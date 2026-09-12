@@ -1,9 +1,9 @@
-import { FACTPACK_SCHEMA_VERSION } from "../schema";
+import { FACTPACK_SCHEMA_VERSION, type FactPack } from "../schema";
 
 export const excerpt = { text: "x", source: "fmp:profile-symbol", asOf: "2026-09-12T00:00:00Z" };
 const row = (key: string) => ({ key, label: key, values: [1, 2, 3, 4, 5] });
 
-export const minimalPack = (): Record<string, any> => ({
+export const minimalPack = (): FactPack => ({
   schemaVersion: FACTPACK_SCHEMA_VERSION,
   ticker: "AVGO", cik: 1730168, company: "Broadcom Inc.", exchange: "NASDAQ",
   filing: { form: "10-Q", accession: "0001730168-26-000080", filedDate: "2026-09-10",
