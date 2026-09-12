@@ -5,7 +5,7 @@
  * malformed or internally inconsistent report fails the build rather than
  * rendering a broken page.
  */
-import { readdir, readFile } from "node:fs/promises";
+import * as fsPromises from "node:fs/promises";
 import path from "node:path";
 import { Report } from "./report.schema";
 import { assertValidReport } from "./validate";
@@ -24,7 +24,7 @@ export interface ReportSummary {
 }
 
 export async function listReportTickers(): Promise<string[]> {
-  const entries = await readdir(DATA_DIR);
+  const entries = await fsPromises.readdir(DATA_DIR);
   return entries
     .filter((f) => f.endsWith(".json"))
     .map((f) => f.replace(/\.json$/, "").toLowerCase())
@@ -37,9 +37,10 @@ export async function loadReport(ticker: string): Promise<Report | null> {
 
   let raw: string;
   try {
-    raw = await readFile(path.join(DATA_DIR, `${slug}.json`), "utf8");
-  } catch {
-    return null;
+    raw = await fsPromises.readFile(path.join(DATA_DIR, `${slug}.json`), "utf8");
+  } catch (err) {
+    if ((err as NodeJS.ErrnoException).code === "ENOENT") return null;
+    throw err;
   }
 
   const report = Report.parse(JSON.parse(raw));
