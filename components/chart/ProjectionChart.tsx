@@ -8,7 +8,7 @@
 import { line, curveMonotoneX } from "d3-shape";
 import {
   chartDims, computeScales, buildLabelRows, declutterLabels, historySeries,
-  MIN_LABEL_GAP,
+  MIN_LABEL_GAP, bandBox,
 } from "./geometry";
 import type { ChartLayout, ChartModel, Tone } from "./types";
 
@@ -26,8 +26,7 @@ export function ProjectionChart({
   const { plotLeft: PL, plotRight: PR, plotTop: PT, plotBottom: PB, labelX } = dims;
   const { nowX, curY } = scales;
 
-  const bandTop = scales.y(model.bandHi);
-  const bandBottom = scales.y(model.bandLo);
+  const band = bandBox(model, scales);
   const history = historySeries(model.current);
   const gradientId = `band-${model.ticker.toLowerCase()}-${layout}`;
 
@@ -37,8 +36,6 @@ export function ProjectionChart({
     .curve(curveMonotoneX)(history.points) ?? "";
 
   const rows = declutterLabels(buildLabelRows(model, scales), MIN_LABEL_GAP);
-  const bandCaptionX = scales.x(66);
-  const bandMidY = (bandTop + bandBottom) / 2;
 
   return (
     <svg
@@ -77,9 +74,9 @@ export function ProjectionChart({
         </g>
       ))}
 
-      <rect x={nowX} y={bandTop} width={PR - nowX} height={bandBottom - bandTop}
+      <rect x={nowX} y={band.top} width={PR - nowX} height={band.bottom - band.top}
         fill={`url(#${gradientId})`} />
-      {[bandTop, bandBottom].map((y) => (
+      {[band.top, band.bottom].map((y) => (
         <line key={y} x1={nowX} x2={PR} y1={y} y2={y} stroke="var(--bull)"
           strokeWidth={1} strokeDasharray="2 3" opacity={0.7} />
       ))}
@@ -108,13 +105,13 @@ export function ProjectionChart({
       <circle cx={nowX} cy={curY} r={3} fill="var(--ink)" />
 
       <g>
-        <rect x={bandCaptionX - 94} y={bandMidY - 21} width={188} height={34}
+        <rect x={band.captionX - 94} y={band.midY - 21} width={188} height={34}
           fill="var(--page)" stroke="var(--bull)" strokeWidth={1} />
-        <text x={bandCaptionX} y={bandMidY - 4} textAnchor="middle" fill="var(--bull)"
+        <text x={band.captionX} y={band.midY - 4} textAnchor="middle" fill="var(--bull)"
           fontFamily="var(--font-sans)" fontSize={13} fontWeight={700}>
           Juniper target {model.bandLo}–{model.bandHi}
         </text>
-        <text x={bandCaptionX} y={bandMidY + 11} textAnchor="middle" fill="var(--bull)"
+        <text x={band.captionX} y={band.midY + 11} textAnchor="middle" fill="var(--bull)"
           fontFamily="var(--font-mono)" fontSize={10}>{model.bandPctText}</text>
       </g>
 

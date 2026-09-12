@@ -52,6 +52,13 @@ export interface LabelRow {
   labelY: number;
 }
 
+export interface BandBox {
+  top: number;
+  bottom: number;
+  midY: number;
+  captionX: number;
+}
+
 export interface HistoryPoint { day: number; price: number }
 
 export interface HistorySeries {

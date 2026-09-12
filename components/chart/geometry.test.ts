@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import {
   buildChartModel, chartDims, niceStep, computeScales,
   buildLabelRows, declutterLabels, historySeries, MIN_LABEL_GAP,
+  bandBox, BAND_CAPTION_DAY,
 } from "@/components/chart/geometry";
 import { Report } from "@/lib/report.schema";
 import avgo from "@/data/avgo.json";
@@ -115,6 +116,22 @@ describe("declutterLabels", () => {
 
   it("formats target values with signed upside", () => {
     expect(rows.find((r) => r.key === "high")!.value).toBe("$600.00  +65.8%");
+  });
+});
+
+describe("bandBox", () => {
+  const scales = computeScales(model, chartDims("wide"));
+  const box = bandBox(model, scales);
+
+  it("spans the band between its price edges, top above bottom", () => {
+    expect(box.top).toBeCloseTo(scales.y(525), 6);
+    expect(box.bottom).toBeCloseTo(scales.y(440), 6);
+    expect(box.top).toBeLessThan(box.bottom);
+  });
+
+  it("centres the caption vertically at the caption day", () => {
+    expect(box.midY).toBeCloseTo((box.top + box.bottom) / 2, 6);
+    expect(box.captionX).toBeCloseTo(scales.x(BAND_CAPTION_DAY), 6);
   });
 });
 

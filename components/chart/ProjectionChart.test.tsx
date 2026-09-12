@@ -45,7 +45,7 @@ describe("ProjectionChart", () => {
   it("omits the label column in the narrow layout", () => {
     const { container } = render(<ProjectionChart model={model} layout="narrow" />);
     expect(container.querySelectorAll("polyline[data-role='leader']")).toHaveLength(0);
-    expect(container.querySelector("svg")?.getAttribute("viewBox")).toBe("0 0 640 420");
+    expect(container.querySelector("svg")?.getAttribute("viewBox")).toBe("0 0 640 480");
   });
 
   it("renders the header rows left-aligned to the plot edge", () => {
@@ -53,5 +53,15 @@ describe("ProjectionChart", () => {
     expect(text).toContain("EQUITY RESEARCH");
     expect(text).toContain("Broadcom Inc. · NASDAQ: AVGO");
     expect(text).toContain("as of Sep 11, 2026");
+  });
+
+  it("keeps every element inside the canvas in both layouts", () => {
+    for (const layout of ["wide", "narrow"] as const) {
+      const { container } = render(<ProjectionChart model={model} layout={layout} />);
+      const svg = container.querySelector("svg")!;
+      const height = Number(svg.getAttribute("viewBox")!.split(" ")[3]);
+      const ys = [...svg.querySelectorAll("text, rect")].map((el) => Number(el.getAttribute("y")));
+      expect(Math.max(...ys)).toBeLessThanOrEqual(height);
+    }
   });
 });

@@ -11,7 +11,7 @@ import { scaleLinear } from "d3-scale";
 import type { Report } from "@/lib/report.schema";
 import { pct, upside, upsideRangeText, usd } from "@/lib/format";
 import type {
-  ChartDims, ChartLayout, ChartModel, ChartScales, HistorySeries, LabelRow,
+  BandBox, ChartDims, ChartLayout, ChartModel, ChartScales, HistorySeries, LabelRow,
 } from "./types";
 
 /** Minimum vertical gap between label rows, per editorial-hairline-design.md. */
@@ -51,7 +51,7 @@ export function buildChartModel(r: Report): ChartModel {
 export function chartDims(layout: ChartLayout): ChartDims {
   if (layout === "narrow") {
     return {
-      width: 640, height: 420,
+      width: 640, height: 480,
       plotLeft: 52, plotRight: 620, plotTop: 120, plotBottom: 360,
       labelX: null,
     };
@@ -98,6 +98,15 @@ export function computeScales(model: ChartModel, dims: ChartDims): ChartScales {
     x: (day) => x(day), y: (price) => y(price),
     gridValues, nowX: x(0), curY: y(model.current), yMin, yMax,
   };
+}
+
+/** Day at which the band caption chip is centred (≈ horizonDays × 0.18). */
+export const BAND_CAPTION_DAY = 66;
+
+export function bandBox(model: ChartModel, scales: ChartScales): BandBox {
+  const top = scales.y(model.bandHi);
+  const bottom = scales.y(model.bandLo);
+  return { top, bottom, midY: (top + bottom) / 2, captionX: scales.x(BAND_CAPTION_DAY) };
 }
 
 export function buildLabelRows(model: ChartModel, scales: ChartScales): LabelRow[] {
