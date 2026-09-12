@@ -329,9 +329,7 @@ No new runtime dependencies. `zod` for the schema; Node's global `fetch`; a
 small HTML-to-text step in `filing-text.ts` written by hand (tag stripping and
 entity decoding — the filing HTML is simple), not a parser library.
 
-The `scripts/*.ts` CLIs run under Node 24's native type stripping
-(`node scripts/detect.ts`), so they use relative imports rather than the `@/`
-alias, which only Next and Vitest resolve. `package.json` scripts wrap them.
+The `scripts/*.ts` CLIs run via `tsx` (a dev dependency): `node --env-file-if-exists=.env.local --import tsx scripts/<name>.ts`, wrapped by `package.json` scripts. Node's native type stripping was rejected because it requires `.ts` extensions on relative imports, which the Next `tsconfig` does not allow.
 
 ## Out of scope
 

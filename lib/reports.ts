@@ -12,6 +12,8 @@ import { assertValidReport } from "./validate";
 
 const DATA_DIR = path.join(process.cwd(), "data");
 const TICKER_PATTERN = /^[a-z0-9.-]+$/;
+/** Pipeline state files that live alongside reports in data/ but are not reports. */
+const NON_REPORT_FILES = new Set(["watchlist.json"]);
 
 export interface ReportSummary {
   ticker: string;
@@ -26,7 +28,7 @@ export interface ReportSummary {
 export async function listReportTickers(): Promise<string[]> {
   const entries = await fsPromises.readdir(DATA_DIR);
   return entries
-    .filter((f) => f.endsWith(".json"))
+    .filter((f) => f.endsWith(".json") && !NON_REPORT_FILES.has(f))
     .map((f) => f.replace(/\.json$/, "").toLowerCase())
     .sort();
 }
