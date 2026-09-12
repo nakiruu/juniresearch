@@ -9,7 +9,7 @@ export function RatingBlock({
     <div className="my-4 flex">
       <Badge
         variant={rating.tone}
-        className="flex w-[34%] items-center justify-center p-3.5 font-sans text-[26px] font-extrabold tracking-[2px]"
+        className="flex h-auto w-[34%] self-stretch items-center justify-center p-3.5 font-sans text-[26px] font-extrabold tracking-[2px]"
       >
         {rating.label}
       </Badge>
