@@ -11,7 +11,8 @@
     "test:watch": "vitest",
     "detect": "node --env-file-if-exists=.env.local --import tsx scripts/detect.ts",
     "watchlist:add": "node --env-file-if-exists=.env.local --import tsx scripts/watchlist-add.ts",
-    "facts:manifest": "node --env-file-if-exists=.env.local --import tsx scripts/facts-manifest.ts"
+    "facts:manifest": "node --env-file-if-exists=.env.local --import tsx scripts/facts-manifest.ts",
+    "facts:edgar": "node --env-file-if-exists=.env.local --import tsx scripts/facts-edgar.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",
