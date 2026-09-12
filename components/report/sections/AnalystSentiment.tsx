@@ -10,6 +10,7 @@ import type { Report } from "@/lib/report.schema";
 export function AnalystSentiment({
   data, current, asOf,
 }: { data: Report["analystSentiment"]; current: number; asOf: string }) {
+  const u = upside(data.consensusTarget, current);
   const rows: [string, React.ReactNode][] = [
     [`Consensus rating (${data.numAnalysts} analysts)`, data.consensusRating],
     ["Rating distribution", `${data.buy} Buy / ${data.hold} Hold / ${data.sell} Sell`],
@@ -17,8 +18,8 @@ export function AnalystSentiment({
     ["Median target", usd(data.medianTarget)],
     ["High / Low target", `${usd(data.highTarget)} / ${usd(data.lowTarget)}`],
     ["Implied upside to consensus",
-      <span key="u" className="font-bold text-bull">
-        {pct(upside(data.consensusTarget, current), { signed: true })}
+      <span key="u" className={u >= 0 ? "font-bold text-bull" : "font-bold text-bear"}>
+        {pct(u, { signed: true })}
       </span>],
   ];
   return (

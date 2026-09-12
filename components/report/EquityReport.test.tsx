@@ -48,4 +48,15 @@ describe("EquityReport", () => {
     render(<EquityReport data={report} />);
     expect(screen.getAllByText("+40.8%").length).toBeGreaterThan(0);
   });
+
+  it("colours a negative implied upside as a loss", () => {
+    const bearish = {
+      ...report,
+      analystSentiment: { ...report.analystSentiment, consensusTarget: 300 },
+    };
+    render(<EquityReport data={bearish} />);
+    const el = screen.getByText("-17.1%");
+    expect(el.className).toContain("text-bear");
+    expect(el.className).not.toContain("text-bull");
+  });
 });
