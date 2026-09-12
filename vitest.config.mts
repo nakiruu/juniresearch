@@ -7,6 +7,11 @@ export default defineConfig({
     tsconfigPaths: true,
   },
   test: {
+    // Pinned explicitly so Vitest stops suggesting `isolate: false` ("6 workers
+    // spawned … ~282ms faster with isolate: false"). Isolation stays on because
+    // lib/reports.errors.test.ts mocks node:fs/promises and must not leak into
+    // sibling test files.
+    isolate: true,
     environment: "jsdom",
     globals: true,
     setupFiles: ["./vitest.setup.ts"],
