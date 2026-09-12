@@ -30,6 +30,11 @@ describe("markSeen", () => {
     expect(next).toEqual({ AVGO: ["A-1", "A-2"], NVDA: ["N-1"] });
     expect(seen).toEqual({ AVGO: ["A-1"] });
   });
+  it("does not duplicate an accession that is already seen", () => {
+    const once = markSeen({}, [{ ...f("A-1", "2026-03-11"), ticker: "AVGO" }]);
+    const twice = markSeen(once, [{ ...f("A-1", "2026-03-11"), ticker: "AVGO" }]);
+    expect(twice).toEqual({ AVGO: ["A-1"] });
+  });
 });
 
 describe("flattenFilings", () => {

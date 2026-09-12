@@ -14,9 +14,13 @@ export function detectNew(filingsByTicker: Record<string, Filing[]>, seen: SeenS
   return out;
 }
 
+/** Union per ticker, insertion order kept, no duplicates. Never mutates the input. */
 export function markSeen(seen: SeenState, filings: NewFiling[]): SeenState {
   const next: SeenState = Object.fromEntries(Object.entries(seen).map(([k, v]) => [k, [...v]]));
-  for (const f of filings) (next[f.ticker] ??= []).push(f.accession);
+  for (const f of filings) {
+    const list = (next[f.ticker] ??= []);
+    if (!list.includes(f.accession)) list.push(f.accession);
+  }
   return next;
 }
 
