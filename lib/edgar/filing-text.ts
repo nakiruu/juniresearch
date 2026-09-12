@@ -8,6 +8,8 @@
 import { edgarText, type FetchLike } from "./client";
 
 export const EXCERPT_CAP = 8000;
+// MD&A opens with cautionary language and a 10-Q's substantive discussion routinely starts past 8k; Risk Factors keep EXCERPT_CAP.
+export const MDA_CAP = 16000;
 
 export function htmlToText(html: string): string {
   return html
@@ -69,13 +71,15 @@ function extractItem(text: string, spec: SectionSpec): string | null {
   return best && best.length > 200 ? best : null;
 }
 
-export function extractSections(text: string, form: "10-Q" | "10-K"): { mda: string | null; riskFactors: string | null } {
+export interface CappedSection { text: string; truncated: boolean }
+
+export function extractSections(text: string, form: "10-Q" | "10-K"): { mda: CappedSection | null; riskFactors: CappedSection | null } {
   const spec = SPECS[form];
   const mda = extractItem(text, spec.mda);
   const rf = extractItem(text, spec.riskFactors);
   return {
-    mda: mda ? capAtSentence(mda).text : null,
-    riskFactors: rf ? capAtSentence(rf).text : null,
+    mda: mda ? capAtSentence(mda, MDA_CAP) : null,
+    riskFactors: rf ? capAtSentence(rf) : null,
   };
 }
 
