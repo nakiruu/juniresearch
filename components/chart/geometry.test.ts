@@ -82,14 +82,11 @@ describe("computeScales", () => {
       expect(v).toBeGreaterThanOrEqual(scales.yMin);
       expect(v).toBeLessThanOrEqual(scales.yMax);
     }
+    expect(scales.gridLabels).toEqual(["350", "400", "450", "500", "550", "600"]);
   });
 
   it("inverts y so higher prices sit higher on the canvas", () => {
     expect(scales.y(600)).toBeLessThan(scales.y(350));
-  });
-
-  it("formats gridline labels through format.ts", () => {
-    expect(scales.gridLabels).toEqual(["350", "400", "450", "500", "550", "600"]);
   });
 });
 
