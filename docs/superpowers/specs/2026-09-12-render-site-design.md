@@ -271,8 +271,9 @@ cannot express:
   leaves `scenario.name` freeform, so the base case is identified by a
   case-insensitive match on `"base"`. If no scenario matches, the check is
   skipped rather than failed — this rule must never fire on a naming choice.
+- the file name equals the lower-cased `meta.ticker`, so static routes and index links agree
 
-All five rules pass against `avgo.json` as written: probabilities sum to exactly
+All six rules pass against `avgo.json` as written: probabilities sum to exactly
 1.0, 440 <= 490 <= 525, and 54 + 6 + 0 = 60.
 
 Each failure reports the ticker, the field and the offending value. These

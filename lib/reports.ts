@@ -44,6 +44,13 @@ export async function loadReport(ticker: string): Promise<Report | null> {
   }
 
   const report = Report.parse(JSON.parse(raw));
+  const declared = report.meta.ticker.toLowerCase();
+  if (declared !== slug) {
+    throw new Error(
+      `Report file "${slug}.json" declares meta.ticker "${report.meta.ticker}" — ` +
+      `the filename must be the lower-cased ticker so routes and index links agree`,
+    );
+  }
   assertValidReport(report, report.meta.ticker);
   return report;
 }
