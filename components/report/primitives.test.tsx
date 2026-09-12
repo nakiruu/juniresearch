@@ -5,6 +5,7 @@ import { RatingBlock } from "@/components/report/RatingBlock";
 import { FinTable } from "@/components/report/FinTable";
 import { ScenarioTable } from "@/components/report/ScenarioTable";
 import { Report } from "@/lib/report.schema";
+import type { FinancialTable } from "@/lib/report.schema";
 import avgo from "@/data/avgo.json";
 
 const report = Report.parse(avgo);
@@ -50,6 +51,22 @@ describe("FinTable", () => {
     for (const c of report.sections.financials.income.columns) {
       expect(screen.getByText(c)).toBeInTheDocument();
     }
+  });
+
+  it("bolds exactly the rows flagged emphasize, not the last row by default", () => {
+    const table: FinancialTable = {
+      columns: ["Metric", "FY24", "FY25"],
+      rows: [
+        { label: "Revenue", values: [1e9, 2e9], format: "usdB" as const },
+        { label: "Total", values: [3e9, 4e9], format: "usdB" as const, emphasize: true },
+        { label: "Margin", values: [0.1, 0.2], format: "pct" as const },
+      ],
+    };
+    render(<FinTable table={table} />);
+    const rowOf = (label: string) => screen.getByText(label).closest("tr")!;
+    expect(rowOf("Total").className).toContain("font-bold");
+    expect(rowOf("Margin").className).not.toContain("font-bold");
+    expect(rowOf("Revenue").className).not.toContain("font-bold");
   });
 });
 
