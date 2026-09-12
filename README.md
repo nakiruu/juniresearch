@@ -2,8 +2,8 @@
 
 Renders a Juniper Finance equity report as a themeable Next.js page from a single
 JSON sidecar. **The model that writes reports emits barebones data; this project
-owns every pixel of presentation.** One `avgo.json` renders as web (dark/light)
-and as the two PDFs, with zero per-report markup.
+owns every pixel of presentation.** One `avgo.json` renders as web (dark/light);
+PDF export is a later subsystem, with zero per-report markup.
 
 ```
 app/
@@ -23,6 +23,15 @@ lib/
   reports.ts              filesystem loader; parse + validate at the boundary
 data/
   avgo.json               reference report (proves parity with the PDF)
+```
+
+## Running it
+
+```bash
+npm install
+npm run dev      # http://localhost:3000 → redirects to /research
+npm test         # Vitest, 90+ tests against data/avgo.json
+npm run build    # prerenders /research and /research/<ticker>
 ```
 
 ---
@@ -194,8 +203,5 @@ path for the component reports.
   numbers, or results drift a tenth from the filing. In `avgo.json` the YoY row
   is provided data for exact parity; wire live derivation to the raw Bigdata
   figures.
-- **`emphasize: true`** on a table row (or the scenario summary) adds the
-  bold last-row treatment via `.emph-last`.
-- `data/avgo.json` is the regression fixture. `node` spot-checks in the repo
-  confirm every formatter output matches the source PDF; keep it green when the
-  schema changes.
+- **`emphasize: true`** on a financial-table row bolds that row. It is per-row; flag a mid-table "Total" and only that row is bold.
+- `data/avgo.json` is the regression fixture. `npm test` asserts every formatter output against the source PDF's strings; keep it green when the schema changes.
