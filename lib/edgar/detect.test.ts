@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { detectNew, markSeen } from "@/lib/edgar/detect";
+import { detectNew, markSeen, flattenFilings } from "@/lib/edgar/detect";
 import type { Filing } from "@/lib/edgar/submissions";
 
 const f = (accession: string, filedDate: string): Filing => ({
@@ -29,5 +29,17 @@ describe("markSeen", () => {
     const next = markSeen(seen, [{ ...f("A-2", "2026-06-09"), ticker: "AVGO" }, { ...f("N-1", "2026-08-01"), ticker: "NVDA" }]);
     expect(next).toEqual({ AVGO: ["A-1", "A-2"], NVDA: ["N-1"] });
     expect(seen).toEqual({ AVGO: ["A-1"] });
+  });
+});
+
+describe("flattenFilings", () => {
+  it("tags every filing with its ticker so all of them can be marked seen", () => {
+    const flat = flattenFilings(filings);
+    expect(flat).toHaveLength(3);
+    expect(flat.every((f) => f.ticker === "AVGO")).toBe(true);
+  });
+  it("marking all fetched filings seen leaves nothing new on the next run", () => {
+    const seen = markSeen({}, flattenFilings(filings));
+    expect(detectNew(filings, seen)).toEqual([]);
   });
 });

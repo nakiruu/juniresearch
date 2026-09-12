@@ -19,3 +19,8 @@ export function markSeen(seen: SeenState, filings: NewFiling[]): SeenState {
   for (const f of filings) (next[f.ticker] ??= []).push(f.accession);
   return next;
 }
+
+/** Every fetched filing tagged with its ticker — what the CLI marks seen after a run. */
+export function flattenFilings(filingsByTicker: Record<string, Filing[]>): NewFiling[] {
+  return Object.entries(filingsByTicker).flatMap(([ticker, fs]) => fs.map((f) => ({ ...f, ticker })));
+}
