@@ -6,24 +6,22 @@ import type { FinancialTable } from "@/lib/report.schema";
 
 export function FinTable({ table }: { table: FinancialTable }) {
   return (
-    <div className="-mx-1 overflow-x-auto px-1">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            {table.columns.map((c) => <TableHead key={c}>{c}</TableHead>)}
+    <Table>
+      <TableHeader>
+        <TableRow>
+          {table.columns.map((c) => <TableHead key={c}>{c}</TableHead>)}
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {table.rows.map((row) => (
+          <TableRow key={row.label} className={row.emphasize ? "font-bold" : undefined}>
+            <TableCell>{row.label}</TableCell>
+            {row.values.map((v, j) => (
+              <TableCell key={j}>{formatCell(v, row.format)}</TableCell>
+            ))}
           </TableRow>
-        </TableHeader>
-        <TableBody>
-          {table.rows.map((row) => (
-            <TableRow key={row.label} className={row.emphasize ? "font-bold" : undefined}>
-              <TableCell>{row.label}</TableCell>
-              {row.values.map((v, j) => (
-                <TableCell key={j}>{formatCell(v, row.format)}</TableCell>
-              ))}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </div>
+        ))}
+      </TableBody>
+    </Table>
   );
 }

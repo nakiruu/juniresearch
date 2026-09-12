@@ -68,6 +68,13 @@ describe("FinTable", () => {
     expect(rowOf("Margin").className).not.toContain("font-bold");
     expect(rowOf("Revenue").className).not.toContain("font-bold");
   });
+
+  it("renders inside a single scroll container carrying the fade affordance", () => {
+    const { container } = render(<FinTable table={report.sections.financials.income} />);
+    const scrollers = container.querySelectorAll(".overflow-x-auto");
+    expect(scrollers).toHaveLength(1);
+    expect(scrollers[0].className).toContain("table-scroll");
+  });
 });
 
 describe("ScenarioTable", () => {

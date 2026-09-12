@@ -99,3 +99,11 @@ body {
 .report-prose h4 { font-size: 14px; font-weight: 600; margin: 12px 0 4px; }
 .report-prose .pos { color: var(--bull); font-weight: 700; }
 .report-prose .neg { color: var(--bear); font-weight: 700; }
+
+/* Phone-width tables scroll horizontally; the right edge fades so clipping reads
+   as "more to the right" rather than a cut. Desktop and print are unmasked. */
+@media (max-width: 767px) {
+  .table-scroll {
+    mask-image: linear-gradient(to right, black calc(100% - 2rem), transparent);
+  }
+}

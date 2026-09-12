@@ -24,18 +24,16 @@ export function AnalystSentiment({
   ];
   return (
     <Section title="Analyst Sentiment Summary">
-      <div className="-mx-1 overflow-x-auto px-1">
-        <Table>
-          <TableHeader>
-            <TableRow><TableHead>Metric</TableHead><TableHead>Value</TableHead></TableRow>
-          </TableHeader>
-          <TableBody>
-            {rows.map(([k, v]) => (
-              <TableRow key={k}><TableCell>{k}</TableCell><TableCell>{v}</TableCell></TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
+      <Table>
+        <TableHeader>
+          <TableRow><TableHead>Metric</TableHead><TableHead>Value</TableHead></TableRow>
+        </TableHeader>
+        <TableBody>
+          {rows.map(([k, v]) => (
+            <TableRow key={k}><TableCell>{k}</TableCell><TableCell>{v}</TableCell></TableRow>
+          ))}
+        </TableBody>
+      </Table>
       <Src>Source: Bigdata.com / FMP aggregated analyst data, as of {asOf}.</Src>
       <Markdown text={data.commentary} />
     </Section>
