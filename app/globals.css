@@ -1,26 +1,101 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --page: #f5f3e9;
+  --surface: #eeece0;
+  --ink: #23241d;
+  --muted: #6b6d5f;
+  --accent: #315438;
+  --hairline: #dcdbcb;
+  --bull: #4a7a52;
+  --bear: #a24a30;
+}
+
+.dark {
+  --page: #12140f;
+  --surface: #191c16;
+  --ink: #eae9dc;
+  --muted: #9ca08b;
+  --accent: #7fb083;
+  --hairline: #2f342a;
+  --bull: #8fc48a;
+  --bear: #d68a5f;
+}
+
+/* shadcn vocabulary, aliased onto the report tokens.
+   --primary is shadcn's BUTTON FILL, not the report's body ink. */
+:root, .dark {
+  --background: var(--page);
+  --foreground: var(--ink);
+  --card: var(--surface);
+  --card-foreground: var(--ink);
+  --popover: var(--surface);
+  --popover-foreground: var(--ink);
+  --primary: var(--accent);
+  --primary-foreground: var(--page);
+  --secondary: var(--surface);
+  --secondary-foreground: var(--ink);
+  --muted-foreground: var(--muted);
+  --accent-foreground: var(--page);
+  --destructive: var(--bear);
+  --border: var(--hairline);
+  --input: var(--hairline);
+  --ring: var(--accent);
+  --radius: 0rem;
 }
 
 @theme inline {
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-hairline: var(--hairline);
+  --color-bull: var(--bull);
+  --color-bear: var(--bear);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-display: var(--font-cormorant), var(--font-eb-garamond), Georgia, serif;
+  --font-sans: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --radius-sm: 0rem;
+  --radius-md: 0rem;
+  --radius-lg: 0rem;
+  --radius-xl: 0rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.6;
 }
+
+/* Report prose. Applied by the .report-prose wrapper only. */
+.report-prose p { margin: 0 0 10px; text-align: justify; }
+.report-prose ul { margin: 4px 0 10px; padding-left: 18px; }
+.report-prose li { margin-bottom: 4px; line-height: 1.55; }
+.report-prose h3 { font-size: 15.5px; font-weight: 600; margin: 16px 0 4px; }
+.report-prose h4 { font-size: 14px; font-weight: 600; margin: 12px 0 4px; }
+.report-prose .pos { color: var(--bull); font-weight: 700; }
+.report-prose .neg { color: var(--bear); font-weight: 700; }
