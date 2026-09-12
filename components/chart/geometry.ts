@@ -9,7 +9,7 @@
  */
 import { scaleLinear } from "d3-scale";
 import type { Report } from "@/lib/report.schema";
-import { pct, upside, usd } from "@/lib/format";
+import { pct, upside, upsideRangeText, usd } from "@/lib/format";
 import type {
   ChartDims, ChartLayout, ChartModel, ChartScales, HistorySeries, LabelRow,
 } from "./types";
@@ -31,9 +31,7 @@ export function buildChartModel(r: Report): ChartModel {
     current,
     bandLo: r.rating.targetLow,
     bandHi: r.rating.targetHigh,
-    bandPctText:
-      `${pct(upside(r.rating.targetLow, current), { signed: true })} to ` +
-      `${pct(upside(r.rating.targetHigh, current), { signed: true })}`,
+    bandPctText: upsideRangeText(r.rating.targetLow, r.rating.targetHigh, current),
     targets: [
       { key: "high", name: "High target", value: s.highTarget, tone: "bull" },
       { key: "median", name: "Median target", value: s.medianTarget, tone: "accent" },
@@ -43,6 +41,13 @@ export function buildChartModel(r: Report): ChartModel {
   };
 }
 
+/**
+ * Wide-layout plot edges follow the prototype's proven values rather than
+ * editorial-hairline-design.md's stated margins (top 100 / bottom 46 →
+ * plotTop 100 / plotBottom 434): the header type is larger than the doc's
+ * mock-up assumed, so plotTop 132 clears the meta line, and plotBottom 440
+ * keeps the x-tick labels inside the 480px canvas at that header height.
+ */
 export function chartDims(layout: ChartLayout): ChartDims {
   if (layout === "narrow") {
     return {
