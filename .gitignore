@@ -1,0 +1,48 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/versions
+
+# next.js
+.next/
+out/
+build/
+next-env.d.ts
+
+# testing
+coverage/
+test-results/
+playwright-report/
+
+# generated report artifacts
+*.pdf
+
+# env
+.env
+.env.*
+!.env.example
+
+# vercel / deployment
+.vercel
+
+# typescript
+*.tsbuildinfo
+
+# editor / os
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
