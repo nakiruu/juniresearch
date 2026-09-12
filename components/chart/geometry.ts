@@ -9,7 +9,7 @@
  */
 import { scaleLinear } from "d3-scale";
 import type { Report } from "@/lib/report.schema";
-import { pct, upside, upsideRangeText, usd } from "@/lib/format";
+import { num, pct, upside, upsideRangeText, usd } from "@/lib/format";
 import type {
   BandBox, ChartDims, ChartLayout, ChartModel, ChartScales, HistorySeries, LabelRow,
 } from "./types";
@@ -29,8 +29,10 @@ export function buildChartModel(r: Report): ChartModel {
     ticker: r.meta.ticker,
     asOf: r.meta.asOf,
     current,
+    currentText: usd(current),
     bandLo: r.rating.targetLow,
     bandHi: r.rating.targetHigh,
+    bandRangeText: `${num(r.rating.targetLow, 0)}–${num(r.rating.targetHigh, 0)}`,
     bandPctText: upsideRangeText(r.rating.targetLow, r.rating.targetHigh, current),
     targets: [
       { key: "high", name: "High target", value: s.highTarget, tone: "bull" },
@@ -47,6 +49,8 @@ export function buildChartModel(r: Report): ChartModel {
  * plotTop 100 / plotBottom 434): the header type is larger than the doc's
  * mock-up assumed, so plotTop 132 clears the meta line, and plotBottom 440
  * keeps the x-tick labels inside the 480px canvas at that header height.
+ * Likewise plotRight 750 / labelX 758 follow the design doc's right margin
+ * of 210 (960 - 210 = 750) rather than the prototype's 752/760.
  */
 export function chartDims(layout: ChartLayout): ChartDims {
   if (layout === "narrow") {
@@ -89,14 +93,17 @@ export function computeScales(model: ChartModel, dims: ChartDims): ChartScales {
     .range([dims.plotBottom, dims.plotTop]);
 
   const step = niceStep((yMax - yMin) / 5);
-  const gridValues: number[] = [];
-  for (let v = Math.ceil(yMin / step) * step; v <= yMax; v += step) {
-    gridValues.push(v);
-  }
+  const decimals = Math.max(0, -Math.floor(Math.log10(step)));
+  const first = Math.ceil(yMin / step) * step;
+  const count = Math.floor((yMax - first) / step + 1e-9) + 1;
+  const gridValues = Array.from({ length: count }, (_, i) =>
+    Number((first + i * step).toFixed(decimals)),
+  );
+  const gridLabels = gridValues.map((v) => num(v, decimals));
 
   return {
     x: (day) => x(day), y: (price) => y(price),
-    gridValues, nowX: x(0), curY: y(model.current), yMin, yMax,
+    gridValues, gridLabels, nowX: x(0), curY: y(model.current), yMin, yMax,
   };
 }
 

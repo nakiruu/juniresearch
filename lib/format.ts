@@ -9,7 +9,7 @@
  *   40.8% -> 0.408      -3.3% -> -0.033      +221% -> 2.21      30% -> 0.30
  */
 
-const num = (x: number, dp = 1): string =>
+export const num = (x: number, dp = 1): string =>
   x.toLocaleString("en-US", { minimumFractionDigits: dp, maximumFractionDigits: dp });
 
 /** Trim a trailing ".0" / redundant zeros from a fixed-decimal string. */

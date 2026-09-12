@@ -14,8 +14,10 @@ export interface ChartModel {
   ticker: string;
   asOf: string;
   current: number;
+  currentText: string;
   bandLo: number;
   bandHi: number;
+  bandRangeText: string;
   bandPctText: string;
   targets: ChartTarget[];
 }
@@ -35,6 +37,8 @@ export interface ChartScales {
   x: (day: number) => number;
   y: (price: number) => number;
   gridValues: number[];
+  /** Axis labels for gridValues, formatted through lib/format — never render gridValues raw. */
+  gridLabels: string[];
   nowX: number;
   curY: number;
   yMin: number;

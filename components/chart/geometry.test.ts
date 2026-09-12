@@ -5,6 +5,7 @@ import {
   bandBox, BAND_CAPTION_DAY,
 } from "@/components/chart/geometry";
 import { Report } from "@/lib/report.schema";
+import type { ChartModel } from "@/components/chart/types";
 import avgo from "@/data/avgo.json";
 
 const report = Report.parse(avgo);
@@ -16,6 +17,8 @@ describe("buildChartModel", () => {
     expect(model.bandLo).toBe(440);
     expect(model.bandHi).toBe(525);
     expect(model.ticker).toBe("AVGO");
+    expect(model.currentText).toBe("$361.99");
+    expect(model.bandRangeText).toBe("440–525");
   });
 
   it("derives the band caption rather than storing it", () => {
@@ -83,6 +86,36 @@ describe("computeScales", () => {
 
   it("inverts y so higher prices sit higher on the canvas", () => {
     expect(scales.y(600)).toBeLessThan(scales.y(350));
+  });
+
+  it("formats gridline labels through format.ts", () => {
+    expect(scales.gridLabels).toEqual(["350", "400", "450", "500", "550", "600"]);
+  });
+});
+
+describe("computeScales on a low-priced instrument", () => {
+  const cheap: ChartModel = {
+    ...model,
+    current: 3.0, bandLo: 2.9, bandHi: 3.2,
+    targets: [
+      { key: "high", name: "High target", value: 3.6, tone: "bull" },
+      { key: "median", name: "Median target", value: 3.35, tone: "accent" },
+      { key: "consensus", name: "Consensus target", value: 3.3, tone: "secondary" },
+      { key: "low", name: "Low target", value: 2.95, tone: "bear" },
+    ],
+    currentText: "$3.00", bandRangeText: "2.9–3.2",
+  };
+  const scales = computeScales(cheap, chartDims("wide"));
+
+  it("produces gridline values free of float noise", () => {
+    for (const v of scales.gridValues) {
+      expect(String(v)).not.toMatch(/\d{6,}$/);
+    }
+  });
+
+  it("formats labels through format.ts with the step's precision", () => {
+    expect(scales.gridLabels).toHaveLength(scales.gridValues.length);
+    for (const label of scales.gridLabels) expect(label).toMatch(/^\d+(\.\d)?$/);
   });
 });
 

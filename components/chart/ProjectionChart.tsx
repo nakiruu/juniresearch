@@ -62,15 +62,15 @@ export function ProjectionChart({
         {model.company} · {model.exchange}: {model.ticker}
       </text>
       <text x={PL} y={109} fill="var(--muted)" fontFamily="var(--font-mono)" fontSize={14.5}>
-        1-Year price projection · as of {model.asOf} · current ${model.current.toFixed(2)}
+        1-Year price projection · as of {model.asOf} · current {model.currentText}
       </text>
 
-      {scales.gridValues.map((value) => (
+      {scales.gridValues.map((value, i) => (
         <g key={value}>
           <line x1={PL} x2={PR} y1={scales.y(value)} y2={scales.y(value)}
             stroke="var(--hairline)" strokeWidth={1} strokeDasharray="1 4" />
           <text x={PL - 8} y={scales.y(value) + 4} textAnchor="end" fill="var(--muted)"
-            fontFamily="var(--font-mono)" fontSize={13}>{value}</text>
+            fontFamily="var(--font-mono)" fontSize={13}>{scales.gridLabels[i]}</text>
         </g>
       ))}
 
@@ -109,7 +109,7 @@ export function ProjectionChart({
           fill="var(--page)" stroke="var(--bull)" strokeWidth={1} />
         <text x={band.captionX} y={band.midY - 4} textAnchor="middle" fill="var(--bull)"
           fontFamily="var(--font-sans)" fontSize={13} fontWeight={700}>
-          Juniper target {model.bandLo}–{model.bandHi}
+          Juniper target {model.bandRangeText}
         </text>
         <text x={band.captionX} y={band.midY + 11} textAnchor="middle" fill="var(--bull)"
           fontFamily="var(--font-mono)" fontSize={10}>{model.bandPctText}</text>

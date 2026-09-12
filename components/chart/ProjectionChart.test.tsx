@@ -53,6 +53,7 @@ describe("ProjectionChart", () => {
     expect(text).toContain("EQUITY RESEARCH");
     expect(text).toContain("Broadcom Inc. · NASDAQ: AVGO");
     expect(text).toContain("as of Sep 11, 2026");
+    expect(text).toContain("current $361.99");
   });
 
   it("keeps every element inside the canvas in both layouts", () => {
