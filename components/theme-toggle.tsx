@@ -9,7 +9,7 @@ export function ThemeToggle() {
   useEffect(() => setMounted(true), []);
 
   if (!mounted) {
-    return <div className="fixed top-4 right-4 z-50 h-8 w-28" aria-hidden />;
+    return <div className="fixed top-4 right-4 z-50 h-8 w-28 print:hidden" aria-hidden />;
   }
 
   const isDark = theme === "dark";
@@ -19,7 +19,7 @@ export function ThemeToggle() {
       onClick={() => setTheme(isDark ? "light" : "dark")}
       className="fixed top-4 right-4 z-50 flex items-center gap-2 border border-hairline
                  bg-surface px-3 py-1.5 font-sans text-xs font-semibold text-muted
-                 transition-colors hover:text-ink"
+                 transition-colors hover:text-ink print:hidden"
     >
       {isDark ? <Sun size={15} /> : <Moon size={15} />}
       {isDark ? "Linen" : "Forest Night"}
