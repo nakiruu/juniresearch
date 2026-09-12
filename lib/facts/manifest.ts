@@ -62,9 +62,11 @@ export const MANIFEST: ManifestEntry[] = [
     params: (c) => ({ rp_entity_id: c.rpEntityId, company_type: c.companyType, interval: "quarter",
                       sections: ["company_overview", "analyst_ratings", "revenue_segmentation"] }) },
   { name: "transcript", file: "bigdata-transcript.md", server: "bigdata", tool: "bigdata_search", phase: 1,
-    params: (c) => ({ query: `${c.company} latest earnings call key points and management commentary` }) },
+    params: (c) => ({ request: { search_mode: "smart", query: {
+      text: `${c.company} latest earnings call key points and management commentary`, max_chunks: 20 } } }) },
   { name: "headlines", file: "bigdata-headlines.md", server: "bigdata", tool: "bigdata_search", phase: 1,
-    params: (c) => ({ query: `${c.company} news since ${c.periodEnd}` }) },
+    params: (c) => ({ request: { search_mode: "smart", query: {
+      text: `${c.company} news since ${c.periodEnd}`, max_chunks: 20 } } }) },
 ];
 
 export function renderManifest(ctx: CaptureContext): RenderedCall[] {

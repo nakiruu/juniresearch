@@ -34,6 +34,15 @@ describe("renderManifest", () => {
     expect(peerCalls).toHaveLength(PEER_LIMIT);
     expect(calls.find((c) => c.file === "bigdata-tearsheet.md")!.params).toMatchObject({ rp_entity_id: "ABC123", company_type: "Public" });
   });
+  it("renders bigdata_search calls in the tool's request envelope", () => {
+    const calls = renderManifest({ ...ctx });
+    for (const name of ["transcript", "headlines"]) {
+      const c = calls.find((x) => x.name === name)!;
+      expect(c.params).toMatchObject({
+        request: { search_mode: "smart", query: { text: expect.stringContaining("Broadcom Inc."), max_chunks: 20 } },
+      });
+    }
+  });
 });
 
 describe("requiredRawFiles", () => {
