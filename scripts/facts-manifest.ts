@@ -1,6 +1,9 @@
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { renderManifest, requiredRawFiles, CODE_FETCHED_FILES, PHASE_INPUT_FILES, type CaptureContext } from "../lib/facts/manifest";
+import {
+  renderManifest, requiredRawFiles, missingRawFiles, pressReleaseIsMissing,
+  PHASE_INPUT_FILES, PRESS_RELEASE_MISSING_FILE, type CaptureContext,
+} from "../lib/facts/manifest";
 
 const [ticker, accession, flag] = process.argv.slice(2);
 if (!ticker || !accession) { console.error("usage: npm run facts:manifest -- <TICKER> <ACCESSION> [--check]"); process.exit(2); }
@@ -23,17 +26,12 @@ if (existsSync(entityFile)) {
 if (flag === "--check") {
   const phase2Ready = Boolean(ctx.rpEntityId && ctx.companyType);
   if (!phase2Ready) { console.error(`Phase 2 unresolved for ${dir}: ${PHASE_INPUT_FILES[0]} is missing or yields no id — cannot check the full raw file set.`); process.exit(1); }
-  const PRESS_FILE = CODE_FETCHED_FILES.find((f) => f.endsWith("-press-release.html"))!;
-  const PRESS_MISSING_FILE = PRESS_FILE.replace(/\.html$/, ".missing");
-  const missing = requiredRawFiles(ctx).filter((f) => {
-    if (existsSync(join(dir, f))) return false;
-    if (f === PRESS_FILE && existsSync(join(dir, PRESS_MISSING_FILE))) return false;
-    return true;
-  });
+  const present = existsSync(dir) ? readdirSync(dir) : [];
+  const missing = missingRawFiles(present, ctx);
   if (missing.length) { console.error("Missing raw files:\n  " + missing.join("\n  ")); process.exit(1); }
   const notes: string[] = [];
-  if (!existsSync(join(dir, PRESS_FILE)) && existsSync(join(dir, PRESS_MISSING_FILE))) {
-    const reason = readFileSync(join(dir, PRESS_MISSING_FILE), "utf8").trim();
+  if (pressReleaseIsMissing(present)) {
+    const reason = readFileSync(join(dir, PRESS_RELEASE_MISSING_FILE), "utf8").trim();
     notes.push(`press release: missing (${reason})`);
   }
   console.log(`All ${requiredRawFiles(ctx).length} raw files present in ${dir}` + (notes.length ? "\n  " + notes.join("\n  ") : ""));

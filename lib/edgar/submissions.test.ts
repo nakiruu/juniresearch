@@ -66,6 +66,15 @@ describe("earnings release and latest annual discovery", () => {
     expect(findLatestAnnual(recent, "2026-09-11")!.accession).toBe("0001-26-000200");
     expect(findLatestAnnual(recent, "2026-06-01")).toBeNull();
   });
+  it("is eligible on the filing's own filedDate (the comparison is <=), not the day before", () => {
+    const soleEightK = [{ form: "8-K", accession: "0001-26-000500", filedDate: "2026-07-15", periodEnd: "2026-07-15", primaryDocument: "k.htm", items: ["2.02"] }];
+    expect(findEarningsRelease(soleEightK, "2026-07-15")!.accession).toBe("0001-26-000500"); // same day: eligible
+    expect(findEarningsRelease(soleEightK, "2026-07-14")).toBeNull();                        // day before: not yet filed
+
+    const soleTenK = [{ form: "10-K", accession: "0001-26-000600", filedDate: "2026-07-15", periodEnd: "2026-05-31", primaryDocument: "a.htm", items: [] }];
+    expect(findLatestAnnual(soleTenK, "2026-07-15")!.accession).toBe("0001-26-000600"); // same day: eligible
+    expect(findLatestAnnual(soleTenK, "2026-07-14")).toBeNull();                        // day before: not yet filed
+  });
   it("finds the exhibit 99 file in a filing index", () => {
     const items = [{ name: "orcl-20260910.htm" }, { name: "orcl-ex99_1.htm" }, { name: "R1.htm" }];
     expect(exhibit99Url(1341439, "0001193125-26-387905", items)).toBe("https://www.sec.gov/Archives/edgar/data/1341439/000119312526387905/orcl-ex99_1.htm");

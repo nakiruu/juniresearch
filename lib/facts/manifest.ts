@@ -19,9 +19,14 @@
  */
 export const PEER_LIMIT = 4;
 export const RAW_CAPTURE_META = "capture.json";
-export const CODE_FETCHED_FILES = ["edgar-filing.json", "edgar-primary.html", "yahoo-history.json", "edgar-press-release.html"] as const;
+export const PRESS_RELEASE_FILE = "edgar-press-release.html";
+/** Stands in for PRESS_RELEASE_FILE when no earnings release was found; `--check` accepts either. */
+export const PRESS_RELEASE_MISSING_FILE = "edgar-press-release.missing";
+/** A 10-Q's prior 10-K primary document, captured only when relevant (see OPTIONAL_FILES). */
+export const ANNUAL_PRIMARY_FILE = "edgar-10k-primary.html";
+export const CODE_FETCHED_FILES = ["edgar-filing.json", "edgar-primary.html", "yahoo-history.json", PRESS_RELEASE_FILE] as const;
 /** Captured only when relevant (a 10-Q's prior 10-K); read when present but never required by `--check`. */
-export const OPTIONAL_FILES = ["edgar-10k-primary.html"] as const;
+export const OPTIONAL_FILES = [ANNUAL_PRIMARY_FILE] as const;
 /** Captured in phase 1 and read by facts-manifest to resolve phase 2 (rpEntityId, companyType); not FactPack data, so no mapper reads it. */
 export const PHASE_INPUT_FILES = ["bigdata-entity.json"] as const;
 
@@ -86,4 +91,24 @@ export function renderManifest(ctx: CaptureContext): RenderedCall[] {
 
 export function requiredRawFiles(ctx: CaptureContext): string[] {
   return [RAW_CAPTURE_META, ...CODE_FETCHED_FILES, ...renderManifest(ctx).map((c) => c.file)];
+}
+
+/**
+ * Which required raw files are absent, given the filenames actually present in the capture
+ * directory. A present PRESS_RELEASE_MISSING_FILE satisfies the press-release requirement in
+ * PRESS_RELEASE_FILE's place, so `--check` never demands both.
+ */
+export function missingRawFiles(present: readonly string[], ctx: CaptureContext): string[] {
+  const have = new Set(present);
+  return requiredRawFiles(ctx).filter((f) => {
+    if (have.has(f)) return false;
+    if (f === PRESS_RELEASE_FILE && have.has(PRESS_RELEASE_MISSING_FILE)) return false;
+    return true;
+  });
+}
+
+/** True when the press-release requirement is satisfied only by the `.missing` marker, not the html. */
+export function pressReleaseIsMissing(present: readonly string[]): boolean {
+  const have = new Set(present);
+  return !have.has(PRESS_RELEASE_FILE) && have.has(PRESS_RELEASE_MISSING_FILE);
 }

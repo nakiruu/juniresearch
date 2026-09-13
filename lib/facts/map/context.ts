@@ -8,14 +8,13 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { readRawJson, readRawText, section } from "../raw";
 import { htmlToText, extractRawSections, capAtSentence, TRANSCRIPT_CAP, PRESS_CAP, MDA_CAP } from "../../edgar/filing-text";
+import { PRESS_RELEASE_FILE, ANNUAL_PRIMARY_FILE } from "../manifest";
 import type { Excerpt, FactPack } from "../schema";
 
 const EDGAR_PRIMARY_FILE = "edgar-primary.html";
-const PRESS_RELEASE_FILE = "edgar-press-release.html";
-const TENK_PRIMARY_FILE = "edgar-10k-primary.html";
 const TRANSCRIPT_FILE = "bigdata-transcript.json";
 const HEADLINES_FILE = "bigdata-headlines.json";
-export const READS = [EDGAR_PRIMARY_FILE, TRANSCRIPT_FILE, HEADLINES_FILE, PRESS_RELEASE_FILE, TENK_PRIMARY_FILE] as const;
+export const READS = [EDGAR_PRIMARY_FILE, TRANSCRIPT_FILE, HEADLINES_FILE, PRESS_RELEASE_FILE, ANNUAL_PRIMARY_FILE] as const;
 export const PROVENANCE: { field: string; endpoint: string; source: FactPack["provenance"][number]["source"] }[] = [
   { field: "context.mdaExcerpt", endpoint: "edgar primary document", source: "edgar" },
   { field: "context.riskFactorsExcerpt", endpoint: "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)", source: "edgar" },
@@ -84,8 +83,8 @@ export function mapContext(
   let winnerRaw = own.riskFactors;
   let riskFactorsSource: FactPack["context"]["riskFactorsSource"] = own.riskFactors ? filing.form : null;
   let winnerSource = `edgar:${filing.form}`, winnerUrl: string | undefined = filing.url, winnerAsOf = filing.filedDate;
-  if (filing.form === "10-Q" && existsSync(join(dir, TENK_PRIMARY_FILE))) {
-    const tenKRaw = extractRawSections(htmlToText(readRawText(dir, TENK_PRIMARY_FILE)), "10-K").riskFactors;
+  if (filing.form === "10-Q" && existsSync(join(dir, ANNUAL_PRIMARY_FILE))) {
+    const tenKRaw = extractRawSections(htmlToText(readRawText(dir, ANNUAL_PRIMARY_FILE)), "10-K").riskFactors;
     if (tenKRaw && (!winnerRaw || tenKRaw.length > winnerRaw.length)) {
       winnerRaw = tenKRaw;
       riskFactorsSource = "10-K";

@@ -45,7 +45,7 @@ export async function fetchSubmissions(cik: number, contact: string, fetchImpl: 
 }
 
 export interface RecentFiling { form: string; accession: string; filedDate: string; periodEnd: string; primaryDocument: string; items: string[] }
-interface RecentBody { filings: { recent: SubmissionsBody["filings"]["recent"] & { items?: string[] } } }
+export interface RecentBody { filings: { recent: SubmissionsBody["filings"]["recent"] & { items?: string[] } } }
 
 export function parseRecent(body: RecentBody): RecentFiling[] {
   const r = body.filings.recent;
@@ -67,8 +67,5 @@ export async function fetchFilingIndex(cik: number, accession: string, contact: 
 export function exhibit99Url(cik: number, accession: string, items: { name: string }[]): string | null {
   const hit = items.find((i) => /ex[-_]?99/i.test(i.name) && /\.htm/i.test(i.name));
   return hit ? filingUrl(cik, accession, hit.name) : null;
-}
-export async function fetchRecent(cik: number, contact: string, fetchImpl: FetchLike = fetch): Promise<RecentFiling[]> {
-  return parseRecent(await edgarJson<RecentBody>(submissionsUrl(cik), contact, fetchImpl));
 }
 export const fetchEdgarDocument = edgarText;

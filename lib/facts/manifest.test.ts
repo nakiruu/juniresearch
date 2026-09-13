@@ -1,5 +1,8 @@
 import { describe, it, expect } from "vitest";
-import { MANIFEST, renderManifest, requiredRawFiles, CODE_FETCHED_FILES, OPTIONAL_FILES, PHASE_INPUT_FILES, isoMinusDays } from "@/lib/facts/manifest";
+import {
+  MANIFEST, renderManifest, requiredRawFiles, missingRawFiles, CODE_FETCHED_FILES, OPTIONAL_FILES, PHASE_INPUT_FILES,
+  PRESS_RELEASE_FILE, PRESS_RELEASE_MISSING_FILE, isoMinusDays,
+} from "@/lib/facts/manifest";
 
 const ctx = { ticker: "AVGO", company: "Broadcom Inc.", periodEnd: "2026-08-02", today: "2026-09-12" };
 
@@ -50,6 +53,21 @@ describe("requiredRawFiles", () => {
     expect(files).toContain("capture.json");
     for (const f of CODE_FETCHED_FILES) expect(files).toContain(f);
     expect(files).toHaveLength(1 + CODE_FETCHED_FILES.length + 7);
+  });
+});
+
+describe("missingRawFiles", () => {
+  const full = { ...ctx, rpEntityId: "X", companyType: "Public" as const };
+  const allOtherFiles = requiredRawFiles(full).filter((f) => f !== PRESS_RELEASE_FILE);
+
+  it("reports nothing missing when the press-release html is present", () => {
+    expect(missingRawFiles([...allOtherFiles, PRESS_RELEASE_FILE], full)).toEqual([]);
+  });
+  it("accepts the .missing marker in the html's place", () => {
+    expect(missingRawFiles([...allOtherFiles, PRESS_RELEASE_MISSING_FILE], full)).toEqual([]);
+  });
+  it("reports the press release missing when neither the html nor the marker is present", () => {
+    expect(missingRawFiles(allOtherFiles, full)).toEqual([PRESS_RELEASE_FILE]);
   });
 });
 
