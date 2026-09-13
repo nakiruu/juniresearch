@@ -20,6 +20,13 @@ describe("scalar formatters", () => {
     expect(compactUSD(63_900_000_000)).toBe("$63.9B");
   });
 
+  it("places the sign before the currency symbol for negative amounts, at every scale", () => {
+    expect(compactUSD(-55.7e9)).toBe("-$55.7B");
+    expect(compactUSD(-2_500_000)).toBe("-$2.5M");
+    expect(compactUSD(-361.99)).toBe("-$361.99");
+    expect(compactUSD(-1_720_000_000_000, { approx: true })).toBe("~-$1.72T");
+  });
+
   it("scales bare counts", () => {
     expect(compactNum(4_760_000_000, { approx: true })).toBe("~4.76B");
   });

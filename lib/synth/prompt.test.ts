@@ -47,7 +47,7 @@ describe("renderFactsBlock", () => {
 describe("renderFactsBlock (ORCL — the frozen formatter's sign placement on a negative highlight cell)", () => {
   const block = renderFactsBlock(orclFacts, orclPack);
   it("renders the negative FY26 capex highlight cell", () => {
-    expect(block).toContain("- capexLatestFY: FY26 Capital Expenditure = $-55.7B");
+    expect(block).toContain("- capexLatestFY: FY26 Capital Expenditure = -$55.7B");
   });
   it("renders ORCL's leverage line with a negative FCF yield", () => {
     expect(block).toContain("- Net debt/EBITDA 3.2x · Interest coverage 4.6x · FCF yield -6.6% · Current ratio 1.17");

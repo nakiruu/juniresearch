@@ -11,11 +11,11 @@ describe("buildHighlightCells — ORCL Q1 FY27 10-Q", () => {
   const cells = buildHighlightCells(pack);
 
   it("renders capexLatestFY as the FY26 capital expenditure, formatted by the frozen formatter", () => {
-    // The brief's suggested rendering was "-$55.7B"; the frozen compactUSD() actually keeps
-    // the sign inside the "$": confirmed directly against lib/format.ts before asserting.
+    // compactUSD() places the sign before the "$" ("-$55.7B") — fixed in the fix wave
+    // (lib/format.ts previously rendered "$-55.7B"); confirmed directly against lib/format.ts.
     const cell = cells.capexLatestFY!;
     expect(cell.label).toBe("FY26 Capital Expenditure");
-    expect(formatSnapshot(cell as SnapshotCell)).toBe("$-55.7B");
+    expect(formatSnapshot(cell as SnapshotCell)).toBe("-$55.7B");
   });
 
   it("renders netDebtToEbitda as a multiple", () => {

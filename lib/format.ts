@@ -21,14 +21,15 @@ const trimZeros = (s: string): string =>
 /** Small dollar amount: 361.99 -> "$361.99". */
 export const usd = (x: number, dp = 2): string => "$" + num(x, dp);
 
-/** Auto-scaled dollars: 1.72e12 -> "$1.72T", 63.9e9 -> "$63.9B", 58e9 -> "$58B". */
+/** Auto-scaled dollars: 1.72e12 -> "$1.72T", 63.9e9 -> "$63.9B", 58e9 -> "$58B", -55.7e9 -> "-$55.7B" (sign before "$"). */
 export function compactUSD(x: number, opts: { approx?: boolean } = {}): string {
   const p = opts.approx ? "~" : "";
+  const sign = x < 0 ? "-" : "";
   const a = Math.abs(x);
-  if (a >= 1e12) return `${p}$${trimZeros(num(x / 1e12, 2))}T`;
-  if (a >= 1e9) return `${p}$${trimZeros(num(x / 1e9, 1))}B`;
-  if (a >= 1e6) return `${p}$${trimZeros(num(x / 1e6, 1))}M`;
-  return `${p}$${num(x, 2)}`;
+  if (a >= 1e12) return `${p}${sign}$${trimZeros(num(a / 1e12, 2))}T`;
+  if (a >= 1e9) return `${p}${sign}$${trimZeros(num(a / 1e9, 1))}B`;
+  if (a >= 1e6) return `${p}${sign}$${trimZeros(num(a / 1e6, 1))}M`;
+  return `${p}${sign}$${num(a, 2)}`;
 }
 
 /** Auto-scaled bare count (e.g. shares): 4.76e9 -> "4.76B". */
