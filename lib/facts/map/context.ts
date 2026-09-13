@@ -14,11 +14,11 @@ const EDGAR_PRIMARY_FILE = "edgar-primary.html";
 const TRANSCRIPT_FILE = "bigdata-transcript.json";
 const HEADLINES_FILE = "bigdata-headlines.json";
 export const READS = [EDGAR_PRIMARY_FILE, TRANSCRIPT_FILE, HEADLINES_FILE] as const;
-export const PROVENANCE = [
-  { field: "context.mdaExcerpt", endpoint: "edgar primary document" },
-  { field: "context.riskFactorsExcerpt", endpoint: "edgar primary document" },
-  { field: "context.transcriptHighlights", endpoint: "bigdata_search" },
-  { field: "context.headlines", endpoint: "bigdata_search" },
+export const PROVENANCE: { field: string; endpoint: string; source: FactPack["provenance"][number]["source"] }[] = [
+  { field: "context.mdaExcerpt", endpoint: "edgar primary document", source: "edgar" },
+  { field: "context.riskFactorsExcerpt", endpoint: "edgar primary document", source: "edgar" },
+  { field: "context.transcriptHighlights", endpoint: "bigdata_search", source: "bigdata" },
+  { field: "context.headlines", endpoint: "bigdata_search", source: "bigdata" },
 ];
 
 export const HEADLINE_LIMIT = 10;
@@ -32,7 +32,7 @@ function searchResults(dir: string, file: string): SearchResult[] {
 }
 
 const sourceOf = (r: SearchResult) => `bigdata:${r.source?.name?.trim() || "search"}`;
-const dayOf = (r: SearchResult, fallback: string) => (r.timestamp ?? fallback).slice(0, 10);
+const dayOf = (r: SearchResult, fallback: string) => (r.timestamp || fallback).slice(0, 10);
 
 function headlinesFrom(results: SearchResult[], fallbackDay: string): Excerpt[] {
   return results

@@ -1,8 +1,9 @@
 import { readRawJson, section } from "../raw";
-import type { HistoryPoint } from "../schema";
+import type { FactPack, HistoryPoint } from "../schema";
 const FILE = "yahoo-history.json";
 export const READS = [FILE] as const;
-export const PROVENANCE = [{ field: "history", endpoint: "yahoo v8 chart (daily close)" }];
+export const PROVENANCE: { field: string; endpoint: string; source: FactPack["provenance"][number]["source"] }[] =
+  [{ field: "history", endpoint: "yahoo v8 chart (daily close)", source: "yahoo" }];
 export const HISTORY_DAYS = 30;
 
 /** Yahoo's shape: chart.result[0].timestamp[] (unix seconds) aligned with indicators.quote[0].close[]. */

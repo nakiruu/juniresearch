@@ -4,10 +4,10 @@ import type { FactPack } from "../schema";
 const FILE = "bigdata-tearsheet-annual.json";
 const PEERS_FILE = "fmp-peers.json";
 export const READS = [FILE, PEERS_FILE] as const;
-export const PROVENANCE = [
-  { field: "analysts", endpoint: "bigdata_company_tearsheet.analyst_data" },
-  { field: "estimates", endpoint: "bigdata_company_tearsheet.estimates" },
-  { field: "peers", endpoint: "fmp company/peers (tickers only)" },
+export const PROVENANCE: { field: string; endpoint: string; source: FactPack["provenance"][number]["source"] }[] = [
+  { field: "analysts", endpoint: "bigdata_company_tearsheet.analyst_data", source: "bigdata" },
+  { field: "estimates", endpoint: "bigdata_company_tearsheet.estimates", source: "bigdata" },
+  { field: "peers", endpoint: "fmp company/peers (tickers only)", source: "fmp" },
 ];
 
 export function mapAnalysts(dir: string, latestFY: number): { analysts: FactPack["analysts"]; estimates: FactPack["estimates"]; peers: FactPack["peers"] } {

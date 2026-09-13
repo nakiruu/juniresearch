@@ -18,22 +18,22 @@ If the accession is unknown, run `npm run detect` first and use what it prints.
 ## Steps
 
 1. `npm run facts:prepare -- <TICKER> <ACCESSION>` — creates the raw directory with
-   `edgar-filing.json`, the primary document, and `yahoo-history.json`. Read the printed directory path.
-2. Write `capture.json` in that directory: `{ "capturedAt": "<now as ISO-8601 UTC>" }`.
-3. `npm run facts:manifest -- <TICKER> <ACCESSION>` — prints `{ dir, phase2Ready, calls[] }`.
-4. For every entry in `calls`:
+   `edgar-filing.json`, the primary document, `yahoo-history.json`, and `capture.json`
+   (stamped with the capture's start time). Read the printed directory path.
+2. `npm run facts:manifest -- <TICKER> <ACCESSION>` — prints `{ dir, phase2Ready, calls[] }`.
+3. For every entry in `calls`:
    - `server: "fmp"` → call the MCP tool `mcp__claude_ai_FMP__<tool>` with `params` exactly as printed.
    - `server: "bigdata"` → call `mcp__claude_ai_Bigdata_com__<tool>` with `params` exactly as printed.
    - Save the tool's response to `<dir>/<file>` **byte-for-byte as the tool returned it**.
      A JSON response is saved as that JSON text; a Markdown response as that Markdown.
      Do not pretty-print, wrap, annotate, or trim.
    - If the call errors, save the error text to `<dir>/<file>.error.txt` and continue.
-5. Run step 3 again. If `phase2Ready` is now true, the printed `calls` include the
+4. Run step 2 again. If `phase2Ready` is now true, the printed `calls` include the
    three tearsheet entries — execute those the same way.
-6. `npm run facts:manifest -- <TICKER> <ACCESSION> --check` — must print
+5. `npm run facts:manifest -- <TICKER> <ACCESSION> --check` — must print
    "All N raw files present". If it lists missing files, retry those calls once;
    if they still fail, stop and report which.
-7. `npm run facts:build -- <TICKER> <ACCESSION>` — code maps, validates, and writes
+6. `npm run facts:build -- <TICKER> <ACCESSION>` — code maps, validates, and writes
    `data/facts/<TICKER>/<ACCESSION>.json`. Report its output verbatim.
 
 ## Rules

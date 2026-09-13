@@ -25,3 +25,9 @@ describe("mapSegments on an empty capture", () => {
     expect(() => mapSegments("lib/facts/map/__fixtures__/empty")).toThrow(/bigdata-tearsheet-annual\.json/);
   });
 });
+
+describe("mapSegments with an all-zero segment total", () => {
+  it("throws naming the tearsheet file rather than dividing by zero", () => {
+    expect(() => mapSegments("lib/facts/map/__fixtures__/zero-segments")).toThrow(/bigdata-tearsheet-annual\.json/);
+  });
+});

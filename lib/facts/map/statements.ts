@@ -3,10 +3,10 @@ import type { FactPack, StatementRow } from "../schema";
 
 const ANNUAL = "bigdata-statements-annual.json", QUARTER = "bigdata-statements-quarter.json", SHEET = "bigdata-tearsheet-annual.json";
 export const READS = [ANNUAL, QUARTER, SHEET] as const;
-export const PROVENANCE = [
-  { field: "statements", endpoint: "bigdata_company_tearsheet.financial_statements (annual)" },
-  { field: "latestQuarter", endpoint: "bigdata_company_tearsheet.financial_statements (quarter)" },
-  { field: "ttm", endpoint: "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]" },
+export const PROVENANCE: { field: string; endpoint: string; source: FactPack["provenance"][number]["source"] }[] = [
+  { field: "statements", endpoint: "bigdata_company_tearsheet.financial_statements (annual)", source: "bigdata" },
+  { field: "latestQuarter", endpoint: "bigdata_company_tearsheet.financial_statements (quarter)", source: "bigdata" },
+  { field: "ttm", endpoint: "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]", source: "bigdata" },
 ];
 
 const fyLabel = (fy: number) => `FY${String(fy).slice(2)}`;

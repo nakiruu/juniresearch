@@ -11,8 +11,6 @@ import * as analysts from "./map/analysts";
 import * as history from "./map/history";
 import * as context from "./map/context";
 
-type Source = "fmp" | "bigdata" | "edgar" | "yahoo";
-
 const EDGAR_FILING_FILE = "edgar-filing.json";
 export const READS = [RAW_CAPTURE_META, EDGAR_FILING_FILE] as const;
 
@@ -23,6 +21,7 @@ export function buildFactPack(dir: string): FactPack {
   if (filing.accession !== basename(dir)) throw new Error(`edgar-filing.json accession ${filing.accession} ≠ directory ${basename(dir)}`);
 
   const q = quote.mapQuote(dir);
+  if (q.cik !== filing.cik) throw new Error(`CIK mismatch: tearsheet ${q.cik} vs EDGAR ${filing.cik}`);
   const s = statements.mapStatements(dir);
   const latestFY = Number("20" + s.statements.fiscalYears[4].slice(2));
   const g = segments.mapSegments(dir);
@@ -30,9 +29,8 @@ export function buildFactPack(dir: string): FactPack {
   const h = history.mapHistory(dir, meta.capturedAt);
   const c = context.mapContext(dir, filing, meta.capturedAt, q.description);
 
-  const stamp = (source: Source, rows: { field: string; endpoint: string }[]) => rows.map((r) => ({ ...r, source, capturedAt: meta.capturedAt }));
-  const peersProv = analysts.PROVENANCE.filter((r) => r.field === "peers");
-  const bigdataProv = analysts.PROVENANCE.filter((r) => r.field !== "peers");
+  const stamp = (rows: { field: string; endpoint: string; source: FactPack["provenance"][number]["source"] }[]) =>
+    rows.map((r) => ({ ...r, capturedAt: meta.capturedAt }));
 
   const pack: FactPack = {
     schemaVersion: FACTPACK_SCHEMA_VERSION,
@@ -43,9 +41,8 @@ export function buildFactPack(dir: string): FactPack {
     estimates: a.estimates, analysts: a.analysts, segments: g.segments, geoMix: g.geoMix, peers: a.peers,
     history: h, context: c,
     provenance: [
-      ...stamp("bigdata", quote.PROVENANCE), ...stamp("bigdata", statements.PROVENANCE), ...stamp("bigdata", segments.PROVENANCE),
-      ...stamp("bigdata", bigdataProv), ...stamp("fmp", peersProv), ...stamp("yahoo", history.PROVENANCE),
-      ...stamp("edgar", context.PROVENANCE.slice(0, 2)), ...stamp("bigdata", context.PROVENANCE.slice(2)),
+      ...stamp(quote.PROVENANCE), ...stamp(statements.PROVENANCE), ...stamp(segments.PROVENANCE),
+      ...stamp(analysts.PROVENANCE), ...stamp(history.PROVENANCE), ...stamp(context.PROVENANCE),
     ],
   };
   FactPack.parse(pack);

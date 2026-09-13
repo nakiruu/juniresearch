@@ -454,7 +454,7 @@ export async function fetchSubmissions(cik: number, contact: string, fetchImpl: 
 
 **Interfaces:**
 - Consumes: `edgarText`, `FetchLike` from Task 2.
-- Produces: `htmlToText(html)`, `capAtSentence(text, cap?) → { text, truncated }`, `extractSections(text, form) → { mda: string | null; riskFactors: string | null }`, `fetchPrimaryDocument(url, contact, fetchImpl?) → string`, `EXCERPT_CAP = 8000`.
+- Produces: `htmlToText(html)`, `capAtSentence(text, cap?) → { text, truncated }`, `extractSections(text, form) → { mda: CappedSection | null; riskFactors: CappedSection | null }`, `fetchPrimaryDocument(url, contact, fetchImpl?) → string`, `EXCERPT_CAP = 8000`, `MDA_CAP = 16000`.
 
 - [ ] **Step 1: Fetch the fixture into its permanent raw location**
 
@@ -623,7 +623,7 @@ export async function fetchPrimaryDocument(url: string, contact: string, fetchIm
 ## Task 4: Detection, watchlist, seen-state, CLIs
 
 **Files:**
-- Create: `lib/edgar/detect.ts`, `scripts/detect.ts`, `scripts/watchlist-add.ts`, `data/watchlist.json`, `data/edgar/seen.json`, `.env.example`
+- Create: `lib/edgar/detect.ts`, `scripts/detect.ts`, `scripts/watchlist-add.ts`, `data/edgar/watchlist.json`, `data/edgar/seen.json`, `.env.example`
 - Modify: `package.json` (scripts, `tsx` devDependency)
 - Modify: `docs/superpowers/specs/2026-09-12-fact-pipeline-design.md` (the CLI-runtime sentence)
 - Test: `lib/edgar/detect.test.ts`
@@ -646,7 +646,7 @@ Add to `package.json` `scripts`:
 
 Create `.env.example` with one line: `EDGAR_CONTACT=you@example.com`.
 
-Create `data/watchlist.json`: `[{ "ticker": "AVGO", "cik": 1730168 }]` and `data/edgar/seen.json`: `{}`.
+Create `data/edgar/watchlist.json`: `[{ "ticker": "AVGO", "cik": 1730168 }]` and `data/edgar/seen.json`: `{}`.
 
 In the spec, replace the paragraph beginning "The `scripts/*.ts` CLIs run under Node 24's native type stripping" with: "The `scripts/*.ts` CLIs run via `tsx` (a dev dependency): `node --env-file-if-exists=.env.local --import tsx scripts/<name>.ts`, wrapped by `package.json` scripts. Node's native type stripping was rejected because it requires `.ts` extensions on relative imports, which the Next `tsconfig` does not allow."
 
@@ -735,7 +735,7 @@ import { sleep, EDGAR_MIN_INTERVAL_MS } from "../lib/edgar/client";
 import { requireContact } from "./_env";
 
 const contact = requireContact();
-const watchlist = JSON.parse(readFileSync("data/watchlist.json", "utf8")) as WatchEntry[];
+const watchlist = JSON.parse(readFileSync("data/edgar/watchlist.json", "utf8")) as WatchEntry[];
 const seen = JSON.parse(readFileSync("data/edgar/seen.json", "utf8")) as SeenState;
 
 const byTicker: Record<string, Filing[]> = {};
@@ -759,11 +759,11 @@ import { requireContact } from "./_env";
 
 const ticker = (process.argv[2] ?? "").toUpperCase();
 if (!ticker) { console.error("usage: npm run watchlist:add -- <TICKER>"); process.exit(2); }
-const list = JSON.parse(readFileSync("data/watchlist.json", "utf8")) as WatchEntry[];
+const list = JSON.parse(readFileSync("data/edgar/watchlist.json", "utf8")) as WatchEntry[];
 if (list.some((w) => w.ticker === ticker)) { console.log(`${ticker} already watched.`); process.exit(0); }
 const { cik, title } = await resolveCik(ticker, requireContact());
 list.push({ ticker, cik });
-writeFileSync("data/watchlist.json", JSON.stringify(list, null, 2) + "\n");
+writeFileSync("data/edgar/watchlist.json", JSON.stringify(list, null, 2) + "\n");
 console.log(`Added ${ticker} (${title}, CIK ${cik}).`);
 ```
 

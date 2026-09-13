@@ -3,12 +3,12 @@ import type { FactPack, Excerpt } from "../schema";
 
 const FILE = "bigdata-tearsheet-annual.json";
 export const READS = [FILE] as const;
-export const PROVENANCE = [
-  { field: "quote", endpoint: "bigdata_company_tearsheet.company_overview + price_performance" },
-  { field: "quote.sharesOutstanding", endpoint: "derived: market_cap / price" },
-  { field: "quote.dividendYield", endpoint: "bigdata_company_tearsheet.fundamentals.ratios[TTM]" },
-  { field: "company", endpoint: "bigdata_company_tearsheet.company_overview" },
-  { field: "context.description", endpoint: "bigdata_company_tearsheet.company_overview" },
+export const PROVENANCE: { field: string; endpoint: string; source: FactPack["provenance"][number]["source"] }[] = [
+  { field: "quote", endpoint: "bigdata_company_tearsheet.company_overview + price_performance", source: "bigdata" },
+  { field: "quote.sharesOutstanding", endpoint: "derived: market_cap / price", source: "bigdata" },
+  { field: "quote.dividendYield", endpoint: "bigdata_company_tearsheet.fundamentals.ratios[TTM]", source: "bigdata" },
+  { field: "company", endpoint: "bigdata_company_tearsheet.company_overview", source: "bigdata" },
+  { field: "context.description", endpoint: "bigdata_company_tearsheet.company_overview", source: "bigdata" },
 ];
 
 export function mapQuote(dir: string): { quote: FactPack["quote"]; company: string; exchange: string; cik: number; description: Excerpt } {
@@ -28,6 +28,8 @@ export function mapQuote(dir: string): { quote: FactPack["quote"]; company: stri
       price, marketCap,
       sharesOutstanding: marketCap / price,
       week52Low: num(pp, "year_low", FILE)!, week52High: num(pp, "year_high", FILE)!,
+      // A missing TTM dividend_yield is read as 0: the vendor omits the field for
+      // non-payers rather than reporting an explicit zero. Ruled, known limitation.
       dividendYield: num(ttm, "dividend_yield", FILE, { optional: true }) ?? 0,
       asOf,
     },

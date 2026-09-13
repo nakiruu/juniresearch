@@ -25,4 +25,5 @@ writeFileSync(join(dir, "edgar-filing.json"), JSON.stringify({ ...filing, ticker
 if (!existsSync(join(dir, "edgar-primary.html"))) writeFileSync(join(dir, "edgar-primary.html"), await fetchPrimaryDocument(filing.url, contact));
 const today = new Date().toISOString().slice(0, 10);
 writeFileSync(join(dir, "yahoo-history.json"), await fetchDailyCloses(ticker, isoMinusDays(filing.periodEnd, 45), today));
-console.log(`Prepared ${dir}: edgar-filing.json, edgar-primary.html, yahoo-history.json (${isoMinusDays(filing.periodEnd, 45)} → ${today})`);
+if (!existsSync(join(dir, "capture.json"))) writeFileSync(join(dir, "capture.json"), `{ "capturedAt": "${new Date().toISOString()}" }\n`);
+console.log(`Prepared ${dir}: edgar-filing.json, edgar-primary.html, yahoo-history.json, capture.json (${isoMinusDays(filing.periodEnd, 45)} → ${today})`);

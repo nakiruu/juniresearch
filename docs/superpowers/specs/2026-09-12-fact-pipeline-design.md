@@ -75,10 +75,13 @@ lib/
     validate.ts       consistency rules
     project.ts        FactPack → ReportFacts (the numeric subset of Report)
 scripts/
-  detect.ts          npm run detect                 prints new filings; marks them seen
-  watchlist-add.ts   npm run watchlist:add AVGO     resolves CIK, appends
-  facts-build.ts     npm run facts:build AVGO <acc> raw → FactPack, or fails loudly
-  facts-diff.ts      npm run facts:diff  AVGO <acc> projected values vs data/avgo.json
+  detect.ts          npm run detect                    prints new filings; marks them seen
+  watchlist-add.ts   npm run watchlist:add AVGO        resolves CIK, appends
+  facts-prepare.ts   npm run facts:prepare AVGO <acc>  code-fetched raw files + capture.json
+  facts-manifest.ts  npm run facts:manifest AVGO <acc> [--check]  prints/checks the manifest
+  facts-build.ts     npm run facts:build AVGO <acc>    raw → FactPack, or fails loudly
+  facts-diff.ts      npm run facts:diff  AVGO <acc>    projected values vs data/avgo.json
+  report-history.ts  npm run report:history AVGO <acc> copies real closes into the report
 .claude/skills/fetch-facts/SKILL.md   the capture recipe; reads manifest.ts
 ```
 
@@ -302,7 +305,7 @@ history so the live page shows Broadcom's actual trailing month; its
 - Mapping: empty array, error object, or missing required key → throw naming the file and key.
 - Validation: every failing rule listed with field and value, same shape as
   subsystem 1's `validate.ts`; the FactPack is not written.
-- Detection never marks a filing seen until it has been printed.
+- Detection marks every fetched filing seen after the run prints the new ones.
 
 ## Testing
 
