@@ -4,7 +4,7 @@ import { FactPack } from "@/lib/facts/schema";
 import { projectReportFacts } from "@/lib/facts/project";
 import { Desk } from "@/lib/synth/desk.schema";
 import { Judgment } from "@/lib/synth/judgment.schema";
-import type { HighlightKey } from "@/lib/synth/highlights";
+import type { HighlightKey } from "@/lib/facts/highlights";
 import { mergeReport, toneFor, longDate, shortDate } from "@/lib/synth/merge";
 import { Report, SCHEMA_VERSION } from "@/lib/report.schema";
 import { validateReport } from "@/lib/validate";

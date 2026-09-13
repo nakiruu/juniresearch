@@ -75,7 +75,7 @@ house style live in `data/desk/desk.json`. The hand-built report that seeded the
 `lib/__fixtures__/avgo-golden.json`.
 
 The model may also choose up to four fact-derived highlight cells (leverage ratios, capital returns, latest-FY margins — see
-`lib/synth/highlights.ts`) to append to the snapshot; `validateJudgment` rejects a duplicate or unavailable key.
+`lib/facts/highlights.ts`) to append to the snapshot; `validateJudgment` rejects a duplicate or unavailable key.
 
 ---
 

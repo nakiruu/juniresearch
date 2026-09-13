@@ -4,7 +4,7 @@ import { FactPack } from "@/lib/facts/schema";
 import { projectReportFacts } from "@/lib/facts/project";
 import { Judgment } from "@/lib/synth/judgment.schema";
 import { validateJudgment, ratingIssues, markdownIssues, segmentIssues, highlightIssues, renderJudgmentBlock } from "@/lib/synth/validate-judgment";
-import type { HighlightKey } from "@/lib/synth/highlights";
+import type { HighlightKey } from "@/lib/facts/highlights";
 import goldenJudgment from "@/lib/__fixtures__/avgo-golden-judgment.json";
 
 const pack = FactPack.parse(JSON.parse(readFileSync("data/facts/AVGO/0001730168-26-000080.json", "utf8")));

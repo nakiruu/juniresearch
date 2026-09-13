@@ -8,9 +8,10 @@
  * vendor couldn't compute) simply omits that key rather than emitting a
  * null-valued cell.
  */
-import type { FactPack } from "../facts/schema";
+import type { FactPack } from "./schema";
 import type { SnapshotCellData } from "../report.schema";
 import { num } from "../format";
+import { latestStatementValue, safeDiv } from "./statement-values";
 
 export const HIGHLIGHT_KEYS = [
   "fcfLatestFY",
@@ -28,26 +29,22 @@ export const HIGHLIGHT_KEYS = [
 
 export type HighlightKey = (typeof HIGHLIGHT_KEYS)[number];
 
-/** The latest fiscal year's value for a statement row, or null if the row or year is missing. */
-const latest = (p: FactPack, table: "income" | "balance" | "cashflow", key: string): number | null =>
-  p.statements[table].find((r) => r.key === key)?.values[4] ?? null;
-
 export function buildHighlightCells(p: FactPack): Partial<Record<HighlightKey, SnapshotCellData>> {
   const fy = p.statements.fiscalYears[4];
-  const revenue = latest(p, "income", "revenue");
-  const grossProfit = latest(p, "income", "grossProfit");
-  const grossMarginLatestFY = revenue == null || grossProfit == null || revenue === 0 ? null : grossProfit / revenue;
+  const revenue = latestStatementValue(p, "income", "revenue");
+  const grossProfit = latestStatementValue(p, "income", "grossProfit");
+  const grossMarginLatestFY = safeDiv(grossProfit, revenue);
 
   const source: Record<HighlightKey, { value: number | null; cell: (value: number) => SnapshotCellData }> = {
-    fcfLatestFY: { value: latest(p, "cashflow", "freeCashFlow"), cell: (value) => ({ label: `${fy} Free Cash Flow`, value, unit: "usdLarge" }) },
-    capexLatestFY: { value: latest(p, "cashflow", "capex"), cell: (value) => ({ label: `${fy} Capital Expenditure`, value, unit: "usdLarge" }) },
-    netDebtLatestFY: { value: latest(p, "balance", "netDebt"), cell: (value) => ({ label: `${fy} Net Debt`, value, unit: "usdLarge" }) },
-    totalDebtLatestFY: { value: latest(p, "balance", "totalDebt"), cell: (value) => ({ label: `${fy} Total Debt`, value, unit: "usdLarge" }) },
+    fcfLatestFY: { value: latestStatementValue(p, "cashflow", "freeCashFlow"), cell: (value) => ({ label: `${fy} Free Cash Flow`, value, unit: "usdLarge" }) },
+    capexLatestFY: { value: latestStatementValue(p, "cashflow", "capex"), cell: (value) => ({ label: `${fy} Capital Expenditure`, value, unit: "usdLarge" }) },
+    netDebtLatestFY: { value: latestStatementValue(p, "balance", "netDebt"), cell: (value) => ({ label: `${fy} Net Debt`, value, unit: "usdLarge" }) },
+    totalDebtLatestFY: { value: latestStatementValue(p, "balance", "totalDebt"), cell: (value) => ({ label: `${fy} Total Debt`, value, unit: "usdLarge" }) },
     netDebtToEbitda: { value: p.ttm.netDebtToEbitda, cell: (value) => ({ label: "Net Debt / EBITDA (TTM)", value, unit: "mult" }) },
     interestCoverage: { value: p.ttm.interestCoverage, cell: (value) => ({ label: "Interest Coverage (TTM)", value, unit: "mult" }) },
     fcfYield: { value: p.ttm.fcfYield, cell: (value) => ({ label: "FCF Yield (TTM)", value, unit: "pct", dp: 1 }) },
-    buybacksLatestFY: { value: latest(p, "cashflow", "buybacks"), cell: (value) => ({ label: `${fy} Share Repurchases`, value, unit: "usdLarge" }) },
-    dividendsLatestFY: { value: latest(p, "cashflow", "dividends"), cell: (value) => ({ label: `${fy} Dividends Paid`, value, unit: "usdLarge" }) },
+    buybacksLatestFY: { value: latestStatementValue(p, "cashflow", "buybacks"), cell: (value) => ({ label: `${fy} Share Repurchases`, value, unit: "usdLarge" }) },
+    dividendsLatestFY: { value: latestStatementValue(p, "cashflow", "dividends"), cell: (value) => ({ label: `${fy} Dividends Paid`, value, unit: "usdLarge" }) },
     currentRatioTTM: { value: p.ttm.currentRatio, cell: (value) => ({ label: "Current Ratio (TTM)", raw: num(value, 2) }) },
     grossMarginLatestFY: { value: grossMarginLatestFY, cell: (value) => ({ label: `${fy} Gross Margin`, value, unit: "pct" }) },
   };

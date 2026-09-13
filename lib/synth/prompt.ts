@@ -10,7 +10,7 @@ import type { FactPack } from "../facts/schema";
 import type { ReportFacts } from "../facts/project";
 import type { Desk } from "./desk.schema";
 import { judgmentJsonSchema } from "./judgment.schema";
-import { HIGHLIGHT_KEYS } from "./highlights";
+import { HIGHLIGHT_KEYS } from "../facts/highlights";
 import { formatSnapshot, formatCell, compactUSD, compactNum, usd, pct, mult, num, type SnapshotCell } from "../format";
 import type { FinancialTable } from "../report.schema";
 

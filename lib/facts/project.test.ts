@@ -3,7 +3,7 @@ import { projectReportFacts } from "@/lib/facts/project";
 import { buildFactPack } from "@/lib/facts/build";
 import { formatCell } from "@/lib/format";
 import { Report } from "@/lib/report.schema";
-import { buildHighlightCells } from "@/lib/synth/highlights";
+import { buildHighlightCells } from "@/lib/facts/highlights";
 import avgo from "@/lib/__fixtures__/avgo-golden.json";
 
 const pack = buildFactPack("data/raw/AVGO/0001730168-26-000080");
@@ -82,7 +82,7 @@ describe("projectReportFacts parity with data/avgo.json", () => {
     expect(facts.quote.history).toHaveLength(30);
     expect(facts.quote.history![29]).toMatchObject({ date: "2026-09-11" });
   });
-  it("builds highlightCells from the FactPack via lib/synth/highlights", () => {
+  it("builds highlightCells from the FactPack via lib/facts/highlights", () => {
     expect(facts.highlightCells.capexLatestFY).toMatchObject({ label: "FY25 Capital Expenditure", unit: "usdLarge" });
     expect(facts.highlightCells.netDebtToEbitda).toEqual(buildHighlightCells(pack).netDebtToEbitda);
   });

@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { FactPack } from "@/lib/facts/schema";
 import { formatSnapshot, num } from "@/lib/format";
 import type { SnapshotCell } from "@/lib/format";
-import { buildHighlightCells, HIGHLIGHT_KEYS } from "@/lib/synth/highlights";
+import { buildHighlightCells, HIGHLIGHT_KEYS } from "@/lib/facts/highlights";
 
 const pack = FactPack.parse(JSON.parse(readFileSync("data/facts/ORCL/0001193125-26-389274.json", "utf8")));
 

@@ -201,7 +201,7 @@ field list; those are in the prompt the code renders.
 
 ## Highlight cells
 
-`ReportFacts.highlightCells` (`lib/synth/highlights.ts`, `HIGHLIGHT_KEYS`) is
+`ReportFacts.highlightCells` (`lib/facts/highlights.ts`, `HIGHLIGHT_KEYS`) is
 eleven fact-derived Snapshot cells, present only when the underlying FactPack
 figure is non-null: `fcfLatestFY`, `capexLatestFY`, `netDebtLatestFY`,
 `totalDebtLatestFY`, `netDebtToEbitda`, `interestCoverage`, `fcfYield`,

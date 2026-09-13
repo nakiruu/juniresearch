@@ -7,7 +7,8 @@
  */
 import type { FactPack } from "./schema";
 import type { Report, FinancialTable, SnapshotCellData } from "../report.schema";
-import { buildHighlightCells } from "../synth/highlights";
+import { buildHighlightCells } from "./highlights";
+import { statementValues, safeDiv } from "./statement-values";
 
 export interface ReportFacts {
   meta: { filing: Report["meta"]["filing"]; company: string; ticker: string; exchange: string; asOf: string };
@@ -23,9 +24,8 @@ export interface ReportFacts {
   highlightCells: ReturnType<typeof buildHighlightCells>;
 }
 
-const vals = (p: FactPack, table: "income" | "balance" | "cashflow", key: string) =>
-  p.statements[table].find((r) => r.key === key)?.values ?? [null, null, null, null, null];
-const ratioRows = (a: (number | null)[], b: (number | null)[]) => a.map((x, i) => (x == null || b[i] == null || b[i] === 0 ? null : x / (b[i] as number)));
+const vals = statementValues;
+const ratioRows = (a: (number | null)[], b: (number | null)[]) => a.map((x, i) => safeDiv(x, b[i]));
 const yoy = (a: (number | null)[]) => a.map((x, i) => (i === 0 || x == null || a[i - 1] == null || a[i - 1] === 0 ? null : x / (a[i - 1] as number) - 1));
 
 export function projectReportFacts(p: FactPack): ReportFacts {

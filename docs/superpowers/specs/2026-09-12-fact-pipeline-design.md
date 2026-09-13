@@ -442,7 +442,7 @@ which document won.
 `project.ts` adds an "Operating Margin" row to the income table (right after
 "Operating Income ($B)") and expands the cash-flow table to Operating Cash
 Flow, Capital Expenditure, Share Repurchases, Dividends Paid, Free Cash Flow,
-FCF Margin. `ReportFacts.highlightCells` (`lib/synth/highlights.ts`) exposes
+FCF Margin. `ReportFacts.highlightCells` (`lib/facts/highlights.ts`) exposes
 eleven fact-derived Snapshot cells — FCF, capex, net debt, total debt,
 buybacks, dividends at the latest FY, plus TTM net-debt/EBITDA, interest
 coverage, FCF yield, current ratio, and latest-FY gross margin — each present

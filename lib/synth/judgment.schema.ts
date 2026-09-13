@@ -7,7 +7,7 @@
  * "helpfully" returns facts fails fast. Bounds are the page's shape.
  */
 import { z } from "zod";
-import { HIGHLIGHT_KEYS } from "./highlights";
+import { HIGHLIGHT_KEYS } from "../facts/highlights";
 
 export const RatingLabel = z.enum(["STRONG BUY", "BUY", "HOLD", "SELL", "STRONG SELL"]);
 export type RatingLabel = z.infer<typeof RatingLabel>;
