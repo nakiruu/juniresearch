@@ -44,7 +44,7 @@ npm run build    # prerenders /research and /research/<ticker>
 ```bash
 npm run watchlist:add -- NVDA           # resolves the CIK via sec.gov, appends to data/edgar/watchlist.json
 npm run detect                          # polls EDGAR for new 10-Q/10-K on the watchlist; prints them; marks seen
-npm run facts:prepare -- AVGO 0001730168-26-000080  # EDGAR filing record + primary document + Yahoo daily closes → data/raw/…
+npm run facts:prepare -- AVGO 0001730168-26-000080  # EDGAR filing record + primary document + earnings press release + Yahoo daily closes → data/raw/…
 /fetch-facts AVGO 0001730168-26-000080  # in Claude Code: captures vendor responses verbatim to data/raw/…
 npm run facts:build -- AVGO 0001730168-26-000080   # raw → validated FactPack in data/facts/…
 npm run facts:diff  -- AVGO 0001730168-26-000080   # projected facts vs the hand-built golden fixture, formatted
@@ -53,7 +53,9 @@ npm run facts:diff  -- AVGO 0001730168-26-000080   # projected facts vs the hand
 `EDGAR_CONTACT=<your email>` must be set in `.env.local` (see `.env.example`); SEC requires it.
 Numbers come from Bigdata.com company tearsheets (which proxy FMP data) and peer tickers from FMP `company`, both through the Claude connectors — the
 `fetch-facts` skill executes `lib/facts/manifest.ts`; EDGAR and Yahoo are fetched by code. Unattended runs need API keys
-and a REST `FactSource`; see the spec's "FactSource seam".
+and a REST `FactSource`; see the spec's "FactSource seam". `facts:prepare` also discovers the earnings 8-K's exhibit 99.1 (writing a
+`.missing` marker when none exists) and, for a 10-Q, fetches the prior 10-K's primary document, feeding FactPack 1.1's leverage
+ratios, capital-return rows, and press-release excerpt.
 
 ---
 
@@ -70,6 +72,9 @@ scenarios' probability-weighted upside, lints the Markdown, and verifies that ev
 captured context, or the report's own calls and the values the page derives from them (`lib/synth/grounding.ts`). Desk identity and
 house style live in `data/desk/desk.json`. The hand-built report that seeded the project is now the test fixture
 `lib/__fixtures__/avgo-golden.json`.
+
+The model may also choose up to four fact-derived highlight cells (leverage ratios, capital returns, latest-FY margins — see
+`lib/synth/highlights.ts`) to append to the snapshot; `validateJudgment` rejects a duplicate or unavailable key.
 
 ---
 

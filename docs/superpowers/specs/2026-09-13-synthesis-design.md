@@ -199,6 +199,44 @@ field list; those are in the prompt the code renders.
   (`--date YYYY-MM-DD`); the skill passes today's date and the value is
   recorded in the report.
 
+## Highlight cells
+
+`ReportFacts.highlightCells` (`lib/synth/highlights.ts`, `HIGHLIGHT_KEYS`) is
+eleven fact-derived Snapshot cells, present only when the underlying FactPack
+figure is non-null: `fcfLatestFY`, `capexLatestFY`, `netDebtLatestFY`,
+`totalDebtLatestFY`, `netDebtToEbitda`, `interestCoverage`, `fcfYield`,
+`buybacksLatestFY`, `dividendsLatestFY`, `currentRatioTTM`,
+`grossMarginLatestFY`.
+
+`Judgment.highlights?: HighlightKey[]` (`judgment.schema.ts`) lets the model
+choose up to four of them, by key, to append to the report snapshot. The
+schema stays a plain `z.enum(HIGHLIGHT_KEYS)` array — deliberately without a
+Zod-level uniqueness refinement — so `judgmentJsonSchema()` (`z.toJSONSchema`)
+exports it losslessly; uniqueness and availability are `validateJudgment`
+concerns instead (`highlightIssues` in `validate-judgment.ts`): a repeated
+key, or a key whose cell this FactPack doesn't have (the underlying figure
+was null), is a validation issue naming the offending key(s).
+
+`mergeReport` (`merge.ts`) resolves the model's chosen keys against
+`facts.highlightCells`, in the order chosen, and appends them to
+`facts.snapshot` after its sixteen code-built cells. The `.filter(Boolean)`
+after the lookup is a last-resort guard — `highlightIssues` has already ruled
+out an unavailable key by the time merge runs.
+
+**In the prompt** (`prompt.ts`, `renderFactsBlock`): the "Trailing twelve
+months" section gains a leverage line — Net debt/EBITDA, interest coverage,
+FCF yield, current ratio — alongside the existing margins line, and the Quote
+line now says whether `sharesOutstanding` came from the cover page or was
+derived from market cap (`sharesSource`). A new "### Highlight cells you may
+add (up to four, by key)" list enumerates every `HIGHLIGHT_KEYS` entry whose
+cell is available in this FactPack, `key: label = formatted value` per line,
+so the model picks from what actually exists rather than guessing a key.
+`renderContextBlock` renders the earnings press release excerpt (when
+captured) ahead of transcript highlights. The `# Calls` section also now
+notes that scenario probabilities are quotable as percentages (e.g. "48%"),
+alongside the target range, each scenario's weighted value, and the weighted
+fair value that were already quotable.
+
 ## Fixture move
 
 `data/avgo.json` (the hand-built report) is copied to

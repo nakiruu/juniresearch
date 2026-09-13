@@ -31,8 +31,10 @@ If the accession is unknown, run `npm run detect` first and use what it prints.
 4. Run step 2 again. If `phase2Ready` is now true, the printed `calls` include the
    three tearsheet entries — execute those the same way.
 5. `npm run facts:manifest -- <TICKER> <ACCESSION> --check` — must print
-   "All N raw files present". If it lists missing files, retry those calls once;
-   if they still fail, stop and report which.
+   "All N raw files present" (an `edgar-press-release.missing` marker from step 1
+   satisfies the press-release requirement in place of the `.html`, noted on its
+   own line). If it lists missing files, retry those calls once; if they still
+   fail, stop and report which.
 6. `npm run facts:build -- <TICKER> <ACCESSION>` — code maps, validates, and writes
    `data/facts/<TICKER>/<ACCESSION>.json`. Report its output verbatim.
 

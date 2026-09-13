@@ -378,6 +378,77 @@ figures sit past 8,000). The watchlist lives at
 The manifest table and mapping section above are superseded by the plan's
 revised Tasks 6–11, which carry the captured response shapes verbatim.
 
+## Revision 2 — after the Oracle comparison
+
+Running the pipeline against Oracle's real 10-Q and 10-K (rather than only
+Broadcom's) surfaced three gaps neither the design nor the first capture had
+exercised. The schema moves to **FactPack 1.1.0**.
+
+**Cover-page shares outstanding.** ORCL's vendor-derived `sharesOutstanding`
+(`marketCap / price`, ≈2.88B) diverged materially from the actual cover-page
+count (3,023,736,000) — a derived figure is only as fresh as the vendor's own
+price/cap snapshot. `filing-text.ts` gains `extractCoverShares(text)`, reading
+the primary document's cover-page "... shares outstanding as of ..." line;
+`lib/facts/map/cover.ts` (`mapCover`) wraps it against `edgar-primary.html`,
+and `build.ts` prefers the cover count over the vendor's whenever one is
+found, recording the winner as `quote.sharesSource: "cover" | "derived"`.
+`project.ts`'s "Shares Outstanding" snapshot cell is `approx` only when the
+source is `"derived"`.
+
+**Two more EDGAR documents.** `facts:prepare` (`scripts/facts-prepare.ts`) now
+also discovers the earnings press release: the newest item-2.02 8-K filed on
+or before the filing (`findEarningsRelease`, `lib/edgar/submissions.ts`), its
+exhibit 99.1 resolved from that filing's own index (`fetchFilingIndex` +
+`exhibit99Url`) and saved as `edgar-press-release.html`. Neither the 8-K nor
+an ex-99.1 exhibit is guaranteed to exist — when discovery comes up empty,
+`facts:prepare` writes `edgar-press-release.missing` (the reason, as text)
+instead of failing the capture. For a 10-Q, `facts:prepare` also fetches the
+prior 10-K's primary document as `edgar-10k-primary.html`
+(`findLatestAnnual`) — read only to arbitrate the Risk Factors excerpt below.
+`edgar-filing.json` gains `pressRelease` and `annualReport` records
+(`{ accession, filedDate, url } | null`).
+
+`lib/facts/manifest.ts` names both new files: `edgar-press-release.html`
+joins `CODE_FETCHED_FILES` (required by `--check`, but the `.missing` marker
+satisfies the requirement in its place); `edgar-10k-primary.html` is the new
+`OPTIONAL_FILES` — captured only for a 10-Q, read when present, never
+required.
+
+**The longer Risk Factors wins.** A 10-Q's own Item 1A is often a thin
+cross-reference to the prior 10-K ("see our Annual Report"). The first cut
+compared the two documents' already-capped excerpts and picked the longer
+one — but both candidates routinely exceed the cap, so their capped lengths
+collapse to near-identical values and the sentence-boundary cut point decides
+the winner instead of which document actually says more (caught on AVGO:
+94,265 vs 90,270 raw characters, 7,880 vs 7,869 capped — an inversion risk).
+`filing-text.ts` now exposes `extractRawSections` (uncapped) underlying
+`extractSections`; `context.ts` compares the *raw* candidate lengths — the
+10-Q's own Item 1A against the 10-K's, when a 10-K was captured — and caps
+only the winner. `context.riskFactorsSource: "10-Q" | "10-K" | null` records
+which document won.
+
+**FactPack 1.1.0 fields** (additive over 1.0.0):
+- `quote.sharesSource: "cover" | "derived"`
+- `ttm.netDebtToEbitda`, `ttm.interestCoverage`, `ttm.fcfYield`,
+  `ttm.currentRatio` — nullable, from the tearsheet's TTM `key_metrics` /
+  `ratios`
+- `context.pressRelease: Excerpt | null` (source `"edgar:8-K ex-99.1"`,
+  capped at the new `PRESS_CAP` = 16,000 characters) and
+  `context.riskFactorsSource: "10-Q" | "10-K" | null`
+- `statements.cashflow` gains `buybacks` ("Share Repurchases") and
+  `dividends` ("Dividends Paid") rows, both optional (a company that neither
+  repurchases nor pays a dividend reports null, not zero)
+
+`project.ts` adds an "Operating Margin" row to the income table (right after
+"Operating Income ($B)") and expands the cash-flow table to Operating Cash
+Flow, Capital Expenditure, Share Repurchases, Dividends Paid, Free Cash Flow,
+FCF Margin. `ReportFacts.highlightCells` (`lib/synth/highlights.ts`) exposes
+eleven fact-derived Snapshot cells — FCF, capex, net debt, total debt,
+buybacks, dividends at the latest FY, plus TTM net-debt/EBITDA, interest
+coverage, FCF yield, current ratio, and latest-FY gross margin — each present
+only when its underlying figure is non-null. See the synthesis spec's
+"Highlight cells" section for how the model selects among them.
+
 ## Out of scope
 
 - Scheduling and unattended runs — blocked on the API-key migration (decision 1)

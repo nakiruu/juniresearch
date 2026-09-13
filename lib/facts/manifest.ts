@@ -9,6 +9,13 @@
  * chart, so numbers now come from Bigdata's tearsheet (which proxies FMP) and
  * daily closes come from Yahoo's keyless chart endpoint (fetched in code, see
  * CODE_FETCHED_FILES) — not through the manifest at all.
+ *
+ * Revision 2026-09-13: facts:prepare also fetches the earnings press release
+ * (8-K exhibit 99.1) as CODE_FETCHED_FILES' edgar-press-release.html, or writes
+ * edgar-press-release.missing when no 8-K/exhibit is found — `--check` accepts
+ * that marker in the .html's place — and, for a 10-Q, the prior 10-K's primary
+ * document as the new OPTIONAL_FILES' edgar-10k-primary.html, read when present
+ * but never required.
  */
 export const PEER_LIMIT = 4;
 export const RAW_CAPTURE_META = "capture.json";
