@@ -33,6 +33,17 @@ describe("numericTokens", () => {
     expect(numericTokens("by 2040 and beyond").map((t) => t.raw)).toEqual([]);
     expect(numericTokens("by 2045 and beyond").map((t) => t.raw)).toEqual(["2045"]);
   });
+  it("allow-lists month-name and ISO dates with days above 12", () => {
+    expect(numericTokens("the quarter ended August 30, 2026 and December 31, 2025; as of 2026-08-30")).toEqual([]);
+  });
+  it("allow-lists period phrases such as 52-week but still tokenizes '52 weeks'", () => {
+    expect(numericTokens("the 52-week low and a 12-month view over a 90-day window")).toEqual([]);
+    expect(numericTokens("over 52 weeks").map((t) => t.raw)).toEqual(["52"]);
+  });
+  it("checks both ends of a hyphenated range", () => {
+    expect(numericTokens("up 40-50% next year").map((t) => t.raw)).toEqual(["40", "50%"]);
+    expect(numericTokens("300-400 basis points").map((t) => t.raw)).toEqual(["300", "400"]);
+  });
 });
 
 describe("the allowed index on the AVGO FactPack", () => {

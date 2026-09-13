@@ -26,18 +26,21 @@ const MULT: Record<string, number> = { k: 1e3, m: 1e6, b: 1e9, t: 1e12, thousand
 const TOKEN = /(?<![A-Za-z'’$\d.])([+\-−]?)(\$?)(\d{1,3}(?:,\d{3})+|\d+)(\.\d+)?(?:\s?(K|M|B|T|thousand|million|billion|trillion)(?![A-Za-z])|(%)|(x)(?![A-Za-z]))?/g;
 const YEAR = /^(199\d|20[0-3]\d|2040)$/;
 
-/** Figures that never need grounding: small counts, years, fiscal/quarter labels, dates, form names, ratios like 10:1. */
+/** Figures that never need grounding: small counts, years, fiscal/quarter labels, dates, form names, ratios like 10:1, period phrases like 52-week. */
 function allowListed(m: RegExpExecArray, text: string): boolean {
   const [whole, , dollar, int, frac, suffix, pctSign, xSign] = m;
   const bare = !dollar && !frac && !suffix && !pctSign && !xSign;
   const n = Number(int.replace(/,/g, ""));
   const before = text.slice(Math.max(0, m.index - 3), m.index);
-  const after = text.slice(m.index + whole.length, m.index + whole.length + 3);
+  const after = text.slice(m.index + whole.length, m.index + whole.length + 8);
   if (/(^|[^A-Za-z])(Q|FY)$/.test(before) || /^'?\d{2}\b/.test(after) && /Q$/.test(before)) return true; // Q3'26, FY24, FY2026
   if (bare && n <= 12) return true;
   if (bare && YEAR.test(int)) return true;
-  if (bare && /^[-:]\s?[A-Z\d]/.test(after)) return true;   // 10-Q, 10-K, 10:1
-  if (/^, ?(19|20)\d\d/.test(after) || /^,? (19|20)\d\d/.test(after)) return true; // "Aug 2, 2026"
+  if (bare && /^-[QK]\b/.test(after)) return true;                          // 10-Q, 10-K
+  if (bare && /^:\d/.test(after)) return true;                              // 10:1
+  if (bare && /^-(week|month|day|year|quarter)s?\b/i.test(after)) return true; // 52-week, 12-month, 90-day, 5-year
+  if (/^,? ?(19|20)\d\d\b/.test(after)) return true;         // "August 30, 2026", "30 2026"
+  if (/\d-$/.test(before) && n >= 1 && n <= 31) return true; // ISO date component, e.g. 2026-08-30
   return false;
 }
 

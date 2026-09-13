@@ -31,6 +31,10 @@ export function ratingIssues(j: Judgment, currentPrice: number): ValidationIssue
   const env = ENVELOPES[j.rating.label];
   if ((env.min != null && u < env.min) || (env.max != null && u > env.max))
     issues.push({ field: "rating.label", message: `${j.rating.label} is inconsistent with an upside of ${pct(u, { signed: true })} (probability-weighted fair value ${fairValue.toFixed(2)} vs price ${currentPrice})`, value: j.rating.label });
+  const names = j.sections.valuation.scenarios.map((s) => s.name.trim());
+  const WANT_NAMES = ["Bull", "Base", "Bear"];
+  if (names.length !== WANT_NAMES.length || !WANT_NAMES.every((w) => names.includes(w)))
+    issues.push({ field: "sections.valuation.scenarios[].name", message: "scenarios must be named exactly Bull, Base and Bear", value: names });
   const byName = (re: RegExp) => j.sections.valuation.scenarios.find((s) => re.test(s.name))?.impliedPrice;
   const bull = byName(/bull/i), base = byName(/base/i), bear = byName(/bear/i);
   if (bull != null && base != null && bear != null && !(bull >= base && base >= bear))

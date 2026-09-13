@@ -43,6 +43,26 @@ describe("rating envelope (price 100)", () => {
   });
 });
 
+describe("scenario names", () => {
+  const withNames = (names: [string, string, string]) => {
+    const j = structuredClone(golden);
+    j.sections.valuation.scenarios = j.sections.valuation.scenarios.map((s, i) => ({ ...s, name: names[i] }));
+    return j;
+  };
+  it("flags scenario names that are not exactly Bull, Base and Bear", () => {
+    const issues = ratingIssues(withNames(["Bull case", "Base case", "Bear case"]), 100);
+    expect(issues.map((i) => i.field)).toContain("sections.valuation.scenarios[].name");
+  });
+  it("flags scenarios renamed away from Bull/Base/Bear entirely", () => {
+    const issues = ratingIssues(withNames(["Upside", "Mid", "Downside"]), 100);
+    expect(issues.map((i) => i.field)).toContain("sections.valuation.scenarios[].name");
+  });
+  it("accepts the golden's scenario names", () => {
+    const issues = ratingIssues(golden, pack.quote.price);
+    expect(issues.map((i) => i.field)).not.toContain("sections.valuation.scenarios[].name");
+  });
+});
+
 describe("markdown lint", () => {
   const withThesis = (body: string) => { const j = structuredClone(golden); j.sections.executiveSummary.thesis.body = body; return j; };
   it("accepts the contract's subset", () => {
