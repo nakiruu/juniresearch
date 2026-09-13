@@ -1752,16 +1752,43 @@ export function mapHistory(dir: string, capturedAt: string): HistoryPoint[] {
 
 ## Task 9: Mapping — context
 
+> **Revision 2026-09-12 (second).** The captured `bigdata_search` responses are JSON, not Markdown: `{ "results": [ { "id", "headline", "timestamp", "source": { "name" }, "chunks": [ { "cnum", "text" } ], "url" } ], "metadata", "audit" }`. The two raw files are renamed to `.json` here and parsed as JSON; the manifest, its test, and the skill follow.
+
 **Files:**
 - Create: `lib/facts/map/context.ts`
+- Modify: `lib/facts/manifest.ts` (two file names), `lib/facts/manifest.test.ts` (the expected file list), `.claude/skills/fetch-facts/SKILL.md` (if it names the two files)
+- Rename (git mv, content untouched): `data/raw/AVGO/0001730168-26-000080/bigdata-transcript.md` → `bigdata-transcript.json`, `bigdata-headlines.md` → `bigdata-headlines.json`
 - Test: `lib/facts/map/context.test.ts`
 
 **Interfaces:**
-- Consumes: `extractSections` (returns `{ mda: CappedSection | null; riskFactors: CappedSection | null }`), `htmlToText`, `capAtSentence`, `readRawText`.
+- Consumes: `extractSections` (returns `{ mda: CappedSection | null; riskFactors: CappedSection | null }`), `htmlToText`, `capAtSentence` from `lib/edgar/filing-text`; `readRawText`, `readRawJson`, `section`, `str` from `lib/facts/raw`.
 - Produces: `mapContext(dir, filing: { form; url; filedDate }, capturedAt, description: Excerpt) → FactPack["context"]`; `PROVENANCE`.
 
-- [ ] **Step 1: Write the failing test**
+**Captured shape (verbatim from the AVGO capture, first result of each file):**
+```jsonc
+// bigdata-headlines.json — 14 results
+{ "results": [ { "id": "B2A63DCA0F4374F148907C96C83CBB57", "headline": "What Is Going on With Broadcom Stock on Tuesday?",
+                 "timestamp": "2026-08-04T17:39:17", "source": { "name": "Benzinga" },
+                 "chunks": [ { "cnum": 1, "text": "Broadcom Inc. (NASDAQ:AVGO) stock gained by more than 4% on Tuesday …" }, … ],
+                 "url": "https://app.bigdata.com/documents/B2A63DCA0F4374F148907C96C83CBB57?cnum=1&cnum=3" }, … ],
+  "metadata": { … }, "audit": { … } }
+// bigdata-transcript.json — 2 results, 8 chunks in the first
+{ "results": [ { "headline": "Broadcom Inc: Q3 2026 Earnings Call on Sep 2, 2026 - Transcript", "timestamp": "2026-09-02T21:00:00",
+                 "source": { "name": "Quartr Transcripts" }, "chunks": [ { "cnum": 11, "text": "In Q4, we forecast non-AI semiconductor revenue …" }, … ],
+                 "url": "https://app.bigdata.com/documents/EA18C42CD71533FFBD9B9301B6401E92" }, … ] }
+```
 
+- [ ] **Step 1: Rename the two raw files and update the manifest**
+
+```bash
+git mv data/raw/AVGO/0001730168-26-000080/bigdata-transcript.md data/raw/AVGO/0001730168-26-000080/bigdata-transcript.json
+git mv data/raw/AVGO/0001730168-26-000080/bigdata-headlines.md  data/raw/AVGO/0001730168-26-000080/bigdata-headlines.json
+```
+In `lib/facts/manifest.ts` change the two `file:` values to `"bigdata-transcript.json"` and `"bigdata-headlines.json"`. In `lib/facts/manifest.test.ts` change the expected list to match (`"bigdata-headlines.json"`, `"bigdata-transcript.json"` — keep it sorted). In `.claude/skills/fetch-facts/SKILL.md`, if either `.md` name appears, change it; add to Rules: "`bigdata_search` responses are JSON too; save the JSON text exactly as returned." Run `npx vitest run lib/facts/manifest.test.ts` and `npm run facts:manifest -- AVGO 0001730168-26-000080 --check` → all 12 present.
+
+- [ ] **Step 2: Write the failing test**
+
+`lib/facts/map/context.test.ts`:
 ```ts
 import { describe, it, expect } from "vitest";
 import { mapContext } from "@/lib/facts/map/context";
@@ -1770,30 +1797,60 @@ const filing = { form: "10-Q" as const, url: "https://www.sec.gov/Archives/edgar
 const desc = { text: "Broadcom designs chips.", source: "bigdata:company_tearsheet", asOf: "2026-09-11" };
 
 describe("mapContext on the AVGO capture", () => {
-  const c = mapContext(DIR, filing, "2026-09-12T00:00:00Z", desc);
+  const c = mapContext(DIR, filing, "2026-09-13T03:18:05Z", desc);
   it("carries capped, sourced filing excerpts with their real truncation flags", () => {
     expect(c.mdaExcerpt).toMatchObject({ source: "edgar:10-Q", url: filing.url, asOf: "2026-09-10", truncated: true });
     expect(c.mdaExcerpt!.text.length).toBeLessThanOrEqual(16000);
     expect(c.mdaExcerpt!.text.toLowerCase()).toContain("revenue");
+    expect(c.riskFactorsExcerpt).toMatchObject({ source: "edgar:10-Q", truncated: true });
     expect(c.riskFactorsExcerpt!.text.length).toBeLessThanOrEqual(8000);
   });
-  it("carries transcript highlights and at most ten headlines from Bigdata", () => {
-    expect(c.transcriptHighlights?.source).toBe("bigdata:search");
-    expect(c.headlines.length).toBeLessThanOrEqual(10);
-    for (const h of c.headlines) expect(h.text.length).toBeGreaterThan(10);
+  it("joins the transcript chunks into one capped, sourced excerpt", () => {
+    const t = c.transcriptHighlights!;
+    expect(t.source).toBe("bigdata:Quartr Transcripts");
+    expect(t.url).toMatch(/^https:\/\/app\.bigdata\.com\/documents\//);
+    expect(t.asOf).toBe("2026-09-02");
+    expect(t.text.length).toBeGreaterThan(1000);
+    expect(t.text.length).toBeLessThanOrEqual(8000);
+    expect(t.text).toContain("infrastructure software");
   });
-  it("passes the description through", () => { expect(c.description).toEqual(desc); });
+  it("carries the ten newest-ranked headlines with publisher, date, and link", () => {
+    expect(c.headlines).toHaveLength(10);
+    expect(c.headlines[0]).toEqual({
+      text: "What Is Going on With Broadcom Stock on Tuesday?", source: "bigdata:Benzinga", asOf: "2026-08-04",
+      url: "https://app.bigdata.com/documents/B2A63DCA0F4374F148907C96C83CBB57?cnum=1&cnum=3",
+    });
+    for (const h of c.headlines) { expect(h.text.length).toBeGreaterThan(10); expect(h.asOf).toMatch(/^\d{4}-\d{2}-\d{2}$/); }
+  });
+  it("passes the description through and tolerates a missing search capture", () => {
+    expect(c.description).toEqual(desc);
+    const bare = mapContext("lib/facts/map/__fixtures__/context-bare", filing, "2026-09-13T03:18:05Z", desc);
+    expect(bare.headlines).toEqual([]);
+    expect(bare.transcriptHighlights).toBeNull();
+  });
 });
 ```
+Create `lib/facts/map/__fixtures__/context-bare/edgar-primary.html` containing exactly:
+```html
+<html><body><p>Item 2. Management's Discussion and Analysis of Financial Condition and Results of Operations</p><p>Revenue was flat. Revenue was flat. Revenue was flat. Revenue was flat. Revenue was flat. Revenue was flat. Revenue was flat. Revenue was flat. Revenue was flat. Revenue was flat. Revenue was flat. Revenue was flat. Revenue was flat. Revenue was flat.</p><p>Item 3. Quantitative and Qualitative Disclosures About Market Risk</p></body></html>
+```
+(The "bare" directory has no search captures, so both Bigdata fields must degrade, not throw. If `extractSections` returns `null` for this stub's MD&A that is fine — the test does not assert on it.)
 
-- [ ] **Step 2: Run to verify it fails** — module resolution.
+- [ ] **Step 3: Run to verify it fails** — module resolution.
 
-- [ ] **Step 3: Implement**
+- [ ] **Step 4: Implement**
 
+`lib/facts/map/context.ts`:
 ```ts
+/**
+ * context.ts — the prose half of the FactPack: filing excerpts and Bigdata context.
+ * -----------------------------------------------------------------------------
+ * Excerpts are bounded and sourced; nothing here is a number. The two Bigdata
+ * search captures are optional — a pack without them is still valid.
+ */
 import { existsSync } from "node:fs";
 import { join } from "node:path";
-import { readRawText } from "../raw";
+import { readRawJson, readRawText, section, str, type Rec } from "../raw";
 import { htmlToText, extractSections, capAtSentence, type CappedSection } from "../../edgar/filing-text";
 import type { Excerpt, FactPack } from "../schema";
 
@@ -1804,39 +1861,63 @@ export const PROVENANCE = [
   { field: "context.headlines", endpoint: "bigdata_search" },
 ];
 
-const optionalText = (dir: string, file: string) => (existsSync(join(dir, file)) ? readRawText(dir, file) : null);
+export const HEADLINE_LIMIT = 10;
 
-/** Bigdata search results are Markdown; take bullet or numbered lines as headlines. */
-function headlinesFrom(md: string | null, asOf: string): Excerpt[] {
-  if (!md) return [];
-  return md.split("\n").map((l) => l.trim())
-    .filter((l) => /^([-*•]|\d+[.)])\s+/.test(l))
-    .map((l) => l.replace(/^([-*•]|\d+[.)])\s+/, "").replace(/\*\*/g, "").trim())
-    .filter((l) => l.length > 10)
-    .slice(0, 10)
-    .map((text) => ({ text, source: "bigdata:search", asOf }));
+interface SearchResult { headline?: string; timestamp?: string; source?: { name?: string }; chunks?: { cnum?: number; text?: string }[]; url?: string }
+
+/** bigdata_search returns { results: [...] }; an absent file means the capture skipped it. */
+function searchResults(dir: string, file: string): SearchResult[] {
+  if (!existsSync(join(dir, file))) return [];
+  return section<SearchResult[]>(readRawJson(dir, file), ["results"], file);
 }
 
-export function mapContext(dir: string, filing: { form: "10-Q" | "10-K"; url: string; filedDate: string }, capturedAt: string, description: Excerpt): FactPack["context"] {
+const sourceOf = (r: SearchResult) => `bigdata:${r.source?.name?.trim() || "search"}`;
+const dayOf = (r: SearchResult, fallback: string) => (r.timestamp ?? fallback).slice(0, 10);
+
+function headlinesFrom(results: SearchResult[], fallbackDay: string): Excerpt[] {
+  return results
+    .filter((r) => typeof r.headline === "string" && r.headline.trim().length > 10)
+    .slice(0, HEADLINE_LIMIT)
+    .map((r) => ({ text: r.headline!.trim(), source: sourceOf(r), asOf: dayOf(r, fallbackDay), ...(r.url ? { url: r.url } : {}) }));
+}
+
+/** Concatenate every chunk of every transcript result, in rank then chunk order, then cap at a sentence. */
+function transcriptFrom(results: SearchResult[], fallbackDay: string): Excerpt | null {
+  const first = results[0];
+  if (!first) return null;
+  const text = results
+    .flatMap((r) => [...(r.chunks ?? [])].sort((a, b) => (a.cnum ?? 0) - (b.cnum ?? 0)).map((c) => c.text?.trim() ?? ""))
+    .filter(Boolean)
+    .join("\n\n");
+  if (!text) return null;
+  const capped = capAtSentence(text);
+  return { text: capped.text, source: sourceOf(first), asOf: dayOf(first, fallbackDay), truncated: capped.truncated, ...(first.url ? { url: first.url } : {}) };
+}
+
+export function mapContext(
+  dir: string,
+  filing: { form: "10-Q" | "10-K"; url: string; filedDate: string },
+  capturedAt: string,
+  description: Excerpt,
+): FactPack["context"] {
   const { mda, riskFactors } = extractSections(htmlToText(readRawText(dir, "edgar-primary.html")), filing.form);
   const edgar = (s: CappedSection | null): Excerpt | null =>
     s ? { text: s.text, source: `edgar:${filing.form}`, url: filing.url, asOf: filing.filedDate, truncated: s.truncated } : null;
-  const asOf = capturedAt.slice(0, 10);
-  const transcript = optionalText(dir, "bigdata-transcript.md");
-  const t = transcript ? capAtSentence(transcript) : null;
+  const day = capturedAt.slice(0, 10);
   return {
     description,
     mdaExcerpt: edgar(mda),
     riskFactorsExcerpt: edgar(riskFactors),
-    transcriptHighlights: t ? { text: t.text, source: "bigdata:search", asOf, truncated: t.truncated } : null,
-    headlines: headlinesFrom(optionalText(dir, "bigdata-headlines.md"), asOf),
+    transcriptHighlights: transcriptFrom(searchResults(dir, "bigdata-transcript.json"), day),
+    headlines: headlinesFrom(searchResults(dir, "bigdata-headlines.json"), day),
   };
 }
 ```
+(`Rec` and `str` are imported only if you use them; drop unused imports so ESLint stays clean.)
 
-- [ ] **Step 4: Run to verify it passes** — 3 passing. If `headlines` is empty because the Markdown uses another list marker, print the first twenty lines and extend the regex to that marker only.
+- [ ] **Step 5: Run to verify it passes** — `npx vitest run lib/facts/map/context.test.ts` → 4 passing. If the transcript excerpt does not contain "infrastructure software", print the first 300 characters of the joined text and report — do not change the assertion to whatever is there.
 
-- [ ] **Step 5: Commit** — `git add lib/facts && git commit -m "feat: map filing excerpts and Bigdata context into the FactPack"`
+- [ ] **Step 6: Commit** — `git add -A lib/facts .claude data/raw && git commit -m "feat: map filing excerpts and Bigdata search context into the FactPack"`
 
 ---
 
