@@ -79,6 +79,20 @@ describe("the allowed index on the AVGO FactPack", () => {
   });
 });
 
+describe("the press release is indexed for grounding (ORCL pack)", () => {
+  const orclPack = FactPack.parse(JSON.parse(readFileSync("data/facts/ORCL/0001193125-26-389274.json", "utf8")));
+  it("accepts a figure that appears only in the press-release excerpt (RPO, quoted nowhere else)", () => {
+    expect(orclPack.context.pressRelease?.text).toContain("$664 billion");
+    const index = buildAllowedIndex(orclPack, []);
+    expect(checkGrounding({ p: "RPO grew to $664 billion" }, index)).toEqual([]);
+  });
+  it("rejects that same figure when the pack has no press release", () => {
+    const noPressRelease = { ...orclPack, context: { ...orclPack.context, pressRelease: null } };
+    const index = buildAllowedIndex(noPressRelease, []);
+    expect(checkGrounding({ p: "RPO grew to $664 billion" }, index)).toHaveLength(1);
+  });
+});
+
 describe("stringLeaves", () => {
   it("walks nested objects and arrays with dotted, indexed paths", () => {
     expect(stringLeaves({ a: { b: ["x", "y"] }, c: 1, d: "z" })).toEqual([

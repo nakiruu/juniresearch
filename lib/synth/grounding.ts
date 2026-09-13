@@ -97,7 +97,7 @@ export function buildAllowedIndex(pack: FactPack, extraText: string[]): AllowedI
     if (Math.abs(n) < 50) index.add(n * 100);            // ratios as percentages
   }
   const c = pack.context;
-  const texts = [c.description.text, c.mdaExcerpt?.text, c.riskFactorsExcerpt?.text, c.transcriptHighlights?.text,
+  const texts = [c.description.text, c.mdaExcerpt?.text, c.riskFactorsExcerpt?.text, c.pressRelease?.text, c.transcriptHighlights?.text,
                  ...c.headlines.map((h) => h.text), ...extraText].filter((t): t is string => typeof t === "string");
   for (const t of texts) for (const tok of numericTokens(t)) index.addToken(tok);
   return index;
