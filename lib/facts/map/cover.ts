@@ -1,5 +1,5 @@
 import { readRawText } from "../raw";
-import { htmlToText, extractCoverShares } from "@/lib/edgar/filing-text";
+import { htmlToText, extractCoverShares } from "../../edgar/filing-text";
 import type { FactPack } from "../schema";
 
 const FILE = "edgar-primary.html";

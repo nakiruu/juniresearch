@@ -33,4 +33,8 @@ describe("buildFactPack on the ORCL Q1 FY27 10-Q capture", () => {
 describe("buildFactPack on the ORCL FY26 10-K capture", () => {
   const pack = buildFactPack("data/raw/ORCL/0001193125-26-277521");
   it("produces a pack that parses and validates", () => { expect(() => FactPack.parse(pack)).not.toThrow(); });
+  it("uses the cover-page share count from beyond the 30,000-character head window", () => {
+    expect(pack.quote.sharesSource).toBe("cover");
+    expect(pack.quote.sharesOutstanding).toBe(2880471000);
+  });
 });

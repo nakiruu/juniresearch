@@ -8,7 +8,10 @@ describe("mapCover", () => {
   });
 
   it.skipIf(!existsSync("data/raw/AVGO/0001730168-26-000080/edgar-primary.html"))("records what Broadcom's cover yields", () => {
-    const n = mapCover("data/raw/AVGO/0001730168-26-000080").sharesOutstanding;
-    expect(n === null || n > 4e9).toBe(true); // calibration: report the actual value
+    expect(mapCover("data/raw/AVGO/0001730168-26-000080").sharesOutstanding).toBe(4773629865);
+  });
+
+  it.skipIf(!existsSync("data/raw/ORCL/0001193125-26-277521/edgar-primary.html"))("reads Oracle's FY26 10-K cover past the 30,000-character head window", () => {
+    expect(mapCover("data/raw/ORCL/0001193125-26-277521").sharesOutstanding).toBe(2880471000);
   });
 });

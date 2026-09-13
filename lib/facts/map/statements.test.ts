@@ -45,9 +45,9 @@ describe("mapStatements on the AVGO capture", () => {
     expect(s.ttm.grossMargin).toBeGreaterThan(0.6);
     expect(s.ttm.grossMargin).toBeLessThan(0.7);
   });
-  it("reads the buybacks and dividends rows (values or null) and a non-null TTM current ratio", () => {
-    expect(row("cashflow", "buybacks")).toBeDefined();
-    expect(row("cashflow", "dividends")).toBeDefined();
+  it("reads FY25 buybacks and dividends and a non-null TTM current ratio", () => {
+    expect(near(row("cashflow", "buybacks").values[4], -6310000000)).toBe(true);
+    expect(near(row("cashflow", "dividends").values[4], -11142000000)).toBe(true);
     expect(s.ttm.currentRatio).not.toBeNull();
   });
 });

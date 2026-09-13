@@ -22,8 +22,16 @@ const COVER_RE = [
 
 export function extractCoverShares(text: string): number | null {
   const head = text.slice(0, 30000);
-  for (const re of COVER_RE) {
-    const m = re.exec(head);
+  // The strict "outstanding as of <Month> <d>, <yyyy> ... N" pattern is specific enough to run over the
+  // whole document: a 10-K's cover sentence can sit well past the head window, behind an XBRL/exhibit
+  // preamble a 10-Q does not have. The two looser patterns stay scoped to the head window.
+  const candidates = [
+    { re: COVER_RE[0], scope: text },
+    { re: COVER_RE[1], scope: head },
+    { re: COVER_RE[2], scope: head },
+  ];
+  for (const { re, scope } of candidates) {
+    const m = re.exec(scope);
     if (m) {
       const n = Number(m[1].replace(/,/g, ""));
       if (n >= 1e8) return n;

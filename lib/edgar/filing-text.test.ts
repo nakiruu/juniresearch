@@ -121,7 +121,25 @@ describe("extractCoverShares", () => {
   it("reads the cover-page share count in both common phrasings", () => {
     expect(extractCoverShares("The number of shares of registrant's common stock outstanding as of September 7, 2026 was: 3,023,736,000")).toBe(3023736000);
     expect(extractCoverShares("As of August 29, 2026, the registrant had 4,756,442,000 shares of common stock outstanding.")).toBe(4756442000);
-    expect(extractCoverShares("There were 1,200,000 options outstanding")).toBeNull(); // below the floor
+    // Matches the strict "outstanding as of <date> ... N" pattern but the count is below the 1e8 floor —
+    // this is what the floor rejects, not a failure to match any pattern.
+    expect(extractCoverShares("... shares of common stock outstanding as of June 12, 2026: 12,000,000")).toBeNull();
     expect(extractCoverShares("no cover here")).toBeNull();
+  });
+
+  it("finds the strict pattern beyond the 30,000-character head window (a 10-K's XBRL/exhibit preamble)", () => {
+    const preamble = "x".repeat(35000);
+    const text = `${preamble}\nNumber of shares of common stock outstanding as of June 12, 2026: 2,880,471,000 .`;
+    expect(extractCoverShares(text)).toBe(2880471000);
+  });
+});
+
+describe("extractCoverShares on the ORCL FY26 10-K (real filing)", () => {
+  const orclPath = "data/raw/ORCL/0001193125-26-277521/edgar-primary.html";
+
+  it.skipIf(!existsSync(orclPath))("finds the cover-page share count past the 30,000-character head window", () => {
+    const orclHtml = readFileSync(orclPath, "utf8");
+    const orclText = htmlToText(orclHtml);
+    expect(extractCoverShares(orclText)).toBe(2880471000);
   });
 });
