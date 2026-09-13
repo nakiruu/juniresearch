@@ -17,8 +17,8 @@ If the accession is unknown, run `npm run detect` first and use what it prints.
 
 ## Steps
 
-1. `npm run facts:edgar -- <TICKER> <ACCESSION>` — creates the raw directory with
-   `edgar-filing.json` and the primary document. Read the printed directory path.
+1. `npm run facts:prepare -- <TICKER> <ACCESSION>` — creates the raw directory with
+   `edgar-filing.json`, the primary document, and `yahoo-history.json`. Read the printed directory path.
 2. Write `capture.json` in that directory: `{ "capturedAt": "<now as ISO-8601 UTC>" }`.
 3. `npm run facts:manifest -- <TICKER> <ACCESSION>` — prints `{ dir, phase2Ready, calls[] }`.
 4. For every entry in `calls`:
@@ -29,7 +29,7 @@ If the accession is unknown, run `npm run detect` first and use what it prints.
      Do not pretty-print, wrap, annotate, or trim.
    - If the call errors, save the error text to `<dir>/<file>.error.txt` and continue.
 5. Run step 3 again. If `phase2Ready` is now true, the printed `calls` include the
-   per-peer and tearsheet entries — execute those the same way.
+   three tearsheet entries — execute those the same way.
 6. `npm run facts:manifest -- <TICKER> <ACCESSION> --check` — must print
    "All N raw files present". If it lists missing files, retry those calls once;
    if they still fail, stop and report which.
@@ -42,3 +42,4 @@ If the accession is unknown, run `npm run detect` first and use what it prints.
 - You do not decide what a number means: the mappers do.
 - You never write a number into any file yourself. If a tool returns nothing
   useful, that is a finding to report, not a gap to fill.
+- Tearsheet responses are JSON objects; save the JSON text exactly as returned.

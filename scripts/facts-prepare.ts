@@ -3,10 +3,12 @@ import { join } from "node:path";
 import { fetchSubmissions } from "../lib/edgar/submissions";
 import { fetchPrimaryDocument } from "../lib/edgar/filing-text";
 import type { WatchEntry } from "../lib/edgar/detect";
+import { fetchDailyCloses } from "../lib/prices/yahoo";
+import { isoMinusDays } from "../lib/facts/manifest";
 import { requireContact } from "./_env";
 
 const [tickerArg, accession] = process.argv.slice(2);
-if (!tickerArg || !accession) { console.error("usage: npm run facts:edgar -- <TICKER> <ACCESSION>"); process.exit(2); }
+if (!tickerArg || !accession) { console.error("usage: npm run facts:prepare -- <TICKER> <ACCESSION>"); process.exit(2); }
 const ticker = tickerArg.toUpperCase();
 const contact = requireContact();
 const watch = (JSON.parse(readFileSync("data/edgar/watchlist.json", "utf8")) as WatchEntry[]).find((w) => w.ticker === ticker);
@@ -17,8 +19,11 @@ if (!filing) { console.error(`Accession ${accession} not found among ${ticker}'s
 
 const dir = join("data", "raw", ticker, accession);
 mkdirSync(dir, { recursive: true });
-const company = (JSON.parse(readFileSync("lib/edgar/__fixtures__/company-tickers-slice.json", "utf8")) as Record<string, { ticker: string; title: string }>);
-const title = Object.values(company).find((c) => c.ticker === ticker)?.title ?? ticker;
-writeFileSync(join(dir, "edgar-filing.json"), JSON.stringify({ ...filing, ticker, cik: watch.cik, company: title }, null, 2) + "\n");
+const slice = JSON.parse(readFileSync("lib/edgar/__fixtures__/company-tickers-slice.json", "utf8")) as Record<string, { ticker: string; title: string }>;
+const company = Object.values(slice).find((c) => c.ticker === ticker)?.title ?? ticker;
+
+writeFileSync(join(dir, "edgar-filing.json"), JSON.stringify({ ...filing, ticker, cik: watch.cik, company }, null, 2) + "\n");
 if (!existsSync(join(dir, "edgar-primary.html"))) writeFileSync(join(dir, "edgar-primary.html"), await fetchPrimaryDocument(filing.url, contact));
-console.log(`Wrote ${dir}/edgar-filing.json${existsSync(join(dir, "edgar-primary.html")) ? " (primary document present)" : ""}`);
+const today = new Date().toISOString().slice(0, 10);
+writeFileSync(join(dir, "yahoo-history.json"), await fetchDailyCloses(ticker, isoMinusDays(filing.periodEnd, 45), today));
+console.log(`Prepared ${dir}: edgar-filing.json, edgar-primary.html, yahoo-history.json (${isoMinusDays(filing.periodEnd, 45)} → ${today})`);

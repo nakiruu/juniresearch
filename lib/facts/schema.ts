@@ -87,7 +87,7 @@ export const FactPack = z.object({
   }),
   provenance: z.array(z.object({
     field: z.string(),
-    source: z.enum(["fmp", "bigdata", "edgar"]),
+    source: z.enum(["fmp", "bigdata", "edgar", "yahoo"]),
     endpoint: z.string(),
     capturedAt: z.string(),
   })),

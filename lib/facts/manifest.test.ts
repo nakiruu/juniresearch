@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { MANIFEST, renderManifest, requiredRawFiles, PEER_LIMIT } from "@/lib/facts/manifest";
+import { MANIFEST, renderManifest, requiredRawFiles, CODE_FETCHED_FILES, isoMinusDays } from "@/lib/facts/manifest";
 
 const ctx = { ticker: "AVGO", company: "Broadcom Inc.", periodEnd: "2026-08-02", today: "2026-09-12" };
 
@@ -9,47 +9,52 @@ describe("MANIFEST", () => {
     expect(new Set(names).size).toBe(names.length);
     expect(new Set(files).size).toBe(files.length);
   });
-  it("covers every raw file the spec lists", () => {
-    for (const f of ["fmp-profile.json", "fmp-quote.json", "fmp-income-annual.json", "fmp-balance-annual.json",
-      "fmp-cashflow-annual.json", "fmp-income-quarter.json", "fmp-key-metrics-ttm.json", "fmp-ratios-ttm.json",
-      "fmp-segments-product.json", "fmp-segments-geo.json", "fmp-target-consensus.json", "fmp-target-summary.json",
-      "fmp-grades-summary.json", "fmp-estimates.json", "fmp-history.json", "fmp-peers.json",
-      "bigdata-entity.json", "bigdata-tearsheet.md", "bigdata-transcript.md", "bigdata-headlines.md"]) {
-      expect(MANIFEST.map((m) => m.file)).toContain(f);
-    }
+  it("lists exactly the eight vendor captures of the revised design", () => {
+    expect(MANIFEST.map((m) => m.file).sort()).toEqual([
+      "bigdata-entity.json", "bigdata-headlines.md", "bigdata-statements-annual.json", "bigdata-statements-quarter.json",
+      "bigdata-tearsheet-annual.json", "bigdata-transcript.md", "fmp-peers.json", "fmp-profile.json",
+    ]);
+  });
+  it("uses only FMP endpoints the connector plan allows", () => {
+    const fmpEndpoints = MANIFEST.filter((m) => m.server === "fmp").map((m) => (m.params(ctx) as { endpoint: string }).endpoint);
+    expect(fmpEndpoints.sort()).toEqual(["peers", "profile-symbol"]);
+    expect(MANIFEST.filter((m) => m.server === "fmp").every((m) => m.tool === "company")).toBe(true);
   });
 });
 
 describe("renderManifest", () => {
-  it("renders phase 1 with the history window from periodEnd − 45 days to today", () => {
-    const calls = renderManifest({ ...ctx });
-    const hist = calls.find((c) => c.file === "fmp-history.json")!;
-    expect(hist.params).toMatchObject({ endpoint: "historical-price-eod-light", symbol: "AVGO", from_date: "2026-06-18", to_date: "2026-09-12" });
-    expect(calls.some((c) => c.file.startsWith("fmp-peer-"))).toBe(false);
+  it("renders only phase 1 until the Bigdata entity is known", () => {
+    const calls = renderManifest(ctx);
+    expect(calls.map((c) => c.name).sort()).toEqual(["entity", "headlines", "peers", "profile", "transcript"]);
   });
-  it("renders per-peer calls and the tearsheet once peers and entity are known", () => {
-    const calls = renderManifest({ ...ctx, peers: ["NVDA", "AMD", "QCOM", "MRVL", "INTC"], rpEntityId: "ABC123", companyType: "Public" });
-    const peerCalls = calls.filter((c) => c.file.startsWith("fmp-peer-"));
-    expect(peerCalls.map((c) => c.file)).toEqual(["fmp-peer-NVDA-ttm.json", "fmp-peer-AMD-ttm.json", "fmp-peer-QCOM-ttm.json", "fmp-peer-MRVL-ttm.json"]);
-    expect(peerCalls).toHaveLength(PEER_LIMIT);
-    expect(calls.find((c) => c.file === "bigdata-tearsheet.md")!.params).toMatchObject({ rp_entity_id: "ABC123", company_type: "Public" });
+  it("renders the three tearsheets once the entity is known", () => {
+    const calls = renderManifest({ ...ctx, rpEntityId: "09DE1F", companyType: "Public" });
+    const sheets = calls.filter((c) => c.tool === "bigdata_company_tearsheet");
+    expect(sheets).toHaveLength(3);
+    expect(sheets.find((c) => c.file === "bigdata-statements-quarter.json")!.params)
+      .toMatchObject({ rp_entity_id: "09DE1F", company_type: "Public", interval: "quarter", sections: ["financial_statements"] });
+    expect(sheets.find((c) => c.file === "bigdata-tearsheet-annual.json")!.params)
+      .toMatchObject({ interval: "annual", sections: expect.arrayContaining(["company_overview", "analyst_ratings", "analyst_estimates", "key_metrics", "financial_ratios", "revenue_segmentation"]) });
   });
   it("renders bigdata_search calls in the tool's request envelope", () => {
-    const calls = renderManifest({ ...ctx });
     for (const name of ["transcript", "headlines"]) {
-      const c = calls.find((x) => x.name === name)!;
-      expect(c.params).toMatchObject({
-        request: { search_mode: "smart", query: { text: expect.stringContaining("Broadcom Inc."), max_chunks: 20 } },
-      });
+      const c = renderManifest(ctx).find((x) => x.name === name)!;
+      expect(c.params).toMatchObject({ request: { search_mode: "smart", query: { text: expect.stringContaining("Broadcom Inc."), max_chunks: 20 } } });
     }
   });
 });
 
 describe("requiredRawFiles", () => {
-  it("lists capture.json, every phase-1 file, and phase-2 files when peers are known", () => {
-    const files = requiredRawFiles({ ...ctx, peers: ["NVDA"], rpEntityId: "X", companyType: "Public" });
+  it("includes capture.json and every code-fetched file", () => {
+    const files = requiredRawFiles({ ...ctx, rpEntityId: "X", companyType: "Public" });
     expect(files).toContain("capture.json");
-    expect(files).toContain("fmp-quote.json");
-    expect(files).toContain("fmp-peer-NVDA-ttm.json");
+    for (const f of CODE_FETCHED_FILES) expect(files).toContain(f);
+    expect(files).toHaveLength(1 + CODE_FETCHED_FILES.length + 8);
+  });
+});
+
+describe("isoMinusDays", () => {
+  it("subtracts calendar days in UTC", () => {
+    expect(isoMinusDays("2026-08-02", 45)).toBe("2026-06-18");
   });
 });
