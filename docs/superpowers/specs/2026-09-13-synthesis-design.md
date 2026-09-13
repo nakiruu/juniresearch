@@ -42,7 +42,7 @@ data/facts/<T>/<acc>.json ──► synth:prompt ──► data/judgment/<T>/<ac
 data/facts/<T>/<acc>.json ──► synth:build ── mergeReport(projectReportFacts, judgment, desk, buildDate)
                                                        ├──► Report.parse
                                                        ├──► validateReport        (subsystem 1's rules)
-                                                       └──► validateJudgment      (rating bands, grounding, Markdown lint, segments)
+                                                       └──► validateJudgment      (rating envelope, grounding, Markdown lint, segments)
                                         pass ──► data/<ticker>.json          fail ──► data/judgment/<T>/<acc>.errors.txt (git-ignored)
 ```
 
