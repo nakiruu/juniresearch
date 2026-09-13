@@ -2,6 +2,8 @@ import { readRawJson, num, str, section, type Rec } from "../raw";
 import { PEER_LIMIT } from "../manifest";
 import type { FactPack } from "../schema";
 const FILE = "bigdata-tearsheet-annual.json";
+const PEERS_FILE = "fmp-peers.json";
+export const READS = [FILE, PEERS_FILE] as const;
 export const PROVENANCE = [
   { field: "analysts", endpoint: "bigdata_company_tearsheet.analyst_data" },
   { field: "estimates", endpoint: "bigdata_company_tearsheet.estimates" },
@@ -30,7 +32,7 @@ export function mapAnalysts(dir: string, latestFY: number): { analysts: FactPack
   const est = (fy: number) => ({ label: `FY${String(fy).slice(2)}E`, revenue: mean("SALES", fy), eps: mean("EPS", fy) });
   const estimates: FactPack["estimates"] = { nextFY: est(latestFY + 1), followingFY: est(latestFY + 2) };
 
-  const peersRaw = readRawJson(dir, "fmp-peers.json") as Rec | Rec[];
+  const peersRaw = readRawJson(dir, PEERS_FILE) as Rec | Rec[];
   const list: unknown[] = Array.isArray(peersRaw) ? peersRaw : ((peersRaw.data ?? peersRaw.peersList ?? []) as unknown[]);
   const peers: FactPack["peers"] = list
     .map((p) => (typeof p === "string" ? p : (p as Rec).symbol as string))

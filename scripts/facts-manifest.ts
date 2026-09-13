@@ -21,6 +21,8 @@ if (existsSync(entityFile)) {
 }
 
 if (flag === "--check") {
+  const phase2Ready = Boolean(ctx.rpEntityId && ctx.companyType);
+  if (!phase2Ready) { console.error(`Phase 2 unresolved for ${dir}: bigdata-entity.json is missing or yields no id — cannot check the full raw file set.`); process.exit(1); }
   const missing = requiredRawFiles(ctx).filter((f) => !existsSync(join(dir, f)));
   if (missing.length) { console.error("Missing raw files:\n  " + missing.join("\n  ")); process.exit(1); }
   console.log(`All ${requiredRawFiles(ctx).length} raw files present in ${dir}`);

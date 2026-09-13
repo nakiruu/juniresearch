@@ -13,9 +13,12 @@ import * as context from "./map/context";
 
 type Source = "fmp" | "bigdata" | "edgar" | "yahoo";
 
+const EDGAR_FILING_FILE = "edgar-filing.json";
+export const READS = [RAW_CAPTURE_META, EDGAR_FILING_FILE] as const;
+
 export function buildFactPack(dir: string): FactPack {
   const meta = readRawJson(dir, RAW_CAPTURE_META) as { capturedAt: string };
-  const filing = readRawJson(dir, "edgar-filing.json") as {
+  const filing = readRawJson(dir, EDGAR_FILING_FILE) as {
     form: "10-Q" | "10-K"; accession: string; filedDate: string; periodEnd: string; url: string; ticker: string; cik: number; company: string };
   if (filing.accession !== basename(dir)) throw new Error(`edgar-filing.json accession ${filing.accession} ≠ directory ${basename(dir)}`);
 

@@ -10,7 +10,7 @@
 
 **Spec:** `docs/superpowers/specs/2026-09-12-fact-pipeline-design.md`
 
-> **Revision 2026-09-12:** Tasks 6–11 were rewritten after the first capture showed the FMP connector's plan gates most endpoints. Numbers now come from Bigdata.com tearsheets, closes from Yahoo, profile/peers from FMP `company`. See the spec's "Revision 2026-09-12" section (decision 8).
+> **Revision 2026-09-12:** Tasks 6–11 were rewritten after the first capture showed the FMP connector's plan gates most endpoints. Numbers now come from Bigdata.com tearsheets, closes from Yahoo, peer tickers from FMP `company`. See the spec's "Revision 2026-09-12" section (decision 8).
 
 ## Global Constraints
 

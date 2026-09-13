@@ -10,6 +10,10 @@ import { readRawJson, readRawText, section } from "../raw";
 import { htmlToText, extractSections, capAtSentence, type CappedSection } from "../../edgar/filing-text";
 import type { Excerpt, FactPack } from "../schema";
 
+const EDGAR_PRIMARY_FILE = "edgar-primary.html";
+const TRANSCRIPT_FILE = "bigdata-transcript.json";
+const HEADLINES_FILE = "bigdata-headlines.json";
+export const READS = [EDGAR_PRIMARY_FILE, TRANSCRIPT_FILE, HEADLINES_FILE] as const;
 export const PROVENANCE = [
   { field: "context.mdaExcerpt", endpoint: "edgar primary document" },
   { field: "context.riskFactorsExcerpt", endpoint: "edgar primary document" },
@@ -56,7 +60,7 @@ export function mapContext(
   capturedAt: string,
   description: Excerpt,
 ): FactPack["context"] {
-  const { mda, riskFactors } = extractSections(htmlToText(readRawText(dir, "edgar-primary.html")), filing.form);
+  const { mda, riskFactors } = extractSections(htmlToText(readRawText(dir, EDGAR_PRIMARY_FILE)), filing.form);
   const edgar = (s: CappedSection | null): Excerpt | null =>
     s ? { text: s.text, source: `edgar:${filing.form}`, url: filing.url, asOf: filing.filedDate, truncated: s.truncated } : null;
   const day = capturedAt.slice(0, 10);
@@ -64,7 +68,7 @@ export function mapContext(
     description,
     mdaExcerpt: edgar(mda),
     riskFactorsExcerpt: edgar(riskFactors),
-    transcriptHighlights: transcriptFrom(searchResults(dir, "bigdata-transcript.json"), day),
-    headlines: headlinesFrom(searchResults(dir, "bigdata-headlines.json"), day),
+    transcriptHighlights: transcriptFrom(searchResults(dir, TRANSCRIPT_FILE), day),
+    headlines: headlinesFrom(searchResults(dir, HEADLINES_FILE), day),
   };
 }

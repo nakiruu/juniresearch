@@ -1,6 +1,7 @@
 import { readRawJson, section, type Rec } from "../raw";
 import type { FactPack } from "../schema";
 const FILE = "bigdata-tearsheet-annual.json";
+export const READS = [FILE] as const;
 export const PROVENANCE = [
   { field: "segments", endpoint: "bigdata_company_tearsheet.revenue_segmentation.product" },
   { field: "geoMix", endpoint: "bigdata_company_tearsheet.revenue_segmentation.geographic" },

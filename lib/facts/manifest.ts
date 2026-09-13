@@ -52,7 +52,6 @@ const tearsheet = (name: string, file: string, interval: "annual" | "quarter", s
 });
 
 export const MANIFEST: ManifestEntry[] = [
-  fmp("profile", "fmp-profile.json", "company", (c) => ({ endpoint: "profile-symbol", symbol: c.ticker })),
   fmp("peers", "fmp-peers.json", "company", (c) => ({ endpoint: "peers", symbol: c.ticker })),
   { name: "entity", file: "bigdata-entity.json", server: "bigdata", tool: "find_securities", phase: 1,
     params: (c) => ({ query: c.ticker, security_types: ["COMPANY"] }) },

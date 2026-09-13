@@ -9,15 +9,15 @@ describe("MANIFEST", () => {
     expect(new Set(names).size).toBe(names.length);
     expect(new Set(files).size).toBe(files.length);
   });
-  it("lists exactly the eight vendor captures of the revised design", () => {
+  it("lists exactly the seven vendor captures of the revised design", () => {
     expect(MANIFEST.map((m) => m.file).sort()).toEqual([
       "bigdata-entity.json", "bigdata-headlines.json", "bigdata-statements-annual.json", "bigdata-statements-quarter.json",
-      "bigdata-tearsheet-annual.json", "bigdata-transcript.json", "fmp-peers.json", "fmp-profile.json",
+      "bigdata-tearsheet-annual.json", "bigdata-transcript.json", "fmp-peers.json",
     ]);
   });
   it("uses only FMP endpoints the connector plan allows", () => {
     const fmpEndpoints = MANIFEST.filter((m) => m.server === "fmp").map((m) => (m.params(ctx) as { endpoint: string }).endpoint);
-    expect(fmpEndpoints.sort()).toEqual(["peers", "profile-symbol"]);
+    expect(fmpEndpoints.sort()).toEqual(["peers"]);
     expect(MANIFEST.filter((m) => m.server === "fmp").every((m) => m.tool === "company")).toBe(true);
   });
 });
@@ -25,7 +25,7 @@ describe("MANIFEST", () => {
 describe("renderManifest", () => {
   it("renders only phase 1 until the Bigdata entity is known", () => {
     const calls = renderManifest(ctx);
-    expect(calls.map((c) => c.name).sort()).toEqual(["entity", "headlines", "peers", "profile", "transcript"]);
+    expect(calls.map((c) => c.name).sort()).toEqual(["entity", "headlines", "peers", "transcript"]);
   });
   it("renders the three tearsheets once the entity is known", () => {
     const calls = renderManifest({ ...ctx, rpEntityId: "09DE1F", companyType: "Public" });
@@ -49,7 +49,7 @@ describe("requiredRawFiles", () => {
     const files = requiredRawFiles({ ...ctx, rpEntityId: "X", companyType: "Public" });
     expect(files).toContain("capture.json");
     for (const f of CODE_FETCHED_FILES) expect(files).toContain(f);
-    expect(files).toHaveLength(1 + CODE_FETCHED_FILES.length + 8);
+    expect(files).toHaveLength(1 + CODE_FETCHED_FILES.length + 7);
   });
 });
 
@@ -58,3 +58,12 @@ describe("isoMinusDays", () => {
     expect(isoMinusDays("2026-08-02", 45)).toBe("2026-06-18");
   });
 });
+
+// NOTE: a manifest<->mapper closure test ("every captured file is read by a mapper, and
+// every file a mapper reads is captured") was specified for this group but is not included:
+// `bigdata-entity.json` is captured (phase 1, always rendered) purely to resolve
+// rpEntityId/companyType for phase-2 params (see renderManifest / scripts/facts-manifest.ts)
+// — it is control-flow, not FactPack data, so no mapper's READS legitimately includes it.
+// Adding it to a mapper's READS would be a fabricated read; silently excluding it from the
+// assertion is a design call this fix wave escalates rather than makes unilaterally. See
+// final-fix-report.md, group C, for the options considered.

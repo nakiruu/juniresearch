@@ -354,8 +354,8 @@ session against Broadcom's record:
   fiscal-year-means-filing-year trap and no EBITDA or normalized debt.
 - Stooq sits behind a JavaScript challenge.
 
-**Decision 8 — re-source without new spend.** The manifest becomes eight tool
-calls: FMP `company` for profile and peers; Bigdata `find_securities`, three
+**Decision 8 — re-source without new spend.** The manifest becomes seven tool
+calls: FMP `company` for peers; Bigdata `find_securities`, three
 `bigdata_company_tearsheet` calls (annual: overview, analyst ratings,
 estimates, key metrics, ratios, segmentation; annual `financial_statements`;
 quarterly `financial_statements`), and the two `bigdata_search` calls. Code

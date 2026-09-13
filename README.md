@@ -49,7 +49,7 @@ npm run report:history -- AVGO 0001730168-26-000080 # copies real closes into th
 ```
 
 `EDGAR_CONTACT=<your email>` must be set in `.env.local` (see `.env.example`); SEC requires it.
-Numbers come from Bigdata.com company tearsheets (which proxy FMP data) and profile/peers from FMP `company`, both through the Claude connectors — the
+Numbers come from Bigdata.com company tearsheets (which proxy FMP data) and peer tickers from FMP `company`, both through the Claude connectors — the
 `fetch-facts` skill executes `lib/facts/manifest.ts`; EDGAR and Yahoo are fetched by code. Unattended runs need API keys
 and a REST `FactSource`; see the spec's "FactSource seam".
 

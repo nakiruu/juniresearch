@@ -1,11 +1,12 @@
 import { readRawJson, section } from "../raw";
 import type { HistoryPoint } from "../schema";
+const FILE = "yahoo-history.json";
+export const READS = [FILE] as const;
 export const PROVENANCE = [{ field: "history", endpoint: "yahoo v8 chart (daily close)" }];
 export const HISTORY_DAYS = 30;
 
 /** Yahoo's shape: chart.result[0].timestamp[] (unix seconds) aligned with indicators.quote[0].close[]. */
 export function mapHistory(dir: string, capturedAt: string): HistoryPoint[] {
-  const FILE = "yahoo-history.json";
   const raw = readRawJson(dir, FILE);
   const result = section<unknown[]>(raw, ["chart", "result"], FILE)[0];
   if (!result) throw new Error(`Empty chart.result in ${FILE}`);

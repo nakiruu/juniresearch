@@ -2,6 +2,7 @@ import { readRawJson, num, str, section, type Rec } from "../raw";
 import type { FactPack, Excerpt } from "../schema";
 
 const FILE = "bigdata-tearsheet-annual.json";
+export const READS = [FILE] as const;
 export const PROVENANCE = [
   { field: "quote", endpoint: "bigdata_company_tearsheet.company_overview + price_performance" },
   { field: "quote.sharesOutstanding", endpoint: "derived: market_cap / price" },
