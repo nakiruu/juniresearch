@@ -23,6 +23,9 @@ const eps = (x: number | null) => (x == null ? "—" : usd(x));
 const ratio = (x: number | null, dp = 1) => (x == null ? "—" : pct(x, { dp }));
 
 export function renderFactsBlock(facts: ReportFacts, pack: FactPack): string {
+  // facts.snapshot is SnapshotCellData, Zod's inferred type from report.schema.ts; format.ts is frozen and
+  // declares its own SnapshotCell interface rather than importing that type. The two shapes are structurally
+  // identical, so the cast is safe — it just bridges the schema-inferred type to format.ts's hand-declared one.
   const snap = facts.snapshot.map((c) => `- ${c.label}: ${formatSnapshot(c as SnapshotCell)}`).join("\n");
   const e = pack.estimates, t = pack.ttm, a = facts.analystSentiment, lq = pack.latestQuarter;
   const multiples = facts.sections.valuation.multiplesCompanyColumn.map((m) => `- ${m.label}: ${m.value == null ? "—" : mult(m.value)}`).join("\n");

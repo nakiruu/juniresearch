@@ -10,9 +10,9 @@ import { Report } from "../lib/report.schema";
 import { validateReport, type ValidationIssue } from "../lib/validate";
 
 const args = process.argv.slice(2);
-const [tickerArg, accession] = args.filter((a) => !a.startsWith("--"));
 const dateFlag = args.indexOf("--date");
 const buildDate = dateFlag >= 0 ? args[dateFlag + 1] : new Date().toISOString().slice(0, 10);
+const [tickerArg, accession] = args.filter((a, i) => !a.startsWith("--") && (dateFlag < 0 || i !== dateFlag + 1));
 if (!tickerArg || !accession || !/^\d{4}-\d{2}-\d{2}$/.test(buildDate ?? "")) { console.error("usage: npm run synth:build -- <TICKER> <ACCESSION> [--date YYYY-MM-DD]"); process.exit(2); }
 const ticker = tickerArg.toUpperCase();
 
