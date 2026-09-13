@@ -43,3 +43,4 @@ If the accession is unknown, run `npm run detect` first and use what it prints.
 - You never write a number into any file yourself. If a tool returns nothing
   useful, that is a finding to report, not a gap to fill.
 - Tearsheet responses are JSON objects; save the JSON text exactly as returned.
+- `bigdata_search` responses are JSON too; save the JSON text exactly as returned.

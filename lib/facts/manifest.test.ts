@@ -11,8 +11,8 @@ describe("MANIFEST", () => {
   });
   it("lists exactly the eight vendor captures of the revised design", () => {
     expect(MANIFEST.map((m) => m.file).sort()).toEqual([
-      "bigdata-entity.json", "bigdata-headlines.md", "bigdata-statements-annual.json", "bigdata-statements-quarter.json",
-      "bigdata-tearsheet-annual.json", "bigdata-transcript.md", "fmp-peers.json", "fmp-profile.json",
+      "bigdata-entity.json", "bigdata-headlines.json", "bigdata-statements-annual.json", "bigdata-statements-quarter.json",
+      "bigdata-tearsheet-annual.json", "bigdata-transcript.json", "fmp-peers.json", "fmp-profile.json",
     ]);
   });
   it("uses only FMP endpoints the connector plan allows", () => {

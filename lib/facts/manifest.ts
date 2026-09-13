@@ -59,10 +59,10 @@ export const MANIFEST: ManifestEntry[] = [
   tearsheet("tearsheet-annual", "bigdata-tearsheet-annual.json", "annual", TEARSHEET_SECTIONS_ANNUAL),
   tearsheet("statements-annual", "bigdata-statements-annual.json", "annual", ["financial_statements"]),
   tearsheet("statements-quarter", "bigdata-statements-quarter.json", "quarter", ["financial_statements"]),
-  { name: "transcript", file: "bigdata-transcript.md", server: "bigdata", tool: "bigdata_search", phase: 1,
+  { name: "transcript", file: "bigdata-transcript.json", server: "bigdata", tool: "bigdata_search", phase: 1,
     params: (c) => ({ request: { search_mode: "smart", query: {
       text: `${c.company} latest earnings call key points and management commentary`, max_chunks: 20 } } }) },
-  { name: "headlines", file: "bigdata-headlines.md", server: "bigdata", tool: "bigdata_search", phase: 1,
+  { name: "headlines", file: "bigdata-headlines.json", server: "bigdata", tool: "bigdata_search", phase: 1,
     params: (c) => ({ request: { search_mode: "smart", query: {
       text: `${c.company} news since ${c.periodEnd}`, max_chunks: 20 } } }) },
 ];
