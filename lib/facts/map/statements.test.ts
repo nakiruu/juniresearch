@@ -43,3 +43,12 @@ describe("mapStatements on the AVGO capture", () => {
     expect(s.ttm.grossMargin).toBeLessThan(0.7);
   });
 });
+
+describe("mapStatements without a prior-year quarter", () => {
+  it("reports revenueYoY as null rather than a fabricated zero", () => {
+    const s = mapStatements("lib/facts/map/__fixtures__/no-prior-quarter");
+    expect(s.latestQuarter.label).toBe("Q3'26");
+    expect(s.latestQuarter.revenueYoY).toBeNull();
+    expect(s.latestQuarter.operatingMargin).toBeCloseTo(0.25, 6);
+  });
+});

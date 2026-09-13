@@ -66,7 +66,7 @@ export function mapStatements(dir: string): { statements: FactPack["statements"]
     periodEnd: str(latest, "report_date", QUARTER),
     revenue: rev,
     operatingMargin: num(latest, "operating_income", QUARTER)! / rev,
-    revenueYoY: prior ? rev / num(prior, "revenue", QUARTER)! - 1 : 0,
+    revenueYoY: prior ? rev / num(prior, "revenue", QUARTER)! - 1 : null,
   };
 
   const sheet = readRawJson(dir, SHEET);
