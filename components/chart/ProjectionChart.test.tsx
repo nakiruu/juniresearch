@@ -3,7 +3,7 @@ import { render } from "@testing-library/react";
 import { ProjectionChart } from "@/components/chart/ProjectionChart";
 import { buildChartModel } from "@/components/chart/geometry";
 import { Report } from "@/lib/report.schema";
-import avgo from "@/data/avgo.json";
+import avgo from "@/lib/__fixtures__/avgo-golden.json";
 
 const model = buildChartModel(Report.parse(avgo));
 const renderWide = () => render(<ProjectionChart model={model} layout="wide" />);

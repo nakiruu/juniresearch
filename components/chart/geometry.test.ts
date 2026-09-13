@@ -6,7 +6,7 @@ import {
 } from "@/components/chart/geometry";
 import { Report } from "@/lib/report.schema";
 import type { ChartModel } from "@/components/chart/types";
-import avgo from "@/data/avgo.json";
+import avgo from "@/lib/__fixtures__/avgo-golden.json";
 
 const report = Report.parse(avgo);
 const model = buildChartModel(report);

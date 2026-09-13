@@ -50,3 +50,7 @@ yarn-error.log*
 # isolated worktrees + SDD scratch
 .worktrees/
 .superpowers/
+
+# synthesis loop scratch (prompts are reproducible; error lists are transient)
+data/judgment/**/*.prompt.md
+data/judgment/**/*.errors.txt

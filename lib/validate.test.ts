@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { validateReport, assertValidReport } from "@/lib/validate";
 import { Report } from "@/lib/report.schema";
-import avgo from "@/data/avgo.json";
+import avgo from "@/lib/__fixtures__/avgo-golden.json";
 
 const base = () => Report.parse(structuredClone(avgo));
 

@@ -3,7 +3,7 @@ import { projectReportFacts } from "@/lib/facts/project";
 import { buildFactPack } from "@/lib/facts/build";
 import { formatCell } from "@/lib/format";
 import { Report } from "@/lib/report.schema";
-import avgo from "@/data/avgo.json";
+import avgo from "@/lib/__fixtures__/avgo-golden.json";
 
 const facts = projectReportFacts(buildFactPack("data/raw/AVGO/0001730168-26-000080"));
 const fixture = Report.parse(avgo);

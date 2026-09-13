@@ -6,7 +6,7 @@ import { FinTable } from "@/components/report/FinTable";
 import { ScenarioTable } from "@/components/report/ScenarioTable";
 import { Report } from "@/lib/report.schema";
 import type { FinancialTable } from "@/lib/report.schema";
-import avgo from "@/data/avgo.json";
+import avgo from "@/lib/__fixtures__/avgo-golden.json";
 
 const report = Report.parse(avgo);
 

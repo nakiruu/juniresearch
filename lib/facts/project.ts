@@ -1,7 +1,7 @@
 /**
  * project.ts — FactPack → the numeric subset of a Report.
  * -----------------------------------------------------------------------------
- * Display labels and formats match data/avgo.json so parity can be checked at
+ * Display labels and formats match the golden fixture (`lib/__fixtures__/avgo-golden.json`) so parity can be checked at
  * the string level. Derived rows (YoY, gross margin, FCF margin) are computed
  * here from full-precision values, never from rounded ones.
  */

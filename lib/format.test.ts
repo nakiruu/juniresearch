@@ -4,7 +4,7 @@ import {
   formatCell, formatSnapshot, upside, upsideRangeText, computeScenarios,
 } from "@/lib/format";
 import { Report } from "@/lib/report.schema";
-import avgo from "@/data/avgo.json";
+import avgo from "@/lib/__fixtures__/avgo-golden.json";
 
 const report = Report.parse(avgo);
 const CURRENT = 361.99;
