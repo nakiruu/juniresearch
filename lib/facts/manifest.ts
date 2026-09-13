@@ -12,7 +12,9 @@
  */
 export const PEER_LIMIT = 4;
 export const RAW_CAPTURE_META = "capture.json";
-export const CODE_FETCHED_FILES = ["edgar-filing.json", "edgar-primary.html", "yahoo-history.json"] as const;
+export const CODE_FETCHED_FILES = ["edgar-filing.json", "edgar-primary.html", "yahoo-history.json", "edgar-press-release.html"] as const;
+/** Captured only when relevant (a 10-Q's prior 10-K); read when present but never required by `--check`. */
+export const OPTIONAL_FILES = ["edgar-10k-primary.html"] as const;
 /** Captured in phase 1 and read by facts-manifest to resolve phase 2 (rpEntityId, companyType); not FactPack data, so no mapper reads it. */
 export const PHASE_INPUT_FILES = ["bigdata-entity.json"] as const;
 

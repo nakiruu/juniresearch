@@ -9,12 +9,13 @@ export const minimalPack = (): FactPack => ({
   filing: { form: "10-Q", accession: "0001730168-26-000080", filedDate: "2026-09-10",
             periodEnd: "2026-08-02", url: "https://www.sec.gov/x" },
   capturedAt: "2026-09-12T15:00:00Z",
-  quote: { price: 361.99, marketCap: 1.72e12, sharesOutstanding: 4.76e9,
+  quote: { price: 361.99, marketCap: 1.72e12, sharesOutstanding: 4.76e9, sharesSource: "derived",
            week52Low: 289.96, week52High: 495, dividendYield: 0.0072, asOf: "2026-09-11" },
   statements: { fiscalYears: ["FY21", "FY22", "FY23", "FY24", "FY25"],
                 income: [row("revenue")], balance: [row("totalDebt")], cashflow: [row("freeCashFlow")] },
   latestQuarter: { label: "Q3'26", periodEnd: "2026-08-02", revenue: 2.96e10, operatingMargin: 0.68, revenueYoY: 0.86 },
-  ttm: { pe: 44.9, ps: 19.3, evToEbitda: 33.6, grossMargin: 0.68, operatingMargin: 0.6, netMargin: 0.4 },
+  ttm: { pe: 44.9, ps: 19.3, evToEbitda: 33.6, grossMargin: 0.68, operatingMargin: 0.6, netMargin: 0.4,
+         netDebtToEbitda: null, interestCoverage: null, fcfYield: null, currentRatio: null },
   estimates: { nextFY: { label: "FY26E", revenue: 1.059e11, eps: 12 }, followingFY: { label: "FY27E", revenue: 1.5e11, eps: 19 } },
   analysts: { count: 60, buy: 54, hold: 6, sell: 0, consensusRating: "Buy", consensusTarget: 509.61,
               medianTarget: 517.5, highTarget: 600, lowTarget: 350, asOf: "2026-09-12" },
@@ -25,6 +26,6 @@ export const minimalPack = (): FactPack => ({
     const d = new Date(Date.UTC(2026, 7, 21)); d.setUTCDate(d.getUTCDate() + i);
     return { date: d.toISOString().slice(0, 10), close: 340 + i };
   }),
-  context: { description: excerpt, mdaExcerpt: null, riskFactorsExcerpt: null, transcriptHighlights: null, headlines: [] },
+  context: { description: excerpt, mdaExcerpt: null, riskFactorsExcerpt: null, riskFactorsSource: null, pressRelease: null, transcriptHighlights: null, headlines: [] },
   provenance: [{ field: "quote", source: "fmp", endpoint: "quote", capturedAt: "2026-09-12T15:00:00Z" }],
 });

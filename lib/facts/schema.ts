@@ -7,7 +7,7 @@
  */
 import { z } from "zod";
 
-export const FACTPACK_SCHEMA_VERSION = "1.0.0";
+export const FACTPACK_SCHEMA_VERSION = "1.1.0";
 
 const ratio = z.number();
 const nullableNum = z.number().nullable();
@@ -45,7 +45,7 @@ export const FactPack = z.object({
   }),
   capturedAt: z.string(),
   quote: z.object({
-    price: z.number(), marketCap: z.number(), sharesOutstanding: z.number(),
+    price: z.number(), marketCap: z.number(), sharesOutstanding: z.number(), sharesSource: z.enum(["cover", "derived"]),
     week52Low: z.number(), week52High: z.number(), dividendYield: ratio, asOf: z.string(),
   }),
   statements: z.object({
@@ -61,6 +61,7 @@ export const FactPack = z.object({
   ttm: z.object({
     pe: nullableNum, ps: nullableNum, evToEbitda: nullableNum,
     grossMargin: nullableNum, operatingMargin: nullableNum, netMargin: nullableNum,
+    netDebtToEbitda: nullableNum, interestCoverage: nullableNum, fcfYield: nullableNum, currentRatio: nullableNum,
   }),
   estimates: z.object({ nextFY: estimate, followingFY: estimate }),
   analysts: z.object({
@@ -82,6 +83,8 @@ export const FactPack = z.object({
     description: Excerpt,
     mdaExcerpt: Excerpt.nullable(),
     riskFactorsExcerpt: Excerpt.nullable(),
+    riskFactorsSource: z.enum(["10-Q", "10-K"]).nullable(),
+    pressRelease: Excerpt.nullable(),
     transcriptHighlights: Excerpt.nullable(),
     headlines: z.array(Excerpt).max(10),
   }),

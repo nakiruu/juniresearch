@@ -23,9 +23,20 @@ if (existsSync(entityFile)) {
 if (flag === "--check") {
   const phase2Ready = Boolean(ctx.rpEntityId && ctx.companyType);
   if (!phase2Ready) { console.error(`Phase 2 unresolved for ${dir}: ${PHASE_INPUT_FILES[0]} is missing or yields no id — cannot check the full raw file set.`); process.exit(1); }
-  const missing = requiredRawFiles(ctx).filter((f) => !existsSync(join(dir, f)));
+  const PRESS_FILE = "edgar-press-release.html";
+  const PRESS_MISSING_FILE = "edgar-press-release.missing";
+  const missing = requiredRawFiles(ctx).filter((f) => {
+    if (existsSync(join(dir, f))) return false;
+    if (f === PRESS_FILE && existsSync(join(dir, PRESS_MISSING_FILE))) return false;
+    return true;
+  });
   if (missing.length) { console.error("Missing raw files:\n  " + missing.join("\n  ")); process.exit(1); }
-  console.log(`All ${requiredRawFiles(ctx).length} raw files present in ${dir}`);
+  const notes: string[] = [];
+  if (!existsSync(join(dir, PRESS_FILE)) && existsSync(join(dir, PRESS_MISSING_FILE))) {
+    const reason = readFileSync(join(dir, PRESS_MISSING_FILE), "utf8").trim();
+    notes.push(`press release: missing (${reason})`);
+  }
+  console.log(`All ${requiredRawFiles(ctx).length} raw files present in ${dir}` + (notes.length ? "\n  " + notes.join("\n  ") : ""));
 } else {
   console.log(JSON.stringify({ dir, phase2Ready: Boolean(ctx.rpEntityId && ctx.companyType), calls: renderManifest(ctx) }, null, 2));
 }

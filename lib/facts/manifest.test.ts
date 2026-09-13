@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { MANIFEST, renderManifest, requiredRawFiles, CODE_FETCHED_FILES, PHASE_INPUT_FILES, isoMinusDays } from "@/lib/facts/manifest";
+import { MANIFEST, renderManifest, requiredRawFiles, CODE_FETCHED_FILES, OPTIONAL_FILES, PHASE_INPUT_FILES, isoMinusDays } from "@/lib/facts/manifest";
 
 const ctx = { ticker: "AVGO", company: "Broadcom Inc.", periodEnd: "2026-08-02", today: "2026-09-12" };
 
@@ -60,11 +60,14 @@ describe("isoMinusDays", () => {
 });
 
 describe("manifest / mapper closure", () => {
-  it("every captured file is read by a mapper (phase inputs aside), and every file a mapper reads is captured", async () => {
-    const mods = await Promise.all(["quote", "statements", "segments", "analysts", "history", "context"].map((m) => import(`@/lib/facts/map/${m}`)));
+  it("every captured (or optional) file is read by a mapper, and every file a mapper reads is captured or optional", async () => {
+    const mods = await Promise.all(["quote", "statements", "segments", "analysts", "history", "context", "cover"].map((m) => import(`@/lib/facts/map/${m}`)));
     const { READS: buildReads } = await import("@/lib/facts/build");
     const read = new Set<string>([...mods.flatMap((m) => m.READS as readonly string[]), ...buildReads]);
-    const captured = new Set(requiredRawFiles({ ...ctx, rpEntityId: "X", companyType: "Public" }).filter((f) => !(PHASE_INPUT_FILES as readonly string[]).includes(f)));
+    const captured = new Set<string>([
+      ...requiredRawFiles({ ...ctx, rpEntityId: "X", companyType: "Public" }).filter((f) => !(PHASE_INPUT_FILES as readonly string[]).includes(f)),
+      ...OPTIONAL_FILES,
+    ]);
     expect([...read].sort()).toEqual([...captured].sort());
   });
 });

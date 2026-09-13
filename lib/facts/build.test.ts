@@ -20,3 +20,17 @@ describe("buildFactPack on the AVGO capture", () => {
     expect(() => buildFactPack("lib/facts/map/__fixtures__/empty")).toThrow(/Missing raw file|Missing "company_overview"/);
   });
 });
+
+describe("buildFactPack on the ORCL Q1 FY27 10-Q capture", () => {
+  const pack = buildFactPack("data/raw/ORCL/0001193125-26-389274");
+  it("produces a pack that parses and validates", () => { expect(() => FactPack.parse(pack)).not.toThrow(); });
+  it("uses the cover-page share count, with sharesSource recording it", () => {
+    expect(pack.quote.sharesSource).toBe("cover");
+    expect(pack.quote.sharesOutstanding).toBe(3023736000);
+  });
+});
+
+describe("buildFactPack on the ORCL FY26 10-K capture", () => {
+  const pack = buildFactPack("data/raw/ORCL/0001193125-26-277521");
+  it("produces a pack that parses and validates", () => { expect(() => FactPack.parse(pack)).not.toThrow(); });
+});

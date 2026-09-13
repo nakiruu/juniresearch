@@ -63,7 +63,7 @@ describe("the allowed index on the AVGO FactPack", () => {
     // "$16.7 billion" would also round from FY22 operating cash flow (16.736B) — a numeric index cannot attribute,
     // so the transcript-only case uses guided Q4 AI revenue, which no FactPack number rounds to.
     expect(ok("management guided Q4 AI revenue to $21.7 billion")).toEqual([]);
-    const noContext = { ...pack, context: { description: { ...pack.context.description, text: "" }, mdaExcerpt: null, riskFactorsExcerpt: null, transcriptHighlights: null, headlines: [] } };
+    const noContext = { ...pack, context: { description: { ...pack.context.description, text: "" }, mdaExcerpt: null, riskFactorsExcerpt: null, riskFactorsSource: null, pressRelease: null, transcriptHighlights: null, headlines: [] } };
     expect(buildAllowedIndex(noContext, []).has(numericTokens("$21.7 billion")[0])).toBe(false);
   });
   it("rejects a figure that is nowhere in the facts or the context, naming the field and the token", () => {

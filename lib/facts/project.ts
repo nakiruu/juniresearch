@@ -51,6 +51,8 @@ export function projectReportFacts(p: FactPack): ReportFacts {
   const cashflow: FinancialTable = { columns: colsB, rows: [
     { label: "Operating Cash Flow", values: vals(p, "cashflow", "operatingCashFlow"), format: "usdB" },
     { label: "Capital Expenditure", values: vals(p, "cashflow", "capex"), format: "usdB" },
+    { label: "Share Repurchases", values: vals(p, "cashflow", "buybacks"), format: "usdB" },
+    { label: "Dividends Paid", values: vals(p, "cashflow", "dividends"), format: "usdB" },
     { label: "Free Cash Flow", values: fcf, format: "usdB" },
     { label: "FCF Margin", values: ratioRows(fcf, revenue), format: "pct" },
   ] };
@@ -63,7 +65,7 @@ export function projectReportFacts(p: FactPack): ReportFacts {
     { label: "Current Price", value: q.price, unit: "usd" },
     { label: "Market Cap", value: q.marketCap, unit: "usdLarge", approx: true },
     { label: "52-Week Range", raw: `$${q.week52Low.toFixed(2)} – $${q.week52High.toFixed(2)}` },
-    { label: "Shares Outstanding", value: q.sharesOutstanding, unit: "shares", approx: true },
+    { label: "Shares Outstanding", value: q.sharesOutstanding, unit: "shares", approx: q.sharesSource !== "cover" },
     { label: "P/E (TTM)", value: p.ttm.pe ?? undefined, unit: "mult" },
     { label: "Consensus Target", value: a.consensusTarget, unit: "usd", change: a.consensusTarget / q.price - 1 },
     { label: "EV/EBITDA (TTM)", value: p.ttm.evToEbitda ?? undefined, unit: "mult" },

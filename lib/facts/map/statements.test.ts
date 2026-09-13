@@ -3,6 +3,8 @@ import { mapStatements } from "@/lib/facts/map/statements";
 const DIR = "data/raw/AVGO/0001730168-26-000080";
 const near = (a: number | null, b: number, tol = 0.005) => a != null && Math.abs(a - b) / Math.abs(b) <= tol;
 
+const ORCL_DIR = "data/raw/ORCL/0001193125-26-389274";
+
 describe("mapStatements on the AVGO capture", () => {
   const s = mapStatements(DIR);
   const row = (t: "income" | "balance" | "cashflow", key: string) => s.statements[t].find((r) => r.key === key)!;
@@ -42,6 +44,30 @@ describe("mapStatements on the AVGO capture", () => {
     expect(near(s.ttm.evToEbitda, 33.6, 0.01)).toBe(true);
     expect(s.ttm.grossMargin).toBeGreaterThan(0.6);
     expect(s.ttm.grossMargin).toBeLessThan(0.7);
+  });
+  it("reads the buybacks and dividends rows (values or null) and a non-null TTM current ratio", () => {
+    expect(row("cashflow", "buybacks")).toBeDefined();
+    expect(row("cashflow", "dividends")).toBeDefined();
+    expect(s.ttm.currentRatio).not.toBeNull();
+  });
+});
+
+describe("mapStatements on the ORCL Q1 FY27 10-Q capture", () => {
+  const s = mapStatements(ORCL_DIR);
+  const row = (t: "income" | "balance" | "cashflow", key: string) => s.statements[t].find((r) => r.key === key)!;
+
+  it("reads Share Repurchases and Dividends Paid across the five fiscal years", () => {
+    expect(s.statements.fiscalYears).toEqual(["FY22", "FY23", "FY24", "FY25", "FY26"]);
+    expect(near(row("cashflow", "buybacks").values[0], -17341000000)).toBe(true);
+    expect(near(row("cashflow", "buybacks").values[4], -206000000)).toBe(true);
+    expect(near(row("cashflow", "dividends").values[4], -5787000000)).toBe(true);
+  });
+  it("reads leverage and coverage ratios and a negative FCF yield off the TTM ratios/key metrics", () => {
+    expect(near(s.ttm.netDebtToEbitda, 3.1877, 0.001)).toBe(true);
+    expect(near(s.ttm.interestCoverage, 4.5704, 0.001)).toBe(true);
+    expect(near(s.ttm.currentRatio, 1.1708, 0.001)).toBe(true);
+    expect(s.ttm.fcfYield).not.toBeNull();
+    expect(s.ttm.fcfYield!).toBeLessThan(0);
   });
 });
 

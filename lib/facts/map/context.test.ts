@@ -1,8 +1,11 @@
 import { describe, it, expect } from "vitest";
+import { readFileSync } from "node:fs";
 import { mapContext } from "@/lib/facts/map/context";
 const DIR = "data/raw/AVGO/0001730168-26-000080";
 const filing = { form: "10-Q" as const, url: "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm", filedDate: "2026-09-10" };
 const desc = { text: "Broadcom designs chips.", source: "bigdata:company_tearsheet", asOf: "2026-09-11" };
+
+const readFiling = (dir: string) => JSON.parse(readFileSync(`${dir}/edgar-filing.json`, "utf8"));
 
 describe("mapContext on the AVGO capture", () => {
   const c = mapContext(DIR, filing, "2026-09-13T03:18:05Z", desc);
@@ -37,11 +40,48 @@ describe("mapContext on the AVGO capture", () => {
     const bare = mapContext("lib/facts/map/__fixtures__/context-bare", filing, "2026-09-13T03:18:05Z", desc);
     expect(bare.headlines).toEqual([]);
     expect(bare.transcriptHighlights).toBeNull();
+    expect(bare.pressRelease).toBeNull();
+  });
+  it("keeps its own risk factors as the source since they are longer than the prior 10-K's", () => {
+    expect(c.riskFactorsSource).toBe("10-Q");
   });
 });
 
 describe("mapContext on an empty capture", () => {
   it("throws naming the primary document file", () => {
     expect(() => mapContext("lib/facts/map/__fixtures__/empty", filing, "2026-09-13T03:18:05Z", desc)).toThrow(/edgar-primary\.html/);
+  });
+});
+
+describe("mapContext on the ORCL Q1 FY27 10-Q capture (press release, 10-K risk factors)", () => {
+  const orclDir = "data/raw/ORCL/0001193125-26-389274";
+  const orclFiling = readFiling(orclDir);
+  const c = mapContext(orclDir, orclFiling, "2026-09-13T03:18:05Z", desc);
+
+  it("captures the earnings press release, capped and sourced", () => {
+    expect(c.pressRelease).not.toBeNull();
+    expect(c.pressRelease!.text).toContain("$664 billion");
+    expect(c.pressRelease!.source).toBe("edgar:8-K ex-99.1");
+    expect(c.pressRelease!.truncated).toBe(true);
+  });
+  it("prefers the prior 10-K's risk factors over the 10-Q's own thin cross-reference", () => {
+    expect(c.riskFactorsSource).toBe("10-K");
+    expect(c.riskFactorsExcerpt).not.toBeNull();
+    expect(c.riskFactorsExcerpt!.text.length).toBeGreaterThan(5000);
+    expect(c.riskFactorsExcerpt!.source).toBe("edgar:10-K");
+  });
+});
+
+describe("mapContext on the ORCL FY26 10-K capture", () => {
+  const orclDir = "data/raw/ORCL/0001193125-26-277521";
+  const orclFiling = readFiling(orclDir);
+  const c = mapContext(orclDir, orclFiling, "2026-09-13T03:18:05Z", desc);
+
+  it("records its own risk factors as the source", () => {
+    expect(c.riskFactorsSource).toBe("10-K");
+  });
+  it("captures the June 10 earnings press release", () => {
+    expect(c.pressRelease).not.toBeNull();
+    expect(c.pressRelease!.asOf).toBe("2026-06-10");
   });
 });

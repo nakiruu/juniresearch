@@ -50,6 +50,8 @@ export function mapStatements(dir: string): { statements: FactPack["statements"]
     cashflow: [
       row("operatingCashFlow", "Operating Cash Flow", col(cf, "operating_cash_flow")),
       row("capex", "Capital Expenditure", col(cf, "capex", true)),
+      row("buybacks", "Share Repurchases", col(cf, "common_stock_repurchased", true)),
+      row("dividends", "Dividends Paid", col(cf, "common_dividends_paid", true)),
       row("freeCashFlow", "Free Cash Flow", col(cf, "free_cash_flow")),
     ],
   };
@@ -78,6 +80,8 @@ export function mapStatements(dir: string): { statements: FactPack["statements"]
   const ttm: FactPack["ttm"] = {
     pe: opt(km, "pe_ratio"), ps: opt(km, "price_to_sales"), evToEbitda: opt(km, "ev_to_ebitda"),
     grossMargin: opt(rt, "gross_margin"), operatingMargin: opt(rt, "operating_margin"), netMargin: opt(rt, "net_margin"),
+    netDebtToEbitda: opt(rt, "net_debt_to_ebitda"), interestCoverage: opt(rt, "interest_coverage"),
+    currentRatio: opt(rt, "current_ratio"), fcfYield: opt(km, "free_cash_flow_yield"),
   };
   return { statements, latestQuarter, ttm };
 }

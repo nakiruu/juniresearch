@@ -43,13 +43,21 @@ describe("projectReportFacts parity with data/avgo.json", () => {
     expect(facts.sections.businessMoat.segments.map((s) => s.sharePct).reduce((a, b) => a + b)).toBeCloseTo(1, 6);
     expect(facts.sections.businessMoat.geoMix.every((g) => g.sharePct > 0 && g.sharePct < 1)).toBe(true);
   });
-  it("includes Capital Expenditure in the projection's cash-flow table", () => {
+  it("includes Capital Expenditure, Share Repurchases and Dividends Paid in the projection's cash-flow table", () => {
     const labels = facts.sections.financials.cashflow.rows.map((r) => r.label);
-    expect(labels).toEqual(["Operating Cash Flow", "Capital Expenditure", "Free Cash Flow", "FCF Margin"]);
+    expect(labels).toEqual(["Operating Cash Flow", "Capital Expenditure", "Share Repurchases", "Dividends Paid", "Free Cash Flow", "FCF Margin"]);
   });
   it("formats the FY25 capex value correctly", () => {
     const capexRow = facts.sections.financials.cashflow.rows.find((r) => r.label === "Capital Expenditure")!;
     expect(formatCell(capexRow.values[4], capexRow.format)).toBe("-0.6");
+  });
+  it("marks Shares Outstanding as approximate only when the FactPack's shares figure is derived, not from the cover page", () => {
+    expect(pack.quote.sharesSource).toBe("cover");
+    const sharesCell = facts.snapshot.find((c) => c.label === "Shares Outstanding")!;
+    expect(sharesCell.approx).toBeFalsy();
+    const derived = { ...pack, quote: { ...pack.quote, sharesSource: "derived" as const } };
+    const derivedCell = projectReportFacts(derived).snapshot.find((c) => c.label === "Shares Outstanding")!;
+    expect(derivedCell.approx).toBe(true);
   });
   it("projects the company's multiples column, with NTM forward P/E from next-FY EPS", () => {
     const col = facts.sections.valuation.multiplesCompanyColumn;

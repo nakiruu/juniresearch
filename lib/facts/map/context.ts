@@ -7,16 +7,19 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { readRawJson, readRawText, section } from "../raw";
-import { htmlToText, extractSections, capAtSentence, TRANSCRIPT_CAP, type CappedSection } from "../../edgar/filing-text";
+import { htmlToText, extractSections, capAtSentence, TRANSCRIPT_CAP, PRESS_CAP, type CappedSection } from "../../edgar/filing-text";
 import type { Excerpt, FactPack } from "../schema";
 
 const EDGAR_PRIMARY_FILE = "edgar-primary.html";
+const PRESS_RELEASE_FILE = "edgar-press-release.html";
+const TENK_PRIMARY_FILE = "edgar-10k-primary.html";
 const TRANSCRIPT_FILE = "bigdata-transcript.json";
 const HEADLINES_FILE = "bigdata-headlines.json";
-export const READS = [EDGAR_PRIMARY_FILE, TRANSCRIPT_FILE, HEADLINES_FILE] as const;
+export const READS = [EDGAR_PRIMARY_FILE, TRANSCRIPT_FILE, HEADLINES_FILE, PRESS_RELEASE_FILE, TENK_PRIMARY_FILE] as const;
 export const PROVENANCE: { field: string; endpoint: string; source: FactPack["provenance"][number]["source"] }[] = [
   { field: "context.mdaExcerpt", endpoint: "edgar primary document", source: "edgar" },
-  { field: "context.riskFactorsExcerpt", endpoint: "edgar primary document", source: "edgar" },
+  { field: "context.riskFactorsExcerpt", endpoint: "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)", source: "edgar" },
+  { field: "context.pressRelease", endpoint: "edgar 8-K exhibit 99.1", source: "edgar" },
   { field: "context.transcriptHighlights", endpoint: "bigdata_search", source: "bigdata" },
   { field: "context.headlines", endpoint: "bigdata_search", source: "bigdata" },
 ];
@@ -56,18 +59,52 @@ function transcriptFrom(results: SearchResult[], fallbackDay: string): Excerpt |
 
 export function mapContext(
   dir: string,
-  filing: { form: "10-Q" | "10-K"; url: string; filedDate: string },
+  filing: {
+    form: "10-Q" | "10-K"; url: string; filedDate: string;
+    pressRelease?: { url: string; filedDate: string } | null;
+    annualReport?: { url: string; filedDate: string } | null;
+  },
   capturedAt: string,
   description: Excerpt,
 ): FactPack["context"] {
-  const { mda, riskFactors } = extractSections(htmlToText(readRawText(dir, EDGAR_PRIMARY_FILE)), filing.form);
+  const { mda, riskFactors: ownRiskFactors } = extractSections(htmlToText(readRawText(dir, EDGAR_PRIMARY_FILE)), filing.form);
   const edgar = (s: CappedSection | null): Excerpt | null =>
     s ? { text: s.text, source: `edgar:${filing.form}`, url: filing.url, asOf: filing.filedDate, truncated: s.truncated } : null;
+
+  // A 10-Q's own Item 1A is often a thin cross-reference to the prior 10-K; when a 10-K
+  // was also captured, compare candidates and keep whichever is the longer excerpt.
+  let riskFactorsExcerpt = edgar(ownRiskFactors);
+  let riskFactorsSource: FactPack["context"]["riskFactorsSource"] = ownRiskFactors ? filing.form : null;
+  if (filing.form === "10-Q" && existsSync(join(dir, TENK_PRIMARY_FILE))) {
+    const tenKRiskFactors = extractSections(htmlToText(readRawText(dir, TENK_PRIMARY_FILE)), "10-K").riskFactors;
+    if (tenKRiskFactors && (!ownRiskFactors || tenKRiskFactors.text.length > ownRiskFactors.text.length)) {
+      riskFactorsExcerpt = {
+        text: tenKRiskFactors.text, source: "edgar:10-K",
+        url: filing.annualReport?.url, asOf: filing.annualReport?.filedDate ?? filing.filedDate,
+        truncated: tenKRiskFactors.truncated,
+      };
+      riskFactorsSource = "10-K";
+    }
+  }
+
+  const pressRelease: Excerpt | null = existsSync(join(dir, PRESS_RELEASE_FILE))
+    ? (() => {
+        const capped = capAtSentence(htmlToText(readRawText(dir, PRESS_RELEASE_FILE)), PRESS_CAP);
+        return {
+          text: capped.text, source: "edgar:8-K ex-99.1",
+          url: filing.pressRelease?.url, asOf: filing.pressRelease?.filedDate ?? filing.filedDate,
+          truncated: capped.truncated,
+        };
+      })()
+    : null;
+
   const day = capturedAt.slice(0, 10);
   return {
     description,
     mdaExcerpt: edgar(mda),
-    riskFactorsExcerpt: edgar(riskFactors),
+    riskFactorsExcerpt,
+    riskFactorsSource,
+    pressRelease,
     transcriptHighlights: transcriptFrom(searchResults(dir, TRANSCRIPT_FILE), day),
     headlines: headlinesFrom(searchResults(dir, HEADLINES_FILE), day),
   };

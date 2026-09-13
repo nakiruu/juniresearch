@@ -26,7 +26,7 @@ export function mapQuote(dir: string): { quote: FactPack["quote"]; company: stri
     description: { text: str(ov, "description", FILE), source: "bigdata:company_tearsheet", asOf },
     quote: {
       price, marketCap,
-      sharesOutstanding: marketCap / price,
+      sharesOutstanding: marketCap / price, sharesSource: "derived",
       week52Low: num(pp, "year_low", FILE)!, week52High: num(pp, "year_high", FILE)!,
       // A missing TTM dividend_yield is read as 0: the vendor omits the field for
       // non-payers rather than reporting an explicit zero. Ruled, known limitation.
