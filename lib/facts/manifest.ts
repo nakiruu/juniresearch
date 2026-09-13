@@ -13,6 +13,8 @@
 export const PEER_LIMIT = 4;
 export const RAW_CAPTURE_META = "capture.json";
 export const CODE_FETCHED_FILES = ["edgar-filing.json", "edgar-primary.html", "yahoo-history.json"] as const;
+/** Captured in phase 1 and read by facts-manifest to resolve phase 2 (rpEntityId, companyType); not FactPack data, so no mapper reads it. */
+export const PHASE_INPUT_FILES = ["bigdata-entity.json"] as const;
 
 export interface CaptureContext {
   ticker: string;
@@ -53,7 +55,7 @@ const tearsheet = (name: string, file: string, interval: "annual" | "quarter", s
 
 export const MANIFEST: ManifestEntry[] = [
   fmp("peers", "fmp-peers.json", "company", (c) => ({ endpoint: "peers", symbol: c.ticker })),
-  { name: "entity", file: "bigdata-entity.json", server: "bigdata", tool: "find_securities", phase: 1,
+  { name: "entity", file: PHASE_INPUT_FILES[0], server: "bigdata", tool: "find_securities", phase: 1,
     params: (c) => ({ query: c.ticker, security_types: ["COMPANY"] }) },
   tearsheet("tearsheet-annual", "bigdata-tearsheet-annual.json", "annual", TEARSHEET_SECTIONS_ANNUAL),
   tearsheet("statements-annual", "bigdata-statements-annual.json", "annual", ["financial_statements"]),

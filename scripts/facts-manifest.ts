@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { renderManifest, requiredRawFiles, type CaptureContext } from "../lib/facts/manifest";
+import { renderManifest, requiredRawFiles, PHASE_INPUT_FILES, type CaptureContext } from "../lib/facts/manifest";
 
 const [ticker, accession, flag] = process.argv.slice(2);
 if (!ticker || !accession) { console.error("usage: npm run facts:manifest -- <TICKER> <ACCESSION> [--check]"); process.exit(2); }
@@ -9,7 +9,7 @@ const filing = JSON.parse(readFileSync(join(dir, "edgar-filing.json"), "utf8")) 
 
 const ctx: CaptureContext = { ticker: ticker.toUpperCase(), company: filing.company, periodEnd: filing.periodEnd,
   today: new Date().toISOString().slice(0, 10) };
-const entityFile = join(dir, "bigdata-entity.json");
+const entityFile = join(dir, PHASE_INPUT_FILES[0]);
 if (existsSync(entityFile)) {
   const raw = JSON.parse(readFileSync(entityFile, "utf8")) as unknown;
   const top = Array.isArray(raw) ? raw[0] : raw;
@@ -22,7 +22,7 @@ if (existsSync(entityFile)) {
 
 if (flag === "--check") {
   const phase2Ready = Boolean(ctx.rpEntityId && ctx.companyType);
-  if (!phase2Ready) { console.error(`Phase 2 unresolved for ${dir}: bigdata-entity.json is missing or yields no id — cannot check the full raw file set.`); process.exit(1); }
+  if (!phase2Ready) { console.error(`Phase 2 unresolved for ${dir}: ${PHASE_INPUT_FILES[0]} is missing or yields no id — cannot check the full raw file set.`); process.exit(1); }
   const missing = requiredRawFiles(ctx).filter((f) => !existsSync(join(dir, f)));
   if (missing.length) { console.error("Missing raw files:\n  " + missing.join("\n  ")); process.exit(1); }
   console.log(`All ${requiredRawFiles(ctx).length} raw files present in ${dir}`);

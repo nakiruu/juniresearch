@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { MANIFEST, renderManifest, requiredRawFiles, CODE_FETCHED_FILES, isoMinusDays } from "@/lib/facts/manifest";
+import { MANIFEST, renderManifest, requiredRawFiles, CODE_FETCHED_FILES, PHASE_INPUT_FILES, isoMinusDays } from "@/lib/facts/manifest";
 
 const ctx = { ticker: "AVGO", company: "Broadcom Inc.", periodEnd: "2026-08-02", today: "2026-09-12" };
 
@@ -59,11 +59,12 @@ describe("isoMinusDays", () => {
   });
 });
 
-// NOTE: a manifest<->mapper closure test ("every captured file is read by a mapper, and
-// every file a mapper reads is captured") was specified for this group but is not included:
-// `bigdata-entity.json` is captured (phase 1, always rendered) purely to resolve
-// rpEntityId/companyType for phase-2 params (see renderManifest / scripts/facts-manifest.ts)
-// — it is control-flow, not FactPack data, so no mapper's READS legitimately includes it.
-// Adding it to a mapper's READS would be a fabricated read; silently excluding it from the
-// assertion is a design call this fix wave escalates rather than makes unilaterally. See
-// final-fix-report.md, group C, for the options considered.
+describe("manifest / mapper closure", () => {
+  it("every captured file is read by a mapper (phase inputs aside), and every file a mapper reads is captured", async () => {
+    const mods = await Promise.all(["quote", "statements", "segments", "analysts", "history", "context"].map((m) => import(`@/lib/facts/map/${m}`)));
+    const { READS: buildReads } = await import("@/lib/facts/build");
+    const read = new Set<string>([...mods.flatMap((m) => m.READS as readonly string[]), ...buildReads]);
+    const captured = new Set(requiredRawFiles({ ...ctx, rpEntityId: "X", companyType: "Public" }).filter((f) => !(PHASE_INPUT_FILES as readonly string[]).includes(f)));
+    expect([...read].sort()).toEqual([...captured].sort());
+  });
+});
