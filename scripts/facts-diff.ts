@@ -21,4 +21,8 @@ for (const t of ["income", "balance", "cashflow"] as const)
 for (const c of facts.snapshot) { const w = fixture.snapshot.find((x) => x.label === c.label); if (w) line(`snapshot.${c.label}`, formatSnapshot(c), formatSnapshot(w)); }
 for (const k of ["consensusTarget", "medianTarget", "highTarget", "lowTarget", "numAnalysts"] as const)
   line(`analystSentiment.${k}`, String(facts.analystSentiment[k]), String(fixture.analystSentiment[k]));
-console.log(`\n${same} match, ${diff} differ. Quote/target/estimate fields drift daily; statement rows should match.`);
+for (const c of facts.sections.valuation.multiplesCompanyColumn) {
+  const w = fixture.sections.valuation.multiples.rows.find((r) => r.label === c.label);
+  if (w) line(`valuation.${c.label}`, formatCell(c.value, "mult"), formatCell(w.values[0], "mult"));
+}
+console.log(`\n${same} match, ${diff} differ. Quote/target/estimate fields drift daily; statement rows and multiples should match.`);

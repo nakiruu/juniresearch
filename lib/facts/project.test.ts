@@ -42,4 +42,15 @@ describe("projectReportFacts parity with data/avgo.json", () => {
     expect(facts.sections.businessMoat.segments.map((s) => s.sharePct).reduce((a, b) => a + b)).toBeCloseTo(1, 6);
     expect(facts.sections.businessMoat.geoMix.every((g) => g.sharePct > 0 && g.sharePct < 1)).toBe(true);
   });
+  it("projects the company's multiples column, with NTM forward P/E from next-FY EPS", () => {
+    const col = facts.sections.valuation.multiplesCompanyColumn;
+    expect(col.map((c) => c.label)).toEqual(["P/E", "P/S", "EV/EBITDA", "Fwd P/E (NTM)"]);
+    const want = fixture.sections.valuation.multiples.rows;
+    for (const row of col) {
+      const w = want.find((r) => r.label === row.label)!.values[0];
+      const target = typeof w === "number" ? w : Number(String(w).replace(/[^0-9.]/g, ""));
+      expect(row.value, row.label).not.toBeNull();
+      expect(Math.abs(row.value! / target - 1), row.label).toBeLessThan(0.02);
+    }
+  });
 });

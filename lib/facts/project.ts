@@ -39,7 +39,8 @@ export function projectReportFacts(p: FactPack): ReportFacts {
     { label: "Net Income ($B)", values: vals(p, "income", "netIncome"), format: "usdB" },
     { label: "Diluted EPS ($)*", values: vals(p, "income", "epsDiluted"), format: "eps" },
   ] };
-  const balance: FinancialTable = { columns: ["Metric ($B)", ...fy], rows: [
+  const colsB = ["Metric ($B)", ...fy];
+  const balance: FinancialTable = { columns: colsB, rows: [
     { label: "Cash & ST Investments", values: vals(p, "balance", "cashAndInvestments"), format: "usdB" },
     { label: "Total Debt", values: vals(p, "balance", "totalDebt"), format: "usdB" },
     { label: "Net Debt", values: vals(p, "balance", "netDebt"), format: "usdB" },
@@ -47,7 +48,7 @@ export function projectReportFacts(p: FactPack): ReportFacts {
     { label: "Current Ratio", values: vals(p, "balance", "currentRatio"), format: "num2" },
   ] };
   const fcf = vals(p, "cashflow", "freeCashFlow");
-  const cashflow: FinancialTable = { columns: ["Metric ($B)", ...fy], rows: [
+  const cashflow: FinancialTable = { columns: colsB, rows: [
     { label: "Operating Cash Flow", values: vals(p, "cashflow", "operatingCashFlow"), format: "usdB" },
     { label: "Free Cash Flow", values: fcf, format: "usdB" },
     { label: "FCF Margin", values: ratioRows(fcf, revenue), format: "pct" },
@@ -55,6 +56,7 @@ export function projectReportFacts(p: FactPack): ReportFacts {
 
   const last = fy[4], q = p.quote, a = p.analysts, lq = p.latestQuarter;
   const fwdPe = p.estimates.followingFY.eps ? q.price / p.estimates.followingFY.eps : null;
+  const ntmPe = p.estimates.nextFY.eps ? q.price / p.estimates.nextFY.eps : null;
   const nextRevYoY = p.estimates.nextFY.revenue && revenue[4] ? p.estimates.nextFY.revenue / revenue[4]! - 1 : undefined;
   const snapshot: SnapshotCellData[] = [
     { label: "Current Price", value: q.price, unit: "usd" },
@@ -90,7 +92,7 @@ export function projectReportFacts(p: FactPack): ReportFacts {
     sections: {
       financials: { income, balance, cashflow },
       valuation: { multiplesCompanyColumn: [
-        { label: "P/E", value: p.ttm.pe }, { label: "P/S", value: p.ttm.ps }, { label: "EV/EBITDA", value: p.ttm.evToEbitda }, { label: "Fwd P/E (NTM)", value: fwdPe } ] },
+        { label: "P/E", value: p.ttm.pe }, { label: "P/S", value: p.ttm.ps }, { label: "EV/EBITDA", value: p.ttm.evToEbitda }, { label: "Fwd P/E (NTM)", value: ntmPe } ] },
       businessMoat: {
         segments: p.segments.items.map((s) => ({ name: s.name, sharePct: s.share, revenue: s.revenue })), segmentsBasis: `${p.segments.basis} mix`,
         geoMix: p.geoMix.items.map((g) => ({ region: g.region, sharePct: g.share })), geographyBasis: p.geoMix.basis,
