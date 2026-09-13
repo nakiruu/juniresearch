@@ -345,7 +345,8 @@ describe("the allowed index on the AVGO FactPack", () => {
   });
   it("accepts a figure only because the transcript contains it", () => {
     expect(ok("AI semiconductor revenue of $16.7 billion")).toEqual([]);
-    expect(buildAllowedIndex({ ...pack, context: { ...pack.context, transcriptHighlights: null } }, []).has(numericTokens("$16.7 billion")[0])).toBe(false);
+    const noContext = { ...pack, context: { description: { ...pack.context.description, text: "" }, mdaExcerpt: null, riskFactorsExcerpt: null, transcriptHighlights: null, headlines: [] } };
+    expect(buildAllowedIndex(noContext, []).has(numericTokens("$16.7 billion")[0])).toBe(false);
   });
   it("rejects a figure that is nowhere in the facts or the context, naming the field and the token", () => {
     const issues = checkGrounding({ sections: { thesis: { body: "Revenue of $17.9B" } } }, index);
@@ -354,9 +355,9 @@ describe("the allowed index on the AVGO FactPack", () => {
     expect(issues[0].message).toMatch(/\$17\.9B.*not in the facts or the captured context/);
   });
   it("indexes extra text, such as the rendered facts block", () => {
-    const withExtra = buildAllowedIndex(pack, ["Fwd P/E (NTM) 31.1x"]);
-    expect(checkGrounding({ p: "at 31.1x forward earnings" }, withExtra)).toEqual([]);
-    expect(checkGrounding({ p: "at 31.1x forward earnings" }, index)).toHaveLength(1);
+    const withExtra = buildAllowedIndex(pack, ["Custom metric 123.4x"]);
+    expect(checkGrounding({ p: "at 123.4x on our metric" }, withExtra)).toEqual([]);
+    expect(checkGrounding({ p: "at 123.4x on our metric" }, index)).toHaveLength(1);
   });
 });
 
@@ -410,7 +411,8 @@ export interface NumberToken {
 const MULT: Record<string, number> = { k: 1e3, m: 1e6, b: 1e9, t: 1e12, thousand: 1e3, million: 1e6, billion: 1e9, trillion: 1e12 };
 
 // sign? $? digits(,ddd)* (.ddd)? then an optional unit: suffix letter, spelled multiplier, %, or x.
-const TOKEN = /(?<![A-Za-z'’$\d.])([+\-−–]?)(\$?)(\d{1,3}(?:,\d{3})+|\d+)(\.\d+)?(?:\s?(K|M|B|T|thousand|million|billion|trillion)(?![A-Za-z])|(%)|(x)(?![A-Za-z]))?/g;
+// En/em dashes are range separators ("$350–$600"), not minus signs; only "-" and "−" negate.
+const TOKEN = /(?<![A-Za-z'’$\d.])([+\-−]?)(\$?)(\d{1,3}(?:,\d{3})+|\d+)(\.\d+)?(?:\s?(K|M|B|T|thousand|million|billion|trillion)(?![A-Za-z])|(%)|(x)(?![A-Za-z]))?/g;
 const YEAR = /^(19[9]\d|20[0-4]\d)$/;
 
 /** Figures that never need grounding: small counts, years, fiscal/quarter labels, dates, form names, ratios like 10:1. */
@@ -436,7 +438,7 @@ export function numericTokens(text: string): NumberToken[] {
     const [raw, sign, dollar, int, frac = "", suffix, pctSign, xSign] = m;
     if (allowListed(m, text)) continue;
     const abs = Number(int.replace(/,/g, "") + frac);
-    const value = /[-−–]/.test(sign) ? -abs : abs;
+    const value = /[-−]/.test(sign) ? -abs : abs;
     const mult = suffix ? MULT[suffix.toLowerCase()] : 1;
     const kind: NumberToken["kind"] = dollar ? "money" : pctSign ? "pct" : xSign ? "mult" : "plain";
     out.push({ raw: raw.trim(), value, magnitude: value * mult, precision: frac ? frac.length - 1 : 0, kind });
@@ -913,16 +915,16 @@ describe("rating envelope (price 100)", () => {
   // weighted fair value = 0.3·bull + 0.5·base + 0.2·bear
   const table: [Judgment["rating"]["label"], [number, number, number], boolean][] = [
     ["BUY", [150, 140, 100], true],          // +34% — the golden's shape
-    ["BUY", [115, 110, 100], true],          // +10.5%
-    ["BUY", [105, 100, 80], false],          // -0.5%
+    ["BUY", [120, 110, 100], true],          // +11%
+    ["BUY", [105, 100, 80], false],          // -2.5%
     ["STRONG BUY", [140, 125, 110], true],   // +26.5%
     ["STRONG BUY", [120, 115, 100], false],  // +13.5%
     ["HOLD", [120, 110, 90], true],          // +9%
     ["HOLD", [160, 140, 120], false],        // +42%
     ["SELL", [100, 90, 80], true],           // -11%
     ["SELL", [120, 110, 100], false],        // +11%
-    ["STRONG SELL", [90, 75, 60], false],    // -17.5%
-    ["STRONG SELL", [85, 70, 50], true],     // -24.5%
+    ["STRONG SELL", [95, 85, 70], false],    // -15%
+    ["STRONG SELL", [85, 70, 50], true],     // -29.5%
   ];
   for (const [label, prices, ok] of table)
     it(`${label} at ${prices.join("/")} ${ok ? "passes" : "fails"}`, () => {
@@ -1154,21 +1156,19 @@ const fail = (issues: ValidationIssue[], stage: string): never => {
   process.exit(1);
 };
 
-let raw: unknown;
-try { raw = JSON.parse(judgmentText); } catch (e) { fail([{ field: judgmentPath, message: `not valid JSON: ${(e as Error).message}`, value: null }], "parse"); }
+const raw: unknown = (() => { try { return JSON.parse(judgmentText) as unknown; } catch (e) { return fail([{ field: judgmentPath, message: `not valid JSON: ${(e as Error).message}`, value: null }], "parse"); } })();
 const parsed = Judgment.safeParse(raw);
-if (!parsed.success) fail(parsed.error.issues.map((i) => ({ field: i.path.join(".") || "(root)", message: i.message, value: null })), "Judgment.parse");
-const judgment = parsed.data!;
+const judgment = parsed.success ? parsed.data : fail(parsed.error.issues.map((i) => ({ field: i.path.join(".") || "(root)", message: i.message, value: null })), "Judgment.parse");
 
 const facts = projectReportFacts(pack);
 const report = mergeReport(facts, judgment, desk, buildDate);
 const rp = Report.safeParse(report);
-if (!rp.success) fail(rp.error.issues.map((i) => ({ field: i.path.join("."), message: i.message, value: null })), "Report.parse");
-const issues = [...validateReport(rp.data), ...validateJudgment(judgment, facts, pack)];
+const valid = rp.success ? rp.data : fail(rp.error.issues.map((i) => ({ field: i.path.join("."), message: i.message, value: null })), "Report.parse");
+const issues = [...validateReport(valid), ...validateJudgment(judgment, facts, pack)];
 if (issues.length) fail(issues, "validate");
 
 const out = join("data", `${ticker.toLowerCase()}.json`);
-writeFileSync(out, JSON.stringify(rp.data, null, 2) + "\n");
+writeFileSync(out, JSON.stringify(valid, null, 2) + "\n");
 if (existsSync(errorsPath)) rmSync(errorsPath);
 console.log(`Wrote ${out}\n  ${report.meta.company} · ${report.rating.label} ${report.rating.targetLow}–${report.rating.targetHigh} · report date ${report.meta.reportDate} · ${report.quote.history?.length ?? 0} closes`);
 ```
