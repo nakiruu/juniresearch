@@ -37,3 +37,9 @@ describe("mapContext on the AVGO capture", () => {
     expect(bare.transcriptHighlights).toBeNull();
   });
 });
+
+describe("mapContext on an empty capture", () => {
+  it("throws naming the primary document file", () => {
+    expect(() => mapContext("lib/facts/map/__fixtures__/empty", filing, "2026-09-13T03:18:05Z", desc)).toThrow(/edgar-primary\.html/);
+  });
+});

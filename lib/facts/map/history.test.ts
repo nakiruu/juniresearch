@@ -13,3 +13,9 @@ describe("mapHistory on the AVGO capture", () => {
     expect(h[h.length - 1].close).toBeCloseTo(361.99, 1);
   });
 });
+
+describe("mapHistory on an empty capture", () => {
+  it("throws naming the history file", () => {
+    expect(() => mapHistory("lib/facts/map/__fixtures__/empty", "2026-09-13T00:00:00Z")).toThrow(/yahoo-history\.json/);
+  });
+});

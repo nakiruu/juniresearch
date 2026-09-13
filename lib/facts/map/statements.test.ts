@@ -44,6 +44,12 @@ describe("mapStatements on the AVGO capture", () => {
   });
 });
 
+describe("mapStatements on an empty capture", () => {
+  it("throws naming the annual statements file", () => {
+    expect(() => mapStatements("lib/facts/map/__fixtures__/empty")).toThrow(/bigdata-statements-annual\.json/);
+  });
+});
+
 describe("mapStatements without a prior-year quarter", () => {
   it("reports revenueYoY as null rather than a fabricated zero", () => {
     const s = mapStatements("lib/facts/map/__fixtures__/no-prior-quarter");

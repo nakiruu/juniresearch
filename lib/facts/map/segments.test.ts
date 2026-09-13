@@ -19,3 +19,9 @@ describe("mapSegments on the AVGO capture", () => {
     expect(byRegion["EMEA"]).toBeCloseTo(0.14, 2);
   });
 });
+
+describe("mapSegments on an empty capture", () => {
+  it("throws naming the tearsheet file", () => {
+    expect(() => mapSegments("lib/facts/map/__fixtures__/empty")).toThrow(/bigdata-tearsheet-annual\.json/);
+  });
+});

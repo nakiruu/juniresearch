@@ -86,4 +86,11 @@ describe("the contract", () => {
     expect(report.meta.ticker).toBe("AVGO");
     expect(report.schemaVersion).toBe("1.1.0");
   });
+
+  it("still parses a 1.0.0 report that has no quote.history", () => {
+    const legacy = { ...avgo, schemaVersion: "1.0.0", quote: { ...avgo.quote, history: undefined } };
+    const parsed = Report.parse(legacy);
+    expect(parsed.schemaVersion).toBe("1.0.0");
+    expect(parsed.quote.history).toBeUndefined();
+  });
 });

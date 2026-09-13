@@ -21,3 +21,9 @@ describe("mapAnalysts on the AVGO capture", () => {
     for (const p of a.peers) { expect(p.ticker).toMatch(/^[A-Z.]+$/); expect(p.pe).toBeNull(); }
   });
 });
+
+describe("mapAnalysts on an empty capture", () => {
+  it("throws naming the tearsheet file", () => {
+    expect(() => mapAnalysts("lib/facts/map/__fixtures__/empty", 2025)).toThrow(/bigdata-tearsheet-annual\.json/);
+  });
+});

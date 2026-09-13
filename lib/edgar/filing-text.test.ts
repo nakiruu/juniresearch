@@ -40,8 +40,8 @@ describe("extractSections on the AVGO 10-Q", () => {
   it("caps each section at its own limit and says so", () => {
     expect(s.mda!.text.length).toBeLessThanOrEqual(MDA_CAP);
     expect(s.riskFactors!.text.length).toBeLessThanOrEqual(EXCERPT_CAP);
-    expect(typeof s.mda!.truncated).toBe("boolean");
-    expect(typeof s.riskFactors!.truncated).toBe("boolean");
+    expect(s.mda!.truncated).toBe(true);
+    expect(s.riskFactors!.truncated).toBe(true);
   });
   it("returns null for a section that is absent", () => {
     expect(extractSections("Item 1. Nothing here.", "10-K")).toEqual({ mda: null, riskFactors: null });
