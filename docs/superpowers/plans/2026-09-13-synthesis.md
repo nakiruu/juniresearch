@@ -893,7 +893,9 @@ export function mergeReport(facts: ReportFacts, j: Judgment, desk: Desk, buildDa
 
 **Interfaces:**
 - Consumes: `Judgment`, `ReportFacts`, `FactPack`, `computeScenarios` (`lib/format.ts`), `buildAllowedIndex`/`checkGrounding`, `renderFactsBlock`, `stringLeaves`, `ValidationIssue`.
-- Produces: `ENVELOPES`, `ratingIssues(judgment, currentPrice)`, `markdownIssues(judgment)`, `segmentIssues(judgment, facts)`, `validateJudgment(judgment, facts, pack): ValidationIssue[]`.
+- Produces: `ENVELOPES`, `ratingIssues(judgment, currentPrice)`, `markdownIssues(judgment)`, `segmentIssues(judgment, facts)`, `renderJudgmentBlock(judgment, currentPrice): string`, `validateJudgment(judgment, facts, pack): ValidationIssue[]`.
+
+**Grounding surface (ruling 2026-09-13):** the quotable surface is *what the page shows*. Besides the facts block, the page renders the judgment's own calls and the values it derives from them — the target range with its upside range (`upsideRangeText`), each scenario's weighted value, and the probability-weighted fair value with its upside. `renderJudgmentBlock` renders exactly those through `lib/format.ts`, and `validateJudgment` indexes it alongside the facts block; so "our $440–$525 target (+21.6% to +45.0%)" and "a $485 fair value" are grounded, while a figure computed by the model that the page never shows is not.
 
 - [ ] **Step 1: Write the failing tests**
 
@@ -904,7 +906,7 @@ import { readFileSync } from "node:fs";
 import { FactPack } from "@/lib/facts/schema";
 import { projectReportFacts } from "@/lib/facts/project";
 import { Judgment } from "@/lib/synth/judgment.schema";
-import { validateJudgment, ratingIssues, markdownIssues, segmentIssues } from "@/lib/synth/validate-judgment";
+import { validateJudgment, ratingIssues, markdownIssues, segmentIssues, renderJudgmentBlock } from "@/lib/synth/validate-judgment";
 import goldenJudgment from "@/lib/__fixtures__/avgo-golden-judgment.json";
 
 const pack = FactPack.parse(JSON.parse(readFileSync("data/facts/AVGO/0001730168-26-000080.json", "utf8")));
@@ -973,7 +975,20 @@ describe("segments", () => {
   });
 });
 
+describe("renderJudgmentBlock", () => {
+  it("renders the calls and the page's derived values so the prose may quote them", () => {
+    const block = renderJudgmentBlock(golden, pack.quote.price);
+    expect(block).toContain("Target range $440.00–$525.00 (+21.6% to +45.0%)");
+    expect(block).toContain("Probability-weighted fair value $485.00 (+34.0%)");
+    expect(block).toMatch(/Base: \$490\.00 × 50% = \$245\.00/);
+  });
+});
+
 describe("validateJudgment on the golden judgment", () => {
+  it("grounds the judgment's own target and fair value", () => {
+    const issues = validateJudgment(golden, facts, pack).map((i) => String(i.value));
+    for (const own of ["$525", "$485", "+21.6%", "+45.0%"]) expect(issues, own).not.toContain(own);
+  });
   it("passes everything except grounding, and reports exactly the hand-written figures the capture cannot support", () => {
     const issues = validateJudgment(golden, facts, pack);
     expect(issues.filter((i) => !/not in the facts/.test(i.message))).toEqual([]);
@@ -1002,7 +1017,7 @@ describe("validateJudgment on the golden judgment", () => {
 import type { FactPack } from "../facts/schema";
 import type { ReportFacts } from "../facts/project";
 import type { ValidationIssue } from "../validate";
-import { computeScenarios, pct } from "../format";
+import { computeScenarios, pct, usd, upside, upsideRangeText } from "../format";
 import type { Judgment, RatingLabel } from "./judgment.schema";
 import { buildAllowedIndex, checkGrounding } from "./grounding";
 import { renderFactsBlock } from "./prompt";
@@ -1063,8 +1078,18 @@ export function segmentIssues(j: Judgment, facts: ReportFacts): ValidationIssue[
   return issues;
 }
 
+/** The judgment's own calls and the values the page derives from them — quotable because the reader sees them. */
+export function renderJudgmentBlock(j: Judgment, currentPrice: number): string {
+  const { rows, fairValue } = computeScenarios(j.sections.valuation.scenarios);
+  return [
+    `Target range ${usd(j.rating.targetLow)}–${usd(j.rating.targetHigh)} (${upsideRangeText(j.rating.targetLow, j.rating.targetHigh, currentPrice)})`,
+    ...rows.map((r) => `${r.name}: ${usd(r.impliedPrice)} × ${pct(r.probability, { dp: 0 })} = ${usd(r.weighted)}`),
+    `Probability-weighted fair value ${usd(fairValue)} (${pct(upside(fairValue, currentPrice), { signed: true })})`,
+  ].join("\n");
+}
+
 export function validateJudgment(j: Judgment, facts: ReportFacts, pack: FactPack): ValidationIssue[] {
-  const index = buildAllowedIndex(pack, [renderFactsBlock(facts, pack)]);
+  const index = buildAllowedIndex(pack, [renderFactsBlock(facts, pack), renderJudgmentBlock(j, pack.quote.price)]);
   return [
     ...ratingIssues(j, pack.quote.price),
     ...segmentIssues(j, facts),
