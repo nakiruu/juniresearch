@@ -1,0 +1,606 @@
+{
+  "schemaVersion": "1.0.0",
+  "ticker": "ORCL",
+  "cik": 1341439,
+  "company": "Oracle Corporation",
+  "exchange": "NYSE",
+  "filing": {
+    "form": "10-K",
+    "accession": "0001193125-26-277521",
+    "filedDate": "2026-06-22",
+    "periodEnd": "2026-05-31",
+    "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm"
+  },
+  "capturedAt": "2026-09-13T17:26:01.126Z",
+  "quote": {
+    "price": 150.15,
+    "marketCap": 432502570500,
+    "sharesOutstanding": 2880470000,
+    "week52Low": 114.5,
+    "week52High": 329.5,
+    "dividendYield": 0.01332001,
+    "asOf": "2026-09-11"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25",
+      "FY26"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          42440000000,
+          49954000000,
+          52961000000,
+          57399000000,
+          67358000000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          33563000000,
+          36390000000,
+          37818000000,
+          40472000000,
+          43916000000
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          10926000000,
+          13093000000,
+          15353000000,
+          17678000000,
+          20778000000
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          13526000000,
+          18739000000,
+          21394000000,
+          23912000000,
+          32138000000
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          6717000000,
+          8503000000,
+          10467000000,
+          12443000000,
+          17087000000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          2.41,
+          3.07,
+          3.71,
+          4.34,
+          5.83
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          21902000000,
+          10187000000,
+          10661000000,
+          11203000000,
+          31894000000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          75859000000,
+          90481000000,
+          94469000000,
+          104104000000,
+          156189000000
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          54476000000,
+          80716000000,
+          84015000000,
+          93318000000,
+          124900000000
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          -5768000000,
+          1556000000,
+          9239000000,
+          20969000000,
+          43056000000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          1.6212905540464353,
+          0.9096578605456908,
+          0.7150012680699974,
+          0.7529638819961401,
+          1.1150033521693323
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          9539000000,
+          17165000000,
+          18673000000,
+          20821000000,
+          31977000000
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          5028000000,
+          8470000000,
+          11807000000,
+          -394000000,
+          -23686000000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q1'27",
+    "periodEnd": "2026-08-31",
+    "revenue": 19345000000,
+    "operatingMargin": 0.35264926337554925,
+    "revenueYoY": 0.2960605654562509
+  },
+  "ttm": {
+    "pe": 23.171296296296298,
+    "ps": 6.025642900929268,
+    "evToEbitda": 14.71897433812355,
+    "grossMargin": 0.7443888710868384,
+    "operatingMargin": 0.32493695752121154,
+    "netMargin": 0.2635941875531159
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY27E",
+      "revenue": 90081657290,
+      "eps": 8.1143
+    },
+    "followingFY": {
+      "label": "FY28E",
+      "revenue": 131209800777,
+      "eps": 11.02451
+    }
+  },
+  "analysts": {
+    "count": 86,
+    "buy": 56,
+    "hold": 26,
+    "sell": 4,
+    "consensusRating": "Buy",
+    "consensusTarget": 236.52,
+    "medianTarget": 241,
+    "highTarget": 325,
+    "lowTarget": 95,
+    "asOf": "2026-09-13"
+  },
+  "segments": {
+    "basis": "FY25",
+    "items": [
+      {
+        "name": "Cloud And License Business",
+        "revenue": 49230000000,
+        "share": 0.857680447394554
+      },
+      {
+        "name": "Hardware Business",
+        "revenue": 2936000000,
+        "share": 0.051150716911444453
+      },
+      {
+        "name": "Services Business",
+        "revenue": 5233000000,
+        "share": 0.09116883569400164
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": [
+      {
+        "region": "EMEA",
+        "share": 0.2443422359274552
+      },
+      {
+        "region": "Asia Pacific",
+        "share": 0.12256311085558982
+      },
+      {
+        "region": "Americas",
+        "share": 0.633094653216955
+      }
+    ]
+  },
+  "peers": [
+    {
+      "ticker": "ADBE",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "ASML",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "FTNT",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "HPAI",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-07-31",
+      "close": 129.8699951171875
+    },
+    {
+      "date": "2026-08-03",
+      "close": 141.85000610351562
+    },
+    {
+      "date": "2026-08-04",
+      "close": 145.74000549316406
+    },
+    {
+      "date": "2026-08-05",
+      "close": 144.38999938964844
+    },
+    {
+      "date": "2026-08-06",
+      "close": 143.47000122070312
+    },
+    {
+      "date": "2026-08-07",
+      "close": 147.02000427246094
+    },
+    {
+      "date": "2026-08-10",
+      "close": 151.0500030517578
+    },
+    {
+      "date": "2026-08-11",
+      "close": 145.47999572753906
+    },
+    {
+      "date": "2026-08-12",
+      "close": 153.27999877929688
+    },
+    {
+      "date": "2026-08-13",
+      "close": 156.22000122070312
+    },
+    {
+      "date": "2026-08-14",
+      "close": 150.52000427246094
+    },
+    {
+      "date": "2026-08-17",
+      "close": 146.64999389648438
+    },
+    {
+      "date": "2026-08-18",
+      "close": 142.7899932861328
+    },
+    {
+      "date": "2026-08-19",
+      "close": 143.80999755859375
+    },
+    {
+      "date": "2026-08-20",
+      "close": 142.07000732421875
+    },
+    {
+      "date": "2026-08-21",
+      "close": 146.47000122070312
+    },
+    {
+      "date": "2026-08-24",
+      "close": 142.4499969482422
+    },
+    {
+      "date": "2026-08-25",
+      "close": 144.75999450683594
+    },
+    {
+      "date": "2026-08-26",
+      "close": 148.8699951171875
+    },
+    {
+      "date": "2026-08-27",
+      "close": 151.94000244140625
+    },
+    {
+      "date": "2026-08-28",
+      "close": 150.85000610351562
+    },
+    {
+      "date": "2026-08-31",
+      "close": 149.1199951171875
+    },
+    {
+      "date": "2026-09-01",
+      "close": 141.32000732421875
+    },
+    {
+      "date": "2026-09-02",
+      "close": 145.75
+    },
+    {
+      "date": "2026-09-03",
+      "close": 154.0399932861328
+    },
+    {
+      "date": "2026-09-04",
+      "close": 158.77999877929688
+    },
+    {
+      "date": "2026-09-08",
+      "close": 162.52000427246094
+    },
+    {
+      "date": "2026-09-09",
+      "close": 161.6300048828125
+    },
+    {
+      "date": "2026-09-10",
+      "close": 152.94000244140625
+    },
+    {
+      "date": "2026-09-11",
+      "close": 150.27999877929688
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "Oracle Corporation, a global technology giant, provides a comprehensive suite of enterprise information technology solutions worldwide. A core part of its portfolio comprises cloud-based software-as-a-service (SaaS) applications, including the Oracle Fusion Cloud suite covering enterprise resource planning (ERP), enterprise performance management (EPM), supply chain and manufacturing management (SCM), and human capital management (HCM). This also extends to specialized offerings like Oracle Advertising, the NetSuite application suite, and Oracle Fusion solutions for Sales, Service, and Marketing. Beyond these, Oracle develops cloud solutions tailored for various specific industries, alongside traditional application licenses and comprehensive license support services. Furthermore, the company's robust cloud and licensing business is underpinned by its infrastructure technologies. These include the flagship Oracle Database, the widely adopted Java programming language, and various middleware components such as development tools. Its advanced cloud infrastructure provides compute, storage, and networking capabilities, complemented by innovative services like the Oracle Autonomous Database, MySQL HeatWave, Internet-of-Things (IoT) platforms, digital assistants, and blockchain technology. Oracle also offers a range of hardware products and associated software. This encompasses Oracle engineered systems, enterprise servers, storage solutions, and specialized hardware for particular industries. Additionally, it provides virtualization software, operating systems, management software, and related hardware support. Complementing its product lines, Oracle delivers expert consulting and dedicated customer services. The company employs a direct sales model, reaching businesses across diverse sectors, government bodies, and educational institutions globally, while also leveraging an extensive network of indirect channels. Established in 1977, Oracle Corporation maintains its corporate headquarters in Austin, Texas.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-11"
+    },
+    "mdaExcerpt": {
+      "text": "Item 7. Management's Discussion and Analysis o f Financial Condition and Results of Operations\nWe begin Management's Discussion and Analysis of Financial Condition and Results of Operations with an overview of our businesses and significant trends. This overview is followed by a summary of our critical accounting estimates that we believe are important to understanding significant assumptions and judgments incorporated in our reported financial results. We then provide a more detailed analysis of our results of operations and financial condition for fiscal 2026 compared to fiscal 2025. A discussion regarding our financial condition and results of operations for fiscal 2025 compared to fiscal 2024 can be found in Management's Discussion and Analysis of Financial Condition and Results of Operations in Part II, Item 7 of our Annual Report on Form 10-K for the fiscal year ended May 31, 2025, as filed with the SEC on June 18, 2025, which is available free of charge on the SEC's website at www.sec.gov and on our Investor Relations website at www.oracle.com/investor.\nBusiness Overview\nOracle provides products and services that build, run and support enterprise information technology (IT) frameworks. Our products and services include enterprise applications and infrastructure offerings that incorporate and are enhanced by artificial intelligence (AI) technologies, including embedded AI-driven automation and analytics and generative AI capabilities. These offerings are delivered worldwide through a variety of flexible and interoperable IT deployment models. These models include cloud-based, on-premise and hybrid deployments. We provide choice and flexibility to our customers as to when and how they deploy Oracle applications and infrastructure technologies. Through our worldwide sales force and Oracle Partner Network, we sell to customers all over the world, including businesses of various sizes and industries, government agencies, educational institutions and resellers.\nWe have three businesses: cloud and software (formerly referred to as cloud and license); hardware; and services; each of which is comprised of a single operating segment. The descriptions set forth below as a part of this Item 7 Management's Discussion and Analysis of Financial Condition and Results of Operations and the information contained within Item 1 Business and Note 13 of Notes to Consolidated Financial Statements included elsewhere in this Annual Report provide additional information related to our businesses and operating segments and align to how our chief operating decision makers (CODMs), which are our Chief Executive Officers and Chief Technology Officer, view our operating results and allocate resources.\nCloud and Software Business\nOur cloud and software business, which represented 87% and 86% of our total revenues in fiscal 2026 and 2025, respectively, markets, sells and delivers a broad spectrum of enterprise applications and infrastructure technologies through our cloud and software offerings. Revenue streams included in our cloud and software business are:\nCloud revenues, which are earned by providing customers access to Oracle Cloud applications and infrastructure technologies via cloud-based deployment models that Oracle develops, provides unspecified updates and enhancements for, deploys, hosts, manages and supports and that customers access by entering into a subscription agreement with us for a stated period. Oracle Cloud Applications and Oracle Cloud Infrastructure (collectively Oracle Cloud) arrangements generally: have durations of one to five years; are renewed at the customer's option; and are recognized as revenues ratably over the contractual period of the cloud contract or, in the case of usage model contracts, as the cloud services are consumed over time; and\nSoftware revenues, which include:\no software license revenues, which are generated from licensing our software products, including Oracle Applications, Oracle Database, Oracle Middleware and Java, among others, for deployment by our customers in cloud-based, on-premise or other IT environments. Our software license transactions are generally perpetual in nature and are generally recognized as revenues up front at the point in time when the software is made available to the customer to download and use. Revenues from usage-based royalty arrangements for distinct software licenses are recognized at the point in time when the software end user usage occurs. The timing of a few large software license transactions can\n39\nTable of Contents\nsubstantially affect our quarterly software license revenues due to the point-in-time nature of revenue recognition for software license transactions. Software license customers have the option to purchase and renew software support contracts, as further described below; and\no software support revenues, which are generated by providing Oracle software support services to customers that have elected to purchase support services in connection with the purchase of Oracle applications and infrastructure software licenses. Substantially all software support customers renew their support contracts with us upon expiration in order to continue to benefit from technical support services and the periodic issuance of unspecified updates and enhancements, which current software support customers are entitled to receive. Software support contracts are generally: priced as a percentage of the net fees paid by the customer to purchase a software license; billed in advance of the support services being performed; renewed at the customer's option; and recognized as revenues ratably over the contractual period that the support services are provided, which is generally one year.\nProviding choice and flexibility to our customers as to when and how they deploy Oracle applications and infrastructure technologies are important elements of our corporate strategy. In recent periods, customer demand for our applications and infrastructure technologies delivered through our Oracle Cloud has increased. To address customer demand and enable customer choice, we have certain programs for customers to pivot their applications and infrastructure software licenses and the related software support to the Oracle Cloud for new deployments and to migrate to and expand with the Oracle Cloud for their existing workloads. The proportion of our cloud revenues relative to our total revenues has increased and we expect this trend to continue. Cloud revenues represented 51% and 43% of our total revenues during fiscal 2026 and 2025, respectively.\nOur cloud and software business' revenue growth is affected by many factors, including the strength of general economic and business conditions, including the effects of inflation, tariffs and trade policy, geopolitical conditions and other macroeconomic factors on customer demand; governmental budgetary constraints; the strategy for and competitive position of our offerings; customer satisfaction with our offerings; the continued renewal of our cloud and software support customer contracts by the customer contract base; substantially all customers continuing to purchase software support contracts in connection with their license purchases; the pricing of software support contracts sold in connection with the sales of licenses; the pricing, amounts and volumes of cloud services and licenses sold; our ability to manage Oracle Cloud capacity requirements to meet existing and prospective customer demand; and foreign currency rate fluctuations.\nOn a constant currency basis, we expect that our total cloud and software revenues generally will continue to increase due to:\nexpected growth in our cloud offerings; and\ncontinued demand for our software offerings.\nWe believe these factors should contribute to future growth in our cloud and software business' total revenues, which should enable us to continue to make investments in research and development and our cloud operations to develop, improve, increase the capacity of and expand the geographic footprint of our cloud and software products and services. We continue to place significant emphasis, both domestically and internationally, on direct sales through our own sales force. We also continue to market certain of our cloud and software offerings through indirect channels.\nCosts associated with our cloud and software business are included in cloud and software expenses and sales and marketing expenses. These costs are largely infrastructure- and personnel-related and include the cost of providing our cloud and software support offerings, salaries and commissions earned by our sales force for the sale of our cloud and software offerings and marketing program costs.\nOur cloud and software business' margin has historically trended upward over the course of the four quarters within a particular fiscal year due to the historical upward trend of our cloud and software business' revenues over those quarterly periods and because the majority of our costs for this business are generally fixed in the short term. The historical upward trend of our cloud and software business' revenues over the course of the four quarters within a particular fiscal year is primarily due to the addition of new cloud and software support contracts to the customer\n40\nTable of Contents\ncontract base, which we generally recognize as revenues ratably or based upon customer usage over the respective contractual terms and the renewal of existing customers' cloud and software support contracts over the course of each fiscal year, which we generally recognize as revenues in a similar manner; and the historical upward trend of our software license revenues, which we generally recognize at a point in time upon delivery; in each case over those four fiscal quarterly periods. Our margin for this business may be adversely impacted due to increases in supply chain and energy costs, the impact of tariffs and other trade barriers on our costs, and our ability to pass such costs on to customers; inflation; foreign currency rate fluctuations; governmental budgetary constraints; trade policy and other factors.\nHardware Business\nOur hardware business, which represented 5% of our total revenues in each of fiscal 2026 and 2025, provides a broad selection of enterprise hardware products and hardware-related software products including Oracle Engineered Systems, servers, storage, industry-specific hardware offerings, operating systems, virtualization, management and other hardware-related software and related hardware support. Each hardware product and its related software, such as an operating system or firmware, are highly interdependent and interrelated and are accounted for as a combined performance obligation. The revenues for this combined performance obligation are generally recognized at the point in time that the hardware product and its related software are delivered to the customer and ownership is transferred to the customer. Our hardware support offerings provide customers with unspecified software updates for software components that are essential to the functionality of our hardware products and associated software products. Our hardware support offerings can also include product repairs, maintenance services and technical support services. Hardware support contracts are entered into and renewed at the option of the customer, are generally priced as a percentage of the net hardware products fees and are generally recognized as revenues ratably as the hardware support services are delivered over the contractual term, which is generally one year. The majority of our hardware products are sold through indirect channels, including independent distributors and value-added resellers, and we also market and sell our hardware products through our direct sales force. We expect to continue to make investments in research and development to improve existing hardware products and services and to develop new hardware products and services.\nCosts associated with our hardware business include the cost of hardware products, which consists of expenses for materials and labor used to produce these products by our internal manufacturing operations or by third-party manufacturers, warranty and related expenses and the impact of periodic changes in inventory valuation, including the impact of inventory determined to be excess and obsolete; the cost of materials used to repair customer products with eligible support contracts; the cost of labor and infrastructure to provide support services; and sales and marketing expenses, which are largely personnel-related and include variable compensation earned by our sales force for the sales of our hardware offerings.\nOur quarterly hardware revenues are difficult to predict. Our hardware revenues, cost of hardware and hardware operating margins that we report are affected by many factors, including our manufacturing partners' abilities to timely and cost-effectively manufacture or deliver a few large hardware transactions; our strategy for and the pricing and position of our hardware products relative to competitor offerings; customer demand for competing offerings, including cloud infrastructure offerings; the strength of general economic and business conditions, including the effects of inflation, tariffs and trade policy, geopolitical conditions and other macroeconomic factors on customer demand; governmental budgetary constraints; whether customers decide to purchase hardware support contracts at or in close proximity to the time of hardware product sale; the percentage of our hardware support contract customer base that renews its support contracts; the effect of tariffs and other trade barriers on our costs, and our ability to pass such costs on to customers; the geographic locations of our customers; the close association between hardware products, which have a finite life, and customer demand for related hardware support as hardware products age; customer decisions to either maintain or upgrade their existing hardware infrastructure to newly developed technologies that are available; and foreign currency rate fluctuations.\n41\nTable of Contents\nServices Business\nOur services business, which represented 8% and 9% of our total revenues in fiscal 2026 and 2025, respectively, helps customers and partners maximize the performance of their investments in Oracle applications and infrastructure technologies. We believe that our services are differentiated based on our focus on Oracle technologies, extensive experience, broad sets of intellectual property and best practices. Our services offerings include consulting services and customer success services (formerly referred to as advanced customer services). Services revenues are generally recognized over time as the services are performed. The cost of providing our services consists primarily of personnel-related expenses, technology infrastructure expenditures, facilities expenses and external contractor expenses. Our services business has lower margins than our cloud and software and hardware businesses. Our services revenues are affected by many factors including our strategy for, and the competitive position of, our services; customer demand for our cloud and software and hardware offerings and the related services that we may market and sell in connection with these offerings; general economic conditions; governmental budgetary constraints; personnel reductions in our customers' IT departments; tighter controls over customer discretionary spending; and foreign currency rate fluctuations.\nAcquisitions\nOur selective acquisition program is another element of our corporate strategy. Historically, we have invested billions of dollars to acquire a number of complementary companies, products, services and technologies.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm",
+      "asOf": "2026-06-22",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "Item 1A. R isk Factors\nWe operate in rapidly changing economic and technological environments that present numerous risks, many of which are driven by factors that we cannot control or predict. The following discussion, as well as our discussion in Item 7 Management's Discussion and Analysis of Financial Condition and Results of Operations, highlights some of these risks. The risks described below are not exhaustive and you should carefully consider these risks and uncertainties before investing in our securities. Additional risks and uncertainties not currently known to us or that we currently deem to be insignificant also may materially and adversely affect our business, financial condition or operating results in the future. If any of the following risks occur, our business, operating results, financial condition, and prospects could be materially and adversely affected.\nRisk Factor Summary\nBusiness and Operational Risks\nWe may be unsuccessful in developing and selling new products and services, integrating acquired products and services and enhancing our existing products and services.\nOur AI products may not operate as anticipated, which could adversely affect our reputation, revenues and profitability.\nIf we do not successfully execute our Oracle Cloud strategy, including our offerings of Oracle Cloud, our revenues and profitability may decline.\nIf we are unable to secure data center capacity at affordable rates or do not accurately plan for and manage our infrastructure capacity requirements, our profitability may decline.\nOur cloud offerings and hardware offerings are complex, and if we cannot successfully manage this complexity, including the sourcing of technologies and components, the results of these businesses will suffer.\nWe may not receive significant revenues from our current research and development efforts for several years, if at all.\nOur products and services may not function properly if we experience significant coding, manufacturing or configuration errors in our cloud, software and hardware offerings.\nIf we are unable to compete effectively, the results of operations and prospects for our business could be harmed.\nAny failure to offer high-quality technical support services may adversely affect our relationships with our customers and our financial results.\nOur periodic workforce restructurings and reorganizations can be disruptive.\nWe may lose key employees or may be unable to hire enough qualified employees.\nThere are risks associated with our cloud and software and hardware indirect sales channels which could affect our future operating results.\nAcquisitions, joint ventures and strategic alliances present many risks and we may not achieve the financial and strategic goals that were contemplated at the time of a transaction.\nWe are subject to risks with respect to environmental, social and governance (ESG) matters.\nData Privacy, Cybersecurity and Intellectual Property Risks\nWe are subject to business, financial and reputational risks related to cybersecurity incidents and data breaches.\nOur business practices with respect to data could give rise to operational interruption, liabilities or reputational harm as a result of governmental regulation, legal requirements or industry standards relating to privacy and data protection.\nThird parties have claimed, and in the future may claim, infringement or misuse of intellectual property rights and/or breach of license agreement provisions.\nWe may not be able to protect our intellectual property rights.\n15\nTable of Contents\nLegal and Regulatory Risks\nAdverse litigation results could affect our business.\nWe may be subjected to increased taxes due to changes in U.S. or international tax laws, the inability to obtain or retain tax incentives, or from adverse resolutions of tax audits and controversies.\nOur international sales and operations and global customer base subject us to additional risks, including trade restrictions, export controls and sanctions, that can adversely affect our operating results.\nThe healthcare industry is highly regulated, and thus, we are subject to several laws, regulations and industry initiatives, non-compliance with certain of which could adversely affect our healthcare business.\nOur sales to local, state, federal and foreign government customers expose us to business volatility and risks, including government budgeting cycles and appropriations, government shutdowns, procurement regulations, governmental policy shifts, early termination of contracts, audits, investigations, sanctions and penalties.\nEnvironmental and other related laws and regulations subject us to a number of risks and could result in significant liabilities and costs.\nFinancial Risks\nOur operations can be difficult for us to predict because our quarterly results of operations may fluctuate significantly based on a number of factors.\nChanges in currency exchange rates can adversely affect customer demand and our revenues and profitability.\nThere are risks associated with our outstanding and future indebtedness.\nIf our accounting estimates and judgments turn out to be inaccurate, our future financial results could fall short of expectations, which could have a material adverse effect on our stock price.\nRisks Related to our Common and Preferred Stock\nOur stock price could become more volatile and your investment could lose value.\nConversion of our 6.50% Series D Mandatory Convertible Preferred Stock (Mandatory Convertible Preferred Stock) and our depositary shares, or the payment of dividends on Mandatory Convertible Preferred Stock in shares of common stock, or the issuance of shares of our common stock under the At the Market (ATM) Program will dilute the ownership interest of the holders of our common stock.\nThe ATM Program, the Mandatory Convertible Preferred Stock or our depositary shares may adversely affect the market price of our common stock, and we cannot guarantee that our ATM Program will be fully implemented.\nOur common stock ranks junior to our Mandatory Convertible Preferred Stock with respect to the payment of dividends and amounts payable in the event of our liquidation, winding-up or dissolution.\nWe cannot guarantee that our stock repurchase program will be fully implemented or that it will enhance long-term stockholder value.\nGeneral Risks\nEconomic, political and market conditions can adversely affect our business, results of operations and financial condition, including our revenue growth and profitability, which in turn could adversely affect our stock price.\nSignificant events in certain geographic locations could adversely affect our operating results and disrupt our business.\n16\nTable of Contents\nBusiness and Operational Risks\nWe may be unsuccessful in developing and selling new products and services, integrating acquired products and services and enhancing our existing products and services. Our industry is characterized by rapid technological advances, intense competition, changing delivery models, evolving standards in communications infrastructure, increasingly sophisticated customer needs and frequent new product introductions and enhancements. We have continued to refresh and release new offerings of our cloud products and services, but if we are unable to develop new or sufficiently differentiated products and services, enhance and improve our product offerings and support services in a timely manner or position and price our products and services to meet demand, customers may not purchase or subscribe to our software, hardware or cloud offerings or renew software support, hardware support or cloud subscriptions contracts. Renewals of these contracts are important to our future success. In addition, we cannot provide any assurance that the standards on which we choose to develop new products will allow us to compete effectively for business opportunities in emerging areas.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm",
+      "asOf": "2026-06-22",
+      "truncated": true
+    },
+    "transcriptHighlights": {
+      "text": "Great to be here with you all today. Like Ken said, you can follow along with our remarks in the earnings slide deck on our website and via the webcast. If I had to describe this quarter in one word, I think it would be acceleration. As we are seeing an acceleration in execution across the company, translating into our top and bottom line results. Q1 was another record quarter, driven by strength in both our cloud infrastructure and cloud apps businesses. Total revenue was a record $19.3 billion, up 30% year-over-year in U.S. dollars. For the first time, Q1 total revenue grew sequentially, an important sign of our continued progress in building scaled infrastructure. Historically, a record Q4 was followed by a lighter Q1.\n\nBut as we accelerate across the full technology stack, from infrastructure to database to software, that is no longer the case. Cloud infrastructure revenue for Q1 was $7.4 billion, up 121%, reflecting strong execution as we brought record levels of new megawatt capacity online, supported by a continued strong demand environment for compute and our database services. Cloud apps were up 10% with Fusion and our industry apps tracking well above that, and Mike and Clay will give more details on those businesses in just a moment. Our non-GAAP operating income increased 31% in USD to $8.2 billion, driven by strong revenue progression boosted by operating leverage. Our gross margin did decline as expected, driven by impacts from ramping up our data centers and the acceleration of infrastructure revenue. However, this was offset in the quarter by lower operating costs and strong operating leverage tied to simplification and efficiency actions.\n\nNet net, our operating margin remained around flat for the quarter at 42% on a non-GAAP basis. This all translated to a strong increase in our non-GAAP EPS of +30% in USD, reaching $1.92 for the quarter. The last point I will make on our financial highlights is that our remaining performance obligations, or RPO, increased $26 billion from Q4. There are two things happening here. First, we continued to grow our RPO during the quarter to support future revenues. The vast majority of those new contracts were via prepay or bring your own hardware or similar mechanic, so will not require incremental capital from Oracle. Also, that new RPO will not impact our CapEx or revenues until fiscal 2028 or beyond. Second, we started to see a strong conversion of our RPO into revenues this quarter, driving our cloud infrastructure results.\n\nWe have added a few slides here where you can see that strong inflection point in our RPO converting into revenues and operating profits. First, in cloud infrastructure revenues, I already mentioned the +121% growth for this quarter, and that is after a Q4 of +93%. We would expect acceleration to continue in the remainder of fiscal 2027 as we convert more RPO into revenues. We now expect around half of our RPO to convert into sales over the next 36 months. Next, not surprisingly, you can see the acceleration in our total company revenues, here shown on a trailing 12-month basis, driving growth in Q1 to five points higher than our Q4, as cloud infrastructure accelerates and becomes a larger and larger contributor. Lastly, our growth in operating income, also on a trailing 12-month basis, shows a similar strong acceleration from 16% to 21% between Q4 and Q1.\n\nNow to our balance sheet and cash flows. We drove record cash flow from operations of $23 billion in Q1, again reflecting our strong execution against a backdrop of strong demand, as well as collection of customer prepayments. Our CapEx for the quarter was $28 billion, leading to negative free cash flow of $5 billion. Our net cash CapEx, so net of prepayments, was $18 billion for the quarter. To note, our CapEx will not be linear throughout the year. We continue to anticipate $90 billion-$95 billion in CapEx for the full year, with not more than $70 billion in net cash CapEx. Lastly, we are quite pleased to announce that we completed our previously disclosed $20 billion at-the-market equity issuance in entirety during the Q1.\nWith that, let me turn the call over to Mike and then Clay to get into more details on our cloud apps and infrastructure businesses.\n\nThanks, Hillary. I'll start with some additional color on the applications business. We continue to see the power of application suites in the minds of our customers. They are investing in trusted, complete solutions that now seamlessly blend agents and applications together to run their businesses. The introduction of AI is an accelerator, not a replacement, for packaged applications. As such, our decades of experience and expertise running business processes across every industry, in every geography, for organizations of any size, gives us the understanding of how to help them succeed. Before AI came along, application suites had already proven their effectiveness. Companies had been able to increase their profit margins because end-to-end automation with standardized and efficient business processes proved to be much more effective than one-off custom solutions.\n\nAt AI World in October, we will unveil a new agentic AI accelerator poised to redefine how customers deploy Oracle applications faster, simpler, and at a dramatically lower cost. Working alongside Oracle and customer teams, AI agents will automate and orchestrate implementation at an unprecedented scale, compressing SaaS deployments from years to months, and months to weeks. It's really the power of these things together that reinforce my belief that the growth of our applications business is only going up from here. In Q1, we had a strong quarter in many of our SaaS offerings, driven by the demand environment that I just described. In total, our SaaS business grew 10%, with Fusion growing at 14%. Our Oracle Health business continued to accelerate, and although we don't specifically call it out, our industry applications grew at greater than 20% in Q1.\n\nCustomers used our embedded AI capabilities more than 150 million times during the quarter, with usage growing 42% sequentially. Our AI agents executed more than 3.5 million times in production during the quarter, nearly doubling quarter over quarter. Customers have over 2,300 AI agents in production, and that is up 90% quarter over quarter. Overall, AI production usage across Fusion alone consumed 900 billion tokens during the quarter. I think it is fair to say that customers are using our AI built into our Fusion applications and our application stack every day. Turning to NetSuite, we are announcing the general availability of our new AI-powered offering called NetSuite Next. This presents an agentic experience that is simpler, more powerful, and is infused with AI across the workflows that customers rely on every day. It is easier to adopt, it is more productive from day one, and it is more valuable as customers grow.\n\nAdditionally, the NetSuite AI Connector Service, which lets customers securely connect their NetSuite data to leading AI assistants of their choice, including ChatGPT and Claude, is already one of the fastest adopted capabilities in the whole entire history of NetSuite, with more than 10,000 customers already using it. Personal care company Every Man Jack estimates that the service alone will save $350,000 annually and nearly 5,000 hours of work. This month at our Oracle Health and Life Sciences customer event, we will debut our all-new agentic care management system alongside a world-class lineup of external speakers. More than an EHR, this system connects clinical research and care delivery, reduces the burden of records management for patients, and enables providers to practice at the top of their license with AI as the user interface. There are few AI missions that matter more.\nHelping deliver better care while freeing providers to focus on what matters most, their patients, not computer systems.",
+      "source": "bigdata:Quartr Transcripts",
+      "asOf": "2026-09-10",
+      "truncated": true,
+      "url": "https://app.bigdata.com/documents/8290DC1105B7144E57BC5ECD99D8DAAB"
+    },
+    "headlines": [
+      {
+        "text": "*UBS RAISES ORACLE PRICE TARGET TO 285 (250) USD - 'BUY'",
+        "source": "bigdata:Alliance News",
+        "asOf": "2026-06-02",
+        "url": "https://app.bigdata.com/documents/93888FE03352B17771294F5C9F379281?cnum=1"
+      },
+      {
+        "text": "UBS Maintains Buy on Oracle, Raises Price Target to $285",
+        "source": "bigdata:Benzinga",
+        "asOf": "2026-06-02",
+        "url": "https://app.bigdata.com/documents/5BFE2190D7ADE6B7219A20B6E0C05697?cnum=1"
+      },
+      {
+        "text": "Kuehn Law Encourages Investors of Oracle Corporation to Contact Law Firm",
+        "source": "bigdata:Benzinga",
+        "asOf": "2026-06-02",
+        "url": "https://app.bigdata.com/documents/431829D950146B20ABC77641E14BA49B?cnum=1"
+      },
+      {
+        "text": "Oracle price target raised to $285 from $250 at UBS",
+        "source": "bigdata:The Fly",
+        "asOf": "2026-06-02",
+        "url": "https://app.bigdata.com/documents/3F7B27CEB5FCE1CDB97D263D66EAB258?cnum=1"
+      },
+      {
+        "text": "Oracle price target raised to $290 from $215 at Scotiabank",
+        "source": "bigdata:The Fly",
+        "asOf": "2026-06-02",
+        "url": "https://app.bigdata.com/documents/333A83F01708BF0FAB00C6648DE8DDAB?cnum=1"
+      },
+      {
+        "text": "Scotiabank Maintains Sector Outperform on Oracle, Raises Price Target to $290",
+        "source": "bigdata:Benzinga",
+        "asOf": "2026-06-02",
+        "url": "https://app.bigdata.com/documents/D45FAA8D020D5D4E8CC003E0EBD3E548?cnum=1"
+      },
+      {
+        "text": "What's Going On With Oracle Stock Monday?",
+        "source": "bigdata:Benzinga",
+        "asOf": "2026-06-01",
+        "url": "https://app.bigdata.com/documents/7FAE687D2B7D3709D4C0920B5DE7E86D?cnum=1"
+      },
+      {
+        "text": "Oracle Joins Arm's AGI CPU Ecosystem As Agentic AI Boom Draws Meta, OpenAI And ByteDance",
+        "source": "bigdata:Benzinga",
+        "asOf": "2026-06-02",
+        "url": "https://app.bigdata.com/documents/C1E73F5AB2C851DA1F76097FF8EDFC30?cnum=1&cnum=2"
+      },
+      {
+        "text": "ARM Holdings plc - Oracle Cloud Infrastructure joins the Arm AGI CPU ecosystem as agentic AI accelerates",
+        "source": "bigdata:PubT",
+        "asOf": "2026-06-02",
+        "url": "https://app.bigdata.com/documents/C5E94AAF6882DED0194DC8380A8C7097?cnum=1"
+      },
+      {
+        "text": "Oracle Stock Consolidates After Huge Software Rally As Company Ramps Up Multi-Megawatt AI Factories",
+        "source": "bigdata:Benzinga",
+        "asOf": "2026-06-02",
+        "url": "https://app.bigdata.com/documents/CAD4C5961B36B46342E975BBB1461CB3?cnum=2"
+      }
+    ]
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-13T17:26:01.126Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-09-13T17:26:01.126Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-13T17:26:01.126Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-13T17:26:01.126Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-13T17:26:01.126Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-13T17:26:01.126Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-13T17:26:01.126Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-13T17:26:01.126Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-13T17:26:01.126Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-13T17:26:01.126Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-13T17:26:01.126Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-13T17:26:01.126Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-13T17:26:01.126Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-13T17:26:01.126Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-13T17:26:01.126Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-13T17:26:01.126Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-13T17:26:01.126Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-13T17:26:01.126Z"
+    }
+  ]
+}
