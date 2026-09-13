@@ -10,6 +10,8 @@ import { edgarText, type FetchLike } from "./client";
 export const EXCERPT_CAP = 8000;
 // MD&A opens with cautionary language and a 10-Q's substantive discussion routinely starts past 8k; Risk Factors keep EXCERPT_CAP.
 export const MDA_CAP = 16000;
+// the call's headline metrics routinely sit past 8k of the ranked chunks; Risk Factors keep EXCERPT_CAP.
+export const TRANSCRIPT_CAP = 16000;
 
 export function htmlToText(html: string): string {
   return html

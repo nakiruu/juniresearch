@@ -118,7 +118,7 @@ the desk config.
    52-week range, dividend yield.
 4. **Context block** — under headings carrying source and date: company
    description, MD&A (≤ 16,000), risk factors (≤ 8,000), transcript highlights
-   (≤ 8,000), headlines (≤ 10, with publisher and date). Verbatim; code
+   (≤ 16,000), headlines (≤ 10, with publisher and date). Verbatim; code
    summarises nothing.
 5. **Output contract** — the Judgment JSON Schema, the file path the driver
    expects, and "return the complete object every time".

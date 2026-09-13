@@ -7,7 +7,7 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { readRawJson, readRawText, section } from "../raw";
-import { htmlToText, extractSections, capAtSentence, type CappedSection } from "../../edgar/filing-text";
+import { htmlToText, extractSections, capAtSentence, TRANSCRIPT_CAP, type CappedSection } from "../../edgar/filing-text";
 import type { Excerpt, FactPack } from "../schema";
 
 const EDGAR_PRIMARY_FILE = "edgar-primary.html";
@@ -50,7 +50,7 @@ function transcriptFrom(results: SearchResult[], fallbackDay: string): Excerpt |
     .filter(Boolean)
     .join("\n\n");
   if (!text) return null;
-  const capped = capAtSentence(text);
+  const capped = capAtSentence(text, TRANSCRIPT_CAP);
   return { text: capped.text, source: sourceOf(first), asOf: dayOf(first, fallbackDay), truncated: capped.truncated, ...(first.url ? { url: first.url } : {}) };
 }
 

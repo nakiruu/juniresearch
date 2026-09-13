@@ -122,19 +122,16 @@ describe("validateJudgment on the golden judgment", () => {
     const issues = validateJudgment(golden, facts, pack);
     expect(issues.filter((i) => !/not in the facts/.test(i.message))).toEqual([]);
     const misses = issues.map((i) => `${i.field}: ${i.value}`).sort();
-    // Calibration record: calibrated on 2026-09-13. Each figure below was confirmed genuinely absent
-    // from data/facts/AVGO/0001730168-26-000080.json (its numeric fields and its context excerpts).
+    // Calibration record: re-calibrated 2026-09-13 after the transcript cap rose to 16,000. The AVGO
+    // transcript excerpt now reaches the passage "...revenue, which grew 221% year-on-year..." and its
+    // surrounding paragraph ("...up over 3.5x year-on-year and represented 73% of AI revenue... AI
+    // networking revenue was up over 2.5x year-on-year"), which grounds +221%/221%, 2.5x, 3.5x and 73%
+    // (all four occurrences, across catalysts, thesis, risks, and finalRecommendation). Each figure
+    // remaining below was confirmed genuinely absent from data/facts/AVGO/0001730168-26-000080.json
+    // (its numeric fields and its context excerpts).
     expect(misses).toEqual([
-      "sections.executiveSummary.catalysts[0]: +221%",
-      "sections.executiveSummary.catalysts[0]: 2.5x",
-      "sections.executiveSummary.catalysts[0]: 3.5x",
-      "sections.executiveSummary.catalysts[0]: 73%",
-      "sections.executiveSummary.risks[2]: 73%",
-      "sections.executiveSummary.thesis.body: 221%",
-      "sections.finalRecommendation.body[0]: 221%",
       "sections.financials.balanceCommentary: $1.4B",
       "sections.financials.cashflowCommentary: $1.4B",
-      "sections.risks.idiosyncratic[2]: 73%",
     ]);
   });
 });

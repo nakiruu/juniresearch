@@ -370,7 +370,9 @@ until a peer source exists. `sharesOutstanding` is derived as
 The FactPack schema is unchanged except `provenance.source` gains `"yahoo"`.
 SEC XBRL is parked as a later hardening pass. The MD&A excerpt cap is 16,000
 characters (Risk Factors 8,000) and `extractSections` returns
-`{ text, truncated }` per section. The watchlist lives at
+`{ text, truncated }` per section. Transcript highlights are capped at 16,000
+characters (raised 2026-09-13 after the Oracle run showed the call's headline
+figures sit past 8,000). The watchlist lives at
 `data/edgar/watchlist.json`. CLIs run via `tsx`.
 
 The manifest table and mapping section above are superseded by the plan's

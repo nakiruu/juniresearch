@@ -19,8 +19,10 @@ describe("mapContext on the AVGO capture", () => {
     expect(t.url).toMatch(/^https:\/\/app\.bigdata\.com\/documents\//);
     expect(t.asOf).toBe("2026-09-02");
     expect(t.text.length).toBeGreaterThan(1000);
-    expect(t.text.length).toBeLessThanOrEqual(8000);
+    expect(t.text.length).toBeLessThanOrEqual(16000);
     expect(t.text).toContain("infrastructure software");
+    // Past the old 8,000-character cap — proves the raised TRANSCRIPT_CAP actually reaches further into the ranked chunks.
+    expect(t.text).toContain("AI semiconductor revenue, which grew 221% year-on-year");
   });
   it("carries the ten newest-ranked headlines with publisher, date, and link", () => {
     expect(c.headlines).toHaveLength(10);
