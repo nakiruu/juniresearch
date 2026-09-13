@@ -24,6 +24,10 @@ describe("validateFactPack", () => {
     const p = minimalPack(); p.latestQuarter.periodEnd = "2026-05-03";
     expect(validateFactPack(p).map((i) => i.field)).toContain("latestQuarter.periodEnd");
   });
+  it("accepts a quarter that ends after the filing period", () => {
+    const p = minimalPack(); p.latestQuarter.periodEnd = "2026-11-01";
+    expect(validateFactPack(p).map((i) => i.field)).not.toContain("latestQuarter.periodEnd");
+  });
   it("assert throws naming the label and every field", () => {
     const p = minimalPack(); p.analysts.count = 61; p.segments.items[0].share = 0.7;
     expect(() => assertValidFactPack(p, "AVGO/x")).toThrow(/AVGO\/x[\s\S]*analysts\.count[\s\S]*segments/);

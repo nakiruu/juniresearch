@@ -1,6 +1,12 @@
 import { describe, it, expect } from "vitest";
-import { mapSegments } from "@/lib/facts/map/segments";
+import { mapSegments, tidyName } from "@/lib/facts/map/segments";
 const DIR = "data/raw/AVGO/0001730168-26-000080";
+
+describe("tidyName", () => {
+  it("collapses letter-spaced labels", () => { expect(tidyName("E M E A")).toBe("EMEA"); });
+  it("leaves real multi-word names unchanged", () => { expect(tidyName("Asia Pacific")).toBe("Asia Pacific"); });
+  it("trims surrounding whitespace", () => { expect(tidyName(" Americas ")).toBe("Americas"); });
+});
 describe("mapSegments on the AVGO capture", () => {
   const s = mapSegments(DIR);
   it("takes the latest fiscal year's product mix, shares summing to one", () => {

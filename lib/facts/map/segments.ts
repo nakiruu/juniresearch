@@ -2,6 +2,8 @@ import { readRawJson, num, section, type Rec } from "../raw";
 import type { FactPack } from "../schema";
 const FILE = "bigdata-tearsheet-annual.json";
 export const READS = [FILE] as const;
+/** Vendor labels sometimes arrive letter-spaced ("E M E A"); collapse those, leave real multi-word names alone. */
+export const tidyName = (s: string) => (s.trim().split(/\s+/).every((t) => t.length === 1) ? s.replace(/\s+/g, "") : s.trim());
 export const PROVENANCE: { field: string; endpoint: string; source: FactPack["provenance"][number]["source"] }[] = [
   { field: "segments", endpoint: "bigdata_company_tearsheet.revenue_segmentation.product", source: "bigdata" },
   { field: "geoMix", endpoint: "bigdata_company_tearsheet.revenue_segmentation.geographic", source: "bigdata" },
@@ -24,7 +26,7 @@ export function mapSegments(dir: string): { segments: FactPack["segments"]; geoM
   const [pBasis, product, pTotal] = latest(section(ts, ["revenue_segmentation", "product"], FILE), "product_segments");
   const [gBasis, geo, gTotal] = latest(section(ts, ["revenue_segmentation", "geographic"], FILE), "region_segments");
   return {
-    segments: { basis: pBasis, items: Object.entries(product).map(([name, revenue]) => ({ name, revenue, share: revenue / pTotal })) },
-    geoMix: { basis: gBasis, items: Object.entries(geo).map(([region, v]) => ({ region, share: v / gTotal })) },
+    segments: { basis: pBasis, items: Object.entries(product).map(([name, revenue]) => ({ name: tidyName(name), revenue, share: revenue / pTotal })) },
+    geoMix: { basis: gBasis, items: Object.entries(geo).map(([region, v]) => ({ region: tidyName(region), share: v / gTotal })) },
   };
 }

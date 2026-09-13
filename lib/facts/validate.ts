@@ -19,8 +19,8 @@ export function validateFactPack(p: FactPack): ValidationIssue[] {
   const ascending = h.every((pt, i) => i === 0 || pt.date > h[i - 1].date);
   if (h.length < 20 || !ascending || (h.length > 0 && h[h.length - 1].date > p.capturedAt.slice(0, 10)))
     issues.push({ field: "history", message: "must be ≥ 20 points, strictly ascending, ending on or before capturedAt", value: { length: h.length, ascending, last: h.at(-1)?.date } });
-  if (p.latestQuarter.periodEnd !== p.filing.periodEnd)
-    issues.push({ field: "latestQuarter.periodEnd", message: `must equal filing.periodEnd (${p.filing.periodEnd})`, value: p.latestQuarter.periodEnd });
+  if (p.latestQuarter.periodEnd < p.filing.periodEnd)
+    issues.push({ field: "latestQuarter.periodEnd", message: `must be on or after filing.periodEnd (${p.filing.periodEnd}) — an older quarter means stale vendor data`, value: p.latestQuarter.periodEnd });
   return issues;
 }
 

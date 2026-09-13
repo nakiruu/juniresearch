@@ -78,9 +78,16 @@ export function projectReportFacts(p: FactPack): ReportFacts {
   ];
 
   // The fixture stores display forms here: "fiscal Q3 2026" and "Sep 10, 2026".
-  const fiscalPeriod = `fiscal ${lq.label.slice(0, 2)} 20${lq.label.slice(3)}`;
-  const filedDate = new Date(p.filing.filedDate + "T00:00:00Z")
-    .toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
+  const shortDate = (iso: string) =>
+    new Date(iso + "T00:00:00Z").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
+  // fiscalPeriod describes the filing, not the latest quarter: a 10-K is always its fiscal year; a 10-Q
+  // keeps the "fiscal Qn YYYY" label only when the latest quarter is the one the filing itself reports.
+  const fiscalPeriod = p.filing.form === "10-K"
+    ? `fiscal ${new Date(p.filing.periodEnd + "T00:00:00Z").getUTCFullYear()}`
+    : lq.periodEnd === p.filing.periodEnd
+      ? `fiscal ${lq.label.slice(0, 2)} 20${lq.label.slice(3)}`
+      : `quarter ended ${shortDate(p.filing.periodEnd)}`;
+  const filedDate = shortDate(p.filing.filedDate);
 
   return {
     meta: { filing: { form: p.filing.form, fiscalPeriod, filedDate, accession: p.filing.accession },

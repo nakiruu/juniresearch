@@ -5,7 +5,8 @@ import { formatCell } from "@/lib/format";
 import { Report } from "@/lib/report.schema";
 import avgo from "@/lib/__fixtures__/avgo-golden.json";
 
-const facts = projectReportFacts(buildFactPack("data/raw/AVGO/0001730168-26-000080"));
+const pack = buildFactPack("data/raw/AVGO/0001730168-26-000080");
+const facts = projectReportFacts(pack);
 const fixture = Report.parse(avgo);
 
 /** Same vendor as the fixture, so every row is asserted — including EBITDA. */
@@ -56,5 +57,19 @@ describe("projectReportFacts parity with data/avgo.json", () => {
   it("carries the FactPack's daily closes as quote.history", () => {
     expect(facts.quote.history).toHaveLength(30);
     expect(facts.quote.history![29]).toMatchObject({ date: "2026-09-11" });
+  });
+});
+
+describe("fiscalPeriod follows the filing, not the latest quarter", () => {
+  it("uses the filing's own fiscal year for a 10-K", () => {
+    const p = JSON.parse(JSON.stringify(pack));
+    p.filing.form = "10-K";
+    p.filing.periodEnd = "2025-11-02";
+    expect(projectReportFacts(p).meta.filing.fiscalPeriod).toBe("fiscal 2025");
+  });
+  it("describes the filing's own period once a newer quarter has been reported", () => {
+    const p = JSON.parse(JSON.stringify(pack));
+    p.latestQuarter.periodEnd = "2026-11-01";
+    expect(projectReportFacts(p).meta.filing.fiscalPeriod).toBe("quarter ended Aug 2, 2026");
   });
 });
