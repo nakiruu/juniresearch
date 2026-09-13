@@ -3,6 +3,7 @@ import { projectReportFacts } from "@/lib/facts/project";
 import { buildFactPack } from "@/lib/facts/build";
 import { formatCell } from "@/lib/format";
 import { Report } from "@/lib/report.schema";
+import { buildHighlightCells } from "@/lib/synth/highlights";
 import avgo from "@/lib/__fixtures__/avgo-golden.json";
 
 const pack = buildFactPack("data/raw/AVGO/0001730168-26-000080");
@@ -43,6 +44,13 @@ describe("projectReportFacts parity with data/avgo.json", () => {
     expect(facts.sections.businessMoat.segments.map((s) => s.sharePct).reduce((a, b) => a + b)).toBeCloseTo(1, 6);
     expect(facts.sections.businessMoat.geoMix.every((g) => g.sharePct > 0 && g.sharePct < 1)).toBe(true);
   });
+  it("includes an Operating Margin row right after Operating Income in the projection's income table, computed from full precision", () => {
+    const labels = facts.sections.financials.income.rows.map((r) => r.label);
+    expect(labels.indexOf("Operating Margin")).toBe(labels.indexOf("Operating Income ($B)") + 1);
+    const row = facts.sections.financials.income.rows.find((r) => r.label === "Operating Margin")!;
+    expect(row.format).toBe("pct");
+    expect(row.values[4] as number).toBeCloseTo(25484000000 / 63887000000, 6);
+  });
   it("includes Capital Expenditure, Share Repurchases and Dividends Paid in the projection's cash-flow table", () => {
     const labels = facts.sections.financials.cashflow.rows.map((r) => r.label);
     expect(labels).toEqual(["Operating Cash Flow", "Capital Expenditure", "Share Repurchases", "Dividends Paid", "Free Cash Flow", "FCF Margin"]);
@@ -73,6 +81,10 @@ describe("projectReportFacts parity with data/avgo.json", () => {
   it("carries the FactPack's daily closes as quote.history", () => {
     expect(facts.quote.history).toHaveLength(30);
     expect(facts.quote.history![29]).toMatchObject({ date: "2026-09-11" });
+  });
+  it("builds highlightCells from the FactPack via lib/synth/highlights", () => {
+    expect(facts.highlightCells.capexLatestFY).toMatchObject({ label: "FY25 Capital Expenditure", unit: "usdLarge" });
+    expect(facts.highlightCells.netDebtToEbitda).toEqual(buildHighlightCells(pack).netDebtToEbitda);
   });
 });
 

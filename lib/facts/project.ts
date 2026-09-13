@@ -7,6 +7,7 @@
  */
 import type { FactPack } from "./schema";
 import type { Report, FinancialTable, SnapshotCellData } from "../report.schema";
+import { buildHighlightCells } from "../synth/highlights";
 
 export interface ReportFacts {
   meta: { filing: Report["meta"]["filing"]; company: string; ticker: string; exchange: string; asOf: string };
@@ -19,6 +20,7 @@ export interface ReportFacts {
     businessMoat: { segments: { name: string; sharePct: number; revenue: number }[]; segmentsBasis: string;
                     geoMix: { region: string; sharePct: number }[]; geographyBasis: string };
   };
+  highlightCells: ReturnType<typeof buildHighlightCells>;
 }
 
 const vals = (p: FactPack, table: "income" | "balance" | "cashflow", key: string) =>
@@ -35,6 +37,7 @@ export function projectReportFacts(p: FactPack): ReportFacts {
     { label: "YoY Growth", values: yoy(revenue), format: "pctSigned" },
     { label: "Gross Margin", values: ratioRows(vals(p, "income", "grossProfit"), revenue), format: "pct" },
     { label: "Operating Income ($B)", values: vals(p, "income", "operatingIncome"), format: "usdB" },
+    { label: "Operating Margin", values: ratioRows(vals(p, "income", "operatingIncome"), revenue), format: "pct" },
     { label: "EBITDA ($B)", values: vals(p, "income", "ebitda"), format: "usdB" },
     { label: "Net Income ($B)", values: vals(p, "income", "netIncome"), format: "usdB" },
     { label: "Diluted EPS ($)*", values: vals(p, "income", "epsDiluted"), format: "eps" },
@@ -108,5 +111,6 @@ export function projectReportFacts(p: FactPack): ReportFacts {
         geoMix: p.geoMix.items.map((g) => ({ region: g.region, sharePct: g.share })), geographyBasis: p.geoMix.basis,
       },
     },
+    highlightCells: buildHighlightCells(p),
   };
 }
