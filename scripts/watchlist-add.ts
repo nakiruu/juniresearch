@@ -8,6 +8,6 @@ if (!ticker) { console.error("usage: npm run watchlist:add -- <TICKER>"); proces
 const list = JSON.parse(readFileSync("data/edgar/watchlist.json", "utf8")) as WatchEntry[];
 if (list.some((w) => w.ticker === ticker)) { console.log(`${ticker} already watched.`); process.exit(0); }
 const { cik, title } = await resolveCik(ticker, requireContact());
-list.push({ ticker, cik });
+list.push({ ticker, cik, name: title });
 writeFileSync("data/edgar/watchlist.json", JSON.stringify(list, null, 2) + "\n");
 console.log(`Added ${ticker} (${title}, CIK ${cik}).`);

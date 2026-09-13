@@ -19,8 +19,7 @@ if (!filing) { console.error(`Accession ${accession} not found among ${ticker}'s
 
 const dir = join("data", "raw", ticker, accession);
 mkdirSync(dir, { recursive: true });
-const slice = JSON.parse(readFileSync("lib/edgar/__fixtures__/company-tickers-slice.json", "utf8")) as Record<string, { ticker: string; title: string }>;
-const company = Object.values(slice).find((c) => c.ticker === ticker)?.title ?? ticker;
+const company = watch.name ?? ticker;
 
 writeFileSync(join(dir, "edgar-filing.json"), JSON.stringify({ ...filing, ticker, cik: watch.cik, company }, null, 2) + "\n");
 if (!existsSync(join(dir, "edgar-primary.html"))) writeFileSync(join(dir, "edgar-primary.html"), await fetchPrimaryDocument(filing.url, contact));

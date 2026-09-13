@@ -1,6 +1,6 @@
 import type { Filing } from "./submissions";
 
-export interface WatchEntry { ticker: string; cik: number }
+export interface WatchEntry { ticker: string; cik: number; name?: string }
 export type SeenState = Record<string, string[]>;
 export type NewFiling = Filing & { ticker: string };
 
