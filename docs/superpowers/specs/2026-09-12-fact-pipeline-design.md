@@ -331,6 +331,44 @@ entity decoding — the filing HTML is simple), not a parser library.
 
 The `scripts/*.ts` CLIs run via `tsx` (a dev dependency): `node --env-file-if-exists=.env.local --import tsx scripts/<name>.ts`, wrapped by `package.json` scripts. Node's native type stripping was rejected because it requires `.ts` extensions on relative imports, which the Next `tsconfig` does not allow.
 
+## Revision 2026-09-12 — data sourcing after the first capture
+
+The first execution of the manifest (Task 6) found that **the FMP connector's plan
+tier gates `quote`, `statements`, `analyst`, and `chart`**; only `company` is
+open. Probing the alternatives produced these facts, verified from the controller
+session against Broadcom's record:
+
+- Bigdata.com's `bigdata_company_tearsheet` returns the same FMP data
+  (`source.provider_id: "FMP"`), as JSON: quote, 52-week range, market cap,
+  analyst targets and ratings, FY estimates, product and geographic segments
+  FY21–FY25, five years of ratios, TTM key metrics, and **full income, balance
+  and cash-flow statements by year and by quarter**. Every value matched
+  `data/avgo.json`.
+- Yahoo's v8 chart endpoint is keyless and returns daily closes (unofficial;
+  needs a browser-like `User-Agent`).
+- SEC XBRL `companyfacts` is keyless and authoritative but has the
+  fiscal-year-means-filing-year trap and no EBITDA or normalized debt.
+- Stooq sits behind a JavaScript challenge.
+
+**Decision 8 — re-source without new spend.** The manifest becomes eight tool
+calls: FMP `company` for profile and peers; Bigdata `find_securities`, three
+`bigdata_company_tearsheet` calls (annual: overview, analyst ratings,
+estimates, key metrics, ratios, segmentation; annual `financial_statements`;
+quarterly `financial_statements`), and the two `bigdata_search` calls. Code
+fetches `edgar-filing.json`, `edgar-primary.html`, and `yahoo-history.json`
+(`lib/prices/yahoo.ts`, the second permitted network module beside `lib/edgar/`).
+Peer multiples are not captured; `peers[]` carries tickers with null multiples
+until a peer source exists. `sharesOutstanding` is derived as
+`marketCap / price` from the tearsheet's overview, with provenance saying so.
+The FactPack schema is unchanged except `provenance.source` gains `"yahoo"`.
+SEC XBRL is parked as a later hardening pass. The MD&A excerpt cap is 16,000
+characters (Risk Factors 8,000) and `extractSections` returns
+`{ text, truncated }` per section. The watchlist lives at
+`data/edgar/watchlist.json`. CLIs run via `tsx`.
+
+The manifest table and mapping section above are superseded by the plan's
+revised Tasks 6–11, which carry the captured response shapes verbatim.
+
 ## Out of scope
 
 - Scheduling and unattended runs — blocked on the API-key migration (decision 1)

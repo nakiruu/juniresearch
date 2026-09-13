@@ -10,6 +10,8 @@
 
 **Spec:** `docs/superpowers/specs/2026-09-12-fact-pipeline-design.md`
 
+> **Revision 2026-09-12:** Tasks 6–11 were rewritten after the first capture showed the FMP connector's plan gates most endpoints. Numbers now come from Bigdata.com tearsheets, closes from Yahoo, profile/peers from FMP `company`. See the spec's "Revision 2026-09-12" section (decision 8).
+
 ## Global Constraints
 
 - **Numbers are numbers; every percentage is a decimal ratio.** A FactPack never contains a pre-formatted string for a number. `dividendYield: 0.0072`, never `0.72` or `"0.72%"`.
@@ -39,14 +41,15 @@
 | `lib/edgar/__fixtures__/` | trimmed submissions JSON, ticker-map slice |
 | `lib/facts/manifest.ts` | the capture list, `renderManifest`, `requiredRawFiles` |
 | `lib/facts/source.ts` | `FactSource` interface (the REST seam) |
-| `lib/facts/raw.ts` | `readRawJson`, `readRawArray`, `readRawText`, `pick` |
+| `lib/prices/yahoo.ts` | `yahooChartUrl`, `fetchDailyCloses` (daily closes; the second permitted network module) |
+| `lib/facts/raw.ts` | `readRawJson`, `readRawText`, `num`, `str`, `section` |
 | `lib/facts/map/*.ts` | one pure mapper per raw-file family |
 | `lib/facts/validate.ts` | consistency rules |
 | `lib/facts/build.ts` | raw dir → FactPack |
 | `lib/facts/project.ts` | FactPack → `ReportFacts` |
-| `scripts/*.ts` | `detect`, `watchlist-add`, `facts-manifest`, `facts-edgar`, `facts-build`, `facts-diff`, `report-history` |
+| `scripts/*.ts` | `detect`, `watchlist-add`, `facts-manifest`, `facts-prepare`, `facts-build`, `facts-diff`, `report-history` |
 | `.claude/skills/fetch-facts/SKILL.md` | the capture recipe |
-| `data/watchlist.json`, `data/edgar/seen.json` | pipeline state |
+| `data/edgar/watchlist.json`, `data/edgar/seen.json` | pipeline state |
 
 ---
 
@@ -985,128 +988,316 @@ Add `"facts:manifest": "node --env-file-if-exists=.env.local --import tsx script
 
 ---
 
-## Task 6: The fetch-facts skill, and the AVGO capture
+## Task 6: Revised manifest, Yahoo fetcher, prepare CLI, the skill, and the AVGO capture
+
+> **Revision 2026-09-12.** The first capture proved the FMP connector's plan gates `quote`/`statements`/`analyst`/`chart`. Numbers now come from Bigdata's tearsheet (which proxies FMP), daily closes from Yahoo's keyless v8 chart endpoint, and profile/peers from FMP `company`. Spec: "Revision 2026-09-12 — data sourcing after the first capture".
 
 **Files:**
-- Create: `.claude/skills/fetch-facts/SKILL.md`, `scripts/facts-edgar.ts`
-- Modify: `package.json` (`facts:edgar` script)
-- Create (by executing the skill): `data/raw/AVGO/0001730168-26-000080/*` — `capture.json`, `edgar-filing.json`, twenty-plus vendor files
+- Modify: `lib/facts/manifest.ts`, `lib/facts/manifest.test.ts`, `scripts/facts-manifest.ts`, `lib/facts/schema.ts` (one enum value), `.claude/skills/fetch-facts/SKILL.md`
+- Create: `lib/prices/yahoo.ts`, `scripts/facts-prepare.ts`
+- Delete: `scripts/facts-edgar.ts` (superseded by `facts-prepare.ts`); the `.error.txt` files and stale FMP-named files in the raw dir
+- Modify: `package.json` (`facts:prepare` replaces `facts:edgar`)
+- Test: `lib/facts/manifest.test.ts`, `lib/prices/yahoo.test.ts`
+- Create (by executing the skill): the eight vendor files plus `capture.json`, `edgar-filing.json`, `yahoo-history.json` in `data/raw/AVGO/0001730168-26-000080/`
 
 **Interfaces:**
-- Consumes: `renderManifest`, `requiredRawFiles`, `fetchSubmissions`, `filingUrl`, `resolveCik`.
-- Produces: the committed raw capture for AVGO; `npm run facts:edgar <TICKER> <ACCESSION>` writing `edgar-filing.json` (`Filing & { ticker; cik; company }`) and `edgar-primary.html` if absent.
+- Consumes: `fetchSubmissions`, `fetchPrimaryDocument`, `FetchLike`, `Filing`; `renderManifest`, `requiredRawFiles`.
+- Produces: the revised `MANIFEST` (8 entries), `CODE_FETCHED_FILES = ["edgar-filing.json", "edgar-primary.html", "yahoo-history.json"]`, `requiredRawFiles(ctx)` including them; `fetchDailyCloses(ticker, from, to, fetchImpl?) → string` (raw JSON text); `yahooChartUrl(ticker, from, to)`; `npm run facts:prepare <TICKER> <ACCESSION>`; `provenance.source` accepts `"yahoo"`; the committed AVGO raw capture.
 
-**This task requires an agent with the FMP and Bigdata.com MCP tools.** If the executing agent does not have them, report NEEDS_CONTEXT immediately; the controller runs the capture.
+**This task requires an agent with the FMP and Bigdata.com MCP tools** (they are available to subagents — Task 6's first run proved it).
 
-- [ ] **Step 1: The EDGAR-side CLI**
+- [ ] **Step 1: Rewrite the manifest**
 
-`scripts/facts-edgar.ts`:
+Replace the `MANIFEST` array and the two helpers in `lib/facts/manifest.ts` with:
+
+```ts
+export const CODE_FETCHED_FILES = ["edgar-filing.json", "edgar-primary.html", "yahoo-history.json"] as const;
+
+const TEARSHEET_SECTIONS_ANNUAL = [
+  "company_overview", "analyst_ratings", "analyst_estimates", "key_metrics", "financial_ratios", "revenue_segmentation",
+];
+
+const tearsheet = (name: string, file: string, interval: "annual" | "quarter", sections: string[]): ManifestEntry => ({
+  name, file, server: "bigdata", tool: "bigdata_company_tearsheet", phase: 2,
+  params: (c) => ({ rp_entity_id: c.rpEntityId, company_type: c.companyType, interval, sections }),
+});
+
+export const MANIFEST: ManifestEntry[] = [
+  fmp("profile", "fmp-profile.json", "company", (c) => ({ endpoint: "profile-symbol", symbol: c.ticker })),
+  fmp("peers", "fmp-peers.json", "company", (c) => ({ endpoint: "peers", symbol: c.ticker })),
+  { name: "entity", file: "bigdata-entity.json", server: "bigdata", tool: "find_securities", phase: 1,
+    params: (c) => ({ query: c.ticker, security_types: ["COMPANY"] }) },
+  tearsheet("tearsheet-annual", "bigdata-tearsheet-annual.json", "annual", TEARSHEET_SECTIONS_ANNUAL),
+  tearsheet("statements-annual", "bigdata-statements-annual.json", "annual", ["financial_statements"]),
+  tearsheet("statements-quarter", "bigdata-statements-quarter.json", "quarter", ["financial_statements"]),
+  { name: "transcript", file: "bigdata-transcript.md", server: "bigdata", tool: "bigdata_search", phase: 1,
+    params: (c) => ({ request: { search_mode: "smart", query: {
+      text: `${c.company} latest earnings call key points and management commentary`, max_chunks: 20 } } }) },
+  { name: "headlines", file: "bigdata-headlines.md", server: "bigdata", tool: "bigdata_search", phase: 1,
+    params: (c) => ({ request: { search_mode: "smart", query: {
+      text: `${c.company} news since ${c.periodEnd}`, max_chunks: 20 } } }) },
+];
+
+export function renderManifest(ctx: CaptureContext): RenderedCall[] {
+  const phase2Ready = Boolean(ctx.rpEntityId && ctx.companyType);
+  return MANIFEST
+    .filter((m) => m.phase === 1 || phase2Ready)
+    .map((m) => ({ name: m.name, file: m.file, server: m.server, tool: m.tool, params: m.params(ctx) }));
+}
+
+export function requiredRawFiles(ctx: CaptureContext): string[] {
+  return [RAW_CAPTURE_META, ...CODE_FETCHED_FILES, ...renderManifest(ctx).map((c) => c.file)];
+}
+```
+
+Remove the `perPeer` field from `ManifestEntry` and the `peers` field from `CaptureContext`; drop the `peer` parameter from `params`; the `fmp` helper becomes `const fmp = (name: string, file: string, tool: string, params: ManifestEntry["params"]): ManifestEntry => ({ name, file, server: "fmp", tool, phase: 1, params })`. Keep `PEER_LIMIT` exported (Task 8 still caps the peer *ticker* list with it). **Export `isoMinusDays`** (it is module-private today) — the prepare CLI uses it for the Yahoo window.
+
+Replace the tests in `lib/facts/manifest.test.ts` with:
+
+```ts
+import { describe, it, expect } from "vitest";
+import { MANIFEST, renderManifest, requiredRawFiles, CODE_FETCHED_FILES, isoMinusDays } from "@/lib/facts/manifest";
+
+const ctx = { ticker: "AVGO", company: "Broadcom Inc.", periodEnd: "2026-08-02", today: "2026-09-12" };
+
+describe("MANIFEST", () => {
+  it("has unique names and files", () => {
+    const names = MANIFEST.map((m) => m.name), files = MANIFEST.map((m) => m.file);
+    expect(new Set(names).size).toBe(names.length);
+    expect(new Set(files).size).toBe(files.length);
+  });
+  it("lists exactly the eight vendor captures of the revised design", () => {
+    expect(MANIFEST.map((m) => m.file).sort()).toEqual([
+      "bigdata-entity.json", "bigdata-headlines.md", "bigdata-statements-annual.json", "bigdata-statements-quarter.json",
+      "bigdata-tearsheet-annual.json", "bigdata-transcript.md", "fmp-peers.json", "fmp-profile.json",
+    ]);
+  });
+  it("uses only FMP endpoints the connector plan allows", () => {
+    const fmpEndpoints = MANIFEST.filter((m) => m.server === "fmp").map((m) => (m.params(ctx) as { endpoint: string }).endpoint);
+    expect(fmpEndpoints.sort()).toEqual(["peers", "profile-symbol"]);
+    expect(MANIFEST.filter((m) => m.server === "fmp").every((m) => m.tool === "company")).toBe(true);
+  });
+});
+
+describe("renderManifest", () => {
+  it("renders only phase 1 until the Bigdata entity is known", () => {
+    const calls = renderManifest(ctx);
+    expect(calls.map((c) => c.name).sort()).toEqual(["entity", "headlines", "peers", "profile", "transcript"]);
+  });
+  it("renders the three tearsheets once the entity is known", () => {
+    const calls = renderManifest({ ...ctx, rpEntityId: "09DE1F", companyType: "Public" });
+    const sheets = calls.filter((c) => c.tool === "bigdata_company_tearsheet");
+    expect(sheets).toHaveLength(3);
+    expect(sheets.find((c) => c.file === "bigdata-statements-quarter.json")!.params)
+      .toMatchObject({ rp_entity_id: "09DE1F", company_type: "Public", interval: "quarter", sections: ["financial_statements"] });
+    expect(sheets.find((c) => c.file === "bigdata-tearsheet-annual.json")!.params)
+      .toMatchObject({ interval: "annual", sections: expect.arrayContaining(["company_overview", "analyst_ratings", "analyst_estimates", "key_metrics", "financial_ratios", "revenue_segmentation"]) });
+  });
+  it("renders bigdata_search calls in the tool's request envelope", () => {
+    for (const name of ["transcript", "headlines"]) {
+      const c = renderManifest(ctx).find((x) => x.name === name)!;
+      expect(c.params).toMatchObject({ request: { search_mode: "smart", query: { text: expect.stringContaining("Broadcom Inc."), max_chunks: 20 } } });
+    }
+  });
+});
+
+describe("requiredRawFiles", () => {
+  it("includes capture.json and every code-fetched file", () => {
+    const files = requiredRawFiles({ ...ctx, rpEntityId: "X", companyType: "Public" });
+    expect(files).toContain("capture.json");
+    for (const f of CODE_FETCHED_FILES) expect(files).toContain(f);
+    expect(files).toHaveLength(1 + CODE_FETCHED_FILES.length + 8);
+  });
+});
+
+describe("isoMinusDays", () => {
+  it("subtracts calendar days in UTC", () => {
+    expect(isoMinusDays("2026-08-02", 45)).toBe("2026-06-18");
+  });
+});
+```
+
+- [ ] **Step 2: Fix the phase-2 extraction in `scripts/facts-manifest.ts`**
+
+The captured `bigdata-entity.json` is `[{ "results": [ { "id": "09DE1F", "name": "Broadcom Inc.", "security_type": "COMPANY", "listing_type": "PUBLIC", … } ], "metadata": … }]`. Replace the entity block with:
+
+```ts
+if (existsSync(entityFile)) {
+  const raw = JSON.parse(readFileSync(entityFile, "utf8")) as unknown;
+  const top = Array.isArray(raw) ? raw[0] : raw;
+  const list = ((top as { results?: unknown[]; data?: unknown[] })?.results
+    ?? (top as { data?: unknown[] })?.data
+    ?? (Array.isArray(raw) ? raw : [])) as { id?: string; listing_type?: string }[];
+  const first = list[0];
+  if (first?.id) { ctx.rpEntityId = first.id; ctx.companyType = first.listing_type === "PRIVATE" ? "Private" : "Public"; }
+}
+```
+
+Delete the `peersFile` block (peers are no longer a phase-2 input).
+
+- [ ] **Step 3: The Yahoo fetcher**
+
+`lib/prices/yahoo.ts`:
+```ts
+/**
+ * yahoo.ts — daily closes for the chart's history line.
+ * -----------------------------------------------------------------------------
+ * Keyless, unofficial. The raw response is saved verbatim as yahoo-history.json;
+ * map/history.ts parses it. If this endpoint ever breaks, the chart falls back
+ * to its labelled placeholder — nothing else in the pipeline depends on it.
+ */
+export type FetchLike = typeof fetch;
+
+const toUnix = (ymd: string) => Math.floor(new Date(ymd + "T00:00:00Z").getTime() / 1000);
+
+export function yahooChartUrl(ticker: string, from: string, to: string): string {
+  const p1 = toUnix(from), p2 = toUnix(to) + 86400; // period2 is exclusive
+  return `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(ticker)}?period1=${p1}&period2=${p2}&interval=1d`;
+}
+
+export async function fetchDailyCloses(ticker: string, from: string, to: string, fetchImpl: FetchLike = fetch): Promise<string> {
+  const url = yahooChartUrl(ticker, from, to);
+  const res = await fetchImpl(url, { headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)", Accept: "application/json" } });
+  if (!res.ok) throw new Error(`Yahoo responded ${res.status} for ${url}`);
+  return res.text();
+}
+```
+
+`lib/prices/yahoo.test.ts`:
+```ts
+import { describe, it, expect } from "vitest";
+import { yahooChartUrl, fetchDailyCloses } from "@/lib/prices/yahoo";
+
+describe("yahooChartUrl", () => {
+  it("builds a daily chart URL with an exclusive end", () => {
+    const u = new URL(yahooChartUrl("AVGO", "2026-06-18", "2026-09-12"));
+    expect(u.pathname).toBe("/v8/finance/chart/AVGO");
+    expect(u.searchParams.get("interval")).toBe("1d");
+    expect(Number(u.searchParams.get("period2")) - Number(u.searchParams.get("period1"))).toBe((86 + 1) * 86400);
+  });
+});
+
+describe("fetchDailyCloses", () => {
+  it("returns the body verbatim and sends a browser-like User-Agent", async () => {
+    let ua = "";
+    const fake = (async (_u: string, init: RequestInit) => { ua = (init.headers as Record<string, string>)["User-Agent"];
+      return { ok: true, status: 200, text: async () => '{"chart":{"result":[]}}' }; }) as unknown as typeof fetch;
+    expect(await fetchDailyCloses("AVGO", "2026-06-18", "2026-09-12", fake)).toBe('{"chart":{"result":[]}}');
+    expect(ua).toMatch(/Mozilla/);
+  });
+  it("throws naming the URL on a non-200", async () => {
+    const fake = (async () => ({ ok: false, status: 429, text: async () => "" })) as unknown as typeof fetch;
+    await expect(fetchDailyCloses("AVGO", "2026-06-18", "2026-09-12", fake)).rejects.toThrow(/429.*chart\/AVGO/);
+  });
+});
+```
+
+(June 18 → September 12 is 86 days; the URL adds one exclusive day.)
+
+Add `"yahoo"` to the `provenance.source` enum in `lib/facts/schema.ts`: `z.enum(["fmp", "bigdata", "edgar", "yahoo"])`. No other schema change.
+
+- [ ] **Step 4: The prepare CLI**
+
+`scripts/facts-prepare.ts` (replaces `facts-edgar.ts`; `git rm scripts/facts-edgar.ts`):
 ```ts
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fetchSubmissions } from "../lib/edgar/submissions";
 import { fetchPrimaryDocument } from "../lib/edgar/filing-text";
 import type { WatchEntry } from "../lib/edgar/detect";
+import { fetchDailyCloses } from "../lib/prices/yahoo";
+import { isoMinusDays } from "../lib/facts/manifest";
 import { requireContact } from "./_env";
 
 const [tickerArg, accession] = process.argv.slice(2);
-if (!tickerArg || !accession) { console.error("usage: npm run facts:edgar -- <TICKER> <ACCESSION>"); process.exit(2); }
+if (!tickerArg || !accession) { console.error("usage: npm run facts:prepare -- <TICKER> <ACCESSION>"); process.exit(2); }
 const ticker = tickerArg.toUpperCase();
 const contact = requireContact();
-const watch = (JSON.parse(readFileSync("data/watchlist.json", "utf8")) as WatchEntry[]).find((w) => w.ticker === ticker);
-if (!watch) { console.error(`${ticker} is not in data/watchlist.json — run npm run watchlist:add -- ${ticker}`); process.exit(2); }
+const watch = (JSON.parse(readFileSync("data/edgar/watchlist.json", "utf8")) as WatchEntry[]).find((w) => w.ticker === ticker);
+if (!watch) { console.error(`${ticker} is not in data/edgar/watchlist.json — run npm run watchlist:add -- ${ticker}`); process.exit(2); }
 
 const filing = (await fetchSubmissions(watch.cik, contact)).find((f) => f.accession === accession);
 if (!filing) { console.error(`Accession ${accession} not found among ${ticker}'s 10-Q/10-K filings`); process.exit(1); }
 
 const dir = join("data", "raw", ticker, accession);
 mkdirSync(dir, { recursive: true });
-const company = (JSON.parse(readFileSync("lib/edgar/__fixtures__/company-tickers-slice.json", "utf8")) as Record<string, { ticker: string; title: string }>);
-const title = Object.values(company).find((c) => c.ticker === ticker)?.title ?? ticker;
-writeFileSync(join(dir, "edgar-filing.json"), JSON.stringify({ ...filing, ticker, cik: watch.cik, company: title }, null, 2) + "\n");
+const slice = JSON.parse(readFileSync("lib/edgar/__fixtures__/company-tickers-slice.json", "utf8")) as Record<string, { ticker: string; title: string }>;
+const company = Object.values(slice).find((c) => c.ticker === ticker)?.title ?? ticker;
+
+writeFileSync(join(dir, "edgar-filing.json"), JSON.stringify({ ...filing, ticker, cik: watch.cik, company }, null, 2) + "\n");
 if (!existsSync(join(dir, "edgar-primary.html"))) writeFileSync(join(dir, "edgar-primary.html"), await fetchPrimaryDocument(filing.url, contact));
-console.log(`Wrote ${dir}/edgar-filing.json${existsSync(join(dir, "edgar-primary.html")) ? " (primary document present)" : ""}`);
+const today = new Date().toISOString().slice(0, 10);
+writeFileSync(join(dir, "yahoo-history.json"), await fetchDailyCloses(ticker, isoMinusDays(filing.periodEnd, 45), today));
+console.log(`Prepared ${dir}: edgar-filing.json, edgar-primary.html, yahoo-history.json (${isoMinusDays(filing.periodEnd, 45)} → ${today})`);
 ```
 
-Add `"facts:edgar": "node --env-file-if-exists=.env.local --import tsx scripts/facts-edgar.ts"` to `package.json`. Run `npm run facts:edgar -- AVGO 0001730168-26-000080` and confirm `edgar-filing.json` exists with `company: "Broadcom Inc."`.
+`package.json`: remove `facts:edgar`; add `"facts:prepare": "node --env-file-if-exists=.env.local --import tsx scripts/facts-prepare.ts"`.
 
-(The company title comes from the ticker-map slice for now; when the watchlist grows beyond the slice, `watchlist:add` should persist `title` into `watchlist.json` — note this as a follow-up, do not build it here.)
+- [ ] **Step 5: Revise the skill**
 
-- [ ] **Step 2: Write the skill**
+In `.claude/skills/fetch-facts/SKILL.md`, replace step 1 with `npm run facts:prepare -- <TICKER> <ACCESSION>` ("creates the raw directory with `edgar-filing.json`, the primary document, and `yahoo-history.json`"), and in step 5 replace "the per-peer and tearsheet entries" with "the three tearsheet entries". Add one line under Rules: "Tearsheet responses are JSON objects; save the JSON text exactly as returned."
 
-`.claude/skills/fetch-facts/SKILL.md`:
-```markdown
----
-name: fetch-facts
-description: Capture every vendor response a Juniper report needs for one filing, verbatim, into data/raw/<TICKER>/<ACCESSION>/ — then build the FactPack. Use when a new 10-Q/10-K has been detected or the user says "fetch facts for <ticker>".
----
+- [ ] **Step 6: Clean the raw directory and capture**
 
-# fetch-facts
-
-You are the capture step of the fact pipeline. Your entire job is to execute a
-manifest that code renders for you: call the named tool with exactly the given
-parameters and save the response **verbatim**. You never interpret, reformat,
-round, summarise, or omit anything. Every decision lives in code downstream.
-
-## Inputs
-
-`/fetch-facts <TICKER> <ACCESSION>` — e.g. `/fetch-facts AVGO 0001730168-26-000080`.
-If the accession is unknown, run `npm run detect` first and use what it prints.
-
-## Steps
-
-1. `npm run facts:edgar -- <TICKER> <ACCESSION>` — creates the raw directory with
-   `edgar-filing.json` and the primary document. Read the printed directory path.
-2. Write `capture.json` in that directory: `{ "capturedAt": "<now as ISO-8601 UTC>" }`.
-3. `npm run facts:manifest -- <TICKER> <ACCESSION>` — prints `{ dir, phase2Ready, calls[] }`.
-4. For every entry in `calls`:
-   - `server: "fmp"` → call the MCP tool `mcp__claude_ai_FMP__<tool>` with `params` exactly as printed.
-   - `server: "bigdata"` → call `mcp__claude_ai_Bigdata_com__<tool>` with `params` exactly as printed.
-   - Save the tool's response to `<dir>/<file>` **byte-for-byte as the tool returned it**.
-     A JSON response is saved as that JSON text; a Markdown response as that Markdown.
-     Do not pretty-print, wrap, annotate, or trim.
-   - If the call errors, save the error text to `<dir>/<file>.error.txt` and continue.
-5. Run step 3 again. If `phase2Ready` is now true, the printed `calls` include the
-   per-peer and tearsheet entries — execute those the same way.
-6. `npm run facts:manifest -- <TICKER> <ACCESSION> --check` — must print
-   "All N raw files present". If it lists missing files, retry those calls once;
-   if they still fail, stop and report which.
-7. `npm run facts:build -- <TICKER> <ACCESSION>` — code maps, validates, and writes
-   `data/facts/<TICKER>/<ACCESSION>.json`. Report its output verbatim.
-
-## Rules
-
-- You do not decide what to fetch: the manifest does.
-- You do not decide what a number means: the mappers do.
-- You never write a number into any file yourself. If a tool returns nothing
-  useful, that is a finding to report, not a gap to fill.
+```bash
+cd data/raw/AVGO/0001730168-26-000080 && rm -f *.error.txt fmp-peer-*.json && cd -
 ```
+Keep `edgar-primary.html`, `fmp-profile.json`, `fmp-peers.json`, `bigdata-entity.json`, `bigdata-transcript.md`, `bigdata-headlines.md` from the first run — they are valid captures. Then execute the skill steps 1–6: `facts:prepare` (rewrites `edgar-filing.json`, adds `yahoo-history.json`), write a fresh `capture.json`, run `facts:manifest`, execute the printed calls (phase 1 files that already exist may be re-captured or kept — keep them), run `facts:manifest` again (now `phase2Ready: true`), execute the three tearsheet calls, save each response's JSON text verbatim, then `--check` → "All 12 raw files present".
 
-- [ ] **Step 3: Execute the skill for AVGO**
+- [ ] **Step 7: Verify and commit**
 
-Follow `SKILL.md` steps 1–6 exactly (step 7 does not exist yet; skip it). Use the accession `0001730168-26-000080`. For each tool call, save the response text exactly as the tool returned it.
-
-- [ ] **Step 4: Verify the capture**
-
-`npm run facts:manifest -- AVGO 0001730168-26-000080 --check` → "All N raw files present". Then `ls -la data/raw/AVGO/0001730168-26-000080/` and paste it. Inspect three files and paste the first ~20 lines of each in the report — `fmp-income-annual.json`, `fmp-quote.json`, `fmp-segments-product.json` — so the next tasks' implementers can see the real shapes.
-
-- [ ] **Step 5: Commit** — `git add -A && git commit -m "feat: add the fetch-facts skill and capture Broadcom's 10-Q raw data"`
+`npm test` (expect 132 − 6 old manifest tests + 7 new manifest + 3 yahoo = 136), `npx tsc --noEmit -p .`, `npx eslint lib scripts`. In the report paste the `--check` output, `ls -la` of the raw dir, and the first 30 lines of `bigdata-statements-annual.json` (the one shape not yet seen). Commit: `git add -A && git commit -m "feat: re-source the capture via Bigdata tearsheets and Yahoo; capture Broadcom's raw data"`.
 
 ---
 
-## Task 7: Mapping — quote, profile, statements, TTM
+## Task 7: Mapping — quote, profile, statements, TTM (from the tearsheets)
 
 **Files:**
-- Create: `lib/facts/raw.ts`, `lib/facts/map/quote.ts`, `lib/facts/map/statements.ts`
+- Create: `lib/facts/raw.ts`, `lib/facts/map/quote.ts`, `lib/facts/map/statements.ts`, `lib/facts/map/__fixtures__/empty/` (two files)
 - Test: `lib/facts/map/quote.test.ts`, `lib/facts/map/statements.test.ts`
 
 **Interfaces:**
-- Consumes: `FactPack` section types; the committed raw files under `data/raw/AVGO/0001730168-26-000080/`.
-- Produces: `readRawJson(dir, file)`, `readRawArray(dir, file)`, `readRawText(dir, file)`, `pick(obj, candidates, file, {optional?})`; `mapQuote(dir) → { quote, company, exchange, cik, description }`; `mapStatements(dir, capturedAt) → { statements, latestQuarter, ttm }`; each mapper exports `PROVENANCE: { field: string; endpoint: string }[]`.
+- Consumes: the committed raw files; `FactPack` section types.
+- Produces: `readRawJson`, `readRawText`, `num(obj, key, file, opts?)`, `str(obj, key, file)`; `mapQuote(dir) → { quote, company, exchange, cik, description }`; `mapStatements(dir) → { statements, latestQuarter, ttm }`; each mapper's `PROVENANCE`.
 
-**The FMP MCP connector's exact response shape is known only from the captured files.** Read `data/raw/AVGO/0001730168-26-000080/fmp-quote.json` and `fmp-income-annual.json` **before** writing code. The key names below are FMP's stable-API names; if the captured files use different names, add them to the candidate lists (never guess a value). Record every adaptation in the mapper's header comment.
+**Captured shapes (verbatim from the AVGO capture):**
 
-- [ ] **Step 1: Write the failing tests** (assertions are grounded in `data/avgo.json`, which was built from this same filing)
+`bigdata-tearsheet-annual.json` is one JSON object:
+```jsonc
+{
+  "company_overview": { "company_name": "Broadcom Inc.", "exchange": "NASDAQ", "cik": "0001730168", "market_cap": 1722196384200,
+                        "price": 361.99, "timestamp": "2026-09-11T20:00:01Z", "description": "…", "full_time_employees": 33000, … },
+  "analyst_data": { "as_of_utc_timestamp": "2026-09-12T23:45:33Z",
+                    "price_targets": { "target_consensus": 509.61, "target_median": 517.5, "target_high": 600, "target_low": 350 },
+                    "ratings": { "strong_buy": 0, "buy": 54, "hold": 6, "sell": 0, "strong_sell": 0, "consensus": "Buy" } },
+  "price_performance": { "current_market": { "current_price": 361.99, "year_high": 495, "year_low": 289.96, "market_cap": 1722196384200, … } },
+  "revenue_segmentation": {
+    "geographic": { "2025-11-02": { "fiscal_year": 2025, "period": "FY", "region_segments": { "Americas": 18939000000, "Asia Pacific": 35896000000, "EMEA": 9052000000 } }, "2024-11-03": {…}, … },
+    "product":    { "2025-11-02": { "fiscal_year": 2025, "period": "FY", "product_segments": { "Infrastructure Software": 27029000000, "Semiconductor Solutions": 36858000000 } }, … } },
+  "fundamentals": {
+    "ratios":      [ { "fiscal_period": "TTM", "gross_margin": 0.6766, "operating_margin": 0.4827, "net_margin": 0.4294, "current_ratio": 2.50, "dividend_yield": 0.00701677, … },
+                     { "fiscal_year": 2025, "fiscal_period": "FY", "report_date": "2025-11-02", "gross_margin": 0.6777, … }, … ],
+    "key_metrics": [ { "fiscal_period": "TTM", "pe_ratio": 44.91, "price_to_sales": 19.33, "ev_to_ebitda": 33.63, … }, { "fiscal_year": 2025, "fiscal_period": "FY", … }, … ] },
+  "estimates": { "periodicity": "ANN", "records": [ { "metric": "SALES", "fiscal_year": 2026, "fiscal_period": "FY", "estimate_mean": 105864823726, "num_analysts": 29 },
+                                                     { "metric": "EPS",   "fiscal_year": 2026, "fiscal_period": "FY", "estimate_mean": 11.62904 }, … ] }
+}
+```
+
+`bigdata-statements-quarter.json` (and, by the same shape with `"fiscal_period": "FY"`, `bigdata-statements-annual.json` — **confirm from the captured file**):
+```jsonc
+{ "fundamentals": {
+    "income_statement": [ { "fiscal_year": 2026, "fiscal_period": "Q3", "report_date": "2026-08-02", "filing_date": "2026-09-10",
+                            "revenue": 29591000000, "gross_profit": 20456000000, "operating_income": 15955000000, "ebitda": 18266000000,
+                            "net_income": 13088000000, "eps_diluted": 2.68, "weighted_average_shares_diluted": 4887000000, … }, … ],
+    "balance_sheet":    [ { "fiscal_year": 2026, "fiscal_period": "Q3", "report_date": "2026-08-02", "cash_and_short_term_investments": 23975000000,
+                            "total_debt": 59419000000, "net_debt": 35444000000, "total_equity": 99690000000,
+                            "total_current_assets": 52173000000, "total_current_liabilities": 20838000000, … }, … ],
+    "cash_flow":        [ { "fiscal_year": 2026, "fiscal_period": "Q3", "report_date": "2026-08-02", "operating_cash_flow": 14197000000,
+                            "capex": -532000000, "free_cash_flow": 13665000000, … }, … ] } }
+```
+Entries are newest-first.
+
+- [ ] **Step 1: Write the failing tests** (assertions grounded in `data/avgo.json`)
 
 `lib/facts/map/quote.test.ts`:
 ```ts
@@ -1116,65 +1307,79 @@ const DIR = "data/raw/AVGO/0001730168-26-000080";
 
 describe("mapQuote on the AVGO capture", () => {
   const q = mapQuote(DIR);
-  it("identifies the company", () => {
-    expect(q.company).toMatch(/Broadcom/);
+  it("identifies the company from the tearsheet overview", () => {
+    expect(q.company).toBe("Broadcom Inc.");
     expect(q.exchange).toBe("NASDAQ");
     expect(q.cik).toBe(1730168);
     expect(q.description.text.length).toBeGreaterThan(100);
+    expect(q.description.source).toBe("bigdata:company_tearsheet");
   });
-  it("carries a plausible quote as raw numbers", () => {
-    expect(q.quote.price).toBeGreaterThan(100);
-    expect(q.quote.marketCap).toBeGreaterThan(1e12);
-    expect(q.quote.sharesOutstanding).toBeGreaterThan(4e9);
-    expect(q.quote.sharesOutstanding).toBeLessThan(6e9);
-    expect(q.quote.week52High).toBeGreaterThan(q.quote.week52Low);
+  it("carries the quote as raw numbers with the tearsheet's as-of date", () => {
+    expect(q.quote.price).toBe(361.99);
+    expect(q.quote.marketCap).toBeGreaterThan(1.7e12);
+    expect(q.quote.week52High).toBe(495);
+    expect(q.quote.week52Low).toBe(289.96);
+    expect(q.quote.asOf).toBe("2026-09-11");
   });
-  it("normalises dividend yield to a ratio", () => {
-    expect(q.quote.dividendYield).toBeGreaterThan(0);
-    expect(q.quote.dividendYield).toBeLessThan(0.05);
+  it("derives shares outstanding from market cap and price, within 5% of the fixture", () => {
+    expect(Math.abs(q.quote.sharesOutstanding / 4.76e9 - 1)).toBeLessThan(0.05);
   });
-  it("throws naming the file on an empty response", () => {
-    expect(() => mapQuote("lib/facts/map/__fixtures__/empty")).toThrow(/fmp-quote\.json/);
+  it("reads dividend yield as a ratio", () => {
+    expect(q.quote.dividendYield).toBeGreaterThan(0.005);
+    expect(q.quote.dividendYield).toBeLessThan(0.01);
+  });
+  it("throws naming the file when the tearsheet is empty", () => {
+    expect(() => mapQuote("lib/facts/map/__fixtures__/empty")).toThrow(/bigdata-tearsheet-annual\.json/);
   });
 });
 ```
-
-Create `lib/facts/map/__fixtures__/empty/fmp-quote.json` containing `[]` and `fmp-profile.json` containing `[]`.
+Create `lib/facts/map/__fixtures__/empty/bigdata-tearsheet-annual.json` containing `{}` and `capture.json` containing `{"capturedAt":"2026-09-12T00:00:00Z"}`.
 
 `lib/facts/map/statements.test.ts`:
 ```ts
 import { describe, it, expect } from "vitest";
 import { mapStatements } from "@/lib/facts/map/statements";
 const DIR = "data/raw/AVGO/0001730168-26-000080";
-const near = (a: number, b: number, tol = 0.01) => Math.abs(a - b) / Math.abs(b) <= tol;
+const near = (a: number | null, b: number, tol = 0.005) => a != null && Math.abs(a - b) / Math.abs(b) <= tol;
 
 describe("mapStatements on the AVGO capture", () => {
-  const s = mapStatements(DIR, "2026-09-12T00:00:00Z");
-  const row = (table: "income" | "balance" | "cashflow", key: string) =>
-    s.statements[table].find((r) => r.key === key)!;
+  const s = mapStatements(DIR);
+  const row = (t: "income" | "balance" | "cashflow", key: string) => s.statements[t].find((r) => r.key === key)!;
 
   it("labels five consecutive fiscal years oldest first", () => {
     expect(s.statements.fiscalYears).toEqual(["FY21", "FY22", "FY23", "FY24", "FY25"]);
   });
-  it("reads FY25 revenue and EPS within 1% of the fixture", () => {
-    expect(near(row("income", "revenue").values[4]!, 63.9e9)).toBe(true);
-    expect(near(row("income", "epsDiluted").values[4]!, 4.77)).toBe(true);
+  it("reads FY25 income rows matching the fixture", () => {
+    expect(near(row("income", "revenue").values[4], 63.9e9)).toBe(true);
+    expect(near(row("income", "operatingIncome").values[4], 25.5e9)).toBe(true);
+    expect(near(row("income", "ebitda").values[4], 34.7e9)).toBe(true);
+    expect(near(row("income", "netIncome").values[4], 23.1e9)).toBe(true);
+    expect(near(row("income", "epsDiluted").values[4], 4.77, 0.003)).toBe(true);
   });
-  it("carries the balance and cash-flow rows the report needs", () => {
-    for (const k of ["cashAndInvestments", "totalDebt", "netDebt", "totalEquity", "currentRatio"]) expect(row("balance", k)).toBeDefined();
-    for (const k of ["operatingCashFlow", "freeCashFlow"]) expect(row("cashflow", k)).toBeDefined();
-    expect(near(row("cashflow", "freeCashFlow").values[4]!, 26.9e9, 0.02)).toBe(true);
+  it("reads FY25 balance rows matching the fixture", () => {
+    expect(near(row("balance", "cashAndInvestments").values[4], 16.2e9)).toBe(true);
+    expect(near(row("balance", "totalDebt").values[4], 65.1e9)).toBe(true);
+    expect(near(row("balance", "netDebt").values[4], 49.0e9)).toBe(true);
+    expect(near(row("balance", "totalEquity").values[4], 81.3e9)).toBe(true);
+    expect(near(row("balance", "currentRatio").values[4], 1.71, 0.005)).toBe(true);
   });
-  it("derives the latest quarter with YoY growth", () => {
+  it("reads FY25 cash-flow rows matching the fixture", () => {
+    expect(near(row("cashflow", "operatingCashFlow").values[4], 27.5e9)).toBe(true);
+    expect(near(row("cashflow", "freeCashFlow").values[4], 26.9e9)).toBe(true);
+  });
+  it("derives the latest quarter with YoY growth from the quarterly statements", () => {
     expect(s.latestQuarter.label).toBe("Q3'26");
     expect(s.latestQuarter.periodEnd).toBe("2026-08-02");
-    expect(near(s.latestQuarter.revenue, 29.6e9, 0.02)).toBe(true);
-    expect(s.latestQuarter.revenueYoY).toBeGreaterThan(0.5);
-    expect(s.latestQuarter.operatingMargin).toBeGreaterThan(0.4);
+    expect(near(s.latestQuarter.revenue, 29.591e9, 0.001)).toBe(true);
+    expect(near(s.latestQuarter.revenueYoY, 29.591 / 15.952 - 1, 0.01)).toBe(true);
+    expect(near(s.latestQuarter.operatingMargin, 15.955 / 29.591, 0.01)).toBe(true);
   });
-  it("reads TTM multiples as ratios/multiples, never percents", () => {
-    expect(s.ttm.pe).toBeGreaterThan(10);
-    expect(s.ttm.grossMargin).toBeLessThan(1);
+  it("reads TTM multiples and margins", () => {
+    expect(near(s.ttm.pe, 44.9, 0.01)).toBe(true);
+    expect(near(s.ttm.ps, 19.3, 0.01)).toBe(true);
+    expect(near(s.ttm.evToEbitda, 33.6, 0.01)).toBe(true);
+    expect(s.ttm.grossMargin).toBeGreaterThan(0.6);
+    expect(s.ttm.grossMargin).toBeLessThan(0.7);
   });
 });
 ```
@@ -1188,6 +1393,8 @@ describe("mapStatements on the AVGO capture", () => {
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
+export type Rec = Record<string, unknown>;
+
 export function readRawText(dir: string, file: string): string {
   try { return readFileSync(join(dir, file), "utf8"); }
   catch { throw new Error(`Missing raw file ${file} in ${dir}`); }
@@ -1198,67 +1405,64 @@ export function readRawJson(dir: string, file: string): unknown {
   try { return JSON.parse(text); } catch { throw new Error(`Raw file ${file} in ${dir} is not JSON`); }
 }
 
-/** FMP responses are arrays; some MCP wrappers nest them. Unwrap, and refuse emptiness. */
-export function readRawArray(dir: string, file: string): Record<string, unknown>[] {
-  const v = readRawJson(dir, file) as Record<string, unknown> | unknown[];
-  let arr: unknown[] | undefined = Array.isArray(v) ? v : undefined;
-  if (!arr && v && typeof v === "object")
-    for (const k of ["data", "results", "items", "content"]) if (Array.isArray((v as Record<string, unknown>)[k])) { arr = (v as Record<string, unknown[]>)[k]; break; }
-  if (!arr) throw new Error(`Raw file ${file} in ${dir} has no array payload`);
-  if (arr.length === 0) throw new Error(`Raw file ${file} in ${dir} is an empty array`);
-  if (typeof arr[0] === "object" && arr[0] && "error" in (arr[0] as object)) throw new Error(`Raw file ${file} in ${dir} is an error response`);
-  return arr as Record<string, unknown>[];
-}
-
-/** First present candidate key; throws naming file and candidates unless optional. */
-export function pick(obj: Record<string, unknown>, candidates: string[], file: string, opts: { optional?: boolean } = {}): number | null {
-  for (const k of candidates) {
-    const v = obj[k];
-    if (typeof v === "number" && Number.isFinite(v)) return v;
-    if (typeof v === "string" && v.trim() !== "" && Number.isFinite(Number(v))) return Number(v);
-  }
+/** A numeric field, tolerating numeric strings; throws naming file and key unless optional. */
+export function num(obj: Rec | undefined, key: string, file: string, opts: { optional?: boolean } = {}): number | null {
+  const v = obj?.[key];
+  if (typeof v === "number" && Number.isFinite(v)) return v;
+  if (typeof v === "string" && v.trim() !== "" && Number.isFinite(Number(v))) return Number(v);
   if (opts.optional) return null;
-  throw new Error(`None of [${candidates.join(", ")}] present in ${file}`);
+  throw new Error(`Missing numeric "${key}" in ${file}`);
 }
 
-export function pickString(obj: Record<string, unknown>, candidates: string[], file: string): string {
-  for (const k of candidates) { const v = obj[k]; if (typeof v === "string" && v.trim()) return v; }
-  throw new Error(`None of [${candidates.join(", ")}] present in ${file}`);
+export function str(obj: Rec | undefined, key: string, file: string): string {
+  const v = obj?.[key];
+  if (typeof v === "string" && v.trim()) return v;
+  throw new Error(`Missing string "${key}" in ${file}`);
+}
+
+export function section<T = Rec>(obj: unknown, path: string[], file: string): T {
+  let cur: unknown = obj;
+  for (const p of path) {
+    if (!cur || typeof cur !== "object" || !(p in (cur as Rec))) throw new Error(`Missing "${path.join(".")}" in ${file}`);
+    cur = (cur as Rec)[p];
+  }
+  return cur as T;
 }
 ```
 
 `lib/facts/map/quote.ts`:
 ```ts
-import { readRawArray, pick, pickString } from "../raw";
+import { readRawJson, num, str, section, type Rec } from "../raw";
 import type { FactPack, Excerpt } from "../schema";
 
+const FILE = "bigdata-tearsheet-annual.json";
 export const PROVENANCE = [
-  { field: "quote", endpoint: "quote" },
-  { field: "company", endpoint: "profile-symbol" },
-  { field: "context.description", endpoint: "profile-symbol" },
+  { field: "quote", endpoint: "bigdata_company_tearsheet.company_overview + price_performance" },
+  { field: "quote.sharesOutstanding", endpoint: "derived: market_cap / price" },
+  { field: "quote.dividendYield", endpoint: "bigdata_company_tearsheet.fundamentals.ratios[TTM]" },
+  { field: "company", endpoint: "bigdata_company_tearsheet.company_overview" },
+  { field: "context.description", endpoint: "bigdata_company_tearsheet.company_overview" },
 ];
 
-const asRatio = (v: number) => (v > 1 ? v / 100 : v); // some FMP fields report percent
-
 export function mapQuote(dir: string): { quote: FactPack["quote"]; company: string; exchange: string; cik: number; description: Excerpt } {
-  const q = readRawArray(dir, "fmp-quote.json")[0];
-  const p = readRawArray(dir, "fmp-profile.json")[0];
-  const ratios = readRawArray(dir, "fmp-ratios-ttm.json")[0];
-  const exchangeRaw = pickString(p, ["exchangeShortName", "exchange"], "fmp-profile.json");
-  const ts = pick(q, ["timestamp"], "fmp-quote.json", { optional: true });
+  const ts = readRawJson(dir, FILE);
+  const ov = section<Rec>(ts, ["company_overview"], FILE);
+  const pp = section<Rec>(ts, ["price_performance", "current_market"], FILE);
+  const ratios = section<Rec[]>(ts, ["fundamentals", "ratios"], FILE);
+  const ttm = ratios.find((r) => r.fiscal_period === "TTM");
+  const price = num(ov, "price", FILE)!, marketCap = num(ov, "market_cap", FILE)!;
+  const asOf = str(ov, "timestamp", FILE).slice(0, 10);
   return {
-    company: pickString(p, ["companyName", "name"], "fmp-profile.json"),
-    exchange: exchangeRaw.toUpperCase().includes("NASDAQ") ? "NASDAQ" : exchangeRaw.toUpperCase(),
-    cik: pick(p, ["cik"], "fmp-profile.json")!,   // FMP sends "0001730168" or 1730168; pick handles both
-    description: { text: pickString(p, ["description"], "fmp-profile.json"), source: "fmp:profile-symbol", asOf: new Date().toISOString().slice(0, 10) },
+    company: str(ov, "company_name", FILE),
+    exchange: str(ov, "exchange", FILE).toUpperCase(),
+    cik: num(ov, "cik", FILE)!,
+    description: { text: str(ov, "description", FILE), source: "bigdata:company_tearsheet", asOf },
     quote: {
-      price: pick(q, ["price"], "fmp-quote.json")!,
-      marketCap: pick(q, ["marketCap"], "fmp-quote.json")!,
-      sharesOutstanding: pick(q, ["sharesOutstanding"], "fmp-quote.json")!,
-      week52Low: pick(q, ["yearLow"], "fmp-quote.json")!,
-      week52High: pick(q, ["yearHigh"], "fmp-quote.json")!,
-      dividendYield: asRatio(pick(ratios, ["dividendYieldTTM", "dividendYieldPercentageTTM"], "fmp-ratios-ttm.json", { optional: true }) ?? 0),
-      asOf: ts ? new Date(ts * 1000).toISOString().slice(0, 10) : new Date().toISOString().slice(0, 10),
+      price, marketCap,
+      sharesOutstanding: marketCap / price,
+      week52Low: num(pp, "year_low", FILE)!, week52High: num(pp, "year_high", FILE)!,
+      dividendYield: num(ttm, "dividend_yield", FILE, { optional: true }) ?? 0,
+      asOf,
     },
   };
 }
@@ -1266,97 +1470,92 @@ export function mapQuote(dir: string): { quote: FactPack["quote"]; company: stri
 
 `lib/facts/map/statements.ts`:
 ```ts
-import { readRawArray, pick, pickString } from "../raw";
+import { readRawJson, num, str, section, type Rec } from "../raw";
 import type { FactPack, StatementRow } from "../schema";
 
+const ANNUAL = "bigdata-statements-annual.json", QUARTER = "bigdata-statements-quarter.json", SHEET = "bigdata-tearsheet-annual.json";
 export const PROVENANCE = [
-  { field: "statements.income", endpoint: "income-statement" },
-  { field: "statements.balance", endpoint: "balance-sheet-statement" },
-  { field: "statements.cashflow", endpoint: "cashflow-statement" },
-  { field: "latestQuarter", endpoint: "income-statement (quarter)" },
-  { field: "ttm", endpoint: "key-metrics-ttm, metrics-ratios-ttm" },
+  { field: "statements", endpoint: "bigdata_company_tearsheet.financial_statements (annual)" },
+  { field: "latestQuarter", endpoint: "bigdata_company_tearsheet.financial_statements (quarter)" },
+  { field: "ttm", endpoint: "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]" },
 ];
 
-type Rec = Record<string, unknown>;
-const fyOf = (r: Rec, file: string) => Number(pickString(r, ["fiscalYear", "calendarYear"], file));
 const fyLabel = (fy: number) => `FY${String(fy).slice(2)}`;
-
-/** Oldest-first, exactly five fiscal years, aligned across the three statements. */
-function alignedYears(inc: Rec[], bal: Rec[], cf: Rec[]): number[] {
-  const common = [inc, bal, cf].map((rows) => new Set(rows.map((r) => fyOf(r, "statement")))).reduce((a, b) => new Set([...a].filter((y) => b.has(y))));
-  const years = [...common].sort((a, b) => a - b).slice(-5);
-  if (years.length !== 5) throw new Error(`Expected 5 aligned fiscal years, found ${years.length}: ${years.join(",")}`);
-  return years;
-}
-const byYear = (rows: Rec[], years: number[], file: string) => years.map((y) => rows.find((r) => fyOf(r, file) === y)!);
-
 const row = (key: string, label: string, values: (number | null)[]): StatementRow => ({ key, label, values });
 const div = (a: number | null, b: number | null) => (a == null || b == null || b === 0 ? null : a / b);
 
-export function mapStatements(dir: string, capturedAt: string): { statements: FactPack["statements"]; latestQuarter: FactPack["latestQuarter"]; ttm: FactPack["ttm"] } {
-  const inc = readRawArray(dir, "fmp-income-annual.json"), bal = readRawArray(dir, "fmp-balance-annual.json"), cf = readRawArray(dir, "fmp-cashflow-annual.json");
-  const years = alignedYears(inc, bal, cf);
-  const I = byYear(inc, years, "fmp-income-annual.json"), B = byYear(bal, years, "fmp-balance-annual.json"), C = byYear(cf, years, "fmp-cashflow-annual.json");
-  const col = (rows: Rec[], keys: string[], file: string, optional = false) => rows.map((r) => pick(r, keys, file, { optional }));
+function fyRows(all: Rec[], file: string): Map<number, Rec> {
+  const m = new Map<number, Rec>();
+  for (const r of all) if (r.fiscal_period === "FY") m.set(num(r, "fiscal_year", file)!, r);
+  return m;
+}
 
-  const revenue = col(I, ["revenue"], "fmp-income-annual.json");
-  const fcf = col(C, ["freeCashFlow"], "fmp-cashflow-annual.json");
-  const curA = col(B, ["totalCurrentAssets"], "fmp-balance-annual.json"), curL = col(B, ["totalCurrentLiabilities"], "fmp-balance-annual.json");
+export function mapStatements(dir: string): { statements: FactPack["statements"]; latestQuarter: FactPack["latestQuarter"]; ttm: FactPack["ttm"] } {
+  const a = readRawJson(dir, ANNUAL);
+  const inc = fyRows(section<Rec[]>(a, ["fundamentals", "income_statement"], ANNUAL), ANNUAL);
+  const bal = fyRows(section<Rec[]>(a, ["fundamentals", "balance_sheet"], ANNUAL), ANNUAL);
+  const cf = fyRows(section<Rec[]>(a, ["fundamentals", "cash_flow"], ANNUAL), ANNUAL);
+  const years = [...inc.keys()].filter((y) => bal.has(y) && cf.has(y)).sort((x, y) => x - y).slice(-5);
+  if (years.length !== 5) throw new Error(`Expected 5 aligned fiscal years in ${ANNUAL}, found ${years.length}: ${years.join(",")}`);
+  const col = (m: Map<number, Rec>, key: string, optional = false) => years.map((y) => num(m.get(y), key, ANNUAL, { optional }));
 
+  const revenue = col(inc, "revenue");
+  const curA = col(bal, "total_current_assets"), curL = col(bal, "total_current_liabilities");
   const statements: FactPack["statements"] = {
     fiscalYears: years.map(fyLabel),
     income: [
       row("revenue", "Revenue", revenue),
-      row("grossProfit", "Gross Profit", col(I, ["grossProfit"], "fmp-income-annual.json")),
-      row("operatingIncome", "Operating Income", col(I, ["operatingIncome"], "fmp-income-annual.json")),
-      row("ebitda", "EBITDA", col(I, ["ebitda"], "fmp-income-annual.json", true)),
-      row("netIncome", "Net Income", col(I, ["netIncome"], "fmp-income-annual.json")),
-      row("epsDiluted", "Diluted EPS", col(I, ["epsDiluted", "epsdiluted"], "fmp-income-annual.json")),
+      row("grossProfit", "Gross Profit", col(inc, "gross_profit")),
+      row("operatingIncome", "Operating Income", col(inc, "operating_income")),
+      row("ebitda", "EBITDA", col(inc, "ebitda", true)),
+      row("netIncome", "Net Income", col(inc, "net_income")),
+      row("epsDiluted", "Diluted EPS", col(inc, "eps_diluted")),
     ],
     balance: [
-      row("cashAndInvestments", "Cash & ST Investments", col(B, ["cashAndShortTermInvestments"], "fmp-balance-annual.json")),
-      row("totalDebt", "Total Debt", col(B, ["totalDebt"], "fmp-balance-annual.json")),
-      row("netDebt", "Net Debt", col(B, ["netDebt"], "fmp-balance-annual.json")),
-      row("totalEquity", "Total Equity", col(B, ["totalStockholdersEquity", "totalEquity"], "fmp-balance-annual.json")),
-      row("currentRatio", "Current Ratio", curA.map((a, i) => div(a, curL[i]))),
+      row("cashAndInvestments", "Cash & ST Investments", col(bal, "cash_and_short_term_investments")),
+      row("totalDebt", "Total Debt", col(bal, "total_debt")),
+      row("netDebt", "Net Debt", col(bal, "net_debt")),
+      row("totalEquity", "Total Equity", col(bal, "total_equity")),
+      row("currentRatio", "Current Ratio", curA.map((x, i) => div(x, curL[i]))),
     ],
     cashflow: [
-      row("operatingCashFlow", "Operating Cash Flow", col(C, ["operatingCashFlow", "netCashProvidedByOperatingActivities"], "fmp-cashflow-annual.json")),
-      row("freeCashFlow", "Free Cash Flow", fcf),
+      row("operatingCashFlow", "Operating Cash Flow", col(cf, "operating_cash_flow")),
+      row("freeCashFlow", "Free Cash Flow", col(cf, "free_cash_flow")),
     ],
   };
 
-  const quarters = readRawArray(dir, "fmp-income-quarter.json")
-    .map((r) => ({ r, date: pickString(r, ["date"], "fmp-income-quarter.json"), fy: fyOf(r, "fmp-income-quarter.json"), period: pickString(r, ["period"], "fmp-income-quarter.json") }))
-    .sort((a, b) => (a.date < b.date ? 1 : -1));
+  const q = readRawJson(dir, QUARTER);
+  const quarters = section<Rec[]>(q, ["fundamentals", "income_statement"], QUARTER)
+    .filter((r) => r.fiscal_period !== "FY")
+    .sort((x, y) => (str(x, "report_date", QUARTER) < str(y, "report_date", QUARTER) ? 1 : -1));
   const latest = quarters[0];
-  const prior = quarters.find((q) => q.period === latest.period && q.fy === latest.fy - 1);
-  const rev = pick(latest.r, ["revenue"], "fmp-income-quarter.json")!;
-  const opInc = pick(latest.r, ["operatingIncome"], "fmp-income-quarter.json")!;
-  const priorRev = prior ? pick(prior.r, ["revenue"], "fmp-income-quarter.json") : null;
+  if (!latest) throw new Error(`No quarterly income rows in ${QUARTER}`);
+  const fy = num(latest, "fiscal_year", QUARTER)!, period = str(latest, "fiscal_period", QUARTER);
+  const prior = quarters.find((r) => r.fiscal_period === period && num(r, "fiscal_year", QUARTER) === fy - 1);
+  const rev = num(latest, "revenue", QUARTER)!;
   const latestQuarter: FactPack["latestQuarter"] = {
-    label: `${latest.period}'${String(latest.fy).slice(2)}`,
-    periodEnd: latest.date, revenue: rev, operatingMargin: opInc / rev,
-    revenueYoY: priorRev ? rev / priorRev - 1 : 0,
+    label: `${period}'${String(fy).slice(2)}`,
+    periodEnd: str(latest, "report_date", QUARTER),
+    revenue: rev,
+    operatingMargin: num(latest, "operating_income", QUARTER)! / rev,
+    revenueYoY: prior ? rev / num(prior, "revenue", QUARTER)! - 1 : 0,
   };
 
-  const km = readRawArray(dir, "fmp-key-metrics-ttm.json")[0], rt = readRawArray(dir, "fmp-ratios-ttm.json")[0];
+  const sheet = readRawJson(dir, SHEET);
+  const km = section<Rec[]>(sheet, ["fundamentals", "key_metrics"], SHEET).find((r) => r.fiscal_period === "TTM");
+  const rt = section<Rec[]>(sheet, ["fundamentals", "ratios"], SHEET).find((r) => r.fiscal_period === "TTM");
+  const opt = (o: Rec | undefined, k: string) => num(o, k, SHEET, { optional: true });
   const ttm: FactPack["ttm"] = {
-    pe: pick(rt, ["priceToEarningsRatioTTM", "peRatioTTM"], "fmp-ratios-ttm.json", { optional: true }),
-    ps: pick(rt, ["priceToSalesRatioTTM"], "fmp-ratios-ttm.json", { optional: true }),
-    evToEbitda: pick(km, ["evToEBITDATTM", "enterpriseValueOverEBITDATTM"], "fmp-key-metrics-ttm.json", { optional: true }),
-    grossMargin: pick(rt, ["grossProfitMarginTTM"], "fmp-ratios-ttm.json", { optional: true }),
-    operatingMargin: pick(rt, ["operatingProfitMarginTTM"], "fmp-ratios-ttm.json", { optional: true }),
-    netMargin: pick(rt, ["netProfitMarginTTM"], "fmp-ratios-ttm.json", { optional: true }),
+    pe: opt(km, "pe_ratio"), ps: opt(km, "price_to_sales"), evToEbitda: opt(km, "ev_to_ebitda"),
+    grossMargin: opt(rt, "gross_margin"), operatingMargin: opt(rt, "operating_margin"), netMargin: opt(rt, "net_margin"),
   };
-  void capturedAt;
   return { statements, latestQuarter, ttm };
 }
 ```
 
-- [ ] **Step 4: Run to verify they pass** — `npx vitest run lib/facts/map` → 9 passing. If a `pick` throws, the captured key differs: open the raw file, add the real key to the candidate list, note it in the header comment. If a numeric assertion fails by more than the tolerance, **do not change the tolerance or the fixture** — report the two values; the controller rules.
+- [ ] **Step 4: Run to verify they pass** — `npx vitest run lib/facts/map` → 11 passing. If the annual statements file's rows carry a different `fiscal_period` label than `"FY"`, print the distinct values and adapt `fyRows` — record it. If a numeric assertion misses, report both values; do not change tolerances or the fixture.
 
-- [ ] **Step 5: Commit** — `git add lib/facts && git commit -m "feat: map quote, profile, statements, and TTM from the raw capture"`
+- [ ] **Step 5: Commit** — `git add lib/facts && git commit -m "feat: map quote, statements, and TTM metrics from the Bigdata tearsheets"`
 
 ---
 
@@ -1364,13 +1563,11 @@ export function mapStatements(dir: string, capturedAt: string): { statements: Fa
 
 **Files:**
 - Create: `lib/facts/map/segments.ts`, `lib/facts/map/analysts.ts`, `lib/facts/map/history.ts`
-- Test: `lib/facts/map/segments.test.ts`, `lib/facts/map/analysts.test.ts`, `lib/facts/map/history.test.ts`
+- Test: one test file per mapper
 
 **Interfaces:**
-- Consumes: `readRawArray`, `pick`, `pickString`, schema types.
-- Produces: `mapSegments(dir) → { segments, geoMix }`; `mapAnalysts(dir, capturedAt, latestFY: number) → { analysts, estimates, peers }`; `mapHistory(dir, capturedAt) → HistoryPoint[]`; each with `PROVENANCE`.
-
-Read the captured `fmp-segments-product.json`, `fmp-grades-summary.json`, `fmp-estimates.json`, `fmp-peers.json` and `fmp-history.json` first. Segment files historically come in two shapes: `[{ fiscalYear, period, date, data: { "<segment>": value } }]` (current) and `[{ "<date>": { "<segment>": value } }]` (legacy). Handle both.
+- Consumes: `readRawJson`, `readRawText`, `num`, `str`, `section`; `PEER_LIMIT`.
+- Produces: `mapSegments(dir) → { segments, geoMix }`; `mapAnalysts(dir, latestFY: number) → { analysts, estimates, peers }`; `mapHistory(dir, capturedAt) → HistoryPoint[]`; `PROVENANCE` on each.
 
 - [ ] **Step 1: Write the failing tests**
 
@@ -1381,16 +1578,20 @@ import { mapSegments } from "@/lib/facts/map/segments";
 const DIR = "data/raw/AVGO/0001730168-26-000080";
 describe("mapSegments on the AVGO capture", () => {
   const s = mapSegments(DIR);
-  it("finds the two reportable segments for the latest fiscal year", () => {
-    expect(s.segments.basis).toMatch(/^FY\d\d$/);
-    expect(s.segments.items.length).toBeGreaterThanOrEqual(2);
-    const sum = s.segments.items.reduce((a, i) => a + i.share, 0);
-    expect(Math.abs(sum - 1)).toBeLessThan(0.02);
-    expect(s.segments.items.map((i) => i.name.toLowerCase()).join(" ")).toMatch(/semiconductor|software/);
+  it("takes the latest fiscal year's product mix, shares summing to one", () => {
+    expect(s.segments.basis).toBe("FY25");
+    expect(s.segments.items.map((i) => i.name).sort()).toEqual(["Infrastructure Software", "Semiconductor Solutions"]);
+    const semis = s.segments.items.find((i) => i.name === "Semiconductor Solutions")!;
+    expect(semis.revenue).toBe(36858000000);
+    expect(semis.share).toBeCloseTo(0.58, 2);
+    expect(s.segments.items.reduce((a, i) => a + i.share, 0)).toBeCloseTo(1, 6);
   });
-  it("finds a geographic mix whose shares sum to one", () => {
-    expect(s.geoMix.items.length).toBeGreaterThanOrEqual(2);
-    expect(Math.abs(s.geoMix.items.reduce((a, i) => a + i.share, 0) - 1)).toBeLessThan(0.02);
+  it("takes the latest fiscal year's geographic mix", () => {
+    expect(s.geoMix.basis).toBe("FY25");
+    const byRegion = Object.fromEntries(s.geoMix.items.map((g) => [g.region, g.share]));
+    expect(byRegion["Asia Pacific"]).toBeCloseTo(0.56, 2);
+    expect(byRegion["Americas"]).toBeCloseTo(0.30, 2);
+    expect(byRegion["EMEA"]).toBeCloseTo(0.14, 2);
   });
 });
 ```
@@ -1401,24 +1602,23 @@ import { describe, it, expect } from "vitest";
 import { mapAnalysts } from "@/lib/facts/map/analysts";
 const DIR = "data/raw/AVGO/0001730168-26-000080";
 describe("mapAnalysts on the AVGO capture", () => {
-  const a = mapAnalysts(DIR, "2026-09-12T00:00:00Z", 2025);
-  it("reconciles the rating split with the count", () => {
-    expect(a.analysts.buy + a.analysts.hold + a.analysts.sell).toBe(a.analysts.count);
-    expect(a.analysts.count).toBeGreaterThan(20);
+  const a = mapAnalysts(DIR, 2025);
+  it("reads targets and the rating split exactly as the fixture", () => {
+    expect(a.analysts).toMatchObject({ consensusTarget: 509.61, medianTarget: 517.5, highTarget: 600, lowTarget: 350,
+      buy: 54, hold: 6, sell: 0, count: 60, consensusRating: "Buy" });
+    expect(a.analysts.asOf).toMatch(/^\d{4}-\d{2}-\d{2}$/);
   });
-  it("orders the targets low ≤ consensus ≤ high", () => {
-    expect(a.analysts.lowTarget).toBeLessThanOrEqual(a.analysts.consensusTarget);
-    expect(a.analysts.consensusTarget).toBeLessThanOrEqual(a.analysts.highTarget);
-  });
-  it("labels the next two fiscal years as estimates", () => {
+  it("labels the next two fiscal years' SALES and EPS means as estimates", () => {
     expect(a.estimates.nextFY.label).toBe("FY26E");
+    expect(a.estimates.nextFY.revenue).toBeCloseTo(105.86e9, -9);
+    expect(a.estimates.nextFY.eps).toBeCloseTo(11.629, 2);
     expect(a.estimates.followingFY.label).toBe("FY27E");
-    expect(a.estimates.nextFY.revenue).toBeGreaterThan(80e9);
+    expect(a.estimates.followingFY.eps).toBeCloseTo(19.28, 1);
   });
-  it("carries up to four peers with TTM multiples", () => {
+  it("carries up to four peer tickers with null multiples until a peer source exists", () => {
     expect(a.peers.length).toBeGreaterThan(0);
     expect(a.peers.length).toBeLessThanOrEqual(4);
-    for (const p of a.peers) expect(p.ticker).toMatch(/^[A-Z.]+$/);
+    for (const p of a.peers) { expect(p.ticker).toMatch(/^[A-Z.]+$/); expect(p.pe).toBeNull(); }
   });
 });
 ```
@@ -1435,8 +1635,9 @@ describe("mapHistory on the AVGO capture", () => {
     for (let i = 1; i < h.length; i++) expect(h[i].date > h[i - 1].date).toBe(true);
     expect(h[h.length - 1].date <= "2026-09-12").toBe(true);
   });
-  it("carries closes as raw numbers in a plausible range", () => {
-    for (const p of h) { expect(p.close).toBeGreaterThan(200); expect(p.close).toBeLessThan(700); }
+  it("ends on the quote's as-of close", () => {
+    expect(h[h.length - 1]).toMatchObject({ date: "2026-09-11" });
+    expect(h[h.length - 1].close).toBeCloseTo(361.99, 1);
   });
 });
 ```
@@ -1447,35 +1648,27 @@ describe("mapHistory on the AVGO capture", () => {
 
 `segments.ts`:
 ```ts
-import { readRawArray, pickString } from "../raw";
+import { readRawJson, section, type Rec } from "../raw";
 import type { FactPack } from "../schema";
+const FILE = "bigdata-tearsheet-annual.json";
 export const PROVENANCE = [
-  { field: "segments", endpoint: "revenue-product-segmentation" },
-  { field: "geoMix", endpoint: "revenue-geographic-segments" },
+  { field: "segments", endpoint: "bigdata_company_tearsheet.revenue_segmentation.product" },
+  { field: "geoMix", endpoint: "bigdata_company_tearsheet.revenue_segmentation.geographic" },
 ];
-type Rec = Record<string, unknown>;
 
-/** Returns [fiscalYearLabel, { name: value }] for the latest full-year entry, either FMP shape. */
-function latestBreakdown(rows: Rec[], file: string): [string, Record<string, number>] {
-  const parsed = rows.map((r) => {
-    if (r.data && typeof r.data === "object") {
-      const fy = pickString(r, ["fiscalYear", "calendarYear"], file);
-      const period = typeof r.period === "string" ? r.period : "FY";
-      return { fy: Number(fy), period, data: r.data as Record<string, number> };
-    }
-    const [date, data] = Object.entries(r)[0] as [string, Record<string, number>];
-    return { fy: Number(date.slice(0, 4)), period: "FY", data };
-  }).filter((x) => x.period === "FY" || x.period === "annual");
-  if (parsed.length === 0) throw new Error(`${file} has no annual segment entries`);
-  const latest = parsed.sort((a, b) => b.fy - a.fy)[0];
-  return [`FY${String(latest.fy).slice(2)}`, latest.data];
+/** revenue_segmentation.<kind> is keyed by period-end date; take the latest FY entry. */
+function latest(byDate: Record<string, Rec>, valuesKey: string): [string, Record<string, number>] {
+  const entries = Object.values(byDate).filter((e) => e.period === "FY" && typeof e.fiscal_year === "number");
+  if (!entries.length) throw new Error(`No FY entries under revenue_segmentation in ${FILE}`);
+  const top = entries.sort((a, b) => (b.fiscal_year as number) - (a.fiscal_year as number))[0];
+  return [`FY${String(top.fiscal_year).slice(2)}`, top[valuesKey] as Record<string, number>];
 }
 
 export function mapSegments(dir: string): { segments: FactPack["segments"]; geoMix: FactPack["geoMix"] } {
-  const [pBasis, product] = latestBreakdown(readRawArray(dir, "fmp-segments-product.json"), "fmp-segments-product.json");
-  const pTotal = Object.values(product).reduce((a, b) => a + b, 0);
-  const [gBasis, geo] = latestBreakdown(readRawArray(dir, "fmp-segments-geo.json"), "fmp-segments-geo.json");
-  const gTotal = Object.values(geo).reduce((a, b) => a + b, 0);
+  const ts = readRawJson(dir, FILE);
+  const [pBasis, product] = latest(section(ts, ["revenue_segmentation", "product"], FILE), "product_segments");
+  const [gBasis, geo] = latest(section(ts, ["revenue_segmentation", "geographic"], FILE), "region_segments");
+  const pTotal = Object.values(product).reduce((a, b) => a + b, 0), gTotal = Object.values(geo).reduce((a, b) => a + b, 0);
   return {
     segments: { basis: pBasis, items: Object.entries(product).map(([name, revenue]) => ({ name, revenue, share: revenue / pTotal })) },
     geoMix: { basis: gBasis, items: Object.entries(geo).map(([region, v]) => ({ region, share: v / gTotal })) },
@@ -1485,81 +1678,75 @@ export function mapSegments(dir: string): { segments: FactPack["segments"]; geoM
 
 `analysts.ts`:
 ```ts
-import { existsSync } from "node:fs";
-import { join } from "node:path";
-import { readRawArray, readRawJson, pick, pickString } from "../raw";
+import { readRawJson, num, str, section, type Rec } from "../raw";
 import { PEER_LIMIT } from "../manifest";
 import type { FactPack } from "../schema";
+const FILE = "bigdata-tearsheet-annual.json";
 export const PROVENANCE = [
-  { field: "analysts", endpoint: "price-target-consensus, price-target-summary, grades-summary" },
-  { field: "estimates", endpoint: "financial-estimates" },
-  { field: "peers", endpoint: "peers, key-metrics-ttm" },
+  { field: "analysts", endpoint: "bigdata_company_tearsheet.analyst_data" },
+  { field: "estimates", endpoint: "bigdata_company_tearsheet.estimates" },
+  { field: "peers", endpoint: "fmp company/peers (tickers only)" },
 ];
-type Rec = Record<string, unknown>;
 
-export function mapAnalysts(dir: string, capturedAt: string, latestFY: number): { analysts: FactPack["analysts"]; estimates: FactPack["estimates"]; peers: FactPack["peers"] } {
-  const c = readRawArray(dir, "fmp-target-consensus.json")[0];
-  const g = readRawArray(dir, "fmp-grades-summary.json")[0];
-  const buy = (pick(g, ["strongBuy"], "fmp-grades-summary.json", { optional: true }) ?? 0) + (pick(g, ["buy"], "fmp-grades-summary.json") ?? 0);
-  const hold = pick(g, ["hold"], "fmp-grades-summary.json") ?? 0;
-  const sell = (pick(g, ["sell"], "fmp-grades-summary.json", { optional: true }) ?? 0) + (pick(g, ["strongSell"], "fmp-grades-summary.json", { optional: true }) ?? 0);
+export function mapAnalysts(dir: string, latestFY: number): { analysts: FactPack["analysts"]; estimates: FactPack["estimates"]; peers: FactPack["peers"] } {
+  const ts = readRawJson(dir, FILE);
+  const ad = section<Rec>(ts, ["analyst_data"], FILE);
+  const pt = section<Rec>(ad, ["price_targets"], FILE), rt = section<Rec>(ad, ["ratings"], FILE);
+  const g = (k: string) => num(rt, k, FILE, { optional: true }) ?? 0;
+  const buy = g("strong_buy") + g("buy"), hold = g("hold"), sell = g("sell") + g("strong_sell");
   const analysts: FactPack["analysts"] = {
     count: buy + hold + sell, buy, hold, sell,
-    consensusRating: pickString(g, ["consensus"], "fmp-grades-summary.json"),
-    consensusTarget: pick(c, ["targetConsensus"], "fmp-target-consensus.json")!,
-    medianTarget: pick(c, ["targetMedian"], "fmp-target-consensus.json")!,
-    highTarget: pick(c, ["targetHigh"], "fmp-target-consensus.json")!,
-    lowTarget: pick(c, ["targetLow"], "fmp-target-consensus.json")!,
-    asOf: capturedAt.slice(0, 10),
+    consensusRating: str(rt, "consensus", FILE),
+    consensusTarget: num(pt, "target_consensus", FILE)!, medianTarget: num(pt, "target_median", FILE)!,
+    highTarget: num(pt, "target_high", FILE)!, lowTarget: num(pt, "target_low", FILE)!,
+    asOf: str(ad, "as_of_utc_timestamp", FILE).slice(0, 10),
   };
 
-  const est = readRawArray(dir, "fmp-estimates.json")
-    .map((r) => ({ r, fy: Number((pickString(r, ["date"], "fmp-estimates.json")).slice(0, 4)) }));
-  const forYear = (fy: number) => {
-    const hit = est.find((e) => e.fy === fy);
-    return { label: `FY${String(fy).slice(2)}E`,
-      revenue: hit ? pick(hit.r, ["revenueAvg", "estimatedRevenueAvg"], "fmp-estimates.json", { optional: true }) : null,
-      eps: hit ? pick(hit.r, ["epsAvg", "estimatedEpsAvg"], "fmp-estimates.json", { optional: true }) : null };
+  const records = section<Rec[]>(ts, ["estimates", "records"], FILE);
+  const mean = (metric: string, fy: number) => {
+    const r = records.find((x) => x.metric === metric && x.fiscal_year === fy && x.fiscal_period === "FY");
+    return r ? num(r, "estimate_mean", FILE, { optional: true }) : null;
   };
-  // FMP dates estimates by fiscal-year end; a November FYE lands in the same calendar year.
-  const estimates: FactPack["estimates"] = { nextFY: forYear(latestFY + 1), followingFY: forYear(latestFY + 2) };
+  const est = (fy: number) => ({ label: `FY${String(fy).slice(2)}E`, revenue: mean("SALES", fy), eps: mean("EPS", fy) });
+  const estimates: FactPack["estimates"] = { nextFY: est(latestFY + 1), followingFY: est(latestFY + 2) };
 
   const peersRaw = readRawJson(dir, "fmp-peers.json") as Rec | Rec[];
   const list: unknown[] = Array.isArray(peersRaw) ? peersRaw : ((peersRaw.data ?? peersRaw.peersList ?? []) as unknown[]);
-  const tickers = list.map((p) => (typeof p === "string" ? p : (p as Rec).symbol as string)).filter(Boolean).slice(0, PEER_LIMIT);
-  const peers: FactPack["peers"] = tickers.map((ticker) => {
-    const file = `fmp-peer-${ticker}-ttm.json`;
-    if (!existsSync(join(dir, file))) return { ticker, pe: null, ps: null, evToEbitda: null };
-    const m = readRawArray(dir, file)[0];
-    return { ticker,
-      pe: pick(m, ["peRatioTTM", "priceToEarningsRatioTTM"], file, { optional: true }),
-      ps: pick(m, ["priceToSalesRatioTTM"], file, { optional: true }),
-      evToEbitda: pick(m, ["evToEBITDATTM", "enterpriseValueOverEBITDATTM"], file, { optional: true }) };
-  });
+  const peers: FactPack["peers"] = list
+    .map((p) => (typeof p === "string" ? p : (p as Rec).symbol as string))
+    .filter((t): t is string => typeof t === "string" && t.length > 0)
+    .slice(0, PEER_LIMIT)
+    .map((ticker) => ({ ticker, pe: null, ps: null, evToEbitda: null }));
   return { analysts, estimates, peers };
 }
 ```
 
 `history.ts`:
 ```ts
-import { readRawArray, pick, pickString } from "../raw";
+import { readRawJson, section } from "../raw";
 import type { HistoryPoint } from "../schema";
-export const PROVENANCE = [{ field: "history", endpoint: "historical-price-eod-light" }];
+export const PROVENANCE = [{ field: "history", endpoint: "yahoo v8 chart (daily close)" }];
 export const HISTORY_DAYS = 30;
 
+/** Yahoo's shape: chart.result[0].timestamp[] (unix seconds) aligned with indicators.quote[0].close[]. */
 export function mapHistory(dir: string, capturedAt: string): HistoryPoint[] {
+  const FILE = "yahoo-history.json";
+  const raw = readRawJson(dir, FILE);
+  const result = section<unknown[]>(raw, ["chart", "result"], FILE)[0];
+  if (!result) throw new Error(`Empty chart.result in ${FILE}`);
+  const ts = section<number[]>(result, ["timestamp"], FILE);
+  const quote = section<{ close: (number | null)[] }[]>(result, ["indicators", "quote"], FILE)[0];
   const cutoff = capturedAt.slice(0, 10);
-  return readRawArray(dir, "fmp-history.json")
-    .map((r) => ({ date: pickString(r, ["date"], "fmp-history.json"), close: pick(r, ["price", "close", "adjClose"], "fmp-history.json")! }))
-    .filter((p) => p.date <= cutoff)
+  return ts.map((t, i) => ({ date: new Date(t * 1000).toISOString().slice(0, 10), close: quote.close[i] }))
+    .filter((p): p is HistoryPoint => typeof p.close === "number" && p.date <= cutoff)
     .sort((a, b) => (a.date < b.date ? -1 : 1))
     .slice(-HISTORY_DAYS);
 }
 ```
 
-- [ ] **Step 4: Run to verify they pass** — `npx vitest run lib/facts/map` → 18 passing. Same rule: adapt key names to the captured files and record it; never adjust a tolerance or a fixture.
+- [ ] **Step 4: Run to verify they pass** — `npx vitest run lib/facts/map` → 18 passing. The analyst and estimate literals in these tests were read from the tearsheet on 2026-09-12; the vendor refreshes them. If a test fails **and the captured raw file plainly carries a different value** (open `bigdata-tearsheet-annual.json` and quote the field), change the test literal to the captured value and record the change in your report — never change the mapper to force agreement. Peer-list shape: if `fmp-peers.json` is not an array of `{ symbol }` objects, print its first 200 characters and extend the unwrap — never invent tickers.
 
-- [ ] **Step 5: Commit** — `git add lib/facts && git commit -m "feat: map segments, analysts, estimates, peers, and price history"`
+- [ ] **Step 5: Commit** — `git add lib/facts && git commit -m "feat: map segments, analysts, estimates, peers, and Yahoo price history"`
 
 ---
 
@@ -1570,7 +1757,7 @@ export function mapHistory(dir: string, capturedAt: string): HistoryPoint[] {
 - Test: `lib/facts/map/context.test.ts`
 
 **Interfaces:**
-- Consumes: `extractSections`, `htmlToText`, `capAtSentence`, `EXCERPT_CAP`; `readRawText`; `Excerpt`.
+- Consumes: `extractSections` (returns `{ mda: CappedSection | null; riskFactors: CappedSection | null }`), `htmlToText`, `capAtSentence`, `readRawText`.
 - Produces: `mapContext(dir, filing: { form; url; filedDate }, capturedAt, description: Excerpt) → FactPack["context"]`; `PROVENANCE`.
 
 - [ ] **Step 1: Write the failing test**
@@ -1580,24 +1767,22 @@ import { describe, it, expect } from "vitest";
 import { mapContext } from "@/lib/facts/map/context";
 const DIR = "data/raw/AVGO/0001730168-26-000080";
 const filing = { form: "10-Q" as const, url: "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm", filedDate: "2026-09-10" };
-const desc = { text: "Broadcom designs chips.", source: "fmp:profile-symbol", asOf: "2026-09-12" };
+const desc = { text: "Broadcom designs chips.", source: "bigdata:company_tearsheet", asOf: "2026-09-11" };
 
 describe("mapContext on the AVGO capture", () => {
   const c = mapContext(DIR, filing, "2026-09-12T00:00:00Z", desc);
-  it("extracts capped, sourced filing excerpts", () => {
-    expect(c.mdaExcerpt?.source).toBe("edgar:10-Q");
-    expect(c.mdaExcerpt?.url).toBe(filing.url);
-    expect(c.mdaExcerpt?.text.length).toBeLessThanOrEqual(8000);
-    expect(c.riskFactorsExcerpt?.asOf).toBe("2026-09-10");
+  it("carries capped, sourced filing excerpts with their real truncation flags", () => {
+    expect(c.mdaExcerpt).toMatchObject({ source: "edgar:10-Q", url: filing.url, asOf: "2026-09-10", truncated: true });
+    expect(c.mdaExcerpt!.text.length).toBeLessThanOrEqual(16000);
+    expect(c.mdaExcerpt!.text.toLowerCase()).toContain("revenue");
+    expect(c.riskFactorsExcerpt!.text.length).toBeLessThanOrEqual(8000);
   });
   it("carries transcript highlights and at most ten headlines from Bigdata", () => {
     expect(c.transcriptHighlights?.source).toBe("bigdata:search");
     expect(c.headlines.length).toBeLessThanOrEqual(10);
     for (const h of c.headlines) expect(h.text.length).toBeGreaterThan(10);
   });
-  it("passes the description through", () => {
-    expect(c.description).toEqual(desc);
-  });
+  it("passes the description through", () => { expect(c.description).toEqual(desc); });
 });
 ```
 
@@ -1609,7 +1794,7 @@ describe("mapContext on the AVGO capture", () => {
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { readRawText } from "../raw";
-import { htmlToText, extractSections, capAtSentence } from "../../edgar/filing-text";
+import { htmlToText, extractSections, capAtSentence, type CappedSection } from "../../edgar/filing-text";
 import type { Excerpt, FactPack } from "../schema";
 
 export const PROVENANCE = [
@@ -1622,34 +1807,34 @@ export const PROVENANCE = [
 const optionalText = (dir: string, file: string) => (existsSync(join(dir, file)) ? readRawText(dir, file) : null);
 
 /** Bigdata search results are Markdown; take bullet or numbered lines as headlines. */
-function headlinesFrom(md: string | null, capturedAt: string): Excerpt[] {
+function headlinesFrom(md: string | null, asOf: string): Excerpt[] {
   if (!md) return [];
   return md.split("\n").map((l) => l.trim())
     .filter((l) => /^([-*•]|\d+[.)])\s+/.test(l))
     .map((l) => l.replace(/^([-*•]|\d+[.)])\s+/, "").replace(/\*\*/g, "").trim())
     .filter((l) => l.length > 10)
     .slice(0, 10)
-    .map((text) => ({ text, source: "bigdata:search", asOf: capturedAt.slice(0, 10) }));
+    .map((text) => ({ text, source: "bigdata:search", asOf }));
 }
 
 export function mapContext(dir: string, filing: { form: "10-Q" | "10-K"; url: string; filedDate: string }, capturedAt: string, description: Excerpt): FactPack["context"] {
-  const html = readRawText(dir, "edgar-primary.html");
-  const { mda, riskFactors } = extractSections(htmlToText(html), filing.form);
-  const edgar = (text: string | null): Excerpt | null =>
-    text ? { text, source: `edgar:${filing.form}`, url: filing.url, asOf: filing.filedDate, truncated: text.length >= 7900 } : null;
+  const { mda, riskFactors } = extractSections(htmlToText(readRawText(dir, "edgar-primary.html")), filing.form);
+  const edgar = (s: CappedSection | null): Excerpt | null =>
+    s ? { text: s.text, source: `edgar:${filing.form}`, url: filing.url, asOf: filing.filedDate, truncated: s.truncated } : null;
+  const asOf = capturedAt.slice(0, 10);
   const transcript = optionalText(dir, "bigdata-transcript.md");
   const t = transcript ? capAtSentence(transcript) : null;
   return {
     description,
     mdaExcerpt: edgar(mda),
     riskFactorsExcerpt: edgar(riskFactors),
-    transcriptHighlights: t ? { text: t.text, source: "bigdata:search", asOf: capturedAt.slice(0, 10), truncated: t.truncated } : null,
-    headlines: headlinesFrom(optionalText(dir, "bigdata-headlines.md"), capturedAt),
+    transcriptHighlights: t ? { text: t.text, source: "bigdata:search", asOf, truncated: t.truncated } : null,
+    headlines: headlinesFrom(optionalText(dir, "bigdata-headlines.md"), asOf),
   };
 }
 ```
 
-- [ ] **Step 4: Run to verify it passes** — `npx vitest run lib/facts/map/context.test.ts` → 3 passing. If `headlines` is empty because the Bigdata Markdown uses a different list marker, print the first twenty lines of `bigdata-headlines.md` in your report and extend the regex to that marker only.
+- [ ] **Step 4: Run to verify it passes** — 3 passing. If `headlines` is empty because the Markdown uses another list marker, print the first twenty lines and extend the regex to that marker only.
 
 - [ ] **Step 5: Commit** — `git add lib/facts && git commit -m "feat: map filing excerpts and Bigdata context into the FactPack"`
 
@@ -1664,43 +1849,51 @@ export function mapContext(dir: string, filing: { form: "10-Q" | "10-K"; url: st
 - Test: `lib/facts/validate.test.ts`, `lib/facts/build.test.ts`
 
 **Interfaces:**
-- Consumes: every mapper; `FactPack`; `requiredRawFiles`; `RAW_CAPTURE_META`.
+- Consumes: every mapper; `FactPack`; `RAW_CAPTURE_META`; `minimalPack` from `lib/facts/__fixtures__/minimal-pack`.
 - Produces: `validateFactPack(pack) → ValidationIssue[]`, `assertValidFactPack(pack, label)`, `buildFactPack(dir) → FactPack`, `npm run facts:build <TICKER> <ACCESSION>`.
 
 - [ ] **Step 1: Write the failing tests**
 
-`validate.test.ts` — uses the `minimalPack()` factory from Task 1:
+First, `lib/facts/__fixtures__/minimal-pack.ts`: the validation rule below requires ≥ 20 history points, and the fixture has two. Replace its `history` line with twenty-two generated trading days ending 2026-09-11 (Task 1's schema tests only parse the pack, so this is safe):
+```ts
+  history: Array.from({ length: 22 }, (_, i) => {
+    const d = new Date(Date.UTC(2026, 7, 21)); d.setUTCDate(d.getUTCDate() + i);
+    return { date: d.toISOString().slice(0, 10), close: 340 + i };
+  }),
+```
+
+
+`validate.test.ts`:
 ```ts
 import { describe, it, expect } from "vitest";
 import { validateFactPack, assertValidFactPack } from "@/lib/facts/validate";
 import { minimalPack } from "@/lib/facts/__fixtures__/minimal-pack";
 
 describe("validateFactPack", () => {
-  it("accepts the minimal pack", () => { expect(validateFactPack(minimalPack() as never)).toEqual([]); });
+  it("accepts the minimal pack", () => { expect(validateFactPack(minimalPack())).toEqual([]); });
   it("rejects non-consecutive fiscal years", () => {
     const p = minimalPack(); p.statements.fiscalYears = ["FY20", "FY22", "FY23", "FY24", "FY25"];
-    expect(validateFactPack(p as never).map((i) => i.field)).toContain("statements.fiscalYears");
+    expect(validateFactPack(p).map((i) => i.field)).toContain("statements.fiscalYears");
   });
   it("rejects segment shares that do not sum to one", () => {
     const p = minimalPack(); p.segments.items[0].share = 0.7;
-    expect(validateFactPack(p as never).map((i) => i.field)).toContain("segments.items[].share");
+    expect(validateFactPack(p).map((i) => i.field)).toContain("segments.items[].share");
   });
   it("rejects analyst counts that disagree", () => {
     const p = minimalPack(); p.analysts.count = 61;
-    expect(validateFactPack(p as never).map((i) => i.field)).toContain("analysts.count");
+    expect(validateFactPack(p).map((i) => i.field)).toContain("analysts.count");
   });
   it("rejects unsorted, short, or future history", () => {
     const p = minimalPack(); p.history = [{ date: "2026-09-13", close: 1 }, { date: "2026-09-12", close: 1 }];
-    const fields = validateFactPack(p as never).map((i) => i.field);
-    expect(fields).toContain("history");
+    expect(validateFactPack(p).map((i) => i.field)).toContain("history");
   });
   it("rejects a quarter that does not end on the filing period", () => {
     const p = minimalPack(); p.latestQuarter.periodEnd = "2026-05-03";
-    expect(validateFactPack(p as never).map((i) => i.field)).toContain("latestQuarter.periodEnd");
+    expect(validateFactPack(p).map((i) => i.field)).toContain("latestQuarter.periodEnd");
   });
   it("assert throws naming the label and every field", () => {
     const p = minimalPack(); p.analysts.count = 61; p.segments.items[0].share = 0.7;
-    expect(() => assertValidFactPack(p as never, "AVGO/x")).toThrow(/AVGO\/x[\s\S]*analysts\.count[\s\S]*segments/);
+    expect(() => assertValidFactPack(p, "AVGO/x")).toThrow(/AVGO\/x[\s\S]*analysts\.count[\s\S]*segments/);
   });
 });
 ```
@@ -1714,20 +1907,19 @@ const DIR = "data/raw/AVGO/0001730168-26-000080";
 
 describe("buildFactPack on the AVGO capture", () => {
   const pack = buildFactPack(DIR);
-  it("produces a pack that parses and validates", () => {
-    expect(() => FactPack.parse(pack)).not.toThrow();
-  });
+  it("produces a pack that parses and validates", () => { expect(() => FactPack.parse(pack)).not.toThrow(); });
   it("stamps the filing and capture identity", () => {
     expect(pack.ticker).toBe("AVGO");
     expect(pack.filing.accession).toBe("0001730168-26-000080");
     expect(pack.capturedAt).toMatch(/^\d{4}-\d{2}-\d{2}T/);
   });
-  it("records provenance for every top-level fact section", () => {
+  it("records provenance for every fact section, with yahoo for history", () => {
     const fields = new Set(pack.provenance.map((p) => p.field.split(".")[0]));
     for (const f of ["quote", "statements", "latestQuarter", "ttm", "analysts", "estimates", "segments", "geoMix", "peers", "history", "context"]) expect(fields).toContain(f);
+    expect(pack.provenance.find((p) => p.field === "history")?.source).toBe("yahoo");
   });
   it("fails naming a missing raw file", () => {
-    expect(() => buildFactPack("lib/facts/map/__fixtures__/empty")).toThrow(/Missing raw file|capture\.json/);
+    expect(() => buildFactPack("lib/facts/map/__fixtures__/empty")).toThrow(/Missing raw file|Missing "company_overview"/);
   });
 });
 ```
@@ -1757,7 +1949,7 @@ export function validateFactPack(p: FactPack): ValidationIssue[] {
   if (a.buy + a.hold + a.sell !== a.count) issues.push({ field: "analysts.count", message: "buy + hold + sell must equal count", value: a.count });
   const h = p.history;
   const ascending = h.every((pt, i) => i === 0 || pt.date > h[i - 1].date);
-  if (h.length < 20 || !ascending || (h.length && h[h.length - 1].date > p.capturedAt.slice(0, 10)))
+  if (h.length < 20 || !ascending || (h.length > 0 && h[h.length - 1].date > p.capturedAt.slice(0, 10)))
     issues.push({ field: "history", message: "must be ≥ 20 points, strictly ascending, ending on or before capturedAt", value: { length: h.length, ascending, last: h.at(-1)?.date } });
   if (p.latestQuarter.periodEnd !== p.filing.periodEnd)
     issues.push({ field: "latestQuarter.periodEnd", message: `must equal filing.periodEnd (${p.filing.periodEnd})`, value: p.latestQuarter.periodEnd });
@@ -1773,13 +1965,11 @@ export function assertValidFactPack(p: FactPack, label: string): void {
 
 `build.ts`:
 ```ts
-/**
- * build.ts — raw directory in, FactPack out. Refuses to write on any failure.
- */
+/** build.ts — raw directory in, FactPack out. Refuses to write on any failure. */
 import { basename } from "node:path";
 import { readRawJson } from "./raw";
 import { FactPack, FACTPACK_SCHEMA_VERSION } from "./schema";
-import { validateFactPack, assertValidFactPack } from "./validate";
+import { assertValidFactPack } from "./validate";
 import { RAW_CAPTURE_META } from "./manifest";
 import * as quote from "./map/quote";
 import * as statements from "./map/statements";
@@ -1788,6 +1978,8 @@ import * as analysts from "./map/analysts";
 import * as history from "./map/history";
 import * as context from "./map/context";
 
+type Source = "fmp" | "bigdata" | "edgar" | "yahoo";
+
 export function buildFactPack(dir: string): FactPack {
   const meta = readRawJson(dir, RAW_CAPTURE_META) as { capturedAt: string };
   const filing = readRawJson(dir, "edgar-filing.json") as {
@@ -1795,15 +1987,16 @@ export function buildFactPack(dir: string): FactPack {
   if (filing.accession !== basename(dir)) throw new Error(`edgar-filing.json accession ${filing.accession} ≠ directory ${basename(dir)}`);
 
   const q = quote.mapQuote(dir);
-  const s = statements.mapStatements(dir, meta.capturedAt);
+  const s = statements.mapStatements(dir);
   const latestFY = Number("20" + s.statements.fiscalYears[4].slice(2));
   const g = segments.mapSegments(dir);
-  const a = analysts.mapAnalysts(dir, meta.capturedAt, latestFY);
+  const a = analysts.mapAnalysts(dir, latestFY);
   const h = history.mapHistory(dir, meta.capturedAt);
   const c = context.mapContext(dir, filing, meta.capturedAt, q.description);
 
-  const stamp = (src: "fmp" | "bigdata" | "edgar", rows: { field: string; endpoint: string }[]) =>
-    rows.map((r) => ({ ...r, source: src, capturedAt: meta.capturedAt }));
+  const stamp = (source: Source, rows: { field: string; endpoint: string }[]) => rows.map((r) => ({ ...r, source, capturedAt: meta.capturedAt }));
+  const peersProv = analysts.PROVENANCE.filter((r) => r.field === "peers");
+  const bigdataProv = analysts.PROVENANCE.filter((r) => r.field !== "peers");
 
   const pack: FactPack = {
     schemaVersion: FACTPACK_SCHEMA_VERSION,
@@ -1814,8 +2007,8 @@ export function buildFactPack(dir: string): FactPack {
     estimates: a.estimates, analysts: a.analysts, segments: g.segments, geoMix: g.geoMix, peers: a.peers,
     history: h, context: c,
     provenance: [
-      ...stamp("fmp", quote.PROVENANCE), ...stamp("fmp", statements.PROVENANCE), ...stamp("fmp", segments.PROVENANCE),
-      ...stamp("fmp", analysts.PROVENANCE), ...stamp("fmp", history.PROVENANCE),
+      ...stamp("bigdata", quote.PROVENANCE), ...stamp("bigdata", statements.PROVENANCE), ...stamp("bigdata", segments.PROVENANCE),
+      ...stamp("bigdata", bigdataProv), ...stamp("fmp", peersProv), ...stamp("yahoo", history.PROVENANCE),
       ...stamp("edgar", context.PROVENANCE.slice(0, 2)), ...stamp("bigdata", context.PROVENANCE.slice(2)),
     ],
   };
@@ -1823,7 +2016,6 @@ export function buildFactPack(dir: string): FactPack {
   assertValidFactPack(pack, `${filing.ticker}/${filing.accession}`);
   return pack;
 }
-export { validateFactPack };
 ```
 
 `scripts/facts-build.ts`:
@@ -1845,7 +2037,7 @@ console.log(`Wrote ${out}\n  ${pack.company} · ${pack.filing.form} ${pack.filin
 
 Add `"facts:build": "node --env-file-if-exists=.env.local --import tsx scripts/facts-build.ts"`.
 
-- [ ] **Step 4: Run tests, then build for real** — `npx vitest run lib/facts` green; `npm run facts:build -- AVGO 0001730168-26-000080` writes `data/facts/AVGO/0001730168-26-000080.json`. Paste the CLI output. If validation fails, paste the issues and stop — do not edit the mappers to make it pass without reporting what the data actually says.
+- [ ] **Step 4: Run tests, then build for real** — `npx vitest run lib/facts` green; `npm run facts:build -- AVGO 0001730168-26-000080` writes the FactPack. Paste the CLI output. If validation fails, paste the issues and stop.
 
 - [ ] **Step 5: Commit** — `git add -A && git commit -m "feat: validate and build the FactPack; add Broadcom's first FactPack"`
 
@@ -1859,8 +2051,8 @@ Add `"facts:build": "node --env-file-if-exists=.env.local --import tsx scripts/f
 - Test: `lib/facts/project.test.ts`
 
 **Interfaces:**
-- Consumes: `FactPack`; `Report`, `FinancialTable`, `SnapshotCellData` types; `formatCell`.
-- Produces: `ReportFacts` type; `projectReportFacts(pack) → ReportFacts`; `npm run facts:diff <TICKER> <ACCESSION>`.
+- Consumes: `FactPack`; `Report`, `FinancialTable`, `SnapshotCellData` types; `formatCell`, `formatSnapshot`, `usd`.
+- Produces: `ReportFacts`; `projectReportFacts(pack) → ReportFacts`; `npm run facts:diff <TICKER> <ACCESSION>`.
 
 - [ ] **Step 1: Write the failing test**
 
@@ -1872,13 +2064,12 @@ import { formatCell } from "@/lib/format";
 import { Report } from "@/lib/report.schema";
 import avgo from "@/data/avgo.json";
 
-const pack = buildFactPack("data/raw/AVGO/0001730168-26-000080");
-const facts = projectReportFacts(pack);
+const facts = projectReportFacts(buildFactPack("data/raw/AVGO/0001730168-26-000080"));
 const fixture = Report.parse(avgo);
 
-/** Rows compared as the reader sees them. EBITDA is vendor-defined and reported, not asserted. */
-const ASSERTED: Record<"income" | "balance" | "cashflow", string[]> = {
-  income: ["Revenue ($B)", "YoY Growth", "Gross Margin", "Operating Income ($B)", "Net Income ($B)", "Diluted EPS ($)*"],
+/** Same vendor as the fixture, so every row is asserted — including EBITDA. */
+const LABELS: Record<"income" | "balance" | "cashflow", string[]> = {
+  income: ["Revenue ($B)", "YoY Growth", "Gross Margin", "Operating Income ($B)", "EBITDA ($B)", "Net Income ($B)", "Diluted EPS ($)*"],
   balance: ["Cash & ST Investments", "Total Debt", "Net Debt", "Total Equity", "Current Ratio"],
   cashflow: ["Operating Cash Flow", "Free Cash Flow", "FCF Margin"],
 };
@@ -1888,16 +2079,14 @@ describe("projectReportFacts parity with data/avgo.json", () => {
     it(`matches the ${table} table row for row, formatted`, () => {
       const got = facts.sections.financials[table], want = fixture.sections.financials[table];
       expect(got.columns).toEqual(want.columns);
-      for (const label of ASSERTED[table]) {
+      for (const label of LABELS[table]) {
         const g = got.rows.find((r) => r.label === label)!, w = want.rows.find((r) => r.label === label)!;
         expect(g, label).toBeDefined();
         expect(g.values.map((v) => formatCell(v, g.format)), label).toEqual(w.values.map((v) => formatCell(v, w.format)));
       }
     });
   }
-  it("projects the filing metadata exactly", () => {
-    expect(facts.meta.filing).toEqual(fixture.meta.filing);
-  });
+  it("projects the filing metadata exactly", () => { expect(facts.meta.filing).toEqual(fixture.meta.filing); });
   it("projects the sixteen generic snapshot cells in order", () => {
     expect(facts.snapshot.map((c) => c.label)).toEqual([
       "Current Price", "Market Cap", "52-Week Range", "Shares Outstanding", "P/E (TTM)", "Consensus Target",
@@ -1905,8 +2094,11 @@ describe("projectReportFacts parity with data/avgo.json", () => {
       "FY26E Revenue", "Q3'26 Revenue", "Q3'26 Operating Margin", "Fwd P/E (FY27E)", "Dividend Yield",
     ]);
   });
+  it("projects the analyst numbers the fixture carries", () => {
+    expect(facts.analystSentiment).toMatchObject({ numAnalysts: 60, buy: 54, hold: 6, sell: 0, consensusTarget: 509.61, medianTarget: 517.5, highTarget: 600, lowTarget: 350 });
+  });
   it("projects segments and geography as ratios", () => {
-    expect(facts.sections.businessMoat.segments.map((s) => s.sharePct).reduce((a, b) => a + b)).toBeCloseTo(1, 1);
+    expect(facts.sections.businessMoat.segments.map((s) => s.sharePct).reduce((a, b) => a + b)).toBeCloseTo(1, 6);
     expect(facts.sections.businessMoat.geoMix.every((g) => g.sharePct > 0 && g.sharePct < 1)).toBe(true);
   });
 });
@@ -2049,7 +2241,7 @@ console.log(`\n${same} match, ${diff} differ. Quote/target/estimate fields drift
 
 Add `"facts:diff": "node --env-file-if-exists=.env.local --import tsx scripts/facts-diff.ts"`.
 
-- [ ] **Step 4: Run** — `npx vitest run lib/facts/project.test.ts`. Then `npm run facts:diff -- AVGO 0001730168-26-000080` and paste the full output. **If a statement row differs, do not adjust the fixture or the mapper to force agreement — report both values.** The most likely legitimate differences: EBITDA (vendor-defined, excluded from assertion), and a tenth-of-a-billion rounding on a row where FMP and the PDF disagree — those are findings for the controller.
+- [ ] **Step 4: Run** — `npx vitest run lib/facts/project.test.ts`. Then `npm run facts:diff -- AVGO 0001730168-26-000080` and paste the full output. Expect the fifteen statement rows to match. The snapshot cell `Q3'26 Operating Margin` is expected to differ: the projection is GAAP (≈54%), the fixture's "68% (record)" is Broadcom's non-GAAP figure — report it, do not chase it. Any *statement* row that differs is a finding to report with both values.
 
 - [ ] **Step 5: Commit** — `git add -A && git commit -m "feat: project a FactPack onto the Report's numeric fields, with parity against avgo.json"`
 
@@ -2176,8 +2368,9 @@ Add `"report:history": "node --import tsx scripts/report-history.ts"`. Run `npm 
 ## The fact pipeline (subsystem 2)
 
 ```bash
-npm run watchlist:add -- NVDA           # resolves the CIK via sec.gov, appends to data/watchlist.json
+npm run watchlist:add -- NVDA           # resolves the CIK via sec.gov, appends to data/edgar/watchlist.json
 npm run detect                          # polls EDGAR for new 10-Q/10-K on the watchlist; prints them; marks seen
+npm run facts:prepare -- AVGO 0001730168-26-000080  # EDGAR filing record + primary document + Yahoo daily closes → data/raw/…
 /fetch-facts AVGO 0001730168-26-000080  # in Claude Code: captures vendor responses verbatim to data/raw/…
 npm run facts:build -- AVGO 0001730168-26-000080   # raw → validated FactPack in data/facts/…
 npm run facts:diff  -- AVGO 0001730168-26-000080   # projected facts vs data/avgo.json, formatted
@@ -2185,8 +2378,8 @@ npm run report:history -- AVGO 0001730168-26-000080 # copies real closes into th
 ```
 
 `EDGAR_CONTACT=<your email>` must be set in `.env.local` (see `.env.example`); SEC requires it.
-Data access today runs through the FMP and Bigdata.com connectors in Claude — the
-`fetch-facts` skill executes `lib/facts/manifest.ts`. Unattended runs need API keys
+Numbers come from Bigdata.com company tearsheets (which proxy FMP data) and profile/peers from FMP `company`, both through the Claude connectors — the
+`fetch-facts` skill executes `lib/facts/manifest.ts`; EDGAR and Yahoo are fetched by code. Unattended runs need API keys
 and a REST `FactSource`; see the spec's "FactSource seam".
 ```
 
@@ -2204,7 +2397,7 @@ Also update the "Pipeline flow" list's steps 1–2 to reference these commands, 
 
 **Type consistency.** `Filing` (Task 2) is consumed by Tasks 4, 6, 9, 10 with the same five fields plus `url`. `FactPack["quote" | "statements" | …]` section types (Task 1) are the return types of every mapper (Tasks 7–9) and are assembled in Task 10. `HistoryPoint` from `lib/facts/schema` (`{ date, close }`) is distinct from `components/chart/types` `HistoryPoint` (`{ day, price }`); Task 12 converts between them explicitly. `PEER_LIMIT` (Task 5) is imported by Task 8. `ValidationIssue` matches subsystem 1's shape.
 
-**Placeholder scan.** None. The mapper tasks name FMP's stable-API keys and give an explicit adapt-and-record procedure for the case where the connector's captured shape differs — a procedure, not a gap. Task 6 states the MCP-tool prerequisite and the escalation path.
+**Placeholder scan.** None. The mapper tasks (revised 2026-09-12) carry the captured tearsheet, FMP `company`, and Yahoo shapes verbatim, with a report-both-values procedure for any mismatch — a procedure, not a gap. Task 6 states the MCP-tool prerequisite and the escalation path.
 
 ---
 
@@ -2212,5 +2405,5 @@ Also update the "Pipeline flow" list's steps 1–2 to reference these commands, 
 
 Plan complete. Two execution options:
 
-1. **Subagent-Driven (recommended)** — a fresh subagent per task, reviewed between tasks. Task 6 needs an agent with the FMP/Bigdata connectors; if the subagent lacks them, the controller runs the capture inline.
+1. **Subagent-Driven (recommended)** — a fresh subagent per task, reviewed between tasks. Task 6 needs an agent with the FMP/Bigdata connectors (proven available to subagents on the first run).
 2. **Inline Execution** — tasks executed in this session with batch checkpoints.
