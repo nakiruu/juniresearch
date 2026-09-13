@@ -16,7 +16,7 @@
  */
 import { z } from "zod";
 
-export const SCHEMA_VERSION = "1.0.0";
+export const SCHEMA_VERSION = "1.1.0";
 
 /* ------------------------------- primitives ------------------------------- */
 const md = z.string(); // Markdown: **bold**, "- " lists, and {+ bull +}/{- bear -} spans
@@ -79,6 +79,7 @@ const quote = z.object({
   week52Low: z.number(),
   week52High: z.number(),
   dividendYield: ratio,
+  history: z.array(z.object({ date: z.string(), close: z.number() })).optional(),
 });
 
 const rating = z.object({

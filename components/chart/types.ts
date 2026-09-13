@@ -20,6 +20,10 @@ export interface ChartModel {
   bandRangeText: string;
   bandPctText: string;
   targets: ChartTarget[];
+  /** Trailing closes as (day ≤ 0, price); day 0 is the current price. */
+  history: HistoryPoint[];
+  /** True when history is the synthetic wave, not vendor closes. */
+  placeholder: boolean;
 }
 
 export interface ChartDims {

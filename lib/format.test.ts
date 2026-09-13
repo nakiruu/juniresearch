@@ -84,6 +84,6 @@ describe("derived values", () => {
 describe("the contract", () => {
   it("parses the reference fixture", () => {
     expect(report.meta.ticker).toBe("AVGO");
-    expect(report.schemaVersion).toBe("1.0.0");
+    expect(report.schemaVersion).toBe("1.1.0");
   });
 });

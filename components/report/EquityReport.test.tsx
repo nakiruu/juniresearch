@@ -33,9 +33,14 @@ describe("EquityReport", () => {
     expect(container.querySelectorAll("svg[role='img']")).toHaveLength(2);
   });
 
-  it("captions the placeholder history line", () => {
-    render(<EquityReport data={report} />);
+  it("captions the history line while it is the placeholder", () => {
+    render(<EquityReport data={{ ...report, quote: { ...report.quote, history: undefined } }} />);
     expect(screen.getByText(/history line is indicative/i)).toBeInTheDocument();
+  });
+  it("drops the placeholder caption when real history is present", () => {
+    const closes = Array.from({ length: 25 }, (_, i) => ({ date: `2026-08-${String(i + 1).padStart(2, "0")}`, close: 300 + i }));
+    render(<EquityReport data={{ ...report, quote: { ...report.quote, history: closes } }} />);
+    expect(screen.queryByText(/history line is indicative/i)).toBeNull();
   });
 
   it("falls back to the default disclaimer when none is supplied", () => {

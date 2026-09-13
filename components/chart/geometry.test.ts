@@ -182,3 +182,20 @@ describe("historySeries", () => {
     expect(historySeries(361.99, 30)).toEqual(series);
   });
 });
+
+describe("buildChartModel history", () => {
+  it("uses real closes when the report carries them", () => {
+    const closes = Array.from({ length: 25 }, (_, i) => ({ date: `2026-08-${String(i + 1).padStart(2, "0")}`, close: 300 + i }));
+    const withHistory = { ...report, quote: { ...report.quote, history: closes } };
+    const m = buildChartModel(withHistory);
+    expect(m.placeholder).toBe(false);
+    expect(m.history).toHaveLength(25);
+    expect(m.history[24]).toEqual({ day: 0, price: 324 });
+    expect(m.history[0].day).toBe(-24);
+  });
+  it("falls back to the synthetic placeholder without history", () => {
+    const m = buildChartModel({ ...report, quote: { ...report.quote, history: undefined } });
+    expect(m.placeholder).toBe(true);
+    expect(m.history.at(-1)).toEqual({ day: 0, price: report.quote.currentPrice });
+  });
+});

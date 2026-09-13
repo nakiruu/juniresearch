@@ -7,7 +7,7 @@
  */
 import { line, curveMonotoneX } from "d3-shape";
 import {
-  chartDims, computeScales, buildLabelRows, declutterLabels, historySeries,
+  chartDims, computeScales, buildLabelRows, declutterLabels,
   MIN_LABEL_GAP, bandBox,
 } from "./geometry";
 import type { ChartLayout, ChartModel, Tone } from "./types";
@@ -27,13 +27,12 @@ export function ProjectionChart({
   const { nowX, curY } = scales;
 
   const band = bandBox(model, scales);
-  const history = historySeries(model.current);
   const gradientId = `band-${model.ticker.toLowerCase()}-${layout}`;
 
   const path = line<{ day: number; price: number }>()
     .x((p) => scales.x(p.day))
     .y((p) => scales.y(p.price))
-    .curve(curveMonotoneX)(history.points) ?? "";
+    .curve(curveMonotoneX)(model.history) ?? "";
 
   const rows = declutterLabels(buildLabelRows(model, scales), MIN_LABEL_GAP);
 

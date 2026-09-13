@@ -5,7 +5,7 @@
  * `data` for any ticker the pipeline emits.
  */
 import { ProjectionChart } from "@/components/chart/ProjectionChart";
-import { buildChartModel, historySeries } from "@/components/chart/geometry";
+import { buildChartModel } from "@/components/chart/geometry";
 import { ReportHeader } from "./ReportHeader";
 import { Snapshot } from "./Snapshot";
 import { RatingBlock } from "./RatingBlock";
@@ -30,7 +30,6 @@ export default function EquityReport({ data }: { data: Report }) {
   const { meta: m, quote, rating, sections: s } = data;
   const current = quote.currentPrice;
   const chartModel = buildChartModel(data);
-  const isPlaceholderHistory = historySeries(current).placeholder;
 
   return (
     <div className="report-prose mx-auto max-w-[900px] px-7 pt-11 pb-20">
@@ -45,7 +44,7 @@ export default function EquityReport({ data }: { data: Report }) {
         <div className="md:hidden">
           <ProjectionChart model={chartModel} layout="narrow" />
         </div>
-        {isPlaceholderHistory && (
+        {chartModel.placeholder && (
           <figcaption className="mt-1 text-center font-sans text-[11px] italic text-muted">
             The history line is indicative; live daily closes are not yet wired.
           </figcaption>

@@ -11,7 +11,7 @@ import { scaleLinear } from "d3-scale";
 import type { Report } from "@/lib/report.schema";
 import { num, pct, upside, upsideRangeText, usd } from "@/lib/format";
 import type {
-  BandBox, ChartDims, ChartLayout, ChartModel, ChartScales, HistorySeries, LabelRow,
+  BandBox, ChartDims, ChartLayout, ChartModel, ChartScales, HistoryPoint, HistorySeries, LabelRow,
 } from "./types";
 
 /** Minimum vertical gap between label rows, per editorial-hairline-design.md. */
@@ -23,6 +23,12 @@ const HORIZON_DAYS = 365;
 export function buildChartModel(r: Report): ChartModel {
   const current = r.quote.currentPrice;
   const s = r.analystSentiment;
+  const closes = r.quote.history ?? [];
+  const real = closes.length >= 2;
+  const history: HistoryPoint[] = real
+    ? closes.map((c, i) => ({ day: i - (closes.length - 1), price: c.close }))
+    : historySeries(current).points;
+  if (real) history[history.length - 1] = { day: 0, price: closes[closes.length - 1].close };
   return {
     company: r.meta.company,
     exchange: r.meta.exchange,
@@ -40,6 +46,8 @@ export function buildChartModel(r: Report): ChartModel {
       { key: "consensus", name: "Consensus target", value: s.consensusTarget, tone: "secondary" },
       { key: "low", name: "Low target", value: s.lowTarget, tone: "bear" },
     ],
+    history,
+    placeholder: !real,
   };
 }
 
