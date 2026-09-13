@@ -36,6 +36,25 @@ npm run build    # prerenders /research and /research/<ticker>
 
 ---
 
+## The fact pipeline (subsystem 2)
+
+```bash
+npm run watchlist:add -- NVDA           # resolves the CIK via sec.gov, appends to data/edgar/watchlist.json
+npm run detect                          # polls EDGAR for new 10-Q/10-K on the watchlist; prints them; marks seen
+npm run facts:prepare -- AVGO 0001730168-26-000080  # EDGAR filing record + primary document + Yahoo daily closes → data/raw/…
+/fetch-facts AVGO 0001730168-26-000080  # in Claude Code: captures vendor responses verbatim to data/raw/…
+npm run facts:build -- AVGO 0001730168-26-000080   # raw → validated FactPack in data/facts/…
+npm run facts:diff  -- AVGO 0001730168-26-000080   # projected facts vs data/avgo.json, formatted
+npm run report:history -- AVGO 0001730168-26-000080 # copies real closes into the report (chart history line)
+```
+
+`EDGAR_CONTACT=<your email>` must be set in `.env.local` (see `.env.example`); SEC requires it.
+Numbers come from Bigdata.com company tearsheets (which proxy FMP data) and profile/peers from FMP `company`, both through the Claude connectors — the
+`fetch-facts` skill executes `lib/facts/manifest.ts`; EDGAR and Yahoo are fetched by code. Unattended runs need API keys
+and a REST `FactSource`; see the spec's "FactSource seam".
+
+---
+
 ## The core idea
 
 The AVGO PDF baked presentation into content: numbers were pre-formatted strings
@@ -125,10 +144,12 @@ The report-generation model returns **one JSON object** matching
 
 ## Pipeline flow
 
-1. **Detect** a new 10-Q / 10-K (SEC EDGAR EFTS).
-2. **Fetch facts** from Bigdata.com / FMP — financials, ratios, peers, analyst
-   targets, segments, transcript. These populate the numeric half of the JSON
-   deterministically.
+1. **Detect** a new 10-Q / 10-K — `npm run detect` polls the `data.sec.gov`
+   submissions API for the tickers in `data/edgar/watchlist.json`.
+2. **Capture facts** — `npm run facts:prepare` + the `/fetch-facts` skill pull
+   financials, ratios, peers, analyst targets, segments, transcript from
+   Bigdata.com / FMP; `npm run facts:build` turns the capture into a validated
+   FactPack. These populate the numeric half of the JSON deterministically.
 3. **Synthesize** — one model call with the facts in context, using **structured
    outputs / a forced tool call** so the return conforms to the schema. The model
    fills only judgment + prose (rating, target range, scenario probabilities,
@@ -144,7 +165,9 @@ The report-generation model returns **one JSON object** matching
 7. **Publish** to juniperfin.com.
 
 Keep `schemaVersion` on every file and store them in git/DB — that's the report
-archive, and it lets you re-render historical reports in a new theme.
+archive, and it lets you re-render historical reports in a new theme. The
+Report schema is `1.1.0`: `quote.history` (up to 30 daily closes) is optional
+and, when present, drives the chart's history line.
 
 ---
 

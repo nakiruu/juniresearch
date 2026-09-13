@@ -55,7 +55,7 @@ reproducing their auth in an SDK config is the API-key problem decision 1 defers
 
 ```
 data/
-  watchlist.json                   [{ "ticker": "AVGO", "cik": 1730168 }]
+  edgar/watchlist.json             [{ "ticker": "AVGO", "cik": 1730168 }]
   edgar/seen.json                  { "AVGO": ["0001730168-26-000080", …] }
   raw/<ticker>/<accession>/        verbatim tool responses — written by the skill
   facts/<ticker>/<accession>.json  the FactPack — written by code
@@ -108,17 +108,19 @@ keeping only `10-Q` and `10-K`. `url` is
 `https://www.sec.gov/Archives/edgar/data/<cik>/<accession without dashes>/<primaryDocument>`.
 Non-200 or malformed responses throw naming the URL.
 
-**`detect.ts`** — `detectNew(filingsByTicker, seen): NewFiling[]` where
-`NewFiling = Filing & { ticker: string }`. It returns filings whose accession
-is not in `seen[ticker]`, newest first. It is pure; the CLI does the fetching,
-prints the result, and rewrites `seen.json` with the new accessions appended.
-Nothing is marked seen until the CLI has printed it.
+**`detect.ts`** — `detectNew(filingsByTicker, seen, limit = 4): NewFiling[]` where
+`NewFiling = Filing & { ticker: string }`. It returns, per ticker, the newest
+`limit` previously-unseen filings (accession not in `seen[ticker]`). It is pure;
+the CLI does the fetching, prints only those filings, and marks **every**
+fetched 10-Q/10-K seen — not just the reported ones — rewriting `seen.json`
+with the full set of accessions from this run.
 
 **`filing-text.ts`** — `fetchPrimaryDocument(url)` GETs the filing HTML (same
 header), strips tags to text, and extracts two sections by their Item headings:
 Item 2 (10-Q) / Item 7 (10-K) "Management's Discussion and Analysis", and
-Item 1A "Risk Factors". Each is capped at 8,000 characters, cut at a sentence
-boundary, with `truncated: true` recorded when cut. Headings are matched
+Item 1A "Risk Factors". The MD&A excerpt is capped at 16,000 characters and
+Risk Factors at 8,000, both cut at a sentence boundary; `extractSections`
+returns `{ text, truncated }` per section. Headings are matched
 case-insensitively with the item number as anchor; a section not found yields
 `null`, never a guess.
 
@@ -141,13 +143,13 @@ FactPack {
     cashflow: StatementRow[];                           // each { key, label, values: number[] }
   };
   latestQuarter: { label: string; periodEnd; revenue; operatingMargin; revenueYoY };
-  ttm: { pe; evToEbitda; grossMargin; operatingMargin; netMargin };
+  ttm: { pe; ps; evToEbitda; grossMargin; operatingMargin; netMargin };
   estimates: { nextFY: { label; revenue; eps }; followingFY: { label; revenue; eps } };
   analysts: { count; buy; hold; sell; consensusRating; consensusTarget;
               medianTarget; highTarget; lowTarget; asOf };
   segments: { basis: string; items: { name; revenue; share }[] };
   geoMix:   { basis: string; items: { region; share }[] };
-  peers:    { ticker; pe; evToEbitda; fwdPe }[];       // every FMP peer; subsystem 3 selects
+  peers:    { ticker; pe; ps; evToEbitda }[];          // tickers from FMP peers; multiples null until a peer source exists
   history:  { date: string; close: number }[];         // ascending, trailing ~30 trading days
 
   context: {
@@ -176,6 +178,8 @@ earlier in the same run. Adding a data point is a code change here, not a
 prompt edit.
 
 The captures, with the raw filename each produces:
+
+*Superseded 2026-09-12 by the revision at the end of this document (decision 8): the manifest is now eight Bigdata/FMP calls plus three code-fetched files.*
 
 | # | Server · tool · endpoint | Params | Raw file |
 |---|---|---|---|
