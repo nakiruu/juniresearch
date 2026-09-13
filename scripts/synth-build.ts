@@ -1,0 +1,47 @@
+import { existsSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
+import { FactPack } from "../lib/facts/schema";
+import { projectReportFacts } from "../lib/facts/project";
+import { Desk } from "../lib/synth/desk.schema";
+import { Judgment } from "../lib/synth/judgment.schema";
+import { mergeReport } from "../lib/synth/merge";
+import { validateJudgment } from "../lib/synth/validate-judgment";
+import { Report } from "../lib/report.schema";
+import { validateReport, type ValidationIssue } from "../lib/validate";
+
+const args = process.argv.slice(2);
+const [tickerArg, accession] = args.filter((a) => !a.startsWith("--"));
+const dateFlag = args.indexOf("--date");
+const buildDate = dateFlag >= 0 ? args[dateFlag + 1] : new Date().toISOString().slice(0, 10);
+if (!tickerArg || !accession || !/^\d{4}-\d{2}-\d{2}$/.test(buildDate ?? "")) { console.error("usage: npm run synth:build -- <TICKER> <ACCESSION> [--date YYYY-MM-DD]"); process.exit(2); }
+const ticker = tickerArg.toUpperCase();
+
+const read = (p: string) => { if (!existsSync(p)) { console.error(`Missing ${p}`); process.exit(2); } return readFileSync(p, "utf8"); };
+const pack = FactPack.parse(JSON.parse(read(join("data", "facts", ticker, `${accession}.json`))));
+const desk = Desk.parse(JSON.parse(read(join("data", "desk", "desk.json"))));
+const judgmentPath = join("data", "judgment", ticker, `${accession}.json`);
+const errorsPath = join("data", "judgment", ticker, `${accession}.errors.txt`);
+const judgmentText = read(judgmentPath);
+
+const fail = (issues: ValidationIssue[], stage: string): never => {
+  const lines = issues.map((i) => `${i.field}: ${i.message} (received ${JSON.stringify(i.value)})`);
+  writeFileSync(errorsPath, lines.join("\n") + "\n");
+  console.error(`${stage}: ${issues.length} issue(s) — written to ${errorsPath}\n` + lines.map((l) => `  - ${l}`).join("\n"));
+  process.exit(1);
+};
+
+const raw: unknown = (() => { try { return JSON.parse(judgmentText) as unknown; } catch (e) { return fail([{ field: judgmentPath, message: `not valid JSON: ${(e as Error).message}`, value: null }], "parse"); } })();
+const parsed = Judgment.safeParse(raw);
+const judgment = parsed.success ? parsed.data : fail(parsed.error.issues.map((i) => ({ field: i.path.join(".") || "(root)", message: i.message, value: null })), "Judgment.parse");
+
+const facts = projectReportFacts(pack);
+const report = mergeReport(facts, judgment, desk, buildDate);
+const rp = Report.safeParse(report);
+const valid = rp.success ? rp.data : fail(rp.error.issues.map((i) => ({ field: i.path.join("."), message: i.message, value: null })), "Report.parse");
+const issues = [...validateReport(valid), ...validateJudgment(judgment, facts, pack)];
+if (issues.length) fail(issues, "validate");
+
+const out = join("data", `${ticker.toLowerCase()}.json`);
+writeFileSync(out, JSON.stringify(valid, null, 2) + "\n");
+if (existsSync(errorsPath)) rmSync(errorsPath);
+console.log(`Wrote ${out}\n  ${report.meta.company} · ${report.rating.label} ${report.rating.targetLow}–${report.rating.targetHigh} · report date ${report.meta.reportDate} · ${report.quote.history?.length ?? 0} closes`);

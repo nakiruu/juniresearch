@@ -21,8 +21,11 @@ lib/
   format.ts               every "$ / x / % / B/T / ~ / +/-" + all derived values
   validate.ts             consistency checks Zod cannot express
   reports.ts              filesystem loader; parse + validate at the boundary
+  synth/                  Desk + Judgment schemas, renderPrompt, mergeReport, grounding, validateJudgment
 data/
   avgo.json               reference report (proves parity with the PDF)
+  desk/desk.json          desk identity + house style
+  judgment/<T>/<acc>.*    prompt.md / .json / .errors.txt — staged judgment, per filing
 ```
 
 ## Running it
@@ -45,13 +48,27 @@ npm run facts:prepare -- AVGO 0001730168-26-000080  # EDGAR filing record + prim
 /fetch-facts AVGO 0001730168-26-000080  # in Claude Code: captures vendor responses verbatim to data/raw/…
 npm run facts:build -- AVGO 0001730168-26-000080   # raw → validated FactPack in data/facts/…
 npm run facts:diff  -- AVGO 0001730168-26-000080   # projected facts vs data/avgo.json, formatted
-npm run report:history -- AVGO 0001730168-26-000080 # copies real closes into the report (chart history line)
 ```
 
 `EDGAR_CONTACT=<your email>` must be set in `.env.local` (see `.env.example`); SEC requires it.
 Numbers come from Bigdata.com company tearsheets (which proxy FMP data) and peer tickers from FMP `company`, both through the Claude connectors — the
 `fetch-facts` skill executes `lib/facts/manifest.ts`; EDGAR and Yahoo are fetched by code. Unattended runs need API keys
 and a REST `FactSource`; see the spec's "FactSource seam".
+
+---
+
+## Synthesis (subsystem 3)
+
+```bash
+npm run synth:prompt -- AVGO 0001730168-26-000080   # FactPack + desk config → data/judgment/AVGO/<acc>.prompt.md
+/synthesize AVGO 0001730168-26-000080               # in Claude Code: writes data/judgment/AVGO/<acc>.json, then builds
+npm run synth:build  -- AVGO 0001730168-26-000080   # judgment + facts → validated data/avgo.json (or an errors file)
+```
+
+The model writes only the judgment (`lib/synth/judgment.schema.ts`); code sets everything derivable, checks the rating against the
+scenarios' probability-weighted upside, lints the Markdown, and verifies that every figure in the prose exists in the FactPack or
+the captured context (`lib/synth/grounding.ts`). Desk identity and house style live in `data/desk/desk.json`. The hand-built
+report that seeded the project is now the test fixture `lib/__fixtures__/avgo-golden.json`.
 
 ---
 
@@ -150,9 +167,10 @@ The report-generation model returns **one JSON object** matching
    financials, ratios, peers, analyst targets, segments, transcript from
    Bigdata.com / FMP; `npm run facts:build` turns the capture into a validated
    FactPack. These populate the numeric half of the JSON deterministically.
-3. **Synthesize** — one model call with the facts in context, using **structured
-   outputs / a forced tool call** so the return conforms to the schema. The model
-   fills only judgment + prose (rating, target range, scenario probabilities,
+3. **Synthesize** — `/synthesize <TICKER> <ACCESSION>`: the skill renders the prompt
+   (`npm run synth:prompt`), writes the judgment, and runs `npm run synth:build` to
+   validate and merge, re-prompting with the residual errors for up to three rounds.
+   The model fills only judgment + prose (rating, target range, scenario probabilities,
    section Markdown).
 4. **Validate** — `Report.parse(json)`. On failure, re-prompt with the Zod error
    and let the model self-heal. Add sanity checks (probabilities sum to 1;

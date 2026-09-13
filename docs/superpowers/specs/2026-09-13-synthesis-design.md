@@ -150,9 +150,13 @@ Expected size for AVGO: 35–40k characters.
      every FactPack number expanded to its display scalings (a USD amount →
      itself, thousands, millions, billions; a ratio → itself, ×100), every
      token of the rendered facts block, and every token of the context
-     excerpts. A figure passes if it equals an indexed value when the indexed
-     value is rounded to the figure's own precision, or lies within 0.5% of
-     one. Allow-listed without lookup: integers 0–12, years 1990–2040, `Q1`–`Q4`,
+     excerpts. The index also holds the judgment's own calls and the values
+     the page derives from them — the target range with its upside range,
+     each scenario's weighted value, and the probability-weighted fair value —
+     rendered through `lib/format.ts` by `renderJudgmentBlock`, so a report may
+     quote its own target and fair value. A figure passes if it equals an
+     indexed value when the indexed value is rounded to the figure's own
+     precision. Allow-listed without lookup: integers 0–12, years 1990–2040, `Q1`–`Q4`,
      `FY24`-style labels, ISO and month-name dates. Every miss is an issue:
      `sections.executiveSummary.thesis.body: "$17.9B" is not in the facts or the
      captured context`.
