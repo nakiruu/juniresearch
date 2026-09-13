@@ -48,16 +48,22 @@ describe("markdown lint", () => {
   it("accepts the contract's subset", () => {
     expect(markdownIssues(withThesis("### Heading\n\nA **bold** claim with {+ +21% +} growth.\n\n- one\n- two"))).toEqual([]);
   });
+  it("accepts a level-4 heading", () => {
+    expect(markdownIssues(withThesis("#### Sub-heading\n\nbody"))).toEqual([]);
+  });
   it.each([
-    ["HTML", "A <b>bold</b> claim"],
-    ["nested markers", "**{+ up +}**"],
-    ["a table", "| a | b |\n| - | - |"],
-    ["a link", "see [the filing](https://sec.gov)"],
-    ["a heading mid-block", "First line\n### Not at block start"],
-  ])("rejects %s", (_name, body) => {
+    ["HTML", "A <b>bold</b> claim", /HTML/],
+    ["nested markers", "**{+ up +}**", /nests/],
+    ["a table", "| a | b |\n| - | - |", /table/],
+    ["a link", "see [the filing](https://sec.gov)", /link/],
+    ["a heading mid-block", "First line\n### Not at block start", /not at the start of a block/],
+    ["a level-2 heading", "## Not allowed", /heading level/],
+    ["a level-1 heading", "# Title\n\nbody", /heading level/],
+  ])("rejects %s", (_name, body, msg) => {
     const issues = markdownIssues(withThesis(body));
     expect(issues.length).toBeGreaterThan(0);
     expect(issues[0].field).toBe("sections.executiveSummary.thesis.body");
+    expect(issues[0].message).toMatch(msg);
   });
 });
 

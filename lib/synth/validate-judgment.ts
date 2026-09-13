@@ -27,10 +27,10 @@ export const ENVELOPES: Record<RatingLabel, { min?: number; max?: number }> = {
 export function ratingIssues(j: Judgment, currentPrice: number): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
   const { fairValue } = computeScenarios(j.sections.valuation.scenarios);
-  const upside = fairValue / currentPrice - 1;
+  const u = upside(fairValue, currentPrice);
   const env = ENVELOPES[j.rating.label];
-  if ((env.min != null && upside < env.min) || (env.max != null && upside > env.max))
-    issues.push({ field: "rating.label", message: `${j.rating.label} is inconsistent with an upside of ${pct(upside, { signed: true })} (probability-weighted fair value ${fairValue.toFixed(2)} vs price ${currentPrice})`, value: j.rating.label });
+  if ((env.min != null && u < env.min) || (env.max != null && u > env.max))
+    issues.push({ field: "rating.label", message: `${j.rating.label} is inconsistent with an upside of ${pct(u, { signed: true })} (probability-weighted fair value ${fairValue.toFixed(2)} vs price ${currentPrice})`, value: j.rating.label });
   const byName = (re: RegExp) => j.sections.valuation.scenarios.find((s) => re.test(s.name))?.impliedPrice;
   const bull = byName(/bull/i), base = byName(/base/i), bear = byName(/bear/i);
   if (bull != null && base != null && bear != null && !(bull >= base && base >= bear))
@@ -51,6 +51,7 @@ export function markdownIssues(j: Judgment): ValidationIssue[] {
     if (/^\s*\|/m.test(text)) bad("contains a table; not allowed in report prose");
     for (const block of text.split(/\n{2,}/)) {
       const lines = block.split("\n");
+      if (/^#/.test(lines[0]) && !/^#{3,4}\s/.test(lines[0])) bad("uses a heading level other than ### or ####");
       if (lines.slice(1).some((l) => /^#{1,6}\s/.test(l))) bad("has a heading that is not at the start of a block");
     }
   }
