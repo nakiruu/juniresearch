@@ -1538,7 +1538,7 @@ export function mapStatements(dir: string): { statements: FactPack["statements"]
     periodEnd: str(latest, "report_date", QUARTER),
     revenue: rev,
     operatingMargin: num(latest, "operating_income", QUARTER)! / rev,
-    revenueYoY: prior ? rev / num(prior, "revenue", QUARTER)! - 1 : 0,
+    revenueYoY: prior ? rev / num(prior, "revenue", QUARTER)! - 1 : null, // null, never a fabricated 0 (ruling, Task 7 review)
   };
 
   const sheet = readRawJson(dir, SHEET);
@@ -2261,7 +2261,7 @@ export function projectReportFacts(p: FactPack): ReportFacts {
     { label: `${last} Net Income`, value: vals(p, "income", "netIncome")[4] ?? undefined, unit: "usdLarge" },
     { label: `${last} Diluted EPS`, value: vals(p, "income", "epsDiluted")[4] ?? undefined, unit: "usd" },
     { label: `${p.estimates.nextFY.label} Revenue`, value: p.estimates.nextFY.revenue ?? undefined, unit: "usdLarge", approx: true, change: nextRevYoY, changeDp: 0 },
-    { label: `${lq.label} Revenue`, value: lq.revenue, unit: "usdLarge", change: lq.revenueYoY, changeDp: 0 },
+    { label: `${lq.label} Revenue`, value: lq.revenue, unit: "usdLarge", change: lq.revenueYoY ?? undefined, changeDp: 0 },
     { label: `${lq.label} Operating Margin`, value: lq.operatingMargin, unit: "pct", dp: 0 },
     { label: `Fwd P/E (${p.estimates.followingFY.label})`, value: fwdPe ?? undefined, unit: "mult", approx: true },
     { label: "Dividend Yield", value: q.dividendYield, unit: "pct", dp: 2 },
