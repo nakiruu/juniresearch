@@ -340,13 +340,15 @@ describe("the allowed index on the AVGO FactPack", () => {
   it("accepts figures that round from FactPack values at their own precision", () => {
     expect(ok("Revenue of $29.6B rose 86% YoY; FY25 revenue was $63.9B; EPS of $4.77")).toEqual([]);
   });
-  it("accepts figures within 0.5% of a FactPack value", () => {
+  it("accepts figures that round from FactPack values at a coarser precision", () => {
     expect(ok("consensus target $509.61, market cap ~$1.72T, P/E of 44.9x")).toEqual([]);
   });
   it("accepts a figure only because the transcript contains it", () => {
-    expect(ok("AI semiconductor revenue of $16.7 billion")).toEqual([]);
+    // "$16.7 billion" would also round from FY22 operating cash flow (16.736B) — a numeric index cannot attribute,
+    // so the transcript-only case uses guided Q4 AI revenue, which no FactPack number rounds to.
+    expect(ok("management guided Q4 AI revenue to $21.7 billion")).toEqual([]);
     const noContext = { ...pack, context: { description: { ...pack.context.description, text: "" }, mdaExcerpt: null, riskFactorsExcerpt: null, transcriptHighlights: null, headlines: [] } };
-    expect(buildAllowedIndex(noContext, []).has(numericTokens("$16.7 billion")[0])).toBe(false);
+    expect(buildAllowedIndex(noContext, []).has(numericTokens("$21.7 billion")[0])).toBe(false);
   });
   it("rejects a figure that is nowhere in the facts or the context, naming the field and the token", () => {
     const issues = checkGrounding({ sections: { thesis: { body: "Revenue of $17.9B" } } }, index);
@@ -452,11 +454,13 @@ export class AllowedIndex {
   private values: number[] = [];
   add(v: number): void { if (Number.isFinite(v)) this.values.push(v); }
   addToken(t: NumberToken): void { this.add(t.value); this.add(t.magnitude); this.add(Math.abs(t.value)); this.add(Math.abs(t.magnitude)); }
-  /** A prose figure is grounded if some indexed value rounds to it at its own precision, or lies within 0.5% of it. */
+  /**
+   * A prose figure is grounded if some indexed value rounds to it at the figure's own precision.
+   * No relative tolerance: a 0.5% band let unrelated numbers vouch for each other (EPS 1.23 ×100 for "123.4x").
+   */
   has(t: NumberToken): boolean {
     const targets = [t.value, t.magnitude, Math.abs(t.value), Math.abs(t.magnitude)];
-    return this.values.some((v) => targets.some((x) =>
-      roundTo(v, t.precision) === roundTo(x, t.precision) || (x !== 0 && Math.abs(v - x) / Math.abs(x) <= 0.005)));
+    return this.values.some((v) => targets.some((x) => roundTo(v, t.precision) === roundTo(x, t.precision)));
   }
 }
 
@@ -758,10 +762,11 @@ describe("mergeReport with the golden judgment and the AVGO facts", () => {
     expect(m.rows.every((r) => r.values.length === 1 && r.format === "mult")).toBe(true);
     expect(m.note).toBe("Peer multiples pending a peer data source.");
   });
-  it("joins segment bodies to the fact segments by name and copies the rest of the moat section", () => {
+  it("joins segment bodies to the fact segments by name, largest segment first, and copies the rest of the moat section", () => {
     const seg = report.sections.businessMoat.segments;
-    expect(seg.map((s) => s.name)).toEqual(["Semiconductor Solutions", "Infrastructure Software"]);
-    expect(seg[0]).toMatchObject({ sharePct: facts.sections.businessMoat.segments[0].sharePct, revenue: facts.sections.businessMoat.segments[0].revenue, body: judgment.sections.businessMoat.segments[0].body });
+    expect(seg.map((s) => s.name)).toEqual(["Semiconductor Solutions", "Infrastructure Software"]); // the FactPack lists them the other way; merge orders by share
+    const factSeg = facts.sections.businessMoat.segments.find((s) => s.name === "Semiconductor Solutions")!;
+    expect(seg[0]).toMatchObject({ sharePct: factSeg.sharePct, revenue: factSeg.revenue, body: judgment.sections.businessMoat.segments[0].body });
     expect(report.sections.businessMoat.segmentsBasis).toBe("FY25 mix");
     expect(report.sections.businessMoat.moatRating).toBe("WIDE");
   });
@@ -858,7 +863,8 @@ export function mergeReport(facts: ReportFacts, j: Judgment, desk: Desk, buildDa
         scenarioCommentary: j.sections.valuation.scenarioCommentary,
       },
       businessMoat: {
-        segments: f.businessMoat.segments.map((s) => ({ ...s, body: bodies.get(s.name) ?? "" })),
+        // Largest segment first — the FactPack keeps the vendor's key order, the page reads by weight.
+        segments: [...f.businessMoat.segments].sort((a, b) => b.sharePct - a.sharePct).map((s) => ({ ...s, body: bodies.get(s.name) ?? "" })),
         segmentsBasis: f.businessMoat.segmentsBasis, geographyBasis: f.businessMoat.geographyBasis, geoMix: f.businessMoat.geoMix,
         moatRating: j.sections.businessMoat.moatRating, moatFactors: j.sections.businessMoat.moatFactors, durability: j.sections.businessMoat.durability,
       },
