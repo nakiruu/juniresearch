@@ -90,7 +90,8 @@ const CALLS = `- Scenarios: exactly three, named exactly \`Bull\`, \`Base\`, \`B
 - Target range: \`targetLow\` < \`targetHigh\`, and the range must bracket the Base implied price.
 - Rating: the probability-weighted fair value (Σ impliedPrice × probability) implies an upside vs the current price; your label must sit in its envelope — STRONG BUY ≥ +25%, BUY ≥ +10%, HOLD −10% to +15%, SELL ≤ −5%, STRONG SELL ≤ −20%. A conservative label is allowed; a contradiction fails.
 - Numbers you may quote from your own calls: the target range and its upside range, each scenario's weighted value, and the weighted fair value — the page renders these.
-- Scenario probabilities are quotable as percentages (e.g. 48%).`;
+- Scenario probabilities are quotable as percentages (e.g. 48%).
+- \`highlights\`: up to four keys from the "Highlight cells you may add" list below, no repeats; the code computes the values, you only choose which keys to append.`;
 
 export function renderPrompt(pack: FactPack, facts: ReportFacts, desk: Desk, opts: { priorErrors?: string[]; judgmentPath?: string } = {}): string {
   const path = opts.judgmentPath ?? `data/judgment/${pack.ticker}/${pack.filing.accession}.json`;

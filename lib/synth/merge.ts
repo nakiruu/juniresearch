@@ -33,9 +33,9 @@ export function mergeReport(facts: ReportFacts, j: Judgment, desk: Desk, buildDa
     quote: facts.quote,
     rating: { label: j.rating.label, tone: toneFor(j.rating.label), targetLow: j.rating.targetLow, targetHigh: j.rating.targetHigh },
     // The model's chosen highlight keys (up to four) resolve to fact-built cells, in the order chosen,
-    // appended after the sixteen code-owned cells. validateJudgment has already ruled out duplicates and
-    // unavailable keys, but `.filter(Boolean)` is a last-resort guard against an unavailable key slipping
-    // through unvalidated.
+    // appended after the sixteen code-owned cells. mergeReport runs before validateJudgment (see
+    // scripts/synth-build.ts), so `.filter(Boolean)` here is the merge-time guard against a duplicate or
+    // unavailable key; validateJudgment's highlightIssues turns the same condition into a build failure.
     snapshot: [...facts.snapshot, ...(j.highlights ?? []).map((k) => facts.highlightCells[k]).filter((c): c is SnapshotCellData => c != null)],
     analystSentiment: { ...facts.analystSentiment, commentary: j.analystCommentary },
     sections: {

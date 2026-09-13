@@ -219,9 +219,11 @@ was null), is a validation issue naming the offending key(s).
 
 `mergeReport` (`merge.ts`) resolves the model's chosen keys against
 `facts.highlightCells`, in the order chosen, and appends them to
-`facts.snapshot` after its sixteen code-built cells. The `.filter(Boolean)`
-after the lookup is a last-resort guard — `highlightIssues` has already ruled
-out an unavailable key by the time merge runs.
+`facts.snapshot` after its sixteen code-built cells. `mergeReport` runs
+*before* `validateJudgment` (`scripts/synth-build.ts`), so the `.filter(Boolean)`
+after the lookup is the merge-time guard against a duplicate or unavailable
+key; `highlightIssues` turns the same condition into a build failure
+afterwards.
 
 **In the prompt** (`prompt.ts`, `renderFactsBlock`): the "Trailing twelve
 months" section gains a leverage line — Net debt/EBITDA, interest coverage,
