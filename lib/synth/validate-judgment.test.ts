@@ -51,6 +51,12 @@ describe("markdown lint", () => {
   it("accepts a level-4 heading", () => {
     expect(markdownIssues(withThesis("#### Sub-heading\n\nbody"))).toEqual([]);
   });
+  it("accepts a leading '#' immediately followed by a digit", () => {
+    expect(markdownIssues(withThesis("#1 in custom silicon by design-win count"))).toEqual([]);
+  });
+  it("accepts a leading '#' with no whitespace after it (not a heading)", () => {
+    expect(markdownIssues(withThesis("#hashtag-style text at block start"))).toEqual([]);
+  });
   it.each([
     ["HTML", "A <b>bold</b> claim", /HTML/],
     ["nested markers", "**{+ up +}**", /nests/],

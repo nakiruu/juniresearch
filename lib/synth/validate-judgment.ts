@@ -51,7 +51,8 @@ export function markdownIssues(j: Judgment): ValidationIssue[] {
     if (/^\s*\|/m.test(text)) bad("contains a table; not allowed in report prose");
     for (const block of text.split(/\n{2,}/)) {
       const lines = block.split("\n");
-      if (/^#/.test(lines[0]) && !/^#{3,4}\s/.test(lines[0])) bad("uses a heading level other than ### or ####");
+      const first = lines[0];
+      if (/^#{1,6}\s/.test(first) && !/^#{3,4}\s/.test(first)) bad("uses a heading level other than ### or ####");
       if (lines.slice(1).some((l) => /^#{1,6}\s/.test(l))) bad("has a heading that is not at the start of a block");
     }
   }
