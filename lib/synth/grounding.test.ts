@@ -34,13 +34,15 @@ describe("the allowed index on the AVGO FactPack", () => {
   it("accepts figures that round from FactPack values at their own precision", () => {
     expect(ok("Revenue of $29.6B rose 86% YoY; FY25 revenue was $63.9B; EPS of $4.77")).toEqual([]);
   });
-  it("accepts figures within 0.5% of a FactPack value", () => {
+  it("accepts figures that round from FactPack values at a coarser precision", () => {
     expect(ok("consensus target $509.61, market cap ~$1.72T, P/E of 44.9x")).toEqual([]);
   });
   it("accepts a figure only because the transcript contains it", () => {
-    expect(ok("AI semiconductor revenue of $16.7 billion")).toEqual([]);
+    // "$16.7 billion" would also round from FY22 operating cash flow (16.736B) — a numeric index cannot attribute,
+    // so the transcript-only case uses guided Q4 AI revenue, which no FactPack number rounds to.
+    expect(ok("management guided Q4 AI revenue to $21.7 billion")).toEqual([]);
     const noContext = { ...pack, context: { description: { ...pack.context.description, text: "" }, mdaExcerpt: null, riskFactorsExcerpt: null, transcriptHighlights: null, headlines: [] } };
-    expect(buildAllowedIndex(noContext, []).has(numericTokens("$16.7 billion")[0])).toBe(false);
+    expect(buildAllowedIndex(noContext, []).has(numericTokens("$21.7 billion")[0])).toBe(false);
   });
   it("rejects a figure that is nowhere in the facts or the context, naming the field and the token", () => {
     const issues = checkGrounding({ sections: { thesis: { body: "Revenue of $17.9B" } } }, index);

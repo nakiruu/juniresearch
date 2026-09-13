@@ -62,11 +62,13 @@ export class AllowedIndex {
   private values: number[] = [];
   add(v: number): void { if (Number.isFinite(v)) this.values.push(v); }
   addToken(t: NumberToken): void { this.add(t.value); this.add(t.magnitude); this.add(Math.abs(t.value)); this.add(Math.abs(t.magnitude)); }
-  /** A prose figure is grounded if some indexed value rounds to it at its own precision, or lies within 0.5% of it. */
+  /**
+   * A prose figure is grounded if some indexed value rounds to it at the figure's own precision.
+   * No relative tolerance: a 0.5% band let unrelated numbers vouch for each other (EPS 1.23 ×100 for "123.4x").
+   */
   has(t: NumberToken): boolean {
     const targets = [t.value, t.magnitude, Math.abs(t.value), Math.abs(t.magnitude)];
-    return this.values.some((v) => targets.some((x) =>
-      roundTo(v, t.precision) === roundTo(x, t.precision) || (x !== 0 && Math.abs(v - x) / Math.abs(x) <= 0.005)));
+    return this.values.some((v) => targets.some((x) => roundTo(v, t.precision) === roundTo(x, t.precision)));
   }
 }
 
