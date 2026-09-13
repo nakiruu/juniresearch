@@ -35,3 +35,27 @@ describe("Judgment contract", () => {
     expect(JSON.stringify(js)).toContain("STRONG BUY");
   });
 });
+
+describe("Judgment.highlights", () => {
+  it("accepts up to four unique highlight keys, and leaves the field off entirely as valid (the golden fixture has none)", () => {
+    expect(Judgment.parse(golden).highlights).toBeUndefined();
+    const j = { ...structuredClone(golden), highlights: ["capexLatestFY", "netDebtToEbitda"] };
+    expect(Judgment.parse(j).highlights).toEqual(["capexLatestFY", "netDebtToEbitda"]);
+  });
+  it("rejects an unknown highlight key", () => {
+    const j = { ...structuredClone(golden), highlights: ["notARealKey"] };
+    expect(() => Judgment.parse(j)).toThrow();
+  });
+  it("rejects a fifth highlight key (schema caps at four; uniqueness is validateJudgment's job, not the schema's)", () => {
+    const j = { ...structuredClone(golden), highlights: ["fcfLatestFY", "capexLatestFY", "netDebtLatestFY", "totalDebtLatestFY", "netDebtToEbitda"] };
+    expect(() => Judgment.parse(j)).toThrow();
+  });
+  it("does not reject duplicate keys at the schema level (validateJudgment catches those)", () => {
+    const j = { ...structuredClone(golden), highlights: ["capexLatestFY", "capexLatestFY"] };
+    expect(() => Judgment.parse(j)).not.toThrow();
+  });
+  it("keeps the JSON Schema export lossless with the new field", () => {
+    const js = judgmentJsonSchema() as { properties: { highlights?: { items?: { enum?: string[] } } } };
+    expect(js.properties.highlights?.items?.enum).toContain("netDebtToEbitda");
+  });
+});

@@ -7,6 +7,7 @@
  * "helpfully" returns facts fails fast. Bounds are the page's shape.
  */
 import { z } from "zod";
+import { HIGHLIGHT_KEYS } from "./highlights";
 
 export const RatingLabel = z.enum(["STRONG BUY", "BUY", "HOLD", "SELL", "STRONG SELL"]);
 export type RatingLabel = z.infer<typeof RatingLabel>;
@@ -49,6 +50,10 @@ export const Judgment = z.strictObject({
     risks: z.strictObject({ idiosyncratic: z.array(md(800)).min(2).max(5), systemic: md(1500) }),
     finalRecommendation: z.strictObject({ body: z.array(md(1200)).min(1).max(3) }),
   }),
+  // Up to four fact-derived cells (highlights.ts) to append to the snapshot; uniqueness is a
+  // validateJudgment concern (validate-judgment.ts), not the schema, so the JSON Schema export stays a
+  // plain enum array.
+  highlights: z.array(z.enum(HIGHLIGHT_KEYS)).max(4).optional(),
 });
 export type Judgment = z.infer<typeof Judgment>;
 

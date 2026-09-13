@@ -10,7 +10,8 @@ import type { FactPack } from "../facts/schema";
 import type { ReportFacts } from "../facts/project";
 import type { Desk } from "./desk.schema";
 import { judgmentJsonSchema } from "./judgment.schema";
-import { formatSnapshot, formatCell, compactUSD, usd, pct, mult, type SnapshotCell } from "../format";
+import { HIGHLIGHT_KEYS } from "./highlights";
+import { formatSnapshot, formatCell, compactUSD, compactNum, usd, pct, mult, num, type SnapshotCell } from "../format";
 import type { FinancialTable } from "../report.schema";
 
 const table = (title: string, t: FinancialTable): string => {
@@ -21,6 +22,8 @@ const table = (title: string, t: FinancialTable): string => {
 const money = (x: number | null) => (x == null ? "—" : compactUSD(x));
 const eps = (x: number | null) => (x == null ? "—" : usd(x));
 const ratio = (x: number | null, dp = 1) => (x == null ? "—" : pct(x, { dp }));
+const multOrDash = (x: number | null) => (x == null ? "—" : mult(x));
+const num2OrDash = (x: number | null) => (x == null ? "—" : num(x, 2));
 
 export function renderFactsBlock(facts: ReportFacts, pack: FactPack): string {
   // facts.snapshot is SnapshotCellData, Zod's inferred type from report.schema.ts; format.ts is frozen and
@@ -31,6 +34,10 @@ export function renderFactsBlock(facts: ReportFacts, pack: FactPack): string {
   const multiples = facts.sections.valuation.multiplesCompanyColumn.map((m) => `- ${m.label}: ${m.value == null ? "—" : mult(m.value)}`).join("\n");
   const segments = facts.sections.businessMoat.segments.map((s) => `- ${s.name}: ${pct(s.sharePct)} (${compactUSD(s.revenue)})`).join("\n");
   const geo = facts.sections.businessMoat.geoMix.map((g) => `- ${g.region}: ${pct(g.sharePct)}`).join("\n");
+  const sharesNote = pack.quote.sharesSource === "cover" ? "cover page" : "derived from market cap";
+  const highlights = HIGHLIGHT_KEYS.filter((k) => facts.highlightCells[k] != null)
+    .map((k) => `- ${k}: ${facts.highlightCells[k]!.label} = ${formatSnapshot(facts.highlightCells[k] as SnapshotCell)}`)
+    .join("\n");
   return [
     "### Snapshot", snap,
     table(`Income statement (${facts.sections.financials.income.columns.slice(1).join(", ")})`, facts.sections.financials.income),
@@ -41,6 +48,7 @@ export function renderFactsBlock(facts: ReportFacts, pack: FactPack): string {
     `- ${e.followingFY.label} revenue ${money(e.followingFY.revenue)}, EPS ${eps(e.followingFY.eps)}`,
     "### Trailing twelve months",
     `- Gross margin ${ratio(t.grossMargin)} · Operating margin ${ratio(t.operatingMargin)} · Net margin ${ratio(t.netMargin)}`,
+    `- Net debt/EBITDA ${multOrDash(t.netDebtToEbitda)} · Interest coverage ${multOrDash(t.interestCoverage)} · FCF yield ${ratio(t.fcfYield)} · Current ratio ${num2OrDash(t.currentRatio)}`,
     `- Latest quarter ${lq.label} (ended ${lq.periodEnd}): revenue ${compactUSD(lq.revenue)}, operating margin ${pct(lq.operatingMargin)}${lq.revenueYoY == null ? "" : `, revenue ${pct(lq.revenueYoY, { signed: true })} YoY`}`,
     "### Multiples (company column; peers pending a peer data source)", multiples,
     "### Street view",
@@ -49,7 +57,8 @@ export function renderFactsBlock(facts: ReportFacts, pack: FactPack): string {
     `### Segments (${facts.sections.businessMoat.segmentsBasis})`, segments,
     `### Geography (${facts.sections.businessMoat.geographyBasis})`, geo,
     `### Quote`,
-    `- Price ${usd(pack.quote.price)} as of ${pack.quote.asOf}; 52-week ${usd(pack.quote.week52Low)}–${usd(pack.quote.week52High)}; market cap ${compactUSD(pack.quote.marketCap)}; dividend yield ${pct(pack.quote.dividendYield, { dp: 2 })}`,
+    `- Price ${usd(pack.quote.price)} as of ${pack.quote.asOf}; 52-week ${usd(pack.quote.week52Low)}–${usd(pack.quote.week52High)}; market cap ${compactUSD(pack.quote.marketCap)}; shares ${compactNum(pack.quote.sharesOutstanding)} (${sharesNote}); dividend yield ${pct(pack.quote.dividendYield, { dp: 2 })}`,
+    "### Highlight cells you may add (up to four, by key)", highlights,
   ].join("\n\n");
 }
 
@@ -64,6 +73,7 @@ export function renderContextBlock(pack: FactPack): string {
     ex("Company description", c.description),
     ex("MD&A", c.mdaExcerpt),
     ex("Risk factors", c.riskFactorsExcerpt),
+    ex("Earnings press release", c.pressRelease),
     ex("Transcript highlights", c.transcriptHighlights),
     `### Headlines\n${headlines}`,
   ].join("\n\n");
@@ -79,7 +89,8 @@ const CONTRACT = `- Write Markdown using only: **bold**, "### " or "#### " at th
 const CALLS = `- Scenarios: exactly three, named exactly \`Bull\`, \`Base\`, \`Bear\`, with implied prices Bull ≥ Base ≥ Bear and probabilities that sum to 1.
 - Target range: \`targetLow\` < \`targetHigh\`, and the range must bracket the Base implied price.
 - Rating: the probability-weighted fair value (Σ impliedPrice × probability) implies an upside vs the current price; your label must sit in its envelope — STRONG BUY ≥ +25%, BUY ≥ +10%, HOLD −10% to +15%, SELL ≤ −5%, STRONG SELL ≤ −20%. A conservative label is allowed; a contradiction fails.
-- Numbers you may quote from your own calls: the target range and its upside range, each scenario's weighted value, and the weighted fair value — the page renders these.`;
+- Numbers you may quote from your own calls: the target range and its upside range, each scenario's weighted value, and the weighted fair value — the page renders these.
+- Scenario probabilities are quotable as percentages (e.g. 48%).`;
 
 export function renderPrompt(pack: FactPack, facts: ReportFacts, desk: Desk, opts: { priorErrors?: string[]; judgmentPath?: string } = {}): string {
   const path = opts.judgmentPath ?? `data/judgment/${pack.ticker}/${pack.filing.accession}.json`;

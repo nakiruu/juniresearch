@@ -63,6 +63,19 @@ export function markdownIssues(j: Judgment): ValidationIssue[] {
   return issues;
 }
 
+/** Duplicate highlight keys, or a chosen key whose cell this FactPack does not have (highlights.ts omits a null fact). */
+export function highlightIssues(j: Judgment, facts: ReportFacts): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+  const keys = j.highlights ?? [];
+  const dupes = [...new Set(keys.filter((k, i) => keys.indexOf(k) !== i))];
+  if (dupes.length)
+    issues.push({ field: "highlights", message: `highlight keys must be unique; repeated: ${dupes.join(", ")}`, value: keys });
+  const unavailable = keys.filter((k) => facts.highlightCells[k] == null);
+  if (unavailable.length)
+    issues.push({ field: "highlights", message: `highlight key(s) not available in this FactPack: ${unavailable.join(", ")}`, value: unavailable });
+  return issues;
+}
+
 export function segmentIssues(j: Judgment, facts: ReportFacts): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
   const want = facts.sections.businessMoat.segments.map((s) => s.name);
@@ -91,6 +104,7 @@ export function validateJudgment(j: Judgment, facts: ReportFacts, pack: FactPack
   return [
     ...ratingIssues(j, pack.quote.price),
     ...segmentIssues(j, facts),
+    ...highlightIssues(j, facts),
     ...markdownIssues(j),
     ...checkGrounding(j, index),
   ];

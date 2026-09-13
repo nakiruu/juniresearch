@@ -4,6 +4,7 @@ import { FactPack } from "@/lib/facts/schema";
 import { projectReportFacts } from "@/lib/facts/project";
 import { Desk } from "@/lib/synth/desk.schema";
 import { Judgment } from "@/lib/synth/judgment.schema";
+import type { HighlightKey } from "@/lib/synth/highlights";
 import { mergeReport, toneFor, longDate, shortDate } from "@/lib/synth/merge";
 import { Report, SCHEMA_VERSION } from "@/lib/report.schema";
 import { validateReport } from "@/lib/validate";
@@ -53,6 +54,23 @@ describe("mergeReport with the golden judgment and the AVGO facts", () => {
     expect(seg[0]).toMatchObject({ sharePct: factSeg.sharePct, revenue: factSeg.revenue, body: judgment.sections.businessMoat.segments[0].body });
     expect(report.sections.businessMoat.segmentsBasis).toBe("FY25 mix");
     expect(report.sections.businessMoat.moatRating).toBe("WIDE");
+  });
+});
+
+describe("mergeReport snapshot with chosen highlight cells", () => {
+  it("leaves the sixteen fact cells in place when the judgment chooses none (the golden judgment)", () => {
+    const report = mergeReport(facts, judgment, desk, "2026-09-13");
+    expect(report.snapshot).toHaveLength(16);
+    expect(report.snapshot).toEqual(facts.snapshot);
+  });
+  it("appends the chosen highlight cells after the sixteen, in the order chosen", () => {
+    const highlights: HighlightKey[] = ["capexLatestFY", "netDebtToEbitda"];
+    const withHighlights: Judgment = { ...judgment, highlights };
+    const report = mergeReport(facts, withHighlights, desk, "2026-09-13");
+    expect(report.snapshot).toHaveLength(facts.snapshot.length + 2);
+    expect(report.snapshot.slice(0, facts.snapshot.length)).toEqual(facts.snapshot);
+    expect(report.snapshot[facts.snapshot.length]).toEqual(facts.highlightCells.capexLatestFY);
+    expect(report.snapshot[facts.snapshot.length + 1]).toEqual(facts.highlightCells.netDebtToEbitda);
   });
 });
 

@@ -9,6 +9,9 @@ const pack = FactPack.parse(JSON.parse(readFileSync("data/facts/AVGO/0001730168-
 const facts = projectReportFacts(pack);
 const desk = Desk.parse(JSON.parse(readFileSync("data/desk/desk.json", "utf8")));
 
+const orclPack = FactPack.parse(JSON.parse(readFileSync("data/facts/ORCL/0001193125-26-389274.json", "utf8")));
+const orclFacts = projectReportFacts(orclPack);
+
 describe("renderFactsBlock", () => {
   const block = renderFactsBlock(facts, pack);
   it("renders the snapshot exactly as the page formats it", () => {
@@ -28,6 +31,27 @@ describe("renderFactsBlock", () => {
     expect(block).toMatch(/Semiconductor Solutions: 57\.7% \(\$36\.9B\)/);
     expect(block).toMatch(/Asia Pacific: 56\.2%/);
   });
+  it("renders the leverage line under Trailing twelve months", () => {
+    expect(block).toContain("- Net debt/EBITDA 0.7x · Interest coverage 14.2x · FCF yield 2.3% · Current ratio 2.50");
+  });
+  it("shows cover-page shares on the Quote line", () => {
+    expect(block).toMatch(/shares 4\.77B \(cover page\)/);
+  });
+  it("lists every available highlight cell by key", () => {
+    expect(block).toContain("### Highlight cells you may add (up to four, by key)");
+    expect(block).toContain("- fcfLatestFY: FY25 Free Cash Flow = $26.9B");
+    expect(block).toContain("- netDebtToEbitda: Net Debt / EBITDA (TTM) = 0.7x");
+  });
+});
+
+describe("renderFactsBlock (ORCL — the frozen formatter's sign placement on a negative highlight cell)", () => {
+  const block = renderFactsBlock(orclFacts, orclPack);
+  it("renders the negative FY26 capex highlight cell", () => {
+    expect(block).toContain("- capexLatestFY: FY26 Capital Expenditure = $-55.7B");
+  });
+  it("renders ORCL's leverage line with a negative FCF yield", () => {
+    expect(block).toContain("- Net debt/EBITDA 3.2x · Interest coverage 4.6x · FCF yield -6.6% · Current ratio 1.17");
+  });
 });
 
 describe("renderContextBlock", () => {
@@ -38,6 +62,11 @@ describe("renderContextBlock", () => {
     expect(ctx).toMatch(/### Transcript highlights \(bigdata:Quartr Transcripts, 2026-09-02/);
     expect(ctx).toContain(pack.context.mdaExcerpt!.text.slice(0, 200));
     expect(ctx).toMatch(/### Headlines\n- 2026-08-04 · Benzinga · What Is Going on With Broadcom Stock on Tuesday\?/);
+  });
+  it("renders the earnings press release before the transcript", () => {
+    expect(ctx).toMatch(/### Earnings press release \(edgar:8-K ex-99\.1, 2026-09-02, truncated\)/);
+    expect(ctx).toContain(pack.context.pressRelease!.text.slice(0, 100));
+    expect(ctx.indexOf("### Earnings press release")).toBeLessThan(ctx.indexOf("### Transcript highlights"));
   });
 });
 
@@ -51,6 +80,7 @@ describe("renderPrompt", () => {
     expect(p).toContain(desk.styleRules[0]);
     expect(p).toContain('"STRONG BUY"');
     expect(p).toContain("STRONG BUY ≥ +25%");
+    expect(p).toContain("Scenario probabilities are quotable as percentages (e.g. 48%).");
     expect(p).toContain("data/judgment/AVGO/0001730168-26-000080.json");
     const re = renderPrompt(pack, facts, desk, { priorErrors: ["rating.label: BUY is inconsistent with an upside of -3.0%"] });
     expect(re).toMatch(/# Prior errors[\s\S]*- rating\.label: BUY is inconsistent/);
@@ -59,6 +89,8 @@ describe("renderPrompt", () => {
     const a = renderPrompt(pack, facts, desk), b = renderPrompt(pack, facts, desk);
     expect(a).toBe(b);
     expect(a.length).toBeGreaterThan(30000);
-    expect(a.length).toBeLessThan(60000);
+    // Raised from 60000: the Context block now also carries the earnings press release excerpt
+    // (Task 5), which for AVGO alone runs to ~15,000 characters.
+    expect(a.length).toBeLessThan(90000);
   });
 });

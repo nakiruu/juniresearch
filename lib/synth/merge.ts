@@ -8,7 +8,7 @@
 import type { ReportFacts } from "../facts/project";
 import type { Judgment, RatingLabel } from "./judgment.schema";
 import type { Desk } from "./desk.schema";
-import { SCHEMA_VERSION, type Report } from "../report.schema";
+import { SCHEMA_VERSION, type Report, type SnapshotCellData } from "../report.schema";
 
 export const toneFor = (label: RatingLabel): Report["rating"]["tone"] =>
   label === "HOLD" ? "secondary" : label.endsWith("BUY") ? "bull" : "bear";
@@ -32,7 +32,11 @@ export function mergeReport(facts: ReportFacts, j: Judgment, desk: Desk, buildDa
     },
     quote: facts.quote,
     rating: { label: j.rating.label, tone: toneFor(j.rating.label), targetLow: j.rating.targetLow, targetHigh: j.rating.targetHigh },
-    snapshot: facts.snapshot,
+    // The model's chosen highlight keys (up to four) resolve to fact-built cells, in the order chosen,
+    // appended after the sixteen code-owned cells. validateJudgment has already ruled out duplicates and
+    // unavailable keys, but `.filter(Boolean)` is a last-resort guard against an unavailable key slipping
+    // through unvalidated.
+    snapshot: [...facts.snapshot, ...(j.highlights ?? []).map((k) => facts.highlightCells[k]).filter((c): c is SnapshotCellData => c != null)],
     analystSentiment: { ...facts.analystSentiment, commentary: j.analystCommentary },
     sections: {
       executiveSummary: {

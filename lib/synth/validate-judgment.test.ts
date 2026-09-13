@@ -3,7 +3,8 @@ import { readFileSync } from "node:fs";
 import { FactPack } from "@/lib/facts/schema";
 import { projectReportFacts } from "@/lib/facts/project";
 import { Judgment } from "@/lib/synth/judgment.schema";
-import { validateJudgment, ratingIssues, markdownIssues, segmentIssues, renderJudgmentBlock } from "@/lib/synth/validate-judgment";
+import { validateJudgment, ratingIssues, markdownIssues, segmentIssues, highlightIssues, renderJudgmentBlock } from "@/lib/synth/validate-judgment";
+import type { HighlightKey } from "@/lib/synth/highlights";
 import goldenJudgment from "@/lib/__fixtures__/avgo-golden-judgment.json";
 
 const pack = FactPack.parse(JSON.parse(readFileSync("data/facts/AVGO/0001730168-26-000080.json", "utf8")));
@@ -104,6 +105,28 @@ describe("segments", () => {
   });
 });
 
+describe("highlightIssues", () => {
+  const withHighlights = (highlights: HighlightKey[]): Judgment => ({ ...golden, highlights });
+  it("passes when the judgment picks no highlights, or unique, available ones", () => {
+    expect(highlightIssues(golden, facts)).toEqual([]);
+    expect(highlightIssues(withHighlights(["capexLatestFY", "netDebtToEbitda"]), facts)).toEqual([]);
+  });
+  it("flags a repeated highlight key", () => {
+    const issues = highlightIssues(withHighlights(["capexLatestFY", "capexLatestFY"]), facts);
+    expect(issues).toHaveLength(1);
+    expect(issues[0]).toMatchObject({ field: "highlights" });
+    expect(issues[0].message).toMatch(/unique/);
+  });
+  it("flags a highlight key whose cell this FactPack does not have", () => {
+    const stripped = structuredClone(facts);
+    delete (stripped.highlightCells as Record<string, unknown>).grossMarginLatestFY;
+    const issues = highlightIssues(withHighlights(["grossMarginLatestFY"]), stripped);
+    expect(issues).toHaveLength(1);
+    expect(issues[0]).toMatchObject({ field: "highlights", value: ["grossMarginLatestFY"] });
+    expect(issues[0].message).toMatch(/not available/);
+  });
+});
+
 describe("renderJudgmentBlock", () => {
   it("renders the calls and the page's derived values so the prose may quote them", () => {
     const block = renderJudgmentBlock(golden, pack.quote.price);
@@ -133,5 +156,10 @@ describe("validateJudgment on the golden judgment", () => {
       "sections.financials.balanceCommentary: $1.4B",
       "sections.financials.cashflowCommentary: $1.4B",
     ]);
+  });
+  it("also runs the highlight checks", () => {
+    const withDupes: Judgment = { ...golden, highlights: ["capexLatestFY", "capexLatestFY"] };
+    const issues = validateJudgment(withDupes, facts, pack);
+    expect(issues.some((i) => i.field === "highlights")).toBe(true);
   });
 });
