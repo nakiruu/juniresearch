@@ -28,7 +28,6 @@ export function buildChartModel(r: Report): ChartModel {
   const history: HistoryPoint[] = real
     ? closes.map((c, i) => ({ day: i - (closes.length - 1), price: c.close }))
     : historySeries(current).points;
-  if (real) history[history.length - 1] = { day: 0, price: closes[closes.length - 1].close };
   return {
     company: r.meta.company,
     exchange: r.meta.exchange,
