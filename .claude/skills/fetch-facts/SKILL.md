@@ -18,8 +18,11 @@ If the accession is unknown, run `npm run detect` first and use what it prints.
 ## Steps
 
 1. `npm run facts:prepare -- <TICKER> <ACCESSION>` — creates the raw directory with
-   `edgar-filing.json`, the primary document, `yahoo-history.json`, and `capture.json`
-   (stamped with the capture's start time). Read the printed directory path.
+   `edgar-filing.json`, the primary document, the earnings press release
+   (`edgar-press-release.html`, or `.missing` when none is found) and, for a 10-Q,
+   the prior 10-K's primary document (`edgar-10k-primary.html`), plus
+   `yahoo-history.json` and `capture.json` (stamped with the capture's start time).
+   Read the printed directory path.
 2. `npm run facts:manifest -- <TICKER> <ACCESSION>` — prints `{ dir, phase2Ready, calls[] }`.
 3. For every entry in `calls`:
    - `server: "fmp"` → call the MCP tool `mcp__claude_ai_FMP__<tool>` with `params` exactly as printed.

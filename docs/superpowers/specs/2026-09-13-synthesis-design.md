@@ -233,9 +233,9 @@ cell is available in this FactPack, `key: label = formatted value` per line,
 so the model picks from what actually exists rather than guessing a key.
 `renderContextBlock` renders the earnings press release excerpt (when
 captured) ahead of transcript highlights. The `# Calls` section also now
-notes that scenario probabilities are quotable as percentages (e.g. "48%"),
-alongside the target range, each scenario's weighted value, and the weighted
-fair value that were already quotable.
+notes that scenario probabilities are quotable as percentages (e.g. 48%),
+alongside the target range and its upside range, each scenario's weighted
+value, and the weighted fair value that were already quotable.
 
 ## Fixture move
 

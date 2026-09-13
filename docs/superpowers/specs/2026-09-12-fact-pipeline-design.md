@@ -378,7 +378,7 @@ figures sit past 8,000). The watchlist lives at
 The manifest table and mapping section above are superseded by the plan's
 revised Tasks 6–11, which carry the captured response shapes verbatim.
 
-## Revision 2 — after the Oracle comparison
+## Revision 2026-09-13 — after the Oracle comparison
 
 Running the pipeline against Oracle's real 10-Q and 10-K (rather than only
 Broadcom's) surfaced three gaps neither the design nor the first capture had

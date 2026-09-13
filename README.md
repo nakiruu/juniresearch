@@ -54,8 +54,9 @@ npm run facts:diff  -- AVGO 0001730168-26-000080   # projected facts vs the hand
 Numbers come from Bigdata.com company tearsheets (which proxy FMP data) and peer tickers from FMP `company`, both through the Claude connectors — the
 `fetch-facts` skill executes `lib/facts/manifest.ts`; EDGAR and Yahoo are fetched by code. Unattended runs need API keys
 and a REST `FactSource`; see the spec's "FactSource seam". `facts:prepare` also discovers the earnings 8-K's exhibit 99.1 (writing a
-`.missing` marker when none exists) and, for a 10-Q, fetches the prior 10-K's primary document, feeding FactPack 1.1's leverage
-ratios, capital-return rows, and press-release excerpt.
+`.missing` marker when none exists), feeding `context.pressRelease`, and, for a 10-Q, fetches the prior 10-K's primary document
+solely to arbitrate which filing's Risk Factors excerpt is longer (`context.riskFactorsSource`); FactPack 1.1's leverage ratios
+and capital-return rows come from the Bigdata tearsheet, not from EDGAR.
 
 ---
 
