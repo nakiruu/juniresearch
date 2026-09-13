@@ -26,6 +26,13 @@ describe("numericTokens", () => {
   it("records precision as the number of decimals written", () => {
     expect(numericTokens("$361.99 and 0.855 and 68%").map((t) => t.precision)).toEqual([2, 3, 0]);
   });
+  it("treats a typographic apostrophe in quarter shorthand like a straight one", () => {
+    expect(numericTokens("Q3'26 revenue and Q4'26 guidance")).toEqual([]);
+  });
+  it("allow-lists bare years only through 2040", () => {
+    expect(numericTokens("by 2040 and beyond").map((t) => t.raw)).toEqual([]);
+    expect(numericTokens("by 2045 and beyond").map((t) => t.raw)).toEqual(["2045"]);
+  });
 });
 
 describe("the allowed index on the AVGO FactPack", () => {

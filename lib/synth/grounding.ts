@@ -20,10 +20,11 @@ export interface NumberToken {
 
 const MULT: Record<string, number> = { k: 1e3, m: 1e6, b: 1e9, t: 1e12, thousand: 1e3, million: 1e6, billion: 1e9, trillion: 1e12 };
 
-// sign? $? digits(,ddd)* (.ddd)? then an optional unit: suffix letter, spelled multiplier, %, or x.
-// En/em dashes are range separators ("$350–$600"), not minus signs; only "-" and "−" negate.
-const TOKEN = /(?<![A-Za-z''$\d.])([+\-−]?)(\$?)(\d{1,3}(?:,\d{3})+|\d+)(\.\d+)?(?:\s?(K|M|B|T|thousand|million|billion|trillion)(?![A-Za-z])|(%)|(x)(?![A-Za-z]))?/g;
-const YEAR = /^(19[9]\d|20[0-4]\d)$/;
+// Lookbehind: not preceded by letter, straight or curly apostrophe, $, digit, or period. Prevents Q3'26 → "26" leak.
+// Capture groups: (1) sign [+\-−], (2) $, (3) integer with thousands-separators or bare, (4) decimals,
+// (5) scaled unit (K/M/B/T or spelled-out), (6) percent sign, (7) x multiplier.
+const TOKEN = /(?<![A-Za-z'’$\d.])([+\-−]?)(\$?)(\d{1,3}(?:,\d{3})+|\d+)(\.\d+)?(?:\s?(K|M|B|T|thousand|million|billion|trillion)(?![A-Za-z])|(%)|(x)(?![A-Za-z]))?/g;
+const YEAR = /^(199\d|20[0-3]\d|2040)$/;
 
 /** Figures that never need grounding: small counts, years, fiscal/quarter labels, dates, form names, ratios like 10:1. */
 function allowListed(m: RegExpExecArray, text: string): boolean {
