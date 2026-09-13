@@ -23,7 +23,7 @@ lib/
   reports.ts              filesystem loader; parse + validate at the boundary
   synth/                  Desk + Judgment schemas, renderPrompt, mergeReport, grounding, validateJudgment
 data/
-  avgo.json               reference report (proves parity with the PDF)
+  avgo.json               generated report (the hand-built original lives in `lib/__fixtures__/avgo-golden.json`)
   desk/desk.json          desk identity + house style
   judgment/<T>/<acc>.*    prompt.md / .json / .errors.txt — staged judgment, per filing
 ```
@@ -33,7 +33,7 @@ data/
 ```bash
 npm install
 npm run dev      # http://localhost:3000 → redirects to /research
-npm test         # Vitest, 90+ tests against data/avgo.json
+npm test         # Vitest, 250+ tests against the golden fixture and the committed FactPack
 npm run build    # prerenders /research and /research/<ticker>
 ```
 
@@ -47,7 +47,7 @@ npm run detect                          # polls EDGAR for new 10-Q/10-K on the w
 npm run facts:prepare -- AVGO 0001730168-26-000080  # EDGAR filing record + primary document + Yahoo daily closes → data/raw/…
 /fetch-facts AVGO 0001730168-26-000080  # in Claude Code: captures vendor responses verbatim to data/raw/…
 npm run facts:build -- AVGO 0001730168-26-000080   # raw → validated FactPack in data/facts/…
-npm run facts:diff  -- AVGO 0001730168-26-000080   # projected facts vs data/avgo.json, formatted
+npm run facts:diff  -- AVGO 0001730168-26-000080   # projected facts vs the hand-built golden fixture, formatted
 ```
 
 `EDGAR_CONTACT=<your email>` must be set in `.env.local` (see `.env.example`); SEC requires it.
@@ -66,9 +66,10 @@ npm run synth:build  -- AVGO 0001730168-26-000080   # judgment + facts → valid
 ```
 
 The model writes only the judgment (`lib/synth/judgment.schema.ts`); code sets everything derivable, checks the rating against the
-scenarios' probability-weighted upside, lints the Markdown, and verifies that every figure in the prose exists in the FactPack or
-the captured context (`lib/synth/grounding.ts`). Desk identity and house style live in `data/desk/desk.json`. The hand-built
-report that seeded the project is now the test fixture `lib/__fixtures__/avgo-golden.json`.
+scenarios' probability-weighted upside, lints the Markdown, and verifies that every figure in the prose exists in the FactPack, the
+captured context, or the report's own calls and the values the page derives from them (`lib/synth/grounding.ts`). Desk identity and
+house style live in `data/desk/desk.json`. The hand-built report that seeded the project is now the test fixture
+`lib/__fixtures__/avgo-golden.json`.
 
 ---
 
@@ -172,9 +173,9 @@ The report-generation model returns **one JSON object** matching
    validate and merge, re-prompting with the residual errors for up to three rounds.
    The model fills only judgment + prose (rating, target range, scenario probabilities,
    section Markdown).
-4. **Validate** — `Report.parse(json)`. On failure, re-prompt with the Zod error
-   and let the model self-heal. Add sanity checks (probabilities sum to 1;
-   margins in [0,1]; target range brackets the base case).
+4. **Validate** — `synth:build` runs `Judgment.parse`, `Report.parse`, `validateReport`
+   and `validateJudgment` (rating envelope, grounding, Markdown lint); failures go
+   back to the model as an error list, three rounds at most.
 5. **Persist** `data/<ticker>.json` — the canonical, versioned artifact.
 6. **Render** — the page reads the JSON (SSG/ISR). Generate both PDFs by
    Playwright print-to-PDF against `?theme=dark|light&print=1` with print CSS —

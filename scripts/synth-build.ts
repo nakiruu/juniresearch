@@ -44,4 +44,4 @@ if (issues.length) fail(issues, "validate");
 const out = join("data", `${ticker.toLowerCase()}.json`);
 writeFileSync(out, JSON.stringify(valid, null, 2) + "\n");
 if (existsSync(errorsPath)) rmSync(errorsPath);
-console.log(`Wrote ${out}\n  ${report.meta.company} · ${report.rating.label} ${report.rating.targetLow}–${report.rating.targetHigh} · report date ${report.meta.reportDate} · ${report.quote.history?.length ?? 0} closes`);
+console.log(`Wrote ${out}\n  ${valid.meta.company} · ${valid.rating.label} ${valid.rating.targetLow}–${valid.rating.targetHigh} · report date ${valid.meta.reportDate} · ${valid.quote.history?.length ?? 0} closes`);

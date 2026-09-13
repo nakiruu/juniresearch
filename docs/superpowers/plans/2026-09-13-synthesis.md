@@ -13,9 +13,9 @@
 ## Global Constraints
 
 - **The model writes prose and calls only.** Every derivable field (`rating.tone`, `thesis.label`, `snapshot`, `quote`, tables and their notes, `meta` identity fields, `disclaimer`, `schemaVersion`) is set by `mergeReport`, never accepted from the judgment. The `Judgment` schema is `strictObject` throughout so an extra key is a Zod error.
-- **Numbers in judgment prose must be grounded.** Every numeric token in every judgment string must match the allowed index (FactPack numbers at display scalings, facts-block tokens, context tokens) at the token's own precision or within 0.5%, except the allow-list: integers 0–12, years 1990–2040, `Q1`–`Q4`, `FY24`-style labels, dates.
+- **Numbers in judgment prose must be grounded.** Every numeric token in every judgment string must match the allowed index (FactPack numbers at display scalings, facts-block tokens, context tokens) at the token's own precision, except the allow-list: integers 0–12, years 1990–2040, `Q1`–`Q4`, `FY24`-style labels, dates.
 - **`lib/format.ts`, `lib/report.schema.ts`, `lib/validate.ts`, `lib/facts/schema.ts` are frozen.** `lib/facts/project.ts` changes only as Task 5 specifies (adds `quote.history`).
-- **Nothing under `lib/synth/` performs I/O.** The scripts read and write files; no module in `lib/` imports `node:fs`.
+- **Nothing under `lib/synth/` performs I/O.** The scripts read and write files; nothing under `lib/synth/` performs I/O.
 - **Rating envelope (spec):** upside `u` = Σ(`impliedPrice × probability`) ÷ `currentPrice` − 1. STRONG BUY `u ≥ 0.25`; BUY `u ≥ 0.10`; HOLD `−0.10 ≤ u ≤ 0.15`; SELL `u ≤ −0.05`; STRONG SELL `u ≤ −0.20`.
 - **Markdown subset (from `components/report/Markdown.tsx`):** `**bold**`, `### `/`#### ` at block start, `- `/`* ` list lines, blank-line paragraphs, `{+ +}`/`{- -}` spans; no nesting, no HTML, no tables, no links, no images.
 - **Output paths:** prompt `data/judgment/<T>/<acc>.prompt.md` (git-ignored), judgment `data/judgment/<T>/<acc>.json` (committed), errors `data/judgment/<T>/<acc>.errors.txt` (git-ignored), report `data/<ticker-lowercase>.json`. `<T>` is the upper-case ticker; `<acc>` keeps its dashes.

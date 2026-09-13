@@ -3,7 +3,7 @@ name: synthesize
 description: Author the judgment half of an equity report for a captured filing and build the published Report. Usage — /synthesize <TICKER> <ACCESSION>
 ---
 
-# Synthesize
+# synthesize
 
 You are the `Synthesizer` for this run: the code renders the prompt, you write the judgment, the code validates and merges. Three rounds at most.
 

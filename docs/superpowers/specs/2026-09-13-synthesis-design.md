@@ -84,7 +84,7 @@ filled by `mergeReport`.
 | `executiveSummary.catalysts[]`, `.risks[]` | 3–6 items, each ≤ 600 | copied |
 | `financials.incomeCommentary`, `.balanceCommentary`, `.cashflowCommentary` | Markdown ≤ 2,500 each | tables and their `note` come from facts; the note is set by code: "Source: Bigdata.com company tearsheet (FMP); fiscal years ended <FYE>." |
 | `valuation.multiplesCommentary`, `.scenarioCommentary` | Markdown ≤ 2,500 | the multiples table is `columns: ["Multiple (TTM)", "<TICKER>"]` with the company column only and `note: "Peer multiples pending a peer data source."` |
-| `valuation.scenarios[]` | exactly 3; `name` ≤ 20, `driver` Markdown ≤ 600, `impliedPrice` > 0, `probability` in (0, 1) | copied; `computeScenarios` derives weighted values at render |
+| `valuation.scenarios[]` | exactly 3 (three scenarios named exactly Bull, Base, Bear); `name` ≤ 20, `driver` Markdown ≤ 600, `impliedPrice` > 0, `probability` in (0, 1) | copied; `computeScenarios` derives weighted values at render |
 | `businessMoat.segments[]` | one entry per fact segment, `{ name, body ≤ 1,200 }` | joined to facts by `name`; share and revenue from facts |
 | `businessMoat.moatRating` | enum `WIDE \| NARROW \| NONE` | copied (Report keeps the string) |
 | `businessMoat.moatFactors[]` | 2–5 of `{ name ≤ 60, strength ≤ 30, body ≤ 800 }`, names unique | copied |
@@ -125,7 +125,7 @@ the desk config.
 6. **Prior errors** — present only on a re-prompt: the validator messages
    verbatim under "Fix every item below and return the full object".
 
-Expected size for AVGO: 35–40k characters.
+Expected size for AVGO: about 48k characters (the JSON Schema is ~10k of it).
 
 ## Validation
 
@@ -133,7 +133,7 @@ Expected size for AVGO: 35–40k characters.
 
 1. `Judgment.parse` on the judgment file (bounds, enums, shapes).
 2. `mergeReport` → `Report.parse`.
-3. `validateReport` — subsystem 1's rules, unchanged.
+3. `validateReport` — subsystem 1's rules, unchanged (`targetLow < targetHigh`).
 4. `validateJudgment`:
    - **Rating envelope.** Fair value = Σ `impliedPrice × probability`; upside
      `u` = fair value ÷ current price − 1. Each label has an envelope the
@@ -141,9 +141,9 @@ Expected size for AVGO: 35–40k characters.
      allowed and only a contradiction fails: STRONG BUY `u ≥ +0.25`; BUY
      `u ≥ +0.10`; HOLD `−0.10 ≤ u ≤ +0.15`; SELL `u ≤ −0.05`; STRONG SELL
      `u ≤ −0.20`. (The hand-built AVGO report — BUY at a weighted +34% — passes;
-     a BUY at −3% or a HOLD at +40% fails.) `targetLow < targetHigh`. Where
-     scenario names match `/bull/i`, `/base/i`, `/bear/i`, prices must satisfy
-     bull ≥ base ≥ bear.
+     a BUY at −3% or a HOLD at +40% fails.) Where scenario names match
+     `/bull/i`, `/base/i`, `/bear/i`, prices must satisfy bull ≥ base ≥ bear
+     (three scenarios named exactly Bull, Base, Bear).
    - **Grounding.** `numericTokens(md)` extracts every figure from Markdown,
      normalising sign, `$`, `%`, `x`, `K/M/B/T` suffixes, thousands separators
      and ranges (`$350–$600` → 350, 600). The allowed index is the union of:
@@ -159,7 +159,10 @@ Expected size for AVGO: 35–40k characters.
      precision. Allow-listed without lookup: integers 0–12, years 1990–2040, `Q1`–`Q4`,
      `FY24`-style labels, ISO and month-name dates. Every miss is an issue:
      `sections.executiveSummary.thesis.body: "$17.9B" is not in the facts or the
-     captured context`.
+     captured context`. Grounding proves a figure exists on the quotable surface,
+     not that it is correct or attributed to the right quantity: a typo in a
+     captured transcript is quotable, and two different quantities that round to
+     the same display value are indistinguishable.
    - **Markdown lint.** No HTML tags, no nested emphasis markers, headings only
      at block start, no tables, links or images.
    - **Segments.** One body per fact segment name and no extra names;
