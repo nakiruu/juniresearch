@@ -42,14 +42,15 @@ describe("renderContextBlock", () => {
 });
 
 describe("renderPrompt", () => {
-  it("assembles the six sections in order, with the errors section only on a re-prompt", () => {
+  it("assembles the seven sections in order, with the errors section only on a re-prompt", () => {
     const p = renderPrompt(pack, facts, desk, { judgmentPath: "data/judgment/AVGO/0001730168-26-000080.json" });
-    const order = ["# Role", "# Authoring contract", "# Facts", "# Context", "# Output"].map((h) => p.indexOf(h));
+    const order = ["# Role", "# Authoring contract", "# Calls", "# Facts", "# Context", "# Output"].map((h) => p.indexOf(h));
     expect(order).toEqual([...order].sort((a, b) => a - b));
     expect(order.every((i) => i >= 0)).toBe(true);
     expect(p).not.toContain("# Prior errors");
     expect(p).toContain(desk.styleRules[0]);
     expect(p).toContain('"STRONG BUY"');
+    expect(p).toContain("STRONG BUY ≥ +25%");
     expect(p).toContain("data/judgment/AVGO/0001730168-26-000080.json");
     const re = renderPrompt(pack, facts, desk, { priorErrors: ["rating.label: BUY is inconsistent with an upside of -3.0%"] });
     expect(re).toMatch(/# Prior errors[\s\S]*- rating\.label: BUY is inconsistent/);

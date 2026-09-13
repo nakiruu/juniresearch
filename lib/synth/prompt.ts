@@ -73,11 +73,17 @@ const CONTRACT = `- Write Markdown using only: **bold**, "### " or "#### " at th
 - Keep every field within its schema bounds; the page has a fixed shape.
 - Order your thinking as the schema orders the fields: rating and scenarios first, then the prose that argues for them.`;
 
+const CALLS = `- Scenarios: exactly three, named exactly \`Bull\`, \`Base\`, \`Bear\`, with implied prices Bull ≥ Base ≥ Bear and probabilities that sum to 1.
+- Target range: \`targetLow\` < \`targetHigh\`, and the range must bracket the Base implied price.
+- Rating: the probability-weighted fair value (Σ impliedPrice × probability) implies an upside vs the current price; your label must sit in its envelope — STRONG BUY ≥ +25%, BUY ≥ +10%, HOLD −10% to +15%, SELL ≤ −5%, STRONG SELL ≤ −20%. A conservative label is allowed; a contradiction fails.
+- Numbers you may quote from your own calls: the target range and its upside range, each scenario's weighted value, and the weighted fair value — the page renders these.`;
+
 export function renderPrompt(pack: FactPack, facts: ReportFacts, desk: Desk, opts: { priorErrors?: string[]; judgmentPath?: string } = {}): string {
   const path = opts.judgmentPath ?? `data/judgment/${pack.ticker}/${pack.filing.accession}.json`;
   const parts = [
     `# Role\n\nYou are ${desk.analystName} at ${desk.analyst}, writing the judgment half of an equity research report on ${pack.company} (${pack.ticker}) following its ${pack.filing.form} for the period ended ${pack.filing.periodEnd}. House style:\n${desk.styleRules.map((r) => `- ${r}`).join("\n")}`,
     `# Authoring contract\n\n${CONTRACT}`,
+    `# Calls\n\n${CALLS}`,
     `# Facts\n\n${renderFactsBlock(facts, pack)}`,
     `# Context\n\n${renderContextBlock(pack)}`,
     `# Output\n\nWrite one JSON object matching this schema, and nothing else, to \`${path}\`. Return the complete object every time.\n\n\`\`\`json\n${JSON.stringify(judgmentJsonSchema(), null, 2)}\n\`\`\``,
