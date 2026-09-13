@@ -38,14 +38,38 @@ export function capAtSentence(text: string, cap = EXCERPT_CAP): { text: string; 
 
 interface SectionSpec { item: string; title: RegExp; until: string[] }
 
+function escapeRegExpChar(ch: string): string {
+  return ch.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+/**
+ * Build a section-title matcher tolerant of spurious spaces inside words.
+ * Some filings render headings with letter-spaced inline spans, and
+ * htmlToText joins adjacent spans with a space, turning "Risk Factors"
+ * into "R isk Factors". A real word gap (the space in the plain-string
+ * input) becomes `\s+`; every intra-word gap becomes optional (`\s*`).
+ * An apostrophe stays tolerant via `.{0,5}`, matching the historical
+ * "management's discussion" behavior (handles missing/curly apostrophes).
+ */
+function titlePattern(title: string): RegExp {
+  const words = title.split(" ");
+  const wordPatterns = words.map((word) =>
+    word
+      .split("'")
+      .map((part) => [...part].map(escapeRegExpChar).join("\\s*"))
+      .join(".{0,5}"),
+  );
+  return new RegExp(wordPatterns.join("\\s+"), "i");
+}
+
 const SPECS: Record<"10-Q" | "10-K", { mda: SectionSpec; riskFactors: SectionSpec }> = {
   "10-Q": {
-    mda: { item: "2", title: /management.{0,5}s discussion/i, until: ["3", "4"] },
-    riskFactors: { item: "1A", title: /risk factors/i, until: ["2", "3", "4", "5", "6"] },
+    mda: { item: "2", title: titlePattern("management's discussion"), until: ["3", "4"] },
+    riskFactors: { item: "1A", title: titlePattern("risk factors"), until: ["2", "3", "4", "5", "6"] },
   },
   "10-K": {
-    mda: { item: "7", title: /management.{0,5}s discussion/i, until: ["7A", "8"] },
-    riskFactors: { item: "1A", title: /risk factors/i, until: ["1B", "1C", "2"] },
+    mda: { item: "7", title: titlePattern("management's discussion"), until: ["7A", "8"] },
+    riskFactors: { item: "1A", title: titlePattern("risk factors"), until: ["1B", "1C", "2"] },
   },
 };
 
