@@ -118,13 +118,17 @@ function extractItem(text: string, spec: SectionSpec): string | null {
 
 export interface CappedSection { text: string; truncated: boolean }
 
-export function extractSections(text: string, form: "10-Q" | "10-K"): { mda: CappedSection | null; riskFactors: CappedSection | null } {
+/** Uncapped longest-candidate bodies — for comparing two documents' sections by their real length before either is truncated. */
+export function extractRawSections(text: string, form: "10-Q" | "10-K"): { mda: string | null; riskFactors: string | null } {
   const spec = SPECS[form];
-  const mda = extractItem(text, spec.mda);
-  const rf = extractItem(text, spec.riskFactors);
+  return { mda: extractItem(text, spec.mda), riskFactors: extractItem(text, spec.riskFactors) };
+}
+
+export function extractSections(text: string, form: "10-Q" | "10-K"): { mda: CappedSection | null; riskFactors: CappedSection | null } {
+  const { mda, riskFactors } = extractRawSections(text, form);
   return {
     mda: mda ? capAtSentence(mda, MDA_CAP) : null,
-    riskFactors: rf ? capAtSentence(rf) : null,
+    riskFactors: riskFactors ? capAtSentence(riskFactors) : null,
   };
 }
 

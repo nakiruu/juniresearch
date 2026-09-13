@@ -7,7 +7,7 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { readRawJson, readRawText, section } from "../raw";
-import { htmlToText, extractSections, capAtSentence, TRANSCRIPT_CAP, PRESS_CAP, type CappedSection } from "../../edgar/filing-text";
+import { htmlToText, extractRawSections, capAtSentence, TRANSCRIPT_CAP, PRESS_CAP, MDA_CAP } from "../../edgar/filing-text";
 import type { Excerpt, FactPack } from "../schema";
 
 const EDGAR_PRIMARY_FILE = "edgar-primary.html";
@@ -57,6 +57,11 @@ function transcriptFrom(results: SearchResult[], fallbackDay: string): Excerpt |
   return { text: capped.text, source: sourceOf(first), asOf: dayOf(first, fallbackDay), truncated: capped.truncated, ...(first.url ? { url: first.url } : {}) };
 }
 
+/** Wrap an already-capped { text, truncated } as a sourced, dated Excerpt. */
+function toExcerpt(capped: { text: string; truncated: boolean }, source: string, url: string | undefined, asOf: string): Excerpt {
+  return { text: capped.text, source, url, asOf, truncated: capped.truncated };
+}
+
 export function mapContext(
   dir: string,
   filing: {
@@ -67,41 +72,41 @@ export function mapContext(
   capturedAt: string,
   description: Excerpt,
 ): FactPack["context"] {
-  const { mda, riskFactors: ownRiskFactors } = extractSections(htmlToText(readRawText(dir, EDGAR_PRIMARY_FILE)), filing.form);
-  const edgar = (s: CappedSection | null): Excerpt | null =>
-    s ? { text: s.text, source: `edgar:${filing.form}`, url: filing.url, asOf: filing.filedDate, truncated: s.truncated } : null;
+  const own = extractRawSections(htmlToText(readRawText(dir, EDGAR_PRIMARY_FILE)), filing.form);
+  const mdaExcerpt: Excerpt | null = own.mda
+    ? toExcerpt(capAtSentence(own.mda, MDA_CAP), `edgar:${filing.form}`, filing.url, filing.filedDate)
+    : null;
 
-  // A 10-Q's own Item 1A is often a thin cross-reference to the prior 10-K; when a 10-K
-  // was also captured, compare candidates and keep whichever is the longer excerpt.
-  let riskFactorsExcerpt = edgar(ownRiskFactors);
-  let riskFactorsSource: FactPack["context"]["riskFactorsSource"] = ownRiskFactors ? filing.form : null;
+  // A 10-Q's own Item 1A is often a thin cross-reference to the prior 10-K; when a 10-K was also
+  // captured, compare the RAW (uncapped) candidate lengths. Comparing already-capped text would let
+  // the sentence-boundary cut point decide the winner instead of which document actually says more
+  // (both candidates commonly exceed the cap, collapsing their capped lengths to near-identical values).
+  let winnerRaw = own.riskFactors;
+  let riskFactorsSource: FactPack["context"]["riskFactorsSource"] = own.riskFactors ? filing.form : null;
+  let winnerSource = `edgar:${filing.form}`, winnerUrl: string | undefined = filing.url, winnerAsOf = filing.filedDate;
   if (filing.form === "10-Q" && existsSync(join(dir, TENK_PRIMARY_FILE))) {
-    const tenKRiskFactors = extractSections(htmlToText(readRawText(dir, TENK_PRIMARY_FILE)), "10-K").riskFactors;
-    if (tenKRiskFactors && (!ownRiskFactors || tenKRiskFactors.text.length > ownRiskFactors.text.length)) {
-      riskFactorsExcerpt = {
-        text: tenKRiskFactors.text, source: "edgar:10-K",
-        url: filing.annualReport?.url, asOf: filing.annualReport?.filedDate ?? filing.filedDate,
-        truncated: tenKRiskFactors.truncated,
-      };
+    const tenKRaw = extractRawSections(htmlToText(readRawText(dir, TENK_PRIMARY_FILE)), "10-K").riskFactors;
+    if (tenKRaw && (!winnerRaw || tenKRaw.length > winnerRaw.length)) {
+      winnerRaw = tenKRaw;
       riskFactorsSource = "10-K";
+      winnerSource = "edgar:10-K";
+      winnerUrl = filing.annualReport?.url;
+      winnerAsOf = filing.annualReport?.filedDate ?? filing.filedDate;
     }
   }
+  const riskFactorsExcerpt: Excerpt | null = winnerRaw ? toExcerpt(capAtSentence(winnerRaw), winnerSource, winnerUrl, winnerAsOf) : null;
 
   const pressRelease: Excerpt | null = existsSync(join(dir, PRESS_RELEASE_FILE))
-    ? (() => {
-        const capped = capAtSentence(htmlToText(readRawText(dir, PRESS_RELEASE_FILE)), PRESS_CAP);
-        return {
-          text: capped.text, source: "edgar:8-K ex-99.1",
-          url: filing.pressRelease?.url, asOf: filing.pressRelease?.filedDate ?? filing.filedDate,
-          truncated: capped.truncated,
-        };
-      })()
+    ? toExcerpt(
+        capAtSentence(htmlToText(readRawText(dir, PRESS_RELEASE_FILE)), PRESS_CAP),
+        "edgar:8-K ex-99.1", filing.pressRelease?.url, filing.pressRelease?.filedDate ?? filing.filedDate,
+      )
     : null;
 
   const day = capturedAt.slice(0, 10);
   return {
     description,
-    mdaExcerpt: edgar(mda),
+    mdaExcerpt,
     riskFactorsExcerpt,
     riskFactorsSource,
     pressRelease,

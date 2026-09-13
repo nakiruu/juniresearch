@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { renderManifest, requiredRawFiles, PHASE_INPUT_FILES, type CaptureContext } from "../lib/facts/manifest";
+import { renderManifest, requiredRawFiles, CODE_FETCHED_FILES, PHASE_INPUT_FILES, type CaptureContext } from "../lib/facts/manifest";
 
 const [ticker, accession, flag] = process.argv.slice(2);
 if (!ticker || !accession) { console.error("usage: npm run facts:manifest -- <TICKER> <ACCESSION> [--check]"); process.exit(2); }
@@ -23,8 +23,8 @@ if (existsSync(entityFile)) {
 if (flag === "--check") {
   const phase2Ready = Boolean(ctx.rpEntityId && ctx.companyType);
   if (!phase2Ready) { console.error(`Phase 2 unresolved for ${dir}: ${PHASE_INPUT_FILES[0]} is missing or yields no id — cannot check the full raw file set.`); process.exit(1); }
-  const PRESS_FILE = "edgar-press-release.html";
-  const PRESS_MISSING_FILE = "edgar-press-release.missing";
+  const PRESS_FILE = CODE_FETCHED_FILES.find((f) => f.endsWith("-press-release.html"))!;
+  const PRESS_MISSING_FILE = PRESS_FILE.replace(/\.html$/, ".missing");
   const missing = requiredRawFiles(ctx).filter((f) => {
     if (existsSync(join(dir, f))) return false;
     if (f === PRESS_FILE && existsSync(join(dir, PRESS_MISSING_FILE))) return false;

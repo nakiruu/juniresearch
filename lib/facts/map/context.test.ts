@@ -53,6 +53,21 @@ describe("mapContext on an empty capture", () => {
   });
 });
 
+describe("mapContext picks the risk-factors winner on raw length, not capped length", () => {
+  // edgar-primary.html (10-Q): Item 1A is short sentences throughout, raw ~8,211 chars, capping to
+  // ~7,977 (a sentence boundary lands close to the 8,000-char cap).
+  // edgar-10k-primary.html (10-K): Item 1A is raw ~9,381 chars — longer — but a ~4,450-char run-on
+  // clause with no periods pushes its last pre-cap sentence boundary back to ~4,857, so its CAPPED
+  // text is shorter than the 10-Q's even though its RAW text is longer.
+  const dir = "lib/facts/map/__fixtures__/rf-longest";
+  const c = mapContext(dir, filing, "2026-09-13T03:18:05Z", desc);
+  it("prefers the raw-longer 10-K even though its capped excerpt is shorter", () => {
+    expect(c.riskFactorsSource).toBe("10-K");
+    expect(c.riskFactorsExcerpt!.source).toBe("edgar:10-K");
+    expect(c.riskFactorsExcerpt!.text.length).toBeLessThan(6000); // the 10-K's capped text, not the 10-Q's ~7,977
+  });
+});
+
 describe("mapContext on the ORCL Q1 FY27 10-Q capture (press release, 10-K risk factors)", () => {
   const orclDir = "data/raw/ORCL/0001193125-26-389274";
   const orclFiling = readFiling(orclDir);
