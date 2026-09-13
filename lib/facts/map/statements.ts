@@ -49,6 +49,7 @@ export function mapStatements(dir: string): { statements: FactPack["statements"]
     ],
     cashflow: [
       row("operatingCashFlow", "Operating Cash Flow", col(cf, "operating_cash_flow")),
+      row("capex", "Capital Expenditure", col(cf, "capex", true)),
       row("freeCashFlow", "Free Cash Flow", col(cf, "free_cash_flow")),
     ],
   };

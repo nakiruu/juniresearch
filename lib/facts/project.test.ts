@@ -13,7 +13,7 @@ const fixture = Report.parse(avgo);
 const LABELS: Record<"income" | "balance" | "cashflow", string[]> = {
   income: ["Revenue ($B)", "YoY Growth", "Gross Margin", "Operating Income ($B)", "EBITDA ($B)", "Net Income ($B)", "Diluted EPS ($)*"],
   balance: ["Cash & ST Investments", "Total Debt", "Net Debt", "Total Equity", "Current Ratio"],
-  cashflow: ["Operating Cash Flow", "Free Cash Flow", "FCF Margin"],
+  cashflow: ["Operating Cash Flow", "Capital Expenditure", "Free Cash Flow", "FCF Margin"],
 };
 
 describe("projectReportFacts parity with data/avgo.json", () => {
@@ -42,6 +42,10 @@ describe("projectReportFacts parity with data/avgo.json", () => {
   it("projects segments and geography as ratios", () => {
     expect(facts.sections.businessMoat.segments.map((s) => s.sharePct).reduce((a, b) => a + b)).toBeCloseTo(1, 6);
     expect(facts.sections.businessMoat.geoMix.every((g) => g.sharePct > 0 && g.sharePct < 1)).toBe(true);
+  });
+  it("formats the FY25 capex value correctly", () => {
+    const capexRow = facts.sections.financials.cashflow.rows.find((r) => r.label === "Capital Expenditure")!;
+    expect(formatCell(capexRow.values[4], capexRow.format)).toBe("-0.6");
   });
   it("projects the company's multiples column, with NTM forward P/E from next-FY EPS", () => {
     const col = facts.sections.valuation.multiplesCompanyColumn;

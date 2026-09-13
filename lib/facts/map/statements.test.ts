@@ -26,6 +26,7 @@ describe("mapStatements on the AVGO capture", () => {
   });
   it("reads FY25 cash-flow rows matching the fixture", () => {
     expect(near(row("cashflow", "operatingCashFlow").values[4], 27.5e9)).toBe(true);
+    expect(near(row("cashflow", "capex").values[4], -623000000, 0.005)).toBe(true);
     expect(near(row("cashflow", "freeCashFlow").values[4], 26.9e9)).toBe(true);
   });
   it("derives the latest quarter with YoY growth from the quarterly statements", () => {

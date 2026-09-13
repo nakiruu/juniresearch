@@ -50,6 +50,7 @@ export function projectReportFacts(p: FactPack): ReportFacts {
   const fcf = vals(p, "cashflow", "freeCashFlow");
   const cashflow: FinancialTable = { columns: colsB, rows: [
     { label: "Operating Cash Flow", values: vals(p, "cashflow", "operatingCashFlow"), format: "usdB" },
+    { label: "Capital Expenditure", values: vals(p, "cashflow", "capex"), format: "usdB" },
     { label: "Free Cash Flow", values: fcf, format: "usdB" },
     { label: "FCF Margin", values: ratioRows(fcf, revenue), format: "pct" },
   ] };
