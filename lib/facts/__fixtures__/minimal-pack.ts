@@ -21,7 +21,10 @@ export const minimalPack = (): FactPack => ({
   segments: { basis: "FY25", items: [{ name: "Semis", revenue: 3.69e10, share: 0.58 }, { name: "Software", revenue: 2.7e10, share: 0.42 }] },
   geoMix: { basis: "FY25", items: [{ region: "APAC", share: 0.56 }, { region: "Americas", share: 0.3 }, { region: "EMEA", share: 0.14 }] },
   peers: [{ ticker: "NVDA", pe: 40, ps: 24, evToEbitda: 36 }],
-  history: [{ date: "2026-09-10", close: 360 }, { date: "2026-09-11", close: 361.99 }],
+  history: Array.from({ length: 22 }, (_, i) => {
+    const d = new Date(Date.UTC(2026, 7, 21)); d.setUTCDate(d.getUTCDate() + i);
+    return { date: d.toISOString().slice(0, 10), close: 340 + i };
+  }),
   context: { description: excerpt, mdaExcerpt: null, riskFactorsExcerpt: null, transcriptHighlights: null, headlines: [] },
   provenance: [{ field: "quote", source: "fmp", endpoint: "quote", capturedAt: "2026-09-12T15:00:00Z" }],
 });

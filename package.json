@@ -12,7 +12,8 @@
     "detect": "node --env-file-if-exists=.env.local --import tsx scripts/detect.ts",
     "watchlist:add": "node --env-file-if-exists=.env.local --import tsx scripts/watchlist-add.ts",
     "facts:manifest": "node --env-file-if-exists=.env.local --import tsx scripts/facts-manifest.ts",
-    "facts:prepare": "node --env-file-if-exists=.env.local --import tsx scripts/facts-prepare.ts"
+    "facts:prepare": "node --env-file-if-exists=.env.local --import tsx scripts/facts-prepare.ts",
+    "facts:build": "node --env-file-if-exists=.env.local --import tsx scripts/facts-build.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",

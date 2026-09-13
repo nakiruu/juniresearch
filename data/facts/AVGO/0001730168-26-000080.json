@@ -1,0 +1,601 @@
+{
+  "schemaVersion": "1.0.0",
+  "ticker": "AVGO",
+  "cik": 1730168,
+  "company": "Broadcom Inc.",
+  "exchange": "NASDAQ",
+  "filing": {
+    "form": "10-Q",
+    "accession": "0001730168-26-000080",
+    "filedDate": "2026-09-10",
+    "periodEnd": "2026-08-02",
+    "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm"
+  },
+  "capturedAt": "2026-09-13T03:18:05.482Z",
+  "quote": {
+    "price": 361.99,
+    "marketCap": 1722196384200,
+    "sharesOutstanding": 4757580000,
+    "week52Low": 289.96,
+    "week52High": 495,
+    "dividendYield": 0.00701677,
+    "asOf": "2026-09-11"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          27450000000,
+          33203000000,
+          35819000000,
+          51574000000,
+          63887000000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          16844000000,
+          22095000000,
+          24690000000,
+          32509000000,
+          43294000000
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          8519000000,
+          14225000000,
+          16207000000,
+          13463000000,
+          25484000000
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          14691000000,
+          19155000000,
+          20554000000,
+          23879000000,
+          34714000000
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          6736000000,
+          11495000000,
+          14082000000,
+          5895000000,
+          23126000000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          1.5,
+          2.65,
+          3.3,
+          1.23,
+          4.77
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          12163000000,
+          12416000000,
+          14189000000,
+          9348000000,
+          16178000000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          40273000000,
+          39978000000,
+          39648000000,
+          67566000000,
+          65136000000
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          28110000000,
+          27562000000,
+          25459000000,
+          58218000000,
+          48958000000
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          24989000000,
+          22709000000,
+          23988000000,
+          67678000000,
+          81292000000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          2.6406623149180066,
+          2.6239364719228586,
+          2.8152599594868333,
+          1.1735641133137689,
+          1.7053581073782003
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          13764000000,
+          16736000000,
+          18085000000,
+          19962000000,
+          27537000000
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          13321000000,
+          16312000000,
+          17633000000,
+          19414000000,
+          26914000000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q3'26",
+    "periodEnd": "2026-08-02",
+    "revenue": 29591000000,
+    "operatingMargin": 0.5391842114156331,
+    "revenueYoY": 0.8550025075225678
+  },
+  "ttm": {
+    "pe": 44.911910669975185,
+    "ps": 19.327935717812892,
+    "evToEbitda": 33.63068297265752,
+    "grossMargin": 0.6765913988148681,
+    "operatingMargin": 0.48272804812354103,
+    "netMargin": 0.4294420003591309
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 105864823726,
+      "eps": 11.62904
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 174757026654,
+      "eps": 19.28126
+    }
+  },
+  "analysts": {
+    "count": 60,
+    "buy": 54,
+    "hold": 6,
+    "sell": 0,
+    "consensusRating": "Buy",
+    "consensusTarget": 509.61,
+    "medianTarget": 517.5,
+    "highTarget": 600,
+    "lowTarget": 350,
+    "asOf": "2026-09-13"
+  },
+  "segments": {
+    "basis": "FY25",
+    "items": [
+      {
+        "name": "Infrastructure Software",
+        "revenue": 27029000000,
+        "share": 0.42307511700345923
+      },
+      {
+        "name": "Semiconductor Solutions",
+        "revenue": 36858000000,
+        "share": 0.5769248829965408
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": [
+      {
+        "region": "Americas",
+        "share": 0.29644528620846183
+      },
+      {
+        "region": "Asia Pacific",
+        "share": 0.5618670465039836
+      },
+      {
+        "region": "EMEA",
+        "share": 0.14168766728755458
+      }
+    ]
+  },
+  "peers": [
+    {
+      "ticker": "ADI",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "AMD",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "ASML",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "FORM",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-07-31",
+      "close": 389.2799987792969
+    },
+    {
+      "date": "2026-08-03",
+      "close": 392.2300109863281
+    },
+    {
+      "date": "2026-08-04",
+      "close": 418.1600036621094
+    },
+    {
+      "date": "2026-08-05",
+      "close": 418.2799987792969
+    },
+    {
+      "date": "2026-08-06",
+      "close": 420.57000732421875
+    },
+    {
+      "date": "2026-08-07",
+      "close": 427.760009765625
+    },
+    {
+      "date": "2026-08-10",
+      "close": 422.3999938964844
+    },
+    {
+      "date": "2026-08-11",
+      "close": 416.0799865722656
+    },
+    {
+      "date": "2026-08-12",
+      "close": 416.04998779296875
+    },
+    {
+      "date": "2026-08-13",
+      "close": 417.82000732421875
+    },
+    {
+      "date": "2026-08-14",
+      "close": 392.989990234375
+    },
+    {
+      "date": "2026-08-17",
+      "close": 392.42999267578125
+    },
+    {
+      "date": "2026-08-18",
+      "close": 380
+    },
+    {
+      "date": "2026-08-19",
+      "close": 362.4800109863281
+    },
+    {
+      "date": "2026-08-20",
+      "close": 364.0299987792969
+    },
+    {
+      "date": "2026-08-21",
+      "close": 368.45001220703125
+    },
+    {
+      "date": "2026-08-24",
+      "close": 358.760009765625
+    },
+    {
+      "date": "2026-08-25",
+      "close": 356.739990234375
+    },
+    {
+      "date": "2026-08-26",
+      "close": 355.5899963378906
+    },
+    {
+      "date": "2026-08-27",
+      "close": 371.5400085449219
+    },
+    {
+      "date": "2026-08-28",
+      "close": 368.7900085449219
+    },
+    {
+      "date": "2026-08-31",
+      "close": 370.3399963378906
+    },
+    {
+      "date": "2026-09-01",
+      "close": 369.67999267578125
+    },
+    {
+      "date": "2026-09-02",
+      "close": 367.239990234375
+    },
+    {
+      "date": "2026-09-03",
+      "close": 357.1600036621094
+    },
+    {
+      "date": "2026-09-04",
+      "close": 357.8999938964844
+    },
+    {
+      "date": "2026-09-08",
+      "close": 368.55999755859375
+    },
+    {
+      "date": "2026-09-09",
+      "close": 364.3800048828125
+    },
+    {
+      "date": "2026-09-10",
+      "close": 360.8299865722656
+    },
+    {
+      "date": "2026-09-11",
+      "close": 361.989990234375
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "Broadcom Inc. is a prominent global technology enterprise focused on the innovation, development, and supply of advanced semiconductor solutions and critical infrastructure software. The company's headquarters are situated in San Jose, California, and it maintains a significant team of 19,000 full-time staff. Its operations are segmented into four primary divisions: Wired Infrastructure, Wireless Communications, Enterprise Storage, and Industrial & Other. Broadcom’s diverse product range is integrated into numerous end-user technologies, including enterprise and data center networking, residential internet solutions, digital television receivers, telecommunications apparatus, mobile phones, data center servers and storage architectures, industrial automation, alternative and power generation systems, and electronic display technologies. The company's product offerings extend from fundamental discrete components to intricate sub-systems incorporating various device categories. This also encompasses specialized firmware designed to facilitate interaction between analog and digital systems, alongside mechanical hardware engineered to connect with optoelectronic or capacitive sensing technologies.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-11"
+    },
+    "mdaExcerpt": {
+      "text": "Item 2. Management's Discussion and Analysis of Financial Condition and Results of Operations\nThis Management's Discussion and Analysis of Financial Condition and Results of Operations should be read in conjunction with the unaudited condensed consolidated financial statements and the related notes thereto included elsewhere in this Quarterly Report on Form 10-Q (\"Form 10-Q\") and the audited consolidated financial statements and notes thereto and management's discussion and analysis of financial condition and results of operations for the fiscal year ended November 2, 2025 (\"fiscal year 2025\") included in our Annual Report on Form 10-K for fiscal year 2025 (\"2025 Annual Report on Form 10-K\"). This Form 10-Q contains forward-looking statements within the meaning of federal securities laws. These statements are indicated by words or phrases such as \"anticipate,\" \"expect,\" \"estimate,\" \"seek,\" \"plan,\" \"believe,\" \"could,\" \"intend,\" \"will,\" and similar words or phrases. Forward-looking statements provide current expectations of future events based on certain assumptions and include any statement that does not directly relate to any historical or current fact. These forward-looking statements may include our projected financial results or expectations regarding acquisitions, business strategies and models, and developments in technology, solutions and products. Such statements are based on current expectations, estimates, forecasts and projections of our industry performance and macroeconomic conditions, based on management's judgment, beliefs, current trends and market conditions, and involve risks and uncertainties that may cause actual results to differ materially from those contained in the forward-looking statements. We derive many of our forward-looking statements from our operating budgets and forecasts, which are based upon many detailed assumptions. While we believe that our assumptions are reasonable, we caution that it is very difficult to predict the impact of known factors, and it is impossible for us to anticipate all factors that could affect our actual results. Accordingly, we caution you not to place undue reliance on these statements. Material factors that could cause actual results to differ materially from our expectations include, but are not limited to, those disclosed under \"Risk Factors\" in Part II, Item 1A of this Form 10-Q, and in other documents we file from time to time with the Securities and Exchange Commission (the \"SEC\"). We undertake no intent or obligation to publicly update or revise any forward-looking statements for any reason, except as required by law.\nUnless stated otherwise or the context otherwise requires, references to \"Broadcom,\" \"we,\" \"our,\" and \"us\" mean Broadcom Inc. and its consolidated subsidiaries.\nOverview\nWe are a global technology leader that designs, develops and supplies a broad range of semiconductor and semiconductor-based solutions and infrastructure software solutions. Our semiconductor and semiconductor-based solutions include a broad portfolio of complex digital and mixed signal devices based on silicon wafers with complementary metal oxide semiconductor transistors, III-V based devices, network interface cards and other modules, switches, subsystems and, in some cases, racks. Our solutions are used in a wide array of environments, end products and applications, such as enterprise and artificial intelligence (\"AI\") data centers, servers and networking and connectivity equipment, as well as storage systems, home connectivity devices, set-top boxes, broadband access, telecommunication equipment, wireless devices and base stations, factory automation, power generation and alternative energy systems, and electronic displays. Our infrastructure software solutions help enterprises simplify their information technology environments. Our customers rely on our infrastructure and security software solutions to modernize, optimize, and secure the most complex private cloud, hybrid cloud and edge environments. This enables scalability, agility, automation, insights, resiliency and security, making it easy for customers to run their mission-critical workloads. We also offer mission-critical fibre channel storage area networking (\"FC SAN\") products and related software in the form of modules, switches and subsystems incorporating multiple semiconductor products.\nWe have two reportable segments: semiconductor solutions and infrastructure software. Our semiconductor solutions segment includes all of our semiconductor-based product lines and intellectual property (\"IP\") licensing. Our infrastructure software segment includes our private cloud, mainframe software, cybersecurity and enterprise software portfolios, and our FC SAN business.\n23\nTable of Contents\nQuarterly Highlights\nHighlights during the fiscal quarter ended August 2, 2026 include the following:\nWe generated $14,197 million of cash from operations.\nWe paid $3,103 million in cash dividends.\nWe repurchased $5,641 million of our senior notes.\nRecent Developments\nWe see unprecedented demand for our custom AI accelerators or XPUs and AI networking solutions from our customers, including the leading frontier AI labs, due to the demand for AI compute. However, deploying AI infrastructure to meet this demand requires our customers to access significant capital.\nWe established the AI XPV platform with certain sophisticated financial partners to enable more than 20 gigawatts in compute capacity using our custom AI accelerators or XPUs and networking solutions customized for the leading frontier AI labs through 2028. The AI XPV platform provides for future deployments of XPU-based compute capacity and networking that enable frontier model training and inference. The AI XPV platform bridges the gap between the current cash flows of the leading frontier AI labs and significant upfront investments required for their businesses. Through the AI XPV platform, the financial partners fund and we provide the technology to the leading frontier AI labs to allow them to deploy AI infrastructure at a scale that meets their increasing demand. Where necessary, we may provide residual value guarantees, which are contingent liabilities we believe would have a low probability of occurring, supported by the strong profitability trajectory of the leading frontier AI labs and the sustaining value of the underlying assets.\nIn June 2026, we launched the AI XPV platform with an initial tranche of $35 billion led by a financial partner to facilitate the deployment of more than 1 gigawatt of compute infrastructure for our customer. Pursuant to the AI XPV platform, we arranged for the financial partner to take on certain agreements to purchase AI racks based on custom AI accelerators designed by us and the related lease agreements with a customer that enable access to compute capacity.\nIn connection with this arrangement, we entered into a backstop agreement with the financial partner for the customer's lease obligations over the 5-year lease terms (the \"Backstop\"). The total Backstop amount increases as the AI racks are delivered and deployed and decreases as the customer makes payments on its lease obligations. In the event of a lease default by the customer, our Backstop liability will be equal to any difference between 85% of the outstanding amounts owed on the lease Backstop and the value of the AI racks received upon sale of the assets at that time. Remedies to limit our total liability exposure in a lease default include the assumption of the applicable lease, reselling the AI racks back to the seller at a fixed price under certain conditions or arranging a sale of the applicable AI racks.\nOur maximum potential liability under the Backstop upon the deployment of all AI racks, on an undiscounted basis, was approximately $29 billion. The fair value of the Backstop was not material. No amounts have been paid under the Backstop. Refer to Note 10. \"Commitments and Contingencies\" in Part 1, Item 1 of this Form 10-Q.\nCritical Accounting Estimates\nThe preparation of financial statements in accordance with generally accepted accounting principles in the United States requires us to make estimates and assumptions that affect the reported amounts of assets and liabilities and disclosure of contingent assets and liabilities at the date of the financial statements and the reported amounts of revenue and expenses during the reporting period. We base our estimates and assumptions on current facts, historical experience and various other factors that we believe to be reasonable under the circumstances, the results of which form the basis for making judgments about the carrying values of assets and liabilities and the accrual of costs and expenses that are not readily apparent from other sources. Our actual financial results may differ materially and adversely from our estimates. Our critical accounting policies are those that affect our financial statements materially and involve difficult, subjective or complex judgments by management. Those policies include revenue recognition, business combinations, valuation of goodwill and long-lived assets, and income taxes.\nThere were no significant changes in our critical accounting estimates during the three fiscal quarters ended August 2, 2026 compared to those previously disclosed in \"Critical Accounting Estimates\" in \"Management's Discussion and Analysis of Financial Condition and Results of Operations\" included in the 2025 Annual Report on Form 10-K.\nMacroeconomic Factors\nWe are subject to risks and exposures from evolving macroeconomic conditions, including uncertainty and volatility in financial markets, geopolitical events, supply constraints, efforts of governments to stimulate or stabilize the economy and other unfavorable changes in economic conditions, as well as an increase in trade tensions and related tariffs with U.S. trading partners. While difficult to isolate and quantify, these risks and exposures may cause our net revenue to fluctuate\n24\nTable of Contents\nsignificantly, disrupt supply chain operations and could affect trends in our operating results. We continuously monitor the broader impacts of these circumstances on our business, our supply chain and our results of operations.\n25\nTable of Contents\nResults of Operations\nFiscal Quarter and Three Fiscal Quarters Ended August 2, 2026 Compared to Fiscal Quarter and Three Fiscal Quarters Ended August 3, 2025\nThe following tables set forth our results of operations for the periods presented:\nFiscal Quarter Ended\nAugust 2,\n2026\nAugust 3,\n2025\nAugust 2,\n2026\nAugust 3,\n2025\n(In millions)\n(As a percentage of net revenue)\nStatements of Operations Data:\nNet revenue:\nProducts\n$\n24,279\n$\n11,173\n82\n%\n70\n%\nSubscriptions and services\n5,312\n4,779\n18\n30\nTotal net revenue\n29,591\n15,952\n100\n100\nCost of revenue:\nCost of products sold\n6,983\n3,098\n24\n19\nCost of subscriptions and services\n641\n606\n2\n4\nAmortization of acquisition-related intangible assets\n1,499\n1,519\n5\n10\nRestructuring charges\n12\n26\nTotal cost of revenue\n9,135\n5,249\n31\n33\nGross margin\n20,456\n10,703\n69\n67\nResearch and development\n2,895\n3,050\n10\n19\nSelling, general and administrative\n996\n1,072\n3\n7\nAmortization of acquisition-related intangible assets\n507\n507\n2\n3\nRestructuring and other charges\n103\n187\n1\nTotal operating expenses\n4,501\n4,816\n15\n30\nOperating income\n$\n15,955\n$\n5,887\n54\n%\n37\n%\n26\nTable of Contents\nThree Fiscal Quarters Ended\nAugust 2,\n2026\nAugust 3,\n2025\nAugust 2,\n2026\nAugust 3,\n2025\n(In millions)\n(As a percentage of net revenue)\nStatements of Operations Data:\nNet revenue:\nProducts\n$\n55,301\n$\n31,625\n78\n%\n69\n%\nSubscriptions and services\n15,788\n14,247\n22\n31\nTotal net revenue\n71,089\n45,872\n100\n100\nCost of revenue:\nCost of products sold\n15,689\n8,515\n22\n18\nCost of subscriptions and services\n1,915\n1,758\n3\n4\nAmortization of acquisition-related intangible assets\n4,422\n4,486\n6\n10\nRestructuring charges\n35\n68\nTotal cost of revenue\n22,061\n14,827\n31\n32\nGross margin\n49,028\n31,045\n69\n68\nResearch and development\n8,855\n7,996\n13\n18\nSelling, general and administrative\n3,070\n3,104\n4\n7\nAmortization of acquisition-related intangible assets\n1,520\n1,524\n2\n3\nRestructuring and other charges\n277\n445\n1\nTotal operating expenses\n13,722\n13,069\n19\n29\nOperating income\n$\n35,306\n$\n17,976\n50\n%\n39\n%\nWe included upfront license revenue of $3,465 million and $7,184 million within products revenue for the fiscal quarter and three fiscal quarters ended August 2, 2026, respectively. We included the related costs, which were immaterial, in cost of products sold. To conform to the current period presentation, we reclassified $1,916 million and $5,691 million of upfront license revenue from subscriptions and services revenue to products revenue for the fiscal quarter and three fiscal quarters ended August 3, 2025, respectively. We also reclassified the related costs for the upfront license revenue, which were immaterial for the periods presented. See Note 2. \"Revenue from Contracts with Customers\" in Part I, Item 1. of this Form 10-Q for additional information.\nNet Revenue\nA relatively small number of customers account for a significant portion of our net revenue. Direct sales to one semiconductor solutions customer, which is a distributor, accounted for 50% and 46% of our net revenue for the fiscal quarter and three fiscal quarters ended August 2, 2026, respectively, and 32% and 30% of our net revenue for the fiscal quarter and three fiscal quarters ended August 3, 2025, respectively.\nWe believe aggregate sales to our top five end customers, through all channels, accounted for approximately 55% and 50% of our net revenue for the fiscal quarter and three fiscal quarters ended August 2, 2026, respectively, and approximately 40% of our net revenue for each of the fiscal quarter and three fiscal quarters ended August 3, 2025. We expect to continue to experience significant customer concentration in future periods. The loss of, or significant decrease in demand from, any of our top five end customers could have a material adverse effect on our business, results of operations and financial condition.\nFrom time to time, some of our key semiconductor customers place large orders or delay orders, causing our quarterly net revenue to fluctuate significantly. This is particularly true of our products used in AI and wireless applications as fluctuations may be magnified by the timing of customer deployments, as well as product launches. For infrastructure software, the timing and extent of renewals and relative volume of customer contracts without the right to terminate causes variations in revenue recognized in each period.\n27\nTable of Contents\nThe following tables set forth net revenue by segment for the periods presented:\nFiscal Quarter Ended\nThree Fiscal Quarters Ended\nNet Revenue by Segment\nAugust 2, 2026\nAugust 3, 2025\n$ Change\n% Change\nAugust 2, 2026\nAugust 3, 2025\n$ Change\n% Change\n(Dollars in millions)\nSemiconductor solutions\n$\n20,839\n$\n9,166\n$\n11,673\n127\n%\n$\n48,363\n$\n25,786\n$\n22,577\n88\n%\nInfrastructure software\n8,752\n6,786\n1,966\n29\n%\n22,726\n20,086\n2,640\n13\n%\nTotal net revenue\n$\n29,591\n$\n15,952\n$\n13,639\n86\n%\n$\n71,089\n$\n45,872\n$\n25,217\n55\n%\nFiscal Quarter Ended\nThree Fiscal Quarters Ended\nNet Revenue by Segment\nAugust 2,\n2026\nAugust 3,\n2025\nAugust 2,\n2026\nAugust 3,\n2025\n(As a percentage of net revenue)\nSemiconductor solutions\n70\n%\n57\n%\n68\n%\n56\n%\nInfrastructure software\n30\n43\n32\n44\nTotal net revenue\n100\n%\n100\n%\n100\n%\n100\n%\nNet revenue from our semiconductor solutions segment increased in the fiscal quarter and three fiscal quarters ended August 2, 2026 compared to the prior year fiscal periods due to strong demand for our networking solutions, primarily custom AI accelerators and AI networking products.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm",
+      "asOf": "2026-09-10",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "Item 1A. Risk Factors\nOur business, operations and financial results are subject to various risks and uncertainties, including those described below, that could adversely affect our business, financial condition, results of operations, cash flows, and the trading price of our common stock. Additional risks, trends and uncertainties not presently known to us or that we currently believe are immaterial may also harm our business, financial condition, results of operations, cash flows, our reputation or the trading price of our common stock.\nRisk Factors Summary\nThe following is a summary of the risks and uncertainties, among others, that could cause our actual results to differ materially from historical results and those expressed in forward-looking statements made by us or on our behalf in filings with the SEC, press releases, communications with investors and oral statements, and which are more fully discussed below.\n32\nTable of Contents\nRisks Related to Our Business\nAdverse global economic conditions could have a negative effect on us.\nOur business is subject to various governmental regulations and trade restrictions.\nGlobal political and economic conditions and other factors related to our international operations could adversely affect us.\nWe operate in a highly cyclical semiconductor industry that is undergoing profound change due to AI.\nA significant reduction in demand or loss of one or more of our significant customers may adversely affect us.\nA slow or the unsuccessful return on our investments in research and development, expansion of our business strategy or adoption of new business models could adversely affect us.\nDependence on a limited number of contract manufacturers and suppliers of critical materials, including components, within our supply chain, and potential failure to adjust such manufacturing and supply chain to meet customer demand, may adversely affect our ability to bring products to market and our results of operations.\nWinning business in the semiconductor solutions industry is an unpredictable process that often requires us to incur significant expenses, evolve our business strategy or adopt a new business model, which may negatively impact our results of operations, gross margin or cash flows.\nWe are dependent on senior management and if we are unable to attract and retain qualified personnel, we may not be able to execute our business strategy effectively.\nOur ability to maintain or improve gross margin.\nCybersecurity threats or other security breaches, or any other impairment of the confidentiality, integrity or availability of our information technology (\"IT\") systems, or those of one or more of our corporate infrastructure vendors, could have a material adverse effect on our business.\nA prolonged disruption of our or our customers' or suppliers' facilities or other significant operations could have a material adverse effect on us.\nWe may be unable to maintain appropriate manufacturing capacity or product yields at our own manufacturing facilities.\nWe are subject to risks associated with our distributors and other channel partners.\nFailure of our software portfolio to manage and secure IT infrastructures and environments and our use of open source software in certain software and services could have a material adverse effect on our business.\nThe growth of our software business depends on demand for our data center virtualization portfolio, as well as customer acceptance of our software, services and business strategy.\nIf our software does not successfully address market trends and competitive developments, demand for our software and services could decrease and materially adversely affect us.\nFailure to enter into software license agreements on a satisfactory basis could adversely affect us.\nOur sales to government customers subject us to uncertainties and additional governmental regulations.\nFailure to effectively manage our software solutions and services lifecycles could harm our business.\nCompetition in our industries could prevent us from growing our revenue.\nOur operating results are subject to substantial quarterly and annual fluctuations.\nWe have pursued, and may in the future pursue, mergers, acquisitions, investments, joint ventures and dispositions, which could adversely affect our results of operations.\nWe may be involved in legal proceedings that could materially adversely affect our business.\nFailure to protect the IP utilized in our business could adversely affect our business.\nWe are subject to warranty claims, product recalls and product liability.\nThe complexity of our products could result in unforeseen delays or expense or undetected defects or bugs.\nWe are subject to privacy and data security laws and contractual commitments, and our actual or perceived failure to comply with such laws and commitments could harm our business.\nCorporate responsibility matters may adversely affect our relationships with customers and investors and increase compliance costs.\nWe must comply with a variety of technical standards, domestic and international laws and regulations in the manufacture and distribution of our semiconductors.\n33\nTable of Contents\nRisks Related to Our Taxes\nOur income taxes and overall cash tax costs are affected by a number of factors that could have a material, adverse effect on our financial results.\nIf our tax incentives or tax holiday arrangements change or cease to be in effect or applicable, our corporate income taxes could significantly increase.\nWe have potential tax liabilities as a result of VMware's former controlling ownership by Dell, which could have an adverse effect on our financial condition and operating results.\nRisks Related to Our Indebtedness\nOur substantial indebtedness could adversely affect our financial health and our ability to execute our business strategy.\nRisks Related to Owning Our Common Stock\nOur stock price may be volatile and your investment could lose value.\nThe amount and frequency of our stock repurchases may fluctuate.\nThere can be no assurance that we will continue to declare cash dividends.\nFor a more complete discussion of the material risks facing our business, see below.\nRisks Related to Our Business\nAdverse global economic conditions could have a negative effect on our business, results of operations and financial condition and liquidity.\nA general weakening of the economy globally or in a particular region or industry, uncertainty and volatility in financial markets, efforts of governments to stimulate or stabilize the economy or to achieve specific policy objectives such as onshoring of semiconductor manufacturing and other unfavorable changes in economic conditions, such as inflation, higher interest rates, tightening of the credit markets, recession or slowing growth, as well as an increase in geopolitical conflicts, trade tensions and related tariffs with U.S. trading partners, could negatively impact our business, financial condition, cash flows and liquidity. In addition, unfavorable or volatile economic conditions or credit markets could adversely affect the ability of our customers and other AI infrastructure participants to obtain financings necessary for their anticipated capital expenditures which could adversely affect our business, financial condition, cash flows and liquidity. Adverse global economic conditions have from time to time caused or exacerbated significant slowdowns in the industries and markets in which we operate, which have adversely affected our business and results of operations. Macroeconomic weakness and uncertainty may also make it more difficult to accurately forecast operating results, and market volatility stemming from current macroeconomic events may materially impact our cash flow and our ability to raise or refinance debt at favorable rates. An escalation of trade tensions between the U.S.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm",
+      "asOf": "2026-09-10",
+      "truncated": true
+    },
+    "transcriptHighlights": {
+      "text": "This strong momentum continues into Q4. During the quarter, we expect to accelerate shipments of Ironwood to Anthropic. We also expect to ramp up high volume shipments of the TPU v8i to Google. Shipments of Jalapeño for OpenAI will continue, and for Meta, we expect production shipments of their custom MTIA accelerator optimized for inference and recommendation at scale. In Q4, we expect both XPUs and AI networking revenue to triple year-on-year. Together, we expect these deployments to drive our Q4 AI revenue to $21.7 billion, which is up 236% year-on-year. Based on this Q4 guidance, I should say, we expect our fiscal 2026 AI revenue to be $58 billion for the year, up 186% year upon year, and above our prior guidance of $56 million. We are continuing to see exponential growth in demand from our XPU customers.\n\nThe lesson here is when you co-develop a chip that is optimized for your particular LLM workloads, you will outperform any GPU. Like GPUs, Jalapeño demonstrates that it can also run other frontier models, and you can do all this at half the cost of a GPU. Our partnership with Meta to deliver multiple generations of MTIA XPUs remains on track. Between now and the end of 2027, we will be delivering three generations of MTIA accelerators to Meta. Across these three generations, we have line of sight to deploying 3 gigawatts through 2028. Our content in AI, as you know, goes beyond XPUs. We are the leader in AI networking, and we continue to extend our lead.\nIn Ethernet switching for scale up and scale out, we were first to market with our 100 terabit Tomahawk 6, and we just picked up Tomahawk 7, the industry's first 200 terabit per second Ethernet switch. For scaling in, we continue to be the leader in every generation of PCI Express switching. We are now the leader in leading-edge optical DSPs and are rapidly expanding our capacity and market position as a leader in EMLs, VCSELs, and CW lasers for optical interconnects. In sum, we continue to invest, and invest heavily, to provide the broadest and most leading-edge AI portfolio. In fact, our AI networking revenue is expected to grow just as fast as XPUs over the next few years. Reflecting our excellent progress with this key group of LLM customers, here is our outlook for our AI semiconductor revenue.\n\nIn Q4, we forecast non-AI semiconductor revenue to be approximately $4.3 billion, again up 5% sequentially. Talking about infrastructure software, Q3 revenue of $8.8 billion was up 29% year-on-year and we sustained ARR growth of 15% year-on-year. For Q4, we forecast infrastructure software revenue to stabilize at approximately $8.7 billion. We announced VMware Private AI Cloud, giving enterprises a secure, cost-effective platform to build and run AI alongside their existing applications. It brings together AI infrastructure, security, and compliance, and the tools to build and operate trusted AI agents, all while protecting enterprise data. VCF, VMware Cloud that is also making it easier for customers to repatriate workloads from public cloud to private cloud, where they can gain greater control and significantly improve infrastructure economics. Enterprise consumption of AI is in fact opening a new opportunity for our infrastructure software business.\nTo sum it all, for Q4 2026, we expect consolidated revenue to grow to $34.8 billion, up 93% year-on-year. We expect Q4 AI revenue to be $21.7 billion, up 236% year-on-year, and we expect operating margin to be approximately 66% of revenue. With that, let me turn it over to Pan.\n\nRevenue for our Semiconductor Solutions segment was a record $20.8 billion, up 127% year-on-year, and represented 70% of our total revenue. AI semiconductor revenue of $16.7 billion represented 56% of total revenue, up from 49% in Q2. Gross margin for our Semiconductor Solutions segment was approximately 76%. Operating expenses of $1.2 billion reflected investments in R&D, with OpEx representing 6% of segment revenue. Operating margin of 61% was up 440 basis points year-on-year as revenue growth of 127% outpaced operating expenses, which grew 22% year-on-year. Moving on to infrastructure software. Revenue of $8.8 billion was up 29% year-on-year and represented 30% of our total revenue. Gross margin for infrastructure software was 94% in the quarter, and operating expenses were over $900 million. Q3 software operating margin was up 650 basis points year-on-year to approximately 84%.\n\nMoving on to the balance sheet. We ended the third quarter with $24 billion of cash, compared to $19.6 billion in the prior quarter, up $4.3 billion sequentially. We ended the third quarter with inventory of $4.5 billion to support our strong semiconductor demand. Moving on to cash flow. Free cash flow in the quarter was a record $13.7 billion and represented 46% of revenue. We spent $532 million on capital expenditures in the quarter. Turning to capital allocation. In Q3, we paid stockholders $3.1 billion of cash dividends based on a quarterly common stock dividend of $0.65 per share. In Q3, we also paid down $5.6 billion of long-term debt. Subsequent to quarter end, we paid down an additional $1.5 billion of senior notes upon maturity.\n\nThe weighted average coupon rate and years to maturity of our gross principal fixed rate debt of $59.6 billion is 4% and 7.4 years, respectively. In June, we established the AI XPV Platform in partnership with Apollo and Blackstone to enable more than 20 gigawatts of compute infrastructure for OpenAI and Anthropic by the end of 2028. We closed the first $35 billion tranche in June for Anthropic's one gigawatt deployment, which is already underway. While future tranches will include unique features tailored to specific lab and investor needs, our core strategy remains consistent. First, we are empowering two of our most strategic customers, the leading AI labs, to bridge the gap between their current cash flow and the significant upfront investments required for their businesses. Our XPUs enable cost-effective, sustainable growth at multiples of their infrastructure costs.\n\nSecond, this XPV Platform enables highly investable customers and facilitates execution where demand is already locked in. Third, we review any strategic financings through a commercial as well as balance sheet lens, consistent with our existing capital allocation framework. Through the XPV Platform, we partner with sophisticated third-party financial partners to independently underwrite and capitalize the assets, rather than providing the direct financing ourselves. Where necessary, we may provide modest residual value guarantees, which are contingent liabilities we view as low risk, supported by the strong profitability trajectory of these labs and the sustaining value of the underlying assets. Moving on to guidance. Our guidance for Q4 is for consolidated revenue of $34.8 billion, up 93% year-on-year. We forecast semiconductor revenue of approximately $26.1 billion, up 136% year-on-year. Within this, we expect Q4 AI semiconductor revenue of $21.7 billion, up over 236% year-on-year.\n\nIt will be 30 gigawatts between the customers we have, the six customers we have. Question is, will all 30 come into production within these two fiscal years? We are giving you a judged number of $115 billion of chips to these guys in fiscal 2027, another $230 billion in 2028, which would add up, I know, to about $350 billion. Another way of saying is, we believe with a pretty high degree of confidence, we will ship $350 billion of AI semiconductors to these customers in the next two years. That's the best way to look at it. It doesn't necessarily mean all 30 gigawatts need to have been deployed within that period. Turning to your more next interesting question. Right.\nAs I said, when you do an XPU, it not only performs as well, if not better, for your particular LLM workloads for each of our customers, it's also half the cost. In fact, less than half the cost. You made my point exactly.",
+      "source": "bigdata:Quartr Transcripts",
+      "asOf": "2026-09-02",
+      "truncated": true,
+      "url": "https://app.bigdata.com/documents/EA18C42CD71533FFBD9B9301B6401E92"
+    },
+    "headlines": [
+      {
+        "text": "What Is Going on With Broadcom Stock on Tuesday?",
+        "source": "bigdata:Benzinga",
+        "asOf": "2026-08-04",
+        "url": "https://app.bigdata.com/documents/B2A63DCA0F4374F148907C96C83CBB57?cnum=1&cnum=3"
+      },
+      {
+        "text": "Why Broadcom Stock Rallied Today",
+        "source": "bigdata:Nasdaq",
+        "asOf": "2026-08-04",
+        "url": "https://app.bigdata.com/documents/AFBAA6891805050E73396F4617BD151A?cnum=1&cnum=2&cnum=3"
+      },
+      {
+        "text": "Why Broadcom Stock Rallied Today",
+        "source": "bigdata:The Globe And Mail",
+        "asOf": "2026-08-04",
+        "url": "https://app.bigdata.com/documents/EC59FD58DA59D13FFC1FEF88F76CC7CD?cnum=1&cnum=2"
+      },
+      {
+        "text": "Why Broadcom Stock Rallied Today",
+        "source": "bigdata:AOL.com",
+        "asOf": "2026-08-04",
+        "url": "https://app.bigdata.com/documents/BA7DD8177DCEF8CA7D2ED9B30BFE292B?cnum=1"
+      },
+      {
+        "text": "Marvell Stock Surges 10%: Next-Gen AI Storage Unveiled Ahead of Q2 Earnings",
+        "source": "bigdata:Benzinga",
+        "asOf": "2026-08-04",
+        "url": "https://app.bigdata.com/documents/4AF37FF7BDABF7766A3610C718F23D56?cnum=1"
+      },
+      {
+        "text": "Intel Soars 10%, AMD Jumps 8%, Broadcom Rises 6% as Chip Stocks Ride a Risk-On Rally",
+        "source": "bigdata:AOL.com",
+        "asOf": "2026-08-04",
+        "url": "https://app.bigdata.com/documents/864F41DBD0A29775FDDB9AEDB73B0ABF?cnum=1&cnum=2"
+      },
+      {
+        "text": "Why Broadcom Stock Rallied Today",
+        "source": "bigdata:Yahoo! Finance",
+        "asOf": "2026-08-04",
+        "url": "https://app.bigdata.com/documents/7A455995F4F3221E0B151392BD143634?cnum=1"
+      },
+      {
+        "text": "Goldman Sachs Just Added Microsoft to Its Closely Watched 'Conviction List.' Broadcom and ServiceNow Were Removed.",
+        "source": "bigdata:AOL.com",
+        "asOf": "2026-08-04",
+        "url": "https://app.bigdata.com/documents/77E4390A1096C05D77BE56B10D7C5242?cnum=1"
+      },
+      {
+        "text": "JPMorgan Says Bet NVDA, AMD, but Morgan Stanley Backs MSFT, GOOGL: What Is the Best AI Trade?",
+        "source": "bigdata:Benzinga",
+        "asOf": "2026-08-04",
+        "url": "https://app.bigdata.com/documents/EED1D792A6D5B2F63019DA527CD0AC44?cnum=1&cnum=2"
+      },
+      {
+        "text": "Microsoft added to Goldman's top list - Broadcom removed",
+        "source": "bigdata:Finwire",
+        "asOf": "2026-08-03",
+        "url": "https://app.bigdata.com/documents/954C2A7E7B04652E7A754A907F381619?cnum=1"
+      }
+    ]
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-13T03:18:05.482Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-09-13T03:18:05.482Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-13T03:18:05.482Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-13T03:18:05.482Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-13T03:18:05.482Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-13T03:18:05.482Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-13T03:18:05.482Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-13T03:18:05.482Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-13T03:18:05.482Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-13T03:18:05.482Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-13T03:18:05.482Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-13T03:18:05.482Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-13T03:18:05.482Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-13T03:18:05.482Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-13T03:18:05.482Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-13T03:18:05.482Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-13T03:18:05.482Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-13T03:18:05.482Z"
+    }
+  ]
+}
