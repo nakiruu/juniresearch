@@ -85,7 +85,7 @@ export function projectReportFacts(p: FactPack): ReportFacts {
   return {
     meta: { filing: { form: p.filing.form, fiscalPeriod, filedDate, accession: p.filing.accession },
             company: p.company, ticker: p.ticker, exchange: p.exchange, asOf: q.asOf },
-    quote: { currentPrice: q.price, marketCap: q.marketCap, sharesOutstanding: q.sharesOutstanding, week52Low: q.week52Low, week52High: q.week52High, dividendYield: q.dividendYield },
+    quote: { currentPrice: q.price, marketCap: q.marketCap, sharesOutstanding: q.sharesOutstanding, week52Low: q.week52Low, week52High: q.week52High, dividendYield: q.dividendYield, history: p.history.map((h) => ({ date: h.date, close: h.close })) },
     snapshot,
     analystSentiment: { numAnalysts: a.count, buy: a.buy, hold: a.hold, sell: a.sell, consensusRating: a.consensusRating,
       consensusTarget: a.consensusTarget, medianTarget: a.medianTarget, highTarget: a.highTarget, lowTarget: a.lowTarget },

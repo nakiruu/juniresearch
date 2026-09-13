@@ -53,4 +53,8 @@ describe("projectReportFacts parity with data/avgo.json", () => {
       expect(Math.abs(row.value! / target - 1), row.label).toBeLessThan(0.02);
     }
   });
+  it("carries the FactPack's daily closes as quote.history", () => {
+    expect(facts.quote.history).toHaveLength(30);
+    expect(facts.quote.history![29]).toMatchObject({ date: "2026-09-11" });
+  });
 });
