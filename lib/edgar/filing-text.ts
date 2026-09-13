@@ -12,6 +12,25 @@ export const EXCERPT_CAP = 8000;
 export const MDA_CAP = 16000;
 // the call's headline metrics routinely sit past 8k of the ranked chunks; Risk Factors keep EXCERPT_CAP.
 export const TRANSCRIPT_CAP = 16000;
+export const PRESS_CAP = 16000; // an earnings release is ~30k chars; the headline metrics are in the first half
+
+const COVER_RE = [
+  /outstanding\s+as\s+of\s+[A-Za-z]+\s+\d{1,2},\s+\d{4}[^0-9]{0,40}?(\d{1,3}(?:,\d{3}){2,3})/i,
+  /had\s+(\d{1,3}(?:,\d{3}){2,3})\s+shares[^.]{0,80}?outstanding/i,
+  /(\d{1,3}(?:,\d{3}){2,3})\s+shares\s+of[^.]{0,80}?outstanding/i,
+];
+
+export function extractCoverShares(text: string): number | null {
+  const head = text.slice(0, 30000);
+  for (const re of COVER_RE) {
+    const m = re.exec(head);
+    if (m) {
+      const n = Number(m[1].replace(/,/g, ""));
+      if (n >= 1e8) return n;
+    }
+  }
+  return null;
+}
 
 export function htmlToText(html: string): string {
   return html

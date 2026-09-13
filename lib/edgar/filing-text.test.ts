@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync, existsSync } from "node:fs";
-import { htmlToText, capAtSentence, extractSections, EXCERPT_CAP, MDA_CAP } from "@/lib/edgar/filing-text";
+import { htmlToText, capAtSentence, extractSections, extractCoverShares, EXCERPT_CAP, MDA_CAP } from "@/lib/edgar/filing-text";
 
 const html = readFileSync("data/raw/AVGO/0001730168-26-000080/edgar-primary.html", "utf8");
 const text = htmlToText(html);
@@ -114,5 +114,14 @@ describe("extractSections on the ORCL FY26 10-K (real filing)", () => {
 
     expect(s.mda).not.toBeNull();
     expect(s.mda!.truncated).toBe(true);
+  });
+});
+
+describe("extractCoverShares", () => {
+  it("reads the cover-page share count in both common phrasings", () => {
+    expect(extractCoverShares("The number of shares of registrant's common stock outstanding as of September 7, 2026 was: 3,023,736,000")).toBe(3023736000);
+    expect(extractCoverShares("As of August 29, 2026, the registrant had 4,756,442,000 shares of common stock outstanding.")).toBe(4756442000);
+    expect(extractCoverShares("There were 1,200,000 options outstanding")).toBeNull(); // below the floor
+    expect(extractCoverShares("no cover here")).toBeNull();
   });
 });
