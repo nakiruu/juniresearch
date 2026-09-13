@@ -44,6 +44,10 @@ describe("numericTokens", () => {
     expect(numericTokens("up 40-50% next year").map((t) => t.raw)).toEqual(["40", "50%"]);
     expect(numericTokens("300-400 basis points").map((t) => t.raw)).toEqual(["300", "400"]);
   });
+  it("keeps the high end of a small range even though it looks like a day", () => {
+    expect(numericTokens("up 20-30% next year").map((t) => t.raw)).toEqual(["20", "30%"]);
+    expect(numericTokens("10-25 units of growth").map((t) => t.raw)).toEqual(["25"]);
+  });
 });
 
 describe("the allowed index on the AVGO FactPack", () => {

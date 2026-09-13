@@ -40,7 +40,7 @@ function allowListed(m: RegExpExecArray, text: string): boolean {
   if (bare && /^:\d/.test(after)) return true;                              // 10:1
   if (bare && /^-(week|month|day|year|quarter)s?\b/i.test(after)) return true; // 52-week, 12-month, 90-day, 5-year
   if (/^,? ?(19|20)\d\d\b/.test(after)) return true;         // "August 30, 2026", "30 2026"
-  if (/\d-$/.test(before) && n >= 1 && n <= 31) return true; // ISO date component, e.g. 2026-08-30
+  if (bare && n >= 1 && n <= 31 && /(19|20)\d\d-(\d{1,2}-)?$/.test(text.slice(Math.max(0, m.index - 8), m.index))) return true; // ISO date component, e.g. 2026-08-30
   return false;
 }
 
