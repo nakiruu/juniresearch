@@ -1,12 +1,15 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { useTheme } from "next-themes";
 import { Sun, Moon } from "lucide-react";
 
+const subscribeNever = () => () => {};
+
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  // True only after hydration: the server snapshot is false, the client's true,
+  // so the first client render matches the server HTML without an effect.
+  const mounted = useSyncExternalStore(subscribeNever, () => true, () => false);
 
   if (!mounted) {
     return <div className="fixed top-4 right-4 z-50 h-8 w-28 print:hidden" aria-hidden />;
