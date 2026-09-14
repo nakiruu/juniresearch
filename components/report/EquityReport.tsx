@@ -18,6 +18,8 @@ import { Section6 } from "./sections/Section6";
 import { Section7 } from "./sections/Section7";
 import { Section8 } from "./sections/Section8";
 import { AnalystSentiment } from "./sections/AnalystSentiment";
+import { ReportStepper } from "./ReportStepper";
+import { REPORT_STEPS } from "./report-steps";
 import type { Report } from "@/lib/report.schema";
 
 const DEFAULT_DISCLAIMER =
@@ -32,7 +34,9 @@ export default function EquityReport({ data }: { data: Report }) {
   const chartModel = buildChartModel(data);
 
   return (
-    <div className="report-prose mx-auto max-w-[900px] px-7 pt-11 pb-20">
+    <>
+    <ReportStepper steps={REPORT_STEPS} />
+    <div className="report-prose mx-auto max-w-[900px] px-7 pt-11 pb-28 min-[1280px]:pb-20">
       <ReportHeader meta={m} />
       <Snapshot cells={data.snapshot} />
       <RatingBlock rating={rating} current={current} upsideLabel="Upside Potential:" />
@@ -77,5 +81,6 @@ export default function EquityReport({ data }: { data: Report }) {
         Form {m.filing.form} (accession {m.filing.accession})
       </div>
     </div>
+    </>
   );
 }
