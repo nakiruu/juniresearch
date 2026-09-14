@@ -199,7 +199,9 @@ function lineStart(re: RegExp): RegExp {
  *  (the document's, or a section's own mini contents) is followed by a page
  *  number or another title, a real heading by a paragraph. Converted filings
  *  wrap prose at roughly 100 characters, so "prose" is judged by shape — a
- *  line of ten or more words with lowercase letters — not by length alone. */
+ *  line of ten or more words with lowercase letters — not by length alone.
+ *  A proxy whose body is set in capitals, or wrapped far narrower, would fail
+ *  this test and yield no section (null), never a wrong one. */
 function looksLikeProse(line: string): boolean {
   return line.length >= 60 && /[a-z]/.test(line) && line.split(/\s+/).length >= 10;
 }
@@ -224,7 +226,10 @@ function extractProxySection(text: string, spec: ProxySpec): string | null {
       const start = m.index! + (m[1]?.length ?? 0);
       // A contents entry (page numbers, short lines) is not where the section starts.
       if (!headingFollowedByBody(text, start)) continue;
-      const restAt = start + 50;
+      // Scan for the section's end from the line after its heading, so a long
+      // title's own words never count as the ending heading.
+      const headingEnd = text.indexOf("\n", start);
+      const restAt = headingEnd < 0 ? text.length : headingEnd + 1;
       const rest = text.slice(restAt);
       let end = text.length;
       for (const e of enders) {

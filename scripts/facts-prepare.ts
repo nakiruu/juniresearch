@@ -132,11 +132,11 @@ const today = new Date().toISOString().slice(0, 10);
 const yahooPath = join(dir, "yahoo-history.json");
 if (!existsSync(yahooPath)) {
   writeFileSync(yahooPath, await fetchDailyCloses(ticker, isoMinusDays(filing.periodEnd, 45), today));
-  notes.push("yahoo-history.json");
+  notes.push(`yahoo-history.json (${isoMinusDays(filing.periodEnd, 45)} → ${today})`);
 } else {
   notes.push("yahoo-history.json (already present)");
 }
 if (!existsSync(join(dir, "capture.json"))) writeFileSync(join(dir, "capture.json"), `{ "capturedAt": "${new Date().toISOString()}" }\n`);
 
 console.log(`Prepared ${dir}:`);
-console.log(`  edgar-filing.json, ${notes.join(", ")}, capture.json (history window ${isoMinusDays(filing.periodEnd, 45)} → ${today})`);
+console.log(`  edgar-filing.json, ${notes.join(", ")}, capture.json`);
