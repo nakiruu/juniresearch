@@ -15,7 +15,7 @@ import { splitSentences } from "../sentences";
 
 export const MAX_POINTER_SENTENCES = 2;
 
-const POINTER = /^sections\.executiveSummary\.catalysts\[\d+\]$/;
+const POINTER = /^sections\.executiveSummary\.(catalysts|risks)\[\d+\]$/;
 const OPPOSED = /\b(?:against|versus|vs\.?)\b/gi;   // global: every connector in the sentence is tried
 const RESOLVED = /\b(?:we use|we used|the statement figure|the filing's number)\b/i;
 
@@ -25,7 +25,7 @@ export function structure(units: SectionUnit[]): LintIssue[] {
     for (const leaf of unit.leaves) {
       const sentences = splitSentences(leaf.text);
 
-      if (POINTER.test(leaf.path) && sentences.length >= MAX_POINTER_SENTENCES)
+      if (POINTER.test(leaf.path) && sentences.length > MAX_POINTER_SENTENCES)
         issues.push({
           rule: "pointer-length",
           severity: "warning",

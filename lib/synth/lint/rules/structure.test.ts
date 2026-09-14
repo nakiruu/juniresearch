@@ -19,10 +19,18 @@ describe("pointer-length", () => {
     ])])).toEqual([]);
   });
 
-  it("does not count a bold lead-in's period as a sentence break it cannot be", () => {
+  it("does not warn on a two-sentence pointer with a bold lead-in", () => {
     expect(structure([unit("executiveSummary", [
       ["sections.executiveSummary.catalysts[2]", "**Utilization.** It ran at 97.9% and the fleet is full."],
-    ])]).map((i) => i.value)).toEqual([2]);
+    ])])).toEqual([]);
+  });
+
+  it("warns on a three-sentence risk", () => {
+    const issues = structure([unit("executiveSummary", [
+      ["sections.executiveSummary.risks[1]", "Refinancing risk is mounting. The maturity wall hits next year. Covenant flexibility matters."],
+    ])]);
+    expect(issues.map((i) => [i.rule, i.severity, i.field, i.value]))
+      .toEqual([["pointer-length", "warning", "sections.executiveSummary.risks[1]", 3]]);
   });
 
   it("leaves the body sections alone — only the summary's pointers are capped", () => {
