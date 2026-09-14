@@ -180,22 +180,26 @@ describe("extractProxySections on a synthetic DEF 14A", () => {
     expect(sections.board).toMatch(/^Director Independence/);
     expect(sections.board).toContain("Audit Committee met nine times sentence 10.");
     expect(sections.ownership).toMatch(/^Security Ownership/);
-    expect(sections.ownership).toContain("Related Person Transactions Policy");
-    expect(sections.ownership).not.toContain("no reports were late");
+    expect(sections.ownership).toContain("beneficial ownership as of the record date sentence 25.");
+    expect(sections.ownership).not.toContain("Related Person Transactions Policy");
+    expect(sections.related).toMatch(/^Transactions with Related Persons/);
+    expect(sections.related).toContain("Related Person Transactions Policy");
+    expect(sections.related).not.toContain("no reports were late");
   });
   it("returns null for a section the document does not carry", () => {
-    expect(extractProxySections("Nothing to see here.")).toEqual({ compensation: null, board: null, ownership: null });
+    expect(extractProxySections("Nothing to see here.")).toEqual({ compensation: null, board: null, ownership: null, related: null });
   });
   it("joins the present sections under fixed labels, capping each at its own budget", () => {
     const ex = proxyExcerpt(sections)!;
     expect(ex.text).toMatch(/^Board and director independence:\n/);
     expect(ex.text).toContain("\n\nCompensation discussion and analysis:\n");
-    expect(ex.text).toContain("\n\nSecurity ownership and related-person transactions:\n");
+    expect(ex.text).toContain("\n\nSecurity ownership:\n");
+    expect(ex.text).toContain("\n\nRelated-person transactions:\n");
     expect(ex.truncated).toBe(false);
     const capped = proxyExcerpt({ ...sections, compensation: filler(4000, "Pay") })!;
     expect(capped.truncated).toBe(true);
-    expect(capped.text.length).toBeLessThanOrEqual(PROXY_CAPS.board + PROXY_CAPS.compensation + PROXY_CAPS.ownership + 200);
-    expect(proxyExcerpt({ compensation: null, board: null, ownership: null })).toBeNull();
+    expect(capped.text.length).toBeLessThanOrEqual(PROXY_CAPS.board + PROXY_CAPS.compensation + PROXY_CAPS.ownership + PROXY_CAPS.related + 200);
+    expect(proxyExcerpt({ compensation: null, board: null, ownership: null, related: null })).toBeNull();
   });
 });
 
@@ -211,7 +215,9 @@ describe("extractProxySections on the ORCL FY25 proxy (real filing)", () => {
     expect(s.compensation).toMatch(/^Compensation Discussion and Analysis/);
     expect(s.compensation!.length).toBeGreaterThan(20000);
     expect(s.ownership).toMatch(/^SECURITY OWNERSHIP OF CERTAIN BENEFICIAL OWNERS AND MANAGEMENT/);
-    expect(s.ownership!.length).toBeGreaterThan(4000);
+    expect(s.ownership!.length).toBeGreaterThan(2500);
+    expect(s.related).toMatch(/^TRANSACTIONS WITH RELATED PERSONS/);
+    expect(s.related).toContain("Stanford");
     // Bodies, not contents entries: no bare page-number lines near the top, and the real opening sentences.
     for (const body of [s.board!, s.compensation!, s.ownership!]) expect(body.slice(0, 400)).not.toMatch(/\n\d{1,3}\n/);
     expect(s.compensation).toContain("This Compensation Discussion and Analysis describes our fiscal 2025 executive compensation program");
@@ -220,8 +226,8 @@ describe("extractProxySections on the ORCL FY25 proxy (real filing)", () => {
     expect(s.ownership!.length).toBeLessThan(10000);
     const ex = proxyExcerpt(s)!;
     expect(ex.truncated).toBe(true);
-    for (const label of ["Board and director independence:", "Compensation discussion and analysis:", "Security ownership and related-person transactions:"]) expect(ex.text).toContain(label);
-    expect(ex.text.length).toBeLessThanOrEqual(PROXY_CAPS.board + PROXY_CAPS.compensation + PROXY_CAPS.ownership + 200);
+    for (const label of ["Board and director independence:", "Compensation discussion and analysis:", "Security ownership:", "Related-person transactions:"]) expect(ex.text).toContain(label);
+    expect(ex.text.length).toBeLessThanOrEqual(PROXY_CAPS.board + PROXY_CAPS.compensation + PROXY_CAPS.ownership + PROXY_CAPS.related + 200);
   });
 });
 
@@ -249,8 +255,11 @@ describe("extractProxySections with titles set over several lines (Broadcom styl
   const s = extractProxySections(proxy);
   it("accepts a heading whose title continues on the next lines, and rejects the contents entry followed by a page number", () => {
     expect(s.ownership).toMatch(/^SECURITY OWNERSHIP OF\nCERTAIN BENEFICIAL OWNERS, DIRECTORS\nAND EXECUTIVE OFFICERS/);
-    expect(s.ownership).toContain("related party transactions on an ongoing basis sentence 6.");
-    expect(s.ownership).not.toContain("no other matters");
+    expect(s.ownership).toContain("beneficial ownership of common stock sentence 14.");
+    expect(s.ownership).not.toContain("related party transactions on an ongoing basis");
+    expect(s.related).toMatch(/^CERTAIN RELATIONSHIPS AND RELATED PARTY TRANSACTIONS/);
+    expect(s.related).toContain("related party transactions on an ongoing basis sentence 6.");
+    expect(s.related).not.toContain("no other matters");
     expect(s.board).toMatch(/^DIRECTOR INDEPENDENCE/);
     expect(s.compensation).toBeNull();
   });
@@ -266,6 +275,8 @@ describe("extractProxySections on the AVGO FY25 proxy (real filing)", () => {
     expect(s.compensation).toMatch(/^COMPENSATION DISCUSSION AND ANALYSIS/i);
     expect(s.ownership).toMatch(/^SECURITY OWNERSHIP OF\s+CERTAIN BENEFICIAL OWNERS, DIRECTORS/);
     expect(s.ownership).toContain("The following table sets forth information about the beneficial ownership of Broadcom common stock");
+    expect(s.related).toMatch(/^CERTAIN RELATIONSHIPS AND RELATED PARTY TRANSACTIONS/);
+    expect(s.related).toContain("the Audit Committee must review all related party transactions on an ongoing basis");
     for (const body of [s.board!, s.compensation!, s.ownership!]) expect(body.slice(0, 400)).not.toMatch(/\n\d{1,3}\n/);
   });
 });

@@ -14,7 +14,7 @@ export const MDA_CAP = 16000;
 export const TRANSCRIPT_CAP = 16000;
 export const PRESS_CAP = 16000; // an earnings release is ~30k chars; the headline metrics are in the first half
 /** Per-section budgets for the proxy statement excerpt (about 12k chars in all). */
-export const PROXY_CAPS = { board: 3000, compensation: 5000, ownership: 4000 } as const;
+export const PROXY_CAPS = { board: 3000, compensation: 5000, ownership: 4000, related: 2000 } as const;
 
 const COVER_RE = [
   /outstanding\s+as\s+of\s+[A-Za-z]+\s+\d{1,2},\s+\d{4}[^0-9]{0,40}?(\d{1,3}(?:,\d{3}){2,3})/i,
@@ -154,7 +154,7 @@ export async function fetchPrimaryDocument(url: string, contact: string, fetchIm
 // heading to the next such heading that does not belong inside it; if a title
 // still matches more than once, the longest candidate wins.
 // ---------------------------------------------------------------------------
-export interface ProxySections { compensation: string | null; board: string | null; ownership: string | null }
+export interface ProxySections { compensation: string | null; board: string | null; ownership: string | null; related: string | null }
 
 interface ProxySpec { start: RegExp[]; keep: RegExp[] }
 
@@ -190,7 +190,10 @@ const ALL_PROXY_HEADINGS = Object.values(H);
 const PROXY_SPECS: Record<keyof ProxySections, ProxySpec> = {
   board: { start: [H.boardAndIndependence, H.independence, H.boardIndependence, H.independenceOfDirectors], keep: [H.committees, H.committeesOfTheBoard] },
   compensation: { start: [H.cda], keep: [] },
-  ownership: { start: [H.ownership], keep: [H.relatedTransactions, H.relatedPersonTransactions, H.relatedPartyTransactions, H.certainRelationships] },
+  ownership: { start: [H.ownership], keep: [] },
+  // Its own budget: the ownership table and its footnotes fill that section, and the
+  // related-party disclosure follows it in both proxies captured so far.
+  related: { start: [H.relatedTransactions, H.relatedPersonTransactions, H.relatedPartyTransactions, H.certainRelationships], keep: [] },
 };
 
 function lineStart(re: RegExp): RegExp {
@@ -271,10 +274,11 @@ export function extractProxySections(text: string): ProxySections {
     compensation: extractProxySection(text, PROXY_SPECS.compensation),
     board: extractProxySection(text, PROXY_SPECS.board),
     ownership: extractProxySection(text, PROXY_SPECS.ownership),
+    related: extractProxySection(text, PROXY_SPECS.related),
   };
 }
 
-/** One labelled, per-section-capped excerpt (board, then pay, then ownership); null when nothing was found. */
+/** One labelled, per-section-capped excerpt (board, pay, ownership, related-party); null when nothing was found. */
 export function proxyExcerpt(s: ProxySections): CappedSection | null {
   const parts: string[] = [];
   let truncated = false;
@@ -286,6 +290,7 @@ export function proxyExcerpt(s: ProxySections): CappedSection | null {
   };
   add("Board and director independence", s.board, PROXY_CAPS.board);
   add("Compensation discussion and analysis", s.compensation, PROXY_CAPS.compensation);
-  add("Security ownership and related-person transactions", s.ownership, PROXY_CAPS.ownership);
+  add("Security ownership", s.ownership, PROXY_CAPS.ownership);
+  add("Related-person transactions", s.related, PROXY_CAPS.related);
   return parts.length ? { text: parts.join("\n\n"), truncated } : null;
 }

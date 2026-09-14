@@ -113,6 +113,7 @@ describe("mapContext carries the proxy statement when captured", () => {
     expect(c.proxyStatement!.text).toContain("Compensation discussion and analysis:");
     expect(c.proxyStatement!.text).toContain("total compensation of $9,876,543");
     expect(c.proxyStatement!.text).toContain("Board and director independence:");
-    expect(c.proxyStatement!.text).toContain("Security ownership and related-person transactions:");
+    expect(c.proxyStatement!.text).toContain("Security ownership:");
+    expect(c.proxyStatement!.text).toContain("Related-person transactions:");
   });
 });

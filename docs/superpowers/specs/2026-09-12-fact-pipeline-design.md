@@ -460,14 +460,17 @@ report's filing, as the optional `edgar-proxy.html` (`OPTIONAL_FILES`; no
 `.missing` marker, `--check` never demands it), and records it in
 `edgar-filing.json.proxyStatement`.
 
-`lib/edgar/filing-text.ts` extracts three governance sections by their
+`lib/edgar/filing-text.ts` extracts four governance sections by their
 titles at a line start (proxies have no `Item N` skeleton): director
-independence / board, Compensation Discussion and Analysis, and security
-ownership with related-person transactions. Each candidate runs to the next
+independence / board, Compensation Discussion and Analysis, security
+ownership, and related-person transactions (its own budget: the ownership
+table and footnotes fill that section, and the related-party disclosure
+follows it). Each candidate runs to the next
 known proxy heading that does not belong inside it, and the longest candidate
 wins (a contents entry ends at the next contents line; the body does not).
 `proxyExcerpt` joins the present sections under fixed labels, each capped at
-its own budget (`PROXY_CAPS`: board 3,000, pay 5,000, ownership 4,000).
+its own budget (`PROXY_CAPS`: board 3,000, pay 5,000, ownership 4,000,
+related-party 2,000).
 
 FactPack `1.2.0` adds `context.proxyStatement` (an `Excerpt`, source
 `edgar:DEF 14A`, dated by the proxy's filing, nullable) — every built pack
