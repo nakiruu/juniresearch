@@ -95,7 +95,12 @@ const CALLS = `- Scenarios: exactly three, named exactly \`Bull\`, \`Base\`, \`B
 - Scenario probabilities are quotable as percentages (e.g. 48%).
 - \`highlights\`: up to four keys from the "Highlight cells you may add" list below, no repeats; the code computes the values, you only choose which keys to append.`;
 
-export function renderPrompt(pack: FactPack, facts: ReportFacts, desk: Desk, opts: { priorErrors?: string[]; judgmentPath?: string } = {}): string {
+export function renderPrompt(
+  pack: FactPack,
+  facts: ReportFacts,
+  desk: Desk,
+  opts: { priorErrors?: string[]; priorWarnings?: string[]; judgmentPath?: string } = {},
+): string {
   const path = opts.judgmentPath ?? `data/judgment/${pack.ticker}/${pack.filing.accession}.json`;
   const parts = [
     `# Role\n\nYou are ${desk.analystName} at ${desk.analyst}, writing the judgment half of an equity research report on ${pack.company} (${pack.ticker}) following its ${pack.filing.form} for the period ended ${pack.filing.periodEnd}. House style:\n${desk.styleRules.map((r) => `- ${r}`).join("\n")}`,
@@ -105,7 +110,16 @@ export function renderPrompt(pack: FactPack, facts: ReportFacts, desk: Desk, opt
     `# Context\n\n${renderContextBlock(pack)}`,
     `# Output\n\nWrite one JSON object matching this schema, and nothing else, to \`${path}\`. Return the complete object every time.\n\n\`\`\`json\n${JSON.stringify(judgmentJsonSchema(), null, 2)}\n\`\`\``,
   ];
-  if (opts.priorErrors?.length)
-    parts.push(`# Prior errors\n\nYour previous object failed validation. Fix every item below and return the full object again.\n${opts.priorErrors.map((e) => `- ${e}`).join("\n")}`);
+  const errors = opts.priorErrors ?? [];
+  const warnings = opts.priorWarnings ?? [];
+  if (errors.length || warnings.length) {
+    const lead = errors.length
+      ? `Your previous object failed validation. Fix every item below and return the full object again.\n${errors.map((e) => `- ${e}`).join("\n")}`
+      : "Your previous object passed validation. The desk lint left the warnings below; fix the cheap ones and return the full object again.";
+    const tail = warnings.length
+      ? `\n\n## Warnings (fix if cheap)\n\nThese do not block the build. Fix the ones a rewrite can absorb; leave the rest.\n${warnings.map((w) => `- ${w}`).join("\n")}`
+      : "";
+    parts.push(`# Prior errors\n\n${lead}${tail}`);
+  }
   return parts.join("\n\n") + "\n";
 }

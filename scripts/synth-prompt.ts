@@ -4,6 +4,7 @@ import { FactPack } from "../lib/facts/schema";
 import { projectReportFacts } from "../lib/facts/project";
 import { Desk } from "../lib/synth/desk.schema";
 import { renderPrompt } from "../lib/synth/prompt";
+import { parseErrorsFile } from "../lib/synth/errors-file";
 
 const args = process.argv.slice(2);
 const [tickerArg, accession] = args.filter((a) => !a.startsWith("--"));
@@ -17,10 +18,17 @@ const desk = Desk.parse(JSON.parse(read(join("data", "desk", "desk.json"))));
 const dir = join("data", "judgment", ticker);
 mkdirSync(dir, { recursive: true });
 const errorsPath = join(dir, `${accession}.errors.txt`);
-const priorErrors = withErrors ? read(errorsPath).split("\n").filter(Boolean) : undefined;
 
 const judgmentPath = join(dir, `${accession}.json`).replace(/\\/g, "/");
-const prompt = renderPrompt(pack, projectReportFacts(pack), desk, { priorErrors, judgmentPath });
+const prior = withErrors ? parseErrorsFile(read(errorsPath)) : { errors: [], warnings: [] };
+const prompt = renderPrompt(pack, projectReportFacts(pack), desk, {
+  priorErrors: prior.errors.length ? prior.errors : undefined,
+  priorWarnings: prior.warnings.length ? prior.warnings : undefined,
+  judgmentPath,
+});
 const out = join(dir, `${accession}.prompt.md`);
 writeFileSync(out, prompt);
-console.log(`Wrote ${out} (${prompt.length.toLocaleString("en-US")} chars${priorErrors ? `, ${priorErrors.length} prior errors` : ""})\nJudgment goes to ${judgmentPath}`);
+console.log(
+  `Wrote ${out} (${prompt.length.toLocaleString("en-US")} chars` +
+    `${withErrors ? `, ${prior.errors.length} prior errors, ${prior.warnings.length} warnings` : ""})\nJudgment goes to ${judgmentPath}`,
+);

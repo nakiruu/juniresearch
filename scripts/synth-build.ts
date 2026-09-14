@@ -8,6 +8,8 @@ import { mergeReport } from "../lib/synth/merge";
 import { validateJudgment } from "../lib/synth/validate-judgment";
 import { Report } from "../lib/report.schema";
 import { validateReport, type ValidationIssue } from "../lib/validate";
+import { lintJudgment, type LintIssue } from "../lib/synth/lint";
+import { issueLine, writeErrorsFile } from "../lib/synth/errors-file";
 
 const args = process.argv.slice(2);
 const dateFlag = args.indexOf("--date");
@@ -23,25 +25,33 @@ const judgmentPath = join("data", "judgment", ticker, `${accession}.json`);
 const errorsPath = join("data", "judgment", ticker, `${accession}.errors.txt`);
 const judgmentText = read(judgmentPath);
 
-const fail = (issues: ValidationIssue[], stage: string): never => {
-  const lines = issues.map((i) => `${i.field}: ${i.message} (received ${JSON.stringify(i.value)})`);
-  writeFileSync(errorsPath, lines.join("\n") + "\n");
-  console.error(`${stage}: ${issues.length} issue(s) — written to ${errorsPath}\n` + lines.map((l) => `  - ${l}`).join("\n"));
+const fail = (issues: (ValidationIssue | LintIssue)[], warnings: LintIssue[], stage: string): never => {
+  const errorLines = issues.map(issueLine);
+  const warningLines = warnings.map(issueLine);
+  writeErrorsFile(errorsPath, errorLines, warningLines);
+  console.error(`${stage}: ${issues.length} issue(s) — written to ${errorsPath}\n` + errorLines.map((l) => `  - ${l}`).join("\n"));
+  if (warningLines.length) console.warn(`  ${warningLines.length} warning(s):\n` + warningLines.map((l) => `  - ${l}`).join("\n"));
   process.exit(1);
 };
 
-const raw: unknown = (() => { try { return JSON.parse(judgmentText) as unknown; } catch (e) { return fail([{ field: judgmentPath, message: `not valid JSON: ${(e as Error).message}`, value: null }], "parse"); } })();
+const raw: unknown = (() => { try { return JSON.parse(judgmentText) as unknown; } catch (e) { return fail([{ field: judgmentPath, message: `not valid JSON: ${(e as Error).message}`, value: null }], [], "parse"); } })();
 const parsed = Judgment.safeParse(raw);
-const judgment = parsed.success ? parsed.data : fail(parsed.error.issues.map((i) => ({ field: i.path.join(".") || "(root)", message: i.message, value: null })), "Judgment.parse");
+const judgment = parsed.success ? parsed.data : fail(parsed.error.issues.map((i) => ({ field: i.path.join(".") || "(root)", message: i.message, value: null })), [], "Judgment.parse");
 
 const facts = projectReportFacts(pack);
 const report = mergeReport(facts, judgment, desk, buildDate);
 const rp = Report.safeParse(report);
-const valid = rp.success ? rp.data : fail(rp.error.issues.map((i) => ({ field: i.path.join("."), message: i.message, value: null })), "Report.parse");
+const valid = rp.success ? rp.data : fail(rp.error.issues.map((i) => ({ field: i.path.join("."), message: i.message, value: null })), [], "Report.parse");
 const issues = [...validateReport(valid), ...validateJudgment(judgment, facts, pack)];
-if (issues.length) fail(issues, "validate");
+const lint = lintJudgment(judgment, desk);
+const errors = [...issues, ...lint.filter((i) => i.severity === "error")];
+const warnings = lint.filter((i) => i.severity === "warning");
+if (errors.length) fail(errors, warnings, "validate");
 
 const out = join("data", `${ticker.toLowerCase()}.json`);
 writeFileSync(out, JSON.stringify(valid, null, 2) + "\n");
-if (existsSync(errorsPath)) rmSync(errorsPath);
+if (warnings.length) writeErrorsFile(errorsPath, [], warnings.map(issueLine));
+else if (existsSync(errorsPath)) rmSync(errorsPath);
 console.log(`Wrote ${out}\n  ${valid.meta.company} · ${valid.rating.label} ${valid.rating.targetLow}–${valid.rating.targetHigh} · report date ${valid.meta.reportDate} · ${valid.quote.history?.length ?? 0} closes`);
+if (warnings.length)
+  console.warn(`  ${warnings.length} lint warning(s) — kept in ${errorsPath} for the next --with-errors render:\n` + warnings.map((w) => `  - ${issueLine(w)}`).join("\n"));

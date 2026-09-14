@@ -95,6 +95,28 @@ describe("renderPrompt", () => {
   });
 });
 
+describe("prior warnings in the prompt", () => {
+  const errors = ["rating.label: BUY is inconsistent with an upside of -3.0% (received \"BUY\")"];
+  const warnings = ['warn: lint/tic: analystCommentary: "leg" appears 11 times (received "leg")'];
+
+  it("renders warnings under the errors, in their own subsection", () => {
+    const p = renderPrompt(pack, facts, desk, { priorErrors: errors, priorWarnings: warnings });
+    expect(p).toContain("# Prior errors");
+    expect(p).toContain("## Warnings (fix if cheap)");
+    expect(p.indexOf("## Warnings (fix if cheap)")).toBeGreaterThan(p.indexOf(errors[0]));
+    expect(p).toContain(warnings[0]);
+  });
+  it("renders a warnings-only section when the last build passed", () => {
+    const p = renderPrompt(pack, facts, desk, { priorWarnings: warnings });
+    expect(p).toContain("## Warnings (fix if cheap)");
+    expect(p).toMatch(/passed validation/);
+    expect(p).not.toMatch(/failed validation/);
+  });
+  it("renders no section at all when there is neither", () => {
+    expect(renderPrompt(pack, facts, desk)).not.toContain("# Prior errors");
+  });
+});
+
 describe("the proxy statement in the prompt", () => {
   it("renders (not captured) when the pack has none, between the press release and the transcript", () => {
     const ctx = renderContextBlock({ ...pack, context: { ...pack.context, proxyStatement: null } });
