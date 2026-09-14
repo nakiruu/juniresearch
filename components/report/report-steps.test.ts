@@ -15,6 +15,13 @@ describe("REPORT_STEPS", () => {
     expect(REPORT_STEPS[7].title).toBe("8. Final Recommendation");
   });
 
+  it("refuses a step number outside 1–8", async () => {
+    const { stepFor } = await import("@/components/report/report-steps");
+    expect(stepFor(8).id).toBe("sec-8");
+    expect(() => stepFor(9)).toThrow(/No report step 9/);
+    expect(() => stepFor(0)).toThrow(/No report step 0/);
+  });
+
   it("carries a short rail label for every step", () => {
     for (const s of REPORT_STEPS) {
       expect(s.label.length).toBeGreaterThan(0);

@@ -34,7 +34,7 @@ function intersect(id: string) {
   act(() => callback?.([{ target, isIntersecting: true }]));
 }
 
-const tab = (n: number) => screen.getByRole("tab", { name: new RegExp(`^${n}\\b`) });
+const link = (n: number) => screen.getByRole("link", { name: new RegExp(`^${n}\\b`) });
 
 beforeEach(() => {
   callback = null;
@@ -51,18 +51,21 @@ afterEach(() => {
 });
 
 describe("ReportStepper", () => {
-  it("renders one tab per step, named by number and title", () => {
+  it("is a navigation landmark holding one link per step, named by number and title", () => {
     render(<ReportStepper steps={REPORT_STEPS} />);
-    const tabs = screen.getAllByRole("tab");
-    expect(tabs).toHaveLength(8);
-    expect(tabs[0]).toHaveAccessibleName("1. Executive Summary");
-    expect(tabs[7]).toHaveAccessibleName("8. Final Recommendation");
+    const nav = screen.getByRole("navigation", { name: "Report sections" });
+    expect(nav).not.toHaveAttribute("aria-orientation");
+    expect(screen.queryByRole("tablist")).toBeNull();
+    const links = screen.getAllByRole("link");
+    expect(links).toHaveLength(8);
+    expect(links[0]).toHaveAccessibleName("1. Executive Summary");
+    expect(links[7]).toHaveAccessibleName("8. Final Recommendation");
   });
 
-  it("links each tab to its section anchor", () => {
+  it("links each step to its section anchor", () => {
     render(<ReportStepper steps={REPORT_STEPS} />);
-    expect(tab(3)).toHaveAttribute("href", "#sec-3");
-    expect(tab(3)).toHaveAttribute("aria-controls", "sec-3");
+    expect(link(3)).toHaveAttribute("href", "#sec-3");
+    expect(link(3)).toHaveAttribute("aria-controls", "sec-3");
   });
 
   it("observes every section with a thin band near the top of the viewport", () => {
@@ -73,18 +76,20 @@ describe("ReportStepper", () => {
 
   it("starts on step 1 with nothing completed", () => {
     render(<ReportStepper steps={REPORT_STEPS} />);
-    expect(tab(1)).toHaveAttribute("aria-selected", "true");
-    expect(tab(1)).toHaveAttribute("data-state", "active");
-    expect(tab(2)).toHaveAttribute("data-state", "inactive");
+    expect(link(1)).toHaveAttribute("aria-current", "location");
+    expect(link(1)).toHaveAttribute("data-state", "active");
+    expect(link(2)).not.toHaveAttribute("aria-current");
+    expect(link(2)).toHaveAttribute("data-state", "inactive");
   });
 
   it("marks the section in the band active and the ones above it completed", () => {
     render(<ReportStepper steps={REPORT_STEPS} />);
     intersect("sec-3");
-    expect(tab(3)).toHaveAttribute("aria-selected", "true");
-    expect(tab(1)).toHaveAttribute("data-state", "completed");
-    expect(tab(2)).toHaveAttribute("data-state", "completed");
-    expect(tab(4)).toHaveAttribute("data-state", "inactive");
+    expect(link(3)).toHaveAttribute("aria-current", "location");
+    expect(link(1)).toHaveAttribute("data-state", "completed");
+    expect(link(2)).toHaveAttribute("data-state", "completed");
+    expect(link(4)).toHaveAttribute("data-state", "inactive");
+    expect(screen.getAllByRole("link").filter((l) => l.hasAttribute("aria-current"))).toHaveLength(1);
   });
 
   it("shows the active section's full title in the compact caption", () => {
@@ -97,16 +102,17 @@ describe("ReportStepper", () => {
     render(<ReportStepper steps={REPORT_STEPS} />);
     intersect("sec-4");
     act(() => callback?.([{ target: document.getElementById("sec-4")!, isIntersecting: false }]));
-    expect(tab(4)).toHaveAttribute("aria-selected", "true");
+    expect(link(4)).toHaveAttribute("aria-current", "location");
   });
 
-  it("scrolls to the section on click and activates that step at once", async () => {
+  it("scrolls to the section exactly once on click and activates that step at once", async () => {
     render(<ReportStepper steps={REPORT_STEPS} />);
-    await userEvent.click(tab(6));
+    await userEvent.click(link(6));
     const target = document.getElementById("sec-6")!;
+    expect(target.scrollIntoView).toHaveBeenCalledTimes(1);
     expect(target.scrollIntoView).toHaveBeenCalledWith({ behavior: "smooth", block: "start" });
-    expect(tab(6)).toHaveAttribute("aria-selected", "true");
-    expect(tab(5)).toHaveAttribute("data-state", "completed");
+    expect(link(6)).toHaveAttribute("aria-current", "location");
+    expect(link(5)).toHaveAttribute("data-state", "completed");
   });
 
   it("disconnects the observer on unmount", () => {

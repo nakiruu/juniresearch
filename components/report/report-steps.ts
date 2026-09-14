@@ -30,4 +30,8 @@ export const REPORT_STEPS: readonly ReportStep[] = DEFS.map(([title, label], i) 
   label,
 }));
 
-export const stepFor = (n: number): ReportStep => REPORT_STEPS[n - 1];
+export function stepFor(n: number): ReportStep {
+  const step = REPORT_STEPS[n - 1];
+  if (!step) throw new Error(`No report step ${n}; sections are numbered 1–${REPORT_STEPS.length}`);
+  return step;
+}

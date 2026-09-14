@@ -8,19 +8,23 @@
  * active step follows the reader: an IntersectionObserver watches every section
  * against a thin band near the top of the viewport, and the section overlapping
  * that band is "where the reader is". Steps above it read as completed.
- * Clicking a step smooth-scrolls to its section; the triggers are real anchors
- * so the links work without JavaScript.
+ * Clicking a step smooth-scrolls to its section.
+ *
+ * Semantics: this is in-page navigation, not a wizard, so it is a `navigation`
+ * landmark holding plain links with `aria-current="location"` on the active
+ * one — the ReUI primitives supply the step state, indicator and separator
+ * styling; their tab-role trigger is not used.
  *
  * Every Tailwind class is written out in full: the scanner only generates
  * utilities it can read verbatim from the source.
  */
-import { useEffect, useState, type MouseEvent } from "react";
+import { useEffect, useState, type MouseEvent, type ReactNode } from "react";
 import {
   Stepper,
   StepperIndicator,
   StepperItem,
   StepperSeparator,
-  StepperTrigger,
+  useStepItem,
 } from "@/components/reui/stepper";
 import type { ReportStep } from "./report-steps";
 
@@ -62,13 +66,15 @@ const SHELL =
   "min-[1280px]:inset-auto min-[1280px]:top-[4.75rem] min-[1280px]:left-[calc(50%+474px)] min-[1280px]:w-[150px] " +
   "min-[1280px]:border-0 min-[1280px]:bg-transparent min-[1280px]:p-0 min-[1280px]:backdrop-blur-none";
 
-const NAV = "flex flex-row items-center min-[1280px]:flex-col min-[1280px]:items-start";
+const LIST = "flex flex-row items-center min-[1280px]:flex-col min-[1280px]:items-start";
 
 const ITEM =
   "relative flex-row items-center not-last:flex-1 " +
   "min-[1280px]:flex-col min-[1280px]:items-start min-[1280px]:not-last:flex-none";
 
-const TRIGGER = "gap-2.5 rounded-none no-underline min-[1280px]:pb-7";
+const LINK =
+  "inline-flex items-center gap-2.5 no-underline outline-none " +
+  "focus-visible:ring-3 focus-visible:ring-ring/50 min-[1280px]:pb-7";
 
 const INDICATOR =
   "size-6 rounded-none font-mono text-[11px] font-bold " +
@@ -88,6 +94,36 @@ const SEPARATOR =
 
 const CAPTION = "mt-1.5 truncate text-center font-sans text-[11px] text-muted min-[1280px]:hidden";
 
+/** A step's link; reads its state from the enclosing StepperItem. */
+function StepLink({
+  step,
+  onJump,
+  children,
+}: {
+  step: ReportStep;
+  onJump: (n: number) => void;
+  children: ReactNode;
+}) {
+  const { state } = useStepItem();
+  const onClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    onJump(step.n);
+  };
+  return (
+    <a
+      href={`#${step.id}`}
+      aria-label={step.title}
+      aria-controls={step.id}
+      aria-current={state === "active" ? "location" : undefined}
+      data-state={state}
+      className={LINK}
+      onClick={onClick}
+    >
+      {children}
+    </a>
+  );
+}
+
 export function ReportStepper({ steps }: { steps: readonly ReportStep[] }) {
   const [active, setActive] = useActiveStep(steps);
   const current = steps.find((s) => s.n === active) ?? steps[0];
@@ -97,25 +133,28 @@ export function ReportStepper({ steps }: { steps: readonly ReportStep[] }) {
     const step = steps.find((s) => s.n === n);
     if (step) document.getElementById(step.id)?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
-  const keepInPage = (e: MouseEvent<HTMLAnchorElement>) => e.preventDefault();
 
   return (
     <div data-testid="report-stepper" className={SHELL}>
-      <Stepper value={active} onValueChange={jump} orientation="vertical" aria-label="Report sections">
-        <nav aria-label="Sections" className={NAV}>
+      <Stepper
+        value={active}
+        onValueChange={jump}
+        orientation="vertical"
+        role="navigation"
+        aria-orientation={undefined}
+        aria-label="Report sections"
+      >
+        <div className={LIST}>
           {steps.map((s, i) => (
             <StepperItem key={s.id} step={s.n} className={ITEM}>
-              <StepperTrigger
-                render={<a href={`#${s.id}`} aria-label={s.title} aria-controls={s.id} onClick={keepInPage} />}
-                className={TRIGGER}
-              >
+              <StepLink step={s} onJump={jump}>
                 <StepperIndicator className={INDICATOR}>{s.n}</StepperIndicator>
                 <span className={LABEL}>{s.label}</span>
-              </StepperTrigger>
+              </StepLink>
               {i < steps.length - 1 && <StepperSeparator className={SEPARATOR} />}
             </StepperItem>
           ))}
-        </nav>
+        </div>
       </Stepper>
       <div data-testid="stepper-caption" className={CAPTION}>
         {current.title}
