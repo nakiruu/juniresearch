@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { ReportStepper } from "@/components/report/ReportStepper";
+import { ReportStepper, JUMP_PIN_MS } from "@/components/report/ReportStepper";
 import { REPORT_STEPS } from "@/components/report/report-steps";
 
 type Entry = { target: Element; isIntersecting: boolean };
@@ -113,6 +113,43 @@ describe("ReportStepper", () => {
     expect(target.scrollIntoView).toHaveBeenCalledWith({ behavior: "smooth", block: "start" });
     expect(link(6)).toHaveAttribute("aria-current", "location");
     expect(link(5)).toHaveAttribute("data-state", "completed");
+  });
+
+  it("shows a check on completed steps and the number on the active one", () => {
+    render(<ReportStepper steps={REPORT_STEPS} />);
+    intersect("sec-3");
+    expect(link(1).querySelector("svg")).not.toBeNull();
+    expect(link(2).querySelector("svg")).not.toBeNull();
+    expect(link(3).querySelector("svg")).toBeNull();
+    expect(link(3)).toHaveTextContent("3");
+    expect(link(4).querySelector("svg")).toBeNull();
+  });
+
+  it("ignores the sections a click-scroll passes through until the target arrives", async () => {
+    render(<ReportStepper steps={REPORT_STEPS} />);
+    await userEvent.click(link(6));
+    intersect("sec-2");
+    intersect("sec-4");
+    expect(link(6)).toHaveAttribute("aria-current", "location");
+    intersect("sec-6");
+    expect(link(6)).toHaveAttribute("aria-current", "location");
+    intersect("sec-7");
+    expect(link(7)).toHaveAttribute("aria-current", "location");
+  });
+
+  it("tracks manual scrolling again once the click pin expires", async () => {
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    try {
+      render(<ReportStepper steps={REPORT_STEPS} />);
+      await userEvent.click(link(6));
+      intersect("sec-2");
+      expect(link(6)).toHaveAttribute("aria-current", "location");
+      await act(async () => { await vi.advanceTimersByTimeAsync(JUMP_PIN_MS + 1); });
+      intersect("sec-2");
+      expect(link(2)).toHaveAttribute("aria-current", "location");
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it("disconnects the observer on unmount", () => {

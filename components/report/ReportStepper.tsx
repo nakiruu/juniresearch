@@ -7,8 +7,13 @@
  * bar of numbered squares with the active title beneath (below that). The
  * active step follows the reader: an IntersectionObserver watches every section
  * against a thin band near the top of the viewport, and the section overlapping
- * that band is "where the reader is". Steps above it read as completed.
- * Clicking a step smooth-scrolls to its section.
+ * that band is "where the reader is". Steps above it read as completed and show
+ * a check; the active one keeps its number and a halo.
+ *
+ * Clicking a step smooth-scrolls to its section. While that scroll is in
+ * flight the observer would otherwise walk the active step through every
+ * section it passes, so a click pins the target until the observer reports it
+ * (or a short timeout expires, after which manual scrolling is tracked again).
  *
  * Semantics: this is in-page navigation, not a wizard, so it is a `navigation`
  * landmark holding plain links with `aria-current="location"` on the active
@@ -18,7 +23,8 @@
  * Every Tailwind class is written out in full: the scanner only generates
  * utilities it can read verbatim from the source.
  */
-import { useEffect, useState, type MouseEvent, type ReactNode } from "react";
+import { useEffect, useRef, useState, type MouseEvent, type ReactNode } from "react";
+import { Check } from "lucide-react";
 import {
   Stepper,
   StepperIndicator,
@@ -30,9 +36,14 @@ import type { ReportStep } from "./report-steps";
 
 /** The viewport band (24%–34% from the top) that decides the active section. */
 const BAND = "-24% 0px -66% 0px";
+/** How long a click keeps its target pinned if the observer never reports it. */
+export const JUMP_PIN_MS = 2000;
 
 function useActiveStep(steps: readonly ReportStep[]) {
   const [active, setActive] = useState(1);
+  const pinned = useRef<number | null>(null);
+  const pinTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   useEffect(() => {
     if (typeof IntersectionObserver === "undefined") return;
     const byId = new Map(steps.map((s) => [s.id, s.n]));
@@ -46,16 +57,36 @@ function useActiveStep(steps: readonly ReportStep[]) {
           .filter((e) => e.isIntersecting)
           .map((e) => byId.get(e.target.id))
           .filter((n): n is number => n != null);
+        if (!hits.length) return;
+        // A click-scroll in flight: ignore the sections it passes through.
+        if (pinned.current != null) {
+          if (!hits.includes(pinned.current)) return;
+          pinned.current = null;
+          if (pinTimer.current) clearTimeout(pinTimer.current);
+        }
         // Two sections can share the band at their boundary; the later one is
         // the one the reader is entering.
-        if (hits.length) setActive(Math.max(...hits));
+        setActive(Math.max(...hits));
       },
       { rootMargin: BAND, threshold: 0 },
     );
     els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
+    return () => {
+      io.disconnect();
+      if (pinTimer.current) clearTimeout(pinTimer.current);
+    };
   }, [steps]);
-  return [active, setActive] as const;
+
+  const jumpTo = (n: number) => {
+    setActive(n);
+    pinned.current = n;
+    if (pinTimer.current) clearTimeout(pinTimer.current);
+    pinTimer.current = setTimeout(() => {
+      pinned.current = null;
+    }, JUMP_PIN_MS);
+  };
+
+  return [active, jumpTo] as const;
 }
 
 const SHELL =
@@ -77,10 +108,11 @@ const LINK =
   "focus-visible:ring-3 focus-visible:ring-ring/50 min-[1280px]:pb-7";
 
 const INDICATOR =
-  "size-6 rounded-none font-mono text-[11px] font-bold " +
+  "size-6 rounded-none font-mono text-[11px] font-bold transition-colors " +
   "bg-surface text-muted ring-1 ring-hairline " +
-  "data-[state=active]:bg-accent data-[state=active]:text-page data-[state=active]:ring-accent " +
-  "data-[state=completed]:bg-accent data-[state=completed]:text-page data-[state=completed]:ring-accent";
+  "data-[state=completed]:bg-accent data-[state=completed]:text-page data-[state=completed]:ring-accent " +
+  "data-[state=active]:bg-accent data-[state=active]:text-page data-[state=active]:ring-2 " +
+  "data-[state=active]:ring-accent data-[state=active]:ring-offset-2 data-[state=active]:ring-offset-page";
 
 const LABEL =
   "hidden whitespace-nowrap font-sans text-xs font-medium text-muted " +
@@ -93,6 +125,8 @@ const SEPARATOR =
   "min-[1280px]:h-[calc(100%-2rem)] min-[1280px]:w-px min-[1280px]:flex-none min-[1280px]:-translate-x-1/2";
 
 const CAPTION = "mt-1.5 truncate text-center font-sans text-[11px] text-muted min-[1280px]:hidden";
+
+const INDICATORS = { completed: <Check className="size-3.5" strokeWidth={3} aria-hidden /> };
 
 /** A step's link; reads its state from the enclosing StepperItem. */
 function StepLink({
@@ -125,11 +159,11 @@ function StepLink({
 }
 
 export function ReportStepper({ steps }: { steps: readonly ReportStep[] }) {
-  const [active, setActive] = useActiveStep(steps);
+  const [active, jumpTo] = useActiveStep(steps);
   const current = steps.find((s) => s.n === active) ?? steps[0];
 
   const jump = (n: number) => {
-    setActive(n);
+    jumpTo(n);
     const step = steps.find((s) => s.n === n);
     if (step) document.getElementById(step.id)?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
@@ -140,6 +174,7 @@ export function ReportStepper({ steps }: { steps: readonly ReportStep[] }) {
         value={active}
         onValueChange={jump}
         orientation="vertical"
+        indicators={INDICATORS}
         role="navigation"
         aria-orientation={undefined}
         aria-label="Report sections"
