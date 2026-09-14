@@ -47,32 +47,49 @@ function useActiveStep(steps: readonly ReportStep[]) {
   useEffect(() => {
     if (typeof IntersectionObserver === "undefined") return;
     const byId = new Map(steps.map((s) => [s.id, s.n]));
-    const els = steps
-      .map((s) => document.getElementById(s.id))
-      .filter((el): el is HTMLElement => el != null);
-    if (!els.length) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        const hits = entries
-          .filter((e) => e.isIntersecting)
-          .map((e) => byId.get(e.target.id))
-          .filter((n): n is number => n != null);
-        if (!hits.length) return;
-        // A click-scroll in flight: ignore the sections it passes through.
-        if (pinned.current != null) {
-          if (!hits.includes(pinned.current)) return;
-          pinned.current = null;
-          if (pinTimer.current) clearTimeout(pinTimer.current);
+    let io: IntersectionObserver | null = null;
+    let waiting: MutationObserver | null = null;
+
+    const onEntries = (entries: IntersectionObserverEntry[]) => {
+      const hits = entries
+        .filter((e) => e.isIntersecting)
+        .map((e) => byId.get(e.target.id))
+        .filter((n): n is number => n != null);
+      if (!hits.length) return;
+      // A click-scroll in flight: ignore the sections it passes through.
+      if (pinned.current != null) {
+        if (!hits.includes(pinned.current)) return;
+        pinned.current = null;
+        if (pinTimer.current) clearTimeout(pinTimer.current);
+      }
+      // Two sections can share the band at their boundary; the later one is
+      // the one the reader is entering.
+      setActive(Math.max(...hits));
+    };
+
+    // Attach once every section exists. With streamed HTML this island can
+    // hydrate before the sections below it are parsed (slow links, Safari),
+    // so a missing section means "not yet", not "never".
+    const attach = () => {
+      const els = steps.map((s) => document.getElementById(s.id));
+      if (els.some((el) => el == null)) return false;
+      io = new IntersectionObserver(onEntries, { rootMargin: BAND, threshold: 0 });
+      for (const el of els) io.observe(el!);
+      return true;
+    };
+    if (!attach() && typeof MutationObserver !== "undefined") {
+      waiting = new MutationObserver(() => {
+        if (attach()) {
+          waiting?.disconnect();
+          waiting = null;
         }
-        // Two sections can share the band at their boundary; the later one is
-        // the one the reader is entering.
-        setActive(Math.max(...hits));
-      },
-      { rootMargin: BAND, threshold: 0 },
-    );
-    els.forEach((el) => io.observe(el));
+      });
+      waiting.observe(document.body, { childList: true, subtree: true });
+    }
+
     return () => {
-      io.disconnect();
+      io?.disconnect();
+      waiting?.disconnect();
       if (pinTimer.current) clearTimeout(pinTimer.current);
     };
   }, [steps]);

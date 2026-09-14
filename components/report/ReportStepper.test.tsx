@@ -152,6 +152,17 @@ describe("ReportStepper", () => {
     }
   });
 
+  it("waits for sections that are parsed after it hydrates, then tracks them", async () => {
+    document.getElementById("sections")?.remove();
+    render(<ReportStepper steps={REPORT_STEPS} />);
+    expect(observed).toHaveLength(0);
+    // MutationObserver delivers on a microtask; the async act flushes it.
+    await act(async () => { mountSections(); });
+    expect(observed.map((el) => el.id)).toEqual(REPORT_STEPS.map((s) => s.id));
+    intersect("sec-2");
+    expect(link(2)).toHaveAttribute("aria-current", "location");
+  });
+
   it("disconnects the observer on unmount", () => {
     const { unmount } = render(<ReportStepper steps={REPORT_STEPS} />);
     expect(observed).toHaveLength(8);

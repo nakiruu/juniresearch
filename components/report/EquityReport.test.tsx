@@ -28,6 +28,14 @@ describe("EquityReport", () => {
     }
   });
 
+  it("renders the section stepper after the report column, with an anchor per numbered section", () => {
+    const { container } = render(<EquityReport data={report} />);
+    const stepper = screen.getByRole("navigation", { name: "Report sections" });
+    expect(container.lastElementChild).toContainElement(stepper);
+    for (let n = 1; n <= 8; n++) expect(container.querySelector(`section#sec-${n}`)).not.toBeNull();
+    expect(screen.getAllByRole("link", { name: /^\d\. / })).toHaveLength(8);
+  });
+
   it("renders the chart once per layout", () => {
     const { container } = render(<EquityReport data={report} />);
     expect(container.querySelectorAll("svg[role='img']")).toHaveLength(2);

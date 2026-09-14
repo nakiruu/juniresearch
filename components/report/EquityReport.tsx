@@ -35,7 +35,6 @@ export default function EquityReport({ data }: { data: Report }) {
 
   return (
     <>
-    <ReportStepper steps={REPORT_STEPS} />
     <div className="report-prose mx-auto max-w-[900px] px-7 pt-11 pb-28 min-[1280px]:pb-20">
       <ReportHeader meta={m} />
       <Snapshot cells={data.snapshot} />
@@ -81,6 +80,9 @@ export default function EquityReport({ data }: { data: Report }) {
         Form {m.filing.form} (accession {m.filing.accession})
       </div>
     </div>
+    {/* After the column on purpose: the stepper's sections are then already
+        parsed when this client island hydrates, even on a streamed, slow load. */}
+    <ReportStepper steps={REPORT_STEPS} />
     </>
   );
 }
