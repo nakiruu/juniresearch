@@ -7,7 +7,7 @@
  */
 import { z } from "zod";
 
-export const FACTPACK_SCHEMA_VERSION = "1.1.0";
+export const FACTPACK_SCHEMA_VERSION = "1.2.0";
 
 const ratio = z.number();
 const nullableNum = z.number().nullable();
@@ -85,6 +85,7 @@ export const FactPack = z.object({
     riskFactorsExcerpt: Excerpt.nullable(),
     riskFactorsSource: z.enum(["10-Q", "10-K"]).nullable(),
     pressRelease: Excerpt.nullable(),
+    proxyStatement: Excerpt.nullable(),
     transcriptHighlights: Excerpt.nullable(),
     headlines: z.array(Excerpt).max(10),
   }),

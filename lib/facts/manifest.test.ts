@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import {
-  MANIFEST, renderManifest, requiredRawFiles, missingRawFiles, CODE_FETCHED_FILES, OPTIONAL_FILES, PHASE_INPUT_FILES,
+  MANIFEST, renderManifest, requiredRawFiles, missingRawFiles, CODE_FETCHED_FILES, OPTIONAL_FILES, PHASE_INPUT_FILES, PROXY_FILE,
   PRESS_RELEASE_FILE, PRESS_RELEASE_MISSING_FILE, isoMinusDays,
 } from "@/lib/facts/manifest";
 
@@ -87,5 +87,13 @@ describe("manifest / mapper closure", () => {
       ...OPTIONAL_FILES,
     ]);
     expect([...read].sort()).toEqual([...captured].sort());
+  });
+});
+
+describe("the proxy statement is optional", () => {
+  it("is listed in OPTIONAL_FILES and never demanded by --check", () => {
+    expect(PROXY_FILE).toBe("edgar-proxy.html");
+    expect(OPTIONAL_FILES).toContain(PROXY_FILE);
+    expect(requiredRawFiles({ ticker: "ORCL", company: "Oracle", periodEnd: "2026-08-31", today: "2026-09-14" } as never)).not.toContain(PROXY_FILE);
   });
 });

@@ -41,6 +41,7 @@ describe("mapContext on the AVGO capture", () => {
     expect(bare.headlines).toEqual([]);
     expect(bare.transcriptHighlights).toBeNull();
     expect(bare.pressRelease).toBeNull();
+    expect(bare.proxyStatement).toBeNull();
   });
   it("keeps its own risk factors as the source since they are longer than the prior 10-K's", () => {
     expect(c.riskFactorsSource).toBe("10-Q");
@@ -98,5 +99,20 @@ describe("mapContext on the ORCL FY26 10-K capture", () => {
   it("captures the June 10 earnings press release", () => {
     expect(c.pressRelease).not.toBeNull();
     expect(c.pressRelease!.asOf).toBe("2026-06-10");
+  });
+});
+
+describe("mapContext carries the proxy statement when captured", () => {
+  const withProxy = { ...filing, proxyStatement: { url: "https://www.sec.gov/Archives/edgar/data/1341439/000119312525209/def14a.htm", filedDate: "2025-09-26" } };
+  it("is null on the AVGO capture, which has no proxy file", () => {
+    expect(mapContext(DIR, withProxy, "2026-09-13T03:18:05Z", desc).proxyStatement).toBeNull();
+  });
+  it("maps the three governance sections into one sourced excerpt dated by the proxy's filing", () => {
+    const c = mapContext("lib/facts/map/__fixtures__/proxy", withProxy, "2026-09-13T03:18:05Z", desc);
+    expect(c.proxyStatement).toMatchObject({ source: "edgar:DEF 14A", url: withProxy.proxyStatement.url, asOf: "2025-09-26", truncated: false });
+    expect(c.proxyStatement!.text).toContain("Compensation discussion and analysis:");
+    expect(c.proxyStatement!.text).toContain("total compensation of $9,876,543");
+    expect(c.proxyStatement!.text).toContain("Board and director independence:");
+    expect(c.proxyStatement!.text).toContain("Security ownership and related-person transactions:");
   });
 });

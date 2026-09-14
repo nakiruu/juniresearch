@@ -58,6 +58,9 @@ export const findEarningsRelease = (recent: RecentFiling[], filedOnOrBefore: str
   recent.find((f) => f.form === "8-K" && f.items.includes("2.02") && f.filedDate <= filedOnOrBefore) ?? null;
 export const findLatestAnnual = (recent: RecentFiling[], filedOnOrBefore: string) =>
   recent.find((f) => f.form === "10-K" && f.filedDate <= filedOnOrBefore) ?? null;
+/** The definitive proxy statement (DEF 14A) — additional materials (DEFA14A) are not the governance source. */
+export const findLatestProxy = (recent: RecentFiling[], filedOnOrBefore: string) =>
+  recent.find((f) => f.form === "DEF 14A" && f.filedDate <= filedOnOrBefore) ?? null;
 
 const indexUrl = (cik: number, accession: string) => `https://www.sec.gov/Archives/edgar/data/${cik}/${accession.replace(/-/g, "")}/index.json`;
 export async function fetchFilingIndex(cik: number, accession: string, contact: string, fetchImpl: FetchLike = fetch): Promise<{ name: string }[]> {

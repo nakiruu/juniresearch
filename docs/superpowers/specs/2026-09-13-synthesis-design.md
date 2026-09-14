@@ -233,7 +233,10 @@ derived from market cap (`sharesSource`). A new "### Highlight cells you may
 add (up to four, by key)" list enumerates every `HIGHLIGHT_KEYS` entry whose
 cell is available in this FactPack, `key: label = formatted value` per line,
 so the model picks from what actually exists rather than guessing a key.
-`renderContextBlock` renders the earnings press release excerpt (when
+`renderContextBlock` renders the proxy statement excerpt (`context.proxyStatement`,
+FactPack 1.2) between the press release and the transcript, and the
+contract tells the author that governance claims rest on it; it also
+renders the earnings press release excerpt (when
 captured) ahead of transcript highlights. The `# Calls` section also now
 notes that scenario probabilities are quotable as percentages (e.g. 48%),
 alongside the target range and its upside range, each scenario's weighted

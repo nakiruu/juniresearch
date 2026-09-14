@@ -449,6 +449,34 @@ coverage, FCF yield, current ratio, and latest-FY gross margin — each present
 only when its underlying figure is non-null. See the synthesis spec's
 "Highlight cells" section for how the model selects among them.
 
+## Revision 2026-09-14 — the governance source
+
+The regenerated Oracle report lost its governance judgment for want of a
+source: a 10-Q carries no board, pay or ownership disclosure, and the 10-K
+incorporates those items (Part III) from the proxy statement by reference.
+So `facts:prepare` now also fetches the latest definitive proxy statement
+(`DEF 14A`, never the additional-materials `DEFA14A`) filed on or before the
+report's filing, as the optional `edgar-proxy.html` (`OPTIONAL_FILES`; no
+`.missing` marker, `--check` never demands it), and records it in
+`edgar-filing.json.proxyStatement`.
+
+`lib/edgar/filing-text.ts` extracts three governance sections by their
+titles at a line start (proxies have no `Item N` skeleton): director
+independence / board, Compensation Discussion and Analysis, and security
+ownership with related-person transactions. Each candidate runs to the next
+known proxy heading that does not belong inside it, and the longest candidate
+wins (a contents entry ends at the next contents line; the body does not).
+`proxyExcerpt` joins the present sections under fixed labels, each capped at
+its own budget (`PROXY_CAPS`: board 3,000, pay 5,000, ownership 4,000).
+
+FactPack `1.2.0` adds `context.proxyStatement` (an `Excerpt`, source
+`edgar:DEF 14A`, dated by the proxy's filing, nullable) — every built pack
+states whether it has one. The prompt renders it under Context, the grounding
+index includes it, and the authoring contract says governance claims rest on
+it or the section says the pack carries none. A re-run of `facts:prepare` no
+longer rewrites `yahoo-history.json` when it is present, so re-capturing a
+filing only adds what is missing.
+
 ## Out of scope
 
 - Scheduling and unattended runs — blocked on the API-key migration (decision 1)

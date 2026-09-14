@@ -74,6 +74,7 @@ export function renderContextBlock(pack: FactPack): string {
     ex("MD&A", c.mdaExcerpt),
     ex("Risk factors", c.riskFactorsExcerpt),
     ex("Earnings press release", c.pressRelease),
+    ex("Proxy statement", c.proxyStatement),
     ex("Transcript highlights", c.transcriptHighlights),
     `### Headlines\n${headlines}`,
   ].join("\n\n");
@@ -84,7 +85,8 @@ const CONTRACT = `- Write Markdown using only: **bold**, "### " or "#### " at th
 - Quote figures exactly as they appear in the Facts or Context blocks below — the same rounding, the same unit. Never compute a new figure, never recall one from memory. A figure that appears in neither block fails validation.
 - Do not write null anywhere; omit an optional field instead.
 - Keep every field within its schema bounds; the page has a fixed shape.
-- Order your thinking as the schema orders the fields: rating and scenarios first, then the prose that argues for them.`;
+- Order your thinking as the schema orders the fields: rating and scenarios first, then the prose that argues for them.
+- Governance claims (board composition and independence, executive pay, insider ownership, related-party dealings) rest on the proxy statement excerpt in Context; when the pack carries no proxy statement, say so in the governance section rather than inferring.`;
 
 const CALLS = `- Scenarios: exactly three, named exactly \`Bull\`, \`Base\`, \`Bear\`, with implied prices Bull ≥ Base ≥ Bear and probabilities that sum to 1.
 - Target range: \`targetLow\` < \`targetHigh\`, and the range must bracket the Base implied price.

@@ -63,7 +63,7 @@ describe("the allowed index on the AVGO FactPack", () => {
     // "$16.7 billion" would also round from FY22 operating cash flow (16.736B) — a numeric index cannot attribute,
     // so the transcript-only case uses guided Q4 AI revenue, which no FactPack number rounds to.
     expect(ok("management guided Q4 AI revenue to $21.7 billion")).toEqual([]);
-    const noContext = { ...pack, context: { description: { ...pack.context.description, text: "" }, mdaExcerpt: null, riskFactorsExcerpt: null, riskFactorsSource: null, pressRelease: null, transcriptHighlights: null, headlines: [] } };
+    const noContext = { ...pack, context: { description: { ...pack.context.description, text: "" }, mdaExcerpt: null, riskFactorsExcerpt: null, riskFactorsSource: null, pressRelease: null, proxyStatement: null, transcriptHighlights: null, headlines: [] } };
     expect(buildAllowedIndex(noContext, []).has(numericTokens("$21.7 billion")[0])).toBe(false);
   });
   it("rejects a figure that is nowhere in the facts or the context, naming the field and the token", () => {
@@ -98,5 +98,18 @@ describe("stringLeaves", () => {
     expect(stringLeaves({ a: { b: ["x", "y"] }, c: 1, d: "z" })).toEqual([
       { path: "a.b[0]", text: "x" }, { path: "a.b[1]", text: "y" }, { path: "d", text: "z" },
     ]);
+  });
+});
+
+describe("the proxy statement is indexed for grounding", () => {
+  const orclPack = FactPack.parse(JSON.parse(readFileSync("data/facts/ORCL/0001193125-26-389274.json", "utf8")));
+  const proxyStatement = { text: "Compensation discussion and analysis:\nThe CEO's total compensation was $138,713,110 for fiscal 2025.", source: "edgar:DEF 14A", asOf: "2025-09-26" };
+  it("accepts a figure that appears only in the proxy excerpt", () => {
+    const index = buildAllowedIndex({ ...orclPack, context: { ...orclPack.context, proxyStatement } }, []);
+    expect(checkGrounding({ p: "total compensation of $138,713,110" }, index)).toEqual([]);
+  });
+  it("rejects it when the pack carries no proxy", () => {
+    const index = buildAllowedIndex({ ...orclPack, context: { ...orclPack.context, proxyStatement: null } }, []);
+    expect(checkGrounding({ p: "total compensation of $138,713,110" }, index)).toHaveLength(1);
   });
 });

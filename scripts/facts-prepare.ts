@@ -1,14 +1,14 @@
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import {
-  parseSubmissions, parseRecent, findEarningsRelease, findLatestAnnual,
+  parseSubmissions, parseRecent, findEarningsRelease, findLatestAnnual, findLatestProxy,
   fetchFilingIndex, exhibit99Url, fetchEdgarDocument, filingUrl, submissionsUrl, type RecentFiling, type RecentBody,
 } from "../lib/edgar/submissions";
 import { fetchPrimaryDocument } from "../lib/edgar/filing-text";
 import { edgarJson, sleep, EDGAR_MIN_INTERVAL_MS } from "../lib/edgar/client";
 import type { WatchEntry } from "../lib/edgar/detect";
 import { fetchDailyCloses } from "../lib/prices/yahoo";
-import { isoMinusDays, PRESS_RELEASE_FILE, PRESS_RELEASE_MISSING_FILE, ANNUAL_PRIMARY_FILE } from "../lib/facts/manifest";
+import { isoMinusDays, PRESS_RELEASE_FILE, PRESS_RELEASE_MISSING_FILE, ANNUAL_PRIMARY_FILE, PROXY_FILE } from "../lib/facts/manifest";
 import { requireContact } from "./_env";
 
 interface DocRef { accession: string; filedDate: string; url: string }
@@ -104,14 +104,39 @@ if (filing.form === "10-Q") {
   }
 }
 
+// Latest definitive proxy statement (DEF 14A) filed on or before this filing: the governance source.
+let proxyStatement: DocRef | null = null;
+const px = findLatestProxy(recent, filing.filedDate);
+if (px) {
+  const pxUrl = filingUrl(cik, px.accession, px.primaryDocument);
+  proxyStatement = { accession: px.accession, filedDate: px.filedDate, url: pxUrl };
+  const pxPath = join(dir, PROXY_FILE);
+  if (!existsSync(pxPath)) {
+    await sleep(EDGAR_MIN_INTERVAL_MS);
+    writeFileSync(pxPath, await fetchPrimaryDocument(pxUrl, contact));
+    notes.push(PROXY_FILE);
+  } else {
+    notes.push(`${PROXY_FILE} (already present)`);
+  }
+} else {
+  notes.push("no proxy statement found");
+}
+
 writeFileSync(
   join(dir, "edgar-filing.json"),
-  JSON.stringify({ ...filing, ticker, cik, company, pressRelease, annualReport }, null, 2) + "\n",
+  JSON.stringify({ ...filing, ticker, cik, company, pressRelease, annualReport, proxyStatement }, null, 2) + "\n",
 );
 
 const today = new Date().toISOString().slice(0, 10);
-writeFileSync(join(dir, "yahoo-history.json"), await fetchDailyCloses(ticker, isoMinusDays(filing.periodEnd, 45), today));
+// A re-run adds what is missing; it must not move the captured price history under a built report.
+const yahooPath = join(dir, "yahoo-history.json");
+if (!existsSync(yahooPath)) {
+  writeFileSync(yahooPath, await fetchDailyCloses(ticker, isoMinusDays(filing.periodEnd, 45), today));
+  notes.push("yahoo-history.json");
+} else {
+  notes.push("yahoo-history.json (already present)");
+}
 if (!existsSync(join(dir, "capture.json"))) writeFileSync(join(dir, "capture.json"), `{ "capturedAt": "${new Date().toISOString()}" }\n`);
 
 console.log(`Prepared ${dir}:`);
-console.log(`  edgar-filing.json, ${notes.join(", ")}, yahoo-history.json, capture.json (${isoMinusDays(filing.periodEnd, 45)} → ${today})`);
+console.log(`  edgar-filing.json, ${notes.join(", ")}, capture.json (history window ${isoMinusDays(filing.periodEnd, 45)} → ${today})`);

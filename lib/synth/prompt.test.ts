@@ -94,3 +94,22 @@ describe("renderPrompt", () => {
     expect(a.length).toBeLessThan(90000);
   });
 });
+
+describe("the proxy statement in the prompt", () => {
+  it("renders (not captured) when the pack has none, between the press release and the transcript", () => {
+    const ctx = renderContextBlock({ ...pack, context: { ...pack.context, proxyStatement: null } });
+    expect(ctx).toContain("### Proxy statement\n(not captured)");
+    expect(ctx.indexOf("### Proxy statement")).toBeGreaterThan(ctx.indexOf("### Earnings press release"));
+    expect(ctx.indexOf("### Proxy statement")).toBeLessThan(ctx.indexOf("### Transcript highlights"));
+  });
+  it("renders the captured excerpt with its source and filing date", () => {
+    const proxyStatement = { text: "Board and director independence:\nEleven of twelve directors are independent.", source: "edgar:DEF 14A", asOf: "2025-09-26", truncated: true };
+    const ctx = renderContextBlock({ ...pack, context: { ...pack.context, proxyStatement } });
+    expect(ctx).toMatch(/### Proxy statement \(edgar:DEF 14A, 2025-09-26, truncated\)\nBoard and director independence:/);
+  });
+  it("tells the author that governance claims rest on the proxy statement", () => {
+    const p = renderPrompt(pack, facts, desk);
+    expect(p).toMatch(/Governance claims[^\n]*proxy statement/);
+    expect(p).toMatch(/no proxy statement[^\n]*say so/i);
+  });
+});

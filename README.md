@@ -56,7 +56,9 @@ Numbers come from Bigdata.com company tearsheets (which proxy FMP data) and peer
 and a REST `FactSource`; see the spec's "FactSource seam". `facts:prepare` also discovers the earnings 8-K's exhibit 99.1 (writing a
 `.missing` marker when none exists), feeding `context.pressRelease`, and, for a 10-Q, fetches the prior 10-K's primary document
 solely to arbitrate which filing's Risk Factors excerpt is longer (`context.riskFactorsSource`); FactPack 1.1's leverage ratios
-and capital-return rows come from the Bigdata tearsheet, not from EDGAR.
+and capital-return rows come from the Bigdata tearsheet, not from EDGAR. FactPack 1.2 adds the governance source: the latest
+definitive proxy statement (DEF 14A) filed on or before the filing is captured as the optional `edgar-proxy.html`, and its board,
+pay and ownership sections become `context.proxyStatement`, the only surface governance claims may rest on.
 
 ---
 

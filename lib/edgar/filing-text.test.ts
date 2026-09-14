@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync, existsSync } from "node:fs";
-import { htmlToText, capAtSentence, extractSections, extractCoverShares, EXCERPT_CAP, MDA_CAP } from "@/lib/edgar/filing-text";
+import { htmlToText, capAtSentence, extractSections, extractCoverShares, extractProxySections, proxyExcerpt, EXCERPT_CAP, MDA_CAP, PROXY_CAPS } from "@/lib/edgar/filing-text";
 
 const html = readFileSync("data/raw/AVGO/0001730168-26-000080/edgar-primary.html", "utf8");
 const text = htmlToText(html);
@@ -141,5 +141,86 @@ describe("extractCoverShares on the ORCL FY26 10-K (real filing)", () => {
     const orclHtml = readFileSync(orclPath, "utf8");
     const orclText = htmlToText(orclHtml);
     expect(extractCoverShares(orclText)).toBe(2880471000);
+  });
+});
+
+describe("extractProxySections on a synthetic DEF 14A", () => {
+  const filler = (n: number, seed: string) => Array.from({ length: n }, (_, i) => `${seed} sentence ${i + 1}.`).join(" ");
+  const proxy = [
+    "TABLE OF CONTENTS",
+    "Corporate Governance 12",
+    "Compensation Discussion and Analysis 40",
+    "Security Ownership of Certain Beneficial Owners and Management 88",
+    "Transactions with Related Persons 92",
+    "",
+    "CORPORATE GOVERNANCE",
+    "Director Independence",
+    filler(20, "The Board has determined that each non-employee director is independent"),
+    "Board Committees",
+    filler(10, "The Audit Committee met nine times"),
+    "",
+    "C ompensation D iscussion and A nalysis",
+    filler(60, "Our executive compensation program ties pay to performance"),
+    "Compensation Committee Report",
+    filler(5, "The Compensation Committee has reviewed the CD&A"),
+    "",
+    "Security Ownership of Certain Beneficial Owners and Management",
+    filler(25, "The following table shows beneficial ownership as of the record date"),
+    "Transactions with Related Persons",
+    filler(15, "Our Related Person Transactions Policy requires approval by the Audit Committee"),
+    "Delinquent Section 16(a) Reports",
+    filler(4, "Based on our review no reports were late"),
+  ].join("\n");
+
+  const sections = extractProxySections(proxy);
+  it("finds the body of each governance section, not its table-of-contents entry, tolerating letter-spaced headings", () => {
+    expect(sections.compensation).toMatch(/^C ompensation D iscussion/);
+    expect(sections.compensation).toContain("ties pay to performance sentence 60.");
+    expect(sections.compensation).not.toContain("Compensation Committee has reviewed");
+    expect(sections.board).toMatch(/^Director Independence/);
+    expect(sections.board).toContain("Audit Committee met nine times sentence 10.");
+    expect(sections.ownership).toMatch(/^Security Ownership/);
+    expect(sections.ownership).toContain("Related Person Transactions Policy");
+    expect(sections.ownership).not.toContain("no reports were late");
+  });
+  it("returns null for a section the document does not carry", () => {
+    expect(extractProxySections("Nothing to see here.")).toEqual({ compensation: null, board: null, ownership: null });
+  });
+  it("joins the present sections under fixed labels, capping each at its own budget", () => {
+    const ex = proxyExcerpt(sections)!;
+    expect(ex.text).toMatch(/^Board and director independence:\n/);
+    expect(ex.text).toContain("\n\nCompensation discussion and analysis:\n");
+    expect(ex.text).toContain("\n\nSecurity ownership and related-person transactions:\n");
+    expect(ex.truncated).toBe(false);
+    const capped = proxyExcerpt({ ...sections, compensation: filler(4000, "Pay") })!;
+    expect(capped.truncated).toBe(true);
+    expect(capped.text.length).toBeLessThanOrEqual(PROXY_CAPS.board + PROXY_CAPS.compensation + PROXY_CAPS.ownership + 200);
+    expect(proxyExcerpt({ compensation: null, board: null, ownership: null })).toBeNull();
+  });
+});
+
+describe("extractProxySections on the ORCL FY25 proxy (real filing)", () => {
+  const proxyPath = "data/raw/ORCL/0001193125-26-389274/edgar-proxy.html";
+  const proxyText = existsSync(proxyPath) ? htmlToText(readFileSync(proxyPath, "utf8")) : null;
+  it("finds all three governance sections in their bodies, not the contents", () => {
+    if (!proxyText) return;
+    const s = extractProxySections(proxyText);
+    expect(s.board).toMatch(/^Board of Directors and Director Independence/);
+    expect(s.board!.length).toBeGreaterThan(3000);
+    // The CD&A opens with its own mini contents naming the Compensation Committee Report; that line must not end the section.
+    expect(s.compensation).toMatch(/^Compensation Discussion and Analysis/);
+    expect(s.compensation!.length).toBeGreaterThan(20000);
+    expect(s.ownership).toMatch(/^SECURITY OWNERSHIP OF CERTAIN BENEFICIAL OWNERS AND MANAGEMENT/);
+    expect(s.ownership!.length).toBeGreaterThan(4000);
+    // Bodies, not contents entries: no bare page-number lines near the top, and the real opening sentences.
+    for (const body of [s.board!, s.compensation!, s.ownership!]) expect(body.slice(0, 400)).not.toMatch(/\n\d{1,3}\n/);
+    expect(s.compensation).toContain("This Compensation Discussion and Analysis describes our fiscal 2025 executive compensation program");
+    expect(s.ownership).toContain("The following table provides information, as of September 19, 2025");
+    expect(s.compensation!.length).toBeLessThan(70000);
+    expect(s.ownership!.length).toBeLessThan(10000);
+    const ex = proxyExcerpt(s)!;
+    expect(ex.truncated).toBe(true);
+    for (const label of ["Board and director independence:", "Compensation discussion and analysis:", "Security ownership and related-person transactions:"]) expect(ex.text).toContain(label);
+    expect(ex.text.length).toBeLessThanOrEqual(PROXY_CAPS.board + PROXY_CAPS.compensation + PROXY_CAPS.ownership + 200);
   });
 });

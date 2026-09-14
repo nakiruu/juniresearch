@@ -16,6 +16,10 @@
  * that marker in the .html's place — and, for a 10-Q, the prior 10-K's primary
  * document as the new OPTIONAL_FILES' edgar-10k-primary.html, read when present
  * but never required.
+ *
+ * Revision 2026-09-14: the latest definitive proxy statement (DEF 14A) filed on
+ * or before the filing is captured as OPTIONAL_FILES' edgar-proxy.html — the
+ * governance source (board, pay, ownership) — read when present, never required.
  */
 export const PEER_LIMIT = 4;
 export const RAW_CAPTURE_META = "capture.json";
@@ -24,9 +28,11 @@ export const PRESS_RELEASE_FILE = "edgar-press-release.html";
 export const PRESS_RELEASE_MISSING_FILE = "edgar-press-release.missing";
 /** A 10-Q's prior 10-K primary document, captured only when relevant (see OPTIONAL_FILES). */
 export const ANNUAL_PRIMARY_FILE = "edgar-10k-primary.html";
+/** The latest definitive proxy statement (DEF 14A) filed on or before the filing — the governance source (see OPTIONAL_FILES). */
+export const PROXY_FILE = "edgar-proxy.html";
 export const CODE_FETCHED_FILES = ["edgar-filing.json", "edgar-primary.html", "yahoo-history.json", PRESS_RELEASE_FILE] as const;
 /** Captured only when relevant (a 10-Q's prior 10-K); read when present but never required by `--check`. */
-export const OPTIONAL_FILES = [ANNUAL_PRIMARY_FILE] as const;
+export const OPTIONAL_FILES = [ANNUAL_PRIMARY_FILE, PROXY_FILE] as const;
 /** Captured in phase 1 and read by facts-manifest to resolve phase 2 (rpEntityId, companyType); not FactPack data, so no mapper reads it. */
 export const PHASE_INPUT_FILES = ["bigdata-entity.json"] as const;
 

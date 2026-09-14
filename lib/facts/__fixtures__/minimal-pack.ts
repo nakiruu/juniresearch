@@ -26,6 +26,7 @@ export const minimalPack = (): FactPack => ({
     const d = new Date(Date.UTC(2026, 7, 21)); d.setUTCDate(d.getUTCDate() + i);
     return { date: d.toISOString().slice(0, 10), close: 340 + i };
   }),
-  context: { description: excerpt, mdaExcerpt: null, riskFactorsExcerpt: null, riskFactorsSource: null, pressRelease: null, transcriptHighlights: null, headlines: [] },
+  context: { description: excerpt, mdaExcerpt: null, riskFactorsExcerpt: null, riskFactorsSource: null, pressRelease: null,
+    proxyStatement: null, transcriptHighlights: null, headlines: [] },
   provenance: [{ field: "quote", source: "fmp", endpoint: "quote", capturedAt: "2026-09-12T15:00:00Z" }],
 });

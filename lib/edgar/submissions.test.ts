@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
   parseSubmissions, fetchSubmissions, submissionsUrl, filingUrl, padCik,
-  parseRecent, findEarningsRelease, findLatestAnnual, exhibit99Url,
+  parseRecent, findEarningsRelease, findLatestAnnual, findLatestProxy, exhibit99Url,
 } from "@/lib/edgar/submissions";
 import fixture from "@/lib/edgar/__fixtures__/avgo-submissions.json";
 
@@ -83,5 +83,20 @@ describe("earnings release and latest annual discovery", () => {
   it("parses items from the submissions feed", () => {
     const body = { filings: { recent: { accessionNumber: ["a"], form: ["8-K"], filingDate: ["2026-09-10"], reportDate: ["2026-09-10"], primaryDocument: ["k.htm"], items: ["2.02,9.01"] } } };
     expect(parseRecent(body as never)[0].items).toEqual(["2.02", "9.01"]);
+  });
+});
+
+describe("latest proxy statement discovery", () => {
+  const recent = [
+    { form: "10-Q", accession: "0001-26-000300", filedDate: "2026-09-11", periodEnd: "2026-08-31", primaryDocument: "q.htm", items: [] },
+    { form: "DEFA14A", accession: "0001-25-000120", filedDate: "2025-10-02", periodEnd: "", primaryDocument: "defa.htm", items: [] },
+    { form: "DEF 14A", accession: "0001-25-000110", filedDate: "2025-09-26", periodEnd: "", primaryDocument: "def14a.htm", items: [] },
+    { form: "DEF 14A", accession: "0001-24-000110", filedDate: "2024-09-27", periodEnd: "", primaryDocument: "def14a-old.htm", items: [] },
+  ];
+  it("picks the newest DEF 14A filed on or before the filing, ignoring additional-materials DEFA14A", () => {
+    expect(findLatestProxy(recent, "2026-09-11")!.accession).toBe("0001-25-000110");
+    expect(findLatestProxy(recent, "2025-09-26")!.accession).toBe("0001-25-000110"); // same day: eligible
+    expect(findLatestProxy(recent, "2025-09-25")!.accession).toBe("0001-24-000110");
+    expect(findLatestProxy(recent, "2024-01-01")).toBeNull();
   });
 });

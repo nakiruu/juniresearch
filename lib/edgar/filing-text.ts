@@ -13,6 +13,8 @@ export const MDA_CAP = 16000;
 // the call's headline metrics routinely sit past 8k of the ranked chunks; Risk Factors keep EXCERPT_CAP.
 export const TRANSCRIPT_CAP = 16000;
 export const PRESS_CAP = 16000; // an earnings release is ~30k chars; the headline metrics are in the first half
+/** Per-section budgets for the proxy statement excerpt (about 12k chars in all). */
+export const PROXY_CAPS = { board: 3000, compensation: 5000, ownership: 4000 } as const;
 
 const COVER_RE = [
   /outstanding\s+as\s+of\s+[A-Za-z]+\s+\d{1,2},\s+\d{4}[^0-9]{0,40}?(\d{1,3}(?:,\d{3}){2,3})/i,
@@ -142,4 +144,125 @@ export function extractSections(text: string, form: "10-Q" | "10-K"): { mda: Cap
 
 export async function fetchPrimaryDocument(url: string, contact: string, fetchImpl: FetchLike = fetch): Promise<string> {
   return edgarText(url, contact, fetchImpl);
+}
+
+// ---------------------------------------------------------------------------
+// Proxy statement (DEF 14A). Proxies have no "Item N" skeleton, so sections are
+// found by their titles at a line start. A title counts as a heading only when
+// a paragraph follows it (contents entries — the document's, or a section's own
+// mini contents — are followed by more short lines). Each section runs from its
+// heading to the next such heading that does not belong inside it; if a title
+// still matches more than once, the longest candidate wins.
+// ---------------------------------------------------------------------------
+export interface ProxySections { compensation: string | null; board: string | null; ownership: string | null }
+
+interface ProxySpec { start: RegExp[]; keep: RegExp[] }
+
+const PROXY_HEADINGS = {
+  independence: titlePattern("director independence"),
+  boardAndIndependence: titlePattern("board of directors and director independence"),
+  boardIndependence: titlePattern("board independence"),
+  independenceOfDirectors: titlePattern("independence of directors"),
+  committees: titlePattern("board committees"),
+  committeesOfTheBoard: titlePattern("committees of the board"),
+  directorCompensation: titlePattern("director compensation"),
+  cda: titlePattern("compensation discussion and analysis"),
+  committeeReport: titlePattern("compensation committee report"),
+  summaryTable: titlePattern("summary compensation table"),
+  executiveTables: titlePattern("executive compensation tables"),
+  payRatio: titlePattern("pay ratio"),
+  ownership: titlePattern("security ownership of certain beneficial owners"),
+  relatedTransactions: titlePattern("transactions with related persons"),
+  relatedPersonTransactions: titlePattern("related person transactions"),
+  relatedPartyTransactions: titlePattern("related party transactions"),
+  delinquent: titlePattern("delinquent section 16"),
+  section16: titlePattern("section 16(a)"),
+  stockholderProposals: titlePattern("stockholder proposals"),
+  shareholderProposals: titlePattern("shareholder proposals"),
+  otherMatters: titlePattern("other matters"),
+  householding: titlePattern("householding"),
+};
+const H = PROXY_HEADINGS;
+const ALL_PROXY_HEADINGS = Object.values(H);
+
+const PROXY_SPECS: Record<keyof ProxySections, ProxySpec> = {
+  board: { start: [H.boardAndIndependence, H.independence, H.boardIndependence, H.independenceOfDirectors], keep: [H.committees, H.committeesOfTheBoard] },
+  compensation: { start: [H.cda], keep: [] },
+  ownership: { start: [H.ownership], keep: [H.relatedTransactions, H.relatedPersonTransactions, H.relatedPartyTransactions] },
+};
+
+function lineStart(re: RegExp): RegExp {
+  return new RegExp(`(^|\\n)[ \\t]*(?:${re.source})`, "gi");
+}
+
+/** A title is a section heading only when prose follows it: a contents entry
+ *  (the document's, or a section's own mini contents) is followed by a page
+ *  number or another title, a real heading by a paragraph. Converted filings
+ *  wrap prose at roughly 100 characters, so "prose" is judged by shape — a
+ *  line of ten or more words with lowercase letters — not by length alone. */
+function looksLikeProse(line: string): boolean {
+  return line.length >= 60 && /[a-z]/.test(line) && line.split(/\s+/).length >= 10;
+}
+function headingFollowedByBody(text: string, headingAt: number): boolean {
+  let lineEnd = text.indexOf("\n", headingAt);
+  if (lineEnd < 0) return false;
+  for (let i = 0; i < 3; i++) {
+    const nextEnd = text.indexOf("\n", lineEnd + 1);
+    const line = text.slice(lineEnd + 1, nextEnd < 0 ? undefined : nextEnd).trim();
+    if (line.length > 0) return looksLikeProse(line);
+    if (nextEnd < 0) return false;
+    lineEnd = nextEnd;
+  }
+  return false;
+}
+
+function extractProxySection(text: string, spec: ProxySpec): string | null {
+  const enders = ALL_PROXY_HEADINGS.filter((h) => !spec.start.includes(h) && !spec.keep.includes(h)).map(lineStart);
+  let best: string | null = null;
+  for (const startRe of spec.start) {
+    for (const m of text.matchAll(lineStart(startRe))) {
+      const start = m.index! + (m[1]?.length ?? 0);
+      // A contents entry (page numbers, short lines) is not where the section starts.
+      if (!headingFollowedByBody(text, start)) continue;
+      const restAt = start + 50;
+      const rest = text.slice(restAt);
+      let end = text.length;
+      for (const e of enders) {
+        e.lastIndex = 0;
+        for (const em of rest.matchAll(e)) {
+          const at = restAt + em.index! + (em[1]?.length ?? 0);
+          if (at >= end) break;
+          if (headingFollowedByBody(text, at)) { end = at; break; }
+        }
+      }
+      const body = text.slice(start, end).trim();
+      if (body.length > 200 && (!best || body.length > best.length)) best = body;
+    }
+  }
+  return best;
+}
+
+/** Uncapped bodies of the three governance sections a report needs, or null where the proxy lacks one. */
+export function extractProxySections(text: string): ProxySections {
+  return {
+    compensation: extractProxySection(text, PROXY_SPECS.compensation),
+    board: extractProxySection(text, PROXY_SPECS.board),
+    ownership: extractProxySection(text, PROXY_SPECS.ownership),
+  };
+}
+
+/** One labelled, per-section-capped excerpt (board, then pay, then ownership); null when nothing was found. */
+export function proxyExcerpt(s: ProxySections): CappedSection | null {
+  const parts: string[] = [];
+  let truncated = false;
+  const add = (label: string, body: string | null, cap: number) => {
+    if (!body) return;
+    const c = capAtSentence(body, cap);
+    truncated = truncated || c.truncated;
+    parts.push(`${label}:\n${c.text}`);
+  };
+  add("Board and director independence", s.board, PROXY_CAPS.board);
+  add("Compensation discussion and analysis", s.compensation, PROXY_CAPS.compensation);
+  add("Security ownership and related-person transactions", s.ownership, PROXY_CAPS.ownership);
+  return parts.length ? { text: parts.join("\n\n"), truncated } : null;
 }

@@ -7,18 +7,19 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { readRawJson, readRawText, section } from "../raw";
-import { htmlToText, extractRawSections, capAtSentence, TRANSCRIPT_CAP, PRESS_CAP, MDA_CAP } from "../../edgar/filing-text";
-import { PRESS_RELEASE_FILE, ANNUAL_PRIMARY_FILE } from "../manifest";
+import { htmlToText, extractRawSections, capAtSentence, TRANSCRIPT_CAP, PRESS_CAP, MDA_CAP, extractProxySections, proxyExcerpt } from "../../edgar/filing-text";
+import { PRESS_RELEASE_FILE, ANNUAL_PRIMARY_FILE, PROXY_FILE } from "../manifest";
 import type { Excerpt, FactPack } from "../schema";
 
 const EDGAR_PRIMARY_FILE = "edgar-primary.html";
 const TRANSCRIPT_FILE = "bigdata-transcript.json";
 const HEADLINES_FILE = "bigdata-headlines.json";
-export const READS = [EDGAR_PRIMARY_FILE, TRANSCRIPT_FILE, HEADLINES_FILE, PRESS_RELEASE_FILE, ANNUAL_PRIMARY_FILE] as const;
+export const READS = [EDGAR_PRIMARY_FILE, TRANSCRIPT_FILE, HEADLINES_FILE, PRESS_RELEASE_FILE, ANNUAL_PRIMARY_FILE, PROXY_FILE] as const;
 export const PROVENANCE: { field: string; endpoint: string; source: FactPack["provenance"][number]["source"] }[] = [
   { field: "context.mdaExcerpt", endpoint: "edgar primary document", source: "edgar" },
   { field: "context.riskFactorsExcerpt", endpoint: "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)", source: "edgar" },
   { field: "context.pressRelease", endpoint: "edgar 8-K exhibit 99.1", source: "edgar" },
+  { field: "context.proxyStatement", endpoint: "edgar DEF 14A primary document (board, pay, ownership sections)", source: "edgar" },
   { field: "context.transcriptHighlights", endpoint: "bigdata_search", source: "bigdata" },
   { field: "context.headlines", endpoint: "bigdata_search", source: "bigdata" },
 ];
@@ -67,6 +68,7 @@ export function mapContext(
     form: "10-Q" | "10-K"; url: string; filedDate: string;
     pressRelease?: { url: string; filedDate: string } | null;
     annualReport?: { url: string; filedDate: string } | null;
+    proxyStatement?: { url: string; filedDate: string } | null;
   },
   capturedAt: string,
   description: Excerpt,
@@ -102,6 +104,14 @@ export function mapContext(
       )
     : null;
 
+  // Governance source: the three proxy sections a report needs, or null when no proxy was captured
+  // (or the document carries none of them).
+  let proxyStatement: Excerpt | null = null;
+  if (existsSync(join(dir, PROXY_FILE))) {
+    const ex = proxyExcerpt(extractProxySections(htmlToText(readRawText(dir, PROXY_FILE))));
+    if (ex) proxyStatement = toExcerpt(ex, "edgar:DEF 14A", filing.proxyStatement?.url, filing.proxyStatement?.filedDate ?? filing.filedDate);
+  }
+
   const day = capturedAt.slice(0, 10);
   return {
     description,
@@ -109,6 +119,7 @@ export function mapContext(
     riskFactorsExcerpt,
     riskFactorsSource,
     pressRelease,
+    proxyStatement,
     transcriptHighlights: transcriptFrom(searchResults(dir, TRANSCRIPT_FILE), day),
     headlines: headlinesFrom(searchResults(dir, HEADLINES_FILE), day),
   };
