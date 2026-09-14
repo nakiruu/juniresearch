@@ -224,3 +224,48 @@ describe("extractProxySections on the ORCL FY25 proxy (real filing)", () => {
     expect(ex.text.length).toBeLessThanOrEqual(PROXY_CAPS.board + PROXY_CAPS.compensation + PROXY_CAPS.ownership + 200);
   });
 });
+
+describe("extractProxySections with titles set over several lines (Broadcom style)", () => {
+  const filler = (n: number, seed: string) => Array.from({ length: n }, (_, i) => `${seed} sentence ${i + 1}.`).join(" ");
+  const proxy = [
+    "TABLE OF CONTENTS",
+    "Security Ownership of Certain Beneficial Owners, Directors and Executive Officers",
+    "92",
+    "Certain Relationships and Related Party Transactions",
+    "95",
+    "",
+    "DIRECTOR INDEPENDENCE",
+    filler(12, "Our Board annually reviews the independence of each director and nominee"),
+    "",
+    "SECURITY OWNERSHIP OF",
+    "CERTAIN BENEFICIAL OWNERS, DIRECTORS",
+    "AND EXECUTIVE OFFICERS",
+    filler(14, "The following table sets forth information about the beneficial ownership of common stock"),
+    "CERTAIN RELATIONSHIPS AND RELATED PARTY TRANSACTIONS",
+    filler(6, "The Audit Committee must review all related party transactions on an ongoing basis"),
+    "OTHER MATTERS",
+    filler(4, "The Board knows of no other matters that will be presented for consideration"),
+  ].join("\n");
+  const s = extractProxySections(proxy);
+  it("accepts a heading whose title continues on the next lines, and rejects the contents entry followed by a page number", () => {
+    expect(s.ownership).toMatch(/^SECURITY OWNERSHIP OF\nCERTAIN BENEFICIAL OWNERS, DIRECTORS\nAND EXECUTIVE OFFICERS/);
+    expect(s.ownership).toContain("related party transactions on an ongoing basis sentence 6.");
+    expect(s.ownership).not.toContain("no other matters");
+    expect(s.board).toMatch(/^DIRECTOR INDEPENDENCE/);
+    expect(s.compensation).toBeNull();
+  });
+});
+
+describe("extractProxySections on the AVGO FY25 proxy (real filing)", () => {
+  const proxyPath = "data/raw/AVGO/0001730168-26-000080/edgar-proxy.html";
+  const proxyText = existsSync(proxyPath) ? htmlToText(readFileSync(proxyPath, "utf8")) : null;
+  it("finds board, pay and the multi-line ownership heading in their bodies", () => {
+    if (!proxyText) return;
+    const s = extractProxySections(proxyText);
+    expect(s.board).toMatch(/^DIRECTOR INDEPENDENCE/);
+    expect(s.compensation).toMatch(/^COMPENSATION DISCUSSION AND ANALYSIS/i);
+    expect(s.ownership).toMatch(/^SECURITY OWNERSHIP OF\s+CERTAIN BENEFICIAL OWNERS, DIRECTORS/);
+    expect(s.ownership).toContain("The following table sets forth information about the beneficial ownership of Broadcom common stock");
+    for (const body of [s.board!, s.compensation!, s.ownership!]) expect(body.slice(0, 400)).not.toMatch(/\n\d{1,3}\n/);
+  });
+});

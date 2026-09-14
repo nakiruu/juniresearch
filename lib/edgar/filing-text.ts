@@ -175,6 +175,8 @@ const PROXY_HEADINGS = {
   relatedTransactions: titlePattern("transactions with related persons"),
   relatedPersonTransactions: titlePattern("related person transactions"),
   relatedPartyTransactions: titlePattern("related party transactions"),
+  certainRelationships: titlePattern("certain relationships and related party transactions"),
+  meetingInformation: titlePattern("additional meeting information"),
   delinquent: titlePattern("delinquent section 16"),
   section16: titlePattern("section 16(a)"),
   stockholderProposals: titlePattern("stockholder proposals"),
@@ -188,7 +190,7 @@ const ALL_PROXY_HEADINGS = Object.values(H);
 const PROXY_SPECS: Record<keyof ProxySections, ProxySpec> = {
   board: { start: [H.boardAndIndependence, H.independence, H.boardIndependence, H.independenceOfDirectors], keep: [H.committees, H.committeesOfTheBoard] },
   compensation: { start: [H.cda], keep: [] },
-  ownership: { start: [H.ownership], keep: [H.relatedTransactions, H.relatedPersonTransactions, H.relatedPartyTransactions] },
+  ownership: { start: [H.ownership], keep: [H.relatedTransactions, H.relatedPersonTransactions, H.relatedPartyTransactions, H.certainRelationships] },
 };
 
 function lineStart(re: RegExp): RegExp {
@@ -205,13 +207,29 @@ function lineStart(re: RegExp): RegExp {
 function looksLikeProse(line: string): boolean {
   return line.length >= 60 && /[a-z]/.test(line) && line.split(/\s+/).length >= 10;
 }
+/** A short line with letters and no sentence punctuation: the rest of a title
+ *  that was set over several lines ("SECURITY OWNERSHIP OF" / "CERTAIN
+ *  BENEFICIAL OWNERS, DIRECTORS" / "AND EXECUTIVE OFFICERS"). */
+function looksLikeTitleContinuation(line: string): boolean {
+  return line.length <= 60 && /[A-Za-z]/.test(line) && !/[.;:]$/.test(line);
+}
+
+/** `headingAt` is the end of the matched title, so the first line examined is
+ *  the one after the title's last word. Up to two title-continuation lines may
+ *  sit between it and the prose; a bare page number means a contents entry. */
 function headingFollowedByBody(text: string, headingAt: number): boolean {
   let lineEnd = text.indexOf("\n", headingAt);
   if (lineEnd < 0) return false;
-  for (let i = 0; i < 3; i++) {
+  let continuations = 0;
+  for (let i = 0; i < 6; i++) {
     const nextEnd = text.indexOf("\n", lineEnd + 1);
     const line = text.slice(lineEnd + 1, nextEnd < 0 ? undefined : nextEnd).trim();
-    if (line.length > 0) return looksLikeProse(line);
+    if (line.length > 0) {
+      if (looksLikeProse(line)) return true;
+      if (/^\d{1,3}$/.test(line)) return false;
+      if (looksLikeTitleContinuation(line) && continuations < 2) { continuations++; }
+      else return false;
+    }
     if (nextEnd < 0) return false;
     lineEnd = nextEnd;
   }
@@ -225,7 +243,7 @@ function extractProxySection(text: string, spec: ProxySpec): string | null {
     for (const m of text.matchAll(lineStart(startRe))) {
       const start = m.index! + (m[1]?.length ?? 0);
       // A contents entry (page numbers, short lines) is not where the section starts.
-      if (!headingFollowedByBody(text, start)) continue;
+      if (!headingFollowedByBody(text, m.index! + m[0].length - 1)) continue;
       // Scan for the section's end from the line after its heading, so a long
       // title's own words never count as the ending heading.
       const headingEnd = text.indexOf("\n", start);
@@ -237,7 +255,7 @@ function extractProxySection(text: string, spec: ProxySpec): string | null {
         for (const em of rest.matchAll(e)) {
           const at = restAt + em.index! + (em[1]?.length ?? 0);
           if (at >= end) break;
-          if (headingFollowedByBody(text, at)) { end = at; break; }
+          if (headingFollowedByBody(text, restAt + em.index! + em[0].length - 1)) { end = at; break; }
         }
       }
       const body = text.slice(start, end).trim();

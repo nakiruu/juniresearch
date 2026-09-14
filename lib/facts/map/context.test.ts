@@ -104,8 +104,8 @@ describe("mapContext on the ORCL FY26 10-K capture", () => {
 
 describe("mapContext carries the proxy statement when captured", () => {
   const withProxy = { ...filing, proxyStatement: { url: "https://www.sec.gov/Archives/edgar/data/1341439/000119312525209/def14a.htm", filedDate: "2025-09-26" } };
-  it("is null on the AVGO capture, which has no proxy file", () => {
-    expect(mapContext(DIR, withProxy, "2026-09-13T03:18:05Z", desc).proxyStatement).toBeNull();
+  it("is null on a capture with no proxy file", () => {
+    expect(mapContext("lib/facts/map/__fixtures__/rf-longest", withProxy, "2026-09-13T03:18:05Z", desc).proxyStatement).toBeNull();
   });
   it("maps the three governance sections into one sourced excerpt dated by the proxy's filing", () => {
     const c = mapContext("lib/facts/map/__fixtures__/proxy", withProxy, "2026-09-13T03:18:05Z", desc);
