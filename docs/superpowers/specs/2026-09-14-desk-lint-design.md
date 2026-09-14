@@ -128,11 +128,16 @@ seeing the same number twice, not about equal values.
 
 ### Errors
 
-**`figure-repeat`** — within one section unit, a display key appears in more
-than one place (twice in one field, or in two fields of the unit). Reported
-once per key per unit, at the second occurrence. The only exclusion is the
-tokeniser's allow-list (bare integers ≤ 12, years); the rating's target
-range and the fair value count like any other figure.
+**`figure-repeat`** — a display key appears twice within one field (leaf),
+or twice anywhere within the `executiveSummary` unit (its catalysts and risks
+must point, not restate the thesis). Reported once per key per field or unit,
+at the second occurrence. The only exclusion is the tokeniser's allow-list
+(bare integers ≤ 12, years); the rating's target range and the fair value
+count like any other figure. A repeat across *different fields* of any other
+unit is the warning `figure-repeat` (severity `warning`) — see below.
+*Revised 2026-09-14 while planning: measured against the approved reports, the
+unit-wide error fired 15–36 times per report; the reviewers had applied "once
+per section" at field level, plus the executive summary as a whole.*
 
 **`sentence-repeat`** — a sentence of eight or more words appears in two
 different units after normalisation (lowercase; markers, punctuation and
@@ -166,6 +171,10 @@ desk config.
 **`rhetorical-question`** — a `?` in any unit's prose.
 
 ### Warnings
+
+**`figure-repeat`** (warning form) — the same display key in two different
+fields of one unit other than `executiveSummary` (e.g. a figure in
+`management.leadership` and again in `management.capitalAllocation`).
 
 **`sentence-similar`** — trigram Jaccard in [0.60, 0.80) across units.
 
