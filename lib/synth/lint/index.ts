@@ -12,6 +12,7 @@ import { sectionUnits, type SectionUnit } from "./units";
 import { figureRepeat } from "./rules/figure-repeat";
 import { repetition } from "./rules/repetition";
 import { markup } from "./rules/markup";
+import { words } from "./rules/words";
 
 export interface LintIssue extends ValidationIssue {
   rule: string;
@@ -25,6 +26,7 @@ export const RULES: LintRule[] = [
   (units) => figureRepeat(units),
   (units, desk) => repetition(units, desk),
   (units) => markup(units),
+  (units, desk) => words(units, desk),
 ];
 
 export function lintJudgment(judgment: Judgment, desk: Desk): LintIssue[] {
