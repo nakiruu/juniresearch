@@ -27,8 +27,8 @@ function renderInline(text: string, key: string): React.ReactNode[] {
   INLINE.lastIndex = 0;
   while ((m = INLINE.exec(text))) {
     if (m.index > last) out.push(text.slice(last, m.index));
-    if (m[1] !== undefined) out.push(<span className="pos" key={`${key}-${i++}`}>{m[1]}</span>);
-    else if (m[2] !== undefined) out.push(<span className="neg" key={`${key}-${i++}`}>{m[2]}</span>);
+    if (m[1] !== undefined) out.push(<span className="pos" key={`${key}-${i++}`}>{m[1].trim()}</span>);
+    else if (m[2] !== undefined) out.push(<span className="neg" key={`${key}-${i++}`}>{m[2].trim()}</span>);
     else out.push(<strong key={`${key}-${i++}`}>{m[3]}</strong>);
     last = INLINE.lastIndex;
   }

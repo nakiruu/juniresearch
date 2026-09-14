@@ -11,12 +11,17 @@ describe("MD (inline)", () => {
   it("renders a bullish span", () => {
     const { container } = render(<MD>{"growth of {+ +221% YoY +} here"}</MD>);
     const span = container.querySelector("span.pos");
-    expect(span?.textContent).toBe(" +221% YoY ");
+    expect(span?.textContent).toBe("+221% YoY");
   });
 
   it("renders a bearish span", () => {
     const { container } = render(<MD>{"a {- -3.3% -} decline"}</MD>);
-    expect(container.querySelector("span.neg")?.textContent).toBe(" -3.3% ");
+    expect(container.querySelector("span.neg")?.textContent).toBe("-3.3%");
+  });
+
+  it("drops the delimiter padding so punctuation hugs the span", () => {
+    const { container } = render(<MD>{"an FCF margin of {- -35.2% -}. Measured"}</MD>);
+    expect(container.textContent).toBe("an FCF margin of -35.2%. Measured");
   });
 
   it("returns null for null input", () => {
