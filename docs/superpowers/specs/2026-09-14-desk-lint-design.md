@@ -43,8 +43,8 @@ cost most of this week's authoring time become the exception.
    `--skip-review` bypasses with a printed warning, for local experiments.
 6. At most two review rounds per report; Minors may stay open and are printed.
 7. Section units for the "once per section" and "no sentence in two sections"
-   rules are the ten units listed below (the nine the page renders, with the
-   scenario driver cells split out) — not the leaf fields. This matches how the reviewers read the reports.
+   rules are the eleven units listed below (the nine the page renders, with the
+   scenario driver cells and the company overview split out) — not the leaf fields. This matches how the reviewers read the reports.
 
 ## Architecture
 
@@ -61,7 +61,7 @@ synth:prompt --with-review ──▶ author fixes ──▶ synth:build ──�
 
 New modules:
 
-- `lib/synth/lint/units.ts` — maps a `Judgment` to the ten section units,
+- `lib/synth/lint/units.ts` — maps a `Judgment` to the eleven section units,
   each a list of `{ path, text }` leaves (`stringLeaves` from `walk.ts`).
 - `lib/synth/lint/sentences.ts` — sentence splitting and normalisation shared
   by the repetition and pointer rules.
@@ -86,7 +86,8 @@ subsystem 3 spec (a revision note pointing here).
 | Unit | Judgment fields |
 | --- | --- |
 | `analystCommentary` | `analystCommentary` |
-| `executiveSummary` | `sections.executiveSummary.*` (thesis body, catalysts, risks) |
+| `companyOverview` | `sections.executiveSummary.companyOverview` — the descriptive overview; it introduces figures the thesis argues from (*added 2026-09-14 at the corpus checkpoint*) |
+| `executiveSummary` | `sections.executiveSummary.*` except the overview (thesis body, catalysts, risks) |
 | `financials` | `sections.financials.*` |
 | `valuation` | `sections.valuation.multiplesCommentary`, `sections.valuation.scenarioCommentary` |
 | `scenarioDrivers` | `sections.valuation.scenarios[*].driver` — the table cells; a driver may carry a price the commentary also introduces |
@@ -131,7 +132,9 @@ seeing the same number twice, not about equal values.
 **`figure-repeat`** — a display key appears twice within one field (leaf),
 or twice anywhere within the `executiveSummary` unit (its catalysts and risks
 must point, not restate the thesis). Reported once per key per field or unit,
-at the second occurrence. The only exclusion is the tokeniser's allow-list
+at the second occurrence — where a second occurrence inside the same sentence
+is one introduction, not two (*corpus checkpoint, 2026-09-14: "all 30
+gigawatts … 30 gigawatts"*). The other exclusion is the tokeniser's allow-list
 (bare integers ≤ 12, years); the rating's target range and the fair value
 count like any other figure. A repeat across *different fields* of any other
 unit is the warning `figure-repeat` (severity `warning`) — see below.
@@ -190,8 +193,11 @@ whole judgment exceeds `desk.lint.ticLimit` (default 4). One issue per phrase.
 two sentences.
 
 **`source-disagreement`** — two different display keys with the same unit type
-appear in one sentence joined by "against", "versus" or "vs" without "we use"
-/ "we used" / "the statement figure" nearby — a hint that a disagreement was
+appear in one sentence joined by "against", "versus" or "vs", the sentence
+names a source (proxy, release, filing, statement, tearsheet, table, call,
+transcript, 10-Q, 10-K, vendor, management — *corpus checkpoint, 2026-09-14:*
+*without this, every year-over-year comparison fired*), and no "we use" /
+"we used" / "the statement figure" resolves it — a hint that a disagreement was
 stated without saying which figure was used. Warning only; the rubric covers
 the rest.
 
