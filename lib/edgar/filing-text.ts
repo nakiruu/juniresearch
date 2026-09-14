@@ -13,7 +13,7 @@ export const MDA_CAP = 16000;
 // the call's headline metrics routinely sit past 8k of the ranked chunks; Risk Factors keep EXCERPT_CAP.
 export const TRANSCRIPT_CAP = 16000;
 export const PRESS_CAP = 16000; // an earnings release is ~30k chars; the headline metrics are in the first half
-/** Per-section budgets for the proxy statement excerpt (about 12k chars in all). */
+/** Per-section budgets for the proxy statement excerpt (14k chars in all). */
 export const PROXY_CAPS = { board: 3000, compensation: 5000, ownership: 4000, related: 2000 } as const;
 
 const COVER_RE = [
@@ -280,7 +280,7 @@ function extractProxySection(text: string, spec: ProxySpec): string | null {
   return best;
 }
 
-/** Uncapped bodies of the three governance sections a report needs, or null where the proxy lacks one. */
+/** Uncapped bodies of the four governance sections a report needs, or null where the proxy lacks one. */
 export function extractProxySections(text: string): ProxySections {
   return {
     compensation: extractProxySection(text, PROXY_SPECS.compensation),

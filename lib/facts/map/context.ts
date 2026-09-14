@@ -19,7 +19,7 @@ export const PROVENANCE: { field: string; endpoint: string; source: FactPack["pr
   { field: "context.mdaExcerpt", endpoint: "edgar primary document", source: "edgar" },
   { field: "context.riskFactorsExcerpt", endpoint: "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)", source: "edgar" },
   { field: "context.pressRelease", endpoint: "edgar 8-K exhibit 99.1", source: "edgar" },
-  { field: "context.proxyStatement", endpoint: "edgar DEF 14A primary document (board, pay, ownership sections)", source: "edgar" },
+  { field: "context.proxyStatement", endpoint: "edgar DEF 14A primary document (board, pay, ownership, related-party sections)", source: "edgar" },
   { field: "context.transcriptHighlights", endpoint: "bigdata_search", source: "bigdata" },
   { field: "context.headlines", endpoint: "bigdata_search", source: "bigdata" },
 ];
@@ -104,7 +104,7 @@ export function mapContext(
       )
     : null;
 
-  // Governance source: the three proxy sections a report needs, or null when no proxy was captured
+  // Governance source: the four proxy sections a report needs, or null when no proxy was captured
   // (or the document carries none of them).
   let proxyStatement: Excerpt | null = null;
   if (existsSync(join(dir, PROXY_FILE))) {
