@@ -43,8 +43,8 @@ cost most of this week's authoring time become the exception.
    `--skip-review` bypasses with a printed warning, for local experiments.
 6. At most two review rounds per report; Minors may stay open and are printed.
 7. Section units for the "once per section" and "no sentence in two sections"
-   rules are the nine units the page renders, listed below — not the leaf
-   fields. This matches how the reviewers read the reports.
+   rules are the ten units listed below (the nine the page renders, with the
+   scenario driver cells split out) — not the leaf fields. This matches how the reviewers read the reports.
 
 ## Architecture
 
@@ -61,7 +61,7 @@ synth:prompt --with-review ──▶ author fixes ──▶ synth:build ──�
 
 New modules:
 
-- `lib/synth/lint/units.ts` — maps a `Judgment` to the nine section units,
+- `lib/synth/lint/units.ts` — maps a `Judgment` to the ten section units,
   each a list of `{ path, text }` leaves (`stringLeaves` from `walk.ts`).
 - `lib/synth/lint/sentences.ts` — sentence splitting and normalisation shared
   by the repetition and pointer rules.
@@ -290,7 +290,8 @@ export const EditorialReview = z.strictObject({
 ```
 
 `judgmentSha256` is the SHA-256 of the judgment file's text at review time
-with `
+with `
+
 ` normalised to `
 ` (the same file hashes the same on every
 machine and after a git line-ending conversion).
