@@ -13,6 +13,7 @@ import { figureRepeat } from "./rules/figure-repeat";
 import { repetition } from "./rules/repetition";
 import { markup } from "./rules/markup";
 import { words } from "./rules/words";
+import { structure } from "./rules/structure";
 
 export interface LintIssue extends ValidationIssue {
   rule: string;
@@ -27,6 +28,7 @@ export const RULES: LintRule[] = [
   (units, desk) => repetition(units, desk),
   (units) => markup(units),
   (units, desk) => words(units, desk),
+  (units) => structure(units),
 ];
 
 export function lintJudgment(judgment: Judgment, desk: Desk): LintIssue[] {
