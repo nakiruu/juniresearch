@@ -90,7 +90,7 @@ npm run synth:prompt -- AVGO 0001730168-26-000080 --with-review  # the author's 
 npm run synth:build -- AVGO 0001730168-26-000080 --skip-review   # local experiments only; prints a warning
 ```
 
-`lintJudgment` (`lib/synth/lint/`) reads the judgment as the ten section units the
+`lintJudgment` (`lib/synth/lint/`) reads the judgment as the eleven section units the
 page renders and applies the desk's mechanical rules: a figure introduced twice in
 one field or twice in the executive summary (`figure-repeat`), a sentence in two
 sections (`sentence-repeat`), a

@@ -5,7 +5,7 @@ description: Author the judgment half of an equity report for a captured filing 
 
 # synthesize
 
-You are the `Synthesizer` for this run: the code renders the prompt, you write the judgment, the code validates and merges. Three rounds at most.
+You are the `Synthesizer` for this run: the code renders the prompt, you write the judgment, the code validates and merges. Three authoring rounds at most, then two review rounds at most.
 
 ## Steps
 
@@ -14,6 +14,10 @@ You are the `Synthesizer` for this run: the code renders the prompt, you write t
 3. `npm run synth:build -- <TICKER> <ACCESSION>`.
 4. If it fails: `npm run synth:prompt -- <TICKER> <ACCESSION> --with-errors`, read the new prompt (its last section lists every error), rewrite the **whole** judgment file, and return to step 3. Stop after the third failed build and report the residual errors verbatim.
 5. On a build that fails **only** at the editorial gate with "missing" or "stale":
+   build once with `npm run synth:build -- <TICKER> <ACCESSION> --skip-review` so
+   the lint and grounding pass and `data/<ticker>.json` exists for the reviewer —
+   nothing is published behind the flag; the gated build at the end of this step
+   (step 5, without the flag) is the publish. Then
    `npm run synth:review-brief -- <TICKER> <ACCESSION>`, then dispatch a **fresh**
    reviewer subagent — the model named by `desk.review.model` in
    `data/desk/desk.json` (default Opus), never this session, never the author —
@@ -38,5 +42,7 @@ You are the `Synthesizer` for this run: the code renders the prompt, you write t
   the brief path; an author who reviews their own work finds nothing.
 - Never edit the findings file except to set a **Minor** to `declined` with a
   `note`. A Critical or Important is addressed in the judgment or it stays open.
-- `--skip-review` is for local experiments only. A report is not published
-  behind it.
+- `--skip-review` renders the draft `data/<ticker>.json` the reviewer reads when
+  the gate would otherwise block the build. A report is never *published* behind
+  `--skip-review` — the gated build at the end of step 5, run without the flag,
+  is the publish.

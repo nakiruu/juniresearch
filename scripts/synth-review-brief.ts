@@ -1,6 +1,6 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { loadEditorialReview } from "../lib/synth/editorial";
+import { loadEditorialReview, malformedReviewMessage } from "../lib/synth/editorial";
 import { renderReviewBrief } from "../lib/synth/review-brief";
 
 const args = process.argv.slice(2);
@@ -23,7 +23,10 @@ const paths = {
 
 const judgmentText = read(paths.judgment);
 const rubric = read(paths.rubric);
-const previousReview = loadEditorialReview(paths.findings);
+const previousReview = (() => {
+  try { return loadEditorialReview(paths.findings); }
+  catch (e) { console.error(malformedReviewMessage(paths.findings, e)); return process.exit(1); }
+})();
 const round = previousReview ? (Math.min(previousReview.round + 1, 2) as 1 | 2) : 1;
 
 const brief = renderReviewBrief({ ticker, accession, judgmentText, previousReview, round, rubric, paths });

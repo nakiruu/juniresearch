@@ -58,7 +58,7 @@ describe("wordTrigrams and jaccard", () => {
   it("scores an empty side 0", () => {
     expect(jaccard(new Set(), wordTrigrams("one two three"))).toBe(0);
   });
-  it("scores a one-word edit of a seven-word sentence at the 0.80 boundary or above", () => {
+  it("scores a one-word substitution at 0.25 and a one-word suffix addition at 0.89", () => {
     // 5 trigrams each, 2 shared → 2 / (5 + 5 - 2) = 0.25 — below the error threshold, above nothing.
     const x = wordTrigrams("the board approved the buyback last quarter");
     const y = wordTrigrams("the board approved the dividend last quarter");
@@ -67,5 +67,11 @@ describe("wordTrigrams and jaccard", () => {
     const p = wordTrigrams("management raised the full-year outlook to at least ninety billion");
     const q = wordTrigrams("management raised the full-year outlook to at least ninety billion today");
     expect(jaccard(p, q)).toBeCloseTo(0.8889, 3);
+  });
+  it("scores a one-word suffix addition to a six-word sentence at exactly the 0.80 boundary", () => {
+    // 4 trigrams each, appending one word adds a 5th to the longer side: 4 / (4 + 5 - 4) = 0.80.
+    const p = wordTrigrams("management raised the full-year outlook today");
+    const q = wordTrigrams("management raised the full-year outlook today again");
+    expect(jaccard(p, q)).toBe(0.8);
   });
 });

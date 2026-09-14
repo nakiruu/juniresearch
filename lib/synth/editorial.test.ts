@@ -3,7 +3,7 @@ import { mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { EditorialReview } from "@/lib/synth/editorial.schema";
-import { judgmentSha256, loadEditorialReview, openFindings, reviewStatus, editorialGateMessage, renderEditorialFindings } from "@/lib/synth/editorial";
+import { judgmentSha256, loadEditorialReview, openFindings, reviewStatus, editorialGateMessage, renderEditorialFindings, malformedReviewMessage } from "@/lib/synth/editorial";
 
 const TEXT = '{\n  "rating": { "label": "BUY" }\n}\n';
 const finding = (over: Record<string, unknown> = {}) => ({
@@ -61,6 +61,21 @@ describe("loadEditorialReview", () => {
     const wrong = join(dir, "wrong.json");
     writeFileSync(wrong, JSON.stringify({ ...review(), round: 9 }));
     expect(() => loadEditorialReview(wrong)).toThrow();
+  });
+});
+
+describe("malformedReviewMessage", () => {
+  it("names the parse error and tells the caller to fix or delete the file", () => {
+    let caught: unknown;
+    try { JSON.parse("{ not json"); } catch (e) { caught = e; }
+    const message = malformedReviewMessage("data/judgment/AVGO/x.editorial.json", caught);
+    expect(message).toContain("malformed editorial review:");
+    expect(message).toContain((caught as Error).message);
+    expect(message).toContain("data/judgment/AVGO/x.editorial.json");
+    expect(message).toMatch(/fix or delete/);
+  });
+  it("stringifies a non-Error throw rather than losing it", () => {
+    expect(malformedReviewMessage("p.json", "boom")).toContain("boom");
   });
 });
 

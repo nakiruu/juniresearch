@@ -42,6 +42,18 @@ export function editorialGateMessage(status: ReviewStatus, openCount: number): s
   return "the editorial review is clean";
 }
 
+/**
+ * The message for a findings file that exists but fails `loadEditorialReview` —
+ * bad JSON or a schema violation. `synth:build`'s gate reports this shape as a
+ * validation issue (`malformed editorial review: <message>`); this is the same
+ * wording for callers, like `synth:review-brief`, that only have a path and a
+ * caught error and need a readable line instead of a raw stack.
+ */
+export function malformedReviewMessage(path: string, error: unknown): string {
+  const detail = error instanceof Error ? error.message : String(error);
+  return `malformed editorial review: ${detail} — fix or delete ${path} before re-rendering the brief`;
+}
+
 export function renderEditorialFindings(review: EditorialReview): string {
   const open = openFindings(review);
   const head = `Editorial review round ${review.round} by ${review.reviewer} (${review.reviewedAt}); verdict ${review.verdict}.`;

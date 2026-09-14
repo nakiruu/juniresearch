@@ -187,9 +187,10 @@ id) — the same display key in two different fields of one unit other than
 **`judgment-superlative`** — `first` or `only` used as a superlative (`the first
 …`, `the only …`) without attribution; too many innocent uses ("first quarter",
 "the only other holder") to block, so the author is told to check. A
-sentence-initial "The first …" is excluded — an ordinal opening a sentence
-reads as a topic ("The first quarter's cloud growth accelerated…"), not a
-superlative claim.
+sentence-initial "The first …" or "The only …" (and "Its first …" / "Its only …",
+"Their first …" / "Their only …") is excluded — an ordinal or exclusivity word
+opening a sentence reads as a topic ("The first quarter's cloud growth
+accelerated…"), not a superlative claim.
 
 **`tic`** — a phrase from `desk.lint.tics` (default: "this pack", "worth naming",
 "worth stating", "worth noticing", "is where", "leg") whose count across the
@@ -378,17 +379,38 @@ build now also reports lint errors and warnings). Then:
 
 Fixtures under `lib/synth/lint/__fixtures__/`, extracted from git history:
 
+*Revised 2026-09-14, fix wave: measurement against the approved reports refuted
+several of the cells below — `orcl-10q-before` does not produce a
+`sentence-repeat` between `sections.growth.points[1]` and
+`sections.finalRecommendation.body[0]` (Jaccard 0.40, below the error
+threshold) nor a `figure-repeat` for `65.2%` in `financials` (it occurs once
+there), and `orcl-10q-after`, `orcl-gov-before` and `avgo-final` are not zero
+errors. Rules are never weakened to fit a stale expectation, so the table is
+corrected to match the code. The recorded inline snapshots in
+`lib/synth/lint/index.test.ts` (the `the regression corpus — the full lint
+output, so a rule change is visible` describe block) are the contract; the
+counts below are what those snapshots record as of this revision. This same
+fix wave also closed a `figure-repeat` hole (a same-field repeat was
+suppressed when the key had first appeared in a sibling field, and vice
+versa), which added one more `figure-repeat-unit` warning to `avgo-gov-before`
+and `avgo-final` each (`44.9x` in `sections.valuation.scenarioCommentary`,
+cross-field from `multiplesCommentary`) — both fixtures' warning counts below
+reflect that.*
+
 | Fixture | Source | Must produce |
 | --- | --- | --- |
-| `orcl-10q-before.json` | `ee6850a:data/judgment/ORCL/0001193125-26-389274.json` | `sentence-repeat` between `sections.growth.points[1]` and `sections.finalRecommendation.body[0]` (the raised-outlook sentence); `figure-repeat` for `65.2%` in `financials`; `figure-repeat` for `850` and `97.9%` in `executiveSummary`; no `span-scope` |
-| `orcl-10q-after.json` | `59619e8:…` | zero errors |
-| `orcl-gov-before.json` | `0474e1f:…` | zero errors expected from the lint (its defects were attribution and inference — rubric items); documents the lint's limit |
+| `orcl-10q-before.json` | `ee6850a:data/judgment/ORCL/0001193125-26-389274.json` | `sentence-repeat` between `analystCommentary` and `sections.management.leadership` (trigram similarity 0.88), and between `analystCommentary` and `sections.finalRecommendation.body[0]` (0.81); `figure-repeat` for `30%` in `sections.financials.incomeCommentary`; `figure-repeat` for `850` and `97.9%` in `executiveSummary`; no `span-scope` |
+| `orcl-10q-after.json` | `59619e8:…` | 7 errors (`figure-repeat` 3, `sentence-repeat` 2, `superlative` 2), 17 warnings — see the recorded snapshot |
+| `orcl-gov-before.json` | `0474e1f:…` | 9 errors (`figure-repeat` 3, `sentence-repeat` 2, `superlative` 4), 17 warnings — not zero, but none of them are the round's actual defects (attribution and inference — rubric items); documents the lint's limit |
 | `avgo-gov-before.json` | `86052e6:data/judgment/AVGO/0001730168-26-000080.json` | `span-scope` on `{- Mr. Hartenstein was not standing for re-election -}`; `superlative` on the unattributed "record revenue" in `management.governance` |
-| `avgo-final.json` | `8abc627:…` | zero errors; warnings allowed and asserted ≤ 3 |
+| `avgo-final.json` | `8abc627:…` | 17 errors (`figure-repeat` 12, `superlative` 5), 23 warnings — see the recorded snapshot |
 
-The assertions above are the minimum each fixture test must make; the plan's
-fixture task records the lint's full output per fixture and adds it to the
-test as the expected set, so later rule changes are visible.
+The assertions above are the minimum each fixture test must make; the ten
+named assertions in the `the regression corpus — the defects the desk found by
+hand` describe block of `lib/synth/lint/index.test.ts` are that minimum, and
+the five `toMatchInlineSnapshot()` calls in the sibling describe block record
+the lint's complete output per fixture, so a later rule change is visible as
+both a snapshot diff and a named-assertion failure.
 
 ## Testing
 

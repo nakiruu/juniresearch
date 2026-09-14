@@ -25,7 +25,11 @@ describe("span-scope", () => {
     expect(one("The quarter was {- materially worse sequentially -} for margins.")).toEqual([]);
   });
 
-  it("flags at four words without a figure — the boundary", () => {
+  it("flags a span of exactly four words without a figure — the boundary", () => {
+    expect(one("The quarter was {- materially worse than sequentially -} for margins.").map((i) => i.rule)).toEqual(["span-scope"]);
+  });
+
+  it("flags a five-word span without a figure", () => {
     expect(one("The quarter was {- materially worse than last sequentially -} for margins.").map((i) => i.rule)).toEqual(["span-scope"]);
   });
 

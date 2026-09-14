@@ -1,7 +1,7 @@
 /**
  * lint/index.ts — the desk's mechanical rules, run beside validateJudgment.
  * -----------------------------------------------------------------------------
- * Every rule takes the ten section units and the desk config and returns issues;
+ * Every rule takes the eleven section units and the desk config and returns issues;
  * a rule's severity is its own, never the config's. Errors fail the build like a
  * grounding error; warnings ride back to the author as "fix if cheap".
  */

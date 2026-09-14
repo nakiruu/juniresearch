@@ -86,6 +86,19 @@ describe("figure-repeat-unit (warning)", () => {
     ])]).map((i) => [i.rule, i.severity])).toEqual([["figure-repeat", "error"]]);
   });
 
+  it("still flags the same-field error after a cross-field warning fires for the same key (leaf A once, leaf B twice)", () => {
+    const issues = figureRepeat([unit("management", [
+      ["sections.management.leadership", "Buybacks totaled $2.1B in the quarter."],
+      ["sections.management.capitalAllocation", "The board approved $2.1B more in buybacks. That $2.1B completes the authorization."],
+    ])]);
+    expect(issues.map((i) => [i.rule, i.severity, i.field, i.value])).toEqual([
+      ["figure-repeat-unit", "warning", "sections.management.capitalAllocation", "$2.1B"],
+      ["figure-repeat", "error", "sections.management.capitalAllocation", "$2.1B"],
+    ]);
+    expect(issues[0].message).toContain("first in sections.management.leadership");
+    expect(issues[1].message).toContain("twice in sections.management.capitalAllocation");
+  });
+
   it("separates the two tiers inside one run", () => {
     const issues = figureRepeat([
       unit("executiveSummary", [
