@@ -177,6 +177,8 @@ const PROXY_HEADINGS = {
   relatedPartyTransactions: titlePattern("related party transactions"),
   certainRelationships: titlePattern("certain relationships and related party transactions"),
   meetingInformation: titlePattern("additional meeting information"),
+  auditReport: titlePattern("audit committee report"),
+  reportOfAudit: titlePattern("report of the audit committee"),
   delinquent: titlePattern("delinquent section 16"),
   section16: titlePattern("section 16(a)"),
   stockholderProposals: titlePattern("stockholder proposals"),
@@ -217,18 +219,28 @@ function looksLikeTitleContinuation(line: string): boolean {
   return line.length <= 60 && /[A-Za-z]/.test(line) && !/[.;:]$/.test(line);
 }
 
+/** A short "Label:" line ("When:", "Where:", "Submitted by:") opens a body of
+ *  label/value pairs — a contents entry is never followed by one. */
+function looksLikeLabelLine(line: string): boolean {
+  return /^[A-Za-z][^:]{0,40}:$/.test(line);
+}
+
 /** `headingAt` is the end of the matched title, so the first line examined is
  *  the one after the title's last word. Up to two title-continuation lines may
  *  sit between it and the prose; a bare page number means a contents entry. */
 function headingFollowedByBody(text: string, headingAt: number): boolean {
   let lineEnd = text.indexOf("\n", headingAt);
   if (lineEnd < 0) return false;
+  // A title never ends a sentence: "…related party transactions." at a line
+  // start is prose that happens to begin with the words of a heading.
+  const lineStartAt = text.lastIndexOf("\n", headingAt) + 1;
+  if (/[.;]$/.test(text.slice(lineStartAt, lineEnd).trim())) return false;
   let continuations = 0;
   for (let i = 0; i < 6; i++) {
     const nextEnd = text.indexOf("\n", lineEnd + 1);
     const line = text.slice(lineEnd + 1, nextEnd < 0 ? undefined : nextEnd).trim();
     if (line.length > 0) {
-      if (looksLikeProse(line)) return true;
+      if (looksLikeProse(line) || looksLikeLabelLine(line)) return true;
       if (/^\d{1,3}$/.test(line)) return false;
       if (looksLikeTitleContinuation(line) && continuations < 2) { continuations++; }
       else return false;

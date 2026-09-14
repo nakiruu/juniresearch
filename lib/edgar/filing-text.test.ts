@@ -217,7 +217,7 @@ describe("extractProxySections on the ORCL FY25 proxy (real filing)", () => {
     expect(s.ownership).toMatch(/^SECURITY OWNERSHIP OF CERTAIN BENEFICIAL OWNERS AND MANAGEMENT/);
     expect(s.ownership!.length).toBeGreaterThan(2500);
     expect(s.related).toMatch(/^TRANSACTIONS WITH RELATED PERSONS/);
-    expect(s.related).toContain("Stanford");
+    expect(s.related).toContain("5% or more beneficial owner");
     // Bodies, not contents entries: no bare page-number lines near the top, and the real opening sentences.
     for (const body of [s.board!, s.compensation!, s.ownership!]) expect(body.slice(0, 400)).not.toMatch(/\n\d{1,3}\n/);
     expect(s.compensation).toContain("This Compensation Discussion and Analysis describes our fiscal 2025 executive compensation program");
@@ -277,6 +277,51 @@ describe("extractProxySections on the AVGO FY25 proxy (real filing)", () => {
     expect(s.ownership).toContain("The following table sets forth information about the beneficial ownership of Broadcom common stock");
     expect(s.related).toMatch(/^CERTAIN RELATIONSHIPS AND RELATED PARTY TRANSACTIONS/);
     expect(s.related).toContain("the Audit Committee must review all related party transactions on an ongoing basis");
+    // "Additional Meeting Information" opens with "When:" / "Where:" label lines and must still end the section.
+    expect(s.related!.length).toBeLessThan(6000);
+    expect(s.related).not.toContain("Appendix A");
+    expect(s.ownership!.length).toBeLessThan(10000);
     for (const body of [s.board!, s.compensation!, s.ownership!]) expect(body.slice(0, 400)).not.toMatch(/\n\d{1,3}\n/);
+  });
+});
+
+describe("a heading followed by label lines counts as a heading", () => {
+  const filler = (n: number, seed: string) => Array.from({ length: n }, (_, i) => `${seed} sentence ${i + 1}.`).join(" ");
+  const proxy = [
+    "Transactions with Related Persons",
+    filler(12, "The Audit Committee reviews every transaction with a related person under the written policy"),
+    "Additional Meeting Information",
+    "When:",
+    "April 20, 2026",
+    "Where:",
+    "3421 Hillview Avenue",
+    filler(6, "Stockholders of record may attend the meeting in person"),
+  ].join("\n");
+  it("ends the related-party section at a meeting-information heading whose body starts with When:", () => {
+    const s = extractProxySections(proxy);
+    expect(s.related).toMatch(/^Transactions with Related Persons/);
+    expect(s.related).toContain("written policy sentence 12.");
+    expect(s.related).not.toContain("When:");
+  });
+});
+
+describe("a sentence that starts with a heading's words is not a heading", () => {
+  const filler = (n: number, seed: string) => Array.from({ length: n }, (_, i) => `${seed} sentence ${i + 1}.`).join(" ");
+  const proxy = [
+    "AUDIT COMMITTEE",
+    "The Audit Committee oversees, among other things, the review of",
+    "related party transactions.",
+    "Fiscal 2025 Financial Statements",
+    filler(12, "In fulfilling its oversight responsibilities the Audit Committee reviewed the audited financial statements"),
+    "",
+    "CERTAIN RELATIONSHIPS AND RELATED PARTY TRANSACTIONS",
+    filler(8, "The Audit Committee must review all related party transactions on an ongoing basis under its charter"),
+    "OTHER MATTERS",
+    filler(4, "Our management does not know of any matters to be presented at the meeting"),
+  ].join("\n");
+  it("picks the real related-party heading over the sentence fragment that precedes it", () => {
+    const s = extractProxySections(proxy);
+    expect(s.related).toMatch(/^CERTAIN RELATIONSHIPS AND RELATED PARTY TRANSACTIONS/);
+    expect(s.related).not.toContain("Fiscal 2025 Financial Statements");
   });
 });
