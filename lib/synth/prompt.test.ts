@@ -4,6 +4,7 @@ import { FactPack } from "@/lib/facts/schema";
 import { projectReportFacts } from "@/lib/facts/project";
 import { Desk } from "@/lib/synth/desk.schema";
 import { renderFactsBlock, renderContextBlock, renderPrompt } from "@/lib/synth/prompt";
+import { EditorialReview } from "@/lib/synth/editorial.schema";
 
 const pack = FactPack.parse(JSON.parse(readFileSync("data/facts/AVGO/0001730168-26-000080.json", "utf8")));
 const facts = projectReportFacts(pack);
@@ -133,5 +134,37 @@ describe("the proxy statement in the prompt", () => {
     const p = renderPrompt(pack, facts, desk);
     expect(p).toMatch(/Governance claims[^\n]*proxy statement/);
     expect(p).toMatch(/no proxy statement[^\n]*say so/i);
+  });
+});
+
+describe("editorial findings in the prompt", () => {
+  const review = EditorialReview.parse({
+    judgmentSha256: "c".repeat(64), reviewedAt: "2026-09-14T10:00:00Z", reviewer: "opus", round: 1,
+    verdict: "needs-fix-round",
+    findings: [
+      { id: "F-1", severity: "Critical", field: "sections.financials.incomeCommentary", quote: "up 121%", issue: "wrong period", fix: "date it to FY26", status: "open" },
+      { id: "F-2", severity: "Minor", field: "analystCommentary", quote: "record", issue: "unattributed", fix: "attribute it", status: "addressed" },
+    ],
+  });
+
+  it("renders the open findings last, after the output section", () => {
+    const p = renderPrompt(pack, facts, desk, { editorial: review });
+    expect(p).toContain("# Editorial findings");
+    expect(p.indexOf("# Editorial findings")).toBeGreaterThan(p.indexOf("# Output"));
+    expect(p).toContain("F-1");
+    expect(p).toContain("sections.financials.incomeCommentary");
+    expect(p).toContain("date it to FY26");
+    expect(p).not.toContain("F-2");
+  });
+
+  it("renders errors, warnings and findings together, in that order", () => {
+    const p = renderPrompt(pack, facts, desk, { priorErrors: ["rating.label: bad (received 1)"], priorWarnings: ['warn: lint/tic: a: b (received "c")'], editorial: review });
+    const order = ["# Prior errors", "## Warnings (fix if cheap)", "# Editorial findings"].map((h) => p.indexOf(h));
+    expect(order).toEqual([...order].sort((a, b) => a - b));
+    expect(order.every((i) => i >= 0)).toBe(true);
+  });
+
+  it("renders no findings section without a review", () => {
+    expect(renderPrompt(pack, facts, desk)).not.toContain("# Editorial findings");
   });
 });

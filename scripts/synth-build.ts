@@ -10,12 +10,14 @@ import { Report } from "../lib/report.schema";
 import { validateReport, type ValidationIssue } from "../lib/validate";
 import { lintJudgment, type LintIssue } from "../lib/synth/lint";
 import { issueLine, writeErrorsFile } from "../lib/synth/errors-file";
+import { loadEditorialReview, reviewStatus, editorialGateMessage, openFindings } from "../lib/synth/editorial";
 
 const args = process.argv.slice(2);
 const dateFlag = args.indexOf("--date");
 const buildDate = dateFlag >= 0 ? args[dateFlag + 1] : new Date().toISOString().slice(0, 10);
+const skipReview = args.includes("--skip-review");
 const [tickerArg, accession] = args.filter((a, i) => !a.startsWith("--") && (dateFlag < 0 || i !== dateFlag + 1));
-if (!tickerArg || !accession || !/^\d{4}-\d{2}-\d{2}$/.test(buildDate ?? "")) { console.error("usage: npm run synth:build -- <TICKER> <ACCESSION> [--date YYYY-MM-DD]"); process.exit(2); }
+if (!tickerArg || !accession || !/^\d{4}-\d{2}-\d{2}$/.test(buildDate ?? "")) { console.error("usage: npm run synth:build -- <TICKER> <ACCESSION> [--date YYYY-MM-DD] [--skip-review]"); process.exit(2); }
 const ticker = tickerArg.toUpperCase();
 
 const read = (p: string) => { if (!existsSync(p)) { console.error(`Missing ${p}`); process.exit(2); } return readFileSync(p, "utf8"); };
@@ -23,6 +25,7 @@ const pack = FactPack.parse(JSON.parse(read(join("data", "facts", ticker, `${acc
 const desk = Desk.parse(JSON.parse(read(join("data", "desk", "desk.json"))));
 const judgmentPath = join("data", "judgment", ticker, `${accession}.json`);
 const errorsPath = join("data", "judgment", ticker, `${accession}.errors.txt`);
+const editorialPath = join("data", "judgment", ticker, `${accession}.editorial.json`);
 const judgmentText = read(judgmentPath);
 
 const fail = (issues: (ValidationIssue | LintIssue)[], warnings: LintIssue[], stage: string): never => {
@@ -47,6 +50,15 @@ const lint = lintJudgment(judgment, desk);
 const errors = [...issues, ...lint.filter((i) => i.severity === "error")];
 const warnings = lint.filter((i) => i.severity === "warning");
 if (errors.length) fail(errors, warnings, "validate");
+
+const review = (() => {
+  try { return loadEditorialReview(editorialPath); }
+  catch (e) { return fail([{ field: editorialPath, message: `malformed editorial review: ${(e as Error).message}`, value: null }], warnings, "editorial"); }
+})();
+const status = reviewStatus(judgmentText, review);
+if (status !== "clean" && !skipReview)
+  fail([{ field: editorialPath, message: editorialGateMessage(status, review ? openFindings(review).length : 0), value: status }], warnings, "editorial");
+if (status !== "clean") console.warn(`editorial review skipped: ${status}`);
 
 const out = join("data", `${ticker.toLowerCase()}.json`);
 writeFileSync(out, JSON.stringify(valid, null, 2) + "\n");

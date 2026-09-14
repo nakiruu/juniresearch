@@ -13,6 +13,8 @@ import { judgmentJsonSchema } from "./judgment.schema";
 import { HIGHLIGHT_KEYS } from "../facts/highlights";
 import { formatSnapshot, formatCell, compactUSD, compactNum, usd, pct, mult, num, type SnapshotCell } from "../format";
 import type { FinancialTable } from "../report.schema";
+import type { EditorialReview } from "./editorial.schema";
+import { renderEditorialFindings } from "./editorial";
 
 const table = (title: string, t: FinancialTable): string => {
   const head = `| ${t.columns.join(" | ")} |\n| ${t.columns.map(() => "---").join(" | ")} |`;
@@ -99,7 +101,7 @@ export function renderPrompt(
   pack: FactPack,
   facts: ReportFacts,
   desk: Desk,
-  opts: { priorErrors?: string[]; priorWarnings?: string[]; judgmentPath?: string } = {},
+  opts: { priorErrors?: string[]; priorWarnings?: string[]; judgmentPath?: string; editorial?: EditorialReview } = {},
 ): string {
   const path = opts.judgmentPath ?? `data/judgment/${pack.ticker}/${pack.filing.accession}.json`;
   const parts = [
@@ -121,5 +123,7 @@ export function renderPrompt(
       : "";
     parts.push(`# Prior errors\n\n${lead}${tail}`);
   }
+  if (opts.editorial)
+    parts.push(`# Editorial findings\n\n${renderEditorialFindings(opts.editorial)}`);
   return parts.join("\n\n") + "\n";
 }

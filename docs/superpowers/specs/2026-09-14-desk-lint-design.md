@@ -137,7 +137,7 @@ is one introduction, not two (*corpus checkpoint, 2026-09-14: "all 30
 gigawatts … 30 gigawatts"*). The other exclusion is the tokeniser's allow-list
 (bare integers ≤ 12, years); the rating's target range and the fair value
 count like any other figure. A repeat across *different fields* of any other
-unit is the warning `figure-repeat` (severity `warning`) — see below.
+unit is the warning `figure-repeat-unit` (severity `warning`) — see below.
 *Revised 2026-09-14 while planning: measured against the approved reports, the
 unit-wide error fired 15–36 times per report; the reviewers had applied "once
 per section" at field level, plus the executive summary as a whole.*
@@ -168,22 +168,28 @@ or the superlative sits inside straight or curly quotation marks. "Record" is ex
 when it is not a superlative: preceded within two words by "the", "its",
 "this", "that", "in", "on", "reported", "governance" or "track" ("the
 record", "not in the record", "the reported record", "track record"), or
-followed by "date" ("record date"). These patterns live in the rule, not the
-desk config.
+followed by "date" ("record date"). It is also excluded when followed by "as"
+("record as" — the verb, as in "the company will record as an expense"),
+since that use is bookkeeping, not a claim. These patterns live in the rule,
+not the desk config.
 
 **`rhetorical-question`** — a `?` in any unit's prose.
 
 ### Warnings
 
-**`figure-repeat`** (warning form) — the same display key in two different
-fields of one unit other than `executiveSummary` (e.g. a figure in
-`management.leadership` and again in `management.capitalAllocation`).
+**`figure-repeat-unit`** (the warning form of `figure-repeat`, a distinct rule
+id) — the same display key in two different fields of one unit other than
+`executiveSummary` (e.g. a figure in `management.leadership` and again in
+`management.capitalAllocation`).
 
 **`sentence-similar`** — trigram Jaccard in [0.60, 0.80) across units.
 
 **`judgment-superlative`** — `first` or `only` used as a superlative (`the first
 …`, `the only …`) without attribution; too many innocent uses ("first quarter",
-"the only other holder") to block, so the author is told to check.
+"the only other holder") to block, so the author is told to check. A
+sentence-initial "The first …" is excluded — an ordinal opening a sentence
+reads as a topic ("The first quarter's cloud growth accelerated…"), not a
+superlative claim.
 
 **`tic`** — a phrase from `desk.lint.tics` (default: "this pack", "worth naming",
 "worth stating", "worth noticing", "is where", "leg") whose count across the

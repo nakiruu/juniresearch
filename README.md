@@ -81,6 +81,37 @@ The model may also choose up to four fact-derived highlight cells (leverage rati
 
 ---
 
+## Desk lint and editorial review (subsystem 3b)
+
+```bash
+npm run synth:build -- AVGO 0001730168-26-000080                 # validators + desk lint + the editorial gate
+npm run synth:review-brief -- AVGO 0001730168-26-000080          # → data/judgment/AVGO/<acc>.review-brief.md
+npm run synth:prompt -- AVGO 0001730168-26-000080 --with-review  # the author's brief with the open findings
+npm run synth:build -- AVGO 0001730168-26-000080 --skip-review   # local experiments only; prints a warning
+```
+
+`lintJudgment` (`lib/synth/lint/`) reads the judgment as the ten section units the
+page renders and applies the desk's mechanical rules: a figure introduced twice in
+one field or twice in the executive summary (`figure-repeat`), a sentence in two
+sections (`sentence-repeat`), a
+`{+ +}` span around a whole clause (`span-scope`), hype (`hype-word`), an
+unattributed superlative (`superlative`), a rhetorical question. Errors fail the
+build with a `lint/<rule>` prefix and go back to the author like grounding errors;
+warnings (`figure-repeat-unit`, `sentence-similar`, `judgment-superlative`, `tic`,
+`pointer-length`, `source-disagreement`) print, live in the errors file's
+`# warnings` block and
+render to the author as "fix if cheap". Word lists and thresholds are desk
+configuration in `data/desk/desk.json` under `lint`; a rule's severity is not.
+
+Above the lint sits the editorial review. `synth:review-brief` renders a brief
+from `data/desk/editorial-rubric.md`; the `/synthesize` skill dispatches a fresh
+reviewer that writes `data/judgment/<T>/<acc>.editorial.json` (`lib/synth/editorial.schema.ts`);
+`synth:build` refuses to write the report until that file matches the judgment's
+SHA-256 with no Critical or Important finding open. Two review rounds at most;
+Minors may stay open and are printed.
+
+---
+
 ## The core idea
 
 The AVGO PDF baked presentation into content: numbers were pre-formatted strings

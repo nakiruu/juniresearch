@@ -290,3 +290,15 @@ Vitest, all pure except the final end-to-end step.
 - Peer multiples and a peer data source
 - PDF export, publishing, ISR (subsystems 4–5)
 - More than one ticker; scheduling
+
+---
+
+## Revision 1 — 2026-09-14: desk lint and the editorial review loop
+
+`synth:build`'s validation stage gained a deterministic desk lint, and its write
+step gained an editorial gate; `renderPrompt` gained a warnings subsection and an
+editorial-findings section; the `/synthesize` loop gained steps 5–7. The
+authority for all of it is
+`docs/superpowers/specs/2026-09-14-desk-lint-design.md` (subsystem 3b); the
+"Validation", "The prompt" and "The loop" sections above describe the pre-3b
+behaviour and are superseded by it where the two differ.
