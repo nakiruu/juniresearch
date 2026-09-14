@@ -10,6 +10,7 @@ import type { Desk } from "../desk.schema";
 import type { Judgment } from "../judgment.schema";
 import { sectionUnits, type SectionUnit } from "./units";
 import { figureRepeat } from "./rules/figure-repeat";
+import { repetition } from "./rules/repetition";
 
 export interface LintIssue extends ValidationIssue {
   rule: string;
@@ -19,7 +20,10 @@ export interface LintIssue extends ValidationIssue {
 export type LintRule = (units: SectionUnit[], desk: Desk) => LintIssue[];
 
 /** Registered in print order; Tasks 5–9 fill this in. */
-export const RULES: LintRule[] = [(units) => figureRepeat(units)];
+export const RULES: LintRule[] = [
+  (units) => figureRepeat(units),
+  (units, desk) => repetition(units, desk),
+];
 
 export function lintJudgment(judgment: Judgment, desk: Desk): LintIssue[] {
   const units = sectionUnits(judgment);
