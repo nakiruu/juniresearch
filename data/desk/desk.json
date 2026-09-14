@@ -12,5 +12,14 @@
     "No unearned superlatives: before writing fastest, largest, record, first or only, check the series or the source supports it; if it does not, say the number without the superlative.",
     "Executive-summary catalysts and risks are one- or two-sentence pointers; the later sections carry the argument, mechanism and what-to-watch. No sentence appears in two sections.",
     "Introduce each figure once per section and refer back in words afterwards; when two sources in the Facts block disagree on a figure, say so once and state which one you used."
-  ]
+  ],
+  "lint": {
+    "hypeWords": ["massive", "incredible", "game-changing", "skyrocket", "skyrocketing", "revolutionary", "explosive"],
+    "superlatives": ["record", "fastest", "largest", "biggest", "highest", "unprecedented", "best-ever"],
+    "attributionPhrases": ["what it calls", "what management calls", "its word", "the release's word", "the company's word", "described as", "describes as", "calls it", "calls its", "reported as", "management's phrase"],
+    "tics": ["this pack", "worth naming", "worth stating", "worth noticing", "is where", "leg"],
+    "ticLimit": 4,
+    "similarity": { "error": 0.8, "warning": 0.6 }
+  },
+  "review": { "model": "opus" }
 }
