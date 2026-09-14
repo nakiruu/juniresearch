@@ -71,3 +71,24 @@ describe("source-disagreement", () => {
     ])])).toEqual([]);
   });
 });
+
+describe("source-disagreement — only when the sentence names a source", () => {
+  it("says nothing about an ordinary period-over-period comparison with no source named", () => {
+    expect(structure([unit("executiveSummary", [
+      ["sections.executiveSummary.companyOverview", "Operating margin reached 70% against 57% a year earlier."],
+    ])])).toEqual([]);
+  });
+
+  it("warns when a source noun sits in the same sentence as the opposed figures", () => {
+    const issues = structure([unit("financials", [
+      ["sections.financials.cashflowCommentary", "The proxy puts repurchases at $2.5 billion against the $6.3B in the cash flow statement."],
+    ])]);
+    expect(issues.map((i) => [i.rule, i.severity])).toEqual([["source-disagreement", "warning"]]);
+  });
+
+  it("accepts the source-named sentence when it also says which figure was used", () => {
+    expect(structure([unit("financials", [
+      ["sections.financials.cashflowCommentary", "The proxy puts repurchases at $2.5 billion against the $6.3B in the cash flow statement; we use the statement figure."],
+    ])])).toEqual([]);
+  });
+});

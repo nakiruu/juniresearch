@@ -14,31 +14,67 @@
  * and again in a moat factor is usually the same fact doing two jobs, which the
  * desk's own reviewers have waved through on every report so far; that is a
  * warning the author fixes if a rewrite can absorb it.
+ *
+ * A key repeated inside one sentence — "not all 30 gigawatts", "up from $5B to
+ * $5B" — is one introduction read once, not two; the rule only fires once the
+ * second occurrence lands in a later sentence of the field, or in another field.
  */
 import { numericTokens } from "../../grounding";
+import { splitSentences } from "../sentences";
 import type { LintIssue } from "../index";
 import type { SectionUnit } from "../units";
+
+/** Each token's key alongside which sentence of `text` it falls in, located by character offset. */
+function locateTokens(text: string): { key: string; sentence: number }[] {
+  const sentences = splitSentences(text);
+  const ranges: [number, number][] = [];
+  let cursor = 0;
+  for (const s of sentences) {
+    const start = text.indexOf(s, cursor);
+    const at = start === -1 ? cursor : start;
+    ranges.push([at, at + s.length]);
+    cursor = at + s.length;
+  }
+  const sentenceAt = (offset: number): number => {
+    for (let i = 0; i < ranges.length; i++) {
+      const [start, end] = ranges[i];
+      if (offset < end) return offset >= start ? i : Math.max(0, i - 1);
+    }
+    return Math.max(0, ranges.length - 1);
+  };
+
+  const out: { key: string; sentence: number }[] = [];
+  let cursor2 = 0;
+  for (const token of numericTokens(text)) {
+    const idx = text.indexOf(token.raw, cursor2);
+    const at = idx === -1 ? cursor2 : idx;
+    cursor2 = at + token.raw.length;
+    out.push({ key: token.raw, sentence: sentenceAt(at) });
+  }
+  return out;
+}
 
 export function figureRepeat(units: SectionUnit[]): LintIssue[] {
   const issues: LintIssue[] = [];
   for (const unit of units) {
-    const firstSeenIn = new Map<string, string>();
+    const firstSeenIn = new Map<string, { leaf: string; sentence: number }>();
     const reported = new Set<string>();
     for (const leaf of unit.leaves)
-      for (const token of numericTokens(leaf.text)) {
-        const key = token.raw;
+      for (const { key, sentence } of locateTokens(leaf.text)) {
         const first = firstSeenIn.get(key);
         if (first === undefined) {
-          firstSeenIn.set(key, leaf.path);
+          firstSeenIn.set(key, { leaf: leaf.path, sentence });
           continue;
         }
+        const sameSentence = first.leaf === leaf.path && first.sentence === sentence;
+        if (sameSentence) continue;   // one introduction, read once
         if (reported.has(key)) continue;
         reported.add(key);
-        const sameField = first === leaf.path;
+        const sameField = first.leaf === leaf.path;
         const blocks = sameField || unit.name === "executiveSummary";
         const where = sameField
           ? `twice in ${leaf.path}`
-          : `twice in ${unit.name} (first in ${first})`;
+          : `twice in ${unit.name} (first in ${first.leaf})`;
         issues.push(
           blocks
             ? {

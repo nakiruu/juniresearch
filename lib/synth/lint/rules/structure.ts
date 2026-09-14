@@ -7,6 +7,13 @@
  * usually means two sources disagreed — which is fine, said once, with the figure
  * the report used named. Both are warnings: the rubric's items 7 and 8 carry the
  * judgment, the lint only raises a hand.
+ *
+ * "Against" alone is not evidence of a source conflict: "54% against 37% a year
+ * earlier" is an ordinary current-vs-prior-period comparison, the desk's own
+ * prose does it constantly, and it is not what item 8 means. The rule only fires
+ * when the sentence also names a source the figures could plausibly come from —
+ * a filing, a release, a table, management — narrowing it to sentences actually
+ * weighing one source's number against another's.
  */
 import { numericTokens } from "../../grounding";
 import type { LintIssue } from "../index";
@@ -18,6 +25,8 @@ export const MAX_POINTER_SENTENCES = 2;
 const POINTER = /^sections\.executiveSummary\.(catalysts|risks)\[\d+\]$/;
 const OPPOSED = /\b(?:against|versus|vs\.?)\b/gi;   // global: every connector in the sentence is tried
 const RESOLVED = /\b(?:we use|we used|the statement figure|the filing's number)\b/i;
+const SOURCE_NOUNS = ["proxy", "release", "filing", "statement", "tearsheet", "table", "call", "transcript", "10-Q", "10-K", "vendor", "management"];
+const SOURCE = new RegExp(`\\b(?:${SOURCE_NOUNS.join("|")})\\b`, "i");
 
 export function structure(units: SectionUnit[]): LintIssue[] {
   const issues: LintIssue[] = [];
@@ -48,6 +57,7 @@ export function structure(units: SectionUnit[]): LintIssue[] {
           joined = before.some((b) => after.some((a) => a.kind === b.kind && a.raw !== b.raw));
         }
         if (!joined) continue;
+        if (!SOURCE.test(sentence)) continue;   // no named source — an ordinary period-over-period comparison
         issues.push({
           rule: "source-disagreement",
           severity: "warning",

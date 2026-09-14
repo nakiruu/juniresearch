@@ -9,7 +9,7 @@ const TABLE: [string, string | null][] = [
   ["rating.label", null],
   ["highlights[0]", null],
   ["analystCommentary", "analystCommentary"],
-  ["sections.executiveSummary.companyOverview", "executiveSummary"],
+  ["sections.executiveSummary.companyOverview", "companyOverview"],
   ["sections.executiveSummary.thesis.body", "executiveSummary"],
   ["sections.executiveSummary.catalysts[2]", "executiveSummary"],
   ["sections.executiveSummary.risks[0]", "executiveSummary"],
@@ -46,9 +46,9 @@ describe("sectionUnits", () => {
   const j = loadCorpus("avgo-final");
   const units = sectionUnits(j);
 
-  it("returns the ten units in render order", () => {
+  it("returns the eleven units in render order", () => {
     expect(units.map((u) => u.name)).toEqual([...UNIT_NAMES]);
-    expect(UNIT_NAMES).toHaveLength(10);
+    expect(UNIT_NAMES).toHaveLength(11);
   });
 
   it("puts every judgment leaf in exactly one unit or excludes it", () => {
@@ -65,6 +65,13 @@ describe("sectionUnits", () => {
       "sections.businessMoat.moatRating",
       "sections.valuation.scenarios[0].name", "sections.valuation.scenarios[1].name", "sections.valuation.scenarios[2].name",
     ].sort());
+  });
+
+  it("keeps the company overview out of the executive summary unit", () => {
+    const overview = units.find((u) => u.name === "companyOverview")!;
+    const summary = units.find((u) => u.name === "executiveSummary")!;
+    expect(overview.leaves.map((l) => l.path)).toEqual(["sections.executiveSummary.companyOverview"]);
+    expect(summary.leaves.map((l) => l.path)).not.toContain("sections.executiveSummary.companyOverview");
   });
 
   it("keeps the scenario drivers out of the valuation unit", () => {

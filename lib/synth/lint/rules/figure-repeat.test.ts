@@ -5,7 +5,7 @@ import { unit } from "@/lib/synth/lint/__fixtures__/units";
 describe("figure-repeat (error)", () => {
   it("flags a display key used twice inside one field", () => {
     const issues = figureRepeat([unit("financials", [
-      ["sections.financials.incomeCommentary", "Cloud grew 30% while total revenue grew 12.4%; the 30% is the mix driver."],
+      ["sections.financials.incomeCommentary", "Cloud grew 30% while total revenue grew 12.4%. The 30% is the mix driver."],
     ])]);
     expect(issues).toHaveLength(1);
     expect(issues[0]).toMatchObject({
@@ -35,10 +35,32 @@ describe("figure-repeat (error)", () => {
 
   it("reports a repeated key once per unit, not once per extra occurrence", () => {
     const issues = figureRepeat([unit("valuation", [
-      ["sections.valuation.multiplesCommentary", "At 44.9x trailing earnings, 44.9x is dear, and 44.9x again next year."],
+      ["sections.valuation.multiplesCommentary", "At 44.9x trailing earnings the stock is dear. It traded at 44.9x last quarter too. It will likely still be 44.9x next year."],
     ])]);
     expect(issues).toHaveLength(1);
     expect(issues[0].rule).toBe("figure-repeat");
+  });
+});
+
+describe("figure-repeat — a repeat inside one sentence is one introduction", () => {
+  it("does not flag the same key twice in the same sentence", () => {
+    expect(figureRepeat([unit("financials", [
+      ["sections.financials.incomeCommentary", "Guidance commits all 30 gigawatts of capacity, not all 30 gigawatts of it, by 2027."],
+    ])])).toEqual([]);
+  });
+
+  it("flags the same key once it reaches a later sentence of the same field", () => {
+    const issues = figureRepeat([unit("financials", [
+      ["sections.financials.incomeCommentary", "Guidance commits 30 gigawatts of capacity by 2027. A further 30 gigawatts is under negotiation."],
+    ])]);
+    expect(issues).toHaveLength(1);
+    expect(issues[0]).toMatchObject({
+      rule: "figure-repeat",
+      severity: "error",
+      field: "sections.financials.incomeCommentary",
+      value: "30",
+    });
+    expect(issues[0].message).toContain("twice in sections.financials.incomeCommentary");
   });
 });
 
@@ -60,7 +82,7 @@ describe("figure-repeat-unit (warning)", () => {
 
   it("stays an error, not a warning, when the repeat is inside one field of that same unit", () => {
     expect(figureRepeat([unit("management", [
-      ["sections.management.governance", "Pay was $4.2M, and the $4.2M is almost all variable."],
+      ["sections.management.governance", "Pay was $4.2M. The $4.2M is almost all variable."],
     ])]).map((i) => [i.rule, i.severity])).toEqual([["figure-repeat", "error"]]);
   });
 
