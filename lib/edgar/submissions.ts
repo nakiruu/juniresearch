@@ -67,8 +67,10 @@ export async function fetchFilingIndex(cik: number, accession: string, contact: 
   const j = await edgarJson<{ directory: { item: { name: string }[] } }>(indexUrl(cik, accession), contact, fetchImpl);
   return j.directory.item;
 }
+/** The earnings-release exhibit: "ex99_1", "ex-99.1", or AT&T's "exhibit991"; the .1 exhibit wins when several 99s are filed. */
 export function exhibit99Url(cik: number, accession: string, items: { name: string }[]): string | null {
-  const hit = items.find((i) => /ex[-_]?99/i.test(i.name) && /\.htm/i.test(i.name));
-  return hit ? filingUrl(cik, accession, hit.name) : null;
+  const htm = items.filter((i) => /\.htm/i.test(i.name) && /ex(?:hibit)?[-_.]?99/i.test(i.name));
+  const first = htm.find((i) => /ex(?:hibit)?[-_.]?99[-_.]?1(?!\d)/i.test(i.name)) ?? htm[0];
+  return first ? filingUrl(cik, accession, first.name) : null;
 }
 export const fetchEdgarDocument = edgarText;

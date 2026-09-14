@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
   MANIFEST, renderManifest, requiredRawFiles, missingRawFiles, CODE_FETCHED_FILES, OPTIONAL_FILES, PHASE_INPUT_FILES, PROXY_FILE,
-  PRESS_RELEASE_FILE, PRESS_RELEASE_MISSING_FILE, isoMinusDays,
+  PRESS_RELEASE_FILE, PRESS_RELEASE_MISSING_FILE, isoMinusDays, pickEntity,
 } from "@/lib/facts/manifest";
 
 const ctx = { ticker: "AVGO", company: "Broadcom Inc.", periodEnd: "2026-08-02", today: "2026-09-12" };
@@ -39,11 +39,32 @@ describe("renderManifest", () => {
     expect(sheets.find((c) => c.file === "bigdata-tearsheet-annual.json")!.params)
       .toMatchObject({ interval: "annual", sections: expect.arrayContaining(["company_overview", "analyst_ratings", "analyst_estimates", "key_metrics", "financial_ratios", "revenue_segmentation"]) });
   });
+  it("queries find_securities by ticker, or by company name when the ticker is one letter (AT&T's T)", () => {
+    const entity = (c: typeof ctx) => renderManifest(c).find((x) => x.name === "entity")!.params;
+    expect(entity(ctx)).toEqual({ query: "AVGO", security_types: ["COMPANY"] });
+    expect(entity({ ...ctx, ticker: "T", company: "AT&T INC." })).toEqual({ query: "AT&T INC.", security_types: ["COMPANY"] });
+  });
   it("renders bigdata_search calls in the tool's request envelope", () => {
     for (const name of ["transcript", "headlines"]) {
       const c = renderManifest(ctx).find((x) => x.name === name)!;
       expect(c.params).toMatchObject({ request: { search_mode: "smart", query: { text: expect.stringContaining("Broadcom Inc."), max_chunks: 20 } } });
     }
+  });
+});
+
+describe("pickEntity", () => {
+  const raw = { results: [
+    { id: "AAA111", name: "AT&T Latin America", listing_values: [], listing_type: "PRIVATE" },
+    { id: "BBB222", name: "AT&T Inc.", listing_values: ["XNYS:T", "XMEX:T"], listing_type: "PUBLIC" },
+  ] };
+  it("prefers the result listed under the ticker", () => {
+    expect(pickEntity(raw, "T")).toEqual({ id: "BBB222", listing_type: "PUBLIC" });
+    expect(pickEntity(raw, "t")).toEqual({ id: "BBB222", listing_type: "PUBLIC" });
+  });
+  it("falls back to the first result, and accepts the array-wrapped shape of earlier captures", () => {
+    expect(pickEntity(raw, "ZZZ")).toEqual({ id: "AAA111", listing_type: "PRIVATE" });
+    expect(pickEntity([raw], "T")).toEqual({ id: "BBB222", listing_type: "PUBLIC" });
+    expect(pickEntity([{ results: [] }], "T")).toBeUndefined();
   });
 });
 

@@ -1,7 +1,7 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import {
-  renderManifest, requiredRawFiles, missingRawFiles, pressReleaseIsMissing,
+  renderManifest, requiredRawFiles, missingRawFiles, pressReleaseIsMissing, pickEntity,
   PHASE_INPUT_FILES, PRESS_RELEASE_MISSING_FILE, type CaptureContext,
 } from "../lib/facts/manifest";
 
@@ -14,13 +14,8 @@ const ctx: CaptureContext = { ticker: ticker.toUpperCase(), company: filing.comp
   today: new Date().toISOString().slice(0, 10) };
 const entityFile = join(dir, PHASE_INPUT_FILES[0]);
 if (existsSync(entityFile)) {
-  const raw = JSON.parse(readFileSync(entityFile, "utf8")) as unknown;
-  const top = Array.isArray(raw) ? raw[0] : raw;
-  const list = ((top as { results?: unknown[]; data?: unknown[] })?.results
-    ?? (top as { data?: unknown[] })?.data
-    ?? (Array.isArray(raw) ? raw : [])) as { id?: string; listing_type?: string }[];
-  const first = list[0];
-  if (first?.id) { ctx.rpEntityId = first.id; ctx.companyType = first.listing_type === "PRIVATE" ? "Private" : "Public"; }
+  const picked = pickEntity(JSON.parse(readFileSync(entityFile, "utf8")), ctx.ticker);
+  if (picked) { ctx.rpEntityId = picked.id; ctx.companyType = picked.listing_type === "PRIVATE" ? "Private" : "Public"; }
 }
 
 if (flag === "--check") {

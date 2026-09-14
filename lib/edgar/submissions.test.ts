@@ -75,6 +75,11 @@ describe("earnings release and latest annual discovery", () => {
     expect(findLatestAnnual(soleTenK, "2026-07-15")!.accession).toBe("0001-26-000600"); // same day: eligible
     expect(findLatestAnnual(soleTenK, "2026-07-14")).toBeNull();                        // day before: not yet filed
   });
+  it("finds AT&T's exhibit991 naming and prefers the .1 exhibit among several", () => {
+    const items = [{ name: "t-20260722.htm" }, { name: "t-2q2026exhibit993.htm" }, { name: "t-2q2026exhibit991.htm" }, { name: "t-2q2026exhibit992.htm" }, { name: "R1.htm" }];
+    expect(exhibit99Url(732717, "0000732717-26-000294", items)).toBe("https://www.sec.gov/Archives/edgar/data/732717/000073271726000294/t-2q2026exhibit991.htm");
+    expect(exhibit99Url(732717, "0000732717-26-000294", [{ name: "t-2q2026exhibit992.htm" }])).toBe("https://www.sec.gov/Archives/edgar/data/732717/000073271726000294/t-2q2026exhibit992.htm");
+  });
   it("finds the exhibit 99 file in a filing index", () => {
     const items = [{ name: "orcl-20260910.htm" }, { name: "orcl-ex99_1.htm" }, { name: "R1.htm" }];
     expect(exhibit99Url(1341439, "0001193125-26-387905", items)).toBe("https://www.sec.gov/Archives/edgar/data/1341439/000119312526387905/orcl-ex99_1.htm");

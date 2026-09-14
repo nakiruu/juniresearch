@@ -20,6 +20,11 @@
  * Revision 2026-09-14: the latest definitive proxy statement (DEF 14A) filed on
  * or before the filing is captured as OPTIONAL_FILES' edgar-proxy.html — the
  * governance source (board, pay, ownership) — read when present, never required.
+ *
+ * Revision 2026-09-14 (AT&T run): Bigdata's find_securities rejects a query
+ * shorter than two characters, so a one-letter ticker searches by company name
+ * (entityQuery), and the phase-2 resolver prefers the result listed under the
+ * ticker (pickEntity) — a name search ranks by name, not by listing.
  */
 export const PEER_LIMIT = 4;
 export const RAW_CAPTURE_META = "capture.json";
@@ -61,6 +66,25 @@ export const isoMinusDays = (ymd: string, days: number) => {
   return d.toISOString().slice(0, 10);
 };
 
+/** find_securities needs at least two characters, so a one-letter ticker (AT&T's "T") searches by company name instead. */
+export const entityQuery = (c: CaptureContext): string => (c.ticker.length >= 2 ? c.ticker : c.company);
+
+/**
+ * The phase-1 entity result to use for phase 2: the result listed under the
+ * ticker ("XNYS:T"), else the first result. Accepts the tool's response as
+ * saved — a bare object or an array wrapping one.
+ */
+export function pickEntity(raw: unknown, ticker: string): { id: string; listing_type?: string } | undefined {
+  const top = Array.isArray(raw) ? raw[0] : raw;
+  const list = ((top as { results?: unknown[]; data?: unknown[] })?.results
+    ?? (top as { data?: unknown[] })?.data
+    ?? (Array.isArray(raw) ? raw : [])) as { id?: string; listing_type?: string; listing_values?: string[] }[];
+  const suffix = `:${ticker.toUpperCase()}`;
+  const listed = list.find((r) => r.id && (r.listing_values ?? []).some((l) => l.toUpperCase().endsWith(suffix)));
+  const chosen = listed ?? list[0];
+  return chosen?.id ? { id: chosen.id, listing_type: chosen.listing_type } : undefined;
+}
+
 const fmp = (name: string, file: string, tool: string, params: ManifestEntry["params"]): ManifestEntry =>
   ({ name, file, server: "fmp", tool, phase: 1, params });
 
@@ -76,7 +100,7 @@ const tearsheet = (name: string, file: string, interval: "annual" | "quarter", s
 export const MANIFEST: ManifestEntry[] = [
   fmp("peers", "fmp-peers.json", "company", (c) => ({ endpoint: "peers", symbol: c.ticker })),
   { name: "entity", file: PHASE_INPUT_FILES[0], server: "bigdata", tool: "find_securities", phase: 1,
-    params: (c) => ({ query: c.ticker, security_types: ["COMPANY"] }) },
+    params: (c) => ({ query: entityQuery(c), security_types: ["COMPANY"] }) },
   tearsheet("tearsheet-annual", "bigdata-tearsheet-annual.json", "annual", TEARSHEET_SECTIONS_ANNUAL),
   tearsheet("statements-annual", "bigdata-statements-annual.json", "annual", ["financial_statements"]),
   tearsheet("statements-quarter", "bigdata-statements-quarter.json", "quarter", ["financial_statements"]),
