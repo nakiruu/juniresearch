@@ -1,0 +1,169 @@
+{
+  "judgmentSha256": "08abaaf80c85a3566b3d165c2f79eda300fe494d4953933c8f7b070f09b9fbb9",
+  "reviewedAt": "2026-09-14T21:19:03Z",
+  "reviewer": "opus",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.valuation.scenarios[1].driver",
+      "quote": "Operating margin settles near the 54% the quarter ended August 2, 2026 established, short of the guided 66% peak.",
+      "issue": "The two margins are different quantities. 54% is the GAAP operating margin from the 10-Q income statement (operating income $15,955 million on net revenue $29,591 million; prompt lines 264-272). The approximately 66% Q4 figure is a non-GAAP operating income guide: the press release states \"Fourth quarter fiscal year 2026 Non-GAAP operating income guidance of approximately 66 percent of projected revenue\" (prompt line 540), and the comparable non-GAAP margin already delivered in Q3 was 67.9% (prompt line 1085), i.e. above 66%, not below. Presenting 66% as a peak the 54% quarter fell short of inverts the relationship and makes the base case look conservative on an arithmetic that does not exist. The same unqualified 66% appears in sections.finalRecommendation.body[0] (\"at a 54% operating margin, and guided the following quarter to $34.8 billion at approximately 66%\"), sections.executiveSummary.companyOverview and sections.executiveSummary.catalysts[0].",
+      "fix": "Call the guide what the pack calls it — a non-GAAP operating margin of approximately 66% — and compare it with the Q3 non-GAAP margin of 67.9% rather than with the GAAP 54%. In the base case, either argue the GAAP margin against the GAAP 54% or drop the implied step-up from 54% to 66%. Apply the same label in companyOverview, catalysts[0] and finalRecommendation.body[0].",
+      "status": "addressed",
+      "note": "The base case now reads \"Operating margin holds near the 54% GAAP level the quarter ended August 2, 2026 established rather than improving on it\" — the false step-up is gone. The guide is labelled non-GAAP in companyOverview and finalRecommendation.body[0], and catalysts[0] no longer carries the figure."
+    },
+    {
+      "id": "F-2",
+      "severity": "Critical",
+      "field": "sections.executiveSummary.risks[2]",
+      "quote": "The prior-year presentation was restated, moving $1,916 million and $5,691 million out of subscriptions and services.",
+      "issue": "The filing describes a reclassification, not a restatement: \"To conform to the current period presentation, we reclassified $1,916 million and $5,691 million of upfront license revenue from subscriptions and services revenue to products revenue for the fiscal quarter and three fiscal quarters ended August 3, 2025, respectively\" (prompt line 369). A restatement is a correction of previously issued financial statements; nothing in the pack carries one. Inside a risk bullet headed \"Revenue quality inside the products line\" the word reads as an accounting-quality flag the source does not support. The bullet also drops the periods the filing attaches to the two figures.",
+      "fix": "Use the filing's verb — \"reclassified ... to conform to the current period presentation\" — and carry the periods ($1,916 million for the fiscal quarter and $5,691 million for the three fiscal quarters ended August 3, 2025).",
+      "status": "addressed",
+      "note": "risks.idiosyncratic[3] now uses the filing's verb with both periods and adds \"that is a change of presentation, not a correction of prior statements\". The summary bullet points to it rather than characterising it."
+    },
+    {
+      "id": "F-3",
+      "severity": "Critical",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "Revenue rose 44.0% while net income {- fell to $5.9B -} and diluted EPS to $1.23, because acquisition accounting and financing costs landed before the revenue did.",
+      "issue": "Causal claim the grounding surface does not establish. The Facts block gives the FY24 line items only (revenue +44.0%, net income $5.9B, diluted EPS $1.23; prompt lines 57-64) with no commentary on what drove them, and the Context blocks cover only the Q3 FY26 quarter, the risk factors and the fiscal 2025 proxy. Nothing in the pack attributes the FY24 earnings decline to acquisition accounting or financing costs. The same shape recurs in sections.financials.balanceCommentary, where the FY24 equity step from $24.0B to $67.7B is explained as \"which is purchase accounting rather than retained value\" — again a mechanism the pack does not state.",
+      "fix": "State the FY24 movement without asserting a cause the pack does not carry, or attribute it to what the pack does say — the proxy names the VMware acquisition (prompt line 936) — and mark the link as inference rather than fact. Same for the equity step in balanceCommentary.",
+      "status": "addressed",
+      "note": "Now reads \"The pack does not state a cause for that divergence\" before offering the VMware reading \"which is our inference and not a disclosed fact\". balanceCommentary drops the purchase-accounting mechanism: \"The pack does not break that step down, so we note it without reading retained value into it.\""
+    },
+    {
+      "id": "F-4",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "operating income of $15,955 million was 54% of revenue against 37%",
+      "issue": "The pack carries two figures for the same quarter's operating income and margin: GAAP $15,955 million / 54% (10-Q, prompt lines 264-272) and non-GAAP $20,095 million / 67.9%, which management calls \"a record 68% of revenue\" (press release prompt lines 570-582; transcript prompt lines 1073, 1085). The report uses the GAAP basis everywhere — incomeCommentary, executiveSummary.companyOverview, executiveSummary.thesis.body, management.leadership, finalRecommendation.body[0] — and never tells the reader the second basis exists or which one it chose. It handles the analogous split correctly elsewhere (insiderOwnership names both the proxy's $2.5 billion and the cash flow statement's $6.3B and says which it uses), so the omission here is inconsistent as well as silent, and it is what lets F-1 through.",
+      "fix": "Say once, in incomeCommentary, that the quarter carries a GAAP operating margin of 54% and a non-GAAP margin of 67.9%, and state that the report uses the GAAP basis throughout. Then keep the label attached wherever the guided 66% appears.",
+      "status": "addressed",
+      "note": "incomeCommentary now carries the disclosure once — \"Two bases are on the table and they are far apart\", naming non-GAAP operating income of $20.1 billion and a 67.9% non-GAAP margin, the 66% Q4 guide on that basis, and \"We use the GAAP basis throughout this report\". The label is carried in companyOverview, management.leadership and finalRecommendation.body[0]."
+    },
+    {
+      "id": "F-5",
+      "severity": "Important",
+      "field": "sections.executiveSummary.catalysts",
+      "quote": "Management expects to accelerate shipments of Ironwood to Anthropic, ramp high volume shipments of the TPU v8i to Google, continue Jalapeño shipments for OpenAI, and begin production shipments of Meta's custom MTIA accelerator. It expects both XPU and AI networking revenue to triple year-on-year in Q4. Tomahawk 7, the industry's first 200 terabit per second Ethernet switch, extends the networking attach into the next generation of deployments.",
+      "issue": "Catalysts are meant to be one- or two-sentence pointers with the argument carried by the sections behind them (prompt line 11). Four of the five run to three or more sentences and each duplicates its section rather than pointing at it: catalysts[0] repeats growth.points[0] and finalRecommendation.body[2] ($34.8 billion / $21.7 billion / 236%); catalysts[1] repeats management.leadership almost word for word (\"$115 billion of AI semiconductors to its six customers in fiscal 2027 and $230 billion in fiscal 2028\"); catalysts[2], quoted here, repeats growth.points[1] (the same four shipment programs) and businessMoat.moatFactors[1] (Tomahawk 7); catalysts[4] repeats growth.points[4] and businessMoat.segments[1].body (29% growth, 15% ARR, 650 basis points, the $8.7 billion guide, VMware Private AI Cloud and VCF repatriation). Only catalysts[3] is pointer-length.",
+      "fix": "Cut each bullet to one or two sentences that name the event and where it is argued — e.g. \"Q4 shipments of Ironwood, TPU v8i, Jalapeño and MTIA reach volume; see Growth\" — and leave the mechanism, the shipment list and the Tomahawk 7 claim to the growth and moat sections.",
+      "status": "addressed",
+      "note": "All five bullets are one sentence, carry no duplicated figures and name where the argument sits. The two defects the rewrite introduced were raised as F-14 and F-15 and are themselves now addressed."
+    },
+    {
+      "id": "F-6",
+      "severity": "Important",
+      "field": "sections.executiveSummary.risks",
+      "quote": "Maximum potential liability upon deployment of all AI racks was approximately $29 billion on an undiscounted basis. Management describes the probability of occurrence as low and the fair value as not material, and reports that no amounts have been paid.",
+      "issue": "Same defect as F-5 on the risk side: all five bullets run to three sentences and each restates the section behind it. The quoted pair is repeated in financials.balanceCommentary (\"Management assigns it a low probability, states the fair value was not material, and reports that no amounts have been paid\"). risks[0] restates risks.idiosyncratic[0] (the 50%/46%/30% distributor line and the 55%/40% top-five line); risks[2] restates risks.idiosyncratic[3] nearly verbatim (\"Upfront license revenue of $3,465 million was included within products revenue for the fiscal quarter ended August 2, 2026, and $7,184 million for the three fiscal quarters\"); risks[3] restates risks.systemic (the cyclical-industry risk and the credit-markets risk); risks[4] restates financials.balanceCommentary and management.capitalAllocation (the $59.6 billion / 4% / 7.4 years sentence). House style is explicit that no sentence appears in two sections (prompt line 11).",
+      "fix": "Reduce each risk bullet to one or two sentences that name the risk and its size, and let the idiosyncratic, systemic, balance-sheet and capital-allocation sections carry the mechanism, the qualifiers and the what-to-watch.",
+      "status": "addressed",
+      "note": "All five bullets are one sentence, naming the risk and its size and pointing to the section that argues it. The Backstop qualifiers now sit only in balanceCommentary, and the $59.6 billion / 4% / 7.4 years sentence only in balanceCommentary. Each bullet's pointer resolves to a section that carries the material."
+    },
+    {
+      "id": "F-7",
+      "severity": "Important",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "Gross principal fixed rate debt of $59.6 billion carries a weighted average coupon of 4% and 7.4 years to maturity, which is neither cheap nor pressing.",
+      "issue": "Repetition between body sections, not only between the summary and its sections. The quoted debt sentence and its verdict appear again in management.capitalAllocation (\"Gross principal fixed rate debt of $59.6 billion at a 4% weighted average coupon and 7.4 years to maturity is not an urgent problem\") and a third time in executiveSummary.risks[4]. Four further cases: the R&D pair $2,895 million against $3,050 million is argued in financials.incomeCommentary, again in risks.idiosyncratic[4] and a third time in businessMoat.durability, each reaching the same conclusion; the $509.61 consensus target with the $517.50 median appears in analystCommentary, valuation.scenarioCommentary and finalRecommendation.body[1]; the judged $115 billion / $230 billion pair appears in management.leadership, executiveSummary.catalysts[1] and valuation.scenarios[0].driver; the note-repurchase set ($5,641 million, $3,103 million, $1.5 billion) is given in full in financials.balanceCommentary and again in full in management.capitalAllocation, even though financials.cashflowCommentary handles the same material correctly by pointing back in words.",
+      "fix": "Introduce each of these figures once in the section that owns it — the debt profile in balanceCommentary, R&D in incomeCommentary, the street targets in analystCommentary, the judged shipment figures in management.leadership — and refer back in words elsewhere, as cashflowCommentary already does for the note repurchases.",
+      "status": "addressed",
+      "note": "All five named cases are fixed: the debt profile, the R&D pair, the note repurchases, the $115bn/$230bn split and the $509.61/$517.50 pair are each introduced once and referred back to in words (\"as the income statement section sets out\", \"below both the consensus target and the median\"). The residual within-section repetition raised as F-16 is now cleared too."
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "sections.growth.points[0]",
+      "quote": "**AI semiconductor revenue is the growth story.** It was $16.7 billion in the fiscal quarter ended August 2, 2026, or 56% of total revenue, up from 49% in Q2. Management guides Q4 AI revenue to $21.7 billion, up 236% year-on-year, and fiscal 2026 AI revenue to $58 billion, up 186%.",
+      "issue": "The point lists figures the reader has already been given and reaches no view: the $16.7 billion / 56% / 49% figures are in executiveSummary.thesis.body and businessMoat.segments[0].body, and the $21.7 billion and $58 billion guides are in executiveSummary.catalysts[0] and thesis.body. Nothing here tells the reader what to do with it. growth.points[4] has the same problem, repeating the 29% growth, 15% ARR, the $8.7 billion guide and the VMware Private AI Cloud/VCF levers already set out in catalysts[4] and businessMoat.segments[1].body. growth.points[2] restates the FY26E/FY27E revenue and EPS line from valuation.multiplesCommentary. Only points[1] and points[3] add a reading the rest of the report does not already carry.",
+      "fix": "Turn points[0] into the judgment the section is for — what the 49%-to-56% step and the $58 billion exit rate imply for fiscal 2027 volumes, supply or mix — and either merge points[4] into the software segment body or give it a view on what enterprise AI consumption has to do to reopen growth. Refer back to the figures in words instead of restating them.",
+      "status": "addressed",
+      "note": "points[0] now reaches a view — the slope is \"a volume question rather than a demand one\", which the call supports (\"we have secured the supply ... Our demand actually exceeds this outlook\", prompt line 1083). points[2] points back to the valuation section instead of restating the estimates, and points[4] sets a test for fiscal 2027 rather than relisting the segment figures."
+    },
+    {
+      "id": "F-9",
+      "severity": "Important",
+      "field": "sections.businessMoat.moatFactors[1].body",
+      "quote": "Management expects AI networking revenue to grow as fast as XPU revenue over the next few years, so the attach is structural.",
+      "issue": "This moat factor, rated Strong, names no reading that cuts the other way. It closes on management's own expectation used as confirmation, with nothing on merchant-silicon competition, the customers' freedom to buy networking separately from the accelerator, or the fact that the growth claim is a forecast rather than a result. moatFactors[0] (Custom accelerator co-design, Strong) has the same gap — its counter-case is deferred to the durability paragraph, so the factor itself reads one-sided. moatFactors[2] and [3] both carry their counterweight in the body, which is the pattern to follow.",
+      "fix": "Add the counter-sentence to each Strong factor using figures already on the page: for networking, that the attach rests on a forward expectation and that AI networking sells to the same concentrated buyers; for co-design, bring forward the point durability already makes — the architecture carries the customer's name and any of the six could take a later generation elsewhere.",
+      "status": "addressed",
+      "note": "Both Strong factors now close on a counter-case: networking on \"a forward expectation rather than a result\" and buyers \"who can source switching separately from the accelerator\"; co-design on the architecture belonging to the buyer. durability has since been trimmed so the co-design point is made once."
+    },
+    {
+      "id": "F-10",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "one distributor accounted for {- 50% of net revenue -} in the quarter",
+      "issue": "Spans belong only around signed changes or explicit positives and negatives (prompt line 9). \"50% of net revenue\" is a level, not a signed change, and the minus span reads as though the filing marked it negative. The identical span appears in analystCommentary. Every other span in the judgment is used correctly ({+ up 86% +}, {+ +23.9% +}, {- fell to $5.9B -}), so this is the lone exception.",
+      "fix": "Drop the span from both places and let the sentence carry the judgment, or move the span onto the change — the rise from 32% in the year-ago quarter.",
+      "status": "addressed",
+      "note": "The span is gone from both thesis.body and analystCommentary; the sentence now reads \"one distributor accounted for 50% of net revenue in the quarter\". The five spans left in the judgment all sit on signed changes."
+    },
+    {
+      "id": "F-11",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.catalysts[2]",
+      "quote": "Tomahawk 7, the industry's first 200 terabit per second Ethernet switch, extends the networking attach into the next generation of deployments.",
+      "issue": "The superlative is the company's, taken into the report's own voice. It comes from the Q3'26 call — \"we just picked up Tomahawk 7, the industry's first 200 terabit per second Ethernet switch\" (prompt line 1057) — and the pack carries no series that supports \"the industry's first\". The same unattributed phrasing is repeated in businessMoat.moatFactors[1].body, which also takes \"first to market with the 100 terabit Tomahawk 6\" and \"the leader in leading-edge optical DSPs\" from the same passage as fact. The report shows it knows the distinction: cashflowCommentary writes \"what management calls a record $13.7 billion\".",
+      "fix": "Attribute the claim the way cashflowCommentary does — \"management calls Tomahawk 7 the industry's first 200 terabit per second Ethernet switch\" — or state the switch and the speed without the superlative.",
+      "status": "addressed",
+      "note": "Cleared. catalysts[2] drops the claim, and moatFactors[1].body now attributes all four superlatives from that call passage to the company: \"Management puts itself first to market with the 100 terabit Tomahawk 6, calls Tomahawk 7 the industry's first 200 terabit per second Ethernet switch, and claims the lead in PCI Express switching for scaling in. It describes itself as the leader in leading-edge optical DSPs\"."
+    },
+    {
+      "id": "F-12",
+      "severity": "Minor",
+      "field": "sections.management.governance",
+      "quote": "No counterparty and no amount is named, so a holder can note it but cannot size it.",
+      "issue": "Three fields sit effectively on their caps, leaving the next round nowhere to go: management.governance is 1,497 characters against a 1,500 cap, risks.idiosyncratic[0] is 792 against 800 and risks.idiosyncratic[1] is 788 against 800. businessMoat.durability (1,411 of 1,500) and valuation.scenarios[0].driver (549 of 600) are close behind. The governance field is the binding one — the related-party paragraph quoted here cannot be extended, and the board paragraph already notes that the successor to the Lead Independent Director seat is not in the record, which is material left unresolved for want of room.",
+      "fix": "Trim the restated material identified in F-6 and F-7 out of these fields — the duplicated Backstop qualifiers in risks.idiosyncratic[1], the duplicated distributor figures in risks.idiosyncratic[0] — to bring each back under roughly 90% of its cap.",
+      "status": "addressed",
+      "note": "All three named fields are back inside the fix's threshold: governance 1,342 of 1,500 (89%, from 1,497), risks.idiosyncratic[0] 711 of 800 (89%) and [1] 703 of 800 (88%). durability is now 1,082 of 1,500. The tightest fields left are risks.idiosyncratic[3] at 762 of 800 (95%), moatFactors[1].body at 745 (93%) and moatFactors[0].body at 738 (92%) — thin but real headroom, and each is dense because it carries the reclassification detail or a counter-case this review asked for."
+    },
+    {
+      "id": "F-13",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.companyOverview",
+      "quote": "The company is headquartered in San Jose, California and employs 19,000 full-time staff.",
+      "issue": "Both figures come from the Bigdata.com company tearsheet (prompt line 144), which the pack's own company sources contradict on the first: the Q3 FY26 earnings release is datelined \"PALO ALTO, Calif.\" (prompt line 541). The same tearsheet paragraph also describes four divisions — Wired Infrastructure, Wireless Communications, Enterprise Storage, and Industrial & Other — against the two reportable segments the 10-Q names, which is a fair signal that the entry is stale. The report picks the tearsheet silently and the headcount carries no as-of date.",
+      "fix": "Follow the company's own filing for the headquarters or say nothing about it, and date the headcount to the tearsheet (as of September 11, 2026) so the reader knows which source it came from.",
+      "status": "addressed",
+      "note": "companyOverview now names both sources once, dates the tearsheet and states the choice: \"The third quarter earnings release is datelined Palo Alto, California, while the company tearsheet of September 11, 2026 puts the headquarters in San Jose and full-time staff at 19,000; we use the release for the location.\""
+    },
+    {
+      "id": "F-14",
+      "severity": "Important",
+      "field": "sections.executiveSummary.catalysts[0]",
+      "quote": "A print at or above the guided revenue, AI and margin lines would confirm the ramp, and the growth section carries the guide while the valuation section carries what it is worth.",
+      "issue": "The pointer names a section that does not carry what it promises. The Q4 guide this catalyst turns on — consolidated revenue of $34.8 billion, AI revenue of $21.7 billion and the non-GAAP margin of approximately 66% — appears in executiveSummary.companyOverview, valuation.scenarios[1].driver and finalRecommendation.body[0]. The growth section carries none of the three: growth.points[0] refers to \"the fiscal 2026 exit rate management guides to\" without a figure, and the only guided number there is the approximately $4.3 billion non-AI line in growth.points[3]. A reader sent to the growth section for the guide does not find it. The other four catalysts and all five risk bullets resolve correctly, so this is the single broken pointer.",
+      "fix": "Point at the section that actually carries the guide — the company overview states it and the valuation section prices it — or move the three guided lines into the growth section so the pointer resolves there.",
+      "status": "addressed",
+      "note": "The pointer now reads \"the company overview states the guide and the valuation section prices it\", and both resolve: companyOverview carries all three guided lines and valuation.scenarios[1].driver prices the $34.8 billion and $21.7 billion. All five catalysts and all five risk bullets now point at sections that carry the material."
+    },
+    {
+      "id": "F-15",
+      "severity": "Important",
+      "field": "sections.executiveSummary.catalysts[4]",
+      "quote": "**Infrastructure software stabilizing at a higher margin.** The segment is growing again at software margins, and the moat section carries the figures alongside the levers that would turn stabilization back into growth.",
+      "issue": "The bullet contradicts itself and the two sections it points to. Its own heading says \"stabilizing\"; its body says the segment \"is growing again\". businessMoat.segments[1].body says the Q4 guide of approximately $8.7 billion \"is stabilization rather than growth\", and growth.points[4] says \"The segment is guided to stabilize rather than grow next quarter\". The claim also carries no period, which is what lets the two readings sit together: the 29% year-on-year increase in the quarter just reported is growth, the guided quarter is flat against it. An executive-summary pointer that tells the reader a segment is growing while the sections behind it say it is guided to stop is the wrong direction to leave in the most-read field.",
+      "fix": "Date the claim and match the sections: say the segment grew in the quarter just reported and is guided to stabilize next quarter, or drop the \"growing again\" clause and let the heading and the moat section carry the direction.",
+      "status": "addressed",
+      "note": "The bullet now reads \"The segment grew year-on-year in the quarter just reported and is guided to stabilize next quarter\". Both clauses carry their period and both match the sections behind them — businessMoat.segments[1].body and growth.points[4]."
+    },
+    {
+      "id": "F-16",
+      "severity": "Important",
+      "field": "sections.businessMoat.moatFactors[0].body",
+      "quote": "The counter-case is that the architecture carries the customer's name, so the program belongs to the buyer, and any of the six could take a later generation elsewhere once one ends.",
+      "issue": "The same claim is now made twice inside the businessMoat section. businessMoat.durability already says \"The accelerators carry the customers' own names — Google's TPU, Meta's MTIA — so the architecture belongs to the buyer and Broadcom supplies the implementation of it. Any of the six could take a later generation elsewhere.\" The F-9 counter-case was added without trimming the passage it was drawn from, so a reader meets the identical argument twice within one section. Two lesser cases of the same shape: the judged $350 billion of fiscal 2027-2028 shipments is stated in valuation.scenarios[0].driver and again in valuation.scenarioCommentary (\"the judged $350 billion of shipments across fiscal 2027 and 2028\"), and the 10-Q's \"slow or unsuccessful return on research and development investment\" risk is quoted in both businessMoat.durability and risks.idiosyncratic[4].",
+      "fix": "Keep the argument where it now does the most work — inside the co-design moat factor — and cut the repeated sentences from durability, leaving durability to make the point that survives it (the ten-year horizon and the second-source risk). State the $350 billion once in the valuation section and refer back in words in the other place, and let one of durability or risks.idiosyncratic[4] carry the R&D risk factor.",
+      "status": "addressed",
+      "note": "All three cases cleared. durability now refers back — \"who the customers are and what they own, which the co-design factor above sets out\" — and drops the R&D risk factor, leaving it to risks.idiosyncratic[4]. scenarioCommentary refers to \"the judged two-year shipment total in the bull case above\", so $350 billion is stated once per section (thesis, scenarios[0].driver, growth.points[1], management.leadership). No sentence now repeats across or within sections."
+    }
+  ]
+}

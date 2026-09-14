@@ -1,0 +1,198 @@
+{
+  "judgmentSha256": "cb68c15203237d13120f5a59c534b33bd47b96e5e85eddcc884661cce7233d0d",
+  "reviewedAt": "2026-09-14T18:40:00Z",
+  "reviewer": "opus",
+  "round": 2,
+  "verdict": "approved-with-minors",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.growth.points[4]",
+      "quote": "RPO reached $664 billion and rose $26 billion from Q4, while Oracle booked more than $30 billion of new AI cloud contracts in the same quarter; the difference between those two is backlog that became revenue, which is the conversion management describes.",
+      "issue": "An inference the sources invite but do not make, and the arithmetic behind it does not hold. Prompt line 265 (press release) says Oracle 'booked more than $30 billion of additional AI cloud contracts in Q1 increasing its RPO to $664 billion'; prompt line 1045 (transcript) says RPO 'increased $26 billion from Q4'. Neither source subtracts one from the other, and neither says the residual is converted backlog. The residual is about $4 billion, while the quarter's total revenue was $19.3B and cloud revenue $11.6B, most of it recognised out of RPO — so far more backlog converted than the stated difference. The $30 billion is also AI cloud bookings only, not all bookings, so the two figures are not the same kind of quantity and cannot be netted.",
+      "fix": "Drop the subtraction. State the two disclosed facts separately — RPO up $26 billion sequentially to $664 billion, and more than $30 billion of AI cloud contracts booked — and attribute the conversion to management's own words (prompt line 1045: 'we started to see a strong conversion of our RPO into revenues this quarter, driving our cloud infrastructure results') rather than to a computed residual.",
+      "status": "addressed",
+      "note": "The subtraction is gone. The bullet now reads 'up $209 billion year over year and $26 billion from Q4, and Oracle booked more than $30 billion of additional AI cloud contracts in the quarter', with the conversion attributed to management: 'Management said it started to see a strong conversion of RPO into revenues this quarter, driving its cloud infrastructure results'. Every figure matches the press release and transcript."
+    },
+    {
+      "id": "F-2",
+      "severity": "Critical",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "Bear sits at 25%, down from our read of the annual filing, and the weight we took out of it went to Base.",
+      "issue": "A characterisation of a prior set of calls that the grounding surface does not carry. The prompt contains no previous report, no previous scenario weights and no previous target band anywhere in the Facts or Context blocks — only this filing's pack. Three passages rest on that absent surface: this sentence; 'The press release did not move the calls, and it is worth saying why.' (same field); and 'The calls are unchanged, and the press release is the reason we re-checked them.' (sections.finalRecommendation.body[2]). The section heading '### How the band is built, and what changed' makes the same promise. Separately, the claim is inaccurate against the desk's own prior judgment for accession 0001193125-26-277521, where Bull/Base/Bear were 0.25/0.45/0.30: of the five points taken out of Bear, three went to Base and two went to Bull, so the weight did not all go to Base.",
+      "fix": "Either drop every comparison to an earlier set of calls and argue each probability from this pack alone, or have the prompt carry the previous judgment's calls in the Facts block so the comparison is grounded. If the comparison stays, correct it: Bear 30% to 25%, Base 45% to 48%, Bull 25% to 27%. Retitle the heading to match whatever the section can actually support.",
+      "status": "addressed",
+      "note": "All three passages are gone and the heading is now '### How the band is built'. The bear weight is argued from this pack alone ('Bear carries 25%. The central bear mechanism for any GPU-heavy build is that the assets lose value faster than they earn it'), and finalRecommendation.body[2] no longer claims the calls were re-checked against an earlier round."
+    },
+    {
+      "id": "F-3",
+      "severity": "Critical",
+      "field": "sections.executiveSummary.risks[3]",
+      "quote": "It declined in every year of the five-year series, and the cause is mix rather than cycle, so a recovery would require the mix to stop shifting.",
+      "issue": "A causal claim the pack does not establish, and one the report itself disclaims. The only source statement on gross margin cause is management's, and it covers the quarter, not the annual series: 'Our gross margin did decline as expected, driven by impacts from ramping up our data centers and the acceleration of infrastructure revenue' (prompt line 1043). The five-year series (prompt line 59: 79.1%, 72.8%, 71.4%, 70.5%, 65.2%) carries no explanation in the pack, and sections.financials.incomeCommentary says so in terms: 'Nothing in the sources explains why the annual ratio moved that way. For the quarter management does explain it'. The bullet asserts for FY22-FY26 what the sources support only for Q1 FY27. The 'every year of the five-year series' framing is also loose: the table shows four year-over-year declines, FY22 having no prior year in it.",
+      "fix": "Confine the causal claim to the period it is sourced for: say the quarter's gross margin decline is attributed by management to ramping data centers and accelerating infrastructure revenue, and that the pack offers no explanation for the multi-year fall from 79.1% in FY22 to 65.2% in FY26. Change 'every year of the five-year series' to 'in each of the four years since FY22'.",
+      "status": "addressed",
+      "note": "Both halves fixed. The bullet now reads 'The annual ratio declined in each of the four years since FY22, and management ties the quarter's decline to the data center ramp and the infrastructure mix, while the multi-year fall carries no explanation in the sources.' The period of the causal claim is now the quarter, matching prompt line 1043, and the count matches the table."
+    },
+    {
+      "id": "F-4",
+      "severity": "Critical",
+      "field": "sections.risks.systemic",
+      "quote": "Energy cost is named specifically as a pressure on cloud and software margin, and that is a newer exposure for a software company than for the utilities it now competes with for power.",
+      "issue": "The clause 'the utilities it now competes with for power' asserts a fact the surface does not support. The MD&A (prompt line 174) names 'increases in supply chain and energy costs' among the factors that may adversely impact cloud and software margin. Nothing in the Facts block, the report's calls or any Context excerpt — MD&A, 10-K risk factors, press release, transcript or proxy — says Oracle competes with utilities, or with anyone, for power. The 10-K risk summary (prompt lines 193, 235-236) goes no further than data center capacity and sourcing.",
+      "fix": "Delete the comparison, or reduce it to what the filing says: energy cost is named as a margin pressure on the cloud and software business, which is an input exposure a software-only business did not carry. If the competition-for-power point is to stay, it needs a source in the pack.",
+      "status": "addressed",
+      "note": "The clause is gone. The sentence now reads 'Energy cost is named specifically as a pressure on cloud and software margin, which is an input exposure a software-only business did not carry', which stays inside prompt line 174."
+    },
+    {
+      "id": "F-5",
+      "severity": "Important",
+      "field": "sections.management.capitalAllocation",
+      "quote": "Share repurchases fell from -$17.3B in FY22 to -$3.2B in FY24, -$1.5B in FY25 and -$0.2B in FY26",
+      "issue": "The series on the page does not fall the way the sentence reads. The cash flow table (prompt line 80) gives share repurchases of -17.3, -2.5, -3.2, -1.5 and -0.2 across FY22 to FY26. FY23 is the one year omitted, and it is the year that breaks the descent: repurchases rose from -$2.5B in FY23 to -$3.2B in FY24. Presenting FY22 to FY24 to FY25 to FY26 as a fall silently drops the counter-example.",
+      "fix": "Either give the full series including -$2.5B in FY23 and describe the FY23-FY24 uptick, or state the endpoints only — repurchases of -$17.3B in FY22 against -$0.2B in FY26 — without implying a year-by-year decline.",
+      "status": "addressed",
+      "note": "The full series is now given and the counter-example named: 'Share repurchases ran -$17.3B in FY22, -$2.5B in FY23, -$3.2B in FY24, -$1.5B in FY25 and -$0.2B in FY26, a descent that was not steady, since FY24 ran above FY23.' Matches prompt line 80 exactly."
+    },
+    {
+      "id": "F-6",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "Net debt sits at 3.2x EBITDA with interest coverage of 4.6x.",
+      "issue": "The same sentence appears in three sections in three wordings. sections.financials.balanceCommentary: 'Net debt runs at 3.2x EBITDA and interest coverage at 4.6x.' sections.finalRecommendation.body[1]: 'net debt runs at 3.2x EBITDA against interest coverage of 4.6x'. 3.2x is introduced fresh in five places (thesis, balanceCommentary, scenarios[2].driver, risks.systemic, finalRecommendation.body[1]) and 4.6x in four (thesis, balanceCommentary, risks.idiosyncratic[0], finalRecommendation.body[1]). The mechanical lint does not catch it because each restatement changes a verb.",
+      "fix": "Introduce the leverage pair once, in sections.financials.balanceCommentary where the balance sheet is argued, and refer back in words elsewhere ('the leverage set out in the balance sheet section', 'coverage at the level noted above'). The thesis and the final recommendation should point, not restate.",
+      "status": "addressed",
+      "note": "3.2x and 4.6x now each appear exactly once in the whole judgment, in sections.financials.balanceCommentary. The thesis, scenarios[2].driver, risks.idiosyncratic[0] and finalRecommendation.body[1] all refer back in words instead. Still true after the F-16 fix."
+    },
+    {
+      "id": "F-7",
+      "severity": "Important",
+      "field": "analystCommentary",
+      "quote": "**BUY. Target band $165 to $205. Probability-weighted fair value $181.70 against a last price of $150.15.**",
+      "issue": "analystCommentary and sections.finalRecommendation.body duplicate each other three times over. The headline line reappears as '**BUY. Target band $165 to $205, weighted fair value $181.70, last price $150.15.**' (body[0]). 'So we land well below the $236.52 consensus target' reappears as 'We therefore sit far below the $236.52 consensus target' (body[1]). 'A backlog of that size is strong evidence for the revenue leg of this thesis. It is not evidence for the cash leg' reappears as 'A backlog of that size is the revenue case stated in full; it is not a cash case' (body[2]). Three sentences in two sections.",
+      "fix": "Keep the call line in one place — the final recommendation, where the reader ends — and open analystCommentary with the disagreement itself. Say the consensus-target distance and the backlog-is-not-cash point once each, and let the other section refer back to it in words.",
+      "status": "addressed",
+      "note": "All three duplications are resolved. The call line now appears only in finalRecommendation.body[0]; analystCommentary opens on the disagreement. $236.52 appears once, in analystCommentary, and body[1] refers back as 'our distance from the consensus target'. body[2] now points — 'The backlog-against-cash point at the head of this report is what the band prices'."
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "sections.executiveSummary.risks[5]",
+      "quote": "A fleet running this close to full means new demand requires new capacity, and new capacity requires new capital.",
+      "issue": "The clause 'new demand requires new capacity, and new capacity requires new capital' appears verbatim in two sections: here and in sections.risks.idiosyncratic[2] ('it also means new demand requires new capacity, and new capacity requires new capital, which is the loop this balance sheet is already inside'). The two bullets also carry the same heading in near-identical wording — 'Utilization leaves no headroom.' against 'Utilization has no headroom.' The executive-summary bullet is meant to point; instead it makes the argument the risks section then makes again.",
+      "fix": "Cut the mechanism from the executive-summary bullet and leave the pointer: utilization at 97.9% leaves the fleet no spare capacity, argued in the risks section. Keep the demand-capacity-capital loop in sections.risks.idiosyncratic[2] only, and give the two bullets distinct headings.",
+      "status": "addressed",
+      "note": "The executive-summary bullet is now a pointer under a distinct heading: '**The fleet is running full.** GPU utilization of 97.9% leaves no spare capacity, and the risks section carries what that implies for capital.' The demand-capacity-capital loop survives only in risks.idiosyncratic[2]."
+    },
+    {
+      "id": "F-9",
+      "severity": "Important",
+      "field": "sections.executiveSummary.companyOverview",
+      "quote": "Inside cloud and software, cloud revenues represented 60% of total revenues for the three months ended August 31, 2026 against 48% for the same period a year earlier.",
+      "issue": "One disclosure, introduced as new in four sections. sections.financials.incomeCommentary: 'the filing puts cloud revenues at 60% of total revenues for the quarter against 48% for the same three months a year earlier'. sections.businessMoat.segments[0].body: 'cloud revenues were 60% of total revenues for the three months ended August 31, 2026 against 48% a year earlier'. sections.growth.points[2]: 'Cloud revenues were 60% of total revenues for the three months ended August 31, 2026 against 48% a year earlier'. Each states the same claim in different words rather than referring back; by the fourth the reader has been told the same thing four times.",
+      "fix": "Introduce the 60%/48% mix once — sections.financials.incomeCommentary is where it earns its place — and elsewhere refer to it in words ('the mix shift set out in the financials section', 'the cloud share of revenue noted above'). The moat and growth sections should carry what the mix shift means for them, not the figures again.",
+      "status": "addressed",
+      "note": "The 60%/48% pair appears once, in sections.financials.incomeCommentary. companyOverview, businessMoat.segments[0].body and growth.points[2] all refer back in words ('the financials section sets out by how much', 'the mix shift already described', 'the cloud share of total revenues moves with it'). Still true after the F-16 fix."
+    },
+    {
+      "id": "F-10",
+      "severity": "Important",
+      "field": "sections.finalRecommendation.body[1]",
+      "quote": "with a bear case at $95.00, the bottom of the street's own range, carrying 25% of the weight",
+      "issue": "The bear case is argued in three places instead of once, and its probability is stated in two. sections.valuation.scenarios[2].driver: 'the price lands at $95.00, the bottom of the street's target range and below the $114.50 52-week low'. sections.valuation.scenarioCommentary: 'Bear sits at 25%' and, four sentences later, 'Our bear price is the bottom of the street's own target range, not an invented floor.' The 'bottom of the street's range' justification is therefore made three times and the 25% weight twice, against the rubric's requirement that each scenario's probability is stated and argued once.",
+      "fix": "Argue the bear anchor once, in sections.valuation.scenarioCommentary, and let scenarios[2].driver state the mechanism without re-justifying the price. In the final recommendation, point to the bear case without repeating its price, its provenance and its weight.",
+      "status": "addressed",
+      "note": "The anchor is now argued once, in scenarioCommentary ('Our bear price is the bottom of the street's own target range and sits below the 52-week low'). scenarios[2].driver carries the mechanism only, and finalRecommendation.body[1] points without price or weight: 'the bear case argued in the valuation section carries a real weight rather than a formal one'."
+    },
+    {
+      "id": "F-11",
+      "severity": "Important",
+      "field": "sections.executiveSummary.risks[0]",
+      "quote": "what we watch is whether the step-up ever produces a year of positive free cash flow",
+      "issue": "Executive-summary risk bullets are pointers; the argument, mechanism and what-to-watch belong to the sections behind them. Two of the six bullets carry a what-to-watch clause instead: this one, and sections.executiveSummary.risks[2] ('what we watch is whether coverage holds as the debt reprices'). Both duplicate work the risks section already does — sections.risks.idiosyncratic[0] carries 'What we watch is the net cash CapEx line against the guided not more than $70 billion' and its own 'What would change our view'. The repeated 'what we watch is whether' construction is also a tic by its third appearance.",
+      "fix": "Strip the what-to-watch clauses from the executive-summary bullets and leave the pointer — the capital line has multiplied in each of the last two fiscal years and FY27 is guided higher; interest is now a prior claim on operating profit. Carry both watch items in sections.risks.idiosyncratic, and vary the construction.",
+      "status": "addressed",
+      "note": "Both executive-summary bullets now stop at the pointer, and the two watch items are consolidated into risks.idiosyncratic[0]: 'Two markers sit behind it: whether the capital step-up ever delivers a fiscal year of positive free cash flow, and whether coverage holds as this debt is refinanced.' The 'what we watch is whether' construction now appears once."
+    },
+    {
+      "id": "F-12",
+      "severity": "Minor",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "The 10-Q covers the three months ended 2026-08-31.",
+      "issue": "An ISO date in prose. House style asks for dates in prose form. The report writes the date correctly elsewhere — 'the three months ended August 31, 2026' in sections.executiveSummary.companyOverview, sections.businessMoat.segments[0].body and sections.growth.points[2] — so this is the outlier, and it opens the section.",
+      "fix": "Write 'The 10-Q covers the three months ended August 31, 2026.'",
+      "status": "addressed",
+      "note": "Now reads 'The 10-Q covers the three months ended August 31, 2026.' No ISO date remains in any prose field; the only one left in the judgment is meta.fiscalYearEnd, which is the house form for that field."
+    },
+    {
+      "id": "F-13",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.risks[4]",
+      "quote": "Software revenues, licence and support together, fell 3% in the quarter while cloud infrastructure grew at triple digits",
+      "issue": "British spelling against the house style's American spelling, and against the filing's own usage. The MD&A writes 'software license revenues' and 'purchase a software license' (prompt lines 162-163), and the report spells it 'license' everywhere else, including sections.businessMoat.moatFactors[0].body and moatFactors[1].body.",
+      "fix": "Change 'licence' to 'license'.",
+      "status": "addressed",
+      "note": "Now reads 'Software revenues, license and support together, fell 3% in the quarter'. No British spelling remains."
+    },
+    {
+      "id": "F-14",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.catalysts[2]",
+      "quote": "Oracle delivered several times the Q4 volume in Q1, and delivered capacity, unlike contracted backlog, converts into revenue.",
+      "issue": "'several times' overstates the source. The transcript says 'Delivery in Q1 is almost three times what we delivered in all of Q4' (prompt line 1061) and the press release says 'almost triple the capacity delivered in Q4 FY26' (prompt line 265) — both of which are a shade under three, where 'several' reads as more. The report states it correctly in sections.growth.points[3] ('almost three times the Q4 volume'), so the catalyst is the loose one.",
+      "fix": "Write 'almost three times the Q4 volume', matching the source and the growth section.",
+      "status": "addressed",
+      "note": "Now reads 'Oracle delivered almost three times the Q4 volume in Q1', matching the transcript and the growth section."
+    },
+    {
+      "id": "F-15",
+      "severity": "Minor",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "a range management frames as 21% to 25% growth once the Ampere gain booked in the same quarter last year is excluded.",
+      "issue": "Fields are written to the edge of their caps, leaving the next round nowhere to go. incomeCommentary ends 2,492 characters into a 2,500 cap (99.7%); management.leadership and management.insiderOwnership both 1,492/1,500 (99.5%); management.governance 1,484/1,500 (98.9%); the three scenario drivers 574-594/600 (96-99%); the three businessMoat segment bodies 1,158-1,167/1,200 (96-97%); valuation.scenarioCommentary 2,322/2,500 and risks.systemic 1,383/1,500. The arrays are full too: catalysts 6 of 6, executiveSummary.risks 6 of 6, risks.idiosyncratic 5 of 5. Any fix above has to displace text rather than add it.",
+      "fix": "Take the cuts the repetition findings already identify — the duplicated leverage sentence, the four-times-stated cloud mix, the twice-argued bear anchor, the executive-summary what-to-watch clauses — and let the freed space sit unused, so the fields land nearer 85% of cap and a round-two edit has room.",
+      "status": "addressed",
+      "note": "Headroom restored across the rewrite: incomeCommentary 2,293/2,500, governance 1,365/1,500, scenario drivers 511-550/600, segment bodies 1,032-1,122/1,200. The one field that went back to the edge in the targeted fix is management.insiderOwnership, now 1,496/1,500 — carried as a fresh finding at F-19 rather than reopened here."
+    },
+    {
+      "id": "F-16",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "The leverage and the coverage that result are set out in the balance sheet section.",
+      "issue": "The cross-reference that replaced the round-1 repetition has itself become a tic. The same construction runs eleven times across thirteen fields: 'set out in' in thesis.body, scenarios[2].driver, scenarioCommentary, businessMoat.segments[0].body, growth.points[2], management.capitalAllocation, risks.idiosyncratic[0] and finalRecommendation.body[1]; 'sets out' in companyOverview, catalysts[0] and management.leadership; plus 'the risks section carries what that implies for capital' in executiveSummary.risks[5]. The word 'section' appears fourteen times. One referent is also named two ways: the leverage line is 'the balance sheet section' in thesis.body, risks.idiosyncratic[0] and finalRecommendation.body[1], but 'the financials section' in scenarios[2].driver.",
+      "fix": "Vary the pointers — some can name the figure in words instead of the section ('at the leverage the balance sheet carries', 'on the mix shift already described'), and a few can be dropped where the reader has just read the section. Where a section is named, name it the same way every time; make scenarios[2].driver say 'the balance sheet section' to match the other three.",
+      "status": "addressed",
+      "note": "'set out in' is gone entirely (0 occurrences, from 8) and 'section' is down from fourteen to eight, one of which is the filing's own forward-looking statements section rather than a pointer. The surviving pointers each use a different verb ('sets out by how much', 'argued in', 'says what it drove', 'carries what that implies', 'records'), and four became figure-free referrals such as 'the mix shift already described' and 'the leverage described above'. The leverage referent is 'the balance sheet section' in both places that name it."
+    },
+    {
+      "id": "F-17",
+      "severity": "Important",
+      "field": "sections.management.insiderOwnership",
+      "quote": "Oracle's payments came to approximately 0.0002% of its own total revenues in fiscal 2025 and, on the company's estimate, approximately 0.0005% of Stanford's in its last fiscal year.",
+      "issue": "The related-party paragraph now lists the proxy's figures and stops. It names the relationship (Dr. Boskin's employment, other Board members serving or working part-time at Stanford University) and the two percentages, and reaches no view — the reader is not told whether this is an exposure that matters. The rewrite removed the sentence that did the reading, 'Nothing here points to a transaction that moves value away from outside holders.' The rest of the section does read its figures for the holder (40.9% as what a controlling bloc permits; the 346,000,000 pledged shares as a second layer of leverage), which makes the closing paragraph the one that only restates.",
+      "fix": "Close the paragraph on a view the reader can act on: at 0.0002% of revenues these payments are immaterial to the income statement and nothing in the excerpt points to a transaction that moves value away from outside holders, so the governance exposure sits in the pledging footnote above rather than here. Alternatively, cut the paragraph to a clause and fold it into the pledging paragraph, since the field has 89 characters of headroom either way.",
+      "status": "addressed",
+      "note": "The paragraph now reaches a view and routes the reader to where the exposure actually sits: 'At that scale nothing here moves value away from outside holders, and the exposure a minority holder carries sits in the pledging footnote.' The percentages still match the proxy excerpt, and 'on the company's estimate' keeps the hedge on the 0.0005% figure."
+    },
+    {
+      "id": "F-18",
+      "severity": "Minor",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "The full-year revenue outlook went up, non-GAAP EPS for the year is now guided to $8.10, and the Q2 FY27 range for non-GAAP EPS is $1.85 to $1.93.",
+      "issue": "Material context present in the pack, and carried in round 1, was dropped without being flagged, and the field now has room for it. The press release footnote (prompt line 282) says Q2 FY26 included a one-time net investment gain on the Ampere sale, and that including it 'Q2 FY27 non-GAAP earnings per share is expected to decline between -18% and -14% in USD'; the 21% to 25% growth management frames the range with excludes that gain (prompt lines 272 and 1072). As written, the guided range appears with no comparability note, so a reader cannot tell the headline EPS line is guided down year over year on a reported basis. incomeCommentary is 2,124 of 2,500 characters, so the qualifier was not displaced for space.",
+      "fix": "Restore the qualifier in one clause: the $1.85 to $1.93 range is 21% to 25% growth once the one-time Ampere gain booked in the year-ago quarter is excluded, and a decline of 14% to 18% including it.",
+      "status": "addressed",
+      "note": "Restored in full, on the USD basis both source figures use: 'Management frames that range as 21% to 25% growth once the one-time Ampere gain booked in the year-ago quarter is excluded, and as a decline of 14% to 18% including it.' Matches prompt line 272 (21% to 25% in USD excluding the gain) and prompt line 282 (decline of -18% to -14% in USD including it)."
+    },
+    {
+      "id": "F-19",
+      "severity": "Minor",
+      "field": "sections.management.insiderOwnership",
+      "quote": "At that scale nothing here moves value away from outside holders, and the exposure a minority holder carries sits in the pledging footnote.",
+      "issue": "The F-17 fix put the field back at its cap. sections.management.insiderOwnership is now 1,496 characters against a 1,500 cap — four characters of headroom, tighter than the 1,492/1,500 that this field carried in round 1 and that F-15 flagged. It is the only field in the judgment above 95% of cap; the next tightest is businessMoat.segments[0].body at 1,122/1,200. The closing view was added (rightly) without trimming to pay for it, so a future edit to this section cannot add a word.",
+      "fix": "Recover roughly 120 characters inside the section. The pledging paragraph can lose 'including various lines of credit' and 'under Board and committee oversight' without losing its point, and 'The related-person relationships run to Stanford University, where Dr. Boskin is employed and other Board members serve part-time' compresses to name the relationship in half the words. Land the field nearer 1,380 of 1,500.",
+      "status": "open"
+    }
+  ]
+}
