@@ -9,9 +9,15 @@ describe("FactPack schema", () => {
   it("rejects a foreign schema version", () => {
     expect(() => FactPack.parse({ ...minimalPack(), schemaVersion: "0.9.0" })).toThrow();
   });
-  it("requires exactly five fiscal years", () => {
-    const p = minimalPack(); p.statements.fiscalYears = ["FY22", "FY23", "FY24", "FY25"];
-    expect(() => FactPack.parse(p)).toThrow();
+  it("accepts three to five fiscal years and rejects fewer or more", () => {
+    const p = minimalPack();
+    p.statements.fiscalYears = ["FY23", "FY24", "FY25"];
+    p.statements.income = p.statements.income.map((r) => ({ ...r, values: r.values.slice(-3) }));
+    p.statements.balance = p.statements.balance.map((r) => ({ ...r, values: r.values.slice(-3) }));
+    p.statements.cashflow = p.statements.cashflow.map((r) => ({ ...r, values: r.values.slice(-3) }));
+    expect(() => FactPack.parse(p)).not.toThrow();
+    expect(() => FactPack.parse({ ...p, statements: { ...p.statements, fiscalYears: ["FY24", "FY25"] } })).toThrow();
+    expect(() => FactPack.parse({ ...p, statements: { ...p.statements, fiscalYears: ["FY21", "FY22", "FY23", "FY24", "FY25", "FY26"] } })).toThrow();
   });
   it("caps headlines at ten", () => {
     const p = minimalPack(); p.context.headlines = Array.from({ length: 11 }, () => excerpt);

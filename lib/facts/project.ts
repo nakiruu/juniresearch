@@ -60,10 +60,10 @@ export function projectReportFacts(p: FactPack): ReportFacts {
     { label: "FCF Margin", values: ratioRows(fcf, revenue), format: "pct" },
   ] };
 
-  const last = fy[4], q = p.quote, a = p.analysts, lq = p.latestQuarter;
+  const last = fy.at(-1)!, li = fy.length - 1, q = p.quote, a = p.analysts, lq = p.latestQuarter;
   const fwdPe = p.estimates.followingFY.eps ? q.price / p.estimates.followingFY.eps : null;
   const ntmPe = p.estimates.nextFY.eps ? q.price / p.estimates.nextFY.eps : null;
-  const nextRevYoY = p.estimates.nextFY.revenue && revenue[4] ? p.estimates.nextFY.revenue / revenue[4]! - 1 : undefined;
+  const nextRevYoY = p.estimates.nextFY.revenue && revenue[li] ? p.estimates.nextFY.revenue / revenue[li]! - 1 : undefined;
   const snapshot: SnapshotCellData[] = [
     { label: "Current Price", value: q.price, unit: "usd" },
     { label: "Market Cap", value: q.marketCap, unit: "usdLarge", approx: true },
@@ -73,9 +73,9 @@ export function projectReportFacts(p: FactPack): ReportFacts {
     { label: "Consensus Target", value: a.consensusTarget, unit: "usd", change: a.consensusTarget / q.price - 1 },
     { label: "EV/EBITDA (TTM)", value: p.ttm.evToEbitda ?? undefined, unit: "mult" },
     { label: "Analyst Consensus", raw: `${a.consensusRating} (${a.buy} B / ${a.hold} H / ${a.sell} S)` },
-    { label: `${last} Revenue`, value: revenue[4] ?? undefined, unit: "usdLarge", change: yoy(revenue)[4] ?? undefined },
-    { label: `${last} Net Income`, value: vals(p, "income", "netIncome")[4] ?? undefined, unit: "usdLarge" },
-    { label: `${last} Diluted EPS`, value: vals(p, "income", "epsDiluted")[4] ?? undefined, unit: "usd" },
+    { label: `${last} Revenue`, value: revenue[li] ?? undefined, unit: "usdLarge", change: yoy(revenue)[li] ?? undefined },
+    { label: `${last} Net Income`, value: vals(p, "income", "netIncome")[li] ?? undefined, unit: "usdLarge" },
+    { label: `${last} Diluted EPS`, value: vals(p, "income", "epsDiluted")[li] ?? undefined, unit: "usd" },
     p.estimates.nextFY.revenue == null
       ? { label: `${p.estimates.nextFY.label} Revenue`, raw: "—", note: "no consensus estimate" }
       : { label: `${p.estimates.nextFY.label} Revenue`, value: p.estimates.nextFY.revenue, unit: "usdLarge", approx: true, change: nextRevYoY, changeDp: 0 },

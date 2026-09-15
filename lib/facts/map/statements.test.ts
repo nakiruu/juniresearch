@@ -71,6 +71,20 @@ describe("mapStatements on the ORCL Q1 FY27 10-Q capture", () => {
   });
 });
 
+describe("mapStatements on the CoreWeave capture (a company public under five years)", () => {
+  const s = mapStatements("data/raw/CRWV/0001769628-26-000366");
+  it("returns the three aligned fiscal years the vendor carries, oldest first", () => {
+    expect(s.statements.fiscalYears).toEqual(["FY23", "FY24", "FY25"]);
+    for (const t of ["income", "balance", "cashflow"] as const)
+      for (const r of s.statements[t]) expect(r.values.length).toBe(3);
+  });
+  it("reads the latest quarter (Q2 2026) with year-over-year growth", () => {
+    expect(s.latestQuarter.label).toBe("Q2'26");
+    expect(s.latestQuarter.periodEnd).toBe("2026-06-30");
+    expect(s.latestQuarter.revenue).toBe(2575000000);
+  });
+});
+
 describe("mapStatements on an empty capture", () => {
   it("throws naming the annual statements file", () => {
     expect(() => mapStatements("lib/facts/map/__fixtures__/empty")).toThrow(/bigdata-statements-annual\.json/);

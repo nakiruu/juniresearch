@@ -4,6 +4,22 @@ import { minimalPack } from "@/lib/facts/__fixtures__/minimal-pack";
 
 describe("validateFactPack", () => {
   it("accepts the minimal pack", () => { expect(validateFactPack(minimalPack())).toEqual([]); });
+  it("accepts a four-year pack and checks row length against the year count", () => {
+    const p = minimalPack();
+    p.statements.fiscalYears = ["FY22", "FY23", "FY24", "FY25"];
+    for (const t of ["income", "balance", "cashflow"] as const)
+      p.statements[t] = p.statements[t].map((r) => ({ ...r, values: r.values.slice(-4) }));
+    expect(validateFactPack(p)).toEqual([]);
+    p.statements.income = p.statements.income.map((r) => ({ ...r, values: [...r.values, 0] }));
+    expect(validateFactPack(p).some((i) => i.field.startsWith("statements.income"))).toBe(true);
+  });
+  it("rejects fewer than three fiscal years", () => {
+    const p = minimalPack();
+    p.statements.fiscalYears = ["FY24", "FY25"];
+    for (const t of ["income", "balance", "cashflow"] as const)
+      p.statements[t] = p.statements[t].map((r) => ({ ...r, values: r.values.slice(-2) }));
+    expect(validateFactPack(p).some((i) => i.field === "statements.fiscalYears")).toBe(true);
+  });
   it("rejects non-consecutive fiscal years", () => {
     const p = minimalPack(); p.statements.fiscalYears = ["FY20", "FY22", "FY23", "FY24", "FY25"];
     expect(validateFactPack(p).map((i) => i.field)).toContain("statements.fiscalYears");

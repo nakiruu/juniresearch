@@ -43,6 +43,21 @@ describe("mapSegments with no geographic split", () => {
   });
 });
 
+describe("mapSegments with only a geographic split (no product segmentation)", () => {
+  const s = mapSegments("lib/facts/map/__fixtures__/geo-only");
+  it("uses the latest year's geographic split as the segments, labelled by geography", () => {
+    expect(s.segments.basis).toBe("FY25 by geography");
+    expect(s.segments.items.map((i) => i.name).sort()).toEqual(["Non-US", "UNITED STATES"]);
+    const us = s.segments.items.find((i) => i.name === "UNITED STATES")!;
+    expect(us.revenue).toBe(4801000000);
+    expect(us.share).toBeCloseTo(0.9357, 3);
+    expect(s.segments.items.reduce((a, i) => a + i.share, 0)).toBeCloseTo(1, 6);
+  });
+  it("leaves the separate geography line empty so it is not repeated", () => {
+    expect(s.geoMix).toEqual({ basis: "FY25", items: [] });
+  });
+});
+
 describe("mapSegments with an all-zero segment total", () => {
   it("throws naming the tearsheet file rather than dividing by zero", () => {
     expect(() => mapSegments("lib/facts/map/__fixtures__/zero-segments")).toThrow(/bigdata-tearsheet-annual\.json/);

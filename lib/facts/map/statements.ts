@@ -25,7 +25,9 @@ export function mapStatements(dir: string): { statements: FactPack["statements"]
   const bal = fyRows(section<Rec[]>(a, ["fundamentals", "balance_sheet"], ANNUAL), ANNUAL);
   const cf = fyRows(section<Rec[]>(a, ["fundamentals", "cash_flow"], ANNUAL), ANNUAL);
   const years = [...inc.keys()].filter((y) => bal.has(y) && cf.has(y)).sort((x, y) => x - y).slice(-5);
-  if (years.length !== 5) throw new Error(`Expected 5 aligned fiscal years in ${ANNUAL}, found ${years.length}: ${years.join(",")}`);
+  // Five years is the norm; a company public for under five years (a 2025 IPO, say) has fewer aligned years.
+  // Three is the floor below which the trend tables say too little to publish.
+  if (years.length < 3) throw new Error(`Expected at least 3 aligned fiscal years in ${ANNUAL}, found ${years.length}: ${years.join(",")}`);
   const col = (m: Map<number, Rec>, key: string, optional = false) => years.map((y) => num(m.get(y), key, ANNUAL, { optional }));
 
   const revenue = col(inc, "revenue");

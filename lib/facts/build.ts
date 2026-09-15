@@ -26,7 +26,7 @@ export function buildFactPack(dir: string): FactPack {
   const q = quote.mapQuote(dir);
   if (q.cik !== filing.cik) throw new Error(`CIK mismatch: tearsheet ${q.cik} vs EDGAR ${filing.cik}`);
   const s = statements.mapStatements(dir);
-  const latestFY = Number("20" + s.statements.fiscalYears[4].slice(2));
+  const latestFY = Number("20" + s.statements.fiscalYears.at(-1)!.slice(2));
   const g = segments.mapSegments(dir);
   const a = analysts.mapAnalysts(dir, latestFY);
   const h = history.mapHistory(dir, meta.capturedAt);

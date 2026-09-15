@@ -5,10 +5,11 @@ const sumShares = (xs: { share: number }[]) => xs.reduce((a, x) => a + x.share, 
 export function validateFactPack(p: FactPack): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
   const years = p.statements.fiscalYears.map((l) => Number("20" + l.slice(2)));
-  if (!years.every((y, i) => i === 0 || y === years[i - 1] + 1))
-    issues.push({ field: "statements.fiscalYears", message: "must be five consecutive years, oldest first", value: p.statements.fiscalYears });
+  const n = p.statements.fiscalYears.length;
+  if (n < 3 || n > 5 || !years.every((y, i) => i === 0 || y === years[i - 1] + 1))
+    issues.push({ field: "statements.fiscalYears", message: "must be 3 to 5 consecutive years, oldest first", value: p.statements.fiscalYears });
   for (const [name, table] of Object.entries({ income: p.statements.income, balance: p.statements.balance, cashflow: p.statements.cashflow }))
-    for (const r of table) if (r.values.length !== 5) issues.push({ field: `statements.${name}.${r.key}`, message: "must have five values", value: r.values.length });
+    for (const r of table) if (r.values.length !== n) issues.push({ field: `statements.${name}.${r.key}`, message: "must have one value per fiscal year", value: r.values.length });
   const a = p.analysts;
   if (a.buy + a.hold + a.sell !== a.count) issues.push({ field: "analysts.count", message: "buy + hold + sell must equal count", value: a.count });
   const segSum = sumShares(p.segments.items);

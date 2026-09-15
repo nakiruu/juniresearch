@@ -30,7 +30,7 @@ export const HIGHLIGHT_KEYS = [
 export type HighlightKey = (typeof HIGHLIGHT_KEYS)[number];
 
 export function buildHighlightCells(p: FactPack): Partial<Record<HighlightKey, SnapshotCellData>> {
-  const fy = p.statements.fiscalYears[4];
+  const fy = p.statements.fiscalYears.at(-1)!;
   const revenue = latestStatementValue(p, "income", "revenue");
   const grossProfit = latestStatementValue(p, "income", "grossProfit");
   const grossMarginLatestFY = safeDiv(grossProfit, revenue);

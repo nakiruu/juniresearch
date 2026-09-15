@@ -14,7 +14,7 @@ export function statementValues(p: FactPack, table: "income" | "balance" | "cash
 
 /** The latest fiscal year's value for a statement row, or null if the row or year is missing. */
 export function latestStatementValue(p: FactPack, table: "income" | "balance" | "cashflow", key: string): number | null {
-  return statementValues(p, table, key)[4] ?? null;
+  return statementValues(p, table, key).at(-1) ?? null;
 }
 
 /** Null-safe division: null if either side is null or the denominator is zero. */

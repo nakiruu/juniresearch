@@ -23,7 +23,7 @@ export const Excerpt = z.object({
 export const StatementRow = z.object({
   key: z.string(),
   label: z.string(),
-  values: z.array(nullableNum).length(5),
+  values: z.array(nullableNum).min(3).max(5), // one cell per fiscal year; a recently listed company may have as few as 3
 });
 
 export const HistoryPoint = z.object({ date: z.string(), close: z.number() });
@@ -49,7 +49,7 @@ export const FactPack = z.object({
     week52Low: z.number(), week52High: z.number(), dividendYield: ratio, asOf: z.string(),
   }),
   statements: z.object({
-    fiscalYears: z.array(z.string()).length(5),
+    fiscalYears: z.array(z.string()).min(3).max(5), // 3-5: a company public for under five years has a shorter series
     income: z.array(StatementRow),
     balance: z.array(StatementRow),
     cashflow: z.array(StatementRow),
