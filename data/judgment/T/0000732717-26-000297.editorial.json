@@ -1,0 +1,280 @@
+{
+  "judgmentSha256": "fffe01a329bcec3344eb7f25fbbe560746bb9cb60762ff882e3f686eab100f35",
+  "reviewedAt": "2026-09-15T10:02:52Z",
+  "reviewer": "claude-opus-5",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.businessMoat.moatFactors[1].body",
+      "quote": "it is adding PON-fed small cells off its fiber to densify the wireless network",
+      "issue": "Nothing in the Facts or Context blocks mentions PON, small cells or network densification. The 10-Q MD&A, the press release and the transcript highlights are all silent on it. This is a network-architecture claim from outside the grounding surface, and it is doing work in the moat argument: it is one of only two supports for the 'Spectrum and network scale' factor.",
+      "fix": "Delete the clause. If the factor needs a second support, use something the pack carries: retail wireless subscribers of 109,800 thousand at June 30, 2026 and postpaid phones up 2.1% to 74,921 thousand are already in the same paragraph, or the 10-Q's statement that depreciation of the shared network is managed in Advanced Connectivity.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-2",
+      "severity": "Critical",
+      "field": "sections.risks.idiosyncratic[0]",
+      "quote": "management presents its AST SpaceMobile work as coverage extension for its own customers",
+      "issue": "AST SpaceMobile is named nowhere in the pack - not in the MD&A, the press release, the transcript highlights or the headlines. This characterises what management said on a call the pack does not record it saying. The nearest the transcript gets is an unnamed speaker noting that 'For those limited circumstances, when the AT&T network is not available to one of our converged customers. We expect to be in a position to solve many of these corner cases as we move into 2027' - which names no partner and no satellite.",
+      "fix": "Remove the AST SpaceMobile attribution. If the counter-point is needed, use the transcript's own framing about solving coverage corner cases as the company moves into 2027, or drop the sentence and let the churn metric carry the risk.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-3",
+      "severity": "Critical",
+      "field": "sections.businessMoat.durability",
+      "quote": "the assets that create it are shared with two national rivals running the same convergence playbook, and a third path into wireless, satellite, is being priced by the market before it has customers",
+      "issue": "Two unsupported claims in one clause, and they carry the NARROW moat rating. (1) No competitor is named or described anywhere in the pack - 'Verizon' and 'T-Mobile' do not appear, and the only mention of competitors at all is the 10-K's generic inflation language about customers buying lower-priced offerings. 'Two national rivals running the same convergence playbook' comes from outside the grounding surface. (2) 'before it has customers' asserts that satellite entrants have no U.S. wireless customers; the pack establishes only that a Morningstar headline tied a share-price fall to SpaceX.",
+      "fix": "Rebuild the durability opener on what the pack supports: the 10-Q attributes wireless service growth to pricing actions 'partially offset by promotional discounts on wireless subscriber additions' and calls churn management critical to margins, which is the real evidence for a narrow moat. For satellite, say what the pack says - the market moved on a headline while no operating metric in the quarter showed share loss - rather than asserting the entrants' customer count.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-4",
+      "severity": "Critical",
+      "field": "sections.businessMoat.moatFactors[1].body",
+      "quote": "The company describes an advantaged low-band position that the pending EchoStar spectrum licenses would deepen",
+      "issue": "The pack ties the low-band remark to a different thing. The transcript says only: 'We already have an advantage low-band position in the market. The 600 is going to make that advantage even more substantial.' The pack nowhere identifies 'the 600' as the EchoStar licences, and nowhere says EchoStar deepens the low-band position. The fact is attached to a source that does not make the link.",
+      "fix": "Quote the transcript as it stands - an advantaged low-band position that management says 'the 600' will make more substantial - and keep the EchoStar leverage point separate, which the same paragraph already makes correctly. Do not bridge the two unless the pack bridges them.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-5",
+      "severity": "Critical",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "Cash rose to $18.2B at FY25 from $3.3B at FY24 ahead of the EchoStar payment",
+      "issue": "'ahead of the EchoStar payment' is a causal claim the pack does not establish. Nothing in the Facts or Context blocks says the FY25 cash build was raised or held for the EchoStar spectrum purchase; the pack says only that management is 'well-positioned to fund the transaction'. The two figures are the vendor table's FY25 and FY24 cash balances with no stated purpose attached, and the EchoStar agreement is not shown in the pack to predate the FY25 balance sheet date.",
+      "fix": "State the cash move without the motive: cash rose to $18.2B at FY25 from $3.3B at FY24, which lifted the current ratio to 0.91 from 0.66. If the funding link matters, attribute it to management's own words about being positioned to fund the transaction rather than asserting the balance was built for it.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-6",
+      "severity": "Important",
+      "field": "analystCommentary",
+      "quote": "Net debt to adjusted EBITDA stood at 2.68 times at quarter end and management guides it to the 3.2 times range once the EchoStar spectrum purchase closes, with the return to the two and a half times range taking approximately three years",
+      "issue": "The whole leverage sequence - 2.68 times now, 3.2 times on close, roughly three years back to the two and a half times range - is stated in full five separate times: analystCommentary, sections.financials.balanceCommentary, sections.management.capitalAllocation, sections.risks.idiosyncratic[1] and sections.finalRecommendation.body[1]. The phrase 'the two and a half times range' appears in six fields and '3.2 times' in nine, adding thesis.body, catalysts[0], multiplesCommentary, scenarios[2].driver and moatFactors[1]. It has become the report's tic rather than its argument.",
+      "fix": "Argue the sequence once, in sections.financials.balanceCommentary, where the balance sheet is the subject. Everywhere else refer back in words - 'the post-close leverage peak', 'the deleveraging window' - without re-citing 2.68, 3.2 or the three-year timetable. Cut it entirely from catalysts[0] and moatFactors[1], which only need to point.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-7",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[2]",
+      "quote": "Fiber ARPU fell 1.3% year over year, roughly flat excluding the acquired Lumen customers, and management expects near-term pressure as converged discounts spread",
+      "issue": "The 1.3% fiber ARPU decline is re-introduced with its cause in six fields: analystCommentary, executiveSummary.risks[1], businessMoat.moatFactors[2].body, risks.idiosyncratic[2], valuation.scenarios[2].driver and finalRecommendation.body[1]. Four repeat the same two-part cause (acquired Lumen customers plus converged discounts) and three repeat the same rider that management expects near-term pressure to continue. analystCommentary and executiveSummary.risks[1] share the near-verbatim string 'Lumen customers and converged discounts mixed in'.",
+      "fix": "Keep the full treatment here in risks.idiosyncratic[2] - it is the only one carrying the 'roughly flat excluding Lumen' qualifier, which is the analytically useful half. Reduce executiveSummary.risks[1] to a pointer without the cause, and in analystCommentary, moatFactors[2] and finalRecommendation.body[1] refer back in words ('the ARPU dilution from convergence') without restating the figure.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "sections.finalRecommendation.body[1]",
+      "quote": "the early-July sell-off showed the multiple reacts to satellite headlines before any churn appears",
+      "issue": "The same sentence is made three times in different words - 'shows the multiple responds to satellite headlines before any subscriber impact is visible' (executiveSummary.risks[0]), 'showed that the multiple can move on satellite headlines before any operating data confirms them' (valuation.scenarioCommentary), and this one. The early-July sell-off is invoked in five fields and 'satellite' appears in thirteen, including the subtitle. This is the paraphrase case the rubric asks the reviewer to catch, not a mechanical duplicate the lint would flag.",
+      "fix": "Make the claim once, in sections.risks.idiosyncratic[0], where the mechanism and the metric to watch belong. Cut the restatement from scenarioCommentary and finalRecommendation.body[1] - the Bear scenario and the HOLD both already rest on it - and reduce executiveSummary.risks[0] to a pointer at the risk section.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-9",
+      "severity": "Important",
+      "field": "sections.finalRecommendation.body[0]",
+      "quote": "At 11.3x NTM earnings with a 9.7% trailing free-cash-flow yield the shares are not expensive, and the dividend yield of 4.18% pays investors to hold.",
+      "issue": "Near-verbatim duplicate of analystCommentary's 'The shares trade at 11.3x NTM earnings with a 9.7% trailing free-cash-flow yield and a 4.18% dividend yield'. The same multiple-plus-yield pair also opens thesis.body and is restated in multiplesCommentary; 11.3x appears in five fields, 9.7% in five, 4.18% in three, and the string 'with a 9.7% trailing free cash flow' occurs in four separate fields.",
+      "fix": "Let sections.valuation.multiplesCommentary own the full multiple set, since that is the section a reader goes to for it. In analystCommentary, thesis.body and finalRecommendation.body[0] name at most one of the three and refer to the rest in words ('the cash yield', 'the forward multiple').",
+      "status": "addressed"
+    },
+    {
+      "id": "F-10",
+      "severity": "Important",
+      "field": "sections.executiveSummary.risks[3]",
+      "quote": "Business transitional and other revenue fell 16.6% on lower VPN and wholesale demand that management expects to continue",
+      "issue": "Executive-summary bullets are meant to point while the sections argue; several here carry the section's argument verbatim instead. This risk shares the string 'on lower VPN and wholesale demand that management expects to continue' with businessMoat.segments[1].body. The pattern recurs in three more places: executiveSummary.risks[4] and risks.idiosyncratic[4] share 'the company reflects annual funded-status adjustments'; executiveSummary.companyOverview and moatFactors[0].body share the fiber-locations sentence ('over 40 million by the end of 2026 and more than 60 million by the end of 2030'); executiveSummary.risks[2] and financials.incomeCommentary share 'on higher debt balances and rates'.",
+      "fix": "Cut each executive-summary bullet back to the claim plus a pointer, leaving the driver, the figure and the management quote to the section behind it. For companyOverview, state the 38.6 million locations reached and let moatFactors[0] carry the 2026 and 2030 targets.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-11",
+      "severity": "Important",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "The trailing P/E flatters: FY25 diluted EPS of $3.04 sits well above the FY26E consensus of $2.34, so the forward multiples are the ones to use.",
+      "issue": "The same claim, with the same two figures and the same conclusion, is already made in sections.financials.incomeCommentary: 'FY25 net income of $21.9B and diluted EPS of $3.04 sit well above the FY26E consensus of $2.34, so the trailing P/E rests on a year consensus does not expect to repeat; we value the shares on forward earnings.' The string 'above the FY26E consensus of $2.34, so' is common to both.",
+      "fix": "Keep it here in multiplesCommentary, where the multiple is the subject and the conclusion - use the forward multiples - is actionable. In incomeCommentary state the FY25 result and stop, or point forward to the valuation section in words.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-12",
+      "severity": "Important",
+      "field": "sections.growth.points[3]",
+      "quote": "Business Advanced Connectivity service revenues grew 1.8% in the quarter on wireless, fiber and fixed wireless, and management expects them to grow at a low single-digit CAGR through 2028",
+      "issue": "Duplicates sections.businessMoat.segments[1].body, which already says 'Business Advanced Connectivity service revenues in total grew 1.8%, which management describes as having turned a corner, with a low single-digit CAGR expected through 2028.' Same figure, same guidance, same period, in two sections, with no added judgment in either place.",
+      "fix": "Keep the 1.8% and the 2028 CAGR in the growth section, where the forward path is the point, and in the moat segment replace them with the desk's own read of what a low-single-digit business franchise is worth to the moat.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-13",
+      "severity": "Important",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "On the company's measure, net debt to adjusted EBITDA was 2.68 times at quarter end, essentially flat with the March quarter.",
+      "issue": "The report chose netDebtToEbitda as a highlight cell, so the page renders 'Net Debt / EBITDA (TTM) = 2.7x' - a vendor figure built on the FY25 net debt of $155.8B that this very paragraph says the report is not using. The prose then argues everywhere off management's 2.68 times, built on net debt of $126.4B at June 30, 2026. Two different numerators, two different periods, two nearly identical-looking ratios, and the reader is never told they are not the same measure. The disagreement rule is honoured for total and net debt one sentence earlier, but not for the ratio the whole thesis turns on.",
+      "fix": "Extend the disagreement sentence already in this paragraph to cover the ratio: say once that the vendor's TTM net debt/EBITDA of 2.7x rests on the $155.8B net debt figure while management's 2.68 times rests on the release's $126.4B, and that the report uses management's. Alternatively drop the netDebtToEbitda highlight and use interestCoverage or netDebtLatestFY, so the page stops rendering a figure the prose disowns.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-14",
+      "severity": "Important",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "the definitions differ, and we use the release figures when discussing leverage because they are the ones management guides to",
+      "issue": "'The definitions differ' is asserted, not established - nothing in the Facts or Context blocks says what either definition is or that they differ. The larger problem is that the two figures may not be in disagreement at all: the vendor's $174.0B total debt and $155.8B net debt are FY25 balances at December 31, 2025, while the release's $144.0 billion and $126.4 billion are at June 30, 2026. A six-month gap spanning a $30B move is presented to the reader as a definitional dispute.",
+      "fix": "Say what the pack supports: the vendor figures are FY25 year-end balances and the release figures are at the end of the second quarter of 2026, so the two are not comparable as stated, and the report uses the release figures because they match the reporting period and are the ones management guides to. Drop the claim about definitions unless the pack carries one.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-15",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "Advanced Connectivity, which the CFO says contributes over 90% of service revenue and nearly all of adjusted EBITDA",
+      "issue": "The figure is grounded but the speaker is not. The transcript highlights in Context carry no speaker labels and the pack never names a CFO or identifies who is talking. The only titled person anywhere in the pack is 'John Stankey, AT T Chairman and CEO', named in the press release - and the speaker who makes this remark refers to 'John' in the third person, so it is not him. Attributing it to the CFO is a characterisation the pack does not support.",
+      "fix": "Attribute it to the source the pack actually gives: 'management told the call' or 'on the second-quarter call'. Reserve named or titled attribution for John T. Stankey, the one person the pack identifies by title.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-16",
+      "severity": "Important",
+      "field": "sections.management.governance",
+      "quote": "the excerpt records the approved employment of a related person and two director relationships that the Board judged consistent with independence, an executive's employer that buys AT&T services amounting to less than 1% of either company's revenues",
+      "issue": "Mischaracterises the proxy. The DEF 14A excerpt says 'The entity where Ms. Taylor serves as an executive officer purchased communications services from subsidiaries of AT&T' - that is an AT&T director who is an executive officer elsewhere, and the relationship runs through the company she works for. 'An executive's employer' reads naturally as an AT&T executive's employer, which reverses the relationship and loses the fact that the person is a board member whose independence was the question being tested. The proxy also dates the test explicitly ('For the year 2025'); the report does not.",
+      "fix": "Name it as the proxy does: a director who serves as an executive officer of another company that bought communications services from AT&T subsidiaries during 2025, with total payments below 1% of each company's consolidated gross revenues - against the NYSE's 2% ceiling, which the excerpt gives and which is the figure that makes the judgment readable.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-17",
+      "severity": "Important",
+      "field": "sections.management.governance",
+      "quote": "while free cash flow and a strategic component, each at a 20% weight, attained 100% and paid 101% and 105%",
+      "issue": "The parallel construction distributes the payouts across the two metrics ('paid 101% and 105%') but gives a single attainment, so the reader takes 100% attainment to apply to both. The proxy marks the strategic component's attainment 'N/A', not 100%. A figure is being attached to a quantity the source expressly declines to state.",
+      "fix": "Separate them: free cash flow, at a 20% weight, attained 100% and paid 101%; the strategic component, also at 20%, has no stated attainment in the proxy and paid 105%. The absence is worth a clause - a fifth of the short-term bonus paid above target on a measure the proxy does not score.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-18",
+      "severity": "Important",
+      "field": "sections.management.leadership",
+      "quote": "the Board has designated nine directors as independent",
+      "issue": "Two problems. The count is derived - the proxy lists nine names and states no total - and the authoring contract says never to compute a new figure. More importantly it is unread: without the board size the reader cannot tell whether nine is the 'substantial majority' the proxy's own Corporate Governance Guidelines require. Nine of eleven and nine of eighteen mean opposite things, and the excerpt supports neither.",
+      "fix": "Say what the excerpt states rather than counting: the Corporate Governance Guidelines require a substantial majority of the Board to be independent, the Board affirmatively determined the named directors independent, and every member of the Audit, Governance and Policy, and Human Resources Committees is independent. If the count stays, add that the excerpt gives no board size, so the ratio cannot be checked.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-19",
+      "severity": "Important",
+      "field": "sections.management.governance",
+      "quote": "The proxy's disclosures are conventional in structure and revealing in detail.",
+      "issue": "The proxy is never dated anywhere in the report. It is the DEF 14A of March 23, 2026 - filed roughly six months before this report and before the filing under review - and it is the sole source for the whole governance, pay and related-party section. The pay figures do carry their performance periods (2025, 2023-2025), but the board-independence determinations and committee composition are presented as current when they are the position as of March 2026. The 10-K of February 9, 2026 has the same problem: it is cited in executiveSummary.risks[4], risks.idiosyncratic[4], risks.systemic and balanceCommentary, never with a date.",
+      "fix": "Date both documents on first use in each section - 'the March 2026 proxy', 'the February 2026 10-K' - so the reader knows the governance snapshot predates the quarter being reported and the risk factors predate the EchoStar agreement.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-20",
+      "severity": "Important",
+      "field": "sections.businessMoat.moatFactors[0].body",
+      "quote": "The footprint is the asset a satellite or cable rival cannot copy quickly.",
+      "issue": "This factor closes purely bullish with no reading that cuts the other way, unlike the three factors after it, each of which names its counter. The figure that would supply one is in the pack and omitted: the transcript says the convergence rate 'reached 45% when excluding customers within our acquired footprint from Lumen', which means the reported 42.5% is being diluted by the acquisition rather than driven by it - the traditional footprint converts better than the headline and the acquired base is the drag.",
+      "fix": "Add the counter using the 45%-ex-Lumen figure: the headline convergence rate fell because the acquired base starts under-penetrated, so 42.5% understates the traditional footprint and overstates the near-term contribution of the Lumen customers. That also sets up the ARPU point in the next factor.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-21",
+      "severity": "Important",
+      "field": "sections.businessMoat.segments[1].body",
+      "quote": "Business Advanced Connectivity service revenues in total grew 1.8%, which management describes as having turned a corner, with a low single-digit CAGR expected through 2028.",
+      "issue": "The Business Service paragraph lists three figures from the pack and then closes on management's own characterisation, reaching no view of its own. Every other segment paragraph ends with a desk judgment - 'This is the cash engine', 'the 10-Q's version is the one that matters', 'It is immaterial to the thesis', 'we set it aside when judging the moat'. This one hands the last word to the company.",
+      "fix": "Close with the desk's read: business fiber and advanced connectivity growing 10.0% against business transitional and other falling 16.6% means the reported 1.8% is a mix outcome, and it accelerates only as the shrinking line gets small enough to stop offsetting the growing one. Say whether the desk believes the corner has been turned on one quarter of evidence.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-22",
+      "severity": "Important",
+      "field": "sections.executiveSummary.catalysts[3]",
+      "quote": "unlock the cost take-out behind the $4 billion annual savings target for 2028",
+      "issue": "A causal link the pack does not make. The transcript attributes the $4 billion to a different programme - 'driven by top-line momentum and our continued cost transformation initiatives... We remain on pace to achieve $4 billion in consolidated annual cost savings by the end of 2028' - and says only that the copper exit is 'providing a path to unlock access to descaling parts of our cost structure and to further streamline our operations'. The report converts an adjacency into the FCC approvals being the mechanism behind the $4 billion target.",
+      "fix": "Keep the two apart: FCC discontinuance approvals unlock the copper cost structure and gate the Legacy exit, while the $4 billion by end-2028 is a consolidated cost-transformation target management tracks separately. If the catalyst needs a number, use the Legacy figures the pack does tie to copper - EBITDA of $523 million, guided negative after 2027.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-23",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[0]",
+      "quote": "Morningstar's 2026-07-02 headlines recorded a weekly fall in AT&T's shares unmatched since March 2020",
+      "issue": "The headline does not establish this. It reads 'AT&T on Pace for Worst Week Since March 2020 - Data Talk' - written mid-week and forward-looking. 'On pace for' is not a completed week, and the pack carries nothing showing how the week closed. The report converts a projection into a recorded outcome and then leans on it as the strongest evidence in the satellite risk.",
+      "fix": "Quote the headline's own tense: on July 2, 2026 Morningstar reported the shares were on pace for their worst week since March 2020, and a companion headline called it a SpaceX panic. That is enough to make the point about headline sensitivity without asserting a result the pack does not record.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-24",
+      "severity": "Minor",
+      "field": "analystCommentary",
+      "quote": "And the early-July sell-off that Morningstar's 2026-07-02 headline tied to SpaceX shows how quickly the market will discount satellite competition, which no quarter of net adds can settle.",
+      "issue": "ISO dates in prose, against house style. '2026-07-02' appears here and again in sections.risks.idiosyncratic[0]. Every other date in the report is already in prose form - 'February 2, 2026', 'June 30, 2026', 'July 2, 2025' - so these two are the outliers.",
+      "fix": "Write 'Morningstar's July 2, 2026 headline' in both places.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-25",
+      "severity": "Minor",
+      "field": "sections.businessMoat.segments[3].body",
+      "quote": "the 10-Q's version is the one that matters, and its growth rate leads every other line in the company",
+      "issue": "The superlative is undercut by the sentence it sits in, which reports 'AT&T Internet Air revenue more than doubling' - a growth rate above the 27.3% being called the leader. The claim holds only across the six reported revenue lines of the Advanced Connectivity segment table, not across 'every other line in the company'.",
+      "fix": "Qualify to what the series supports: the fastest-growing of the segment's reported revenue lines. Or drop the superlative and let 27.3% against wireless service's 3.3% make the point unaided.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-26",
+      "severity": "Minor",
+      "field": "sections.management.governance",
+      "quote": "Related-person transactions require Governance and Policy Committee approval under a written policy",
+      "issue": "The field runs 1,401 characters against a 1,500 cap - 93% full, leaving 99 characters of room. Three findings above ask for changes inside this field (the related-party relationship re-described, the strategic component's N/A attainment separated, the proxy dated), and none of them fit in what is left. Every other long field in the report sits at 76% of cap or below.",
+      "fix": "Make room before the fix round: the say-on-pay sentence and the short-term plan breakdown can shed the payout percentages that carry no argument, and the three-metric long-term table can be cut to the two findings the section actually reasons from - the 0.6% EPS CAGR paying 128%, and the third-quartile TSR paying nothing.",
+      "status": "addressed",
+      "note": "Addressed. management.governance came down from 1,484/1,500 (98.9%) to 1,381/1,500 (92.1%), and businessMoat.moatFactors[0].body from 799/800 (99.9%) to 701/800 (87.6%). No field now sits above 92.1% of its cap, and the three governance edits this finding was blocking (F-16, F-17, F-19) all landed. Noting for the record that governance is still the tightest field at 119 characters of headroom."
+    },
+    {
+      "id": "F-27",
+      "severity": "Minor",
+      "field": "sections.businessMoat.segments[5].body",
+      "quote": "by its size this is equipment revenue, the handsets and devices AT&T sells alongside service",
+      "issue": "Presented as a finding of fact when it is the desk's own reconciliation. The vendor's label is 'Other Capitalized Property Plant and Equipment' at 19.5% of FY25 revenue; nothing in the pack maps that label to equipment revenue, and the inference rests on the analyst comparing $24.5B against a quarterly figure. The reasoning is sound and the report is honest elsewhere about the vendor mapping problem, but here the hedge ('by its size') is carrying more weight than it can.",
+      "fix": "Mark it as the desk's inference rather than a fact: the label maps to no 10-Q line, and on size the only plausible match is equipment revenue, which the 10-Q reports at $5,581 million for the quarter. Say the mapping is the desk's and that the vendor does not confirm it.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-28",
+      "severity": "Important",
+      "field": "analystCommentary",
+      "quote": "The EchoStar spectrum purchase lifts net leverage to a post-close peak",
+      "issue": "The fix for F-6 traded a repeated figure for a repeated phrase. Seven verbatim cross-section duplicates now sit in the draft, four of them created by this rewrite: this string is identical in analystCommentary and executiveSummary.thesis.body; 'the post-close leverage peak and the multi-year... set out in the balance-sheet section' is near-identical in management.capitalAllocation and risks.idiosyncratic[1]; 'partially offset by promotional discounts on new subscribers' is identical in businessMoat.durability and businessMoat.segments[0].body; and 'including over 4 million acquired from Lumen' is identical in executiveSummary.catalysts[2] and businessMoat.durability. Three more survive from round 1: 'our probability-weighted value sits modestly above' (analystCommentary, finalRecommendation.body[1]), 'absorb essentially 100% of the free cash flow' (thesis.body, cashflowCommentary) and 'up from $0.2B in FY24 per the vendor table' (cashflowCommentary, management.capitalAllocation).",
+      "fix": "Vary the back-reference instead of standardising it. balanceCommentary already declares that every later mention of the leverage peak means its sequence, so the later fields need only a short nod - 'the leverage peak', 'the deleveraging window' - and not the same eight-word clause twice. For the promotional-discount language, let segments[0] quote the 10-Q and have durability refer to it. For the three round-1 survivors, keep each phrase in the section that argues it and refer back in words elsewhere.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-29",
+      "severity": "Minor",
+      "field": "sections.risks.idiosyncratic[0]",
+      "quote": "a week of headlines can cost more than a year of net adds earns back",
+      "issue": "An unsupported quantitative comparison, carried over from round 1 in reworded form. The pack gives no share-price magnitude for the early-July move - only that Morningstar reported the shares were 'on Pace for Worst Week Since March 2020' - and nothing at all on what a year of net adds is worth in price terms. The two sides of the comparison are both unmeasured here, so the sentence asserts a ratio the sources cannot support. It reads as rhetoric in a paragraph that is otherwise now careful about what the headline does and does not establish.",
+      "fix": "Drop the comparison and let the disclosed facts carry the point: the shares were reported on pace for their worst week since March 2020 on a headline, while no operating metric in the quarter showed satellite taking share. That already makes the case that the multiple moves ahead of the data, without pricing a trade the pack cannot price.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-30",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.risks[0]",
+      "quote": "SpaceX headlines hit telecom shares in early July 2026",
+      "issue": "The pack evidences an AT&T move, not a sector one. Both Morningstar headlines are AT&T-specific - 'SpaceX panic sends AT&T stock to its worst week in years' and 'AT&T on Pace for Worst Week Since March 2020' - and no other telecom issuer appears anywhere in the Facts or Context blocks. 'Telecom shares' asserts a sector re-pricing the sources do not show. The section behind this bullet gets it right, saying 'AT&T's shares were on pace for their worst week since March 2020', so the generalisation is introduced only in the pointer. valuation.multiplesCommentary carries the same scope in forward-looking form ('satellite competition can compress telecom multiples on headlines alone'). Raised at this round rather than earlier - the wording has been present since round 1 and I did not catch it.",
+      "fix": "Narrow the pointer to what the headlines support: SpaceX headlines hit AT&T's shares in early July 2026. The multiplesCommentary line can stay as written, since it is an explicit forward-looking claim about what satellite competition can do to the group's multiples rather than a report of what happened, but if the desk wants the sector framing in the executive summary it needs a source covering more than one issuer.",
+      "status": "addressed"
+    }
+  ]
+}
