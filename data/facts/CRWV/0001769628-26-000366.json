@@ -1,0 +1,613 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "CRWV",
+  "cik": 1769628,
+  "company": "CoreWeave, Inc. Class A Common Stock",
+  "exchange": "NASDAQ",
+  "filing": {
+    "form": "10-Q",
+    "accession": "0001769628-26-000366",
+    "filedDate": "2026-08-12",
+    "periodEnd": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm"
+  },
+  "capturedAt": "2026-09-15T20:40:33.195Z",
+  "quote": {
+    "price": 80.92,
+    "marketCap": 44147555797,
+    "sharesOutstanding": 545570388.0004944,
+    "sharesSource": "derived",
+    "week52Low": 60.55,
+    "week52High": 153.2,
+    "dividendYield": 0,
+    "asOf": "2026-09-15"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          228943000,
+          1915426000,
+          5131000000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          160163000,
+          1422076000,
+          3678000000
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          -14451000,
+          324358000,
+          -46000000
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          -426433000,
+          480036000,
+          2468000000
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          -593748000,
+          -863448000,
+          -1167000000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          -1.47,
+          -2.33,
+          -2.81
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          219515000,
+          1361083000,
+          3980000000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          1999740000,
+          10620277000,
+          29822000000
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          1782593000,
+          9259194000,
+          25876000000
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          -596591000,
+          -413598000,
+          3335000000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          0.5027657564992524,
+          0.3861395914746782,
+          0.4554744525547445
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          1832650000,
+          2749168000,
+          3058000000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -2943130000,
+          -8702078000,
+          -10309000000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          -32054000,
+          -1470000,
+          0
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          -1110480000,
+          -5952910000,
+          -7251000000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q2'26",
+    "periodEnd": "2026-06-30",
+    "revenue": 2575000000,
+    "operatingMargin": -0.019029126213592235,
+    "revenueYoY": 1.1232070238161986
+  },
+  "ttm": {
+    "pe": -22.290383561643832,
+    "ps": 5.848485978275478,
+    "evToEbitda": 35.150237213404225,
+    "grossMargin": 0.6741665546710095,
+    "operatingMargin": -0.030402077585320927,
+    "netMargin": -0.2540127385178099,
+    "netDebtToEbitda": 17.736641222871405,
+    "interestCoverage": -0.2876331184656176,
+    "currentRatio": 0.4551321891284601,
+    "fcfYield": -0.3076257491084655
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 12905583160,
+      "eps": -4.00619
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 26532955331,
+      "eps": -1.97433
+    }
+  },
+  "analysts": {
+    "count": 30,
+    "buy": 19,
+    "hold": 10,
+    "sell": 1,
+    "consensusRating": "Buy",
+    "consensusTarget": 141.41,
+    "medianTarget": 150,
+    "highTarget": 192,
+    "lowTarget": 74,
+    "asOf": "2026-09-15"
+  },
+  "segments": {
+    "basis": "FY25 by geography",
+    "items": [
+      {
+        "name": "Non-US",
+        "revenue": 330000000,
+        "share": 0.06431494835314754
+      },
+      {
+        "name": "UNITED STATES",
+        "revenue": 4801000000,
+        "share": 0.9356850516468525
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "ADSK",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "FTNT",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "INFY",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "MSI",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-04",
+      "close": 91.9000015258789
+    },
+    {
+      "date": "2026-08-05",
+      "close": 89.88999938964844
+    },
+    {
+      "date": "2026-08-06",
+      "close": 85.33000183105469
+    },
+    {
+      "date": "2026-08-07",
+      "close": 90.66999816894531
+    },
+    {
+      "date": "2026-08-10",
+      "close": 88.19000244140625
+    },
+    {
+      "date": "2026-08-11",
+      "close": 90.31999969482422
+    },
+    {
+      "date": "2026-08-12",
+      "close": 107.7300033569336
+    },
+    {
+      "date": "2026-08-13",
+      "close": 106.29000091552734
+    },
+    {
+      "date": "2026-08-14",
+      "close": 105.26000213623047
+    },
+    {
+      "date": "2026-08-17",
+      "close": 106
+    },
+    {
+      "date": "2026-08-18",
+      "close": 93.16999816894531
+    },
+    {
+      "date": "2026-08-19",
+      "close": 90.87000274658203
+    },
+    {
+      "date": "2026-08-20",
+      "close": 89.76000213623047
+    },
+    {
+      "date": "2026-08-21",
+      "close": 87.8499984741211
+    },
+    {
+      "date": "2026-08-24",
+      "close": 86.25
+    },
+    {
+      "date": "2026-08-25",
+      "close": 88.04000091552734
+    },
+    {
+      "date": "2026-08-26",
+      "close": 88.01000213623047
+    },
+    {
+      "date": "2026-08-27",
+      "close": 86.80000305175781
+    },
+    {
+      "date": "2026-08-28",
+      "close": 84.2300033569336
+    },
+    {
+      "date": "2026-08-31",
+      "close": 84.88999938964844
+    },
+    {
+      "date": "2026-09-01",
+      "close": 81.8499984741211
+    },
+    {
+      "date": "2026-09-02",
+      "close": 80.93000030517578
+    },
+    {
+      "date": "2026-09-03",
+      "close": 84.55999755859375
+    },
+    {
+      "date": "2026-09-04",
+      "close": 89.36000061035156
+    },
+    {
+      "date": "2026-09-08",
+      "close": 99.83000183105469
+    },
+    {
+      "date": "2026-09-09",
+      "close": 94.94000244140625
+    },
+    {
+      "date": "2026-09-10",
+      "close": 89.12000274658203
+    },
+    {
+      "date": "2026-09-11",
+      "close": 88.98999786376953
+    },
+    {
+      "date": "2026-09-14",
+      "close": 82.9800033569336
+    },
+    {
+      "date": "2026-09-15",
+      "close": 80.91999816894531
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "CoreWeave, Inc. operates a specialized cloud computing platform designed to empower generative AI (GenAI) applications. It constructs the fundamental infrastructure necessary to manage intensive compute workloads for large enterprises. The company's comprehensive suite of offerings includes high-performance GPU and CPU compute resources, robust storage solutions, advanced networking capabilities, and fully managed services. Clients can choose from flexible virtual servers or powerful bare-metal options. Beyond core hardware, its platform integrates sophisticated tools like a fleet lifecycle controller, a node lifecycle controller, Tensorizer, and advanced observability features. CoreWeave's expertise also extends to specialized services, such as visual effects (VFX) and rendering, AI model training, AI inference, and \"Mission Control.\" Originally incorporated in 2017 as Atlantic Crypto Corporation, the company rebranded to CoreWeave, Inc. in December 2019 and is headquartered in Livingston, New Jersey.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-15"
+    },
+    "mdaExcerpt": {
+      "text": "Item 2. Management's Discussion and Analysis of Financial Condition and Results of Operations\nThe following discussion and analysis of financial condition and results of operations should be read together with our condensed consolidated financial statements and related notes, and other financial information, included elsewhere in this Quarterly Report on Form 10-Q and our Annual Report on Form 10-K for the year ended December 31, 2025. In addition to our historical results of operations and financial position, this discussion contains forward-looking statements that involve risks and uncertainties. Our actual results could differ materially from those discussed in or implied by these forward-looking statements. Factors that could cause or contribute to such differences include, but are not limited to, those discussed in the section titled \"Risk Factors.\" Our historical results are not necessarily indicative of the results to be expected for any period in the future, and results for any interim period should not be construed as an inference of what our results would be for any full year or future period.\nOverview\nCoreWeave is The Essential Cloud for AI TM purpose-built to accelerate breakthroughs by artificial intelligence (\"AI\") pioneers, from leading research labs to enterprises fueling business growth. We deliver a comprehensive, tightly integrated platform of advanced infrastructure and proprietary software that enables our customers to build and run AI systems continuously, reliably, and at scale. CoreWeave is trusted by some of the world's leading AI labs and enterprises.\nOur CoreWeave Cloud Platform includes:\nNetworking Backbone. Our network backbone supports the bandwidth and connectivity that our customers need to move large-scale distributed AI workloads.\nFoundational Infrastructure. Our purpose-built foundational infrastructure maximizes performance with first-to-market Graphics Processing Unit (\"GPU\") clusters, ultra-high density, and high-speed interconnects, supporting complex AI workloads while improving efficiency and lowering total cost of ownership.\nData and Storage. CoreWeave's purpose-built storage combines exascale, AI-optimized object and file storage with GPU-local caching and Local Tier Acceleration (LOTA ) to deliver high-throughput data access, cross-cloud reach, and predictable economics for training and inference.\nInfrastructure Control. Our integrated AI-native orchestration and bare-metal control deliver the reliability, flexibility, and efficiency required to run complex AI workloads at scale, and matched with the right AI services.\nCoreWeave Mission Control . CoreWeave Mission Control integrates security, observability, and services including node, rack, and fleet lifecycle management to enable intelligent, unified orchestration from foundational infrastructure to agent development.\nRuntime Acceleration. CoreWeave delivers platform services that accelerate training and inference by reducing startup latency, improving throughput, and increasing utilization at runtime removing friction across scheduling, environment readiness, and execution so jobs reach steady-state performance faster and run more efficiently at scale.\nModel and Agent Development. CoreWeave provides the developer tools and integrations teams use to build, evaluate, deploy, and monitor models and agents, with experiment tracking, governance and guardrails, and workflow integrations that speed iteration from prototype to production.\nComponents of Results of Operations\nRevenue\nWe generate revenue by providing our customers with access to cloud computing services, including compute enabled by our software and infrastructure optimized for AI and high-performance computing. Our customers purchase access to our CoreWeave Cloud Platform services through either committed contracts or on an on-demand basis. Our revenue primarily comes from committed contracts.\nCost of Revenue\nCost of revenue primarily consists of direct costs for data centers, including costs associated with our facilities, such as rent, utilities including power, and depreciation and amortization, including depreciation of power installation and\n41\nTable of Contents\ndistribution systems, and personnel costs for employees involved in data center operations and customer success, including salaries, bonuses, benefits, stock-based compensation expense, and other related expenses.\nWe expect our cost of revenue to increase in absolute dollar terms as we continue to grow our platform and expand our customer base. However, we anticipate that cost of revenue may fluctuate as a percentage of revenue in the future due to the timing of when data centers go live, including any delays in the availability of data centers that we lease or own, and when we achieve economies of scale and operational efficiencies.\nTechnology and Infrastructure\nTechnology and infrastructure expense consists of costs associated with our infrastructure, such as depreciation and amortization related to our servers, switches, networking equipment and internally developed software, personnel costs for employees associated with research and development of new and existing products and services or with maintaining our computing infrastructure, such as salaries, bonuses, benefits, stock-based compensation expense, and other related expenses, and costs related to software subscriptions.\nWe expect our technology and infrastructure expense to increase in absolute dollars as we continue to focus on growth and innovation. However, we anticipate technology and infrastructure expense may fluctuate as a percentage of revenue in the future due to the timing of when we achieve economies of scale and operational efficiencies, including through software innovation.\nSales and Marketing\nSales and marketing expense consists of personnel costs associated with selling and marketing our CoreWeave Cloud Platform, such as salaries, stock-based compensation expense, commissions, bonuses, and other related expenses, advertising costs associated with marketing programs, and third-party professional services costs. We expect our sales and marketing expense to fluctuate as we expand our go-to-market capabilities, grow our brand and diversify our customer footprint.\nGeneral and Administrative\nGeneral and administrative expense consists of costs associated with corporate functions including our finance, legal, human resources, information technology (\"IT\"), and facilities. These costs include personnel costs, such as salaries, bonuses, benefits, stock-based compensation expense, and other related expenses, third-party professional services costs, such as legal, accounting, and audit services, and costs related to software subscriptions.\nWe expect to continue incurring additional expenses as a result of projected future growth, including expenses to support the overall growth trajectory of the business including our international expansion, expenses related to compliance and reporting obligations pursuant to the rules and regulations of the SEC, and professional services.\nInterest Expense, Net\nInterest expense, net consists of contractual and imputed interest associated with our finance leases and revenue agreements with significant financing components, the amortization of debt discounts and issuance costs, and the accretion of redemption premiums associated with our debt obligations. Interest expense, net is reflected net of capitalized interest.\nOther Income (Expense), Net\nOther income (expense), net consists of gains (losses) on strategic investments and other non-operating gains and losses, interest and investment income, foreign currency exchange gains (losses), and gains (losses) on extinguishment of debt.\nProvision for Income Taxes\nThe provision for income taxes consists primarily of income taxes in certain U.S. federal, state, local and foreign jurisdictions in which we conduct business, net of any valuation allowance. Foreign jurisdictions typically have different statutory tax rates from those in the United States. Accordingly, our effective tax rate might fluctuate significantly in the future due to changes in the mix of income and losses in jurisdictions with a wide range of tax rates, the effect of\n42\nTable of Contents\nacquisitions, changes resulting from the amount of recorded valuation allowance, permanent differences between U.S. generally accepted accounting principles, certain one-time items, and local tax laws, and changes in tax contingencies.\nResults of Operations\nThe following table sets forth our condensed consolidated statements of operations and comprehensive loss data for the periods indicated:\nThree Months Ended June 30,\nSix Months Ended June 30,\n2026\n2025\n2026\n2025\n(in millions)\nRevenue\n$\n2,575\n$\n1,212\n$\n4,653\n$\n2,194\nOperating expenses:\nCost of revenue (1)\n879\n313\n1,595\n575\nTechnology and infrastructure (1)\n1,507\n670\n2,780\n1,231\nSales and marketing (1)\n60\n36\n129\n47\nGeneral and administrative (1)\n178\n174\n342\n349\nTotal operating expenses\n2,624\n1,193\n4,846\n2,202\nOperating loss\n(49)\n19\n(193)\n(8)\nGain (loss) on fair value adjustments\n27\nInterest expense, net\n(640)\n(267)\n(1,176)\n(531)\nOther income (expense), net\n125\n6\n149\n1\nLoss before income taxes\n(564)\n(242)\n(1,220)\n(511)\nProvision for income taxes\n62\n48\n146\n94\nNet loss\n$\n(626)\n$\n(290)\n$\n(1,366)\n$\n(605)\n_____________\n(1) Includes stock-based compensation as follows:\nThree Months Ended June 30,\nSix Months Ended June 30,\n2026\n2025\n2026\n2025\n(dollars in millions)\nCost of revenue\n$\n9\n$\n3\n$\n18\n$\n5\nTechnology and infrastructure\n60\n48\n115\n102\nSales and marketing\n12\n8\n25\n11\nGeneral and administrative\n84\n86\n160\n211\nTotal\n$\n165\n$\n145\n$\n318\n$\n329\nComparison of the Three and Six Months Ended June 30, 2026 and 2025\nRevenue\nThree Months Ended June 30,\nSix Months Ended June 30,\n2026\n2025\nChange\n% Change\n2026\n2025\nChange\n% Change\n(dollars in millions)\nRevenue\n$\n2,575\n$\n1,212\n$\n1,363\n112\n%\n$\n4,653\n$\n2,194\n$\n2,459\n112\n%\nRevenue for the three months ended June 30, 2026 increased by $1.4 billion, or 112%, compared to the three months ended June 30, 2025. Revenue for the six months ended June 30, 2026 increased by $2.5 billion, or 112%, compared to the six months ended June 30, 2025. This substantial growth was related to increased demand from both existing and new customer contracts and our fulfillment of that demand through our expanded data center footprint. Approximately 93% of the revenue increase in both the three and six months ended June 30, 2026 was attributable to expansion within our existing customer base, with the remainder attributable to new customers.\n43\nTable of Contents\nCost of Revenue\nThree Months Ended June 30,\nSix Months Ended June 30,\n2026\n2025\nChange\n% Change\n2026\n2025\nChange\n% Change\n(dollars in millions)\nCost of revenue\n$\n879\n$\n313\n$\n566\n181\n%\n$\n1,595\n$\n575\n$\n1,020\n177\n%\nPercentage of revenue\n34\n%\n26\n%\n34\n%\n26\n%\nCost of revenue for the three months ended June 30, 2026 increased by $566 million, or 181%, compared to the three months ended June 30, 2025. This increase was primarily attributable to the expansion of existing data centers and the significant increase in the deployment of new data centers, which resulted in an increase in rent expense of approximately $335 million, and an increase in data center utilities and power spend of approximately $87 million. The increase is also attributable to an increase in depreciation and amortization related to power installation and distribution systems of approximately $79 million.\nCost of revenue for the six months ended June 30, 2026 increased by $1.0 billion, or 177%, compared to the six months ended June 30, 2025. This increase was primarily attributable to the expansion of existing data centers and the significant increase in the deployment of new data centers, which resulted in an increase in rent expense of approximately $685 million. The increase is also attributable to an increase in depreciation and amortization related to power installation and distribution systems of approximately $139 million.\nTechnology and Infrastructure\nThree Months Ended June 30,\nSix Months Ended June 30,\n2026\n2025\nChange\n% Change\n2026\n2025\nChange\n% Change\n(dollars in millions)\nTechnology and infrastructure\n$\n1,507\n$\n670\n$\n837\n125\n%\n$\n2,780\n$\n1,231\n$\n1,549\n126\n%\nPercentage of revenue\n59\n%\n55\n%\n60\n%\n56\n%\nTechnology and infrastructure expense for the three months ended June 30, 2026 increased by $837 million, or 125%, compared to the three months ended June 30, 2025. This increase was primarily attributable to an increase in depreciation and amortization of approximately $752 million, from $537 million for the three months ended June 30, 2025, to approximately $1.3 billion for the three months ended June 30, 2026. These increases in depreciation and amortization were related to investments in our platform and servers, switches, and other networking equipment fixed assets within our infrastructure that were placed in service.\nTechnology and infrastructure expense for the six months ended June 30, 2026 increased by $1.5 billion, or 126%, compared to the six months ended June 30, 2025. This increase was primarily attributable to an increase in depreciation and amortization of approximately $1.4 billion, from $967 million for the six months ended June 30, 2025, to approximately $2.4 billion for the six months ended June 30, 2026. These increases in depreciation and amortization were related to investments in our platform and servers, switches, and other networking equipment fixed assets within our infrastructure that were placed in service.\nSales and Marketing\nThree Months Ended June 30,\nSix Months Ended June 30,\n2026\n2025\nChange\n% Change\n2026\n2025\nChange\n% Change\n(dollars in millions)\nSales and marketing\n$\n60\n$\n36\n$\n24\n67\n%\n$\n129\n$\n47\n$\n82\n174\n%\nPercentage of revenue\n2\n%\n3\n%\n3\n%\n2\n%\n44\nTable of Contents\nSales and marketing expense for the three months ended June 30, 2026 increased by $24 million, or 67%, compared to the three months ended June 30, 2025. This increase was primarily attributable to an increase of approximately $12 million in personnel costs, including stock-based compensation.\nSales and marketing expense for the six months ended June 30, 2026 increased by $82 million, or 174%, compared to the six months ended June 30, 2025. This increase was primarily attributable to an increase of approximately $38 million in personnel costs, including stock-based compensation, and an increase of $30 million of advertising and sponsorship expenses.\nGeneral and Administrative\nThree Months Ended June 30,\nSix Months Ended June 30,\n2026\n2025\nChange\n% Change\n2026\n2025\nChange\n% Change\n(dollars in millions)\nGeneral and administrative\n$\n178\n$\n174\n$\n4\n2\n%\n$\n342\n$\n349\n$\n(7)\n(2\n%)\nPercentage of revenue\n7\n%\n14\n%\n7\n%\n16\n%\nGeneral and administrative expense for the three months ended June 30, 2026 increased by $4 million, or 2%, compared to the three months ended June 30, 2025. This increase was primarily attributable to an increase of approximately $14 million in personnel costs, including stock-based compensation.\nGeneral and administrative expense for the six months ended June 30, 2026 decreased by $7 million, or 2%, compared to the six months ended June 30, 2025. This decrease was primarily attributable to a decrease of approximately $12 million in personnel costs, including stock-based compensation, primarily related to RSUs with a performance condition that was satisfied upon our IPO in the six months ended June 30, 2025.\nInterest Expense, Net\nThree Months Ended June 30,\nSix Months Ended June 30,\n2026\n2025\nChange\n% Change\n2026\n2025\nChange\n% Change\n(dollars in millions)\nInterest expense, net\n$\n(640)\n$\n(267)\n$\n(373)\n140\n%\n$\n(1,176)\n$\n(531)\n$\n(645)\n121\n%\nInterest expense, net for the three months ended June 30, 2026 increased by $373 million, or 140%, compared to the three months ended June 30, 2025.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm",
+      "asOf": "2026-08-12",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "Item 1A. Risk Factors\nA description of the risks and uncertainties associated with our business is set forth below. You should carefully consider the risks and uncertainties described below, together with the other information in this Quarterly Report on Form 10-Q. References to past events are provided by way of example only and are not intended to be a complete listing of such events or a representation as to whether or not such factors or similar events have occurred in the past or their likelihood of occurring in the future. The risks and uncertainties described below are not the only ones we face. Additional risks and uncertainties that we are unaware of, or that we currently believe are not material, may also become important factors that adversely affect our business. If any of the following risks occur, our business, operating results, financial condition, and prospects could be materially and adversely affected. In that event, the trading price of our Class A common stock could decline, and you could lose all or a part of your investment.\nSummary Risk Factors\nOur business is subject to numerous risks and uncertainties and this summary provides an overview of such risks. You should read this risk factor summary together with the more detailed discussion of risks and uncertainties following this summary.\nOur business would be harmed if we were not able to access sufficient power or by increased costs to procure power, prolonged power outages, shortages, or capacity constraints.\nWe have a limited number of suppliers for significant components of the equipment we use to build and operate our platform and provide our solutions and services. Any disruption in the availability of these components could delay our ability to expand or increase the capacity of our infrastructure or replace defective equipment.\nIf our data center providers fail to meet the requirements of our business, or if the data center facilities experience damage, interruption, or a security breach, our ability to provide access to our infrastructure and maintain the performance of our network could be negatively impacted.\nOur recent growth may not be indicative of our future growth, and if we do not effectively manage our future growth, our business, operating results, financial condition, and prospects may be adversely affected.\nA substantial portion of our revenue is driven by a limited number of our customers, and the loss of, or a significant reduction in, spending from one or a few of our top customers would adversely affect our business, operating results, financial condition, and prospects.\nOur operations require substantial and growing capital expenditures, and we will require additional capital to fund our business and support our growth, and any inability to generate or obtain such capital on acceptable terms, if at all, or to lower our total cost of capital, may adversely affect our business, operating results, financial condition, and prospects.\nIf we fail to efficiently enhance our platform and develop and sell new solutions and services and respond effectively to rapidly changing technology, evolving industry standards, changing regulations, and changing customer needs, requirements, or preferences, our platform may become less competitive.\nThe broader adoption, use, and commercialization of AI technology, and the continued rapid pace of developments in the AI field, are inherently uncertain. Failure by our customers to continue to use our CoreWeave Cloud Platform to support AI use cases in their systems, or our ability to keep up with evolving AI technology requirements and regulatory frameworks, could have a material adverse effect on our business, operating results, financial condition, and prospects.\n52\nTable of Contents\nOur operating results may fluctuate significantly, which could make our future results difficult to predict and could cause our operating results to fall below expectations.\nWe face intense competition and could lose market share to our competitors, which would adversely affect our business, operating results, financial condition, and prospects.\nOur substantial indebtedness could materially adversely affect our financial condition, our ability to raise additional capital to fund our operations, our ability to operate our business, our ability to react to changes in the economy or our industry, our ability to meet our obligations under our outstanding indebtedness and could divert our cash flow from operations for debt payments, and we may still incur substantially more indebtedness in the future.\nThe multi-class structure of our common stock has the effect of concentrating voting power with our Co-Founders (as defined below), which will limit your ability to influence the outcome of important transactions, including a change in control.\nRisks Related to Our Business and Industry\nOur business would be harmed if we were not able to access sufficient power or by increased costs to procure power, prolonged power outages, shortages, or capacity constraints.\nWe depend on third parties, including utilities, independent system operators, regulators, governments, and global suppliers to secure sufficient power, which powers our data center facilities, in a cost-effective manner. Limitations on generation, transmission, and distribution may limit our ability to obtain sufficient power capacity for our potential expansion sites in new or existing markets. Power providers, other participants in the power market, and regulators may impose onerous operating conditions, such as power generation procurement obligations or collateralization requirements, to any approval or provision of power. The local electricity grids in the markets where we have data centers have faced substantial increases in demand for power. Although there are some early stage alternative methods to source power to local electricity grids they may not be available to service all of our needs due to lack of supply or high cost per unit of electricity. Our inability to secure sufficient power on terms that are acceptable to us could have an adverse effect on our business, results of operation, ability to operate, financial condition, and prospects.\nOur data center facilities are affected by problems accessing electricity sources, such as unplanned or planned power outages and limitations on transmission or distribution of power. Unplanned power outages, including, but not limited to those relating to large storms, earthquakes, fires, tsunamis, cyberattacks, physical attacks on utility infrastructure, war, and any failures of electrical power grids more generally, and planned power outages by public utilities, such as the practice of planned outages by the public utilities in California, Colorado, Texas, and other states to minimize fire risks, could harm our customers and our business. Further, our existing data center facilities are located in leased buildings where, depending upon the lease requirements and number of tenants involved, we may or may not control some or all of the infrastructure, including generators and fuel tanks. As a result, in the event of a power outage, we could be dependent upon the landlord, as well as the utility company, to restore the power. Even if we attempt to limit our exposure to system downtime by using backup generators, which are in turn supported by onsite fuel storage and through contracts with fuel suppliers, these measures may not always prevent downtime or large-scale outages. We may also face constraints on our ability to deliver our platform, solutions, and services if there is limited power supply or a disruption in power supply. Our failure, or our suppliers' failure, to achieve or maintain high data transmission capacity and sufficient electrical services would impact our ability to meet customer needs and could significantly reduce customer demand for our services.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm",
+      "asOf": "2026-08-12",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-Q",
+    "pressRelease": null,
+    "proxyStatement": {
+      "text": "Board and director independence:\nDirector Independence\nOur Class A common stock is listed on The Nasdaq Stock Market LLC (\"Nasdaq\"). The listing rules of Nasdaq (the \"Listing Rules\") generally require that a majority of the members of a listed company's board of directors be independent. In addition, the Listing Rules require that, subject to specified exceptions, each member of a listed company's audit, compensation, and nominating and corporate governance committees be independent. Under the Listing Rules, a director will only qualify as an \"independent director\" if, in the opinion of that company's board of directors, that person does not have a relationship that would interfere with the exercise of independent judgment in carrying out the responsibilities of a director.\nAdditionally, compensation committee members must also satisfy the additional independence criteria set forth in Rule 10C-1 under the Securities Exchange Act of 1934, as amended (the \"Exchange Act\"), and the Listing Rules and must not have a relationship with the listed company that is material to the director's ability to be independent from management in connection with the duties of a compensation committee member.\nAudit committee members must also satisfy the independence criteria set forth in Rule 10A-3 under the Exchange Act. In order to be considered independent for purposes of Rule 10A-3, a member of an audit committee of a listed company may not, other than in his or her capacity as a member of the audit committee, the board of directors, or any other board committee: accept, directly or indirectly, any consulting, advisory, or other compensatory fee from the listed company or any of its subsidiaries; or be an affiliated person of the listed company or any of its subsidiaries.\nOur Board of Directors currently consists of six directors. Our Board of Directors conducts an annual review of the independence of our directors. Based on information provided by each director concerning their background, employment and affiliations, our Board of Directors has determined that each director other than Michael Intrator and Brian Venturo is an \"independent director\" as defined under the Listing Rules and the applicable rules and regulations promulgated by the Securities and Exchange Commission (the \"SEC\"). Michael Intrator and Brian Venturo are not considered independent by virtue of their positions as our employees.\n\nCompensation discussion and analysis:\nCompensation Discussion and Analysis\nThis Compensation Discussion and Analysis provides an overview of the material components of our executive compensation program for our Named Executive Officers during the year ended December 31, 2025. Our Named Executive Officers are listed below.\nName\nTitle\nMichael Intrator\nChief Executive Officer and President; Co-Founder\nBrian Venturo\nChief Strategy Officer; Co-Founder\nBrannin McBee\nChief Development Officer; Co-Founder\nNitin Agrawal\nChief Financial Officer and Treasurer\nJonathan Jones\nChief Revenue Officer\nExecutive Summary\n2025 Business Highlights\nThis is our first Proxy Statement as a public company and it arrives at a key moment in history, as artificial intelligence is no longer a bet on the future; it is the present.\nOur 2025 Business Highlights reflect the strength of our foundation and continued growth:\nOur cloud footprint now spans more than 850MW of active power across 43 data centers globally.\nWe reached $5 billion in annual revenue for the year ended December 31, 2025, representing growth of 168% year-over-year and reflecting strong demand for our platform.\nWe deepened and diversified our customer relationships in meaningful ways, including by expanding our weighted average contract length 1 as customers increasingly count on us for the long term.\nWe strengthened our financial position by securing significant capital and reducing our weighted average cost of debt.\nBeing purpose-built for AI continues to set us apart: we were the first to achieve Exemplar Cloud status for GB200 and were the only provider named by SemiAnalysis as its sole Platinum AI cloud two times.\nWe grew alongside our customers, expanding our platform, including through a series of strategic acquisitions, to match their rapidly evolving needs.\n__________\n(1) Committed contracts generally have a predetermined term and start either on a fixed date or when we deliver the capacity specified in the contract.\nCompensation Practices and Policies\nCompensation Philosophy and Objectives\nWe use executive compensation as a tool, in an industry characterized by enormous competition for talent, to attract and retain the best executives in order to serve shareholder interests by driving innovation and rewarding value creation. We employ the following principles to accomplish our philosophy:\n27\nOur Principles\nOur Principles in Action\nWe achieve more together with fair pay and by rewarding performance\nWe reward impact, ownership, and consistent excellence\nCompensation decisions are driven by contribution, not tenure\nPaying competitively ensures that we have the talent needed to deliver best-in-class experiences to our clients\nWe benchmark against high-growth companies with a focus on cloud services and computing\nCompensation is informed by role criticality, sustained performance, and enterprise impact\nBeing competitive in this space ensures alignment with investor expectations and talent-market competitiveness\nWe align compensation with shareholder interests, value and growth\nCompensation scales with company growth and enterprise value\nOur incentive structure supports capital efficiency, strategic milestones, and long-term return on investment (ROI)\nOur equity strategy balances competitiveness with dilution management and investor alignment\nSummary of Compensation Governance (\"What We Do/Don't Do\")\nWe have adopted the following policies and practices to ensure proper governance of our executive compensation programs and strengthen the alignment of our executive compensation programs and stockholder interests:\nWhat We Do\nWhat We Don't Do\nMaintain 100% independent directors on our Compensation Committee\nNo contractual rights to excise tax reimbursements or gross-ups in the event of a change-in-control\nUse an independent compensation advisor, retained directly by our Compensation Committee\nNo automatic executive compensation increases\nReview (at least annually) executive compensation practices/levels of our compensation peer companies\nNo fixed term (vs. \"at-will\") employment for our Named Executive Officers\nLink pay to performance by heavily weighting total compensation to long-term equity awards that align executive interests with the interests of our stockholders\nNo pension plans\nMaintain robust stock ownership guidelines for our executive officers and non-employee directors\nAnnually assess the risk associated with compensation programs and practices\nUse double-trigger change in control arrangements in our executive severance and change in control policy\nMaintain a compensation clawback policy\n28\nCompensation-Setting Process\nThe Compensation Committee, other independent board members, our Chief Executive Officer (except with respect to his own compensation), our management team, external legal counsel, and the Compensation Committee's independent advisor, Semler Brossy, provide valuable input and perspectives that are used to make executive compensation decisions.\n\nSecurity ownership:\nSECURITY OWNERSHIP OF CERTAIN BENEFICIAL OWNERS AND MANAGEMENT\nThe following table sets forth certain information with respect to the beneficial ownership of our common stock as of April 15, 2026, by:\neach of our Named Executive Officers;\neach of our directors or director nominees;\nall of our directors and executive officers as a group; and\neach stockholder known by us to be the beneficial owner of more than 5% of our outstanding shares of our Class A common stock or Class B common stock.\nWe have determined beneficial ownership in accordance with the rules of the SEC, and the information is not necessarily indicative of beneficial ownership for any other purpose. Except as indicated by the footnotes below, we believe, based on information furnished to us, that the persons and entities named in the table below have sole voting and sole investment power with respect to all shares beneficially owned, subject to applicable community property laws.\nApplicable beneficial ownership percentages are based on 442,969,348 shares of Class A common stock, 99,997,704 shares of Class B common stock, and no shares of Class C common stock outstanding as of April 15, 2026. Shares of our common stock subject to stock options that are currently exercisable or exercisable within 60 days of April 15, 2026, RSUs that are expected to vest and settle within 60 days of April 15, 2026 are deemed to be outstanding and to be beneficially owned by the person holding the stock options or RSUs for the purpose of computing the percentage ownership of that person. We did not deem these shares outstanding, however, for the purpose of computing the percentage ownership of any other person. For further information regarding material transactions between us and certain of our stockholders, see \"Certain Relationships and Related Party Transactions.\"\nUnless otherwise indicated, the address for each beneficial owner listed in the table below is c/o CoreWeave, Inc., 290 W Mt. Pleasant Ave., Suite 4100, Livingston, New Jersey 07039.\n51\nShares Beneficially Owned\nPercent of Total\nVoting Power (1)\nClass A Common Stock\nClass B Common Stock\nNumber\n(#)\nPercent\n(%)\nNumber\n(#)\nPercent\n(%)\nName of Beneficial Owner\nNamed Executive Officers and Directors:\nMichael Intrator (2)\n5,289,944\n1.19%\n56,215,770\n54.93%\n38.70%\nNitin Agrawal (3)\n505,518\n*\n*\n*\nBrannin McBee (4)\n377,569\n*\n21,140,580\n20.96%\n14.59%\nBrian Venturo (5)\n422,832\n*\n30,114,514\n28.89%\n20.30%\nJonathan Jones\n*\n*\n*\nKaren Boone (6)\n18,880\n*\n*\n*\nJack Cogen (7)\n15,329,596\n3.46%\n*\n1.06%\nGlenn H. Hutchins (8)\n404,780\n*\n*\n*\nMargaret C. Whitman (9)\n6,380\n*\n*\n*\nAll executive officers and directors as a group (12 persons) (10)\n23,912,505\n5.38%\n107,470,864\n100.00%\n72.32%\nOther 5% Stockholders:\nFunds or accounts managed or advised by Magnetar Financial LLC (11)\n77,684,206\n17.07%\n5.34%\nNVIDIA Corporation (12)\n47,213,353\n10.66%\n3.27%\nJane Street Group LLC (13)\n28,913,099\n6.53%\n2.00%\n___________\n* Represents beneficial ownership of less than 1% of our outstanding shares of common stock.\n(1) Percentage of total voting power represents voting power with respect to all shares of our common stock, as a single class outstanding as of April 15, 2026. The holders of our Class A common stock are entitled to one vote per share and holders of our Class B common stock are entitled to ten votes per share.\n(2) Consists of (i) 5,266,501 shares of our Class A common stock directly held by Michael Intrator; (ii) 21,867,489 shares of our Class B common stock directly held by Mr. Intrator; (iii) 2,345,920 shares of our Class B common stock issuable upon the exercise of stock options directly held by Mr. Intrator which are exercisable within 60 days of April 15, 2026; (iv) 23,443 shares of our Class A common stock issuable upon the vesting and settlement of RSUs within 60 days of April 15, 2026;(v) 365,200 shares of our Class B common stock directly held by Mr.\n\nRelated-person transactions:\nCERTAIN RELATIONSHIPS AND RELATED PARTY TRANSACTIONS\nWe describe below transactions and series of similar transactions, since the beginning of our last year, to which we were a party or will be a party, in which (i) the amounts involved exceeded or will exceed $120,000 and (ii) any of our directors, nominees for director, executive officers, or beneficial holders of more than 5% of any class of our outstanding capital stock, or any immediate family member of, or person sharing the household with, any of these individuals or entities, had or will have a direct or indirect material interest, other than compensation and other arrangements that are described under the sections \"Proposal No. 1: Election of Class I Director\" and \"Executive Compensation\".\nEquity Exchange Right Agreements\nIn September 2024, we entered into an Equity Exchange Right Agreement with each of our Co-Founders, Messrs. Intrator, Venturo, and McBee, pursuant to which each of our Co-Founders have a right (but not an obligation), to require us to exchange, for shares of our Class B common stock, any shares of our Class A common stock received by him upon the exercise or settlement of equity awards for shares of our Class A common stock (the \"Equity Exchange Rights\"). The Equity Exchange Rights only apply to equity awards granted to our Co-Founders prior to September 2024. As of December 31, 2025 and March 31, 2026, respectively, there were 6,826,380 and 7,214,460 shares of our Class A common stock subject to outstanding stock options to purchase shares of our Class A common stock held by our Co-Founders and that may be exchanged, upon exercise, for an equivalent number of shares of our Class B common stock pursuant to the Equity Exchange Rights.",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000191/crwv-20260422.htm",
+      "asOf": "2026-04-22",
+      "truncated": true
+    },
+    "transcriptHighlights": {
+      "text": "Good afternoon, everyone, and thank you for joining us. Q2 was an exceptional quarter for CoreWeave. We outperformed our plan across the board with the operating leverage we have been building beginning to show up clearly in our results. Extraordinary execution across the organization drove record financial performance, rapid capacity growth, broadening customer demand, and continued platform innovation. We generated record revenue of $2.6 billion, up 112% year-over-year, increased revenue backlog to $104 billion, while driving rapidly expanding enterprise adoption. This figure does not include the over $25 billion of net new customer commitments added in the early weeks of Q3. We continued to execute on our power strategy, reaching 1.5 gigawatts of active power, adding nearly 500 megawatts, more than any quarter in our history, and more than tripling year-over-year. We remain firmly on track to reach at least 8 gigawatts by 2030.\n\nWe grew adjusted operating income to $128 million, with margins expanding meaningfully as our scale increasingly translates into operating leverage. We continued to broaden our technology stack, delivering 7 new AI platform capabilities, and achieving multiple industry first milestones that enable customers to build, deploy, and operate AI faster and at greater scale. Our incredible progress is a testament to the entire organization, and the business is only getting stronger. In Q2, the customer contracts we signed came with contribution margins we expect to be 5 to 10 percentage points above those added in recent quarters. This is more than a collection of milestones. It is evidence that the AI market is developing in line with the convictions on which we built CoreWeave. We believe that the AI era is here and will ultimately touch every part of the global economy.\n\nThat is translating into signed commitments on increasingly favorable terms from a broadening set of customers and is positioning CoreWeave to gain market share for years to come. Every organization is being challenged to rethink what is possible. AI is not simply accelerating existing processes. It is enabling enterprises to redesign core functions, create new offerings, and enter markets that did not exist before. Caterpillar is a powerful example. Together, we will deploy NVIDIA's Vera Rubin platform to support Caterpillar's physical AI training and inference at industrial scale. Using CoreWeave's AI cloud infrastructure as its data factory, Caterpillar will train specialized models that enhance the intelligence and productivity of autonomous construction equipment. Life sciences is emerging as another important growth vertical for CoreWeave. As organizations tackling some of the world's most complex scientific challenges increasingly turn to our platform.\n\nWe recently welcomed Isomorphic Labs as a new customer and are excited to support them in their mission to solve all disease. Financial services remains a major growth area for us as well. We recently added Flow Traders and IMC to our growing roster of systematic trading firms. These customers are using CoreWeave to develop and deploy the next generation of AI models for quantitative trading. They select our platform because of our ability to orchestrate high-performance workloads with the speed, reliability, and efficiency those applications require. In the public sector, our collaboration with Leidos marks an important step in the growth of CoreWeave Federal. Together, we are working to accelerate the delivery of secure AI capabilities for defense, national security, and intelligence missions. The future of AI is being built by a new class of innovators. Some are AI native companies operating at the frontier.\n\nIn Q2, we introduced seven new AI platform capabilities and achieved multiple industry firsts. These innovations were built alongside our customers and partners to solve real production challenges. That is why we are seeing such strong adoption. Just this week, we surpassed 1 billion model training runs tracked on our platform. Behind that number are millions of experiments, thousands of research breakthroughs, and a growing community of engineers, researchers, and organizations building the next generation of AI. Our AI development services, which carry higher margins, are also being adopted by a broader set of customers than our core cloud. That is proving to be a natural customer expansion path, because the developers building AI applications today are the AI cloud infrastructure customers of tomorrow. By serving them early, we are establishing relationships that naturally expand as AI workloads scale.\n\nThat leadership is converting directly into revenue. In the past few months since its launch, booked ARR for our managed inference platform has grown from $1 million to more than $100 million. We expect to exit 2026 with at least $250 million of managed inference ARR. Pioneers need a different kind of platform. The continuous AI life cycle cannot be supported by simply adding GPUs to a general purpose cloud. It requires a new approach from power, cooling, and rack design through networking, orchestration, observability, developer tools, and managed services. That is why CoreWeave is purpose-built for AI. Our platform is singular in its depth, breadth, and technical capability. In Q2, we became the first cloud provider to bring up and validate NVIDIA's Vera Rubin NVL72, leveraging our innovations in software-defined liquid cooling and rack management to extend our track record of being first to market.\n\nThey translate directly into faster deployment, higher utilization, better application performance, and lower cost for customers. Pairing product depth with best-in-class performance, quality, and market-leading TCO is a winning formula for our customers and for CoreWeave. CoreWeave is the foundation for AI at scale. This market requires a foundation at a magnitude unlike anything that came before. That means securing power, sites, cooling, hardware, storage, networking, and supply chain inputs well ahead of need and operating them as one integrated system. As I shared at the top of the call, we ended Q2 with 1.5 gigawatts of active power, adding close to 500 megawatts in the quarter alone. To put that in perspective, we added more power in Q2 than any single Neo cloud operates in total today, according to third-party estimates. Critically, our scale is working in our favor, and the math gets better from here.\n\nOur first several self-builds are already well underway, including our first site, expected to come online later this year. Powered land forms the foundation for deeper vertical integration, giving us greater operational control and supporting enhanced long-term margins. We are also expanding globally and have contracted more than one gigawatt of power outside the U.S., including recently entering the APAC region with 360 megawatts in Indonesia that will begin coming online in approximately 18 months. We expect international markets to become a major driver of growth as we meet customers where they and their end users operate. All in, we have excellent visibility to our target of at least eight gigawatts by 2030. We expect demand to meaningfully exceed supply for years. In that environment, access to power is only part of the equation. Just as important is each necessary component required to deliver the AI cloud at scale.\n\nThe pioneers that are building need more than compute, and that is why they come to CoreWeave for an AI cloud designed for the full AI life cycle, serving any workload from frontier training to rapidly scaling inference. Demand continues to exceed supply across sectors, geographies, and generations of infrastructure. We are delivering at extraordinary scale to a diverse set of customers with improving operating leverage and visibility into the power and critical components required to sustain growth for years. The opportunity ahead is generational. CoreWeave is the essential cloud for AI. Our conviction in our strategy has never been stronger, and our execution continues to reinforce it. With that, I'll turn it over to Nitin.\n\nThanks, Mike, and good afternoon, everyone. Q2 was an exceptional quarter for CoreWeave, marked by intense customer demand, significant ramp of our active capacity, and continued execution against our product and financing roadmaps. Perhaps most importantly, Q2 marked the quarter in which we saw margins inflect, expanding sequentially as we had discussed over the past several quarters. Before diving into results, I wanted to spend a few moments touching upon how demand dynamics are evolving in the current environment, as well as its implications on cash flows and the value of our rapidly growing infrastructure footprint. Demand for CoreWeave cloud remains exceptionally strong across the entirety of our customer base, with demand from multiple customers for each GPU we bring online. We are being disciplined in how we allocate our scarce cloud capacity.\n\nWe are prioritizing opportunities that are strategically important, adding new customers while deepening long-term existing relationships and delivering attractive returns that, as Mike noted, are expanding further. The scale of our AI products and services beyond GPUs also continues to ramp significantly as customers consolidate spend with us. These margin-accretive businesses including storage, CPU, networking, and software already exceed $400 million of ARR as of Q2. We expect they will continue to expand rapidly. Simply put, customer spending on CoreWeave has gone up as customers recognize the increased value we deliver. This operating margin improvement came before our July pricing changes, which included an approximately 25% increase across SKUs in response to the current demand environment and the increasing ROI our customers are observing from their investments in the CoreWeave platform as they shift to inference. We are also passing through component price increases.\n\nIn terms of how this translate to cash flows, as we previously discussed, a typical five-year contract carries strong and still expanding unit economics across its term. But those economics do not arrive evenly. The cost, primarily in the form of CapEx, is front-loaded, requiring a combination of debt, customer prepayments, and other corporate-level capital to finance its build-out. Once the cluster is delivered, contracted revenue ramps, becoming predictable and highly cash flow generative. This is all considered in our underwriting of expected margins before a contract is signed. The deployment delivers attractive returns, fully repaying asset-level debt used to fund the CapEx while generating significant additional free cash flow. So when an initial contract ends, the cluster no longer has any leverage, and we are free to recontract that cloud infrastructure or offer it to the market.\n\nWe will have generated an attractive return even before the prospect of further monetizing the cloud infrastructure. Every resale or renewal is incremental on top of the returns already earned within the initial term. What we are seeing today is that the upside of recontracting is real as we remain largely sold out of prior generations of NVIDIA GPUs in addition to the current SKUs. As our earlier generation fleets roll off their original contracts, they offer the potential to deliver strong returns in the subsequent years. We are seeing this across our Ampere and Hopper fleet. As an example, we recently signed an A100 contract that extends into 2029 at an attractive price. As a reminder, this SKU was introduced in 2020. Clusters of prior generations of architecture offer installed, energized, production-grade compute already running at scale. They come with a proven ROI for customers.\n\nIn a market where new capacity is supply-constrained and costs are rising, AI cloud infrastructure in production is a scarce, valuable asset. While we have built a business whose economics do not rely on recontracting after initial customer term, increasingly we are seeing longer utilization at higher prices, offering the potential for significant further upside. With these tailwinds at our back, we are more confident than ever in the long-term ROI of our product and capacity investments, enabled by our industry-leading AI cloud services. Now turning to Q2 results. Revenue was $2.6 billion in Q2, up 112% year-over-year and 24% sequentially, driven by continued strong execution and customer demand for CoreWeave's AI cloud platform. Revenue backlog ended the quarter at $104 billion, up 246% year-over-year. As Mike noted, this does not include the over $25 billion of net new customer commitments we added early in Q3.\n\nIn fact, in June, we brought on more than 300 megawatts of active power, which makes June itself larger than any full quarter in our history. As Mike noted, the global supply chain remains complex. We continue to navigate these challenges with operational discipline and leveraging our partner relationships, including new ones like Solidigm, to strategically source required inputs. Turning to our balance sheet and strong liquidity position. As of June 30, we had more than $6.9 billion in cash equivalents, restricted cash, and marketable securities. In Q2, we made significant progress in strengthening our balance sheet and expanding the depth and breadth of our access to capital, raising approximately $18 billion across a combination of debt, convertibles, and equity. These transactions included several firsts, like our inaugural Eurobond, as well as our first ever delayed draw term loan backed by HPC infrastructure issued in the public markets.\n\nOur most recent financing, our second publicly syndicated term loan, marked another significant milestone as the first to include shorter duration customer contracts. The transaction, which priced during one of the most dislocated weeks for credit this year, was met with meaningful interest. Despite the environment at the time, we chose to complete the transaction at its full size. Our spreads have retraced since. Perhaps, most importantly, the transaction demonstrated the credit market's growing conviction in long-term value of NVIDIA infrastructure running on CoreWeave Cloud. This financing is significant as it unlocks our ability to serve critical part of the enterprise market at scale, while also allowing us to accelerate the ramp of our managed inference platform and grow our exposure to shorter-dated contracts that typically come at a higher ASP and margins.\n\nThese transactions attracted broad and deep investor participation, highlighting the significant interest we continue to see in supporting CoreWeave's journey. The combination of these transactions brings us to over $32 billion of debt and equity capital secured to date. Over the past year, we have reduced our weighted average cost of debt by almost 300 basis points, representing approximately $1.1 billion of annualized interest saving based on our end of Q2 debt load. Turning to guidance. As a result of continued strong execution, we now expect to end the year with more than 1.85 gigawatts of active power, up from our previous guidance of more than 1.7 gigawatts. In terms of how this flows through the second half, we expect Q3 revenue to be in the range of $3.45 billion-$3.6 billion.\n\nWe expect Q3 adjusted operating income of $200 million to $260 million as margins continue to sequentially expand, reaching low teens in Q4. Q3 interest expense is expected to be in the range of $860 million to $940 million, reflecting the growth in our debt balance to finance our accelerating deployments. We expect CapEx to be $11.5 billion to $13.5 billion based on the significant amount of new capacity we will be delivering to customers. Moving on to full year.",
+      "source": "bigdata:Quartr Transcripts",
+      "asOf": "2026-08-11",
+      "truncated": true,
+      "url": "https://app.bigdata.com/documents/23DEAD935EE4913A004F477BFB03F4C8"
+    },
+    "headlines": [
+      {
+        "text": "Stock Of The Day: Is CoreWeave Headed Lower?",
+        "source": "bigdata:Benzinga",
+        "asOf": "2026-07-02",
+        "url": "https://app.bigdata.com/documents/D97E50E4D165D1622C8D0577FED673C2?cnum=1&cnum=2"
+      },
+      {
+        "text": "Coreweave Sell-off Sparks Buying Opportunity, Analyst Says Meta Fears Are Overblown",
+        "source": "bigdata:Benzinga",
+        "asOf": "2026-07-02",
+        "url": "https://app.bigdata.com/documents/391FFEB993095E720C2A7EB3BDC8DC54?cnum=1&cnum=3"
+      },
+      {
+        "text": "CoreWeave Stock Drops Sharply on Report of Meta AI Cloud Business",
+        "source": "bigdata:Benzinga",
+        "asOf": "2026-07-01",
+        "url": "https://app.bigdata.com/documents/C9DADB45E7A33F876E08C9BB0A32EE3D?cnum=1&cnum=2"
+      },
+      {
+        "text": "Option traders moderately bearish in CoreWeave Inc with shares down 4.59%",
+        "source": "bigdata:The Fly",
+        "asOf": "2026-07-02",
+        "url": "https://app.bigdata.com/documents/EF53D250A299A30DEAC8A61667DD0EDA?cnum=1"
+      },
+      {
+        "text": "CoreWeave selloff on Meta report a buying opportunity, says Rosenblatt",
+        "source": "bigdata:The Fly",
+        "asOf": "2026-07-02",
+        "url": "https://app.bigdata.com/documents/DCE92ED79761A75C1E1A8E4F9C5DD619?cnum=1"
+      },
+      {
+        "text": "Bernstein says Meta's potential cloud push 'problematic' for CoreWeave",
+        "source": "bigdata:The Fly",
+        "asOf": "2026-07-01",
+        "url": "https://app.bigdata.com/documents/F281124693E3958EF222FC4B1F80EEE3?cnum=1"
+      },
+      {
+        "text": "CoreWeave and Nebius Plunged 14% and 17% in a Single Day. Which Beaten-Down AI Cloud Stock Is the Better Rebound Bet?",
+        "source": "bigdata:Nasdaq",
+        "asOf": "2026-07-02",
+        "url": "https://app.bigdata.com/documents/8E47CC8441EC2FC4D3EA741DF5A81FDD?cnum=1&cnum=2"
+      },
+      {
+        "text": "Nebius, CoreWeave drop as report suggests Meta plans cloud expansion",
+        "source": "bigdata:The Fly",
+        "asOf": "2026-07-01",
+        "url": "https://app.bigdata.com/documents/77635DEE34D0352513F72800E4EF1150?cnum=1"
+      },
+      {
+        "text": "Stock Market Today, July 1: CoreWeave Stock Tumbles as Meta Cloud Report Raises Customer Concerns",
+        "source": "bigdata:Nasdaq",
+        "asOf": "2026-07-01",
+        "url": "https://app.bigdata.com/documents/269F8EAD9225BFAEEE8D88BDC1AFE198?cnum=1"
+      },
+      {
+        "text": "CoreWeave Unveils ARIA to Accelerate AI Research and Agent Development",
+        "source": "bigdata:Nasdaq",
+        "asOf": "2026-07-02",
+        "url": "https://app.bigdata.com/documents/683E6D73111D494E63990D43DB797649?cnum=1"
+      }
+    ]
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-15T20:40:33.195Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-09-15T20:40:33.195Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-15T20:40:33.195Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-15T20:40:33.195Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-15T20:40:33.195Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-15T20:40:33.195Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-15T20:40:33.195Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-15T20:40:33.195Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-15T20:40:33.195Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-15T20:40:33.195Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-15T20:40:33.195Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-15T20:40:33.195Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-15T20:40:33.195Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-15T20:40:33.195Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-15T20:40:33.195Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-09-15T20:40:33.195Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-09-15T20:40:33.195Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-09-15T20:40:33.195Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-15T20:40:33.195Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-15T20:40:33.195Z"
+    }
+  ]
+}
