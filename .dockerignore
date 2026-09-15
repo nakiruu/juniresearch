@@ -1,0 +1,42 @@
+# Build context excludes. Keep this lean: only the source, config, public assets
+# and the published reports (data/*.json) are needed to build the static site.
+
+# dependencies and build output (the image runs its own npm ci / next build)
+node_modules
+.next
+out
+build
+*.tsbuildinfo
+
+# git and isolated worktrees (worktrees contain full repo copies incl. large captures)
+.git
+.gitignore
+.worktrees
+.superpowers
+
+# env and secrets (the site needs none; never bake these in)
+.env
+.env.*
+!.env.example
+
+# pipeline capture artifacts — not read by the static site, large
+data/raw
+data/judgment/**/*.prompt.md
+data/judgment/**/*.errors.txt
+data/judgment/**/*.review-brief.md
+
+# tests, logs, editor, os
+coverage
+test-results
+playwright-report
+*.log
+.DS_Store
+Thumbs.db
+.idea
+.vscode
+
+# docker and docs that don't affect the build
+Dockerfile
+.dockerignore
+docker-compose.yml
+README.Docker.md
