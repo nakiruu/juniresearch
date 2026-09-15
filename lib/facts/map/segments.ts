@@ -13,6 +13,10 @@ export const PROVENANCE: { field: string; endpoint: string; source: FactPack["pr
 function latest(byDate: Record<string, Rec>, valuesKey: string): [string, Record<string, number>, number] {
   const entries = Object.values(byDate).filter((e) => e.period === "FY" && typeof e.fiscal_year === "number");
   if (!entries.length) throw new Error(`No FY entries under revenue_segmentation in ${FILE}`);
+  return latestOf(entries, valuesKey);
+}
+
+function latestOf(entries: Rec[], valuesKey: string): [string, Record<string, number>, number] {
   const top = entries.sort((a, b) => (b.fiscal_year as number) - (a.fiscal_year as number))[0];
   const fy = num(top, "fiscal_year", FILE)!;
   const values = section<Record<string, number>>(top, [valuesKey], FILE);
@@ -24,9 +28,15 @@ function latest(byDate: Record<string, Rec>, valuesKey: string): [string, Record
 export function mapSegments(dir: string): { segments: FactPack["segments"]; geoMix: FactPack["geoMix"] } {
   const ts = readRawJson(dir, FILE);
   const [pBasis, product, pTotal] = latest(section(ts, ["revenue_segmentation", "product"], FILE), "product_segments");
-  const [gBasis, geo, gTotal] = latest(section(ts, ["revenue_segmentation", "geographic"], FILE), "region_segments");
+  // A single-jurisdiction issuer (a domestic miner, say) has no geographic split in the vendor data: the
+  // section arrives as {}. That is an empty mix on the product basis, not a capture failure.
+  const geoEntries = Object.values(section<Record<string, Rec>>(ts, ["revenue_segmentation", "geographic"], FILE))
+    .filter((e) => e.period === "FY" && typeof e.fiscal_year === "number");
+  const geoMix: FactPack["geoMix"] = geoEntries.length
+    ? (([gBasis, geo, gTotal]) => ({ basis: gBasis, items: Object.entries(geo).map(([region, v]) => ({ region: tidyName(region), share: v / gTotal })) }))(latestOf(geoEntries, "region_segments"))
+    : { basis: pBasis, items: [] };
   return {
     segments: { basis: pBasis, items: Object.entries(product).map(([name, revenue]) => ({ name: tidyName(name), revenue, share: revenue / pTotal })) },
-    geoMix: { basis: gBasis, items: Object.entries(geo).map(([region, v]) => ({ region: tidyName(region), share: v / gTotal })) },
+    geoMix,
   };
 }

@@ -32,6 +32,17 @@ describe("mapSegments on an empty capture", () => {
   });
 });
 
+describe("mapSegments with no geographic split", () => {
+  const s = mapSegments("lib/facts/map/__fixtures__/no-geo");
+  it("still maps the product mix", () => {
+    expect(s.segments.basis).toBe("FY25");
+    expect(s.segments.items).toEqual([{ name: "Sale of Inventory", revenue: 66837000, share: 1 }]);
+  });
+  it("returns an empty geoMix on the product basis instead of throwing", () => {
+    expect(s.geoMix).toEqual({ basis: "FY25", items: [] });
+  });
+});
+
 describe("mapSegments with an all-zero segment total", () => {
   it("throws naming the tearsheet file rather than dividing by zero", () => {
     expect(() => mapSegments("lib/facts/map/__fixtures__/zero-segments")).toThrow(/bigdata-tearsheet-annual\.json/);

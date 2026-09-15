@@ -77,6 +77,15 @@ describe("mapStatements on an empty capture", () => {
   });
 });
 
+describe("mapStatements on a quarter with no revenue", () => {
+  it("reports a null operating margin and a null YoY rather than -Infinity and NaN", () => {
+    const s = mapStatements("lib/facts/map/__fixtures__/zero-revenue-quarter");
+    expect(s.latestQuarter.revenue).toBe(0);
+    expect(s.latestQuarter.operatingMargin).toBeNull();
+    expect(s.latestQuarter.revenueYoY).toBeNull();
+  });
+});
+
 describe("mapStatements without a prior-year quarter", () => {
   it("reports revenueYoY as null rather than a fabricated zero", () => {
     const s = mapStatements("lib/facts/map/__fixtures__/no-prior-quarter");

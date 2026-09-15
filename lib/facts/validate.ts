@@ -14,7 +14,7 @@ export function validateFactPack(p: FactPack): ValidationIssue[] {
   const segSum = sumShares(p.segments.items);
   if (Math.abs(segSum - 1) > 0.02) issues.push({ field: "segments.items[].share", message: "shares must sum to 1 ± 0.02", value: segSum });
   const geoSum = sumShares(p.geoMix.items);
-  if (Math.abs(geoSum - 1) > 0.02) issues.push({ field: "geoMix.items[].share", message: "shares must sum to 1 ± 0.02", value: geoSum });
+  if (p.geoMix.items.length && Math.abs(geoSum - 1) > 0.02) issues.push({ field: "geoMix.items[].share", message: "shares must sum to 1 ± 0.02 when present", value: geoSum });
   const h = p.history;
   const ascending = h.every((pt, i) => i === 0 || pt.date > h[i - 1].date);
   if (h.length < 20 || !ascending || (h.length > 0 && h[h.length - 1].date > p.capturedAt.slice(0, 10)))

@@ -65,12 +65,15 @@ export function mapStatements(dir: string): { statements: FactPack["statements"]
   const fy = num(latest, "fiscal_year", QUARTER)!, period = str(latest, "fiscal_period", QUARTER);
   const prior = quarters.find((r) => r.fiscal_period === period && num(r, "fiscal_year", QUARTER) === fy - 1);
   const rev = num(latest, "revenue", QUARTER)!;
+  const priorRev = prior ? num(prior, "revenue", QUARTER)! : null;
+  // A quarter with no revenue (a miner that sold nothing that quarter) has no margin and no growth rate;
+  // null keeps -Infinity and NaN out of the pack rather than pretending the ratio exists.
   const latestQuarter: FactPack["latestQuarter"] = {
     label: `${period}'${String(fy).slice(2)}`,
     periodEnd: str(latest, "report_date", QUARTER),
     revenue: rev,
-    operatingMargin: num(latest, "operating_income", QUARTER)! / rev,
-    revenueYoY: prior ? rev / num(prior, "revenue", QUARTER)! - 1 : null,
+    operatingMargin: rev === 0 ? null : num(latest, "operating_income", QUARTER)! / rev,
+    revenueYoY: priorRev == null || priorRev === 0 ? null : rev / priorRev - 1,
   };
 
   const sheet = readRawJson(dir, SHEET);

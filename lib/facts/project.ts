@@ -76,10 +76,19 @@ export function projectReportFacts(p: FactPack): ReportFacts {
     { label: `${last} Revenue`, value: revenue[4] ?? undefined, unit: "usdLarge", change: yoy(revenue)[4] ?? undefined },
     { label: `${last} Net Income`, value: vals(p, "income", "netIncome")[4] ?? undefined, unit: "usdLarge" },
     { label: `${last} Diluted EPS`, value: vals(p, "income", "epsDiluted")[4] ?? undefined, unit: "usd" },
-    { label: `${p.estimates.nextFY.label} Revenue`, value: p.estimates.nextFY.revenue ?? undefined, unit: "usdLarge", approx: true, change: nextRevYoY, changeDp: 0 },
+    p.estimates.nextFY.revenue == null
+      ? { label: `${p.estimates.nextFY.label} Revenue`, raw: "—", note: "no consensus estimate" }
+      : { label: `${p.estimates.nextFY.label} Revenue`, value: p.estimates.nextFY.revenue, unit: "usdLarge", approx: true, change: nextRevYoY, changeDp: 0 },
     { label: `${lq.label} Revenue`, value: lq.revenue, unit: "usdLarge", change: lq.revenueYoY ?? undefined, changeDp: 0 },
-    { label: `${lq.label} Operating Margin`, value: lq.operatingMargin, unit: "pct", dp: 0 },
-    { label: `Fwd P/E (${p.estimates.followingFY.label})`, value: fwdPe ?? undefined, unit: "mult", approx: true },
+    lq.operatingMargin == null
+      ? { label: `${lq.label} Operating Margin`, raw: "n/m", note: "no revenue in the quarter" }
+      : { label: `${lq.label} Operating Margin`, value: lq.operatingMargin, unit: "pct", dp: 0 },
+    // A negative forward multiple (consensus expects a loss) is not meaningful; a missing one is a dash.
+    fwdPe == null
+      ? { label: `Fwd P/E (${p.estimates.followingFY.label})`, raw: "—", note: "no consensus EPS" }
+      : fwdPe < 0
+        ? { label: `Fwd P/E (${p.estimates.followingFY.label})`, raw: "n/m", note: "consensus expects a loss" }
+        : { label: `Fwd P/E (${p.estimates.followingFY.label})`, value: fwdPe, unit: "mult", approx: true },
     { label: "Dividend Yield", value: q.dividendYield, unit: "pct", dp: 2 },
   ];
 

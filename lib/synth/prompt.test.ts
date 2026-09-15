@@ -32,6 +32,16 @@ describe("renderFactsBlock", () => {
     expect(block).toMatch(/Semiconductor Solutions: 57\.7% \(\$36\.9B\)/);
     expect(block).toMatch(/Asia Pacific: 56\.2%/);
   });
+  it("says so when the quarter had no revenue and when the vendor has no geographic split", () => {
+    const bare = structuredClone(pack);
+    bare.latestQuarter = { ...bare.latestQuarter, revenue: 0, operatingMargin: null, revenueYoY: null };
+    bare.geoMix = { basis: "FY25", items: [] };
+    const b = renderFactsBlock(projectReportFacts(bare), bare);
+    const line = b.split("\n").find((l) => l.startsWith("- Latest quarter"))!;
+    expect(line).toContain("operating margin not meaningful (no revenue in the quarter)");
+    expect(line).not.toContain("YoY");
+    expect(b).toContain("- No geographic split in the vendor data");
+  });
   it("renders the leverage line under Trailing twelve months", () => {
     expect(block).toContain("- Net debt/EBITDA 0.7x · Interest coverage 14.2x · FCF yield 2.3% · Current ratio 2.50");
   });

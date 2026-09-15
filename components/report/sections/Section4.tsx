@@ -7,9 +7,10 @@ import type { Report } from "@/lib/report.schema";
 const STEP = stepFor(4);
 
 export function Section4({ data }: { data: Report["sections"]["businessMoat"] }) {
-  const geoLine =
-    `By geography${data.geographyBasis ? ` (${data.geographyBasis})` : ""}: ` +
-    data.geoMix.map((g) => `${g.region} ~${pct(g.sharePct, { dp: 0 })}`).join(", ") + ".";
+  const geoLine = data.geoMix.length
+    ? `By geography${data.geographyBasis ? ` (${data.geographyBasis})` : ""}: ` +
+      data.geoMix.map((g) => `${g.region} ~${pct(g.sharePct, { dp: 0 })}`).join(", ") + "."
+    : null;
   return (
     <Section title={STEP.title} id={STEP.id}>
       <h3>Business Segments{data.segmentsBasis ? ` (${data.segmentsBasis})` : ""}</h3>
@@ -21,7 +22,7 @@ export function Section4({ data }: { data: Report["sections"]["businessMoat"] })
           </li>
         ))}
       </ul>
-      <p className="font-sans text-[11px] italic text-muted">{geoLine}</p>
+      {geoLine && <p className="font-sans text-[11px] italic text-muted">{geoLine}</p>}
       <h3>Economic Moat: {data.moatRating}</h3>
       <ul>
         {data.moatFactors.map((f) => (

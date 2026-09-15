@@ -40,6 +40,25 @@ describe("projectReportFacts parity with data/avgo.json", () => {
   it("projects the analyst numbers the fixture carries", () => {
     expect(facts.analystSentiment).toMatchObject({ numAnalysts: 60, buy: 54, hold: 6, sell: 0, consensusTarget: 509.61, medianTarget: 517.5, highTarget: 600, lowTarget: 350 });
   });
+  it("prints n/m for the latest-quarter operating margin when the quarter had no revenue", () => {
+    const bare = structuredClone(pack);
+    bare.latestQuarter = { ...bare.latestQuarter, revenue: 0, operatingMargin: null, revenueYoY: null };
+    const cell = projectReportFacts(bare).snapshot.find((c) => c.label.endsWith("Operating Margin"))!;
+    expect(cell.raw).toBe("n/m");
+    expect(cell.value).toBeUndefined();
+  });
+  it("prints a dash for a missing next-FY revenue estimate and n/m for a negative forward P/E", () => {
+    const bare = structuredClone(pack);
+    bare.estimates = { ...bare.estimates, nextFY: { ...bare.estimates.nextFY, revenue: null }, followingFY: { ...bare.estimates.followingFY, eps: -0.05 } };
+    const snap = projectReportFacts(bare).snapshot;
+    expect(snap.find((c) => c.label.endsWith("E Revenue"))!.raw).toBe("—");
+    expect(snap.find((c) => c.label.startsWith("Fwd P/E"))!.raw).toBe("n/m");
+  });
+  it("projects an empty geographic mix as an empty list on the product basis", () => {
+    const bare = structuredClone(pack);
+    bare.geoMix = { basis: "FY25", items: [] };
+    expect(projectReportFacts(bare).sections.businessMoat.geoMix).toEqual([]);
+  });
   it("projects segments and geography as ratios", () => {
     expect(facts.sections.businessMoat.segments.map((s) => s.sharePct).reduce((a, b) => a + b)).toBeCloseTo(1, 6);
     expect(facts.sections.businessMoat.geoMix.every((g) => g.sharePct > 0 && g.sharePct < 1)).toBe(true);

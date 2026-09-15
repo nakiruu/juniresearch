@@ -56,7 +56,7 @@ export const FactPack = z.object({
   }),
   latestQuarter: z.object({
     label: z.string(), periodEnd: z.string(), revenue: z.number(),
-    operatingMargin: ratio, revenueYoY: nullableNum,
+    operatingMargin: nullableNum, revenueYoY: nullableNum, // both null for a quarter with no revenue (a miner between sales)
   }),
   ttm: z.object({
     pe: nullableNum, ps: nullableNum, evToEbitda: nullableNum,
