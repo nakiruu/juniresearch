@@ -25,6 +25,7 @@ const MULT: Record<string, number> = { k: 1e3, m: 1e6, b: 1e9, t: 1e12, thousand
 // (5) scaled unit (K/M/B/T or spelled-out), (6) percent sign, (7) x multiplier.
 const TOKEN = /(?<![A-Za-z'’$\d.])([+\-−]?)(\$?)(\d{1,3}(?:,\d{3})+|\d+)(\.\d+)?(?:\s?(K|M|B|T|thousand|million|billion|trillion)(?![A-Za-z])|(%)|(x)(?![A-Za-z]))?/g;
 const YEAR = /^(199\d|20[0-3]\d|2040)$/;
+const MONTH_BEFORE = /(^|[^A-Za-z])(Jan(uary)?|Feb(ruary)?|Mar(ch)?|Apr(il)?|May|June?|July?|Aug(ust)?|Sept?(ember)?|Oct(ober)?|Nov(ember)?|Dec(ember)?)\.? $/i;
 
 /** Figures that never need grounding: small counts, years, fiscal/quarter labels, dates, form names, ratios like 10:1, period phrases like 52-week. */
 function allowListed(m: RegExpExecArray, text: string): boolean {
@@ -41,6 +42,7 @@ function allowListed(m: RegExpExecArray, text: string): boolean {
   if (bare && /^-(week|month|day|year|quarter)s?\b/i.test(after)) return true; // 52-week, 12-month, 90-day, 5-year
   if (/^,? ?(19|20)\d\d\b/.test(after)) return true;         // "August 30, 2026", "30 2026"
   if (bare && n >= 1 && n <= 31 && /(19|20)\d\d-(\d{1,2}-)?$/.test(text.slice(Math.max(0, m.index - 8), m.index))) return true; // ISO date component, e.g. 2026-08-30
+  if (bare && n >= 1 && n <= 31 && MONTH_BEFORE.test(text.slice(Math.max(0, m.index - 12), m.index))) return true; // yearless month-name date, e.g. "December 31", "Sept. 30"
   return false;
 }
 

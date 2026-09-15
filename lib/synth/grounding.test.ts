@@ -36,6 +36,11 @@ describe("numericTokens", () => {
   it("allow-lists month-name and ISO dates with days above 12", () => {
     expect(numericTokens("the quarter ended August 30, 2026 and December 31, 2025; as of 2026-08-30")).toEqual([]);
   });
+  it("allow-lists a yearless month-name date but still tokenizes a count after a month", () => {
+    expect(numericTokens("fiscal years ended December 31 and quarters ended Sept. 30")).toEqual([]);
+    expect(numericTokens("in May 25 stores opened").map((t) => t.raw)).toEqual([]);
+    expect(numericTokens("since December, 31 stores opened").map((t) => t.raw)).toEqual(["31"]);
+  });
   it("allow-lists period phrases such as 52-week but still tokenizes '52 weeks'", () => {
     expect(numericTokens("the 52-week low and a 12-month view over a 90-day window")).toEqual([]);
     expect(numericTokens("over 52 weeks").map((t) => t.raw)).toEqual(["52"]);
