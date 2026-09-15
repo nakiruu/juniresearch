@@ -1,0 +1,229 @@
+{
+  "judgmentSha256": "31cfd46185273d52495efd3828c352762caa14e74dbebec0fa811a49721943a0",
+  "reviewedAt": "2026-09-15T20:28:56Z",
+  "reviewer": "claude-opus-5",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.valuation.scenarios[2].driver",
+      "quote": "the shares price toward their liquid assets at $6",
+      "issue": "The Bear case anchors its implied price to liquid assets per share, but the surface does not support $6. The Facts block gives shares outstanding of ~494.87M and the call gives liquid assets of $794 million; that is about $1.60 a share, and even FY25 total equity of $1.0B is about $2.02 a share. $6 x 494.87M shares is roughly $3.0B, nearly four times the liquid assets named. The report's own valuation section says the opposite — 'The balance sheet, $794 million of liquid assets and no debt per management, covers a fraction of the market value' — so the Bear anchor contradicts the prose as well as the pack. This is the figure that carries the whole downside case.",
+      "fix": "Either re-anchor the Bear case to something the surface supports (for example the low end of the Street's target range, $11.50, or the October 2025 offering price of $13.15 as the level a stalled ramp would have to re-raise below) and rewrite the driver to argue that anchor, or keep $6 and drop the liquid-assets justification, replacing it with an argument in words the page can check. Do not imply a liquid-assets-per-share figure the pack does not carry.",
+      "status": "addressed",
+      "note": "Re-anchored to the 52-week low: 'the shares break below the 52-week low of $8.91 to $7 as the market prices the next raise.' $8.91 is on the surface, $7 is the author's own call, and no liquid-assets-per-share figure is implied."
+    },
+    {
+      "id": "F-2",
+      "severity": "Critical",
+      "field": "sections.management.governance",
+      "quote": "an independent advisor, Global Governance Advisors, retained annually since May 2012, with fees of $70,461 in Fiscal 2023 and $44,398 in Fiscal 2024",
+      "issue": "The proxy excerpt does not say Global Governance Advisors has been retained since May 2012. It makes two separate statements: 'Since May 2012 ... the Compensation Committee retains on an annual basis an independent compensation advisor' (a generic practice) and 'In Fiscal 2024 the Compensation Committee retained Global Governance Advisors'. Naming GGA as the advisor for a fourteen-year run is an inference the source invites but does not make, and it is the sentence that carries the governance section's 'reads well on paper' verdict.",
+      "fix": "Split the claim as the proxy splits it: the committee has retained an independent compensation advisor annually since May 2012, and in Fiscal 2024 that advisor was Global Governance Advisors, with fees of $70,461 for Fiscal 2023 and $44,398 for Fiscal 2024.",
+      "status": "addressed",
+      "note": "Now split exactly as the proxy splits it: 'the committee has retained an independent compensation advisor annually since May 2012, and in Fiscal 2024 that advisor was Global Governance Advisors, whose fees were $70,461 for Fiscal 2023 and $44,398 for Fiscal 2024'."
+    },
+    {
+      "id": "F-3",
+      "severity": "Critical",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "The company's revenue is the sale of uranium, mostly purchased pounds from the Physical Uranium Program, and it recognizes revenue only in the quarters it chooses to sell",
+      "issue": "Nothing on the grounding surface attributes FY25 revenue, or revenue generally, mostly to purchased pounds. The vendor's segment line is 'Sale of Inventory' with no split; the MD&A describes the Physical Uranium Program without tying it to a revenue figure; and the 10-K says only that the company 'has also relied on cash flows generated from the sales of our purchased uranium inventories'. The same unsupported split is asserted a second time at sections.businessMoat.segments[0].body: 'the FY25 sales came from inventory, largely purchased pounds under the Physical Uranium Program rather than mined output'. The report itself notes elsewhere that the vendor's label 'should split into mined and purchased pounds' — which concedes the split is not on the page.",
+      "fix": "Say what the surface says: FY25 revenue is a single 'Sale of Inventory' line of $66.8M with no mined-versus-purchased split disclosed, and the Physical Uranium Program held 1,456,000 purchased pounds at April 30, 2026. Drop 'mostly' and 'largely' from both places, or attribute the composition to a source that states it.",
+      "status": "addressed",
+      "note": "Both places now say the opposite of what was wrong: 'the record does not split mined pounds from purchased ones'. The cash-flow section's 'sold heavily from its purchased inventory' was also corrected to 'sold heavily from its inventory'."
+    },
+    {
+      "id": "F-4",
+      "severity": "Critical",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "the one positive year, FY22 at 0.02, resting on other income rather than mining",
+      "issue": "The Facts block carries no income-statement line below operating income for any year. It shows FY22 operating margin of -83.2% and diluted EPS of 0.02; the conclusion that the positive EPS rested on 'other income' is an inference the tables invite but never make, and no 'other income' figure appears anywhere on the surface. Stated as fact, it tells the reader where FY22 earnings came from on evidence the page does not hold.",
+      "fix": "State only what the table shows — FY22 is the one year in the series with positive diluted EPS (0.02) despite an operating margin of -83.2% — and say that the captured record does not break out what closed the gap, if the point is worth keeping.",
+      "status": "addressed",
+      "note": "Reduced to what the table shows: 'with FY22 at 0.02 the one positive year'. No composition claim remains."
+    },
+    {
+      "id": "F-5",
+      "severity": "Critical",
+      "field": "sections.financials.cashflowCommentary",
+      "quote": "capital expenditure of -$5.7M, small because in-situ recovery mines are built in header houses rather than shafts",
+      "issue": "Three causal claims in the report rest on nothing in the pack. (1) This one: the surface gives FY25 capex of -$5.7M and describes header-house construction, but nowhere connects the two, and nowhere mentions shaft mining or its capital cost. (2) sections.executiveSummary.companyOverview: 'The vendor's segment chart has one line, Sale of Inventory, at 100.0% of FY25 revenue, because uranium is the company's only product and its sales are lumpy' — the pack gives no reason for the vendor's single line, and the tearsheet describes UEC as working 'every stage of the uranium and titanium concentrate production cycle', so 'only product' is also contradicted. (3) sections.businessMoat.segments[0].body repeats the same causal claim: 'because uranium concentrate is the company's only product'.",
+      "fix": "Remove the 'because' in all three places and state the facts side by side, or attribute the causation to a source that makes it. For capex, say FY25 capital expenditure was -$5.7M against a mine built out through header houses, without asserting the link. For the segment line, say the vendor reports one product line, Sale of Inventory, at 100.0% of FY25 revenue and gives no further split.",
+      "status": "addressed",
+      "note": "All three causal claims are gone: capex now reads 'and capital expenditure of -$5.7M' with no explanation, and the 'only product' claim is replaced in both places. The replacement clause is circular and now duplicated across two sections — raised separately as F-20."
+    },
+    {
+      "id": "F-6",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "that gap sets the Base case at the market's price rather than above it",
+      "issue": "The Base implied price is $11 and the current price is $10.14, so the Base case sits about 8.5% above the market, not at it. The same contradiction runs through sections.valuation.scenarios[1].driver ('the shares stay near the market's price, which we put at $11') and sections.valuation.scenarioCommentary ('The Base case is the market's price with the ramp delivered'). Since the Base case carries half the weight and the probability-weighted value of $11.00 is exactly the Base price, the whole HOLD arithmetic rests on a description the page contradicts.",
+      "fix": "Pick one and make the three places agree: either set the Base implied price at the market price the Facts block gives and re-weight, or keep $11 and say plainly that the Base case is modestly above the current $10.14 because the ramp is delivered, naming what the 8.5% pays for.",
+      "status": "addressed",
+      "note": "Base moved to $10, described as 'the market's price, $10 in round terms', and the three places now agree. Weighted value recomputes to $10.75 on 16/10/7 at 0.25/0.50/0.25, or +6.0% on $10.14, which matches 'a mid-single-digit percentage above the current price' and sits inside the HOLD envelope; the $9-$14 band still brackets the Base."
+    },
+    {
+      "id": "F-7",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[3]",
+      "quote": "Nothing after that explains the fall from the top of the range, and a report that cannot see the cause treats it as a risk, not noise.",
+      "issue": "The same claim — that the shares are near the bottom of the 52-week range and nothing captured after May 1, 2026 explains it — is made four times in different words: sections.executiveSummary.thesis.body ('the shares sit at the bottom of their 52-week range, and nothing captured after May 1, 2026 explains how they got there'), sections.executiveSummary.risks[3] ('the shares sit near the bottom of their 52-week range with nothing captured after May 1, 2026 to account for it'), sections.valuation.multiplesCommentary ('the record carries nothing that dates or explains the fall from the top of that range'), and here. The executive-summary bullet should point; three later passages should not all argue the same point.",
+      "fix": "Argue the unexplained decline once, in the risks section, and refer back to it in words everywhere else. Cut the restatement from the thesis and from the multiples commentary, keeping only the pointer the executive-summary bullet already gives.",
+      "status": "addressed",
+      "note": "Argued once in the risks section now; the thesis and the multiples commentary both point to it ('the decline the risk section describes', 'a fall the risk section describes as unexplained'). The thesis still echoes the clause 'a report that cannot see the cause' word for word — carried into F-20 rather than left here."
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "consensus expects a loss of $-0.05 per share in FY27E on revenue of $102.5M",
+      "issue": "The FY27E consensus loss is stated in five places: analystCommentary ('consensus expects a loss again in FY27E'), sections.executiveSummary.thesis.body ('consensus itself expects FY27E revenue of $102.5M with a loss of $-0.05 per share'), here, sections.growth.points[2] ('Consensus starts a year out, at FY27E, and models a loss'), and sections.finalRecommendation.body[0] ('consensus expects a loss through FY27E'). The $102.5M / $-0.05 pair is given in full twice.",
+      "fix": "Give the FY27E figures once, in the valuation section where they do the work of killing the forward multiple, and refer to them in words elsewhere ('the consensus loss the valuation section quotes'). Keep the growth point's distinct observation — that there is no FY26E estimate at all — and drop its restatement of the loss.",
+      "status": "addressed",
+      "note": "The $102.5M / $-0.05 pair now appears once, in the multiples commentary. The other four places refer back in words ('the Street's own estimates model no profit a year out', 'consensus itself models a loss a year out', 'as the valuation section shows', 'the Street models no profit yet'), and the growth point keeps its distinct FY26E observation."
+    },
+    {
+      "id": "F-9",
+      "severity": "Important",
+      "field": "analystCommentary",
+      "quote": "Management put liquid assets at $794 million at quarter end, including $488 million of cash, with no debt, plus a physical uranium inventory the 10-Q counts at 1,456,000 pounds.",
+      "issue": "The $794 million liquid-assets figure is printed four times: meta.subtitle, analystCommentary, sections.financials.balanceCommentary, and here. The balance-sheet section is where it belongs; the other three restate it rather than refer back.",
+      "fix": "Introduce the figure once in balanceCommentary with its date and composition, and refer back in words elsewhere ('the liquid assets the financials section counts'). The subtitle may keep the number; the valuation section should point rather than repeat it.",
+      "status": "addressed",
+      "note": "Now a headline figure plus a pointer: the analyst commentary keeps $794 million and refers the composition on ('the financials section breaks that down'), while $488 million and the 1,456,000-pound count appear only in balanceCommentary. The subtitle and the multiples commentary still carry no figure. The surviving mention introduced a new error in the same sentence, raised as F-22."
+    },
+    {
+      "id": "F-10",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "a fully permitted portfolio that took 14 years to bring Burke Hollow from discovery to production",
+      "issue": "The 14-year Burke Hollow path appears in three sections: here, sections.businessMoat.moatFactors[0].body ('Burke Hollow took 14 years from discovery in 2012 to production in 2026'), and sections.management.leadership ('brought Burke Hollow into production in April 2026 after a 14-year path'). The moat section is where the claim earns its keep, as evidence that permits are the scarce input; the other two are restatements in different words.",
+      "fix": "Keep the 14-year figure in the moat factor and point to it from the thesis and the leadership paragraph in words, without repeating the number.",
+      "status": "addressed",
+      "note": "The number survives only in the moat factor. The thesis now says 'a fully permitted portfolio that took years to assemble' and the leadership paragraph drops the 14-year path entirely."
+    },
+    {
+      "id": "F-11",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "32,000 pounds of uranium concentrate were produced at Christensen Ranch in the quarter at a total cost per pound of $54.61, including a cash cost per pound of $46.69",
+      "issue": "Three of the quarter's operating figures are introduced more than once across sections instead of being referred back to. The quarter's 32,000 pounds and $54.61 total cost per pound appear in analystCommentary, here, and in sections.businessMoat.moatFactors[1].body; the nine-month 146,550 pounds appears here and in sections.growth.points[1]; the Irigaray plant's four-million-pound licence appears in sections.executiveSummary.companyOverview, sections.businessMoat.moatFactors[0].body and sections.growth.points[1].",
+      "fix": "Assign each figure one home — the quarter's pounds and unit costs to the income commentary, the nine-month production to the growth section, the licensed plant capacity to the company overview — and refer back to each in words from the other sections.",
+      "status": "addressed",
+      "note": "All three now have one home and pointers elsewhere: the quarter's pounds and unit costs sit in the income commentary ('measured in tens of thousands of pounds at a unit cost above the cumulative average' in the analyst commentary, 'the level the financials section quantifies' in the moat factor); the nine-month volume sits in the growth section ('the volumes to date are in the growth section'); the licensed capacity sits in the company overview ('at the capacity the company overview gives', 'the licensed hub capacity in the company overview')."
+    },
+    {
+      "id": "F-12",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[0]",
+      "quote": "The 10-K puts it ahead of everything else: operations are capital intensive, the company has relied primarily on equity financings, and it has yet to achieve consistent profitability or positive operating cash flow.",
+      "issue": "The risk factors come from the 10-K for the year ended July 31, 2025, filed September 24, 2025 — roughly a year before this report's September 15, 2026 date. The report cites 'the 10-K' six times (sections.executiveSummary.risks[0], sections.businessMoat.moatFactors[3].body, sections.management.capitalAllocation, sections.risks.idiosyncratic[0], [1] and [2]) and never dates it once. A reader is left to assume the risk list reflects conditions today, when it predates the Burke Hollow start-up, the October 2025 offering and the conversion-subsidiary docket the same report treats as the news.",
+      "fix": "Date the source the first time it is cited — 'the 10-K for the year ended July 31, 2025' — and note where its age matters, for example that it was written before Burke Hollow began production and before the October 2025 raise. Refer back to 'the 10-K' unqualified afterwards.",
+      "status": "addressed",
+      "note": "The risks section, where the 10-K does its work, now dates it in full: 'The 10-K for the year ended July 31, 2025, filed September 24, 2025, puts it ahead of everything else'. The remaining mentions are unqualified refer-backs, which is what the fix asked for."
+    },
+    {
+      "id": "F-13",
+      "severity": "Important",
+      "field": "sections.executiveSummary.catalysts[0]",
+      "quote": "Burke Hollow's opening pounds and Wellfield 11's three header houses both land in the quarter ending July 31, 2026, and management expects unit costs to fall as fixed costs spread; the growth section carries the figures.",
+      "issue": "This report is dated September 15, 2026, so the quarter ending July 31, 2026 closed six weeks ago; a catalyst that 'lands' in a quarter already over is presented as forward-looking without saying so. Two more dated items are carried forward the same way: sections.executiveSummary.catalysts[2] gives a FAST-41 track whose 'National Environmental Policy Act process began in June 2026' as a catalyst, and sections.growth.points[3] presents 'a second 200-hole drilling program scheduled for July 2026' as pending. All three are the filing's forward view, quoted three months later without being dated as such.",
+      "fix": "Recast these as what they now are: the fourth quarter has ended and the catalyst is the report on it, not the quarter; the NEPA process began in June 2026 and the catalyst is its next milestone; the second Sweetwater drilling program was scheduled for July 2026 in the filing and the captured record says nothing later. Where the pack ends before the event, say the record stops at the June 9, 2026 filing.",
+      "status": "addressed",
+      "note": "All three recast. The catalyst is now the filing, not the quarter ('the quarter ended July 31, 2026 closed before this report and its results are not yet filed'); Sweetwater's catalyst is its next steps 'with the National Environmental Policy Act review under way since June 2026'; and the growth point says the July 2026 program is one 'which the record does not confirm started'."
+    },
+    {
+      "id": "F-14",
+      "severity": "Important",
+      "field": "sections.growth.points[1]",
+      "quote": "so the ramp, not the plant, is the constraint",
+      "issue": "Three of the six growth points name no reading that cuts the other way, while points [0], [4] and [5] each close with an explicit counter. Point [1] (volumes and plant capacity) stops at its conclusion; point [2] (consensus starts at FY27E) offers no case for the ramp beating that assumption; point [3] ('The development pipeline is long-dated') is a four-clause list of Ludeman, Sweetwater and Roughrider milestones already in the MD&A excerpt, with no view attached and no counter.",
+      "fix": "Add one counter sentence to points [1] and [2] using figures already on the page — for example that 146,550 pounds in nine months against a four-million-pound licence is the scale of the option, or that a single FY27E consensus point drawn before Burke Hollow produced is thinly held. Give point [3] a view of its own beyond 'long-dated', or fold its milestones into the points that argue something.",
+      "status": "addressed",
+      "note": "Point [1] now names both readings — licensed hub capacity many times current output against a fixed cost base small volumes must carry. Point [2] adds an explicit counter ('the other side is that no pace has been guided, so the Street's revenue line is an assumption about sales the company has said it will time opportunistically'). Point [3] reaches a view ('None of these adds pounds before the current hubs prove out, and each competes for the same cash')."
+    },
+    {
+      "id": "F-15",
+      "severity": "Important",
+      "field": "sections.executiveSummary.risks[4]",
+      "quote": "beneficial ownership concentrated in three index managers",
+      "issue": "The proxy table shows BlackRock at 6.6%, Global X at 6.4% and Vanguard at 5.0% — about 18% between them, held passively. 'Concentrated' is not what those figures show, and the report's own management section reaches the opposite reading from the same table: 'The pattern is a widely held, index-owned stock with modest insider alignment'. The executive-summary bullet therefore flags as a governance risk something the section behind it describes as ordinary.",
+      "fix": "Either drop the ownership half of the bullet and let the related-party item carry the governance risk, or restate it as the management section reads it — three index managers above 5% and directors and officers at 2.0%, meaning no holder with a control position and little insider counterweight. Make the bullet and the section agree.",
+      "status": "addressed",
+      "note": "The bullet now reads 'one related-party vendor controlled by a family member of the CEO, thin insider ownership and no pay tables in the excerpt', which agrees with the management section's 'modest insider alignment' instead of contradicting it."
+    },
+    {
+      "id": "F-16",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.catalysts[4]",
+      "quote": "Alto Paraná's titanium resource: the TZ Minerals International report and the 2023 preliminary economic assessment give management a second asset to unlock; the growth section carries the figures.",
+      "issue": "Seven of the ten executive-summary bullets end in the same construction — 'the growth section carries the figures' (catalysts[0] and catalysts[4], word for word), 'the growth section carries the timeline' (catalysts[2]), 'the risk section carries the capital question' (catalysts[3]), 'the financials section carries the terms' (risks[0]), 'the risk section carries the mechanism' (risks[2]), 'the management section carries the proxy detail' (risks[4]). The pointer is the right idea; repeated verbatim it reads as a template.",
+      "fix": "Vary the pointers, or drop them where the bullet already makes clear which section argues the case. At minimum change one of the two identical 'the growth section carries the figures' endings.",
+      "status": "addressed",
+      "note": "The pointers are varied now — 'sets out what to look for', 'says how far the record confirms them', 'sits in the risk section', 'with the figures in the growth section', 'has the terms', 'is in the risk section' — and 'carries' survives in one bullet only."
+    },
+    {
+      "id": "F-17",
+      "severity": "Minor",
+      "field": "sections.businessMoat.moatFactors[1].body",
+      "quote": "The counter is the quarter itself, where the total cost per pound rose to $54.61 on low volumes",
+      "issue": "'The counter is' opens the balancing sentence in all of moatFactors[0], [1] and [2], and 'the counter is that' does the same work in growth points [0], [4] and [5] and in businessMoat.durability. Six or seven uses of one construction is a tic past the point of notice, and it makes the counter-case read as a required field rather than an argument.",
+      "fix": "Rewrite three or four of them so the counter arrives in the sentence's own terms — 'capacity is not output: the quarter produced 32,000 pounds' — rather than through the same stock opener.",
+      "status": "addressed",
+      "note": "'The counter is' is gone everywhere. The balancing sentences now open variously with 'Against that', 'What cuts the other way is', 'The other side is', 'against that stands', and in growth point [0] with no opener at all."
+    },
+    {
+      "id": "F-18",
+      "severity": "Minor",
+      "field": "meta.subtitle",
+      "quote": "A uranium producer in ramp-up that sold nothing this quarter, with a debt-free balance sheet and a valuation the disclosures cannot yet underwrite",
+      "issue": "The subtitle runs 153 characters against a 160-character cap (96%), leaving a later round no room to change a word. sections.executiveSummary.thesis.body is 1,392 of 1,500 (93%) and sections.businessMoat.moatFactors[0].body is 709 of 800 (89%). Every other field sits comfortably inside its cap.",
+      "fix": "Trim the subtitle to roughly 130 characters — the 'in ramp-up' and 'this quarter' qualifiers can go without loss — and shorten the thesis body by a sentence so the next round has somewhere to add.",
+      "status": "addressed",
+      "note": "The subtitle is now 125 of 160 characters (78%), inside the roughly 130 the fix asked for. No field on the page exceeds 88% of its cap."
+    },
+    {
+      "id": "F-19",
+      "severity": "Minor",
+      "field": "sections.risks.idiosyncratic[3]",
+      "quote": "The shares closed at $10.14 on September 15, 2026",
+      "issue": "The Facts block gives 'Price $10.14 as of 2026-09-15', which is the report date itself; it does not say the figure is a closing price. analystCommentary makes the same characterisation ('+78.4% above the $10.14 close'). The unit and the quantity are right, the description is more than the source says.",
+      "fix": "Write it as the pack does — the shares stood at $10.14 on September 15, 2026 — in both places.",
+      "status": "addressed",
+      "note": "Both places now match the pack: 'The shares were $10.14 as of September 15, 2026' and '+78.4% above the $10.14 price'."
+    },
+    {
+      "id": "F-20",
+      "severity": "Important",
+      "field": "sections.businessMoat.segments[0].body",
+      "quote": "because the vendor's segmentation records a single revenue line for a company whose sales are uranium inventory; the record does not split mined pounds from purchased ones.",
+      "issue": "The F-5 and F-3 rewrites were pasted into two sections each, so three clauses now appear word for word in two places. (1) 'because the vendor's segmentation records a single revenue line for a company whose sales are uranium inventory' — twenty-one words identical in sections.executiveSummary.companyOverview and here. (2) 'the record does not split mined pounds from purchased ones' — identical in sections.financials.incomeCommentary and here. (3) 'a report that cannot see the cause' — identical in sections.executiveSummary.thesis.body and sections.risks.idiosyncratic[3]. The rubric's line is that no sentence appears in two sections. The first clause is also circular as written: it explains the vendor's single segment line by restating that the vendor records a single line.",
+      "fix": "Give each clause one home and refer back from the other. Let the segment body carry the vendor's single-line explanation and the mined-versus-purchased point, and have the company overview and the income commentary point to it ('the moat section explains the label', which the overview already says). Replace the circular 'because' with what the page can actually show — the vendor reports one product line, Sale of Inventory, at 100.0% of FY25 revenue and gives no further split. Reword the thesis echo so 'a report that cannot see the cause' appears once.",
+      "status": "addressed",
+      "note": "All three verbatim duplications are gone. The circular 'because' is replaced in both places with different wording ('uranium sales are all the revenue the vendor tracks' in the overview, 'what the company sells is uranium from inventory' in the segment body), and the thesis echo is reworded to 'we do not price away a fall we cannot explain'. The mined-versus-purchased disclaimer survives in two sections but in different words and with no figure in either, and each clause does work where it sits — the income commentary needs it to keep F-3 fixed. Acceptable as it stands."
+    },
+    {
+      "id": "F-21",
+      "severity": "Critical",
+      "field": "sections.management.capitalAllocation",
+      "quote": "the equity holdings management counts within liquid assets continue a habit of owning stakes in the sector",
+      "issue": "The surface mentions equities exactly once, in the call's list of what makes up liquid assets: '$794 million in liquid assets, including $488 million in cash, along with uranium inventory and equities'. It names no holding, no sector and no history. 'Continue a habit of owning stakes in the sector' asserts a pattern of behaviour across time that the pack does not carry, in the paragraph that judges how management allocates capital. The Uranium Royalty Corp. headline in the window does not help: it announces that company's own private placement and does not name UEC as a subscriber. This text is unchanged from round 1 and was missed then; it is a one-clause fix.",
+      "fix": "Say only what the call says — the liquid assets management counts include equity holdings alongside cash and uranium inventory, and the record does not identify them — or delete the clause. If the habit is worth asserting, it needs a source that names the holdings.",
+      "status": "addressed",
+      "note": "The habit claim is gone. The sentence now reads 'management counts equity holdings, unnamed in the record, within liquid assets', which is exactly what the call supports and says so."
+    },
+    {
+      "id": "F-22",
+      "severity": "Critical",
+      "field": "analystCommentary",
+      "quote": "Management put liquid assets at $794 million at quarter end, with no debt and a physical uranium inventory on top; the financials section breaks that down.",
+      "issue": "The F-9 rewrite stripped the composition out of this sentence and left the inventory sitting outside the total. The call puts it inside: 'We finished the quarter with $794 million in liquid assets, including $488 million in cash, along with uranium inventory and equities, and importantly, no debt.' Uranium inventory is a component of the $794 million, not an addition to it, and 'on top' tells the reader otherwise. The report's own balance-sheet section — the one this sentence points to — states it correctly: '$794 million of liquid assets at April 30, 2026, comprising $488 million of cash plus uranium inventory and equity holdings'. The overstatement is roughly the $127 million the call assigns the 1.4 million pounds at market prices, in the opening paragraph, about the balance sheet the whole HOLD rests on.",
+      "fix": "Put the inventory back inside the total: 'Management put liquid assets at $794 million at quarter end — cash, uranium inventory and equity holdings — with no debt; the financials section breaks that down.' Any wording works so long as it does not read as $794 million plus an inventory, and so long as it agrees with the balance-sheet section it refers the reader to.",
+      "status": "addressed",
+      "note": "The inventory is back inside the total: 'Management put liquid assets at $794 million at quarter end, a total that includes cash, uranium inventory and equities, with no debt; the financials section breaks that down.' That matches the call's own construction and agrees with the balance-sheet section it points to."
+    }
+  ]
+}
