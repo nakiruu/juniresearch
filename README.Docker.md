@@ -11,20 +11,22 @@ reports**. The site needs no secrets.
 docker compose up --build
 ```
 
-Then open http://localhost:3000 (report pages at `/research/<ticker>`, e.g.
-http://localhost:3000/research/avgo).
+Then open http://localhost:58472 (report pages at `/research/<ticker>`, e.g.
+http://localhost:58472/research/avgo). Host port 58472 is a deliberately uncommon
+high port; the container listens on 3000 internally.
 
 ## Without compose
 
 ```bash
 docker build -t juniresearch-web .
-docker run --rm -p 3000:3000 juniresearch-web
+docker run --rm -p 58472:3000 juniresearch-web
 ```
 
 ## What is and isn't in the image
 
 - **In:** the built site and the reports that existed at build time. The image
-  runs as a non-root user and serves on port 3000 (override with `-e PORT=...`).
+  runs as a non-root user and the container listens on port 3000 (override with
+  `-e PORT=...`); the compose file publishes it on host port 58472.
 - **Out:** the capture and synthesis pipeline. Its capture steps (`detect`,
   `facts:prepare`, the MCP tearsheet and search calls) reach Claude's connectors,
   which are not available inside a container, so run those in your dev session as

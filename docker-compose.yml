@@ -1,5 +1,7 @@
-# One service: build the render-site image and serve it on http://localhost:3000.
+# One service: build the render-site image and serve it on http://localhost:58472.
 #   docker compose up --build
+# Host port 58472 is a deliberately uncommon, unassigned high port; the container
+# still listens on 3000 internally (see Dockerfile PORT).
 services:
   web:
     build:
@@ -7,5 +9,5 @@ services:
       dockerfile: Dockerfile
     image: juniresearch-web
     ports:
-      - "3000:3000"
+      - "58472:3000"
     restart: unless-stopped
