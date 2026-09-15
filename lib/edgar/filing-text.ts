@@ -172,7 +172,9 @@ const PROXY_HEADINGS = {
   executiveTables: titlePattern("executive compensation tables"),
   payRatio: titlePattern("pay ratio"),
   ownership: titlePattern("security ownership of certain beneficial owners"),
+  stockOwnership: titlePattern("stock ownership of directors"),                       // Bank of America: "Stock ownership of directors, executive officers, and certain beneficial owners"
   relatedTransactions: titlePattern("transactions with related persons"),
+  relatedPersonAndOther: titlePattern("related person and certain other transactions"), // Bank of America
   relatedPersonTransactions: titlePattern("related person transactions"),
   relatedPartyTransactions: titlePattern("related party transactions"),
   certainRelationships: titlePattern("certain relationships and related party transactions"),
@@ -192,10 +194,10 @@ const ALL_PROXY_HEADINGS = Object.values(H);
 const PROXY_SPECS: Record<keyof ProxySections, ProxySpec> = {
   board: { start: [H.boardAndIndependence, H.independence, H.boardIndependence, H.independenceOfDirectors], keep: [H.committees, H.committeesOfTheBoard] },
   compensation: { start: [H.cda], keep: [] },
-  ownership: { start: [H.ownership], keep: [] },
+  ownership: { start: [H.ownership, H.stockOwnership], keep: [] },
   // Its own budget: the ownership table and its footnotes fill that section, and the
   // related-party disclosure follows it in both proxies captured so far.
-  related: { start: [H.relatedTransactions, H.relatedPersonTransactions, H.relatedPartyTransactions, H.certainRelationships], keep: [] },
+  related: { start: [H.relatedTransactions, H.relatedPersonTransactions, H.relatedPartyTransactions, H.certainRelationships, H.relatedPersonAndOther], keep: [] },
 };
 
 function lineStart(re: RegExp): RegExp {

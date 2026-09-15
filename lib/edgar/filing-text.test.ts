@@ -325,3 +325,34 @@ describe("a sentence that starts with a heading's words is not a heading", () =>
     expect(s.related).not.toContain("Fiscal 2025 Financial Statements");
   });
 });
+
+describe("extractProxySections with Bank of America's heading vocabulary", () => {
+  const filler = (n: number, seed: string) => Array.from({ length: n }, (_, i) => `${seed} sentence ${i + 1}.`).join(" ");
+  // A bank proxy: the contents page lists each title with a page number, the body repeats each title twice
+  // (once as a bare anchor, once followed by prose), and the ownership section follows the related-person one.
+  const proxy = [
+    "Related person and certain other transactions",
+    "36",
+    "Stock ownership of directors, executive officers, and certain beneficial owners",
+    "37",
+    "Compensation discussion and analysis",
+    filler(12, "The Compensation and Human Capital Committee oversees the design of the executive compensation program"),
+    "Related person and certain other transactions",
+    "Related person and certain other transactions",
+    filler(8, "The related person transactions policy in our Corporate Governance Guidelines sets the review standard"),
+    "Stock ownership of directors, executive officers, and certain beneficial owners",
+    "Stock ownership of directors, executive officers, and certain beneficial owners",
+    filler(8, "The following table shows the number of shares of our common stock beneficially owned by each director"),
+    "Other matters",
+    filler(4, "Management knows of no other business to be presented at the meeting"),
+  ].join("\n");
+  it("finds the related-person and ownership sections and ends each at the next heading", () => {
+    const s = extractProxySections(proxy);
+    expect(s.related).toMatch(/^Related person and certain other transactions/);
+    expect(s.related).toContain("review standard sentence 8.");
+    expect(s.related).not.toContain("beneficially owned");
+    expect(s.ownership).toMatch(/^Stock ownership of directors/);
+    expect(s.ownership).toContain("beneficially owned by each director sentence 8.");
+    expect(s.ownership).not.toContain("Other matters");
+  });
+});
