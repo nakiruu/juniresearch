@@ -42,6 +42,15 @@ describe("renderFactsBlock", () => {
     expect(line).not.toContain("YoY");
     expect(b).toContain("- No geographic split in the vendor data");
   });
+  it("points to the segment mix when geography was promoted to segments (no product split)", () => {
+    const bare = structuredClone(pack);
+    bare.segments = { basis: "FY25 by geography", items: [{ name: "UNITED STATES", revenue: 4.8e9, share: 0.936 }, { name: "Non-US", revenue: 3.3e8, share: 0.064 }] };
+    bare.geoMix = { basis: "FY25", items: [] };
+    const b = renderFactsBlock(projectReportFacts(bare), bare);
+    expect(b).toContain("### Segments (FY25 by geography mix)");
+    expect(b).toContain("the geographic revenue mix is shown as the segment mix above");
+    expect(b).not.toContain("do not quote a regional mix");
+  });
   it("renders the leverage line under Trailing twelve months", () => {
     expect(block).toContain("- Net debt/EBITDA 0.7x · Interest coverage 14.2x · FCF yield 2.3% · Current ratio 2.50");
   });

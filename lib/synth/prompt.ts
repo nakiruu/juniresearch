@@ -35,9 +35,15 @@ export function renderFactsBlock(facts: ReportFacts, pack: FactPack): string {
   const e = pack.estimates, t = pack.ttm, a = facts.analystSentiment, lq = pack.latestQuarter;
   const multiples = facts.sections.valuation.multiplesCompanyColumn.map((m) => `- ${m.label}: ${m.value == null ? "—" : mult(m.value)}`).join("\n");
   const segments = facts.sections.businessMoat.segments.map((s) => `- ${s.name}: ${pct(s.sharePct)} (${compactUSD(s.revenue)})`).join("\n");
+  // Three cases for the geography line: the vendor gave a geographic split (render it); the vendor gave no
+  // product split so geography was promoted to the segment mix above (say so, don't repeat it); or a
+  // single-jurisdiction issuer with neither (say there is no regional mix to quote).
+  const geoPromoted = /by geography/i.test(facts.sections.businessMoat.segmentsBasis);
   const geo = facts.sections.businessMoat.geoMix.length
     ? facts.sections.businessMoat.geoMix.map((g) => `- ${g.region}: ${pct(g.sharePct)}`).join("\n")
-    : "- No geographic split in the vendor data (single-jurisdiction issuer); do not quote a regional mix.";
+    : geoPromoted
+      ? "- The vendor gives no product split; the geographic revenue mix is shown as the segment mix above."
+      : "- No geographic split in the vendor data (single-jurisdiction issuer); do not quote a regional mix.";
   const sharesNote = pack.quote.sharesSource === "cover" ? "cover page" : "derived from market cap";
   const highlights = HIGHLIGHT_KEYS.filter((k) => facts.highlightCells[k] != null)
     .map((k) => `- ${k}: ${facts.highlightCells[k]!.label} = ${formatSnapshot(facts.highlightCells[k] as SnapshotCell)}`)

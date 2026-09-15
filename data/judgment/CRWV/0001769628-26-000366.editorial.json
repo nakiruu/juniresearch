@@ -1,0 +1,79 @@
+{
+  "judgmentSha256": "79cdc7dc5d37916d92447521ee00759ace3ef5cba43e64ad9a14f01a6277625a",
+  "reviewedAt": "2026-09-15T21:28:24Z",
+  "reviewer": "claude-opus-4-8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.businessMoat.segments",
+      "quote": "The vendor gives no product breakdown, so its one revenue disaggregation is geographic, and the moat section reads it as the segment mix: the United States was 93.6% of FY25 revenue and Non-US 6.4%.",
+      "issue": "The Facts block's Geography section states 'No geographic split in the vendor data (single-jurisdiction issuer); do not quote a regional mix.' The report quotes exactly that regional mix, characterises the US/Non-US split as CoreWeave's geographic revenue disaggregation, builds two moat 'segments' (UNITED STATES $4.8B / Non-US $330M) and infers 'almost all revenue is domestic.' The only surface source for the numbers is the 'Segments (FY25 by geography mix)' line, which directly contradicts the Geography instruction; the FactPack provenance shows the figures come from the vendor's product-segmentation endpoint, so the geographic label is unsupported. The contradiction between the two Facts entries is resolved silently. Recurs in sections.executiveSummary.companyOverview and both businessMoat.segments bodies.",
+      "fix": "Do not quote a US/Non-US regional revenue mix; drop or recast the two geographic segments. If the split is kept, disclose once that the Geography note disallows a regional mix and that the vendor US/Non-US labels are product-segmentation rather than a geographic disaggregation, and do not draw the 'almost all revenue is domestic' inference.",
+      "status": "addressed",
+      "note": "Prompt-renderer bug fixed: the re-rendered Geography line now reads 'The vendor gives no product split; the geographic revenue mix is shown as the segment mix above.' The prohibition is gone, so quoting US 93.6% / Non-US 6.4% as the geographic split and the 'almost all revenue is domestic' reading are now grounded and internally consistent. No source contradiction remains."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "businessMoat.moatFactors[0],[3]; management.governance; risks.idiosyncratic[1]; executiveSummary.risks[1]",
+      "quote": "The 10-K names intense competition and the risk that hyperscalers compete directly.",
+      "issue": "The captured risk-factors excerpt is the 10-Q (context.riskFactorsExcerpt source 'edgar:10-Q'; riskFactorsSource '10-Q'); no 10-K is in the pack. The report attributes risk factors to 'the 10-K' in five places: power limits 'the 10-K lists first among its risks' (moatFactors[0]); 'The 10-K names intense competition...' (moatFactors[3]); capital need 'which the 10-K names as a risk' (executiveSummary.risks[1] and risks.idiosyncratic[1]); voting concentration 'the 10-K lists... among its risk factors' (governance). All this content is present in the captured 10-Q, and the report cites the 10-Q correctly for the customer-concentration risk elsewhere, so the source label is simply wrong.",
+      "fix": "Replace 'the 10-K' with 'the 10-Q' (the captured document) in these five places, or attribute to 'the filing's risk factors.'",
+      "status": "addressed",
+      "note": "All five citations now read '10-Q'; zero '10-K' occurrences remain in the judgment or the rendered report. The specific line now reads 'The 10-Q names intense competition and the risk that hyperscalers compete directly.'"
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "executiveSummary.thesis.body; finalRecommendation.body; analystCommentary; growth.points[0]",
+      "quote": "guidance raised across revenue, margin and power",
+      "issue": "The transcript raises only power guidance ('we now expect to end the year with more than 1.85 gigawatts of active power, up from our previous guidance of more than 1.7 gigawatts'). Q3 revenue ($3.45-3.6B), adjusted operating income ($200-260M) and the Q4 low-teens margin are given as guidance but not as raises against any prior figure. 'guidance raised across revenue, margin and power' (thesis) and 'guidance raised across the board' (finalRecommendation) assert revenue and margin raises the pack does not establish; 'management raised its full-year outlook' (analystCommentary, growth.points[0]) is supported only for power.",
+      "fix": "Limit the 'raised' claim to power guidance (1.85 from 1.7 GW); present the revenue, margin and interest figures as guidance, not as raises, unless a prior comparable appears on the surface.",
+      "status": "addressed",
+      "note": "All four sites now scope the raise to power: analystCommentary 'management raised its year-end power guidance'; thesis 'a raised year-end power target'; growth.points[0] 'with management raising its year-end power guidance'; finalRecommendation 'its year-end power guidance raised.' No 'across the board' / 'across revenue, margin' phrasing remains."
+    },
+    {
+      "id": "F-4",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[4]",
+      "quote": "The multi-class structure gives the Co-Founders 72.32% of the vote as a group, so public holders cannot influence outcomes",
+      "issue": "In the proxy ownership table, 72.32% is the total voting power of 'All executive officers and directors as a group (12 persons)', not the three Co-Founders. The report attaches the 12-person group figure to 'the Co-Founders.' The same judgment's insiderOwnership section correctly labels 72.32% as the 12-person group, so the two sections conflict; the Co-Founders' own rows are 38.70% + 20.30% + 14.59%.",
+      "fix": "Attribute 72.32% to 'all executive officers and directors as a group (12 persons)', or state the Co-Founders' individual voting shares; do not present 72.32% as the Co-Founders' group total.",
+      "status": "addressed",
+      "note": "The bullet no longer attaches 72.32% to the Co-Founders; it now reads 'The multi-class structure concentrates the vote in insiders, whose executive-officer-and-director group holds the entire high-vote class' (100.00% of Class B per the proxy). The precise 72.32% figure stays only in insiderOwnership, correctly labelled as the 12-person group."
+    },
+    {
+      "id": "F-5",
+      "severity": "Important",
+      "field": "executiveSummary.companyOverview; management.leadership",
+      "quote": "it went public in March 2025, so its record as a listed company is short",
+      "issue": "The specific month 'March 2025' appears on neither the Facts nor the Context surface. The pack supports only that the IPO occurred in the first half of 2025 (MD&A: 'our IPO in the six months ended June 30, 2025'; proxy: 'first Proxy Statement as a public company'). The precise month is recalled, not grounded, and recurs in management.leadership ('taking the company public in March 2025'). House style: a figure that appears in neither block fails validation.",
+      "fix": "State only what the surface supports, e.g. 'went public in the first half of 2025' or 'IPO in the six months ended June 30, 2025', or omit the month.",
+      "status": "addressed",
+      "note": "Both sites drop the ungrounded month: companyOverview now 'it went public in 2025' and leadership 'taking the company public in 2025.' Zero 'March 2025' occurrences remain."
+    },
+    {
+      "id": "F-6",
+      "severity": "Important",
+      "field": "businessMoat.moatFactors[3]; risks.idiosyncratic[4]",
+      "quote": "The July 1-2 headlines are dominated by reports that Meta is weighing an AI cloud business, which brokers split over",
+      "issue": "The same claim, in nearly the same words, is argued in two sections: businessMoat.moatFactors[3] ('...which brokers split over') and risks.idiosyncratic[4] ('...and brokers split on whether it matters'). The executive-summary risk already points to it, so both body sections restate rather than one arguing and the other pointing. This is the cross-section paraphrase the rubric's repetition item targets.",
+      "fix": "Argue the Meta-competition point once (in the risk section) and, in the moat section, refer back to it in words rather than restating the headline claim.",
+      "status": "addressed",
+      "note": "The moat factor now points rather than restates: 'The risk section details the July headlines in which Meta is reported weighing exactly this...' The full headline claim is argued once, in risks.idiosyncratic, with the executive summary providing the pointer. Structure is now pointer + single argument."
+    },
+    {
+      "id": "F-7",
+      "severity": "Minor",
+      "field": "sections.businessMoat.moatFactors[1]",
+      "quote": "Five-year take-or-pay terms and the cost of migrating a running AI workload create real switching costs.",
+      "issue": "'take-or-pay' is not on the surface. The pack supports 'committed contracts' and a 'typical five-year contract' (transcript; MD&A: 'Our revenue primarily comes from committed contracts'), but nothing establishes a take-or-pay structure (customers pay whether or not they use the capacity). The 'five-year' term is grounded; 'take-or-pay' is unearned specificity.",
+      "fix": "Say 'five-year committed contracts' (grounded) and drop 'take-or-pay', or ground the term to a source.",
+      "status": "addressed",
+      "note": "Now reads 'Five-year committed contracts and the cost of migrating a running AI workload create real switching costs.' The ungrounded 'take-or-pay' is removed; the descriptor is now the grounded 'committed contracts.'"
+    }
+  ]
+}
