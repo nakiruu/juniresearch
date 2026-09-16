@@ -30,4 +30,31 @@ describe("computeTtm", () => {
     expect(t.ratios.current_ratio).toBeCloseTo(400 / 200, 6);
     expect(t.ratios.dividend_yield).toBe(0.01);
   });
+
+  it("nulls both leverage metrics when the latest quarter's net_debt is null, rather than falling back to 0", () => {
+    const quartersMissingNetDebt = [
+      q({ report_date: "2025-09-30" }), q({ report_date: "2025-12-31" }), q({ report_date: "2026-03-31" }),
+      q({ report_date: "2026-06-30", total_debt: null, net_debt: null }),
+    ];
+    const partial = computeTtm(quartersMissingNetDebt, { price: 100, marketCap: 4000, dividendYield: 0.01 });
+    expect(partial.keyMetrics.ev_to_ebitda).toBeNull();
+    expect(partial.ratios.net_debt_to_ebitda).toBeNull();
+  });
+
+  it("throws a clear error when fewer than four quarters are supplied", () => {
+    const threeQuarters = [q({ report_date: "2025-09-30" }), q({ report_date: "2025-12-31" }), q({ report_date: "2026-03-31" })];
+    expect(() => computeTtm(threeQuarters, { price: 100, marketCap: 4000, dividendYield: 0.01 })).toThrow(
+      "computeTtm needs 4 quarters for a trailing-twelve-month period, got 3",
+    );
+  });
+
+  it("nulls a summed TTM ratio when one of the four quarters is missing that flow field, instead of treating it as 0", () => {
+    const quartersMissingRevenue = [
+      q({ report_date: "2025-09-30", revenue: null }), q({ report_date: "2025-12-31" }),
+      q({ report_date: "2026-03-31" }), q({ report_date: "2026-06-30", net_debt: 150 }),
+    ];
+    const partial = computeTtm(quartersMissingRevenue, { price: 100, marketCap: 4000, dividendYield: 0.01 });
+    expect(partial.ratios.net_margin).toBeNull();
+    expect(partial.keyMetrics.price_to_sales).toBeNull();
+  });
 });

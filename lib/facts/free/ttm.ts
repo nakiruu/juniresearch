@@ -49,6 +49,9 @@ export function computeTtm(
   quarters: SecPeriod[],
   yh: { price: number; marketCap: number; dividendYield: number },
 ): TtmRows {
+  if (quarters.length < 4) {
+    throw new Error(`computeTtm needs 4 quarters for a trailing-twelve-month period, got ${quarters.length}`);
+  }
   const last4 = [...quarters].sort((a, b) => (a.report_date < b.report_date ? -1 : a.report_date > b.report_date ? 1 : 0)).slice(-4);
   const latest = last4[last4.length - 1];
 
@@ -62,6 +65,11 @@ export function computeTtm(
   const ttmOcf = sum(last4, "operating_cash_flow");
   const ttmCapex = sum(last4, "capex");
   const ttmFcf = ttmOcf != null && ttmCapex != null ? ttmOcf + ttmCapex : null;
+  // Explicit null guard: `marketCap + null` would coerce null to 0 in JS and silently
+  // understate EV, so enterprise value is null whenever net_debt is null — symmetric
+  // with net_debt_to_ebitda below (no `?? 0` fallback; the design spec states both
+  // formulas the same way, and this pipeline never fabricates a number for a missing input).
+  const ev = latest.net_debt == null || yh.marketCap == null ? null : yh.marketCap + latest.net_debt;
 
   const ratios: Record<string, unknown> = {
     fiscal_period: "TTM",
@@ -78,7 +86,7 @@ export function computeTtm(
     fiscal_period: "TTM",
     pe_ratio: safeDiv(yh.price, ttmEps),
     price_to_sales: safeDiv(yh.marketCap, ttmRevenue),
-    ev_to_ebitda: safeDiv(yh.marketCap + (latest.net_debt ?? 0), ttmEbitda),
+    ev_to_ebitda: safeDiv(ev, ttmEbitda),
     free_cash_flow_yield: safeDiv(ttmFcf, yh.marketCap),
   };
 
