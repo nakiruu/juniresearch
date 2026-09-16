@@ -378,6 +378,11 @@ export function parseCompanyFacts(facts: unknown): { annual: SecPeriod[]; quarte
     const q1 = byQuarter?.get("Q1"), q2 = byQuarter?.get("Q2"), q3 = byQuarter?.get("Q3");
     if (!q1 || !q2 || !q3) continue;
 
+    // NOTE: for eps_diluted specifically, FY − (Q1+Q2+Q3) is an approximation, not an exact
+    // Q4 figure — diluted share counts (the EPS denominator) differ quarter to quarter, so this
+    // subtraction doesn't reflect Q4's own weighted-average share count. It feeds ttm.pe_ratio
+    // (via the last four quarters' eps_diluted sum), so that figure is an approximation too, not
+    // an exact TTM EPS.
     const sub = (field: keyof DerivedFields): number | null => {
       const fy = fyRow[field], a = q1[field], b = q2[field], c = q3[field];
       return fy == null || a == null || b == null || c == null ? null : (fy as number) - ((a as number) + (b as number) + (c as number));

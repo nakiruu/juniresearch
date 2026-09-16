@@ -37,4 +37,10 @@ describe("parseQuoteSummary required fields", () => {
     delete clone.quoteSummary.result[0].summaryDetail.fiftyTwoWeekHigh;
     expect(() => parseQuoteSummary(clone, { latestFY: 2025 })).toThrow();
   });
+
+  it("throws when the description (assetProfile.longBusinessSummary) is absent instead of defaulting to empty string", () => {
+    const clone = JSON.parse(JSON.stringify(raw));
+    delete clone.quoteSummary.result[0].assetProfile.longBusinessSummary;
+    expect(() => parseQuoteSummary(clone, { latestFY: 2025 })).toThrow();
+  });
 });

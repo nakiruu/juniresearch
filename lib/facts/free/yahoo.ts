@@ -63,7 +63,7 @@ export async function fetchQuoteSummary(ticker: string, fetchImpl: FetchLike = f
   }
 
   const url =
-    `https://query2.finance.yahoo.com/v10/finance/quoteSummary/${ticker}` +
+    `https://query2.finance.yahoo.com/v10/finance/quoteSummary/${encodeURIComponent(ticker)}` +
     `?modules=${MODULES}&crumb=${encodeURIComponent(crumb)}`;
   const quoteRes = await fetchImpl(url, { headers: { "User-Agent": USER_AGENT, Cookie: cookie } });
 
@@ -178,7 +178,14 @@ export function parseQuoteSummary(raw: unknown, opts: { latestFY: number }): Yah
     high: rawVal(financialData.targetHighPrice),
     low: rawVal(financialData.targetLowPrice),
   };
+  const companyName = price.longName ?? price.shortName ?? "";
+  const exchange = normalizeExchange(price.exchangeName);
+  const description = assetProfile.longBusinessSummary ?? "";
 
+  // companyName/exchange/description are read NON-optionally one stage later by
+  // mapQuote (via str(), which throws on ""), so an empty string here would pass
+  // facts:free and only fail at facts:build with a misdirecting "Missing string"
+  // error. Throw the clear Yahoo-boundary error here instead.
   if (
     priceValue === null ||
     marketCap === null ||
@@ -187,10 +194,13 @@ export function parseQuoteSummary(raw: unknown, opts: { latestFY: number }): Yah
     targets.consensus === null ||
     targets.median === null ||
     targets.high === null ||
-    targets.low === null
+    targets.low === null ||
+    !companyName ||
+    !exchange ||
+    !description
   ) {
     throw new Error(
-      "Yahoo quoteSummary missing required fields (price, marketCap, 52-week range, or analyst targets); refusing to fabricate them.",
+      "Yahoo quoteSummary missing required fields (price, marketCap, 52-week range, analyst targets, company name, exchange, or description); refusing to fabricate them.",
     );
   }
 
@@ -222,9 +232,9 @@ export function parseQuoteSummary(raw: unknown, opts: { latestFY: number }): Yah
   return {
     price: priceValue,
     marketCap,
-    companyName: price.longName ?? price.shortName ?? "",
-    exchange: normalizeExchange(price.exchangeName),
-    description: assetProfile.longBusinessSummary ?? "",
+    companyName,
+    exchange,
+    description,
     week52Low,
     week52High,
     dividendYield: rawVal(summaryDetail.dividendYield) ?? rawVal(summaryDetail.trailingAnnualDividendYield) ?? 0,

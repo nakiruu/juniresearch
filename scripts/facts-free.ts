@@ -1,3 +1,4 @@
+import { mkdirSync } from "node:fs";
 import { join } from "node:path";
 import { requireContact } from "./_env";
 import { resolveCik } from "../lib/edgar/tickers";
@@ -30,5 +31,6 @@ const ttm = computeTtm(sec.quarter, { price: yahoo.price, marketCap: yahoo.marke
 
 const dir = join("data", "raw", ticker, accession);
 const files = buildTearsheetFiles({ cik, sec, yahoo, ttm, capturedAt: new Date().toISOString() });
+mkdirSync(dir, { recursive: true });
 writeTearsheetFiles(dir, files);
 console.log(`Wrote 3 free tearsheet files to ${dir}\n  ${yahoo.companyName} · price ${yahoo.price} · ${sec.annual.length} FY · ${sec.quarter.length} quarters · target ${yahoo.targets.consensus}`);

@@ -9,6 +9,7 @@ import { buildTearsheetFiles, writeTearsheetFiles } from "./emit";
 import { mapStatements } from "../map/statements";
 import { mapQuote } from "../map/quote";
 import { mapAnalysts } from "../map/analysts";
+import { mapSegments } from "../map/segments";
 
 const facts = JSON.parse(readFileSync("lib/facts/free/__fixtures__/lly-companyfacts.json", "utf8"));
 const yraw = JSON.parse(readFileSync("lib/facts/free/__fixtures__/lly-quotesummary.json", "utf8"));
@@ -28,6 +29,9 @@ describe("buildTearsheetFiles → real mappers (shape parity)", () => {
     expect(s.statements.fiscalYears.length).toBeGreaterThanOrEqual(3);
     expect(s.latestQuarter.revenue).toBeGreaterThan(0);
     expect(s.ttm.grossMargin === null || s.ttm.grossMargin! > 0).toBe(true);
+    // revenue_segmentation is emitted as empty {product:{},geographic:{}} (Task 3 has no vendor
+    // segment data), relying on mapSegments' single-"Consolidated" fallback; guard that shape parity.
+    expect(() => mapSegments(dir)).not.toThrow();
   });
 
   it("mapQuote and mapAnalysts read the tearsheet without throwing", () => {
