@@ -1,0 +1,69 @@
+{
+  "judgmentSha256": "d8a732a6c20fd03e88f673354262e4fb7f492d7feddd9d972c48e3713641fa07",
+  "reviewedAt": "2026-09-15T18:30:00Z",
+  "reviewer": "Claude Opus 4.8",
+  "round": 2,
+  "verdict": "approved-with-minors",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.growth.points[3]",
+      "quote": "management sizes the AI-accelerator market at more than $1.4 trillion by 2030 and the server-CPU market above $220 billion",
+      "issue": "The transcript sizes both markets as \"approximately $1.4 trillion by 2030\" and \"approximately $220 billion by 2030\"; the \"more than\" in the source attaches to the growth rate (\"grow more than 45% annually\", \"more than 50% annually\"), not the endpoint. The report reassigns \"more than\"/\"above\" to the TAM figures, turning management's central estimate into a floor and overstating a number that carries the growth/TAM argument.",
+      "fix": "Match the source: write \"approximately $1.4 trillion by 2030\" and \"approximately $220 billion,\" or move the \"more than\" onto the growth rates (\">45% annually\", \">50% annually\") exactly as the transcript states them.",
+      "status": "addressed",
+      "note": "Addressed: points[3] now reads \"grow more than 45% a year to about $1.4 trillion by 2030 and the server-CPU market more than 50% a year to about $220 billion,\" matching the transcript; \"more than\" now sits on the growth rates and the endpoints read \"about,\" not floors."
+    },
+    {
+      "id": "F-2",
+      "severity": "Minor",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "the company can self-fund its roadmap and its acquisitions ... the company can fund its roadmap and acquisitions from its own resources without leaning on debt",
+      "issue": "The self-funding conclusion is stated twice in the two-paragraph field in near-identical words: paragraph one ends \"leverage is not a constraint and the company can self-fund its roadmap and its acquisitions,\" and paragraph two ends \"the company can fund its roadmap and acquisitions from its own resources without leaning on debt.\" The same claim made twice adds nothing and wastes the field's room.",
+      "fix": "State the self-funding point once. Close the second paragraph on a distinct thought (e.g. the tangible-book caveat, or interest coverage) rather than repeating that AMD can fund its roadmap and acquisitions.",
+      "status": "addressed",
+      "note": "Addressed: paragraph one now ends \"leverage is not a constraint\"; the self-funding point is stated once, in paragraph two (\"funds its roadmap, its acquisitions and its capacity commitments from its own cash generation rather than by borrowing\"). The near-duplicate closing clause is gone."
+    },
+    {
+      "id": "F-3",
+      "severity": "Minor",
+      "field": "sections.management.governance",
+      "quote": "There is a single class of common stock, so public shareholders hold both the economics and the vote, without the super-voting structure common among newer technology issuers.",
+      "issue": "The proxy excerpt supports a single common-stock class only indirectly (the ownership table denominates everything in one \"common stock\" with a single \"Percent of Class\" on 1,630,338,779 shares). It says nothing about voting structure, super-voting shares, or peer issuers. The clause \"without the super-voting structure common among newer technology issuers\" is an editorial comparison the excerpt does not carry, and the prompt requires governance claims to rest on the proxy excerpt.",
+      "fix": "Keep the claim to what the ownership table shows (a single class of common stock, proportional voting). Drop the unsupported \"super-voting structure common among newer technology issuers\" generalization, or ground it.",
+      "status": "addressed",
+      "note": "Addressed: the clause now reads only \"There is a single class of common stock, so public shareholders hold both the economics and the vote.\" The \"super-voting structure common among newer technology issuers\" comparison was removed (0 occurrences in the judgment)."
+    },
+    {
+      "id": "F-4",
+      "severity": "Minor",
+      "field": "sections.businessMoat.segments[1].body",
+      "quote": "grew revenue 23% year-over-year in the quarter on record mobile and commercial demand",
+      "issue": "The transcript supports a record only for mobile (\"record mobile processor revenue\") and for client processor revenue overall; it does not describe \"record\" commercial demand — commercial is characterized as Ryzen PRO sales \"growing more than 50% year-over-year\" and adoption that \"continued to expand.\" Attaching \"record\" to commercial as well as mobile extends the superlative past what the source shows.",
+      "fix": "Confine \"record\" to what the transcript states — \"record mobile processor revenue\" — and describe commercial as growing/expanding (Ryzen PRO +50% YoY) rather than record.",
+      "status": "addressed",
+      "note": "Addressed: the phrase now reads \"grew revenue 23% year-over-year in the quarter on strong mobile and commercial demand.\" \"record\" no longer attaches to commercial (or mobile), so the superlative no longer exceeds the source."
+    },
+    {
+      "id": "F-5",
+      "severity": "Minor",
+      "field": "analystCommentary (+ thesis, valuation, finalRecommendation)",
+      "quote": "a stock priced near its high on a rich multiple",
+      "issue": "The valuation motif is repeated near-verbatim across the report: the subtitle (\"priced richly near its 52-week high\"), analystCommentary (\"a stock priced near its high on a rich multiple\"), thesis (\"trades near its high on a trailing multiple\"), valuation (\"a stock that has run hard and sits near its high\") and finalRecommendation (\"near the high on a rich multiple\"). The probability-weighted fair value \"$565.00 ... about 12% above the price\" likewise recurs verbatim in analystCommentary, scenarioCommentary and finalRecommendation. It is the report's central point, but the same phrasing repeated five-plus times is a tic past the point of notice.",
+      "fix": "Introduce the \"near its high on a rich multiple\" point and the $565 / ~12% fair value once each, then refer back in varied words. Let each section add its own angle rather than restate the same phrase.",
+      "status": "open",
+      "note": "Reduced but not resolved. \"near [its/the] high on a rich multiple\" still appears verbatim 3x: analystCommentary, sections.executiveSummary.risks[0], sections.finalRecommendation.body[1]. \"$565.00 ... about 12% above the price\" is verbatim in both analystCommentary and sections.valuation.scenarioCommentary (item 7: same sentence in two sections). The \"run hard / climbed steeply\" motif also recurs 3x. Fix asked for each introduced once, then referred back in varied words."
+    },
+    {
+      "id": "F-6",
+      "severity": "Minor",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "the asset base is heavy with goodwill and intangibles from the Xilinx and ZT Systems deals, so reported book value overstates tangible capital",
+      "issue": "The grounding surface carries no goodwill, intangibles or tangible-book-value figure — only total equity ($63.0B FY25). The claim that the asset base is \"heavy with goodwill and intangibles\" and that book value \"overstates tangible capital\" is a quantitative characterization the pack does not support, even if the FY21-to-FY22 equity step-up hints at it.",
+      "fix": "Either ground the point in a figure the pack carries, or soften it to what is on the surface (e.g. the large equity step-up coinciding with the Xilinx stock deal) rather than asserting the goodwill/intangibles weighting and tangible-capital overstatement outright.",
+      "status": "addressed",
+      "note": "Addressed: the goodwill/intangibles/tangible-capital sentence was removed from balanceCommentary (0 occurrences of \"heavy with goodwill\"). The field now rests on cash, total debt, net debt, current ratio and interest coverage, all of which are on the surface."
+    }
+  ]
+}
