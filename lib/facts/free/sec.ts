@@ -64,6 +64,11 @@ interface CompanyFactsShape {
 // both report the *same* period (the higher-priority one wins).
 
 const REVENUE = [
+  // Utilities report total operating revenue under this concept (regulated + unregulated); it is the
+  // headline top line and exceeds RevenueFromContractWithCustomer, which excludes regulatory-mechanism
+  // and alternative-revenue-program amounts. Non-utilities never tag it, so per-period selection is
+  // unaffected for them.
+  "RegulatedAndUnregulatedOperatingRevenue",
   "RevenueFromContractWithCustomerExcludingAssessedTax",
   "Revenues",
   "RevenueFromContractWithCustomerIncludingAssessedTax",

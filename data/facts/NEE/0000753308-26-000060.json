@@ -1,0 +1,581 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "NEE",
+  "cik": 753308,
+  "company": "NextEra Energy, Inc.",
+  "exchange": "NYSE",
+  "filing": {
+    "form": "10-Q",
+    "accession": "0000753308-26-000060",
+    "filedDate": "2026-07-24",
+    "periodEnd": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/753308/000075330826000060/nee-20260630.htm"
+  },
+  "capturedAt": "2026-09-16T17:58:49.106Z",
+  "quote": {
+    "price": 80.135,
+    "marketCap": 167159873536,
+    "sharesOutstanding": 2085978330.766831,
+    "sharesSource": "derived",
+    "week52Low": 69.37,
+    "week52High": 98.75,
+    "dividendYield": 0.0305,
+    "asOf": "2026-09-16"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          17069000000,
+          20956000000,
+          28114000000,
+          24753000000,
+          27412000000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          2913000000,
+          4081000000,
+          10237000000,
+          7479000000,
+          8280000000
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          6837000000,
+          8584000000,
+          16116000000,
+          12941000000,
+          14860000000
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          3573000000,
+          4147000000,
+          7310000000,
+          6946000000,
+          6835000000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          1.81,
+          2.1,
+          3.6,
+          3.37,
+          3.3
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          639000000,
+          1601000000,
+          2690000000,
+          1487000000,
+          2812000000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          54127000000,
+          63598000000,
+          72956000000,
+          82116000000,
+          95011000000
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          53488000000,
+          61997000000,
+          70266000000,
+          80629000000,
+          92199000000
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          45424000000,
+          48326000000,
+          57768000000,
+          60460000000,
+          66479000000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          0.5326604347078052,
+          0.505338078291815,
+          0.5493330472409971,
+          0.4713468743837507,
+          0.5953455756672656
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          7553000000,
+          8262000000,
+          11301000000,
+          13260000000,
+          12485000000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          -3024000000,
+          -3352000000,
+          -3782000000,
+          -4235000000,
+          -4680000000
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q2'26",
+    "periodEnd": "2026-06-30",
+    "revenue": 7534000000,
+    "operatingMargin": 0.2970533581099018,
+    "revenueYoY": 0.1244776119402986
+  },
+  "ttm": {
+    "pe": 17.96748878923767,
+    "ps": 5.824385837491289,
+    "evToEbitda": 17.548728718488213,
+    "grossMargin": null,
+    "operatingMargin": 0.29822299651567946,
+    "netMargin": 0.3240418118466899,
+    "netDebtToEbitda": 6.693486590038314,
+    "interestCoverage": null,
+    "currentRatio": 0.5338234279008767,
+    "fcfYield": null
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 31077993450,
+      "eps": 4.05215
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 34740254980,
+      "eps": 4.39474
+    }
+  },
+  "analysts": {
+    "count": 20,
+    "buy": 12,
+    "hold": 7,
+    "sell": 1,
+    "consensusRating": "Buy",
+    "consensusTarget": 98.38889,
+    "medianTarget": 100.5,
+    "highTarget": 114,
+    "lowTarget": 55,
+    "asOf": "2026-09-16"
+  },
+  "segments": {
+    "basis": "FY25 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 27412000000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "AEP",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "D",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "DUK",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "ETR",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-05",
+      "close": 85.91000366210938
+    },
+    {
+      "date": "2026-08-06",
+      "close": 84.5999984741211
+    },
+    {
+      "date": "2026-08-07",
+      "close": 84.6500015258789
+    },
+    {
+      "date": "2026-08-10",
+      "close": 84.69999694824219
+    },
+    {
+      "date": "2026-08-11",
+      "close": 85.73999786376953
+    },
+    {
+      "date": "2026-08-12",
+      "close": 85.77999877929688
+    },
+    {
+      "date": "2026-08-13",
+      "close": 86.01000213623047
+    },
+    {
+      "date": "2026-08-14",
+      "close": 86.19000244140625
+    },
+    {
+      "date": "2026-08-17",
+      "close": 86.22000122070312
+    },
+    {
+      "date": "2026-08-18",
+      "close": 86.22000122070312
+    },
+    {
+      "date": "2026-08-19",
+      "close": 85.91000366210938
+    },
+    {
+      "date": "2026-08-20",
+      "close": 85.02999877929688
+    },
+    {
+      "date": "2026-08-21",
+      "close": 83.6500015258789
+    },
+    {
+      "date": "2026-08-24",
+      "close": 84.0999984741211
+    },
+    {
+      "date": "2026-08-25",
+      "close": 84.22000122070312
+    },
+    {
+      "date": "2026-08-26",
+      "close": 84.22000122070312
+    },
+    {
+      "date": "2026-08-27",
+      "close": 83.47000122070312
+    },
+    {
+      "date": "2026-08-28",
+      "close": 81.83999633789062
+    },
+    {
+      "date": "2026-08-31",
+      "close": 82.33999633789062
+    },
+    {
+      "date": "2026-09-01",
+      "close": 82.93000030517578
+    },
+    {
+      "date": "2026-09-02",
+      "close": 83.0999984741211
+    },
+    {
+      "date": "2026-09-03",
+      "close": 84.05999755859375
+    },
+    {
+      "date": "2026-09-04",
+      "close": 83.43000030517578
+    },
+    {
+      "date": "2026-09-08",
+      "close": 83.83000183105469
+    },
+    {
+      "date": "2026-09-09",
+      "close": 82.6500015258789
+    },
+    {
+      "date": "2026-09-10",
+      "close": 82.44000244140625
+    },
+    {
+      "date": "2026-09-11",
+      "close": 82.30999755859375
+    },
+    {
+      "date": "2026-09-14",
+      "close": 81.62999725341797
+    },
+    {
+      "date": "2026-09-15",
+      "close": 81.06999969482422
+    },
+    {
+      "date": "2026-09-16",
+      "close": 80.77999877929688
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "NextEra Energy, Inc., through its subsidiaries, generates, stores, transmits, distributes, and sells electric power to retail and wholesale customers in North America. It operates through Florida Power & Light Company (FPL) and NEER segments. The company generates electricity from wind, solar, nuclear, natural gas, and other clean energy assets. It also invests in generation, storage, transmission, and distribution facilities; owns, develops, constructs, manages, and operates generation facilities, including renewables, nuclear and natural gas, and battery storage facilities in the wholesale energy market in the United States and Canada, as well as electric and gas transmission assets, and natural gas pipelines; provides full energy and capacity requirement services; markets and trades in energy-related commodities; and participates in the production of natural gas, natural gas liquids, and oil. As of December 31, 2025, the company had approximately 35,963 megawatts of net generating capacity; approximately 93,000 circuit miles of transmission and distribution lines; and 932 substations. It serves approximately 12 million people through approximately 6 million customer accounts on the east and lower west coasts of Florida. The company was formerly known as FPL Group, Inc. and changed its name to NextEra Energy, Inc. in 2010. NextEra Energy, Inc. was founded in 1925 and is headquartered in Juno Beach, Florida.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-16"
+    },
+    "mdaExcerpt": {
+      "text": "Item 2. Management's Discussion and Analysis of Financial Condition and Results of Operations\nOVERVIEW\nNEE's operating performance is driven primarily by the operations of its two principal businesses, FPL, which serves more than six million customer accounts in Florida and is the largest electric utility in the U.S., and NEER, which together with affiliated entities is one of the largest energy infrastructure developers in the U.S. The table below presents net income (loss) attributable to NEE and earnings (loss) p er share attributable to NEE , assuming dilution, by reportable segment, FPL and NEER . Corporate and Other is primarily comprised of the operating results of other business activities, as well as other income and expense items, including interest expense, and eliminating entries, and may include the net effect of rounding. See Note 13 for additional segment information. The foll owing discussions should be read in conjunction with the Notes to Condensed Consolidated Financial Statements contained herein and Management's Discussion and Analysis of Financial Condition and Results of Operations appearing in the 2025 Form 10 K. The results of operations for an interim period generally will not give a true indication of results for the year. In the following discussions, all comparisons are with the corresponding items in the prior year periods.\nNet Income (Loss)\nAttributable to NEE\nEarnings (Loss)\nPer Share Attributable to NEE,\nAssuming Dilution\nNet Income (Loss) Attributable to NEE\nEarnings (Loss)\nPer Share Attributable to NEE,\nAssuming Dilution\nThree Months Ended June 30,\nThree Months Ended June 30,\nSix Months Ended June 30,\nSix Months Ended June 30,\n2026\n2025\n2026\n2025\n2026\n2025\n2026\n2025\n(millions)\n(millions)\nFPL\n$\n1,412\n$\n1,275\n$\n0.67\n$\n0.62\n$\n2,874\n$\n2,591\n$\n1.37\n$\n1.26\nNEER (a)\n1,634\n983\n0.78\n0.48\n2,653\n1,155\n1.27\n0.56\nCorporate and Other\n98\n(230)\n0.05\n(0.12)\n(201)\n(884)\n(0.10)\n(0.43)\nNEE\n$\n3,144\n$\n2,028\n$\n1.50\n$\n0.98\n$\n5,326\n$\n2,862\n$\n2.54\n$\n1.39\n(a) NEER's results reflect an allocation of interest expense from NEECH to NextEra Energy Resources based on a deemed capital structure of 70% debt and differential membership interests sold by NextEra Energy Resources' subsidiaries.\nAdjusted Earnings\nNEE prepares its financial statements under GAAP. However, management also uses earnings adjusted for certain items (adjusted earnings), a non-GAAP financial measure, internally for financial planning, analysis of performance, reporting of results to the Board of Directors and as an input in determining performance-based compensation under NEE's employee incentive compensation plans. NEE also uses adjusted earnings when communicating its financial results and earnings outlook to analysts and investors. NEE's management believes that adjusted earnings provide a more meaningful representation of NEE's fundamental earnings power. Although these amounts are properly reflected in the determination of net income under GAAP, management believes that the amount and/or nature of such items make period to period comparisons of operations difficult and potentially confusing. Adjusted earnings do not represent a substitute for net income, as prepared under GAAP.\nThe following table provides details of the after-tax adjustments to net income considered in computing NEE's adjusted earnings discussed above.\nThree Months Ended June 30,\nSix Months Ended June 30,\n2026\n2025\n2026\n2025\n(millions)\nNet gains (losses) associated with non-qualifying hedge activity (a)\n$\n640\n$\n(189)\n$\n596\n$\n(701)\nXPLR investment gains, net NEER (b)\n$\n(6)\n$\n(1)\n$\n(13)\n$\n(643)\nChange in unrealized gains (losses) on equity securities held in NEER's nuclear decommissioning funds and OTTI, net NEER\n$\n134\n$\n54\n$\n92\n$\n5\nMerger-related expenses Corporate and Other (c)\n$\n(31)\n$\n$\n(31)\n$\n(a) For the three months ended June 30, 2026 and 2025, approximately $215 million of gains and $161 million of losses, respectively, and for the six months ended June 30, 2026 and 2025, approximately $245 million of gains and $206 million of losses, respectively, are included in NEER's net income; the remaining balance is included in Corporate and Other. The change in non-qualifying hedge activity is primarily attributable to changes in forward power and natural gas prices, interest rates and foreign currency exchange rates, as well as the reversal of previously recognized unrealized mark-to-market gains or losses as the underlying transactions were realized.\n(b) The six months ended June 30, 2025 includes an impairment charge related to the investment in XPLR. See Note 3 Nonrecurring Fair Value Measurements.\n(c) See Note 5 Proposed Business Combination.\n45\nNEE segregates into two categories unrealized mark-to-market gains and losses and timing impacts related to derivative transactions. The first category, referred to as non-qualifying hedges, represents certain energy derivative, interest rate derivative and foreign currency transactions entered into as economic hedges, which do not meet the requirements for hedge accounting, or for which hedge accounting treatment is not elected or has been discontinued. Changes in the fair value of those transactions are marked to market and reported in the condensed consolidated statements of income, resulting in earnings volatility because the economic offset to certain of the positions are generally not marked to market. As a consequence, NEE's net income reflects only the movement in one part of economically-linked transactions. For example, a gain (loss) in the non-qualifying hedge category for certain energy derivatives is offset by decreases (increases) in the fair value of related physical asset positions in the portfolio or contracts, which are not marked to market under GAAP. For this reason, NEE's management views results expressed excluding the impact of the non-qualifying hedges as a meaningful measure of current period performance. The second category, referred to as trading activities, which is included in adjusted earnings, represents the net unrealized effect of actively traded positions entered into to take advantage of expected market price movements and all other commodity hedging activities. At FPL, substantially all changes in the fair value of energy derivative transactions are deferred as a regulatory asset or liability until the contracts are settled, and, upon settlement, any gains or losses are passed through the fuel clause or base rates. See Note 2.\nRESULTS OF OPERATIONS\nSummary\nNet income attributable to NEE increased $1,116 million and $2,464 million for the three and six months ended June 30, 2026, respectively, reflecting higher results at FPL, NEER and Corporate and Other.\nFPL's increase in net income for the three and six months ended June 30, 2026 was primarily driven by continued investments in plant in service and other property.\nNEER's results increased for the three months ended June 30, 2026 primarily reflecting favorable non-qualifying hedge activity compared to 2025 and higher earnings from new investments. NEER's results increased for the six months ended June 30, 2026 primarily reflecting the absence of an impairment charge related to the investment in XPLR recorded in 2025, favorable non-qualifying hedge activity compared to 2025 and higher earnings from new investments.\nCorporate and Other's results increased for the three and six months ended June 30, 2026 primarily due to favorable non-qualifying hedge activity compared to 2025, partly offset by higher interest expense driven by higher average debt balances.\nNEE's effective income tax rates for the three months ended June 30, 2026 and 2025 were approximately (3)% and (19)%, respectively, and for the six months ended June 30, 2026 and 2025 were (15)% and (59)%, respectively. See Note 4 for a discussion of NEE's and FPL's effective income tax rates.\nA number of legislative, executive and administrative activities occurred in 2025 and 2026 that affect NEE and FPL including 1) the enactment of the One Big Beautiful Bill Act (OBBBA) which, among other things, modified tax legislation affecting clean energy tax credits, 2) the issuance of a number of federal executive orders and presidential actions, 3) the imposition of tariffs on a variety of imports and 4) the issuance of guidance by various federal agencies. A number of similar activities remain pending or are in various phases of implementation, such as certain Treasury Department rulemaking authorized by the OBBBA, trade investigations that may lead to additional tariffs or place limitations on imports of certain materials, ordered reviews of, or process or policy changes with respect to, federal permitting and approvals for wind and solar projects and proposals by regional transmission operators regarding the process for interconnecting new generation projects to certain regional transmission grids that have been approved by FERC. There has been no material impact on NEE's or FPL's operations or financial performance as a result of these developments and NEE believes that its current pipeline of wind and solar facilities to be placed in service through 2030 will qualify for clean energy tax credits. NEE will assess any further developments for potential impacts in future periods.\nIn May 2026, NEE and Dominion Energy entered into a merger agreement. See Note 5 Proposed Business Combination.\nFPL: Results of Operations\nFPL's net income increased $137 million and $283 million for the three and six months ended June 30, 2026, respectively. Investments in plant in service and other property grew FPL's average rate base by approximately $6.8 billion and $6.6 billion for the three and six months ended June 30, 2026, respectively, when compared to the same periods in the prior year, reflecting, among other things, solar generation additions and ongoing transmission and distribution additions.\nThe use of RSM for the three and six months ended June 30, 2026 is permitted by the 2025 rate agreement, and, for the prior year periods, the use of reserve amortization was permitted by the 2021 rate agreement. The RSM reserve, which is authorized up to approximately $1.5 billion, after tax, over the term of the 2025 rate agreement, includes ITC amortization for battery storage projects placed in service in 2025, the remaining balance from FPL's previous reserve amortization mechanism as of January 1, 2026 and certain amounts related to deferred tax liabilities.\n46\nIn order to earn a targeted regulatory ROE in each reporting period, subject to conditions of the effective rate agreement, RSM amortization and reserve amortization, as applicable, are calculated using a trailing thirteen-month average of retail rate base and capital structure in conjunction with the trailing twelve months regulatory retail base net operating income, which primarily includes the retail base portion of base and other revenues, net of O&M, depreciation and amortization, interest and tax expenses. In general, the net impact of these income statement line items is adjusted, in part, by the RSM amortization or reserve amortization, as applicable, to earn the targeted regulatory ROE. In certain periods, the RSM amortization or reserve amortization, as applicable, are reversed so as not to exceed the targeted regulatory ROE. The drivers of FPL's net income not reflected in the RSM amortization and reserve amortization calculation typically include wholesale and transmission service revenues and expenses, cost recovery clause revenues and expenses, AFUDC equity and revenue and costs not recoverable from retail customers.\nDuring the three months ended June 30, 2026, FPL recorded the reversal of RSM amortization of approximately $110 million, after tax, reflecting the reversal of reserve amortization in accordance with the 2025 rate agreement. During the six months ended June 30, 2026, FPL recorded RSM amortization of approximately $196 million, after tax, reflecting ITC and reserve amortization in accordance with the 2025 rate agreement. During the three and six months ended June 30, 2025, FPL recorded pre-tax reserve amortization of approximately $19 million and $641 million, respectively. See Depreciation and Amortization Expense and Income Taxes below. FPL earned a regulatory ROE of approximately 11.70% and 11.60% on its retail rate base, based on a trailing thirteen-month average retail rate base as of June 30, 2026 and June 30, 2025, respectively.\nFPL completed a twelve-month storm restoration charge that began in January 2025 for eligible storm restoration costs of approximately $1.2 billion, primarily related to surcharges for Hurricanes Debby, Helene and Milton which impacted FPL's service area in 2024.\nIn February 2026, the non signatories challenged the FPSC's final order approving the 2025 rate agreement through a motion for reconsideration with the FPSC and appeals with the Florida Supreme Court. In April 2026, the FPSC denied substantially all of the motion for reconsideration, and the matter remains pending before the Florida Supreme Court. In May 2026, notices of appeal were filed with the Florida Supreme Court challenging the FPSC's order denying reconsideration of the FPSC's final order approving the 2025 rate agreement. In June 2026, the Florida Supreme Court consolidated the appeals into a single proceeding. See Note 11 Rate Regulation.\nOperating Revenues\nDuring the three and six months ended June 30, 2026, operating revenues increased $188 million and $462 million, respectively.\nRetail base revenues during the three and six months ended June 30, 2026 increased by approximately $276 million and $561 million, respectively, reflecting additional revenues of $251 million and $451 million, respectively, related to new retail base rates under the 2025 rate agreement. Retail base revenues for the three and six months ended June 30, 2026 were also impacted by increases of approximately 1.5% and 1.6%, respectively, in the average number of customer accounts, partly offset by decreases of 1.2% and 0.1%, respectively, in the average usage per retail customer when compared to the prior year periods.\nThe increase in operating revenues for the three and six months ended June 30, 2026 also reflects increases in fuel revenues of approximately $137 million and $207 million, respectively, and increases in storm protection plan cost recovery clause revenues of $47 million and $108 million, respectively. The increase in operating revenues for the three and six months ended June 30, 2026 was partly offset by decreases in storm cost recovery revenues of approximately $309 million and $556 million, respectively, primarily associated with the completion of surcharges for Hurricanes Debby, Helene and Milton, as discussed above.\nFuel, Purchased Power and Interchange\nFuel, purchased power and interchange expense increased $133 million during the three months ended June 30, 2026 primarily reflecting higher net recognition of previously deferred fuel costs, partly offset by lower fuel prices as compared to the prior year period. Fuel, purchased power and interchange expense increased $190 million during the six months ended June 30, 2026 primarily reflecting higher usage and higher net recognition of previously deferred fuel costs as compared to the prior year period.\nDepreciation and Amortization Expense\nDepreciation and amortization expense decreased $51 million during the three months ended June 30, 2026 primarily driven by lower amortization of deferred storm costs of approximately $309 million primarily associated with the completion of the surcharges related to Hurricanes Debby, Helene and Milton, as discussed above. This decrease was partly offset by the impact of the reversal of RSM amortization (reserve amortization in 2025) as well as higher plant in service balances.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/753308/000075330826000060/nee-20260630.htm",
+      "asOf": "2026-07-24",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "Item 1A. Risk Factors\nRisks Relating to NEE's and FPL's Business\nThe business, financial condition, results of operations and prospects of NEE and FPL are subject to a variety of risks, many of which are beyond the control of NEE and FPL. These risks, whether or not expressly stated with respect to any particular risk factor, as well as additional risks and uncertainties either not presently known or that are currently believed to not be material to the business, may materially adversely affect the business, financial condition, results of operations and prospects of NEE and FPL and may cause actual results of NEE and FPL to differ substantially from those that NEE or FPL currently expects or seeks. In that event, the market price for the securities of NEE or FPL could decline. Accordingly, the risks described below should be carefully considered together with the other information set forth in this report and in future reports that NEE and FPL file with the SEC.\nRegulatory, Legislative and Legal Risks\nNEE's and FPL's business, financial condition, results of operations and prospects may be materially adversely affected by the extensive regulation of their business.\nThe operations of NEE and FPL are subject to complex and comprehensive federal, state and other regulation. This extensive regulatory framework, portions of which are more specifically identified in the following risk factors, regulates, among other things and to varying degrees, NEE's and FPL's industry, businesses, operations, and rates and cost structures, including: siting, permitting, planning, construction and operation of electric generation, storage, transmission and distribution facilities and natural gas, oil and other fuel production, transportation, processing and storage facilities; acquisitions, disposals, depreciation and amortization of facilities and other assets; decommissioning costs and funding; service reliability; wholesale and retail competition; and commodities trading and derivatives transactions. In their business planning and in the management of their operations, NEE and FPL must address the effects of regulation on their business and any inability or failure to do so adequately could have a material adverse effect on their business, financial condition, results of operations and prospects.\nNEE's and FPL's business, financial condition, results of operations and prospects could be materially adversely affected if they are unable to recover in a timely manner any significant amount of costs, a return on certain assets or a reasonable return on invested capital through base rates, cost recovery clauses, other regulatory mechanisms or otherwise.\nFPL operates as an electric utility and is subject to the jurisdiction of the FPSC over a wide range of business activities, including, among other items, the retail rates charged to its customers through base rates and cost recovery clauses, the terms and conditions of its services, procurement of electricity for its customers and fuel for its plant operations, issuances of securities, and aspects of the siting, permitting, planning, construction and operation of its generation, storage, transmission and distribution facilities for the sale of electric energy. The FPSC has the authority to disallow recovery by FPL of costs that it considers excessive or imprudently incurred and to determine the level of return that FPL is permitted to earn on invested capital. The regulatory process, which may be adversely affected by the geopolitical, political, regulatory, operational and economic environment in Florida and elsewhere, limits or could otherwise adversely impact NEE's and FPL's earnings. The regulatory process also does not provide any assurance as to achievement of authorized or other earnings levels, or that FPL will be permitted to earn an acceptable return on capital investments it wishes to make. NEE's and FPL's business, financial condition, results of operations and prospects could be materially adversely affected if any material amount of costs, a return on certain assets or a reasonable return on invested capital cannot be recovered through base rates, cost recovery clauses, other regulatory mechanisms or otherwise. Certain other subsidiaries of NEE, such as subsidiaries of NEET, are utilities subject to the ratemaking jurisdiction of FERC, the PUCT or the OEB and are subject to similar risks.\nRegulatory decisions that are important to NEE and FPL may be materially adversely affected by political, regulatory, operational and economic factors.\nThe local and national political, regulatory and economic environment has had, and may in the future have, an adverse effect on regulatory decisions with negative consequences for NEE and FPL. These decisions, which may come from any level of government, including through actions taken, or not taken, by government agencies as a result of executive orders, may require, for example, FPL or NEER to cancel or delay planned development activities, to reduce or delay other planned capital expenditures or to pay for investments or otherwise incur costs that it may not be able to recover through rates or otherwise, each of which could have a material adverse effect on the business, financial condition, results of operations and prospects of NEE and FPL.\nAny reductions or modifications to, or the elimination of, governmental incentives or policies that support clean energy, including, but not limited to, tax laws, policies and incentives, RPS and feed-in-tariffs, or changes in or the imposition of additional taxes, tariffs, duties or other costs or assessments on clean energy or the equipment necessary to generate, store or deliver it, could result in, among other items, the lack of a satisfactory market for the development and/or financing of new clean energy projects, NEE and FPL abandoning the development of clean energy projects, a\n23\nTable of Content s\nloss of investments in clean energy projects and reduced project returns, any of which could have a material adverse effect on NEE's and FPL's business, financial condition, results of operations and prospects.\nNEE depends on government policies that support clean energy and enhance the economic feasibility of developing and operating clean energy projects in regions in which NEER and FPL operate or plan to develop and operate such facilities. The federal government, a majority of state governments in the U.S. and portions of Canada provide incentives, such as tax incentives, RPS or feed-in-tariffs, that support or are designed to support the sale of energy from clean energy facilities, such as wind and solar energy facilities and energy storage facilities. However, as a result of budgetary constraints, geopolitical factors, political factors or otherwise, governments from time to time may review their laws and policies that support, or do not overly burden, the development and operation of clean energy facilities and, instead, consider or take actions, such as the OBBBA and related governmental actions, that make or would make the laws and policies less conducive to the development and operation of such projects. Any reductions or modifications to, or the elimination of, governmental incentives or policies that support clean energy or changes in or the imposition of additional taxes, tariffs, duties or other costs or assessments on clean energy or the equipment necessary to generate, store or deliver it, could result in, among other items, higher equipment costs, scarcity of equipment, the lack of a satisfactory market for the development and/or financing of new clean energy projects, NEE and FPL abandoning the development of clean energy projects, a loss of investments in the projects and reduced project returns, any of which could have a material adverse effect on NEE's and FPL's business, financial condition, results of operations and prospects.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/753308/000075330826000015/nee-20251231.htm",
+      "asOf": "2026-02-13",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-K",
+    "pressRelease": {
+      "text": "EX-99\n2\nneeq22026exhibit99.htm\nEX-99\nDocument\nExhibit 99\nNextEra Energy, Inc.\nMedia Line 561-694-4442\nJuly 24, 2026\nFOR IMMEDIATE RELEASE\nNextEra Energy reports second-quarter 2026 financial results\nNextEra Energy delivers strong second-quarter results\nFPL grows regulatory capital employed by approximately 9.3% year-over-year and continues to keep customer bills low while delivering highly reliable electricity\nNextEra Energy Resources has a strong quarter for new renewables and storage origination, adding 3.6 gigawatts to its backlog\nNextEra Energy and Dominion Energy advance proposed combination by filing applications seeking merger approvals\nJUNO BEACH, Fla. - NextEra Energy, Inc. (NYSE NEE) today reported 2026 second-quarter net income attributable to NextEra Energy on a GAAP basis of $3.144 billion, or $1.50 per share, compared to $2.028 billion, or $0.98 per share, for the second quarter of 2025. On an adjusted basis, NextEra Energy's 2026 second-quarter earnings were $2.407 billion, or $1.15 per share, compared to $2.164 billion, or $1.05 per share, in the second quarter of 2025.\nNextEra Energy delivered a strong second quarter, with adjusted earnings per share increasing by 9.5% year-over-year, reflecting continued operational and financial execution across both FPL and NextEra Energy Resources, said John Ketchum, chairman, president and chief executive officer. As power demand continues to accelerate, NextEra Energy is uniquely positioned to meet the power demand needs of our customers because we have the scale, financial strength, supply chain, development expertise and technology to build all forms of energy. NextEra Energy continues to be well positioned to deliver on its growth opportunities in its regulated and long-term contracted businesses in 2026 and beyond. We continue to expect to grow adjusted earnings per share at a compound annual growth rate of 8%+ through 2032 and are targeting the same from 2032 through 2035, all off our 2025 base.\nEarlier this month, we took the next step in our proposed combination with Dominion Energy by filing applications for merger approval with state and federal agencies, formally beginning the regulatory review process. This combination is about putting greater scale, financial strength and operational expertise behind Dominion Energy's local operating companies so they can meet growing power demand while keeping bills affordable and service reliable. Together, we will be better positioned to support jobs and economic development in four fast-growing states by investing in the all-of-the-above energy infrastructure needed to power growth and strengthen American competitiveness. If approved and completed, Dominion Energy customers would receive $2.25 billion in shareholder-funded bill credits, providing meaningful near-term customer benefits. Over the longer term, customers and communities would benefit from a stronger company with the scale and capabilities to buy, build, finance and operate critical energy infrastructure more efficiently, helping support reliability, affordability and economic growth. As discussed when the combination was announced on May 18, the combined company is expected to support approximately 11% annual growth in regulatory capital employed through 2032 and 9%+ adjusted earnings per share growth through 2032, with a 9%+ target through 2035, all off a 2025 base.\nFPL\nFPL reported second-quarter 2026 net income of $1.412 billion, or $0.67 per share, compared to $1.275 billion, or $0.62 per share, for the prior-year comparable quarter.\nFPL's growth in the second quarter of 2026 was driven primarily by continued disciplined capital investments. FPL's capital expenditures were approximately $2.8 billion for the second quarter, and full-year capital investments are expected to be between $12 billion and $13 billion. Regulatory capital employed increased by approximately 9.3%, compared to the prior-year comparable quarter.\n1\nFPL continues to demonstrate that it can consistently deliver customer affordability and reliability, while serving one of the fastest-growing states in the nation and the world's 14th largest economy. Today, FPL's typical residential bill remains approximately 30% below the national average and is only projected to increase 2% annually on average through the end of the decade. FPL drives consistently low bills through exceptional operational efficiency. FPL's non-fuel O M is more than 70% better than the industry average on a dollar-per-megawatt-hour basis. Customers also continue to benefit from top-decile reliability that's more than 60% better than the national average. During the second quarter, FPL added more than 90,000 customers, compared to the prior-year comparable period.\nFPL continues to see very strong interest from hyperscalers and other large customers that value speed to market, reliability and competitive power pricing. FPL has roughly 21 gigawatts (GW) of large-load interest. Of that, FPL is in advanced discussions on 12 GW, a portion of which it believes it could begin serving as soon as 2028. FPL is advancing negotiations with large-load customers and continues to expect to announce at least one large-load transaction under FPL's tariff by the end of the year.\nNextEra Energy Resources\nNextEra Energy Resources reported second-quarter 2026 net income attributable to NextEra Energy on a GAAP basis of $1.634 billion, or $0.78 per share, compared to $983 million, or $0.48 per share, in the prior-year quarter. On an adjusted basis, NextEra Energy Resources' earnings for the second quarter of 2026 were $1.291 billion, or $0.62 per share, compared to $1.091 billion, or $0.53 per share, for the second quarter of 2025.\nNextEra Energy Resources had a strong quarter of new renewables and storage origination with 3.6 GW added to the backlog. Battery storage represented 2 GW of additions this quarter. With these additions, NextEra Energy Resources' backlog now totals approximately 35.1 GW after taking into account 1.1 GW of new projects placed into service since the first-quarter 2026 financial results call in April.\nNextEra Energy Resources also remains on track to bring the Duane Arnold nuclear power plant back online no later than the first quarter of 2029. The Iowa Utilities Commission approved a generating certificate for the plant, and NextEra Energy Resources also successfully closed on the acquisition of the final 30% minority interest in the plant held by the two cooperative partners, making NextEra Energy Resources the plant's sole owner.\nDuring the quarter, NextEra Energy Transmission energized a new 137-mile, 345-kilovolt (kV) transmission line in New Mexico to strengthen grid reliability in a growing part of the state. The project was completed ahead of schedule and on budget and is projected to reduce typical residential electric bills in 2031 by approximately $13 per month, based on an independent study performed by the Southwest Power Pool, providing a clear and tangible example of how smart transmission investments can directly improve affordability for customers. Also during the quarter, MISO selected NextEra Energy Transmission as part of a consortium to develop two large-scale 765-kV transmission projects in Illinois.\nCorporate and Other\nIn the second quarter of 2026 on a GAAP basis, Corporate and Other results increased $0.17 per share, compared to the prior-year quarter. On an adjusted basis, Corporate and Other results for the second quarter of 2026 decreased $0.04 per share, compared to the prior-year quarter.\nNextEra Energy and Dominion Energy proposed combination\nNextEra Energy and Dominion Energy continue to advance their proposed combination. On July 15, the companies filed for merger approval with the Virginia State Corporation Commission, North Carolina Utilities Commission and the Public Service Commission of South Carolina. The Virginia filing initiated the state's statutory six-month review process. The companies also filed for merger approval with the Federal Energy Regulatory Commission and the Nuclear Regulatory Commission. In addition, the companies filed the registration statement on Form S-4 with the Securities and Exchange Commission on July 9, which became effective yesterday. NextEra Energy expects to distribute proxy materials to shareholders in the near future and expects Dominion Energy to do the same. The companies are anticipating both special shareholder meetings will be held in early September. The transaction is expected to close in the second half of 2027, subject to customary closing conditions and approvals. As discussed when the combination was announced on May 18, the combined company is expected to support approximately 11% annual growth in regulatory capital employed through 2032 and 9%+ adjusted earnings per share growth through 2032, with a 9%+ target through 2035, all off a 2025 base.\nOutlook\nNextEra Energy's long-term financial expectations remain unchanged. NextEra Energy continues to expect 2026 adjusted earnings per share to be in the range of $3.92 to $4.02 and is targeting the high end of that range. NextEra Energy also continues to expect a compound annual growth rate in adjusted earnings per share of 8%+ annually through 2032 and is targeting the same from 2032 through 2035, all off the 2025 base of $3.71 adjusted earnings\n2\nper share. NextEra Energy also continues to expect to grow its dividends per share at a roughly 10% rate per year through 2026, off a 2024 base, and 6% per year from year-end 2026 through 2028.\nConference call information\nAs previously announced, NextEra Energy's second-quarter 2026 financial results conference call is scheduled for 9 a.m. ET today. The listen-only webcast will be available on NextEra Energy's website by accessing the following link www.NextEraEnergy.com FinancialResults . The news release and slides accompanying the presentation may be downloaded at www.NextEraEnergy.com FinancialResults , beginning at 7 30 a.m. ET today. A replay will be available for 90 days by accessing the link listed above.\nNextEra Energy, Inc.\nNextEra Energy, Inc. (NYSE NEE) is the largest electric power and energy infrastructure company in North America and is a leading provider of electricity to American homes and businesses. Headquartered in Juno Beach, Florida, NextEra Energy is a Fortune 200 company that owns Florida Power Light Company, America's largest electric utility, which provides reliable electricity to approximately 12 million people across Florida. NextEra Energy also owns the largest energy infrastructure development company in the U.S., NextEra Energy Resources, LLC. NextEra Energy and its affiliated entities are meeting America's growing energy needs with a diverse mix of energy sources, including natural gas, nuclear, renewable energy and battery storage. For more information about NextEra Energy companies, visit these websites www.NextEraEnergy.com , www.FPL.com , www.NextEraEnergyResources.com .\n###\nAdjusted earnings for the periods in this news release exclude the effects of non-qualifying hedges XPLR Infrastructure, LP net investment gains change in unrealized gains and losses on equity securities held in NextEra Energy Resources' nuclear decommissioning funds and other than temporary impairments (OTTI) and merger-related expenses.\nNextEra Energy's management uses adjusted earnings, which is a non-GAAP financial measure, internally for financial planning, analysis of performance, reporting of results to the board of directors and as an input in determining performance-based compensation under the company's employee incentive compensation plans. NextEra Energy also uses earnings expressed in this fashion when communicating its financial results and earnings outlook to analysts and investors. NextEra Energy's management believes that adjusted earnings provide a more meaningful representation of NextEra Energy's fundamental earnings power. A reconciliation of historical adjusted earnings to net income attributable to NextEra Energy, which is the most directly comparable GAAP measure, is included in the attachments to this news release. Adjusted earnings does not represent a substitute for net income, as prepared in accordance with GAAP.\nNextEra Energy does not provide a quantitative reconciliation of forward-looking adjusted earnings per share to earnings per share, the most directly comparable GAAP financial measure, because certain information needed to reconcile these measures is not available without unreasonable efforts due to the inherent difficulty in forecasting and quantifying these measures. These items include, but are not limited to, the effects of non-qualifying hedges and unrealized gains and losses on equity securities held in NextEra Energy Resources, LLC's nuclear decommissioning funds and other than temporary impairments. These items could significantly impact GAAP earnings per share. Adjusted earnings expectations and other forward-looking statements assume, among other things, normal weather and operating conditions positive macroeconomic conditions in the U.S. and Florida supportive commodity markets current forward curves public policy support for wind, solar, and storage development and construction market demand for generation development and capacity needs market demand and policy support for transmission development and expansion market demand for pipeline capacity access to capital at reasonable cost and terms rate case outcomes consistent with historical no adverse litigation decisions and no changes to governmental policies or incentives. Please see the accompanying cautionary statements for a list of the risk factors that may affect future results.\nThis news release should be read in conjunction with the attached unaudited financial information.\nCautionary Statements and Risk Factors That May Affect Future Results\nThis news release contains \"forward-looking statements\" within the meaning of the safe harbor provisions of the Private Securities Litigation Reform Act of 1995. Forward-looking statements are not statements of historical facts, but instead represent the current expectations of NextEra Energy, Inc. (NextEra Energy) and Florida Power Light Company (FPL) regarding future operating results and other future events, many of which, by their nature, are inherently uncertain and outside of NextEra Energy's and FPL's control. Forward-looking statements in this news release include, among others, statements concerning adjusted earnings per share expectations and future operating performance, statements concerning future dividends and statements concerning growth strategies, capital investment opportunities and technology initiatives. In addition, all statements other than statements of historical fact included or incorporated by reference in this news release, including, among other things, statements regarding the proposed business combination transaction between NextEra Energy and Dominion Energy, Inc., a Virginia corporation (Dominion Energy), and other aspects of NextEra Energy's or FPL's operations or operating results, are forward-looking statements. In some cases, you can identify the forward-looking statements by words or phrases such as ambition, \"will,\" \"may result,\" \"expect,\" \"anticipate,\" estimate, \"believe,\" budget, \"intend,\" \"plan,\" \"seek,\" \"potential,\" \"projection,\" \"forecast,\" \"predict,\" \"goals,\" \"target,\" \"outlook,\" \"should,\" \"would,\" \"estimate,\" \"continue,\" \"could,\" \"objective,\" \"guidance,\" \"effort\" or similar words or expressions.",
+      "source": "edgar:8-K ex-99.1",
+      "url": "https://www.sec.gov/Archives/edgar/data/753308/000075330826000058/neeq22026exhibit99.htm",
+      "asOf": "2026-07-24",
+      "truncated": true
+    },
+    "proxyStatement": {
+      "text": "Board and director independence:\nDIRECTOR INDEPENDENCE\nThe Board conducts an annual review regarding the independence from the Company's management of each of its members and, in addition, assesses the independence of any new member at the time that the new member is considered for appointment or nomination for election to the Board. In assessing independence, the Board considers all relevant facts and circumstances and the standards established by the NYSE and also set forth or referred to in the Governance Guidelines. The NYSE standards and the Governance Guidelines require that NextEra Energy have a majority of independent directors and that the Board must affirmatively determine that each director has no material relationship with the Company in order to determine that the director is independent. Material relationships for this purpose may include commercial, industrial, banking, consulting, legal, accounting, charitable and familial relationships, among others.\nBased on its review, the Board determined that Nicole S. Arnaboldi, James L. Camaren, Naren K. Gursahaney, Kirk S. Hachigian, Maria G. Henry, Amy B. Lane, Geoffrey S. Martha, David L. Porges, Dev Stahlkopf, John A. Stall and Darryl L. Wilson, constituting all 11 non-employee directors, are independent under the NYSE standards and the Governance Guidelines.\nIn determining that Mr. Camaren is independent, the Board considered that a NextEra Energy Subsidiary has employed Mr. Camaren's son-in-law since 2021 in a non-executive business role, for total compensation in 2025 of approximately $230,000.\nBOARD LEADERSHIP STRUCTURE\nThe Board believes that the decision as to who should serve as chairman and as CEO and whether the offices should be combined or separate is properly the responsibility of the Board to be exercised from time to time in appropriate consideration of the Company's then-existing characteristics or circumstances. In view of the Company's operating record, including its role as a national leader in renewable energy generation, and the operational and financial opportunities and challenges faced by the Company, the Board's judgment is that the functioning of the Board is generally best served by maintaining a structure of having one individual serve as both chairman and CEO. The Board believes that having a single person acting in the capacities of chairman and CEO promotes unified leadership and direction for the Board and executive management and allows for a single, clear focus for the chain of command to execute the Company's strategic initiatives and business plans and to address its challenges. However, in certain circumstances, such as the transition from one CEO to another, the Board believes that it may be appropriate for the roles of the CEO and the chairman to be separated.\nThe Board has an independent Lead Director selected by and from the independent directors (with strong consideration given to present and past committee chairs).\n\nRelated-person transactions:\nTRANSACTIONS WITH RELATED PERSONS\nIn 2007, the Board adopted a Related Person Transactions Policy (the \"Policy\") for the review and approval of related person transactions by the Governance & Nominating Committee. Transactions and series of transactions exceeding $120,000 in any fiscal year involving the Company and in which any related person has a direct or indirect material interest are governed by the Policy (\"Related Person Transactions\"). Related persons under the Policy are executive officers, directors and nominees for director of NextEra Energy, any beneficial owner of more than 5% of any class of NextEra Energy's voting securities and any immediate family member of any of the foregoing persons (\"Related Person\").\nIn considering whether to approve a Related Person Transaction, the Governance & Nominating Committee (or its Chair, to whom authority has been delegated under certain circumstances) considers such factors as it (or the Chair) deems appropriate, which may include:\n(1)\nthe Related Person's relationship to NextEra Energy and interest in the transaction;\n(2)\nthe material facts of the proposed Related Person Transaction, including the proposed value of such transaction or, in the case of indebtedness, the principal amount that would be involved;\n(3)\nthe benefits to NextEra Energy and its shareholders of the Related Person Transaction; and\n(4)\nan assessment of whether the Related Person Transaction is on terms that are comparable to the terms that would be available to an unrelated third party.\nThe Policy provides for standing approval for certain categories of Related Person Transactions without the need for specific approval by the Governance & Nominating Committee.",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/753308/000110465926038551/tm261592-1_def14a.htm",
+      "asOf": "2026-04-01",
+      "truncated": true
+    },
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-16T17:58:49.106Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-09-16T17:58:49.106Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-16T17:58:49.106Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-16T17:58:49.106Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-16T17:58:49.106Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-16T17:58:49.106Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-16T17:58:49.106Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-16T17:58:49.106Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-16T17:58:49.106Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-16T17:58:49.106Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-16T17:58:49.106Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-16T17:58:49.106Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-16T17:58:49.106Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-16T17:58:49.106Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-16T17:58:49.106Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-09-16T17:58:49.106Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-09-16T17:58:49.106Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-09-16T17:58:49.106Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-16T17:58:49.106Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-16T17:58:49.106Z"
+    }
+  ]
+}

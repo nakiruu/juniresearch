@@ -36,7 +36,10 @@ export function mapStatements(dir: string): { statements: FactPack["statements"]
     fiscalYears: years.map(fyLabel),
     income: [
       row("revenue", "Revenue", revenue),
-      row("grossProfit", "Gross Profit", col(inc, "gross_profit")),
+      // Optional: utilities and banks report no gross-profit line (no COGS), so SEC XBRL carries no
+      // GrossProfit tag and none can be derived — the row is null and renders "—", with operating
+      // margin carrying profitability instead.
+      row("grossProfit", "Gross Profit", col(inc, "gross_profit", true)),
       row("operatingIncome", "Operating Income", col(inc, "operating_income")),
       row("ebitda", "EBITDA", col(inc, "ebitda", true)),
       row("netIncome", "Net Income", col(inc, "net_income")),
@@ -54,7 +57,10 @@ export function mapStatements(dir: string): { statements: FactPack["statements"]
       row("capex", "Capital Expenditure", col(cf, "capex", true)),
       row("buybacks", "Share Repurchases", col(cf, "common_stock_repurchased", true)),
       row("dividends", "Dividends Paid", col(cf, "common_dividends_paid", true)),
-      row("freeCashFlow", "Free Cash Flow", col(cf, "free_cash_flow")),
+      // Optional: free cash flow is OCF + capex, so it is null whenever capex is (a utility that tags
+      // capital spending only under company-specific extension concepts, not a us-gaap capex tag) —
+      // the row renders "—" rather than forcing a figure that cannot be derived.
+      row("freeCashFlow", "Free Cash Flow", col(cf, "free_cash_flow", true)),
     ],
   };
 
