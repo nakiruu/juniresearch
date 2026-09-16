@@ -39,11 +39,14 @@ export function renderFactsBlock(facts: ReportFacts, pack: FactPack): string {
   // product split so geography was promoted to the segment mix above (say so, don't repeat it); or a
   // single-jurisdiction issuer with neither (say there is no regional mix to quote).
   const geoPromoted = /by geography/i.test(facts.sections.businessMoat.segmentsBasis);
+  const singleSegment = /single reportable segment/i.test(facts.sections.businessMoat.segmentsBasis);
   const geo = facts.sections.businessMoat.geoMix.length
     ? facts.sections.businessMoat.geoMix.map((g) => `- ${g.region}: ${pct(g.sharePct)}`).join("\n")
     : geoPromoted
       ? "- The vendor gives no product split; the geographic revenue mix is shown as the segment mix above."
-      : "- No geographic split in the vendor data (single-jurisdiction issuer); do not quote a regional mix.";
+      : singleSegment
+        ? "- The vendor breaks out no product or geographic revenue mix; the company reports as a single segment, shown as the consolidated total above. Do not quote a segment or regional split."
+        : "- No geographic split in the vendor data (single-jurisdiction issuer); do not quote a regional mix.";
   const sharesNote = pack.quote.sharesSource === "cover" ? "cover page" : "derived from market cap";
   const highlights = HIGHLIGHT_KEYS.filter((k) => facts.highlightCells[k] != null)
     .map((k) => `- ${k}: ${facts.highlightCells[k]!.label} = ${formatSnapshot(facts.highlightCells[k] as SnapshotCell)}`)

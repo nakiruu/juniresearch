@@ -1,7 +1,8 @@
 import { readRawJson, num, section, type Rec } from "../raw";
 import type { FactPack } from "../schema";
 const FILE = "bigdata-tearsheet-annual.json";
-export const READS = [FILE] as const;
+const STATEMENTS = "bigdata-statements-annual.json";
+export const READS = [FILE, STATEMENTS] as const;
 /** Vendor labels sometimes arrive letter-spaced ("E M E A"); collapse those, leave real multi-word names alone. */
 export const tidyName = (s: string) => (s.trim().split(/\s+/).every((t) => t.length === 1) ? s.replace(/\s+/g, "") : s.trim());
 export const PROVENANCE: { field: string; endpoint: string; source: FactPack["provenance"][number]["source"] }[] = [
@@ -48,5 +49,19 @@ export function mapSegments(dir: string): { segments: FactPack["segments"]; geoM
       geoMix: { basis: geography.basis, items: [] },
     };
   }
-  throw new Error(`No product or geographic FY entries under revenue_segmentation in ${FILE}`);
+  // Neither a product nor a geographic split: a single-reportable-segment issuer, such as a young
+  // AI-compute company whose 10-Q reports one segment. Size one consolidated segment from the latest
+  // FY revenue so the moat section has a basis to narrate, and carry an empty geoMix.
+  const stmts = readRawJson(dir, STATEMENTS);
+  const rows = section<Rec[]>(stmts, ["fundamentals", "income_statement"], STATEMENTS);
+  const fyRows = rows.filter((r) => r.fiscal_period === "FY" && typeof r.fiscal_year === "number");
+  if (!fyRows.length) throw new Error(`No product/geographic segmentation, and no FY income rows to size a single reportable segment in ${STATEMENTS}`);
+  const top = fyRows.sort((a, b) => (b.fiscal_year as number) - (a.fiscal_year as number))[0];
+  const fy = num(top, "fiscal_year", STATEMENTS)!;
+  const revenue = num(top, "revenue", STATEMENTS)!;
+  const yy = String(fy).slice(2);
+  return {
+    segments: { basis: `FY${yy} (single reportable segment)`, items: [{ name: "Consolidated", revenue, share: 1 }] },
+    geoMix: { basis: `FY${yy}`, items: [] },
+  };
 }

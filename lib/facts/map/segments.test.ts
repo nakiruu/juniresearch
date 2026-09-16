@@ -58,6 +58,17 @@ describe("mapSegments with only a geographic split (no product segmentation)", (
   });
 });
 
+describe("mapSegments with neither a product nor a geographic split (single reportable segment)", () => {
+  const s = mapSegments("lib/facts/map/__fixtures__/single-segment");
+  it("sizes one consolidated segment from the latest FY revenue", () => {
+    expect(s.segments.basis).toBe("FY25 (single reportable segment)");
+    expect(s.segments.items).toEqual([{ name: "Consolidated", revenue: 509991000, share: 1 }]);
+  });
+  it("carries an empty geoMix on the same fiscal-year basis", () => {
+    expect(s.geoMix).toEqual({ basis: "FY25", items: [] });
+  });
+});
+
 describe("mapSegments with an all-zero segment total", () => {
   it("throws naming the tearsheet file rather than dividing by zero", () => {
     expect(() => mapSegments("lib/facts/map/__fixtures__/zero-segments")).toThrow(/bigdata-tearsheet-annual\.json/);
