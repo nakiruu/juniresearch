@@ -79,6 +79,24 @@ describe("mapSegments with neither a product nor a geographic split (single repo
   });
 });
 
+describe("mapSegments when the product mix carries a negative intersegment-eliminations line", () => {
+  const s = mapSegments("lib/facts/map/__fixtures__/eliminations-segments");
+  it("drops the contra line and presents the operating segments gross of eliminations", () => {
+    expect(s.segments.basis).toBe("FY25 (gross of intersegment eliminations)");
+    expect(s.segments.items.map((i) => i.name)).toEqual([
+      "Client Computing Group",
+      "Data Center Group",
+      "Intel Foundry Services",
+      "Other Segments",
+    ]);
+    const gross = 32228000000 + 16919000000 + 17826000000 + 3563000000;
+    const ccg = s.segments.items.find((i) => i.name === "Client Computing Group")!;
+    expect(ccg.share).toBeCloseTo(32228000000 / gross, 6);
+    expect(s.segments.items.every((i) => i.share > 0)).toBe(true);
+    expect(s.segments.items.reduce((a, i) => a + i.share, 0)).toBeCloseTo(1, 6);
+  });
+});
+
 describe("mapSegments with an all-zero segment total", () => {
   it("throws naming the tearsheet file rather than dividing by zero", () => {
     expect(() => mapSegments("lib/facts/map/__fixtures__/zero-segments")).toThrow(/bigdata-tearsheet-annual\.json/);

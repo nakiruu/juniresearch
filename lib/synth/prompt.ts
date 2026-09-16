@@ -34,7 +34,9 @@ export function renderFactsBlock(facts: ReportFacts, pack: FactPack): string {
   const snap = facts.snapshot.map((c) => `- ${c.label}: ${formatSnapshot(c as SnapshotCell)}`).join("\n");
   const e = pack.estimates, t = pack.ttm, a = facts.analystSentiment, lq = pack.latestQuarter;
   const multiples = facts.sections.valuation.multiplesCompanyColumn.map((m) => `- ${m.label}: ${m.value == null ? "—" : mult(m.value)}`).join("\n");
-  const segments = facts.sections.businessMoat.segments.map((s) => `- ${s.name}: ${pct(s.sharePct)} (${compactUSD(s.revenue)})`).join("\n");
+  const grossOfElim = /gross of intersegment eliminations/i.test(facts.sections.businessMoat.segmentsBasis);
+  const segments = facts.sections.businessMoat.segments.map((s) => `- ${s.name}: ${pct(s.sharePct)} (${compactUSD(s.revenue)})`).join("\n")
+    + (grossOfElim ? "\n- Note: these segment revenues are gross of intersegment eliminations (they include internal sales, e.g. in-house foundry wafers), so they sum above consolidated revenue; the shares are of that gross total. Do not multiply a share by consolidated revenue." : "");
   // Three cases for the geography line: the vendor gave a geographic split (render it); the vendor gave no
   // product split so geography was promoted to the segment mix above (say so, don't repeat it); or a
   // single-jurisdiction issuer with neither (say there is no regional mix to quote).

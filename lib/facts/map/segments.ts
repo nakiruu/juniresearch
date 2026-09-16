@@ -42,6 +42,22 @@ function latestFyIncome(dir: string): { fy: number; revenue: number } | null {
 
 const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
+const isContraLine = (name: string, value: number) => value < 0 && /elimination|intersegment/i.test(name);
+
+/** Some vendor product mixes carry a contra-revenue reconciling line — internal sales a company
+ *  nets out at the consolidated level (an in-house foundry selling wafers to its own product groups,
+ *  say). It arrives as a negative "Intersegment Eliminations" entry, so the positive operating
+ *  segments sum well above consolidated revenue. Drop the contra line and present the operating
+ *  segments on a gross basis (shares of their own gross total), noted, rather than as a segment with
+ *  a negative share. Leaves a mix with no such line untouched. */
+function stripEliminations(mix: Mix): Mix {
+  if (!Object.entries(mix.values).some(([n, v]) => isContraLine(n, v))) return mix;
+  const values = Object.fromEntries(Object.entries(mix.values).filter(([n, v]) => !isContraLine(n, v)));
+  const total = Object.values(values).reduce((a, b) => a + b, 0);
+  if (Object.keys(values).length < 2 || total <= 0) return mix;
+  return { basis: `${mix.basis} (gross of intersegment eliminations)`, values, total };
+}
+
 /** Some vendor product mixes carry both a combined segment ("Client and Gaming") and one of its
  *  components ("Gaming") as separate lines, so they sum above total revenue and double-count. When
  *  that happens, drop any label that appears as a whole-word sub-phrase of another label, but only
@@ -61,7 +77,7 @@ export function mapSegments(dir: string): { segments: FactPack["segments"]; geoM
   const ts = readRawJson(dir, FILE);
   const income = latestFyIncome(dir);
   let product = latestMix(ts, "product", "product_segments");
-  if (product) product = reconcileToRevenue(product, income?.revenue ?? null);
+  if (product) product = reconcileToRevenue(stripEliminations(product), income?.revenue ?? null);
   const geography = latestMix(ts, "geographic", "region_segments");
   const toItems = (m: Mix) =>
     Object.entries(m.values).map(([name, revenue]) => ({ name: tidyName(name), revenue, share: revenue / m.total }));
