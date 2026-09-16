@@ -1,0 +1,679 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "NVDA",
+  "cik": 1045810,
+  "company": "NVIDIA Corporation",
+  "exchange": "NASDAQ",
+  "filing": {
+    "form": "10-Q",
+    "accession": "0001045810-26-000075",
+    "filedDate": "2026-08-26",
+    "periodEnd": "2026-07-26",
+    "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm"
+  },
+  "capturedAt": "2026-09-16T09:24:01.346Z",
+  "quote": {
+    "price": 212.17,
+    "marketCap": 5138969570000,
+    "sharesOutstanding": 24221000000,
+    "sharesSource": "derived",
+    "week52Low": 164.27,
+    "week52High": 236.54,
+    "dividendYield": 0.00245086,
+    "asOf": "2026-09-15"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25",
+      "FY26"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          26914000000,
+          26974000000,
+          60922000000,
+          130497000000,
+          215938000000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          17475000000,
+          15356000000,
+          44301000000,
+          97858000000,
+          153463000000
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          10041000000,
+          4224000000,
+          32972000000,
+          81453000000,
+          130387000000
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          11351000000,
+          5986000000,
+          35583000000,
+          86137000000,
+          144552000000
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          9752000000,
+          4368000000,
+          29760000000,
+          72880000000,
+          120067000000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          0.38,
+          0.17,
+          1.19,
+          2.94,
+          4.9
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          21208000000,
+          13296000000,
+          25984000000,
+          43210000000,
+          62556000000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          11831000000,
+          12031000000,
+          11056000000,
+          10270000000,
+          11412000000
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          9841000000,
+          8642000000,
+          3776000000,
+          1681000000,
+          807000000
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          26612000000,
+          22101000000,
+          42978000000,
+          79327000000,
+          157293000000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          6.650288350634371,
+          3.515617857687033,
+          4.171291505973097,
+          4.439851498864077,
+          3.905263812455306
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          9108000000,
+          5641000000,
+          28090000000,
+          64089000000,
+          102718000000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -976000000,
+          -1833000000,
+          -1069000000,
+          -3236000000,
+          -6042000000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          0,
+          -10039000000,
+          -9533000000,
+          -33706000000,
+          -40086000000
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          -399000000,
+          -398000000,
+          -395000000,
+          -834000000,
+          -974000000
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          8132000000,
+          3808000000,
+          27021000000,
+          60853000000,
+          96676000000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q2'27",
+    "periodEnd": "2026-07-26",
+    "revenue": 96221000000,
+    "operatingMargin": 0.6623710000935347,
+    "revenueYoY": 1.0585114348672526
+  },
+  "ttm": {
+    "pe": 26.6880503144654,
+    "ps": 16.962030999871274,
+    "evToEbitda": 22.06296383314717,
+    "grossMargin": 0.7467463667900016,
+    "operatingMargin": 0.6521426284537362,
+    "netMargin": 0.6366294901458565,
+    "netDebtToEbitda": 0.07025810234222205,
+    "interestCoverage": 426.7365010799136,
+    "currentRatio": 4.588949069016016,
+    "fcfYield": 0.02471429306400816
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY27E",
+      "revenue": 408757705951,
+      "eps": 9.2584
+    },
+    "followingFY": {
+      "label": "FY28E",
+      "revenue": 687354277951,
+      "eps": 15.70066
+    }
+  },
+  "analysts": {
+    "count": 79,
+    "buy": 60,
+    "hold": 16,
+    "sell": 3,
+    "consensusRating": "Buy",
+    "consensusTarget": 345.21,
+    "medianTarget": 322.5,
+    "highTarget": 515,
+    "lowTarget": 270,
+    "asOf": "2026-09-16"
+  },
+  "segments": {
+    "basis": "FY26",
+    "items": [
+      {
+        "name": "Automotive",
+        "revenue": 2349000000,
+        "share": 0.01087812242402912
+      },
+      {
+        "name": "Data Center",
+        "revenue": 193737000000,
+        "share": 0.89718808176421
+      },
+      {
+        "name": "Gaming",
+        "revenue": 16042000000,
+        "share": 0.07428984245477868
+      },
+      {
+        "name": "OEM And Other",
+        "revenue": 619000000,
+        "share": 0.0028665635506487973
+      },
+      {
+        "name": "Professional Visualization",
+        "revenue": 3191000000,
+        "share": 0.014777389806333299
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY26",
+    "items": [
+      {
+        "region": "CHINA",
+        "share": 0.09112337800665006
+      },
+      {
+        "region": "Other Americas",
+        "share": 0.019908492252405784
+      },
+      {
+        "region": "TAIWAN, PROVINCE OF CHINA",
+        "share": 0.19609795404236402
+      },
+      {
+        "region": "UNITED STATES",
+        "share": 0.6928701756985801
+      }
+    ]
+  },
+  "peers": [
+    {
+      "ticker": "AAPL",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "ADI",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "AVGO",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "ENTG",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-04",
+      "close": 211.94000244140625
+    },
+    {
+      "date": "2026-08-05",
+      "close": 219.22000122070312
+    },
+    {
+      "date": "2026-08-06",
+      "close": 218.99000549316406
+    },
+    {
+      "date": "2026-08-07",
+      "close": 223.9600067138672
+    },
+    {
+      "date": "2026-08-10",
+      "close": 217.5500030517578
+    },
+    {
+      "date": "2026-08-11",
+      "close": 217.5
+    },
+    {
+      "date": "2026-08-12",
+      "close": 224.08999633789062
+    },
+    {
+      "date": "2026-08-13",
+      "close": 225.3000030517578
+    },
+    {
+      "date": "2026-08-14",
+      "close": 225.16000366210938
+    },
+    {
+      "date": "2026-08-17",
+      "close": 225.00999450683594
+    },
+    {
+      "date": "2026-08-18",
+      "close": 219.74000549316406
+    },
+    {
+      "date": "2026-08-19",
+      "close": 217.55999755859375
+    },
+    {
+      "date": "2026-08-20",
+      "close": 216.85000610351562
+    },
+    {
+      "date": "2026-08-21",
+      "close": 214.72000122070312
+    },
+    {
+      "date": "2026-08-24",
+      "close": 208.47999572753906
+    },
+    {
+      "date": "2026-08-25",
+      "close": 213.0500030517578
+    },
+    {
+      "date": "2026-08-26",
+      "close": 209.66000366210938
+    },
+    {
+      "date": "2026-08-27",
+      "close": 227.97999572753906
+    },
+    {
+      "date": "2026-08-28",
+      "close": 217.5500030517578
+    },
+    {
+      "date": "2026-08-31",
+      "close": 220.77999877929688
+    },
+    {
+      "date": "2026-09-01",
+      "close": 217.44000244140625
+    },
+    {
+      "date": "2026-09-02",
+      "close": 224.41000366210938
+    },
+    {
+      "date": "2026-09-03",
+      "close": 228.4499969482422
+    },
+    {
+      "date": "2026-09-04",
+      "close": 230.36000061035156
+    },
+    {
+      "date": "2026-09-08",
+      "close": 225.72999572753906
+    },
+    {
+      "date": "2026-09-09",
+      "close": 223.6699981689453
+    },
+    {
+      "date": "2026-09-10",
+      "close": 218.36000061035156
+    },
+    {
+      "date": "2026-09-11",
+      "close": 218.2899932861328
+    },
+    {
+      "date": "2026-09-14",
+      "close": 210.9600067138672
+    },
+    {
+      "date": "2026-09-15",
+      "close": 212.1699981689453
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "NVIDIA Corporation stands as a prominent provider of advanced graphics, computational, and networking solutions, operating across the United States, Taiwan, China, and numerous international markets. Its Graphics division encompasses GeForce GPUs, central to PC gaming and personal computing experiences, along with the GeForce NOW cloud gaming service and its supporting infrastructure, as well as dedicated solutions for various gaming platforms. For professional visualization, it provides Quadro and NVIDIA RTX GPUs for enterprise workstations, further offering vGPU software designed for cloud-centric visual and virtual computing, automotive platforms for in-vehicle infotainment, and the Omniverse software suite, facilitating 3D design and virtual world creation. The Compute & Networking segment is a cornerstone for AI, high-performance computing (HPC), and accelerated data center platforms. It integrates Mellanox networking and interconnect solutions, delivers automotive AI Cockpit technologies, fosters autonomous driving development through strategic agreements, and offers comprehensive autonomous vehicle solutions. This segment also manufactures cryptocurrency mining processors, supplies Jetson platforms for robotics and other embedded applications, and offers enterprise AI software, including NVIDIA AI Enterprise. These diverse offerings find widespread application across the gaming, professional visualization, data center, and automotive sectors. NVIDIA distributes its portfolio through a broad ecosystem, engaging original equipment and device manufacturers, system integrators, add-in board makers, retail channels, software vendors, internet and cloud service providers, automotive companies (both manufacturers and tier-1 suppliers), mapping firms, nascent technology ventures, and other industry stakeholders. A notable strategic partnership exists with Kroger Co. Founded in 1993, NVIDIA Corporation maintains its corporate headquarters in Santa Clara, California.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-15"
+    },
+    "mdaExcerpt": {
+      "text": "Item 2. Management's Discussion and Analysis of Financial Condition and Results of Operations\nForward-Looking Statements\nThis Quarterly Report on Form 10-Q contains forward-looking statements within the meaning of Section 27A of the Securities Act of 1933, as amended, and Section 21E of the Securities Exchange Act of 1934, as amended, which are subject to the \"safe harbor\" created by those sections based on management's beliefs and assumptions and on information currently available to management. In some cases, you can identify forward-looking statements by terms such as \"may,\" \"will,\" \"should,\" \"could,\" \"goal,\" \"would,\" \"expect,\" \"plan,\" \"anticipate,\" \"believe,\" \"estimate,\" \"project,\" \"predict,\" \"potential\" and similar expressions intended to identify forward-looking statements. These statements involve known and unknown risks, uncertainties and other factors, which may cause our actual results, performance, time frames or achievements to be materially different from any future results, performance, time frames or achievements expressed or implied by the forward-looking statements. We discuss many of these risks, uncertainties and other factors in this Quarterly Report on Form 10-Q and our Annual Report on Form 10-K for the fiscal year ended January 25, 2026 in greater detail under the heading \"Risk Factors\" of such reports. Given these risks, uncertainties, and other factors, you should not place undue reliance on these forward-looking statements. Also, these forward-looking statements represent our estimates and assumptions only as of the date of this filing. You should read this Quarterly Report on Form 10-Q completely and understand that our actual future results may be materially different from what we expect. We hereby qualify our forward-looking statements by these cautionary statements. Except as required by law, we assume no obligation to update these forward-looking statements publicly, or to update the reasons actual results could differ materially from those anticipated in these forward-looking statements, even if new information becomes available in the future.\nAll references to \"NVIDIA,\" \"we,\" \"us,\" \"our\" or the \"Company\" mean NVIDIA Corporation and its subsidiaries.\nIn addition, statements that \"we believe\" and similar statements reflect our beliefs and opinions on the relevant subject. These statements are based upon information available to us as of the filing date of this Quarterly Report on Form 10-Q, and while we believe such information forms a reasonable basis for such statements, such information may be limited or incomplete, and our statements should not be read to indicate that we have conducted an exhaustive inquiry into, or review of, all potentially available relevant information. These statements are inherently uncertain, and investors are cautioned not to unduly rely upon these statements.\n2026 NVIDIA Corporation. All rights reserved.\nThe following discussion and analysis of our financial condition and results of operations should be read in conjunction with the risk factors set forth in Item 1A. \"Risk Factors\" of our Annual Report on Form 10-K for the fiscal year ended January 25, 2026 and Part II, Item 1A. \"Risk Factors\" of this Quarterly Report on Form 10-Q and our Condensed Consolidated Financial Statements and related Notes thereto, as well as other cautionary statements and risks described elsewhere in this Quarterly Report on Form 10-Q and our other filings with the SEC, before deciding to purchase, hold, or sell our securities.\nOverview\nOur Company and Our Businesses\nNVIDIA pioneered accelerated computing to help solve the most challenging computational problems. Since our original focus on PC graphics, we have expanded to several other large and important computationally intensive fields. Fueled by the sustained demand for exceptional 3D graphics and the scale of the gaming market, NVIDIA has leveraged its GPU architecture to create platforms for scientific computing, AI, data science, autonomous vehicles, robotics, and digital twin applications. NVIDIA is now a data center-scale AI infrastructure company reshaping all industries.\nOur two operating segments are \"Compute & Networking\" and \"Graphics.\" Refer to Note 13 of the Notes to Condensed Consolidated Financial Statements in Part I, Item 1 of this Quarterly Report on Form 10-Q for additional information.\nHeadquartered in Santa Clara, California, NVIDIA was incorporated in California in April 1993 and reincorporated in Delaware in April 1998.\nRecent Developments, Future Objectives and Challenges\nRevenue growth in the second quarter and the first half of fiscal year 2027 was driven by data center products for accelerated computing and AI solutions. Blackwell continued to account for the majority of our system shipments.\nOur next-generation Data Center architecture, Vera Rubin, began production shipments in the third quarter of fiscal year 2027. We will be shipping both Blackwell and Rubin systems in the future and are currently experiencing certain supply constraints. Demand estimates for our products can be inaccurate and create volatility in our revenue or supply levels. To secure inventory and capacity to meet demand for the next several years, we have entered into significant commitments and may continue to enter into manufacturing and supply agreements for both current and future products, and we continue to expand our supplier base. The scale and size of our production needs and the complexity of producing our data center systems has caused and could in the future cause delays in production, challenges in managing supply and demand, revenue volatility, quality issues, increased inventory provisions, decreases in product yields, higher material\n25\ncosts, and increased warranty costs. We have significantly increased our supply and capacity commitments from $119 billion last quarter to $279 billion as of July 26, 2026 to meet future demand. Refer to Note 10 of the Notes to Condensed Consolidated Financial Statements included in Part 1, Item 1 of this Quarterly Report on Form 10-Q. Customers may postpone purchasing new architectures due to the lack of availability of data center infrastructure to deploy our products, constraints on capital to have sufficient funding to purchase our products, or may adopt new technologies more gradually than anticipated, affecting our revenue timing and supply chain expenses.\nThe availability of land, power, shell, and capital is crucial to support the buildout of a full data center inclusive of NVIDIA AI infrastructure by our customers and partners, and any shortage of these or other necessary resources could impact our future revenue and financial performance. Expanding land, power, shell, and energy needs to meet demand is a complex, multi-year process that involves significant regulatory, technical, and construction challenges. In addition, access to capital can be particularly constrained for less-capitalized companies, which may face difficulties securing financing for large-scale infrastructure projects. We believe AI clouds and AI model makers have significant demand for training and inference compute and currently lack the ability to secure long-term infrastructure contracts and investment-grade financing capacity to secure the AI infrastructure necessary to grow. These limitations could delay customer and partner deployments or reduce the scale of accelerated computing and AI adoption and may impact the growth of our revenue. We have undertaken initiatives to address these challenges including securing and providing guarantees of land, power, shell, and capacity of select data center infrastructure that customers require to deploy our products. We expect to focus our data center infrastructure initiatives on exceptional sites and apply the same discipline to these initiatives as we do to our supply-chain management by securing critical inputs when we have visibility into customer demand and when doing so enables long-term productive capacity. We expect our large cloud service provider customers and investment grade enterprises to continue to secure land, power, and shell commitments independently. Our land, power, and shell commitments and guarantees may impact our financial results and are dependent on the performance of our customers and partners.\nIn August 2026, we entered into guarantees with SB Energy Corp. to provide credit support on the land, power, and shell buildout at SB Energy's PORTS Technology Campus in Pike County, Ohio, covering leases for approximately 4.25 gigawatts of IT load. The campus will exclusively host our compute under 20-year leases to OpenAI, subject to limited exceptions, with our obligation capped at $105 billion in the aggregate, subject to certain conditions including SB Energy, the lessor, satisfying applicable ready-for-service conditions. Each guarantee generally becomes effective upon commencement of the applicable lease, with corresponding guarantee amounts increasing as each of nine data centers is placed in service, which is expected to begin in fiscal year 2029. Our exposure declines as OpenAI fulfills its lease payments. Our guarantees are limited to defined portions of lease and power payments and not the full cost of the site or all of the tenant's obligations. The guarantees terminate upon certain events, including OpenAI achieving a satisfactory credit rating or after each respective lease term has completed. We also hold an option, exercisable in our sole discretion, to provide additional credit support in phases for approximately 3.8 additional gigawatts as the site scales. Refer to Note 10 of the Notes to Condensed Consolidated Financial Statements in Part 1, Item 1 of this Quarterly Report on Form 10-Q.\nWe have made, and may continue to make, investments and commitments in our ecosystem to enhance our growth opportunities, cultivate our ecosystem, and strengthen our competitive position. These include equity investments of $99 billion and equity investment commitments of $25 billion as of July 26, 2026.\nIn the second quarter of fiscal year 2027, we introduced a new business model with certain select AI cloud partners, to enable broader access to our data center infrastructure products to serve AI startups, model builders, enterprises, research organizations, and sovereign customers. We believe these AI cloud partners have strong customer demand and robust sales pipelines but are constrained by the large-scale infrastructure that is required to meet that demand. Through this model, we expect our AI cloud partners will be able to deploy incremental NVIDIA AI infrastructure, enabling them to serve a broader set of customers and address expanding demand for AI compute. Under these agreements, AI clouds procure our data center infrastructure products and we commit to cloud service agreements, which the AI clouds can unilaterally stop providing to us and sell to third-party customers at more advantageous rates. Our commitments, which are typically six years in duration, totaled $36 billion as of July 26, 2026, and decrease as capacity is used by third-party customers or by us for our research and development efforts. If certain criteria are met, we will participate in revenue share generated by the AI clouds from third-party customers, which may contribute to revenue in the future. If market conditions change, it may negatively impact our financial results. Refer to Note 10 of the Notes to Condensed Consolidated Financial Statements in Part 1, Item 1 of this Quarterly Report on Form 10-Q.\nIn August 2026, we entered into memorandums of understanding with several large capital providers to establish independent financing platforms designed to mobilize more than $500 billion of third-party capital over time to support the deployment of AI infrastructure. These and other preliminary arrangements may not lead to definitive agreements. These arrangements are designed for our ecosystem partners and customers to build and gain access to AI infrastructure with the corresponding funding structures independently underwritten and provided by the capital providers. At our option, we may provide limited residual-value support for a portion of specific projects, subject to disciplined risk management and project-by-project evaluation.\nOpen-source foundation models are rapidly growing in popularity with developers worldwide. We believe the demand for open-source foundation models and applications promotes use of our products worldwide. If these models and\n26\napplications are primarily deployed on competitors' platforms, they could reduce demand for our offerings. Any regulatory control or other restriction that limits our ability to provide products and services that support third-party applications and models could have a material impact on our business, operating results, and financial condition.\nThe U.S. government, or USG, granted licenses that would allow us to ship small amounts of H200 products to specific China-based customers, but such sales were restricted by the PRC government, and we have been unable to sell all the products for which we have licenses. During the first half of fiscal year 2027, we incurred a $0.4 billion charge associated with H200 for excess inventory and purchase obligations, as the demand for H200 products diminished. After incurring that charge, we have made a fraction of the allowed shipments under the USG's H200 licensing program. Those shipments account for less than 1% of Data Center revenue in our most recent quarter. The licenses require that the H200s go through an inspection process in the United States prior to any shipment to the customer. As a result, any H200s shipped under the new licensing program are subject to a 25% tariff upon importation into the United States. We have been unable to pass along any of the tariff to our customers, and do not anticipate doing so in the event we are able to sell licensed products into the China market.\nOur global supply chain for networking products, including our Israel operations, with approximately 6,200 employees, supporting research and development, operations, and sales and marketing, has not been significantly impacted by the conflict in the Middle East. If the conflict escalates or extends, it could affect future product development, supply chain, and revenue, and create business uncertainty.\nMacroeconomic factors, including tariffs, inflation, interest rate changes, capital market volatility, global supply chain constraints, and global economic and geopolitical developments and conflicts, have direct and indirect impacts on our results of operations, particularly demand for our products. While difficult to isolate and quantify, these macroeconomic factors impact our supply chain and manufacturing costs, employee wages, costs for capital equipment, the value of our investments, revenue, and competitive position. Our product and solution pricing generally does not fluctuate with short-term changes in our costs. Within our supply chain, we continuously manage product availability and costs with our vendors.\nRefer to Part II, Item 1A, \"Risk Factors\" for a discussion of these factors and other risks.\nSecond Quarter of Fiscal Year 2027 Summary\nThree Months Ended\nQuarter-over-Quarter Change\nYear-over-Year Change\nJul 26, 2026\nApr 26, 2026\nJul 27, 2025\n($ in millions, except per share data)\nRevenue\n$\n96,221\n$\n81,615\n$\n46,743\n18\n%\n106\n%\nGross margin\n75.0\n%\n74.9\n%\n72.4\n%\n0.1 pts\n2.6 pts\nOperating expenses\n$\n8,408\n$\n7,621\n$\n5,413\n10\n%\n55\n%\nOperating income\n$\n63,734\n$\n53,536\n$\n28,440\n19\n%\n124\n%\nNet income\n$\n59,688\n$\n58,321\n$\n26,422\n2\n%\n126\n%\nNet income per diluted share\n$\n2.46\n$\n2.39\n$\n1.08\n3\n%\n128\n%\nWe specialize in markets where our computing platforms can provide tremendous acceleration for applications. These platforms incorporate processors, interconnects, software, algorithms, systems, and services to deliver unique value.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+      "asOf": "2026-08-26",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "Item 1A. Risk Factors\nThe following risk factors should be considered in addition to the other information in this Annual Report on Form 10-K. The following risks could harm our business, financial condition, results of operations or reputation, which could cause our stock price to decline. Additional risks, trends and uncertainties not presently known to us or that we currently believe are immaterial may also harm our business, financial condition, results of operations or reputation.\nRisk Factors Summary\nRisks Related to Our Industry and Markets\nFailure to meet the evolving needs of our industry and markets may adversely impact our financial results.\nCompetition could adversely impact our market share and financial results.\nRisks Related to Demand, Supply, and Manufacturing\nLong manufacturing lead times and uncertain supply and capacity availability, combined with a failure to estimate customer demand accurately has led and could lead to mismatches between supply and demand.\n12\nTable of Contents\nDependency on third-party suppliers and their technology to manufacture, assemble, test, or package our products reduces our control over product quantity and quality, manufacturing yields, and product delivery schedules and could harm our business.\nDefects in our products have caused and could cause us to incur significant expenses to remediate and could damage our business.\nRisks Related to Our Global Operating Business\nAdverse economic conditions may harm our business.\nInternational sales and operations are a significant part of our business, which exposes us to risks that could harm our business.\nProduct, system security and data protection incidents or breaches, as well as cyber-attacks could disrupt our operations and adversely affect our financial condition, stock price and reputation.\nBusiness disruptions could harm our operations and financial results.\nClimate change may have a long-term impact on our business.\nWe may not be able to realize the potential benefits of business investments or acquisitions, nor successfully integrate acquisition targets.\nA significant amount of our revenue stems from a limited number of partners and distributors and we have a concentration of sales to customers who purchase directly or indirectly from us, and our revenue could be adversely affected if we lose or are prevented from selling to any of these customers.\nCommercial arrangements expose us to counterparty risks, which may negatively impact our business, financial condition, or results of operations.\nWe may be unable to attract, retain, and motivate our executives and key employees.\nModification or interruption of our business processes and information systems may disrupt our business and internal controls.\nOur operating results have in the past fluctuated and may in the future fluctuate, and if our operating results are below the expectations of securities analysts or investors, our stock price could decline.\nRisks Related to Regulatory, Legal, Our Stock, and Other Matters\nWe are subject to complex laws, rules, regulations, and political and other actions, including restrictions on the export of our products, which may adversely impact our business.\nScrutiny regarding our corporate sustainability practices could result in financial, reputational, or operational harm and liability.\nIssues relating to the responsible use of our technologies, including AI, may result in reputational or financial harm and liability.\nAdequately protecting our IP rights could be costly, and our ability to compete could be harmed if we are unsuccessful or if we are prohibited from making or selling our products.\nWe are subject to stringent and changing data privacy and security laws, rules, regulations, and other obligations. These areas could damage our reputation, deter customers, affect product design, or result in legal or regulatory proceedings and liability.\nOur operating results may be adversely impacted by additional tax liabilities, higher than expected tax rates, changes in tax laws, and other tax-related factors.\nOur business is exposed to the burden and risks associated with litigation, investigations, and regulatory proceedings.\nDelaware law, provisions in our governing documents and our agreement with Microsoft could delay or prevent a change in control.\n13\nTable of Contents\nRisk Factors\nRisks Related to Our Industry and Markets\nFailure to meet the evolving needs of our industry and markets may adversely impact our financial results.\nOur accelerated computing platforms experience rapid changes in technology, customer requirements, competitive products, and industry standards.\nOur success depends on our ability to:\ntimely identify industry changes, adapt our strategies, and develop new or enhance and maintain existing products and technologies that meet the evolving needs of our markets, including addressing unexpected shifts in industry standards or disruptive technological innovations that could render our products incompatible with those developed by other companies;\ndevelop or secure access to new products and technologies through investments in research and development;\nlaunch new offerings with new business models including software, services, and cloud solutions, as well as software-, infrastructure-, or platform-as-a-service solutions;\nexpand the ecosystem for our products and technologies;\nmeet evolving and prevailing customer and industry safety, security, reliability expectations, and compliance standards;\nmanage product and software lifecycles to maintain customer and end-user satisfaction;\ndevelop, acquire, maintain, and secure access to the internal and external infrastructure needed to scale our business, including sufficient energy for powering data centers using our products, acquisition integrations, customer support, e-commerce, IP licensing capabilities, and cloud service capacity; and\ncomplete technical, financial, operational, compliance, sales and marketing investments for the above activities.\nWe have invested in research and development in markets where we have a limited operating history, which may not produce meaningful revenue for several years, if at all. If we fail to develop or monetize new products and technologies, or if they do not become widely adopted, our financial results could be adversely affected. Obtaining design wins may involve a lengthy process and depends on our ability to anticipate and provide features and functionality that customers will demand. They also do not guarantee revenue. Failure to obtain a design win may prevent us from obtaining future design wins in subsequent generations. We cannot ensure that our products and technologies will provide value to our customers and partners. If we fail any of these key success criteria, our financial results may be harmed.\nWe have entered into an intellectual property license arrangement with Groq, Inc., or Groq, that required significant, nonrefundable payments. Successfully incorporating the licensed technology into our architectures and product roadmaps requires significant engineering effort and may not occur on expected timelines or at all. The licensed technology may not achieve the desired results as designed or achieve customer or ecosystem adoption. The economic outcomes of this arrangement depend on our ability to translate the licensed technology into commercially viable products and services over time, and we may be unable to recover the associated costs or realize an adequate return on this spend. If our efforts to use the licensed technology are delayed or unsuccessful, our business, operating results, and financial condition could be negatively impacted.\nWe entered into multi-year cloud service agreements to support our research and development activities.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+      "asOf": "2026-02-25",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-K",
+    "pressRelease": null,
+    "proxyStatement": {
+      "text": "Compensation discussion and analysis:\nCompensation Discussion and Analysis\nThis CD&A describes our Fiscal 2026 executive compensation philosophy, design, and process, and how our corporate results affected the payout of performance-based awards. Our Fiscal 2026 NEOs were: Jen-Hsun Huang, President and CEO; Colette M. Kress, EVP and CFO; Ajay K. Puri, EVP, Worldwide Field Operations; Debora Shoquist, EVP, Operations; and Timothy S. Teter, EVP, General Counsel and Secretary.\nFiscal 2026 Executive Compensation Summary\nContinued Focus on Pay for Performance\nNVIDIA's executive compensation program in Fiscal 2026 continued to be guided by a pay for performance philosophy to link competitive NEO pay with our stockholders' interests. 96% of our CEO's and 48% of our other NEOs' Fiscal 2026 total target pay was dependent on corporate performance.\nExecutive Pay Heavily Weighted Towards Equity Awards\nThe vast majority of our NEOs' total target pay for Fiscal 2026 was comprised of equity awards:\nSY PSUs that can be earned based on annual Non-GAAP Operating Income performance, vesting over 4 years,\nMY PSUs that can be earned based on 3-year TSR performance relative to the S&P 500, vesting over 3 years, and\nRSUs vesting over 4 years (for NEOs other than our CEO)\n(1) Based on total target pay as approved by the CC, consisting of annual base salary, and, assuming the Company achieves associated performance goals at a Base Compensation Plan level, target payout opportunity under our Variable Cash Plan and target equity opportunities the CC intended to deliver.\n(2) Reflects the average total target pay mix for our NEOs other than our CEO.\nNEOs were also eligible for variable cash awards based on annual revenue, in addition to base salary and other compensation and benefits.\nKey NEO Compensation Actions for Fiscal 2026\nCash Compensation Remained Constant : no changes compared to Fiscal 2025 base salary or variable cash opportunity\nIncreased Target Equity Opportunities : increased target equity opportunities for all NEOs to recognize the complexity and scope of NEOs' roles and responsibilities; by increasing target equity opportunities, aligned total target pay for all NEOs other than our CEO to reflect their comparable, significant contributions and impact on corporate performance\nContinued Increased Rigor of Performance Goals : set the Base Compensation Plan revenue goal for the Fiscal 2026 Variable Cash Plan in line with our record Fiscal 2025 results and the Base Compensation Plan Non-GAAP Operating Income goal for SY PSUs granted in Fiscal 2026 in line with our corresponding Fiscal 2025 Stretch Compensation Plan goal\n38\nTable of Contents\nRecord Performance Resulting in Maximum Payouts\nFiscal 2026 Revenue\nFiscal 2026 Non-GAAP Operating Income (1)\n3-Year TSR Relative to S&P 500\n(Fiscal 2024 to 2026) (2)\nStretch Compensation Plan Goal\n$160.0 billion (3)\n$96.0 billion (3)\n75th percentile\nPerformance Achievement for Period Ended Fiscal 2026\n$215.9 billion\n$137.3 billion\n100th Percentile (1,055%)\n(1) See Reconciliation of Non-GAAP Financial Measures below for a reconciliation between the non-GAAP financial measures and GAAP results.\n(2) Represents TSR for purposes of the MY PSU performance goal, calculated using cumulative stock price appreciation with dividends reinvested and the average closing stock price for the 60 trading days preceding the start, and preceding and including the last day, of the three-year performance period.\n(3) Our original Fiscal 2026 Stretch Compensation Plan revenue goal of $190.0 billion was automatically adjusted to $160.0 billion, and our original Fiscal 2026 Stretch Compensation Plan Non-GAAP Operating Income goal of $120.0 billion was automatically adjusted to $96.0 billion, due to the imposition of additional export controls on the Company's H20 products during the first half of Fiscal 2026. See Fiscal 2026 Compensation Actions and Achievements Performance Metrics and Goals for Executive Compensation below for further discussion of these adjustments.\nAs a result of the above performance achievements, each exceeding the CC's pre-established Stretch Compensation Plan goals, our NEOs earned the maximum payouts possible for our Fiscal 2026 Variable Cash Plan, SY PSUs granted in Fiscal 2026 (which remain subject to service-based vesting), and MY PSUs granted in Fiscal 2024.\nOur Compensation Philosophy and Practices\nNVIDIA is building a one-of-a-kind company that invents the future, builds amazing technologies, and strives to achieve the highest level of craft. To achieve this vision, we must attract and retain a high-caliber executive team while balancing our stockholders' interests.\n\nSecurity ownership:\nSecurity Ownership of Certain Beneficial Owners and Management\nThe following table sets forth information as of March 23, 2026 as to shares of our common stock beneficially owned by each of our NEOs, each of our directors, all of our directors and executive officers as a group, and all known by us to be beneficial owners of more than 5% of our common stock, unless otherwise indicated in the footnotes to the table. Beneficial ownership is determined in accordance with the SEC's rules and generally includes voting or investment power with respect to securities as well as shares of common stock subject to PSUs or RSUs that will vest within 60 days of March 23, 2026.\nThis table is based upon information provided to us by our executive officers and directors. Information about principal stockholders, other than percentages of beneficial ownership, is based solely on Schedules 13G/A filed with the SEC. Unless otherwise indicated and subject to community property laws where applicable, we believe that each of the stockholders named in the table has sole voting and investment power with respect to the shares indicated as beneficially owned. Percentages are based on 24,312,141,810 shares of our common stock outstanding as of March 23, 2026, adjusted as required by SEC rules.\nName of Beneficial Owner\nShares Owned\nShares Issuable Within 60 Days\nTotal Shares Beneficially Owned\nPercent\nNEOs:\nJen-Hsun Huang\n870,604,104\n(1)\n870,604,104\n3.58%\nColette M. Kress\n4,443,523\n(2)\n4,443,523\n*\nAjay K. Puri\n3,266,897\n(3)\n3,266,897\n*\nDebora Shoquist\n1,580,729\n(4)\n1,580,729\n*\nTimothy S. Teter\n2,687,197\n(5)\n2,687,197\n*\nDirectors, not including Mr. Huang:\nTench Coxe\n30,555,240\n(6)\n30,555,240\n*\nJohn O. Dabiri\n13,888\n900\n14,788\n*\nDawn Hudson\n367,987\n900\n368,887\n*\nHarvey C. Jones\n7,002,787\n(7)\n900\n7,003,687\n*\nMelissa B. Lora\n899\n(8)\n900\n1,799\n*\nStephen C. Neal\n183,967\n(9)\n900\n184,867\n*\nA. Brooke Seawell\n2,505,707\n(10)\n900\n2,506,607\n*\nAarti Shah\n25,620\n(11)\n25,620\n*\nMark A. Stevens\n34,068,672\n(12)\n900\n34,069,572\n*\nDirectors and executive officers as a group (14 persons)\n957,307,217\n(13)\n6,300\n957,313,517\n3.94%\n5% Stockholders:\nBlackRock, Inc.\n1,805,935,550\n(14)\n1,805,935,550\n7.43%\nVanguard Capital Management\n1,777,408,252\n(15)\n1,777,408,252\n7.31%\n* Represents less than 1% of the outstanding shares of our common stock.\n(1) Includes (a) 528,531,547 shares of common stock held by Jen-Hsun Huang and Lori Huang, as co-trustees of the Jen-Hsun and Lori Huang Living Trust, u/a/d May 1, 1995, or the Huang Trust, (b) 31,421,011 shares of common stock held by The Huang 2012 Irrevocable Trust, of which Mr. Huang and his wife are co-trustees, (c) 109,040,602 shares of common stock held by The Huang Irrevocable Remainder Trust u/a/d 2/19/2016, of which Mr. Huang and his wife are co-trustees, (d) 6,632,667 shares of common stock held by TARG M LLC, of which the Huang Trust is the sole member, (e) 6,632,667 shares of common stock held by TARG S LLC, of which the Huang Trust is the sole member, (f) 30,000,000 shares of common stock held by TARG M2 LLC, of which the Huang Trust is the sole member, (g) 30,000,000 shares of common stock held by TARG S2 LLC, of which the Huang Trust is the sole member, and (h) 58,683,830 shares of common stock held by The Jen-Hsun & Lori Huang Foundation, or the Huang Foundation, of which Mr. Huang and his wife are board members. By virtue of their status as co-trustees of the Huang Trust, The Huang 2012 Irrevocable Trust, and The Huang Irrevocable Remainder Trust, each of Mr. Huang and his wife may be deemed to have shared beneficial ownership of, and to exercise shared voting and investment power over, the shares referenced in (a)-(g). By virtue of their status as board members of the Huang Foundation since 2007, Mr.\n\nRelated-person transactions:\nRelated party transactions\nPolicies and practices related to government relations, public policy, and related expenditures\nManagement\nManagement identifies, evaluates, and mitigates business risks and reports to the Board on them\nInternal Audit\nProvides independent assurance on design and effectiveness of internal controls and governance processes\nOur Board retains direct oversight of strategic risks to NVIDIA and other risk areas not delegated to its committees. Delegation to Board committees enhances risk oversight by allocating authority and responsibility to the committee best suited to oversee specific risks, as outlined in their charters, with escalation to the full Board when appropriate. Committee chairpersons regularly report to the full Board on reviewed matters, including key risks, and collaborate with the Board to ensure effective risk management oversight. The Board believes its leadership structure facilitates robust\n27\nTable of Contents\nrisk oversight, with the independent Lead Director and independent committees proactively engaging with management. For further details, see Board Leadership Structure above.\nThe Board retains full oversight of information security matters, including cybersecurity. The AC reviews the adequacy and effectiveness of the Company's information security policies, practices, and internal controls. The AC receives regular updates on information security from management, including the Chief Security Officer and security team, while the Board receives annual reports on these matters. The AC also meets in executive session with leaders of key control functions, ensuring direct access to management teams and appropriate staffing and resources.\nThe Company's ERM process is an annual assessment of its risk environment, integrating risk evaluation with the Company's operations and strategies.",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000036/nvda-20260512.htm",
+      "asOf": "2026-05-12",
+      "truncated": true
+    },
+    "transcriptHighlights": {
+      "text": "We delivered another outstanding quarter with record revenue, operating income, and EPS. Total revenue of $96 billion more than doubled year-over-year as growth accelerated for the fourth consecutive quarter. The surge in AI demand is driving a global infrastructure build-out, supported by an expanding and diverse set of growth opportunities, spanning hyperscalers, AI labs, AI natives, enterprises, and sovereign customers. We expect to grow revenue by approximately 70% in fiscal 2028. This is a supply-constrained outlook. Q2 data center revenue increased 18% quarter-over-quarter to $89 billion, with strong contributions from both sub-segments, hyperscale and ACIE, which includes our NeoCloud, industrial, and enterprise customers. Hyperscale revenue of $49 billion grew 13% sequentially, driven by sustained strength in Blackwell.\n\nReinforcing that more compute drives more revenue as new GPU capacity comes online, our hyperscale customers delivered strong financial results in the quarter, with accelerating revenue growth and expanding margins. With cloud industry backlog now greater than $2 trillion, CapEx by the top five hyperscalers is expected to reach nearly $800 billion in 2026 and $1.3 trillion in 2027. Today, we are delighted to announce an expansion of our partnership with AWS. Building on its already vast installed base of NVIDIA Compute, AWS is deploying an additional 2 million GPUs starting this quarter through the second quarter of fiscal 2029, along with Vera CPUs, some integrated with Rubin, others standalone. AWS will serve NVIDIA Nemotron family of open models on Amazon Bedrock and SageMaker. Amazon will also adopt our full physical AI stack, Omniverse, Cosmos, Isaac, and Jetson to power its fleet of warehouse robots.\n\nACIE revenue of $40 billion increased 25% sequentially and 138% year-over-year. Growth was driven by NeoCloud capacity additions to meet the rising demand from enterprises, AI startups, and sovereigns, as well as hyperscalers purchasing capacity to supplement their own build-outs. Using NVIDIA DSX reference designs, our NeoCloud partners are bringing capacity online faster and at lower token cost. They are expected to exit the year with 8 gigawatts in total installed capacity, up from approximately 3 gigawatts at the end of 2025. Incredibly, we are seeing demand acceleration even at our scale. Customers' forecasts point to our growth doubling next year. However, as I mentioned earlier, we expect to grow approximately 70% as we are supply-constrained. NVIDIA Compute is fully utilized across every cloud we serve. The economic value it generates for our hyperscale, NeoCloud, and AI lab partners keeps rising.\n\nBesides building the best AI computing technologies and the most capable supply chain, NVIDIA has three unique capabilities that are engines powering our growth. First, NVIDIA's architecture runs every model, and we're growing share as closed and open model adoption grow. Closed and open models alike, adoption is skyrocketing. NVIDIA runs the leading closed models, OpenAI, Anthropic, Groq, Meta, Gemini, and the leading open models, Thinking Machines Lab, Mistral AI, Qwen, Kimi, GLM, DeepSeek, MiniMax, and Nemotron. We're great at small models and giant ones, large or video, auto, regressive or diffusion, in the cloud or in the edge. NVIDIA is great at training, great at inference, great at agentic workloads. One platform, fungible for every model and workload. Durable for the entire life cycle of AI. That combination of performance, fungibility, and durability is what makes NVIDIA the productive and financiable compute infrastructure.\n\nOur second unique capability is our full stack AI factory platform that is expanding our share of the data center TAM. Since Hopper, our revenue opportunity has grown from roughly $18 billion per gigawatt to $25 billion with Blackwell, to $40 billion with Vera Rubin, which now spans Vera CPU, Rubin GPU, NVLink, InfiniBand or Ethernet, and Groq LPU, announced earlier this week. Our ability to extreme co-design across GPU, CPU, NVLink scale-up networking, scale-out networking, systems, algorithms, and software enables us to deliver X factor performance gain every generation. Vera Rubin exemplifies this, delivering 30x higher throughput per megawatt and 35x lower token cost relative to Grace Blackwell Ultra. We commenced production shipments of Vera Rubin earlier this month. Having already received purchase orders from every major hyperscaler, AI cloud, and system OEM, we expect Vera Rubin to mark the fastest product ramp in NVIDIA's history.\n\nOur networking business had another record quarter, with revenue growing 18% on a sequential basis. Spectrum-X Ethernet, which grew 2.6x on a year-over-year basis, is already helping us become the largest and fastest-growing network company in the world. Rising adoption of agentic AI is driving an acceleration in demand for data center CPUs. Our Grace CPU, introduced in 2021, has been a great success, with revenue on a trailing 12-month basis exceeding $5 billion. Today, we are in full production of our next generation Vera CPU. As a standalone product, Vera expands our TAM even further. Vera completes agentic tasks 1.8x faster on the spec benchmark and provides five times the bandwidth per watt than any other data center CPU.\n\nWe expect Vera to be deployed by every major hyperscaler, NeoCloud, AI lab, and system OEM, with shipments already underway to our lead partners, including Oracle Cloud Infrastructure, SpaceX AI, and starting this quarter, AWS. We continue to see demand for approximately $20 billion in total server CPUs. Based on our customer demand and improving supply outlook, our preliminary expectation is for CPU revenue to more than double in fiscal 2028, positioning us as one of the world's leading server CPU suppliers. Since the announcement of our Groq partnership last year, we've been working to unite NVIDIA's high throughput and Groq's high interactivity architectures. At Hot Chips earlier this week, we announced that Groq 3 LPX, our first rack-scale LPU system, is in full production and already setting records, demonstrating nearly 4x the number of tokens per second against the next best alternative on our Artificial Analysis benchmark.\n\nWe expect to ship Groq 3 LPX in volume later this quarter to early adopters. Nebius will be the first. Today, we're not just selling the best chips, we're selling a full stack AI factory platform, offering superior economics for customers and capturing a bigger share of the data center TAM. Our third unique capability is the combination of our full stack AI factory and rich CUDA ecosystem, allowing us to extend AI into markets a single chip alone can never reach. Beyond the hyperscalers lies a massive market anxious to adopt AI, customers with no interest in designing their own custom silicon.\nNVIDIA's fully proven full stack platform is uniquely suited to help sovereigns, NeoClouds, and enterprises build their AI infrastructure, bring it to full operation, continuously optimize it through CUDA software, and connect it to offtake demand from our vast developer ecosystem. Hyperscalers will remain a major growth driver, but non-hyperscaler growth, our ACIE segment spanning sovereign regional NeoClouds, enterprise edge, and air gap data centers will represent roughly half of our data center business. Our AI native startup ecosystem, developed and running primarily on the NVIDIA compute platform, is scaling at a rapid pace. Global VC funding in AI, roughly 70% of which is spent on compute, exceeded $400 billion in the first half of 2026, surpassing the $265 billion raised in all of 2025.\n\nNearly 20 companies, including Cursor, owned by SpaceX, Figma, and Together AI, now exceed $1 billion in annualized run rate revenue, up from 13 companies in Q4 of last year, with vertical enterprise software logging the fastest growth. In enterprise, on a trailing 12-month basis, on-prem revenue in the automotive vertical reached $8 billion, while financial services, manufacturing, and healthcare combined contributed $7 billion in revenue. Hudson River Trading and Jane Street are leveraging NVIDIA-powered AI factories to accelerate quantitative trading. Samsung Electronics is using NVIDIA cuLitho to achieve up to 20x greater performance in computational lithography, while Bristol Myers Squibb is investing in Vera Rubin AI factory, a fast follow to the Roche and Lilly build-outs as drug R&D timelines compress from years to months. In sovereign AI, our business, primarily through the regional NeoClouds, grew 35% sequentially and more than tripled year-over-year in Q2.\n\nSouth Korea's LG and Hyundai Motor Group are partnering with NVIDIA to build and scale AI. In Europe, a record 35 new NVIDIA-powered AI supercomputers were unveiled to advance industry and scientific breakthroughs. NeoClouds are seeing strong demand pipelines for many diverse offtakers. Rather than allocating their entire capacity to a single long-term offtake guarantee that lenders typically require to finance a data center independently, we have introduced a revenue-sharing structure. NVIDIA provides a take or pay commitment on a portion of the facility's capacity, a minimum revenue guarantee that gives lenders the confidence to underwrite the project, and in exchange, we share in a portion of the NeoCloud's revenue earned above that floor. Independent capital still underwrites every deal on its own merits. We're not making loans.\n\nIn this model, we get paid twice, once on the hardware sale and again through the share of rental revenue, a highly reoccurring stream layered on top of a one-time equipment purchase. Over time, this model can expand our addressable market and create reoccurring usage-linked revenue stream alongside our core platform revenue, with the potential to drive billions in revenue over the medium to long term. Together, NVIDIA's three unique capabilities, a platform that runs every model, a full stack AI factory platform capturing more of the data center TAM, and a CUDA ecosystem that extends AI into markets no single chip could reach alone, reinforce one another and are the engines of our growth. Let me update you on our progress with our Frontier AI labs.\n\nFurther, to support the Frontier labs infrastructure build-outs, we recently announced partnerships with six of the world's leading infrastructure capital providers, Apollo Global Management, BlackRock, Blackstone, Brookfield Asset Management, Goldman Sachs, and KKR, to establish financing platforms that will raise over $500 billion of third-party capital. With these partnerships, building on our unique, fungible, and durable computing platform, the AI labs will be able to build and assess AI infrastructure funded by long-term institutional capital at relatively attractive rates. Last week, we announced that we secured land power shell capacity through our partnership with SB Energy to exclusively host NVIDIA Compute at their Portsmouth campus. The initial deployment, expected to support 4.25 gigawatts of AI factory capacity, will be utilized by OpenAI. Each generation of NVIDIA AI factory systems deployed at PORTS-Pike could represent approximately 1.5 million NVIDIA GPUs, and over 20 years, the site could support multiple upgrade cycles.\n\nHere is the essential economic point. The LPS commitment secures a long-lived AI factory site, while the NVIDIA Compute within the data center can be upgraded repeatedly. This project deepens our longstanding partnership with OpenAI. OpenAI has committed to substantial deployments of NVIDIA AI infrastructure through 2030. OpenAI's existing and planned commitments represent approximately 12 gigawatts of NVIDIA Compute. For another Frontier AI lab, we will provide selective credit enhancement for nearly 2 gigawatts of compute. This complements the substantial NVIDIA Compute capacity they have secured independently without NVIDIA's credit support. We recognize the scale of this support, and we know some will call this circular financing. We see it differently. We are going through a major computing platform shift, the creation of one of the most important technologies in human history, and these are once-in-a-generation companies. Their technology leadership is proven, and their customer traction and usage are skyrocketing.\n\nIn Q2, we returned a record $26 billion to shareholders, $20 billion through share repurchases, and $6 billion through our quarterly dividend of $0.25 per share. Relative to our plan to return 50% or more of free cash flow, we have returned 60% on a year-to-date basis. Going forward, we intend to increase and return excess free cash flow net of strategic uses. Let me turn to the outlook for the third quarter. Total revenue is expected to be $108 billion ±2%. We expect sequential growth to be driven primarily by ACIE with data center, while growth in hyperscale is expected to re-accelerate in Q4 and into fiscal year 2028 as supply of Vera Rubin grows over time. We see Vera Rubin accounting for about 20% of data center revenue in Q3.\n\nLooking ahead, our preliminary expectation is for fiscal year 2028 revenue to grow approximately 70% year-over-year. Although we will work to close the supply-demand gap, we expect supply to remain a bottleneck at least through the end of fiscal year 2028. Many of you have expressed concerns regarding our gross margins, as component costs have risen significantly. As you are already aware, we are experiencing extreme pricing conditions in memory. The magnitude of the price increase has exceeded our prior expectations and are headed even higher into next year. As a result, we are resetting expectations today. For Q3, we expect GAAP and non-GAAP gross margins to be 74% ±50 basis points. We expect margins to bottom in Q4 in the 71%-72% range before settling at 72%-73% in fiscal year 2028 as executed price increases take effect in Q1.\n\nNot to mention the scale-in security networking and the scale across multi-campus networking. You could argue 5 different types of networking systems. Then, of course, Groq. All of that increased our revenue contribution or revenue opportunity per gigawatt to $40 billion. Each gigawatt of data center increased from, say, $30 billion about 5 years ago to now $60 billion today. Of course, the productivity's tremendous. The performance is incredible in comparison. But you are talking about a $60 billion investment. To the extent that you could use it across multiple phases of the AI life cycle, run every single type of model you can imagine running on it, whether it is diffusion or autoregressive or state space or some hybrid version of that, every version of attention mechanism you can think of, small or large models.\n\nFor Grace Blackwell, we are about $25 billion per gigawatt. For Vera Rubin, it is about $40 billion per gigawatt. The productivity is X factors increase in each generation. Customers want to race to the next generation as fast as they can. Meanwhile, because NVIDIA's compute is so productive, the tokens they are generating, the GPU hours they are renting out is insanely profitable as you know. Their margins are fantastic. All of that is just simultaneously happening. I think the big picture is that we are going through this platform shift, and it affects every computer company. Every industry in the world uses computers, so therefore every industry is affected, every company is affected. This new way of doing computing is intelligent. It is not based on retrieval of files, but it is now generative, generating intelligence, and that requires compute.\nThe results you get is phenomenal. The results you get is tremendously better. We are just seeing that across the world. Everybody wants to be part of the AI revolution. Everybody will have to be part of this computing shift, and everybody has to build infrastructure.\n\nI'm delighted to be their friend. I'm delighted to partner with them.",
+      "source": "bigdata:Quartr Transcripts",
+      "asOf": "2026-08-26",
+      "truncated": true,
+      "url": "https://app.bigdata.com/documents/51AC2B171CD01000EEBC6B1842CFB481"
+    },
+    "headlines": [
+      {
+        "text": "Micron, Nvidia, AMD on Watch as Asia's Chip Selloff Sends Warning to Wall Street",
+        "source": "bigdata:Benzinga",
+        "asOf": "2026-07-28",
+        "url": "https://app.bigdata.com/documents/B67FF394C90AD33CCB7818FC5075928F?cnum=1"
+      },
+      {
+        "text": "Nvidia Corporation - Ilya Sutskever's Safe Superintelligence Inc. and NVIDIA Announce Long-Term Strategic Partnership",
+        "source": "bigdata:PubT",
+        "asOf": "2026-07-27",
+        "url": "https://app.bigdata.com/documents/9C5067CFD9CAD61BA9338E485A150D3B?cnum=1"
+      },
+      {
+        "text": "Taiwan detains Nvidia worker in chip smuggling probe",
+        "source": "bigdata:Alliance News",
+        "asOf": "2026-07-28",
+        "url": "https://app.bigdata.com/documents/0FC3F64C4DA73BB1D0AFBBB6716B62B7?cnum=1"
+      },
+      {
+        "text": "Market Chatter: Nvidia Employee Detained in Taiwan AI Chip-Smuggling Probe",
+        "source": "bigdata:MT Newswires",
+        "asOf": "2026-07-28",
+        "url": "https://app.bigdata.com/documents/04C1243F2A85FF00B5B53D0EAD1E02B8?cnum=1"
+      },
+      {
+        "text": "NVDA Down 6% in Two Days: What's Happening to Nvidia's Default Insurance Costs?",
+        "source": "bigdata:Benzinga",
+        "asOf": "2026-07-28",
+        "url": "https://app.bigdata.com/documents/C9136B9F5F5C358D6BE8A3B54DD1C47D?cnum=1"
+      },
+      {
+        "text": "Nvidia reportedly signs 15-year data center deal in Texas - FT",
+        "source": "bigdata:Finwire",
+        "asOf": "2026-07-28",
+        "url": "https://app.bigdata.com/documents/C8B8167AF889B1C0B8F10F14753568D9?cnum=1"
+      },
+      {
+        "text": "Nvidia Employee Detained in Taiwan as Prosecutors Allege AI Chip Smuggling to China: Report (UPDATED)",
+        "source": "bigdata:Benzinga",
+        "asOf": "2026-07-28",
+        "url": "https://app.bigdata.com/documents/000696EEB5B017EB7A60394AB40903F6?cnum=1"
+      },
+      {
+        "text": "Micron, Nvidia fall after SK Hynix plunges nearly 15% as chip sell-off deepens",
+        "source": "bigdata:CNBC.com",
+        "asOf": "2026-07-28",
+        "url": "https://app.bigdata.com/documents/2058188C3A6111E63837E5B367E045CF?cnum=1"
+      },
+      {
+        "text": "Apple Overtakes Nvidia as World's Most Valuable Company",
+        "source": "bigdata:MT Newswires",
+        "asOf": "2026-07-27",
+        "url": "https://app.bigdata.com/documents/AEFE875A6946EA615819BC9209F7232D?cnum=1"
+      },
+      {
+        "text": "Nvidia's Potential $250 Billion OpenAI Financing Deal Is Reviving a 1990s Tech Bubble Habit, Analyst Warns: 'Usually Don't End Well'",
+        "source": "bigdata:Benzinga",
+        "asOf": "2026-07-28",
+        "url": "https://app.bigdata.com/documents/323B98BF2AB9D190E198C3BC89534A6C?cnum=1&cnum=2"
+      }
+    ]
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-16T09:24:01.346Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-09-16T09:24:01.346Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-16T09:24:01.346Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-16T09:24:01.346Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-16T09:24:01.346Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-16T09:24:01.346Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-16T09:24:01.346Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-16T09:24:01.346Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-16T09:24:01.346Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-16T09:24:01.346Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-16T09:24:01.346Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-16T09:24:01.346Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-16T09:24:01.346Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-16T09:24:01.346Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-16T09:24:01.346Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-09-16T09:24:01.346Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-09-16T09:24:01.346Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-09-16T09:24:01.346Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-16T09:24:01.346Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-16T09:24:01.346Z"
+    }
+  ]
+}
