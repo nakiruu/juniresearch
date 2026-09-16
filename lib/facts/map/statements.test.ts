@@ -85,6 +85,21 @@ describe("mapStatements on the CoreWeave capture (a company public under five ye
   });
 });
 
+describe("mapStatements on a utility-shaped capture (no gross profit, no free cash flow)", () => {
+  const s = mapStatements("lib/facts/map/__fixtures__/utility");
+  const row = (t: "income" | "balance" | "cashflow", key: string) => s.statements[t].find((r) => r.key === key)!;
+  it("does not throw when gross profit and free cash flow are absent", () => {
+    expect(s.statements.fiscalYears).toEqual(["FY23", "FY24", "FY25"]);
+    expect(s.latestQuarter.periodEnd).toBe("2026-06-30");
+  });
+  it("renders the absent gross-profit and free-cash-flow rows as all-null, keeping the present rows", () => {
+    expect(row("income", "grossProfit").values.every((v) => v === null)).toBe(true);
+    expect(row("cashflow", "freeCashFlow").values.every((v) => v === null)).toBe(true);
+    expect(row("income", "operatingIncome").values[2]).toBe(8.1e9);
+    expect(row("cashflow", "operatingCashFlow").values[2]).toBe(12.485e9);
+  });
+});
+
 describe("mapStatements on an empty capture", () => {
   it("throws naming the annual statements file", () => {
     expect(() => mapStatements("lib/facts/map/__fixtures__/empty")).toThrow(/bigdata-statements-annual\.json/);
