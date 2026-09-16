@@ -15,13 +15,10 @@
  * Scope, deliberately narrow:
  *  - Only `us-gaap:*` concepts (companies' own extension concepts, and `dei:`/`srt:` facts,
  *    are never in sec.ts's concept maps, so there's nothing to gain by keeping them).
- *  - Only plain-USD-unit facts. A unit is "USD" when its `<xbrli:unit>` definition resolves to
- *    a bare `iso4217:USD` measure — not a divide/ratio unit like USD-per-share. EPS therefore
- *    keeps coming from companyfacts; sec.ts reads it as a `USD/shares`-unit series, and this
- *    module never emits one. This is the simplification the design spec explicitly allows,
- *    since a filing that's new enough to be missing from companyfacts for its income-statement
- *    and balance-sheet concepts is missing EPS too, but EPS isn't on the FactPack's critical
- *    path the way current-quarter revenue/margin are.
+ *  - Only two unit kinds: plain USD (a `<xbrli:unit>` definition resolving to a bare
+ *    `iso4217:USD` measure) and USD/shares (a divide unit whose numerator measure is USD and
+ *    denominator measure is shares — what the two EPS concepts are tagged with). Every other
+ *    unit (raw shares, MW, ratios, ...) is dropped; sec.ts never reads them.
  *  - Only CONSOLIDATED (non-dimensioned) facts. A context with an `<xbrli:segment>` member (an
  *    FPL-only or NEER-only breakdown, a stock-class split, a VIE breakdown, ...) tags a
  *    dimensioned value, not the consolidated total sec.ts's concept map expects — mixing one in
@@ -35,6 +32,16 @@ interface UnitEntry {
   form: string;
   filed: string;
 }
+
+/** The only two unit kinds sec.ts ever reads a concept series under. */
+export type FactUnit = "USD" | "USD/shares";
+
+/**
+ * Concept → unit → entries, mirroring companyfacts' own `facts["us-gaap"][concept].units[unit]`
+ * nesting one level early, so `mergeFilingFacts` can append each unit's entries straight into
+ * the matching bucket instead of guessing which one a bare entry belongs in.
+ */
+export type FilingFacts = Record<string, Partial<Record<FactUnit, UnitEntry[]>>>;
 
 export interface FilingMeta {
   form: string;
@@ -94,17 +101,32 @@ function parseContexts(html: string): Map<string, ContextInfo> {
 const UNIT_RE = /<(?:xbrli:)?unit\s+id="([^"]+)">([\s\S]*?)<\/(?:xbrli:)?unit>/g;
 const MEASURE_RE = /<(?:xbrli:)?measure>([^<]+)<\/(?:xbrli:)?measure>/;
 const DIVIDE_RE = /<(?:xbrli:)?divide\b/;
+const NUMERATOR_RE = /<(?:xbrli:)?unitNumerator>([\s\S]*?)<\/(?:xbrli:)?unitNumerator>/;
+const DENOMINATOR_RE = /<(?:xbrli:)?unitDenominator>([\s\S]*?)<\/(?:xbrli:)?unitDenominator>/;
 
-/** Unit ids whose definition resolves to plain `iso4217:USD` (not a divide/ratio unit). */
-function parseUsdUnitIds(html: string): Set<string> {
-  const ids = new Set<string>();
+const isUsdMeasure = (measure: string | undefined) => !!measure && /(?:^|:)usd$/i.test(measure);
+const isSharesMeasure = (measure: string | undefined) => !!measure && /(?:^|:)shares$/i.test(measure);
+
+/**
+ * Maps each `<xbrli:unit>` id to the `FactUnit` it resolves to: "USD" for a plain
+ * `iso4217:USD` measure, "USD/shares" for a divide unit with a USD numerator and a shares
+ * denominator (how EPS concepts are always tagged). Every other unit (raw shares, MW, ratios,
+ * a divide unit that isn't USD/shares, ...) is absent from the map and its facts are dropped.
+ */
+function parseUnitKinds(html: string): Map<string, FactUnit> {
+  const kinds = new Map<string, FactUnit>();
   for (const m of html.matchAll(UNIT_RE)) {
     const [, id, body] = m;
-    if (DIVIDE_RE.test(body)) continue; // e.g. USD/shares — a ratio, not plain USD
+    if (DIVIDE_RE.test(body)) {
+      const numerator = body.match(NUMERATOR_RE)?.[1]?.match(MEASURE_RE)?.[1]?.trim();
+      const denominator = body.match(DENOMINATOR_RE)?.[1]?.match(MEASURE_RE)?.[1]?.trim();
+      if (isUsdMeasure(numerator) && isSharesMeasure(denominator)) kinds.set(id, "USD/shares");
+      continue;
+    }
     const measure = body.match(MEASURE_RE)?.[1]?.trim();
-    if (measure && /(?:^|:)usd$/i.test(measure)) ids.add(id);
+    if (isUsdMeasure(measure)) kinds.set(id, "USD");
   }
-  return ids;
+  return kinds;
 }
 
 // --- facts -------------------------------------------------------------------
@@ -119,16 +141,19 @@ function attr(attrs: string, name: string): string | undefined {
 }
 
 /**
- * Parses a filing's inline XBRL into a concept → entries map in the exact shape `sec.ts`
- * consumes from `companyfacts.facts["us-gaap"][concept].units.USD`. Returns `{}` (a safe no-op
- * for `mergeFilingFacts`) if the document has no recognizable iXBRL facts at all.
+ * Parses a filing's inline XBRL into a concept → unit → entries map (see `FilingFacts`), each
+ * unit's entries in the exact shape `sec.ts` consumes from
+ * `companyfacts.facts["us-gaap"][concept].units[unit]`. Returns `{}` (a safe no-op for
+ * `mergeFilingFacts`) if the document has no recognizable iXBRL facts at all.
  */
-export function parseFilingXbrl(html: string, meta: FilingMeta): Record<string, UnitEntry[]> {
+export function parseFilingXbrl(html: string, meta: FilingMeta): FilingFacts {
   const contexts = parseContexts(html);
-  const usdUnitIds = parseUsdUnitIds(html);
-  const out: Record<string, UnitEntry[]> = {};
-  const seen = new Set<string>(); // dedup key: "concept|contextRef" — a fact commonly repeats
-  // across the statement table, an XBRL-viewer-facing duplicate table, and footnote reconciliations.
+  const unitKinds = parseUnitKinds(html);
+  const out: FilingFacts = {};
+  const seen = new Set<string>(); // dedup key: "concept|contextRef|unit" — a fact commonly
+  // repeats across the statement table, an XBRL-viewer-facing duplicate table, and footnote
+  // reconciliations (and, per an EDGAR rendering quirk, as an identical fact literally nested
+  // inside another — see the "nested-duplicate" test).
 
   for (const m of html.matchAll(FACT_RE)) {
     const attrs = m[1] ?? m[2];
@@ -144,13 +169,14 @@ export function parseFilingXbrl(html: string, meta: FilingMeta): Record<string, 
     if (!ctx || ctx.dimensioned) continue; // unresolved context, or a segmented/non-consolidated value
 
     const unitRef = attr(attrs, "unitRef");
-    if (!unitRef || !usdUnitIds.has(unitRef)) continue; // not a plain-USD fact (e.g. USD/shares, shares, MW, ...)
+    const unit = unitRef ? unitKinds.get(unitRef) : undefined;
+    if (!unit) continue; // not a USD or USD/shares fact (e.g. raw shares, MW, a ratio unit, ...)
 
-    const dedupeKey = `${concept}|${contextRef}`;
+    const dedupeKey = `${concept}|${contextRef}|${unit}`;
     if (seen.has(dedupeKey)) continue;
 
     const text = content
-      .replace(/<[^>]*>/g, "") // strip nested formatting tags to get at the numeral
+      .replace(/<[^>]*>/g, "") // strip nested formatting/nested-fact tags to get at the numeral
       .replace(/,/g, "")
       .trim();
     if (!text || /^nil$/i.test(text)) continue;
@@ -166,7 +192,8 @@ export function parseFilingXbrl(html: string, meta: FilingMeta): Record<string, 
     const entry: UnitEntry = ctx.start
       ? { start: ctx.start, end: ctx.end, val, form: meta.form, filed: meta.filed }
       : { end: ctx.end, val, form: meta.form, filed: meta.filed };
-    (out[concept] ??= []).push(entry);
+    const conceptBuckets = (out[concept] ??= {});
+    (conceptBuckets[unit] ??= []).push(entry);
   }
 
   return out;
@@ -174,16 +201,18 @@ export function parseFilingXbrl(html: string, meta: FilingMeta): Record<string, 
 
 /**
  * Appends each filing-parsed concept's entries onto `companyfacts.facts["us-gaap"][concept]
- * .units.USD`, creating the concept node (and, if the filing has no usable facts at all, doing
- * nothing) when absent. Never mutates the input — returns a new merged object built with
- * shallow copies down to the concept level.
+ * .units[<unit>]` — "USD" for dollar facts, "USD/shares" for the two EPS concepts (never mixed:
+ * EPS entries always land under "USD/shares", never "USD") — creating the concept node and/or
+ * unit bucket (and, if the filing has no usable facts at all, doing nothing) when absent. Never
+ * mutates the input — returns a new merged object built with shallow copies down to the unit
+ * bucket level.
  *
  * Deliberately does not dedup against companyfacts' own entries: sec.ts's per-period selection
  * (keepLatestFiled, keyed by `filed`) already resolves any overlap, and a filing fact's `filed`
  * date is always the actual filing's — later than anything companyfacts could have for the same
  * period — so an appended filing entry always wins ties for periods it covers.
  */
-export function mergeFilingFacts(companyfacts: CompanyFactsLike, filingFacts: Record<string, UnitEntry[]>): CompanyFactsLike {
+export function mergeFilingFacts(companyfacts: CompanyFactsLike, filingFacts: FilingFacts): CompanyFactsLike {
   const concepts = Object.keys(filingFacts);
   if (concepts.length === 0) return companyfacts;
 
@@ -192,15 +221,22 @@ export function mergeFilingFacts(companyfacts: CompanyFactsLike, filingFacts: Re
   const nextGaap: Record<string, UsGaapConceptNode> = { ...prevGaap };
 
   for (const concept of concepts) {
-    const newEntries = filingFacts[concept];
-    if (!newEntries.length) continue;
+    const byUnit = filingFacts[concept];
+    const units = Object.keys(byUnit) as FactUnit[];
+    if (units.length === 0) continue;
+
     const prevNode = nextGaap[concept] ?? {};
     const prevUnits = prevNode.units ?? {};
-    const prevUsd = prevUnits.USD ?? [];
-    nextGaap[concept] = {
-      ...prevNode,
-      units: { ...prevUnits, USD: [...prevUsd, ...newEntries] },
-    };
+    const nextUnits: Record<string, UnitEntry[]> = { ...prevUnits };
+
+    for (const unit of units) {
+      const newEntries = byUnit[unit];
+      if (!newEntries?.length) continue;
+      const prevBucket = prevUnits[unit] ?? [];
+      nextUnits[unit] = [...prevBucket, ...newEntries];
+    }
+
+    nextGaap[concept] = { ...prevNode, units: nextUnits };
   }
 
   return { ...companyfacts, facts: { ...prevFacts, "us-gaap": nextGaap } };
