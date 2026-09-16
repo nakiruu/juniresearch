@@ -1,0 +1,39 @@
+{
+  "judgmentSha256": "9f262de96beee34bd73e30500e22606e7435611b3b72f4a020599812e9d8163f",
+  "reviewedAt": "2026-09-16T13:30:00Z",
+  "reviewer": "claude-opus-4-8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.executiveSummary.risks[3]",
+      "quote": "Generic and competitive entry: a generic maker has filed for a tirzepatide copy, and Novo Nordisk remains a direct competitor in obesity.",
+      "issue": "Novo Nordisk appears nowhere on the grounding surface — not in the Facts block, the Context excerpts, or the FactPack. Only its product Wegovy is on the surface (proxy SURMOUNT-5: 'Zepbound: 20.2% weight loss vs. Wegovy's 13.7%'). Naming Novo Nordisk as the competitor is a recalled proper noun the house rule forbids ('never recall one from memory') and is exactly the shape item 2 flags — an inference the source invites but does not make. No later section argues a Novo/Lilly competitive dynamic, so this exec-summary pointer is unsupported.",
+      "fix": "Ground the claim in what the surface carries: refer to Wegovy (the competing obesity medicine named in the proxy SURMOUNT-5 head-to-head) instead of naming Novo Nordisk, or drop the competitor clause and keep only the tirzepatide-generic point, which the headline supports. If Novo is to be named, it must first appear on the grounding surface.",
+      "status": "addressed",
+      "note": "Addressed. risks[3] no longer names Novo Nordisk; it now reads 'the competing Wegovy franchise remains a direct rival in obesity.' Wegovy is on the grounding surface via the proxy SURMOUNT-5 head-to-head (Zepbound 20.2% vs Wegovy's 13.7%), so the competitor reference is now grounded, exactly as the fix directed."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[0]",
+      "quote": "Valuation risk: at a full trailing multiple near a 52-week high, the shares price sustained hypergrowth, so even an in-line quarter that hints at deceleration could trigger a sharp de-rating.",
+      "issue": "The same claims recur across sections instead of being introduced once and referred back in words. (1) The clause 'the shares price sustained hypergrowth' appears verbatim in thesis.body and in this risks.idiosyncratic[0] bullet. (2) 'oncology, immunology, and neuroscience medicines ... grew 121% year over year in the quarter' appears near-verbatim in businessMoat.segments[0] and growth.points[3]. (3) The consensus revenue path '$88.2B ... $101.8B' is stated with figures in incomeCommentary and again in valuation.scenarios[1] (Base) driver. (4) The '~55%' international share and '136%' rest-of-world figures are carried in catalysts[2] and repeated in moatFactors[0] and growth.points[4], where an exec-summary pointer should point rather than carry the figure.",
+      "fix": "Introduce each figure once, in the section that argues it, and refer back in words elsewhere. Reword risks.idiosyncratic[0] so it does not reuse the thesis's 'shares price sustained hypergrowth' clause. State the 121% figure once (moat or growth) and refer to it in words in the other. Let incomeCommentary own the $88.2B/$101.8B path and have the Base scenario say 'the consensus path' in words. Turn catalysts[2] into a pointer without the 55%/136% figures the sections carry.",
+      "status": "addressed",
+      "note": "Addressed on all four counts. (1) idiosyncratic[0] now reads 'the price leaves little room for error' and no longer reuses the thesis clause. (2) The 121% figure sits once in growth.points[3]; the moat refers to it in words. (3) incomeCommentary owns the $88.2B/$101.8B path; the Base scenario now says 'along the consensus path.' (4) catalysts[2] is a figureless pointer; 55% appears once in moatFactors[0] and 136% once in growth.points[4]."
+    },
+    {
+      "id": "F-3",
+      "severity": "Minor",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "equity of $26.5B supports a current ratio of 1.58",
+      "issue": "The sentence links two unrelated quantities. The current ratio (1.58 = current assets / current liabilities) is not a function of total equity ($26.5B). Both figures are individually grounded (FY25 equity $26.5B; current ratio 1.58), but 'equity ... supports a current ratio' misstates what drives the ratio and reads as a non-sequitur.",
+      "fix": "Separate the two facts: present FY25 equity ($26.5B) and the current ratio (1.58) as distinct balance-sheet points, or attribute the current ratio to liquidity (current assets versus current liabilities) rather than to equity.",
+      "status": "addressed",
+      "note": "Addressed. balanceCommentary now presents equity in the net-debt context ('net debt of $35.2B against equity of $26.5B') and attributes the 1.58 current ratio to liquidity in a separate sentence ('Short-term liquidity is comfortable, with a current ratio of 1.58'). The equity-drives-the-ratio non-sequitur is gone."
+    }
+  ]
+}
