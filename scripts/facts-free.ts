@@ -18,8 +18,9 @@ let sec: ReturnType<typeof parseCompanyFacts>;
 try {
   const facts = await fetchCompanyFacts(cik, contact);
   sec = parseCompanyFacts(facts);
-} catch (err: any) {
-  throw new Error(`SEC data for ${ticker}: ${err.message}`);
+} catch (err) {
+  const message = err instanceof Error ? err.message : String(err);
+  throw new Error(`SEC data for ${ticker}: ${message}`);
 }
 
 if (sec.annual.length < 3) { console.error(`Only ${sec.annual.length} annual periods from SEC for ${ticker}; need ≥3.`); process.exit(1); }
