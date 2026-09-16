@@ -1,0 +1,98 @@
+{
+  "judgmentSha256": "fed3219304175de7f53d1a3f0d09d7b62ee8a224be2e7c4a91731362900c567a",
+  "reviewedAt": "2026-09-16T19:30:00Z",
+  "reviewer": "claude-opus-4-8",
+  "round": 2,
+  "verdict": "approved-with-minors",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.businessMoat.segments[Client Computing Group].body",
+      "quote": "with AI-PC volume growing 26% sequentially to two-thirds of the client mix",
+      "issue": "The transcript states this as revenue, not volume: \"Our AI PC revenue grew 26% sequentially and now represents two-thirds of our client revenue mix.\" Revenue and unit volume are different quantities and diverge with ASP; the same call attributes upside to \"higher ASPs due to mix and pricing actions.\" The report's own growth.points[1] correctly labels the identical figure \"AI-PC revenue up 26% sequentially and now two-thirds of the client mix,\" so the segment body both misattributes the quantity (Rubric 1) and contradicts the growth section.",
+      "fix": "Change \"volume\" to \"revenue\": \"with AI-PC revenue growing 26% sequentially to two-thirds of the client revenue mix,\" matching the transcript wording and growth.points[1].",
+      "status": "addressed",
+      "note": "Re-verified round 2. Segment body now reads \"with AI-PC revenue growing 26% sequentially to two-thirds of the client revenue mix\" — \"volume\" changed to \"revenue,\" matching the transcript and the growth section. Still fixed in both the judgment and the built report."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.growth.points",
+      "quote": "Data-center and AI is inflecting, up 59% year over year in the latest quarter, as server-CPU demand recovers and purpose-built silicon scales.",
+      "issue": "The growth section re-argues figures already argued in businessMoat segments rather than referring back in words (Rubric 7 paraphrase). DCAI +59% YoY appears in the Data Center Group body (\"grew 59% year over year in Q2'26 to $6.3B\") and in growth.points[0]; AI-PC +26% sequential / two-thirds appears in the Client Computing Group body and growth.points[1]; the $293M external base appears in the Intel Foundry Services body (\"external foundry revenue was just $293M in Q2'26\") and in growth.points[2] (and catalysts[1]). Separately, the NVIDIA $5.0B and SoftBank $2.0B raises are stated in both financials.balanceCommentary and management.capitalAllocation.",
+      "fix": "Keep each Q2 figure where it is argued (businessMoat segments; balanceCommentary) and, in the growth points, make the point forward-looking or refer back in words instead of restating the same 59% / 26% / $293M. Cite the NVIDIA and SoftBank raises once and refer back in the other section.",
+      "status": "addressed",
+      "note": "Re-verified round 2. growth.points refer back in words without restating the figures (\"returned to growth,\" \"majority of the client revenue mix,\" \"least proven growth lever\"), and capitalAllocation cites \"the equity investments from NVIDIA, SoftBank and the U.S. government noted in the balance-sheet discussion,\" so the $5.0B/$2.0B figures appear once, in balanceCommentary. Still fixed."
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.risks.systemic",
+      "quote": "a systemic risk it shares with every large chipmaker but carries with a weaker balance-sheet cushion than its most profitable peers",
+      "issue": "No peer financials are on the grounding surface. The FactPack peers block lists ADI, AMAT, APH and ARM with pe/ps/evToEbitda all null, and the valuation multiples note says \"Peer multiples pending a peer data source.\" The claim that Intel's balance-sheet cushion is weaker than \"its most profitable peers\" is a comparative statement of fact the surface does not support (Rubric 2). Intel's own metrics (net debt/EBITDA 10.3x, four consecutive years of negative free cash flow) support a weak-cushion claim in absolute terms, but not the ranking against peers.",
+      "fix": "Drop the peer comparison, or recast it in absolute terms using surface figures (e.g., net debt/EBITDA of 10.3x and four straight years of negative free cash flow leave a thinner cushion to absorb a downturn), without asserting a ranking against peers the pack does not quantify.",
+      "status": "addressed",
+      "note": "Re-verified round 2. The peer ranking is gone; the sentence reads \"one it carries while free cash flow is still negative and EBITDA-based leverage is elevated, leaving a thinner cushion to absorb a downturn\" — absolute terms only, no comparison to peers. Still fixed."
+    },
+    {
+      "id": "F-4",
+      "severity": "Minor",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "Recent actions bracket the debate — Cantor Fitzgerald raised its target to $150 from $90 while keeping a Neutral rating, and LBBW cut the stock to Sell.",
+      "issue": "Both actions come from Headlines dated 2026-06-29, roughly eleven weeks before the report date (September 16, 2026), and the consensus target has since moved to $110.97 (as of 2026-09-16). Presenting them as \"Recent actions\" without their late-June date overstates their currency (Rubric 3), and the Bull scenario anchors its $150 implied price on the June Cantor target.",
+      "fix": "Date the actions (e.g., \"In late June 2026, Cantor Fitzgerald raised its target to $150 from $90... and LBBW cut the stock to Sell\") so the reader can weigh them against the current $110.97 consensus.",
+      "status": "addressed",
+      "note": "Re-verified round 2. Now reads \"In late June 2026, Cantor Fitzgerald raised its target to $150 from $90 while keeping a Neutral rating, and LBBW cut the stock to Sell — a spread of views that predates the consensus figure above,\" so the actions are dated and set against the current consensus. Still fixed."
+    },
+    {
+      "id": "F-5",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.companyOverview",
+      "quote": "designs and manufactures computing silicon and, uniquely among large chip designers, owns the fabs that build it",
+      "issue": "\"uniquely among large chip designers\" is an unearned superlative the surface does not establish (Rubric 9); other large chip designers also own fabs, and the pack carries no support for a uniqueness claim on fab ownership. The transcript's uniqueness claim is narrower and is management's own (\"the only company that can design, manufacturing, build the entire range of computing solutions\"). The report's own Integrated manufacturing moat factor uses the accurate framing \"Unlike its fabless peers.\"",
+      "fix": "Soften to the accurate framing, e.g., \"unlike its fabless peers, owns the fabs that build it,\" consistent with the Integrated manufacturing moat factor.",
+      "status": "addressed",
+      "note": "Re-verified round 2. Now reads \"unlike the fabless chip designers it competes with, owns the fabs that build its chips\" — the uniqueness superlative is gone and the framing matches the Integrated manufacturing moat factor. Still fixed."
+    },
+    {
+      "id": "F-6",
+      "severity": "Minor",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "the range runs from $60.00 to $200.00, one of the widest spreads we track and a fair reflection of a binary outcome",
+      "issue": "\"one of the widest spreads we track\" is an unearned comparative (Rubric 9). The grounding surface carries this stock's target range ($60.00–$200.00) but nothing about the spreads of the other names the desk tracks, so the assertion that this is among the widest cannot be verified from the pack. It is a superlative the series on the page does not support.",
+      "fix": "Drop the comparative or recast it against surface figures without ranking it against other names — e.g., \"the range runs from $60.00 to $200.00, a spread of $140 that reflects a binary outcome.\"",
+      "status": "addressed",
+      "note": "Fixed this round. The comparative is gone; the sentence now reads \"the range runs from $60.00 to $200.00, a wide spread that reflects a binary outcome\" — no ranking against other names the desk tracks, only the stock's own $60.00–$200.00 range. Confirmed in the judgment and the built report."
+    },
+    {
+      "id": "F-7",
+      "severity": "Minor",
+      "field": "sections.risks.systemic",
+      "quote": "As a manufacturer with meaningful revenue booked in Asia — Singapore, Taiwan and other markets together exceed the 39.2% booked in the United States",
+      "issue": "The FY25 geography split is United States 39.2%, Singapore 23.7%, Taiwan 19.1%, Other Countries 17.9%. The appositive equates \"revenue booked in Asia\" with \"Singapore, Taiwan and other markets,\" but \"Other Countries\" (17.9%) is unspecified and the company tearsheet notes Intel operates in Ireland and Israel, so folding the whole non-US total under an \"Asia\" label over-claims (Rubric 1/2). Singapore and Taiwan alone (42.8%) already exceed the 39.2% US share, so \"and other markets\" is not needed to carry the point.",
+      "fix": "Either drop \"and other markets\" and rest the point on Singapore + Taiwan (42.8% vs 39.2% US), or reframe the group as revenue booked \"outside the United States\" rather than \"in Asia,\" so the geography label matches the surface figures.",
+      "status": "addressed",
+      "note": "Fixed this round. Recast as revenue booked \"outside the United States\" and rested on Singapore (23.7%) and Taiwan (19.1%) together exceeding the 39.2% U.S. share; the \"Asia\" label and \"and other markets\" are both gone, so the geography label now matches the surface figures. Confirmed in the judgment and the built report."
+    },
+    {
+      "id": "F-8",
+      "severity": "Minor",
+      "field": "sections.businessMoat.durability",
+      "quote": "gross margin sits at 34.8% versus the mid-50s the business once earned",
+      "issue": "34.8% is the FY25 full-year gross margin, but the present-tense \"sits at\" presents it as the current level. The report's own financials carry a more recent, higher picture: the Facts block gives trailing-twelve-month gross margin of 38.9%, and incomeCommentary cites Q2'26 non-GAAP gross margin of 41.8%, with management's stated goal of margins \"comfortably in the 40s\" met for the first two quarters. Presenting the lower FY25 figure as current understates the recovering margin and is inconsistent with incomeCommentary (Rubric 3 honest dating / Rubric 1 period). The comparison to the FY21 peak (the mid-50s) is annual-to-annual and sound; only the undated present-tense framing is the problem.",
+      "fix": "Label the period so it is not read as current — e.g., \"gross margin of 34.8% in FY25 versus the mid-50s the business once earned\" — or use the TTM figure (38.9%), so the durability section reflects the same improving margin the financials section already shows rather than the FY25 low.",
+      "status": "addressed",
+      "note": "Fixed this round. The present-tense \"sits at\" is gone; durability now reads \"gross margin was 34.8% in FY25 against the mid-50s the business once earned, and is only beginning to recover,\" so the FY25 figure carries its period and the recovering-margin context is preserved rather than reading as the current level. Confirmed in the judgment and the built report."
+    },
+    {
+      "id": "F-9",
+      "severity": "Minor",
+      "field": "analystCommentary",
+      "quote": "The bull and bear cases sit unusually far apart because the investment thesis rests on execution management has promised but not yet demonstrated",
+      "issue": "\"unusually far apart\" is an unearned comparative (Rubric 9) — the same defect shape the desk removed in F-6. The grounding surface carries this stock's own bull/bear spread (target range $60.00–$200.00; the report's Bull $150 / Bear $60 scenarios) but nothing about the typical bull-bear spread across the names the desk covers, so \"unusually\" ranks the spread against a norm the pack does not establish. The valuation section was already recast from \"one of the widest spreads we track\" to \"a wide spread,\" but analystCommentary keeps the comparative in a different field.",
+      "fix": "Drop \"unusually,\" or recast against surface figures without ranking against a norm — e.g., \"The bull and bear cases sit far apart\" or \"sit far apart — a $60 to $200 target range — because...\", consistent with the \"a wide spread\" framing now used in valuation.",
+      "status": "open"
+    }
+  ]
+}
