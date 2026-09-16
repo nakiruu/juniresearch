@@ -105,3 +105,105 @@ describe("parseCompanyFacts", () => {
     expect(ttmEbitda!).toBeGreaterThan(0);
   });
 });
+
+// Regression for a review finding on the YTD-reconstruction fix above: the Q1/H1/9M bucket
+// classification originally matched on DURATION ALONE (an 80-100 day entry -> "Q1", etc). A
+// discrete Q3 entry is also ~90 days, so a filer that tags a discrete Q1 AND a discrete Q3 (both
+// ~90d) plus a YTD H1 in the same fiscal year could have the later-filed ~90d entry win the "Q1"
+// anchor slot — silently corrupting Q2's reconstruction (H1 - Q3 instead of H1 - Q1) with a
+// wrong, non-null number. These use small synthetic companyfacts objects (not live LLY data) to
+// isolate the collision from any real filer's incidental tagging pattern.
+describe("YTD bucket anchoring (off-quarter ~90-day entries must not occupy the Q1 slot)", () => {
+  const collisionFacts = {
+    facts: {
+      "us-gaap": {
+        Revenues: {
+          units: {
+            USD: [
+              { start: "2024-01-01", end: "2024-03-31", val: 1000, form: "10-Q", filed: "2024-04-20" },
+              { start: "2024-04-01", end: "2024-06-30", val: 1100, form: "10-Q", filed: "2024-07-20" },
+              { start: "2024-07-01", end: "2024-09-30", val: 1200, form: "10-Q", filed: "2024-10-25" },
+            ],
+          },
+        },
+        NetIncomeLoss: {
+          units: {
+            USD: [
+              { start: "2024-01-01", end: "2024-03-31", val: 50, form: "10-Q", filed: "2024-04-20" },
+              { start: "2024-04-01", end: "2024-06-30", val: 60, form: "10-Q", filed: "2024-07-20" },
+              { start: "2024-07-01", end: "2024-09-30", val: 70, form: "10-Q", filed: "2024-10-25" },
+            ],
+          },
+        },
+        NetCashProvidedByUsedInOperatingActivities: {
+          units: {
+            USD: [
+              // True discrete Q1: ~90d, ends Mar 31, filed first.
+              { start: "2024-01-01", end: "2024-03-31", val: 100, form: "10-Q", filed: "2024-04-20" },
+              // Discrete Q3: ALSO ~90d (92 days) but ends Sep 30 — filed LATER than the true
+              // Q1. Duration-only bucketing would let this win the "Q1" anchor slot.
+              { start: "2024-07-01", end: "2024-09-30", val: 130, form: "10-Q", filed: "2024-10-25" },
+              // YTD H1: ~180d, ends Jun 30. No discrete Q2 tag exists for this concept, so Q2
+              // must come from differencing this against the correct Q1 anchor.
+              { start: "2024-01-01", end: "2024-06-30", val: 250, form: "10-Q", filed: "2024-07-20" },
+            ],
+          },
+        },
+      },
+    },
+  };
+
+  it("reconstructs Q2 as H1 minus the true Q1, not H1 minus the later-filed off-quarter Q3 entry", () => {
+    const { quarter } = parseCompanyFacts(collisionFacts);
+    const q2 = quarter.find((p) => p.fiscal_year === 2024 && p.fiscal_period === "Q2")!;
+    expect(q2).toBeDefined();
+    expect(q2.operating_cash_flow).toBe(250 - 100); // correct: H1(250) − Q1(100) = 150
+    expect(q2.operating_cash_flow).not.toBe(250 - 130); // must NOT be H1 − Q3(130) = 120
+  });
+});
+
+// The review also flagged that "a discrete tag always wins over a reconstructed value" (the
+// merge in quarterFlowWithYtdFallback) was never exercised with a case where the two actually
+// differ — a bug there would be invisible as long as the reconstructed and discrete values
+// happened to agree.
+describe("discrete tag wins over YTD reconstruction when both exist for the same quarter", () => {
+  const bothTaggedFacts = {
+    facts: {
+      "us-gaap": {
+        Revenues: {
+          units: {
+            USD: [
+              { start: "2024-01-01", end: "2024-03-31", val: 1000, form: "10-Q", filed: "2024-04-20" },
+              { start: "2024-04-01", end: "2024-06-30", val: 1100, form: "10-Q", filed: "2024-07-20" },
+            ],
+          },
+        },
+        NetIncomeLoss: {
+          units: {
+            USD: [
+              { start: "2024-01-01", end: "2024-03-31", val: 50, form: "10-Q", filed: "2024-04-20" },
+              { start: "2024-04-01", end: "2024-06-30", val: 60, form: "10-Q", filed: "2024-07-20" },
+            ],
+          },
+        },
+        NetCashProvidedByUsedInOperatingActivities: {
+          units: {
+            USD: [
+              { start: "2024-01-01", end: "2024-03-31", val: 100, form: "10-Q", filed: "2024-04-20" }, // discrete Q1
+              { start: "2024-01-01", end: "2024-06-30", val: 250, form: "10-Q", filed: "2024-07-20" }, // YTD H1 -> would reconstruct Q2 as 150
+              { start: "2024-04-01", end: "2024-06-30", val: 999, form: "10-Q", filed: "2024-07-20" }, // genuine discrete Q2, deliberately != 150
+            ],
+          },
+        },
+      },
+    },
+  };
+
+  it("uses the genuine discrete Q2 tag (999), not the YTD-reconstructed value (150)", () => {
+    const { quarter } = parseCompanyFacts(bothTaggedFacts);
+    const q2 = quarter.find((p) => p.fiscal_year === 2024 && p.fiscal_period === "Q2")!;
+    expect(q2).toBeDefined();
+    expect(q2.operating_cash_flow).toBe(999);
+    expect(q2.operating_cash_flow).not.toBe(250 - 100);
+  });
+});

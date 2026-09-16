@@ -176,11 +176,22 @@ const quarterInstant = (entries: UnitEntry[]): Map<string, UnitEntry> =>
 
 type YtdBucket = "Q1" | "H1" | "9M";
 
-/** ~90d / ~180d / ~270d duration buckets a 10-Q YTD entry can fall into; null otherwise. */
-function ytdBucketOf(days: number): YtdBucket | null {
-  if (days >= 80 && days <= 100) return "Q1";
-  if (days >= 170 && days <= 190) return "H1";
-  if (days >= 260 && days <= 280) return "9M";
+/**
+ * ~90d / ~180d / ~270d duration buckets a 10-Q YTD entry can fall into; null otherwise.
+ *
+ * Duration alone is NOT enough: a discrete Q3 entry (~90 days, ending Sep 30) matches the same
+ * 80–100 day window as a true discrete Q1 (~90 days, ending Mar 31) — if a filer tags both,
+ * whichever is filed later would otherwise win the "Q1" anchor slot in ytdByYear below, and
+ * reconstructedQuarterFlow would silently compute Q2 = H1 − Q3 instead of H1 − Q1 (a wrong,
+ * non-null number, not a null one — nothing downstream would flag it). So bucket
+ * classification also requires the entry's period-end to actually fall in the calendar quarter
+ * the bucket represents: an off-quarter ~90-day entry can never occupy the Q1 slot.
+ */
+function ytdBucketOf(days: number, end: string): YtdBucket | null {
+  const q = quarterOf(end);
+  if (days >= 80 && days <= 100 && q === 1) return "Q1";
+  if (days >= 170 && days <= 190 && q === 2) return "H1";
+  if (days >= 260 && days <= 280 && q === 3) return "9M";
   return null;
 }
 
@@ -194,7 +205,7 @@ function ytdByYear(entries: UnitEntry[]): Map<number, Partial<Record<YtdBucket, 
   const latestPerKey = new Map<string, UnitEntry>();
   for (const e of entries) {
     if (e.form !== "10-Q" || !e.start || yearOf(e.start) !== yearOf(e.end)) continue;
-    const bucket = ytdBucketOf(daysBetween(e.start, e.end));
+    const bucket = ytdBucketOf(daysBetween(e.start, e.end), e.end);
     if (!bucket) continue;
     const key = `${yearOf(e.end)}:${bucket}`;
     const prev = latestPerKey.get(key);
@@ -215,6 +226,8 @@ function reconstructedQuarterFlow(entries: UnitEntry[]): Map<string, UnitEntry> 
   const out = new Map<string, UnitEntry>();
   for (const { Q1, H1, "9M": nineMonth } of ytdByYear(entries).values()) {
     if (Q1) out.set(quarterKey(Q1.end), Q1); // YTD-ending-Q1 IS the discrete Q1 figure
+    // `start` below is approximate (the prior quarter's end date, not its own start-of-quarter
+    // day) — nothing downstream reads a reconstructed entry's `start`, so this is cosmetic.
     if (H1 && Q1) out.set(quarterKey(H1.end), { ...H1, start: Q1.end, val: H1.val - Q1.val });
     if (nineMonth && H1) out.set(quarterKey(nineMonth.end), { ...nineMonth, start: H1.end, val: nineMonth.val - H1.val });
   }
