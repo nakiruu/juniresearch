@@ -1,0 +1,619 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "CBRS",
+  "cik": 2021728,
+  "company": "Cerebras Systems Inc.",
+  "exchange": "NASDAQ",
+  "filing": {
+    "form": "10-Q",
+    "accession": "0001628280-26-056357",
+    "filedDate": "2026-08-12",
+    "periodEnd": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/2021728/000162828026056357/cbrs-20260630.htm"
+  },
+  "capturedAt": "2026-09-15T23:30:55.465Z",
+  "quote": {
+    "price": 184.03,
+    "marketCap": 41689699990,
+    "sharesOutstanding": 226537521.00201055,
+    "sharesSource": "derived",
+    "week52Low": 160.81,
+    "week52High": 386.34,
+    "dividendYield": 0,
+    "asOf": "2026-09-15"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          24619000,
+          78744000,
+          290252000,
+          509991000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          2890000,
+          26358000,
+          122738000,
+          199071000
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          -178821000,
+          -133934000,
+          -101639000,
+          -145254000
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          -165574000,
+          -116440000,
+          -468138000,
+          279338000
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          -177719000,
+          -127155000,
+          -481602000,
+          237827000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          -0.83,
+          -0.59,
+          -2.25,
+          0.41
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          225334000,
+          152388000,
+          337151000,
+          1108237000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          1298000,
+          560000,
+          40673000,
+          261822000
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          -24779000,
+          -34201000,
+          -179535000,
+          -439884000
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          -466334000,
+          -558962000,
+          -966791000,
+          -578655000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          11.613211009174313,
+          3.885214399443641,
+          0.8746697110263255,
+          2.1453234010617894
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          -164402000,
+          -78977000,
+          451978000,
+          -10050000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -10463000,
+          -6593000,
+          -23435000,
+          -382739000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          -3881000,
+          -63000,
+          -102000,
+          -38086000
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          -174865000,
+          -85570000,
+          428543000,
+          -392789000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q2'26",
+    "periodEnd": "2026-06-30",
+    "revenue": 180110000,
+    "operatingMargin": -2.649675198489812,
+    "revenueYoY": 0.7431911887110199
+  },
+  "ttm": {
+    "pe": -56.41976822613281,
+    "ps": 61.247765064869625,
+    "evToEbitda": -72.2317197646555,
+    "grossMargin": 0.348336132034031,
+    "operatingMargin": -0.8116672763573698,
+    "netMargin": -0.7527138581962264,
+    "netDebtToEbitda": 12.001127423050345,
+    "interestCoverage": -29.156155997677978,
+    "currentRatio": 5.824521993655529,
+    "fcfYield": -0.021715147871468287
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 885310000,
+      "eps": -0.52
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 2850000000,
+      "eps": 1.24
+    }
+  },
+  "analysts": {
+    "count": 8,
+    "buy": 7,
+    "hold": 1,
+    "sell": 0,
+    "consensusRating": "Buy",
+    "consensusTarget": 300.5,
+    "medianTarget": 300,
+    "highTarget": 330,
+    "lowTarget": 279,
+    "asOf": "2026-09-16"
+  },
+  "segments": {
+    "basis": "FY25 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 509991000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "ALAB",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "AVEX",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "FRVO",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "SWMR",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-04",
+      "close": 227.14999389648438
+    },
+    {
+      "date": "2026-08-05",
+      "close": 214.3000030517578
+    },
+    {
+      "date": "2026-08-06",
+      "close": 211.3000030517578
+    },
+    {
+      "date": "2026-08-07",
+      "close": 226.72999572753906
+    },
+    {
+      "date": "2026-08-10",
+      "close": 230.00999450683594
+    },
+    {
+      "date": "2026-08-11",
+      "close": 234.75999450683594
+    },
+    {
+      "date": "2026-08-12",
+      "close": 262.05999755859375
+    },
+    {
+      "date": "2026-08-13",
+      "close": 231.00999450683594
+    },
+    {
+      "date": "2026-08-14",
+      "close": 218.97999572753906
+    },
+    {
+      "date": "2026-08-17",
+      "close": 251.97999572753906
+    },
+    {
+      "date": "2026-08-18",
+      "close": 220.00999450683594
+    },
+    {
+      "date": "2026-08-19",
+      "close": 215.69000244140625
+    },
+    {
+      "date": "2026-08-20",
+      "close": 209.85000610351562
+    },
+    {
+      "date": "2026-08-21",
+      "close": 196.1300048828125
+    },
+    {
+      "date": "2026-08-24",
+      "close": 185.42999267578125
+    },
+    {
+      "date": "2026-08-25",
+      "close": 183.9199981689453
+    },
+    {
+      "date": "2026-08-26",
+      "close": 182.14999389648438
+    },
+    {
+      "date": "2026-08-27",
+      "close": 186.6699981689453
+    },
+    {
+      "date": "2026-08-28",
+      "close": 179.0800018310547
+    },
+    {
+      "date": "2026-08-31",
+      "close": 184.24000549316406
+    },
+    {
+      "date": "2026-09-01",
+      "close": 172.6199951171875
+    },
+    {
+      "date": "2026-09-02",
+      "close": 184.52000427246094
+    },
+    {
+      "date": "2026-09-03",
+      "close": 190.44000244140625
+    },
+    {
+      "date": "2026-09-04",
+      "close": 210.0500030517578
+    },
+    {
+      "date": "2026-09-08",
+      "close": 199.77000427246094
+    },
+    {
+      "date": "2026-09-09",
+      "close": 196.1999969482422
+    },
+    {
+      "date": "2026-09-10",
+      "close": 191.33999633789062
+    },
+    {
+      "date": "2026-09-11",
+      "close": 191.92999267578125
+    },
+    {
+      "date": "2026-09-14",
+      "close": 181.2100067138672
+    },
+    {
+      "date": "2026-09-15",
+      "close": 184.02999877929688
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "Cerebras Systems Inc. is a leading innovator in artificial intelligence infrastructure. The company develops and manufactures an advanced AI compute platform, integrating proprietary hardware systems and software. This platform is delivered in rack-mountable units, suitable for deployment in data centers, scaling all the way up to supercomputer-level capabilities. At its core is the groundbreaking Wafer-Scale Engine (WSE), a unique chip that encompasses an entire silicon wafer. This innovation is specifically engineered to deliver superior performance and speed compared to conventional GPUs, addressing the intensive computational demands of inference, Generative AI, and a broad spectrum of other AI applications. Cerebras serves a diverse clientele, including leading hyperscalers, advanced foundation model laboratories, AI-native and digital-first businesses, large enterprises, and key players in Sovereign AI initiatives. With operations spanning the United States, Europe, the Middle East, Africa, and other international markets, Cerebras maintains a significant global footprint. The company was established in 2015 and is headquartered in Sunnyvale, California.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-15"
+    },
+    "mdaExcerpt": {
+      "text": "Item 2. Management's Discussion and Analysis of Financial Condition and Results of Operations\nThe following discussion and analysis of financial condition and results of operations should be read together with our unaudited condensed consolidated financial statements and related notes, and other financial information, included elsewhere in this Quarterly Report on Form 10-Q and our final prospectus (the \"Prospectus\") filed with the Securities and Exchange Commission (the \"SEC\") pursuant to Rule 424(b) under the Securities Act of 1933, as amended (the \"Securities Act\"), on May 14, 2026, in connection with our initial public offering (the \"IPO\"). In addition to our historical results of operations and financial position, this discussion contains forward-looking statements that involve risks and uncertainties. Our actual results could differ materially from those discussed in or implied by these forward-looking statements. Factors that could cause or contribute to such differences include, but are not limited to, those discussed in the section titled \"Risk Factors\" in Part II, Item 1A of this Quarterly Report on Form 10-Q. Our historical results are not necessarily indicative of the results to be expected for any period in the future, and results for any interim period should not be construed as an inference of what our results would be for any full year or future period.\nOverview\nWe are building the fastest AI infrastructure in the world.\nIn AI, speed is critical to win. Speed improves user engagement, expands product capabilities, can lower operating costs, and opens new markets. It shortens iteration cycles for engineers, researchers, and professionals across industries, allowing them to be more productive. Speed unlocks new applications and new industries.\nOur solutions are built for speed. Cerebras Inference delivers answers substantially faster than GPU-based solutions. These performance breakthroughs are the result of our core innovation: the world's first and only commercialized wafer-scale processor.\nOur customers include hyperscalers, foundation model labs, AI-native and digital native businesses, enterprises, and sovereign AI initiatives. Our customers use Cerebras solutions to run applications that demand speed, scale, and intelligence. This work includes training and serving large frontier models with near-instant responses, processing massive datasets in real time, and generating full-stack applications in a single step.\nOnce customers adopt fast inference, user expectations for interactivity rise, and engineering teams shift from latency optimizations to other work, making it difficult to return to slower inference.\nWe deliver our solutions to customers in several different ways. Organizations that require full data and infrastructure control can purchase Cerebras AI supercomputers for on-premises deployments. Customers seeking cloud flexibility can access Cerebras compute through consumption-based models on Cerebras Cloud or through partner clouds. For example, our high-speed inference services are available through partners, including AWS Marketplace, Microsoft Marketplace, IBM watsonx Model Gateway, Vercel AI Gateway, OpenRouter, and Hugging Face, enabling seamless adoption within existing workflows. Beyond providing compute infrastructure, we provide AI services to our customers to co-develop solutions to address their most complex challenges, from training state-of-the-art models to optimizing deployments for each application's needs, and maintaining and operating their on-premises hardware.\nRecent Developments\nOpenAI Collaboration\nIn December 2025, we entered into a master relationship agreement (the \"MRA\") with OpenAI OpCo, LLC (\"OpenAI\"), under which OpenAI committed to purchase 750MW of AI inference compute capacity and related services, with deployment expected in tranches during 2026 through 2028. OpenAI also has the option to purchase an additional 1.25GW of capacity for deployment by the end of 2030. In the first quarter of 2026, we began recognizing revenue from the arrangement, and the initial tranche of the warrant issued to OpenAI vested upon the funding of a working capital loan of approximately $1.0 billion (the \"Working Capital Loan\") in January 2026. Refer to Note 3 - Revenue, Note 10 - Debt, and Note 12 - Common Stock to our unaudited condensed consolidated financial statements for additional information regarding the OpenAI collaboration, including the revenue arrangement, Working Capital Loan, and warrant, respectively. The Company has to date repaid a portion of the balance using non-cash service credits and expects to continue to repay the balance using non-cash service credits.\nInitial Public Offering\nOn May 13, 2026, our registration statement on Form S-1 (File No. 333-295145) related to the IPO was declared effective by the SEC, and our Class A common stock began trading on the Nasdaq Global Select Market on May 14, 2026. The IPO was completed on May 15, 2026. For additional information, see Note 2 - Basis of Presentation and Summary of Significant Accounting Policies to our unaudited condensed consolidated financial statements included in Part I, Item 1 of this Quarterly Report on Form 10-Q.\n30\nTable of Contents\nAWS\nIn June 2026, we entered into a global hardware leasing agreement with Amazon Web Services (\"AWS\") to collaborate on the development and deployment of a joint compute solution in AWS data centers, together with related software and support services. As of June 30, 2026, the applicable lease commencement conditions had not been satisfied. Accordingly, the leases had not commenced, and we had not recognized revenue under the arrangement. In connection with the arrangement, we also issued a warrant to AWS. Refer to Note 12 - Common Stock to our unaudited condensed consolidated financial statements for additional information regarding the warrant issued in connection with the AWS collaboration.\nComponents of Results of Operations\nRevenue\nWe generate revenue primarily from hardware solutions and cloud and other services. Hardware solutions consist of sales of our AI systems and related equipment for on-premises use. Cloud and other services include our Dedicated Capacity and On-Demand cloud offerings, support and management services, and AI modeling services. Cloud and other services revenue also includes pass-through amounts for data center set-up and operation costs that we incur and bill to certain specific customers under custom arrangements with those customers. These pass-through revenues are not part of our core technology or service offerings.\nHardware Solutions\nHardware revenue consists of sales of our AI systems and other equipment that can be used for both training and inference on-premises. We recognize revenue from sales of AI systems when control of the goods transfers to the customer, which generally occurs upon shipment or delivery, depending on shipping terms or upon meeting the contractual acceptance terms. Beginning in the first quarter of 2026, we began recognizing amortization of customer warrant assets as a reduction in revenue. Refer to Note 12 - Common Stock for additional information on common stock warrants issued to customers. This non-cash reduction in revenue negatively impacts sequential revenue growth trends in the near term.\nCloud and Other Services\nCustomers procure cloud capacity from us through two primary models: Dedicated Capacity and On-Demand. Dedicated Capacity contracts are generally structured as take-or-pay commitments, under which customers pay for dedicated compute capacity irrespective of utilization. We recognize revenue from sales of these cloud-based computing services, including hosted inference, over the service term, as the customer benefits from our services throughout the contract period. Beginning in the first quarter of 2026, we began recognizing revenue for pass-through data center costs due to a customer agreement. Also beginning in the first quarter of 2026, we began amortization of customer warrant assets as a reduction in revenue. Refer to Note 12 - Common Stock for additional information on warrants issued to customers. This non-cash reduction in revenue negatively impacts sequential revenue growth trends in the near term.\nOur On-Demand model includes a consumption-based \"pay-as-you-go\" approach for inference, allowing customers to either pay for tokens as they consume them or pre-purchase token bundles for fixed amounts that are drawn down over time as the tokens are consumed, as well as for training workloads that run for contracted periods of time. The On-Demand model allows customers to scale elastically and many customers have begun with on-demand usage and transitioned to dedicated capacity as their workloads expand.\nWe generate services and support revenue primarily through software support agreements that range from one to five years, as well as offering a comprehensive suite of services to manage and operate Cerebras supercomputer clusters located in our customers' data centers. Such revenue is recognized ratably over time as the services are provided.\nWe also generate revenue from custom AI modeling services over time as services are provided or at a point-in-time upon completion and acceptance by the customer of contract deliverables, depending on the terms of the agreement.\nAs a result of the MRA with OpenAI for the delivery of the Committed Capacity, we expect our cloud and other services revenue to comprise a significantly higher percentage of total revenue in future periods. The mix of hardware and cloud and other services revenue may vary from period to period based on OpenAI's deployment options and the manner in which they elect to have the Committed Capacity, and any Additional Capacity, delivered by us. In the near term, we expect pass-through revenue to also increase significantly as initial Committed Capacity will be deployed in our cloud. This may vary over the longer term based on the deployment options elected for future Committed Capacity.\n31\nTable of Contents\nHardware Cost of Revenue\nCost of revenue for hardware consists primarily of the cost of materials, such as wafers processed by third-party foundries, costs associated with packaging, assembly, shipping, logistics, quality assurance, warranty cost, cost of personnel, including salaries, stock-based compensation, and employee benefits, write-down of inventories, and facilities expenses.\nCloud and Other Services Cost of Revenue\nCost of revenue for cloud-based and other support services revenue primarily consists of data center costs, depreciation or rental of equipment, cost of personnel, including salaries, stock-based compensation, and employee benefits, and facilities expenses. We expect to incur other start-up costs related to expediting the availability of cloud capacity to fulfill the significant increase in near-term demand. We also began recognizing pass-through data center costs due to our MRA with OpenAI and expect these costs to grow as we deliver more cloud capacity under the agreement.\nGross Profit and Gross Margin\nGross profit represents revenue less cost of revenue. Gross margin is gross profit expressed as a percentage of revenue. Our gross profit has been, and we expect will continue to be, influenced by several factors, including sales volume and pricing of our products and services, mix of revenue between hardware and cloud and other services, changes in inventory costs, including wafer yield, contract manufacturing and supplier pricing, data center costs, repair and warranty costs, cost of logistics, and personnel costs.\nWe expect overall gross profit will increase in absolute dollars in the near term, primarily due to higher gross profit from Cloud and other services as revenue increases in connection with the continued ramp-up of dedicated cloud capacity deployments.\nWe expect gross margin to be significantly lower in the near term compared to recent prior periods and to fluctuate from period to period. These fluctuations are primarily driven by the amortization of customer warrant assets, which will reduce reported revenue in future periods. Gross margin is also expected to be adversely impacted by pass-through data center costs recorded in both revenue and cost of revenue, as well as start-up costs incurred to expedite cloud capacity to meet increased near-term demand. Because we began amortization of customer warrant assets in the first quarter of 2026, future quarterly revenue growth rates may decline from historical trends.\nOperating Expenses\nResearch and Development Expenses\nResearch and development expenses primarily consist of costs incurred in performing research and development activities and include salaries, stock-based compensation, employee benefits, tape-out costs, which include layout services, mask sets, prototype components, system qualification and testing incurred before releasing new system designs into production, shipping, data center costs, depreciation and amortization, professional services fees, cloud computing, artificial intelligence tooling costs, and facilities expenses. We expense research and development costs as incurred.\nWe also expense software development costs, including costs to develop the software component of hardware to be sold, leased, or marketed to external users, before technological feasibility is reached. Technological feasibility is typically reached shortly before the release of such products.\nWe expect research and development expenses to increase in absolute dollar terms as we continue to build new innovations with our wafer-scale technology and to remain competitive in the dynamic AI market. We expect to have significantly higher stock-based compensation expense related to equity awards, including the Executive Grants for our CTO discussed in Note 13 - Stock-Based Compensation, for which the liquidity-based vesting condition was satisfied in connection with the IPO on May 13, 2026. The Company began recognizing the stock-based compensation expense for these awards in the second quarter of 2026.\nSales and Marketing Expenses\nSales and marketing expenses primarily consist of personnel costs, including salaries, commissions, stock-based compensation, employee benefits, public relations costs, tradeshow and other sales event costs, advertising, travel and entertainment costs, costs to provide prospective customers with demonstrations or trials of Cerebras Cloud, and facilities expenses.\nWe expect sales and marketing expenses to increase in absolute dollar terms as we grow our customer base and brand. We expect to have higher stock-based compensation expense related to equity awards for which the liquidity-based vesting condition was satisfied in connection with the IPO.\n32\nTable of Contents\nGeneral and Administrative Expenses\nGeneral and administrative expenses consist primarily of personnel costs, including salaries, stock-based compensation, employee benefits and bonuses related to corporate, finance, legal, information technology and human resource functions, professional services fees, audit and compliance expenses, software subscription costs, travel and related costs, insurance costs, depreciation and amortization, allocation of facilities and other general corporate expenses. We expect to incur additional expenses as a result of operating as a public company, including expenses to comply with the rules and regulations applicable to companies listed on a national securities exchange, expenses related to auditing, compliance, and reporting obligations pursuant to the rules and regulations of the SEC, as well as higher expenses for general and director and officer insurance, investor relations, and professional services.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/2021728/000162828026056357/cbrs-20260630.htm",
+      "asOf": "2026-08-12",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "Item 1A. Risk Factors\nInvesting in our Class A common stock involves a high degree of risk. You should carefully consider the risks described below in this Quarterly Report on Form 10-Q including our unaudited condensed consolidated financial statements and the notes thereto, and the section titled \"Management's Discussion and Analysis of Financial Condition and Results of Operations\" in Part I, Item 2 as well as the other information in this Quarterly Report on Form 10-Q. The occurrence of any of the events or developments described below may harm our business, financial condition, results of operations, and prospects. In such an event, the price of our Class A common stock could decline, and you may lose all or part of your investment. Additional risks and uncertainties not presently known to us or that we currently believe are not material may also harm our business, financial condition, results of operations, and prospects.\nRisk Factors Summary\nOur business is subject to numerous risks and uncertainties and this summary provides an overview of such risks. You should read this risk factor summary together with the more detailed discussion of risks and uncertainties following this summary.\nWe may not sustain our growth rate, and we may not be able to manage future growth effectively.\nWe have a history of generating net losses, and if we are unable to achieve adequate revenue growth while our expenses increase, we may not achieve and maintain profitability in the future.\nWe have a limited operating history at our current scale, and we may have difficulty evaluating our current business and accurately predicting our future revenue for the purpose of appropriately budgeting and adjusting our expenses.\nA substantial portion of our revenue has been, and is expected to continue to be, driven by a limited number of customers. A reduction in demand from, or a material adverse development in our relationship with any of our significant customers, including OpenAI, G42, MBZUAI, and AWS, or our failure to meet our obligations under the MRA with OpenAI, would harm our business, financial condition, results of operations, and prospects.\nOur revenue historically has been derived from sales of our hardware systems. We are in the early stages of delivering our cloud-based offerings, the market for which is nascent and evolving rapidly, and which require significant data center capacity and capital investments for which we expect to require significant additional capital. There is no assurance that we will be able to sustain or increase revenue from these efforts.\nOur cloud-based offerings are subject to certain risks and challenges. Unfavorable or uncertain conditions in the training or inference cloud market, as well as for AI infrastructure, may cause fluctuations in our results of operations.\nThe market for AI computing solutions is competitive, evolving, and requires scale, and if we do not compete effectively, our business, financial condition, results of operations, and prospects may be harmed.\nThe broader adoption, use, and commercialization of AI technology, and the continued rapid pace of developments in the AI field, are inherently uncertain. If we are unable to expand the application of our offerings, keep up with evolving AI technology requirements, or if new offerings we develop and introduce into the market are not successful, our business, financial condition, results of operations, and prospects may be harmed.\nWe depend on third-party suppliers, including certain sole sources, and substantially all of our manufacturing services and components are procured on a purchase order basis without capacity or volume commitments, which may harm our ability to compete, meet customer demand, satisfy customer contracts or bring products to market, and our reputation, business, financial condition, results of operations, and prospects.\nOur supply chain is long, complex, and global, with many interdependencies. Any significant fluctuations in supply and demand or disruption to our supply chain may harm our ability to manufacture and deliver our products to our customers.\n45\nTable of Contents\nOur business and our offerings are subject to various governmental regulations, and compliance with these regulations may cause us to incur significant expense. If we fail to comply with applicable regulations, we could be subject to administrative, civil, and/or criminal penalties.\nOur offerings are subject to U.S. export controls and may be exported outside the United States only with the required export license or through a license exception. We cannot guarantee that we will be successful in obtaining all required licenses in the future. If we are unable to obtain licenses to export our offerings, our business, financial condition, results of operations, and prospects may be harmed.\nWe identified material weaknesses in our internal control over financial reporting. If we are unable to remediate these material weaknesses, or if we identify additional material weaknesses in the future or otherwise fail to maintain an effective system of internal controls, we may not be able to accurately or timely report our financial condition or results of operations, which may adversely affect investor confidence in us and, as a result, the value of our Class A common stock.\nThe multi-class structure of our capital stock as contained in our amended and restated certificate of incorporation has the effect of concentrating voting control with those stockholders who held our securities prior to the IPO, including our executive officers, employees, and directors and their affiliates, and limiting your ability to influence corporate matters, which could adversely affect the price of our Class A common stock.\nRisks Related to Our Business and Our Industry\nWe may not sustain our growth rate, and we may not be able to manage future growth effectively.\nWe have experienced significant growth in a short period of time. Our revenue increased from $290.3 million for the year ended December 31, 2024 to $510.0 million for the year ended December 31, 2025, and to $373.5 million in the six months ended June 30, 2026. We may not achieve similar growth rates in future periods. You should not rely on our results of operations for any prior quarterly or annual periods as an indication of our future operating performance. If we are unable to maintain adequate revenue growth, our financial results could suffer, and our stock price could decline.\nTo manage our growth successfully and handle the responsibilities of being a public company, we believe we must effectively, among other things:\nrecruit, hire, train, and manage additional qualified personnel for our engineering, security, operations, manufacturing, cloud, and data center activities;\ncontinue to make significant investments in our new and existing products;\ninvest in long-term research and development to remain at the forefront of innovation;\nimprove and scale our sales, marketing and go-to-market functions;\nimprove and scale our manufacturing, supply chain, operations, and data center capacity procurement, fit-out, and deployment functions; and\nimprove and scale our administrative, financial, legal and compliance functions, and operational systems, procedures, and controls.\nOur future growth is dependent on our ability to meet the needs of new customers and the expanding needs of our existing customers as their use of our solutions and services grows, as well as our ability to fulfill existing orders on their committed delivery schedules. As sales of our offerings grow, we will need to devote additional resources to expanding, improving, and maintaining our infrastructure, including our hardware, software, cybersecurity, and cloud infrastructure, and integrating with third-party applications and partner platforms and marketplaces.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/2021728/000162828026056357/cbrs-20260630.htm",
+      "asOf": "2026-08-12",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-Q",
+    "pressRelease": null,
+    "proxyStatement": null,
+    "transcriptHighlights": {
+      "text": "Thank you all for joining us today. Q2 was a strong quarter. We completed our public offering, but we did not let that distract us from execution. We delivered record core revenue and beat guidance on all metrics: core revenue, core gross margins, and core operating margin. Looking forward, we see unbound demand for fast inference. The market is realizing that speed is not a benchmark item. Speed changes user engagement, it changes agentic performance, and it changes AI productivity. Fast inference unlocks new applications and new markets. As we've shared with you previously, 2026 is a foundation-building year for Cerebras. We've made excellent progress on multiple fronts in the past seven weeks since our last earnings call, preparing us for a massive 2027, 2028, and 2029 as we deliver on the $25 billion of RPO we currently have on our books.\n\nWith the benefit of that progress, we expect to more than triple our core revenues in 2027 and continue to grow at multiples in the years following. We think of progress in terms of capacity, capabilities, and customers. We are expanding capacity by adding new contracts for data centers around the world, expanding manufacturing capabilities, and collaborating with our vendors to ensure supply and to support our extraordinary growth. We are advancing our capabilities by inventing new technology that extends our performance and throughput and our power efficiency. We are expanding our customer base by accelerating AI productivity in existing markets like coding and agentic flows, and pioneering new areas like security, where speed opens up entirely new opportunities. On the capacity front, data center space continues to be the bottleneck for the entire industry, and we are no exception.\n\nThe faster we and our customers bring on new data centers, the faster we grow. Over the last seven months, we have had an all-out push to secure and build out data centers. We have two advantages. First, because we are serving inference, we do not need gigawatt footprint locations like those needed for training clusters. This gives us much more flexibility to scale up capacity across a multitude of locations around the world. Second, we have built a repeatable process for site selection, cluster deployment, and customer activation, which is an operational muscle required to turn gigawatts into production tokens at a global scale. I am pleased to report that our push has been very successful. We now have data centers either up or under contract in Alabama, Dallas, Denver, Minneapolis, Santa Clara, Stockton, and outside the U.S. in France, Finland, Manitoba, Montreal, Norway, Saskatchewan, and Toronto.\n\nIn total, over the last seven months, we have secured more than 600 megawatts of data center capacity that is either live now or will be delivered by the end of 2027. While this is not nearly enough to meet our demand, our data center pipeline of new opportunities for expansion continues to grow and is now measured in gigawatts. To put it in perspective, as we continue to build out our first-party cloud, it will be among the largest non-hyperscale AI clouds. Whereas at the end of 2025, we were on a steep learning curve, today I am happy to report that we are pretty good at data center build-out with a clear path to becoming excellent. Other key dimensions of capacity include manufacturing and supply chain.\nHere we have successfully increased our manufacturing capacity and are building up new factories with Flex in Sanmina, and expect to increase our manufacturing capacity by more than 10x in 2026 and continue that expansion in 2027, again, preparing us for the exceptional growth expected in the years ahead. Our partnership with our supply chain vendors has also turned into a significant advantage. TSMC has once again come through, and we have the wafers needed to fuel our growth. Our ability to get wafer supply also benefits from the fact that we were able to deliver industry-leading performance while running on TSMC's five nanometer node, where wafers are less expensive and supply is less constrained. Our decades-long relationships with our supply partners reinforces our confidence that we can deliver on our growth plans going forward. These relationships are rare and valuable, particularly in times of short supply.\n\nIncreasing throughput by 5x while keeping our industry-leading speed has a profound impact on the economics of token generation. It means up to 5 times as many high-speed, high-value tokens are made by each Cerebras system. More tokens per system at lower cost means more revenue and more gross margin. More tokens generated per CS system also means more tokens per watt, making each data center more profitable. Perhaps most important in a data center-constrained environment, the disaggregated solution allows us to serve more of the demand that we have in RPO. Finally, we believe this disaggregation approach makes performance and economic sense with any GPU.\nFor operators who have already deployed large footprints of GPUs, disaggregation with Cerebras offers them an opportunity to create meaningful leverage built on their existing investments by pairing some portion of those GPUs with Cerebras solutions, dramatically improving the value and usefulness of their data center footprint. Continuing on the capabilities theme, let us turn to our roadmap. Our engineering execution is continuing at pace. We expect to deliver new systems that double our speed each year for the next several years. Remember, we are doubling our performance, starting with a 15x performance advantage over everyone else in the industry. In addition, while keeping the performance crown, over the next 18 months, we plan to deliver solutions that increase throughput by more than 20x. Next week at our annual Supernova conference, we will be unveiling the CS-4, our fourth generation system.\n\nIt will be a great event with lots of product announcements, so I recommend you attend. Finally, we are currently on track to launch our CS-5 in the second half of 2027. Looking even further out, our invention engine is humming. We have significant partnerships with the U.S. government for delivery of stacked memory solutions, as well as integrated wafer scale optical solutions. In the years ahead, you can expect to see inventions from us in chip and chip architecture, as well as all elements of system design, including packaging, IO, and power delivery. To summarize the capabilities section, we expect to continue to deliver pioneering advances in product and technology to drive up speed and throughput, reduce the power used per token, and slash the cost per token of our solution. Now let us turn to the customer front.\n\nFast tokens are in demand and command a premium at market, and fast tokens with frontier intelligence are only available through OpenAI Cerebras partnership. Our work with AWS continues, and we expect to have solutions generally available in Q1 2027 through AWS's Amazon Bedrock platform. This AWS partnership expands our market opportunity and provides us with global reach through an industry leader who is trusted by nearly every enterprise in the world. Our discussions with other hyperscalers are also going well. We expect to produce first revenues starting in mid-2027 and ramp through 2028 and beyond. With all of this progress, I think it's important to keep in mind that our $25 billion in RPO does not reflect any backlog of business from AWS or any other hyperscaler at this time. Our business outside of OpenAI and the hyperscalers continues to grow nicely.\n\nFor example, in Q2, we signed six deals north of $30 million. AI coding continues its rapid rate of growth. In our experience, no one says, \"I'm happy with slow tokens\" when coding. So not surprisingly, in the coding category, our footprint continues to grow. We signed new agreements with public companies such as Figma and startup leaders such as Cognition, and we extended our presence in Europe with a major win at Lovable. Agentic flows are growing quickly, and the value of speed compounds as agentic operations rapidly evolve toward multi-step, multi-agent solutions. Companies as diverse as Block, AlphaSense, and GSK signed new agreements during the second quarter with Cerebras to leverage fast inference to provide their custom-made agents. Fast AI also opens up new markets, extending the TAM for Cerebras. Security is one such example.\n\nOur recent win with CrowdStrike is an application that only exists if AI is fast. Fast AI enables AI-based security devices to sit in line with enterprise traffic and use LLMs to secure traffic so quickly that nobody notices. Fast AI enables an LLM to provide security that is invisible to users. The AI provides the security. The speed creates the invisibility that enables the security to avoid delay and disruption. We expect this type of security to become the norm given the rapidly evolving threat landscape. Enterprises will soon expect vast swaths of their traffic to be inspected in this way, creating massive new opportunities made possible exclusively through Fast AI. Frontier labs, hyperscalers, leading chip makers, the fastest-growing startups, and massive enterprises are all now customers and partners of Cerebras and benefit from our blazing fast inference. To summarize, overall a strong quarter.\nWe went public in a successful IPO. We beat on all metrics, core revenue, core margins, and core operating margins. We made progress in each of our key domains, capacity, capability, and customers. These are the foundations on which we will achieve our goals of massive growth in 2027 and 2028 and continue this exceptional rate of growth in 2029 and beyond. With that, I'll turn things over to Bob.\n\nThank you, Andrew, and good afternoon, everyone. We made tremendous progress in the first half of 2026. As we described, 2026 is the foundation for multiples of growth over the years ahead. We entered the year having won one of the largest technology deals ever, creating RPO of more than $25 billion. This required us to immediately work on major increases in three critical components of capacity. First, we needed to increase our wafer supply. As Andrew described, due to our strong relationship and support from TSMC, we did that and are now well positioned, not just for the remainder of this year, but for the next year as well. Second, we needed to scale our manufacturing capacity. We are already 4 times above where we were in the first half of 2025, and we will have increased the manufacturing capacity more than 10x in 2026.\n\nWe are making great progress here. Third, we need to substantially increase our data center capacity. We have made significant progress with over 600 megawatts now up or under contract, expected for delivery by the end of 2027, plus a pipeline in gigawatts. The foundation is in place to support a tripling or better in our core revenue in 2027 and additional multiples in future years. This growth is also setting us up for significant margin expansion in 2027 and beyond. Turning to Q2 financial results. We had another quarter of strong results, beating expectations across each element of our guidance. We delivered record core revenue. We beat on core gross margin and on core operating margin. I will be using the same core business framework introduced last quarter to describe our progress.\n\nThe definition of our core business metrics and reconciliations of all of them to GAAP are included in today's earnings release and on our website. Core revenue was $209.9 million, up 103% year-over-year. Our private cloud business is growing at an extraordinary pace. Core cloud and other services revenue was $127.7 million, up 287% year-over-year. This nearly fourfold increase reflects the tremendous demand we have for Cerebras' Fast Inference service. Core hardware revenue was $82.1 million in the quarter, up 17% compared to last year. We focus on total core revenue, not the mix between the two, which can vary significantly quarter to quarter due to the timing of large new cloud capacity additions and hardware shipments.\n\nIn Q2, most of the total core revenue was attributable to increases in our core cloud offering, reflecting the ramp in our OpenAI deployment, increases in our other cloud customers' usage, and finally, hardware customers who are also wrestling with the timing of new data center capacity. The demand for Fast Inference continues to be strong, with several late-stage hardware deals representing hundreds of millions of dollars in the pipeline from new customers, as well as significant new cloud deals for 2027. Existing Fast Inference markets are growing, and new ones are getting started. We see disaggregation as an important unlock to drive new use cases since it dramatically improves the economics of inference and of data center ownership.\n\nToday, this means that up to 5X more tokens are produced per CS system, so power and cost are significantly reduced per token. By continuing to invest heavily in R&D and our product roadmap, Cerebras will quadruple our current industry-leading speed and increase throughput by more than 20X through the end of 2027, drastically improving our performance and the economics of inference. Turning now to gross margin. Year-over-year, core gross margins improved substantially. Q2 core gross margin was 40.6%, approximately 940 basis points higher than Q2 2025. This reflects the increase in value of fast inference by the market, our continuous stream of product improvements, and additional economies of scale. Breaking the total core gross margin into its components, core cloud and other services gross margin was 41.8%, 1,600 basis points better than Q2 2025.\n\nCore hardware gross margin was 38.8%, 510 basis points higher than a year ago. As we described last quarter, we are meeting some of the overwhelming demand for our fast inference service by temporarily renting some of our own systems back from our cloud customers and making it available through the Cerebras cloud. Serving this inference demand sooner strengthens our ability to meet the needs of our cloud customers and to grow with them over time. We believe this will create additional long-term value for Cerebras and its shareholders. In the short term, it reduces gross margin as we have a higher cost for this rented capacity. As a result, sequentially, core gross margin was 40.6% versus 46.5% in Q1 2026.\nHad we not had higher costs due to increasing our private cloud capacity by renting back more of our systems, core gross margins would have been approximately 500 basis points higher and more similar to last quarter. Looking forward, we expect Q3 to be the low point for core gross margin before improving significantly in Q4 2026 as we bring on more data centers filled with lower-cost Cerebras owned systems. This will cause core cloud gross margin to step back up. Core gross margin will also continue to improve in 2027 and trend towards our target of 60% plus for several reasons. The market has recognized that fast tokens are more valuable tokens. This supports higher pricing, which is reflected in hardware and cloud deals that will be recognized over the next several quarters.\n\nCore operating loss was $33.6 million. Core operating margin was negative 16% compared to negative 42% a year ago, an improvement of approximately 2,600 basis points year-over-year. Our ability to deliver this significant improvement in core operating margin while more than doubling revenues and stepping up our investments in all areas demonstrates the strong operating leverage inherent in our business model. Today, we are investing in world-class people, manufacturing and data center capacity, and company infrastructure to support the significant increase in scale we expect to deliver over the next several years. Remaining performance obligations at June 30, 2026, are $25.4 billion.",
+      "source": "bigdata:Quartr Transcripts",
+      "asOf": "2026-08-12",
+      "truncated": true,
+      "url": "https://app.bigdata.com/documents/8E7D9B758AA19630063C4534F2E13690"
+    },
+    "headlines": [
+      {
+        "text": "Securities Fraud Investigation Into Cerebras Systems Inc. (CBRS) Announced - Shareholders Who Lost Money Urged To Contact Glancy Prongay Wolke & Rotter LLP, a Leading Securities Fraud Law Firm",
+        "source": "bigdata:Benzinga",
+        "asOf": "2026-07-02",
+        "url": "https://app.bigdata.com/documents/92512802878EA132CB251BEE76BC9BC2?cnum=1&cnum=2"
+      },
+      {
+        "text": "Cerebras Systems Inc. (CBRS) Shareholders Who Lost Money - Contact Law Offices of Howard G. Smith About Securities Fraud Investigation",
+        "source": "bigdata:Benzinga",
+        "asOf": "2026-07-02",
+        "url": "https://app.bigdata.com/documents/1C39FF6962453B47AF4CE20B9127E1A0?cnum=1"
+      },
+      {
+        "text": "Securities Fraud Investigation Into Cerebras Systems Inc. (CBRS) Announced - Shareholders Who Lost Money Urged To Contact The Law Offices of Frank R. Cruz",
+        "source": "bigdata:Benzinga",
+        "asOf": "2026-07-01",
+        "url": "https://app.bigdata.com/documents/43EAFA4F03707A4CAF91744F4E8B5CC4?cnum=1&cnum=2"
+      },
+      {
+        "text": "INVESTOR ALERT: Pomerantz Law Firm Investigates Claims On Behalf of Investors of Cerebras Systems Inc. - CBRS",
+        "source": "bigdata:Benzinga",
+        "asOf": "2026-06-30",
+        "url": "https://app.bigdata.com/documents/8C51C2AE5A46A38678D18DD08F015C6E?cnum=1&cnum=2"
+      },
+      {
+        "text": "Cerebras Systems Inc. (NASDAQ: CBRS) Faces Possible Securities Law Violations - Contact Kaplan Fox & Kilsheimer LLP",
+        "source": "bigdata:Associated Press",
+        "asOf": "2026-07-02",
+        "url": "https://app.bigdata.com/documents/0FD1AD4B53E4C532F24A205D6F5C3353?cnum=1&cnum=2"
+      },
+      {
+        "text": "Cerebras Systems Inc. (CBRS) Shareholders Who Lost Money - Contact Law Offices of Howard G. Smith About Securities Fraud Investigation",
+        "source": "bigdata:Associated Press",
+        "asOf": "2026-07-02",
+        "url": "https://app.bigdata.com/documents/0B0D9FEF67A2C731395EA12AB4CB4F6D?cnum=1&cnum=3"
+      },
+      {
+        "text": "Cerebras Systems Inc. (CBRS) Shareholders Who Lost Money - Contact Law Offices of Howard G. Smith About Securities Fraud Investigation",
+        "source": "bigdata:Morningstar",
+        "asOf": "2026-07-02",
+        "url": "https://app.bigdata.com/documents/41DF2ECE371D6AC8AEC115C052465460?cnum=1"
+      },
+      {
+        "text": "Cerebras Systems Inc. (CBRS) Shareholders Who Lost Money - Contact Law Offices of Howard G. Smith About Securities Fraud Investigation",
+        "source": "bigdata:Business Wire (BW)",
+        "asOf": "2026-07-02",
+        "url": "https://app.bigdata.com/documents/E6B14601E4F2D0400F608FA0F5AB17D8?cnum=1"
+      },
+      {
+        "text": "Cerebras Systems initiated with a Hold at Freedom Capital",
+        "source": "bigdata:The Fly",
+        "asOf": "2026-06-30",
+        "url": "https://app.bigdata.com/documents/950AC84EF7D513F2BE7E35D03715CDCF?cnum=1"
+      },
+      {
+        "text": "Securities Fraud Investigation Into Cerebras Systems Inc. (CBRS) Announced - Shareholders Who Lost Money Urged To Contact Glancy Prongay Wolke & Rotter LLP, a Leading Securities Fraud Law Firm",
+        "source": "bigdata:Business Wire (BW)",
+        "asOf": "2026-07-02",
+        "url": "https://app.bigdata.com/documents/AAD19230630736607FCBD72CA6A5AD36?cnum=2"
+      }
+    ]
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-15T23:30:55.465Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-09-15T23:30:55.465Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-15T23:30:55.465Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-15T23:30:55.465Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-15T23:30:55.465Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-15T23:30:55.465Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-15T23:30:55.465Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-15T23:30:55.465Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-15T23:30:55.465Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-15T23:30:55.465Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-15T23:30:55.465Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-15T23:30:55.465Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-15T23:30:55.465Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-15T23:30:55.465Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-15T23:30:55.465Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-09-15T23:30:55.465Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-09-15T23:30:55.465Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-09-15T23:30:55.465Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-15T23:30:55.465Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-15T23:30:55.465Z"
+    }
+  ]
+}
