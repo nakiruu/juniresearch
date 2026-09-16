@@ -86,7 +86,11 @@ const DA = ["DepreciationDepletionAndAmortization", "DepreciationAmortizationAnd
 const INTEREST_EXPENSE = ["InterestExpense", "InterestExpenseNonoperating"];
 const CASH_AND_ST_INVESTMENTS = ["CashCashEquivalentsAndShortTermInvestments"]; // else derived: cash + ST investments
 const CASH = ["CashAndCashEquivalentsAtCarryingValue"];
-const SHORT_TERM_INVESTMENTS = ["ShortTermInvestments"];
+// LLY's real companyfacts (2026-09-16 fetch) confirms ShortTermInvestments is the only STI concept it has
+// ever tagged; the others are appended for filers that use them instead. Priority order matters only when
+// two concepts both report the same period (see mergeByPriority) — a stale/unused concept here can't shadow
+// a live one for a period it doesn't cover.
+const SHORT_TERM_INVESTMENTS = ["ShortTermInvestments", "AvailableForSaleSecuritiesCurrent", "MarketableSecuritiesCurrent", "OtherShortTermInvestments"];
 const LTD_NONCURRENT = ["LongTermDebtNoncurrent", "LongTermDebt"];
 const LTD_CURRENT = ["LongTermDebtCurrent", "DebtCurrent"];
 const SHORT_TERM_BORROWINGS = ["ShortTermBorrowings", "CommercialPaper"];
@@ -215,8 +219,13 @@ function deriveFields(r: RawValues): DerivedFields {
   const grossProfit = r.grossProfitDirect ?? (r.revenue != null && r.cogs != null ? r.revenue - r.cogs : null);
   const operatingIncome = r.operatingIncomeDirect ?? (r.pretax != null && r.nonoperating != null ? r.pretax - r.nonoperating : null);
   const ebitda = operatingIncome != null && r.da != null ? operatingIncome + r.da : null;
+  // Some filers stop separately tagging short-term investments once the balance is immaterial (LLY: no
+  // ShortTermInvestments entry for FY2025, though every prior year back to 2008 has one). Falling back to
+  // `null` there would make mapStatements' required "cashAndInvestments" column throw for a filer that
+  // plainly reports cash. Cash alone is a real, non-fabricated subset of the combined figure, so it's
+  // never null merely because the STI leg wasn't separately disclosed for that period.
   const cashAndShortTermInvestments =
-    r.cashAndStDirect ?? (r.cash != null && r.shortTermInvestments != null ? r.cash + r.shortTermInvestments : null);
+    r.cashAndStDirect ?? (r.cash != null ? r.cash + (r.shortTermInvestments ?? 0) : null);
   const totalDebt =
     r.ltdNoncurrent == null && r.ltdCurrent == null && r.shortTermBorrowings == null
       ? null
