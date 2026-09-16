@@ -1,0 +1,98 @@
+{
+  "judgmentSha256": "4e0d64f38af27118fa9ec997d4bdda34e1fe551b63e572cf8c7de298517c873d",
+  "reviewedAt": "2026-09-15T18:45:00Z",
+  "reviewer": "claude-opus-4-8",
+  "round": 2,
+  "verdict": "approved-with-minors",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "Reported total equity was negative through the years shown, -$0.6B at FY25, a legacy of pre-IPO convertible preferred stock carried as a liability rather than a sign of insolvency",
+      "issue": "The negative total equity (-$0.6B at FY25) is on the grounding surface, but the explanation for it is not. Nothing in the Facts block, the MD&A, the risk factors or the transcript mentions convertible preferred stock, let alone that it is 'carried as a liability.' The FactPack balance sheet exposes only cash, total debt, net debt, total equity and current ratio. This is an invented accounting characterisation of a document the pack does not carry (rubric 2).",
+      "fix": "Drop the convertible-preferred-as-liability explanation. State the negative equity as observed (-$0.6B at FY25) and, if a cause is offered, limit it to what the surface supports (accumulated losses / a pre-IPO capital structure the post-IPO balance sheet will reshape), without asserting a specific classification the pack does not disclose.",
+      "status": "addressed",
+      "note": "Fixed. The clause now reads 'a feature of the pre-IPO capital structure rather than a sign of insolvency given the net cash position; after the May 2026 IPO that structure looks different.' The invented convertible-preferred-as-liability characterisation is gone; what remains is a defensible, surface-consistent framing (all years shown are pre-IPO)."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "Management's 'core' revenue for the same quarter was $209.9 million, up 103%; the gap is non-cash amortization of customer warrants, which the company began recording in early 2026 as a reduction of reported revenue.",
+      "issue": "The figures ($209.9M, up 103%) are sourced, but attributing the entire $29.8M core-vs-GAAP gap solely to warrant amortization is unsupported. The transcript states the core-to-GAAP reconciliation is in the earnings release / website, which the pack did not capture. The author's own thesis says core figures 'strip out non-cash warrant and pass-through effects' (two effects); the MD&A says pass-through revenue 'is not part of our core' - so the gap cannot be only warrant amortization. This is an inference the source does not make (rubric 2) and it contradicts the thesis.",
+      "fix": "Say the gap reflects the company's core adjustments (warrant-amortization add-back and pass-through treatment) rather than claiming it is entirely warrant amortization, and note the full reconciliation is not in the pack.",
+      "status": "addressed",
+      "note": "Fixed. Now reads 'the gap reflects the adjustments management makes to reach its core figures, chiefly the non-cash amortization of customer warrants and the pass-through data-center amounts it removes from reported revenue.' Both MD&A-named effects are cited and the wording is appropriately hedged; consistent with the thesis."
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.financials.cashflowCommentary",
+      "quote": "Operating cash flow has hovered around zero across the years shown, so the burn is investment rather than operating collapse",
+      "issue": "The series on the surface does not support 'hovered around zero.' The Facts cash-flow table shows operating cash flow of 0.5 ($B) in FY24 (FactPack: $451.98M), alongside -0.2, -0.1 and -0.0 in the other years. FY24 at roughly +$452M is nowhere near zero, so the characterisation misstates the series the reader can see (rubric 2 / rubric 1).",
+      "fix": "Reword to reflect the actual range, acknowledging FY24's materially positive operating cash flow (~$452M / 0.5 $B) and the near-zero FY25 figure, before drawing the 'burn is investment, not operating collapse' conclusion.",
+      "status": "addressed",
+      "note": "Fixed. Now reads 'Operating cash flow has been erratic, a $0.5B inflow in FY24 against outflows in the other years shown,' which matches the Facts cash-flow table."
+    },
+    {
+      "id": "F-4",
+      "severity": "Important",
+      "field": "sections.management.capitalAllocation",
+      "quote": "FY25 capital expenditure was $382.7 million and free cash flow was -$392.8 million, and the company raised fresh equity in its May 2026 IPO to fund the build-out",
+      "issue": "Both figures were already introduced and sized one section earlier in financials.cashflowCommentary ('Free cash flow was negative $392.8 million in FY25 ... and capital expenditure was $382.7 million'). House style is to introduce each figure once and refer back in words; re-citing the identical capex and FCF numbers here is a repetition/pointer defect (rubric 7). The risks section handles the same figures correctly ('negative free cash flow, which the cash-flow section sizes').",
+      "fix": "Refer back in words rather than re-quoting the numbers, e.g. 'the capital expenditure and free-cash-flow outflow the cash-flow section sizes,' keeping the capital-allocation point (equity-funded build-out) intact.",
+      "status": "addressed",
+      "note": "Fixed. capitalAllocation now refers back in words ('at the capital-expenditure and free-cash-flow levels the cash-flow section sizes') and no longer re-quotes the $382.7M / -$392.8M figures."
+    },
+    {
+      "id": "F-5",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[4]",
+      "quote": "In the weeks after Cerebras's initial post-IPO results, multiple law firms announced securities-fraud investigations into the company, as the headlines show",
+      "issue": "Two problems. (1) The temporal anchor is unsupported: the pack carries no 'initial post-IPO results' event, and the only post-IPO results captured are the Q2 10-Q filed 2026-08-12 - after the investigation headlines, which are dated 2026-06-30 to 2026-07-02. So the investigations did not follow reported results (rubric 2). (2) The sourced fact carries no date, only a vague 'in the weeks after' (rubric 3, honest dating).",
+      "fix": "Date the investigations (late June to early July 2026, per the headlines) and anchor them to the post-IPO share-price decline, which is on the surface (52-week high $386.34 down to $184.03), rather than to earnings 'results' the pack does not show preceding them.",
+      "status": "addressed",
+      "note": "Fixed. Now reads 'In late June and early July 2026, multiple law firms announced securities-fraud investigations into the company ... such investigations often follow a volatile new listing.' The investigations are dated per the headlines and the false earnings-results anchor is removed."
+    },
+    {
+      "id": "F-6",
+      "severity": "Minor",
+      "field": "sections.management.leadership",
+      "quote": "The chief executive and chief financial officer, addressed as Andrew and Bob on the earnings call, frame 2026 as a foundation-building year",
+      "issue": "The transcript supplies the first names Andrew and Bob (Andrew opens; 'I'll turn things over to Bob,' who presents the financials) but never states their titles. Assigning the CEO and CFO labels is an inference the pack does not establish (rubric 2 / house rule that every claim rests on a quoted fact).",
+      "fix": "Refer to them as the earnings-call speakers by the names the transcript uses, without asserting the specific CEO/CFO titles, or omit the titles.",
+      "status": "addressed",
+      "note": "Fixed. The names and the CEO/CFO titles are removed; the sentence now reads 'On the earnings call, management frames 2026 as a foundation-building year.' (But see F-9: a different unsupported leadership characterisation was introduced in the same field.)"
+    },
+    {
+      "id": "F-7",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.companyOverview",
+      "quote": "The report date is September 15, 2026, and the fiscal year ends in late December.",
+      "issue": "This self-referential sentence restates meta the report header already renders (fiscalYearEnd) and, on the built report, contradicts it: cbrs.json meta.reportDate renders as 'September 16, 2026' while the prose asserts September 15, 2026, so the reader sees a mismatched date (rubric 9/10, plus a visible inconsistency).",
+      "fix": "Remove the report-date/fiscal-year sentence from the overview prose; the header carries both. If a date is kept, align it with the rendered report date.",
+      "status": "addressed",
+      "note": "Now fully addressed. The trailing 'The fiscal year ends in late December.' sentence flagged in round 1 has been removed from companyOverview; the section no longer restates the report date or the fiscal-year-end (both now live only in the header/meta). No 'September 15' remains in the prose."
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "sections.financials.balanceCommentary (also sections.management.capitalAllocation)",
+      "quote": "The IPO in May 2026 added materially to that cash, and the company funds its build-out with equity rather than borrowing.",
+      "issue": "The 'rather than borrowing' characterisation is contradicted by the grounding surface, and it recurs in capitalAllocation ('raised fresh equity in its May 2026 IPO to fund the build-out rather than taking on meaningful debt'). The FY25 balance sheet shows total debt of $261.8M (up from zero in FY22-FY24) - which the author quotes one sentence earlier in the same paragraph - and the MD&A discloses 'a working capital loan of approximately $1.0 billion (the Working Capital Loan) in January 2026,' referenced to 'Note 10 - Debt' and repaid via non-cash service credits. A ~$1.0B loan is meaningful debt, so the claim that the company funds itself without borrowing / without meaningful debt is unsupported and self-contradicting (rubric 2). The net-cash position itself (net debt -$439.9M) is correct and supported.",
+      "fix": "Drop or qualify the 'rather than borrowing' / 'rather than taking on meaningful debt' phrasing in both fields. Keep the supported point that the balance sheet is net cash and equity (the IPO) is the primary funding source, while acknowledging the disclosed borrowing - $261.8M of FY25 total debt and the ~$1.0 billion OpenAI-linked Working Capital Loan (Note 10 - Debt) repaid via non-cash service credits.",
+      "status": "addressed",
+      "note": "Fixed in both fields. balanceCommentary now reads 'funds its build-out mainly with equity, alongside a roughly $1.0 billion working capital loan drawn in January 2026 that it repays with non-cash service credits'; capitalAllocation now reads 'the borrowing it does carry, including the working capital loan tied to the OpenAI arrangement, is repaid largely in service credits.' The 'rather than borrowing' / 'rather than taking on meaningful debt' phrasing is gone and the disclosed loan is acknowledged."
+    },
+    {
+      "id": "F-9",
+      "severity": "Minor",
+      "field": "sections.management.leadership",
+      "quote": "Cerebras is led by the founding management team that built it from 2015 and took it public in May 2026.",
+      "issue": "The grounding surface establishes only that the company 'was established in 2015' (Context company description). Nothing in the Facts or Context blocks names a founder, a 'founding management team,' any CEO/CFO, or management tenure - the transcript speakers 'Andrew' and 'Bob' appear with no role and no founder status (a scan of the description, MD&A, risk factors and transcript returns zero hits for founder/founding/CEO/led-by/management team). Asserting the current leadership is the 'founding management team' that 'built it from 2015' is an inference the source invites but does not make (rubric 2). It is the same class of unsupported leadership characterisation that F-6 removed, reintroduced in the same field.",
+      "fix": "Drop 'founding' and 'that built it from 2015.' State only what the surface supports, e.g. 'Cerebras, established in 2015, went public in May 2026, and on the earnings call management frames 2026 as a foundation-building year,' without asserting that the leadership founded the company or has led it since 2015.",
+      "status": "open"
+    }
+  ]
+}
