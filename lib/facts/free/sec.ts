@@ -154,6 +154,80 @@ const quarterInstant = (entries: UnitEntry[]): Map<string, UnitEntry> =>
     (e) => quarterKey(e.end),
   );
 
+// --- YTD reconstruction (the "10-Q cash-flow items are cumulative" trap) -----------------
+//
+// Income-statement concepts (revenue, operating income, ...) are tagged per discrete quarter,
+// so quarterFlow above is all they need. But cash-flow-statement concepts (operating cash
+// flow, capex, dividends paid, buybacks) plus D&A and interest expense are commonly tagged
+// YEAR-TO-DATE in 10-Qs instead: a Q2 10-Q reports a ~180-day (6-month) cumulative figure, a
+// Q3 10-Q a ~270-day (9-month) figure — both outside quarterFlow's ~90-day discrete-quarter
+// filter, so it silently returns nothing for those quarters. Q1 is unaffected (YTD-ending-Q1
+// *is* the discrete Q1 figure, already ~90 days).
+//
+// The fix: for the concepts that need it, reconstruct each discrete quarter as
+//   Q1 = YTD ending Q1 (already discrete, no differencing needed)
+//   Q2 = YTD ending Q2 (~180d) − YTD ending Q1 (~90d)
+//   Q3 = YTD ending Q3 (~270d) − YTD ending Q2 (~180d)
+// keyed by the calendar quarter of the YTD entry's own period-end date (quarterKey), same as
+// quarterFlow. Q4 is left to the existing FY − (Q1+Q2+Q3) derivation below, which already
+// works once Q1–Q3 are non-null here. A discrete tag, when one exists, always wins over a
+// reconstructed value (some filers — and some concepts, e.g. LLY's interest expense — tag
+// both; the true discrete figure is preferred to an equivalent-but-derived one).
+
+type YtdBucket = "Q1" | "H1" | "9M";
+
+/** ~90d / ~180d / ~270d duration buckets a 10-Q YTD entry can fall into; null otherwise. */
+function ytdBucketOf(days: number): YtdBucket | null {
+  if (days >= 80 && days <= 100) return "Q1";
+  if (days >= 170 && days <= 190) return "H1";
+  if (days >= 260 && days <= 280) return "9M";
+  return null;
+}
+
+/**
+ * Groups a concept's 10-Q entries by fiscal year (the period-end's calendar year) and YTD
+ * bucket, keeping only the latest-filed entry per (year, bucket) — mirroring keepLatestFiled.
+ * Only entries whose start falls in the same calendar year as their end are considered "YTD"
+ * (guards against stray cross-year durations coincidentally matching a bucket width).
+ */
+function ytdByYear(entries: UnitEntry[]): Map<number, Partial<Record<YtdBucket, UnitEntry>>> {
+  const latestPerKey = new Map<string, UnitEntry>();
+  for (const e of entries) {
+    if (e.form !== "10-Q" || !e.start || yearOf(e.start) !== yearOf(e.end)) continue;
+    const bucket = ytdBucketOf(daysBetween(e.start, e.end));
+    if (!bucket) continue;
+    const key = `${yearOf(e.end)}:${bucket}`;
+    const prev = latestPerKey.get(key);
+    if (!prev || e.filed > prev.filed) latestPerKey.set(key, e);
+  }
+  const byYear = new Map<number, Partial<Record<YtdBucket, UnitEntry>>>();
+  for (const [key, entry] of latestPerKey) {
+    const [yearStr, bucket] = key.split(":") as [string, YtdBucket];
+    const year = Number(yearStr);
+    if (!byYear.has(year)) byYear.set(year, {});
+    byYear.get(year)![bucket] = entry;
+  }
+  return byYear;
+}
+
+/** Reconstructs discrete Q1/Q2/Q3 entries by differencing consecutive YTD entries, per fiscal year. */
+function reconstructedQuarterFlow(entries: UnitEntry[]): Map<string, UnitEntry> {
+  const out = new Map<string, UnitEntry>();
+  for (const { Q1, H1, "9M": nineMonth } of ytdByYear(entries).values()) {
+    if (Q1) out.set(quarterKey(Q1.end), Q1); // YTD-ending-Q1 IS the discrete Q1 figure
+    if (H1 && Q1) out.set(quarterKey(H1.end), { ...H1, start: Q1.end, val: H1.val - Q1.val });
+    if (nineMonth && H1) out.set(quarterKey(nineMonth.end), { ...nineMonth, start: H1.end, val: nineMonth.val - H1.val });
+  }
+  return out;
+}
+
+/** quarterFlow, falling back to a YTD-differenced value when no discrete tag exists for that quarter. */
+const quarterFlowWithYtdFallback = (entries: UnitEntry[]): Map<string, UnitEntry> => {
+  const merged = new Map(reconstructedQuarterFlow(entries));
+  for (const [key, entry] of quarterFlow(entries)) merged.set(key, entry); // discrete tag wins when present
+  return merged;
+};
+
 /**
  * Merges filtered per-concept period maps in priority order: for each period key, the value
  * comes from the highest-priority concept that has a datapoint for THAT period — not merely
@@ -173,6 +247,20 @@ function flowSeries(facts: unknown, concepts: string[], unit: Unit = "USD") {
   return {
     annual: mergeByPriority(perConcept.map(annualFlow)),
     quarter: mergeByPriority(perConcept.map(quarterFlow)),
+  };
+}
+/**
+ * Like flowSeries, but for concepts 10-Qs commonly tag year-to-date instead of per discrete
+ * quarter (cash-flow-statement items, D&A, interest expense) — see quarterFlowWithYtdFallback.
+ * Income-statement concepts (revenue, operating income, ...) must keep using plain flowSeries:
+ * they're already discretely tagged, and running them through YTD differencing would be a
+ * silent no-op at best and a double-difference bug at worst if a filer ever tags both.
+ */
+function flowSeriesYtd(facts: unknown, concepts: string[], unit: Unit = "USD") {
+  const perConcept = concepts.map((c) => entriesFor(facts, c, unit));
+  return {
+    annual: mergeByPriority(perConcept.map(annualFlow)),
+    quarter: mergeByPriority(perConcept.map(quarterFlowWithYtdFallback)),
   };
 }
 function instantSeries(facts: unknown, concepts: string[], unit: Unit = "USD") {
@@ -293,12 +381,16 @@ export function parseCompanyFacts(facts: unknown): { annual: SecPeriod[]; quarte
   const nonoperating = flowSeries(facts, NONOPERATING_INCOME_EXPENSE);
   const netIncome = flowSeries(facts, NET_INCOME);
   const epsDiluted = flowSeries(facts, EPS_DILUTED, "USD/shares");
-  const da = flowSeries(facts, DA);
-  const interestExpense = flowSeries(facts, INTEREST_EXPENSE);
-  const ocf = flowSeries(facts, OCF);
-  const capexRaw = flowSeries(facts, CAPEX_RAW);
-  const buybacksRaw = flowSeries(facts, BUYBACKS_RAW);
-  const dividendsRaw = flowSeries(facts, DIVIDENDS_RAW);
+  // These six are commonly tagged year-to-date rather than per discrete quarter in 10-Qs (see
+  // flowSeriesYtd / quarterFlowWithYtdFallback above); the rest of the flow concepts above are
+  // income-statement items filers already tag discretely and must NOT go through YTD
+  // differencing.
+  const da = flowSeriesYtd(facts, DA);
+  const interestExpense = flowSeriesYtd(facts, INTEREST_EXPENSE);
+  const ocf = flowSeriesYtd(facts, OCF);
+  const capexRaw = flowSeriesYtd(facts, CAPEX_RAW);
+  const buybacksRaw = flowSeriesYtd(facts, BUYBACKS_RAW);
+  const dividendsRaw = flowSeriesYtd(facts, DIVIDENDS_RAW);
 
   const cashAndStDirect = instantSeries(facts, CASH_AND_ST_INVESTMENTS);
   const cash = instantSeries(facts, CASH);
