@@ -89,12 +89,33 @@ usable value wins. All values in USD from `units.USD` (EPS from
 |---|---|
 | `revenue` | RevenueFromContractWithCustomerExcludingAssessedTax → Revenues → RevenueFromContractWithCustomerIncludingAssessedTax → SalesRevenueNet |
 | `gross_profit` | GrossProfit → (revenue − CostOfGoodsAndServicesSold\|CostOfRevenue) |
-| `operating_income` | OperatingIncomeLoss |
+| `operating_income` | OperatingIncomeLoss → **derived**: pretax income − nonoperating income/expense |
+| (pretax income, for operating_income) | IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest → IncomeLossFromContinuingOperationsBeforeIncomeTaxesMinorityInterestAndIncomeLossFromEquityMethodInvestments → IncomeBeforeIncomeTaxesMinorityInterestAndCumulativeEffectOfChangeInAccountingPrinciple |
+| (nonoperating income/expense, for operating_income) | NonoperatingIncomeExpense |
 | `net_income` | NetIncomeLoss |
 | `eps_diluted` | EarningsPerShareDiluted (units USD/shares) |
 | (D&A, for EBITDA) | DepreciationDepletionAndAmortization → DepreciationAmortizationAndAccretionNet → DepreciationAndAmortization (from cash-flow section) |
 | (interest, for coverage) | InterestExpense → InterestExpenseNonoperating |
 | `ebitda` | **derived**: operating_income + D&A |
+
+Some filers (LLY confirmed, 2026-09-16) tag neither `OperatingIncomeLoss` nor `GrossProfit` at
+all — their income statement has no such subtotal lines in XBRL. `operating_income` then falls
+back to the standard GAAP identity `pretax income − nonoperating income/expense` (verified against
+LLY's real FY2024/FY2025 tax reconciliation: `NetIncomeLoss = pretax income − IncomeTaxExpenseBenefit`
+holds exactly). Treat `operating_income` as a **derived subtotal for some filers**, not always a
+directly-tagged GAAP figure — a task consuming it (e.g. a coverage ratio) should not assume its
+provenance is uniform across companies.
+
+**Concept selection is per period, not per series.** A filer can switch which XBRL concept it
+tags a line item under partway through its filing history (LLY: `LongTermDebtCurrent` has no data
+after 2013, `DebtCurrent` is what it tags from FY2023 on; `InterestExpense` stops after 2023,
+`InterestExpenseNonoperating` picks up from FY2024). Fallback resolution must be evaluated
+independently for each reporting period — for a given year/quarter, take the value from the
+highest-priority concept in the list that has a datapoint for *that period*, not the first concept
+that is tagged *anywhere* in the company's filing history. Committing an entire field to a single
+concept for the whole company (the naive reading of "first present concept wins") lets a stale,
+long-abandoned tag silently shadow the concept currently in use and understate the field for every
+recent period.
 
 **Balance sheet (instant; period-end):**
 | Emitted field | XBRL concept(s) |

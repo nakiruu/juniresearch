@@ -30,6 +30,17 @@ describe("parseCompanyFacts", () => {
     expect(p.free_cash_flow!).toBe(p.operating_cash_flow! + p.capex!);
   });
 
+  it("total debt reflects the live current-debt concept, not a stale one that merely exists somewhere in the filing history", () => {
+    const p = annual.at(-1)!;
+    // FY2025: LongTermDebtCurrent (the design spec's primary current-debt concept) has had no
+    // LLY data since 2013; DebtCurrent ($1,635.0M for FY2025) is what LLY tags today for
+    // LongTermDebtNoncurrent ($40,868.0M) + DebtCurrent ($1,635.0M) = $42,503.0M. Concept
+    // selection that commits to the first concept present *anywhere* in the filing history
+    // (rather than resolving per period) would lock onto the stale LongTermDebtCurrent tag,
+    // silently drop the current-debt portion, and understate total_debt by $1.635B.
+    expect(p.total_debt).toBe(42_503_000_000);
+  });
+
   it("emits quarterly income rows labelled Q1..Q4 with revenue and operating income", () => {
     expect(quarter.length).toBeGreaterThanOrEqual(4);
     const latest = quarter.at(-1)!;

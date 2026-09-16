@@ -56,6 +56,12 @@ interface CompanyFactsShape {
 // Matches the design spec's table; extended in priority order where a real
 // LLY companyfacts fetch showed the "expected" primary concept unused (see
 // task-1-report.md for which concepts were missing and why).
+//
+// Selection is per-period, not per-series (see mergeByPriority below): a filer that has
+// switched XBRL tags mid-history — one concept covering only old periods, another covering
+// only current ones — must not have the stale concept's mere existence shadow the live one
+// for the periods we actually want. Priority order below still matters when two concepts
+// both report the *same* period (the higher-priority one wins).
 
 const REVENUE = [
   "RevenueFromContractWithCustomerExcludingAssessedTax",
@@ -88,26 +94,19 @@ const TOTAL_EQUITY = ["StockholdersEquityIncludingPortionAttributableToNoncontro
 const CURRENT_ASSETS = ["AssetsCurrent"];
 const CURRENT_LIABILITIES = ["LiabilitiesCurrent"];
 const OCF = ["NetCashProvidedByUsedInOperatingActivities", "NetCashProvidedByUsedInOperatingActivitiesContinuingOperations"];
-// LLY tags neither of the spec's two concepts; it uses "other property, plant and equipment".
-// "PaymentsToAcquireProductiveAssets" is present in LLY's real companyfacts too, but only with
-// stale 2019-2022 data (no current years) — since pick() commits to the first concept that is
-// present at all (not the first with data for the year wanted), it must rank behind the concept
-// LLY actually reports current capex under, or it silently shadows real numbers with a dead tag.
-const CAPEX_RAW = ["PaymentsToAcquirePropertyPlantAndEquipment", "PaymentsToAcquireOtherPropertyPlantAndEquipment", "PaymentsToAcquireProductiveAssets"];
+// LLY tags neither of the spec's two concepts for its current capex line; it uses "other
+// property, plant and equipment" instead. Appended at lowest priority — per-period merging
+// (see mergeByPriority) means this is only reached for periods neither spec concept covers.
+const CAPEX_RAW = ["PaymentsToAcquirePropertyPlantAndEquipment", "PaymentsToAcquireProductiveAssets", "PaymentsToAcquireOtherPropertyPlantAndEquipment"];
 const BUYBACKS_RAW = ["PaymentsForRepurchaseOfCommonStock"];
 const DIVIDENDS_RAW = ["PaymentsOfDividendsCommonStock", "PaymentsOfDividends"];
 
 // --- concept selection --------------------------------------------------
 
-/** Returns the first present concept's unit-entry array (empty if none of `concepts` is tagged at all). */
-function pick(facts: unknown, concepts: string[], unit: Unit = "USD"): UnitEntry[] {
+/** Returns one concept's raw unit-entry array (empty if that concept is untagged). */
+function entriesFor(facts: unknown, concept: string, unit: Unit = "USD"): UnitEntry[] {
   const gaap = (facts as CompanyFactsShape)?.facts?.["us-gaap"];
-  if (!gaap) return [];
-  for (const concept of concepts) {
-    const entries = gaap[concept]?.units?.[unit];
-    if (entries && entries.length > 0) return entries;
-  }
-  return [];
+  return gaap?.[concept]?.units?.[unit] ?? [];
 }
 
 // --- period selection (the XBRL "fy-means-filing-year" trap) -----------
@@ -151,13 +150,33 @@ const quarterInstant = (entries: UnitEntry[]): Map<string, UnitEntry> =>
     (e) => quarterKey(e.end),
   );
 
+/**
+ * Merges filtered per-concept period maps in priority order: for each period key, the value
+ * comes from the highest-priority concept that has a datapoint for THAT period — not merely
+ * the first concept in `concepts` that is tagged somewhere in the filing history. Iterates
+ * lowest-priority first so each higher-priority map's entries overwrite on key collision.
+ */
+function mergeByPriority<K>(periodMaps: Map<K, UnitEntry>[]): Map<K, UnitEntry> {
+  const merged = new Map<K, UnitEntry>();
+  for (let i = periodMaps.length - 1; i >= 0; i--) {
+    for (const [key, entry] of periodMaps[i]) merged.set(key, entry);
+  }
+  return merged;
+}
+
 function flowSeries(facts: unknown, concepts: string[], unit: Unit = "USD") {
-  const entries = pick(facts, concepts, unit);
-  return { annual: annualFlow(entries), quarter: quarterFlow(entries) };
+  const perConcept = concepts.map((c) => entriesFor(facts, c, unit));
+  return {
+    annual: mergeByPriority(perConcept.map(annualFlow)),
+    quarter: mergeByPriority(perConcept.map(quarterFlow)),
+  };
 }
 function instantSeries(facts: unknown, concepts: string[], unit: Unit = "USD") {
-  const entries = pick(facts, concepts, unit);
-  return { annual: annualInstant(entries), quarter: quarterInstant(entries) };
+  const perConcept = concepts.map((c) => entriesFor(facts, c, unit));
+  return {
+    annual: mergeByPriority(perConcept.map(annualInstant)),
+    quarter: mergeByPriority(perConcept.map(quarterInstant)),
+  };
 }
 
 const at = <K>(m: Map<K, UnitEntry>, k: K): number | null => m.get(k)?.val ?? null;
