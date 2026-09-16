@@ -58,6 +58,16 @@ describe("mapSegments with only a geographic split (no product segmentation)", (
   });
 });
 
+describe("mapSegments when the product mix overshoots revenue with an overlapping label", () => {
+  const s = mapSegments("lib/facts/map/__fixtures__/overlap-segments");
+  it("drops the redundant sub-phrase segment so shares reconcile to revenue", () => {
+    expect(s.segments.items.map((i) => i.name)).toEqual(["Data Center", "Client and Gaming", "Embedded"]);
+    const dc = s.segments.items.find((i) => i.name === "Data Center")!;
+    expect(dc.share).toBeCloseTo(16635000000 / 34639000000, 6);
+    expect(s.segments.items.reduce((a, i) => a + i.share, 0)).toBeCloseTo(1, 6);
+  });
+});
+
 describe("mapSegments with neither a product nor a geographic split (single reportable segment)", () => {
   const s = mapSegments("lib/facts/map/__fixtures__/single-segment");
   it("sizes one consolidated segment from the latest FY revenue", () => {
