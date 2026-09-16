@@ -43,8 +43,10 @@ const USER_AGENT =
 
 const MODULES = "price,summaryDetail,financialData,earningsTrend,recommendationTrend,assetProfile";
 
-const YAHOO_UNAVAILABLE_MESSAGE =
+const YAHOO_CRUMB_FAILED_MESSAGE =
   "Yahoo quoteSummary unavailable (crumb step failed); retry later or top up Bigdata.";
+const YAHOO_QUOTE_FAILED_MESSAGE =
+  "Yahoo quoteSummary unavailable (quoteSummary request failed); retry later or top up Bigdata.";
 
 /** Fetches quoteSummary for `ticker` via the crumb flow. Returns the parsed JSON body. */
 export async function fetchQuoteSummary(ticker: string, fetchImpl: FetchLike = fetch): Promise<unknown> {
@@ -57,7 +59,7 @@ export async function fetchQuoteSummary(ticker: string, fetchImpl: FetchLike = f
   const crumb = await crumbRes.text();
 
   if (crumbRes.status !== 200 || crumb.includes("<") || crumb.trim().length === 0) {
-    throw new Error(YAHOO_UNAVAILABLE_MESSAGE);
+    throw new Error(YAHOO_CRUMB_FAILED_MESSAGE);
   }
 
   const url =
@@ -66,7 +68,7 @@ export async function fetchQuoteSummary(ticker: string, fetchImpl: FetchLike = f
   const quoteRes = await fetchImpl(url, { headers: { "User-Agent": USER_AGENT, Cookie: cookie } });
 
   if (!quoteRes.ok) {
-    throw new Error(YAHOO_UNAVAILABLE_MESSAGE);
+    throw new Error(YAHOO_QUOTE_FAILED_MESSAGE);
   }
 
   return quoteRes.json();
@@ -168,6 +170,8 @@ export function parseQuoteSummary(raw: unknown, opts: { latestFY: number }): Yah
 
   const priceValue = rawVal(price.regularMarketPrice);
   const marketCap = rawVal(price.marketCap);
+  const week52Low = rawVal(summaryDetail.fiftyTwoWeekLow);
+  const week52High = rawVal(summaryDetail.fiftyTwoWeekHigh);
   const targets = {
     consensus: rawVal(financialData.targetMeanPrice),
     median: rawVal(financialData.targetMedianPrice),
@@ -178,13 +182,15 @@ export function parseQuoteSummary(raw: unknown, opts: { latestFY: number }): Yah
   if (
     priceValue === null ||
     marketCap === null ||
+    week52Low === null ||
+    week52High === null ||
     targets.consensus === null ||
     targets.median === null ||
     targets.high === null ||
     targets.low === null
   ) {
     throw new Error(
-      "Yahoo quoteSummary missing required fields (price, marketCap, or analyst targets); refusing to fabricate them.",
+      "Yahoo quoteSummary missing required fields (price, marketCap, 52-week range, or analyst targets); refusing to fabricate them.",
     );
   }
 
@@ -219,8 +225,8 @@ export function parseQuoteSummary(raw: unknown, opts: { latestFY: number }): Yah
     companyName: price.longName ?? price.shortName ?? "",
     exchange: normalizeExchange(price.exchangeName),
     description: assetProfile.longBusinessSummary ?? "",
-    week52Low: rawVal(summaryDetail.fiftyTwoWeekLow) ?? 0,
-    week52High: rawVal(summaryDetail.fiftyTwoWeekHigh) ?? 0,
+    week52Low,
+    week52High,
     dividendYield: rawVal(summaryDetail.dividendYield) ?? rawVal(summaryDetail.trailingAnnualDividendYield) ?? 0,
     targets: {
       consensus: targets.consensus,

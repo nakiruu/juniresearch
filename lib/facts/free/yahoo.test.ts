@@ -29,3 +29,12 @@ describe("parseQuoteSummary", () => {
     expect(next!.eps === null || Number.isFinite(next!.eps!)).toBe(true);
   });
 });
+
+describe("parseQuoteSummary required fields", () => {
+  it("throws when the 52-week low/high is absent instead of defaulting to 0", () => {
+    const clone = JSON.parse(JSON.stringify(raw));
+    delete clone.quoteSummary.result[0].summaryDetail.fiftyTwoWeekLow;
+    delete clone.quoteSummary.result[0].summaryDetail.fiftyTwoWeekHigh;
+    expect(() => parseQuoteSummary(clone, { latestFY: 2025 })).toThrow();
+  });
+});
