@@ -1,0 +1,581 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "CME",
+  "cik": 1156375,
+  "company": "CME Group Inc.",
+  "exchange": "NASDAQGS",
+  "filing": {
+    "form": "10-Q",
+    "accession": "0001156375-26-000047",
+    "filedDate": "2026-07-24",
+    "periodEnd": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1156375/000115637526000047/cme-20260630.htm"
+  },
+  "capturedAt": "2026-09-20T16:25:27.088Z",
+  "quote": {
+    "price": 276.01,
+    "marketCap": 99247472640,
+    "sharesOutstanding": 359579263.93971235,
+    "sharesSource": "derived",
+    "week52Low": 218.31,
+    "week52High": 329.16,
+    "dividendYield": 0.0188,
+    "asOf": "2026-09-20"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          4689700000,
+          5019400000,
+          5578900000,
+          6130100000,
+          6520600000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          2645200000,
+          3015900000,
+          3435700000,
+          3931500000,
+          4229500000
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          2793000000,
+          3150800000,
+          3561700000,
+          4046600000,
+          4337000000
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          2637000000,
+          2691000000,
+          3226000000,
+          3525800000,
+          4072200000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          7.29,
+          7.4,
+          8.86,
+          9.67,
+          11.16
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          2949900000,
+          2816100000,
+          3023700000,
+          3005600000,
+          4541900000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          749400000,
+          16000000,
+          0,
+          749800000,
+          0
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          -2085500000,
+          -2704100000,
+          -2912000000,
+          -2142600000,
+          -4416900000
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          27399300000,
+          26878700000,
+          26737900000,
+          26486900000,
+          28728200000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          1.0085000847888757,
+          1.0101011348161597,
+          1.0157712362538256,
+          1.007033257455732,
+          1.031582683860616
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          2402400000,
+          3056000000,
+          3453800000,
+          3690500000,
+          4277100000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -127200000,
+          -89700000,
+          -76400000,
+          -94000000,
+          -83500000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          -2189300000,
+          -2633500000,
+          -3235500000,
+          -3584200000,
+          -3933000000
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          2275200000,
+          2966300000,
+          3377400000,
+          3596500000,
+          4193600000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q2'26",
+    "periodEnd": "2026-06-30",
+    "revenue": 1706200000,
+    "operatingMargin": 0.6488688313210643,
+    "revenueYoY": 0.008392434988179653
+  },
+  "ttm": {
+    "pe": 23.410517387616625,
+    "ps": 14.6542646310132,
+    "evToEbitda": null,
+    "grossMargin": null,
+    "operatingMargin": 0.6510055222514248,
+    "netMargin": null,
+    "netDebtToEbitda": null,
+    "interestCoverage": null,
+    "currentRatio": 1.0183584272161887,
+    "fcfYield": 0.04244642093084538
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 7025669690,
+      "eps": 12.25063
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 7354289180,
+      "eps": 12.92641
+    }
+  },
+  "analysts": {
+    "count": 16,
+    "buy": 7,
+    "hold": 6,
+    "sell": 3,
+    "consensusRating": "Hold",
+    "consensusTarget": 283.6,
+    "medianTarget": 285,
+    "highTarget": 330,
+    "lowTarget": 230,
+    "asOf": "2026-09-20"
+  },
+  "segments": {
+    "basis": "FY25 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 6520600000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "BAM",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "BMO",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "BNS",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "COIN",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-07",
+      "close": 263.6600036621094
+    },
+    {
+      "date": "2026-08-10",
+      "close": 263.6499938964844
+    },
+    {
+      "date": "2026-08-11",
+      "close": 259.32000732421875
+    },
+    {
+      "date": "2026-08-12",
+      "close": 262.1700134277344
+    },
+    {
+      "date": "2026-08-13",
+      "close": 267.2099914550781
+    },
+    {
+      "date": "2026-08-14",
+      "close": 269.79998779296875
+    },
+    {
+      "date": "2026-08-17",
+      "close": 267.8800048828125
+    },
+    {
+      "date": "2026-08-18",
+      "close": 271.5400085449219
+    },
+    {
+      "date": "2026-08-19",
+      "close": 266.94000244140625
+    },
+    {
+      "date": "2026-08-20",
+      "close": 270.8699951171875
+    },
+    {
+      "date": "2026-08-21",
+      "close": 274.9800109863281
+    },
+    {
+      "date": "2026-08-24",
+      "close": 279.1700134277344
+    },
+    {
+      "date": "2026-08-25",
+      "close": 277.32000732421875
+    },
+    {
+      "date": "2026-08-26",
+      "close": 280.9800109863281
+    },
+    {
+      "date": "2026-08-27",
+      "close": 280.94000244140625
+    },
+    {
+      "date": "2026-08-28",
+      "close": 285.79998779296875
+    },
+    {
+      "date": "2026-08-31",
+      "close": 285.5
+    },
+    {
+      "date": "2026-09-01",
+      "close": 286.45001220703125
+    },
+    {
+      "date": "2026-09-02",
+      "close": 277.7699890136719
+    },
+    {
+      "date": "2026-09-03",
+      "close": 282.04998779296875
+    },
+    {
+      "date": "2026-09-04",
+      "close": 281.2900085449219
+    },
+    {
+      "date": "2026-09-08",
+      "close": 278.2300109863281
+    },
+    {
+      "date": "2026-09-09",
+      "close": 274.70001220703125
+    },
+    {
+      "date": "2026-09-10",
+      "close": 274.07000732421875
+    },
+    {
+      "date": "2026-09-11",
+      "close": 275.5400085449219
+    },
+    {
+      "date": "2026-09-14",
+      "close": 280.4599914550781
+    },
+    {
+      "date": "2026-09-15",
+      "close": 275.0899963378906
+    },
+    {
+      "date": "2026-09-16",
+      "close": 272.4599914550781
+    },
+    {
+      "date": "2026-09-17",
+      "close": 271.1499938964844
+    },
+    {
+      "date": "2026-09-18",
+      "close": 276.010009765625
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "CME Group Inc., together with its subsidiaries, operates contract markets for the trading of futures and options on futures contracts worldwide. It offers futures and options products based on interest rates, equity indexes, and foreign exchange; and agricultural, energy, and metals commodities, as well as fixed income and foreign currency trading services. The company provides clearing house services, including clearing, settling, and guaranteeing futures and options contracts, and cleared swaps products traded through its exchanges. In addition, the company offers a range of market data services, including real-time and historical data services. It serves professional traders, financial institutions, institutional and individual investors, corporations, manufacturers, producers, governments, and central banks. CME Group Inc. partners with FutureSports to futures on sports indexes. The company was formerly known as Chicago Mercantile Exchange Holdings Inc. and changed its name to CME Group Inc. in July 2007. The company was founded in 1898 and is headquartered in Chicago, Illinois.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-20"
+    },
+    "mdaExcerpt": {
+      "text": "ITEM 2.\nMANAGEMENT'S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS\nThe following discussion is provided as a supplement to, and should be read in conjunction with, the accompanying unaudited consolidated financial statements and notes in this Quarterly Report on Form 10-Q and our Annual Report on Form 10-K for the year ended December 31, 2025, filed with the SEC on February 26, 2026.\nReferences in this discussion and analysis to \"we\" and \"our\" are to CME Group Inc. (CME Group) and its consolidated subsidiaries, collectively. References to \"exchange\" are to Chicago Mercantile Exchange Inc. (CME), the Board of Trade of the City of Chicago, Inc. (CBOT), New York Mercantile Exchange, Inc. (NYMEX), and Commodity Exchange, Inc. (COMEX), collectively, unless otherwise noted.\nRESULTS OF OPERATIONS\nFinancial Highlights\nThe following summarizes significant changes in our financial performance for the periods presented.\nQuarter Ended\nJune 30,\nSix Months Ended\nJune 30,\n(dollars in millions, except per share data)\n2026\n2025\nChange\n2026\n2025\nChange\nTotal revenues\n$\n1,706.2\n$\n1,692.0\n1\n%\n$\n3,586.3\n$\n3,334.3\n8\n%\nTotal expenses\n599.1\n562.7\n6\n1,169.5\n1,097.0\n7\nOperating margin\n64.9\n%\n66.7\n%\n67.4\n%\n67.1\n%\nNon-operating income (expense)\n$\n220.6\n$\n201.0\n10\n$\n421.8\n$\n337.8\n25\nEffective tax rate\n21.5\n%\n22.9\n%\n22.6\n%\n23.1\n%\nNet income\n$\n1,041.8\n$\n1,025.1\n2\n$\n2,196.1\n$\n1,981.3\n11\nDiluted earnings per common share\n2.88\n2.81\n2\n6.06\n5.43\n12\nCash flows from operating activities\n2,207.0\n2,175.1\n1\nRevenues\nQuarter Ended\nJune 30,\nSix Months Ended\nJune 30,\n(dollars in millions)\n2026\n2025\nChange\n2026\n2025\nChange\nClearing and transaction fees\n$\n1,352.5\n$\n1,388.0\n(3)\n%\n$\n2,895.1\n$\n2,725.3\n6\n%\nMarket data and information services\n238.1\n198.1\n20\n462.2\n392.6\n18\nOther\n115.6\n105.9\n9\n229.0\n216.4\n6\nTotal Revenues\n$\n1,706.2\n$\n1,692.0\n1\n$\n3,586.3\n$\n3,334.3\n8\nClearing and Transaction Fees\nFutures and Options Contracts\nThe following table summarizes our total contract volume, revenue and average rate per contract for futures and options. Total contract volume includes contracts that are traded on our exchange and cleared through our clearing house and certain cleared-only contracts. Volume is measured in round turns, which is considered a completed transaction that involves a purchase and an offsetting sale of a contract. Average rate per contract is determined by dividing total clearing and transaction fees by total contract volume. Contract volume and average rate per contract disclosures below exclude trading volume for event contracts, the cash markets business as well as interest rate swaps.\nQuarter Ended\nJune 30,\nSix Months Ended\nJune 30,\n2026\n2025\nChange\n2026\n2025\nChange\nTotal contract volume (in millions)\n1,850.2\n1,873.4\n(1)\n%\n4,060.3\n3,689.3\n10\n%\nClearing and transaction fees (in millions)\n$\n1,254.3\n$\n1,292.8\n(3)\n$\n2,697.5\n$\n2,538.3\n6\nAverage rate per contract\n$\n0.678\n$\n0.690\n(2)\n$\n0.664\n$\n0.688\n(3)\n23\nTable of Contents\nWe estimate the following net changes in clearing and transaction fees based on the changes in total contract volumes and the changes in average rate per contract for futures and options during the second quarter and first six months of 2026 when compared with the same periods in 2025.\n(in millions)\nQuarter Ended\nSix Months Ended\nIncrease (decrease) due to change in total contract volume\n$\n(15.8)\n$\n246.5\nDecreases due to change in average rate per contract\n(22.7)\n(87.3)\nNet increase (decrease) in clearing and transaction fees\n$\n(38.5)\n$\n159.2\nAverage rate per contract is impacted by our rate structure, including volume-based incentives; product mix; trading venue; and the percentage of volume executed by customers who are members compared with non-member customers. Due to the relationship between average rate per contract and contract volume, the change in clearing and transaction fees attributable to changes in each is only an approximation.\nContract Volume\nThe following table summarizes average daily contract volume. Contract volume can be influenced by many factors, including political and economic conditions, the regulatory environment and market competition.\nQuarter Ended\nJune 30,\nSix Months Ended\nJune 30,\n(amounts in thousands)\n2026\n2025\nChange\n2026\n2025\nChange\nAverage Daily Volume by Product Line:\nInterest rates\n14,532\n15,472\n(6)\n%\n16,586\n15,252\n9\n%\nEquity indexes\n8,634\n7,661\n13\n8,644\n7,827\n10\nForeign exchange\n989\n1,096\n(10)\n1,091\n1,123\n(3)\nEnergy\n2,667\n3,082\n(13)\n3,320\n2,993\n11\nAgricultural commodities\n2,080\n1,964\n6\n2,061\n1,961\n5\nMetals\n941\n942\n1,309\n838\n56\nAggregate average daily volume\n29,843\n30,217\n(1)\n33,011\n29,994\n10\nAverage Daily Volume by Venue:\nCME Globex\n27,935\n28,097\n(1)\n30,761\n27,916\n10\nOpen outcry\n830\n993\n(16)\n1,034\n938\n10\nPrivately negotiated\n1,078\n1,127\n(4)\n1,216\n1,140\n7\nAggregate average daily volume\n29,843\n30,217\n(1)\n33,011\n29,994\n10\nElectronic Volume as a Percentage of Total Volume\n94\n%\n93\n%\n93\n%\n93\n%\nOverall market volatility was high in early 2026 due to the heightened geopolitical conflict in the Middle East, which has caused a ripple effect throughout the world economy. In addition, uncertainty remained high within the energy and metals markets as the Middle East conflict caused significant supply disruptions and led market participants to turn to precious metals amid this uncertainty. However, in the second quarter of 2026, overall market volatility subsided relative to periods of very high volatility earlier in the year as market uncertainty tapered. We believe these factors contributed to volume remaining relatively flat in the second quarter of 2026 when compared to the same period in 2025 and an increase in volume in the first six months of 2026 when compared with the same period in 2025.\n24\nTable of Contents\nInterest Rate Products\nThe following table summarizes average daily contract volume for our key interest rate products.\nQuarter Ended\nJune 30,\nSix Months Ended\nJune 30,\n(amounts in thousands)\n2026\n2025\nChange\n2026\n2025\nChange\nSOFR futures and options:\nFutures expiring within two years\n3,009\n3,357\n(10)\n%\n3,501\n3,145\n11\n%\nOptions\n1,212\n1,464\n(17)\n1,611\n1,403\n15\nFutures expiring beyond two years\n1,018\n1,226\n(17)\n1,231\n1,189\n4\nU.S. Treasury futures and options:\n10-Year\n3,532\n3,392\n4\n3,869\n3,580\n8\n5-Year\n2,078\n2,287\n(9)\n2,320\n2,241\n4\n2-Year\n1,292\n1,180\n10\n1,419\n1,161\n22\nTreasury Bond\n717\n839\n(15)\n814\n821\n(1)\nUltra T-Note\n769\n773\n(1)\n831\n795\n4\nUltra T-Bond\n483\n463\n4\n496\n450\n10\nFederal Funds futures and options\n380\n443\n(14)\n452\n422\n7\nIn the second quarter of 2026, interest rate contract volume was lower compared with the same period in 2025 due to a decrease in market volatility. We believe this was due to more certainty surrounding the Federal Reserve's future interest rate policy decisions.\nOverall interest rate contract volume increased in the first six months of 2026 when compared with same period in 2025 due to periods of high market volatility. We believe this was due to the heightened geopolitical conflict in the Middle East, which led to initial uncertainty surrounding the Federal Reserve's future interest rate policy decisions.\nEquity Index and Cryptocurrency Products\nThe following table summarizes average daily contract volume for our key equity index and cryptocurrency products.\nQuarter Ended\nJune 30,\nSix Months Ended\nJune 30,\n(amounts in thousands)\n2026\n2025\nChange\n2026\n2025\nChange\nE-mini S&P 500 futures and options\n4,420\n4,349\n2\n%\n4,546\n4,435\n3\n%\nE-mini Nasdaq 100 futures and options\n3,191\n2,415\n32\n2,994\n2,503\n20\nE-mini Russell 2000 futures and options\n350\n330\n6\n375\n315\n19\nE-mini Dow futures and options\n262\n252\n4\n285\n256\n11\nBitcoin futures and options\n116\n86\n35\n142\n95\n50\nEther futures and options\n89\n102\n(12)\n106\n98\n8\nEquity index contract volumes increased in the second quarter and first six months of 2026 when compared with the same periods in 2025. We believe these increases were due to the geopolitical conflict in the Middle East in early 2026, which caused significant uncertainty throughout the equity markets. In addition, market shifts in the Nasdaq-100 and Russell 2000 resulted in additional volume within both complexes.\nOur cryptocurrency contract volumes increased in the second quarter and first six months of 2026 when compared with the same periods in 2025. We believe the increased volatility resulted in a broader cryptocurrency market repricing.\n25\nTable of Contents\nForeign Exchange Products\nThe following table summarizes average daily contract volume for our key foreign exchange products.\nQuarter Ended\nJune 30,\nSix Months Ended\nJune 30,\n(amounts in thousands)\n2026\n2025\nChange\n2026\n2025\nChange\nEuro\n245\n281\n(13)\n%\n268\n291\n(8)\n%\nJapanese Yen\n185\n213\n(13)\n197\n210\n(6)\nAustralian dollar\n122\n119\n3\n143\n116\n23\nBritish Pound\n107\n111\n(4)\n120\n119\n1\nCanadian dollar\n87\n92\n(5)\n91\n112\n(18)\nIn the second quarter and first six months of 2026, overall foreign exchange volumes decreased when compared with the same periods in 2025. Overall market volatility subsided in the second quarter of 2026 following periods of very high volatility in 2025 due to uncertainty surrounding the United State's position on tariffs. However, the geopolitical conflict in the Middle East in early 2026 led to higher Australian dollar contract volumes due to uncertainty in the commodities and energy markets. We believe these factors contributed to lower overall foreign exchange contract volume in the second quarter and first six months of 2026 when compared with the same periods in 2025.\nEnergy Products\nThe following table summarizes average daily contract volume for our key energy products.\nQuarter Ended\nJune 30,\nSix Months Ended\nJune 30,\n(amounts in thousands)\n2026\n2025\nChange\n2026\n2025\nChange\nWTI crude oil\n1,465\n1,517\n(3)\n%\n1,763\n1,372\n29\n%\nNatural gas\n658\n871\n(24)\n868\n970\n(11)\nRefined products\n341\n437\n(22)\n428\n431\n(1)\nBrent crude oil\n186\n232\n(20)\n243\n195\n25\nEnergy contract volumes decreased in the second quarter of 2026 when compared with the same period in 2025, which we believe was due to lower overall volatility. Despite the ongoing geopolitical conflict in the Middle East, tensions eased within the region leading to broader price stabilization during the second quarter.\nThe geopolitical conflict in the Middle East in early 2026 disrupted crucial supply chain routes and created higher uncertainty within the crude oil markets. We believe this contributed to higher crude oil volume in the first six months of 2026 when compared with the same period in 2025.\nAgricultural Commodity Products\nThe following table summarizes average daily contract volume for our key agricultural commodity products.\nQuarter Ended\nJune 30,\nSix Months Ended\nJune 30,\n(amounts in thousands)\n2026\n2025\nChange\n2026\n2025\nChange\nCorn\n673\n591\n14\n%\n631\n630\n%\nSoybean\n351\n391\n(10)\n384\n387\n(1)\nWheat\n326\n267\n22\n312\n266\n17\nOverall commodity contract volumes increased in the second quarter and first six months of 2026 when compared with the same periods in 2025. The heightened geopolitical conflict in the Middle East in early 2026 caused disruptions within the grain market supply routes. The conflict also caused a greater demand for crop-based fuels as a result of crude oil pricing uncertainties. We believe these factors contributed to higher overall commodity volume in the second quarter and first six months of 2026 compared with the same periods in 2025.\n26\nTable of Contents\nMetal Products\nThe following table summarizes average daily volume for our key metal products.\nQuarter Ended\nJune 30,\nSix Months Ended\nJune 30,\n(amounts in thousands)\n2026\n2025\nChange\n2026\n2025\nChange\nGold\n639\n667\n(4)\n%\n865\n569\n52\n%\nSilver\n167\n117\n43\n285\n109\n160\nCopper\n100\n99\n1\n115\n105\n9\nOverall metals contract volumes increased during the second quarter and first six months of 2026, when compared to the same periods in 2025, driven primarily by heightened market volatility. Precious metals volume growth was largely driven by geopolitical tensions in the Middle East early in 2026, which drove market participants to gold and silver. While the demand subsequently eased within the gold market, sustained volume growth was further supported by increased adoption of precious metals micro contracts among our retail client base.\nAverage Rate per Contract\nThe average rate per contract decreased in the second quarter and first six months of 2026 when compared with the same periods in 2025. The decrease was largely due to an increase in micro contract volume, specifically within equities, energy and metals, as well as higher member trading as a percentage of total volume. In the first six months of 2026, the decrease was partially offset by a change in product mix. Energy and metal contract volume increased by 1 percentage point as a percent of total volume, while other products collectively decreased by 1 percentage point. In general, energy and metals products have a higher rate per contract compared with the remaining contracts. In addition, the overall decrease in the second quarter of 2026 was partially offset by an increase in certain clearing and transaction fees which went into effect on April 1, 2026.\nCash Markets Business\nTotal clearing and transaction fees revenues in the second quarter and first six months of 2026 include $73.9 million and $150.5 million, respectively, of transaction fees attributable to the cash markets business, compared with $74.6 million and $145.6 million, respectively, in the second quarter and first six months of 2025 . This revenue includes BrokerTec Americas LLC's fixed income volume and EBS's foreign exchange volume.\nQuarter Ended\nJune 30,\nSix Months Ended\nJune 30,\n(amounts in millions)\n2026\n2025\nChange\n2026\n2025\nChange\nBrokerTec fixed income transaction fees\n$\n40.1\n$\n37.1\n8\n%\n$\n80.3\n$\n72.9\n10\n%\nEBS foreign exchange transaction fees\n33.8\n37.5\n(10)\n70.2\n72.7\n(3)\nThe related average daily notional value for the first quarter of 2026 and 2025 were as follows:\nQuarter Ended\nJune 30,\nSix Months Ended\nJune 30,\n(amounts in billions)\n2026\n2025\nChange\n2026\n2025\nChange\nU.S. Repo\n$\n397.3\n$\n362.9\n9\n%\n$\n395.2\n$\n347.3\n14\n%\nEuropean Repo (in euros)\n364.0\n310.9\n17\n366.1\n318.4\n15\nU.S. Treasury\n91.4\n114.1\n(20)\n99.6\n112.9\n(12)\nSpot FX\n67.2\n73.7\n(9)\n71.9\n72.3\n(1)\nOverall average daily notional values for the cash markets business were higher in the second quarter and first six months of 2026 when compared with the same periods in 2025 due to higher overall volatility. We believe this was due to the heightened geopolitical conflict in the Middle East, which caused significant macro-economic uncertainty throughout the global economy. However, more certainty surrounding the Federal Reserves interest rate policy decision led to lower overall U.S. Treasury volumes in second quarter and first six months of 2026 when compared with the same periods in 2025. We believe these factors led to higher overall cash market volume in the second quarter and first six months of 2026 compared with the same periods in 2025.\n27\nTable of Contents\nConcentration of Revenue\nWe bill a substantial portion of our clearing and transaction fees directly to our clearing firms. The majority of clearing and transaction fees received from clearing firms represent charges for trades executed and cleared on behalf of their customers . One individual firm represented at least 10% of our clearing and transaction fees in the first six months of 2026. Should a clearing firm withdraw, we believe that the customer portion of the firm's trading activity would likely transfer to another clearing firm of the exchange. Therefore, we do not believe we are exposed to significant risk from the ongoing loss of revenue received from or through a particular clearing firm.\nOther Sources of Revenue\nMarket data and information services .",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/1156375/000115637526000047/cme-20260630.htm",
+      "asOf": "2026-07-24",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "ITEM 1A. RISK FACTORS\nIn addition to the other information contained in this Annual Report on Form 10-K, you should carefully consider the factors discussed below, which are the risks we believe are material at this time. If any of these risks actually occur or continue to occur, our business, financial condition and results of operations could be materially and adversely affected. These risks and uncertainties are not the only ones facing us. Additional risks and uncertainties not presently known to us or that we currently believe to be immaterial may also adversely affect our business.\nRISKS RELATING TO OUR INDUSTRY\nOur business is subject to the impact of global market, economic and political conditions that are beyond our control and that could significantly impact our business and make our financial results more volatile.\nOur revenue is substantially derived from fees for transactions executed and cleared in our markets. The trading volumes in our markets are directly affected by domestic and international factors that are beyond our control, including:\neconomic, political and geopolitical market conditions, including the instability caused by trade policies and wars;\nlegislative and regulatory changes, including any direct or indirect restrictions on or increased costs associated with trading in our markets or our clearing services;\nbroad trends in the industry and financial markets;\nchanges in price levels, trading volumes and volatility in the derivatives, cash and OTC markets and in their underlying markets;\nshifts in demand or supply in commodities underlying our products;\ncompetition;\nchanges in government monetary policies and the U.S. Federal Reserve and other international banks' forecasted interest rates;\navailability of capital to our market participants and their appetite for risk-taking;\nlevels of assets under our customers' management;\nvolatile weather patterns, droughts, natural disasters and other catastrophes;\npandemics affecting our customer base or our ability to operate our markets; and\nconsolidation or expansion in our customer base and within our industry.\nAny one or more of these factors may contribute to reduced activity in our markets. Historically, periods of heightened uncertainty have tended to increase our trading volume due to increased hedging activity and the increased need to manage the risks associated with, or speculate on, volatility. However, in the period after a material market disturbance, there may persist extreme uncertainties, which may lead to decreased volume due to factors such as reduced risk exposure, fluctuating interest rates, central bank asset purchase programs and lack of available capital. The shifts in market trading patterns we experienced as a result of the financial crisis of 2008 may or may not recur in the future, and our business will be affected by future economic uncertainties, which may result in decreased trading volume and a more challenging business environment for us. A reduction in overall trading volume or in certain products could render our markets less attractive to market participants as a source of liquidity, which could result in further loss of trading volume and associated transaction-based revenue. Material decreases in trading volume would have a material adverse effect on our financial condition and operating results.\nPlease see \"Item 1A - Risk Factors - Risks Relating To Our Business\" beginning on page 20 for additional information.\n16\nTable of Contents\nWe operate in a heavily regulated environment that imposes significant costs and competitive burdens on our business, and our failure to maintain compliance with regulations, our status as a regulated entity, or BrokerTec Americas' status as a member in good standing at FICC, could result in the loss of customers, fines or other consequences to our regulated status.\nWe are primarily subject to the jurisdiction of the regulatory agencies in the U.S., UK and EU. As a result of our global operations, we are also subject to the rules and regulations of other local jurisdictions in which we conduct business and offer our products and services, as appropriate.\nOur businesses and those of many of our clients have been and continue to be subject to extensive legislation and regulatory scrutiny, and we face the risk of continued increasing oversight and changes to our regulatory environment and business in the future and have incurred and expect to continue to incur significant costs to comply. Additional new laws or regulations or changes in enforcement practices applicable to our businesses or those of our clients could be imposed in the U.S. or other jurisdictions, which could change, or require us to change, our business practices or the structure of our business, including its current governance, risk oversight or regulatory structure, or impose significant costs on us by, for example, requiring more of our funds to be set aside for the guaranty fund or to meet other compliance requirements. This could adversely affect our ability to compete effectively with other institutions that are not affected in the same way or impact our clients' overall trading volume and demand for our market data and other services. Additionally, regulations imposed on financial institutions or market participants generally may adversely impact their trading activity in our markets. To the extent the legislative and regulatory environment becomes more onerous for us or less beneficial for us or our customers, our business, financial condition and operating results could be negatively affected.\nLegislation may be proposed, both domestically and internationally, that could, for example, add a transaction tax on our products or change the way our market participants are taxed on the products they trade on our markets. If such proposals were to become law, they could have a negative impact on our industry and on us by making transactions more costly to market participants, which may reduce trading and could make our markets less competitive, with a resulting negative impact on our business, financial condition and operating results.\nLegislation regarding the regulatory market structure applicable to the trading and clearing of spot digital assets is currently being considered in Congress. It is not yet certain whether the legislation will be signed into law or whether it will have any impact on listed derivatives regulation.\nThe legal status of certain event-based contracts, most notably those based on sports events, is the subject of litigation in various jurisdictions. The outcome of these cases, new laws or regulations, or changes in the interpretation of existing laws or regulations could immediately or subsequently impact our ability to offer certain event contracts and could subject us to additional litigation or regulatory scrutiny.\nIf we fail to comply with applicable laws, rules or regulations, we may be subject to censure, fines, cease-and-desist orders, suspension of our business, removal of personnel or other sanctions, including revocation of our designations as a contract market, derivatives clearing organization, swap data repository, broker-dealer, MTF or other regulatory status.\nOur broker-dealer and MTF businesses, BrokerTec and EBS, are also extensively regulated in various jurisdictions. These regulatory obligations generally include proper licensing and qualification of the firms and individuals, substantive conduct standards, communication and disclosure rules, monitoring and surveillance, training, capital requirements, supervisory obligations, maintenance of anti-money laundering programs, suspicious activity reporting, risk management standards, trade reporting, and ongoing examinations and reviews. The risks from failing to comply with these regulatory obligations include potential liability and/or disciplinary action against the firm and individuals, monetary penalties and restrictions on future activities.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/1156375/000115637526000009/cme-20251231.htm",
+      "asOf": "2026-02-26",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-K",
+    "pressRelease": {
+      "text": "EX-99.1\n2\nexhibit9916302026.htm\nEX-99.1\nDocument\nExhibit 99.1\nMedia contact\nInvestor contact\nTimothy Barello, 212.299.2256\nAdam Minick, 312.340.8365\nLaurie Bischel, 312.648.8698\ninvestors cmegroup.com\nnews cmegroup.com\nCME-G\ncmegroup.mediaroom.com\nFOR IMMEDIATE RELEASE\nCME Group Inc. Reports Strong Financial Results for Q2 2026\nCHICAGO, July 22, 2026 - CME Group Inc. (NASDAQ CME) today reported financial results for the second quarter of 2026.\nThe company reported revenue of $1.7 billion and operating income of $1.1 billion for the second quarter of 2026. Net income was $1.0 billion and diluted earnings per common share were $2.88. On an adjusted basis, operating income was $1.2 billion, net income was $1.1 billion and diluted earnings per common share were $2.99. Financial results presented on an adjusted basis for the second quarter of 2026 and 2025 exclude certain items, which are detailed in the reconciliation of non-GAAP results. 1\nThe first half of 2026 was the strongest in CME Group's history,\" said CME Group Chairman and Chief Executive Officer Terry Duffy. \"We delivered record H1 performance across revenue, adjusted operating income, adjusted net income and adjusted earnings per share, all of which were powered by record trading in Q1 and our second-highest Q2 volumes ever. During Q2, market data revenue increased 20% to a record $238 million. Importantly, we provided more than $95 billion in daily margin efficiencies during the quarter, a new high that represents unparalleled capital savings that our clients can redeploy in their businesses. We also continue to innovate a number of new tools to help clients manage risk and pursue opportunities, including Single-Stock futures, 1-Ounce Gold contracts available 24 7, U.S. Treasury clearing and Compute futures.\nSecond-quarter 2026 average daily volume (ADV) was the third highest quarterly ADV reaching 29.8 million contracts, which included non-U.S. ADV of 9.1 million contracts.\nClearing and tr ansaction fees revenue for second-quarter 2026 totaled $1.4 billion. The total average rate per contract was $0.678. Market data revenue totaled a record $238 million for second-quarter 2026.\n1. A reconciliation of the non-GAAP financial results mentioned to the respective GAAP figures can be found within the Reconciliation of Adjusted Operating Income and Adjusted Net Income and Adjusted Earnings per Common Share charts at the end of the financial statements.\n- more -\nPage 2\nAs of June 30, 2026, th e company had $2.3 billion in cash (including $200 million deposited with Fixed Income Clearing Corporation, which is included in other current assets) and $3.4 billion of debt. The company paid dividends during the second quarter of approximately $468 million and repurchased $695 million in CM E Group common shares.\nCME Group will hold a Q A conference call to discuss second-quarter 2026 results at 8 30 a.m. Eastern Time today. A live audio webcast of the Q A call will be available on the Investor Relations section of CME Group's website at investor.cmegroup.com under Events Presentations. An archived recording will be available for up to two months after the call.\nAs the world's leading derivatives marketplace, CME Group ( www.cmegroup.com ) enables clients to trade futures, options, cash and OTC markets, optimize portfolios, and analyze data empowering market participants worldwide to efficiently manage risk and capture opportunities. CME Group exchanges offer the widest range of global benchmark products across all major asset classes based on interest rates , equity indexes , foreign exchange , cryptocurrencies , energy , agricultural products and metals . The company offers futures and options on futures trading through the CME Globex platform, fixed income trading via BrokerTec and foreign exchange trading on the EBS platform. In addition, it operates one of the world's leading central counterparty clearing providers, CME Clearing.\nCME Group, the Globe logo, CME, Chicago Mercantile Exchange, Globex, and E-mini are trademarks of Chicago Mercantile Exchange Inc. CBOT and Chicago Board of Trade are trademarks of Board of Trade of the City of Chicago, Inc. NYMEX, New York Mercantile Exchange and ClearPort are trademarks of New York Mercantile Exchange, Inc. COMEX is a trademark of Commodity Exchange, Inc. BrokerTec is a trademark of BrokerTec Americas LLC and EBS is a trademark of EBS Group LTD. The S P 500 Index is a product of S P Dow Jones Indices LLC (\"S P DJI\"). \"S P \", \"S P 500 \", \"SPY \", \"SPX \", US 500 and The 500 are trademarks of Standard Poor's Financial Services LLC Dow Jones , DJIA and Dow Jones Industrial Average are service and or trademarks of Dow Jones Trademark Holdings LLC. These trademarks have been licensed for use by Chicago Mercantile Exchange Inc. Futures contracts based on the S P 500 Index are not sponsored, endorsed, marketed, or promoted by S P DJI, and S P DJI makes no representation regarding the advisability of investing in such products. All other trademarks are the property of their respective owners.\n- more -\nPage 3\nStatements in this press release that are not historical facts are forward-looking statements. These statements are not guarantees of future performance and involve risks, uncertainties and assumptions that are difficult to predict. Therefore, actual outcomes and results may differ materially from what is expressed or implied in any forward-looking statements. We want to caution you not to place undue reliance on any forward-looking statements. We undertake no obligation to publicly update any forward-looking statements, whether as a result of new information, future events or otherwise. Among the factors that might affect our performance are increasing competition by foreign and domestic entities, including increased competition from new entrants into our markets and consolidation of existing entities our ability to keep pace with rapid technological developments, including our ability to complete the development, implementation and maintenance of the enhanced functionality required by our customers while maintaining reliability and ensuring that such technology is not vulnerable to security risks our ability to continue introducing innovative and competitive new products and services on a timely, cost-effective basis, including through our electronic trading capabilities, and derive revenues that are commensurate with our efforts and expectations, and our ability to maintain the competitiveness of our existing products and services our ability to adjust our fixed costs and expenses if our revenues decline our ability to manage variable costs associated with CME Group's transition to the Google Cloud, and minimize duplicative costs of maintaining both on-premise and Google Cloud environments during the transition the resilience of our electronic platforms and the soundness of our business continuity and disaster recovery plans, including in the event of cyberattacks and cyberterrorism or as impacted by a failure of or disruption at one of our suppliers our ability to maintain existing customers at substantially similar trading levels, develop strategic relationships and attract new customers our ability to expand and globally offer our products and services changes in regulations, including the impact of any changes in laws or government policies with respect to our products or services or our industry, such as any changes to regulations and policies that require increased financial and operational resources from us or our customers, as well as the impact of tariffs and tax policy changes, restrictions on our ability to offer CME Group products and services in specific geographies or to specific customers or limitations or changes in underlying physical product flows across geographies the costs associated with protecting our intellectual property rights and our ability to operate our business without violating the intellectual property rights of others decreases in revenue from our market data as a result of decreased demand or changes to regulations in various jurisdictions changes in our rate per contract due to shifts in the mix of the products traded, the trading venue and the mix of customers (whether the customer receives member or non-member fees or participates in one of our various incentive programs) and the impact of our tiered pricing structure the ability of our credit and liquidity risk management practices to adequately protect us from the credit risks of clearing firms and other counterparties, and to satisfy the margin and liquidity requirements associated with the BrokerTec matched principal business the ability of our compliance and risk management programs to effectively monitor and manage our risks, including our ability to prevent errors and misconduct and protect our infrastructure against security breaches and misappropriation of our intellectual property assets our dependence on third-party providers and exposure to risk from third parties, including risks related to the performance, reliability and security of technology used by, or facilities provided by, our third-party providers and third-party providers that our clients and third-parties rely on our reliance on third-party distribution partners, including independent software vendors, futures commission merchants, introducing brokers, broker-dealers, regulatory reporting and data distributors and platform operators, and other partners, for facilitating trading and for market data information, and potential impacts from changes in their business models and priorities volatility in commodity, equity and fixed income prices, and price volatility of financial benchmarks and instruments such as interest rates, equity indices, fixed income instruments and foreign exchange rates economic, social, political and market conditions, including new and existing geopolitical tensions or conflicts, the volatility of the capital and credit markets and the impact of economic conditions on the trading activity of our current and potential customers our ability to accommodate increases in contract volume and market data and order transaction traffic across the entire trade cycle and the ability to implement enhancements meeting our regulatory obligations and customer needs without failure or degradation of the performance of our trading and clearing systems our ability to execute our growth strategy and maintain our growth effectively our ability to manage the risks, control the costs and achieve the synergies associated with our strategy for acquisitions, investments, alliances, strategic partnerships and joint ventures variances in earnings on cash accounts and collateral that our clearing house holds impact of CME Group pricing fee level and structure and incentive changes impact of aggregation services and internalization on trade flow and volumes any negative financial impacts from changes to the terms of intellectual property and index rights our ability to continue to generate funds and or manage our indebtedness to allow us to continue to invest in our business industry, channel partner and customer consolidation and or concentration decreases in trading and clearing activity the imposition of a transaction tax or user fee on\nfutures and options transactions and or repeal of the 60 40 tax treatment of such transactions increases in effective tax rates, borrowing costs, or changes in tax policy our ability to maintain our brand and reputation and the unfavorable resolution of material legal proceedings. For a detailed discussion and additional information concerning these and other factors that might affect our performance, see our other recent periodic filings, including our Annual Report on Form 10-K for the year ended December 31, 2025, as filed with the Securities and Exchange Commission ( SEC ) on February 26, 2026, under the caption Risk Factors .\n# # #\nCME Group Inc. and Subsidiaries\nConsolidated Balance Sheets\n(in millions)\nJune 30, 2026\nDecember 31, 2025\nASSETS\nCurrent Assets\nCash and cash equivalents\n$\n2,144.2\n$\n4,416.9\nMarketable securities\n131.4\n125.0\nAccounts receivable, net of allowance\n753.1\n639.2\nOther current assets (includes $4.4 and $6.5 in restricted cash)\n491.7\n522.1\nPerformance bonds and guaranty fund contributions\n158,110.7\n159,656.1\nTotal current assets\n161,631.1\n165,359.3\nProperty, net of accumulated depreciation and amortization\n351.2\n362.7\nIntangible assets trading products\n17,175.3\n17,175.3\nIntangible assets other, net\n2,494.6\n2,610.7\nGoodwill\n10,505.8\n10,514.7\nOther assets\n2,518.6\n2,401.5\nTotal Assets\n$\n194,676.6\n$\n198,424.2\nLIABILITIES AND EQUITY\nCurrent Liabilities\nAccounts payable\n$\n68.0\n$\n71.8\nOther current liabilities\n538.6\n568.8\nPerformance bonds and guaranty fund contributions\n158,110.7\n159,656.1\nTotal current liabilities\n158,717.3\n160,296.7\nLong-term debt\n3,424.2\n3,422.3\nDeferred income tax liabilities, net\n5,220.9\n5,242.2\nOther liabilities\n793.8\n734.8\nTotal Liabilities\n168,156.2\n169,696.0\nTotal CME Group Shareholders' Equity\n26,520.4\n28,728.2\nTotal Liabilities and Equity\n$\n194,676.6\n$\n198,424.2\nCME Group Inc. and Subsidiaries\nConsolidated Statements of Income\n(dollars in millions, except per share amounts shares in thousands)\nQuarter Ended\nJune 30,\nSix Months Ended\nJune 30,\n2026\n2025\n2026\n2025\nRevenues\nClearing and transaction fees\n$\n1,352.5\n$\n1,388.0\n$\n2,895.1\n$\n2,725.3\nMarket data and information services\n238.1\n198.1\n462.2\n392.6\nOther\n115.6\n105.9\n229.0\n216.4\nTotal Revenues\n1,706.2\n1,692.0\n3,586.3\n3,334.3\nExpenses\nCompensation and benefits\n233.5\n221.6\n456.5\n428.3\nTechnology\n83.3\n70.9\n159.9\n136.6\nProfessional fees and outside services\n29.1\n37.4\n57.3\n65.9\nAmortization of purchased intangibles\n56.0\n56.1\n112.1\n111.3\nDepreciation and amortization\n28.2\n27.3\n55.4\n54.6\nLicensing and other fee agreements\n109.1\n96.2\n215.9\n192.8\nOther\n59.9\n53.2\n112.4\n107.5\nTotal Expenses\n599.1\n562.7\n1,169.5\n1,097.0\nOperating Income\n1,107.1\n1,129.3\n2,416.8\n2,237.3\nNon-Operating Income (Expense)\nInvestment income\n1,429.7\n1,518.4\n2,819.0\n2,411.1\nInterest and other borrowing costs\n(43.6)\n(44.0)\n(87.2)\n(85.7)\nEquity in net earnings of unconsolidated subsidiaries\n97.7\n99.0\n200.1\n187.2\nOther non-operating income (expense)\n(1,263.2)\n(1,372.4)\n(2,510.1)\n(2,174.8)\nTotal Non-Operating Income (Expense)\n220.6\n201.0\n421.8\n337.8\nIncome before Income Taxes\n1,327.7\n1,330.3\n2,838.6\n2,575.1\nIncome tax provision\n285.9\n305.2\n642.5\n593.8\nNet Income\n$\n1,041.8\n$\n1,025.1\n$\n2,196.1\n$\n1,981.3\nNet Income Attributable to Common Shareholders of CME Group - Basic (1)\n$\n1,041.8\n$\n1,012.2\n$\n2,200.4\n$\n1,956.4\nNet Income Attributable to Common Shareholders of CME Group - Diluted (1)\n$\n1,041.8\n$\n1,012.2\n$\n2,196.1\n$\n1,956.4\nEarnings per Share Attributable to Common Shareholders of CME Group\nBasic\n$\n2.89\n$\n2.81\n$\n6.11\n$\n5.44\nDiluted\n2.88\n2.81\n6.06\n5.43\nWeighted Average Number of Common Shares\nBasic\n360,684\n359,658\n360,005\n359,636\nDiluted (2)\n361,282\n360,355\n362,233\n360,297\n1. The difference between Net Income and Net Income Attributable to Common Shareholders of CME Group - Basic and Diluted is the result of the distribution of earnings allocated to preferred shares.\n2. Preferred shares of 4,584,000 were all converted to Class A Common stock on March 5, 2026 with their weighted-average impact included in the Diluted shares starting in the first quarter of 2026.\nCME Group Inc.",
+      "source": "edgar:8-K ex-99.1",
+      "url": "https://www.sec.gov/Archives/edgar/data/1156375/000115637526000042/exhibit9916302026.htm",
+      "asOf": "2026-07-22",
+      "truncated": true
+    },
+    "proxyStatement": {
+      "text": "Board and director independence:\nDirector independence\nThe experience of our directors has been, and continues to be, critical to our success. Our corporate governance principles require that the board be composed of at least a majority of independent directors. Additionally, in accordance with applicable listing standards, the members of our audit, compensation, and nominating and governance committees must be independent. For a director or director nominee to be considered independent, the board must affirmatively determine that the director or director nominee has no direct or indirect material relationship with CME Group. The board has adopted categorical independence standards, which are attached to this proxy statement as Appendix B , to assist it in making its determinations regarding independence. These standards conform to and exceed the independence criteria specified in Nasdaq's listing standards. They specify the criteria by which the independence of our directors and director nominees will be determined, including relationships and transactions between each director, director nominee, any member of his or her immediate family, his or her affiliates, charitable organizations with which he or she is affiliated, and us.\nThe board believes all of its non-executive directors act independently of, and effectively monitor and oversee the actions of, management. Based on our categorical independence standards, at its meeting held in early 2026, the nominating and governance committee made a preliminary assessment of the independence of the current directors, and based on such assessment made a recommendation to our board regarding their independence. Some of our current directors are members of our exchanges, which provides them with access to our markets, lower trading fees, the ability to vote on certain matters relating to the operation of our open outcry markets and, for members of CME, the ability to elect six of our directors. Directors who are members of our exchanges may make payments directly to us or indirectly to us through our clearing firms in connection with their trading activity on an exchange. Such directors also may be customers of our cash markets business. To ensure that such payments do not exceed the monetary thresholds set forth in the listing standards of Nasdaq, the nominating and governance committee reviewed the trading activities of the directors and their affiliated clearing firms, relationships with our exchanges and other payment activities as part of its independence determination. The nominating and governance committee and the board noted that all payments relating to trading fees were made in the ordinary course of our business, were on terms consistent with those prevailing at the time for corresponding transactions by similarly situated unrelated third parties. The board has also adopted a conflict of interest policy to address any potential conflicts that may arise in relation to a board member's participation in our markets.\n\nCompensation discussion and analysis:\nCompensation Discussion and Analysis\nThis discussion provides you with a detailed description of our compensation program for our named executive officers. It also provides an overview of our compensation philosophy and our policies and programs, which are designed to achieve our compensation objectives, and an overview of our program as it relates to other members of our Management Team. These individuals along with our named executive officers are referred to as our senior management group.\nKey topics covered in our compensation discussion and analysis\nExecutive Summary, page 71\nPhilosophy and Objectives, page 72\nPeer Group, page 73\nPrincipal Elements of our Compensation Program, beginning on page 74\n2025 Named Executive Officer Annual Bonus Awards, page 78\n2025 Named Executive Officer Equity Awards, page 79\nStock Ownership Guidelines, Hedging Policy, Tally Sheets and Recoupment Policies, page 83\n2025 named executive officers\nTerrence A. Duffy, Chairman and Chief Executive Officer\nLynne C. Fitzpatrick, President and Chief Financial Officer\nDerek L. Sammann, Global Head of Commodities Markets\nJulie M. Winkler, Chief Commercial Officer\nSunil K. Cutinho, Chief Information Officer\nThe titles for our named executive officers above are those in effect as of December 31, 2025. For the biographies of our current executive officers, including the named executive officers, please see Item 1. Business Human Capital Management - Information about our Executive Officers beginning on page 14 of our 2025 Annual Report on Form 10-K, filed with the SEC on February 26, 2026.\nOPPORTUNITY FOR SHAREHOLDER FEEDBACK\nThe compensation committee carefully considers feedback from our shareholders regarding the compensation program for our senior management group. At our 2025 annual meeting of shareholders, approximately 87% of shareholders voted FOR our non-binding advisory vote approving the compensation of our named executive officers. We attribute the support for our compensation program to our multi-year shareholder outreach and engagement program (as described on pages 9 and 10 ) and the actions taken to enhance our compensation program as a result of shareholder feedback (described on page 10 ). In addition to the perspective provided by the say-on-pay vote results, we consider feedback from shareholders on corporate governance, senior management compensation and other issues provided through our shareholder engagements.\n2026 PROXY STATEMENT\nCME GROUP\n69\nCOMPENSATION DISCUSSION & ANALYSIS\nTABLE OF CONTENTS\nExecutive summary\nOUR BUSINESS\nAs the world's leading derivatives marketplace, CME Group enables clients to trade futures, options, cash and OTC markets, optimize portfolios, and analyze data empowering market participants worldwide to efficiently manage risk and capture opportunities. CME Group exchanges offer the widest range of global benchmark products across all major asset classes based on interest rates, equity indexes, foreign exchange, energy, agricultural products and metals. The company offers futures and options on futures trading through the CME Globex platform, fixed income trading via BrokerTec and foreign exchange trading on the EBS platform. In addition, it operates one of the world's leading central counterparty clearing providers.\nFor more information on our business, see Business and Management's Discussion and Analysis of Financial Condition and Results of Operations in our Annual Report and in the Proxy Statement Summary on pages 5 and 6 .\n2025 COMPENSATION HIGHLIGHTS FOR OUR NAMED EXECUTIVE OFFICERS\nThe compensation committee took the following compensation actions with respect to our named executive officers during 2025 or related to 2025 performance:\nAwarded annual bonuses to our named executive officers in respect of 2025 based on our achievement of cash earnings at approximately 114.3% of the target goal as described on page 78 . For 2025, we set a cash earnings goal for the annual bonus program that required significant effort on behalf of our management as described on page 77 .\nCertified results for the September 2022 award of performance shares based on TSR relative to the S&P 500 for the 2023-2025 performance period. Based on the company's performance against the pre-established goal, 200.0% of the target number of shares were earned. These shares became vested in March 2026 as described beginning on page 81 .\nAwarded equity grants to our named executive officers in September 2025 to encourage long-term retention while focusing management on longer-term value creation. The awards were comprised of 50% time-vested restricted stock and 50% performance shares, with 50% of the performance shares tied to TSR relative to the S&P 500 and 50% tied to absolute net income margin performance, measured over a three-year period (2026-2028).",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/1156375/000162828026020500/cme-20260323.htm",
+      "asOf": "2026-03-23",
+      "truncated": true
+    },
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T16:25:27.088Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T16:25:27.088Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T16:25:27.088Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T16:25:27.088Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T16:25:27.088Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T16:25:27.088Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T16:25:27.088Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T16:25:27.088Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T16:25:27.088Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T16:25:27.088Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T16:25:27.088Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T16:25:27.088Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-20T16:25:27.088Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-20T16:25:27.088Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-20T16:25:27.088Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-09-20T16:25:27.088Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-09-20T16:25:27.088Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-09-20T16:25:27.088Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T16:25:27.088Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T16:25:27.088Z"
+    }
+  ]
+}

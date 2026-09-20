@@ -1,0 +1,187 @@
+{
+  "judgmentSha256": "f027c150be8c143dc9ea927588a9257b7b8bb1dfa22d829ab5d8b91009cb2799",
+  "reviewedAt": "2026-09-20T23:10:00Z",
+  "reviewer": "claude-opus-4-8",
+  "round": 2,
+  "verdict": "approved-with-minors",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "plus equity in the net earnings of unconsolidated subsidiaries",
+      "issue": "Round 1: the equity earnings were characterised as coming from \"CME's index joint venture,\" a fact not on the grounding surface.",
+      "fix": "Drop the \"index joint venture\" characterisation; describe the line as the pack does.",
+      "status": "addressed",
+      "note": "Re-verified against f027c150: reads \"plus equity in the net earnings of unconsolidated subsidiaries,\" matching the income-statement label (Q2 $97.7M); \"index joint venture\" grep=0. Holds."
+    },
+    {
+      "id": "F-2",
+      "severity": "Critical",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "Total equity of roughly $28.7B is dominated by goodwill and indefinite-lived trading-product intangibles",
+      "issue": "Round 1: equity was attributed to the goodwill/intangibles \"from the CBOT, NYMEX, and NEX acquisitions\"; \"NEX\" and the acquisition attribution appear nowhere in the pack.",
+      "fix": "Remove the specific acquisition attribution; say only what the balance sheet supports.",
+      "status": "addressed",
+      "note": "Re-verified against f027c150: CBOT/NYMEX/NEX attribution absent (NEX grep=0). Names only \"goodwill and indefinite-lived trading-product intangibles,\" matching the balance sheet (Goodwill $10,505.8M; Intangibles - trading products $17,175.3M). Holds."
+    },
+    {
+      "id": "F-3",
+      "severity": "Critical",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "as the volatility that had run high earlier in the year subsided; management said as much",
+      "issue": "Round 1: the volume tailwind was attributed to \"2024 and 2025,\" but \"2024\" appears nowhere in the pack, and analystCommentary used the causal \"drove the last two years.\"",
+      "fix": "Re-anchor to the periods the MD&A supports (high volatility in 2025 and early 2026) and drop 2024 and the \"last two years\" framing.",
+      "status": "addressed",
+      "note": "Re-verified against f027c150: \"2024\"=0 and \"last two years\"=0. Thesis and analystCommentary anchor to volatility that \"had run high earlier in the year\" subsiding, which the MD&A supports. Holds."
+    },
+    {
+      "id": "F-4",
+      "severity": "Important",
+      "field": "sections.businessMoat.moatFactors[0].body",
+      "quote": "a competitor cannot win the trade without first winning the liquidity, and the liquidity does not move without the trade",
+      "issue": "Round 1: the moat rested on a specific competitor track record (\"competitors have repeatedly failed to pull it away by launching rival contracts,\" and in durability \"rivals have tried and mostly failed\") the pack does not carry.",
+      "fix": "Make the network-effect and switching-cost argument structurally without asserting a specific competitor track record.",
+      "status": "addressed",
+      "note": "Re-verified against f027c150: moatFactors[0] argues the liquidity circularity structurally; durability says an established liquidity pool is \"inherently hard to dislodge.\" No specific competitor track-record claim remains. Holds."
+    },
+    {
+      "id": "F-5",
+      "severity": "Important",
+      "field": "sections.management.capitalAllocation",
+      "quote": "the second-quarter dividends and repurchases the cash-flow discussion above sets out",
+      "issue": "Round 1: several numeric clusters were restated in full across sections rather than introduced once and referred back in words — (1) Q2 $468M dividends / $695M buybacks; (2) the Q2 decline triplet (clearing fees -3%, volume -1%, rate -2%); (3) market data +20% / $238.1M; (4) $2.3B cash / $3.4B debt.",
+      "fix": "Introduce each cluster once in the section that argues it and refer back in words elsewhere.",
+      "status": "addressed",
+      "note": "Re-verified against f027c150: Q2 $468M/$695M once each, rate $0.678 once, $238.1M once, $2.3B/$3.4B once; capitalAllocation refers back in words (\"the second-quarter dividends and repurchases the cash-flow discussion above sets out\"). Holds."
+    },
+    {
+      "id": "F-6",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.companyOverview",
+      "quote": "clearing and transaction fees, the volume-driven core; market data and information services, a smaller and recurring stream; and other",
+      "issue": "Round 1: the 79% and 14% revenue-mix shares were computed from Q2'26 line items and do not appear on the grounding surface, which carries only the FY25 single-segment \"Consolidated: 100%\" basis.",
+      "fix": "Drop the derived percentages or lean on the dollar lines the pack supports.",
+      "status": "addressed",
+      "note": "Re-verified against f027c150: derived 79%/14% shares absent (grep=0); the three revenue lines are named without percentages. Holds."
+    },
+    {
+      "id": "F-7",
+      "severity": "Minor",
+      "field": "analystCommentary",
+      "quote": "It is an exceptional business model",
+      "issue": "Round 1: unearned superlatives and a repeated tic — \"one of the finest business models in finance,\" \"one of the finest franchises in finance,\" \"one of the most durable moats in finance,\" alongside \"about as wide as they come.\"",
+      "fix": "Let the numbers carry the quality; cut the \"finest/widest/most durable in finance\" superlatives or reduce to one, varied instance.",
+      "status": "addressed",
+      "note": "Re-verified against f027c150: \"finest ... in finance\" tic absent (\"finest\"=0); a single \"about as wide as they come\" remains. Holds. (A separate, remaining \"exceptional\" tic is raised anew as F-17.)"
+    },
+    {
+      "id": "F-8",
+      "severity": "Minor",
+      "field": "sections.risks.systemic",
+      "quote": "These are the exposures of owning the plumbing of the derivatives market: mostly stabilizing, occasionally two-edged, and tied to volatility and rates more than to the ordinary economic cycle.",
+      "issue": "Round 1: two fields sat close to their caps with little room for the next round — businessMoat.segments[0].body at 1,082/1,200 (90%) and risks.systemic at 1,331/1,500 (89%).",
+      "fix": "Trim each toward roughly 80% of cap.",
+      "status": "addressed",
+      "note": "Re-measured in f027c150: businessMoat.segments[0].body 806/1,200 (67%); risks.systemic 1,242/1,500 (83%). Both inside cap with room."
+    },
+    {
+      "id": "F-9",
+      "severity": "Critical",
+      "field": "sections.financials.cashflowCommentary",
+      "quote": "a modest regular quarterly dividend plus a large variable annual dividend sized to sweep out the year's excess capital",
+      "issue": "The grounding surface carries no \"variable annual dividend\" policy: the pack's only dividend facts are the 1.88% yield, FY25 Dividends Paid of $3.9B, and the Q2 dividend of ~$468M. The specific policy mechanism was recalled from outside the pack and asserted in five places: companyOverview, cashflowCommentary, capitalAllocation, valuation.scenarios[Base].driver and finalRecommendation[0].",
+      "fix": "Drop the \"variable annual dividend / sized to sweep out excess capital\" characterisation. State only what the pack supports and refer back in words rather than repeating the unsupported policy label.",
+      "status": "addressed",
+      "note": "Re-verified against f027c150: \"variable annual\"=0, \"sweep\"=0, \"excess capital\"=0. Affected fields state only supported dividend facts (FY25 dividends $3.9B close to full-year FCF; Q2 $468M/$695M). Holds."
+    },
+    {
+      "id": "F-10",
+      "severity": "Minor",
+      "field": "sections.businessMoat.moatFactors[2].body",
+      "quote": "is a capital- and time-intensive undertaking that has rarely succeeded",
+      "issue": "\"has rarely succeeded\" asserts a competitive track record the pack does not carry: the surface lists competition and new entrants only as a forward risk and provides no evidence on the historical success or failure rate of firms building competing regulated exchanges.",
+      "fix": "Drop \"that has rarely succeeded\" and rest the barrier on the structural point which the network-effect logic already supports.",
+      "status": "addressed",
+      "note": "Re-verified against f027c150: \"rarely succeeded\"=0; moatFactors[2] rests on the structural barrier (\"a capital- and time-intensive undertaking, and the barrier compounds with the liquidity advantage above\"). Holds."
+    },
+    {
+      "id": "F-11",
+      "severity": "Minor",
+      "field": "sections.businessMoat.segments[0].body",
+      "quote": "is the higher-quality half of the revenue base",
+      "issue": "Market data is $238.1M of $1,706.2M total revenue (about 14%), and the same paragraph says the revenue \"splits three ways,\" so calling market data \"half\" overstates its size and reintroduces the size implication F-6 removed.",
+      "fix": "Call market data the higher-quality, recurring portion of the revenue base rather than \"half.\"",
+      "status": "addressed",
+      "note": "Re-verified against f027c150: \"half\" overstatement gone; businessMoat.segments[0] now reads only \"Market data, the third line, rose in the quarter.\" Holds (and the residual paraphrase raised as F-15 is now also resolved)."
+    },
+    {
+      "id": "F-12",
+      "severity": "Important",
+      "field": "sections.executiveSummary.companyOverview",
+      "quote": "FY25 dividends were $3.9B, close to the full year's free cash flow and a larger payout than the 1.88% headline yield implies",
+      "issue": "The same dividend claim was made near-verbatim in two sections. cashflowCommentary repeated the clauses \"close to the full year's free cash flow\" and \"a larger payout than the 1.88% headline yield implies\" word-for-word (each phrase appeared twice), and \"$3.9B\" was stated a third time in capitalAllocation, breaking the introduce-once / refer-back rule and the no-sentence-in-two-sections rule.",
+      "fix": "Argue the claim once, in cashflowCommentary. Reduce companyOverview to a brief pointer without the \"close to full-year FCF / understates the 1.88% yield\" clauses, and in capitalAllocation refer to the full-year total in words rather than restating \"$3.9B.\"",
+      "status": "addressed",
+      "note": "Re-verified against f027c150: companyOverview is a pointer (\"hands its surplus cash back to shareholders, as the cash-flow discussion sets out\"); \"close to the full year's free cash flow\" and \"larger payout than the 1.88% headline yield implies\" each occur once; \"$3.9B\" only in cashflowCommentary; capitalAllocation refers back in words. Holds."
+    },
+    {
+      "id": "F-13",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.companyOverview",
+      "quote": "returns nearly all of its earnings to shareholders",
+      "issue": "The capital-return characterisation \"returns/pays nearly all its earnings/cash/free cash flow\" recurs as a near-identical descriptor in roughly nine places: analystCommentary (\"a policy of paying nearly all of its earnings back to shareholders\"), companyOverview (\"returns nearly all of its earnings to shareholders\"), thesis (\"so it can return nearly all of its earnings\"), executiveSummary.catalysts[3] (\"pays out nearly all of its free cash flow through dividends\"), businessMoat.moatFactors[3] (\"returns nearly all its earnings\"), management.leadership (\"a payout policy that returns nearly all the cash\"), management.capitalAllocation (\"dividends that consume nearly all of its free cash flow\"), financials.cashflowCommentary (\"returns nearly all of the cash it generates\") and finalRecommendation.body[0] (\"returns nearly all its earnings through dividends and buybacks\"). It is a tic repeated past the point of notice (rubric item 9).",
+      "fix": "Argue the payout where it belongs (cashflowCommentary) and point to it from companyOverview, then vary the register in the remaining sections — reference the payout via the dividend yield, the dividend-plus-buyback split, or the payout discipline — so the identical \"nearly all its earnings/cash\" phrasing does not recur in almost every section.",
+      "status": "open",
+      "note": "Still open in f027c150 and unchanged from last round. The \"nearly all of [X]\" skeleton persists in the same three fields flagged before: analystCommentary (\"paying nearly all of its earnings back to shareholders\"), financials.cashflowCommentary (\"returns nearly all of the cash it generates\"), management.capitalAllocation (\"consume nearly all of its free cash flow\") — \"nearly all\" grep=3. Argue it once in cashflowCommentary and vary the other two."
+    },
+    {
+      "id": "F-14",
+      "severity": "Important",
+      "field": "sections.growth.points[4]",
+      "quote": "Non-operating income — investment income on the collateral the clearing house holds — grew 10% in the quarter and rises with interest rates, a second-order earnings driver that is easy to overlook and that cuts the other way if rates fall.",
+      "issue": "The non-operating-income point is paraphrased across two body sections. financials.incomeCommentary already introduces and characterises it: \"non-operating income was $220.6 million in the quarter, up 10%, largely investment income earned on the cash and collateral the clearing house holds ... a real and growing piece of the bottom line, and one that rises with interest rates,\" and calls it \"easy to miss.\" growth.points[4] restates the same figure (grew 10% in the quarter) and the same characterisation (investment income on the collateral the clearing house holds; rises with interest rates; easy to overlook) rather than referring back in words — the same claim made twice in different words in two sections (rubric item 7).",
+      "fix": "Argue the non-operating-income line once, in incomeCommentary. In growth.points[4] drop the restated \"grew 10% in the quarter\" and the duplicated \"investment income on the collateral / rises with interest rates / easy to overlook\" characterisation and refer back in words, keeping only the forward, two-sided angle unique to the growth point.",
+      "status": "addressed",
+      "note": "Re-verified against f027c150: growth.points[4] now reads \"Non-operating investment income, discussed in the financials section, swings with the level of interest rates — a second-order driver that adds in a high-rate environment and would subtract in a falling one.\" The \"10% in the quarter\" figure and \"collateral/easy to overlook\" characterisation are dropped and referred back in words; argued once in incomeCommentary. Holds."
+    },
+    {
+      "id": "F-15",
+      "severity": "Important",
+      "field": "sections.growth.points[2]",
+      "quote": "Market data is the higher-quality growth line: it grew even as trading volume fell, a recurring, subscription-like revenue stream independent of trading volume.",
+      "issue": "The market-data characterisation — higher-quality/more-stable, grew even as trading fell, recurring/subscription-like — is made three times as a paraphrase: this growth point; businessMoat.segments[0].body (\"Market data, the recurring subscription-like line, grew even as trading slowed and is a higher-quality part of the revenue base\"); and executiveSummary.catalysts[1] (\"information-services revenue rose 20% in the quarter even as clearing fees fell, a more stable, higher-quality revenue stream\"). growth.points[2] and businessMoat.segments[0] are near-verbatim paraphrases of one another — the same claim made twice in different words in two body sections. \"grew even as trading\" appears in both (grep = 2). Rubric item 7.",
+      "fix": "Argue the market-data characterisation once. Its 20% growth and $238.1M already live in incomeCommentary and its recurring, higher-quality nature in businessMoat.segments[0]. Reduce growth.points[2] to the forward, growth-specific angle and refer back in words, dropping the duplicated \"grew even as trading fell / recurring, subscription-like / higher-quality\" clause.",
+      "status": "addressed",
+      "note": "Re-verified against f027c150: the characterisation is now argued once, in growth.points[2]. businessMoat.segments[0].body no longer carries it (reads only \"Market data, the third line, rose in the quarter\"), and catalysts[1] is now a pointer (\"the more stable revenue stream detailed under growth\"). \"grew even as trading\" grep=1. Resolved."
+    },
+    {
+      "id": "F-16",
+      "severity": "Important",
+      "field": "sections.executiveSummary.catalysts[2]",
+      "quote": "New products and venues — event contracts, the FutureSports sports-index futures partnership, and the migration to Google Cloud — could open growth beyond the mature core complexes.",
+      "issue": "This catalyst and growth.points[3] are near-duplicate sentences: both list the identical three items (event contracts, the FutureSports sports-index futures partnership, the migration to Google Cloud) and both close \"beyond the mature core complexes\" (\"could open growth\" here vs \"could extend growth\" there). The clause \"beyond the mature core complexes\" appears in both (grep = 2, confirmed in the built report). An executive-summary catalyst is meant to point; here it restates its own section almost word-for-word rather than pointing to it. Rubric item 7.",
+      "fix": "Make catalysts[2] a brief pointer — name the new-products/new-venues theme and point to the growth section — without repeating the full three-item list and the \"beyond the mature core complexes\" clause. Let growth.points[3] carry the list and the argument.",
+      "status": "addressed",
+      "note": "Re-verified against f027c150: catalysts[2] is now a brief pointer (\"New products and venues are optional upside the growth section takes up\"), with no three-item list; growth.points[3] carries the list and the argument. \"beyond the mature core complexes\" grep=1. Resolved."
+    },
+    {
+      "id": "F-17",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.companyOverview",
+      "quote": "The economics are exceptional",
+      "issue": "\"exceptional\" recurs three times as a quality descriptor — analystCommentary (\"It is an exceptional business model\"), companyOverview (\"The economics are exceptional\") and finalRecommendation.body[0] (\"the economics are exceptional\") — and the phrase \"the economics are exceptional\" appears near-verbatim in two sections (companyOverview and finalRecommendation.body[0]). \"exceptional\" grep=3. Rubric item 9 (a superlative descriptor repeated past the point of notice) and item 7 (the same characterisation restated in two sections).",
+      "fix": "Keep one \"exceptional\" and let the 64.9% operating margin and ~64% FCF margin carry the quality in the other two — describe the economics via the margin and cash-conversion figures rather than repeating the word.",
+      "status": "open"
+    },
+    {
+      "id": "F-18",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.catalysts[0]",
+      "quote": "A return of market volatility — a rate-cut cycle, a geopolitical shock, an equity drawdown — lifts hedging volume, and CME's revenue is directly geared to it.",
+      "issue": "catalysts[0] and valuation.scenarios[0].driver (Bull) share the same enumerated trigger list and predicate: \"a rate-cut cycle, a geopolitical shock, [an/or an] equity drawdown ... lifts hedging.\" Each of \"rate-cut cycle,\" \"geopolitical shock,\" \"equity drawdown\" and \"lifts hedging\" appears in both (grep = 2). An executive-summary catalyst is meant to point; here it restates the Bull scenario's distinctive trigger list rather than pointing to it — the same defect shape as F-16. Rubric item 7.",
+      "fix": "Reduce catalysts[0] to a pointer — name the \"return of volatility lifts hedging volume\" driver to which CME's revenue is geared and point to the Bull case in the valuation section — without repeating the three-item trigger list, and let scenarios[0].driver carry the enumerated triggers.",
+      "status": "open"
+    }
+  ]
+}
