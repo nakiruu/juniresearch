@@ -100,6 +100,38 @@ describe("mapStatements on a utility-shaped capture (no gross profit, no free ca
   });
 });
 
+describe("mapStatements on a bank-shaped capture (unclassified balance sheet, no operating income)", () => {
+  const s = mapStatements("lib/facts/map/__fixtures__/bank");
+  const row = (t: "income" | "balance" | "cashflow", key: string) => s.statements[t].find((r) => r.key === key)!;
+  it("does not throw when operating income, cash, net debt and current-ratio inputs are absent", () => {
+    expect(s.statements.fiscalYears).toEqual(["FY23", "FY24", "FY25"]);
+    expect(s.latestQuarter.label).toBe("Q2'26");
+    expect(s.latestQuarter.periodEnd).toBe("2026-06-30");
+  });
+  it("renders the bank-meaningless rows as all-null while keeping the present rows", () => {
+    for (const key of ["grossProfit", "operatingIncome", "ebitda"] as const)
+      expect(row("income", key).values.every((v) => v === null)).toBe(true);
+    for (const key of ["cashAndInvestments", "netDebt", "currentRatio"] as const)
+      expect(row("balance", key).values.every((v) => v === null)).toBe(true);
+    expect(row("cashflow", "freeCashFlow").values.every((v) => v === null)).toBe(true);
+    expect(row("income", "revenue").values[2]).toBe(182.447e9);
+    expect(row("income", "netIncome").values[2]).toBe(57.048e9);
+    expect(row("balance", "totalEquity").values[2]).toBe(362.438e9);
+    expect(row("balance", "totalDebt").values[2]).toBe(64.776e9);
+    expect(row("cashflow", "operatingCashFlow").values[2]).toBe(-147.782e9);
+    expect(row("cashflow", "dividends").values[2]).toBe(-16.625e9);
+  });
+  it("reports a null quarterly operating margin (no operating income) but a real net margin", () => {
+    expect(s.latestQuarter.revenue).toBe(57347000000);
+    expect(s.latestQuarter.operatingMargin).toBeNull();
+    expect(near(s.latestQuarter.revenueYoY, 57347 / 44900 - 1, 0.01)).toBe(true);
+    expect(near(s.ttm.netMargin, 0.326)).toBe(true);
+    expect(s.ttm.currentRatio).toBeNull();
+    expect(s.ttm.evToEbitda).toBeNull();
+    expect(s.ttm.netDebtToEbitda).toBeNull();
+  });
+});
+
 describe("mapStatements on an empty capture", () => {
   it("throws naming the annual statements file", () => {
     expect(() => mapStatements("lib/facts/map/__fixtures__/empty")).toThrow(/bigdata-statements-annual\.json/);

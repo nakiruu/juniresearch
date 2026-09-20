@@ -31,7 +31,9 @@ export function mapStatements(dir: string): { statements: FactPack["statements"]
   const col = (m: Map<number, Rec>, key: string, optional = false) => years.map((y) => num(m.get(y), key, ANNUAL, { optional }));
 
   const revenue = col(inc, "revenue");
-  const curA = col(bal, "total_current_assets"), curL = col(bal, "total_current_liabilities");
+  // Optional: banks present an UNCLASSIFIED balance sheet (no current/non-current split), so they tag no
+  // total_current_assets/liabilities and the current ratio is undefined for them — the row renders "—".
+  const curA = col(bal, "total_current_assets", true), curL = col(bal, "total_current_liabilities", true);
   const statements: FactPack["statements"] = {
     fiscalYears: years.map(fyLabel),
     income: [
@@ -40,15 +42,21 @@ export function mapStatements(dir: string): { statements: FactPack["statements"]
       // GrossProfit tag and none can be derived — the row is null and renders "—", with operating
       // margin carrying profitability instead.
       row("grossProfit", "Gross Profit", col(inc, "gross_profit", true)),
-      row("operatingIncome", "Operating Income", col(inc, "operating_income")),
+      // Optional: banks have no operating-income subtotal (net revenue → provision → noninterest expense
+      // → pretax income), and SEC XBRL carries none to derive — the row renders "—", with net income and
+      // net margin carrying profitability instead.
+      row("operatingIncome", "Operating Income", col(inc, "operating_income", true)),
       row("ebitda", "EBITDA", col(inc, "ebitda", true)),
       row("netIncome", "Net Income", col(inc, "net_income")),
       row("epsDiluted", "Diluted EPS", col(inc, "eps_diluted")),
     ],
     balance: [
-      row("cashAndInvestments", "Cash & ST Investments", col(bal, "cash_and_short_term_investments")),
+      // Optional: a bank's cash sits under "cash and due from banks" / "deposits with banks" concepts the
+      // combined tag does not capture, so it can be null; net debt is not meaningful for a bank (deposits
+      // fund the balance sheet, not net borrowings) and is null when cash is. Both render "—".
+      row("cashAndInvestments", "Cash & ST Investments", col(bal, "cash_and_short_term_investments", true)),
       row("totalDebt", "Total Debt", col(bal, "total_debt")),
-      row("netDebt", "Net Debt", col(bal, "net_debt")),
+      row("netDebt", "Net Debt", col(bal, "net_debt", true)),
       row("totalEquity", "Total Equity", col(bal, "total_equity")),
       row("currentRatio", "Current Ratio", curA.map((x, i) => div(x, curL[i]))),
     ],
@@ -80,7 +88,9 @@ export function mapStatements(dir: string): { statements: FactPack["statements"]
     label: `${period}'${String(fy).slice(2)}`,
     periodEnd: str(latest, "report_date", QUARTER),
     revenue: rev,
-    operatingMargin: rev === 0 ? null : num(latest, "operating_income", QUARTER)! / rev,
+    // operating_income is optional (banks and some filers tag no operating-income subtotal) → a null
+    // operating margin, not a throw; the snapshot renders "—".
+    operatingMargin: (() => { const oi = num(latest, "operating_income", QUARTER, { optional: true }); return rev === 0 || oi == null ? null : oi / rev; })(),
     revenueYoY: priorRev == null || priorRev === 0 ? null : rev / priorRev - 1,
   };
 

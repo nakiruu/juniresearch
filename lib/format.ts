@@ -108,8 +108,12 @@ export function formatSnapshot(c: SnapshotCell): string {
   let base = "";
   if (c.raw != null) {
     base = c.raw;
+  } else if (c.value == null) {
+    // A null/undefined value with no `raw` is an em dash, never a formatted 0 — a missing
+    // multiple (a bank's EV/EBITDA, say) must read "—", not "0.0x".
+    base = "—";
   } else {
-    const v = c.value ?? 0;
+    const v = c.value;
     switch (c.unit) {
       case "usd": base = usd(v, c.dp ?? 2); break;
       case "usdLarge": base = compactUSD(v, { approx: c.approx }); break;

@@ -1,0 +1,581 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "JPM",
+  "cik": 19617,
+  "company": "JPMorgan Chase & Co.",
+  "exchange": "NYSE",
+  "filing": {
+    "form": "10-Q",
+    "accession": "0001628280-26-054343",
+    "filedDate": "2026-08-06",
+    "periodEnd": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026054343/jpm-20260630.htm"
+  },
+  "capturedAt": "2026-09-18T23:24:51.773Z",
+  "quote": {
+    "price": 349.67,
+    "marketCap": 929488044032,
+    "sharesOutstanding": 2658186195,
+    "sharesSource": "cover",
+    "week52Low": 279.1,
+    "week52High": 366.5,
+    "dividendYield": 0.0172,
+    "asOf": "2026-09-18"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          121649000000,
+          128695000000,
+          158104000000,
+          177556000000,
+          182447000000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          48334000000,
+          37676000000,
+          49552000000,
+          58471000000,
+          57048000000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          15.36,
+          12.09,
+          16.23,
+          19.75,
+          20.02
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          53594000000,
+          44027000000,
+          44712000000,
+          52893000000,
+          64776000000
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          294127000000,
+          292332000000,
+          327878000000,
+          344758000000,
+          362438000000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          78084000000,
+          107119000000,
+          12974000000,
+          -42012000000,
+          -147782000000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          -18408000000,
+          -3162000000,
+          -9824000000,
+          -18830000000,
+          -31591000000
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          -12858000000,
+          -13562000000,
+          -13463000000,
+          -14783000000,
+          -16625000000
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q2'26",
+    "periodEnd": "2026-06-30",
+    "revenue": 57347000000,
+    "operatingMargin": null,
+    "revenueYoY": 0.2768747773423583
+  },
+  "ttm": {
+    "pe": 14.975160599571737,
+    "ps": 4.661237483110005,
+    "evToEbitda": null,
+    "grossMargin": null,
+    "operatingMargin": null,
+    "netMargin": 0.3263008505175319,
+    "netDebtToEbitda": null,
+    "interestCoverage": null,
+    "currentRatio": null,
+    "fcfYield": null
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 207910831360,
+      "eps": 24.16198
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 213426868530,
+      "eps": 24.98799
+    }
+  },
+  "analysts": {
+    "count": 24,
+    "buy": 13,
+    "hold": 10,
+    "sell": 1,
+    "consensusRating": "Buy",
+    "consensusTarget": 375.38095,
+    "medianTarget": 372,
+    "highTarget": 436,
+    "lowTarget": 305,
+    "asOf": "2026-09-18"
+  },
+  "segments": {
+    "basis": "FY25 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 182447000000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "BAC",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "BMO",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "BNS",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "C",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-07",
+      "close": 357.5199890136719
+    },
+    {
+      "date": "2026-08-10",
+      "close": 359.7900085449219
+    },
+    {
+      "date": "2026-08-11",
+      "close": 362.0400085449219
+    },
+    {
+      "date": "2026-08-12",
+      "close": 365.17999267578125
+    },
+    {
+      "date": "2026-08-13",
+      "close": 363.1099853515625
+    },
+    {
+      "date": "2026-08-14",
+      "close": 362.8399963378906
+    },
+    {
+      "date": "2026-08-17",
+      "close": 360.9599914550781
+    },
+    {
+      "date": "2026-08-18",
+      "close": 363.25
+    },
+    {
+      "date": "2026-08-19",
+      "close": 357.260009765625
+    },
+    {
+      "date": "2026-08-20",
+      "close": 351.54998779296875
+    },
+    {
+      "date": "2026-08-21",
+      "close": 351.5799865722656
+    },
+    {
+      "date": "2026-08-24",
+      "close": 356.3900146484375
+    },
+    {
+      "date": "2026-08-25",
+      "close": 356.69000244140625
+    },
+    {
+      "date": "2026-08-26",
+      "close": 356.5
+    },
+    {
+      "date": "2026-08-27",
+      "close": 354.2200012207031
+    },
+    {
+      "date": "2026-08-28",
+      "close": 357.6199951171875
+    },
+    {
+      "date": "2026-08-31",
+      "close": 356.0199890136719
+    },
+    {
+      "date": "2026-09-01",
+      "close": 354.95001220703125
+    },
+    {
+      "date": "2026-09-02",
+      "close": 356.2200012207031
+    },
+    {
+      "date": "2026-09-03",
+      "close": 362.05999755859375
+    },
+    {
+      "date": "2026-09-04",
+      "close": 358.6400146484375
+    },
+    {
+      "date": "2026-09-08",
+      "close": 353.510009765625
+    },
+    {
+      "date": "2026-09-09",
+      "close": 354.7099914550781
+    },
+    {
+      "date": "2026-09-10",
+      "close": 353.55999755859375
+    },
+    {
+      "date": "2026-09-11",
+      "close": 356.2300109863281
+    },
+    {
+      "date": "2026-09-14",
+      "close": 350.1300048828125
+    },
+    {
+      "date": "2026-09-15",
+      "close": 352.489990234375
+    },
+    {
+      "date": "2026-09-16",
+      "close": 348.9200134277344
+    },
+    {
+      "date": "2026-09-17",
+      "close": 349.30999755859375
+    },
+    {
+      "date": "2026-09-18",
+      "close": 349.6700134277344
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "JPMorgan Chase & Co. operates as a bank and financial holding company in the United States, rest of North America, Europe, the Middle East, Africa, the Asia Pacific, Latin America, and the Caribbean. It operates in three segments: Consumer & Community Banking, Commercial & Investment Bank, and Asset & Wealth Management. The company offers deposit, investment and lending products, and cash management; mortgage origination and servicing activities; residential mortgages and home equity loans; and credit cards, payment solutions, travel services, merchant offers, lifestyle benefits, auto loans, and leases to consumers and small businesses through bank branches, ATMs, and digital and telephone banking. It also provides investment banking, market-making, financing, custody, and securities products and services; corporate strategy and structure advisory, equity and debt market capital-raising, and loan origination and syndication services; cash and derivative instruments, risk management solutions, prime brokerage, clearing, and research; and fund services, liquidity and trading services, and data solutions products for large corporations, financial institutions, merchants, start-ups, small and midsized companies, local governments, municipalities, nonprofits, and commercial real estate clients. In addition, the company offers multi-asset investment management solutions in equities, fixed income, alternatives, and money market funds to institutional clients and retail investors; retirement products and services, estate planning, lending, deposits, and investment management products to high-net-worth clients; and financial transaction processing. JPMorgan Chase & Co. was founded in 1799 and is headquartered in New York, New York.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-18"
+    },
+    "mdaExcerpt": {
+      "text": "Item 2.\nManagement's Discussion and Analysis of Financial Condition and Results of Operations.\nConsolidated Financial Highlights\n3\nIntroduction\n4\nExecutive Overview\n5\nConsolidated Results of Operations\n9\nConsolidated Balance Sheets and Cash Flows Analysis\n15\nExplanation and Reconciliation of the Firm's Use of Non-GAAP Financial Measures\n18\nBusiness Segment & Corporate Results\n20\nFirmwide Risk Management\n43\nCapital Risk Management\n44\nLiquidity Risk Management\n52\nConsumer Credit Portfolio\n61\nWholesale Credit Portfolio\n66\nAllowance for Credit Losses\n75\nInvestment Portfolio Risk Management\n78\nMarket Risk Management\n79\nCountry Risk Management\n86\nCritical Accounting Estimates Used by the Firm\n87\nAccounting and Reporting Developments\n90\nForward-Looking Statements\n92",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026054343/jpm-20260630.htm",
+      "asOf": "2026-08-06",
+      "truncated": false
+    },
+    "riskFactorsExcerpt": {
+      "text": "Item 1A. Risk Factors.\nThe following discussion sets forth the material risk factors that could affect JPMorganChase's financial condition and operations. Readers should not consider any descriptions of these factors to be a complete set of all potential risks that could affect the Firm. Any of the risk factors discussed below could by itself, or combined with other factors, materially and adversely affect JPMorganChase's business, results of operations, financial condition, capital position, liquidity, competitive position or reputation, including by materially increasing expenses or decreasing revenues, which could result in material losses or a decrease in earnings.\nSummary\nThe principal risk factors include:\nLegal and Regulatory risks, including the impact of extensive supervision and regulation, as well as changes to or in the application, interpretation or enforcement of applicable law or executive branch actions, on JPMorganChase's business and operations; the ways in which differences in regulatory implementation in different jurisdictions or with respect to certain competitors could negatively impact JPMorganChase's business; the ways in which governmental policies that discourage or penalize business relationships with certain industries, or require specific business practices, could negatively affect JPMorganChase's businesses; the penalties and other repercussions that JPMorganChase could face when resolving litigation or investigations by governmental authorities; the ways in which less predictable legal and regulatory frameworks in certain jurisdictions could negatively impact JPMorganChase's operations and financial results; and the losses that security holders and other unsecured creditors will absorb if JPMorganChase were to enter into a resolution.\nPolitical risks, including the potential negative effects on JPMorganChase's businesses due to economic uncertainty resulting from political developments.\nMarket risks, including the effects that unfavorable economic and market events and conditions, political developments, changes in interest rates and credit spreads, and market fluctuations could have on JPMorganChase's businesses, investments and market-making positions, as well as on its earnings and liquidity and capital levels.\nCredit risks, including the effects from adverse changes in the financial condition of clients, customers, counterparties, central counterparties and other market participants; the potential for losses due to declines in the value of collateral; and potential negative impacts from concentrations of\ncredit risk with respect to clients, customers, counterparties and other market participants.\nLiquidity risks, including the risk that JPMorganChase's ability to operate could be impaired by constrained liquidity; the dependence of JPMorgan Chase & Co. on its subsidiaries for funding; and the potential adverse effects that any downgrades of JPMorganChase's credit ratings could have on its liquidity and cost of funding.\nCapital risks, including the risk that JPMorganChase's ability to distribute capital to shareholders or to support its business activities could be limited if it does not satisfy applicable regulatory capital requirements.\nOperational risks, including risks associated with JPMorganChase's dependence on its operational systems and its employees, as well as the systems and employees of acquired businesses and external parties; the harm that could be caused by a successful cyber attack affecting JPMorganChase or by other extraordinary events; the adverse effects of failing to identify and address operational risks associated with the introduction of or changes to products, services and delivery platforms or technologies, as well as risks related to data management processes; risks related to safeguarding personal information; potential adverse effects of failing to comply with applicable standards for the oversight of vendors and other service providers; and risks associated with JPMorganChase's risk management framework and control environment, its models and estimations and associated judgments used in its stress testing and financial statements, and controls over disclosure and financial reporting.\nStrategic risks, including the damage to JPMorganChase's competitive standing that could result from ineffective business strategies; risks associated with the significant competition that JPMorganChase faces; and the potential adverse impacts of climate change on JPMorganChase's business and operations and those of its clients and customers.\nConduct risks, including the negative impact that could result from misconduct of JPMorganChase's employees.\nReputation risks, including the potential negative commercial impacts that can arise from JPMorganChase's decisions related to clients and business activities; and the failure to effectively manage conflicts of interest or to satisfy fiduciary obligations, or other factors that could damage JPMorganChase's reputation.\nCountry risks, including potential impacts on JPMorganChase's businesses from an outbreak or escalation of hostilities between countries or within a country or region; and the potential adverse effects\n9\nPart I\nof local economic, political, regulatory and social factors on JPMorganChase's business in certain countries in which it operates.\nPeople risks, including the criticality of attracting and retaining qualified employees.\nThe above summary is subject in its entirety to the discussion of the risk factors set forth below.\nThe following terms which are used in the risk factors set forth below have these meanings:\n\"applicable law\" means the laws, rules and regulations that apply to JPMorganChase's businesses in the jurisdictions in which it operates.\n\"extraordinary events\" include any of the events or circumstances mentioned in the risk factor entitled \"JPMorganChase's operations, results and reputation could be harmed by occurrences of extraordinary events beyond its control.\"\n\"governmental authorities\" means governmental and regulatory agencies, legislative and judicial bodies and other governmental entities and authorities in the countries, states, municipalities, territories, regions and other jurisdictions in which JPMorganChase does business.\n\"penalties\" means fines, penalties or other sanctions imposed by governmental authorities.\nLegal and Regulatory\nJPMorganChase's businesses are highly regulated and are significantly affected by applicable law and supervisory expectations.\nJPMorganChase must comply with applicable law in all of the jurisdictions around the world where it does business. Like other financial services firms, JPMorganChase is subject to extensive supervision and regulation that significantly affects the way that it conducts its business and structures its operations. The supervisory and regulatory framework also imposes requirements for JPMorganChase to implement and maintain compliance programs, and the complexity of these programs can increase its risks of non-compliance. In addition, entering into or acquiring a new business or expanding current business could increase the scope of applicable law or supervision and regulation to which JPMorganChase is subject.\nJPMorganChase has in the past and could in the future be required to modify its business and operations in response to changes in applicable law, regulatory decisions or supervisory expectations, such as:\nlimiting the products and services that it offers\nincreasing the prices that it charges for products and services, which could reduce the demand for them\nreducing the liquidity that it provides through market-making activities\npaying higher taxes or other governmental charges\nabsorbing losses arising from fraudulent transactions perpetrated against its clients and customers\ndisposing of certain assets, and doing so at disadvantageous times or prices\nforgoing business opportunities that it might otherwise pursue, or\notherwise restricting its business activities.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm",
+      "asOf": "2026-02-13",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-K",
+    "pressRelease": {
+      "text": "EX-99.1\n2\na2q26erfexhibit991narrative.htm\nJPMORGAN CHASE & CO. EARNINGS RELEASE - SECOND QUARTER 2026 RESULTS\nDocument\nExhibit 99.1\nJPMorgan Chase Co.\n270 Park Avenue, New York, NY 10017-2070\nNYSE symbol JPM\nwww.jpmorganchase.com\nJPMORGANCHASE REPORTS SECOND-QUARTER 2026 NET INCOME OF $21.2 BILLION ( $7.70 PER SHARE), NET INCOME EXCLUDING SIGNIFICANT ITEMS OF $16.9 BILLION ($6.14 PER SHARE)\nSECOND-QUARTER 2026 RESULTS 1\nROE 24%\nROTCE 2 29%\nROTCE ex. significant items 2 23%\nCET1 Capital Ratios 3\nStd. 14.1% Adv. 14.2%\nTotal Loss-Absorbing Capacity 3 $590B\nStd. RWA 3 $2.1T\nCash and marketable securities 4 $1.5T\nAverage loans $1.5T\nFirmwide Metrics\nn\nReported revenue of $57.3 billion and managed revenue 2 of $58.0 billion\nn\nExpense of $27.3 billion reported overhead ratio of 48% and managed overhead ratio 2 of 47%\nn\nCredit costs of $2.5 billion with $2.4 billion of net charge-offs and a $149 million net reserve build\nn\nAverage loans up 10% YoY, up 2% QoQ average deposits up 7% YoY, up 3% QoQ\nCCB\nROE 34%\nn\nAverage deposits up 3% YoY, up 2% QoQ client investment assets up 21% YoY\nn\nAverage loans up 2% YoY, up 1% QoQ Card Services net charge-off rate of 3.34%\nn\nDebit and credit card sales volume 5 up 10% YoY\nn\nActive mobile customers 6 up 6% YoY\nCIB\nROE 22%\nn\nInvestment Banking fees up 30% YoY, up 14% QoQ #1 ranking for Global Investment Banking fees with 9.3% wallet share YTD 7\nn\nMarkets revenue up 35% YoY, with Fixed Income Markets up 6% and Equity Markets up 86%\nn\nAverage Banking Payments loans up 13% YoY, up 5% QoQ average client deposits 8 up 11% YoY, up 3% QoQ\nAWM\nROE 48%\nn\nAUM 9 of $5.1 trillion, up 18% YoY\nn\nAverage loans up 18% YoY, up 6% QoQ average deposits up 5% YoY, up 3% QoQ\nJamie Dimon, Chairman and CEO, commented on the financial results \"The Firm reported very strong results in the quarter, generating net income o f $16.9 billion and an ROTCE of 23%, excluding gains related to Visa and certain equity investments. These results were the product of a particularly favorable environment with an elevated level of market activity, as well as rigorous execution, years of consistent investment and thoughtful capital deployment.\"\nDimon continued \"Performance was strong across the Firm, and revenue in each line of business hit a new record. In the CIB, revenue grew 27% and outperformed our expectations, with Markets revenue growing 35% due to elevated client activity, strong trading performance and continued demand for financing in Equities. IB activity also accelerated, with IB fees jumping 30% to the highest level since 2021, and market sentiment remains constructive for continued activity. Additionally, Payments and Securities Services each posted double-digit revenue growth led by ongoing deposit and fee growth. In CCB, revenue rose 8%, and we continued to add customers at a sustained pace across the franchise. In wealth management, first-time investors of nearly 44,000 set a new record. Additionally, Card annual fees grew more than 30%, reflecting healthy retention levels after recent product refreshes as well as demand for our premium products. Finally, in AWM, revenue increased 19%, and flows remained robust with $50 billion of long-term AUM net inflows, helping to drive AUM to over $5 trillion.\"\nDimon added \"The U.S. economy has demonstrated notable resiliency this year, with stronger business investment and hiring. This strength is being supported by several tailwinds, including AI-driven capital investment, fiscal stimulus and the benefits of more efficient regulation. However, several risks are shifting below the surface like tectonic plates, including geopolitical tensions and wars, sticky inflation, large global fiscal deficits and elevated asset prices. We cannot predict how these forces will ultimately play out. They may remain manageable, but they could also cause meaningful disruptions when they shift or collide. We carefully monitor these risks and prepare the Firm for a wide range of scenarios to ensure that we can serve our customers and clients consistently in all environments.\"\nDimon concluded \"I want to express my deep gratitude to our employees across the globe for how they work to support our customers and communities every single day.\"\nSIGNIFICANT ITEMS IN 2Q26 RESULTS\nn $4.6 billion net gain related to Visa shares 10 ($1.27 increase in EPS 11 )\nn $1.0 billion of gains on certain equity investments 12 ($0.29 increase in EPS)\nCAPITAL DISTRIBUTIONS\nn Common dividend of $4.0 billion or $1.50 per share\nn $6.2 billion of common stock net repurchases 13\nn Net payout LTM 13,14 of 73%\nFORTRESS PRINCIPLES\nn Book value per share of $133.01, up 9% YoY tangible book value per share 2 of $113.35, up 10% YoY\nn Basel III common equity Tier 1 capital 3 of $303 billion, Standardized ratio 3 of 14.1% and Advanced ratio 3 of 14.2%\nn Firm supplementary leverage ratio of 5.5%\nSUPPORTED CONSUMERS, BUSINESSES COMMUNITIES\nn Approximately $1.9 trillion of credit and capital 15 raised YTD\nn $160 billion of credit for consumers\nn $17 billion of credit for U.S. small businesses\nn $1.7 trillion of credit and capital for corporations and non-U.S. government entities\nn $52 billion of credit and capital for nonprofit and U.S. government entities, including states, municipalities, hospitals and universities\nInvestor Contact Mikael Grubb (212) 270-2479\nMedia Contact Joseph Evangelisti (212) 270-7438\nNote Totals may not sum due to rounding.\n1 Percentage comparisons are for the second quarter of 2026 versus the prior-year second quarter, unless otherwise specified.\n2 For notes on non-GAAP financial measures, including managed basis reporting, see page 6.\nFor additional notes, see page 7.\nJPMorgan Chase Co.\nNews Release\nIn the discussion below of Firmwide results of JPMorgan Chase Co. (\"JPMorganChase\" or the \"Firm\"), information is presented on a managed basis, which is a non-GAAP financial measure, unless otherwise specified. The discussion below of the Firm's business segments and Corporate is also presented on a managed basis. For more information about managed basis and non-GAAP financial measures used by management to evaluate the performance of each line of business, refer to page 6.\nComparisons noted in the sections below are for the second quarter of 2026 versus the prior-year second quarter, unless otherwise specified.\nJPMORGANCHASE (JPM)\nResults for JPM\n1Q26\n2Q25\n($ millions, except per share data)\n2Q26\n1Q26\n2Q25\n$ O (U)\nO (U) %\n$ O (U)\nO (U) %\nNet revenue - reported\n$\n57,347\n$\n49,836\n$\n44,912\n$\n7,511\n15\n%\n$\n12,435\n28\n%\nNet revenue - managed\n58,022\n50,536\n45,680\n7,486\n15\n12,342\n27\nNoninterest expense\n27,316\n26,850\n23,779\n466\n2\n3,537\n15\nProvision for credit losses\n2,515\n2,507\n2,849\n8\n(334)\n(12)\nNet income\n$\n21,155\n$\n16,494\n$\n14,987\n$\n4,661\n28\n%\n$\n6,168\n41\n%\nEarnings per share - diluted\n$\n7.70\n$\n5.94\n$\n5.24\n$\n1.76\n30\n%\n$\n2.46\n47\n%\nReturn on common equity\n24\n%\n19\n%\n18\n%\nReturn on tangible common equity\n29\n23\n21\nDiscussion of Results\nNet income was $21.2 billion, up 41%, or up 13% excluding significant items. 2 The significant items, each in the current quarter, consisted of a $4.6 billion net gain related to Visa shares in Corporate as well as $1.0 billion of gains on certain equity investments, of which $763 million was in Corporate and $263 million was in CIB.\nNet revenue was $58.0 billion, up 27%, or up 15% excluding significant items. Net interest income was $25.6 billion, up 10%. Noninterest revenue was $32.4 billion, up 45%, or up 20% excluding significant items.\nNet interest income excluding Markets 2 was $23.7 billion, up 4%, driven by higher deposit balances, higher revolving balances in Card Services and higher wholesale loan balances, largely offset by the impact of lower rates. Noninterest revenue excluding Markets 2 was $22.3 billion, up 59%, or up 19% also excluding significant items, largely driven by higher asset management fees in AWM and CCB, higher Investment Banking revenue and higher auto operating lease income, partially offset by higher net investment securities losses. Markets revenue was $12.1 billion, up 35%, predominantly driven by higher Equity Markets revenue.\nNoninterest expense was $27.3 billion, up 15%, predominantly driven by higher compensation, including higher revenue-related compensation and growth in the number of front office employees, as well as higher brokerage expense and distribution fees, higher marketing expense, higher technology expense and higher occupancy expense.\nThe provision for credit losses was $2.5 billion. Net charge-offs were $2.4 billion, down $44 million. The net reserve build was $149 million, primarily in Wholesale. In the prior year, the provision was $2.8 billion, net charge-offs were $2.4 billion and the net reserve build was $439 million.\nThe prior year included a $774 million income tax benefit in Corporate.\n2\nJPMorgan Chase Co.\nNews Release\nCONSUMER COMMUNITY BANKING (CCB)\nResults for CCB\n1Q26\n2Q25\n($ millions)\n2Q26\n1Q26\n2Q25\n$ O (U)\nO (U) %\n$ O (U)\nO (U) %\nNet revenue\n$\n20,272\n$\n19,568\n$\n18,847\n$\n704\n4\n%\n$\n1,425\n8\n%\nBanking Wealth Management\n11,229\n10,577\n10,698\n652\n6\n531\n5\nHome Lending\n1,285\n1,232\n1,250\n53\n4\n35\n3\nCard Services Auto\n7,758\n7,759\n6,899\n(1)\n859\n12\nNoninterest expense\n11,108\n10,979\n9,858\n129\n1\n1,250\n13\nProvision for credit losses\n2,156\n2,050\n2,082\n106\n5\n74\n4\nNet income\n$\n5,311\n$\n4,976\n$\n5,169\n$\n335\n7\n%\n$\n142\n3\n%\nDiscussion of Results\nNet income was $5.3 billion, up 3%.\nNet revenue was $20.3 billion, up 8%. Banking Wealth Management net revenue was $11.2 billion, up 5%, largely driven by higher asset management fees in J.P. Morgan Wealth Management and higher deposit-related fees. Home Lending net revenue was $1.3 billion, up 3%, driven by higher net interest income. Card Services Auto net revenue was $7.8 billion, up 12%, predominantly driven by higher Card Services net interest income, largely on higher revolving balances, as well as higher auto operating lease income.\nNoninterest expense was $11.1 billion, up 13%, predominantly driven by higher marketing expense, higher compensation for advisors and bankers, higher technology expense and higher auto lease depreciation.\nThe provision for credit losses was $2.2 billion. Net charge-offs were $2.2 billion, up $70 million, predominantly driven by Card Services. Reserves were flat. In the prior year, the provision was $2.1 billion, net charge-offs were $2.1 billion and reserves were relatively flat.\n3\nJPMorgan Chase Co.\nNews Release\nCOMMERCIAL INVESTMENT BANK (CIB)\nResults for CIB\n1Q26\n2Q25\n($ millions)\n2Q26\n1Q26\n2Q25\n$ O (U)\nO (U) %\n$ O (U)\nO (U) %\nNet revenue\n$\n24,853\n$\n23,379\n$\n19,535\n$\n1,474\n6\n%\n$\n5,318\n27\n%\nBanking Payments\n11,162\n10,425\n9,248\n737\n7\n1,914\n21\nMarkets Securities Services\n13,691\n12,954\n10,287\n737\n6\n3,404\n33\nNoninterest expense\n11,390\n11,136\n9,641\n254\n2\n1,749\n18\nProvision for credit losses\n356\n482\n696\n(126)\n(26)\n(340)\n(49)\nNet income\n$\n9,678\n$\n9,044\n$\n6,650\n$\n634\n7\n%\n$\n3,028\n46\n%\nDiscussion of Results\nNet income was $9.7 billion, up 46%.\nNet revenue was $24.9 billion, up 27%. Banking Payments revenue was $11.2 billion, up 21%. Investment Banking revenue was $3.9 billion, up 45%, predominantly driven by higher Investment Banking fees and net gains on equity investments. Investment Banking fees were $3.3 billion, up 30%, driven by higher fees across all products, with particularly strong performance in equity underwriting fees. Payments revenue was $5.3 billion, up 12%, predominantly driven by higher deposit balances and fee growth. Lending revenue was $2.0 billion, up 7%, largely driven by higher loan balances.\nMarkets Securities Services revenue was $13.7 billion, up 33%. Markets revenue was $12.1 billion, up 35%. Fixed Income Markets revenue was $6.1 billion, up 6%, driven by higher revenue in Credit, Currencies Emerging Markets and Rates, partially offset by lower revenue in Commodities. Equity Markets revenue was $6.0 billion, up 86%, driven by strong performance across products and regions. Securities Services revenue was $1.7 billion, up 17%, predominantly driven by fee growth on higher market levels and client activity, as well as higher deposit balances.\nNoninterest expense was $11.4 billion, up 18%, predominantly driven by higher compensation, including higher revenue-related compensation, as well as higher brokerage expense.\nThe provision for credit losses was $356 million, driven by net lending activity and changes in the credit quality of certain exposures, partially offset by a reserve release for certain accounts receivable and an update to loss assumptions on certain loans in Markets. Net charge-offs were $207 million, and the net reserve build was $149 million. In the prior year, the provision was $696 million, the net reserve build was $371 million and net charge-offs were $325 million.\nASSET WEALTH MANAGEMENT (AWM)\nResults for AWM\n1Q26\n2Q25\n($ millions)\n2Q26\n1Q26\n2Q25\n$ O (U)\nO (U) %\n$ O (U)\nO (U) %\nNet revenue\n$\n6,851\n$\n6,374\n$\n5,760\n$\n477\n7\n%\n$\n1,091\n19\n%\nNoninterest expense\n4,207\n4,167\n3,733\n40\n1\n474\n13\nProvision for credit losses\n13\n(24)\n46\n37\nNM\n(33)\n(72)\nNet income\n$\n1,957\n$\n1,775\n$\n1,473\n$\n182\n10\n%\n$\n484\n33\n%\nDiscussion of Results\nNet income was $2.0 billion, up 33%.\nNet revenue was $6.9 billion, up 19%, driven by growth in management fees on higher average market levels and strong net inflows, as well as investment valuation gains, higher loan balances and higher brokerage activity.\nNoninterest expense was $4.2 billion, up 13%, largely driven by higher compensation, primarily due to higher revenue-related compensation and continued growth in private banking advisor teams, as well as higher distribution fees.\nAssets under management were $5.1 trillion, up 18%, and client assets were $7.7 trillion, up 19%, driven by higher market levels and continued net inflows.\n4\nJPMorgan Chase Co.\nNews Release\nCORPORATE\nResults for Corporate\n1Q26\n2Q25\n($ millions)\n2Q26\n1Q26\n2Q25\n$ O (U)\nO (U) %\n$ O (U)\nO (U) %\nNet revenue\n$\n6,046\n$\n1,215\n$\n1,538\n$\n4,831\n398\n%\n$\n4,508\n293\n%\nNoninterest expense\n611\n568\n547\n43\n8\n64\n12\nProvision for credit losses\n(10)\n(1)\n25\n(9)\nNM\n(35)\nNM\nNet income\n$\n4,209\n$\n699\n$\n1,695\n$\n3,510\nNM\n$\n2,514\n148\n%\nDiscussion of Results\nNet income was $4.2 billion, up $2.5 billion, or down $1.5 billion excluding significant items, driven by lower net interest income and reflecting the absence of a $774 million income tax benefit in the prior year.\nNet revenue was $6.0 billion, up $4.5 billion, or down $805 million excluding significant items. Net interest income was $822 million, down $667 million, predominantly driven by the impact of lower rates. Noninterest revenue was $5.2 billion, up $5.2 billion, or down $138 million excluding significant items. The decrease includes the impact of higher net investment securities losses.\nNoninterest expense was $611 million, up $64 million.\n5\nJPMorgan Chase Co.\nNews Release\n2. Notes on non-GAAP financial measures\na. The Firm prepares its Consolidated Financial Statements in accordance with accounting principles generally accepted in the U.S. (\"U.S. GAAP\"). That presentation, which is referred to as \"reported\" basis, provides the reader with an understanding of the Firm's results that can be tracked consistently from year-to-year and enables a comparison of the Firm's performance with the U.S. GAAP financial statements of other companies. In addition to analyzing the Firm's results on a reported basis, management reviews Firmwide results, including the overhead ratio, on a \"managed\" basis these Firmwide managed basis results are non-GAAP financial measures. The Firm also reviews the results of the lines of business on a managed basis. The Firm's definition of managed basis starts, in each case, with the reported U.S. GAAP results and includes certain reclassifications to present total net revenue for the Firm as a whole and for each of the reportable business segments and Corporate on a fully taxable-equivalent basis.",
+      "source": "edgar:8-K ex-99.1",
+      "url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026048078/a2q26erfexhibit991narrative.htm",
+      "asOf": "2026-07-14",
+      "truncated": true
+    },
+    "proxyStatement": {
+      "text": "Board and director independence:\nDirector independence\nAll of the Firm's non-management Board members are independent, under both the New York Stock Exchange (\"NYSE\") corporate governance listing standards and the Firm's independence standards as set forth in its Governance Principles.\nTo be considered independent, a director must have no disqualifying relationships, as defined by the NYSE, and the Board must have affirmatively determined that he or she has no material relationships with JPMorganChase, either directly or as a partner, shareholder or officer of another organization that has a relationship with the Firm.\nIn assessing the materiality of relationships with the Firm, the Board considers relevant facts and circumstances. Given the nature and broad scope of the products and services provided by the Firm, there are from time to time ordinary course of business transactions between the Firm and a director, his or her immediate family members, or principal business affiliations. These may include, among other relationships: extensions of credit; provision of other financial and financial advisory products and services; business transactions for property or services; and charitable contributions made by the JPMorgan Chase Foundation or the Firm to a nonprofit organization of which a director is an officer. The Board reviews these relationships to assess their materiality and determine if any such relationship would impair the independence and judgment of the relevant director. The Board considered:\nConsumer credit: credit cards and other lines of credit and loans for directors Bammann, Buck, Burke, Gorsky, Hobson, Novakovic, Weinberger and/or their immediate family members.\nWholesale/commercial credit: extensions of credit and other financial and financial advisory products and services provided to: Ford Motor Company, for which Ms. Davis is the Chief Executive Officer of the Ford Pro segment, and its subsidiaries; ICONIQ Capital, LLC, for which Mr. Gorsky serves as a Managing Director, and its subsidiaries, affiliates and funds; Ariel Investments, LLC, for which Ms. Hobson is Co-Chief Executive Officer and President, and its subsidiaries, affiliates and funds; certain entities wholly-owned by Ms. Hobson's spouse; General Dynamics Corporation, for which Ms. Novakovic is Chairman and Chief Executive Officer, and its subsidiaries; Louis Dreyfus Company B.V., for which a sibling of Mrs. Rometty serves as the Trading Operations Officer and Cotton Platform Head, and its subsidiaries; Hearthside Food Solutions, LLC, d/ b/a Maker's Pride, for which a sibling of Mrs. Rometty serves as Chief Executive Officer, and its affiliates; and Marshall University, for which Mr. Smith is the President.\nGoods, services: purchases of corporate aircraft and associated maintenance services and parts provided by General Dynamics subsidiaries.\nOther relationships: a son-in-law of Mr. Burke is a non-executive employed by the Firm and in 2025, was provided compensation of less than $120,000.\n\nCompensation discussion and analysis:\nCompensation discussion and analysis | Executive compensation\nCompensation discussion and analysis\nIntroduction\nOur compensation philosophy promotes a fair and well-governed, long-term approach to compensation, including pay-for-performance practices that are designed to attract and retain top talent from all backgrounds, to be responsive to and aligned with shareholders, to mitigate excessive risk-taking, and to encourage a culture that supports our Purpose, Values, Business Principles and strategic framework.\nThe Board believes that JPMorganChase's long-term success depends on the talents of our employees and a proper alignment of their compensation with performance and sustained shareholder value. The Firm's compensation programs play a significant role in our ability to attract, retain and properly motivate a highly talented workforce.\nIn the discussion that follows, we review the philosophy, key features and process of our executive compensation program as well as how our Board and CMDC make pay decisions. This Compensation discussion and analysis (\"CD&A\") is organized around the following factors:\nCD&A overview (pages 39 - 42 )\nHow we think about pay decisions (pages 43 - 52 )\nHow we performed against our business strategy (pages 53 - 55 )\nHow performance determined pay in 2025 (pages 56 - 61 )\nOur 2025 NEOs are:\nJames Dimon\nChairman and CEO\nMary Callahan Erdoes\nCEO, Asset & Wealth Management\nTroy Rohrbaugh\nCo-CEO, Commercial & Investment Bank\nDouglas Petno\nCo-CEO, Commercial & Investment Bank\nJeremy Barnum\nCFO\nDaniel Pinto\nVice Chair 1\n2025 Firm performance\nIn 2025, the Firm achieved strong business results and maintained its fortress balance sheet principles. Results reflect execution on long-term strategic initiatives, years of investment, a favorable market backdrop, and selective deployment of excess capital. The Firm delivered managed revenue 2 of $185.6 billion, which was a record for the eighth-consecutive year, and net income of $57.0 billion, or $20.02 per share, with ROTCE 2 of 20%. The Firm increased its quarterly common dividend from $1.25 to $1.50 per share.\nThroughout 2025, the Firm continued to invest in data, technology, and AI research and capabilities, people and products, and corporate responsibility, positioning it for future success. The Firm also opened its new global headquarters building at 270 Park Avenue in New York, enabling the Firm to create enhanced collaborative work environments for employees, serve clients locally and globally, and contribute to local economies.\n1 Mr. Pinto served as President & COO of the Firm until June 2025, after which he ceased to be an Executive Officer, and is now serving as a Vice Chair through December 2026. The compensation disclosures required by the SEC can be found in the Executive compensation tables starting on page 63 .\n2 The Firm reviews the results of the Firm on a managed basis. Managed Revenue and ROTCE are each non-GAAP financial measures. Refer to Notes 1 and 2 on page 103 for a further discussion of these measures.\n2026 Proxy Statement\n39\nTable of Contents\nExecutive compensation | Compensation discussion and analysis\nCD&A overview\n01\nHow we think about pay decisions\nPages 43 - 52\nEvaluating performance\nThe Firm's Business Principles and strategic framework guide our OC members in determining their annual strategic priorities. The CMDC assesses OC members' performance against those priorities, as well as four broad financial and non-financial performance dimensions in a balanced and holistic way in accordance with the Firm's compensation philosophy. To determine OC compensation, the CMDC considers both what progress has been made against long-term strategic priorities, and how that progress has been achieved. The CMDC applies:\n~50% weighting to its consideration of absolute and relative Business Results ( what they have accomplished)\n~50% weighting to its qualitative consideration of Client/Customer/Stakeholder; Risk, Controls & Conduct; and Teamwork & Leadership ( how they have accomplished results)\nWhile there is no single performance dimension in isolation that determines compensation, a significant shortcoming in any one dimension may result in downward adjustments to OC members' variable compensation, without limits.\nFOUR BROAD PERFORMANCE DIMENSIONS\nThe \"what\"\nThe \"how\"\nBusiness\nResults\n+\nClient/Customer/Stakeholder\n+\nRisk, Controls\n& Conduct\n+\nTeamwork &\nLeadership\n=\nOC Member\nPerformance\nUnlimited downward potential for significant shortcomings\nDetermining total compensation\nAfter considering OC members' performance throughout the year and over the long-term, the CMDC first determines their respective total compensation levels and then their pay mix a combination of fixed pay (salary) and variable pay (cash awards and long-term equity). Pay mix is weighted toward long-term equity, and for PSUs, ROTCE performance drives the ultimate payout.",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/19617/000001961726000096/jpm-20260402.htm",
+      "asOf": "2026-04-06",
+      "truncated": true
+    },
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-18T23:24:51.773Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-18T23:24:51.773Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-18T23:24:51.773Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-18T23:24:51.773Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "edgar primary document (cover page)",
+      "source": "edgar",
+      "capturedAt": "2026-09-18T23:24:51.773Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-18T23:24:51.773Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-18T23:24:51.773Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-18T23:24:51.773Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-18T23:24:51.773Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-18T23:24:51.773Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-18T23:24:51.773Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-18T23:24:51.773Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-18T23:24:51.773Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-18T23:24:51.773Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-18T23:24:51.773Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-09-18T23:24:51.773Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-09-18T23:24:51.773Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-09-18T23:24:51.773Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-18T23:24:51.773Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-18T23:24:51.773Z"
+    }
+  ]
+}

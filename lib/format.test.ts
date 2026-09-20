@@ -70,6 +70,15 @@ describe("snapshot cells", () => {
     expect(formatSnapshot({ label: "52-Week Range", raw: "$289.96 – $495.00" }))
       .toBe("$289.96 – $495.00");
   });
+
+  it("renders a null/undefined value as an em dash, not a formatted zero", () => {
+    expect(formatSnapshot({ label: "EV/EBITDA (TTM)", value: undefined, unit: "mult" })).toBe("—");
+    expect(formatSnapshot({ label: "P/E (TTM)", value: undefined, unit: "mult" })).toBe("—");
+  });
+  it("keeps an appended note on an em-dashed cell", () => {
+    expect(formatSnapshot({ label: "EV/EBITDA (TTM)", value: undefined, unit: "mult", note: "not meaningful for a bank" }))
+      .toBe("— (not meaningful for a bank)");
+  });
 });
 
 describe("derived values", () => {

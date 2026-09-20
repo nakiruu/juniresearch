@@ -64,7 +64,7 @@ export function renderFactsBlock(facts: ReportFacts, pack: FactPack): string {
     "### Trailing twelve months",
     `- Gross margin ${ratio(t.grossMargin)} · Operating margin ${ratio(t.operatingMargin)} · Net margin ${ratio(t.netMargin)}`,
     `- Net debt/EBITDA ${multOrDash(t.netDebtToEbitda)} · Interest coverage ${multOrDash(t.interestCoverage)} · FCF yield ${ratio(t.fcfYield)} · Current ratio ${num2OrDash(t.currentRatio)}`,
-    `- Latest quarter ${lq.label} (ended ${lq.periodEnd}): revenue ${compactUSD(lq.revenue)}, operating margin ${lq.operatingMargin == null ? "not meaningful (no revenue in the quarter)" : pct(lq.operatingMargin)}${lq.revenueYoY == null ? "" : `, revenue ${pct(lq.revenueYoY, { signed: true })} YoY`}`,
+    `- Latest quarter ${lq.label} (ended ${lq.periodEnd}): revenue ${compactUSD(lq.revenue)}, operating margin ${lq.operatingMargin == null ? `not meaningful (${lq.revenue ? "no operating-income line" : "no revenue in the quarter"})` : pct(lq.operatingMargin)}${lq.revenueYoY == null ? "" : `, revenue ${pct(lq.revenueYoY, { signed: true })} YoY`}`,
     "### Multiples (company column; peers pending a peer data source)", multiples,
     "### Street view",
     `- ${a.numAnalysts} analysts: Buy ${a.buy} · Hold ${a.hold} · Sell ${a.sell}; consensus ${a.consensusRating}`,

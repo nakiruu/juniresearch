@@ -1,0 +1,68 @@
+{
+  "judgmentSha256": "2b83d5913f6715e1b52dd6ed8bebe25e4bc6fd85baa4280d26cc3f10277de556",
+  "reviewedAt": "2026-09-20T18:42:00Z",
+  "reviewer": "claude-opus-4-8",
+  "round": 2,
+  "verdict": "approved-with-minors",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.executiveSummary.companyOverview",
+      "quote": "against $362.4B of common equity",
+      "issue": "The $362.4B figure is the FactPack's \"Total Equity\" row (statements.balance, FY25 = 362,438,000,000), which for JPMorgan includes ~$27B of preferred stock. The report relabels it \"common equity\" here and again in balanceCommentary (\"Common equity reached $362.4B at FY25\"). Common equity excludes preferred, so the total-equity figure is attached to a narrower quantity that is materially smaller (~$335B). The mislabel is compounded because companyOverview pairs it with the 20% return on tangible common equity, whose true denominator (tangible common equity) is smaller still — inviting the reader to read the 20% as earned on $362.4B.",
+      "fix": "Use the FactPack's own label \"total equity\" in both companyOverview and balanceCommentary, or drop the equity denominator; do not present total equity as common equity.",
+      "status": "addressed",
+      "note": "Round 2 reads 'total equity stood at $362.4B' in companyOverview and 'Total equity reached $362.4B at FY25' in balanceCommentary; the ROTCE 20% is now a separate clause, not paired with the $362.4B as a denominator. Mislabel resolved."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "markets and investment-banking revenue are at records in a favorable environment",
+      "issue": "The only \"record\" the press release grounds is Dimon's \"revenue in each line of business hit a new record\" (segment level) and \"first-time investors of nearly 44,000 set a new record.\" The release does not state Markets revenue is a record, and it explicitly caps investment banking at \"IB fees jumping 30% to the highest level since 2021\" — i.e. below the 2021 peak, not a record. Attaching \"records\" specifically to markets and investment-banking revenue is unsupported for Markets and contradicted for IB.",
+      "fix": "Use the supported wording (\"revenue in each line of business hit a new record\") or describe markets/IB revenue as \"elevated\"; drop \"at records\" for those two lines specifically.",
+      "status": "addressed",
+      "note": "thesis.body now reads 'markets and investment-banking revenue are elevated in a favorable environment'; 'at records' removed here and no other section attaches a 'record' to markets or IB revenue."
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.executiveSummary.risks",
+      "quote": "the gap between the $7.70 GAAP EPS and the $6.14 excluding significant items",
+      "issue": "House style makes executive-summary risks one/two-sentence pointers while the sections argue, with no sentence in two sections. Instead all four exec-summary risks are near-verbatim restatements of sections.risks.idiosyncratic: the one-time-gains point repeats the phrase \"the gap between the $7.70 GAAP EPS and the $6.14 excluding significant items\" in both exec risks[1] and idiosyncratic[1]; the peak-earnings, credit/rates ($2.5B) and valuation pointers likewise duplicate idiosyncratic[0], [2] and [4] with only minor rewording. The pointers restate rather than point.",
+      "fix": "Compress the exec-summary risks to brief pointers that carry no repeated figures or phrasing, and let sections.risks.idiosyncratic own the figures, mechanism and what-to-watch.",
+      "status": "addressed",
+      "note": "Exec-summary risks are now compact pointers carrying no figures ('...lifted by Visa and equity gains that do not recur'). The $7.70/$6.14 gap, the ~$2.5B credit figure and the mechanism now live only in sections.risks.idiosyncratic. Residual overlap is the sanctioned pointer-to-section relationship."
+    },
+    {
+      "id": "F-4",
+      "severity": "Minor",
+      "field": "sections.financials.cashflowCommentary",
+      "quote": "FY25 dividends of $16.6B and buybacks of $31.6B",
+      "issue": "Three figure clusters are re-stated with full numbers in more places than needed. Capital return ($31.6B buybacks / $16.6B dividends / 73% payout) appears in companyOverview, executiveSummary.catalysts[0], cashflowCommentary, management.capitalAllocation and growth.points[1]. Loan/deposit growth (average loans up 10%, deposits up 7%) appears in catalysts[2], moatFactors[0] and growth.points[2]. AWM AUM $5.1T up 18% with $50B net inflows appears in businessMoat.segments[0].body and growth.points[3]. This is the paraphrase-across-sections pattern the rubric warns about.",
+      "fix": "Introduce each cluster once in its natural home (capital return in capitalAllocation; AUM/inflows in the moat segment) and refer back in words elsewhere rather than re-quoting the figures.",
+      "status": "addressed",
+      "note": "Full-number clusters now appear once: capital-return dollars only in cashflowCommentary (companyOverview/catalysts[0]/capitalAllocation/growth.points[1] refer back in words), AWM AUM $5.1T/$50B only in businessMoat.segments[0], loans+10%/deposits+7% only in catalysts[2]. The recurring '73%' and '14.1% CET1' persist as signature epithets, which is acceptable."
+    },
+    {
+      "id": "F-5",
+      "severity": "Minor",
+      "field": "sections.management.governance",
+      "quote": "it is offset by a fully independent board",
+      "issue": "The proxy supports \"All of the Firm's non-management Board members are independent\" (which the same paragraph states correctly earlier). JPMorgan's board includes management directors (Dimon), so it is not literally \"fully independent\"; the phrase overstates what the proxy establishes and is slightly inconsistent with the earlier, correct sentence.",
+      "fix": "Change to \"an otherwise fully independent board\" or \"a board whose non-management directors are all independent.\"",
+      "status": "addressed",
+      "note": "governance now reads 'it is offset by a board whose non-management directors are all independent'; 'fully independent board' removed and now consistent with the earlier correct sentence."
+    },
+    {
+      "id": "F-6",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.catalysts",
+      "quote": "A durable capital-markets and payments franchise: Q2 investment-banking fees rose 30% and Markets revenue 35% year over year, and management holds the #1 rank in global investment-banking fees.",
+      "issue": "House style makes exec-summary catalysts one/two-sentence pointers while the sections carry the figures and argument. catalysts[1] carries the Q2 figures — investment-banking fees +30%, Markets revenue +35% and the #1 global IB-fee rank — that businessMoat.segments[0].body also states ('investment-banking fees up 30% (a #1 global rank), Markets revenue up 35%'); the #1 rank recurs a third time in moatFactors[3]. This is the same catalysts-carry-figures pattern F-3/F-4 fixed for the risks and other clusters, left in place for the capital-markets catalyst. catalysts[2] and [3] likewise carry figures (loans +10%/deposits +7%; 14.1% CET1, 5.5% SLR) that read as argument rather than pointer.",
+      "fix": "Compress catalysts[1] to a figure-free pointer (e.g. 'A durable capital-markets and payments franchise, with investment banking and Markets both growing strongly off a #1 global IB-fee rank') and let businessMoat.segments[0].body own the 30%/35%/#1 figures; apply the same to catalysts[2]/[3] so the sections own the numbers.",
+      "status": "open"
+    }
+  ]
+}
