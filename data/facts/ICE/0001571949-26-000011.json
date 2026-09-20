@@ -1,0 +1,575 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "ICE",
+  "cik": 1571949,
+  "company": "Intercontinental Exchange, Inc.",
+  "exchange": "NYSE",
+  "filing": {
+    "form": "10-Q",
+    "accession": "0001571949-26-000011",
+    "filedDate": "2026-07-30",
+    "periodEnd": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1571949/000157194926000011/ice-20260630.htm"
+  },
+  "capturedAt": "2026-09-20T18:30:23.066Z",
+  "quote": {
+    "price": 155.47,
+    "marketCap": 87280001024,
+    "sharesOutstanding": 561394487.8368818,
+    "sharesSource": "derived",
+    "week52Low": 121.79,
+    "week52High": 176.05,
+    "dividendYield": 0.0134000005,
+    "asOf": "2026-09-20"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          9168000000,
+          9636000000,
+          9903000000,
+          11761000000,
+          12640000000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          3449000000,
+          3638000000,
+          3694000000,
+          4309000000,
+          4929000000
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          4458000000,
+          4669000000,
+          4909000000,
+          5846000000,
+          6489000000
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          4058000000,
+          1446000000,
+          2368000000,
+          2754000000,
+          3315000000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          7.18,
+          2.58,
+          4.19,
+          4.78,
+          5.77
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          null,
+          1799000000,
+          899000000,
+          844000000,
+          837000000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          15439000000,
+          18126000000,
+          24567000000,
+          23395000000,
+          20679000000
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          null,
+          16327000000,
+          23668000000,
+          22551000000,
+          19842000000
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          22748000000,
+          22761000000,
+          25786000000,
+          27698000000,
+          28969000000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          1.0057948908487657,
+          1.0521280946028384,
+          1.0041003946777587,
+          0.9948857101381305,
+          1.0197584288363688
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          3123000000,
+          3554000000,
+          3542000000,
+          4609000000,
+          4662000000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -179000000,
+          -225000000,
+          -190000000,
+          -406000000,
+          -373000000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          -250000000,
+          -632000000,
+          0,
+          0,
+          -1294000000
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          -747000000,
+          -853000000,
+          -955000000,
+          -1039000000,
+          -1105000000
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          2944000000,
+          3329000000,
+          3352000000,
+          4203000000,
+          4289000000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q2'26",
+    "periodEnd": "2026-06-30",
+    "revenue": 3611000000,
+    "operatingMargin": 0.38521185267238994,
+    "revenueYoY": 0.10698957694665845
+  },
+  "ttm": {
+    "pe": 21.9590395480226,
+    "ps": 6.500819382094444,
+    "evToEbitda": 15.29033651995439,
+    "grossMargin": null,
+    "operatingMargin": 0.40719499478623566,
+    "netMargin": 0.3007597199463727,
+    "netDebtToEbitda": 2.850199543899658,
+    "interestCoverage": 6.7997512437810945,
+    "currentRatio": 1.0123407643312101,
+    "fcfYield": 0.058180567603381056
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 11000013260,
+      "eps": 8.12824
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 11597420660,
+      "eps": 8.80063
+    }
+  },
+  "analysts": {
+    "count": 15,
+    "buy": 14,
+    "hold": 1,
+    "sell": 0,
+    "consensusRating": "Strong Buy",
+    "consensusTarget": 187.2857,
+    "medianTarget": 182,
+    "highTarget": 232,
+    "lowTarget": 163,
+    "asOf": "2026-09-20"
+  },
+  "segments": {
+    "basis": "FY25 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 12640000000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "BAM",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "BK",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "BNS",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "CME",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-07",
+      "close": 150.3000030517578
+    },
+    {
+      "date": "2026-08-10",
+      "close": 150.5399932861328
+    },
+    {
+      "date": "2026-08-11",
+      "close": 151.25
+    },
+    {
+      "date": "2026-08-12",
+      "close": 151.3300018310547
+    },
+    {
+      "date": "2026-08-13",
+      "close": 155.24000549316406
+    },
+    {
+      "date": "2026-08-14",
+      "close": 154.72999572753906
+    },
+    {
+      "date": "2026-08-17",
+      "close": 154.30999755859375
+    },
+    {
+      "date": "2026-08-18",
+      "close": 156.17999267578125
+    },
+    {
+      "date": "2026-08-19",
+      "close": 157.24000549316406
+    },
+    {
+      "date": "2026-08-20",
+      "close": 158.61000061035156
+    },
+    {
+      "date": "2026-08-21",
+      "close": 161.25
+    },
+    {
+      "date": "2026-08-24",
+      "close": 162.99000549316406
+    },
+    {
+      "date": "2026-08-25",
+      "close": 161.77999877929688
+    },
+    {
+      "date": "2026-08-26",
+      "close": 161.9199981689453
+    },
+    {
+      "date": "2026-08-27",
+      "close": 161.24000549316406
+    },
+    {
+      "date": "2026-08-28",
+      "close": 162.3300018310547
+    },
+    {
+      "date": "2026-08-31",
+      "close": 160.6999969482422
+    },
+    {
+      "date": "2026-09-01",
+      "close": 159.60000610351562
+    },
+    {
+      "date": "2026-09-02",
+      "close": 157.85000610351562
+    },
+    {
+      "date": "2026-09-03",
+      "close": 164.58999633789062
+    },
+    {
+      "date": "2026-09-04",
+      "close": 161.25999450683594
+    },
+    {
+      "date": "2026-09-08",
+      "close": 157.75999450683594
+    },
+    {
+      "date": "2026-09-09",
+      "close": 156.5
+    },
+    {
+      "date": "2026-09-10",
+      "close": 155.80999755859375
+    },
+    {
+      "date": "2026-09-11",
+      "close": 157.39999389648438
+    },
+    {
+      "date": "2026-09-14",
+      "close": 157.75
+    },
+    {
+      "date": "2026-09-15",
+      "close": 156.89999389648438
+    },
+    {
+      "date": "2026-09-16",
+      "close": 154.10000610351562
+    },
+    {
+      "date": "2026-09-17",
+      "close": 153.3000030517578
+    },
+    {
+      "date": "2026-09-18",
+      "close": 155.47000122070312
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "Intercontinental Exchange, Inc., together with its subsidiaries, provides technology and data to financial institutions, corporations, and government entities in the United States, the United Kingdom, the European Union, Canada, Asia Pacific, and the Middle East. It operates through three segments: Exchanges, Fixed Income and Data Services, and Mortgage Technology. The Exchanges segment operates regulated marketplace technology for the listing, trading, and clearing of an array of derivatives contracts and financial securities, such as commodities, interest rates, foreign exchange and equities, and corporate and exchange-traded funds, as well as data and connectivity services related to its exchanges and clearing houses. The Fixed Income and Data Services segment provides fixed income pricing, reference data, indices, analytics, and execution services, as well as global CDS clearing and multi-asset class data delivery technology. The Mortgage Technology segment offers a technology platform that provides customers comprehensive and digital workflow tools to address inefficiencies and mitigate risks that exist in the U.S. residential mortgage market life cycle from application through closing, servicing, and the secondary market. The company was founded in 2000 and is headquartered in Atlanta, Georgia.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-20"
+    },
+    "mdaExcerpt": {
+      "text": "ITEM 2. MANAGEMENT'S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS\nIn this Quarterly Report on Form 10-Q, or this Quarterly Report, and unless otherwise indicated, the terms \"Intercontinental Exchange,\" \"ICE,\" \"we,\" \"us,\" \"our,\" \"our company\" and \"our business\" refer to Intercontinental Exchange, Inc., together with its consolidated subsidiaries. All references to \"options\" or \"options contracts\" in the context of our futures products refer to options on futures contracts. Solely for convenience, references in this Quarterly Report to any trademarks, service marks and trade names owned by ICE are listed without the , and symbols, but we will assert, to the fullest extent under applicable law, our rights to these trademarks, service marks and trade names.\nWe also include references to third-party trademarks, such as FTSE and MSCI , trade names and service marks in this Quarterly Report. Except as otherwise expressly noted, our use or display of any such trademarks, trade names or service marks is not an endorsement or sponsorship and does not indicate any relationship between us and the parties that own such marks and names. FTSE and the FTSE Indexes are trademarks and service marks of the London Stock Exchange plc and the London Stock Exchange Group Holdings Limited and are used under license. MSCI and the MSCI Indexes are trademarks and service marks of MSCI, Inc. or its affiliates and are used under license.\nThe following discussion should be read in conjunction with our consolidated financial statements and related notes included elsewhere in this Quarterly Report. Figures in the tables presented may not recalculate or sum exactly due to rounding. Percentage changes are calculated based on unrounded numbers.\nForward-Looking Statements\nThis Quarterly Report, including the sections entitled \"Notes to Consolidated Financial Statements,\" \"Legal Proceedings\" and \"Management's Discussion and Analysis of Financial Condition and Results of Operations,\" contains \"forward-looking statements\" as defined in the Private Securities Litigation Reform Act of 1995. Any statements contained herein that are not statements of historical fact may be forward-looking statements.\nThese forward-looking statements relate to future events or our future financial performance and are based on our present beliefs and assumptions as well as the information currently available to us. They involve known and unknown risks, uncertainties and other factors that may cause our results, levels of activity, performance, cash flows, financial position or achievements to differ materially from those expressed or implied by these statements.\nForward-looking statements may be introduced by or contain terminology such as \"may,\" \"will,\" \"should,\" \"could,\" \"would,\" \"targets,\" \"goal,\" \"expect,\" \"intend,\" \"plan,\" \"anticipate,\" \"believe,\" \"estimate,\" \"predict,\" \"potential,\" \"continue,\" or the antonyms of these terms or other comparable terminology. Although we believe that the expectations reflected in the forward-looking statements are reasonable, we cannot guarantee future results, levels of activity, performance, cash flows, financial position or achievements. Accordingly, we caution you not to place undue reliance on any forward-looking statements we may make.\nFactors that may affect our performance and the accuracy of any forward-looking statements include, but are not limited to, those listed below:\nconditions in global financial markets and domestic and international economic and social conditions, including inflation, changes to international trade policies and tariffs, risk of recession, political uncertainty and discord, geopolitical events and conflicts (including the conflicts in Ukraine and the Middle East) and sanctions laws;\nglobal political conditions;\nvolatility in commodity prices and equity prices, and price volatility of financial benchmarks and instruments such as interest rates, credit spreads, equity indices, foreign exchange rates, and mortgage industry trends;\nthe business environment in which we operate and trends in our industries, including trading volumes, prevalence of clearing, demand for data services, mortgage lending and servicing activity, mortgage delinquencies, fees, changing regulations, competition (including from entrants or non-traditional competitors) and consolidation;\nour ability to minimize the risks associated with operating clearing houses in multiple jurisdictions;\nthe global impact of the introduction of, or any changes to, laws, regulations, rules, government policies or tax or accounting requirements with respect to, among other things, financial markets and climate-related risks, as well as increased regulatory scrutiny or enforcement actions;\nour exchanges' and clearing houses' compliance with their respective regulatory and oversight responsibilities;\n33\nthe resilience of our electronic platforms and soundness of our business continuity and disaster recovery plans, including in the event of cyberattacks, cyberterrorism or other disruptions;\nour ability to effectively pursue, implement and realize the anticipated cost savings, growth opportunities and synergies and other benefits from our past or future acquisitions and strategic investments within the expected time frame;\nthe impacts of computer and communications systems failures and delays, inclusive of the performance and reliability of our trading, clearing, data services and mortgage technologies and those of third-party service providers;\nour ability to keep pace with technological developments and client preferences, including with regard to our emerging technology initiatives and the use of artificial intelligence in certain of our existing products;\nour ability to ensure that the technology we utilize is not vulnerable to cyberattacks, hacking and other cybersecurity risks or other disruptive events or to minimize the impact of any such events;\nthe impact of climate-related risks and the impact of, and uncertainty related to, the transition to renewable energy, including regulatory and legislative changes;\nour ability to keep information and data relating to the customers of the users of the software and services provided by our ICE Mortgage Technology business confidential;\nthe impacts of a public health emergency or pandemic on our business, results of operations and financial condition, as well as the broader business environment;\nour ability to identify trends and adjust our business to benefit from such trends, including trends in the U.S. mortgage industry such as inflation rates, interest rates, new home purchases, refinancing activity, servicing activity, delinquencies and home builder and buyer sentiment, among others;\nour ability to evolve our benchmarks and indices in a manner that maintains or enhances their reliability and relevance;\nthe accuracy of our cost and other financial estimates and our belief that cash flows from operations will be sufficient to service our debt and to fund our operational and capital expenditure needs;\nour ability to incur additional debt and pay off our existing debt in a timely manner;\nour ability to declare and pay dividends and repurchase shares of our common stock;\nour ability to maintain existing market participants and data and mortgage technology customers, and to attract new ones;\nour ability to offer additional products and services, leverage our risk management capabilities and enhance our technology in a timely and cost-effective fashion;\nour ability to attract, develop and retain key talent;\nour ability to protect our intellectual property rights and to operate our business without violating the intellectual property rights of others; and\npotential adverse results of threatened or pending litigation and regulatory actions and proceedings.\nThese risks and other factors include, among others, those set forth in Part I, Item 1(A) under the caption \"Risk Factors\" in our 2025 Form 10-K, as filed with the SEC on February 5, 2026. Due to the uncertain nature of these factors, management cannot assess the impact of each factor on the business or the extent to which any factor, or combination of factors, may cause actual results to differ materially from those contained in any forward-looking statements.\nAny forward-looking statement speaks only as of the date on which such statement is made, and we undertake no obligation to update any of these statements to reflect events or circumstances occurring after the date of this Quarterly Report. New factors may emerge, and it is not possible to predict all factors that may affect our business and prospects.\n34\nOverview\nWe are a leading global provider of technology and data to a broad range of customers including financial institutions, corporations and government entities. Our products, which span major asset classes including futures, equities, fixed income and U.S. residential mortgages, provide our customers with access to mission critical tools that are designed to increase asset class transparency and workflow efficiency. Although we report our results in three reportable business segments, we operate as one business, leveraging the collective expertise, particularly in data services and technology, that exists across our platforms to inform and enhance our operations. Our segments are as follows:\nExchanges: We operate regulated marketplace technology for the listing, trading and clearing of a broad array of derivatives contracts and financial securities as well as data and connectivity services related to our exchanges and clearing houses.\nFixed Income and Data Services: We provide fixed income pricing, reference data, indices, analytics and execution services as well as global CDS clearing and multi-asset class data delivery technology.\nMortgage Technology: We provide a technology platform that offers customers comprehensive, digital workflow tools that aim to address inefficiencies and mitigate risks that exist in the U.S. residential mortgage market life cycle, from application through closing, servicing and the secondary market.\nRecent Developments\nAcquisition of MarketAxess Holdings Inc.\nOn July 29, 2026, we entered into a definitive agreement to acquire MarketAxess Holdings Inc., or MarketAxess, a leading operator of electronic trading platforms for global institutional fixed income markets.\nThe transaction is valued at approximately $6.0 billion, or $167 per share, with purchase consideration consisting entirely of cash. In conjunction with the acquisition agreement, we entered into a financing commitment letter for a 364-day senior unsecured bridge facility in an aggregate principal amount not to exceed $6.2 billion, or the Bridge Facility. The purpose of the Bridge Facility is to provide backup financing to fund, in part, the acquisition and to pay related fees, commissions and expenses, if the permanent debt financing cannot be obtained. The commitments that we obtained for the Bridge Facility may be permanently reduced from $6.2 billion to $0 as a result of (i) the effectiveness of a future term loan facility, (ii) the issuance by us of senior unsecured notes and (iii) the amendment of our existing revolving credit agreement.\nThe transaction is expected to close in the first half of 2027, subject to receipt of MarketAxess stockholder approval, applicable regulatory approvals and customary closing conditions.\nGlobal Market Conditions\nOur results of operations are affected by global economic conditions, including macroeconomic conditions and geopolitical events and conflicts. Recent macroeconomic conditions, including changes in interest rates, inflation and significant market volatility, changes in tariffs and trade policies along with geopolitical concerns, have created ongoing uncertainty and volatility in the global economy and resulted in a dynamic operating environment.\nOur business has been impacted positively and negatively by these global economic conditions. For instance, due to market and interest rate volatility, including market volatility during the first six months of 2026, we have seen increased trading across a number of our products, such as energy, interest rate and equity futures, credit default swaps and bonds. Conversely, increases in mortgage interest rates over the past several years have resulted in reduced consumer and investor demand for mortgages and adversely impacted the transaction-based revenues in our Mortgage Technology segment. If mortgage rates further increase, or if mortgage lending practices change, our Mortgage Technology segment revenues may be further impacted. In addition, higher interest rates have resulted, and may continue to result, in higher interest rates for our debt instruments as we refinance our existing indebtedness.\nFrom an operational perspective, our businesses, including our exchanges, clearing houses, listings venues, data services businesses and mortgage platforms, have not suffered a material negative impact as a result of the events in Ukraine and the Middle East and surrounding regions.\nWe expect the macroeconomic environment to remain dynamic in the near-term, and we continue to monitor macroeconomic conditions, including interest rates, inflation rates, changes in tariffs and trade policies, market volatility, geopolitical events and military conflicts and repercussions from, and the impact that, any of the foregoing may have on the global economy and on our business. We also continue to closely monitor credit worthiness of our counterparties, clearing members and our financial service providers and take risk management measures in line with established risk management frameworks.\n35\nTax Policy Changes\nIn January 2026, the OECD released a comprehensive package of administrative guidance related to Pillar Two implementing the G7's June 2025 political agreement on a \"Side-by-Side\" system. This system, if implemented by each relevant jurisdiction, will apply for accounting periods beginning on or after January 1, 2026, and will effectively exempt U.S. parented groups from the main international components of Pillar Two. This new guidance on Pillar Two did not have a material impact on our financial statements as of June 30, 2026 or December 31, 2025.\nRegulation\nOur activities and the markets in which we operate are subject to regulations that impact us as well as our customers, and, in turn, meaningfully influence our activities, the manner in which we operate and our strategy. We are primarily subject to the jurisdiction of regulatory agencies in the U.S., U.K., EU, Canada, Singapore and Abu Dhabi. Failure to satisfy regulatory requirements can or may give rise to sanctions by the applicable regulator.\nGlobal policy makers have undertaken reviews of their existing legal frameworks governing financial markets in connection with regulatory reform, and have either passed new laws and regulations, or are in the process of debating and/or enacting new laws and regulations that apply to our business and to our customers' businesses. Legislative and regulatory actions may impact the way in which we or our customers conduct business and may create uncertainty, which could affect trading volumes or demand for market data. See Part I, Item 1 \"Business Regulation\" and Part I, Item 1(A) \"Risk Factors\" included in our 2025 Form 10-K for a discussion of the primary regulations applicable to our business and certain risks associated with those regulations.\nDomestic and foreign policy makers continue to review their legal frameworks governing financial markets, and periodically change the laws and regulations that apply to our business and to our customers' businesses. Our key areas of focus on these evolving efforts are:\nIncreased Bank Capital Requirements .",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/1571949/000157194926000011/ice-20260630.htm",
+      "asOf": "2026-07-30",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": null,
+    "riskFactorsSource": null,
+    "pressRelease": {
+      "text": "EX-99.1\n2\ntm2621213d1_ex99-1.htm\nEXHIBIT 99.1\nExhibit 99.1\nIntercontinental Exchange Reports Second Quarter\n2026\n2Q26 net revenues of $2.7 billion, +5% y/y\nJeff Sprecher ,\nICE Chair & Chief Executive Officer , said ,\n\"We are pleased to report our second quarter results, which reflect continued revenue and earnings per share growth and record open interest\nacross our exchange complex. Against a backdrop of rapid change in global markets, our customers continued to turn to ICE's regulated\nmarkets, trusted data and mission- critical technology to transfer risk. As markets become more global, digital and continuous, the opportunities\nfor our all-weather model continue to expand. As we look to the second half of the year and beyond, we remain focused on innovation, durable\ngrowth and long-term value creation for our stockholders.\"\n2Q26 GAAP diluted earnings per share (EPS) of $1.69, +14% y/y\n2Q26 adj. diluted EPS of $1.90, +5% y/y\n2Q26 operating income of $1.4 billion, +7% y/y; adj. operating income of $1.6 billion, +4% y/y\n2Q26\noperating margin of 52%; adj. operating margin of 61%\nThrough\nJune 30, 2026, returned $1.8 billion to stockholders, including $1.2 billion in share repurchases\nBoard approved increase in share repurchase authorization up to $4.0 billion, effective July 1, 2026\nATLANTA &\nNEW YORK, July 30, 2026 - Intercontinental Exchange (NYSE: ICE), a leading global provider of technology and data, today\nreported financial results for the second quarter of 2026. For the quarter ended June 30, 2026, consolidated net income attributable\nto ICE was $958 million on $2.7 billion of consolidated revenues, less transaction-based expenses. Second quarter GAAP diluted EPS were\n$1.69. Adjusted net income attributable to ICE was $1.1 billion in the second quarter and adjusted diluted EPS were $1.90. Please refer\nto the reconciliation of non-GAAP financial measures included in this press release for more information on our adjusted operating expenses,\nadjusted operating income, adjusted operating margin, adjusted net income, adjusted diluted EPS and adjusted free cash flow.\nWarren Gardiner, ICE Chief Financial Officer, added: \"Our\nsecond quarter results reflect the continued strength and consistency of our business model, with growth across all three of our operating\nsegments and strong free cash flow generation. During the quarter we returned $945 million to stockholders, including $651 million of\nshare repurchases, while continuing to invest across the platform. Share repurchases remain a priority, and the strength of our free cash\nflow lets us continue them alongside disciplined investment in strategically important opportunities. That balance reflects the capital\ndiscipline and financial rigor that have defined ICE's long track record of value creation for our stockholders.\"\n1\nSecond Quarter 2026 Business Highlights\nSecond quarter consolidated net revenues were $2.7 billion including\nexchange net revenues of $1.5 billion, fixed income and data services revenues of $645 million and mortgage technology revenues of $557\nmillion. Consolidated operating expenses were $1.3 billion for the second quarter of 2026. On an adjusted basis, consolidated operating\nexpenses were $1.0 billion. Consolidated operating income for the second quarter was $1.4 billion, and the operating margin was 52%. On\nan adjusted basis, consolidated operating income for the second quarter was $1.6 billion, and the adjusted operating margin was 61%.\n$ (in millions)\nNet\nRevenues\nOp\nMargin\nAdj Op\nMargin\n2Q26\nExchanges\n$\n1,464\n74\n%\n75\n%\nFixed Income and Data Services\n$\n645\n42\n%\n46\n%\nMortgage Technology\n$\n557\n8\n%\n43\n%\nConsolidated\n$\n2,666\n52\n%\n61\n%\n2Q26\n2Q25\n% Chg\nRecurring Revenues\n$\n1,353\n$\n1,256\n8\n%\nTransaction Revenues, net\n$\n1,313\n$\n1,287\n2\n%\nExchanges Segment Results\nSecond quarter exchange net revenues were $1.5 billion. Exchange operating\nexpenses were $386 million, and adjusted operating expenses were $370 million in the second quarter. Segment operating income for the\nsecond quarter was $1.1 billion, and the operating margin was 74%. On an adjusted basis, operating income was $1.1 billion, and the adjusted\noperating margin was 75%.\n2\n$ (in millions)\n2Q26\n2Q25\n%\nChg\nConst\nCurr (1)\nRevenues, net:\nEnergy\n$\n518\n$\n595\n(13\n)%\n(14\n)%\nAgs and Metals\n87\n65\n35\n%\n35\n%\nFinancials (2)\n192\n158\n21\n%\n21\n%\nCash Equities and Equity Options, net\n140\n123\n15\n%\n15\n%\nOTC\nand Other (3)\n111\n96\n15\n%\n15\n%\nData and Connectivity Services\n287\n255\n12\n%\n12\n%\nListings\n129\n123\n5\n%\n5\n%\nSegment Revenues\n$\n1,464\n$\n1,415\n3\n%\n3\n%\nRecurring Revenues\n$\n416\n$\n378\n10\n%\n10\n%\nTransaction Revenues, net\n$\n1,048\n$\n1,037\n1\n%\n1\n%\n(1) Net revenues in constant currency are calculated\nholding both the pound sterling and euro at the average exchange rate from 2Q25, 1.3353 and 1.1338, respectively.\n(2) Financials include interest rates and other financial\nfutures and options.\n(3) OTC & Other includes net interest income\nand fees on certain clearing margin deposits, regulatory penalties and fines, fees for use of our facilities, regulatory fees charged\nto member organizations of our U.S. securities exchanges, designated market maker service fees, exchange member fees, bilateral trading\nfees, non-exchange execution revenue, electronic trade document confirmation services, and agriculture grading and certification fees.\nFixed Income and Data Services Segment Results\nSecond quarter fixed income and data services revenues were $645 million.\nFixed income and data services operating expenses were $377 million, and adjusted operating expenses were $350 million in the second quarter.\nSegment operating income for the second quarter was $268 million, and the operating margin was 42%. On an adjusted basis, operating income\nwas $295 million, and the adjusted operating margin was 46%.\n3\n$ (in millions)\n2Q26\n2Q25\n%\nChg\nConst\nCurr (1)\nRevenues:\nFixed Income Execution\n$\n31\n$\n32\n(4\n)%\n(4\n)%\nCDS Clearing\n83\n82\n2\n%\n1\n%\nFixed Income Data and Analytics\n333\n306\n9\n%\n9\n%\nData and Network Technology\n198\n177\n11\n%\n11\n%\nSegment Revenues\n$\n645\n$\n597\n8\n%\n8\n%\nRecurring Revenues\n$\n531\n$\n483\n10\n%\n10\n%\nTransaction Revenues\n$\n114\n$\n114\n%\n%\n(1) Revenues in constant currency are calculated holding\nboth the pound sterling and euro at the average exchange rate from 2Q25, 1.3353 and 1.1338, respectively.\nMortgage Technology Segment Results\nSecond quarter mortgage technology revenues were $557 million. Mortgage\ntechnology operating expenses were $512 million, and adjusted operating expenses were $318 million in the second quarter. Segment operating\nincome for the second quarter was $45 million, and the operating margin was 8%. On an adjusted basis, operating income was $239 million,\nand the adjusted operating margin was 43%.\n$ (in millions)\n2Q26\n2Q25\n%\nChg\nRevenues:\nOrigination Technology\n$\n197\n$\n187\n5\n%\nClosing Solutions\n65\n58\n14\n%\nServicing Software\n226\n220\n2\n%\nData and Analytics\n69\n66\n6\n%\nSegment Revenues\n$\n557\n$\n531\n5\n%\nRecurring Revenues\n$\n406\n$\n395\n3\n%\nTransaction Revenues\n$\n151\n$\n136\n11\n%\n4\nOther Matters\nOperating\ncash flow through the second quarter of 2026 was $3.3 billion and adjusted free cash flow\nwas $2.6 billion.\nUnrestricted\ncash was $1.1 billion and outstanding debt was $19.8 billion as of June 30, 2026.\nThrough\nthe second quarter of 2026, ICE repurchased $1.2 billion of its common stock and paid\n$591 million in dividends.\nBoard\napproved increase in share repurchase authorization up to $4.0 billion, effective July 1,\n2026\nUpdated Financial Guidance\nGAAP\nNon-GAAP\n2026 Exchange Recurring Revenue\n(% growth)\nHigh-single digits\n2026 Fixed Income & Data Services Recurring Revenue (% growth)\n7% - 8%\n2026 Operating Expenses\n$5.140 - $5.180 billion\n$4.190 - $4.230 billion (1)\n3Q26 Operating Expenses\n$1.298 - $1.308 billion\n$1.063 - $1.073 billion (2)\n3Q26 Non-Operating Expense\n$160 - $165 million\n$175 - $180 million (3)\n2026 Capital Expenditures\n~$850 million\n3Q26 Weighted Average Shares Outstanding\n560 - 566 million\n(1) 2026 non-GAAP operating expenses excludes amortization of\nacquisition-related intangibles, integration expenses, and regulatory matters.\n(2) 3Q26 non-GAAP operating expenses excludes amortization of\nacquisition-related intangibles.\n(3) Adjusted non-operating expense excludes equity earnings from\nunconsolidated investees.\n5\nEarnings Conference Call Information\nICE will hold a conference call today, July 30, 2026, at 8:30\na.m. ET to review its second quarter 2026 financial results. A live audio webcast of the earnings call will be available on the company's\nwebsite at www.ice.com in the investor relations section. Participants may also listen via telephone by dialing 833-470-1428 from the\nUnited States or 646-844-6383 from outside of the United States. Telephone participants are required to provide the participant entry\nnumber 769427 and are recommended to call 10 minutes prior to the start of the call . The call will be archived on the company's website\nfor replay.\nThe conference call for the third quarter 2026 earnings has been scheduled\nfor October 29th, 2026 at 8:30 a.m. ET. Please refer to the Investor Relations website at www.ir.theice.com for additional information.\nHistorical futures, options and cash ADV, rate per contract, open interest\ndata and CDS cleared information can be found at: https://ir.theice.com/investor-resources/supplemental-information/default.aspx\n6\nConsolidated Statements of Income\n(In millions, except per share amounts)\n(Unaudited)\nSix Months Ended June 30,\nThree Months Ended June 30,\n2026\n2025\n2026\n2025\nRevenues:\nExchanges\n$\n4,879\n$\n4,257\n$\n2,409\n$\n2,134\nFixed income and data services\n1,302\n1,193\n645\n597\nMortgage technology\n1,096\n1,041\n557\n531\nTotal revenues\n7,277\n6,491\n3,611\n3,262\nTransaction-based expenses:\nSection 31 fees\n288\n412\n288\n150\nCash liquidity payments, routing and clearing\n1,346\n1,063\n657\n569\nTotal revenues, less transaction-based expenses\n5,643\n5,016\n2,666\n2,543\nOperating expenses:\nCompensation and benefits\n1,014\n980\n509\n499\nProfessional services\n72\n81\n37\n41\nAcquisition-related transaction and integration costs\n53\n42\n12\n10\nTechnology and communication\n480\n428\n242\n215\nRent and occupancy\n47\n41\n23\n20\nSelling, general and administrative\n148\n142\n63\n66\nDepreciation and amortization\n773\n784\n389\n395\nTotal operating expenses\n2,587\n2,498\n1,275\n1,246\nOperating income\n3,056\n2,518\n1,391\n1,297\nOther income/(expense):\nInterest income\n51\n64\n27\n31\nInterest expense\n(408\n)\n(407\n)\n(205\n)\n(201\n)\nOther income, net\n485\n24\n74\n5\nTotal other income/(expense), net\n128\n(319\n)\n(104\n)\n(165\n)\nIncome before income tax expense\n3,184\n2,199\n1,287\n1,132\nIncome tax expense\n777\n522\n312\n267\nNet income\n$\n2,407\n$\n1,677\n$\n975\n$\n865\nNet income attributable to non-controlling interests\n(36\n)\n(29\n)\n(17\n)\n(14\n)\nNet income attributable to Intercontinental Exchange, Inc.\n$\n2,371\n$\n1,648\n$\n958\n$\n851\nEarnings per share attributable to Intercontinental Exchange, Inc. common stockholders:\nBasic\n$\n4.19\n$\n2.87\n$\n1.70\n$\n1.49\nDiluted\n$\n4.18\n$\n2.86\n$\n1.69\n$\n1.48\nWeighted average common shares outstanding:\nBasic\n566\n574\n564\n573\nDiluted\n568\n576\n566\n575\n7\nConsolidated Balance Sheets\n(In millions)\nAs of\nJune 30, 2026\nAs of\n(Unaudited)\nDecember 31, 2025\nAssets:\nCurrent assets:\nCash and cash equivalents\n$\n1,067\n$\n837\nShort-term restricted cash and cash equivalents\n627\n748\nShort-term restricted investments\n886\n629\nCash and cash equivalent margin deposits and guaranty funds\n114,599\n76,789\nInvested deposits, delivery contracts receivable and unsettled variation margin\n2,313\n4,437\nCustomer accounts receivable, net\n1,869\n1,552\nPrepaid expenses and other current assets\n703\n786\nTotal current assets\n122,064\n85,778\nProperty and equipment, net\n2,884\n2,691\nOther non-current assets:\nGoodwill\n30,632\n30,646\nOther intangible assets, net\n14,870\n15,353\nLong-term restricted cash and cash equivalents\n260\n240\nLong-term restricted investments\n136\n141\nOther non-current assets\n3,401\n2,038\nTotal other non-current assets\n49,299\n48,418\nTotal assets\n$\n174,247\n$\n136,887\nLiabilities and Equity:\nCurrent liabilities:\nAccounts payable and accrued liabilities\n$\n1,159\n$\n1,078\nSection 31 fees payable\n286\nAccrued salaries and benefits\n280\n455\nDeferred revenue\n567\n204\nShort-term debt\n1,218\n1,035\nMargin deposits and guaranty funds\n114,599\n76,789\nInvested deposits, delivery contracts payable and unsettled variation margin\n2,313\n4,437\nOther current liabilities\n154\n118\nTotal current liabilities\n120,576\n84,116\nNon-current liabilities:\nNon-current deferred tax liability, net\n4,125\n3,998\nLong-term debt\n18,628\n18,609\nAccrued employee benefits\n179\n174\nNon-current operating lease liability\n681\n635\nOther non-current liabilities\n406\n364\nTotal non-current liabilities\n24,019\n23,780\nTotal liabilities\n144,595\n107,896\nCommitments and contingencies\nRedeemable non-controlling interest in consolidated subsidiaries\n32\n22\nEquity:\nIntercontinental Exchange, Inc. stockholders' equity:\nCommon stock\n7\n7\nTreasury stock, at cost\n(9,100\n)\n(7,792\n)\nAdditional paid-in capital\n16,840\n16,643\nRetained earnings\n22,061\n20,281\nAccumulated other comprehensive loss\n(257\n)\n(224\n)\nTotal Intercontinental Exchange, Inc. stockholders' equity\n29,551\n28,915\nNon-controlling interest in consolidated subsidiaries\n69\n54\nTotal equity\n29,620\n28,969\nTotal liabilities and equity\n$\n174,247\n$\n136,887\n8\nNon-GAAP Financial Measures and Reconciliation\nWe use non-GAAP\nmeasures internally to evaluate our performance and in making financial and operational decisions. When viewed in conjunction with our\nGAAP results and the accompanying reconciliation, we believe that our presentation of these measures provides investors with greater\ntransparency and a greater understanding of factors affecting our financial condition and results of operations than GAAP measures alone.\nIn addition, we believe the presentation of these measures is useful to investors for period-to-period comparison of results because\nthe items described below as adjustments to GAAP are not reflective of our core business performance. These financial measures are not\nin accordance with, or an alternative to, GAAP financial measures and may be different from non-GAAP measures used by other companies.\nWe use these adjusted results because we believe they more clearly highlight trends in our business that may not otherwise be apparent\nwhen relying solely on GAAP financial measures, since these measures eliminate from our results specific financial items that have less\nbearing on our core operating performance. We strongly recommend that investors review the GAAP financial measures and additional non-GAAP\ninformation included in our Quarterly Report on Form 10-Q, including our consolidated financial statements and the notes thereto.",
+      "source": "edgar:8-K ex-99.1",
+      "url": "https://www.sec.gov/Archives/edgar/data/1571949/000110465926088462/tm2621213d1_ex99-1.htm",
+      "asOf": "2026-07-30",
+      "truncated": true
+    },
+    "proxyStatement": {
+      "text": "Security ownership:\nSECURITY OWNERSHIP OF CER TAIN BENEFICIAL OWNERS AND MANAGEMENT\nThe following table sets forth information, based on data provided to us or filed with the SEC, with respect to beneficial ownership of shares of our Common Stock as of March 19, 2026 for (i) each person known by us to beneficially own more than five percent of the outstanding shares of our Common Stock, (ii) each director and nominee for election as a director, (iii) each of our NEOs and (iv) all of our director nominees and executive officers as a group.\nBeneficial ownership is determined in accordance with the rules of the SEC and includes having voting and/or investment power with respect to the securities. Except as indicated by footnote, and subject to applicable community property laws, the persons and entities named in the table below have sole voting and sole investment power with respect to the shares set forth opposite each person's or entity's name.\nShares of Common Stock subject to options or warrants currently exercisable or exercisable within 60 days of March 19, 2026 or restricted stock units that vest within 60 days of March 19, 2026 are deemed outstanding for purposes of computing the percentage ownership of the person holding such options or warrants, but are not deemed outstanding for purposes of computing the percentage ownership of any other person. As of March 19, 2026, there were 566,430,761 shares of Common Stock issued and outstanding. Unless otherwise indicated, the address for each of the individuals listed in the table is c/o Intercontinental Exchange, Inc., 5660 New Northside Drive, Third Floor, Atlanta, Georgia 30328.\nName and Address of Beneficial Owner\nNumber of\nShares\nBeneficially\nOwned\nPercent of\nClass\nHolders of More Than 5%:\nBlackRock, Inc. (1)\n39,066,788\n6.9%\n50 Hudson Yards, New York, NY 10001\nThe Vanguard Group, Inc. (2)\n57,061,845\n10.1%\n100 Vanguard Blvd., Malvern, PA 19355\nNamed Executive Officers, Directors and Nominees:\nSharon Y. Bowen\n14,206\n*\nShantella E. Cooper\n10,356\n*\nDuriya M. Farooqui\n14,299\n*\nLord Hague of Richmond\n20,068\n*\nLord Hill of Oareford\n1,437\n*\nMark F. Mulhern (3)\n10,470\n*\nThomas E. Noonan\n21,429\n*\nDaniel E. Pinto\n0\n*\nCaroline L. Silver\n11,213\n*\nJudith A. Sprieser (4)\n14,287\n*\nMartha A. Tirinnanzi (5)\n3,530\n*\nJeffrey C. Sprecher (6)(7)\n3,481,234\n*\nA. Warren Gardiner (6)\n45,039\n*\nChristopher S. Edmonds (6)\n85,727\n*\nBenjamin R. Jackson (6)\n367,716\n*\nLynn C. Martin (6)\n197,532\n*\nAll Directors, Nominees and Executive Officers as a Group (22 persons)(4)(5)(6)(7)\n4,781,984\n*\n* Represents less than 1% of the outstanding Common Stock.\n2026 Proxy Statement INTERCONTINENTAL EXCHANGE 71\nADDITIONAL INFORMATION\n(1) Based on a report on Schedule 13G/A filed April 17, 2025 by BlackRock, Inc. (the \"BlackRock 13G\"). According to the BlackRock 13G, BlackRock, Inc. has sole voting power over 35,103,296 shares of Common Stock, sole dispositive power over 39,066,788 shares of Common Stock and shared voting power and dispositive power over 0 shares of Common Stock.\n(2) Based on a report on Schedule 13G/A filed December 3, 2025 by The Vanguard Group, Inc. (the \"Vanguard 13G\"). According to the Vanguard 13G, The Vanguard Group, Inc. has sole voting power over 0 shares of Common Stock, sole dispositive power over 51,590,216 shares of Common Stock, shared voting power over 3,411,536 shares of Common Stock and shared dispositive power over 5,471,629 shares of Common Stock.\n(3) Beneficial ownership of Mr. Mulhern includes 3 shares acquired in a dividend reinvestment transaction.\n(4) Beneficial ownership of Ms. Sprieser includes vested deferred restricted stock units granted under the 2003 Restricted Stock Deferral Plan for Outside Directors. Shares of Common Stock equal to the number of restricted stock units held by Ms. Sprieser will be issued during January of the first calendar year following termination of service on the Board of Directors for any reason other than for cause.\n\nRelated-person transactions:\nRelated Party Transactions Ap proval Policy\nOur Board of Directors has delegated to the Nominating & Corporate Governance Committee the authority to review and approve transactions between us and one or more of our directors, or between us and any corporation, partnership, association or other organization in which one or more of our directors or officers serve as a director or officer or have a financial interest. The Nominating & Corporate Governance Committee reports the findings of any review and its determinations regarding transactions with related persons to the full Board of Directors. In addition, our Global Code of Business Conduct, which applies to all employees, officers and directors, generally prohibits conflicts of interests and requires that such conflicts in all cases should be discussed with management (or the Chief Executive Officer, in the case of conflicts related to outside employment or board membership).\nOur Board of Directors has also adopted a formal, written related-party transactions approval policy that provides that the Nominating & Corporate Governance Committee or the Board of Directors will review and approve transactions in excess of $120,000 in value in which we participate and in which a director, executive officer or 5% stockholder (or immediate family member of any of the foregoing) has or will have a direct or indirect material interest. Under this policy, the Nominating & Corporate Governance Committee or the Board of Directors, as applicable, will be provided with the significant details of each related-party transaction, including the material terms of the transaction and the benefits to ICE and to the relevant related party, as well as any other information it believes to be relevant to review and approve these transactions.",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/1571949/000119312526134700/ice-20260330.htm",
+      "asOf": "2026-03-31",
+      "truncated": true
+    },
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T18:30:23.066Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T18:30:23.066Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T18:30:23.066Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T18:30:23.066Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T18:30:23.066Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T18:30:23.066Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T18:30:23.066Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T18:30:23.066Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T18:30:23.066Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T18:30:23.066Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T18:30:23.066Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T18:30:23.066Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-20T18:30:23.066Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-20T18:30:23.066Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-20T18:30:23.066Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-09-20T18:30:23.066Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-09-20T18:30:23.066Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-09-20T18:30:23.066Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T18:30:23.066Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T18:30:23.066Z"
+    }
+  ]
+}
