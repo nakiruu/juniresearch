@@ -81,7 +81,7 @@ export function projectReportFacts(p: FactPack): ReportFacts {
       : { label: `${p.estimates.nextFY.label} Revenue`, value: p.estimates.nextFY.revenue, unit: "usdLarge", approx: true, change: nextRevYoY, changeDp: 0 },
     { label: `${lq.label} Revenue`, value: lq.revenue, unit: "usdLarge", change: lq.revenueYoY ?? undefined, changeDp: 0 },
     lq.operatingMargin == null
-      ? { label: `${lq.label} Operating Margin`, raw: "n/m", note: "no revenue in the quarter" }
+      ? { label: `${lq.label} Operating Margin`, raw: "n/m", note: lq.revenue ? "no operating-income line" : "no revenue in the quarter" }
       : { label: `${lq.label} Operating Margin`, value: lq.operatingMargin, unit: "pct", dp: 0 },
     // A negative forward multiple (consensus expects a loss) is not meaningful; a missing one is a dash.
     fwdPe == null

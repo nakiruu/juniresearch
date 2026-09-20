@@ -69,6 +69,13 @@ const REVENUE = [
   // and alternative-revenue-program amounts. Non-utilities never tag it, so per-period selection is
   // unaffected for them.
   "RegulatedAndUnregulatedOperatingRevenue",
+  // Banks report "total net revenue" (net interest income after interest expense + noninterest income)
+  // under this concept — the headline top line — and RevenueFromContractWithCustomer captures only their
+  // fee/contract revenue, a subset. It must therefore outrank the contract concepts. JPMorgan also tags
+  // the plain `Revenues` concept ANNUALLY (same value) but stopped tagging it quarterly after 2014, so
+  // without this concept the quarterly series went stale at Q4'14; RevenuesNetOfInterestExpense carries
+  // the live quarterly net revenue. Non-banks never tag it, so per-period selection is unaffected.
+  "RevenuesNetOfInterestExpense",
   "RevenueFromContractWithCustomerExcludingAssessedTax",
   "Revenues",
   "RevenueFromContractWithCustomerIncludingAssessedTax",

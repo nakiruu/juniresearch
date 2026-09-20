@@ -42,6 +42,13 @@ describe("renderFactsBlock", () => {
     expect(line).not.toContain("YoY");
     expect(b).toContain("- No geographic split in the vendor data");
   });
+  it("explains a null operating margin as a missing operating-income line when the quarter had revenue (a bank)", () => {
+    const bank = structuredClone(pack);
+    bank.latestQuarter = { ...bank.latestQuarter, revenue: 57.347e9, operatingMargin: null };
+    const line = renderFactsBlock(projectReportFacts(bank), bank).split("\n").find((l) => l.startsWith("- Latest quarter"))!;
+    expect(line).toContain("operating margin not meaningful (no operating-income line)");
+    expect(line).not.toContain("no revenue in the quarter");
+  });
   it("points to the segment mix when geography was promoted to segments (no product split)", () => {
     const bare = structuredClone(pack);
     bare.segments = { basis: "FY25 by geography", items: [{ name: "UNITED STATES", revenue: 4.8e9, share: 0.936 }, { name: "Non-US", revenue: 3.3e8, share: 0.064 }] };
