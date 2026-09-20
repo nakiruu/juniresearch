@@ -1,0 +1,581 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "WFC",
+  "cik": 72971,
+  "company": "Wells Fargo & Company",
+  "exchange": "NYSE",
+  "filing": {
+    "form": "10-Q",
+    "accession": "0000072971-26-000302",
+    "filedDate": "2026-07-28",
+    "periodEnd": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/72971/000007297126000302/wfc-20260630.htm"
+  },
+  "capturedAt": "2026-09-20T21:45:00.914Z",
+  "quote": {
+    "price": 86.12,
+    "marketCap": 260426825728,
+    "sharesOutstanding": 3023999369.809568,
+    "sharesSource": "derived",
+    "week52Low": 72.78,
+    "week52High": 97.76,
+    "dividendYield": 0.0232,
+    "asOf": "2026-09-20"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          79166000000,
+          74368000000,
+          82597000000,
+          82296000000,
+          83699000000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          22109000000,
+          13677000000,
+          19142000000,
+          19722000000,
+          21338000000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          5.08,
+          3.27,
+          4.83,
+          5.37,
+          6.26
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          195098000000,
+          226015000000,
+          297147000000,
+          175782000000,
+          193035000000
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          189889000000,
+          182213000000,
+          187443000000,
+          181066000000,
+          183038000000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          -11525000000,
+          27048000000,
+          40358000000,
+          3035000000,
+          -19001000000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          -14464000000,
+          -6033000000,
+          -11851000000,
+          -19448000000,
+          -17516000000
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          -2422000000,
+          -4178000000,
+          -4789000000,
+          -5133000000,
+          -5434000000
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q2'26",
+    "periodEnd": "2026-06-30",
+    "revenue": 22622000000,
+    "operatingMargin": null,
+    "revenueYoY": 0.08644702718278752
+  },
+  "ttm": {
+    "pe": 12.535662299854442,
+    "ps": 3.0004473216277248,
+    "evToEbitda": null,
+    "grossMargin": null,
+    "operatingMargin": null,
+    "netMargin": 0.26049587538596247,
+    "netDebtToEbitda": null,
+    "interestCoverage": null,
+    "currentRatio": null,
+    "fcfYield": null
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 88805694010,
+      "eps": 7.31232
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 92799863900,
+      "eps": 7.95987
+    }
+  },
+  "analysts": {
+    "count": 26,
+    "buy": 16,
+    "hold": 10,
+    "sell": 0,
+    "consensusRating": "Buy",
+    "consensusTarget": 100.45652,
+    "medianTarget": 102,
+    "highTarget": 115,
+    "lowTarget": 90,
+    "asOf": "2026-09-20"
+  },
+  "segments": {
+    "basis": "FY25 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 83699000000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "BAC",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "BCS",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "BMO",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "BNS",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-07",
+      "close": 87.25
+    },
+    {
+      "date": "2026-08-10",
+      "close": 87.5199966430664
+    },
+    {
+      "date": "2026-08-11",
+      "close": 87.44999694824219
+    },
+    {
+      "date": "2026-08-12",
+      "close": 88.93000030517578
+    },
+    {
+      "date": "2026-08-13",
+      "close": 88.11000061035156
+    },
+    {
+      "date": "2026-08-14",
+      "close": 88.81999969482422
+    },
+    {
+      "date": "2026-08-17",
+      "close": 87.54000091552734
+    },
+    {
+      "date": "2026-08-18",
+      "close": 87.4000015258789
+    },
+    {
+      "date": "2026-08-19",
+      "close": 85.94000244140625
+    },
+    {
+      "date": "2026-08-20",
+      "close": 83.69999694824219
+    },
+    {
+      "date": "2026-08-21",
+      "close": 83.83999633789062
+    },
+    {
+      "date": "2026-08-24",
+      "close": 84.72000122070312
+    },
+    {
+      "date": "2026-08-25",
+      "close": 84.79000091552734
+    },
+    {
+      "date": "2026-08-26",
+      "close": 85.2300033569336
+    },
+    {
+      "date": "2026-08-27",
+      "close": 84.97000122070312
+    },
+    {
+      "date": "2026-08-28",
+      "close": 86.69000244140625
+    },
+    {
+      "date": "2026-08-31",
+      "close": 86.38999938964844
+    },
+    {
+      "date": "2026-09-01",
+      "close": 87.04000091552734
+    },
+    {
+      "date": "2026-09-02",
+      "close": 89.2699966430664
+    },
+    {
+      "date": "2026-09-03",
+      "close": 89.19000244140625
+    },
+    {
+      "date": "2026-09-04",
+      "close": 89.97000122070312
+    },
+    {
+      "date": "2026-09-08",
+      "close": 87.95999908447266
+    },
+    {
+      "date": "2026-09-09",
+      "close": 89.66999816894531
+    },
+    {
+      "date": "2026-09-10",
+      "close": 89.44999694824219
+    },
+    {
+      "date": "2026-09-11",
+      "close": 90.29000091552734
+    },
+    {
+      "date": "2026-09-14",
+      "close": 88.70999908447266
+    },
+    {
+      "date": "2026-09-15",
+      "close": 89.72000122070312
+    },
+    {
+      "date": "2026-09-16",
+      "close": 87.05000305175781
+    },
+    {
+      "date": "2026-09-17",
+      "close": 86.88999938964844
+    },
+    {
+      "date": "2026-09-18",
+      "close": 86.12000274658203
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "Wells Fargo & Company, a financial services company, provides diversified banking, investment, mortgage, and consumer and commercial finance products and services in the United States and internationally. It operates through four segments: Consumer Banking and Lending; Commercial Banking; Corporate and Investment Banking; and Wealth and Investment Management. The company's financial products and services includes checking and savings accounts, and credit and debit cards, as well as home, auto, personal, and small business lending services. It also provides personalized wealth management, brokerage, financial planning, lending, private banking, trust and fiduciary products and services; and financial solutions to private, family owned and public companies through products and services including banking and credit products across multiple industry sectors and municipalities, secured lending and lease products, and treasury management. In addition, it offers a suite of capital markets, banking, and financial products and services, such as corporate banking, investment banking, treasury management, commercial real estate lending and servicing, equity, and fixed income solutions, as well as sales, trading, and research capabilities services to corporate, commercial real estate, government, and institutional clients. Wells Fargo & Company was founded in 1852 and is headquartered in San Francisco, California.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-20"
+    },
+    "mdaExcerpt": {
+      "text": "Item 2.\nManagement's Discussion and Analysis of Financial Condition and Results of Operations (Financial Review)\nSummary Financial Data\n2\nOverview\n3\nEarnings Performance\n5\nBalance Sheet Analysis\n23\nOff-Balance Sheet Arrangements\n25\nRisk Management\n26\nCapital Management\n42\nRegulation and Supervision\n48\nCritical Accounting Policies\n49\nCurrent Accounting Developments\n50\nForward-Looking Statements\n51\nRisk Factors\n53\nGlossary of Acronyms\n126",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/72971/000007297126000302/wfc-20260630.htm",
+      "asOf": "2026-07-28",
+      "truncated": false
+    },
+    "riskFactorsExcerpt": {
+      "text": "ITEM 1A.\nRISK FACTORS\nInformation in response to this Item 1A can be found in this report under Item 1 and in the 2025 Annual Report to Shareholders under \"Financial Review Risk Factors.\" That information is incorporated into this item by reference.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/72971/000007297126000133/wfc-20251231_d2.htm",
+      "asOf": "2026-02-24",
+      "truncated": false
+    },
+    "riskFactorsSource": "10-K",
+    "pressRelease": {
+      "text": "EX-99.1\n2\nwfc2qer07-14x26ex991xrelea.htm\nEXHIBIT 99.1\nDocument\nExhibit 99.1\nNews Release July 14, 2026\nWells Fargo Reports Second Quarter 2026 Net Income of $6.4 billion, or $2.00 per Diluted Share\nCompany-wide Financial Summary\nQuarter ended\nJun 30,\n2026\nJun 30,\n2025\nSelected Income Statement Data\n($ in millions except per share amounts)\nTotal revenue\n$\n22,622\n20,822\nNoninterest expense\n13,661\n13,379\nProvision for credit losses 1\n914\n1,005\nNet income\n6,407\n5,494\nDiluted earnings per common share\n2.00\n1.60\nSelected Balance Sheet Data\n($ in billions)\nAverage loans\n$\n1,026.5\n916.7\nAverage deposits\n1,465.6\n1,331.7\nCET1 2\n10.3\n%\n11.1\nPerformance Metrics\nROE 3\n15.0\n%\n12.8\nROTCE 4\n17.7\n15.2\nOperating Segments and Other Highlights\nQuarter ended\nJun 30, 2026\n% Change from\n($ in billions)\nJun 30,\n2026\nMar 31,\n2026\nJun 30,\n2025\nAverage loans\nConsumer Banking and Lending 5\n$\n337.8\n1\n%\n6\nCommercial Banking 5\n237.1\n4\n5\nCorporate and Investment Banking\n359.4\n5\n26\nWealth and Investment Management\n91.1\n3\n12\nAverage deposits\nConsumer Banking and Lending 5\n828.4\n1\n3\nCommercial Banking 5\n189.5\n2\n6\nCorporate and Investment Banking\n234.8\n10\n16\nWealth and Investment Management\n109.8\n(2)\n10\nCapital\nRepurchased 37.4 million shares, or $3.0 billion, of common stock in second quarter 2026\nSecond quarter 2026 notable item\n$132 million , or $0.04 per share, of discrete tax benefits related to the resolution of prior period matters\nChairman and Chief Executive Officer Charlie Scharf commented, \"We generated strong second quarter results with diluted earnings per share growing to $2.00, up 25% from a year ago. Revenue increased 9% from a year ago with net interest income up 5% and noninterest income up 13%. Continued expense discipline drove positive operating leverage. Total expenses were up 2% from a year ago and non-revenue related expenses were lower. Consumer and commercial credit quality remained strong across all portfolios and net loan charge-offs declined 10 basis points from a year ago. ROTCE 4 increased from 15.2% a year ago to 17.7% in the second quarter and 16.1% in the first half of 2026. Our balance sheet continued to grow with average loans increasing 12% from a year ago, with higher balances in both our consumer and commercial businesses, and average deposits increasing 10%.\"\n\"We saw broad-based revenue growth, with all of our operating segments generating strong revenue growth. In our consumer businesses, Consumer Banking and Lending revenue grew 6% and Wealth and Investment Management revenue increased 13% from a year ago. We also had strong growth in our commercial businesses with Commercial Banking revenue up 6% and Corporate and Investment Banking revenue increasing 16% from a year ago,\" Scharf added.\n\"We are clearly benefitting from the broad-based economic strength we see in the U.S., but the investments we are making and our improved operating discipline also drove strong momentum in our key business metrics across all operating segments again this quarter. Consumer primary checking account growth is accelerating, and we had strong growth in new credit card accounts and auto originations. In Wealth and Investment Management, client assets grew 15% from a year ago to over $2.4 trillion. The hiring we have done in Commercial Banking has helped to drive new client acquisition and higher loan and deposit balances. In Corporate and Investment Banking we had strong results with Banking revenue increasing 20% and Markets revenue up 24% from a year ago,\" Scharf continued.\n\"After years of not being on a level playing field with our competitors because we couldn't grow our balance sheet, we are carefully deploying capital to grow and support our clients by taking risks that we think are prudent through economic cycles, not just the strong environment we see today. Our strong capital generation allows us to do this and continue to return capital to our shareholders. During the first half of this year, we repurchased approximately $7 billion of common stock and as previously announced, we expect to increase our third quarter common stock dividend by 11% to $0.50 per common share, subject to approval by the Company's Board of Directors at its meeting later this month. We continue to manage our capital position with significant buffers above regulatory minimums and look forward to the finalization of the new proposed capital rules,\" Scharf continued.\n\"Consumers and businesses remain very strong. Consumer spending is higher, charge-offs and delinquencies are lower, and savings and investments are growing across consumer segments. Businesses are cautious but balance sheets and cash flows remain strong resulting in strong credit performance. Equity indices are at or near all-time highs, credit spreads are narrow, and there is a significant amount of liquidity being deployed by banks and non-banks. Concerns around affordability and inflation exist, but the labor market and wage growth remain strong. We know that such favorable conditions do not go on forever so we are being selective about how much and where to grow. Our goal is to build sustainable higher returns and higher growth that can endure the inevitable market shocks and economic cycles,\" Scharf concluded.\nEndnotes are presented on page 9.\nFinancial results reported in this document are preliminary. Final financial results and other disclosures will be reported in our Quarterly Report on Form 10-Q for the quarter ended June 30, 2026, and may differ materially from the results and disclosures in this document due to, among other things, the completion of final review procedures, the occurrence of subsequent events, or the discovery of additional information.\nSelected Company-wide Financial Information\nQuarter ended\nJun 30, 2026\n% Change from\nJun 30,\n2026\nMar 31,\n2026\nJun 30,\n2025\nMar 31,\n2026\nJun 30,\n2025\nEarnings ($ in millions except per share amounts)\nNet interest income\n$\n12,317\n12,096\n11,708\n2\n%\n5\nNoninterest income\n10,305\n9,350\n9,114\n10\n13\nTotal revenue\n22,622\n21,446\n20,822\n5\n9\nNet charge-offs\n883\n1,106\n997\n(20)\n(11)\nChange in the allowance for credit losses\n31\n29\n8\n7\n288\nProvision for credit losses 1\n914\n1,135\n1,005\n(19)\n(9)\nNoninterest expense\n13,661\n14,330\n13,379\n(5)\n2\nIncome tax expense\n1,402\n691\n916\n103\n53\nWells Fargo net income\n$\n6,407\n5,253\n5,494\n22\n17\nDiluted earnings per common share\n2.00\n1.60\n1.60\n25\n25\nBalance Sheet Data (average) ($ in billions)\nLoans\n$\n1,026.5\n996.0\n916.7\n3\n12\nDeposits\n1,465.6\n1,415.0\n1,331.7\n4\n10\nAssets\n2,227.9\n2,168.2\n1,933.4\n3\n15\nFinancial Ratios\nReturn on assets (ROA)\n1.15\n%\n0.98\n1.14\nReturn on equity (ROE)\n15.0\n12.2\n12.8\nReturn on average tangible common equity (ROTCE) 2\n17.7\n14.5\n15.2\nEfficiency ratio 3\n60\n67\n64\nNet interest margin on a taxable-equivalent basis\n2.43\n2.47\n2.68\nSecond Quarter 2026 vs. Second Quarter 2025\nNet interest income increased 5%, driven by lower deposit costs, higher loan and investment securities balances, the impact of lower interest rates and balance sheet growth in our Markets business, and higher interest-bearing commercial deposits, partially offset by the impact of lower interest rates on floating rate assets, as well as a modest decline in noninterest-bearing deposits\nNoninterest income increased 13%. Second quarter 2026 included strong performance from our venture capital investments, higher investment advisory fees on higher market valuations, and higher investment banking fees, as well as increases in most other fee categories, partially offset by lower lease income related to the first quarter 2026 sale of our rail car leasing business. Second quarter 2025 included a $253 million gain associated with our merchant services joint venture acquisition\nNoninterest expense increased 2%, driven by higher revenue-related and other incentive compensation expense reflecting improved performance, an increase in technology and equipment expense, and higher advertising expense, partially offset by lower lease expense related to the first quarter 2026 sale of our rail car leasing business and the impact of efficiency initiatives, including a 7% reduction in headcount\nProvision for credit losses in second quarter 2026 included a modest increase in the allowance for credit losses, reflecting a higher allowance for credit card and auto loans driven by higher loan balances, largely offset by a lower allowance for commercial real estate loans\nEndnotes are presented on page 9.\n2\nSelected Company-wide Capital and Liquidity Information\nQuarter ended\n($ in billions)\nJun 30,\n2026\nMar 31,\n2026\nJun 30,\n2025\nCapital\nTotal equity\n$\n182.3\n180.3\n183.0\nCommon stockholders' equity\n165.0\n163.2\n164.6\nTangible common equity 1\n139.7\n137.8\n139.1\nCommon Equity Tier 1 (CET1) ratio 2\n10.3\n%\n10.3\n11.1\nTotal loss absorbing capacity (TLAC) ratio 3\n22.8\n23.0\n24.4\nSupplementary Leverage Ratio (SLR) 4\n5.8\n5.9\n6.7\nLiquidity\nLiquidity Coverage Ratio (LCR) 5\n119\n%\n120\n121\nIn June, the Company completed the 2026 Comprehensive Capital Analysis and Review stress test process\nAs previously announced by the Federal Reserve, this year's stress test results do not impact bank capital requirements. The Company's stress test results continued to be below the stress capital buffer (SCB) floor, and our SCB remains at 2.5%\nThird quarter 2026 common stock dividend is expected to be $0.50 per share, up from $0.45 per share, subject to approval by the Company's Board of Directors at its regularly scheduled meeting in July\nSelected Company-wide Loan Credit Information\nQuarter ended\n($ in millions)\nJun 30,\n2026\nMar 31,\n2026\nJun 30,\n2025\nNet loan charge-offs\n$\n876\n1,100\n997\nNet loan charge-offs as a % of average total loans (annualized)\n0.34\n%\n0.45\n0.44\nTotal nonaccrual loans\n$\n7,643\n8,469\n7,757\nAs a % of total loans\n0.74\n%\n0.83\n0.84\nTotal nonperforming assets\n$\n7,944\n8,768\n7,964\nAs a % of total loans\n0.77\n%\n0.86\n0.86\nAllowance for credit losses for loans\n$\n14,407\n14,374\n14,568\nAs a % of total loans\n1.40\n%\n1.41\n1.58\nSecond Quarter 2026 vs. First Quarter 2026\nCommercial net loan charge-offs as a percentage of average loans were 0.10% (annualized), down from 0.24% , driven by lower commercial and industrial net loan charge-offs. The consumer net loan charge-off rate decreased to 0.74% (annualized), down from 0.78%, on lower auto and credit card net loan charge-offs\nNonperforming assets were down $824 million , driven by lower commercial and industrial and commercial real estate nonaccrual loans . Nonperforming assets as a percentage of total loans were 0.77%, down from 0.86%\nEndnotes are presented on page 9.\n3\nOperating Segment Performance\nConsumer Banking and Lending offers diversified financial products and services for consumers and small businesses. These financial products and services include checking and savings accounts, credit and debit cards, as well as home, auto, personal, and small business lending. We also provide personalized wealth management and financial planning services through our branch channel.\nSelected Financial Information 1\nQuarter ended\nJun 30, 2026\n% Change from\nJun 30,\n2026\nMar 31,\n2026\nJun 30,\n2025\nMar 31,\n2026\nJun 30,\n2025\nEarnings (in millions)\nConsumer, Small and Business Banking\n$\n7,308\n7,019\n6,748\n4\n%\n8\nCredit Card\n1,614\n1,595\n1,588\n1\n2\nHome Lending\n762\n787\n821\n(3)\n(7)\nAuto\n320\n295\n241\n8\n33\nPersonal Lending\n284\n302\n290\n(6)\n(2)\nTotal revenue\n10,288\n9,998\n9,688\n3\n6\nProvision for credit losses\n945\n818\n945\n16\nNoninterest expense\n6,286\n6,589\n6,179\n(5)\n2\nNet income\n$\n2,290\n1,941\n1,923\n18\n19\nAverage balances (in billions)\nLoans\n$\n337.8\n335.3\n319.0\n1\n6\nDeposits\n828.4\n816.6\n805.5\n1\n3\nSecond Quarter 2026 vs. Second Quarter 2025\nRevenue increased 6%\nConsumer, Small and Business Banking was up 8% driven by higher deposit and loan balances, wider deposit spreads, higher deposit-related fees, increased debit card fees on higher volume, and higher investment advisory fees driven by an increase in market valuations. Results include the impact of the third quarter 2025 transfer of certain business customers from the Commercial Banking operating segment\nCredit Card was up 2% reflecting higher net interest income on higher loan balances\nHome Lending was down 7% due to lower net interest income on lower loan balances as well as lower servicing income\nAuto was up 33% due to higher loan balances\nNoninterest expense increased 2% driven by higher advertising expense and higher revenue-related compensation expense, as well as the impact of the third quarter 2025 transfer of certain business customers from the Commercial Banking operating segment, partially offset by the impact of efficiency initiatives\nEndnotes are presented on page 9.\n4\nCommercial Banking provides financial solutions to private, family owned and certain public companies. Products and services include banking and credit products across multiple industry sectors and municipalities, secured lending and lease products, and treasury management.\nSelected Financial Information\nQuarter ended\nJun 30, 2026\n% Change from\nJun 30,\n2026\nMar 31,\n2026\nJun 30,\n2025\nMar 31,\n2026\nJun 30,\n2025\nEarnings (in millions)\nNet interest income\n$\n2,047\n1,988\n1,983\n3\n%\n3\nNoninterest income\n1,071\n1,132\n950\n(5)\n13\nTotal revenue\n3,118\n3,120\n2,933\n6\nProvision for credit losses\n131\n150\n(43)\n(13)\n405\nNoninterest expense\n1,412\n1,608\n1,519\n(12)\n(7)\nNet income\n$\n1,176\n1,017\n1,086\n16\n8\nAverage balances (in billions)\nLoans\n$\n237.1\n229.1\n226.5\n4\n5\nDeposits\n189.5\n185.9\n178.0\n2\n6\nIn third quarter 2025, we prospectively transferred approximately $8 billion of loans and approximately $6 billion of deposits related to certain business customers to Consumer, Small and Business Banking in the Consumer Banking and Lending operating segment.\nSecond Quarter 2026 vs. Second Quarter 2025\nRevenue increased 6%\nNet interest income was up 3% due to higher loan and interest-bearing deposit balances, partially offset by the impact of lower interest rates, a decline in noninterest-bearing deposit balances, and the transfer noted above\nNoninterest income was up 13% driven by higher revenue from equity investments, tax credit investments, and investment banking\nNoninterest expense decreased 7% due to lower operating costs, the impact of the transfer noted above, as well as the impact of efficiency initiatives\n5\nCorporate and Investment Banking delivers a suite of capital markets, banking, and financial products and services to corporate, commercial real estate, government and institutional clients globally. Products and services include corporate banking, investment banking, treasury management, commercial real estate lending and capital markets, equity and fixed income solutions, as well as sales, trading, and research capabilities.\nSelected Financial Information\nQuarter ended\nJun 30, 2026\n% Change from\nJun 30,\n2026\nMar 31,\n2026\nJun 30,\n2025\nMar 31,\n2026\nJun 30,\n2025\nEarnings (in millions)\nBanking\nLending\n$\n724\n700\n601\n3\n%\n20\nTreasury Management and Payments\n661\n655\n611\n1\n8\nInvestment Banking\n628\n602\n463\n4\n36\nTotal Banking\n2,013\n1,957\n1,675\n3\n20\nCommercial Real Estate\n1,197\n1,146\n1,212\n4\n(1)\nMarkets\nFixed Income, Currencies, and Commodities (FICC)\n1,536\n1,583\n1,391\n(3)\n10\nEquities\n635\n543\n387\n17\n64\nCredit Adjustment (CVA DVA FVA) and Other\n35\n47\n1\n(26)\nNM\nTotal Markets\n2,206\n2,173\n1,779\n2\n24\nOther\n9\n2\n7\n350\n29\nTotal revenue\n5,425\n5,278\n4,673\n3\n16\nProvision for credit losses\n(181)\n175\n103\nNM\nNM\nNoninterest expense\n2,497\n2,692\n2,251\n(7)\n11\nNet income\n$\n2,329\n1,809\n1,737\n29\n34\nAverage balances (in billions)\nLoans\n$\n359.4\n342.3\n285.9\n5\n26\nDeposits\n234.8\n214.3\n202.4\n10\n16\nNM Not meaningful\nSecond Quarter 2026 vs.",
+      "source": "edgar:8-K ex-99.1",
+      "url": "https://www.sec.gov/Archives/edgar/data/72971/000007297126000288/wfc2qer07-14x26ex991xrelea.htm",
+      "asOf": "2026-07-14",
+      "truncated": true
+    },
+    "proxyStatement": {
+      "text": "Board and director independence:\nDirector Independence\nOur Corporate Governance Guidelines provide that a significant majority of the directors on our Board, and all members of the Audit Committee, GNC, HRC, and Risk Committee, must be independent under applicable independence standards. To be considered an independent director, our Board must determine that the director has no material relationship with our Company (either directly or as a partner, shareholder, or officer of an organization that has a relationship with our Company). To assist in making its independence determinations, our Board adopted the Director Independence Standards appended to our Corporate Governance Guidelines, which consist of the New York Stock Exchange's standards of independence, as well as additional standards, known as categorical standards of independence.\nBased on the Director Independence Standards, our Board considered information in early 2026 regarding banking and financial services, commercial, charitable, familial, and other relationships between each director and director nominee, his or her respective immediate family members, and/or certain entities affiliated with such directors and director nominees and immediate family members, on the one hand, and our Company, on the other, to determine the director's or director nominee's independence. After reviewing the information presented to it and considering the recommendation of the GNC, our Board determined that, except for Charles W. Scharf, who is a Wells Fargo employee, all other current directors and director nominees are independent under the Director Independence Standards : Steven D. Black, Mark A. Chancy, Celeste A. Clark, Theodore F. Craver, Jr., Richard K. Davis, Fabian T. Garcia, Wayne M. Hewett, CeCelia G. Morken, Maria R. Morris, Felicia F. Norwood, Ronald L. Sargent, and Suzanne M. Vautrinot.\nIn connection with making its independence determinations, our Board considered the following relationships under the Director Independence Standards and determined that all of these relationships satisfied the NYSE's standards of independence and were immaterial under our Board's categorical standards of independence:\nBanking and Financial Services Relationships\nOur Company's banking and other subsidiaries had ordinary course banking and financial services relationships in 2025 with certain of our directors, some of their immediate family members, and/or certain entities affiliated with such directors and their immediate family members, all of which were on substantially the same terms as those available at the time for comparable transactions with persons not affiliated with our Company and complied with applicable banking laws.\nOther Relationships\nTheodore F. Craver, Jr.\n\nSecurity ownership:\nSecurity Ownership of Certain Beneficial Owners, Officers, and Directors\nThe following table shows how many shares of common stock our current directors and nominees for director, our NEOs, and all directors, director nominees, and executive officers, as a group, beneficially owned on February 9, 2026, and the number of shares they had the right to acquire within 60 days of that date, including Restricted Share Rights ( RSRs ) that are scheduled to vest within 60 days of that date. This table also shows, as of February 9, 2026, the number of common stock units credited to the accounts of the directors, director nominees, NEOs, and executive officers as a group under the terms of the benefit and deferral plans in which they participate but that are not deemed beneficially owned under SEC rules as of February 9, 2026. None of our directors, NEOs, or executive officers, individually or as a group, beneficially own more than 1% of our outstanding common stock.\nAmount and Nature of Beneficial Ownership 1\nName\nCommon Stock\nOwned 2,3\nUnvested\nCommon Stock\nUnits 4\nOther\nCommon Stock\nUnits 5,6\nTotal\nBeneficial\nOwnership 7\nAdditional\nCommon Stock\nUnits 8,9\nTotal\n(a)\n(b)\n(c)\n(d)\n(e)\n(f)\nNon-Employee Directors and Director Nominees\nSteven D. Black\n139\n14,336\n14,475\n55,250\n69,725\nMark A. Chancy\n28,540\n14,336\n42,876\n42,876\nCeleste A. Clark\n4,022\n5,892\n9,914\n47,476\n57,390\nTheodore F. Craver, Jr.\n33,201\n6,341\n39,542\n17,910\n57,452\nRichard K. Davis\n4,244\n14,336\n18,580\n5,805\n24,385\nFabian T. Garcia\n101\n101\n9,111\n9,212\nWayne M. Hewett\n101\n101\n55,043\n55,144\nCeCelia G. Morken\n100\n14,336\n14,436\n5,805\n20,241\nMaria R. Morris\n4,253\n4,253\n37,229\n41,482\nFelicia F. Norwood\n5,384\n14,336\n19,720\n19,720\nRonald L. Sargent\n18,131\n18,131\n83,687\n101,818\nSuzanne M. Vautrinot\n17,636\n14,336\n31,972\n20,705\n52,677\nNEOs\nCharles W. Scharf*\n1,118,702\n1,118,702\n1,118,702\nMichael P. Santomassimo\n445,567\n445,567\n445,567\nFernando S Rivas\n121,515\n121,515\n121,515\nKleber R. Santos\n105,768\n105,768\n105,768\nEllen R. Patterson\n230,786\n230,786\n230,786\nAll directors, director nominees, NEOs, and executive officers, as a group (27 persons) 10\n3,884,799\n99,006\n3,983,805\n345,246\n4,329,051\n* Mr. Scharf also serves as a director.\n1. Unless otherwise stated in the footnote below, each of the named individuals and each member of the group have sole voting and investment power for the applicable shares of common stock shown in the table.\n2. The amounts shown for NEOs and executive officers include shares of common stock allocated to the account of each NEO and executive officer under the 401(k) Plan as of February 9, 2026.\n2026 Proxy Statement\n41\nTable of Contents\nOwnership of Our Common Stock\n3. For the following directors and NEOs, and for all directors, director nominees, NEOs, and executive officers, as a group, the amounts shown include certain shares over which they may have shared voting and investment power: Mark A. Chancy, 28,506 shares held in a joint account; Theodore F. Craver, Jr., 33,112 shares held in trusts of which he is a co-trustee; Ellen R. Patterson, 71,691 held in joint accounts; Michael P. Santomassimo, 404,606 shares held in joint accounts and 1,000 shares held in his spouse's IRA; Charles W. Scharf, 1,056,234 shares held in joint accounts and 103 shares held in a trust over which he has investment power; Suzanne M. Vautrinot, 12,129 shares held in a trust of which she is a co-trustee; and all directors, director nominees, NEOs, and executive officers, as a group, 2,323,450 shares.\n4. Unvested common stock units scheduled to vest pursuant to the applicable award agreements within 60 days of February 9, 2026, subject to the terms and conditions of the award.\n5.",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/72971/000007297126000200/wfc-20260318.htm",
+      "asOf": "2026-03-18",
+      "truncated": true
+    },
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T21:45:00.914Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T21:45:00.914Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T21:45:00.914Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T21:45:00.914Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T21:45:00.914Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T21:45:00.914Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T21:45:00.914Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T21:45:00.914Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T21:45:00.914Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T21:45:00.914Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T21:45:00.914Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T21:45:00.914Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-20T21:45:00.914Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-20T21:45:00.914Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-20T21:45:00.914Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-09-20T21:45:00.914Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-09-20T21:45:00.914Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-09-20T21:45:00.914Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T21:45:00.914Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-20T21:45:00.914Z"
+    }
+  ]
+}
