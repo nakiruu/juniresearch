@@ -152,7 +152,13 @@
     "label": "BUY",
     "tone": "bull",
     "targetLow": 215,
-    "targetHigh": 255
+    "targetHigh": 255,
+    "conviction": {
+      "expectedUpside": 0.137153639884795,
+      "bearDownside": 0.15582480881914787,
+      "rewardRisk": 0.8801784576163167,
+      "derivedLabel": "BUY"
+    }
   },
   "snapshot": [
     {
@@ -696,5 +702,5 @@
       ]
     }
   },
-  "disclaimer": "DISCLAIMER: This report is for informational/educational purposes only and does not constitute investment advice. Technology and AI-infrastructure stocks carry significant risk and volatility. Past performance is not indicative of future results. Conduct your own due diligence. The author may hold positions in securities discussed."
+  "disclaimer": "DISCLAIMER: This report is for informational/educational purposes only and does not constitute investment advice. All equity securities carry risk and can be volatile, and past performance is not indicative of future results. Conduct your own due diligence. The author may hold positions in securities discussed."
 }
