@@ -58,3 +58,31 @@ describe("computeTtm", () => {
     expect(partial.keyMetrics.price_to_sales).toBeNull();
   });
 });
+
+describe("computeTtm P/E fallback to Yahoo trailing P/E", () => {
+  const withNullEps = [
+    q({ report_date: "2025-09-30", eps_diluted: null }), q({ report_date: "2025-12-31", eps_diluted: null }),
+    q({ report_date: "2026-03-31", eps_diluted: null }), q({ report_date: "2026-06-30", eps_diluted: 2 }),
+  ];
+
+  it("uses Yahoo's trailing P/E when the quarterly EPS can't be summed", () => {
+    // One quarter's eps is null -> the SEC TTM EPS sum is null (multi-share-class filer whose EPS the
+    // companyfacts API omits); the P/E falls back to Yahoo's own trailing P/E.
+    const t = computeTtm(withNullEps, { price: 100, marketCap: 4000, dividendYield: 0.01, trailingPe: 31.3 });
+    expect(t.keyMetrics.pe_ratio).toBe(31.3);
+  });
+
+  it("prefers the SEC-derived P/E over Yahoo's when the quarterly EPS is complete", () => {
+    const complete = [
+      q({ report_date: "2025-09-30" }), q({ report_date: "2025-12-31" }),
+      q({ report_date: "2026-03-31" }), q({ report_date: "2026-06-30" }),
+    ];
+    const t = computeTtm(complete, { price: 100, marketCap: 4000, dividendYield: 0.01, trailingPe: 999 });
+    expect(t.keyMetrics.pe_ratio).toBeCloseTo(100 / 8, 6); // price / Σeps, not the Yahoo 999
+  });
+
+  it("nulls the P/E when neither a summable EPS nor a Yahoo trailing P/E is available", () => {
+    const t = computeTtm(withNullEps, { price: 100, marketCap: 4000, dividendYield: 0.01 });
+    expect(t.keyMetrics.pe_ratio).toBeNull();
+  });
+});

@@ -27,6 +27,10 @@ export interface YahooData {
   week52High: number;
   dividendYield: number;
   targets: { consensus: number; median: number; high: number; low: number };
+  // Yahoo's own trailing P/E (price ÷ TTM diluted EPS). A fallback for the SEC-derived P/E when the
+  // trailing EPS can't be summed from four discrete quarters — e.g. a multi-share-class filer (Visa)
+  // whose EPS the companyfacts API omits and whose 10-Q supplies only the current discrete quarter.
+  trailingPe: number | null;
   ratings: {
     strong_buy: number;
     buy: number;
@@ -93,6 +97,7 @@ interface QuoteSummaryResult {
     fiftyTwoWeekHigh?: RawValue;
     dividendYield?: RawValue;
     trailingAnnualDividendYield?: RawValue;
+    trailingPE?: RawValue;
   };
   financialData?: {
     targetMeanPrice?: RawValue;
@@ -244,6 +249,7 @@ export function parseQuoteSummary(raw: unknown, opts: { latestFY: number }): Yah
       high: targets.high,
       low: targets.low,
     },
+    trailingPe: rawVal(summaryDetail.trailingPE),
     ratings,
     estimates,
   };

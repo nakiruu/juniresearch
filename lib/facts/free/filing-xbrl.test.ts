@@ -226,3 +226,52 @@ describe("mergeFilingFacts", () => {
     expect(merged.facts?.["us-gaap"]?.NetIncomeLoss.units?.USD).toEqual([{ end: "2026-06-30", val: 5, form: "10-Q", filed: "2026-07-24" }]);
   });
 });
+
+// Multi-share-class filers (Visa, Alphabet) tag EPS only under the class-of-stock axis — never a
+// plain consolidated context — so the headline diluted EPS rides the PRIMARY class's member
+// (us-gaap:CommonClassAMember). parseFilingXbrl must recover that member's value for the EPS
+// concepts only, while still dropping non-primary classes and every non-EPS dimensioned fact.
+describe("primary-share-class EPS recovery (multi-share-class filers)", () => {
+  const CLASS_HTML = `
+<html><body>
+<xbrli:context id="c-a">
+  <xbrli:entity>
+    <xbrli:identifier scheme="http://www.sec.gov/CIK">0001403161</xbrli:identifier>
+    <xbrli:segment><xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">us-gaap:CommonClassAMember</xbrldi:explicitMember></xbrli:segment>
+  </xbrli:entity>
+  <xbrli:period><xbrli:startDate>2025-04-01</xbrli:startDate><xbrli:endDate>2025-06-30</xbrli:endDate></xbrli:period>
+</xbrli:context>
+<xbrli:context id="c-b">
+  <xbrli:entity>
+    <xbrli:identifier scheme="http://www.sec.gov/CIK">0001403161</xbrli:identifier>
+    <xbrli:segment><xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">us-gaap:CommonClassBMember</xbrldi:explicitMember></xbrli:segment>
+  </xbrli:entity>
+  <xbrli:period><xbrli:startDate>2025-04-01</xbrli:startDate><xbrli:endDate>2025-06-30</xbrli:endDate></xbrli:period>
+</xbrli:context>
+<xbrli:unit id="usdPerShare">
+  <xbrli:divide>
+    <xbrli:unitNumerator><xbrli:measure>iso4217:USD</xbrli:measure></xbrli:unitNumerator>
+    <xbrli:unitDenominator><xbrli:measure>xbrli:shares</xbrli:measure></xbrli:unitDenominator>
+  </xbrli:divide>
+</xbrli:unit>
+<ix:nonFraction unitRef="usdPerShare" contextRef="c-a" decimals="2" name="us-gaap:EarningsPerShareDiluted" scale="0" id="e1">2.97</ix:nonFraction>
+<ix:nonFraction unitRef="usdPerShare" contextRef="c-b" decimals="2" name="us-gaap:EarningsPerShareDiluted" scale="0" id="e2">2.97</ix:nonFraction>
+<ix:nonFraction unitRef="usdPerShare" contextRef="c-a" decimals="2" name="us-gaap:CommonStockDividendsPerShareDeclared" scale="0" id="e3">0.59</ix:nonFraction>
+</body></html>`;
+
+  it("captures the primary class (Class A) diluted EPS from its dimensioned context", () => {
+    const facts = parseFilingXbrl(CLASS_HTML, META);
+    const eps = facts["EarningsPerShareDiluted"]?.["USD/shares"];
+    expect(eps).toBeDefined();
+    expect(eps).toHaveLength(1); // Class A only — not Class B's duplicate value in a different context
+    expect(eps![0].val).toBe(2.97);
+    expect(eps![0].end).toBe("2025-06-30");
+  });
+
+  it("drops a non-primary share class and any non-EPS class-scoped fact", () => {
+    const facts = parseFilingXbrl(CLASS_HTML, META);
+    // Class B EPS is excluded (only one EPS entry, asserted above); the class-scoped dividend concept
+    // gets no allowance and is dropped entirely.
+    expect(facts["CommonStockDividendsPerShareDeclared"]).toBeUndefined();
+  });
+});

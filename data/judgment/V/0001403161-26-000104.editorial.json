@@ -1,0 +1,89 @@
+{
+  "judgmentSha256": "17352f7509eb56750e38ac8eedb10fc151640c2b66e593b2d237639792187493",
+  "reviewedAt": "2026-09-21T05:30:00Z",
+  "reviewer": "claude-opus-4-8",
+  "round": 2,
+  "verdict": "approved-with-minors",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "analystCommentary",
+      "quote": "Visa is one of the two dominant global payments networks",
+      "issue": "The grounding surface describes Visa only as \"a global payments technology company\" operating VisaNet across more than 200 countries and territories (company description, MD&A). It nowhere states that Visa is one of only two dominant networks. The duopoly / market-structure claim is recalled from outside the pack, and it is load-bearing — it underwrites the wide-moat and premium-multiple framing that runs through the report.",
+      "fix": "Soften to what the surface supports: describe VisaNet's scale (200+ countries, the double-digit volumes) or call it \"one of the world's largest global payments networks\" without asserting a two-player market structure the pack does not establish.",
+      "status": "addressed",
+      "note": "Still addressed at this round's judgment. analystCommentary opens \"Visa is a global payments network — VisaNet connects issuers, acquirers and merchants across more than 200 countries.\" 0 occurrences of \"two dominant\"/\"duopoly\"; the four residual uses of \"dominant\" are soft characterizations of a WIDE-moat network supported by disclosed scale, not a market-structure assertion."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.executiveSummary.catalysts[0], sections.executiveSummary.risks[1]",
+      "quote": "Continued double-digit volume growth — nominal payments volume up 11%, processed transactions up 10%, cross-border volume up 14% in the quarter — sustaining the net-revenue growth the financials section sets out.",
+      "issue": "House style makes the executive-summary catalysts and risks pointers while the later sections carry the figures, but these bullets restate what the sections argue. Catalyst[0] repeats the 11%/10%/14% volume triple that growth.points[0] states almost verbatim (\"nominal payments volume up 11%, processed transactions up 10%, and nominal cross-border volume up 14% in the quarter\"), and which companyOverview and the moat segment also give; catalyst[1] repeats the cross-border travel/e-commerce point of growth.points[1]; risks[1] repeats the \"$1.1B of additional accruals in the FY26 nine-month period\" that risks.idiosyncratic[1] argues.",
+      "fix": "Turn the bullets into pointers — state the direction and defer the numbers (\"double-digit growth across all three volume measures — see Growth\"; \"open interchange litigation — see Risks\") — and let each figure appear once, in the section that argues it.",
+      "status": "addressed",
+      "note": "Still addressed. catalysts[0] reads \"Continued double-digit growth across all three volume drivers ... the financials section quantifies\" (no 11/10/14); catalysts[1] defers to the growth section; risks[1] reads \"the interchange multidistrict litigation keeps generating accruals and remains open, as the risk section details\" (no $1.1B). The catalysts[2] residual flagged as F-6 is now also fixed."
+    },
+    {
+      "id": "F-3",
+      "severity": "Minor",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "the shares trade at 31.3x trailing and about 27.8x forward earnings",
+      "issue": "The prose \"forward earnings\" multiple (27.8x, the NTM / FY26E figure) is not the \"Fwd P/E (FY27E)\" of ~24.5x shown on the snapshot card the reader sees. Both are grounded (Multiples: Fwd P/E NTM 27.8x; Snapshot: Fwd P/E FY27E ~24.5x), but they are never reconciled, and \"about 28x forward\" recurs in the thesis, risks and final recommendation. A reader comparing the prose to the snapshot sees two different \"forward\" P/Es.",
+      "fix": "State the basis where the multiple is used, e.g. \"about 27.8x next-twelve-months earnings (24.5x on FY27 estimates),\" so the prose and the snapshot card agree on what \"forward\" means.",
+      "status": "addressed",
+      "note": "Addressed. The 27.8x figure is labeled \"next-twelve-months earnings\" everywhere it appears (6 times across the judgment); \"forward\" no longer attaches to a specific multiple. The built report's snapshot (data/v.json) renders no FY27E forward-P/E row at all, so the reader never sees a competing 24.5x \"forward\" figure next to the prose's 27.8x NTM."
+    },
+    {
+      "id": "F-4",
+      "severity": "Minor",
+      "field": "analystCommentary",
+      "quote": "Profitability is extraordinary and hard to overstate",
+      "issue": "House style bars hype and asks the numbers to carry the weight; \"extraordinary and hard to overstate\" editorializes on top of the 51.8% margin figure it introduces. \"extraordinary/extraordinarily\" then recurs as a tic — thesis \"converting revenue to cash at extraordinary rates,\" moat factor \"extraordinarily hard to dislodge,\" risks.systemic \"extraordinary margins\" — alongside \"some of the best economics in business\" and the moat factor's \"a scale few systems on earth match.\"",
+      "fix": "Cut the editorial intensifiers and let the margin and free-cash-flow figures stand on their own; vary or drop the repeated \"extraordinary.\"",
+      "status": "addressed",
+      "note": "Still addressed. \"extraordinary/extraordinarily\" appears 0 times (now \"high and cash-rich,\" \"at high rates,\" \"very hard to dislodge,\" \"very high margins\"); \"best economics in business\" is gone and \"a scale few systems on earth match\" is now \"a scale few networks match.\""
+    },
+    {
+      "id": "F-5",
+      "severity": "Minor",
+      "field": "meta.subtitle",
+      "quote": "A wide-moat payments network compounding double-digit volume into high margins and heavy buybacks — premium-priced, with interchange regulation the overhang",
+      "issue": "meta.subtitle is 156/160 characters (98% of cap) and sections.executiveSummary.thesis.body is 1399/1500 (93%), leaving almost no room for the next round to edit. Item 10 asks fields to sit inside their caps with room to spare.",
+      "fix": "Trim the subtitle (e.g. drop \"heavy\" or compress the clause after the dash) and tighten the thesis so each has editing headroom.",
+      "status": "open",
+      "note": "Still open. In this round's judgment the subtitle is unchanged at 156/160 and the thesis body unchanged at 1401/1500; neither field was trimmed, so there is still no editing headroom. Drop a word from the subtitle (e.g. \"heavy\") and tighten the thesis."
+    },
+    {
+      "id": "F-6",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.catalysts[2]",
+      "quote": "Heavy capital return: $18.3B of FY25 buybacks plus a growing dividend, shrinking the share count and compounding per-share value from a business that generates cash in volume.",
+      "issue": "House style makes executive-summary catalysts pointers while the sections carry the figures. F-2 converted catalysts[0], catalysts[1] and risks[1] to pointers, but this bullet still carries the hard \"$18.3B of FY25 buybacks\" figure. That same FY25 buyback figure already appears in companyOverview (the same executive-summary block), is argued in cashflowCommentary and capitalAllocation, and is recapped in finalRecommendation[0] — five appearances of $18.3B, one of them inside a pointer bullet that should defer the number.",
+      "fix": "Make the bullet a pointer that names the direction and defers the figure — e.g. \"Heavy capital return — nearly all free cash flow returned through buybacks and a growing dividend; see Cash Flow and Capital Allocation\" — leaving $18.3B to the sections that argue it.",
+      "status": "addressed",
+      "note": "Addressed. catalysts[2] no longer carries the $18.3B figure; it now reads \"Heavy capital return: FY25 buybacks plus a growing dividend, shrinking the share count and compounding per-share value from a cash-generative business, as the cash-flow section sizes\" — a pointer that defers the number to the cash-flow and capital-allocation sections that argue it."
+    },
+    {
+      "id": "F-7",
+      "severity": "Minor",
+      "field": "sections.management.leadership",
+      "quote": "The execution record — double-digit volume growth, industry-leading margins and disciplined capital return — is the case for trusting management",
+      "issue": "\"industry-leading margins\" is an unearned superlative. The pack carries no peer or industry margin data, and the valuation section states this explicitly: \"no peer column exists in this pack, so no cross-sectional comparison is made.\" Asserting that Visa's margins lead the industry both lacks support on the grounding surface and contradicts the report's own stated discipline. House style: before writing a superlative, check the source supports it; here it does not.",
+      "fix": "Drop the comparative superlative and let the disclosed figure carry it — e.g. \"double-digit volume growth, a 51.8% net margin and disciplined capital return\" — or write \"very high margins\" without the industry-leadership claim.",
+      "status": "addressed",
+      "note": "Addressed. management.leadership now reads \"double-digit volume growth, very high margins and disciplined capital return\"; the unearned \"industry-leading margins\" superlative is gone (0 occurrences of \"industry-leading\" in the judgment)."
+    },
+    {
+      "id": "F-8",
+      "severity": "Minor",
+      "field": "analystCommentary, sections.financials.incomeCommentary",
+      "quote": "diluted EPS was $2.97 in the quarter against $3.32 on a non-GAAP basis, the gap driven by interchange-litigation accruals",
+      "issue": "The interchange-litigation accrual the pack discloses is a nine-month figure ($1.1 billion for the nine months ended June 30, 2026), and the non-GAAP reconciliation \"tables below\" that would itemize the quarterly adjustment were not captured. Attributing the specific quarterly GAAP-vs-non-GAAP EPS gap ($2.97 vs $3.32, a ~$668M net-income add-back) to interchange-litigation accruals is an inference the filing invites but does not establish for the quarter. incomeCommentary hedges it (\"driven mainly by interchange-litigation accruals and other items Visa excludes\"); analystCommentary states it flatly.",
+      "fix": "Hedge the quarterly attribution the way incomeCommentary does, or pin the litigation-accrual cause to the nine-month level where the disclosed $1.1B belongs, describing the quarterly gap as the non-GAAP items Visa excludes.",
+      "status": "addressed",
+      "note": "Addressed. analystCommentary now hedges the quarterly gap — \"the gap reflecting interchange-litigation accruals among other items\" — matching incomeCommentary's \"driven mainly by interchange-litigation accruals and other items Visa excludes.\" The flat causal attribution to interchange-litigation accruals is gone."
+    }
+  ]
+}

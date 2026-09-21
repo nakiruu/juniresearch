@@ -4,6 +4,7 @@ import { requireContact } from "./_env";
 import { resolveCik } from "../lib/edgar/tickers";
 import { fetchCompanyFacts, parseCompanyFacts } from "../lib/facts/free/sec";
 import { parseFilingXbrl, mergeFilingFacts, type CompanyFactsLike } from "../lib/facts/free/filing-xbrl";
+import { ANNUAL_PRIMARY_FILE } from "../lib/facts/manifest";
 import { fetchQuoteSummary, parseQuoteSummary } from "../lib/facts/free/yahoo";
 import { computeTtm } from "../lib/facts/free/ttm";
 import { buildTearsheetFiles, writeTearsheetFiles } from "../lib/facts/free/emit";
@@ -34,6 +35,22 @@ try {
     if ((err as NodeJS.ErrnoException)?.code !== "ENOENT") throw err;
   }
 
+  // The companyfacts API can omit a concept a filer nonetheless tags: Visa's EarningsPerShareDiluted
+  // is absent from companyfacts entirely, though every 10-K tags it (non-dimensioned), because Visa's
+  // per-share facts sit only under class-of-stock contexts the API drops. The prior 10-K's own primary
+  // document (captured by facts:prepare as edgar-10k-primary.html) carries the annual EPS series, so we
+  // parse and merge it too. It is stamped with the 10-K's own period-end date, older than the
+  // companyfacts filings, so it only FILLS concepts companyfacts lacks (EPS) and never overrides live
+  // values. Missing file / no iXBRL facts is a graceful no-op.
+  try {
+    const annualHtml = readFileSync(join(captureDir, ANNUAL_PRIMARY_FILE), "utf8");
+    const periodEnd = annualHtml.match(/name="dei:DocumentPeriodEndDate"[^>]*>\s*([0-9]{4}-[0-9]{2}-[0-9]{2})/)?.[1];
+    const annualFacts = parseFilingXbrl(annualHtml, { form: "10-K", filed: periodEnd ?? "2000-01-01" });
+    merged = mergeFilingFacts(merged, annualFacts);
+  } catch (err) {
+    if ((err as NodeJS.ErrnoException)?.code !== "ENOENT") throw err;
+  }
+
   sec = parseCompanyFacts(merged);
 } catch (err) {
   const message = err instanceof Error ? err.message : String(err);
@@ -45,7 +62,7 @@ const latestFY = sec.annual.at(-1)!.fiscal_year;
 
 const yraw = await fetchQuoteSummary(ticker);          // throws loudly on crumb/HTTP failure
 const yahoo = parseQuoteSummary(yraw, { latestFY });
-const ttm = computeTtm(sec.quarter, { price: yahoo.price, marketCap: yahoo.marketCap, dividendYield: yahoo.dividendYield });
+const ttm = computeTtm(sec.quarter, { price: yahoo.price, marketCap: yahoo.marketCap, dividendYield: yahoo.dividendYield, trailingPe: yahoo.trailingPe });
 
 const dir = join("data", "raw", ticker, accession);
 const files = buildTearsheetFiles({ cik, sec, yahoo, ttm, capturedAt: new Date().toISOString() });

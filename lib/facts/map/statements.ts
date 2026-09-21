@@ -48,7 +48,11 @@ export function mapStatements(dir: string): { statements: FactPack["statements"]
       row("operatingIncome", "Operating Income", col(inc, "operating_income", true)),
       row("ebitda", "EBITDA", col(inc, "ebitda", true)),
       row("netIncome", "Net Income", col(inc, "net_income")),
-      row("epsDiluted", "Diluted EPS", col(inc, "eps_diluted")),
+      // Optional: the companyfacts API can omit a filer's diluted-EPS concept even though its filings
+      // tag it (Visa reports EPS only under class-of-stock contexts the API drops); facts:free recovers
+      // recent years from the 10-K's own iXBRL, but the earliest years in the window can still lack it,
+      // rendering "—". Net income and net margin carry profitability where an EPS year is missing.
+      row("epsDiluted", "Diluted EPS", col(inc, "eps_diluted", true)),
     ],
     balance: [
       // Optional: a bank's cash sits under "cash and due from banks" / "deposits with banks" concepts the
