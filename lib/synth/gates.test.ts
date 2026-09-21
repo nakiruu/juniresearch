@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
-import { evaluateGates, applyGateCeiling, classifySector, sectorFromSic, type GateFacts } from "./gates";
+import { evaluateGates, applyGateCeiling, classifySector, sectorFromSic, gateAdvisory, type GateFacts } from "./gates";
 
 /**
  * Known-answer fixtures come from real, published FactPacks so a wrong formula
@@ -233,5 +233,18 @@ describe("applyGateCeiling", () => {
     expect(applyGateCeiling("BUY", "SELL")).toBe("SELL");
     expect(applyGateCeiling("SELL", "HOLD")).toBe("SELL");
     expect(applyGateCeiling("BUY", "STRONG BUY")).toBe("BUY");
+  });
+});
+
+describe("gateAdvisory", () => {
+  it("returns null when the author's label is at or below the gate ceiling", () => {
+    expect(gateAdvisory("BUY", evaluateGates(AMD))).toBeNull(); // AMD ceiling STRONG BUY
+    expect(gateAdvisory("HOLD", evaluateGates(INTC))).toBeNull(); // INTC ceiling HOLD == label
+  });
+  it("returns a message when the author's label sits above the ceiling", () => {
+    const msg = gateAdvisory("HOLD", evaluateGates(CRWV)); // CRWV ceiling SELL
+    expect(msg).not.toBeNull();
+    expect(msg).toContain("SELL");
+    expect(msg).toContain("distress");
   });
 });

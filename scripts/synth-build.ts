@@ -5,6 +5,7 @@ import { projectReportFacts } from "../lib/facts/project";
 import { Desk } from "../lib/synth/desk.schema";
 import { Judgment } from "../lib/synth/judgment.schema";
 import { mergeReport } from "../lib/synth/merge";
+import { evaluateGates, gateAdvisory } from "../lib/synth/gates";
 import { validateJudgment } from "../lib/synth/validate-judgment";
 import { Report } from "../lib/report.schema";
 import { validateReport, type ValidationIssue } from "../lib/validate";
@@ -42,7 +43,8 @@ const parsed = Judgment.safeParse(raw);
 const judgment = parsed.success ? parsed.data : fail(parsed.error.issues.map((i) => ({ field: i.path.join(".") || "(root)", message: i.message, value: null })), [], "Judgment.parse");
 
 const facts = projectReportFacts(pack);
-const report = mergeReport(facts, judgment, desk, buildDate);
+const gate = evaluateGates(pack);
+const report = mergeReport(facts, judgment, desk, buildDate, gate);
 const rp = Report.safeParse(report);
 const valid = rp.success ? rp.data : fail(rp.error.issues.map((i) => ({ field: i.path.join("."), message: i.message, value: null })), [], "Report.parse");
 const issues = [...validateReport(valid), ...validateJudgment(judgment, facts, pack, desk)];
@@ -60,10 +62,15 @@ if (status !== "clean" && !skipReview)
   fail([{ field: editorialPath, message: editorialGateMessage(status, review ? openFindings(review).length : 0), value: status }], warnings, "editorial");
 if (status !== "clean") console.warn(`editorial review skipped: ${status}`);
 
+// The fundamental gate is advisory here: it never blocks the build, but a rating above its
+// ceiling is surfaced as a warning (and fed back into the next prompt via the errors file).
+const gateWarning = gateAdvisory(valid.rating.label, gate);
+const warningLines = [...warnings.map(issueLine), ...(gateWarning ? [gateWarning] : [])];
+
 const out = join("data", `${ticker.toLowerCase()}.json`);
 writeFileSync(out, JSON.stringify(valid, null, 2) + "\n");
-if (warnings.length) writeErrorsFile(errorsPath, [], warnings.map(issueLine));
+if (warningLines.length) writeErrorsFile(errorsPath, [], warningLines);
 else if (existsSync(errorsPath)) rmSync(errorsPath);
-console.log(`Wrote ${out}\n  ${valid.meta.company} · ${valid.rating.label} ${valid.rating.targetLow}–${valid.rating.targetHigh} · report date ${valid.meta.reportDate} · ${valid.quote.history?.length ?? 0} closes`);
-if (warnings.length)
-  console.warn(`  ${warnings.length} lint warning(s) — kept in ${errorsPath} for the next --with-errors render:\n` + warnings.map((w) => `  - ${issueLine(w)}`).join("\n"));
+console.log(`Wrote ${out}\n  ${valid.meta.company} · ${valid.rating.label} ${valid.rating.targetLow}–${valid.rating.targetHigh} · report date ${valid.meta.reportDate} · ${valid.quote.history?.length ?? 0} closes · gate ${gate.sector}/${valid.rating.gate?.gatedLabel ?? "—"}`);
+if (warningLines.length)
+  console.warn(`  ${warningLines.length} warning(s) — kept in ${errorsPath} for the next --with-errors render:\n` + warningLines.map((w) => `  - ${w}`).join("\n"));

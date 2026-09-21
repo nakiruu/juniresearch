@@ -95,12 +95,25 @@ const conviction = z.object({
   derivedLabel: ratingLabel,
 });
 
+/** The fundamental-gate read (lib/synth/gates.ts); optional so reports built before it parse. */
+const gate = z.object({
+  sector: z.enum(["financial", "utility", "industrial"]),
+  ceiling: ratingLabel,
+  gatedLabel: ratingLabel, // applyGateCeiling(derivedLabel, ceiling)
+  distress: z.enum(["SAFE", "WEAK", "DISTRESS", "NA"]),
+  piotroski: z.number().int().min(0).max(9),
+  accruals: z.enum(["HIGH", "NEUTRAL", "LOW"]).nullable(),
+  confidence: z.enum(["high", "medium", "low"]),
+  flags: z.array(z.string()),
+});
+
 const rating = z.object({
   label: ratingLabel,
   tone: z.enum(["bull", "accent", "secondary", "bear"]).default("bull"),
   targetLow: z.number(),
   targetHigh: z.number(),
   conviction: conviction.optional(),
+  gate: gate.optional(),
 });
 
 const analystSentiment = z.object({

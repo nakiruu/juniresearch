@@ -6,6 +6,7 @@ import { Desk } from "@/lib/synth/desk.schema";
 import { Judgment } from "@/lib/synth/judgment.schema";
 import type { HighlightKey } from "@/lib/facts/highlights";
 import { mergeReport, toneFor, longDate, shortDate } from "@/lib/synth/merge";
+import { evaluateGates, applyGateCeiling } from "@/lib/synth/gates";
 import { computeConviction, deriveLabel } from "@/lib/synth/conviction";
 import { Report, SCHEMA_VERSION } from "@/lib/report.schema";
 import { validateReport } from "@/lib/validate";
@@ -15,6 +16,21 @@ const pack = FactPack.parse(JSON.parse(readFileSync("data/facts/AVGO/0001730168-
 const facts = projectReportFacts(pack);
 const desk = Desk.parse(JSON.parse(readFileSync("data/desk/desk.json", "utf8")));
 const judgment = Judgment.parse(goldenJudgment);
+
+describe("mergeReport persists the fundamental gate when one is supplied", () => {
+  it("omits rating.gate when no gate is passed (backward compatible)", () => {
+    expect(mergeReport(facts, judgment, desk, "2026-09-13").rating.gate).toBeUndefined();
+  });
+  it("persists the gate block with a gatedLabel derived from ceiling + derivedLabel", () => {
+    const gate = evaluateGates(pack);
+    const report = mergeReport(facts, judgment, desk, "2026-09-13", gate);
+    const derived = deriveLabel(computeConviction(judgment.sections.valuation.scenarios, facts.quote.currentPrice), desk.rating);
+    expect(report.rating.gate).toBeDefined();
+    expect(report.rating.gate!.sector).toBe("industrial"); // AVGO is semiconductors
+    expect(report.rating.gate!.gatedLabel).toBe(applyGateCeiling(derived, gate.ceiling));
+    expect(() => Report.parse(report)).not.toThrow();
+  });
+});
 
 describe("mergeReport with the golden judgment and the AVGO facts", () => {
   const report = mergeReport(facts, judgment, desk, "2026-09-13");

@@ -87,6 +87,18 @@ export function applyGateCeiling(label: RatingLabel, ceiling: RatingLabel): Rati
   return ORDER[Math.min(rank(label), rank(ceiling))];
 }
 
+/**
+ * A one-line advisory when a proposed label sits ABOVE the gate's fundamental
+ * ceiling — i.e. the rating is more bullish than the balance sheet / earnings
+ * quality supports. Returns null when the ceiling is not binding. The pipeline
+ * surfaces this as a non-blocking warning (hard enforcement is a desk decision).
+ */
+export function gateAdvisory(label: RatingLabel, gate: GateResult): string | null {
+  if (rank(gate.ceiling) >= rank(label)) return null;
+  const why = gate.flags.length ? gate.flags.join(", ") : gate.distress.zone.toLowerCase();
+  return `${label} sits above the fundamental-gate ceiling ${gate.ceiling} (sector: ${gate.sector}; ${why})`;
+}
+
 // --- sector classification ---------------------------------------------------
 
 /**
