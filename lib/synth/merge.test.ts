@@ -18,6 +18,7 @@ const judgment = Judgment.parse(goldenJudgment);
 
 describe("mergeReport with the golden judgment and the AVGO facts", () => {
   const report = mergeReport(facts, judgment, desk, "2026-09-13");
+  const c = computeConviction(judgment.sections.valuation.scenarios, facts.quote.currentPrice);
   it("produces a Report that parses and passes validateReport", () => {
     expect(() => Report.parse(report)).not.toThrow();
     expect(validateReport(report)).toEqual([]);
@@ -30,8 +31,8 @@ describe("mergeReport with the golden judgment and the AVGO facts", () => {
     expect(report.disclaimer).toBe(desk.disclaimer);
   });
   it("derives tone and the thesis label from the rating", () => {
-    // conviction is asserted separately below; toMatchObject leaves it out of this comparison.
-    expect(report.rating).toMatchObject({ label: "BUY", tone: "bull", targetLow: 440, targetHigh: 525 });
+    expect(report.rating).toEqual({ label: "BUY", tone: "bull", targetLow: 440, targetHigh: 525,
+      conviction: { ...c, derivedLabel: deriveLabel(c, desk.rating) } });
     expect(report.sections.executiveSummary.thesis.label).toBe("BUY");
   });
   it("passes facts through untouched: snapshot, quote with history, tables, analyst numbers", () => {
@@ -58,7 +59,6 @@ describe("mergeReport with the golden judgment and the AVGO facts", () => {
     expect(report.sections.businessMoat.moatRating).toBe("WIDE");
   });
   it("sets rating.conviction from the scenarios, the quote price and the desk thresholds", () => {
-    const c = computeConviction(judgment.sections.valuation.scenarios, facts.quote.currentPrice);
     expect(report.rating.conviction).toEqual({ ...c, derivedLabel: deriveLabel(c, desk.rating) });
     expect(report.rating.conviction?.expectedUpside).toBeCloseTo(0.34, 2);
     expect(report.rating.conviction?.bearDownside).toBeCloseTo(0.171, 3); // bear $300 vs $361.99
