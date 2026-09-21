@@ -1,0 +1,575 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "V",
+  "cik": 1403161,
+  "company": "Visa Inc.",
+  "exchange": "NYSE",
+  "filing": {
+    "form": "10-Q",
+    "accession": "0001403161-26-000104",
+    "filedDate": "2026-07-29",
+    "periodEnd": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1403161/000140316126000104/v-20260630.htm"
+  },
+  "capturedAt": "2026-09-21T01:38:48.168Z",
+  "quote": {
+    "price": 368.29,
+    "marketCap": 691411156992,
+    "sharesOutstanding": 1877355228.195172,
+    "sharesSource": "derived",
+    "week52Low": 293.89,
+    "week52High": 385.57,
+    "dividendYield": 0.0073,
+    "asOf": "2026-09-21"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          24105000000,
+          29310000000,
+          32653000000,
+          35926000000,
+          40000000000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          15804000000,
+          18813000000,
+          21000000000,
+          23595000000,
+          23994000000
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          16608000000,
+          19674000000,
+          21943000000,
+          24629000000,
+          25214000000
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          12311000000,
+          14957000000,
+          17273000000,
+          19743000000,
+          20058000000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          null,
+          null,
+          8.28,
+          9.73,
+          10.2
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          16487000000,
+          15689000000,
+          16286000000,
+          11975000000,
+          17164000000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          20977000000,
+          22450000000,
+          20463000000,
+          20836000000,
+          25171000000
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          4490000000,
+          6761000000,
+          4177000000,
+          8861000000,
+          8007000000
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          37589000000,
+          35581000000,
+          38733000000,
+          39137000000,
+          37909000000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          1.754050447931889,
+          1.4484726418261162,
+          1.451727422287644,
+          1.2834408115548517,
+          1.0775507874914403
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          15227000000,
+          18849000000,
+          20755000000,
+          19950000000,
+          23059000000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -705000000,
+          -970000000,
+          -1059000000,
+          -1257000000,
+          -1482000000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          -8676000000,
+          -11589000000,
+          -12101000000,
+          -16713000000,
+          -18316000000
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          -2798000000,
+          -3203000000,
+          -3751000000,
+          -4217000000,
+          -4634000000
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          14522000000,
+          17879000000,
+          19696000000,
+          18693000000,
+          21577000000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q2'26",
+    "periodEnd": "2026-06-30",
+    "revenue": 11633000000,
+    "operatingMargin": 0.5911630705750881,
+    "revenueYoY": 0.14362957137239474
+  },
+  "ttm": {
+    "pe": 31.34383,
+    "ps": 15.736779793153678,
+    "evToEbitda": 24.77827682571912,
+    "grossMargin": null,
+    "operatingMargin": 0.6150992352512746,
+    "netMargin": 0.5183448652585579,
+    "netDebtToEbitda": 0.40535109983079526,
+    "interestCoverage": 44.66942148760331,
+    "currentRatio": 0.9852226141672228,
+    "fcfYield": null
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 45755667120,
+      "eps": 13.22816
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 50786783520,
+      "eps": 15.0043
+    }
+  },
+  "analysts": {
+    "count": 40,
+    "buy": 36,
+    "hold": 3,
+    "sell": 1,
+    "consensusRating": "Strong Buy",
+    "consensusTarget": 419.36163,
+    "medianTarget": 422,
+    "highTarget": 466,
+    "lowTarget": 330,
+    "asOf": "2026-09-21"
+  },
+  "segments": {
+    "basis": "FY25 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 40000000000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "ALLY",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "AXP",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "BAC",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "JPM",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-07",
+      "close": 362.5
+    },
+    {
+      "date": "2026-08-10",
+      "close": 361.32000732421875
+    },
+    {
+      "date": "2026-08-11",
+      "close": 362.82000732421875
+    },
+    {
+      "date": "2026-08-12",
+      "close": 359.4200134277344
+    },
+    {
+      "date": "2026-08-13",
+      "close": 365.45001220703125
+    },
+    {
+      "date": "2026-08-14",
+      "close": 364.1499938964844
+    },
+    {
+      "date": "2026-08-17",
+      "close": 358.8399963378906
+    },
+    {
+      "date": "2026-08-18",
+      "close": 364.25
+    },
+    {
+      "date": "2026-08-19",
+      "close": 365.5400085449219
+    },
+    {
+      "date": "2026-08-20",
+      "close": 365.7300109863281
+    },
+    {
+      "date": "2026-08-21",
+      "close": 371.0400085449219
+    },
+    {
+      "date": "2026-08-24",
+      "close": 382.4100036621094
+    },
+    {
+      "date": "2026-08-25",
+      "close": 384.1400146484375
+    },
+    {
+      "date": "2026-08-26",
+      "close": 383.8999938964844
+    },
+    {
+      "date": "2026-08-27",
+      "close": 379.6600036621094
+    },
+    {
+      "date": "2026-08-28",
+      "close": 381.6000061035156
+    },
+    {
+      "date": "2026-08-31",
+      "close": 379.3699951171875
+    },
+    {
+      "date": "2026-09-01",
+      "close": 372.6700134277344
+    },
+    {
+      "date": "2026-09-02",
+      "close": 378.3999938964844
+    },
+    {
+      "date": "2026-09-03",
+      "close": 378.75
+    },
+    {
+      "date": "2026-09-04",
+      "close": 375.07000732421875
+    },
+    {
+      "date": "2026-09-08",
+      "close": 368.6400146484375
+    },
+    {
+      "date": "2026-09-09",
+      "close": 367.3900146484375
+    },
+    {
+      "date": "2026-09-10",
+      "close": 367.2099914550781
+    },
+    {
+      "date": "2026-09-11",
+      "close": 370.45001220703125
+    },
+    {
+      "date": "2026-09-14",
+      "close": 375.2799987792969
+    },
+    {
+      "date": "2026-09-15",
+      "close": 375.6199951171875
+    },
+    {
+      "date": "2026-09-16",
+      "close": 370.92999267578125
+    },
+    {
+      "date": "2026-09-17",
+      "close": 369.92999267578125
+    },
+    {
+      "date": "2026-09-18",
+      "close": 368.2900085449219
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "Visa Inc. operates as a payment technology company in the United States and internationally. The company operates VisaNet, a transaction processing network that enables authorization, clearing, and settlement of payment transactions. It also offers credit, debit, and prepaid card products; tap to pay, tokenization, and click to pay services; Visa Direct, a platform which facilitates money movement, enabling clients to collect, hold, convert, and send funds across its network; and issuing solutions, such as airport lounge access, dining reservations, shopping experiences, event tickets, and seller offers. In addition, the company provides acceptance solutions, an omnichannel payment integration with e-commerce platforms; risk detection and prevention solutions; and advisory and other services comprising consulting practice, proprietary analytics models, data scientists and economists, marketing services, and managed services. It provides its services under the Visa, Visa Electron, V PAY, Interlink, and PLUS brands. The company serves consumers, sellers, financial institutions, and government entities. Visa Inc. was founded in 1958 and is headquartered in San Francisco, California.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-21"
+    },
+    "mdaExcerpt": {
+      "text": "ITEM 2.\nManagement's Discussion and Analysis of Financial Condition and Results of Operations\nThis management's discussion and analysis provides a review of the results of operations, financial condition and liquidity and capital resources of Visa Inc. and its subsidiaries (Visa, we, us, our or the Company) on a historical basis and outlines the factors that have affected recent earnings, as well as those factors that may affect future earnings. The following discussion and analysis should be read in conjunction with our unaudited consolidated financial statements and related notes included in Item 1 Financial Statements of this report.\nForward-Looking Statements\nThis Quarterly Report on Form 10-Q contains forward-looking statements within the meaning of the U.S. Private Securities Litigation Reform Act of 1995 that relate to, among other things, our future financial position, results of operations and cash flows; prospects, developments, strategies and growth of our business; anticipated expansion of our products in certain countries and territories; industry developments; anticipated timing and benefits of our acquisitions; expectations regarding litigation matters, investigations and proceedings; timing and amount of stock repurchases; sufficiency of sources of liquidity and funding; effectiveness of our risk management programs; and expectations regarding the impact of recent accounting pronouncements on our unaudited consolidated financial statements. Forward-looking statements generally are identified by words such as \"anticipates,\" \"believes,\" \"estimates,\" \"expects,\" \"intends,\" \"may,\" \"projects,\" \"could,\" \"should,\" \"will,\" \"continue\" and other similar expressions. All statements other than statements of historical fact could be forward-looking statements, which speak only as of the date they are made, are not guarantees of future performance and are subject to certain risks, uncertainties and other factors, many of which are beyond our control and are difficult to predict. We describe risks and uncertainties that could cause actual results or outcomes, or the timing of our results or outcomes, to differ materially from those expressed in, or implied by, any of these forward-looking statements in our SEC filings, including our Annual Report on Form 10-K, for the year ended September 30, 2025, and any subsequent reports on Forms 10-Q and 8-K. Except as required by law, we do not intend to update or revise any forward-looking statements as a result of new information, future events or otherwise.\n29\nTable of C o n t e n t s\nOverview\nVisa is a global payments technology company that facilitates secure, reliable and efficient global commerce and money movement. We provide transaction processing services (primarily authorization, clearing and settlement) among consumers, issuing and acquiring financial institutions and sellers. We are focused on extending, enhancing and investing in our proprietary advanced transaction processing network, VisaNet, to offer a single connection point for facilitating money movement to multiple endpoints through various form factors and innovative technologies across more than 200 countries and territories. Visa is not a financial institution. We do not issue cards, extend credit or set rates and fees for account holders of Visa products.\nFinancial overview. A summary of our GAAP and non-GAAP operating results is as follows:\nThree Months Ended\nJune 30,\nNine Months Ended\nJune 30,\n2026\n2025\n%\nChange (1)\n2026\n2025\n%\nChange (1)\n(in millions, except percentages and per share data)\nNet revenue\n$\n11,633\n$\n10,172\n14\n%\n$\n33,764\n$\n29,276\n15\n%\nOperating expenses\n$\n4,756\n$\n3,995\n19\n%\n$\n12,916\n$\n11,430\n13\n%\nNet income\n$\n5,628\n$\n5,272\n7\n%\n$\n17,502\n$\n14,968\n17\n%\nDiluted earnings per share\n$\n2.97\n$\n2.69\n10\n%\n$\n9.14\n$\n7.59\n20\n%\nNon-GAAP operating expenses (2)\n$\n3,878\n$\n3,307\n17\n%\n$\n10,868\n$\n9,295\n17\n%\nNon-GAAP net income (2)\n$\n6,296\n$\n5,834\n8\n%\n$\n18,762\n$\n16,739\n12\n%\nNon-GAAP diluted earnings per share (2)\n$\n3.32\n$\n2.98\n11\n%\n$\n9.79\n$\n8.49\n15\n%\n(1) Figures in the table may not recalculate exactly due to rounding. Percentage changes are calculated based on unrounded numbers.\n(2) For a reconciliation of our GAAP to non-GAAP financial measures, see tables in Non-GAAP Financial Measures below.\nHighlights. For the three and nine months ended June 30, 2026, net revenue increased 14% and 15%, respectively, over the prior-year comparable periods, primarily due to the growth in nominal cross-border volume, nominal payments volume and processed transactions, partially offset by higher client incentives. See Results of Operations Net Revenue below for further discussion. For the three and nine months ended June 30, 2026, exchange rate movements increased our net revenue growth by approximately one percentage point.\nFor the three and nine months ended June 30, 2026, operating expenses increased 19% and 13%, respectively, over the prior-year comparable periods, primarily driven by higher personnel expenses. The increase over the nine-month prior-year comparable period was also driven by higher marketing expenses. See Results of Operations Operating Expenses below for further discussion. For the three and nine months ended June 30, 2026, exchange rate movements increased our operating expense growth by approximately one percentage point and one-and-a-half percentage points, respectively.\nFor the three and nine months ended June 30, 2026, non-GAAP operating expenses increased 17% over the prior-year comparable periods, primarily driven by higher marketing and personnel expenses.\nClass B-1 and B-2 common stock exchange offer. In May 2026, we accepted 3 million shares of class B-1 common stock and 120 million shares of class B-2 common stock tendered in the exchange offer. In exchange, we issued 61 million shares of class B-3 common stock and 23 million shares of class C common stock. See Note 11 Stockholders' Equity to our unaudited consolidated financial statements.\nAcquisition. In February 2026, we acquired Prisma Medios de Pago S.A.U. (Prisma) and Newpay S.A.U. (Newpay) in Argentina for a total purchase consideration of $1.5 billion in cash. See Note 2 Acquisitions to our unaudited consolidated financial statements.\nSenior notes. In February 2026, we issued fixed-rate senior notes in a public offering in an aggregate principal amount of $3.0 billion, with maturities ranging between 3 and 10 years. See Note 8 Debt to our unaudited consolidated financial statements.\n30\nTable of C o n t e n t s\nInterchange multidistrict litigation . For the nine months ended June 30, 2026, we recorded additional accruals of $1.1 billion to address claims associated with the interchange multidistrict litigation. We also made deposits of $875 million into the U. S. litigation escrow account. The additional accruals related to the interchange multidistrict litigation could be higher or lower than the deposits made into the U.S. litigation escrow account. See Note 5 U.S. and Europe Retrospective Responsibility Plans and Note 16 Legal Matters to our unaudited consolidated financial statements.\nCommon stock repurchases. In April 2026, our board of directors authorized a $20.0 billion share repurchase program, providing multi-year flexibility. For the nine months ended June 30, 2026, we repurchased 50 million shares of our class A common stock in the open market for $16.5 billion. As of June 30, 2026, our share repurchase programs had remaining authorized funds of $28.4 billion. See Note 11 Stockholders' Equity to our unaudited consolidated financial statements .\nPayments Volume and Processed Transactions\nPayments volume is the primary driver for our service revenue, and the number of processed transactions is the primary driver for our data processing revenue.\nPayments volume represents the aggregate dollar amount of purchases made with cards and other form factors carrying the Visa, Visa Electron, V PAY and Interlink brands and excludes Europe co-badged volume. Nominal payments volume is denominated in U.S. dollars and is calculated each quarter by applying an established U.S. dollar/foreign currency exchange rate for each local currency in which our volumes are reported. Processed transactions include payments and cash transactions, and represent transactions using cards and other form factors carrying the Visa, Visa Electron, V PAY, Interlink and PLUS brands processed on Visa's networks.\nThe following tables present nominal payments and cash volume:\nU.S.\nInternational\nVisa\nThree Months Ended March 31, (1)\n2026\n2025\n2026\n2025\n2026\n2025\n(in billions)\nNominal payments volume\nConsumer credit\n$\n644\n$\n592\n$\n827\n$\n745\n$\n1,471\n$\n1,337\nConsumer debit (2)\n858\n802\n929\n791\n1,787\n1,593\nCommercial (3)\n286\n261\n184\n156\n470\n416\nTotal nominal payments volume (4)\n$\n1,788\n$\n1,654\n$\n1,940\n$\n1,692\n$\n3,728\n$\n3,346\nCash volume (5)\n144\n145\n481\n453\n626\n598\nTotal nominal volume (4),(6)\n$\n1,932\n$\n1,799\n$\n2,422\n$\n2,144\n$\n4,354\n$\n3,944\nU.S.\nInternational\nVisa\nNine Months Ended March 31, (1)\n2026\n2025\n2026\n2025\n2026\n2025\n(in billions)\nNominal payments volume\nConsumer credit\n$\n1,982\n$\n1,844\n$\n2,536\n$\n2,312\n$\n4,518\n$\n4,156\nConsumer debit (2)\n2,547\n2,380\n2,835\n2,461\n5,382\n4,840\nCommercial (3)\n869\n801\n561\n483\n1,430\n1,283\nTotal nominal payments volume (4)\n$\n5,398\n$\n5,024\n$\n5,932\n$\n5,256\n$\n11,330\n$\n10,280\nCash volume (5)\n447\n445\n1,482\n1,412\n1,929\n1,857\nTotal nominal volume (4),(6)\n$\n5,845\n$\n5,469\n$\n7,414\n$\n6,667\n$\n13,259\n$\n12,137\n31\nTable of C o n t e n t s\nThe following table presents the changes in nominal and constant payments and cash volume:\nU.S.\nInternational\nVisa\nU.S.\nInternational\nVisa\nThree Months Ended March 31,\n2026 vs. 2025 (1),(4)\nNine Months Ended March 31,\n2026 vs. 2025 (1),(4)\nNominal\nNominal\nConstant (7)\nNominal\nConstant (7)\nNominal\nNominal\nConstant (7)\nNominal\nConstant (7)\nPayments volume growth\nConsumer credit growth\n9\n%\n11\n%\n8\n%\n10\n%\n8\n%\n8\n%\n10\n%\n8\n%\n9\n%\n8\n%\nConsumer debit growth (2)\n7\n%\n17\n%\n10\n%\n12\n%\n9\n%\n7\n%\n15\n%\n10\n%\n11\n%\n9\n%\nCommercial growth (3)\n10\n%\n18\n%\n13\n%\n13\n%\n11\n%\n9\n%\n16\n%\n13\n%\n11\n%\n10\n%\nTotal payments volume growth\n8\n%\n15\n%\n10\n%\n11\n%\n9\n%\n7\n%\n13\n%\n10\n%\n10\n%\n9\n%\nCash volume growth (5)\n%\n6\n%\n1\n%\n5\n%\n1\n%\n%\n5\n%\n1\n%\n4\n%\n1\n%\nTotal volume growth\n7\n%\n13\n%\n8\n%\n10\n%\n8\n%\n7\n%\n11\n%\n8\n%\n9\n%\n7\n%\n(1) Service revenue in a given quarter is primarily assessed based on nominal payments volume in the prior quarter. Therefore, service revenue reported for the three and nine months ended June 30, 2026 and 2025, respectively, was based on nominal payments volume reported by our financial institution clients for the three and nine months ended March 31, 2026 and 2025, respectively. On occasion, previously presented volume information may be updated. Prior period updates are not material.\n(2) Includes consumer prepaid volume and Interlink volume.\n(3) Includes large, medium and small business credit and debit, as well as commercial prepaid volume.\n(4) Figures in the table may not recalculate exactly due to rounding. Percentage changes and totals are calculated based on unrounded numbers.\n(5) Cash volume generally consists of cash access transactions, balance access transactions, balance transfers and convenience checks.\n(6) Total nominal volume is the sum of total nominal payments volume and cash volume. Total nominal volume is provided by our financial institution clients, subject to review by Visa.\n(7) Growth on a constant-dollar basis excludes the impact of foreign currency fluctuations against the U.S. dollar.\nThe following table presents the number of processed transactions:\nThree Months Ended\nJune 30,\nNine Months Ended\nJune 30,\n2026\n2025\n%\nChange (1)\n2026 (1)\n2025 (1)\n%\nChange (1)\n(in millions, except percentages)\nVisa processed transactions\n71,662\n65,443\n10\n%\n207,148\n189,891\n9\n%\n(1) Figures in the table may not recalculate exactly due to rounding. Percentage change is calculated based on unrounded numbers. On occasion, previously presented information may be updated. Prior period updates are not material.\nResults of Operations\nNet Revenue\nThe following table presents our net revenue earned in the U.S. and internationally:\nThree Months Ended\nJune 30,\nNine Months Ended\nJune 30,\n2026\n2025\n%\nChange (1)\n2026\n2025\n%\nChange (1)\n(in millions, except percentages)\nU.S.\n$\n4,410\n$\n3,927\n12\n%\n$\n12,892\n$\n11,476\n12\n%\nInternational\n7,223\n6,245\n16\n%\n20,872\n17,800\n17\n%\nNet revenue\n$\n11,633\n$\n10,172\n14\n%\n$\n33,764\n$\n29,276\n15\n%\n(1) Figures in the table may not recalculate exactly due to rounding. Percentage changes are calculated based on unrounded numbers.\nNet revenue increased over the three and nine-month prior-year comparable periods primarily due to the growth in nominal cross-border volume, nominal payments volume and processed transactions, partially offset by higher client incentives. Volume growth was driven primarily by continued resilience in consumer spending and ongoing expansion in digital commerce. Cross-border volume growth was supported by cross-border ecommerce and travel-related activity. For the three and nine months ended June 30, 2026, nominal payments volume growth of\n32\nTable of C o n t e n t s\n11% and 10% was supported by broad-based growth across both credit and debit spending, with ecommerce continuing to grow faster than face-to-face spend. We expect that the ongoing shift toward digital commerce and electronic payments will continue; however, the extent to which these trends support volume increases will depend on a number of factors, including consumer spending levels and broader macroeconomic conditions.\nOur net revenue is impacted by the overall strengthening or weakening of the U.S. dollar as payments volume and related revenue denominated in local currencies are converted to U.S. dollars. For the three and nine months ended June 30, 2026, exchange rate movements increased our net revenue growth by approximately one percentage point. Foreign exchange rate movements and volatility have contributed to periodic variability in our results, and may continue to do so in the future.\nThe following table presents the components of our net revenue:\nThree Months Ended\nJune 30,\nNine Months Ended\nJune 30,\n2026\n2025\n%\nChange (1)\n2026\n2025\n%\nChange (1)\n(in millions, except percentages)\nService revenue\n$\n4,922\n$\n4,330\n14\n%\n$\n14,663\n$\n12,937\n13\n%\nData processing revenue\n6,042\n5,153\n17\n%\n17,129\n14,599\n17\n%\nInternational transaction revenue\n3,853\n3,633\n6\n%\n11,136\n10,366\n7\n%\nOther revenue\n1,496\n1,028\n45\n%\n4,030\n2,877\n40\n%\nClient incentives\n(4,680)\n(3,972)\n18\n%\n(13,194)\n(11,503)\n15\n%\nNet revenue\n$\n11,633\n$\n10,172\n14\n%\n$\n33,764\n$\n29,276\n15\n%\n(1) Figures in the table may not recalculate exactly due to rounding. Percentage changes are calculated based on unrounded numbers.\nService revenue increased over the three and nine-month prior-year comparable periods primarily due to growth in nominal payments volume of 11% and 10%, respectively, select pricing modifications and growth in card benefits.\nData processing revenue increased over the three and nine-month prior-year comparable periods primarily due to growth in processed transactions of 10% and 9%, respectively, select pricing modifications, growth in value-added services and higher cross-border transaction mix.\nInternational transaction revenue increased over the three and nine-month prior-year comparable periods primarily due to growth in nominal cross-border volume of 14% and 15%, respectively, excluding transactions within Europe, partially offset by lower volatility of a broad range of currencies and business mix.\nOther revenue increased over the three and nine-month prior-year comparable periods primarily due to growth in Advisory and Other Services and select pricing modifications.\nClient incentives increased over the three and nine-month prior-year comparable periods primarily due to growth in payments volume.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/1403161/000140316126000104/v-20260630.htm",
+      "asOf": "2026-07-29",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "ITEM 1A. Risk Factors\nRegulatory Risks\nWe are subject to complex and evolving global regulations that could harm our business and financial results.\nAs a global payments technology company, we are subject to complex and evolving regulations that govern our operations. Such regulations may increase in quantity, complexity and scope in response to heightened geopolitical tensions. See Item 1 Government Regulation for more information on the most significant areas of regulation that affect our business. The impact of these regulations on us, our clients, and other third parties could limit our ability to enforce our payments system rules; require us to adopt new rules or change existing rules; affect our existing contractual arrangements; and increase our compliance costs. As discussed in more detail below, we may face differing rules and regulations in matters like interchange reimbursement rates, preferred routing, domestic processing and localization requirements, currency conversion, point-of-sale transaction rules and practices, privacy, data use and protection, licensing requirements and associated product technology. As a result, the Visa operating rules and our other contractual commitments may differ from country to country, state to state, or product to product. Complying with these and other regulations increases our costs and operational complexity, and reduces our revenue opportunities.\nIf widely varying regulations come into existence worldwide, we may have difficulty rapidly adjusting our products, services, fees and other important aspects of our business to comply with the regulations. Our compliance programs and policies are designed to support our compliance with a wide array of regulations and laws, such as regulations regarding anti-money laundering, anti-corruption, competition, money transfer services, privacy and sanctions, and we continually adjust our compliance programs as regulations evolve. However, we cannot guarantee that our practices will be deemed compliant by all applicable regulatory authorities. In the event our controls should fail or we are found to be out of compliance for other reasons, we could be subject to monetary damages, civil and criminal penalties, litigation, investigations and proceedings, and damage to our global brands and reputation.\nIncreased scrutiny and regulation of the global payments industry, including with respect to interchange reimbursement fees, merchant discount rates, operating rules, risk management protocols and other related practices, could harm our business.\nRegulators around the world have been establishing or increasing their authority to regulate various aspects of the payments industry. See Item 1 Government Regulation for more information . In the U.S. and many other jurisdictions, we have historically set default IRFs. Even though we generally do not receive any revenue related to IRFs in a payment transaction (in the context of credit and debit transactions, those fees are paid by the acquirers to the issuers; the reverse is true for certain transactions like ATM transactions), IRFs are a factor on which we compete with other payments providers and are therefore an important determinant of the volume of transactions we process. Consequently, changes to these fees, whether voluntarily or by mandate, can substantially affect our overall payments volume and net revenue.\nInterchange reimbursement fees, certain operating rules and related practices continue to be subject to increased government regulation globally, and regulatory authorities and central banks in a number of jurisdictions have reviewed or are reviewing these fees, rules and practices. For example:\nRegulations adopted by the U.S. Federal Reserve cap the maximum U.S. debit interchange reimbursement rate received by large financial institutions at 21 cents plus 5 basis points per transaction, plus a possible fraud adjustment of 1 cent. Additionally, the Dodd-Frank Act limits issuers' and payment networks' ability to adopt network exclusivity and preferred routing in the debit and prepaid area, which also impacts our business. In response to seller requests, the Federal Reserve has recently taken actions to revisit its regulations that implement these aspects of the Dodd-Frank Act. For example, in October 2022, the Federal Reserve published a final rule effectively requiring issuers to ensure that at least two unaffiliated networks are available for routing ecommerce debit transactions by July 1, 2023. In October 2023, the Federal Reserve issued a proposal for comment that further lowers debit interchange rates, with a mechanism for automatic adjustment every two years. Finally, in August 2025, the District Court for the District of North Dakota ruled that the Federal Reserve exceeded its authori ty in implementing Regulation II, which sets debit card interchange fees. The court found the Federal Reserve improperly included various costs beyond what the Durbin Amendment allows, such as fraud losses, network fees and other fixed costs, when setting the debit interchange fee standard. As a result, the court vacated Regulation II's debit interchange fee\n21\nTable of Contents\nstandard. Subsequently, however, the District Court in Kentucky ruled that the Federal Reserve acted within its discretion in setting the debit interchange cap. If the District Court of North Dakota's decision is affirmed on appeal and ultimately prevails, it could potentially result in the Federal Reserve setting a significantly lower interchange cap for relevant debit transactions in the U.S. Separately, there continues to be interest in regulation of credit interchange fees and routing practices by members of Congress and state legislators. It is possible that the Credit Card Competition Act may be reintroduced in Congress or attempted to be offered as an amendment to unrelated legislation. Previous versions of the legislation were introduced in 2022 and 2023, and required among other things, that large issuing banks offer a choice of at least two unaffiliated networks over which electronic credit transactions may be processed. Finally, some states have passed or are considering passing laws that regulate how interchange can be set and assessed. For example, in May 2024, Illinois passed a law that restricts the assessment of interchange on the state tax and gratuity portions of a transaction, and restricts financial institutions and payment networks, among others, from using payment transaction data for any purpose other than facilitating or processing a transaction. While the Illinois law remains subject to legal challenge, if such laws are allowed to go into effect, they may also impose significant technical and compliance burdens on our business.\nIn Europe, the EU's IFR places an effective cap on consumer credit and consumer debit interchange fees for both domestic and cross-border transactions within the European Economic Area of 30 basis points and 20 basis points, respectively. EU member states have the ability to further reduce these interchange levels within their territories. The European Commission has announced its intention to conduct another impact assessment of the IFR, which could result in even lower caps on interchange rates and the expansion of regulation to other types of products, services and fees.\nSeveral countries in Latin America continue to explore regulatory measures against payments networks and have either adopted or are exploring interchange caps, including Argentina, Brazil, Chile and Costa Rica. In Asia Pacific, the Reserve Bank of Australia (RBA) which already regulates interchange, recently proposed reducing existing interchange caps on domestic credit and debit transactions and not allowing differential interchange treatment for consumer and commercial transactions. Similarly, in New Zealand, the Commerce Commission recently lowered existing caps on domestic credit transactions.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/1403161/000140316125000089/v-20250930.htm",
+      "asOf": "2025-11-06",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-K",
+    "pressRelease": null,
+    "proxyStatement": {
+      "text": "Compensation discussion and analysis:\nCompensation Discussion and Analysis\nThis Compensation Discussion and Analysis describes our executive compensation philosophy and program and compensation decisions made under the program for our NEOs for 2025. Our NEOs are listed below.\nRyan McInerney\nChief Executive Officer\nRajat Taneja\nPresident, Technology\nChris Suh\nChief Financial Officer\nKelly Mahon Tullier\nVice Chair, Chief People and Corporate Affairs Officer\nPaul Fabara\nChief Risk and Client Services Officer\nExecutive Summary\nKey Elements of Our Fiscal Year 2025 Compensation Program\n50\nEXECUTIVE COMPENSATION\nCompensation Component\nType of Pay\nKey Characteristics\nPurpose and Strategic Alignment\nAnnual Cash Compensation\nBase Salary\nFixed\nReviewed annually based on individual performance, market pay levels, and internal pay equity.\nAttracts, retains, and rewards NEOs by providing a fixed source of income to reflect experience, skills, and competencies.\nAnnual Incentive Awards\nCash Incentive Awards\nVariable and At-Risk\nVariable cash compensation component based on performance against pre-established corporate performance goals in four categories that are aligned with our corporate strategy: Financial, Business Drivers, Foundational, and Company Objectives.\nFinal payout is based on the Compensation Committee's analysis of the Company's performance against the pre-established scorecard goals and individual performance.\nFocuses NEOs on our annual results and aligns NEOs' interests with stakeholders' interests by rewarding performance based on the achievement of pre-established, strategic annual goals designed to position the Company competitively.\nLong-term Incentive Awards\nEquity Granted in the form of Stock Options, Restricted Stock Units, and Performance Shares\nVariable and At-Risk\nStock option and restricted stock unit awards vest annually over a three-year period.\nPerformance shares vest after a three-year performance period, based on EPS and relative TSR results.\nAligns NEOs' interests with shareholders' interests by linking a substantial portion of each NEO's compensation to stock performance and the achievement of long-term corporate performance and operational efficiency.\nRecognizes company and individual performance in grant date value determinations. Retains NEOs through multi-year vesting of equity awards and three-year performance periods, as applicable.\nProvides opportunities for stock ownership, which attracts and motivates our NEOs and promotes retention.\n2026 Proxy Statement\n51\nEXECUTIVE COMPENSATION\nPerformance-Based Compensation for Fiscal Year 2025\nA significant portion of our 2025 NEO compensation program is variable and at-risk and ties compensation to pre-established performance conditions, as described below.\nVariable over Fixed Pay\nFor 2025, 95% of the target total direct compensation of the annual compensation components for our Chief Executive Officer was variable and at-risk, and an average of 91% was variable and at-risk for our other NEOs.\nEach NEO's performance-based compensation includes an annual cash incentive award and long-term performance shares. For the annual cash incentive, the target award value is established at the beginning of the fiscal year and the actual award amount is determined based on performance measured against pre-established goals at fiscal year end. Performance shares provide the opportunity for shares to be earned after a three-year performance period based on the achievement of pre-established financial and TSR goals. The payouts for the annual cash incentive and performance shares are capped at 200% of target.\nFocus on Pre-Established Performance Metrics\nFor 2025, the annual incentive plan included financial performance goals related to Net Revenue Growth, Net Income Growth, and EPS Growth, as described under Compensation Discussion and Analysis Fiscal Year 2025 Compensation Select Corporate Performance Goals and Results for Fiscal Year 2025 . In this proxy statement, we refer to these metrics as Net Revenue Growth VIP adjusted, Net Income Growth VIP adjusted, and EPS Growth VIP adjusted. Actual performance for the financial metrics in the annual incentive plan exceeded the performance goals established for the fiscal year.\nSimilar to our approach in prior years, the 2025 annual incentive plan scorecard also included goals in the following three categories: Business Drivers, Foundational, and Company Objectives. These performance goals were designed to align with our strategic objectives, as described under Compensation Discussion and Analysis Fiscal Year 2025 Compensation Select Corporate Performance Goals and Results for Fiscal Year 2025 .",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/1403161/000130817925000635/v-20251208.htm",
+      "asOf": "2025-12-08",
+      "truncated": true
+    },
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-21T01:38:48.168Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-09-21T01:38:48.168Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-21T01:38:48.168Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-21T01:38:48.168Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-21T01:38:48.168Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-21T01:38:48.168Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-21T01:38:48.168Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-21T01:38:48.168Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-21T01:38:48.168Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-21T01:38:48.168Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-21T01:38:48.168Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-21T01:38:48.168Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-21T01:38:48.168Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-21T01:38:48.168Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-21T01:38:48.168Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-09-21T01:38:48.168Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-09-21T01:38:48.168Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-09-21T01:38:48.168Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-21T01:38:48.168Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-21T01:38:48.168Z"
+    }
+  ]
+}

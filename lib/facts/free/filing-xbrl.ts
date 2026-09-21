@@ -52,6 +52,12 @@ interface ContextInfo {
   start?: string;
   end: string;
   dimensioned: boolean;
+  // When the context's SOLE segment dimension is us-gaap:StatementClassOfStockAxis, the member id it
+  // pins (e.g. "us-gaap:CommonClassAMember"); undefined otherwise. Multi-share-class filers (Visa,
+  // Alphabet) tag per-share concepts only under this axis — never un-dimensioned — so the headline
+  // consolidated EPS is carried by the primary class's member and would otherwise be dropped as
+  // "dimensioned". Used ONLY to recover EPS for the primary class (see parseFilingXbrl).
+  soleClassOfStockMember?: string;
 }
 
 // --- companyfacts JSON shape (loose; only the fields we read/write) --------
@@ -80,6 +86,16 @@ const START_DATE_RE = /<(?:xbrli:)?startDate>([^<]+)<\/(?:xbrli:)?startDate>/;
 const END_DATE_RE = /<(?:xbrli:)?endDate>([^<]+)<\/(?:xbrli:)?endDate>/;
 const INSTANT_RE = /<(?:xbrli:)?instant>([^<]+)<\/(?:xbrli:)?instant>/;
 const SEGMENT_RE = /<(?:xbrli:)?segment\b/;
+const EXPLICIT_MEMBER_RE = /<(?:xbrldi:)?explicitMember\s+dimension="([^"]+)"[^>]*>([^<]+)<\/(?:xbrldi:)?explicitMember>/g;
+const CLASS_OF_STOCK_AXIS = "us-gaap:StatementClassOfStockAxis";
+
+/** The member id when `body`'s only explicit dimension is the class-of-stock axis; undefined otherwise. */
+function soleClassOfStockMember(body: string): string | undefined {
+  const members = [...body.matchAll(EXPLICIT_MEMBER_RE)];
+  if (members.length !== 1) return undefined; // no dimension, or more than one → not a pure class split
+  const [, dimension, member] = members[0];
+  return dimension.trim() === CLASS_OF_STOCK_AXIS ? member.trim() : undefined;
+}
 
 function parseContexts(html: string): Map<string, ContextInfo> {
   const contexts = new Map<string, ContextInfo>();
@@ -93,6 +109,7 @@ function parseContexts(html: string): Map<string, ContextInfo> {
       start: instant ? undefined : start,
       end,
       dimensioned: SEGMENT_RE.test(body),
+      soleClassOfStockMember: soleClassOfStockMember(body),
     });
   }
   return contexts;
@@ -136,6 +153,13 @@ function parseUnitKinds(html: string): Map<string, FactUnit> {
 // text, which are stripped below).
 const FACT_RE = /<ix:nonFraction\b([^>]*?)\/>|<ix:nonFraction\b([^>]*?)>([\s\S]*?)<\/ix:nonFraction>/g;
 
+// Multi-share-class filers (Visa, Alphabet) never tag a plain consolidated EPS: the headline
+// diluted/basic per-share figure sits under the class-of-stock axis on the primary class's member,
+// which by us-gaap convention is Class A. We recover that member's value for the EPS concepts ONLY —
+// every other concept still requires a non-dimensioned (fully consolidated) context.
+const PRIMARY_SHARE_CLASS = "us-gaap:CommonClassAMember";
+const CLASS_SCOPED_EPS_CONCEPTS = new Set(["EarningsPerShareDiluted", "EarningsPerShareBasic"]);
+
 function attr(attrs: string, name: string): string | undefined {
   return attrs.match(new RegExp(`${name}="([^"]*)"`))?.[1];
 }
@@ -166,7 +190,12 @@ export function parseFilingXbrl(html: string, meta: FilingMeta): FilingFacts {
 
     const contextRef = attr(attrs, "contextRef");
     const ctx = contextRef ? contexts.get(contextRef) : undefined;
-    if (!ctx || ctx.dimensioned) continue; // unresolved context, or a segmented/non-consolidated value
+    if (!ctx) continue; // unresolved context
+    // A dimensioned context is a segmented/non-consolidated value, normally dropped. The sole
+    // exception: the primary share class's EPS on the class-of-stock axis, which IS the consolidated
+    // headline EPS for a multi-share-class filer (see CLASS_SCOPED_EPS_CONCEPTS above).
+    const primaryClassEps = ctx.soleClassOfStockMember === PRIMARY_SHARE_CLASS && CLASS_SCOPED_EPS_CONCEPTS.has(concept);
+    if (ctx.dimensioned && !primaryClassEps) continue;
 
     const unitRef = attr(attrs, "unitRef");
     const unit = unitRef ? unitKinds.get(unitRef) : undefined;

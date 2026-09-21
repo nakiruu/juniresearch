@@ -47,7 +47,7 @@ function sum(quarters: SecPeriod[], field: FlowField): number | null {
 
 export function computeTtm(
   quarters: SecPeriod[],
-  yh: { price: number; marketCap: number; dividendYield: number },
+  yh: { price: number; marketCap: number; dividendYield: number; trailingPe?: number | null },
 ): TtmRows {
   if (quarters.length < 4) {
     throw new Error(`computeTtm needs 4 quarters for a trailing-twelve-month period, got ${quarters.length}`);
@@ -84,7 +84,10 @@ export function computeTtm(
 
   const keyMetrics: Record<string, unknown> = {
     fiscal_period: "TTM",
-    pe_ratio: safeDiv(yh.price, ttmEps),
+    // Prefer the SEC-derived P/E (price ÷ summed discrete-quarter EPS); fall back to Yahoo's own
+    // trailing P/E when the quarterly EPS can't be summed (a multi-share-class filer whose EPS the
+    // companyfacts API omits — see yahoo.trailingPe).
+    pe_ratio: ttmEps != null ? safeDiv(yh.price, ttmEps) : (yh.trailingPe ?? null),
     price_to_sales: safeDiv(yh.marketCap, ttmRevenue),
     ev_to_ebitda: safeDiv(ev, ttmEbitda),
     free_cash_flow_yield: safeDiv(ttmFcf, yh.marketCap),
