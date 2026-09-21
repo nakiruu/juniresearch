@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
-import { Desk, DESK_LINT_DEFAULTS } from "@/lib/synth/desk.schema";
+import { Desk, DESK_LINT_DEFAULTS, DESK_RATING_DEFAULTS } from "@/lib/synth/desk.schema";
 
 describe("Desk config", () => {
   it("parses data/desk/desk.json with the desk identity and at least three style rules", () => {
@@ -48,5 +48,45 @@ describe("Desk.lint and Desk.review", () => {
     expect(raw.review).toEqual({ model: "opus" });
     const desk = Desk.parse(raw);
     expect(desk.lint.ticLimit).toBe(4);
+  });
+});
+
+describe("Desk.rating", () => {
+  const base = { analyst: "a", analystName: "b", disclaimer: "c", styleRules: ["one", "two", "three"] };
+
+  it("fills the rating block with the desk defaults when it is absent", () => {
+    const desk = Desk.parse(base);
+    expect(desk.rating).toEqual({
+      bearFloor: 0.15,
+      strongBuy: { minUpside: 0.2, minRewardRisk: 1.0 },
+      buy: { minUpside: 0.1, minRewardRisk: 0.5 },
+      sell: { maxUpside: -0.05 },
+      strongSell: { maxUpside: -0.2 },
+    });
+    expect(desk.rating).toEqual(DESK_RATING_DEFAULTS);
+  });
+
+  it("takes overrides and keeps the untouched keys at their defaults", () => {
+    const desk = Desk.parse({ ...base, rating: { bearFloor: 0.2, strongBuy: { minUpside: 0.25, minRewardRisk: 0.75 } } });
+    expect(desk.rating.bearFloor).toBe(0.2);
+    expect(desk.rating.strongBuy).toEqual({ minUpside: 0.25, minRewardRisk: 0.75 });
+    expect(desk.rating.buy).toEqual(DESK_RATING_DEFAULTS.buy);
+  });
+
+  it.each([
+    ["bearFloor at 0", { bearFloor: 0 }],
+    ["bearFloor at 1", { bearFloor: 1 }],
+    ["buy.minUpside not below strongBuy.minUpside", { buy: { minUpside: 0.2, minRewardRisk: 0.5 } }],
+    ["buy.minRewardRisk above strongBuy.minRewardRisk", { buy: { minUpside: 0.1, minRewardRisk: 1.5 } }],
+    ["sell.maxUpside not negative", { sell: { maxUpside: 0 } }],
+    ["strongSell.maxUpside not below sell.maxUpside", { strongSell: { maxUpside: -0.05 } }],
+    ["a zero reward/risk floor", { buy: { minUpside: 0.1, minRewardRisk: 0 } }],
+  ])("rejects %s", (_name, rating) => {
+    expect(() => Desk.parse({ ...base, rating })).toThrow();
+  });
+
+  it("carries the rating block explicitly in the committed desk.json", () => {
+    const raw = JSON.parse(readFileSync("data/desk/desk.json", "utf8")) as Record<string, unknown>;
+    expect(raw.rating).toEqual(DESK_RATING_DEFAULTS);
   });
 });

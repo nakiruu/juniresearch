@@ -6,10 +6,15 @@ import { Judgment } from "@/lib/synth/judgment.schema";
 import { validateJudgment, ratingIssues, markdownIssues, segmentIssues, highlightIssues, renderJudgmentBlock } from "@/lib/synth/validate-judgment";
 import type { HighlightKey } from "@/lib/facts/highlights";
 import goldenJudgment from "@/lib/__fixtures__/avgo-golden-judgment.json";
+import { Desk, DESK_RATING_DEFAULTS } from "@/lib/synth/desk.schema";
+import { pct, rewardRiskText } from "@/lib/format";
+import { computeConviction } from "@/lib/synth/conviction";
 
 const pack = FactPack.parse(JSON.parse(readFileSync("data/facts/AVGO/0001730168-26-000080.json", "utf8")));
 const facts = projectReportFacts(pack);
 const golden = Judgment.parse(goldenJudgment);
+const desk = Desk.parse(JSON.parse(readFileSync("data/desk/desk.json", "utf8")));
+const cfg = DESK_RATING_DEFAULTS;
 const withRating = (label: Judgment["rating"]["label"], prices: [number, number, number]) => {
   const j = structuredClone(golden); j.rating.label = label;
   j.sections.valuation.scenarios = [{ name: "Bull", driver: "x", impliedPrice: prices[0], probability: 0.3 },
@@ -17,30 +22,61 @@ const withRating = (label: Judgment["rating"]["label"], prices: [number, number,
   return j;
 };
 
-describe("rating envelope (price 100)", () => {
-  // weighted fair value = 0.3·bull + 0.5·base + 0.2·bear
+describe("rating label vs the derived label (price 100, probabilities 0.3/0.5/0.2, bears at least 15% below)", () => {
+  // Shapes and their derived labels (E = weighted fair value / 100 − 1; D = (100 − bear) / 100; R = E / D):
+  //   A [150,140,80]  E 0.31   D 0.20 R 1.55 → STRONG BUY
+  //   B [130,115,80]  E 0.125  D 0.20 R 0.63 → BUY
+  //   C [150,110,65]  E 0.13   D 0.35 R 0.37 → HOLD   (the AMD shape: upside bought with a deep bear)
+  //   D [100,90,80]   E −0.09           → SELL
+  //   E [85,70,50]    E −0.295          → STRONG SELL
+  const A: [number, number, number] = [150, 140, 80], B: [number, number, number] = [130, 115, 80],
+    C: [number, number, number] = [150, 110, 65], D: [number, number, number] = [100, 90, 80], E: [number, number, number] = [85, 70, 50];
   const table: [Judgment["rating"]["label"], [number, number, number], boolean][] = [
-    ["BUY", [150, 140, 100], true],          // +34% — the golden's shape
-    ["BUY", [120, 110, 100], true],          // +11%
-    ["BUY", [105, 100, 80], false],          // -2.5%
-    ["STRONG BUY", [140, 125, 110], true],   // +26.5%
-    ["STRONG BUY", [120, 115, 100], false],  // +13.5%
-    ["HOLD", [120, 110, 90], true],          // +9%
-    ["HOLD", [160, 140, 120], false],        // +42%
-    ["SELL", [100, 90, 80], true],           // -11%
-    ["SELL", [120, 110, 100], false],        // +11%
-    ["STRONG SELL", [95, 85, 70], false],    // -15%
-    ["STRONG SELL", [85, 70, 50], true],     // -29.5%
+    ["STRONG BUY", A, true], ["BUY", A, true], ["HOLD", A, false],
+    ["BUY", B, true], ["HOLD", B, true], ["STRONG BUY", B, false],
+    ["HOLD", C, true], ["BUY", C, false], ["STRONG BUY", C, false],
+    ["SELL", D, true], ["HOLD", D, true], ["BUY", D, false], ["STRONG SELL", D, false],
+    ["STRONG SELL", E, true], ["SELL", E, true], ["HOLD", E, false],
   ];
   for (const [label, prices, ok] of table)
     it(`${label} at ${prices.join("/")} ${ok ? "passes" : "fails"}`, () => {
-      const issues = ratingIssues(withRating(label, prices), 100).filter((i) => i.field === "rating.label");
+      const issues = ratingIssues(withRating(label, prices), 100, cfg).filter((i) => i.field === "rating.label");
       expect(issues.length === 0).toBe(ok);
-      if (!ok) expect(issues[0].message).toMatch(/inconsistent with an upside of/);
+      if (!ok) expect(issues[0].message).toMatch(/is inconsistent with the derived/);
     });
+  it("names the derived label and the allowed set in the message", () => {
+    const [issue] = ratingIssues(withRating("BUY", C), 100, cfg).filter((i) => i.field === "rating.label");
+    expect(issue.message).toBe("BUY is inconsistent with the derived HOLD (expected upside +13.0%, reward/risk 0.37×); allowed: HOLD");
+    const [up] = ratingIssues(withRating("HOLD", A), 100, cfg).filter((i) => i.field === "rating.label");
+    expect(up.message).toMatch(/allowed: STRONG BUY or BUY$/);
+  });
   it("requires bull ≥ base ≥ bear when the names say so", () => {
-    const j = withRating("BUY", [140, 150, 100]);
-    expect(ratingIssues(j, 100).map((i) => i.field)).toContain("sections.valuation.scenarios");
+    const j = withRating("BUY", [140, 150, 80]);
+    expect(ratingIssues(j, 100, cfg).map((i) => i.field)).toContain("sections.valuation.scenarios");
+  });
+});
+
+describe("bear-depth floor (price 100, floor 15%)", () => {
+  const bearIssues = (bear: number) =>
+    ratingIssues(withRating("HOLD", [150, 140, bear]), 100, cfg).filter((i) => i.field === "sections.valuation.scenarios[bear].impliedPrice");
+  it("passes a bear exactly at the floor and below it", () => {
+    expect(bearIssues(85)).toEqual([]);
+    expect(bearIssues(84)).toEqual([]);
+  });
+  it("fails a bear inside the floor, naming the shortfall and the floor", () => {
+    const [issue] = bearIssues(86);
+    expect(issue.message).toBe("bear case $86.00 is only 14.0% below the price; the desk floor is 15.0% — a bear scenario is a real scenario, not a formality");
+    expect(issue.message).toContain("is only 14.0% below the price");
+    expect(issue.value).toBe(86);
+  });
+  it("fails a bear at or above the price", () => {
+    expect(bearIssues(100)).toHaveLength(1);
+    const issues110 = bearIssues(110);
+    expect(issues110).toHaveLength(1);
+    expect(issues110[0].message).toContain("sits at or above the price");
+  });
+  it("reads the floor from the config", () => {
+    expect(ratingIssues(withRating("HOLD", [150, 140, 86]), 100, { ...cfg, bearFloor: 0.1 }).filter((i) => /bear case/.test(i.message))).toEqual([]);
   });
 });
 
@@ -51,15 +87,15 @@ describe("scenario names", () => {
     return j;
   };
   it("flags scenario names that are not exactly Bull, Base and Bear", () => {
-    const issues = ratingIssues(withNames(["Bull case", "Base case", "Bear case"]), 100);
+    const issues = ratingIssues(withNames(["Bull case", "Base case", "Bear case"]), 100, cfg);
     expect(issues.map((i) => i.field)).toContain("sections.valuation.scenarios[].name");
   });
   it("flags scenarios renamed away from Bull/Base/Bear entirely", () => {
-    const issues = ratingIssues(withNames(["Upside", "Mid", "Downside"]), 100);
+    const issues = ratingIssues(withNames(["Upside", "Mid", "Downside"]), 100, cfg);
     expect(issues.map((i) => i.field)).toContain("sections.valuation.scenarios[].name");
   });
   it("accepts the golden's scenario names", () => {
-    const issues = ratingIssues(golden, pack.quote.price);
+    const issues = ratingIssues(golden, pack.quote.price, cfg);
     expect(issues.map((i) => i.field)).not.toContain("sections.valuation.scenarios[].name");
   });
 });
@@ -134,15 +170,27 @@ describe("renderJudgmentBlock", () => {
     expect(block).toContain("Probability-weighted fair value $485.00 (+34.0%)");
     expect(block).toMatch(/Base: \$490\.00 × 50% = \$245\.00/);
   });
+  it("ends with expected upside, bear-case downside and reward/risk in the page's format", () => {
+    const c = computeConviction(golden.sections.valuation.scenarios, pack.quote.price);
+    const lines = renderJudgmentBlock(golden, pack.quote.price).split("\n").slice(-3);
+    expect(lines).toEqual([
+      `Expected upside ${pct(c.expectedUpside, { signed: true })}`,
+      `Bear-case downside ${pct(-c.bearDownside, { signed: true })}`,
+      `Reward/risk ${rewardRiskText(c.rewardRisk)}`,
+    ]);
+    expect(lines[0]).toBe("Expected upside +34.0%");
+    expect(lines[1]).toBe("Bear-case downside -17.1%");
+    expect(lines[2]).toBe("Reward/risk 1.98×");
+  });
 });
 
 describe("validateJudgment on the golden judgment", () => {
   it("grounds the judgment's own target and fair value", () => {
-    const issues = validateJudgment(golden, facts, pack).map((i) => String(i.value));
+    const issues = validateJudgment(golden, facts, pack, desk).map((i) => String(i.value));
     for (const own of ["$525", "$485", "+21.6%", "+45.0%"]) expect(issues, own).not.toContain(own);
   });
   it("passes everything except grounding, and reports exactly the hand-written figures the capture cannot support", () => {
-    const issues = validateJudgment(golden, facts, pack);
+    const issues = validateJudgment(golden, facts, pack, desk);
     expect(issues.filter((i) => !/not in the facts/.test(i.message))).toEqual([]);
     const misses = issues.map((i) => `${i.field}: ${i.value}`).sort();
     // Calibration record: re-calibrated 2026-09-13 after the transcript cap rose to 16,000. The AVGO
@@ -159,7 +207,10 @@ describe("validateJudgment on the golden judgment", () => {
   });
   it("also runs the highlight checks", () => {
     const withDupes: Judgment = { ...golden, highlights: ["capexLatestFY", "capexLatestFY"] };
-    const issues = validateJudgment(withDupes, facts, pack);
+    const issues = validateJudgment(withDupes, facts, pack, desk);
     expect(issues.some((i) => i.field === "highlights")).toBe(true);
+  });
+  it("derives STRONG BUY for the golden (E +34.0%, D 17.1%, R 1.98; bear $300 clears the $307.69 floor) and accepts its one-notch-conservative BUY", () => {
+    expect(validateJudgment(golden, facts, pack, desk).filter((i) => i.field === "rating.label")).toEqual([]);
   });
 });

@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { FactPack } from "@/lib/facts/schema";
 import { projectReportFacts } from "@/lib/facts/project";
 import { Desk } from "@/lib/synth/desk.schema";
-import { renderFactsBlock, renderContextBlock, renderPrompt } from "@/lib/synth/prompt";
+import { renderFactsBlock, renderContextBlock, renderPrompt, renderCalls } from "@/lib/synth/prompt";
 import { EditorialReview } from "@/lib/synth/editorial.schema";
 
 const pack = FactPack.parse(JSON.parse(readFileSync("data/facts/AVGO/0001730168-26-000080.json", "utf8")));
@@ -97,6 +97,27 @@ describe("renderContextBlock", () => {
   });
 });
 
+describe("renderCalls", () => {
+  it("interpolates the desk thresholds into the rating, bear and target-low rules", () => {
+    const calls = renderCalls(desk.rating);
+    expect(calls).toContain("STRONG BUY needs E ≥ +20.0% and R ≥ 1.00×; BUY needs E ≥ +10.0% and R ≥ 0.50×; SELL is E ≤ -5.0%; STRONG SELL is E ≤ -20.0%; anything else is HOLD.");
+    expect(calls).toContain("one notch more conservative (STRONG BUY→BUY, BUY→HOLD, SELL→HOLD, STRONG SELL→SELL); a more aggressive label fails.");
+    expect(calls).toContain("the Bear implied price must sit at least 15.0% below the current price");
+    expect(calls).toContain("On a BUY, a target low below the current price");
+    expect(calls).toContain("expected upside, bear-case downside and reward/risk");
+    expect(calls).not.toMatch(/envelope|−10% to \+15%/);
+  });
+  it("follows a changed threshold, so the prompt and the validator cannot drift", () => {
+    const tuned = Desk.parse({ ...JSON.parse(readFileSync("data/desk/desk.json", "utf8")), rating: { bearFloor: 0.2, strongBuy: { minUpside: 0.25, minRewardRisk: 1.5 } } });
+    const calls = renderCalls(tuned.rating);
+    expect(calls).toContain("at least 20.0% below");
+    expect(calls).toContain("STRONG BUY needs E ≥ +25.0% and R ≥ 1.50×");
+  });
+  it("is what renderPrompt puts under # Calls", () => {
+    expect(renderPrompt(pack, facts, desk)).toContain(`# Calls\n\n${renderCalls(desk.rating)}`);
+  });
+});
+
 describe("renderPrompt", () => {
   it("assembles the seven sections in order, with the errors section only on a re-prompt", () => {
     const p = renderPrompt(pack, facts, desk, { judgmentPath: "data/judgment/AVGO/0001730168-26-000080.json" });
@@ -106,7 +127,7 @@ describe("renderPrompt", () => {
     expect(p).not.toContain("# Prior errors");
     expect(p).toContain(desk.styleRules[0]);
     expect(p).toContain('"STRONG BUY"');
-    expect(p).toContain("STRONG BUY ≥ +25%");
+    expect(p).toContain("STRONG BUY needs E ≥ +20.0%");
     expect(p).toContain("Scenario probabilities are quotable as percentages (e.g. 48%).");
     expect(p).toContain("data/judgment/AVGO/0001730168-26-000080.json");
     const re = renderPrompt(pack, facts, desk, { priorErrors: ["rating.label: BUY is inconsistent with an upside of -3.0%"] });

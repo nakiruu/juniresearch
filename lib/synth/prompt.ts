@@ -8,10 +8,10 @@
  */
 import type { FactPack } from "../facts/schema";
 import type { ReportFacts } from "../facts/project";
-import type { Desk } from "./desk.schema";
+import type { Desk, DeskRating } from "./desk.schema";
 import { judgmentJsonSchema } from "./judgment.schema";
 import { HIGHLIGHT_KEYS } from "../facts/highlights";
-import { formatSnapshot, formatCell, compactUSD, compactNum, usd, pct, mult, num, type SnapshotCell } from "../format";
+import { formatSnapshot, formatCell, compactUSD, compactNum, usd, pct, mult, num, rewardRiskText, type SnapshotCell } from "../format";
 import type { FinancialTable } from "../report.schema";
 import type { EditorialReview } from "./editorial.schema";
 import { renderEditorialFindings } from "./editorial";
@@ -103,12 +103,18 @@ const CONTRACT = `- Write Markdown using only: **bold**, "### " or "#### " at th
 - Order your thinking as the schema orders the fields: rating and scenarios first, then the prose that argues for them.
 - Governance claims (board composition and independence, executive pay, insider ownership, related-party dealings) rest on the proxy statement excerpt in Context; when the pack carries no proxy statement, say so in the governance section rather than inferring.`;
 
-const CALLS = `- Scenarios: exactly three, named exactly \`Bull\`, \`Base\`, \`Bear\`, with implied prices Bull ≥ Base ≥ Bear and probabilities that sum to 1.
+/** The author's calls, with every threshold interpolated from desk.rating — the same numbers validate-judgment enforces. */
+export function renderCalls(cfg: DeskRating): string {
+  const up = (x: number) => pct(x, { signed: true });
+  return `- Scenarios: exactly three, named exactly \`Bull\`, \`Base\`, \`Bear\`, with implied prices Bull ≥ Base ≥ Bear and probabilities that sum to 1.
 - Target range: \`targetLow\` < \`targetHigh\`, and the range must bracket the Base implied price.
-- Rating: the probability-weighted fair value (Σ impliedPrice × probability) implies an upside vs the current price; your label must sit in its envelope — STRONG BUY ≥ +25%, BUY ≥ +10%, HOLD −10% to +15%, SELL ≤ −5%, STRONG SELL ≤ −20%. A conservative label is allowed; a contradiction fails.
-- Numbers you may quote from your own calls: the target range and its upside range, each scenario's weighted value, and the weighted fair value — the page renders these.
+- Rating: the page derives a label from two numbers you set through the scenarios — expected upside E (probability-weighted fair value vs the current price) and bear-case downside D (Bear implied price vs the current price), with reward/risk R = E ÷ D. STRONG BUY needs E ≥ ${up(cfg.strongBuy.minUpside)} and R ≥ ${rewardRiskText(cfg.strongBuy.minRewardRisk)}; BUY needs E ≥ ${up(cfg.buy.minUpside)} and R ≥ ${rewardRiskText(cfg.buy.minRewardRisk)}; SELL is E ≤ ${up(cfg.sell.maxUpside)}; STRONG SELL is E ≤ ${up(cfg.strongSell.maxUpside)}; anything else is HOLD. Your label must be the derived label or one notch more conservative (STRONG BUY→BUY, BUY→HOLD, SELL→HOLD, STRONG SELL→SELL); a more aggressive label fails.
+- Bear case: the Bear implied price must sit at least ${pct(cfg.bearFloor)} below the current price — a bear scenario is a real scenario, not a formality.
+- On a BUY, a target low below the current price makes the page's upside line read negative; the lint warns so you can raise it or address it in the prose.
+- Numbers you may quote from your own calls: the target range and its upside range, each scenario's weighted value, the weighted fair value, and the expected upside, bear-case downside and reward/risk — the page renders these.
 - Scenario probabilities are quotable as percentages (e.g. 48%).
 - \`highlights\`: up to four keys from the "Highlight cells you may add" list below, no repeats; the code computes the values, you only choose which keys to append.`;
+}
 
 export function renderPrompt(
   pack: FactPack,
@@ -120,7 +126,7 @@ export function renderPrompt(
   const parts = [
     `# Role\n\nYou are ${desk.analystName} at ${desk.analyst}, writing the judgment half of an equity research report on ${pack.company} (${pack.ticker}) following its ${pack.filing.form} for the period ended ${pack.filing.periodEnd}. House style:\n${desk.styleRules.map((r) => `- ${r}`).join("\n")}`,
     `# Authoring contract\n\n${CONTRACT}`,
-    `# Calls\n\n${CALLS}`,
+    `# Calls\n\n${renderCalls(desk.rating)}`,
     `# Facts\n\n${renderFactsBlock(facts, pack)}`,
     `# Context\n\n${renderContextBlock(pack)}`,
     `# Output\n\nWrite one JSON object matching this schema, and nothing else, to \`${path}\`. Return the complete object every time.\n\n\`\`\`json\n${JSON.stringify(judgmentJsonSchema(), null, 2)}\n\`\`\``,

@@ -213,7 +213,7 @@ The report-generation model returns **one JSON object** matching
    The model fills only judgment + prose (rating, target range, scenario probabilities,
    section Markdown).
 4. **Validate** — `synth:build` runs `Judgment.parse`, `Report.parse`, `validateReport`
-   and `validateJudgment` (rating envelope, grounding, Markdown lint); failures go
+   and `validateJudgment` (rating consistency against the derived label, bear floor, grounding, Markdown lint); failures go
    back to the model as an error list, three rounds at most.
 5. **Persist** `data/<ticker>.json` — the canonical, versioned artifact.
 6. **Render** — the page reads the JSON (SSG/ISR). Generate both PDFs by

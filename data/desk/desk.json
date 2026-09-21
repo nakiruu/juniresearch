@@ -21,5 +21,12 @@
     "ticLimit": 4,
     "similarity": { "error": 0.8, "warning": 0.6 }
   },
-  "review": { "model": "opus" }
+  "review": { "model": "opus" },
+  "rating": {
+    "bearFloor": 0.15,
+    "strongBuy": { "minUpside": 0.2, "minRewardRisk": 1.0 },
+    "buy": { "minUpside": 0.1, "minRewardRisk": 0.5 },
+    "sell": { "maxUpside": -0.05 },
+    "strongSell": { "maxUpside": -0.2 }
+  }
 }

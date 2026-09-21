@@ -6,6 +6,7 @@ import { Desk } from "@/lib/synth/desk.schema";
 import { Judgment } from "@/lib/synth/judgment.schema";
 import type { HighlightKey } from "@/lib/facts/highlights";
 import { mergeReport, toneFor, longDate, shortDate } from "@/lib/synth/merge";
+import { computeConviction, deriveLabel } from "@/lib/synth/conviction";
 import { Report, SCHEMA_VERSION } from "@/lib/report.schema";
 import { validateReport } from "@/lib/validate";
 import goldenJudgment from "@/lib/__fixtures__/avgo-golden-judgment.json";
@@ -17,6 +18,7 @@ const judgment = Judgment.parse(goldenJudgment);
 
 describe("mergeReport with the golden judgment and the AVGO facts", () => {
   const report = mergeReport(facts, judgment, desk, "2026-09-13");
+  const c = computeConviction(judgment.sections.valuation.scenarios, facts.quote.currentPrice);
   it("produces a Report that parses and passes validateReport", () => {
     expect(() => Report.parse(report)).not.toThrow();
     expect(validateReport(report)).toEqual([]);
@@ -29,7 +31,8 @@ describe("mergeReport with the golden judgment and the AVGO facts", () => {
     expect(report.disclaimer).toBe(desk.disclaimer);
   });
   it("derives tone and the thesis label from the rating", () => {
-    expect(report.rating).toEqual({ label: "BUY", tone: "bull", targetLow: 440, targetHigh: 525 });
+    expect(report.rating).toEqual({ label: "BUY", tone: "bull", targetLow: 440, targetHigh: 525,
+      conviction: { ...c, derivedLabel: deriveLabel(c, desk.rating) } });
     expect(report.sections.executiveSummary.thesis.label).toBe("BUY");
   });
   it("passes facts through untouched: snapshot, quote with history, tables, analyst numbers", () => {
@@ -54,6 +57,14 @@ describe("mergeReport with the golden judgment and the AVGO facts", () => {
     expect(seg[0]).toMatchObject({ sharePct: factSeg.sharePct, revenue: factSeg.revenue, body: judgment.sections.businessMoat.segments[0].body });
     expect(report.sections.businessMoat.segmentsBasis).toBe("FY25 mix");
     expect(report.sections.businessMoat.moatRating).toBe("WIDE");
+  });
+  it("sets rating.conviction from the scenarios, the quote price and the desk thresholds", () => {
+    expect(report.rating.conviction).toEqual({ ...c, derivedLabel: deriveLabel(c, desk.rating) });
+    expect(report.rating.conviction?.expectedUpside).toBeCloseTo(0.34, 2);
+    expect(report.rating.conviction?.bearDownside).toBeCloseTo(0.171, 3); // bear $300 vs $361.99
+    expect(report.rating.conviction?.rewardRisk).toBeCloseTo(1.98, 2);
+    expect(report.rating.conviction?.derivedLabel).toBe("STRONG BUY");
+    expect(report.rating.label).toBe("BUY"); // the author's one-notch-conservative choice is preserved
   });
 });
 
