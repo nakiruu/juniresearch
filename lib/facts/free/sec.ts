@@ -504,8 +504,6 @@ export function parseCompanyFacts(facts: unknown): { annual: SecPeriod[]; quarte
     report_date: revenue.annual.get(year)!.end,
     ...deriveFields(rawAt(year, "annual")),
   }));
-  const annualByYear = new Map(annual.map((p) => [p.fiscal_year, p]));
-
   // Real quarterly rows (Q1-Q3 only — Q4 is never separately filed), anchored
   // on the quarters the revenue concept reports.
   const quarterKeys = [...revenue.quarter.keys()].sort();
@@ -519,17 +517,24 @@ export function parseCompanyFacts(facts: unknown): { annual: SecPeriod[]; quarte
     };
   });
 
-  // Derive Q4 = FY − (Q1 + Q2 + Q3) per year, when all four are present.
-  const byYearQuarter = new Map<number, Map<string, SecPeriod>>();
-  for (const q of realQuarters) {
-    if (!byYearQuarter.has(q.fiscal_year)) byYearQuarter.set(q.fiscal_year, new Map());
-    byYearQuarter.get(q.fiscal_year)!.set(q.fiscal_period, q);
-  }
+  const byReportDate = (a: SecPeriod, b: SecPeriod) => (a.report_date < b.report_date ? -1 : a.report_date > b.report_date ? 1 : 0);
+
+  // Derive Q4 = FY − (Q1 + Q2 + Q3), one per fiscal year whose three earlier quarters are present.
+  // The composing quarters are grouped by the FISCAL year they belong to — the three whose
+  // period-ends fall within the ~12 months before the annual period-end — not by calendar year: a
+  // non-December fiscal year-end (e.g. Lam Research's late-June year) spreads those three quarters
+  // across two calendar years, so a calendar-year grouping would never assemble all three and the
+  // final quarter (which is the latest quarter when the primary filing is a 10-K) would never be
+  // derived. The prior fiscal year's own Q4 sits ~365+ days back, outside the window, so it is never
+  // miscounted; a realQuarters entry is always a discretely filed Q1-Q3, never a would-be Q4.
   const derivedQ4: SecPeriod[] = [];
-  for (const [year, fyRow] of annualByYear) {
-    const byQuarter = byYearQuarter.get(year);
-    const q1 = byQuarter?.get("Q1"), q2 = byQuarter?.get("Q2"), q3 = byQuarter?.get("Q3");
-    if (!q1 || !q2 || !q3) continue;
+  for (const fyRow of annual) {
+    const fyEnd = fyRow.report_date;
+    const composing = realQuarters
+      .filter((q) => q.report_date < fyEnd && daysBetween(q.report_date, fyEnd) <= 360)
+      .sort(byReportDate);
+    if (composing.length !== 3) continue;
+    const [q1, q2, q3] = composing;
 
     // NOTE: for eps_diluted specifically, FY − (Q1+Q2+Q3) is an approximation, not an exact
     // Q4 figure — diluted share counts (the EPS denominator) differ quarter to quarter, so this
@@ -544,14 +549,13 @@ export function parseCompanyFacts(facts: unknown): { annual: SecPeriod[]; quarte
     const instantPartial = Object.fromEntries(INSTANT_FIELDS.map((f) => [f, fyRow[f]])) as Pick<DerivedFields, (typeof INSTANT_FIELDS)[number]>;
     derivedQ4.push({
       fiscal_period: "Q4",
-      fiscal_year: year,
-      report_date: fyRow.report_date,
+      fiscal_year: fyRow.fiscal_year,
+      report_date: fyEnd,
       ...q4Partial,
       ...instantPartial,
     });
   }
 
-  const byReportDate = (a: SecPeriod, b: SecPeriod) => (a.report_date < b.report_date ? -1 : a.report_date > b.report_date ? 1 : 0);
   const quarter = [...realQuarters, ...derivedQ4].sort(byReportDate);
   annual.sort(byReportDate);
 
