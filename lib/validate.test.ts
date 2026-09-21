@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { validateReport, assertValidReport } from "@/lib/validate";
 import { Report } from "@/lib/report.schema";
+import { computeConviction } from "@/lib/synth/conviction";
 import avgo from "@/lib/__fixtures__/avgo-golden.json";
 
 const base = () => Report.parse(structuredClone(avgo));
@@ -59,6 +60,38 @@ describe("validateReport", () => {
     r.sections.valuation.scenarios[1].name = "Central";
     r.rating.targetHigh = 460;
     expect(validateReport(r).some((i) => i.field === "rating")).toBe(false);
+  });
+
+  it("accepts a conviction that agrees with the scenarios and the quote", () => {
+    const r = base();
+    r.rating.conviction = {
+      ...computeConviction(r.sections.valuation.scenarios, r.quote.currentPrice),
+      derivedLabel: "BUY",
+    };
+    expect(validateReport(r)).toEqual([]);
+  });
+
+  it("flags a conviction that has drifted from a hand-edited bear scenario", () => {
+    const r = base();
+    r.rating.conviction = {
+      ...computeConviction(r.sections.valuation.scenarios, r.quote.currentPrice),
+      derivedLabel: "BUY",
+    };
+    const bearIndex = r.sections.valuation.scenarios.findIndex((s) => /bear/i.test(s.name));
+    r.sections.valuation.scenarios[bearIndex].impliedPrice += 10;
+    const fields = validateReport(r).map((i) => i.field);
+    expect(fields).toContain("rating.conviction.expectedUpside");
+    expect(fields).toContain("rating.conviction.bearDownside");
+    expect(fields).toContain("rating.conviction.rewardRisk");
+  });
+
+  it("flags a stored null reward/risk when the scenarios and quote say the bear is below the price", () => {
+    const r = base();
+    const want = computeConviction(r.sections.valuation.scenarios, r.quote.currentPrice);
+    r.rating.conviction = { ...want, rewardRisk: null, derivedLabel: "BUY" };
+    const issues = validateReport(r);
+    expect(issues).toHaveLength(1);
+    expect(issues[0].field).toBe("rating.conviction.rewardRisk");
   });
 });
 

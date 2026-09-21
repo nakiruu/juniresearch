@@ -82,6 +82,9 @@ const quote = z.object({
   history: z.array(z.object({ date: z.string(), close: z.number() })).optional(),
 });
 
+// Mirrors RatingLabel in lib/synth/judgment.schema.ts. Kept separate on purpose —
+// this file is the public report contract and must not import lib/synth — so a
+// new label is added in both places; mergeReport assigns one into the other.
 const ratingLabel = z.enum(["STRONG BUY", "BUY", "HOLD", "SELL", "STRONG SELL"]);
 
 /** Computed by mergeReport from the scenarios and the quote; optional so reports built before it parse. */

@@ -66,11 +66,14 @@ describe("bear-depth floor (price 100, floor 15%)", () => {
   it("fails a bear inside the floor, naming the shortfall and the floor", () => {
     const [issue] = bearIssues(86);
     expect(issue.message).toBe("bear case $86.00 is only 14.0% below the price; the desk floor is 15.0% — a bear scenario is a real scenario, not a formality");
+    expect(issue.message).toContain("is only 14.0% below the price");
     expect(issue.value).toBe(86);
   });
   it("fails a bear at or above the price", () => {
     expect(bearIssues(100)).toHaveLength(1);
-    expect(bearIssues(110)).toHaveLength(1);
+    const issues110 = bearIssues(110);
+    expect(issues110).toHaveLength(1);
+    expect(issues110[0].message).toContain("sits at or above the price");
   });
   it("reads the floor from the config", () => {
     expect(ratingIssues(withRating("HOLD", [150, 140, 86]), 100, { ...cfg, bearFloor: 0.1 }).filter((i) => /bear case/.test(i.message))).toEqual([]);

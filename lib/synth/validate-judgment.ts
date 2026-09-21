@@ -1,10 +1,11 @@
 /**
  * validate-judgment.ts — the checks Zod cannot express on a judgment.
  * -----------------------------------------------------------------------------
- * Rating envelope (conviction may differ from arithmetic; contradiction may
- * not), grounding (every figure in the prose exists in the facts or context),
- * the Markdown subset, and segment/moat naming. Every issue names field and
- * value; the list is the re-prompt payload.
+ * Rating consistency (the label must equal the derived label or sit one notch
+ * more conservative; the bear case must clear the desk floor), grounding
+ * (every figure in the prose exists in the facts or context), the Markdown
+ * subset, and segment/moat naming. Every issue names field and value; the
+ * list is the re-prompt payload.
  */
 import type { FactPack } from "../facts/schema";
 import type { ReportFacts } from "../facts/project";
@@ -30,11 +31,14 @@ export function ratingIssues(j: Judgment, currentPrice: number, cfg: DeskRating)
       message: `${j.rating.label} is inconsistent with the derived ${derived} (expected upside ${pct(c.expectedUpside, { signed: true })}, reward/risk ${rewardRiskText(c.rewardRisk)}); allowed: ${derived}${alt ? ` or ${alt}` : ""}`,
       value: j.rating.label,
     });
+  // No bear scenario → no floor to enforce here; the scenario-name check below fails that judgment instead.
   const bear = scenarios.find((s) => /bear/i.test(s.name));
   if (bear && bear.impliedPrice > currentPrice * (1 - cfg.bearFloor))
     issues.push({
       field: "sections.valuation.scenarios[bear].impliedPrice",
-      message: `bear case ${usd(bear.impliedPrice)} is only ${pct(c.bearDownside)} below the price; the desk floor is ${pct(cfg.bearFloor)} — a bear scenario is a real scenario, not a formality`,
+      message: c.bearDownside <= 0
+        ? `bear case ${usd(bear.impliedPrice)} sits at or above the price; the desk floor is ${pct(cfg.bearFloor)} below it — a bear scenario is a real scenario, not a formality`
+        : `bear case ${usd(bear.impliedPrice)} is only ${pct(c.bearDownside)} below the price; the desk floor is ${pct(cfg.bearFloor)} — a bear scenario is a real scenario, not a formality`,
       value: bear.impliedPrice,
     });
   const names = scenarios.map((s) => s.name.trim());

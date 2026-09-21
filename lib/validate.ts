@@ -8,6 +8,7 @@
  * messages become the re-prompt payload for the synthesis subsystem.
  */
 import type { Report } from "./report.schema";
+import { computeConviction, type Conviction } from "./synth/conviction";
 
 export interface ValidationIssue {
   field: string;
@@ -77,6 +78,27 @@ export function validateReport(report: Report): ValidationIssue[] {
         value: impliedPrice,
       });
     }
+  }
+
+  // conviction is a snapshot of the scenarios and the quote; a later hand-edit to
+  // either must not leave the row silently stale. derivedLabel needs desk.rating,
+  // which this function does not receive — the three measures catch the drift.
+  if (rating.conviction) {
+    const want = computeConviction(scenarios, report.quote.currentPrice);
+    const drift = (a: number | null, b: number | null) =>
+      a == null || b == null ? a !== b : Math.abs(a - b) > EPSILON;
+    const checks: [keyof Conviction, number | null, number | null][] = [
+      ["expectedUpside", rating.conviction.expectedUpside, want.expectedUpside],
+      ["bearDownside", rating.conviction.bearDownside, want.bearDownside],
+      ["rewardRisk", rating.conviction.rewardRisk, want.rewardRisk],
+    ];
+    for (const [key, have, expected] of checks)
+      if (drift(have, expected))
+        issues.push({
+          field: `rating.conviction.${key}`,
+          message: `conviction ${key} ${have} disagrees with the scenarios and quote (${expected})`,
+          value: have,
+        });
   }
 
   return issues;

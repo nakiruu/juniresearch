@@ -36,6 +36,7 @@ describe("deriveLabel at the band boundaries", () => {
     ["buy at both thresholds", c(0.1, 0.2, 0.5), "BUY"],
     ["just under the buy upside", c(0.099, 0.1, 0.99), "HOLD"],
     ["just under the buy ratio (the AMD shape)", c(0.121, 0.326, 0.37), "HOLD"],
+    ["strong-buy upside bought with a bear too deep for either ratio", c(0.3, 0.9, 0.33), "HOLD"],
     ["positive but small", c(0.014, 0.167, 0.08), "HOLD"],
     ["flat", c(0, 0.2, 0), "HOLD"],
     ["just above the sell line", c(-0.049, 0.2, null), "HOLD"],

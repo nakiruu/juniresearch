@@ -9,7 +9,9 @@ describe("Report.rating.conviction is optional", () => {
     expect(r.rating.conviction).toBeUndefined();
   });
   it("parses every published report in data/ unchanged", () => {
-    for (const f of readdirSync("data").filter((f) => /^[a-z]+\.json$/.test(f)))
+    const files = readdirSync("data").filter((f) => /^[a-z0-9.-]+\.json$/.test(f));
+    expect(files.length).toBeGreaterThan(0);
+    for (const f of files)
       expect(() => Report.parse(JSON.parse(readFileSync(`data/${f}`, "utf8"))), f).not.toThrow();
   });
   it("accepts a full conviction block, with a nullable reward/risk", () => {
