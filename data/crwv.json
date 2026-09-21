@@ -152,7 +152,13 @@
     "label": "HOLD",
     "tone": "secondary",
     "targetLow": 70,
-    "targetHigh": 110
+    "targetHigh": 110,
+    "conviction": {
+      "expectedUpside": 0.12456747404844282,
+      "bearDownside": 0.5056846267918932,
+      "rewardRisk": 0.24633431085043972,
+      "derivedLabel": "HOLD"
+    }
   },
   "snapshot": [
     {
@@ -646,5 +652,5 @@
       ]
     }
   },
-  "disclaimer": "DISCLAIMER: This report is for informational/educational purposes only and does not constitute investment advice. Technology and AI-infrastructure stocks carry significant risk and volatility. Past performance is not indicative of future results. Conduct your own due diligence. The author may hold positions in securities discussed."
+  "disclaimer": "DISCLAIMER: This report is for informational/educational purposes only and does not constitute investment advice. All equity securities carry risk and can be volatile, and past performance is not indicative of future results. Conduct your own due diligence. The author may hold positions in securities discussed."
 }

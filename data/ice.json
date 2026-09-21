@@ -152,7 +152,13 @@
     "label": "BUY",
     "tone": "bull",
     "targetLow": 150,
-    "targetHigh": 205
+    "targetHigh": 205,
+    "conviction": {
+      "expectedUpside": 0.11275487232263459,
+      "bearDownside": 0.1766900366630218,
+      "rewardRisk": 0.6381507098653076,
+      "derivedLabel": "BUY"
+    }
   },
   "snapshot": [
     {
@@ -606,8 +612,8 @@
         },
         {
           "name": "Bear",
-          "driver": "The swing factors bind instead. Rates stay high so mortgage origination does not recover, market volatility subsides, and the MarketAxess deal strains the balance sheet — a larger debt load repricing higher, integration costs, or a regulatory delay — while the buyback is squeezed. Earnings still grow modestly, but the premium multiple de-rates and the shares fall toward the low end of the range near the 52-week low.",
-          "impliedPrice": 135,
+          "driver": "The swing factors bind instead. Rates stay high so mortgage origination does not recover, market volatility subsides, and the MarketAxess deal strains the balance sheet — a larger debt load repricing higher, integration costs, or a regulatory delay — while the buyback is squeezed. Earnings still grow modestly, but the premium multiple de-rates and the shares fall back toward the lower part of the 52-week range.",
+          "impliedPrice": 128,
           "probability": 0.25
         }
       ],
@@ -677,7 +683,7 @@
     },
     "finalRecommendation": {
       "body": [
-        "We rate Intercontinental Exchange BUY with a $150–$205 target range and a probability-weighted fair value of about $175, roughly 12% above the $155.47 price and deliberately below the $187.29 consensus. This is a BUY on a diversified exchange-and-data franchise whose core is genuinely working: net revenue up 5% with the recurring half growing faster still, a 52% operating margin, strong exchange results across the complex, and free cash flow strong enough to have funded deleveraging, a dividend and buybacks at once. Two of the three segments — the 74%-margin exchange business and the recurring data franchise — carry the result on their own.",
+        "We rate Intercontinental Exchange BUY with a $150–$205 target range and a probability-weighted fair value of about $173, roughly 11% above the $155.47 price and deliberately below the $187.29 consensus. This is a BUY on a diversified exchange-and-data franchise whose core is genuinely working: net revenue up 5% with the recurring half growing faster still, a 52% operating margin, strong exchange results across the complex, and free cash flow strong enough to have funded deleveraging, a dividend and buybacks at once. Two of the three segments — the 74%-margin exchange business and the recurring data franchise — carry the result on their own.",
         "The discipline is in what we will and will not pay for, and there are now two things ahead of the price rather than one. The Street's 20%-plus upside rests partly on a recovery in the depressed Mortgage Technology segment, which turns on the rate cycle rather than on execution, and partly on the compounding core continuing. On top of that, ICE has agreed to buy MarketAxess for about $6.0 billion in cash, funded with new debt — strategically sound in extending the fixed-income franchise, but a deal that re-levers the balance sheet and must still close, be financed permanently, and integrate. Our fair value sits below the consensus because both the mortgage recovery and the deal's benefits are still ahead of the price.",
         "What would move us up: mortgage-origination volumes turning as rates ease, continued exchange and recurring-data strength, or clear progress toward closing MarketAxess on terms that preserve the buyback. What would move us more cautious: a mortgage segment that stays depressed while exchange volatility fades, or a deal that closes at the cost of a stretched balance sheet and a suspended repurchase. The call is to own the compounding core at today's price and let the mortgage option and the acquisition earn their keep as they play out."
       ]

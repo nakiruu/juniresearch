@@ -152,7 +152,13 @@
     "label": "BUY",
     "tone": "bull",
     "targetLow": 88,
-    "targetHigh": 108
+    "targetHigh": 108,
+    "conviction": {
+      "expectedUpside": 0.12633534602879704,
+      "bearDownside": 0.18718067812354858,
+      "rewardRisk": 0.6749379652605458,
+      "derivedLabel": "BUY"
+    }
   },
   "snapshot": [
     {
@@ -593,12 +599,12 @@
         },
         {
           "name": "Bear",
-          "driver": "The cycle turns against the bank. A slowing economy lifts credit costs from today's benign level, loan growth stalls, and lower rates or a weaker mix compress net interest income, while the thinner CET1 buffer forces the buyback to slow. Earnings fall from the current run-rate, the multiple stays low, and the shares drift toward the low end of the range near the 52-week low.",
-          "impliedPrice": 78,
+          "driver": "The cycle turns against the bank. A slowing economy lifts credit costs from today's benign level, loan growth stalls, and lower rates or a weaker mix compress net interest income, while the thinner CET1 buffer forces the buyback to slow. Earnings fall from the current run-rate, the multiple stays low, and the shares make a fresh low, sliding below their 52-week trough.",
+          "impliedPrice": 70,
           "probability": 0.25
         }
       ],
-      "scenarioCommentary": "Probability-weighting the three cases gives a fair value of about $99, roughly 15% above the price — a BUY, and one that sits just below the consensus target. We weight the Base case at 45% because a continued-but-moderating reacceleration is the most likely path for a large bank at a strong point in the cycle, and split the tails toward the bull (30%) over the bear (25%): the cheap multiple and the heavy buyback put a firmer floor under per-share value than the returns alone would, while the durability of those returns is the genuine upside. The $88–$108 target range brackets the Base outcome, and its width reflects that the swing factor is the credit and rate cycle — benign today, but cyclical. Our fair value sits close to the Street because at that low forward multiple the disagreement is narrow: the shares are cheap enough that the case rests on the durability of the improvement rather than on a demanding valuation. The discipline is to own the cheap, compounding bank on that asymmetry — a firm floor from the valuation and the buyback, with durable returns the upside."
+      "scenarioCommentary": "Probability-weighting the three cases gives a fair value of about $97, roughly 13% above the price — a BUY, and one that sits just below the consensus target. We weight the Base case at 45% because a continued-but-moderating reacceleration is the most likely path for a large bank at a strong point in the cycle, and split the tails toward the bull (30%) over the bear (25%): the cheap multiple and the heavy buyback put a firmer floor under per-share value than the returns alone would, while the durability of those returns is the genuine upside. The $88–$108 target range brackets the Base outcome, and its width reflects that the swing factor is the credit and rate cycle — benign today, but cyclical. Our fair value sits close to the Street because at that low forward multiple the disagreement is narrow: the shares are cheap enough that the case rests on the durability of the improvement rather than on a demanding valuation. The discipline is to own the cheap, compounding bank on that asymmetry — a firm floor from the valuation and the buyback, with durable returns the upside."
     },
     "businessMoat": {
       "segments": [
@@ -665,7 +671,7 @@
     },
     "finalRecommendation": {
       "body": [
-        "We rate Wells Fargo BUY with an $88–$108 target range and a probability-weighted fair value of about $99, roughly 15% above the $86.12 price and just below the $100.46 consensus. This is a BUY on a cheap bank whose earnings power is inflecting up: after years unable to grow its balance sheet, it is expanding again — average loans up 12%, deposits up 10% — with revenue up 9%, a 17.7% return on tangible common equity up sharply from a year ago, positive operating leverage, and a large buyback retiring stock cheaply. At 12.5x trailing the market is not paying for that improvement, which is the opportunity.",
+        "We rate Wells Fargo BUY with an $88–$108 target range and a probability-weighted fair value of about $97, roughly 13% above the $86.12 price and just below the $100.46 consensus. This is a BUY on a cheap bank whose earnings power is inflecting up: after years unable to grow its balance sheet, it is expanding again — average loans up 12%, deposits up 10% — with revenue up 9%, a 17.7% return on tangible common equity up sharply from a year ago, positive operating leverage, and a large buyback retiring stock cheaply. At 12.5x trailing the market is not paying for that improvement, which is the opportunity.",
         "The discipline is in the durability. As the risk section sets out, a meaningful part of the sharp return improvement is cyclical, and the bank is funding its growth and buybacks partly by drawing its CET1 ratio down to 10.3%, leaving a thinner buffer for a downturn. We discount for both, which is why our fair value sits modestly below the Street even as the narrow disagreement with consensus keeps it a BUY.",
         "What would move us up: evidence that the higher returns and the balance-sheet growth are durable through a normalizing credit cycle, or a re-rating of the multiple as confidence in the returns builds. What would move us more cautious: rising credit costs against the thinner capital buffer, a stall in loan growth, or a pace of buybacks that outruns capital generation. The call is to own a cheap, improving, well-capitalized-enough bank compounding per-share value, while keeping the cyclicality of today's returns firmly in view."
       ]

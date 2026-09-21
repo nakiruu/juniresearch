@@ -1,7 +1,7 @@
 {
-  "judgmentSha256": "93931f34f161c80e327b62854ec48d9c4b78c1a74e0c67ebf470151d8bab8d77",
-  "reviewedAt": "2026-09-20T22:15:00Z",
-  "reviewer": "claude-opus-4-8",
+  "judgmentSha256": "a9bafec322bc95396066a3540b826d029ba55bfae66e84ae15a2181713a72f12",
+  "reviewedAt": "2026-09-21T18:00:00Z",
+  "reviewer": "claude-sonnet-5",
   "round": 2,
   "verdict": "approved",
   "findings": [
@@ -13,7 +13,7 @@
       "issue": "No peer data is on the grounding surface: the Facts multiples block is a company-only column and both it and the segments/geography notes say peers are 'pending a peer data source'. The report's own valuation section confirms this — 'No peer column exists in this pack, so the multiples are judged against Wells Fargo's own history.' So the assertion that WFC trades 'at a discount to higher-multiple peers' is unsupported and internally contradictory. The same peerless-peer premise recurs three more times: sections.executiveSummary.catalysts[3] ('A re-rating of the multiple toward peers'), sections.valuation.scenarios[0] Bull driver ('re-rates the multiple toward higher-returning peers'), and sections.finalRecommendation.body[2] ('a re-rating of the multiple toward higher-returning peers') — each presupposes peers that currently earn more or trade higher, which the pack does not carry.",
       "fix": "Remove 'a discount to higher-multiple peers' from analystCommentary. Frame the valuation against Wells Fargo's own history/forward earnings and returns, as multiplesCommentary already does. Recast the three re-rating references so the upside is a re-rating of WFC's own multiple as the market gains confidence the returns are durable, without asserting where peers trade.",
       "status": "addressed",
-      "note": "Re-verified against the new judgment. analystCommentary reads 'undemanding for a bank earning those returns' with no peer claim; catalysts[3], the Bull driver and finalRecommendation.body recast the re-rating as WFC's own multiple re-rating as confidence in durable returns builds. Grep confirms the only 'peer' mention is 'No peer column exists in this pack'."
+      "note": "Re-confirmed. analystCommentary reads 'undemanding for a bank earning those returns' with no peer claim; catalysts[3], the Bull driver and finalRecommendation.body[2] recast the re-rating as WFC's own multiple re-rating as confidence in durable returns builds. Grep confirms the only 'peer' mention in the judgment is 'No peer column exists in this pack'."
     },
     {
       "id": "F-2",
@@ -23,7 +23,7 @@
       "issue": "Scharf's title ('Chairman and Chief Executive Officer Charlie Scharf') is on the surface via the press release, but Santomassimo's title is not: the phrase 'chief financial officer' appears nowhere in the FactPack, the prompt Facts/Context, or the report's calls. The proxy lists 'Michael P. Santomassimo' only as an NEO in the ownership table, with no title. The claim recurs in sections.management.insiderOwnership ('CFO Michael Santomassimo'). It is a correct real-world title recalled from outside the pack, but it is ungrounded.",
       "fix": "Drop the 'chief financial officer' / 'CFO' designation for Santomassimo in both leadership and insiderOwnership, or identify him only as one of the named executive officers the proxy lists. Keep Scharf's chairman-and-CEO title, which the press release supports.",
       "status": "addressed",
-      "note": "Re-verified. leadership reads 'Michael Santomassimo among the named executive officers the proxy lists' and insiderOwnership names him without a title. Grep confirms 'chief financial officer'/'CFO' appears nowhere in the judgment; Scharf's chairman-and-CEO title retained."
+      "note": "Re-confirmed. leadership reads 'Michael Santomassimo among the named executive officers the proxy lists' and insiderOwnership names him without a title. Grep confirms 'chief financial officer'/'CFO' appears nowhere in the judgment; Scharf's chairman-and-CEO title retained."
     },
     {
       "id": "F-3",
@@ -33,7 +33,7 @@
       "issue": "The proxy does quantify group ownership, so this mischaracterizes the document. It states plainly: 'None of our directors, NEOs, or executive officers, individually or as a group, beneficially own more than 1% of our outstanding common stock,' and it discloses the group total beneficial ownership (3,983,805 shares; 3,884,799 common stock owned) for the 27-person group. The report instead features only the 2,323,450 shared-voting-power subset and reports that no percentage is stated. That under-reads the disclosure and leaves ownership looking unquantified when the proxy caps it below 1%.",
       "fix": "State that the proxy discloses no director, NEO or executive officer — individually or as the 27-person group — beneficially owns more than 1% of shares outstanding, and cite the group's beneficial total (about 3.98 million shares) rather than the 2.3 million shared-power subset. Keep the holder read already present ('alignment is through equity grants rather than a control block').",
       "status": "addressed",
-      "note": "Re-verified. insiderOwnership states 'none of the directors, nominees, NEOs or executive officers, individually or as a group, beneficially owns more than 1% of the outstanding common stock' and cites the group's 3,983,805-share beneficial total as of February 9, 2026; the 2,323,450 shared-power subset is gone and the holder read is kept. Both figures match the proxy."
+      "note": "Re-confirmed. insiderOwnership states 'none of the directors, nominees, NEOs or executive officers, individually or as a group, beneficially owns more than 1% of the outstanding common stock' and cites the group's 3,983,805-share beneficial total as of February 9, 2026; the 2,323,450 shared-power subset is gone and the holder read is kept."
     },
     {
       "id": "F-4",
@@ -43,7 +43,7 @@
       "issue": "The single caveat — that a meaningful part of the returns is cyclical and management itself flags that the strong environment will not last — is re-argued in roughly ten places rather than argued once and pointed back to: analystCommentary ('management itself flags'), executiveSummary.thesis.body, executiveSummary.risks[0] ('not a permanent state'), businessMoat.durability ('will not persist unchanged'), management.leadership ('through economic cycles, not just the strong environment we see today'), risks.idiosyncratic[0] ('strong rather than permanent') and [3] ('a meaningful part reflects the current cycle'), risks.systemic ('will not stay strong indefinitely'), valuation.scenarioCommentary ('management itself warns will not stay strong forever'), and finalRecommendation.body[1] ('management itself says will not last forever'). The paraphrase recurs past the point of notice.",
       "fix": "Argue the cyclicality caveat once where it belongs (thesis plus the lead idiosyncratic risk), and elsewhere refer back to it in a few words rather than restating the mechanism and the management quote each time. Let the moat, management, systemic and final-recommendation sections point to it instead of re-deriving it.",
       "status": "addressed",
-      "note": "Now addressed. The caveat sits in its two designated homes (thesis 'will not last forever'; idiosyncratic[0] 'strong rather than permanent'); scenarioCommentary is compressed to 'benign today, but cyclical'; systemic now points back ('the idiosyncratic risks detail') with 'stay strong indefinitely' removed; finalRecommendation.body[1] points back ('As the risk section sets out'). The full CEO cycle quote now appears once, in leadership, making a distinct management-candor point rather than re-deriving the mechanism. No longer recurs past the point of notice."
+      "note": "Re-confirmed. The caveat sits in its two designated homes (thesis 'will not last forever'; idiosyncratic[0] 'strong rather than permanent'); scenarioCommentary is compressed to 'benign today, but cyclical'; systemic points back ('the idiosyncratic risks detail'); finalRecommendation.body[1] points back ('As the risk section sets out'). The full CEO cycle quote appears once, in leadership. Grep of 'management itself' finds one instance (analystCommentary)."
     },
     {
       "id": "F-5",
@@ -53,7 +53,7 @@
       "issue": "This sentence is repeated almost verbatim in two other sections: valuation.scenarioCommentary ('at that low forward multiple the disagreement is narrow: the shares are cheap enough that the case rests on the durability of the improvement rather than on a demanding valuation') and finalRecommendation.body[1] ('at this multiple the disagreement is narrow — the shares are cheap enough that the case turns on whether the improvement lasts, not on the price paid for it'). The same 'disagreement is narrow / shares cheap enough that the question is durability' claim appears three times in different words.",
       "fix": "Keep the 'narrow disagreement / durability is the question' framing in one place (scenarioCommentary or finalRecommendation) and cut or compress it in the other two, pointing back rather than re-stating.",
       "status": "addressed",
-      "note": "Re-verified. The full 'disagreement is narrow / shares cheap enough that the question is durability' framing appears once (valuation.scenarioCommentary); multiplesCommentary carries only 'We are near the Street rather than far from it', and finalRecommendation.body[1] is compressed to 'the narrow disagreement with consensus'."
+      "note": "Re-confirmed. The full framing appears once (valuation.scenarioCommentary); multiplesCommentary carries only 'We are near the Street rather than far from it', and finalRecommendation.body[1] is compressed to 'the narrow disagreement with consensus'."
     },
     {
       "id": "F-6",
@@ -63,7 +63,7 @@
       "issue": "All five growth points are bullish (balance-sheet expansion, revenue on both halves, operating leverage, consensus estimates, buyback amplification) with no reading that cuts the other way. House style and the rubric require every bullish section to name the counter-case; the growth section names none, even though the counter — that this loan and deposit growth is cyclical and tied to the strong economy management flags, and mid-single-digit revenue growth is the consensus baseline, not an acceleration — sits on the same page.",
       "fix": "Add one counter-case sentence to the growth points: that the balance-sheet reacceleration depends on the current cycle (loan demand, rates, benign credit) and could stall, or note that consensus models only mid-single-digit revenue growth. Use figures already on the page.",
       "status": "addressed",
-      "note": "Re-verified. growth.points carries a sixth counter-case point noting the loan and deposit growth is cyclical (leans on the strong economy and benign credit management flags) and that the consensus revenue path implies only mid-single-digit growth, a baseline rather than an acceleration."
+      "note": "Re-confirmed. growth.points carries a sixth counter-case point noting the loan and deposit growth is cyclical (leans on the strong economy and benign credit management flags) and that the consensus revenue path implies only mid-single-digit growth, a baseline rather than an acceleration."
     },
     {
       "id": "F-7",
@@ -73,7 +73,7 @@
       "issue": "'among the deepest in the country' is an unearned superlative — no ranking or peer/size comparison is on the grounding surface. A related ungrounded characterisation appears in moatFactors[2].body and durability, which allude to the bank's 'period(s) of self-inflicted difficulty'; the pack supports 'years in which it could not grow its balance sheet' (the press release) but not the scandal cause the phrase implies.",
       "fix": "Drop 'among the deepest in the country' or replace it with the grounded fact (average deposits of $1,465.6 billion, up 10%). Replace 'self-inflicted difficulty' with the grounded 'period of constrained growth' the press release supports.",
       "status": "addressed",
-      "note": "Re-verified. 'among the deepest in the country' removed from moatFactors[0]. 'self-inflicted difficulty' replaced with 'period of constrained growth' (durability) and the neutral 'periods of difficulty' (moatFactors[2]); no 'deepest'/'self-inflicted' remains."
+      "note": "Re-confirmed. 'among the deepest in the country' remains removed from moatFactors[0]. 'self-inflicted difficulty' remains replaced with 'period of constrained growth' (durability) and the neutral 'periods of difficulty' (moatFactors[2]); no 'deepest'/'self-inflicted' remains."
     },
     {
       "id": "F-8",
@@ -83,7 +83,7 @@
       "issue": "In the standalone sentiment commentary the '$6.4 billion ... up 25%' construction can be read as net income up 25%, whereas 25% is the diluted-EPS growth (2.00 vs 1.60); net income rose 17% (6,407 vs 5,494). incomeCommentary disambiguates this ('up 25% as the buyback shrank the share count faster than net income grew'), but analystCommentary reads on its own.",
       "fix": "Attach the 25% explicitly to EPS, e.g. 'net income was $6.4 billion; diluted EPS of $2.00 rose 25%', so the growth figure is not read against net income.",
       "status": "addressed",
-      "note": "Re-verified. analystCommentary reads '$6.4 billion, or $2.00 per share — the latter up 25% as the buyback shrank the share count faster than net income grew', attaching the 25% unambiguously to per-share earnings."
+      "note": "Re-confirmed. analystCommentary reads '$6.4 billion, or $2.00 per share — the latter up 25% as the buyback shrank the share count faster than net income grew', attaching the 25% unambiguously to per-share earnings."
     },
     {
       "id": "F-9",
@@ -93,7 +93,7 @@
       "issue": "'barely 11x forward earnings' repeats verbatim in three sections — executiveSummary.thesis.body, valuation.multiplesCommentary and finalRecommendation.body[1] — with a fourth variant 'barely 11x earnings' in growth.points[4]. Introducing the forward multiple once per section is acceptable, but the identical phrasing four times reads as a tic (rubric item 9: no tic repeated past the point of notice).",
       "fix": "Keep 'barely 11x forward earnings' where the forward multiple is first argued (multiplesCommentary or thesis) and vary or shorten the back-references elsewhere — e.g. 'the low-11x forward multiple' or simply 'the cheap forward multiple' — so the phrase is not repeated word for word across four sections.",
       "status": "addressed",
-      "note": "Now addressed. Grep confirms 'barely 11x forward earnings' appears exactly once (valuation.multiplesCommentary); the finalRecommendation.body[0] instance flagged last round now reads 'At 12.5x trailing the market is not paying for that improvement', and the thesis/growth back-references use varied phrasing ('low forward multiple', 'low multiple'). No word-for-word repetition remains."
+      "note": "Re-confirmed. Grep confirms 'barely 11x' appears exactly once, in valuation.multiplesCommentary; finalRecommendation.body[0] reads 'At 12.5x trailing the market is not paying for that improvement', and the thesis/growth back-references use varied phrasing ('low forward multiple', 'low multiple'). No word-for-word repetition remains."
     },
     {
       "id": "F-10",
@@ -103,7 +103,17 @@
       "issue": "'long-serving' asserts a fact about Scharf's tenure that is nowhere on the grounding surface: the FactPack, the prompt Facts/Context and the report's calls give no start date or length of service, and the press release identifies him only as 'Chairman and Chief Executive Officer'. It is a correct real-world detail recalled from outside the pack (rubric item 2).",
       "fix": "Drop 'long-serving', or replace it with a grounded descriptor (e.g. 'the CEO who has run the return-and-efficiency effort'). The 'chairman-and-CEO' concentration point and 'driven the turnaround' (the shown return and balance-sheet improvement) can stay.",
       "status": "addressed",
-      "note": "Re-verified. Grep confirms 'long-serving' appears nowhere; governance reads 'the concentration of leadership in a CEO who has driven the turnaround.' The chairman-and-CEO concentration point and the grounded 'driven the turnaround' are kept."
+      "note": "Re-confirmed. Grep confirms 'long-serving' appears nowhere; governance reads 'the concentration of leadership in a CEO who has driven the turnaround.' The chairman-and-CEO concentration point and the grounded 'driven the turnaround' are kept."
+    },
+    {
+      "id": "F-11",
+      "severity": "Critical",
+      "field": "sections.valuation.scenarios[2] (Bear) driver / impliedPrice",
+      "quote": "the shares make a fresh low, sliding below their 52-week trough. [impliedPrice: 70]",
+      "issue": "The deepened Bear previously anchored its implied price to 'the 52-week low' while $70 sat below the grounded $72.78 low (quote.week52Low), a contradiction against the report's own $72.78–$97.76 range.",
+      "fix": "Reconcile the driver's anchor with the number: either ground impliedPrice at $72.78, or reword the driver so $70 reads as a judgment-based trough below the grounded low rather than as the low itself.",
+      "status": "addressed",
+      "note": "Verified fixed. scenarios[2].driver now reads 'the shares make a fresh low, sliding below their 52-week trough' — no longer claiming $70 is the 52-week low, but a fresh low beneath the grounded $72.78 low (in FactPack and data/wfc.json), which $70 satisfies; no contradiction with the rendered '$72.78 – $97.76' range. Fair value 115*0.3+100*0.45+70*0.25 = $97.0, +12.6% above $86.12 ('roughly 13%'); conviction expectedUpside 0.1263, bearDownside 0.1872 (18.7% below). F-1–F-10 remain addressed."
     }
   ]
 }
