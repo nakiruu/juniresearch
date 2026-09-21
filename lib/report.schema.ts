@@ -82,11 +82,22 @@ const quote = z.object({
   history: z.array(z.object({ date: z.string(), close: z.number() })).optional(),
 });
 
+const ratingLabel = z.enum(["STRONG BUY", "BUY", "HOLD", "SELL", "STRONG SELL"]);
+
+/** Computed by mergeReport from the scenarios and the quote; optional so reports built before it parse. */
+const conviction = z.object({
+  expectedUpside: z.number(),
+  bearDownside: z.number(),
+  rewardRisk: z.number().nullable(),
+  derivedLabel: ratingLabel,
+});
+
 const rating = z.object({
-  label: z.enum(["STRONG BUY", "BUY", "HOLD", "SELL", "STRONG SELL"]),
+  label: ratingLabel,
   tone: z.enum(["bull", "accent", "secondary", "bear"]).default("bull"),
   targetLow: z.number(),
   targetHigh: z.number(),
+  conviction: conviction.optional(),
 });
 
 const analystSentiment = z.object({

@@ -9,6 +9,7 @@ import type { ReportFacts } from "../facts/project";
 import type { Judgment, RatingLabel } from "./judgment.schema";
 import type { Desk } from "./desk.schema";
 import { SCHEMA_VERSION, type Report, type SnapshotCellData } from "../report.schema";
+import { computeConviction, deriveLabel } from "./conviction";
 
 export const toneFor = (label: RatingLabel): Report["rating"]["tone"] =>
   label === "HOLD" ? "secondary" : label.endsWith("BUY") ? "bull" : "bear";
@@ -31,7 +32,11 @@ export function mergeReport(facts: ReportFacts, j: Judgment, desk: Desk, buildDa
       filing: facts.meta.filing,
     },
     quote: facts.quote,
-    rating: { label: j.rating.label, tone: toneFor(j.rating.label), targetLow: j.rating.targetLow, targetHigh: j.rating.targetHigh },
+    rating: (() => {
+      const c = computeConviction(j.sections.valuation.scenarios, facts.quote.currentPrice);
+      return { label: j.rating.label, tone: toneFor(j.rating.label), targetLow: j.rating.targetLow, targetHigh: j.rating.targetHigh,
+        conviction: { ...c, derivedLabel: deriveLabel(c, desk.rating) } };
+    })(),
     // The model's chosen highlight keys (up to four) resolve to fact-built cells, in the order chosen,
     // appended after the sixteen code-owned cells. mergeReport runs before validateJudgment (see
     // scripts/synth-build.ts), so `.filter(Boolean)` here is the merge-time guard against a duplicate or
