@@ -1,0 +1,119 @@
+{
+  "judgmentSha256": "47b2adfb72cfddbcf4a506d06b63618d088c944c8ebdb795064b463de8fd0d67",
+  "reviewedAt": "2026-09-21T00:15:00Z",
+  "reviewer": "claude-opus-4-8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.management.leadership",
+      "quote": "Dominic Ng is chairman and chief executive officer, a role he has held for many years",
+      "issue": "The proxy excerpt in the FactPack lists NEO names in the compensation tables (Dominic Ng first, with the largest awards) but states no titles and no tenure. \"chairman and chief executive officer\" and \"a role he has held for many years\" are recalled from outside the pack, not on the grounding surface. The same unsupported title/tenure recurs in sections.management.governance (\"the concentration of leadership in a long-tenured chairman and CEO\") and sections.management.insiderOwnership (\"the chairman and CEO holding substantial unvested equity\"). The prompt requires governance/leadership claims to rest on the proxy excerpt, and the section itself concedes the excerpt is only the comp and related-party disclosure — so asserting a specific title and long tenure as fact is a grounding violation.",
+      "fix": "Do not assert Ng's title or tenure as fact. Either drop \"chairman and chief executive officer, a role he has held for many years\" or ground it only to what the excerpt supports — Ng is the top-compensated NEO with the largest equity awards (e.g., a $5,092,128 grant-date fair value) — and reach the alignment point from that. Remove \"long-tenured chairman and CEO\" from governance and \"chairman and CEO\" from insiderOwnership unless a title source is added to the pack.",
+      "status": "addressed",
+      "note": "Fixed. Leadership now reads 'Dominic Ng is the top-listed named executive officer in the proxy'; governance now reads 'the concentration of leadership and equity in the company's top executive'; insiderOwnership now reads 'the top-listed executive holding substantial unvested equity.' No title or tenure is asserted — re-confirmed the judgment contains no 'chairman'/'chief executive'/'long-tenured'."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.growth.points[1]",
+      "quote": "total revenue up 12%, with net interest income up 11% on a widening 3.43% margin and noninterest income up 24%",
+      "issue": "\"noninterest income up 24%\" is a computed figure not present on the grounding surface. The MD&A gives noninterest income of $106,492K (Q2'26) and $86,178K (Q2'25) but states no growth percentage; 24% is the author's own calculation (actual 23.57%), which the authoring contract forbids (\"Never compute a new figure\"). Elsewhere the author correctly avoided this by writing \"noninterest income supplied the rest and also rose\" (incomeCommentary).",
+      "fix": "Replace \"noninterest income up 24%\" with a surface-grounded phrasing: cite the two dollar figures ($106.5M vs $86.2M a year earlier) or say \"noninterest income also rose,\" as incomeCommentary already does.",
+      "status": "addressed",
+      "note": "Fixed. growth.points[1] now reads 'noninterest income rising alongside it' — the computed 24% is gone."
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "the statement carries no us-gaap total-debt figure because East West funds itself with deposits rather than borrowings, so those cells render as dashes",
+      "issue": "The Total Debt / Net Debt cells are null in the FactPack because the vendor did not populate them, not because the company has no borrowings. Total deposits ($70.1B) are well below total assets ($84.8B) net of equity ($9.2B), leaving roughly $5B of other liabilities that for a bank typically include FHLB advances and other borrowings. Reading a null data cell as evidence that the bank \"funds itself with deposits rather than borrowings\" is an unsupported causal inference the pack does not establish.",
+      "fix": "State the mechanical fact only — the pack carries no total-debt figure, so those cells render as dashes — without the causal claim that the bank has no borrowings. If a funding-mix point is wanted, ground it to what is on the surface (deposits are the primary funding source).",
+      "status": "addressed",
+      "note": "Fixed. Now reads 'the pack does not populate a us-gaap total-debt figure, so the total-debt and net-debt cells render as dashes; deposits are the bank's primary funding source.' The causal 'no borrowings' inference is removed and the funding point is grounded to the MD&A."
+    },
+    {
+      "id": "F-4",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "a 1.75% return on assets and a 16.88% return on tangible common equity are near the top of the industry",
+      "issue": "The pack carries no peer or industry return data (the peers array is all null and the multiples table notes \"Peer multiples pending a peer data source\"), so \"near the top of the industry\" is an unsupported cross-sectional comparison. The same peerless framing recurs as \"bank economics at the high end of the industry\" (analystCommentary), \"Top-tier returns and efficiency\" (catalysts[2]) and \"a franchise that earns top-tier bank returns\" (leadership). The figures themselves are grounded; the industry-relative ranking is not.",
+      "fix": "Drop the industry-relative superlatives or reframe against East West's own history and the return level itself (a 1.75% ROA and a 16.88% ROATCE are high in absolute terms), rather than asserting standing versus an industry the pack does not measure.",
+      "status": "addressed",
+      "note": "Fixed in all four enumerated fields: thesis 'high in absolute terms'; analystCommentary 'strong bank economics'; catalysts[2] 'Strong returns and efficiency'; leadership 'earns high returns.' The separate un-enumerated instance in businessMoat.moatFactors[2] was raised as F-10 and is now also fixed."
+    },
+    {
+      "id": "F-5",
+      "severity": "Important",
+      "field": "sections.businessMoat.durability",
+      "quote": "they have proven durable through prior bouts of trade tension",
+      "issue": "The pack does not establish that the franchise was tested by, and held up through, specific earlier episodes of trade tension. The only trade-tension evidence on the surface is the 10-K note that the U.S. raised tariffs during 2025 (some later reversed); there is no historical performance series isolating trade-tension periods to support a claim of proven durability through them.",
+      "fix": "Soften to what the surface supports — e.g., the franchise kept growing revenue and returns through FY21-FY25, a period that included the 2025 tariff actions the 10-K describes — or drop the \"proven durable through prior bouts of trade tension\" assertion.",
+      "status": "addressed",
+      "note": "Fixed. Now reads 'the franchise kept growing revenue and returns across FY21-FY25, a stretch that included the 2025 tariff actions its 10-K describes' — the reviewer's suggested phrasing."
+    },
+    {
+      "id": "F-6",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "Our fair value sits below the Street because that concentration deserves a wider discount than the consensus applies",
+      "issue": "The \"fair value below the Street because the concentration deserves a wider discount than the consensus applies\" claim is made four times in near-identical words: analystCommentary (\"a fair value below the consensus. The discount reflects the other face of the franchise\"), multiplesCommentary (\"We sit below the Street rather than with it, because the concentration risk deserves a wider discount than the consensus applies\"), this scenarioCommentary sentence, and finalRecommendation (\"which is why our fair value sits below the Street\"). The rubric asks that each judgment be argued once and referred back in words; this is the same argument restated verbatim in three-plus places.",
+      "fix": "Argue the below-Street discount once (valuation is the natural home) and refer back to it in the exec summary and final recommendation with a pointer rather than re-stating the full reasoning.",
+      "status": "addressed",
+      "note": "Fixed. The full argument now lives once in multiplesCommentary ('the concentration risk deserves a wider discount than the consensus applies' — verified single occurrence); scenarioCommentary now points ('as the valuation section explains') and finalRecommendation now points ('as the valuation section details'). The abstract and thesis carry only a brief statement, appropriate for the lede and exec summary."
+    },
+    {
+      "id": "F-7",
+      "severity": "Important",
+      "field": "sections.finalRecommendation.body[2]",
+      "quote": "The call is to own a high-return, efficient, growing bank at a low multiple while sizing the position for a franchise that concentrates risk by design.",
+      "issue": "This closing line is a near-duplicate of the scenarioCommentary closer: \"The discipline is to own a high-return, efficient, growing bank at that low forward multiple while sizing the position for the concentration rather than pretending it away.\" Separately, the consensus-estimates sentence is duplicated: incomeCommentary (\"Consensus looks for revenue near $3.2B in FY26E and $3.4B in FY27E, with EPS of $10.65 then $11.40 — high-single-digit revenue growth compounding into low-double-digit EPS growth\") and growth.points[3] (\"Consensus models revenue near $3.2B in FY26E and $3.4B in FY27E with EPS of $10.65 then $11.40 — high-single-digit revenue growth turned into low-double-digit per-share growth\") say the same thing in two sections.",
+      "fix": "Keep one of the two \"own a high-return, efficient, growing bank ... size the position\" sentences and vary or cut the other. Keep the consensus-estimates figures in one section (financials) and have the growth section point to them or make a distinct growth point instead of repeating the line.",
+      "status": "addressed",
+      "note": "Fixed. The 'own a high-return, efficient, growing bank ... size the position' line appears only in finalRecommendation.body[2] (verified single occurrence). The consensus figures ('revenue near $3.2B in FY26E') stay in incomeCommentary (single occurrence); growth.points[3] now points to 'the consensus earnings path the financials section lists.'"
+    },
+    {
+      "id": "F-8",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarios[2].driver",
+      "quote": "the shares drift toward the low end of the range near the 52-week low",
+      "issue": "The Bear implied price is $105, but the 52-week low is $92.67 — $105 is about 13% above it, so \"near the 52-week low\" overstates. \"toward the low end of the range\" is also ambiguous: $105 sits below the entire $125-$160 target range and is above the 52-week-range low, so neither \"range\" reading is accurate.",
+      "fix": "Anchor the Bear narrative to the $105 figure itself (e.g., \"back toward last year's levels\" or a stated percentage below the current price) rather than \"near the 52-week low,\" and clarify which range is meant.",
+      "status": "addressed",
+      "note": "Fixed. scenarios[2].driver now reads 'the shares de-rate toward the low $100s,' which matches the $105 implied price without the 52-week-low or range ambiguity."
+    },
+    {
+      "id": "F-9",
+      "severity": "Minor",
+      "field": "sections.businessMoat.moatFactors[1].strength",
+      "quote": "Wide",
+      "issue": "The moat-factor strength labels mix two vocabularies — moat-width words (\"Narrow\", \"Wide\") with strength words (\"Strong\", \"Strong\") — and this deposit-funding factor is tagged \"Wide\" while the overall moatRating is \"NARROW,\" which reads as internally inconsistent to a reader scanning the ratings.",
+      "fix": "Use one consistent strength vocabulary across the four factors (e.g., Strong/Moderate/Limited) so a factor label does not appear to contradict the overall NARROW moat rating.",
+      "status": "addressed",
+      "note": "Fixed. The 'Wide' width label is gone; the four strengths now read Structural / Strong / Strong / Moderate, so no factor label contradicts the NARROW moat rating."
+    },
+    {
+      "id": "F-10",
+      "severity": "Important",
+      "field": "sections.businessMoat.moatFactors[2].body",
+      "quote": "means more of each incremental dollar reaches the bottom line than at a typical bank",
+      "issue": "The pack carries no peer or industry efficiency data (the multiples table notes 'Peer multiples pending a peer data source' and no peer column exists), so 'than at a typical bank' is an unsupported cross-sectional comparison — the same peerless-comparison defect flagged in F-4, which round 2 fixed in the four fields it enumerated (thesis, analystCommentary, catalysts[2], leadership) but left standing here. The efficiency ratio itself (36.73%, 'barely a third of revenue') is grounded; the claim that East West converts more of each revenue dollar to profit than a typical bank requires typical-bank efficiency data the pack does not carry.",
+      "fix": "Drop the 'than at a typical bank' comparison and state the efficiency in absolute terms — e.g., a 36.73% efficiency ratio means barely a third of revenue goes to noninterest expense, so most of each revenue dollar reaches the bottom line — consistent with the absolute-terms reframing already applied elsewhere for F-4.",
+      "status": "addressed",
+      "note": "Fixed. moatFactors[2].body now reads 'means a large share of each incremental dollar reaches the bottom line' — the 'than at a typical bank' cross-sectional comparison is removed and the efficiency is stated in absolute terms (also supported by the 46.6% TTM net margin on the surface)."
+    },
+    {
+      "id": "F-11",
+      "severity": "Minor",
+      "field": "sections.management.governance",
+      "quote": "total shareholder return, return on assets and return on equity measured against the KBW Bank Index over three years",
+      "issue": "The proxy excerpt names the benchmark only as 'the BKX' / 'the banks comprising the BKX' — confirmed the FactPack contains 'BKX' three times and 'KBW' zero times. 'KBW Bank Index' is the correct expansion of the BKX ticker, but it is recalled from outside the grounding surface rather than taken from the pack; the desk standard for governance claims is to write only what the proxy excerpt states.",
+      "fix": "Use the pack's own term — 'measured against the BKX (the bank index named in the proxy) over three years' — or write 'the bank index named in the proxy,' rather than expanding the ticker to a name the excerpt does not use.",
+      "status": "addressed",
+      "note": "Fixed. governance now reads 'measured against the BKX bank index over three years' — the out-of-pack 'KBW Bank Index' expansion is gone and the pack's own term BKX is used (the proxy names 'the banks comprising the BKX')."
+    }
+  ]
+}
