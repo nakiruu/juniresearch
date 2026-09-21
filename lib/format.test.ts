@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
   usd, compactUSD, compactNum, mult, pct,
-  formatCell, formatSnapshot, upside, upsideRangeText, computeScenarios,
+  formatCell, formatSnapshot, upside, upsideRangeText, computeScenarios, rewardRiskText,
 } from "@/lib/format";
 import { Report } from "@/lib/report.schema";
 import avgo from "@/lib/__fixtures__/avgo-golden.json";
@@ -94,6 +94,17 @@ describe("derived values", () => {
     const { rows, fairValue } = computeScenarios(report.sections.valuation.scenarios);
     expect(rows.map((r) => r.weighted)).toEqual([180, 245, 60]);
     expect(usd(fairValue)).toBe("$485.00");
+  });
+});
+
+describe("rewardRiskText", () => {
+  it("renders two decimals with a multiplication sign", () => {
+    expect(rewardRiskText(0.66)).toBe("0.66×");
+    expect(rewardRiskText(1)).toBe("1.00×");
+    expect(rewardRiskText(1.548)).toBe("1.55×");
+  });
+  it("renders an em dash for a null ratio", () => {
+    expect(rewardRiskText(null)).toBe("—");
   });
 });
 

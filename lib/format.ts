@@ -158,3 +158,6 @@ export function computeScenarios(scenarios: ScenarioIn[]): {
   const fairValue = rows.reduce((a, r) => a + r.weighted, 0);
   return { rows, fairValue };
 }
+
+/** "0.66×" — reward/risk to two decimals; an em dash when the bear is not below the price. */
+export const rewardRiskText = (r: number | null): string => (r == null ? "—" : `${num(r, 2)}×`);
