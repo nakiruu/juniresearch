@@ -46,6 +46,37 @@ export type DeskLint = z.infer<typeof DeskLint>;
 export const DeskReview = z.strictObject({ model: text(40).default("opus") }).default(() => ({ model: "opus" }));
 export type DeskReview = z.infer<typeof DeskReview>;
 
+/** Rating thresholds: the prompt renders them and validate-judgment enforces them from this one source. */
+export const DESK_RATING_DEFAULTS = {
+  bearFloor: 0.15,
+  strongBuy: { minUpside: 0.2, minRewardRisk: 1.0 },
+  buy: { minUpside: 0.1, minRewardRisk: 0.5 },
+  sell: { maxUpside: -0.05 },
+  strongSell: { maxUpside: -0.2 },
+};
+
+const BuyBand = (d: { minUpside: number; minRewardRisk: number }) =>
+  z.strictObject({
+    minUpside: z.number().gt(0).lt(1).default(d.minUpside),
+    minRewardRisk: z.number().gt(0).default(d.minRewardRisk),
+  }).default(() => ({ ...d }));
+const SellBand = (d: { maxUpside: number }) =>
+  z.strictObject({ maxUpside: z.number().lt(0).gt(-1).default(d.maxUpside) }).default(() => ({ ...d }));
+
+export const DeskRating = z
+  .strictObject({
+    bearFloor: z.number().gt(0).lt(1).default(DESK_RATING_DEFAULTS.bearFloor),
+    strongBuy: BuyBand(DESK_RATING_DEFAULTS.strongBuy),
+    buy: BuyBand(DESK_RATING_DEFAULTS.buy),
+    sell: SellBand(DESK_RATING_DEFAULTS.sell),
+    strongSell: SellBand(DESK_RATING_DEFAULTS.strongSell),
+  })
+  .refine((r) => r.buy.minUpside < r.strongBuy.minUpside, { message: "buy.minUpside must be below strongBuy.minUpside" })
+  .refine((r) => r.buy.minRewardRisk <= r.strongBuy.minRewardRisk, { message: "buy.minRewardRisk must not exceed strongBuy.minRewardRisk" })
+  .refine((r) => r.strongSell.maxUpside < r.sell.maxUpside, { message: "strongSell.maxUpside must be below sell.maxUpside" })
+  .default(() => structuredClone(DESK_RATING_DEFAULTS));
+export type DeskRating = z.infer<typeof DeskRating>;
+
 export const Desk = z.strictObject({
   analyst: text(80),
   analystName: text(80),
@@ -53,5 +84,6 @@ export const Desk = z.strictObject({
   styleRules: z.array(text(200)).min(3).max(10),
   lint: DeskLint,
   review: DeskReview,
+  rating: DeskRating,
 });
 export type Desk = z.infer<typeof Desk>;
