@@ -14,6 +14,7 @@ import { repetition } from "./rules/repetition";
 import { markup } from "./rules/markup";
 import { words } from "./rules/words";
 import { structure } from "./rules/structure";
+import { ratingLint } from "./rules/rating";
 
 export interface LintIssue extends ValidationIssue {
   rule: string;
@@ -31,9 +32,10 @@ export const RULES: LintRule[] = [
   (units) => structure(units),
 ];
 
-export function lintJudgment(judgment: Judgment, desk: Desk): LintIssue[] {
+export function lintJudgment(judgment: Judgment, desk: Desk, ctx?: { currentPrice: number }): LintIssue[] {
   const units = sectionUnits(judgment);
-  return RULES.flatMap((rule) => rule(units, desk));
+  const issues = RULES.flatMap((rule) => rule(units, desk));
+  return ctx ? [...issues, ...ratingLint(judgment, ctx)] : issues;
 }
 
 export function lintLine(issue: LintIssue): string {

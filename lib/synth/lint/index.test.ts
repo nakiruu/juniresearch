@@ -300,3 +300,13 @@ describe("the regression corpus — the full lint output, so a rule change is vi
     expect(CORPUS_NAMES).toEqual(["orcl-10q-before", "orcl-10q-after", "orcl-gov-before", "avgo-gov-before", "avgo-final"]);
   });
 });
+
+describe("lintJudgment rating context", () => {
+  it("emits the target-low warning only when a current price is supplied", () => {
+    const j = cleanJudgment(); j.rating = { label: "BUY", targetLow: 300, targetHigh: 525 };
+    expect(lintJudgment(j, desk).filter((i) => i.rule === "target-low")).toEqual([]);
+    const withCtx = lintJudgment(j, desk, { currentPrice: 361.99 }).filter((i) => i.rule === "target-low");
+    expect(withCtx).toHaveLength(1);
+    expect(withCtx[0].severity).toBe("warning");
+  });
+});
