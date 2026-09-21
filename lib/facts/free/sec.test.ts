@@ -277,3 +277,48 @@ describe("bank net-revenue derivation (no combined revenue concept)", () => {
     expect(fy2023?.revenue).toBe(200);
   });
 });
+
+// A non-December fiscal year-end (here: late June, mirroring Lam Research) spreads a fiscal year's
+// three reported quarters across TWO calendar years — Q1 ends in Sep, Q2 in Dec of the prior calendar
+// year, Q3 in Mar of the next. The Q4 = FY − (Q1+Q2+Q3) derivation must group the composing quarters
+// by the fiscal year they belong to (the three immediately preceding the annual period-end), not by
+// their calendar year, or it never derives the final quarter — which is exactly the latest quarter
+// when the primary filing is a 10-K.
+describe("Q4 derivation for a non-December (June) fiscal year-end", () => {
+  const juneFacts = {
+    facts: {
+      "us-gaap": {
+        Revenues: {
+          units: {
+            USD: [
+              // FY2026 annual (fiscal year ended 2026-06-28).
+              { start: "2025-06-30", end: "2026-06-28", val: 2000, form: "10-K", filed: "2026-08-07" },
+              // The three reported quarters of FY2026, straddling calendar 2025 and 2026.
+              { start: "2025-06-30", end: "2025-09-28", val: 400, form: "10-Q", filed: "2025-10-24" }, // fiscal Q1
+              { start: "2025-09-29", end: "2025-12-28", val: 500, form: "10-Q", filed: "2026-01-29" }, // fiscal Q2
+              { start: "2025-12-29", end: "2026-03-29", val: 600, form: "10-Q", filed: "2026-04-23" }, // fiscal Q3
+            ],
+          },
+        },
+        NetIncomeLoss: {
+          units: {
+            USD: [
+              { start: "2025-06-30", end: "2026-06-28", val: 800, form: "10-K", filed: "2026-08-07" },
+              { start: "2025-06-30", end: "2025-09-28", val: 150, form: "10-Q", filed: "2025-10-24" },
+              { start: "2025-09-29", end: "2025-12-28", val: 200, form: "10-Q", filed: "2026-01-29" },
+              { start: "2025-12-29", end: "2026-03-29", val: 250, form: "10-Q", filed: "2026-04-23" },
+            ],
+          },
+        },
+      },
+    },
+  };
+
+  it("derives the final quarter as FY − (Q1+Q2+Q3), dated on the fiscal year-end", () => {
+    const { quarter } = parseCompanyFacts(juneFacts);
+    const last = quarter.at(-1)!;
+    expect(last.report_date).toBe("2026-06-28"); // the fiscal Q4 / year-end quarter, not March
+    expect(last.revenue).toBe(2000 - (400 + 500 + 600)); // 500
+    expect(last.net_income).toBe(800 - (150 + 200 + 250)); // 200
+  });
+});
