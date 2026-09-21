@@ -92,6 +92,42 @@ describe("moatRead — the whole engine on AMD", () => {
   });
 });
 
+describe("goodwill-adjusted width (ex-goodwill ROIC for asset-heavy acquirers)", () => {
+  // An acquirer: modest operating income on a big goodwill-laden capital base — as-reported
+  // ROIC below WACC, but the operating business earns well ex-goodwill.
+  const rows = (key: string, values: number[]) => ({ key, label: key, values });
+  const acquirer = (goodwill: number[] | undefined): MoatFacts => ({
+    ticker: "ACQ",
+    sic: 6200,
+    goodwill,
+    quote: { marketCap: 20000 },
+    ttm: { interestCoverage: 20 },
+    statements: {
+      fiscalYears: ["FY21", "FY22", "FY23", "FY24", "FY25"],
+      income: [
+        rows("operatingIncome", [60, 65, 70, 75, 80]),
+        rows("revenue", [1000, 1100, 1200, 1300, 1400]),
+        rows("grossProfit", [600, 665, 735, 810, 890]),
+        rows("ebitda", [90, 100, 110, 120, 130]),
+      ],
+      balance: [
+        rows("totalEquity", [900, 950, 1000, 1050, 1100]),
+        rows("totalDebt", [100, 100, 100, 100, 100]),
+        rows("cashAndInvestments", [50, 50, 50, 50, 50]),
+      ],
+      cashflow: [rows("freeCashFlow", [50, 55, 60, 65, 70])],
+    },
+  });
+
+  it("reads a big-goodwill acquirer as WIDE ex-goodwill, but not WIDE on the reported base", () => {
+    const withGw = moatRead(acquirer([800, 800, 800, 800, 800]), { wacc: 0.1 });
+    const withoutGw = moatRead(acquirer(undefined), { wacc: 0.1 });
+    expect(withGw.width).toBe("WIDE");
+    expect(withGw.flags.some((f) => /goodwill/i.test(f))).toBe(true);
+    expect(withoutGw.width).not.toBe("WIDE");
+  });
+});
+
 describe("moatApplicable", () => {
   it("applies to an industrial (AMD) and abstains on a financial (BAC: ROIC/invested capital not meaningful)", () => {
     expect(moatApplicable(AMD).ok).toBe(true);

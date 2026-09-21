@@ -40,6 +40,9 @@ export const FactPack = z.object({
   // (e.g. the rating gates). Optional: FactPacks captured before it was persisted omit it.
   sic: z.number().int().optional(),
   sicDescription: z.string().optional(),
+  // Goodwill per fiscal year (aligned to statements.fiscalYears) for ex-goodwill ROIC in the
+  // moat engine. Optional: FactPacks captured before it was persisted omit it.
+  goodwill: z.array(nullableNum).optional(),
   filing: z.object({
     form: z.enum(["10-Q", "10-K"]),
     accession: z.string(),

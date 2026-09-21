@@ -28,6 +28,7 @@ export interface MoatFacts {
   ticker?: string;
   sector?: string;
   sic?: number | null;
+  goodwill?: (number | null)[]; // per fiscal year, aligned to statements.fiscalYears
   quote: { marketCap: number };
   ttm: { interestCoverage: number | null };
   statements: { fiscalYears: string[]; income: Row[]; balance: Row[]; cashflow: Row[] };
@@ -57,6 +58,7 @@ export interface MoatResult {
   wacc: number;
   comparableFrom: number; // first comparable fiscal-year index (after any structural break)
   incrementalRoic: number | null;
+  goodwillAdjusted: boolean; // width judged on ex-goodwill ROIC (asset-heavy acquirer)
   bearFloor: number; // modulation: minimum bear depth this moat justifies
   flags: string[];
 }
@@ -195,6 +197,24 @@ export function moatRead(f: MoatFacts, cfg: MoatConfig = {}): MoatResult {
   const cmpRoic = roic.slice(from);
   const cmpSpread = spread.slice(from);
 
+  // Ex-goodwill excess return: for an acquirer, acquisition goodwill inflates invested
+  // capital and drags reported ROIC below its operating reality. When goodwill is a
+  // material share of the base, the level/stability tests read the ex-goodwill spread.
+  const gw = f.goodwill;
+  const goodwillMaterial =
+    !!gw && f.statements.fiscalYears.some((_, i) => num(gw[i]) && ic[i] > 0 && (gw[i] as number) / ic[i] > 0.15);
+  const roicForLevel = goodwillMaterial
+    ? roic.map((r, i) => {
+        const g = gw && num(gw[i]) ? (gw[i] as number) : 0;
+        const exIc = ic[i] - g;
+        return exIc > 0 ? (val(f.statements.income, "operatingIncome", i) * (1 - taxRate)) / exIc : r;
+      })
+    : roic;
+  const spreadForLevel = roicForLevel.map((r) => r - wacc);
+  const cmpRoicLevel = roicForLevel.slice(from);
+  const cmpSpreadLevel = spreadForLevel.slice(from);
+  if (goodwillMaterial) flags.push("width goodwill-adjusted (ex-goodwill ROIC)");
+
   // Gross-margin level and slope (pricing power).
   const gm = f.statements.fiscalYears.map((_, i) => {
     const rev = val(f.statements.income, "revenue", i);
@@ -207,11 +227,12 @@ export function moatRead(f: MoatFacts, cfg: MoatConfig = {}): MoatResult {
   const gmCmp = gm.slice(from);
 
   // --- Width: five evidence tests, resolved by rule (3.md §3) ---
-  const A: MoatWidth = median(cmpSpread) >= 0.08 ? "WIDE" : median(cmpSpread) >= 0 ? "NARROW" : "NONE";
-  const posShare = cmpSpread.filter((s) => s > 0).length / Math.max(1, cmpSpread.length);
-  const mean = cmpRoic.reduce((a, b) => a + b, 0) / Math.max(1, cmpRoic.length);
-  const cov = mean !== 0 ? Math.sqrt(cmpRoic.reduce((a, b) => a + (b - mean) ** 2, 0) / cmpRoic.length) / Math.abs(mean) : Infinity;
+  const A: MoatWidth = median(cmpSpreadLevel) >= 0.08 ? "WIDE" : median(cmpSpreadLevel) >= 0 ? "NARROW" : "NONE";
+  const posShare = cmpSpreadLevel.filter((s) => s > 0).length / Math.max(1, cmpSpreadLevel.length);
+  const meanLevel = cmpRoicLevel.reduce((a, b) => a + b, 0) / Math.max(1, cmpRoicLevel.length);
+  const cov = meanLevel !== 0 ? Math.sqrt(cmpRoicLevel.reduce((a, b) => a + (b - meanLevel) ** 2, 0) / cmpRoicLevel.length) / Math.abs(meanLevel) : Infinity;
   const B: MoatWidth = posShare >= 0.8 && cov < 0.35 ? "WIDE" : posShare >= 0.4 ? "NARROW" : "NONE";
+  const mean = cmpRoic.reduce((a, b) => a + b, 0) / Math.max(1, cmpRoic.length); // as-reported, for the trend
   const C: MoatWidth = inc == null ? "NONE" : inc >= wacc + 0.1 ? "WIDE" : inc >= wacc ? "NARROW" : "NONE";
   const gmSlope = slopePerYear(gmCmp);
   const gmLevel = gmCmp[gmCmp.length - 1] ?? 0;
@@ -251,6 +272,6 @@ export function moatRead(f: MoatFacts, cfg: MoatConfig = {}): MoatResult {
 
   return {
     width, trend, contingent, roic, spread, wacc, comparableFrom: from,
-    incrementalRoic: inc, bearFloor: moatBearFloor(width, trend), flags,
+    incrementalRoic: inc, goodwillAdjusted: goodwillMaterial, bearFloor: moatBearFloor(width, trend), flags,
   };
 }
