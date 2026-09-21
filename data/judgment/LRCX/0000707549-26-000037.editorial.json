@@ -1,0 +1,48 @@
+{
+  "judgmentSha256": "02195c4b415906be122f91eafdfa15f9c38836f9e14fdb100252c0ee628923d8",
+  "reviewedAt": "2026-09-21T20:15:00Z",
+  "reviewer": "claude-opus-4-8",
+  "round": 2,
+  "verdict": "approved-with-minors",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.businessMoat.durability",
+      "quote": "Competition is described as coming from multiple established competitors and 'new, regional competitors,' a nod to state-backed toolmakers emerging in China — the same market that is 34% of revenue.",
+      "issue": "The grounding surface (10-K risk factors) says only 'the emergence and strengthening of new, regional competitors' — it names no country and no state backing. 'state-backed toolmakers emerging in China' and the linkage of those competitors to the 34%-of-revenue China market are the author's invention, not on the surface. This is an inference the source invites but does not make (rubric item 2): the pack does not say the regional competitors are Chinese or state-backed. Confirmed absent from both the prompt's risk-factor excerpt and the FactPack riskFactorsExcerpt ('China' and 'state-backed' do not appear).",
+      "fix": "Quote the disclosure as it stands — 'new, regional competitors' — and drop 'state-backed toolmakers emerging in China.' If the China angle is kept, present it explicitly as analyst inference and not as a characterization of the filing; the 34% China revenue figure can stand on its own as a separate, sourced point.",
+      "status": "addressed",
+      "note": "Fixed. The durability sentence now reads: \"Competition is described as coming from multiple established competitors and 'new, regional competitors,' alongside the risk that customers adopt approaches that reduce their reliance on Lam for process development.\" The 'state-backed toolmakers emerging in China' invention and the 34%-China linkage are gone; the disclosure is quoted as it stands. (A small new redundancy this rewrite introduced is logged as F-4.)"
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.management.capitalAllocation (also financials.cashflowCommentary, executiveSummary.thesis/finalRecommendation, valuation.scenarios)",
+      "quote": "Returning more than free cash flow in a single year is sustainable here given the net-cash balance sheet, but bears watching if operating cash flow stays below net income.",
+      "issue": "Paraphrase repetition across sections (rubric item 7), recurring in four places. (1) The capital-return sustainability judgment above is a near-verbatim restatement of financials.cashflowCommentary's 'sustainable given the net-cash balance sheet, but worth tracking if operating cash flow stays below net income,' with the same buyback $3.85B / dividend $1.27B / OCF $5.86B / debt figures carried in both. (2) The FY26 headline triad — revenue +26.0% to $23.2B, gross margin +180 bps to 50.5%, diluted EPS +38.8% to $5.76 — appears near-identically in executiveSummary.thesis.body and finalRecommendation.body[0]. (3) The exact figure $8,347,202 thousand is introduced twice inside the executive summary (companyOverview and catalysts[2]). (4) 'carrying the shares toward the top of the 52-week range' is duplicated verbatim in valuation.scenarios[0].driver and scenarioCommentary.",
+      "fix": "Give each claim and figure one home and refer back in words elsewhere: state the capital-return sustainability point once (cashflow or capital-allocation, not both); in the final recommendation refer to the FY26 result rather than re-quoting the three metrics; in the executive summary make catalysts[2] a worded pointer instead of re-quoting $8,347,202 thousand already given in companyOverview; and vary or drop the repeated 52-week-range clause between the Bull driver and the scenario commentary.",
+      "status": "addressed",
+      "note": "All four fixed. (1) cashflowCommentary's sustainability sentence is gone; that judgment now lives only in capitalAllocation. (2) finalRecommendation.body[0] refers to the FY26 result in words, not the +26.0%/+180bps/+38.8% triad. (3) catalysts[2] is a worded pointer and no longer re-quotes $8,347,202 thousand. (4) The verbatim 52-week clause is gone (driver 'past their 52-week high'; commentary 'above their 52-week high'). Residual cross-section figure overlap is within the per-section rule."
+    },
+    {
+      "id": "F-3",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarios[0].driver",
+      "quote": "the multiple holds near its recent premium, carrying the shares toward the top of the 52-week range.",
+      "issue": "The Bull implied price is 445, which sits above the 52-week high of 438.50 on the surface, so 'toward the top of the 52-week range' understates where the scenario actually places the shares (above the range, not merely near its top). Rubric item 9: keep the prose precise against the numbers on the page.",
+      "fix": "Either reword to acknowledge the Bull case reaches beyond the 52-week high, or anchor the phrasing to the target-range high (400) / the consensus high target (500) rather than the 52-week range top, so the words match the 445 implied price.",
+      "status": "addressed",
+      "note": "Fixed. Driver now reads 'the multiple holds near its recent premium, lifting the shares past their 52-week high,' and scenarioCommentary reads 'taking the shares above their 52-week high.' Both now match the 445 implied price, which is above the $438.50 52-week high."
+    },
+    {
+      "id": "F-4",
+      "severity": "Minor",
+      "field": "sections.businessMoat.durability",
+      "quote": "Competition is described as coming from multiple established competitors and 'new, regional competitors,' alongside the risk that customers adopt approaches that reduce their reliance on Lam for process development.",
+      "issue": "New redundancy introduced by the F-1 rewrite (rubric items 7/9). The clause 'customers adopt approaches that reduce their reliance on Lam for process development' repeats, back-to-back, the point already made in the immediately preceding sentence: 'future technologies or processes... could render current offerings obsolete or let customers reduce their reliance on Lam for process development.' The same specific risk clause thus appears twice in one paragraph, where the 10-K states it once.",
+      "fix": "End the competition sentence at \"'new, regional competitors,'\" and drop the trailing reliance-reduction clause — the preceding sentence already carries that risk. The competition point (established plus new, regional competitors) stands on its own.",
+      "status": "open"
+    }
+  ]
+}

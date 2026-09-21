@@ -1,0 +1,575 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "LRCX",
+  "cik": 707549,
+  "company": "Lam Research Corporation",
+  "exchange": "NASDAQGS",
+  "filing": {
+    "form": "10-K",
+    "accession": "0000707549-26-000037",
+    "filedDate": "2026-08-07",
+    "periodEnd": "2026-06-28",
+    "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm"
+  },
+  "capturedAt": "2026-09-21T18:09:39.927Z",
+  "quote": {
+    "price": 301.825,
+    "marketCap": 377679970304,
+    "sharesOutstanding": 1251321031.4056158,
+    "sharesSource": "derived",
+    "week52Low": 125.02,
+    "week52High": 438.5,
+    "dividendYield": 0.0046,
+    "asOf": "2026-09-21"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25",
+      "FY26"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          17227039000,
+          17428516000,
+          14905386000,
+          18435591000,
+          23232690000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          7871807000,
+          7776925000,
+          7052791000,
+          8979059000,
+          11725308000
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          5381822000,
+          5174860000,
+          4263913000,
+          5900968000,
+          8199795000
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          5715561000,
+          5517292000,
+          4623612000,
+          6287245000,
+          8641328000
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          4605286000,
+          4510931000,
+          3827772000,
+          5358217000,
+          7265396000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          32.75,
+          3.32,
+          2.9,
+          4.15,
+          5.76
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          3522001000,
+          5337056000,
+          5847856000,
+          6390659000,
+          5579171000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          4962459000,
+          4965365000,
+          4967361000,
+          4469364000,
+          3722061000
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          1440458000,
+          -371691000,
+          -880495000,
+          -1921295000,
+          -1857110000
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          6278366000,
+          8210172000,
+          8539454000,
+          9861619000,
+          12470921000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          2.691321710521848,
+          3.160972807591451,
+          2.9695526362252957,
+          2.210118102893768,
+          2.629282517879914
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          3099674000,
+          5178938000,
+          4652269000,
+          6173264000,
+          5857657000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -546034000,
+          -501568000,
+          -396670000,
+          -759186000,
+          -966405000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          -3865663000,
+          -2017012000,
+          -2842807000,
+          -3422321000,
+          -3851343000
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          -815290000,
+          -907907000,
+          -1018915000,
+          -1149542000,
+          -1270635000
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          2553640000,
+          4677370000,
+          4255599000,
+          5414078000,
+          4891252000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q4'26",
+    "periodEnd": "2026-06-28",
+    "revenue": 6722238000,
+    "operatingMargin": 0.3739064281865652,
+    "revenueYoY": 0.25771765444149275
+  },
+  "ttm": {
+    "pe": 52.400173611111114,
+    "ps": 16.25640295221948,
+    "evToEbitda": null,
+    "grossMargin": 0.5046900724797688,
+    "operatingMargin": 0.35294212594408997,
+    "netMargin": 0.3127229778385542,
+    "netDebtToEbitda": null,
+    "interestCoverage": 52.266610999209604,
+    "currentRatio": 2.629282517879914,
+    "fcfYield": null
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY27E",
+      "revenue": 34928097950,
+      "eps": 9.50808
+    },
+    "followingFY": {
+      "label": "FY28E",
+      "revenue": 40956154730,
+      "eps": 11.65184
+    }
+  },
+  "analysts": {
+    "count": 35,
+    "buy": 29,
+    "hold": 6,
+    "sell": 0,
+    "consensusRating": "Strong Buy",
+    "consensusTarget": 373.12903,
+    "medianTarget": 380,
+    "highTarget": 500,
+    "lowTarget": 290,
+    "asOf": "2026-09-21"
+  },
+  "segments": {
+    "basis": "FY26 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 23232690000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY26",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "AMAT",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "ANET",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "ARM",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "INTC",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-10",
+      "close": 306.3999938964844
+    },
+    {
+      "date": "2026-08-11",
+      "close": 311.4100036621094
+    },
+    {
+      "date": "2026-08-12",
+      "close": 326.1099853515625
+    },
+    {
+      "date": "2026-08-13",
+      "close": 337.010009765625
+    },
+    {
+      "date": "2026-08-14",
+      "close": 332.3599853515625
+    },
+    {
+      "date": "2026-08-17",
+      "close": 343.8399963378906
+    },
+    {
+      "date": "2026-08-18",
+      "close": 327.9200134277344
+    },
+    {
+      "date": "2026-08-19",
+      "close": 307.1700134277344
+    },
+    {
+      "date": "2026-08-20",
+      "close": 310.5299987792969
+    },
+    {
+      "date": "2026-08-21",
+      "close": 314
+    },
+    {
+      "date": "2026-08-24",
+      "close": 310.1700134277344
+    },
+    {
+      "date": "2026-08-25",
+      "close": 314.6600036621094
+    },
+    {
+      "date": "2026-08-26",
+      "close": 312.8800048828125
+    },
+    {
+      "date": "2026-08-27",
+      "close": 318.5799865722656
+    },
+    {
+      "date": "2026-08-28",
+      "close": 301.8999938964844
+    },
+    {
+      "date": "2026-08-31",
+      "close": 301.489990234375
+    },
+    {
+      "date": "2026-09-01",
+      "close": 290.20001220703125
+    },
+    {
+      "date": "2026-09-02",
+      "close": 288.32000732421875
+    },
+    {
+      "date": "2026-09-03",
+      "close": 292.6600036621094
+    },
+    {
+      "date": "2026-09-04",
+      "close": 307.6499938964844
+    },
+    {
+      "date": "2026-09-08",
+      "close": 320.4200134277344
+    },
+    {
+      "date": "2026-09-09",
+      "close": 315.8399963378906
+    },
+    {
+      "date": "2026-09-10",
+      "close": 298.010009765625
+    },
+    {
+      "date": "2026-09-11",
+      "close": 298.2200012207031
+    },
+    {
+      "date": "2026-09-14",
+      "close": 273.489990234375
+    },
+    {
+      "date": "2026-09-15",
+      "close": 270.8699951171875
+    },
+    {
+      "date": "2026-09-16",
+      "close": 269.2300109863281
+    },
+    {
+      "date": "2026-09-17",
+      "close": 269.30999755859375
+    },
+    {
+      "date": "2026-09-18",
+      "close": 288.1099853515625
+    },
+    {
+      "date": "2026-09-21",
+      "close": 301.864990234375
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "Lam Research Corporation designs, manufactures, markets, refurbishes, and services semiconductor processing equipment used in the fabrication of integrated circuits in the United States, China, Korea, Taiwan, Japan, Southeast Asia, and Europe. The company offers ALTUS systems to deposit conformal or selective films for tungsten or molybdenum metallization applications; SABRE electrochemical deposition products for copper interconnect transition, which support copper damascene manufacturing; Striker single-wafer atomic layer deposition products for dielectric film solutions; and VECTOR plasma-enhanced chemical vapor deposition (CVD) products. It also provides Akara, a conductor etch system designed to enhance etch precision, selectivity, and defect control; Argos, Prevos, and Selis, which are selective etch systems used in the fabrication of advanced logic and memory devices that require precise control at nanoscale dimensions; Flex for dielectric etch applications; Vantex, a dielectric etch system that provides RF technology and repeatable wafer-to-wafer performance enabled by Equipment Intelligence solutions; Kiyo for conductor etch applications; Syndion for deep silicon etch; and Versys metal products for metal etch processes. In addition, the company offers Coronus bevel clean products to enhance die yield and Da Vinci, DV-Prime, EOS, and SP series products to address various wafer cleaning applications. Further, it provides Reliant deposition, etch, and clean products; Sense.i platform products; and customer service, spares, and upgrades. Lam Research Corporation was incorporated in 1980 and is headquartered in Fremont, California.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-21"
+    },
+    "mdaExcerpt": {
+      "text": "Item 7. Management's Discussion and Analysis of Financial Condition and Results of Operations\nThe following Management's Discussion and Analysis of Financial Condition and Results of Operations (\"MD&A\") generally discusses fiscal year 2026 and 2025 items and year-to-year comparisons between fiscal year 2026 and 2025 and should be read in conjunction with our Consolidated Financial Statements and accompanying Notes to Consolidated Financial Statements included in Part II, Item 8 of this 2026 Form 10-K. A discussion of fiscal year 2024 items and year-to-year comparisons between fiscal year 2025 and 2024 that are not included in this 2026 Form 10-K can be found in \"Management's Discussion and Analysis of Financial Condition and Results of Operations\" in Part II, Item 7 of our Annual Report on Form 10-K for the fiscal year ended June 29, 2025.\nExecutive Summary\nLam Research Corporation is a global supplier of innovative wafer fabrication equipment and services to the semiconductor industry. We have built a strong global presence with core competencies in areas like nanoscale manufacturing enablement, chemistry, plasma and fluidics, advanced systems engineering and a broad range of operational disciplines. Our products and services are designed to help our customers build smaller and better performing devices that are used in a variety of electronic products, including mobile phones, personal computers, cloud and enterprise servers, wearables, automotive vehicles, and data storage devices.\nOur customer base includes leading semiconductor memory, foundry, and integrated device manufacturers that make products such as NVM, DRAM, and logic devices. Their continued success is part of our commitment to driving semiconductor breakthroughs that define the next generation. Our core technical competency is integrating hardware, process, materials, software, and process control, enabling results on the wafer.\nSemiconductor manufacturing, our customers' business, involves the fabrication of multiple dies or integrated circuits on a wafer. This involves the repetition of a set of core processes and can require hundreds of individual steps. Fabricating these devices requires a sequence of highly sophisticated process technologies to integrate an increasing array of new materials with precise control at the atomic scale. Along with meeting technical requirements, wafer processing equipment must deliver high productivity and be cost-effective.\nDemand for electronic systems supporting artificial intelligence, cloud infrastructure, communications, automotive, industrial and other intelligent systems is driving the need for high performance, energy efficient and highly integrated semiconductor devices. To meet these requirements, semiconductor manufacturers are adopting vertical scaling approaches, including three-dimensional (\"3D\") architecture, more sophisticated patterning schemes, new materials, and advanced integration approaches, as traditional two-dimensional scaling is becoming more challenging. These technology inflections are increasing manufacturing complexity and precision requirements in the production of semiconductors driving demand for our advanced semiconductor fabrication technologies and services.\nWe believe we are in a strong position with our leadership and expertise in deposition , etch, and clean markets to facilitate some of the most significant innovations in semiconductor device manufacturing. Our Customer Support Business Group provides products and services to maximize installed equipment performance, predictability, and operational efficiency. Several factors create opportunities for sustainable differentiation for us: (i) our focus on research and development, with several ongoing programs relating to sustaining engineering, product and process development, and concept and feasibility; (ii) our ability to effectively leverage cycles of learning from our broad installed base; (iii) our collaborative focus with semi-ecosystem partners, including our close-to-customer focus; (iv) our ability to identify and invest in the breadth of our product portfolio to meet technology inflections; and (v) our focus on delivering our multi-product solutions with a goal to enhance the value of Lam's solutions to our customers.\nWafer fabrication equipment investments were strong in the 2025 calendar year, and have continued to grow in 2026 with the AI market driving higher semiconductor industry spending across both the memory and non-memory market segments. In the short term, volatility in the semiconductor industry environment from trade restrictions, tariffs, as well as other direct and indirect risks and uncertainties discussed in Part I, Item 1A, \"Risk Factors, \" have had, and in the future may have, a negative impact on our revenue and operating margin. Over the longer term, we believe that secular demand for semiconductors, combined with technology inflections in our industry, including 3D device scaling, multiple patterning, process flow, and advanced packaging chip integration, will drive sustainable growth and lead to an increase in the served available market for our products and services in the deposition, etch, and clean businesses.\nLam Research Corporation 2026 10-K 32\nTab le o f Content s\nThe following table summarizes certain key financial information for the periods indicated below:\nYear Ended\nChange\nJune 28,\n2026\nJune 29,\n2025\nFY26 vs. FY25\n(in thousands, except per share data, percentages and basis points)\nRevenue\n$\n23,232,690\n$\n18,435,591\n$\n4,797,099\n26.0\n%\nGross margin\n$\n11,725,308\n$\n8,979,059\n$\n2,746,249\n30.6\n%\nGross margin as a percent of total revenue\n50.5\n%\n48.7\n%\n+ 180 bps\nTotal operating expenses\n$\n3,525,513\n$\n3,078,091\n$\n447,422\n14.5\n%\nNet income\n$\n7,265,396\n$\n5,358,217\n$\n1,907,179\n35.6\n%\nNet income per diluted share\n$\n5.76\n$\n4.15\n$\n1.61\n38.8\n%\nFiscal year 2026 revenue increased 26.0% comp ared to fiscal year 2025, driven by strong customer demand for semiconductor equipment systems, particularly from customers within the foundry market segment, as well as customer support-related revenues. Gross margin as a percentage of revenue increased in fiscal year 2026 compared to fiscal year 2025 largely due to favorable customer mix, partially offset by aluminum and steel tariff-related spend. T he increase in operating expenses in fiscal year 2026 compared to fiscal year 2025 was primarily due to employee-related costs from increased headcoun t a nd higher supplies spending for research and development.\nOur cash and cash equivalents and restricted cash balances totaled approximately $5.60 billion as of June 28, 2026, compared to $6.41 billion as of June 29, 2025. Cash flows provided from operating activities were $5.86 billion for fiscal year 2026 compared to $6.17 billion for fiscal year 2025. Cash flows provided from operating activities in fiscal year 2026 were primarily used for $3.85 billion in treasury stock purchases, including net share settlement of employee stock-based compensation; $1.27 billion in dividends paid to our stockholders; $966.4 million of capital expenditures; and $755.4 million of principal payment on debt instruments and debt issuance costs.\nResults of Operations\nRevenue\nWe generate revenue primarily through the sale and service of semiconductor manufacturing equipment. Demand for our products and services is driven by customers' investments in wafer fabrication capacity, technology advancement and installed base support. We present revenue on a disaggregated basis to differentiate between systems revenue and customer support-related revenue. Systems revenue includes sales of new leading-edge equipment in deposition, etch, clean and other wafer fabrication markets. Customer support-related revenue includes sales of customer services, spares, upgrades, and non-leading-edge equipment from the Company's Reliant product line.\nTiming of revenue recognition depends on a number of factors, including customer requirements, resource availability, supply-chain conditions, manufacturing capacity, delivery schedules, and other operational considerations.\nWe present our revenues disaggregated by geographic region based on the location of customers' facilities to which products were shipped and services were rendered. A significant portion of our revenue is generated outside of the United States.\nThe following table presents our total revenue and revenue disaggregated by geographic region:\nYear Ended\nJune 28,\n2026\nJune 29,\n2025\nRevenue (in millions)\n$\n23,233\n$\n18,436\nChina\n34\n%\n34\n%\nTaiwan\n22\n%\n19\n%\nKorea\n19\n%\n22\n%\nJapan\n9\n%\n10\n%\nUnited States\n7\n%\n7\n%\nSoutheast Asia\n6\n%\n5\n%\nEurope\n3\n%\n3\n%\nLam Research Corporation 2026 10-K 33\nTab le o f Content s\nThe following table presents our revenue disaggregated between system and customer support-related revenue:\nYear Ended\nJune 28,\n2026\nJune 29,\n2025\n(in thousands)\nSystems Revenue\n$\n14,885,488\n$\n11,491,280\nCustomer support-related revenue and other\n8,347,202\n6,944,311\n$\n23,232,690\n$\n18,435,591\nSystems revenue increased by $3.39 billion, or 29.5%, in fiscal year 2026 compared to fiscal year 2025 primarily due to foundry equipment customer spending. Customer support-related revenue increased by $1.40 billion, or 20.2%, in fiscal year 2026 compared to fiscal year 2025 mainly due to revenue from spares and non-leading-edge equipment.\nThe percentage of leading- and non-leading-edge equipment and upgrade revenue from each of the markets we serve was as follows:\nYear Ended\nJune 28,\n2026\nJune 29,\n2025\nFoundry\n54\n%\n45\n%\nMemory\n39\n%\n42\n%\nLogic/integrated device manufacturing\n7\n%\n13\n%\nThe percentage of revenue from the Foundry market segment increased by 900 basis points in fiscal year 2026 compared to fiscal year 2025 due to mature node spending as well as investments in leading-edge equipment. The percentage of revenue from the Memory market segment decreased by 300 basis points in fiscal year 2026 compared to fiscal year 2025 primarily due to timing of customer investments.\nThe deferred revenue balance decreased to $2.43 billion as of June 28, 2026 compared to $2.68 billion as of June 29, 2025 primarily due a decrease in customer down payments, partially offset by an increase in earned system credits.\nGross Margin\nYear Ended\nChange\nJune 28,\n2026\nJune 29,\n2025\nFY26 vs. FY25\n(in thousands, except percentages and basis points)\nGross margin\n$\n11,725,308\n$\n8,979,059\n$\n2,746,249\n30.6\n%\nPercent of revenue\n50.5\n%\n48.7\n%\n+ 180 bps\nT he increase in gross margin as a percentage of revenue for fiscal year 2026 compared to fiscal year 2025 was largely due to favorable customer mix, partially offset by aluminum and steel tariff-related spend.\nResearch and Development\nYear Ended\nChange\nJune 28,\n2026\nJune 29,\n2025\nFY26 vs. FY25\n(in thousands, except percentages and basis points)\nResearch & development\n$\n2,375,873\n$\n2,096,387\n$\n279,486\n13.3\n%\nPercent of revenue\n10.2\n%\n11.4\n%\n- 120 bps\nWe continued to make significant R&D investments focused on leading-edge deposition, etch, clean, and other semiconductor manufacturing processes. Fiscal year 2026 R&D expense increased versus fiscal year 2025, due to $131.4 million in employee-related costs from increased headcount and $69.8 million in higher engineering supplies expense.\nLam Research Corporation 2026 10-K 34\nTab le o f Content s\nSelling, General, and Administrative\nYear Ended\nChange\nJune 28,\n2026\nJune 29,\n2025\nFY26 vs. FY25\n(in thousands, except percentages and basis points)\nSelling, general, and administrative (\"SG&A\")\n$\n1,149,640\n$\n981,704\n$\n167,936\n17.1\n%\nPercent of revenue\n4.9\n%\n5.3\n%\n- 40 bps\nThe increase in SG&A expense during fiscal year 2026 compared to fiscal year 2025 was mainly driven by an increa se of $180.0 million in employee-related costs as a result of additional headcount.\nOther Income (Expense), Net\nOther income (expense), net, consisted of the following:\nYear Ended\nChange\nJune 28,\n2026\nJune 29,\n2025\nFY26 vs. FY25\n(in thousands, except percentages)\nInterest income\n$\n196,189\n$\n231,331\n$\n(35,142)\n(15.2)\n%\nInterest expense\n(156,884)\n(178,203)\n$\n21,319\n(12.0)\n%\nGains on deferred compensation plan related assets, net\n73,776\n39,121\n$\n34,655\n88.6\n%\nForeign exchange losses, net\n(30,082)\n(26,412)\n$\n(3,670)\n13.9\n%\nOther, net\n(20,321)\n(8,676)\n$\n(11,645)\n134.2\n%\n$\n62,678\n$\n57,161\n$\n5,517\n9.7\n%\nInterest income decreased in fiscal year 2026 compared to fiscal year 2025 primarily due to lower interest rates as well as an impact from slightly lower average invested cash balances versus the prior year.\nInterest expense decreased in fiscal year 2026 compared to fiscal year 2025 primarily due to the maturity of $750.0 million of the Company's Senior Notes in March 2026.\nThe gains on deferred compensation plan related assets, net were driven by fluctuations in the fair market value of the underlying funds.\nForeign exchange fluctuations were primarily due to currency movements against portions of our unhedged balance sheet exposures.\nThe variation in other, net for the fiscal year 2026 compared to fiscal year 2025 was primarily driven by fluctuations in the fair market value of equity investments.\nIncome Tax Expense\nOur provision for income taxes and effective tax rate for the periods indicated were as follows:\nYear Ended\nChange\nJune 28,\n2026\nJune 29,\n2025\nFY26 vs. FY25\n(in thousands, except percentages and basis points)\nIncome tax expense\n$\n997,077\n$\n599,912\n$\n397,165\n66.2\n%\nEffective tax rate\n12.1\n%\n10.1\n%\n+ 200 bps\nThe increase in the effective tax rate in fiscal year 2026 as compared to fiscal year 2025 was primarily due to the recognition of previously unrecognized tax benefits from lapses of statutes of limitation in fiscal year 2025 and Global Minimum Tax (\"GMT\") being fully effective in fiscal year 2026, offset by the change in level and proportion of income in higher and lower tax jurisdictions and higher stock-based compensation excess tax benefits in fiscal year 2026.\nInternational revenues account for a significant portion of our total revenues, such that a material portion of our pre-tax income is earned outside the United States. International pre-tax income is generally taxable in the United States at a lower effective tax rate than the federal statutory tax rate. Please refer to Note 7: Income Taxes to our Consolidated Financial Statements in Part II, Item 8 to this 2026 Form 10-K for additional information.\nLam Research Corporation 2026 10-K 35\nTab le o f Content s\nThe Organization for Economic Co-operation and Development's Base Erosion and Profit Shifting 2.0 (\"BEPS 2.0\") GMT was fully effective for us this fiscal year. We assessed GMT under currently enacted legislation and determined that we met transitional safe harbor requirements in most jurisdictions, with limited jurisdictions subject to GMT. We assessed the impact and concluded that it was not material. The impact has been included within income tax expense in fiscal year 2026.\nOn July 4, 2025, the One Big Beautiful Bill Act (\"OBBBA\") was signed into law by U.S. President Donald Trump. The impact on income taxes due to change in legislation is required, under Accounting Standards Codification (\"ASC\") 740, Income Taxes, to be recognized in the period in which the law is enacted, which was this fiscal year. In general, the OBBBA introduced changes to U.S. taxation, including changes in the taxation of non-U.S. income. We assessed the changes and concluded that they were not material. The impact has been included within income tax expense in fiscal year 2026.\nDeferred Income Taxes\nDeferred income taxes reflect the net tax effect of temporary differences between the carrying amounts of assets and liabilities for financial reporting purposes and the amounts used for income tax purposes, as well as the tax effect of carryforwards. Our gross deferred tax assets were $2.26 billion and $1.90 billion at the end of fiscal years 2026 and 2025, respectively.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm",
+      "asOf": "2026-08-07",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "Item 1A. Risk Factors\nIn addition to the other information in this Annual Report on Form 10-K (\"2026 Form 10-K\"), the following risk factors should be carefully considered in evaluating us and our business because the occurrence of any of these factors could materially and adversely affect our business, results of operations, financial condition, and price of our Common Stock, and they could cause our actual results to differ materially from those contemplated in any forward-looking statements. Some of the factors, events, and contingencies discussed below may have occurred in the past, but the disclosures below are not representations as to whether or not the factors, events, or contingencies have occurred in the past and instead reflect our beliefs and opinions as to the factors, events, or contingencies that could materially and adversely affect us in the future. The risks and uncertainties described below are not the only ones we face. Our operations could also be affected by factors, events, or uncertainties that are not presently known to us or that we currently do not consider to present a material risk to us and our business. Therefore, the following discussion of risk factors should not be considered a complete statement of all the potential risks or uncertainties that we face. No priority or significance is intended by, nor should be attached to, the order in which the risk factors appear.\nLam Research Corporation 2026 10-K 13\nTab le o f Content s\nINDUSTRY AND CUSTOMER RISKS\nWe Depend on Creating New Products and Processes and Enhancing Existing Products and Processes for Our Success; Consequently, We Are Subject to Risks Associated with Rapid Technological Change\nRapid technological changes in semiconductor manufacturing processes subject us to increased pressure to develop technological advances that enable those processes. We believe that our future success depends in part upon our ability to develop and offer new products with improved capabilities and to continue to enhance our existing products. If new products or existing products have reliability, quality, design, or safety problems, our performance may be impacted by reduced orders, higher manufacturing costs, delays in acceptance of and payment for new products, additional service and warranty expenses, and loss of market share. If we are unable to develop and manufacture products successfully, or the products that we introduce fail in the marketplace, our business, results of operations and financial condition could be materially and adversely affected. For more than 25 years, the primary driver of technology advancement in the semiconductor industry has been to shrink the lithography that prints the circuit design on semiconductor chips. That driver could be approaching its technological limit, leading semiconductor manufacturers to investigate more complex changes in multiple technologies in an effort to continue technology development. In addition, the emergence of \"big data\" and new tools such as machine learning and AI that capitalize on the availability of large data sets is leading semiconductor manufacturers and equipment manufacturers to pursue new products and approaches that exploit those tools to advance technology development. In the face of uncertainty on which technology solutions will become successful, we will need to focus our efforts on developing the technology changes that are ultimately successful in supporting our customers' requirements. Our failure to develop and offer the correct technology solutions in a timely manner with productive and cost-effective products could adversely affect our business in a material way. Our failure to commercialize new products in a timely manner could result in loss of market share, unanticipated costs, and inventory obsolescence, which would adversely affect our business, results of operations and financial condition.\nIn order to develop new products and processes and enhance existing products and processes, we expect to continue to make significant investments in R&D, to investigate the acquisition of products and technologies, to invest in or acquire businesses or technologies, and to pursue joint development relationships with customers, suppliers, or other members of the industry. Our investments and acquisitions may not be as successful as we may expect, particularly in the event that we invest in or acquire product lines and technologies that are new to us. We may find that acquisitions are not available to us, for regulatory or other reasons, and that we must therefore limit ourselves to collaboration and joint venture development activities that do not have the same benefits as acquisitions. Pursuing development through collaboration and/or joint development activities rather than through an acquisition may pose substantial challenges for management, including those related to aligning business objectives; sharing confidential information, intellectual property and data; sharing value with third parties; and realizing synergies that might have been available in an acquisition but are not available through a joint development project. We must manage product transitions and joint development relationships successfully, as the introduction of new products could adversely affect our sales of existing products and certain jointly developed technologies may be subject to restrictions on our ability to share that technology, which could limit our market for products incorporating those technologies. Future technologies, processes, or product developments, including as a result of adoption of AI, may render our current product offerings obsolete, leaving us with non-competitive products, obsolete inventory, or both. Moreover, customers may adopt new technologies or processes to address the complex challenges associated with next-generation devices, or may adopt new technologies, including those based upon AI, that reduce their reliance on us for process development. This shift could reduce the size of our addressable markets, increase the relative size of markets in which we either do not compete or have relatively low market share, or reduce our competitiveness within the markets in which we do compete.\nWe Face a Challenging and Complex Competitive Environment\nWe face significant competition from multiple competitors, and our competitors may be able to develop products comparable or superior to those we offer or may adapt more quickly to new technologies or evolving customer requirements. In particular, while we continue to develop product enhancements that we believe will address future customer requirements, we may fail in a timely manner to identify those future customer requirements, to devote appropriate resources to developing products to address those requirements, or to complete the development or introduction of these additional product enhancements successfully, or these product enhancements may not achieve market acceptance or be competitive. Accordingly, competition may intensify, and we may be unable to continue to compete successfully in our markets, which could have a material adverse effect on our revenues, results of operations, and financial condition.\nWith increased consolidation efforts in our industry, as well as the emergence and strengthening of new, regional competitors and the impact of AI, we may face increasing competitive pressures. Other companies continue to develop systems and/or acquire businesses and products that are competitive to ours and may introduce new products and product capabilities that may affect our ability to sell and support our existing or new products. We face a greater risk if our competitors enter into strategic relationships with leading semiconductor manufacturers covering products addressing applications similar to those we sell or may develop products for, as this could adversely affect our ability to sell products to those manufacturers for those applications.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm",
+      "asOf": "2026-08-07",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-K",
+    "pressRelease": null,
+    "proxyStatement": {
+      "text": "Board and director independence:\nDirector Independence Policies\nBoard independence requirements. Our corporate governance guidelines require that a majority of the Board members be independent. The nominating and governance committee annually reviews the independence of each director, including with respect to the Board and each individual committee, and recommends to the Board director independence determinations made with respect to continuing and prospective directors. No director will qualify as \"independent\" unless the Board affirmatively determines that the director qualifies as independent under the Nasdaq rules and has no relationship that would interfere with the exercise of independent judgment as a director. In addition, no non-employee director may serve as a consultant or service provider to the Company without the approval of a majority of the independent directors (and any such director's independence must be reassessed by the full Board following such approval).\nBoard member independence. The Board has determined that all current directors and persons who served as directors during any part of fiscal year 2025, other than Mr. Archer, are independent in accordance with Nasdaq criteria for director independence. In making the determination, the Board considered prior employment with the Company, disclosed related party transactions, known familial relationships of directors with employees (not involving immediate family members) and commercial transactions involving other parties with common directorships, none of which qualified as related party transactions or were considered by the Board to interfere with the exercise of independent judgment as a director.\nBoard committee independence. All members of the Board's audit, compensation and human resources, and nominating and governance committees must be non-employee or outside directors and independent in accordance with applicable Nasdaq criteria as well as, for compensation and human resources committee members, Rule 16b-3 under the Exchange Act. See \" Board Committees \" below for additional information regarding these committees.\nLead independent director. Our corporate governance guidelines provide that the Board shall designate a lead independent director from among the independent members, if the chair is not independent. As described below under \" Leadership Structure of the Board ,\" an independent director, Mr. Talwalkar, currently serves as chair of the Board, and as a result, the Board has not designated a lead independent director.\nExecutive sessions of independent directors. The Board and its audit, compensation and human resources, and nominating and governance committees hold meetings of the independent directors and committee members, without management present, as part of each regularly scheduled meeting and at any other time at the discretion of the Board or committee, as applicable.\nBoard access to independent advisors.\n\nCompensation discussion and analysis:\nCompensation Discussion and Analysis\nThis Compensation Discussion and Analysis (\"CD&A\") describes our executive compensation program, including the compensation earned by our fiscal year 2025 \"Named Executive Officers\" (\"NEOs\"), who are as follows:\nFigure 19. Named Executive Officers for Fiscal Year 2025\nNamed Executive Officer\nPosition(s)\nTimothy M. Archer\nPresident, Chief Executive Officer\nDouglas R. Bettinger\nExecutive Vice President, Chief Financial Officer\nPatrick J. Lord\nExecutive Vice President, Chief Operating Officer\nAva A. Harter (1)\nSenior Vice President, Chief Legal Officer and Secretary\nSeshasayee (Sesha) Varadarajan\nSenior Vice President, Global Products Group\n(1)\nMs. Harter's employment with the Company began on July 8, 2024.\nOur CD&A is organized according to the following structure:\nTable of Contents\nPage\nI.\nOverview of Executive Compensation\n30\nOur Compensation Cycle\n30\nOur Business, Our Industry Environment, and Our Financial Performance\n30\nOur Pay-for-Performance Orientation\n30\nExecutive Compensation Snapshot: Programs and Recent Outcomes\n33\nExecutive Compensation Philosophy and Program Design\n35\n2024 Say on Pay Voting Results and Stockholder Outreach\n37\nII.\nExecutive Compensation Governance and Procedures\n38\nRole of the Compensation and Human Resources Committee\n38\nRole of Committee Advisors\n38\nRole of Management\n39\nPeer Group Practices and Survey Data\n39\nAssessment of Compensation Risk\n40\nPolicies and Practices Related to the Timing of Option Awards\n40\nTax and Accounting Considerations\n40\nIII.\nPrimary Components of NEO Compensation; CY2024 Compensation Payouts; CY2025 Compensation Targets and Metrics\n41\nBase Salary\n41\nAnnual Incentive Program\n42\nLong-Term Incentive Program\n48\nNew Hire Compensation\n51\nCompensation Recovery Policy, or \"Clawback\" Policy\n52\nInsider Trading Policy\n52\nStock Ownership Guidelines\n52\nSeverance/Change in Control Arrangements\n53\nOther Benefits Not Available to All Employees\n53\nLam Research Corporation 2025 Proxy Statement 29\nTable of Contents\nI. OVERVIEW OF EXECUTIVE COMPENSATION\nOur Compensation Cycle\nAlthough we have a June fiscal year end, our executive compensation program is generally designed and oriented on a calendar year basis to correspond with our calendar year-based business planning. This CD&A generally reflects a calendar year (\"CY\") orientation rather than a fiscal year (\"FY\") orientation, as shown below. The Executive Compensation Tables following this CD&A are based on our fiscal year, as required by SEC regulations.\nFigure 20. Executive Compensation Calendar-Year Orientation\nOur Business, Our Industry Environment, and Our Financial Performance\nAn overview of our business and industry environment is set forth in \"Proxy Statement Summary \" on page 1 .\nOverall, calendar year 2024 was a growth year for Lam's revenue, as overall wafer fabrication equipment spending grew strongly.\nHighlights for calendar year 2024:\nachieved revenue of approximately $16.2 billion for the calendar year, representing an approximately 13% increase over calendar year 2023;\ngenerated operating cash flow of approximately $4.6 billion, which represents approximately 28% of revenues; and\ngenerated sufficient cash flow to support payment of approximately $1.1 billion in dividends to stockholders.\nIn the first half of calendar year 2025, wafer fabrication equipment spending increased strongly over the same period of the prior year. We saw improved memory-related investments as well as growth in spending from foundry customers.\nFor the March and June 2025 quarters combined, Lam delivered revenues of approximately $9.9 billion and operating cash flows of approximately $3.9 billion.\nOur Pay-for-Performance Orientation\nTo align with stockholders' interests, our executive compensation program is designed to foster a pay-for-performance culture and achieve the executive compensation objectives described in \" Executive Compensation Philosophy and Program Design Executive Compensation Philosophy \" below. We have structured our compensation program and payouts to reflect these goals. Highlights of our executive compensation program are listed in \"Proxy Statement Summary Figure 7. Executive Compensation Highlights\" above and in \" Executive Compensation Snapshot: Programs and Recent Outcomes \" below. Our president and CEO's compensation in relation to our revenue and net income, as well as the Company's cumulative five-year total shareholder return on common stock compared against the cumulative returns of other indices, are shown below.\n30\nTable of Contents\nFigure 21. CEO Pay for Performance for Fiscal Years 2020-2025\n(1)\n\"CEO Total Compensation\" consists of base salary, annual incentive payments, and \"All Other Compensation\" as reported in the \" Summary Compensation Table \" below, and the target award opportunities for equity-based awards both under the long-term incentive program or otherwise, .\n\nSecurity ownership:\nSecurity Ownership of Certain Beneficial Owners and Management\nThe table below sets forth the beneficial ownership of shares of Lam common stock by: (1) each person or entity who we believe, based on our review of filings made with the SEC, beneficially owned more than 5% of Lam's common stock on the date set forth below; (2) each current director of the Company; (3) each NEO identified below in the \" Compensation Matters Executive Compensation and Other Information Compensation Discussion and Analysis \" section; and (4) all current directors and current executive officers as a group. With the exception of 5% owners, and unless otherwise noted, the information below reflects holdings as of September 5, 2025, which is the Record Date for the 2025 Annual Meeting of Stockholders and the most recent practicable date for determining ownership. For 5% owners, holdings are as of the dates of their most recent ownership reports filed with the SEC, which are the most practicable dates for determining their holdings. The percentage of the class owned is calculated using 1,261,032,300 as the number of shares of Lam common stock outstanding on September 5, 2025.\nFigure 10. Beneficial Ownership Table\nName of Person or Identity of Group\nShares\nBeneficially\nOwned (#) (1)\nPercentage\nof Class\n5% Stockholders\nBlackRock, Inc.\n50 Hudson Yards\nNew York, NY 10001\n117,779,780 (2)\n9.34%\nThe Vanguard Group\n100 Vanguard Boulevard\nMalvern, PA 19355\n129,149,892 (3)\n10.24%\nDirectors\nSohail U. Ahmed\n33,580\n*\nTimothy M. Archer (also a Named Executive Officer)\n1,481,175\n*\nEric K. Brandt\n287,070\n*\nIta M. Brennan\n3,707\n*\nMichael R. Cannon\n189,740\n*\nJohn M. Dineen\n7,500\n*\nMark Fields\n4,247\n*\nHo Kyu Kang\n8,693\n*\nBethany J. Mayer\n31,880\n*\nJyoti K. Mehra\n16,840\n*\nAbhijit Y. Talwalkar\n108,360\n*\nNamed Executive Officers (\"NEOs\")\nDouglas R. Bettinger\n1,093,082\n*\nPatrick J. Lord\n71,455\n*\nAva A. Harter\n15,046\n*\nSeshasayee (Sesha) Varadarajan\n237,783\n*\nAll current directors and executive officers as a group (17 people)\n3,971,889\n*\nNote: Unless otherwise indicated, the principal address of each of the stockholders above is c/o Lam Research Corporation, 4650 Cushing Parkway Fremont, California 94538.\n*\nLess than 1%\nLam Research Corporation 2025 Proxy Statement 11\nTable of Contents\n(1)\nIncludes shares subject to outstanding stock options that are now exercisable or will become exercisable within 60 days after September 5, 2025, as well as RSUs, that will vest within that time period, as follows:\nShares\nSohail U. Ahmed\n2,950\nTimothy M. Archer\n616,410\nEric K. Brandt\n2,950\nMichael R. Cannon\n2,950\nIta M. Brennan\n2,950\nJohn M. Dineen\n2,950\nMark Fields\n2,950\nHo Kyu Kang\n2,950\nBethany J. Mayer\n2,950\nJyoti K. Mehra\n2,950\nAbhijit Y. Talwalkar\n2,950\nDouglas R. Bettinger\n113,730\nAva A. Harter\n6,010\nPatrick J. Lord\n34,810\nSeshasayee (Sesha) Varadarajan\n88,190\nAll current directors and executive officers as a group (17 people)\n959,030\nThe terms of any outstanding stock options that are now exercisable or will become exercisable within 60 days after September 5, 2025, and RSUs that will vest within that time period, are reflected in \" Figure 53. Outstanding Equity Awards at Fiscal Year 2025 Year-End,\" except for stock options held by executive officers who are not fiscal year 2025 \"Named Executive Officers.\" Such executive officers have options covering 70,380 shares, which are unexercised and exercisable within 60 days of September 5, 2025. The grants to such executive officers have terms consistent with the terms reflected in \" Figure 53. Outstanding Equity Awards at Fiscal Year 2025 Year-End. \"\nAs discussed in \" Governance Matters Director Compensation \" below, the non-employee directors receive an annual equity award as part of their compensation. These awards generally vest on October 31, 2025, subject to continued service on the Board as of that date, with immediate delivery of the shares upon vesting. For 2025, Messrs. Ahmed, Brandt, Cannon, Dineen, Fields, and Talwalkar; Mss.\n\nRelated-person transactions:\nCertain Relationships and Related Party Transactions\nThe audit committee is responsible for the review and oversight of all related party transactions required to be disclosed to the public under SEC rules pursuant to its written charter. In addition, the Company maintains a written code of ethics that requires all employees, officers, and directors to act ethically when handling any actual or apparent conflicts of interest in personal and professional relationships and to promptly report any such issues to the Company's legal department.\nNo family relationships exist as of the date of this proxy statement or existed during fiscal year 2025 among any of our directors and executive officers. The Company did not participate in any transaction (including employment and compensation associated therewith) since the beginning of fiscal year 2025 in which a director, director nominee, executive officer, or one of their immediate family members had a material interest and the amount involved exceeded $120,000.\nOn January 25, 2024, BlackRock filed an amendment to Schedule 13G reporting the beneficial ownership, together with certain subsidiaries, of 117,779,780 shares of our common stock, or approximately 9.34% of the shares outstanding on September 5, 2025. As a result of beneficially owning more than 5% of our common stock, BlackRock may be deemed to have been a related person of the Company during fiscal year 2025. The Company invests in certain BlackRock money market funds. The Company received approximately $26.7 million in interest and/or dividends from these funds during fiscal year 2025.\n72\nTable of Contents\nVoting Proposals\nProposal No. 1: Election of Directors\nThis first proposal relates to the election to the Board of eleven nominees who are directors of the Company as of the date of this proxy statement. In general, the eleven nominees identified in this proposal who receive the highest number of \"for\" votes will be elected.",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/707549/000114036125036012/ny20050572x2_def14a.htm",
+      "asOf": "2025-09-24",
+      "truncated": true
+    },
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-21T18:09:39.927Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-09-21T18:09:39.927Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-21T18:09:39.927Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-21T18:09:39.927Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-21T18:09:39.927Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-21T18:09:39.927Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-21T18:09:39.927Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-21T18:09:39.927Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-21T18:09:39.927Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-21T18:09:39.927Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-21T18:09:39.927Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-21T18:09:39.927Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-21T18:09:39.927Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-21T18:09:39.927Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-21T18:09:39.927Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-09-21T18:09:39.927Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-09-21T18:09:39.927Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-09-21T18:09:39.927Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-21T18:09:39.927Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-21T18:09:39.927Z"
+    }
+  ]
+}
