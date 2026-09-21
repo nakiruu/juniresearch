@@ -45,7 +45,7 @@ export async function fetchSubmissions(cik: number, contact: string, fetchImpl: 
 }
 
 export interface RecentFiling { form: string; accession: string; filedDate: string; periodEnd: string; primaryDocument: string; items: string[] }
-export interface RecentBody { filings: { recent: SubmissionsBody["filings"]["recent"] & { items?: string[] } } }
+export interface RecentBody { sic?: string; sicDescription?: string; filings: { recent: SubmissionsBody["filings"]["recent"] & { items?: string[] } } }
 
 export function parseRecent(body: RecentBody): RecentFiling[] {
   const r = body.filings.recent;

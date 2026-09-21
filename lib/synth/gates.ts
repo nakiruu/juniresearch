@@ -36,6 +36,7 @@ interface Row {
 export interface GateFacts {
   ticker?: string;
   sector?: string;
+  sic?: number | null;
   statements: {
     fiscalYears: string[];
     income: Row[];
@@ -88,11 +89,25 @@ export function applyGateCeiling(label: RatingLabel, ceiling: RatingLabel): Rati
 
 // --- sector classification ---------------------------------------------------
 
-// Prototype stand-in for a persisted sector/SIC. Only names where the industrial
-// solvency ratios are structurally inapplicable (deposit-funded banks/insurers)
-// or normal-when-high (regulated utilities) need to be listed; everything else
-// is industrial by default. Exchanges (ICE, CME) and networks (V) are industrial
-// on purpose — they are capital-light and net-cash, so the ratios do carry meaning.
+/**
+ * SEC SIC → coarse gate sector. "financial" is the set where industrial solvency
+ * ratios are structurally inapplicable: depository/credit institutions (6000-6199),
+ * security brokers/investment banks (6211), and insurers (6300-6499). Utilities are
+ * electric/gas/water/sanitary (4900-4999). Everything else — including exchanges
+ * (SIC 6200: ICE, CME) and networks (7389: V), which are capital-light and net-cash —
+ * is industrial, so the ratios still carry meaning. Returns null when SIC is absent.
+ */
+export function sectorFromSic(sic: number | null | undefined): Sector | null {
+  if (sic == null || !Number.isFinite(sic)) return null;
+  if ((sic >= 6000 && sic <= 6199) || sic === 6211 || (sic >= 6300 && sic <= 6499)) return "financial";
+  if (sic >= 4900 && sic <= 4999) return "utility";
+  return "industrial";
+}
+
+// Fallback for FactPacks captured before SIC was persisted. Only names where the
+// industrial solvency ratios are structurally inapplicable (deposit-funded banks)
+// or normal-when-high (regulated utilities) need listing; everything else defaults
+// to industrial. Superseded by sectorFromSic whenever a persisted SIC is present.
 const SECTOR_BY_TICKER: Record<string, Sector> = {
   BAC: "financial",
   JPM: "financial",
@@ -108,8 +123,14 @@ function normalizeSector(s: string | undefined): Sector | null {
   return "industrial";
 }
 
-export function classifySector(f: { ticker?: string; sector?: string }): Sector {
-  return normalizeSector(f.sector) ?? SECTOR_BY_TICKER[(f.ticker ?? "").toUpperCase()] ?? "industrial";
+/** SIC (authoritative, persisted) first, then a free-text sector, then the ticker map. */
+export function classifySector(f: { ticker?: string; sector?: string; sic?: number | null }): Sector {
+  return (
+    sectorFromSic(f.sic) ??
+    normalizeSector(f.sector) ??
+    SECTOR_BY_TICKER[(f.ticker ?? "").toUpperCase()] ??
+    "industrial"
+  );
 }
 
 // --- statement access helpers ------------------------------------------------

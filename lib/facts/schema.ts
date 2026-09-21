@@ -36,6 +36,10 @@ export const FactPack = z.object({
   cik: z.number().int(),
   company: z.string(),
   exchange: z.string(),
+  // SEC Standard Industrial Classification, for sector-aware downstream logic
+  // (e.g. the rating gates). Optional: FactPacks captured before it was persisted omit it.
+  sic: z.number().int().optional(),
+  sicDescription: z.string().optional(),
   filing: z.object({
     form: z.enum(["10-Q", "10-K"]),
     accession: z.string(),

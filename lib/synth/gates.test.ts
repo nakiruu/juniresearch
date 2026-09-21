@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
-import { evaluateGates, applyGateCeiling, classifySector, type GateFacts } from "./gates";
+import { evaluateGates, applyGateCeiling, classifySector, sectorFromSic, type GateFacts } from "./gates";
 
 /**
  * Known-answer fixtures come from real, published FactPacks so a wrong formula
@@ -55,7 +55,7 @@ function pack(over: {
     },
   };
   const merge = (b: Record<string, number[]>, o?: Partial<Record<string, number[]>>) =>
-    Object.entries({ ...b, ...o }).map(([k, v]) => row(k, v));
+    Object.entries({ ...b, ...o }).map(([k, v]) => row(k, v as number[]));
   return {
     ticker: over.ticker,
     sector: over.sector,
@@ -69,15 +69,35 @@ function pack(over: {
   };
 }
 
+describe("sectorFromSic", () => {
+  it("maps SEC SIC ranges to the coarse gate sectors", () => {
+    expect(sectorFromSic(6021)).toBe("financial"); // national commercial banks (BAC/JPM/WFC)
+    expect(sectorFromSic(6022)).toBe("financial"); // state commercial banks (EWBC)
+    expect(sectorFromSic(6311)).toBe("financial"); // life insurance
+    expect(sectorFromSic(6211)).toBe("financial"); // security brokers / investment banks
+    expect(sectorFromSic(4911)).toBe("utility"); // electric services (NEE)
+    expect(sectorFromSic(3674)).toBe("industrial"); // semiconductors
+    expect(sectorFromSic(6200)).toBe("industrial"); // exchanges (ICE/CME): capital-light, ratios apply
+    expect(sectorFromSic(7389)).toBe("industrial"); // business services (V)
+    expect(sectorFromSic(null)).toBeNull();
+    expect(sectorFromSic(undefined)).toBeNull();
+  });
+});
+
 describe("classifySector", () => {
-  it("classes banks as financial, NextEra as utility, AMD as industrial", () => {
+  it("prefers a persisted SIC over the curated ticker map", () => {
+    expect(classifySector({ ticker: "AMD", sic: 6021 })).toBe("financial"); // SIC wins
+    expect(classifySector({ ticker: "BAC", sic: 3674 })).toBe("industrial"); // SIC wins
+  });
+  it("falls back to the ticker map when no SIC is present, then to industrial", () => {
+    expect(classifySector({ ticker: "BAC" })).toBe("financial"); // curated fallback
+    expect(classifySector({ ticker: "ZZZZ" })).toBe("industrial");
+    expect(classifySector({ ticker: "ZZZZ", sector: "Financial Services" })).toBe("financial");
+  });
+  it("classes the real packs from their data (BAC financial, NEE utility, AMD industrial)", () => {
     expect(classifySector(BAC)).toBe("financial");
     expect(classifySector(NEE)).toBe("utility");
     expect(classifySector(AMD)).toBe("industrial");
-  });
-  it("defaults an unknown ticker to industrial and honors an explicit sector", () => {
-    expect(classifySector({ ticker: "ZZZZ" })).toBe("industrial");
-    expect(classifySector({ ticker: "ZZZZ", sector: "Financial Services" })).toBe("financial");
   });
 });
 
