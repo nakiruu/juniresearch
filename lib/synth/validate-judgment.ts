@@ -9,36 +9,42 @@
 import type { FactPack } from "../facts/schema";
 import type { ReportFacts } from "../facts/project";
 import type { ValidationIssue } from "../validate";
-import { computeScenarios, pct, usd, upside, upsideRangeText } from "../format";
-import type { Judgment, RatingLabel } from "./judgment.schema";
+import { computeScenarios, pct, usd, upside, upsideRangeText, rewardRiskText } from "../format";
+import type { Judgment } from "./judgment.schema";
+import type { Desk, DeskRating } from "./desk.schema";
+import { computeConviction, deriveLabel, conservativeNotch } from "./conviction";
 import { buildAllowedIndex, checkGrounding } from "./grounding";
 import { renderFactsBlock } from "./prompt";
 import { stringLeaves } from "./walk";
 
-/** Upside envelopes overlap so a conservative label passes; only a contradiction fails. */
-export const ENVELOPES: Record<RatingLabel, { min?: number; max?: number }> = {
-  "STRONG BUY": { min: 0.25 },
-  BUY: { min: 0.10 },
-  HOLD: { min: -0.10, max: 0.15 },
-  SELL: { max: -0.05 },
-  "STRONG SELL": { max: -0.20 },
-};
-
-export function ratingIssues(j: Judgment, currentPrice: number): ValidationIssue[] {
+/** The label must be the derived label or one notch more conservative; the bear must sit below the desk floor. */
+export function ratingIssues(j: Judgment, currentPrice: number, cfg: DeskRating): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
-  const { fairValue } = computeScenarios(j.sections.valuation.scenarios);
-  const u = upside(fairValue, currentPrice);
-  const env = ENVELOPES[j.rating.label];
-  if ((env.min != null && u < env.min) || (env.max != null && u > env.max))
-    issues.push({ field: "rating.label", message: `${j.rating.label} is inconsistent with an upside of ${pct(u, { signed: true })} (probability-weighted fair value ${fairValue.toFixed(2)} vs price ${currentPrice})`, value: j.rating.label });
-  const names = j.sections.valuation.scenarios.map((s) => s.name.trim());
+  const scenarios = j.sections.valuation.scenarios;
+  const c = computeConviction(scenarios, currentPrice);
+  const derived = deriveLabel(c, cfg);
+  const alt = conservativeNotch(derived);
+  if (j.rating.label !== derived && j.rating.label !== alt)
+    issues.push({
+      field: "rating.label",
+      message: `${j.rating.label} is inconsistent with the derived ${derived} (expected upside ${pct(c.expectedUpside, { signed: true })}, reward/risk ${rewardRiskText(c.rewardRisk)}); allowed: ${derived}${alt ? ` or ${alt}` : ""}`,
+      value: j.rating.label,
+    });
+  const bear = scenarios.find((s) => /bear/i.test(s.name));
+  if (bear && bear.impliedPrice > currentPrice * (1 - cfg.bearFloor))
+    issues.push({
+      field: "sections.valuation.scenarios[bear].impliedPrice",
+      message: `bear case ${usd(bear.impliedPrice)} is only ${pct(c.bearDownside)} below the price; the desk floor is ${pct(cfg.bearFloor)} — a bear scenario is a real scenario, not a formality`,
+      value: bear.impliedPrice,
+    });
+  const names = scenarios.map((s) => s.name.trim());
   const WANT_NAMES = ["Bull", "Base", "Bear"];
   if (names.length !== WANT_NAMES.length || !WANT_NAMES.every((w) => names.includes(w)))
     issues.push({ field: "sections.valuation.scenarios[].name", message: "scenarios must be named exactly Bull, Base and Bear", value: names });
-  const byName = (re: RegExp) => j.sections.valuation.scenarios.find((s) => re.test(s.name))?.impliedPrice;
-  const bull = byName(/bull/i), base = byName(/base/i), bear = byName(/bear/i);
-  if (bull != null && base != null && bear != null && !(bull >= base && base >= bear))
-    issues.push({ field: "sections.valuation.scenarios", message: "implied prices must satisfy bull ≥ base ≥ bear", value: [bull, base, bear] });
+  const byName = (re: RegExp) => scenarios.find((s) => re.test(s.name))?.impliedPrice;
+  const bull = byName(/bull/i), base = byName(/base/i), bearPrice = byName(/bear/i);
+  if (bull != null && base != null && bearPrice != null && !(bull >= base && base >= bearPrice))
+    issues.push({ field: "sections.valuation.scenarios", message: "implied prices must satisfy bull ≥ base ≥ bear", value: [bull, base, bearPrice] });
   return issues;
 }
 
@@ -96,13 +102,21 @@ export function renderJudgmentBlock(j: Judgment, currentPrice: number): string {
     `Target range ${usd(j.rating.targetLow)}–${usd(j.rating.targetHigh)} (${upsideRangeText(j.rating.targetLow, j.rating.targetHigh, currentPrice)})`,
     ...rows.map((r) => `${r.name}: ${usd(r.impliedPrice)} × ${pct(r.probability, { dp: 0 })} = ${usd(r.weighted)}`),
     `Probability-weighted fair value ${usd(fairValue)} (${pct(upside(fairValue, currentPrice), { signed: true })})`,
+    ...(() => {
+      const c = computeConviction(j.sections.valuation.scenarios, currentPrice);
+      return [
+        `Expected upside ${pct(c.expectedUpside, { signed: true })}`,
+        `Bear-case downside ${pct(-c.bearDownside, { signed: true })}`,
+        `Reward/risk ${rewardRiskText(c.rewardRisk)}`,
+      ];
+    })(),
   ].join("\n");
 }
 
-export function validateJudgment(j: Judgment, facts: ReportFacts, pack: FactPack): ValidationIssue[] {
+export function validateJudgment(j: Judgment, facts: ReportFacts, pack: FactPack, desk: Desk): ValidationIssue[] {
   const index = buildAllowedIndex(pack, [renderFactsBlock(facts, pack), renderJudgmentBlock(j, pack.quote.price)]);
   return [
-    ...ratingIssues(j, pack.quote.price),
+    ...ratingIssues(j, pack.quote.price, desk.rating),
     ...segmentIssues(j, facts),
     ...highlightIssues(j, facts),
     ...markdownIssues(j),

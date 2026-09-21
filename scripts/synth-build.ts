@@ -45,7 +45,7 @@ const facts = projectReportFacts(pack);
 const report = mergeReport(facts, judgment, desk, buildDate);
 const rp = Report.safeParse(report);
 const valid = rp.success ? rp.data : fail(rp.error.issues.map((i) => ({ field: i.path.join("."), message: i.message, value: null })), [], "Report.parse");
-const issues = [...validateReport(valid), ...validateJudgment(judgment, facts, pack)];
+const issues = [...validateReport(valid), ...validateJudgment(judgment, facts, pack, desk)];
 const lint = lintJudgment(judgment, desk);
 const errors = [...issues, ...lint.filter((i) => i.severity === "error")];
 const warnings = lint.filter((i) => i.severity === "warning");
