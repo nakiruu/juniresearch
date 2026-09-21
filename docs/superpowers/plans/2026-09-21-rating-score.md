@@ -435,15 +435,16 @@ describe("renderJudgmentBlock", () => {
       `Reward/risk ${rewardRiskText(c.rewardRisk)}`,
     ]);
     expect(lines[0]).toBe("Expected upside +34.0%");
-    expect(lines[2]).toBe("Reward/risk 1.10×");
+    expect(lines[1]).toBe("Bear-case downside -17.1%");
+    expect(lines[2]).toBe("Reward/risk 1.98×");
   });
 });
 ```
 
-Update the two `validateJudgment(golden, facts, pack)` calls in the golden tests to `validateJudgment(golden, facts, pack, desk)`, and add to the golden block:
+Update all three `validateJudgment(…, facts, pack)` calls in the golden tests — the two on `golden` and the one on `withDupes` in "also runs the highlight checks" — to pass `desk` as the fourth argument, and add to the golden block:
 
 ```ts
-  it("derives STRONG BUY for the golden (E +34.0%, R 1.10) and accepts its one-notch-conservative BUY", () => {
+  it("derives STRONG BUY for the golden (E +34.0%, D 17.1%, R 1.98; bear $300 clears the $307.69 floor) and accepts its one-notch-conservative BUY", () => {
     expect(validateJudgment(golden, facts, pack, desk).filter((i) => i.field === "rating.label")).toEqual([]);
   });
 ```
@@ -736,8 +737,8 @@ Append to `lib/synth/merge.test.ts`, inside `describe("mergeReport with the gold
     const c = computeConviction(judgment.sections.valuation.scenarios, facts.quote.currentPrice);
     expect(report.rating.conviction).toEqual({ ...c, derivedLabel: deriveLabel(c, desk.rating) });
     expect(report.rating.conviction?.expectedUpside).toBeCloseTo(0.34, 2);
-    expect(report.rating.conviction?.bearDownside).toBeCloseTo(0.309, 3);
-    expect(report.rating.conviction?.rewardRisk).toBeCloseTo(1.1, 2);
+    expect(report.rating.conviction?.bearDownside).toBeCloseTo(0.171, 3); // bear $300 vs $361.99
+    expect(report.rating.conviction?.rewardRisk).toBeCloseTo(1.98, 2);
     expect(report.rating.conviction?.derivedLabel).toBe("STRONG BUY");
     expect(report.rating.label).toBe("BUY"); // the author's one-notch-conservative choice is preserved
   });
