@@ -107,6 +107,25 @@ const gate = z.object({
   flags: z.array(z.string()),
 });
 
+/** The composed decision (lib/synth/decide.ts): E/R + gate + moat + intrinsic. Optional/advisory. */
+const decision = z.object({
+  conviction: z.number().int().min(0).max(100),
+  tier: z.enum(["high", "moderate", "low"]),
+  proposed: ratingLabel,
+  reasons: z.array(z.string()),
+  advisories: z.array(z.string()),
+  moat: z
+    .object({
+      width: z.enum(["WIDE", "NARROW", "NONE"]),
+      trend: z.enum(["WIDENING", "STABLE", "ERODING"]),
+      contingent: z.boolean(),
+    })
+    .nullable(),
+  intrinsic: z
+    .object({ marginOfSafety: z.number(), impliedGrowth: z.number(), achievableGrowth: z.number() })
+    .nullable(),
+});
+
 const rating = z.object({
   label: ratingLabel,
   tone: z.enum(["bull", "accent", "secondary", "bear"]).default("bull"),
@@ -114,6 +133,7 @@ const rating = z.object({
   targetHigh: z.number(),
   conviction: conviction.optional(),
   gate: gate.optional(),
+  decision: decision.optional(),
 });
 
 const analystSentiment = z.object({

@@ -12,7 +12,7 @@ import { join } from "node:path";
 import { Desk } from "../lib/synth/desk.schema";
 import type { Conviction } from "../lib/synth/conviction";
 import { evaluateGates } from "../lib/synth/gates";
-import { moatRead, moatApplicable } from "../lib/synth/moat";
+import { moatRead, moatApplicable, costOfEquity } from "../lib/synth/moat";
 import { intrinsicRead, dcfApplicable } from "../lib/synth/intrinsic";
 import { decide, SAFE_DEFAULTS } from "../lib/synth/decide";
 
@@ -43,7 +43,9 @@ for (const file of readdirSync(DATA).filter((f) => f.endsWith(".json")).sort()) 
   const pack = JSON.parse(readFileSync(fp, "utf8"));
   const gate = evaluateGates(pack);
   const moat = moatApplicable(pack).ok ? moatRead(pack) : null;
-  const intrinsic = dcfApplicable(pack).ok ? intrinsicRead(pack, { r: 0.11, terminalGrowth: 0.03, horizon: 10 }) : null;
+  const intrinsic = dcfApplicable(pack).ok
+    ? intrinsicRead(pack, { r: costOfEquity(pack, { riskFree: 0.043, erp: 0.045 }), terminalGrowth: 0.03, horizon: 10 })
+    : null;
   const inputs = { conviction, gate, moat, intrinsic };
 
   const safe = decide(inputs, cfg, SAFE_DEFAULTS);

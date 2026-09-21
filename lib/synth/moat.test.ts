@@ -3,6 +3,9 @@ import { readFileSync } from "node:fs";
 import {
   roicSeries,
   sectorHurdle,
+  betaFromSic,
+  buildWacc,
+  costOfEquity,
   comparableWindow,
   incrementalRoic,
   moatApplicable,
@@ -22,6 +25,29 @@ const load = (t: string, acc: string): MoatFacts =>
 
 const AMD = load("AMD", "0000002488-26-000123");
 const BAC = load("BAC", "0000070858-26-000394");
+const LLY = load("LLY", "0000059478-26-000081");
+
+describe("WACC build-up (replaces the sector-hurdle proxy)", () => {
+  it("maps SIC to a sector beta", () => {
+    expect(betaFromSic(3674)).toBeCloseTo(1.7, 5); // semiconductors
+    expect(betaFromSic(2834)).toBeCloseTo(0.8, 5); // pharma
+    expect(betaFromSic(4911)).toBeCloseTo(0.5, 5); // utility
+    expect(betaFromSic(999999)).toBeGreaterThan(0); // default
+  });
+  it("builds AMD's ~11.9% WACC from rf/ERP/beta and the equity weight (matches 3.md §7.2)", () => {
+    expect(buildWacc(AMD, { riskFree: 0.043, erp: 0.045, taxRate: 0.15 })).toBeCloseTo(0.119, 2);
+  });
+  it("gives a low-beta pharma a much lower cost of equity than a semi", () => {
+    expect(costOfEquity(LLY, { riskFree: 0.043, erp: 0.045 })).toBeCloseTo(0.079, 3); // 4.3% + 0.8*4.5%
+    expect(costOfEquity(AMD, { riskFree: 0.043, erp: 0.045 })).toBeGreaterThan(costOfEquity(LLY, { riskFree: 0.043, erp: 0.045 }));
+  });
+  it("moatRead uses the build-up by default and still reads AMD Narrow(contingent)/Widening", () => {
+    const m = moatRead(AMD, { taxRate: 0.15 }); // no explicit wacc -> build-up
+    expect(m.wacc).toBeCloseTo(0.119, 2);
+    expect(m.width).toBe("NARROW");
+    expect(m.trend).toBe("WIDENING");
+  });
+});
 
 describe("roicSeries", () => {
   it("reproduces AMD's five-year ROIC on t_eff 15% (68% pre-Xilinx, 5.5% latest)", () => {

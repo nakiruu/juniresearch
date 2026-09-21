@@ -38,8 +38,15 @@ export type MoatTrend = "WIDENING" | "STABLE" | "ERODING";
 
 export interface MoatConfig {
   taxRate?: number; // effective tax for NOPAT (assumed; flagged)
-  wacc?: number; // explicit cost of capital; else the sector hurdle by SIC
+  wacc?: number; // explicit cost of capital; else the build-up below
+  riskFree?: number; // desk macro input for the WACC build-up
+  erp?: number; // equity risk premium
 }
+
+// Desk-level macro assumptions for the WACC build-up (3.md §1.2). Documented defaults;
+// promote to desk.json when the desk wants to tune one number for all names.
+const DEFAULT_RISK_FREE = 0.043;
+const DEFAULT_ERP = 0.045;
 
 export interface MoatResult {
   width: MoatWidth;
@@ -75,7 +82,45 @@ function investedCapitalSeries(f: MoatFacts): number[] {
   );
 }
 
-/** Documented sector-default WACC by SIC (3.md §1.2). A proxy, reported with every verdict. */
+/** Sector beta by SIC for the cost-of-equity build-up. A proxy until a per-name beta is captured. */
+export function betaFromSic(sic: number | null | undefined): number {
+  if (num(sic)) {
+    if (sic >= 4900 && sic <= 4999) return 0.5; // utilities
+    if (sic === 2834) return 0.8; // pharma
+    if (sic === 4813) return 0.9; // telecom
+    if (sic === 3674) return 1.7; // semiconductors
+    if (sic === 7372) return 1.3; // software
+    if (sic === 3559) return 1.3; // industrial machinery
+    if (sic === 1090) return 1.4; // metal ores / miners
+    if (sic === 3724 || sic === 3760) return 1.1; // aerospace / defense
+    if (sic === 6200) return 1.0; // exchanges
+    if (sic === 7389) return 1.1; // business services
+  }
+  return 1.1; // default
+}
+
+const creditSpread = (interestCoverage: number | null): number =>
+  !num(interestCoverage) ? 0.025 : interestCoverage > 15 ? 0.01 : interestCoverage >= 8 ? 0.015 : interestCoverage >= 4 ? 0.025 : 0.04;
+
+/** Cost of equity: rf + β·ERP. The right discount rate for an equity/FCFE model (feeds 4.md too). */
+export function costOfEquity(f: { sic?: number | null }, macro: { riskFree: number; erp: number }): number {
+  return macro.riskFree + betaFromSic(f.sic) * macro.erp;
+}
+
+/** WACC build-up (3.md §1.2): equity-weighted cost of equity + debt-weighted after-tax cost of debt. */
+export function buildWacc(f: MoatFacts, macro: { riskFree: number; erp: number; taxRate: number }): number {
+  const mc = f.quote.marketCap;
+  const debt = val(f.statements.balance, "totalDebt", f.statements.fiscalYears.length - 1);
+  const total = mc + debt;
+  if (total <= 0) return costOfEquity(f, macro);
+  const wE = mc / total;
+  const wD = debt / total;
+  const ke = costOfEquity(f, macro);
+  const kd = macro.riskFree + creditSpread(f.ttm.interestCoverage);
+  return wE * ke + wD * kd * (1 - macro.taxRate);
+}
+
+/** Documented sector-default WACC by SIC (3.md §1.2). A cruder fallback than the build-up. */
 export function sectorHurdle(sic: number | null | undefined): number {
   if (num(sic)) {
     if (sic >= 4900 && sic <= 4999) return 0.065; // utilities
@@ -136,8 +181,9 @@ const median = (xs: number[]): number => {
 
 export function moatRead(f: MoatFacts, cfg: MoatConfig = {}): MoatResult {
   const taxRate = cfg.taxRate ?? 0.21;
-  const wacc = cfg.wacc ?? sectorHurdle(f.sic);
-  const flags: string[] = [`WACC proxy ${(wacc * 100).toFixed(1)}%`, `tax rate assumed ${(taxRate * 100).toFixed(0)}%`];
+  const macro = { riskFree: cfg.riskFree ?? DEFAULT_RISK_FREE, erp: cfg.erp ?? DEFAULT_ERP, taxRate };
+  const wacc = cfg.wacc ?? buildWacc(f, macro);
+  const flags: string[] = [`WACC ${(wacc * 100).toFixed(1)}% (build-up, β≈${betaFromSic(f.sic)})`, `tax rate assumed ${(taxRate * 100).toFixed(0)}%`];
 
   const roic = roicSeries(f, taxRate);
   const spread = roic.map((r) => r - wacc);

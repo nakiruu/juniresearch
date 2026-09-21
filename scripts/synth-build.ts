@@ -6,6 +6,10 @@ import { Desk } from "../lib/synth/desk.schema";
 import { Judgment } from "../lib/synth/judgment.schema";
 import { mergeReport } from "../lib/synth/merge";
 import { evaluateGates, gateAdvisory } from "../lib/synth/gates";
+import { moatRead, moatApplicable, costOfEquity } from "../lib/synth/moat";
+import { intrinsicRead, dcfApplicable } from "../lib/synth/intrinsic";
+import { decide, SAFE_DEFAULTS } from "../lib/synth/decide";
+import { computeConviction } from "../lib/synth/conviction";
 import { validateJudgment } from "../lib/synth/validate-judgment";
 import { Report } from "../lib/report.schema";
 import { validateReport, type ValidationIssue } from "../lib/validate";
@@ -43,8 +47,22 @@ const parsed = Judgment.safeParse(raw);
 const judgment = parsed.success ? parsed.data : fail(parsed.error.issues.map((i) => ({ field: i.path.join(".") || "(root)", message: i.message, value: null })), [], "Judgment.parse");
 
 const facts = projectReportFacts(pack);
+
+// Fundamental scoring layers (advisory under safe defaults — they do not move the label).
 const gate = evaluateGates(pack);
-const report = mergeReport(facts, judgment, desk, buildDate, gate);
+const moat = moatApplicable(pack).ok ? moatRead(pack) : null;
+const discountRate = costOfEquity(pack, { riskFree: 0.043, erp: 0.045 });
+const intrinsic = dcfApplicable(pack).ok ? intrinsicRead(pack, { r: discountRate, terminalGrowth: 0.03, horizon: 10 }) : null;
+const conviction = computeConviction(judgment.sections.valuation.scenarios, pack.quote.price);
+const dec = decide({ conviction, gate, moat, intrinsic }, desk.rating, SAFE_DEFAULTS);
+const decisionBlock = {
+  conviction: dec.conviction, tier: dec.tier, proposed: dec.proposed, reasons: dec.reasons, advisories: dec.advisories,
+  moat: moat ? { width: moat.width, trend: moat.trend, contingent: moat.contingent } : null,
+  intrinsic: intrinsic
+    ? { marginOfSafety: intrinsic.marginOfSafety, impliedGrowth: intrinsic.impliedGrowth, achievableGrowth: intrinsic.achievableGrowth }
+    : null,
+};
+const report = mergeReport(facts, judgment, desk, buildDate, gate, decisionBlock);
 const rp = Report.safeParse(report);
 const valid = rp.success ? rp.data : fail(rp.error.issues.map((i) => ({ field: i.path.join("."), message: i.message, value: null })), [], "Report.parse");
 const issues = [...validateReport(valid), ...validateJudgment(judgment, facts, pack, desk)];
@@ -71,6 +89,6 @@ const out = join("data", `${ticker.toLowerCase()}.json`);
 writeFileSync(out, JSON.stringify(valid, null, 2) + "\n");
 if (warningLines.length) writeErrorsFile(errorsPath, [], warningLines);
 else if (existsSync(errorsPath)) rmSync(errorsPath);
-console.log(`Wrote ${out}\n  ${valid.meta.company} · ${valid.rating.label} ${valid.rating.targetLow}–${valid.rating.targetHigh} · report date ${valid.meta.reportDate} · ${valid.quote.history?.length ?? 0} closes · gate ${gate.sector}/${valid.rating.gate?.gatedLabel ?? "—"}`);
+console.log(`Wrote ${out}\n  ${valid.meta.company} · ${valid.rating.label} ${valid.rating.targetLow}–${valid.rating.targetHigh} · report date ${valid.meta.reportDate} · ${valid.quote.history?.length ?? 0} closes · gate ${gate.sector}/${valid.rating.gate?.gatedLabel ?? "—"} · conviction ${dec.conviction} ${dec.tier}`);
 if (warningLines.length)
   console.warn(`  ${warningLines.length} warning(s) — kept in ${errorsPath} for the next --with-errors render:\n` + warningLines.map((w) => `  - ${w}`).join("\n"));

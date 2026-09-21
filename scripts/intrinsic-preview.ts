@@ -9,9 +9,10 @@
 import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { intrinsicRead, dcfApplicable, type IntrinsicFacts } from "../lib/synth/intrinsic";
+import { costOfEquity } from "../lib/synth/moat";
 
 const DATA = "data";
-const CFG = { r: 0.11, terminalGrowth: 0.03, horizon: 10 };
+const MACRO = { riskFree: 0.043, erp: 0.045 };
 
 function latestFactPack(ticker: string): string | null {
   const dir = join(DATA, "facts", ticker);
@@ -38,7 +39,7 @@ for (const file of readdirSync(DATA).filter((f) => f.endsWith(".json")).sort()) 
     rows.push([ticker, usd(facts.quote.price), "—", "—", "—", "—", "—", "—", "—", report.rating.label, `abstained: ${applicable.reason}`]);
     continue;
   }
-  const r = intrinsicRead(facts, CFG);
+  const r = intrinsicRead(facts, { r: costOfEquity(facts, MACRO), terminalGrowth: 0.03, horizon: 10 });
   const mechFv = r.scenarios.reduce((a, s) => a + s.probability * s.impliedPrice, 0);
   const mechE = mechFv / facts.quote.price - 1;
 

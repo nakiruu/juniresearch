@@ -20,7 +20,9 @@ const fmt = (ymd: string, month: "long" | "short") =>
 export const longDate = (ymd: string): string => fmt(ymd, "long");
 export const shortDate = (ymd: string): string => fmt(ymd, "short");
 
-export function mergeReport(facts: ReportFacts, j: Judgment, desk: Desk, buildDate: string, gate?: GateResult): Report {
+export function mergeReport(
+  facts: ReportFacts, j: Judgment, desk: Desk, buildDate: string, gate?: GateResult, decision?: Report["rating"]["decision"],
+): Report {
   const note = `Source: Bigdata.com company tearsheet (FMP); fiscal years ended ${j.meta.fiscalYearEnd}.`;
   const bodies = new Map(j.sections.businessMoat.segments.map((s) => [s.name, s.body]));
   const f = facts.sections;
@@ -44,7 +46,7 @@ export function mergeReport(facts: ReportFacts, j: Judgment, desk: Desk, buildDa
           }
         : undefined;
       return { label: j.rating.label, tone: toneFor(j.rating.label), targetLow: j.rating.targetLow, targetHigh: j.rating.targetHigh,
-        conviction: { ...c, derivedLabel }, ...(gateBlock ? { gate: gateBlock } : {}) };
+        conviction: { ...c, derivedLabel }, ...(gateBlock ? { gate: gateBlock } : {}), ...(decision ? { decision } : {}) };
     })(),
     // The model's chosen highlight keys (up to four) resolve to fact-built cells, in the order chosen,
     // appended after the sixteen code-owned cells. mergeReport runs before validateJudgment (see
