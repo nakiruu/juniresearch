@@ -81,6 +81,15 @@ const REVENUE = [
   "RevenueFromContractWithCustomerIncludingAssessedTax",
   "SalesRevenueNet",
 ];
+// Some banks (e.g. East West Bancorp) tag net interest income and noninterest income separately but
+// NOT any combined net-revenue concept: they never tag RevenuesNetOfInterestExpense or Revenues, and
+// their only RevenueFromContractWithCustomer* line is a fee-only subset that they stop tagging (EWBC:
+// last Q3'20). For such filers net revenue is derived as net interest income + noninterest income and
+// used for every period no REVENUE concept above covers (see combineRevenue). Both are income-statement
+// flow concepts tagged per discrete quarter, so plain flowSeries handles them; a filer that also tags a
+// REVENUE concept keeps it (combineRevenue only fills the gaps), so non-banks are unaffected.
+const NET_INTEREST_INCOME = ["InterestIncomeExpenseNet"];
+const NONINTEREST_INCOME = ["NoninterestIncome"];
 const COGS = ["CostOfGoodsAndServicesSold", "CostOfRevenue", "CostOfGoodsSold"];
 const GROSS_PROFIT = ["GrossProfit"]; // else derived: revenue − COGS
 const OPERATING_INCOME = ["OperatingIncomeLoss"]; // else derived: pretax income − nonoperating income/expense
@@ -298,6 +307,25 @@ function instantSeries(facts: unknown, concepts: string[], unit: Unit = "USD") {
 
 const at = <K>(m: Map<K, UnitEntry>, k: K): number | null => m.get(k)?.val ?? null;
 
+/**
+ * Effective net-revenue series for filers with no combined revenue concept (see NET_INTEREST_INCOME).
+ * Keeps every period the primary REVENUE concepts cover, and for periods they miss, synthesizes an
+ * entry from net interest income + noninterest income when BOTH are present (a real reported subtotal,
+ * summed, not a fabricated number). The synthesized entry carries the NII entry's period-end/form so it
+ * anchors an FY/quarter row exactly like a primary revenue entry would. A non-bank (no NII/noninterest
+ * tags) gets its primary map back unchanged.
+ */
+function combineRevenue<K>(primary: Map<K, UnitEntry>, nii: Map<K, UnitEntry>, noninterest: Map<K, UnitEntry>): Map<K, UnitEntry> {
+  const out = new Map(primary);
+  for (const [key, niiEntry] of nii) {
+    if (out.has(key)) continue;
+    const nonintEntry = noninterest.get(key);
+    if (!nonintEntry) continue;
+    out.set(key, { ...niiEntry, val: niiEntry.val + nonintEntry.val });
+  }
+  return out;
+}
+
 // --- derivation (shared by annual rows and real quarter rows) ----------
 
 interface RawValues {
@@ -398,7 +426,15 @@ const INSTANT_FIELDS: (keyof DerivedFields)[] = [
 ];
 
 export function parseCompanyFacts(facts: unknown): { annual: SecPeriod[]; quarter: SecPeriod[] } {
-  const revenue = flowSeries(facts, REVENUE);
+  const revenuePrimary = flowSeries(facts, REVENUE);
+  const netInterestIncome = flowSeries(facts, NET_INTEREST_INCOME);
+  const noninterestIncome = flowSeries(facts, NONINTEREST_INCOME);
+  // For a bank that tags no combined revenue concept, fill the gaps with net interest income +
+  // noninterest income so the FY/quarter rows anchor on live periods, not a stale fee-only line.
+  const revenue = {
+    annual: combineRevenue(revenuePrimary.annual, netInterestIncome.annual, noninterestIncome.annual),
+    quarter: combineRevenue(revenuePrimary.quarter, netInterestIncome.quarter, noninterestIncome.quarter),
+  };
   const cogs = flowSeries(facts, COGS);
   const grossProfitDirect = flowSeries(facts, GROSS_PROFIT);
   const operatingIncomeDirect = flowSeries(facts, OPERATING_INCOME);
@@ -428,7 +464,7 @@ export function parseCompanyFacts(facts: unknown): { annual: SecPeriod[]; quarte
   const currentLiabilities = instantSeries(facts, CURRENT_LIABILITIES);
 
   if (revenue.annual.size === 0 && revenue.quarter.size === 0) {
-    throw new Error(`No revenue concept found among: ${REVENUE.join(", ")}`);
+    throw new Error(`No revenue concept found among: ${REVENUE.join(", ")} (nor derivable from ${NET_INTEREST_INCOME[0]} + ${NONINTEREST_INCOME[0]})`);
   }
   if (netIncome.annual.size === 0 && netIncome.quarter.size === 0) {
     throw new Error(`No net income concept found among: ${NET_INCOME.join(", ")}`);

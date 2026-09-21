@@ -207,3 +207,73 @@ describe("discrete tag wins over YTD reconstruction when both exist for the same
     expect(q2.operating_cash_flow).not.toBe(250 - 100);
   });
 });
+
+// A bank (East West Bancorp) tags net interest income and noninterest income separately but no
+// combined revenue concept: it never tags RevenuesNetOfInterestExpense or Revenues, and its only
+// RevenueFromContractWithCustomer* line is a fee-only subset it stopped tagging in an earlier year.
+// combineRevenue must then derive net revenue = net interest income + noninterest income so the
+// FY/quarter rows anchor on live periods instead of going stale at the last fee-subset period.
+describe("bank net-revenue derivation (no combined revenue concept)", () => {
+  const bankFacts = {
+    facts: {
+      "us-gaap": {
+        // Fee-only contract revenue: present ONLY for 2023, absent 2024+ (mirrors EWBC's stale tag).
+        RevenueFromContractWithCustomerExcludingAssessedTax: {
+          units: {
+            USD: [{ start: "2023-01-01", end: "2023-12-31", val: 200, form: "10-K", filed: "2024-02-20" }],
+          },
+        },
+        InterestIncomeExpenseNet: {
+          units: {
+            USD: [
+              { start: "2024-01-01", end: "2024-12-31", val: 2400, form: "10-K", filed: "2025-02-20" },
+              { start: "2025-01-01", end: "2025-12-31", val: 2600, form: "10-K", filed: "2026-02-20" },
+              { start: "2025-01-01", end: "2025-03-31", val: 640, form: "10-Q", filed: "2025-04-20" },
+            ],
+          },
+        },
+        NoninterestIncome: {
+          units: {
+            USD: [
+              { start: "2024-01-01", end: "2024-12-31", val: 380, form: "10-K", filed: "2025-02-20" },
+              { start: "2025-01-01", end: "2025-12-31", val: 400, form: "10-K", filed: "2026-02-20" },
+              { start: "2025-01-01", end: "2025-03-31", val: 100, form: "10-Q", filed: "2025-04-20" },
+            ],
+          },
+        },
+        NetIncomeLoss: {
+          units: {
+            USD: [
+              { start: "2024-01-01", end: "2024-12-31", val: 900, form: "10-K", filed: "2025-02-20" },
+              { start: "2025-01-01", end: "2025-12-31", val: 1000, form: "10-K", filed: "2026-02-20" },
+              { start: "2025-01-01", end: "2025-03-31", val: 250, form: "10-Q", filed: "2025-04-20" },
+            ],
+          },
+        },
+      },
+    },
+  };
+
+  it("derives FY net revenue as net interest income + noninterest income where no revenue concept covers the year", () => {
+    const { annual } = parseCompanyFacts(bankFacts);
+    const fy2025 = annual.find((p) => p.fiscal_year === 2025)!;
+    expect(fy2025).toBeDefined();
+    expect(fy2025.revenue).toBe(2600 + 400); // 3000, not stale at 2023's 200 fee subset
+    const fy2024 = annual.find((p) => p.fiscal_year === 2024)!;
+    expect(fy2024.revenue).toBe(2400 + 380); // 2780
+  });
+
+  it("anchors a live quarter row on the derived net revenue (no stale-quarter validation failure)", () => {
+    const { quarter } = parseCompanyFacts(bankFacts);
+    const q1 = quarter.find((p) => p.fiscal_year === 2025 && p.fiscal_period === "Q1")!;
+    expect(q1).toBeDefined();
+    expect(q1.revenue).toBe(640 + 100); // 740
+  });
+
+  it("keeps the primary revenue concept where it is tagged (fill-gaps-only)", () => {
+    const { annual } = parseCompanyFacts(bankFacts);
+    const fy2023 = annual.find((p) => p.fiscal_year === 2023);
+    // 2023 has only the fee-subset concept (no NII/noninterest that year) -> primary value kept.
+    expect(fy2023?.revenue).toBe(200);
+  });
+});

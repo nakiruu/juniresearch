@@ -55,7 +55,12 @@ export function mapStatements(dir: string): { statements: FactPack["statements"]
       // combined tag does not capture, so it can be null; net debt is not meaningful for a bank (deposits
       // fund the balance sheet, not net borrowings) and is null when cash is. Both render "—".
       row("cashAndInvestments", "Cash & ST Investments", col(bal, "cash_and_short_term_investments", true)),
-      row("totalDebt", "Total Debt", col(bal, "total_debt")),
+      // Optional: a deposit-funded bank may tag no us-gaap long-term-debt/borrowings concept at all
+      // (East West Bancorp funds via deposits, with only FHLB advances under a bank-specific concept the
+      // combined tag does not capture), so total debt — like the net debt derived from it — can be null
+      // and renders "—". Banks that do tag debt (WFC, JPM) are unaffected; leverage for a bank is its
+      // capital ratios, not net borrowings.
+      row("totalDebt", "Total Debt", col(bal, "total_debt", true)),
       row("netDebt", "Net Debt", col(bal, "net_debt", true)),
       row("totalEquity", "Total Equity", col(bal, "total_equity")),
       row("currentRatio", "Current Ratio", curA.map((x, i) => div(x, curL[i]))),
