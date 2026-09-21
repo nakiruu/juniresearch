@@ -58,6 +58,7 @@ for (const file of reportFiles) {
 
   rows.push([
     ticker + (fp.multi ? "*" : ""),
+    g.sector,
     published,
     `${pct(report.rating.conviction?.expectedUpside)} / ${rr(report.rating.conviction?.rewardRisk)}`,
     `${g.piotroski.score}/9`,
@@ -69,7 +70,7 @@ for (const file of reportFiles) {
   ]);
 }
 
-const head = ["TICKER", "PUBLISHED", "E / R", "PIOTR", "DISTRESS", "ACCR", "GATE CEIL", "GATED RESULT", "CONF"];
+const head = ["TICKER", "SECTOR", "PUBLISHED", "E / R", "PIOTR", "DISTRESS", "ACCR", "GATE CEIL", "GATED RESULT", "CONF"];
 const widths = head.map((h, i) => Math.max(h.length, ...rows.map((r) => r[i].length)));
 const fmt = (r: string[]) => r.map((c, i) => c.padEnd(widths[i])).join("  ");
 

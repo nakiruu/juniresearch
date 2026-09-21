@@ -1,24 +1,34 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
-import { evaluateGates, applyGateCeiling, type GateFacts } from "./gates";
+import { evaluateGates, applyGateCeiling, classifySector, type GateFacts } from "./gates";
 
 /**
- * Known-answer fixtures come from a real, published FactPack (AMD) and from 5.md's
- * hand-worked example, so a wrong formula fails against numbers a human already checked.
- * Synthetic packs prove the *caps* actually fire — the whole point of the gate layer.
+ * Known-answer fixtures come from real, published FactPacks so a wrong formula
+ * fails against numbers a human already checked. The sector-aware cases are the
+ * point of this iteration: industrial solvency ratios must NOT misfire on banks
+ * (BAC), utilities (NEE), net-cash pre-profit names (UEC), or hypergrowth (NVDA),
+ * while a genuinely leveraged cash-burner (CRWV) must still cap severely.
  */
+const load = (t: string, acc: string): GateFacts & { ticker?: string } =>
+  JSON.parse(readFileSync(`data/facts/${t}/${acc}.json`, "utf8"));
 
-const AMD: GateFacts = JSON.parse(
-  readFileSync("data/facts/AMD/0000002488-26-000123.json", "utf8"),
-);
+const AMD = load("AMD", "0000002488-26-000123");
+const BAC = load("BAC", "0000070858-26-000394");
+const NEE = load("NEE", "0000753308-26-000060");
+const UEC = load("UEC", "0001437749-26-019889");
+const CRWV = load("CRWV", "0001769628-26-000366");
+const INTC = load("INTC", "0000050863-26-000157");
+const NVDA = load("NVDA", "0001045810-26-000075");
 
-// A minimal well-formed pack we can mutate per test.
+/** A minimal, healthy, net-cash INDUSTRIAL pack (no ticker → industrial) we can mutate. */
 function pack(over: {
+  ticker?: string;
+  sector?: string;
   income?: Partial<Record<string, number[]>>;
   balance?: Partial<Record<string, number[]>>;
   cashflow?: Partial<Record<string, number[]>>;
   ttm?: Partial<GateFacts["ttm"]>;
-} = {}): GateFacts {
+} = {}): GateFacts & { ticker?: string; sector?: string } {
   const row = (key: string, values: (number | null)[]) => ({ key, label: key, values });
   const base = {
     income: {
@@ -47,42 +57,35 @@ function pack(over: {
   const merge = (b: Record<string, number[]>, o?: Partial<Record<string, number[]>>) =>
     Object.entries({ ...b, ...o }).map(([k, v]) => row(k, v));
   return {
+    ticker: over.ticker,
+    sector: over.sector,
     statements: {
       fiscalYears: ["FY21", "FY22", "FY23", "FY24", "FY25"],
       income: merge(base.income, over.income),
       balance: merge(base.balance, over.balance),
       cashflow: merge(base.cashflow, over.cashflow),
     },
-    ttm: {
-      interestCoverage: 20,
-      netDebtToEbitda: -0.1,
-      currentRatio: 1.9,
-      ...over.ttm,
-    },
+    ttm: { interestCoverage: 20, netDebtToEbitda: -0.1, currentRatio: 1.9, ...over.ttm },
   };
 }
+
+describe("classifySector", () => {
+  it("classes banks as financial, NextEra as utility, AMD as industrial", () => {
+    expect(classifySector(BAC)).toBe("financial");
+    expect(classifySector(NEE)).toBe("utility");
+    expect(classifySector(AMD)).toBe("industrial");
+  });
+  it("defaults an unknown ticker to industrial and honors an explicit sector", () => {
+    expect(classifySector({ ticker: "ZZZZ" })).toBe("industrial");
+    expect(classifySector({ ticker: "ZZZZ", sector: "Financial Services" })).toBe("financial");
+  });
+});
 
 describe("Piotroski F-Score", () => {
   it("scores AMD's latest fiscal transition at 8/9 (only the leverage signal misses)", () => {
     const g = evaluateGates(AMD);
     expect(g.piotroski.score).toBe(8);
-    expect(g.piotroski.signals.deLevering).toBe(false); // AMD raised debt for the AI build-out
-  });
-});
-
-describe("distress zone", () => {
-  it("reads AMD as SAFE (44x coverage, net cash, positive FCF)", () => {
-    expect(evaluateGates(AMD).distress.zone).toBe("SAFE");
-  });
-
-  it("flags DISTRESS when interest coverage is below 1x", () => {
-    const g = evaluateGates(pack({ ttm: { interestCoverage: 0.5 } }));
-    expect(g.distress.zone).toBe("DISTRESS");
-  });
-
-  it("flags DISTRESS when net debt / EBITDA exceeds 5x", () => {
-    const g = evaluateGates(pack({ ttm: { netDebtToEbitda: 6 } }));
-    expect(g.distress.zone).toBe("DISTRESS");
+    expect(g.piotroski.signals.deLevering).toBe(false);
   });
 });
 
@@ -92,41 +95,115 @@ describe("Sloan accruals", () => {
     expect(g.accruals.flag).toBe("LOW");
     expect(g.accruals.ratio).toBeCloseTo(-0.053, 2);
   });
+});
 
-  it("flags HIGH accruals when net income far exceeds operating cash flow", () => {
-    const g = evaluateGates(
-      pack({ income: { netIncome: [8, 9, 10, 11, 40] }, cashflow: { operatingCashFlow: [12, 13, 14, 15, 16] } }),
-    );
+describe("sector-aware gating — no false positives", () => {
+  it("does not cap a healthy industrial (AMD): ceiling stays STRONG BUY", () => {
+    const g = evaluateGates(AMD);
+    expect(g.distress.zone).toBe("SAFE");
+    expect(g.ceiling).toBe("STRONG BUY");
+  });
+
+  it("never caps a bank on industrial ratios (BAC): distress N/A, no cap", () => {
+    const g = evaluateGates(BAC);
+    expect(g.sector).toBe("financial");
+    expect(g.distress.zone).toBe("NA");
+    expect(g.ceiling).toBe("STRONG BUY");
+  });
+
+  it("does not cap a utility for normal high leverage (NEE)", () => {
+    const g = evaluateGates(NEE);
+    expect(g.sector).toBe("utility");
+    expect(g.distress.zone).not.toBe("DISTRESS");
+    expect(g.ceiling).toBe("STRONG BUY");
+  });
+
+  it("does not read a net-cash pre-profit name as distressed (UEC)", () => {
+    const g = evaluateGates(UEC);
+    expect(g.ceiling).toBe("STRONG BUY"); // negative interest coverage, but net cash — nothing to cover
+  });
+
+  it("does not cap hypergrowth for a HIGH accruals reading alone (NVDA)", () => {
+    const g = evaluateGates(NVDA);
     expect(g.accruals.flag).toBe("HIGH");
+    expect(g.piotroski.score).toBeGreaterThan(3); // not weak, so accruals does not corroborate a cap
+    expect(g.ceiling).toBe("STRONG BUY");
   });
 });
 
-describe("gate ceiling", () => {
-  it("does not cap a healthy name — AMD's ceiling stays STRONG BUY (no restriction)", () => {
-    expect(evaluateGates(AMD).ceiling).toBe("STRONG BUY");
-  });
-
-  it("caps at SELL under distress", () => {
-    const g = evaluateGates(pack({ ttm: { interestCoverage: 0.5 } }));
+describe("sector-aware gating — genuine distress still caps", () => {
+  it("caps a leveraged cash-burner at SELL (CRWV: net debt $25.9B, negative FCF, <1yr cash)", () => {
+    const g = evaluateGates(CRWV);
+    expect(g.distress.zone).toBe("DISTRESS");
     expect(g.ceiling).toBe("SELL");
     expect(g.flags).toContain("distress");
   });
 
-  it("caps at HOLD when the Piotroski score is very weak", () => {
-    // Everything deteriorating year over year -> F <= 2.
-    const weak = pack({
-      income: {
-        netIncome: [12, 11, 10, 9, -5],
-        revenue: [140, 135, 130, 125, 120],
-        grossProfit: [63, 58, 52, 46, 40],
-      },
-      cashflow: { operatingCashFlow: [16, 14, 12, 10, -8], freeCashFlow: [12, 10, 6, 2, -9] },
-      balance: { totalDebt: [26, 27, 28, 29, 30], currentRatio: [1.9, 1.8, 1.7, 1.6, 1.5] },
-    });
-    const g = evaluateGates(weak);
+  it("gives a loss-making but liquid name a HOLD ceiling, not SELL (INTC: $37B cash, 7yr runway)", () => {
+    const g = evaluateGates(INTC);
+    expect(g.distress.zone).toBe("WEAK");
+    expect(g.ceiling).toBe("HOLD");
+  });
+});
+
+describe("severity tiers — synthetic", () => {
+  it("DISTRESS (SELL) on a liquidity crunch: net debtor, current ratio < 1, negative FCF, under a year of cash", () => {
+    const g = evaluateGates(
+      pack({
+        ttm: { interestCoverage: 0.5, currentRatio: 0.8, netDebtToEbitda: 6 },
+        balance: { netDebt: [1, 2, 3, 4, 5], currentRatio: [1.2, 1.1, 1.0, 0.9, 0.8], cashAndInvestments: [8, 6, 5, 4, 3] },
+        cashflow: { freeCashFlow: [2, 0, -3, -6, -10] },
+      }),
+    );
+    expect(g.distress.zone).toBe("DISTRESS");
+    expect(g.ceiling).toBe("SELL");
+  });
+
+  it("WEAK (HOLD) on an uncovered but liquid net debtor", () => {
+    const g = evaluateGates(
+      pack({
+        ttm: { interestCoverage: 0.5, currentRatio: 2.0, netDebtToEbitda: 4 },
+        balance: { netDebt: [1, 2, 3, 4, 5], currentRatio: [2, 2, 2, 2, 2], cashAndInvestments: [40, 40, 40, 40, 40] },
+        cashflow: { freeCashFlow: [2, 1, 0, -1, -2] }, // burning, but 20yr of cash
+      }),
+    );
+    expect(g.distress.zone).toBe("WEAK");
+    expect(g.ceiling).toBe("HOLD");
+  });
+
+  it("caps at HOLD when an industrial Piotroski score is very weak", () => {
+    const g = evaluateGates(
+      pack({
+        income: { netIncome: [12, 11, 10, 9, -5], revenue: [140, 135, 130, 125, 120], grossProfit: [63, 58, 52, 46, 40] },
+        cashflow: { operatingCashFlow: [16, 14, 12, 10, -8], freeCashFlow: [12, 10, 6, 2, 1] },
+        balance: { totalDebt: [26, 27, 28, 29, 30], currentRatio: [1.9, 1.8, 1.7, 1.6, 1.5], netDebt: [-8, -8, -8, -8, -8] },
+      }),
+    );
     expect(g.piotroski.score).toBeLessThanOrEqual(2);
     expect(g.ceiling).toBe("HOLD");
     expect(g.flags).toContain("low-piotroski");
+  });
+
+  it("caps at HOLD when HIGH accruals corroborate a middling Piotroski (F=3, below the F<=2 cap)", () => {
+    // NI far exceeds OCF (HIGH accruals) while margins, turnover, current ratio and
+    // share count all deteriorate -> F=3: Piotroski alone would not cap, accruals corroborates.
+    const g = evaluateGates(
+      pack({
+        income: {
+          netIncome: [8, 9, 10, 60, 40],
+          revenue: [140, 135, 130, 125, 120],
+          grossProfit: [63, 58, 52, 46, 40],
+          epsDiluted: [0.8, 0.9, 1.0, 1.1, 0.5],
+        },
+        cashflow: { operatingCashFlow: [16, 14, 12, 10, 8], freeCashFlow: [12, 10, 6, 2, 1], buybacks: [-1, -1, -1, -1, 3] },
+        balance: { totalDebt: [26, 27, 28, 29, 25], totalEquity: [50, 55, 60, 66, 73], currentRatio: [1.9, 1.8, 1.7, 1.6, 1.5], netDebt: [-8, -8, -8, -8, -8] },
+      }),
+    );
+    expect(g.accruals.flag).toBe("HIGH");
+    expect(g.piotroski.score).toBe(3);
+    expect(g.ceiling).toBe("HOLD");
+    expect(g.flags).toContain("earnings-quality");
+    expect(g.flags).not.toContain("low-piotroski");
   });
 });
 
@@ -134,7 +211,7 @@ describe("applyGateCeiling", () => {
   it("lowers a label to the ceiling but never raises it", () => {
     expect(applyGateCeiling("STRONG BUY", "HOLD")).toBe("HOLD");
     expect(applyGateCeiling("BUY", "SELL")).toBe("SELL");
-    expect(applyGateCeiling("SELL", "HOLD")).toBe("SELL"); // already below the ceiling — unchanged
-    expect(applyGateCeiling("BUY", "STRONG BUY")).toBe("BUY"); // no cap
+    expect(applyGateCeiling("SELL", "HOLD")).toBe("SELL");
+    expect(applyGateCeiling("BUY", "STRONG BUY")).toBe("BUY");
   });
 });

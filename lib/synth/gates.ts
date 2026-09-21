@@ -4,16 +4,25 @@
  * The rating spine (conviction.ts) is valuation-only: E and R say nothing about
  * whether the business survives a shock or whether its earnings are real. These
  * gates read the statements a filing already carries and answer that separately,
- * as three named constructs — a financial-distress zone, the Piotroski F-Score,
- * and Sloan cash-flow accruals. Each can only CAP the label (push it toward a
- * sell); none can raise it. That preserves conviction.ts's invariant — the
- * machinery is never more aggressive than the E/R rule — and adds the fundamental
- * floor the scenario math cannot see. See docs/scoreconcepts/5.md and 6.md.
+ * as named constructs — a financial-distress read, the Piotroski F-Score, and
+ * Sloan cash-flow accruals. Each can only CAP the label (push it toward a sell);
+ * none can raise it. That preserves conviction.ts's invariant — the machinery is
+ * never more aggressive than the E/R rule — and adds the fundamental floor the
+ * scenario math cannot see. See docs/scoreconcepts/5.md and 6.md.
  *
- * Prototype scope: the interim distress proxy and the invested-capital proxy
- * (equity + debt) stand in for fields the FactPack does not yet expose (total
- * assets, going-concern text). Every proxy is flagged so a reader never mistakes
- * it for the full construct; the formulas are drop-in once the fields arrive.
+ * Sector-aware, and deliberately rare-and-severe (6.md §7.1's veto-collapse
+ * guard). Industrial solvency ratios are meaningless for banks and normal-when-
+ * high for utilities, and interest coverage only signals distress for a company
+ * that actually carries net debt — so the gates branch on sector and on whether
+ * the name is a net debtor, reserving a SELL ceiling for imminent solvency risk
+ * (a liquidity crunch or a short cash runway) and a HOLD ceiling for a weak-but-
+ * liquid balance sheet.
+ *
+ * Prototype scope: sector is classified from a small curated ticker map (with a
+ * hook for a persisted `sector`/SIC once the pipeline provides one — the real
+ * fix is to persist Yahoo assetProfile.sector); the interim distress read and
+ * the invested-capital proxy (equity + debt) stand in for fields the FactPack
+ * does not expose (total assets, going-concern text). Every proxy is flagged.
  */
 import type { RatingLabel } from "./judgment.schema";
 
@@ -25,6 +34,8 @@ interface Row {
 
 /** The slice of a FactPack the gates read — any full FactPack satisfies it structurally. */
 export interface GateFacts {
+  ticker?: string;
+  sector?: string;
   statements: {
     fiscalYears: string[];
     income: Row[];
@@ -38,7 +49,8 @@ export interface GateFacts {
   };
 }
 
-export type DistressZone = "SAFE" | "GREY" | "DISTRESS";
+export type Sector = "financial" | "utility" | "industrial";
+export type DistressZone = "SAFE" | "WEAK" | "DISTRESS" | "NA";
 export type Confidence = "high" | "medium" | "low";
 export type AccrualFlag = "HIGH" | "NEUTRAL" | "LOW";
 
@@ -58,6 +70,7 @@ export interface AccrualResult {
 export interface GateResult {
   /** The most conservative bucket the rating may reach; "STRONG BUY" means no cap. */
   ceiling: RatingLabel;
+  sector: Sector;
   flags: string[];
   confidence: Confidence;
   distress: DistressResult;
@@ -73,6 +86,32 @@ export function applyGateCeiling(label: RatingLabel, ceiling: RatingLabel): Rati
   return ORDER[Math.min(rank(label), rank(ceiling))];
 }
 
+// --- sector classification ---------------------------------------------------
+
+// Prototype stand-in for a persisted sector/SIC. Only names where the industrial
+// solvency ratios are structurally inapplicable (deposit-funded banks/insurers)
+// or normal-when-high (regulated utilities) need to be listed; everything else
+// is industrial by default. Exchanges (ICE, CME) and networks (V) are industrial
+// on purpose — they are capital-light and net-cash, so the ratios do carry meaning.
+const SECTOR_BY_TICKER: Record<string, Sector> = {
+  BAC: "financial",
+  JPM: "financial",
+  WFC: "financial",
+  EWBC: "financial",
+  NEE: "utility",
+};
+
+function normalizeSector(s: string | undefined): Sector | null {
+  if (!s) return null;
+  if (/financ|bank|insur/i.test(s)) return "financial";
+  if (/utilit/i.test(s)) return "utility";
+  return "industrial";
+}
+
+export function classifySector(f: { ticker?: string; sector?: string }): Sector {
+  return normalizeSector(f.sector) ?? SECTOR_BY_TICKER[(f.ticker ?? "").toUpperCase()] ?? "industrial";
+}
+
 // --- statement access helpers ------------------------------------------------
 
 function series(section: Row[], key: string): (number | null)[] | undefined {
@@ -81,43 +120,50 @@ function series(section: Row[], key: string): (number | null)[] | undefined {
 const at = (v: (number | null)[] | undefined, i: number): number | null => (v ? v[i] ?? null : null);
 const num = (x: number | null): x is number => x != null && Number.isFinite(x);
 
-// --- the three constructs ----------------------------------------------------
+// --- distress: sector-aware severity tiers -----------------------------------
 
-/** Interim distress proxy: a three-zone read built only from ratios the pack carries. */
-function distress(f: GateFacts): DistressResult {
-  const { interestCoverage: ic, netDebtToEbitda: nd, currentRatio: cr } = f.ttm;
-  const fcf = f.statements.cashflow;
-  const bal = f.statements.balance;
+/**
+ * SAFE / WEAK / DISTRESS / NA. DISTRESS (imminent solvency risk) → SELL ceiling;
+ * WEAK (uncovered or over-levered but liquid) → HOLD ceiling; SAFE / NA → no cap.
+ * A net-cash name is never distressed by low interest coverage — there is nothing
+ * to cover — so the coverage tests require the company to be a net debtor.
+ */
+function assessDistress(f: GateFacts, sector: Sector): DistressResult {
+  if (sector === "financial")
+    return { zone: "NA", reasons: ["financial: industrial solvency ratios not applicable"] };
+
   const n = f.statements.fiscalYears.length - 1;
-  const fcfLatest = at(series(fcf, "freeCashFlow"), n);
-  const cash = at(series(bal, "cashAndInvestments"), n);
+  const nd = at(series(f.statements.balance, "netDebt"), n);
+  const cash = at(series(f.statements.balance, "cashAndInvestments"), n);
+  const fcf = at(series(f.statements.cashflow, "freeCashFlow"), n);
+  const ebitda = at(series(f.statements.income, "ebitda"), n);
+  const { interestCoverage: ic, netDebtToEbitda: ndE, currentRatio: cr } = f.ttm;
 
+  const netDebtor = num(nd) ? nd > 0 : num(ndE) ? ndE > 0 : false;
+  const runwayYears = num(fcf) && fcf < 0 && num(cash) ? cash / Math.abs(fcf) : Infinity;
+
+  // Imminent solvency risk → SELL ceiling.
   const reasons: string[] = [];
-  // Hard distress: any single unambiguous solvency failure.
-  if (num(ic) && ic < 1) reasons.push(`interest coverage ${ic.toFixed(1)}x < 1x`);
-  if (num(nd) && nd > 5) reasons.push(`net debt / EBITDA ${nd.toFixed(1)}x > 5x`);
-  if (num(cr) && cr < 1 && num(fcfLatest) && fcfLatest < 0 && num(cash) && cash < Math.abs(fcfLatest))
-    reasons.push("current ratio < 1 with negative FCF and under a year of cash");
+  if (num(cr) && cr < 1 && num(fcf) && fcf < 0 && runwayYears < 1)
+    reasons.push(`current ratio ${cr.toFixed(2)} with negative FCF and under a year of cash`);
+  if (netDebtor && num(ic) && ic < 1 && runwayYears < 2)
+    reasons.push(`interest coverage ${ic.toFixed(1)}x on net debt with under two years of cash`);
   if (reasons.length) return { zone: "DISTRESS", reasons };
 
-  // Safe requires every available test to pass; a burning FCF is excused only by >2y of cash.
-  const coverageOk = num(ic) ? ic >= 3 : null;
-  const leverageOk = num(nd) ? nd <= 3 : null;
-  const liquidityOk = num(cr) ? cr >= 1 : null;
-  const fcfOk = num(fcfLatest)
-    ? fcfLatest > 0 || (num(cash) && cash > 2 * Math.abs(fcfLatest))
-    : null;
-  const checks = [coverageOk, leverageOk, liquidityOk, fcfOk];
-  if (checks.every((c) => c === true)) return { zone: "SAFE", reasons: [] };
+  // A utility's high leverage and sub-1 current ratio are normal; nothing else caps it.
+  if (sector === "utility") return { zone: "SAFE", reasons: [] };
 
-  const grey: string[] = [];
-  if (coverageOk === false) grey.push("thin interest coverage");
-  if (leverageOk === false) grey.push("elevated leverage");
-  if (liquidityOk === false) grey.push("current ratio < 1");
-  if (fcfOk === false) grey.push("negative free cash flow");
-  if (checks.some((c) => c === null)) grey.push("a solvency input is unavailable");
-  return { zone: "GREY", reasons: grey };
+  // Uncovered or over-levered, but liquid → HOLD ceiling.
+  const weak: string[] = [];
+  if (netDebtor && num(ic) && ic < 1) weak.push(`interest coverage ${ic.toFixed(1)}x on net debt`);
+  if (netDebtor && num(ndE) && ndE > 6 && num(ebitda) && ebitda > 0)
+    weak.push(`net debt / EBITDA ${ndE.toFixed(1)}x`);
+  if (weak.length) return { zone: "WEAK", reasons: weak };
+
+  return { zone: "SAFE", reasons: [] };
 }
+
+// --- Piotroski F-Score (industrials) -----------------------------------------
 
 /** Piotroski F-Score over the latest fiscal transition; invested capital proxies total assets. */
 function piotroski(f: GateFacts): PiotroskiResult {
@@ -160,7 +206,8 @@ function piotroski(f: GateFacts): PiotroskiResult {
     roaPositive: num(at(ni, t)) ? (at(ni, t) as number) > 0 : null,
     ocfPositive: num(at(ocf, t)) ? (at(ocf, t) as number) > 0 : null,
     roaRising: rising(ratio(at(ni, t), icT), ratio(at(ni, p), icP)),
-    accrualCfoOverNi: num(at(ocf, t)) && num(at(ni, t)) ? (at(ocf, t) as number) > (at(ni, t) as number) : null,
+    accrualCfoOverNi:
+      num(at(ocf, t)) && num(at(ni, t)) ? (at(ocf, t) as number) > (at(ni, t) as number) : null,
     // Lower debt/IC year over year — de-levering relative to the capital base.
     deLevering: (() => {
       const a = ratio(at(debt, t), icT);
@@ -184,6 +231,8 @@ function piotroski(f: GateFacts): PiotroskiResult {
   return { score, max: 9, signals };
 }
 
+// --- Sloan accruals ----------------------------------------------------------
+
 /** Sloan cash-flow accruals: earnings not backed by cash are a low-quality flag. */
 function accruals(f: GateFacts): AccrualResult {
   const inc = f.statements.income;
@@ -193,9 +242,10 @@ function accruals(f: GateFacts): AccrualResult {
   const ocfT = at(series(f.statements.cashflow, "operatingCashFlow"), n);
   const equity = series(bal, "totalEquity");
   const debt = series(bal, "totalDebt");
-  const icT = num(at(equity, n)) && num(at(debt, n)) ? (at(equity, n) as number) + (at(debt, n) as number) : null;
-  const icP =
-    num(at(equity, n - 1)) && num(at(debt, n - 1)) ? (at(equity, n - 1) as number) + (at(debt, n - 1) as number) : null;
+  const ic = (i: number) =>
+    num(at(equity, i)) && num(at(debt, i)) ? (at(equity, i) as number) + (at(debt, i) as number) : null;
+  const icT = ic(n);
+  const icP = ic(n - 1);
   const avgIc = num(icT) && num(icP) ? (icT + icP) / 2 : icT;
   if (!num(niT) || !num(ocfT) || !num(avgIc) || avgIc === 0) return { ratio: null, flag: null };
   const ratio = (niT - ocfT) / avgIc;
@@ -206,13 +256,13 @@ function accruals(f: GateFacts): AccrualResult {
 // --- the gate: caps only, most conservative wins -----------------------------
 
 export function evaluateGates(f: GateFacts): GateResult {
-  const d = distress(f);
+  const sector = classifySector(f);
+  const d = assessDistress(f, sector);
   const pio = piotroski(f);
   const acc = accruals(f);
 
   const n = f.statements.fiscalYears.length - 1;
-  const fcfSeries = series(f.statements.cashflow, "freeCashFlow");
-  const fcfLatest = at(fcfSeries, n);
+  const fcfLatest = at(series(f.statements.cashflow, "freeCashFlow"), n);
   const fcfTrendNegative = num(fcfLatest) && fcfLatest < 0;
 
   let ceiling: RatingLabel = "STRONG BUY";
@@ -223,21 +273,28 @@ export function evaluateGates(f: GateFacts): GateResult {
   };
 
   if (d.zone === "DISTRESS") cap("SELL", "distress");
-  else if (d.zone === "GREY") cap("HOLD", "grey-distress");
+  else if (d.zone === "WEAK") cap("HOLD", "weak-balance-sheet");
 
-  if (pio.score <= 1 && fcfTrendNegative) cap("SELL", "low-piotroski");
-  else if (pio.score <= 2) cap("HOLD", "low-piotroski");
-
-  if (acc.flag === "HIGH" && pio.score < 7) cap("HOLD", "earnings-quality");
+  // Piotroski and accruals are non-financial constructs; their components are
+  // distorted for banks and utilities, so they gate industrials only.
+  if (sector === "industrial") {
+    if (pio.score <= 1 && fcfTrendNegative) cap("SELL", "low-piotroski");
+    else if (pio.score <= 2) cap("HOLD", "low-piotroski");
+    // A single non-cash-earnings year is a soft signal; it caps only when it
+    // corroborates a weak Piotroski (earnings not cash-backed AND weak fundamentals).
+    if (acc.flag === "HIGH" && pio.score <= 3) cap("HOLD", "earnings-quality");
+  }
 
   const ttmNull =
     !num(f.ttm.interestCoverage) || !num(f.ttm.netDebtToEbitda) || !num(f.ttm.currentRatio);
   const confidence: Confidence =
-    d.zone === "GREY" || ttmNull || f.statements.fiscalYears.length < 2
+    f.statements.fiscalYears.length < 2 || d.zone === "WEAK"
       ? "low"
-      : f.statements.fiscalYears.length >= 5
-        ? "high"
-        : "medium";
+      : sector !== "industrial"
+        ? "medium"
+        : f.statements.fiscalYears.length >= 5 && d.zone === "SAFE" && !ttmNull
+          ? "high"
+          : "medium";
 
-  return { ceiling, flags, confidence, distress: d, piotroski: pio, accruals: acc };
+  return { ceiling, sector, flags, confidence, distress: d, piotroski: pio, accruals: acc };
 }
