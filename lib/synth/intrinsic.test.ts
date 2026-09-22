@@ -17,7 +17,7 @@ import {
  * for a decade, the achievable path is ~20%, and the base case (g=20%) is worth ~$226.
  */
 const load = (t: string, acc: string): IntrinsicFacts =>
-  JSON.parse(readFileSync(`data/facts/${t}/${acc}.json`, "utf8"));
+  JSON.parse(readFileSync(`lib/synth/__fixtures__/packs/${t}/${acc}.json`, "utf8"));
 
 const AMD = load("AMD", "0000002488-26-000123");
 const BAC = load("BAC", "0000070858-26-000394");

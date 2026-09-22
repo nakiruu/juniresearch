@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { percentileRank, valueSleeve, compositeScore, type CompositeFacts } from "./composite";
 
-const load = (t: string, acc: string): CompositeFacts => JSON.parse(readFileSync(`data/facts/${t}/${acc}.json`, "utf8"));
+const load = (t: string, acc: string): CompositeFacts => JSON.parse(readFileSync(`lib/synth/__fixtures__/packs/${t}/${acc}.json`, "utf8"));
 const AMD = load("AMD", "0000002488-26-000123");
 const BAC = load("BAC", "0000070858-26-000394");
 

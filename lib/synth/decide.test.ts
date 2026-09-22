@@ -132,7 +132,7 @@ describe("conviction score", () => {
 });
 
 describe("integration — the full layer results satisfy decide's inputs", () => {
-  const AMD = JSON.parse(readFileSync("data/facts/AMD/0000002488-26-000123.json", "utf8"));
+  const AMD = JSON.parse(readFileSync("lib/synth/__fixtures__/packs/AMD/0000002488-26-000123.json", "utf8"));
   it("composes real gate/moat/intrinsic outputs on AMD into a HOLD", () => {
     const d = decide(
       {

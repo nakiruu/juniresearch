@@ -10,7 +10,7 @@ import { evaluateGates, applyGateCeiling, classifySector, sectorFromSic, gateAdv
  * while a genuinely leveraged cash-burner (CRWV) must still cap severely.
  */
 const load = (t: string, acc: string): GateFacts & { ticker?: string } =>
-  JSON.parse(readFileSync(`data/facts/${t}/${acc}.json`, "utf8"));
+  JSON.parse(readFileSync(`lib/synth/__fixtures__/packs/${t}/${acc}.json`, "utf8"));
 
 const AMD = load("AMD", "0000002488-26-000123");
 const BAC = load("BAC", "0000070858-26-000394");

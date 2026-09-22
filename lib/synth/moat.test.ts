@@ -21,7 +21,7 @@ import {
  * negative every comparable year but narrowing; verdict Narrow (contingent), Widening.
  */
 const load = (t: string, acc: string): MoatFacts =>
-  JSON.parse(readFileSync(`data/facts/${t}/${acc}.json`, "utf8"));
+  JSON.parse(readFileSync(`lib/synth/__fixtures__/packs/${t}/${acc}.json`, "utf8"));
 
 const AMD = load("AMD", "0000002488-26-000123");
 const BAC = load("BAC", "0000070858-26-000394");
