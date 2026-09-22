@@ -13,6 +13,7 @@ import { Desk } from "../lib/synth/desk.schema";
 import type { Conviction } from "../lib/synth/conviction";
 import { evaluateGates } from "../lib/synth/gates";
 import { moatRead, moatApplicable, costOfEquity } from "../lib/synth/moat";
+import { MACRO } from "../lib/synth/macro";
 import { intrinsicRead, dcfApplicable } from "../lib/synth/intrinsic";
 import { compositeScore } from "../lib/synth/composite";
 import { decide, SAFE_DEFAULTS } from "../lib/synth/decide";
@@ -45,7 +46,7 @@ for (const file of readdirSync(DATA).filter((f) => f.endsWith(".json")).sort()) 
   const gate = evaluateGates(pack);
   const moat = moatApplicable(pack).ok ? moatRead(pack) : null;
   const intrinsic = dcfApplicable(pack).ok
-    ? intrinsicRead(pack, { r: costOfEquity(pack, { riskFree: 0.043, erp: 0.045 }), terminalGrowth: 0.03, horizon: 10 })
+    ? intrinsicRead(pack, { r: costOfEquity(pack, MACRO), terminalGrowth: 0.03, horizon: 10 })
     : null;
   const composite = compositeScore(pack);
   const a = pack.analysts;

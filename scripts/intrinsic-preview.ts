@@ -10,9 +10,9 @@ import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { intrinsicRead, dcfApplicable, type IntrinsicFacts } from "../lib/synth/intrinsic";
 import { costOfEquity } from "../lib/synth/moat";
+import { MACRO } from "../lib/synth/macro";
 
 const DATA = "data";
-const MACRO = { riskFree: 0.043, erp: 0.045 };
 
 function latestFactPack(ticker: string): string | null {
   const dir = join(DATA, "facts", ticker);

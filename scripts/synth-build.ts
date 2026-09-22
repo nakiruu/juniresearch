@@ -11,6 +11,7 @@ import { intrinsicRead, dcfApplicable } from "../lib/synth/intrinsic";
 import { compositeScore } from "../lib/synth/composite";
 import { decide, SAFE_DEFAULTS } from "../lib/synth/decide";
 import { computeConviction } from "../lib/synth/conviction";
+import { MACRO } from "../lib/synth/macro";
 import { validateJudgment } from "../lib/synth/validate-judgment";
 import { Report } from "../lib/report.schema";
 import { validateReport, type ValidationIssue } from "../lib/validate";
@@ -52,7 +53,7 @@ const facts = projectReportFacts(pack);
 // Fundamental scoring layers (advisory under safe defaults — they do not move the label).
 const gate = evaluateGates(pack);
 const moat = moatApplicable(pack).ok ? moatRead(pack) : null;
-const discountRate = costOfEquity(pack, { riskFree: 0.043, erp: 0.045 });
+const discountRate = costOfEquity(pack, MACRO);
 const intrinsic = dcfApplicable(pack).ok ? intrinsicRead(pack, { r: discountRate, terminalGrowth: 0.03, horizon: 10 }) : null;
 const composite = compositeScore(pack);
 const conviction = computeConviction(judgment.sections.valuation.scenarios, pack.quote.price);

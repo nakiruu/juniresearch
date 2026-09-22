@@ -17,6 +17,7 @@
  * and the incremental economics disagree (3.md §3.3).
  */
 import { classifySector } from "./gates";
+import { MACRO } from "./macro";
 
 interface Row {
   key: string;
@@ -43,11 +44,6 @@ export interface MoatConfig {
   riskFree?: number; // desk macro input for the WACC build-up
   erp?: number; // equity risk premium
 }
-
-// Desk-level macro assumptions for the WACC build-up (3.md §1.2). Documented defaults;
-// promote to desk.json when the desk wants to tune one number for all names.
-const DEFAULT_RISK_FREE = 0.043;
-const DEFAULT_ERP = 0.045;
 
 export interface MoatResult {
   width: MoatWidth;
@@ -183,7 +179,7 @@ const median = (xs: number[]): number => {
 
 export function moatRead(f: MoatFacts, cfg: MoatConfig = {}): MoatResult {
   const taxRate = cfg.taxRate ?? 0.21;
-  const macro = { riskFree: cfg.riskFree ?? DEFAULT_RISK_FREE, erp: cfg.erp ?? DEFAULT_ERP, taxRate };
+  const macro = { riskFree: cfg.riskFree ?? MACRO.riskFree, erp: cfg.erp ?? MACRO.erp, taxRate };
   const wacc = cfg.wacc ?? buildWacc(f, macro);
   const flags: string[] = [`WACC ${(wacc * 100).toFixed(1)}% (build-up, β≈${betaFromSic(f.sic)})`, `tax rate assumed ${(taxRate * 100).toFixed(0)}%`];
 
