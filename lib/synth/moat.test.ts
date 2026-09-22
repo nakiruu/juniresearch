@@ -146,9 +146,15 @@ describe("insufficient comparable history (I1)", () => {
 });
 
 describe("moatApplicable", () => {
+  const NEE = load("NEE", "0000753308-26-000060");
   it("applies to an industrial (AMD) and abstains on a financial (BAC: ROIC/invested capital not meaningful)", () => {
     expect(moatApplicable(AMD).ok).toBe(true);
     expect(moatApplicable(BAC).ok).toBe(false);
+  });
+  it("abstains on a regulated utility (NEE): allowed returns are not competitive excess returns", () => {
+    const a = moatApplicable(NEE);
+    expect(a.ok).toBe(false);
+    expect(a.reason).toMatch(/utilit|regulat/i);
   });
 });
 

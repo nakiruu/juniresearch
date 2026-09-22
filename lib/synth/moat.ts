@@ -158,6 +158,10 @@ export function incrementalRoic(f: MoatFacts, taxRate: number, from: number): nu
 export function moatApplicable(f: MoatFacts): { ok: boolean; reason: string | null } {
   const sector = classifySector(f);
   if (sector === "financial") return { ok: false, reason: "financial: ROIC / invested capital not meaningful (use ROTCE − cost of equity)" };
+  // A rate-regulated utility earns its ALLOWED return by design (ROIC ≈ cost of capital), so an
+  // ROIC−WACC spread reads NONE/eroding when the reality is a stable regulatory monopoly. The
+  // ROIC−WACC method measures COMPETITIVE excess returns, which a regulated utility does not have.
+  if (sector === "utility") return { ok: false, reason: "utility: regulated returns are not competitive excess returns (ROIC ≈ allowed return)" };
   return { ok: true, reason: null };
 }
 
