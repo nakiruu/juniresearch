@@ -23,15 +23,16 @@ import type { MoatWidth, MoatTrend } from "./moat";
 export interface DecisionPolicy {
   enforceGate: boolean; // the gate ceiling hard-caps the label
   requireCorroboration: boolean; // an extreme (STRONG BUY/SELL) needs the layers to agree
+  applyMoatFloor: boolean; // the moat's minimum bear depth deepens D before deriveLabel (3.md Lever 1)
   maxNotches: 1 | 2; // most notches disagreement may pull toward HOLD
 }
-export const SAFE_DEFAULTS: DecisionPolicy = { enforceGate: false, requireCorroboration: false, maxNotches: 1 };
+export const SAFE_DEFAULTS: DecisionPolicy = { enforceGate: false, requireCorroboration: false, applyMoatFloor: false, maxNotches: 1 };
 
 // Narrow structural shapes — the full GateResult / MoatResult / IntrinsicResult / CompositeResult satisfy them.
 export interface DecisionInputs {
   conviction: Conviction;
   gate: { ceiling: RatingLabel; flags: string[]; confidence: "high" | "medium" | "low" };
-  moat: { width: MoatWidth; trend: MoatTrend; contingent: boolean } | null;
+  moat: { width: MoatWidth; trend: MoatTrend; contingent: boolean; bearFloor?: number } | null;
   intrinsic: { marginOfSafety: number } | null;
   composite?: { percentile: number | null; confidence: "high" | "medium" | "low" } | null;
 }
@@ -69,6 +70,18 @@ export function decide(inputs: DecisionInputs, cfg: DeskRating, policy: Decision
       reasons.push(`gate cap → ${label} (${why})`);
     } else {
       advisories.push(`gate ceiling ${gate.ceiling} (${why}) — advisory, not applied`);
+    }
+  }
+
+  // --- Moat bear-depth floor (3.md Lever 1): a thin/eroding moat forces a deeper bear,
+  // which lowers R and can only tighten the label. Opt-in; one-way toward HOLD. ---
+  if (policy.applyMoatFloor && moat?.bearFloor != null && moat.bearFloor > c.bearDownside) {
+    const dFloored = moat.bearFloor;
+    const rFloored = dFloored > 0 ? c.expectedUpside / dFloored : null;
+    const flooredLabel = deriveLabel({ ...c, bearDownside: dFloored, rewardRisk: rFloored }, cfg);
+    if (rank(flooredLabel) < rank(label)) {
+      label = flooredLabel;
+      reasons.push(`moat bear floor ${(dFloored * 100).toFixed(0)}% (${moat.width}/${moat.trend}) → ${label}`);
     }
   }
 

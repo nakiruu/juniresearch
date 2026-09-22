@@ -46,6 +46,24 @@ describe("policy knobs", () => {
   });
 });
 
+describe("moat bear-depth floor (3.md Lever 1)", () => {
+  // E 0.12, D 0.20, R 0.60 -> BUY. A thin moat forces a deeper bear -> lower R -> HOLD.
+  const BUYISH: Conviction = { expectedUpside: 0.12, bearDownside: 0.2, rewardRisk: 0.6 };
+  const thin = { width: "NONE" as const, trend: "STABLE" as const, contingent: false, bearFloor: 0.3 };
+  const wide = { width: "WIDE" as const, trend: "WIDENING" as const, contingent: false, bearFloor: 0.15 };
+  it("is off under SAFE_DEFAULTS (label stays the raw E/R BUY)", () => {
+    expect(decide({ conviction: BUYISH, gate: cleanGate, moat: thin, intrinsic: null }, cfg).label).toBe("BUY");
+  });
+  it("deepens the bear for a thin moat and downgrades BUY -> HOLD when applyMoatFloor is on", () => {
+    const d = decide({ conviction: BUYISH, gate: cleanGate, moat: thin, intrinsic: null }, cfg, { ...SAFE_DEFAULTS, applyMoatFloor: true });
+    expect(d.label).toBe("HOLD");
+    expect(d.reasons.some((r) => /moat bear floor/i.test(r))).toBe(true);
+  });
+  it("does not bind for a wide moat whose floor (0.15) is below the actual bear (0.20)", () => {
+    expect(decide({ conviction: BUYISH, gate: cleanGate, moat: wide, intrinsic: null }, cfg, { ...SAFE_DEFAULTS, applyMoatFloor: true }).label).toBe("BUY");
+  });
+});
+
 describe("composite (5.md) in the decision", () => {
   it("blocks a STRONG BUY corroboration when the cross-sectional composite is in the bearish tail", () => {
     const base = { conviction: STRONGBUYISH, gate: cleanGate, moat: { width: "WIDE" as const, trend: "WIDENING" as const, contingent: false }, intrinsic: { marginOfSafety: 0.15 } };

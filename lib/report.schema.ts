@@ -119,6 +119,7 @@ const decision = z.object({
       width: z.enum(["WIDE", "NARROW", "NONE"]),
       trend: z.enum(["WIDENING", "STABLE", "ERODING"]),
       contingent: z.boolean(),
+      bearFloor: z.number(),
     })
     .nullable(),
   intrinsic: z

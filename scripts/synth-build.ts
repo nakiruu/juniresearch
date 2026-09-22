@@ -59,7 +59,7 @@ const conviction = computeConviction(judgment.sections.valuation.scenarios, pack
 const dec = decide({ conviction, gate, moat, intrinsic, composite }, desk.rating, SAFE_DEFAULTS);
 const decisionBlock = {
   conviction: dec.conviction, tier: dec.tier, proposed: dec.proposed, reasons: dec.reasons, advisories: dec.advisories,
-  moat: moat ? { width: moat.width, trend: moat.trend, contingent: moat.contingent } : null,
+  moat: moat ? { width: moat.width, trend: moat.trend, contingent: moat.contingent, bearFloor: moat.bearFloor } : null,
   intrinsic: intrinsic
     ? { marginOfSafety: intrinsic.marginOfSafety, impliedGrowth: intrinsic.impliedGrowth, achievableGrowth: intrinsic.achievableGrowth }
     : null,

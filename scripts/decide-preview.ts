@@ -51,7 +51,7 @@ for (const file of readdirSync(DATA).filter((f) => f.endsWith(".json")).sort()) 
   const inputs = { conviction, gate, moat, intrinsic, composite };
 
   const safe = decide(inputs, cfg, SAFE_DEFAULTS);
-  const enforced = decide(inputs, cfg, { ...SAFE_DEFAULTS, enforceGate: true, requireCorroboration: true });
+  const enforced = decide(inputs, cfg, { ...SAFE_DEFAULTS, enforceGate: true, requireCorroboration: true, applyMoatFloor: true });
   if (enforced.label !== safe.label) enforceChanges++;
 
   const moatStr = moat ? `${moat.width}${moat.contingent ? "*" : ""}/${moat.trend[0]}` : "—";
