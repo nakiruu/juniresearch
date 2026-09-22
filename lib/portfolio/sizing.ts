@@ -41,7 +41,7 @@ export function finalizeCash(items: Weighted[], config: PortfolioConfig): { hold
     // Upscaling can push weights back over wMax/sectorMax — re-apply the hard
     // caps and let cash land wherever that leaves it (possibly still above
     // the nominal ceiling; that's the correct "few marginal names" outcome).
-    holdings = applyConstraints(scale(target), config);
+    holdings = applyConstraints(scale(target), config).filter((w) => w.weight > 0);
     cash = 1 - holdings.reduce((a, w) => a + w.weight, 0);
   }
   return { holdings, cash };

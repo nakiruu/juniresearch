@@ -70,6 +70,19 @@ describe("finalizeCash", () => {
     const { cash } = finalizeCash([w("A", 0.1), w("B", 0.1)], DEFAULT_CONFIG); // 2 names < 4
     expect(cash).toBeCloseTo(0.80, 6);
   });
+  it("drops a zero-weight ghost holding when re-capping on the ceiling path pushes it below wMin", () => {
+    // invested 0.151 across 4 same-sector names -> cash 0.849 > ceiling 0.35, names>=4 -> upscale to 0.65.
+    // Re-applying applyConstraints caps A/B/C at wMax then re-scales for the sector cap, which pushes
+    // D's tiny weight below wMin=0.015 -- applyConstraints zeroes it but does not remove it, so without
+    // the fix it survives in `holdings` as a 0.0%-weight "ghost".
+    const { holdings, cash } = finalizeCash(
+      [w("A", 0.05), w("B", 0.05), w("C", 0.05), w("D", 0.001)],
+      DEFAULT_CONFIG,
+    );
+    expect(holdings.every((h) => h.weight > 0)).toBe(true);
+    expect(holdings.reduce((a, h) => a + h.weight, 0) + cash).toBeCloseTo(1, 9);
+    for (const h of holdings) expect(h.weight).toBeLessThanOrEqual(DEFAULT_CONFIG.wMax + 1e-9);
+  });
 });
 
 describe("sizePortfolio", () => {
