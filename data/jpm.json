@@ -158,6 +158,38 @@
       "bearDownside": 0.1706466096605371,
       "rewardRisk": 0.3407072230601643,
       "derivedLabel": "HOLD"
+    },
+    "gate": {
+      "sector": "financial",
+      "ceiling": "STRONG BUY",
+      "gatedLabel": "HOLD",
+      "distress": "NA",
+      "piotroski": 2,
+      "accruals": "HIGH",
+      "confidence": "medium",
+      "flags": []
+    },
+    "decision": {
+      "conviction": 65,
+      "tier": "moderate",
+      "proposed": "HOLD",
+      "reasons": [
+        "E/R proposed HOLD"
+      ],
+      "advisories": [],
+      "moat": null,
+      "intrinsic": null,
+      "composite": {
+        "percentile": null,
+        "confidence": "low"
+      },
+      "uncertainty": {
+        "tier": "low",
+        "points": 1,
+        "drivers": [
+          "wide analyst-target dispersion (+1)"
+        ]
+      }
     }
   },
   "snapshot": [
