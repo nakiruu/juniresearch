@@ -158,6 +158,46 @@
       "bearDownside": 0.3672993672993673,
       "rewardRisk": 0.5720761559383496,
       "derivedLabel": "BUY"
+    },
+    "gate": {
+      "sector": "industrial",
+      "ceiling": "STRONG BUY",
+      "gatedLabel": "BUY",
+      "distress": "SAFE",
+      "piotroski": 6,
+      "accruals": "LOW",
+      "confidence": "high",
+      "flags": []
+    },
+    "decision": {
+      "conviction": 61,
+      "tier": "moderate",
+      "proposed": "BUY",
+      "reasons": [
+        "E/R proposed BUY"
+      ],
+      "advisories": [],
+      "moat": {
+        "width": "NARROW",
+        "trend": "ERODING",
+        "contingent": false,
+        "bearFloor": 0.35
+      },
+      "intrinsic": null,
+      "composite": {
+        "percentile": 62.134619217968044,
+        "confidence": "high"
+      },
+      "uncertainty": {
+        "tier": "high",
+        "points": 7,
+        "drivers": [
+          "wide analyst-target dispersion (+2)",
+          "elevated leverage (+2)",
+          "layers abstained / thin data (+1)",
+          "revenue concentration (+2)"
+        ]
+      }
     }
   },
   "snapshot": [

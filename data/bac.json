@@ -158,6 +158,36 @@
       "bearDownside": 0.15923995291743734,
       "rewardRisk": 0.6895459345300947,
       "derivedLabel": "BUY"
+    },
+    "gate": {
+      "sector": "financial",
+      "ceiling": "STRONG BUY",
+      "gatedLabel": "BUY",
+      "distress": "NA",
+      "piotroski": 8,
+      "accruals": "NEUTRAL",
+      "confidence": "medium",
+      "flags": []
+    },
+    "decision": {
+      "conviction": 66,
+      "tier": "moderate",
+      "proposed": "BUY",
+      "reasons": [
+        "E/R proposed BUY"
+      ],
+      "advisories": [],
+      "moat": null,
+      "intrinsic": null,
+      "composite": {
+        "percentile": null,
+        "confidence": "low"
+      },
+      "uncertainty": {
+        "tier": "low",
+        "points": 0,
+        "drivers": []
+      }
     }
   },
   "snapshot": [

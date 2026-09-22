@@ -158,6 +158,51 @@
       "bearDownside": 0.5056846267918932,
       "rewardRisk": 0.24633431085043972,
       "derivedLabel": "HOLD"
+    },
+    "gate": {
+      "sector": "industrial",
+      "ceiling": "SELL",
+      "gatedLabel": "SELL",
+      "distress": "DISTRESS",
+      "piotroski": 5,
+      "accruals": "LOW",
+      "confidence": "medium",
+      "flags": [
+        "distress"
+      ]
+    },
+    "decision": {
+      "conviction": 53,
+      "tier": "moderate",
+      "proposed": "HOLD",
+      "reasons": [
+        "E/R proposed HOLD"
+      ],
+      "advisories": [
+        "gate ceiling SELL (distress) — advisory, not applied"
+      ],
+      "moat": {
+        "width": "NONE",
+        "trend": "STABLE",
+        "contingent": false,
+        "bearFloor": 0.3
+      },
+      "intrinsic": null,
+      "composite": {
+        "percentile": 53.564745570834816,
+        "confidence": "high"
+      },
+      "uncertainty": {
+        "tier": "veryHigh",
+        "points": 8,
+        "drivers": [
+          "wide analyst-target dispersion (+2)",
+          "elevated leverage (+2)",
+          "short history (3 FY) (+1)",
+          "layers abstained / thin data (+1)",
+          "revenue concentration (+2)"
+        ]
+      }
     }
   },
   "snapshot": [
