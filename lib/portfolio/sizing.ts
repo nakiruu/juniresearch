@@ -1,5 +1,6 @@
 import type { Signal } from "./signal";
 import type { PortfolioConfig } from "./config";
+import { assessEligibility } from "./eligibility";
 
 export function rawWeight(s: Signal, config: PortfolioConfig): number {
   const sigma = Math.max(s.sigma, config.sigmaMin);
@@ -41,4 +42,22 @@ export function finalizeCash(items: Weighted[], config: PortfolioConfig): { hold
     cash = config.cashCeiling;
   }
   return { holdings, cash };
+}
+
+export interface Sized {
+  holdings: Weighted[]; cash: number; excluded: { ticker: string; reasons: string[] }[];
+}
+
+export function sizePortfolio(signals: Signal[], config: PortfolioConfig): Sized {
+  const eligible: Signal[] = [];
+  const excluded: { ticker: string; reasons: string[] }[] = [];
+  for (const s of signals) {
+    const e = assessEligibility(s, config);
+    if (e.eligible) eligible.push(s);
+    else excluded.push({ ticker: s.ticker, reasons: e.reasons });
+  }
+  const raw: Weighted[] = eligible.map((s) => ({ ticker: s.ticker, sector: s.sector, weight: rawWeight(s, config) }));
+  const constrained = applyConstraints(raw, config);
+  const { holdings, cash } = finalizeCash(constrained, config);
+  return { holdings, cash, excluded };
 }

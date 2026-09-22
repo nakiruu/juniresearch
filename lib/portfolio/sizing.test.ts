@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { rawWeight, applyConstraints, finalizeCash, type Weighted } from "./sizing";
+import { rawWeight, applyConstraints, finalizeCash, sizePortfolio, type Weighted } from "./sizing";
 import { DEFAULT_CONFIG } from "./config";
 import type { Signal } from "./signal";
 
@@ -63,5 +63,29 @@ describe("finalizeCash", () => {
   it("allows cash above the ceiling when too few names qualify", () => {
     const { cash } = finalizeCash([w("A", 0.1), w("B", 0.1)], DEFAULT_CONFIG); // 2 names < 4
     expect(cash).toBeCloseTo(0.80, 6);
+  });
+});
+
+describe("sizePortfolio", () => {
+  const sig = (o: Partial<Signal>): Signal => ({
+    ticker: "X", company: "X", sector: "36", label: "BUY", gatedLabel: "BUY",
+    price: 100, mu: 0.2, sigma: 0.25, sigmaDown: 0.1, D: 0.2, R: 1, kappa: 0.6,
+    quality: 1, ageDays: 0, staleness: 1, ...o,
+  });
+
+  it("holds eligible names, lists the excluded with reasons, and sums to 1", () => {
+    const out = sizePortfolio([
+      sig({ ticker: "A" }),
+      sig({ ticker: "B", label: "HOLD" }),   // excluded
+      sig({ ticker: "C", mu: 0.01 }),         // excluded (rallied out)
+    ], DEFAULT_CONFIG);
+    expect(out.holdings.map((h) => h.ticker)).toEqual(["A"]);
+    expect(out.excluded.map((e) => e.ticker).sort()).toEqual(["B", "C"]);
+    expect(out.holdings.reduce((a, h) => a + h.weight, 0) + out.cash).toBeCloseTo(1, 9);
+  });
+  it("returns an all-cash book when nothing is eligible", () => {
+    const out = sizePortfolio([sig({ label: "HOLD" })], DEFAULT_CONFIG);
+    expect(out.holdings).toHaveLength(0);
+    expect(out.cash).toBeCloseTo(1, 9);
   });
 });
