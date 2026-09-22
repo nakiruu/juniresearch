@@ -10,6 +10,7 @@ import type { Judgment, RatingLabel } from "./judgment.schema";
 import type { Desk } from "./desk.schema";
 import { SCHEMA_VERSION, type Report, type SnapshotCellData } from "../report.schema";
 import { computeConviction, deriveLabel } from "./conviction";
+import { applyGateCeiling, type GateResult } from "./gates";
 
 export const toneFor = (label: RatingLabel): Report["rating"]["tone"] =>
   label === "HOLD" ? "secondary" : label.endsWith("BUY") ? "bull" : "bear";
@@ -19,7 +20,9 @@ const fmt = (ymd: string, month: "long" | "short") =>
 export const longDate = (ymd: string): string => fmt(ymd, "long");
 export const shortDate = (ymd: string): string => fmt(ymd, "short");
 
-export function mergeReport(facts: ReportFacts, j: Judgment, desk: Desk, buildDate: string): Report {
+export function mergeReport(
+  facts: ReportFacts, j: Judgment, desk: Desk, buildDate: string, gate?: GateResult, decision?: Report["rating"]["decision"],
+): Report {
   const note = `Source: Bigdata.com company tearsheet (FMP); fiscal years ended ${j.meta.fiscalYearEnd}.`;
   const bodies = new Map(j.sections.businessMoat.segments.map((s) => [s.name, s.body]));
   const f = facts.sections;
@@ -34,8 +37,16 @@ export function mergeReport(facts: ReportFacts, j: Judgment, desk: Desk, buildDa
     quote: facts.quote,
     rating: (() => {
       const c = computeConviction(j.sections.valuation.scenarios, facts.quote.currentPrice);
+      const derivedLabel = deriveLabel(c, desk.rating);
+      const gateBlock = gate
+        ? {
+            sector: gate.sector, ceiling: gate.ceiling, gatedLabel: applyGateCeiling(derivedLabel, gate.ceiling),
+            distress: gate.distress.zone, piotroski: gate.piotroski.score, accruals: gate.accruals.flag,
+            confidence: gate.confidence, flags: gate.flags,
+          }
+        : undefined;
       return { label: j.rating.label, tone: toneFor(j.rating.label), targetLow: j.rating.targetLow, targetHigh: j.rating.targetHigh,
-        conviction: { ...c, derivedLabel: deriveLabel(c, desk.rating) } };
+        conviction: { ...c, derivedLabel }, ...(gateBlock ? { gate: gateBlock } : {}), ...(decision ? { decision } : {}) };
     })(),
     // The model's chosen highlight keys (up to four) resolve to fact-built cells, in the order chosen,
     // appended after the sixteen code-owned cells. mergeReport runs before validateJudgment (see

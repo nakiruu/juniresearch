@@ -95,12 +95,52 @@ const conviction = z.object({
   derivedLabel: ratingLabel,
 });
 
+/** The fundamental-gate read (lib/synth/gates.ts); optional so reports built before it parse. */
+const gate = z.object({
+  sector: z.enum(["financial", "utility", "industrial"]),
+  ceiling: ratingLabel,
+  gatedLabel: ratingLabel, // applyGateCeiling(derivedLabel, ceiling)
+  distress: z.enum(["SAFE", "WEAK", "DISTRESS", "NA"]),
+  piotroski: z.number().int().min(0).max(9),
+  accruals: z.enum(["HIGH", "NEUTRAL", "LOW"]).nullable(),
+  confidence: z.enum(["high", "medium", "low"]),
+  flags: z.array(z.string()),
+});
+
+/** The composed decision (lib/synth/decide.ts): E/R + gate + moat + intrinsic. Optional/advisory. */
+const decision = z.object({
+  conviction: z.number().int().min(0).max(100),
+  tier: z.enum(["high", "moderate", "low"]),
+  proposed: ratingLabel,
+  reasons: z.array(z.string()),
+  advisories: z.array(z.string()),
+  moat: z
+    .object({
+      width: z.enum(["WIDE", "NARROW", "NONE"]),
+      trend: z.enum(["WIDENING", "STABLE", "ERODING"]),
+      contingent: z.boolean(),
+      bearFloor: z.number(),
+    })
+    .nullable(),
+  intrinsic: z
+    .object({ marginOfSafety: z.number(), impliedGrowth: z.number(), achievableGrowth: z.number() })
+    .nullable(),
+  composite: z
+    .object({ percentile: z.number().nullable(), confidence: z.enum(["high", "medium", "low"]) })
+    .nullable(),
+  uncertainty: z
+    .object({ tier: z.enum(["low", "medium", "high", "veryHigh"]), points: z.number().int(), drivers: z.array(z.string()) })
+    .nullable(),
+});
+
 const rating = z.object({
   label: ratingLabel,
   tone: z.enum(["bull", "accent", "secondary", "bear"]).default("bull"),
   targetLow: z.number(),
   targetHigh: z.number(),
   conviction: conviction.optional(),
+  gate: gate.optional(),
+  decision: decision.optional(),
 });
 
 const analystSentiment = z.object({

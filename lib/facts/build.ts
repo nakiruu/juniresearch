@@ -19,6 +19,7 @@ export function buildFactPack(dir: string): FactPack {
   const meta = readRawJson(dir, RAW_CAPTURE_META) as { capturedAt: string };
   const filing = readRawJson(dir, EDGAR_FILING_FILE) as {
     form: "10-Q" | "10-K"; accession: string; filedDate: string; periodEnd: string; url: string; ticker: string; cik: number; company: string;
+    sic?: number | null; sicDescription?: string | null;
     pressRelease?: { url: string; filedDate: string } | null; annualReport?: { url: string; filedDate: string } | null;
     proxyStatement?: { url: string; filedDate: string } | null };
   if (filing.accession !== basename(dir)) throw new Error(`edgar-filing.json accession ${filing.accession} ≠ directory ${basename(dir)}`);
@@ -49,6 +50,8 @@ export function buildFactPack(dir: string): FactPack {
   const pack: FactPack = {
     schemaVersion: FACTPACK_SCHEMA_VERSION,
     ticker: filing.ticker, cik: filing.cik, company: q.company, exchange: q.exchange,
+    ...(filing.sic != null ? { sic: filing.sic } : {}),
+    ...(filing.sicDescription != null ? { sicDescription: filing.sicDescription } : {}),
     filing: { form: filing.form, accession: filing.accession, filedDate: filing.filedDate, periodEnd: filing.periodEnd, url: filing.url },
     capturedAt: meta.capturedAt,
     quote: quoteFacts, statements: s.statements, latestQuarter: s.latestQuarter, ttm: s.ttm,

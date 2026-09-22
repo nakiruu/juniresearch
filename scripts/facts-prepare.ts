@@ -122,9 +122,13 @@ if (px) {
   notes.push("no proxy statement found");
 }
 
+// SEC serves SIC on the submissions feed we already fetched; persist it for sector-aware downstream logic.
+const sic = submissionsBody.sic != null && submissionsBody.sic !== "" ? Number(submissionsBody.sic) : null;
+const sicDescription = submissionsBody.sicDescription ?? null;
+
 writeFileSync(
   join(dir, "edgar-filing.json"),
-  JSON.stringify({ ...filing, ticker, cik, company, pressRelease, annualReport, proxyStatement }, null, 2) + "\n",
+  JSON.stringify({ ...filing, ticker, cik, company, sic, sicDescription, pressRelease, annualReport, proxyStatement }, null, 2) + "\n",
 );
 
 const today = new Date().toISOString().slice(0, 10);
