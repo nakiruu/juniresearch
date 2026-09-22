@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import {
-  usd, compactUSD, compactNum, mult, pct,
+  usd, compactUSD, compactNum, mult, pct, ordinal,
   formatCell, formatSnapshot, upside, upsideRangeText, computeScenarios, rewardRiskText,
 } from "@/lib/format";
 import { Report } from "@/lib/report.schema";
@@ -13,6 +13,19 @@ describe("scalar formatters", () => {
   it("formats small dollar amounts", () => {
     expect(usd(361.99)).toBe("$361.99");
     expect(usd(600, 0)).toBe("$600");
+  });
+
+  it("suffixes ordinals, including the 11-13 exception and rounding", () => {
+    expect(ordinal(1)).toBe("1st");
+    expect(ordinal(2)).toBe("2nd");
+    expect(ordinal(3)).toBe("3rd");
+    expect(ordinal(4)).toBe("4th");
+    expect(ordinal(11)).toBe("11th");
+    expect(ordinal(12)).toBe("12th");
+    expect(ordinal(13)).toBe("13th");
+    expect(ordinal(21)).toBe("21st");
+    expect(ordinal(63.4)).toBe("63rd");
+    expect(ordinal(100)).toBe("100th");
   });
 
   it("scales large dollar amounts and trims redundant zeros", () => {

@@ -22,3 +22,25 @@ describe("RatingBlock conviction row", () => {
     expect(screen.getByText(/Price Target: \$345\.00 – \$455\.00/)).toBeInTheDocument();
   });
 });
+
+describe("RatingBlock 5-level scale", () => {
+  it("renders an ordinary label as one word with no STRONG marker", () => {
+    render(<RatingBlock rating={base} current={368.29} upsideLabel="Upside:" />);
+    expect(screen.getByText("BUY")).toBeInTheDocument();
+    expect(screen.queryByText("STRONG")).toBeNull();
+  });
+
+  it("stacks the STRONG marker above the tone word for an extreme call", () => {
+    const strong: Report["rating"] = { label: "STRONG BUY", tone: "bull", targetLow: 345, targetHigh: 455 };
+    render(<RatingBlock rating={strong} current={300} upsideLabel="Upside:" />);
+    expect(screen.getByText("STRONG")).toBeInTheDocument();
+    expect(screen.getByText("BUY")).toBeInTheDocument();
+  });
+
+  it("splits STRONG SELL the same way on the bear tone", () => {
+    const strong: Report["rating"] = { label: "STRONG SELL", tone: "bear", targetLow: 90, targetHigh: 120 };
+    render(<RatingBlock rating={strong} current={200} upsideLabel="Upside:" />);
+    expect(screen.getByText("STRONG")).toBeInTheDocument();
+    expect(screen.getByText("SELL")).toBeInTheDocument();
+  });
+});

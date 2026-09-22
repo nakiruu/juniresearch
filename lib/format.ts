@@ -45,6 +45,14 @@ export function compactNum(x: number, opts: { approx?: boolean } = {}): string {
 /** Valuation multiple: 44.9 -> "44.9x". */
 export const mult = (x: number, dp = 1): string => `${num(x, dp)}x`;
 
+/** Ordinal of a whole number: 1 -> "1st", 2 -> "2nd", 63 -> "63rd", 11 -> "11th". */
+export function ordinal(x: number): string {
+  const n = Math.round(x);
+  const abs = Math.abs(n) % 100;
+  const suffix = abs >= 11 && abs <= 13 ? "th" : ["th", "st", "nd", "rd"][Math.abs(n) % 10] ?? "th";
+  return `${n}${suffix}`;
+}
+
 /** Percent from a ratio: 0.408 -> "40.8%", signed 0.216 -> "+21.6%". */
 export function pct(x: number, opts: { signed?: boolean; dp?: number } = {}): string {
   const dp = opts.dp ?? 1;
