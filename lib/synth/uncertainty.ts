@@ -23,16 +23,18 @@ export interface UncertaintyInputs {
   sector: Sector;
 }
 
-/** Herfindahl index of revenue concentration; null when there are no segments. */
+/**
+ * Herfindahl index of revenue concentration — only over TWO OR MORE reported segments.
+ * A single reported segment (HHI = 1) is a disclosure artifact, not diversification risk:
+ * a stable pure-play (Visa, Lilly) is not high-uncertainty for reporting one segment.
+ */
 export function segmentHHI(items: { share: number }[]): number | null {
-  if (!items.length) return null;
+  if (items.length < 2) return null;
   return items.reduce((a, s) => a + (Number.isFinite(s.share) ? s.share * s.share : 0), 0);
 }
 
 const CYCLICAL = (sic: number): boolean =>
   sic === 3674 || (sic >= 1000 && sic <= 1499) || (sic >= 1300 && sic <= 1399) || (sic >= 2900 && sic <= 2999) || sic === 3711 || sic === 4512;
-const DEFENSIVE = (sic: number): boolean =>
-  (sic >= 4900 && sic <= 4999) || sic === 2834 || (sic >= 2000 && sic <= 2111) || sic === 4813;
 
 export function uncertaintyTier(u: UncertaintyInputs): { tier: UncertaintyTier; points: number; drivers: string[] } {
   const drivers: string[] = [];
@@ -46,17 +48,18 @@ export function uncertaintyTier(u: UncertaintyInputs): { tier: UncertaintyTier; 
   const structural = u.sector !== "industrial";
   if (!structural && u.netDebtor && u.netDebtToEbitda != null && u.netDebtToEbitda > 3) add(2, "elevated leverage");
 
-  if (u.sic != null) {
-    if (CYCLICAL(u.sic)) add(2, "cyclical industry");
-    else if (!DEFENSIVE(u.sic)) add(1, "non-defensive industry");
-  }
+  // Cyclicality is a real source of outcome uncertainty; being a non-cyclical, non-defensive
+  // industrial is the baseline and scores nothing (charging it taxed every normal name).
+  if (u.sic != null && CYCLICAL(u.sic)) add(2, "cyclical industry");
 
   if (u.fiscalYears < 5) add(1, `short history (${u.fiscalYears} FY)`);
-  add(Math.min(3, u.abstentions), "layers abstained / thin data");
+  // Only thin-data abstentions count. A bank's / utility's abstentions are structural (our ROIC,
+  // DCF and composite do not fit them) — that is a tool limit, not the company's uncertainty.
+  if (!structural) add(Math.min(3, u.abstentions), "layers abstained / thin data");
 
-  if (!structural && u.segmentHHI != null) add(u.segmentHHI > 0.5 ? 2 : u.segmentHHI > 0.25 ? 1 : 0, "revenue concentration");
+  if (!structural && u.segmentHHI != null) add(u.segmentHHI > 0.6 ? 2 : u.segmentHHI > 0.4 ? 1 : 0, "revenue concentration");
 
-  const tier: UncertaintyTier = points <= 2 ? "low" : points <= 5 ? "medium" : points <= 8 ? "high" : "veryHigh";
+  const tier: UncertaintyTier = points <= 2 ? "low" : points <= 4 ? "medium" : points <= 7 ? "high" : "veryHigh";
   return { tier, points, drivers };
 }
 
