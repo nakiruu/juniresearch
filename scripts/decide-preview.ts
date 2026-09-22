@@ -14,6 +14,7 @@ import type { Conviction } from "../lib/synth/conviction";
 import { evaluateGates } from "../lib/synth/gates";
 import { moatRead, moatApplicable, costOfEquity } from "../lib/synth/moat";
 import { intrinsicRead, dcfApplicable } from "../lib/synth/intrinsic";
+import { compositeScore } from "../lib/synth/composite";
 import { decide, SAFE_DEFAULTS } from "../lib/synth/decide";
 
 const DATA = "data";
@@ -46,7 +47,8 @@ for (const file of readdirSync(DATA).filter((f) => f.endsWith(".json")).sort()) 
   const intrinsic = dcfApplicable(pack).ok
     ? intrinsicRead(pack, { r: costOfEquity(pack, { riskFree: 0.043, erp: 0.045 }), terminalGrowth: 0.03, horizon: 10 })
     : null;
-  const inputs = { conviction, gate, moat, intrinsic };
+  const composite = compositeScore(pack);
+  const inputs = { conviction, gate, moat, intrinsic, composite };
 
   const safe = decide(inputs, cfg, SAFE_DEFAULTS);
   const enforced = decide(inputs, cfg, { ...SAFE_DEFAULTS, enforceGate: true, requireCorroboration: true });
@@ -54,6 +56,7 @@ for (const file of readdirSync(DATA).filter((f) => f.endsWith(".json")).sort()) 
 
   const moatStr = moat ? `${moat.width}${moat.contingent ? "*" : ""}/${moat.trend[0]}` : "—";
   const mos = intrinsic ? `${intrinsic.marginOfSafety * 100 >= 0 ? "+" : ""}${(intrinsic.marginOfSafety * 100).toFixed(0)}%` : "—";
+  const comp = composite.percentile != null ? `${composite.percentile.toFixed(0)}pctl` : "—";
   rows.push([
     ticker,
     report.rating.label,
@@ -63,10 +66,11 @@ for (const file of readdirSync(DATA).filter((f) => f.endsWith(".json")).sort()) 
     gate.ceiling === "STRONG BUY" ? "—" : gate.ceiling,
     moatStr,
     mos,
+    comp,
   ]);
 }
 
-const head = ["TICKER", "PUBLISHED", "E/R", "CONVICTION", "IF ENFORCED", "GATE-CEIL", "MOAT", "MoS"];
+const head = ["TICKER", "PUBLISHED", "E/R", "CONVICTION", "IF ENFORCED", "GATE-CEIL", "MOAT", "MoS", "COMPOSITE"];
 const widths = head.map((h, i) => Math.max(h.length, ...rows.map((r) => r[i].length)));
 const fmt = (r: string[]) => r.map((c, i) => c.padEnd(widths[i])).join("  ");
 

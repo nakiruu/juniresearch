@@ -27,12 +27,13 @@ export interface DecisionPolicy {
 }
 export const SAFE_DEFAULTS: DecisionPolicy = { enforceGate: false, requireCorroboration: false, maxNotches: 1 };
 
-// Narrow structural shapes — the full GateResult / MoatResult / IntrinsicResult satisfy them.
+// Narrow structural shapes — the full GateResult / MoatResult / IntrinsicResult / CompositeResult satisfy them.
 export interface DecisionInputs {
   conviction: Conviction;
   gate: { ceiling: RatingLabel; flags: string[]; confidence: "high" | "medium" | "low" };
   moat: { width: MoatWidth; trend: MoatTrend; contingent: boolean } | null;
   intrinsic: { marginOfSafety: number } | null;
+  composite?: { percentile: number | null; confidence: "high" | "medium" | "low" } | null;
 }
 
 export interface Decision {
@@ -53,6 +54,7 @@ const sign = (x: number) => (x > 0 ? 1 : x < 0 ? -1 : 0);
 
 export function decide(inputs: DecisionInputs, cfg: DeskRating, policy: DecisionPolicy = SAFE_DEFAULTS): Decision {
   const { conviction: c, gate, moat, intrinsic } = inputs;
+  const composite = inputs.composite ?? null;
   const proposed = deriveLabel(c, cfg);
   let label = proposed;
   const reasons: string[] = [`E/R proposed ${proposed}`];
@@ -72,10 +74,11 @@ export function decide(inputs: DecisionInputs, cfg: DeskRating, policy: Decision
 
   // --- Corroboration (L3): an extreme must be backed by moat + intrinsic. Opt-in. ---
   if (policy.requireCorroboration && (label === "STRONG BUY" || label === "STRONG SELL")) {
+    const compTail = composite?.percentile;
     const agree =
       label === "STRONG BUY"
-        ? moat?.width === "WIDE" && moat.trend !== "ERODING" && (intrinsic ? intrinsic.marginOfSafety > 0 : true)
-        : gate.flags.includes("distress") && (intrinsic ? intrinsic.marginOfSafety < 0 : true);
+        ? moat?.width === "WIDE" && moat.trend !== "ERODING" && (intrinsic ? intrinsic.marginOfSafety > 0 : true) && (compTail == null || compTail >= 50)
+        : gate.flags.includes("distress") && (intrinsic ? intrinsic.marginOfSafety < 0 : true) && (compTail == null || compTail <= 50);
     if (!agree) {
       label = towardHold(label);
       reasons.push(`extreme not corroborated → ${label}`);
@@ -89,6 +92,7 @@ export function decide(inputs: DecisionInputs, cfg: DeskRating, policy: Decision
   if (intrinsic && sign(intrinsic.marginOfSafety) !== 0 && sign(intrinsic.marginOfSafety) !== sign(c.expectedUpside)) score -= 20;
   if (!intrinsic) score -= 10; // could not value intrinsically
   if (!moat) score -= 10;
+  if (!composite || composite.percentile == null) score -= 10; // no cross-sectional read
   if (gate.confidence === "low") score -= 10;
   if (moat?.contingent) score -= 5;
   score = Math.max(0, Math.min(100, score));

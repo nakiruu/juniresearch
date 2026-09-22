@@ -46,6 +46,20 @@ describe("policy knobs", () => {
   });
 });
 
+describe("composite (5.md) in the decision", () => {
+  it("blocks a STRONG BUY corroboration when the cross-sectional composite is in the bearish tail", () => {
+    const base = { conviction: STRONGBUYISH, gate: cleanGate, moat: { width: "WIDE" as const, trend: "WIDENING" as const, contingent: false }, intrinsic: { marginOfSafety: 0.15 } };
+    expect(decide({ ...base, composite: { percentile: 30, confidence: "high" as const } }, cfg, { ...SAFE_DEFAULTS, requireCorroboration: true }).label).toBe("BUY");
+    expect(decide({ ...base, composite: { percentile: 80, confidence: "high" as const } }, cfg, { ...SAFE_DEFAULTS, requireCorroboration: true }).label).toBe("STRONG BUY");
+  });
+  it("a present composite lifts conviction vs a missing one (completeness)", () => {
+    const base = { conviction: HOLDISH, gate: cleanGate, moat: { width: "WIDE" as const, trend: "STABLE" as const, contingent: false }, intrinsic: { marginOfSafety: 0.05 } };
+    const withComp = decide({ ...base, composite: { percentile: 60, confidence: "high" as const } }, cfg);
+    const without = decide(base, cfg);
+    expect(withComp.conviction).toBeGreaterThan(without.conviction);
+  });
+});
+
 describe("conviction score", () => {
   it("is lower when the fundamentals disagree with the rating than when they align", () => {
     const aligned = decide({ conviction: HOLDISH, gate: cleanGate, moat: { width: "WIDE", trend: "STABLE", contingent: false }, intrinsic: { marginOfSafety: 0.05 } }, cfg);

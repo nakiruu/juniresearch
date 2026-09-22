@@ -31,7 +31,7 @@ describe("mergeReport persists the fundamental gate when one is supplied", () =>
     expect(() => Report.parse(report)).not.toThrow();
   });
   it("persists the composed decision block when supplied", () => {
-    const decision = { conviction: 80, tier: "high" as const, proposed: "BUY" as const, reasons: ["E/R proposed BUY"], advisories: [], moat: { width: "WIDE" as const, trend: "STABLE" as const, contingent: false }, intrinsic: null };
+    const decision = { conviction: 80, tier: "high" as const, proposed: "BUY" as const, reasons: ["E/R proposed BUY"], advisories: [], moat: { width: "WIDE" as const, trend: "STABLE" as const, contingent: false }, intrinsic: null, composite: { percentile: 62, confidence: "high" as const } };
     const report = mergeReport(facts, judgment, desk, "2026-09-13", evaluateGates(pack), decision);
     expect(report.rating.decision).toEqual(decision);
     expect(() => Report.parse(report)).not.toThrow();

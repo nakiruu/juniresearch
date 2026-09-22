@@ -124,6 +124,9 @@ const decision = z.object({
   intrinsic: z
     .object({ marginOfSafety: z.number(), impliedGrowth: z.number(), achievableGrowth: z.number() })
     .nullable(),
+  composite: z
+    .object({ percentile: z.number().nullable(), confidence: z.enum(["high", "medium", "low"]) })
+    .nullable(),
 });
 
 const rating = z.object({

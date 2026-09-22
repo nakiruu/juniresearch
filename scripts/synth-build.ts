@@ -8,6 +8,7 @@ import { mergeReport } from "../lib/synth/merge";
 import { evaluateGates, gateAdvisory } from "../lib/synth/gates";
 import { moatRead, moatApplicable, costOfEquity } from "../lib/synth/moat";
 import { intrinsicRead, dcfApplicable } from "../lib/synth/intrinsic";
+import { compositeScore } from "../lib/synth/composite";
 import { decide, SAFE_DEFAULTS } from "../lib/synth/decide";
 import { computeConviction } from "../lib/synth/conviction";
 import { validateJudgment } from "../lib/synth/validate-judgment";
@@ -53,14 +54,16 @@ const gate = evaluateGates(pack);
 const moat = moatApplicable(pack).ok ? moatRead(pack) : null;
 const discountRate = costOfEquity(pack, { riskFree: 0.043, erp: 0.045 });
 const intrinsic = dcfApplicable(pack).ok ? intrinsicRead(pack, { r: discountRate, terminalGrowth: 0.03, horizon: 10 }) : null;
+const composite = compositeScore(pack);
 const conviction = computeConviction(judgment.sections.valuation.scenarios, pack.quote.price);
-const dec = decide({ conviction, gate, moat, intrinsic }, desk.rating, SAFE_DEFAULTS);
+const dec = decide({ conviction, gate, moat, intrinsic, composite }, desk.rating, SAFE_DEFAULTS);
 const decisionBlock = {
   conviction: dec.conviction, tier: dec.tier, proposed: dec.proposed, reasons: dec.reasons, advisories: dec.advisories,
   moat: moat ? { width: moat.width, trend: moat.trend, contingent: moat.contingent } : null,
   intrinsic: intrinsic
     ? { marginOfSafety: intrinsic.marginOfSafety, impliedGrowth: intrinsic.impliedGrowth, achievableGrowth: intrinsic.achievableGrowth }
     : null,
+  composite: { percentile: composite.percentile, confidence: composite.confidence },
 };
 const report = mergeReport(facts, judgment, desk, buildDate, gate, decisionBlock);
 const rp = Report.safeParse(report);
