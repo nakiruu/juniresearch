@@ -19,7 +19,8 @@
     "facts:diff": "node --env-file-if-exists=.env.local --import tsx scripts/facts-diff.ts",
     "synth:prompt": "node --env-file-if-exists=.env.local --import tsx scripts/synth-prompt.ts",
     "synth:build": "node --env-file-if-exists=.env.local --import tsx scripts/synth-build.ts",
-    "synth:review-brief": "node --env-file-if-exists=.env.local --import tsx scripts/synth-review-brief.ts"
+    "synth:review-brief": "node --env-file-if-exists=.env.local --import tsx scripts/synth-review-brief.ts",
+    "portfolio:build": "node --env-file-if-exists=.env.local --import tsx scripts/portfolio-build.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",
