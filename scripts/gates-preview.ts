@@ -53,8 +53,11 @@ for (const file of reportFiles) {
   const g = evaluateGates(facts);
   const published = report.rating.label;
   const gated = applyGateCeiling(published, g.ceiling);
-  const changed = gated !== published;
-  if (changed) capped++;
+  const wouldCap = gated !== published;
+  // Rare and severe: a ceiling hard-caps only at HIGH confidence (matches decide()'s enforceGate).
+  // A medium/low-confidence ceiling is advisory — it never moves the label.
+  const binds = wouldCap && g.confidence === "high";
+  if (binds) capped++;
 
   rows.push([
     ticker + (fp.multi ? "*" : ""),
@@ -65,7 +68,7 @@ for (const file of reportFiles) {
     g.distress.zone,
     g.accruals.flag ?? "—",
     g.ceiling === "STRONG BUY" ? "—" : g.ceiling,
-    changed ? `${published} → ${gated}` : "(no change)",
+    binds ? `${published} → ${gated}` : wouldCap ? `advisory (→ ${gated})` : "(no change)",
     g.confidence,
   ]);
 }
@@ -79,6 +82,7 @@ console.log(fmt(head));
 console.log(widths.map((w) => "-".repeat(w)).join("  "));
 for (const r of rows) console.log(fmt(r));
 console.log(
-  `\n${rows.length} reports scanned · ${capped} would be capped by a gate · ${rows.length - capped} unchanged.`,
+  `\n${rows.length} reports scanned · ${capped} would be capped by a gate (high-confidence only) · ${rows.length - capped} unchanged.`,
 );
+console.log("A ceiling binds only at HIGH confidence (rare and severe); medium/low ceilings are advisory.");
 console.log("* = ticker has more than one captured FactPack; newest used.\n");

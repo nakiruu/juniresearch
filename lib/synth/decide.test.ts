@@ -15,6 +15,7 @@ const HOLDISH: Conviction = { expectedUpside: 0.12, bearDownside: 0.32, rewardRi
 const STRONGBUYISH: Conviction = { expectedUpside: 0.25, bearDownside: 0.2, rewardRisk: 1.25 };
 
 const distressedGate = { ceiling: "SELL" as const, flags: ["distress"], confidence: "medium" as const };
+const distressedGateHigh = { ceiling: "SELL" as const, flags: ["distress"], confidence: "high" as const };
 const cleanGate = { ceiling: "STRONG BUY" as const, flags: [] as string[], confidence: "high" as const };
 
 describe("decide with SAFE_DEFAULTS degrades to the E/R rule", () => {
@@ -30,10 +31,19 @@ describe("decide with SAFE_DEFAULTS degrades to the E/R rule", () => {
 });
 
 describe("policy knobs", () => {
-  it("enforceGate applies the gate ceiling as a hard cap", () => {
-    const d = decide({ conviction: HOLDISH, gate: distressedGate, moat: null, intrinsic: null }, cfg, { ...SAFE_DEFAULTS, enforceGate: true });
+  it("enforceGate applies a HIGH-confidence gate ceiling as a hard cap", () => {
+    const d = decide({ conviction: HOLDISH, gate: distressedGateHigh, moat: null, intrinsic: null }, cfg, { ...SAFE_DEFAULTS, enforceGate: true });
     expect(d.label).toBe("SELL");
     expect(d.reasons.some((r) => /gate/i.test(r))).toBe(true);
+  });
+  it("does NOT hard-cap a medium-confidence gate even under enforceGate (rare and severe — 6.md veto-collapse guard)", () => {
+    // The CRWV case: a real but medium-confidence distress flag must not override a considered rating.
+    const d = decide({ conviction: HOLDISH, gate: distressedGate, moat: null, intrinsic: null }, cfg, { ...SAFE_DEFAULTS, enforceGate: true });
+    expect(d.label).toBe("HOLD"); // the ceiling stays advisory, not applied
+    expect(d.advisories.some((a) => /SELL/.test(a))).toBe(true);
+    // but the disagreement still costs conviction — a medium flag is a real concern, just not a veto
+    const clean = decide({ conviction: HOLDISH, gate: cleanGate, moat: null, intrinsic: null }, cfg, { ...SAFE_DEFAULTS, enforceGate: true });
+    expect(d.conviction).toBeLessThan(clean.conviction);
   });
   it("requireCorroboration caps an uncorroborated extreme one notch toward HOLD", () => {
     const inputs = { conviction: STRONGBUYISH, gate: cleanGate, moat: { width: "NONE" as const, trend: "STABLE" as const, contingent: false }, intrinsic: { marginOfSafety: -0.3 } };

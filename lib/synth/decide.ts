@@ -76,15 +76,19 @@ export function decide(inputs: DecisionInputs, cfg: DeskRating, policy: Decision
   if (mult !== 1 && proposed !== deriveLabel(c, cfg)) reasons.push(`uncertainty ${uTier} widened the band → ${proposed}`);
   const advisories: string[] = [];
 
-  // --- Gate (L0): a fundamental ceiling. Hard cap only under policy; else advisory. ---
+  // --- Gate (L0): a fundamental ceiling. Hard cap only under policy AND only at HIGH gate
+  // confidence — "rare and severe" (6.md veto-collapse guard). A medium/low-confidence flag is a
+  // real concern (it still costs conviction below) but must not override a considered rating, or a
+  // crude mechanical signal would overrule a better-informed human judgment (the CRWV case). ---
   const gateBinds = rank(gate.ceiling) < rank(label);
   if (gateBinds) {
     const why = gate.flags.length ? gate.flags.join(", ") : "gate";
-    if (policy.enforceGate) {
+    if (policy.enforceGate && gate.confidence === "high") {
       label = applyGateCeiling(label, gate.ceiling);
       reasons.push(`gate cap → ${label} (${why})`);
     } else {
-      advisories.push(`gate ceiling ${gate.ceiling} (${why}) — advisory, not applied`);
+      const note = policy.enforceGate ? `${gate.confidence}-confidence, not applied` : "advisory, not applied";
+      advisories.push(`gate ceiling ${gate.ceiling} (${why}) — ${note}`);
     }
   }
 
