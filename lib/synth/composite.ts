@@ -73,7 +73,9 @@ export function valueSleeve(f: CompositeFacts): { rank: number | null; validPeer
   const ranks: number[] = [];
   let minValid = Infinity;
   for (const m of metrics) {
-    const peerVals = m.peers.filter(num);
+    // Drop implausible peer yields (a multiple > ~500x, e.g. ASML's Yahoo EV/EBITDA of 2707x is a
+    // data error) so one bad datum cannot shift a rank in a 4-name cross-section (7.md I7).
+    const peerVals = m.peers.filter((v): v is number => num(v) && v > 0.002);
     if (!num(m.own) || peerVals.length < 3) continue; // need a real cross-section
     ranks.push(percentileRank(m.own, peerVals, true));
     minValid = Math.min(minValid, peerVals.length);
@@ -101,12 +103,17 @@ function qualitySleeve(f: CompositeFacts): number | null {
   return parts.length ? parts.reduce((a, b) => a + b, 0) / parts.length : null;
 }
 
-/** Growth: trailing YoY and forward revenue growth, mapped through a logistic centered on ~8%. */
+/**
+ * Growth: trailing YoY and forward revenue growth through a logistic centered on ~10%. The scale is
+ * wide (0.25) and the map is capped below 1.0 so hypergrowth names still separate — a steeper curve
+ * saturated every 30%+ grower to the same ~1.0 (7.md I6). Peer-relative growth (the proper fix)
+ * needs peer growth data the pack does not carry.
+ */
 function growthSleeve(f: CompositeFacts): number | null {
   const rev = series(f.statements.income, "revenue");
   const latestRev = [...rev].reverse().find(num);
   const fwd = num(f.estimates.nextFY.revenue) && num(latestRev) && latestRev !== 0 ? f.estimates.nextFY.revenue! / latestRev - 1 : null;
-  const gs = [f.latestQuarter.revenueYoY, fwd].filter(num).map((g) => logistic((g - 0.08) / 0.12));
+  const gs = [f.latestQuarter.revenueYoY, fwd].filter(num).map((g) => Math.min(0.95, logistic((g - 0.1) / 0.25)));
   return gs.length ? gs.reduce((a, b) => a + b, 0) / gs.length : null;
 }
 

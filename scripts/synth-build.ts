@@ -37,9 +37,13 @@ const errorsPath = join("data", "judgment", ticker, `${accession}.errors.txt`);
 const editorialPath = join("data", "judgment", ticker, `${accession}.editorial.json`);
 const judgmentText = read(judgmentPath);
 
+// Fundamental-scoring advisories (gate warning + decision summary), computed once the layers run.
+// They are surfaced even when the build fails validation, so the author sees the fundamental read
+// and the next --with-errors render carries it (7.md I8).
+let extraWarnings: string[] = [];
 const fail = (issues: (ValidationIssue | LintIssue)[], warnings: LintIssue[], stage: string): never => {
   const errorLines = issues.map(issueLine);
-  const warningLines = warnings.map(issueLine);
+  const warningLines = [...warnings.map(issueLine), ...extraWarnings];
   writeErrorsFile(errorsPath, errorLines, warningLines);
   console.error(`${stage}: ${issues.length} issue(s) — written to ${errorsPath}\n` + errorLines.map((l) => `  - ${l}`).join("\n"));
   if (warningLines.length) console.warn(`  ${warningLines.length} warning(s):\n` + warningLines.map((l) => `  - ${l}`).join("\n"));
@@ -77,6 +81,12 @@ const uncertainty = uncertaintyTier({
   sector: classifySector(pack),
 });
 const dec = decide({ conviction, gate, moat, intrinsic, composite, market: { targetDispersion, divergence }, uncertainty: { tier: uncertainty.tier }, published: judgment.rating.label }, desk.rating, SAFE_DEFAULTS);
+const gateWarning = gateAdvisory(judgment.rating.label, gate);
+extraWarnings = [
+  ...(gateWarning ? [gateWarning] : []),
+  `decision: composed ${dec.label} · conviction ${dec.conviction} ${dec.tier} · uncertainty ${uncertainty.tier}`,
+  ...dec.advisories.map((s) => `  ${s}`),
+];
 const decisionBlock = {
   conviction: dec.conviction, tier: dec.tier, proposed: dec.proposed, reasons: dec.reasons, advisories: dec.advisories,
   moat: moat ? { width: moat.width, trend: moat.trend, contingent: moat.contingent, bearFloor: moat.bearFloor } : null,
@@ -104,10 +114,9 @@ if (status !== "clean" && !skipReview)
   fail([{ field: editorialPath, message: editorialGateMessage(status, review ? openFindings(review).length : 0), value: status }], warnings, "editorial");
 if (status !== "clean") console.warn(`editorial review skipped: ${status}`);
 
-// The fundamental gate is advisory here: it never blocks the build, but a rating above its
-// ceiling is surfaced as a warning (and fed back into the next prompt via the errors file).
-const gateWarning = gateAdvisory(valid.rating.label, gate);
-const warningLines = [...warnings.map(issueLine), ...(gateWarning ? [gateWarning] : [])];
+// The fundamental gate is advisory here: it never blocks the build, but a rating above its ceiling
+// (and the composed decision) is surfaced and fed back into the next prompt via the errors file.
+const warningLines = [...warnings.map(issueLine), ...extraWarnings];
 
 const out = join("data", `${ticker.toLowerCase()}.json`);
 writeFileSync(out, JSON.stringify(valid, null, 2) + "\n");

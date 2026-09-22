@@ -22,6 +22,11 @@ export function validateFactPack(p: FactPack): ValidationIssue[] {
     issues.push({ field: "history", message: "must be ≥ 20 points, strictly ascending, ending on or before capturedAt", value: { length: h.length, ascending, last: h.at(-1)?.date } });
   if (p.latestQuarter.periodEnd < p.filing.periodEnd)
     issues.push({ field: "latestQuarter.periodEnd", message: `must be on or after filing.periodEnd (${p.filing.periodEnd}) — an older quarter means stale vendor data`, value: p.latestQuarter.periodEnd });
+  // Per-fiscal-year enrichment arrays must align to the fiscal-year axis (7.md I10), or the moat /
+  // intrinsic engines index them by the wrong year.
+  for (const [key, arr] of [["goodwill", p.goodwill], ["sbc", p.sbc]] as const)
+    if (arr != null && arr.length !== n)
+      issues.push({ field: key, message: `must have one value per fiscal year (${n})`, value: arr.length });
   return issues;
 }
 
