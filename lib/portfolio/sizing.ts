@@ -22,3 +22,23 @@ export function applyConstraints(items: Weighted[], config: PortfolioConfig): We
   // 3. dust floor
   return out.map((w) => (w.weight < config.wMin ? { ...w, weight: 0 } : w));
 }
+
+export function finalizeCash(items: Weighted[], config: PortfolioConfig): { holdings: Weighted[]; cash: number } {
+  const held = items.filter((w) => w.weight > 0);
+  const invested = held.reduce((a, w) => a + w.weight, 0);
+  const scale = (target: number) => held.map((w) => ({ ...w, weight: w.weight * (target / invested) }));
+
+  // Over-invested: scale down to (1 - cashFloor), no leverage.
+  if (invested > 1 - config.cashFloor) {
+    return { holdings: scale(1 - config.cashFloor), cash: config.cashFloor };
+  }
+  let holdings = held;
+  let cash = 1 - invested;
+  // Cash ceiling binds only with enough names — never a stealth market-timing bet.
+  if (cash > config.cashCeiling && held.length >= config.minNamesForCeiling) {
+    const target = 1 - config.cashCeiling;
+    holdings = scale(target);
+    cash = config.cashCeiling;
+  }
+  return { holdings, cash };
+}
