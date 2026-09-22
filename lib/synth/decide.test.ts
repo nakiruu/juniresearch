@@ -46,6 +46,22 @@ describe("policy knobs", () => {
   });
 });
 
+describe("uncertainty bands (11.md §3)", () => {
+  // E 0.12, D 0.20, R 0.60 -> BUY at Low; a High tier widens the BUY bar (0.10 -> 0.18) -> HOLD.
+  const MARGINAL_BUY: Conviction = { expectedUpside: 0.12, bearDownside: 0.2, rewardRisk: 0.6 };
+  it("is off under SAFE_DEFAULTS (the tier does not move the label)", () => {
+    expect(decide({ conviction: MARGINAL_BUY, gate: cleanGate, moat: null, intrinsic: null, uncertainty: { tier: "high" } }, cfg).label).toBe("BUY");
+  });
+  it("widens the bullish band under a High tier when applyUncertaintyBands is on", () => {
+    const d = decide({ conviction: MARGINAL_BUY, gate: cleanGate, moat: null, intrinsic: null, uncertainty: { tier: "high" } }, cfg, { ...SAFE_DEFAULTS, applyUncertaintyBands: true });
+    expect(d.label).toBe("HOLD");
+    expect(d.reasons.some((r) => /uncertainty/i.test(r))).toBe(true);
+  });
+  it("leaves the label unchanged at a Low tier even with the knob on", () => {
+    expect(decide({ conviction: MARGINAL_BUY, gate: cleanGate, moat: null, intrinsic: null, uncertainty: { tier: "low" } }, cfg, { ...SAFE_DEFAULTS, applyUncertaintyBands: true }).label).toBe("BUY");
+  });
+});
+
 describe("moat bear-depth floor (3.md Lever 1)", () => {
   // E 0.12, D 0.20, R 0.60 -> BUY. A thin moat forces a deeper bear -> lower R -> HOLD.
   const BUYISH: Conviction = { expectedUpside: 0.12, bearDownside: 0.2, rewardRisk: 0.6 };

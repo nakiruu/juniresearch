@@ -12,6 +12,8 @@ import { compositeScore } from "../lib/synth/composite";
 import { decide, SAFE_DEFAULTS } from "../lib/synth/decide";
 import { computeConviction } from "../lib/synth/conviction";
 import { MACRO } from "../lib/synth/macro";
+import { classifySector } from "../lib/synth/gates";
+import { uncertaintyTier, segmentHHI } from "../lib/synth/uncertainty";
 import { validateJudgment } from "../lib/synth/validate-judgment";
 import { Report } from "../lib/report.schema";
 import { validateReport, type ValidationIssue } from "../lib/validate";
@@ -60,7 +62,19 @@ const conviction = computeConviction(judgment.sections.valuation.scenarios, pack
 const a = pack.analysts;
 const fin = (x: number | null | undefined): x is number => x != null && Number.isFinite(x);
 const targetDispersion = fin(a.highTarget) && fin(a.lowTarget) && fin(a.medianTarget) && a.medianTarget > 0 ? (a.highTarget - a.lowTarget) / a.medianTarget : null;
-const dec = decide({ conviction, gate, moat, intrinsic, composite, market: { targetDispersion } }, desk.rating, SAFE_DEFAULTS);
+const netDebtRow = pack.statements.balance.find((r) => r.key === "netDebt")?.values;
+const abstentions = (moat ? 0 : 1) + (intrinsic ? 0 : 1) + (composite.percentile == null ? 1 : 0);
+const uncertainty = uncertaintyTier({
+  dispersion: targetDispersion,
+  sic: pack.sic ?? null,
+  netDebtToEbitda: pack.ttm.netDebtToEbitda,
+  netDebtor: fin(netDebtRow?.at(-1)) && (netDebtRow!.at(-1) as number) > 0,
+  fiscalYears: pack.statements.fiscalYears.length,
+  abstentions,
+  segmentHHI: segmentHHI(pack.segments.items),
+  sector: classifySector(pack),
+});
+const dec = decide({ conviction, gate, moat, intrinsic, composite, market: { targetDispersion }, uncertainty: { tier: uncertainty.tier } }, desk.rating, SAFE_DEFAULTS);
 const decisionBlock = {
   conviction: dec.conviction, tier: dec.tier, proposed: dec.proposed, reasons: dec.reasons, advisories: dec.advisories,
   moat: moat ? { width: moat.width, trend: moat.trend, contingent: moat.contingent, bearFloor: moat.bearFloor } : null,
@@ -68,6 +82,7 @@ const decisionBlock = {
     ? { marginOfSafety: intrinsic.marginOfSafety, impliedGrowth: intrinsic.impliedGrowth, achievableGrowth: intrinsic.achievableGrowth }
     : null,
   composite: { percentile: composite.percentile, confidence: composite.confidence },
+  uncertainty: { tier: uncertainty.tier, points: uncertainty.points, drivers: uncertainty.drivers },
 };
 const report = mergeReport(facts, judgment, desk, buildDate, gate, decisionBlock);
 const rp = Report.safeParse(report);

@@ -19,14 +19,16 @@ import type { DeskRating } from "./desk.schema";
 import { deriveLabel, type Conviction } from "./conviction";
 import { applyGateCeiling } from "./gates";
 import type { MoatWidth, MoatTrend } from "./moat";
+import { uncertaintyMultiplier, type UncertaintyTier } from "./uncertainty";
 
 export interface DecisionPolicy {
   enforceGate: boolean; // the gate ceiling hard-caps the label
   requireCorroboration: boolean; // an extreme (STRONG BUY/SELL) needs the layers to agree
   applyMoatFloor: boolean; // the moat's minimum bear depth deepens D before deriveLabel (3.md Lever 1)
+  applyUncertaintyBands: boolean; // the uncertainty tier widens the bullish minimum-upside band (11.md §3)
   maxNotches: 1 | 2; // most notches disagreement may pull toward HOLD
 }
-export const SAFE_DEFAULTS: DecisionPolicy = { enforceGate: false, requireCorroboration: false, applyMoatFloor: false, maxNotches: 1 };
+export const SAFE_DEFAULTS: DecisionPolicy = { enforceGate: false, requireCorroboration: false, applyMoatFloor: false, applyUncertaintyBands: false, maxNotches: 1 };
 
 // Narrow structural shapes — the full GateResult / MoatResult / IntrinsicResult / CompositeResult satisfy them.
 export interface DecisionInputs {
@@ -36,6 +38,7 @@ export interface DecisionInputs {
   intrinsic: { marginOfSafety: number } | null;
   composite?: { percentile: number | null; confidence: "high" | "medium" | "low" } | null;
   market?: { targetDispersion: number | null } | null; // (highTarget − lowTarget) / medianTarget
+  uncertainty?: { tier: UncertaintyTier } | null;
 }
 
 export interface Decision {
@@ -57,9 +60,19 @@ const sign = (x: number) => (x > 0 ? 1 : x < 0 ? -1 : 0);
 export function decide(inputs: DecisionInputs, cfg: DeskRating, policy: DecisionPolicy = SAFE_DEFAULTS): Decision {
   const { conviction: c, gate, moat, intrinsic } = inputs;
   const composite = inputs.composite ?? null;
-  const proposed = deriveLabel(c, cfg);
+
+  // Uncertainty widens the minimum upside a bullish label demands (11.md §3). Opt-in; the widened
+  // thresholds (`eff`) are then used for every label derivation below so the whole decision is
+  // consistent. One-way: a higher bar can only lower the label.
+  const uTier = inputs.uncertainty?.tier ?? null;
+  const mult = policy.applyUncertaintyBands && uTier ? uncertaintyMultiplier(uTier) : 1;
+  const eff: DeskRating =
+    mult === 1 ? cfg : { ...cfg, buy: { ...cfg.buy, minUpside: cfg.buy.minUpside * mult }, strongBuy: { ...cfg.strongBuy, minUpside: cfg.strongBuy.minUpside * mult } };
+
+  const proposed = deriveLabel(c, eff);
   let label = proposed;
   const reasons: string[] = [`E/R proposed ${proposed}`];
+  if (mult !== 1 && proposed !== deriveLabel(c, cfg)) reasons.push(`uncertainty ${uTier} widened the band → ${proposed}`);
   const advisories: string[] = [];
 
   // --- Gate (L0): a fundamental ceiling. Hard cap only under policy; else advisory. ---
@@ -79,7 +92,7 @@ export function decide(inputs: DecisionInputs, cfg: DeskRating, policy: Decision
   if (policy.applyMoatFloor && moat?.bearFloor != null && moat.bearFloor > c.bearDownside) {
     const dFloored = moat.bearFloor;
     const rFloored = dFloored > 0 ? c.expectedUpside / dFloored : null;
-    const flooredLabel = deriveLabel({ ...c, bearDownside: dFloored, rewardRisk: rFloored }, cfg);
+    const flooredLabel = deriveLabel({ ...c, bearDownside: dFloored, rewardRisk: rFloored }, eff);
     if (rank(flooredLabel) < rank(label)) {
       label = flooredLabel;
       reasons.push(`moat bear floor ${(dFloored * 100).toFixed(0)}% (${moat.width}/${moat.trend}) → ${label}`);

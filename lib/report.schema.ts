@@ -128,6 +128,9 @@ const decision = z.object({
   composite: z
     .object({ percentile: z.number().nullable(), confidence: z.enum(["high", "medium", "low"]) })
     .nullable(),
+  uncertainty: z
+    .object({ tier: z.enum(["low", "medium", "high", "veryHigh"]), points: z.number().int(), drivers: z.array(z.string()) })
+    .nullable(),
 });
 
 const rating = z.object({

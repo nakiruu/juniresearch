@@ -11,12 +11,13 @@ import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { Desk } from "../lib/synth/desk.schema";
 import type { Conviction } from "../lib/synth/conviction";
-import { evaluateGates } from "../lib/synth/gates";
+import { evaluateGates, classifySector } from "../lib/synth/gates";
 import { moatRead, moatApplicable, costOfEquity } from "../lib/synth/moat";
 import { MACRO } from "../lib/synth/macro";
 import { intrinsicRead, dcfApplicable } from "../lib/synth/intrinsic";
 import { compositeScore } from "../lib/synth/composite";
 import { decide, SAFE_DEFAULTS } from "../lib/synth/decide";
+import { uncertaintyTier, segmentHHI } from "../lib/synth/uncertainty";
 
 const DATA = "data";
 const cfg = Desk.parse(JSON.parse(readFileSync("data/desk/desk.json", "utf8"))).rating;
@@ -51,10 +52,18 @@ for (const file of readdirSync(DATA).filter((f) => f.endsWith(".json")).sort()) 
   const composite = compositeScore(pack);
   const a = pack.analysts;
   const disp = a && a.highTarget != null && a.lowTarget != null && a.medianTarget ? (a.highTarget - a.lowTarget) / a.medianTarget : null;
-  const inputs = { conviction, gate, moat, intrinsic, composite, market: { targetDispersion: disp } };
+  const netDebtRow = pack.statements.balance.find((r: { key: string }) => r.key === "netDebt")?.values;
+  const u = uncertaintyTier({
+    dispersion: disp, sic: pack.sic ?? null, netDebtToEbitda: pack.ttm.netDebtToEbitda,
+    netDebtor: typeof netDebtRow?.at(-1) === "number" && netDebtRow.at(-1) > 0,
+    fiscalYears: pack.statements.fiscalYears.length,
+    abstentions: (moat ? 0 : 1) + (intrinsic ? 0 : 1) + (composite.percentile == null ? 1 : 0),
+    segmentHHI: segmentHHI(pack.segments.items), sector: classifySector(pack),
+  });
+  const inputs = { conviction, gate, moat, intrinsic, composite, market: { targetDispersion: disp }, uncertainty: { tier: u.tier } };
 
   const safe = decide(inputs, cfg, SAFE_DEFAULTS);
-  const enforced = decide(inputs, cfg, { ...SAFE_DEFAULTS, enforceGate: true, requireCorroboration: true, applyMoatFloor: true });
+  const enforced = decide(inputs, cfg, { ...SAFE_DEFAULTS, enforceGate: true, requireCorroboration: true, applyMoatFloor: true, applyUncertaintyBands: true });
   if (enforced.label !== safe.label) enforceChanges++;
 
   const moatStr = moat ? `${moat.width}${moat.contingent ? "*" : ""}/${moat.trend[0]}` : "—";
@@ -67,13 +76,14 @@ for (const file of readdirSync(DATA).filter((f) => f.endsWith(".json")).sort()) 
     `${safe.conviction} ${safe.tier}`,
     enforced.label === safe.label ? "(same)" : `${safe.label} → ${enforced.label}`,
     gate.ceiling === "STRONG BUY" ? "—" : gate.ceiling,
+    u.tier,
     moatStr,
     mos,
     comp,
   ]);
 }
 
-const head = ["TICKER", "PUBLISHED", "E/R", "CONVICTION", "IF ENFORCED", "GATE-CEIL", "MOAT", "MoS", "COMPOSITE"];
+const head = ["TICKER", "PUBLISHED", "E/R", "CONVICTION", "IF ENFORCED", "GATE-CEIL", "UNCERT", "MOAT", "MoS", "COMPOSITE"];
 const widths = head.map((h, i) => Math.max(h.length, ...rows.map((r) => r[i].length)));
 const fmt = (r: string[]) => r.map((c, i) => c.padEnd(widths[i])).join("  ");
 
@@ -84,5 +94,5 @@ for (const r of rows) console.log(fmt(r));
 console.log(
   `\nUnder SAFE DEFAULTS the label always equals the E/R rule (${rows.length} unchanged).`,
 );
-console.log(`If gate-enforcement + corroboration were turned ON, ${enforceChanges} label(s) would change.`);
-console.log("MOAT: WIDE/NARROW/NONE (*=contingent) + trend initial (W/S/E). MoS from the reverse DCF.\n");
+console.log(`Under FULL enforcement (gates + corroboration + moat floor + uncertainty bands), ${enforceChanges} label(s) would change.`);
+console.log("UNCERT = uncertainty tier (low/medium/high/veryHigh). MOAT: WIDE/NARROW/NONE (*=contingent) + trend initial. MoS from the reverse DCF.\n");
