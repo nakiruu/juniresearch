@@ -1,5 +1,6 @@
 import { Markdown } from "../Markdown";
 import { RatingBlock } from "../RatingBlock";
+import { FundamentalScorecard } from "../FundamentalScorecard";
 import { Section } from "../Section";
 import { stepFor } from "../report-steps";
 import type { Report } from "@/lib/report.schema";
@@ -16,6 +17,7 @@ export function Section8({
   return (
     <Section title={STEP.title} id={STEP.id}>
       <RatingBlock rating={rating} current={current} upsideLabel="Upside:" />
+      <FundamentalScorecard rating={rating} />
       {data.body.map((p, i) => <Markdown key={i} text={p} />)}
     </Section>
   );
