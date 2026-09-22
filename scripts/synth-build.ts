@@ -56,7 +56,10 @@ const discountRate = costOfEquity(pack, { riskFree: 0.043, erp: 0.045 });
 const intrinsic = dcfApplicable(pack).ok ? intrinsicRead(pack, { r: discountRate, terminalGrowth: 0.03, horizon: 10 }) : null;
 const composite = compositeScore(pack);
 const conviction = computeConviction(judgment.sections.valuation.scenarios, pack.quote.price);
-const dec = decide({ conviction, gate, moat, intrinsic, composite }, desk.rating, SAFE_DEFAULTS);
+const a = pack.analysts;
+const fin = (x: number | null | undefined): x is number => x != null && Number.isFinite(x);
+const targetDispersion = fin(a.highTarget) && fin(a.lowTarget) && fin(a.medianTarget) && a.medianTarget > 0 ? (a.highTarget - a.lowTarget) / a.medianTarget : null;
+const dec = decide({ conviction, gate, moat, intrinsic, composite, market: { targetDispersion } }, desk.rating, SAFE_DEFAULTS);
 const decisionBlock = {
   conviction: dec.conviction, tier: dec.tier, proposed: dec.proposed, reasons: dec.reasons, advisories: dec.advisories,
   moat: moat ? { width: moat.width, trend: moat.trend, contingent: moat.contingent, bearFloor: moat.bearFloor } : null,

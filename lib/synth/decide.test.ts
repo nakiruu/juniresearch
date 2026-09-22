@@ -78,6 +78,20 @@ describe("composite (5.md) in the decision", () => {
   });
 });
 
+describe("conviction: analyst-target dispersion and the HOLD synthesis (I13, I4)", () => {
+  const base = { conviction: HOLDISH, gate: cleanGate, moat: { width: "WIDE" as const, trend: "STABLE" as const, contingent: false }, intrinsic: { marginOfSafety: 0.05 } };
+  it("penalises wide analyst-target dispersion (6.md 4.1)", () => {
+    const tight = decide({ ...base, market: { targetDispersion: 0.1 } }, cfg);
+    const wide = decide({ ...base, market: { targetDispersion: 1.58 } }, cfg);
+    expect(wide.conviction).toBeLessThan(tight.conviction);
+  });
+  it("does not apply the MoS/E-sign penalty to a HOLD (a HOLD is the synthesis of that disagreement)", () => {
+    const disagree = decide({ conviction: HOLDISH, gate: cleanGate, moat: null, intrinsic: { marginOfSafety: -0.6 } }, cfg);
+    const agree = decide({ conviction: HOLDISH, gate: cleanGate, moat: null, intrinsic: { marginOfSafety: 0.1 } }, cfg);
+    expect(disagree.conviction).toBe(agree.conviction);
+  });
+});
+
 describe("conviction score", () => {
   it("is lower when the fundamentals disagree with the rating than when they align", () => {
     const aligned = decide({ conviction: HOLDISH, gate: cleanGate, moat: { width: "WIDE", trend: "STABLE", contingent: false }, intrinsic: { marginOfSafety: 0.05 } }, cfg);

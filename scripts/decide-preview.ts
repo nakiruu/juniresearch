@@ -48,7 +48,9 @@ for (const file of readdirSync(DATA).filter((f) => f.endsWith(".json")).sort()) 
     ? intrinsicRead(pack, { r: costOfEquity(pack, { riskFree: 0.043, erp: 0.045 }), terminalGrowth: 0.03, horizon: 10 })
     : null;
   const composite = compositeScore(pack);
-  const inputs = { conviction, gate, moat, intrinsic, composite };
+  const a = pack.analysts;
+  const disp = a && a.highTarget != null && a.lowTarget != null && a.medianTarget ? (a.highTarget - a.lowTarget) / a.medianTarget : null;
+  const inputs = { conviction, gate, moat, intrinsic, composite, market: { targetDispersion: disp } };
 
   const safe = decide(inputs, cfg, SAFE_DEFAULTS);
   const enforced = decide(inputs, cfg, { ...SAFE_DEFAULTS, enforceGate: true, requireCorroboration: true, applyMoatFloor: true });

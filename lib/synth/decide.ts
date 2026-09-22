@@ -35,6 +35,7 @@ export interface DecisionInputs {
   moat: { width: MoatWidth; trend: MoatTrend; contingent: boolean; bearFloor?: number } | null;
   intrinsic: { marginOfSafety: number } | null;
   composite?: { percentile: number | null; confidence: "high" | "medium" | "low" } | null;
+  market?: { targetDispersion: number | null } | null; // (highTarget − lowTarget) / medianTarget
 }
 
 export interface Decision {
@@ -102,7 +103,12 @@ export function decide(inputs: DecisionInputs, cfg: DeskRating, policy: Decision
   let score = 100;
   if (gateBinds) score -= 25; // the fundamentals disagree with the rating
   if (moat && moat.trend === "ERODING" && isBullish(label)) score -= 15;
-  if (intrinsic && sign(intrinsic.marginOfSafety) !== 0 && sign(intrinsic.marginOfSafety) !== sign(c.expectedUpside)) score -= 20;
+  // A value/expected-return disagreement only counts against a bullish call — a HOLD is often the
+  // correct synthesis of exactly that disagreement, so it is not penalised for it (7.md I4).
+  if (isBullish(label) && intrinsic && sign(intrinsic.marginOfSafety) !== 0 && sign(intrinsic.marginOfSafety) !== sign(c.expectedUpside)) score -= 20;
+  // Contested name: a wide analyst-target spread is a market proxy for uncertainty (6.md 4.1).
+  const disp = inputs.market?.targetDispersion;
+  if (disp != null) score -= Math.round(Math.min(1, Math.max(0, disp)) * 15);
   if (!intrinsic) score -= 10; // could not value intrinsically
   if (!moat) score -= 10;
   if (!composite || composite.percentile == null) score -= 10; // no cross-sectional read

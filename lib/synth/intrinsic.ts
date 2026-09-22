@@ -106,9 +106,12 @@ export function ownerEarningsBase(f: IntrinsicFacts): number {
 
 /**
  * A disciplined achievable growth: the five-year FCF CAGR (revenue CAGR as fallback),
- * clamped to [-10%, 35%]. It is NOT floored at a positive number — a structurally
+ * clamped to [-10%, +20%]. It is NOT floored at a positive number — a structurally
  * declining business must value at a decline, not a manufactured +3% (a lumpy FCF
  * endpoint is only kept from overstating a decline below the steadier revenue trend).
+ * The +20% ceiling moderates a hypergrowth CAGR to a decade-sustainable rate (4.md §5):
+ * 35%+ compounded flat for a 10-year explicit stage inflates fair value absurdly, and
+ * the market-implied rate is usually the more realistic number for such a name.
  */
 export function achievableGrowth(f: IntrinsicFacts): number {
   const cagr = (vals: (number | null)[] | undefined): number | null => {
@@ -122,7 +125,7 @@ export function achievableGrowth(f: IntrinsicFacts): number {
   const revG = cagr(series(f.statements.income, "revenue"));
   let g = fcfG ?? revG ?? 0;
   if (fcfG != null && revG != null && fcfG < 0 && revG < 0) g = Math.max(fcfG, revG); // don't let a lumpy FCF endpoint overstate the decline
-  return Math.min(0.35, Math.max(-0.1, g));
+  return Math.min(0.2, Math.max(-0.1, g)); // moderated to a decade-sustainable ceiling (4.md §5)
 }
 
 export function intrinsicRead(f: IntrinsicFacts, cfg: IntrinsicConfig): IntrinsicResult {
