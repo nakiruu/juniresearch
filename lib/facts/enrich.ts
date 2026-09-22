@@ -52,15 +52,23 @@ export function parsePeerMultiples(result: QuoteSummaryResult | undefined): Peer
 
 // --- network fetchers (fetch injectable for tests) --------------------------
 
-/** SEC companyconcept us-gaap/Goodwill → a per-fiscal-year series aligned to `fiscalYears`. */
-export async function fetchGoodwillSeries(cik: number, fiscalYears: string[], contact: string, fetchImpl: FetchLike = fetch): Promise<(number | null)[]> {
-  const url = `https://data.sec.gov/api/xbrl/companyconcept/CIK${String(cik).padStart(10, "0")}/us-gaap/Goodwill.json`;
+/** SEC companyconcept for a us-gaap concept → a per-fiscal-year annual series aligned to `fiscalYears`. */
+async function fetchConceptSeries(cik: number, concept: string, fiscalYears: string[], contact: string, fetchImpl: FetchLike): Promise<(number | null)[]> {
+  const url = `https://data.sec.gov/api/xbrl/companyconcept/CIK${String(cik).padStart(10, "0")}/us-gaap/${concept}.json`;
   const res = await fetchImpl(url, { headers: { "User-Agent": contact } });
   if (!res.ok) return fiscalYears.map(() => null);
   const body = (await res.json()) as { units?: Record<string, GoodwillEntry[]> };
   const usd = Array.isArray(body.units?.USD) ? body.units!.USD : [];
   return alignGoodwill(usd, fiscalYears);
 }
+
+/** SEC companyconcept us-gaap/Goodwill → a per-fiscal-year series aligned to `fiscalYears`. */
+export const fetchGoodwillSeries = (cik: number, fiscalYears: string[], contact: string, fetchImpl: FetchLike = fetch) =>
+  fetchConceptSeries(cik, "Goodwill", fiscalYears, contact, fetchImpl);
+
+/** SEC companyconcept us-gaap/ShareBasedCompensation → a per-fiscal-year series aligned to `fiscalYears`. */
+export const fetchSbcSeries = (cik: number, fiscalYears: string[], contact: string, fetchImpl: FetchLike = fetch) =>
+  fetchConceptSeries(cik, "ShareBasedCompensation", fiscalYears, contact, fetchImpl);
 
 /** Yahoo quoteSummary (summaryDetail + defaultKeyStatistics) for each ticker, via the crumb flow. */
 export async function fetchPeerMultiples(tickers: string[], fetchImpl: FetchLike = fetch): Promise<Record<string, PeerMultiples>> {
@@ -95,12 +103,16 @@ interface EnrichablePack {
   statements: { fiscalYears: string[] };
   peers?: { ticker: string; pe: number | null; ps: number | null; evToEbitda: number | null }[];
   goodwill?: (number | null)[];
+  sbc?: (number | null)[];
 }
 
-/** Stamp goodwill + peer multiples onto a freshly-built pack (mutates and returns it). */
+/** Stamp goodwill, SBC + peer multiples onto a freshly-built pack (mutates and returns it). */
 export async function enrichPack<T extends EnrichablePack>(pack: T, contact: string, fetchImpl: FetchLike = fetch): Promise<T> {
   const goodwill = await fetchGoodwillSeries(pack.cik, pack.statements.fiscalYears, contact, fetchImpl);
   if (goodwill.some((g) => g != null)) pack.goodwill = goodwill;
+
+  const sbc = await fetchSbcSeries(pack.cik, pack.statements.fiscalYears, contact, fetchImpl);
+  if (sbc.some((s) => s != null)) pack.sbc = sbc;
 
   if (pack.peers?.length) {
     const multiples = await fetchPeerMultiples(pack.peers.map((p) => p.ticker), fetchImpl);

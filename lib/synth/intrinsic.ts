@@ -10,9 +10,9 @@
  * grounds E instead of leaving it to three free-hand analyst numbers.
  * See docs/scoreconcepts/4.md.
  *
- * Prototype scope: the discount rate is exogenous (no WACC field yet — see 3.md);
- * owner earnings uses trailing FCF (fcfYield × marketCap) because SBC is not a
- * separate FactPack row. Both are flagged limitations in 4.md §11.
+ * Prototype scope: the discount rate is exogenous (a cost of equity from moat.ts).
+ * Owner earnings is trailing FCF (fcfYield × marketCap) charged for the latest
+ * stock-based compensation when the pack carries it (8.md; a no-op otherwise).
  */
 import type { ScenarioIn } from "../format";
 import { classifySector } from "./gates";
@@ -28,6 +28,7 @@ export interface IntrinsicFacts {
   ticker?: string;
   sector?: string;
   sic?: number | null;
+  sbc?: (number | null)[]; // stock-based compensation per fiscal year, aligned to statements.fiscalYears
   quote: { price: number; marketCap: number; sharesOutstanding: number };
   ttm: { fcfYield: number | null };
   statements: { fiscalYears: string[]; income: Row[]; cashflow: Row[] };
@@ -96,13 +97,23 @@ export function impliedGrowth(oe0: number, equityValue: number, r: number, gt: n
   return (lo + hi) / 2;
 }
 
-/** Trailing owner earnings — fcfYield × marketCap, falling back to the latest FCF statement row. */
+/**
+ * Trailing owner earnings — fcfYield × marketCap (fallback: the latest FCF row), then charged for
+ * the latest stock-based compensation when it is known. GAAP adds SBC back to cash flow because it
+ * is non-cash, but it dilutes owners as surely as a buyback, so a true owner-earnings figure expenses
+ * it (Damodaran; docs/scoreconcepts/8.md). A no-op when SBC is absent.
+ */
 export function ownerEarningsBase(f: IntrinsicFacts): number {
   const y = f.ttm.fcfYield;
-  if (num(y) && num(f.quote.marketCap)) return y * f.quote.marketCap;
-  const fcf = series(f.statements.cashflow, "freeCashFlow");
-  const latest = fcf?.[fcf.length - 1];
-  return num(latest) ? latest : 0;
+  let oe: number;
+  if (num(y) && num(f.quote.marketCap)) oe = y * f.quote.marketCap;
+  else {
+    const fcf = series(f.statements.cashflow, "freeCashFlow");
+    const latest = fcf?.[fcf.length - 1];
+    oe = num(latest) ? latest : 0;
+  }
+  const sbcLatest = f.sbc?.[f.sbc.length - 1];
+  return num(sbcLatest) ? oe - sbcLatest : oe;
 }
 
 /**
@@ -135,7 +146,8 @@ export function intrinsicRead(f: IntrinsicFacts, cfg: IntrinsicConfig): Intrinsi
   const equity = f.quote.marketCap;
   const shares = f.quote.sharesOutstanding;
   const price = f.quote.price;
-  const flags: string[] = ["trailing-FCF owner-earnings proxy (SBC not isolated)", "exogenous discount rate"];
+  const sbcLatest = f.sbc?.[f.sbc.length - 1];
+  const flags: string[] = [num(sbcLatest) ? "SBC charged to owner earnings" : "trailing-FCF owner-earnings proxy (SBC not isolated)", "exogenous discount rate"];
 
   const gImpl = impliedGrowth(oe0, equity, r, gt, N);
   const gAch = achievableGrowth(f);

@@ -99,8 +99,13 @@ describe("dcfEquityValue / impliedGrowth round-trip", () => {
 });
 
 describe("ownerEarningsBase", () => {
-  it("derives trailing FCF from fcfYield x marketCap (~$8.4B for AMD)", () => {
-    expect(ownerEarningsBase(AMD)).toBeCloseTo(8.4e9, -8);
+  it("derives trailing FCF from fcfYield x marketCap (~$8.4B for AMD, before SBC)", () => {
+    expect(ownerEarningsBase({ ...AMD, sbc: undefined })).toBeCloseTo(8.4e9, -8);
+  });
+  it("charges the latest SBC as a real cost when it is present (8.md; Damodaran)", () => {
+    const noSbc = { ...AMD, sbc: undefined };
+    const withSbc = { ...AMD, sbc: [null, null, null, null, 1.6e9] };
+    expect(ownerEarningsBase(withSbc)).toBeCloseTo(ownerEarningsBase(noSbc) - 1.6e9, 0);
   });
 });
 
