@@ -128,6 +128,23 @@ describe("goodwill-adjusted width (ex-goodwill ROIC for asset-heavy acquirers)",
   });
 });
 
+describe("insufficient comparable history (I1)", () => {
+  const CRWV = load("CRWV", "0001769628-26-000366");
+  const NVDA = load("NVDA", "0001045810-26-000075");
+  it("withholds the width for a genuine young issuer (<4 fiscal years): CRWV -> NONE", () => {
+    const m = moatRead(CRWV);
+    expect(m.width).toBe("NONE");
+    expect(m.contingent).toBe(false);
+    expect(m.flags.some((f) => /young issuer|width withheld/i.test(f))).toBe(true);
+  });
+  it("keeps the width but withholds the trend for a mature name with a recent acquisition (NVDA)", () => {
+    const m = moatRead(NVDA); // 5 FY of ~90%+ ROIC; the recent deal only shortened the post-break window
+    expect(m.width).toBe("WIDE");
+    expect(m.trend).toBe("STABLE");
+    expect(m.flags.some((f) => /trend withheld/i.test(f))).toBe(true);
+  });
+});
+
 describe("moatApplicable", () => {
   it("applies to an industrial (AMD) and abstains on a financial (BAC: ROIC/invested capital not meaningful)", () => {
     expect(moatApplicable(AMD).ok).toBe(true);

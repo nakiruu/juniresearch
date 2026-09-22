@@ -111,8 +111,8 @@ export function gateAdvisory(label: RatingLabel, gate: GateResult): string | nul
  */
 export function sectorFromSic(sic: number | null | undefined): Sector | null {
   if (sic == null || !Number.isFinite(sic)) return null;
-  if ((sic >= 6000 && sic <= 6199) || sic === 6211 || (sic >= 6300 && sic <= 6499)) return "financial";
-  if (sic >= 4900 && sic <= 4999) return "utility";
+  if ((sic >= 6000 && sic <= 6199) || sic === 6211 || sic === 6712 || (sic >= 6300 && sic <= 6499)) return "financial"; // banks, credit, broker-dealers, bank-holding cos, insurers
+  if ((sic >= 4900 && sic <= 4999) || (sic >= 6790 && sic <= 6799)) return "utility"; // utilities and REITs: high leverage / sub-1 current ratio are structural, not distress
   return "industrial";
 }
 

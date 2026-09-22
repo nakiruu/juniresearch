@@ -79,8 +79,21 @@ describe("sectorFromSic", () => {
     expect(sectorFromSic(3674)).toBe("industrial"); // semiconductors
     expect(sectorFromSic(6200)).toBe("industrial"); // exchanges (ICE/CME): capital-light, ratios apply
     expect(sectorFromSic(7389)).toBe("industrial"); // business services (V)
+    expect(sectorFromSic(6798)).toBe("utility"); // REITs: high leverage / sub-1 current ratio are normal
+    expect(sectorFromSic(6712)).toBe("financial"); // bank holding companies
     expect(sectorFromSic(null)).toBeNull();
     expect(sectorFromSic(undefined)).toBeNull();
+  });
+});
+
+describe("REIT distress does not misfire (I2)", () => {
+  it("a REIT with high leverage and a sub-1 current ratio is not read as DISTRESS", () => {
+    const reit = pack({ ticker: "RXYZ", sector: undefined, ttm: { interestCoverage: 3, netDebtToEbitda: 8, currentRatio: 0.4 }, balance: { netDebt: [1, 2, 3, 4, 5], currentRatio: [0.4, 0.4, 0.4, 0.4, 0.4] } });
+    (reit as { sic?: number }).sic = 6798;
+    const g = evaluateGates(reit);
+    expect(g.sector).toBe("utility");
+    expect(g.distress.zone).not.toBe("DISTRESS");
+    expect(g.ceiling).toBe("STRONG BUY");
   });
 });
 

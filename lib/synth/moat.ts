@@ -270,6 +270,19 @@ export function moatRead(f: MoatFacts, cfg: MoatConfig = {}): MoatResult {
   else if (downs >= 2) trend = "ERODING";
   else trend = "STABLE";
 
+  // Insufficient history (3.md §8): a trend needs >=3 comparable years, so withhold it below that;
+  // and a genuine young issuer (<4 total fiscal years) has too little to support any width verdict.
+  const nComparable = f.statements.fiscalYears.length - from;
+  if (nComparable < 3) {
+    trend = "STABLE";
+    flags.push(`trend withheld (${nComparable} comparable yr < 3)`);
+    if (f.statements.fiscalYears.length < 4) {
+      width = "NONE";
+      contingent = false;
+      flags.push("width withheld (young issuer, < 4 fiscal years)");
+    }
+  }
+
   return {
     width, trend, contingent, roic, spread, wacc, comparableFrom: from,
     incrementalRoic: inc, goodwillAdjusted: goodwillMaterial, bearFloor: moatBearFloor(width, trend), flags,
