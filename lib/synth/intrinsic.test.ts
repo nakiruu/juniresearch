@@ -136,4 +136,8 @@ describe("intrinsicRead — the whole engine on AMD", () => {
   it("always reports the discount rate it used", () => {
     expect(read.discountRate).toBe(R);
   });
+  it("reports a mechanical E — the probability-weighted fair value vs price (4.md §8)", () => {
+    const wtd = read.scenarios.reduce((a, s) => a + s.probability * s.impliedPrice, 0);
+    expect(read.eMechanical).toBeCloseTo(wtd / AMD.quote.price - 1, 6);
+  });
 });

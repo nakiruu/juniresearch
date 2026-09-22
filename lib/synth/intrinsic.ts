@@ -59,6 +59,7 @@ export interface IntrinsicResult {
   achievableGrowth: number;
   gap: number; // impliedGrowth − achievableGrowth (the signal)
   fairValue: { bear: number; base: number; bull: number }; // per share
+  eMechanical: number; // probability-weighted fair value / price − 1 (the model's E, vs the Street's)
   marginOfSafety: number; // base/price − 1 (negative = paying above the base case)
   scenarios: ScenarioIn[]; // fed into computeConviction()
   discountRate: number; // always reported
@@ -170,6 +171,7 @@ export function intrinsicRead(f: IntrinsicFacts, cfg: IntrinsicConfig): Intrinsi
     achievableGrowth: gAch,
     gap: gImpl - gAch,
     fairValue: { bear: bear.price, base: base.price, bull: bull.price },
+    eMechanical: scenarios.reduce((a, s) => a + s.probability * s.impliedPrice, 0) / price - 1,
     marginOfSafety: base.price / price - 1,
     scenarios,
     discountRate: r,

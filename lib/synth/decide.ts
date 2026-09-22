@@ -37,8 +37,9 @@ export interface DecisionInputs {
   moat: { width: MoatWidth; trend: MoatTrend; contingent: boolean; bearFloor?: number } | null;
   intrinsic: { marginOfSafety: number } | null;
   composite?: { percentile: number | null; confidence: "high" | "medium" | "low" } | null;
-  market?: { targetDispersion: number | null } | null; // (highTarget − lowTarget) / medianTarget
+  market?: { targetDispersion: number | null; divergence?: number | null } | null; // dispersion; |E_mech − E_Street|
   uncertainty?: { tier: UncertaintyTier } | null;
+  published?: RatingLabel; // the author's label, if a report is being scored
 }
 
 export interface Decision {
@@ -122,6 +123,9 @@ export function decide(inputs: DecisionInputs, cfg: DeskRating, policy: Decision
   // Contested name: a wide analyst-target spread is a market proxy for uncertainty (6.md 4.1).
   const disp = inputs.market?.targetDispersion;
   if (disp != null) score -= Math.round(Math.min(1, Math.max(0, disp)) * 15);
+  // The model and the Street disagree sharply on value — real uncertainty, not an error (4.md §8).
+  const divergence = inputs.market?.divergence;
+  if (divergence != null && divergence > 0.25) score -= 10;
   if (!intrinsic) score -= 10; // could not value intrinsically
   if (!moat) score -= 10;
   if (!composite || composite.percentile == null) score -= 10; // no cross-sectional read
@@ -129,6 +133,11 @@ export function decide(inputs: DecisionInputs, cfg: DeskRating, policy: Decision
   if (moat?.contingent) score -= 5;
   score = Math.max(0, Math.min(100, score));
   const tier: Decision["tier"] = score >= 70 ? "high" : score >= 45 ? "moderate" : "low";
+
+  // The report carries the author's label; note when it differs from the composed recommendation so
+  // the two persisted labels are never silently inconsistent (7.md I5).
+  if (inputs.published && inputs.published !== label)
+    advisories.push(`author's published label ${inputs.published} differs from the composed ${label}`);
 
   return { label, proposed, conviction: score, tier, reasons, advisories };
 }

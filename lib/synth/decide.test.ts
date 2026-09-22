@@ -94,6 +94,20 @@ describe("composite (5.md) in the decision", () => {
   });
 });
 
+describe("Street-vs-model divergence and the published label (I12, I5)", () => {
+  const base = { conviction: HOLDISH, gate: cleanGate, moat: { width: "WIDE" as const, trend: "STABLE" as const, contingent: false }, intrinsic: { marginOfSafety: 0.05 } };
+  it("penalises a large model-vs-Street divergence (4.md §8)", () => {
+    const aligned = decide({ ...base, market: { targetDispersion: 0.2, divergence: 0.05 } }, cfg);
+    const diverged = decide({ ...base, market: { targetDispersion: 0.2, divergence: 0.7 } }, cfg);
+    expect(diverged.conviction).toBeLessThan(aligned.conviction);
+  });
+  it("notes when the author's published label differs from the composed one (I5)", () => {
+    const d = decide({ conviction: HOLDISH, gate: cleanGate, moat: null, intrinsic: null, published: "SELL" }, cfg);
+    expect(d.label).toBe("HOLD"); // the composed recommendation
+    expect(d.advisories.some((a) => /author|published/i.test(a))).toBe(true);
+  });
+});
+
 describe("conviction: analyst-target dispersion and the HOLD synthesis (I13, I4)", () => {
   const base = { conviction: HOLDISH, gate: cleanGate, moat: { width: "WIDE" as const, trend: "STABLE" as const, contingent: false }, intrinsic: { marginOfSafety: 0.05 } };
   it("penalises wide analyst-target dispersion (6.md 4.1)", () => {

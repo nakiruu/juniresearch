@@ -62,6 +62,8 @@ const conviction = computeConviction(judgment.sections.valuation.scenarios, pack
 const a = pack.analysts;
 const fin = (x: number | null | undefined): x is number => x != null && Number.isFinite(x);
 const targetDispersion = fin(a.highTarget) && fin(a.lowTarget) && fin(a.medianTarget) && a.medianTarget > 0 ? (a.highTarget - a.lowTarget) / a.medianTarget : null;
+const eStreet = fin(a.consensusTarget) && pack.quote.price > 0 ? a.consensusTarget / pack.quote.price - 1 : null;
+const divergence = intrinsic && eStreet != null ? Math.abs(intrinsic.eMechanical - eStreet) : null;
 const netDebtRow = pack.statements.balance.find((r) => r.key === "netDebt")?.values;
 const abstentions = (moat ? 0 : 1) + (intrinsic ? 0 : 1) + (composite.percentile == null ? 1 : 0);
 const uncertainty = uncertaintyTier({
@@ -74,7 +76,7 @@ const uncertainty = uncertaintyTier({
   segmentHHI: segmentHHI(pack.segments.items),
   sector: classifySector(pack),
 });
-const dec = decide({ conviction, gate, moat, intrinsic, composite, market: { targetDispersion }, uncertainty: { tier: uncertainty.tier } }, desk.rating, SAFE_DEFAULTS);
+const dec = decide({ conviction, gate, moat, intrinsic, composite, market: { targetDispersion, divergence }, uncertainty: { tier: uncertainty.tier }, published: judgment.rating.label }, desk.rating, SAFE_DEFAULTS);
 const decisionBlock = {
   conviction: dec.conviction, tier: dec.tier, proposed: dec.proposed, reasons: dec.reasons, advisories: dec.advisories,
   moat: moat ? { width: moat.width, trend: moat.trend, contingent: moat.contingent, bearFloor: moat.bearFloor } : null,
