@@ -23,8 +23,43 @@ const AMD = load("AMD", "0000002488-26-000123");
 const BAC = load("BAC", "0000070858-26-000394");
 const NEE = load("NEE", "0000753308-26-000060");
 const CRWV = load("CRWV", "0001769628-26-000366");
+// AT&T: a declining business (FCF 25.4->19.4B, revenue 134->126B), a case where implied < achievable.
+const T = load("T", "0000732717-26-000297");
 
 const R = 0.11, GT = 0.03, N = 10;
+
+describe("achievableGrowth does not manufacture growth for a decliner (C2)", () => {
+  it("returns a negative CAGR for AT&T rather than flooring at +3%", () => {
+    const g = achievableGrowth(T);
+    expect(g).toBeLessThan(0);
+    expect(g).toBeGreaterThanOrEqual(-0.1); // bounded, not unbounded
+  });
+  it("still returns the positive CAGR for a grower (AMD ~20%)", () => {
+    expect(achievableGrowth(AMD)).toBeGreaterThan(0.15);
+  });
+});
+
+describe("the Base scenario is anchored to achievable growth, not the price sort (C1)", () => {
+  const read = intrinsicRead(T, { r: R, terminalGrowth: GT, horizon: N });
+  it("Base carries the 0.50 weight, names the achievable growth, and drives the margin of safety", () => {
+    const base = read.scenarios.find((s) => s.name === "Base")!;
+    expect(base.probability).toBe(0.5);
+    expect(base.driver).toContain(`${(read.achievableGrowth * 100).toFixed(0)}%`); // the achievable rate, not implied/2
+    expect(read.marginOfSafety).toBeCloseTo(base.impliedPrice / T.quote.price - 1, 5);
+  });
+  it("keeps bull >= base >= bear even when implied < achievable", () => {
+    const p = (n: string) => read.scenarios.find((s) => s.name === n)!.impliedPrice;
+    expect(p("Bull")).toBeGreaterThanOrEqual(p("Base"));
+    expect(p("Base")).toBeGreaterThanOrEqual(p("Bear"));
+  });
+  it("does not assign a positive perpetual terminal growth to a declining base case, and flags it", () => {
+    expect(read.flags.some((f) => /declin/i.test(f))).toBe(true);
+    // terminal growth capped at the (negative) explicit growth ⇒ base FV well below the +3%-terminal value
+    const inflated = fairValuePerShare(ownerEarningsBase(T), read.achievableGrowth, T.quote.sharesOutstanding, R, GT, N);
+    const base = read.scenarios.find((s) => s.name === "Base")!.impliedPrice;
+    expect(base).toBeLessThan(inflated);
+  });
+});
 
 describe("dcfApplicable — the engine abstains where a reverse DCF is meaningless", () => {
   it("applies to a mature FCF-generative industrial (AMD)", () => {

@@ -104,7 +104,12 @@ export function ownerEarningsBase(f: IntrinsicFacts): number {
   return num(latest) ? latest : 0;
 }
 
-/** A disciplined achievable growth: the five-year FCF CAGR (revenue CAGR as fallback), clamped. */
+/**
+ * A disciplined achievable growth: the five-year FCF CAGR (revenue CAGR as fallback),
+ * clamped to [-10%, 35%]. It is NOT floored at a positive number — a structurally
+ * declining business must value at a decline, not a manufactured +3% (a lumpy FCF
+ * endpoint is only kept from overstating a decline below the steadier revenue trend).
+ */
 export function achievableGrowth(f: IntrinsicFacts): number {
   const cagr = (vals: (number | null)[] | undefined): number | null => {
     if (!vals || vals.length < 2) return null;
@@ -113,8 +118,11 @@ export function achievableGrowth(f: IntrinsicFacts): number {
     if (!num(first) || !num(last) || first <= 0 || last <= 0) return null;
     return (last / first) ** (1 / (vals.length - 1)) - 1;
   };
-  const g = cagr(series(f.statements.cashflow, "freeCashFlow")) ?? cagr(series(f.statements.income, "revenue")) ?? 0.03;
-  return Math.min(0.35, Math.max(0.03, g));
+  const fcfG = cagr(series(f.statements.cashflow, "freeCashFlow"));
+  const revG = cagr(series(f.statements.income, "revenue"));
+  let g = fcfG ?? revG ?? 0;
+  if (fcfG != null && revG != null && fcfG < 0 && revG < 0) g = Math.max(fcfG, revG); // don't let a lumpy FCF endpoint overstate the decline
+  return Math.min(0.35, Math.max(-0.1, g));
 }
 
 export function intrinsicRead(f: IntrinsicFacts, cfg: IntrinsicConfig): IntrinsicResult {
@@ -127,21 +135,26 @@ export function intrinsicRead(f: IntrinsicFacts, cfg: IntrinsicConfig): Intrinsi
 
   const gImpl = impliedGrowth(oe0, equity, r, gt, N);
   const gAch = achievableGrowth(f);
-  const fv = (g: number) => fairValuePerShare(oe0, g, shares, r, gt, N);
+  if (gAch < 0) flags.push("declining base case (terminal growth capped at the explicit rate)");
+  // Terminal growth must not exceed the explicit-stage growth: a business shrinking at −2% is not
+  // assumed to grow at +3% in perpetuity. A no-op for growers (gAch > gt); it deflates a decliner.
+  const fv = (g: number) => fairValuePerShare(oe0, g, shares, r, Math.min(gt, Math.max(g, 0)), N);
 
-  // Bear halves the implied growth, base uses the achievable path, bull sits just under implied.
-  // Label by resulting price so a cheap stock (implied < achievable) still orders bull >= base >= bear.
-  const candidates = [
-    { g: gImpl / 2, price: fv(gImpl / 2) },
-    { g: gAch, price: fv(gAch) },
-    { g: gImpl * 0.9, price: fv(gImpl * 0.9) },
-  ].sort((a, b) => a.price - b.price);
-  const [bear, base, bull] = candidates;
+  // The Base case is the achievable path and carries the 0.50 weight — always, regardless of
+  // price ordering. Bear (implied halved, a cyclical air-pocket) and Bull (near the market-implied
+  // rate) are then bounded to sit a real spread below / above the base, so bull >= base >= bear is
+  // guaranteed without a price sort reassigning the probabilities (docs/scoreconcepts/7.md C1).
+  const spread = Math.max(0.03, Math.abs(gImpl - gAch) / 2);
+  const bearG = Math.min(gImpl / 2, gAch - spread);
+  const baseG = gAch;
+  const bullG = Math.max(gImpl * 0.9, gAch + spread);
+  const drv = (g: number) => `owner-earnings growth ~${(g * 100).toFixed(0)}%/yr`;
   const scenarios: ScenarioIn[] = [
-    { name: "Bull", driver: `owner-earnings growth ~${(bull.g * 100).toFixed(0)}%/yr`, impliedPrice: bull.price, probability: 0.25 },
-    { name: "Base", driver: `owner-earnings growth ~${(base.g * 100).toFixed(0)}%/yr`, impliedPrice: base.price, probability: 0.5 },
-    { name: "Bear", driver: `owner-earnings growth ~${(bear.g * 100).toFixed(0)}%/yr`, impliedPrice: bear.price, probability: 0.25 },
+    { name: "Bull", driver: drv(bullG), impliedPrice: fv(bullG), probability: 0.25 },
+    { name: "Base", driver: drv(baseG), impliedPrice: fv(baseG), probability: 0.5 },
+    { name: "Bear", driver: drv(bearG), impliedPrice: fv(bearG), probability: 0.25 },
   ];
+  const bear = { g: bearG, price: fv(bearG) }, base = { g: baseG, price: fv(baseG) }, bull = { g: bullG, price: fv(bullG) };
 
   return {
     ownerEarnings: oe0,
