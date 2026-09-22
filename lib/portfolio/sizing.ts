@@ -38,8 +38,11 @@ export function finalizeCash(items: Weighted[], config: PortfolioConfig): { hold
   // Cash ceiling binds only with enough names — never a stealth market-timing bet.
   if (cash > config.cashCeiling && held.length >= config.minNamesForCeiling) {
     const target = 1 - config.cashCeiling;
-    holdings = scale(target);
-    cash = config.cashCeiling;
+    // Upscaling can push weights back over wMax/sectorMax — re-apply the hard
+    // caps and let cash land wherever that leaves it (possibly still above
+    // the nominal ceiling; that's the correct "few marginal names" outcome).
+    holdings = applyConstraints(scale(target), config);
+    cash = 1 - holdings.reduce((a, w) => a + w.weight, 0);
   }
   return { holdings, cash };
 }

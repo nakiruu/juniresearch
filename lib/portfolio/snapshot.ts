@@ -40,7 +40,11 @@ export function assembleSnapshot(input: {
       };
     });
   const invested = holdings.reduce((a, h) => a + h.weight, 0);
-  const nEff = holdings.length ? 1 / holdings.reduce((a, h) => a + h.weight ** 2, 0) : 0;
+  // Effective number of HOLDINGS: inverse Herfindahl over weights normalized to sum to 1
+  // (i.e. cash-independent). Without normalizing by `invested`, a high-cash book with N
+  // equal-weight names inflates nEff toward 1/w^2 instead of reporting N.
+  const sumSquares = holdings.reduce((a, h) => a + h.weight ** 2, 0);
+  const nEff = invested > 0 ? (invested * invested) / sumSquares : 0;
   const excluded = sized.excluded.map((e) => ({
     ticker: e.ticker, label: byTicker.get(e.ticker)?.label ?? "?", reasons: e.reasons,
   }));

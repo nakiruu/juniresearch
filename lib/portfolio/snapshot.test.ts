@@ -25,7 +25,9 @@ describe("snapshot", () => {
     expect(snap.holdings[0].ticker).toBe("A");
     expect(snap.holdings[0].activeWeight).toBeCloseTo(0.1, 6);
     expect(snap.cash).toBeCloseTo(0.4, 6);
-    expect(snap.meta.nEff).toBeCloseTo(1 / (0.6 ** 2), 4);
+    // Effective number of HOLDINGS is cash-independent: a single 0.6-weight holding is
+    // one effective name, not 1/0.6^2 inflated by the 0.4 cash sitting alongside it.
+    expect(snap.meta.nEff).toBeCloseTo(1, 6);
     expect(snap.excluded[0].ticker).toBe("B");
   });
   it("renders a CSV with a header, a holding row, and a CASH row", () => {

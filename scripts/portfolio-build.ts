@@ -1,9 +1,8 @@
-import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, writeFileSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { listReportTickers, loadReport } from "../lib/reports";
 import { fetchDailyCloses } from "../lib/prices/yahoo";
 import { FactPack } from "../lib/facts/schema";
-import { readFileSync } from "node:fs";
 import { resolveConfig, type PortfolioConfig } from "../lib/portfolio/config";
 import { buildSignal, type Signal } from "../lib/portfolio/signal";
 import { sizePortfolio } from "../lib/portfolio/sizing";
@@ -15,7 +14,15 @@ const flag = (name: string) => { const i = args.indexOf(name); return i >= 0 ? a
 const asOf = flag("--date") ?? new Date().toISOString().slice(0, 10);
 const overrides: Partial<PortfolioConfig> = {};
 for (const k of ["wMax", "alpha", "cashCeiling", "sectorMax"] as const) {
-  const v = flag(`--${k}`); if (v != null) overrides[k] = Number(v);
+  const v = flag(`--${k}`);
+  if (v != null) {
+    const n = Number(v);
+    if (!Number.isFinite(n)) {
+      console.error(`Invalid --${k} value: ${JSON.stringify(v)} (expected a finite number)`);
+      process.exit(1);
+    }
+    overrides[k] = n;
+  }
 }
 const config = resolveConfig(overrides);
 const today = new Date(asOf + "T00:00:00Z");
@@ -37,14 +44,24 @@ function sicFor(ticker: string, accession: string): number | null {
 }
 
 const tickers = await listReportTickers();
-const spyPrice = await livePrice("SPY");
+const spyPrice = await livePrice("SPY"); // benchmark — a failure here should abort the run
 const signals: Signal[] = [];
+const failed: { ticker: string; error: string }[] = [];
 for (const t of tickers) {
-  const report = await loadReport(t);
-  if (!report) continue;
-  const price = await livePrice(report.meta.ticker);
-  const sic = sicFor(report.meta.ticker, report.meta.filing.accession);
-  signals.push(buildSignal(report, price, sic, today, config));
+  try {
+    const report = await loadReport(t);
+    if (!report) continue;
+    const price = await livePrice(report.meta.ticker);
+    const sic = sicFor(report.meta.ticker, report.meta.filing.accession);
+    signals.push(buildSignal(report, price, sic, today, config));
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    failed.push({ ticker: t, error: message });
+    console.warn(`Skipping ${t}: ${message}`);
+  }
+}
+if (failed.length) {
+  console.warn(`Skipped ${failed.length} ticker(s): ${failed.map((f) => f.ticker).join(", ")}`);
 }
 
 const sized = sizePortfolio(signals, config);

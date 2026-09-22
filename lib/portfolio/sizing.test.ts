@@ -54,11 +54,17 @@ describe("finalizeCash", () => {
     const { cash } = finalizeCash([w("A", 0.4), w("B", 0.3)], DEFAULT_CONFIG); // invested 0.7
     expect(cash).toBeCloseTo(0.30, 6);
   });
-  it("binds the cash ceiling up when enough names qualify", () => {
-    // invested 0.4 across 4 names -> cash 0.6 > ceiling 0.35, names>=4 -> scale up to invested 0.65
+  it("binds the cash ceiling up when enough names qualify, without breaching wMax/sectorMax", () => {
+    // invested 0.4 across 4 names (all sector "36") -> cash 0.6 > ceiling 0.35, names>=4 -> upscale.
+    // Naive upscale to invested 0.65 would put each name at 0.1625, breaching wMax (0.10).
+    // Re-applying applyConstraints: (1) caps each at wMax=0.10 (sum back to 0.40), which itself
+    // breaches sectorMax=0.30 since all 4 share sector "36", so (2) the sector step scales down
+    // to 0.075 each (sum 0.30). Cash lands at 0.70 -- above the nominal 0.35 ceiling, which is the
+    // correct "too few names to fill the ceiling under the caps" outcome, not a bug.
     const { holdings, cash } = finalizeCash([w("A",0.1),w("B",0.1),w("C",0.1),w("D",0.1)], DEFAULT_CONFIG);
-    expect(cash).toBeCloseTo(0.35, 6);
-    expect(holdings.reduce((a, h) => a + h.weight, 0)).toBeCloseTo(0.65, 6);
+    for (const h of holdings) expect(h.weight).toBeLessThanOrEqual(DEFAULT_CONFIG.wMax + 1e-9);
+    expect(holdings.reduce((a, h) => a + h.weight, 0)).toBeCloseTo(0.30, 6);
+    expect(cash).toBeCloseTo(0.70, 6);
   });
   it("allows cash above the ceiling when too few names qualify", () => {
     const { cash } = finalizeCash([w("A", 0.1), w("B", 0.1)], DEFAULT_CONFIG); // 2 names < 4
