@@ -1,0 +1,97 @@
+{
+  "judgmentSha256": "2d836391d23897315374ab5a29a2397b76c5b296fcbdded60fd80f57489604de",
+  "reviewedAt": "2026-09-22T20:30:00Z",
+  "reviewer": "claude-opus-4-8",
+  "round": 2,
+  "verdict": "approved-with-minors",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.growth.points[3]",
+      "quote": "Counter-drone is emerging as a growth pillar: Dedrone revenue surpassed $100 million in Q2 2026 and drove Platform Solutions up {+ +122.6% +} year over year.",
+      "issue": "The only source for the $100 million Dedrone figure is the Q2 2026 press-release header (\"Dedrone revenue surpasses $100 million\"), which states no period. The report attaches \"in Q2 2026.\" Total Platform Solutions revenue for the quarter was $149.84M, so a single-quarter Dedrone figure over $100M is not established by the surface and reads more naturally as a run-rate or cumulative milestone. Stating a period the source does not give (honest dating). The same undated $100M appears in catalysts[2], where the period is not asserted.",
+      "fix": "Drop \"in Q2 2026\" from the Dedrone clause (keep the period on the Platform Solutions +122.6% figure, which the MD&A dates to the quarter), or present the $100M as a milestone without asserting the quarter.",
+      "status": "addressed",
+      "note": "Fixed. growth.points[3] now reads 'Platform Solutions revenue rose +122.6% year over year to $150 million in Q2 2026 ... and Dedrone revenue has surpassed $100 million' — no period attached to the Dedrone milestone, and the +122.6% keeps its MD&A-dated quarter. catalysts[2] no longer asserts the $100M or a period."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.growth.points",
+      "quote": "International is an underpenetrated runway: US customers were 82% of Q2 2026 revenue and other countries 18%, and management says international and enterprise bookings each roughly tripled year over year.",
+      "issue": "The growth points paraphrase the executive-summary catalysts instead of arguing behind them. \"international and enterprise bookings each roughly tripled year over year\" (points[4]) repeats catalysts[4]; the Dedrone $100M / Platform Solutions +122.6% claim (points[3]) repeats catalysts[2]; annual recurring revenue up 39% to $1.6 billion (points[1]) repeats catalysts[0]. Same claims and same figures made twice in two sections, so the section behind the catalysts adds little new mechanism.",
+      "fix": "Keep the executive-summary catalysts as one-line pointers and let the growth section carry new mechanism and what-to-watch (what drives international/enterprise attach, why counter-drone scales, ARR durability), introducing each figure once and referring back to it in words.",
+      "status": "addressed",
+      "note": "Fixed. The exec-summary catalysts are now figure-free pointers (catalysts[0], [2], [4] no longer carry the ARR 39%/$1.6B, Dedrone/Platform, or bookings-tripled figures). Those figures now live once in the growth points, each of which closes with a distinct what-to-watch (retention/attach as base scales; whether AI features convert to paid attach; whether deployments recur; durability of attach in newer channels)."
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic",
+      "quote": "Stock-based compensation is large and structural. In Q2 2026 it ran to $71 million in SG&A, $62 million in R&D and $11 million in cost of sales, holding GAAP net income to $29.4 million despite $242 million of Adjusted EBITDA, and it dilutes existing holders over time.",
+      "issue": "The idiosyncratic risks restate the executive-summary risk pointers rather than arguing behind them. This bullet duplicates executiveSummary.risks[2] (\"Stock-based compensation of $71 million in SG&A and $62 million in R&D depressed GAAP profit ... net income of $29 million sat against Adjusted EBITDA of $242 million, and the gap dilutes shareholders over time\"). Likewise idiosyncratic[3] (S&S gross margin fell to 71.3% from 75.6% ... $47.4 million tariff refunds) repeats executiveSummary.risks[3] near-verbatim; the 71.3%/75.6% figure also appears in businessMoat.segments[0].body. The exec-summary risks are meant to point; here they carry the same argument the section repeats.",
+      "fix": "Give each claim one home: trim the executive-summary risk bullets to pointers and keep the figures and mechanism in the idiosyncratic risks (or the reverse), so the SBC and S&S-margin/tariff claims are not made twice.",
+      "status": "addressed",
+      "note": "Fixed. The SBC figures ($71M SG&A / $62M R&D / $11M COGS, $242M Adjusted EBITDA) and the S&S 71.3%/75.6% margin and tariff-refund figures now appear only in risks.idiosyncratic[2] and [3]. executiveSummary.risks[2]/[3] are now figure-free pointers, and the 71.3%/75.6% figure has been removed from businessMoat.segments[0].body (which now cites only the 51.9%/48.6% Connected Devices margin and >80% software-only margin)."
+    },
+    {
+      "id": "F-4",
+      "severity": "Minor",
+      "field": "sections.management.leadership",
+      "quote": "Axon is founder-led: Patrick Smith, who co-founded the company, is Chief Executive Officer",
+      "issue": "The proxy excerpt (the governance surface) states Mr. Smith \"is the founder and CEO of the Company.\" Writing \"co-founded the company\" adds the unsupported implication of other founders; the surface says \"founder,\" not \"co-founder.\" A characterisation recalled beyond the surface.",
+      "fix": "Use the surface's wording — \"founder and CEO\" or \"who founded the company.\"",
+      "status": "addressed",
+      "note": "Fixed. leadership now reads 'Patrick Smith, the company's founder, is Chief Executive Officer' — consistent with the proxy's 'founder and CEO.'"
+    },
+    {
+      "id": "F-5",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.companyOverview",
+      "quote": "is a public-safety technology company incorporated in 1993 and headquartered in Scottsdale, Arizona (company description, 2026-09-22).",
+      "issue": "Rubric asks for dates in prose form, not ISO. The parenthetical citation uses the ISO date 2026-09-22.",
+      "fix": "Render the date in prose (e.g., \"company description, September 22, 2026\") or drop the as-of from the citation.",
+      "status": "addressed",
+      "note": "Fixed. The parenthetical now reads '(company description, September 22, 2026)' in prose form."
+    },
+    {
+      "id": "F-6",
+      "severity": "Minor",
+      "field": "sections.businessMoat.durability",
+      "quote": "net revenue retention has stayed above 124% throughout the past year",
+      "issue": "The press release's forward-metrics series is 124% (Jun 2025), 124% (Sep 2025), 125% (Dec 2025), 125% (Mar 2026), 126% (Jun 2026). Two of the last four readings are exactly 124%, so \"above 124%\" overstates; the series has held at or above 124%.",
+      "fix": "Write \"has held at or above 124%\" (or \"at 124% and above\").",
+      "status": "addressed",
+      "note": "Fixed. durability now reads 'Net revenue retention has held at or above 124% across the past year.'"
+    },
+    {
+      "id": "F-7",
+      "severity": "Minor",
+      "field": "sections.growth.points[2]",
+      "quote": "with management citing premium plans such as Axon 911 and AI Era, whose AI-related revenue it says grew nearly 700%.",
+      "issue": "The press release ties \"nearly 700%\" specifically to \"AI Era\" revenue (a named plan), not to \"AI-related revenue\" broadly. Generalising the plan's growth to \"AI-related revenue\" attaches the figure to a broader quantity than the source supports.",
+      "fix": "Attribute the ~700% to AI Era revenue as the source states, e.g., \"AI Era revenue, which management says grew nearly 700%.\"",
+      "status": "addressed",
+      "note": "Fixed. growth.points[2] now reads 'management says AI Era revenue grew nearly 700% off an early, small base' — attributed to the named plan as the press release states."
+    },
+    {
+      "id": "F-8",
+      "severity": "Minor",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "Peer multiples are pending a representative peer data source; the comparables provided are industrial and transportation companies that are not analogous to a public-safety software and hardware vendor, so I draw no peer multiple here.",
+      "issue": "The report's reader-facing grounding surface shows no peer names or sectors: the prompt Facts block says only \"peers pending a peer data source\" and the report's own valuation.multiples call carries a single AXON column with the note \"Peer multiples pending a peer data source.\" The characterisation \"the comparables provided are industrial and transportation companies\" is accurate to the FactPack peer set (CMI, CNI, FDX, HEI) but that identity is not visible on the page, so a reader cannot verify it — a claim of fact resting on data not surfaced in the report.",
+      "fix": "Either surface the peer tickers/sectors so the characterisation is checkable, or soften to a claim the page supports, e.g., \"the available comparables are not analogous to a public-safety software and hardware vendor, so I draw no peer multiple here.\"",
+      "status": "open"
+    },
+    {
+      "id": "F-9",
+      "severity": "Minor",
+      "field": "sections.risks.idiosyncratic[1]",
+      "quote": "On the premium trailing multiples set out in the valuation section, the shares leave no room for a growth stumble, and high-multiple stocks re-rate quickly when growth decelerates or sentiment turns.",
+      "issue": "The phrase \"leave no/little room for a growth stumble\" recurs across three sections: executiveSummary.risks[0] (\"the shares leave little room for any growth stumble or guidance cut\"), valuation.multiplesCommentary (\"the trailing multiples leave no room for a growth stumble\") and risks.idiosyncratic[1] (\"the shares leave no room for a growth stumble\") — a repeated tic (rubric item 9). idiosyncratic[1] rightly cross-references the valuation section and adds the re-rating mechanism, so only the echoed phrase, not the point, is the problem.",
+      "fix": "Vary the wording in at least one of the three — e.g., open idiosyncratic[1] with the re-rating mechanism and drop the repeated \"no room for a growth stumble\" clause — keeping the pointer in exec risks[0] and one full statement in the valuation section.",
+      "status": "open"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "judgmentSha256": "09180253140b44050dbd46b31c961b983987096ead991f51601144812ba48ad0",
+  "reviewedAt": "2026-09-22T23:35:43Z",
+  "reviewer": "claude-opus-4-8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "a free-cash-flow inflection that lifted the reported Rule of 40 score to 155%",
+      "issue": "The earnings press release's Additional Definitions state that the \"Rule of 40\" is the sum of the year-over-year revenue growth rate and the adjusted operating margin; 93% growth + 62% adjusted operating margin = 155%. The metric is not derived from free cash flow, so attributing the 155% score to \"a free-cash-flow inflection\" is a causal claim the grounding surface contradicts (rubric #2). The error carries argumentative weight because the sentence is a listed bull-case pillar.",
+      "fix": "Remove the free-cash-flow causation from the Rule of 40. State the score as the sum of the 93% revenue growth rate and the 62% adjusted operating margin. If an FCF improvement is worth naming as a separate bull point, cite it on its own (e.g., adjusted FCF margin of 63% in Q2'26, FY25 FCF margin of 46.9%) without linking it to the Rule of 40.",
+      "status": "addressed",
+      "note": "Fixed. The thesis now reads \"a Rule of 40 score of 155% in Q2'26 — the sum of the 93% revenue growth rate and the 62% adjusted operating margin,\" matching the press release's definition, and lists \"strong free-cash-flow generation\" as a separate bull pillar rather than the cause of the score."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.management.insiderOwnership",
+      "quote": "As of the record date, Mr. Karp held 11.4% of the total vote, Mr. Thiel 7.9%, and Mr. Cohen 3.0%",
+      "issue": "The ownership and voting-power figures are drawn from the DEF 14A (filed April 24, 2026) and are stated as of the April 6, 2026 record date, but the report never gives that date. It uses only \"As of the record date\" here and \"the record-date vote\" / \"49.999999% of the record-date vote\" in the governance section. The report itself is dated September 22, 2026, so these figures are roughly five and a half months old; \"as of the record date\" with no calendar date is, like \"as of the filing,\" not a date (rubric #3).",
+      "fix": "Date the proxy-sourced ownership and voting figures explicitly, e.g. \"as of the April 6, 2026 record date (per the DEF 14A)\" in insiderOwnership, and similarly qualify \"the record-date vote\" in governance, so the reader can judge their age against the September 22, 2026 report date.",
+      "status": "addressed",
+      "note": "Fixed. insiderOwnership now reads \"As of the April 6, 2026 record date disclosed in the proxy statement,\" and governance reads \"As of the April 6, 2026 record date reported in the DEF 14A.\" Both proxy-sourced figure clusters now carry the calendar date."
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic",
+      "quote": "at 158.1x trailing earnings, 72.2x trailing sales, and 115.1x forward earnings, the shares are priced for sustained rapid growth",
+      "issue": "Several load-bearing figures are restated in full across sections instead of being introduced once and referred back to in words (rubric #7). (1) The valuation trio 158.1x / 72.2x / 115.1x is recited in full in analystCommentary, executiveSummary.thesis.body, valuation.multiplesCommentary and risks.idiosyncratic[0] (exec risks[0] does it right, pointing to \"the multiples cited in the thesis\"). (2) The SBC gap (47% GAAP vs 62% adjusted margin) plus the \"$75M buyback did not offset dilution\" claim recurs in financials.incomeCommentary, executiveSummary.risks[1], financials.cashflowCommentary, management.capitalAllocation and risks.idiosyncratic[1]. (3) The clause \"U.S. commercial revenue reached $764 million in Q2'26, up 149% year-over-year\" appears near-verbatim in executiveSummary.catalysts[1] and growth.points[0]. (4) finalRecommendation.body[0] restates analystCommentary's headline cluster ($1.935B/93%, $912M/47%, the $8.150-$8.158B guidance).",
+      "fix": "Give each figure one home section and refer back in words elsewhere: keep the multiples in valuation and have the thesis and risks point to them rather than re-listing all three; state the 47%-vs-62% SBC gap and the $75M buyback once (income or cash-flow) and reference it in the risk bullets; in growth.points[0] refer back to the catalyst's $764M/149% instead of repeating it; and let finalRecommendation summarize in words rather than re-quoting the Q2'26 figure cluster.",
+      "status": "addressed",
+      "note": "Fixed on all four. (1) The 158.1x/72.2x/115.1x trio now appears only in valuation.multiplesCommentary; analystCommentary, thesis and both risk bullets point to \"the premium multiples set out in the valuation section.\" (2) The 47%-vs-62% gap lives once in incomeCommentary and the $75M buyback once in cashflowCommentary; exec risks[1], capitalAllocation and idiosyncratic[1] refer back in words. (3) $764M/149% now sits once in growth.points[0]; catalyst[1] was rewritten to the $6.238B RDV. (4) finalRecommendation.body[0] now summarizes the quarter in words with no figure cluster."
+    },
+    {
+      "id": "F-4",
+      "severity": "Minor",
+      "field": "analystCommentary",
+      "quote": "against the $184.99 price on 2026-09-22",
+      "issue": "The date is written in ISO form (2026-09-22) inside prose, whereas the rest of the report uses prose-form dates (\"June 30, 2026\", \"Q2'26\"). Rubric #9 calls for dates in prose form, not ISO.",
+      "fix": "Write the date in prose form, e.g. \"against the $184.99 price on September 22, 2026\".",
+      "status": "addressed",
+      "note": "Fixed. analystCommentary now reads \"against the $184.99 price on September 22, 2026.\" No ISO-form dates remain in the prose."
+    }
+  ]
+}

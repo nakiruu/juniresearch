@@ -101,7 +101,9 @@ const PRETAX_INCOME = [
   "IncomeBeforeIncomeTaxesMinorityInterestAndCumulativeEffectOfChangeInAccountingPrinciple",
 ];
 const NONOPERATING_INCOME_EXPENSE = ["NonoperatingIncomeExpense"];
-const NET_INCOME = ["NetIncomeLoss"];
+const NET_INCOME = ["NetIncomeLoss"]; // parent-attributable; ProfitLoss − NCI fills gaps (see fillNetIncomeFromProfitLoss)
+const PROFIT_LOSS = ["ProfitLoss"]; // net income INCLUDING noncontrolling interests
+const NCI = ["NetIncomeLossAttributableToNoncontrollingInterest"];
 const EPS_DILUTED = ["EarningsPerShareDiluted"];
 const DA = ["DepreciationDepletionAndAmortization", "DepreciationAmortizationAndAccretionNet", "DepreciationAndAmortization"];
 const INTEREST_EXPENSE = ["InterestExpense", "InterestExpenseNonoperating"];
@@ -326,6 +328,26 @@ function combineRevenue<K>(primary: Map<K, UnitEntry>, nii: Map<K, UnitEntry>, n
   return out;
 }
 
+/**
+ * Fill net-income gaps with parent-attributable net income derived from ProfitLoss.
+ *
+ * Some filers (e.g. Bloom Energy) tag consolidated net income only as us-gaap:ProfitLoss
+ * (which INCLUDES noncontrolling interests) and stop tagging us-gaap:NetIncomeLoss
+ * (the parent-attributable figure) after an early year. `primary` (NetIncomeLoss) is kept
+ * wherever it exists, so the historical series is unchanged; only the missing periods are
+ * filled with ProfitLoss − NetIncomeLossAttributableToNoncontrollingInterest, which equals
+ * the parent-attributable net income and stays consistent with the pre-gap history. A filer
+ * with no ProfitLoss tag (the common case) gets its primary map back unchanged.
+ */
+function fillNetIncomeFromProfitLoss<K>(primary: Map<K, UnitEntry>, profitLoss: Map<K, UnitEntry>, nci: Map<K, UnitEntry>): Map<K, UnitEntry> {
+  const out = new Map(primary);
+  for (const [key, plEntry] of profitLoss) {
+    if (out.has(key)) continue;
+    out.set(key, { ...plEntry, val: plEntry.val - (nci.get(key)?.val ?? 0) });
+  }
+  return out;
+}
+
 // --- derivation (shared by annual rows and real quarter rows) ----------
 
 interface RawValues {
@@ -440,7 +462,15 @@ export function parseCompanyFacts(facts: unknown): { annual: SecPeriod[]; quarte
   const operatingIncomeDirect = flowSeries(facts, OPERATING_INCOME);
   const pretax = flowSeries(facts, PRETAX_INCOME);
   const nonoperating = flowSeries(facts, NONOPERATING_INCOME_EXPENSE);
-  const netIncome = flowSeries(facts, NET_INCOME);
+  // Parent-attributable net income. Prefer NetIncomeLoss; for filers that tag only ProfitLoss
+  // (incl. noncontrolling interests), fill the gaps with ProfitLoss − NCI (see helper).
+  const netIncomeDirect = flowSeries(facts, NET_INCOME);
+  const profitLoss = flowSeries(facts, PROFIT_LOSS);
+  const nci = flowSeries(facts, NCI);
+  const netIncome = {
+    annual: fillNetIncomeFromProfitLoss(netIncomeDirect.annual, profitLoss.annual, nci.annual),
+    quarter: fillNetIncomeFromProfitLoss(netIncomeDirect.quarter, profitLoss.quarter, nci.quarter),
+  };
   const epsDiluted = flowSeries(facts, EPS_DILUTED, "USD/shares");
   // These six are commonly tagged year-to-date rather than per discrete quarter in 10-Qs (see
   // flowSeriesYtd / quarterFlowWithYtdFallback above); the rest of the flow concepts above are
@@ -467,7 +497,7 @@ export function parseCompanyFacts(facts: unknown): { annual: SecPeriod[]; quarte
     throw new Error(`No revenue concept found among: ${REVENUE.join(", ")} (nor derivable from ${NET_INTEREST_INCOME[0]} + ${NONINTEREST_INCOME[0]})`);
   }
   if (netIncome.annual.size === 0 && netIncome.quarter.size === 0) {
-    throw new Error(`No net income concept found among: ${NET_INCOME.join(", ")}`);
+    throw new Error(`No net income concept found among: ${NET_INCOME.join(", ")} (nor derivable from ${PROFIT_LOSS[0]} − ${NCI[0]})`);
   }
 
   const rawAt = <K>(key: K, side: "annual" | "quarter"): RawValues => ({

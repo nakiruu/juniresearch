@@ -1,0 +1,77 @@
+{
+  "judgmentSha256": "65f0c0ca2b0d76a258dc5b65bfc7af889ab92bccb64d18da3b005c56e407c1da",
+  "reviewedAt": "2026-09-22T18:40:00Z",
+  "reviewer": "claude-opus-4-8",
+  "round": 2,
+  "verdict": "approved-with-minors",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "to $2.0 billion in FY25 ({+ +38.9% +}), with growth accelerating from +13.6% in FY24 to +38.9% in FY25. Gross margin widened from 15.6% in FY23 to 28.1% in FY24 and 29.3% in FY25 as volumes scaled.",
+      "issue": "The proxy CD&A (on the grounding surface) states FY25 revenue of \"$2.02 billion... an increase of 37.3% over fiscal 2024\" and \"gross margin of 29.0% in fiscal 2025\". The report uses the vendor income-table figures (+38.9% revenue growth, 29.3% gross margin) without noting the disagreement. The author demonstrably knows the practice — the same section explicitly flags the Q2 growth disagreement (\"the snapshot header shows the rounded +168%... we use the press release's 165.5%\") — so leaving the FY25 growth (+38.9% vs +37.3%) and gross-margin (29.3% vs 29.0%) discrepancy silent is inconsistent (rubric item 8: silently picking one source is a finding).",
+      "fix": "Add one clause noting the proxy reports FY25 revenue up 37.3% and gross margin of 29.0%, and that the report uses the vendor tearsheet series (+38.9%, 29.3%) for consistency with the five-year table — mirroring the Q2 disclosure already present.",
+      "status": "addressed",
+      "note": "Addressed. incomeCommentary now adds the parenthetical: \"(The proxy's own 2025 summary reports FY25 revenue up 37.3% and gross margin of 29.0%, modestly below the vendor tearsheet series used here for consistency with the five-year table.)\" — the disagreement is named once and the chosen source stated."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.management.insiderOwnership",
+      "quote": "and The Vanguard Group 19,528,801 shares (6.9%).",
+      "issue": "The proxy's own footnote 4 says the Vanguard figure is \"Based solely on a Schedule 13G/A filed with the SEC on February 13, 2024\" as of December 29, 2023, and that \"The Vanguard Group subsequently reported that due to an internal realignment it no longer has, or is deemed to have, beneficial ownership over securities.\" The report lists Vanguard as a current 6.9% institutional holder under the paragraph's \"As of February 27, 2026\" frame, presenting a ~2.75-year-old, self-disclaimed holding as current concentration (rubric item 3: nothing a year old presented as current; item 2: mischaracterisation of the source). Ameriprise (Oct 2025 13G/A) and BlackRock (Jan 2026 13G/A) are reasonably current; only Vanguard is stale/disclaimed.",
+      "fix": "Drop Vanguard from the institutional list, or keep it only with the caveat that the figure dates to a December 2023 13G/A and that Vanguard has since disclaimed beneficial ownership per the proxy.",
+      "status": "addressed",
+      "note": "Addressed. insiderOwnership now drops the numeric Vanguard holding and states: \"The proxy also lists The Vanguard Group, but that figure derives from a filing dated December 2023 and Vanguard has since disclaimed beneficial ownership, so it is not treated here as a current holding.\""
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.growth.points[3] & sections.businessMoat.moatFactors[1],[2] (+ thesis, multiplesCommentary, risks.idiosyncratic[0], finalRecommendation)",
+      "quote": "Capacity is expanding. Bloom plans to double its Fremont annual production run rate from 1GW to 2GW by the end of 2026, with room to scale to 5GW, and backlog rose 2.5x year over year in FY25.",
+      "issue": "Several carrying figures are restated numerically across multiple sections rather than introduced once and referred back in words (rubric item 7 paraphrase/repetition). (a) The Fremont \"1GW to 2GW by the end of 2026, with room to scale to 5GW\" sentence appears near-verbatim in businessMoat.moatFactors[2] and growth.points[3] (also capitalAllocation, catalysts[2]). (b) Backlog \"2.5x year over year in FY25\" appears in moatFactors[1] and growth.points[3]. (c) Consensus target $280.24 / +1.3% is stated numerically in thesis, multiplesCommentary, risks.idiosyncratic[0] and finalRecommendation. (d) The 102.2x forward multiple recurs in thesis, multiplesCommentary, risks.idiosyncratic[0], finalRecommendation. (e) FY27E $6.8 billion recurs in thesis, incomeCommentary, growth.points[2], risks.idiosyncratic[0], finalRecommendation.",
+      "fix": "Give each figure one home section (capacity/backlog in businessMoat; the multiple and consensus target in valuation; FY27E in growth or valuation) and refer back in words elsewhere. Rewrite the duplicated Fremont/backlog sentence in growth.points[3] to point rather than repeat, and let the exec-summary/final-recommendation refer to \"the premium multiple\" and \"the Street's target\" without re-quoting the numbers argued in valuation.",
+      "status": "addressed",
+      "note": "Addressed. Each figure now has one numeric home: Fremont 1GW-to-2GW-to-5GW in moatFactors[2]; backlog 2.5x in moatFactors[1]; consensus target $280.24 (+1.3%) in multiplesCommentary; 102.2x in multiplesCommentary; FY27E $6.8B in growth.points[2]. growth.points[3] is rewritten to the consult-only installation model, and thesis/risks/finalRecommendation now point in words (\"a triple-digit... multiple\", \"the Street's consensus target\"). See F-6 for the tic that the verbal substitution introduced."
+    },
+    {
+      "id": "F-4",
+      "severity": "Minor",
+      "field": "sections.financials.cashflowCommentary",
+      "quote": "The second quarter of 2026 was the strongest cash quarter in the company's history: cash flow from operating activities was $226.4 million",
+      "issue": "The surface supports the CFO's general claim (\"This quarter was the strongest in Bloom's history, with profitable growth and positive operating cash flow\") and \"record quarterly revenue,\" but not a cash-specific superlative. No quarterly operating-cash-flow series is on the page to substantiate \"the strongest cash quarter in the company's history\" (rubric item 9: check the series/source supports a superlative before writing it).",
+      "fix": "Attribute it as the company frames it (the strongest quarter in Bloom's history) or state the fact without the cash-specific superlative — e.g. \"operating cash flow of $226.4 million, a $439.5 million improvement year over year.\"",
+      "status": "addressed",
+      "note": "Addressed. cashflowCommentary now reads \"The second quarter of 2026 brought a sharp cash improvement: cash flow from operating activities was $226.4 million, a $439.5 million improvement from $213.1 million of net cash used a year earlier\" — the unsupported cash-specific superlative is gone."
+    },
+    {
+      "id": "F-5",
+      "severity": "Minor",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "more than doubled to $1,611,998 thousand from $768,641 thousand, helped by the swing to profitability and by $5,332,587 thousand of additional paid-in capital",
+      "issue": "$5,332,587 thousand is the ending additional-paid-in-capital balance, not an amount added in the period; citing the full balance as something that \"helped\" the ~$843M increase conflates a level with a change and reads as if $5.33B was contributed (rubric item 4: read the figure for what it means). The equity rise came from ~$577M higher APIC and the ~$266M reduction in accumulated deficit.",
+      "fix": "Either cite the increase in APIC over the period, or reframe as composition (equity of $1.6B reflects $5.33B of paid-in capital offset by the accumulated deficit, narrowed by first-half profitability) rather than as a driver of the doubling.",
+      "status": "addressed",
+      "note": "Addressed. balanceCommentary now reframes as composition: \"Total stockholders' equity attributable to common stockholders more than doubled to $1,611,998 thousand from $768,641 thousand, as the accumulated deficit narrowed to $(3,720,965) thousand and additional paid-in capital rose to $5,332,587 thousand\" — APIC is now a level it rose to, not an amount presented as driving the doubling."
+    },
+    {
+      "id": "F-6",
+      "severity": "Minor",
+      "field": "executiveSummary.thesis.body & executiveSummary.risks[0]; valuation.scenarioCommentary; risks.idiosyncratic[0]; risks.systemic; finalRecommendation.body",
+      "quote": "a triple-digit multiple on forward earnings (thesis); premium, triple-digit forward multiples, so small disappointments can trigger large multiple compression (risks[0]); a triple-digit forward multiple compresses violently on any growth or sentiment shock (scenarioCommentary); a stock trading at a triple-digit forward multiple harder than the average name (systemic)",
+      "issue": "The phrase \"triple-digit (forward) multiple\" recurs in at least six places — executiveSummary.thesis.body, executiveSummary.risks[0], valuation.scenarioCommentary, risks.idiosyncratic[0], risks.systemic and finalRecommendation.body — and the paired \"multiple compresses / multiple compression\" idea recurs across thesis, risks[0], both the Base and Bear scenario drivers, scenarioCommentary, risks.idiosyncratic[0] and finalRecommendation. This is a by-product of the F-3 fix: the numeric 102.2x was correctly de-duplicated but replaced with the identical verbal phrase everywhere, so it now reads as a tic past the point of notice (rubric item 9).",
+      "fix": "Vary the wording so each section carries the valuation point in its own voice — e.g. \"expensive on forward earnings\", \"a stretched forward P/E\", \"the premium the shares command\" — and keep the compression mechanism argued once in the Bear scenario, referring back to it in words in the exec summary and final recommendation rather than repeating \"multiple compresses\" in each.",
+      "status": "open"
+    },
+    {
+      "id": "F-7",
+      "severity": "Minor",
+      "field": "analystCommentary; valuation.scenarios[2].driver; valuation.scenarioCommentary; executiveSummary.catalysts[3]",
+      "quote": "a July 2026 short-seller report on the supply chain is a reminder that sentiment can turn quickly (analystCommentary); the July 2026 short-seller report keeps sentiment fragile (Bear driver); the July 2026 short-seller report shows how quickly confidence can wobble (scenarioCommentary)",
+      "issue": "The same claim — that the July 2026 short-seller report shows sentiment/confidence is fragile — is made in three different wordings across analystCommentary, the Bear scenario driver and scenarioCommentary (the last two both in the valuation section, so the bear reasoning is argued twice within one section). A fourth pairing, the report resolving/fading \"without financial impact\", recurs in catalysts[3] and the Bull driver. risks.idiosyncratic[1] is the legitimate argued home for this risk; the other mentions should point rather than re-argue (rubric item 7 paraphrase; rubric item 6, argue each scenario once).",
+      "fix": "Keep the argued version in risks.idiosyncratic[1] and state the sentiment-fragility point once in the Bear driver. Let analystCommentary, scenarioCommentary and the exec-summary catalyst refer back in words (\"the short-seller overhang\", \"the July report\") without restating that it shows sentiment can turn.",
+      "status": "open"
+    }
+  ]
+}

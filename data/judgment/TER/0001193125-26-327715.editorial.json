@@ -1,0 +1,79 @@
+{
+  "judgmentSha256": "8cb010036a24929dd22fcd6da67819e5340b0d075b1f0c7ce28e51295141b20d",
+  "reviewedAt": "2026-09-22T13:20:00Z",
+  "reviewer": "Claude Opus 4.8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "Peer multiples are pending a peer data source, so we anchor on the company's own series: the trailing multiple is well above where the stock traded through the last cycle, and it embeds little margin for a memory or wafer-fab-equipment air pocket.",
+      "issue": "Unsupported claim. The grounding surface carries no historical price or historical-multiple series: only the current 54.8x P/E, the current multiples, and the 52-week range ($128.59-$487.91, all within this upcycle). There is no data on what multiple the stock traded at 'through the last cycle' (FY22-FY23), so the comparison is an inference the pack invites but does not establish. 'Anchor on the company's own series' compounds it — the only company series in the pack is revenue/margin/EPS, not a valuation multiple. The same unsupported historical-multiple idea recurs in sections.risks.idiosyncratic[1] ('both the earnings and the multiple can fall together, as they did in the last downturn').",
+      "fix": "Drop the historical-multiple comparison, or reframe on what is on the surface: the absolute level (54.8x trailing, 41.8x EV/EBITDA, 43.9x NTM) sitting on cyclically elevated earnings. In risks.idiosyncratic[1], keep the earnings point but remove the assertion that the multiple compressed in the last downturn.",
+      "status": "addressed",
+      "note": "Rewritten to 'we anchor on what the company's own multiple implies: the market is paying for the current earnings level to persist' — no historical-multiple claim remains. risks.idiosyncratic[1] now attaches 'as they did in the prior downturn' to earnings only (supported by the EPS series), framing multiple compression as a forward mechanism ('a high multiple on lower earnings compounds the move')."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "The gap between GAAP and non-GAAP is small here, unlike at many peers.",
+      "issue": "Unsupported comparative claim. No peer data is on the grounding surface (the multiples block itself states 'peers pending a peer data source'), so 'unlike at many peers' cannot be substantiated. The GAAP-vs-non-GAAP gap for Teradyne ($2.38 vs $2.47) is supported by the press release, but the comparison to peers is not.",
+      "fix": "Delete 'unlike at many peers'. State only the supported point — the GAAP ($2.38) to non-GAAP ($2.47) gap is narrow — without the peer comparison.",
+      "status": "addressed",
+      "note": "The clause now reads 'The gap between GAAP and non-GAAP is small here.' — the unsupported peer comparison is gone."
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.growth.points",
+      "quote": "Robotics returned to growth through 2025 and could add a second engine if the recovery proves durable.",
+      "issue": "The counter-case is missing from the growth section. All four points are bullish (consensus ramp, high operating leverage, Semiconductor Test +19%, Robotics recovery); the only hedge is the conditional 'if the recovery proves durable'. House style requires every bullish section to name the reading that cuts the other way, using figures already on the page — here the Q3 sequential step-down and the fact that the FY26-FY27 ramp is a consensus expectation, not delivered.",
+      "fix": "Add one point that carries the bear on growth using on-page figures — e.g., Q3 revenue is guided to $1.2-1.3B, below Q2's $1.329B, and the steep FY26-FY27 ramp rests on consensus estimates holding through a cyclical end market.",
+      "status": "addressed",
+      "note": "A fifth point now carries the counter-case: 'The growth is cyclical, not secular: the operating leverage that lifts margins in the upcycle reverses in a downturn, and the FY26-FY27 ramp assumes the memory cycle does not roll over.'"
+    },
+    {
+      "id": "F-4",
+      "severity": "Important",
+      "field": "sections.growth.points[0]",
+      "quote": "Consensus sees revenue reaching about $5.1B in FY26, up {+ 61% +}, and $6.3B in FY27, with EPS climbing to $9.09 then $11.65 — a steep ramp off the FY25 base.",
+      "issue": "Repetition. The consensus FY26/FY27 revenue-and-EPS ramp ($5.1B / $6.3B / $9.09 / $11.65) is stated in full in at least three sections: sections.executiveSummary.thesis.body ('revenue rising to about $5.1B in FY26 and $6.3B in FY27, with EPS of $9.09 and $11.65'), here in growth.points[0], and again in the Base scenario driver (sections.valuation.scenarios[1].driver, revenue path); the FY27E EPS $11.65 also reappears in multiplesCommentary. A figure should be introduced once and referred back to in words.",
+      "fix": "State the four consensus figures once (the thesis is the natural home) and, in growth, refer back in words while adding only the incremental read (operating leverage, Semiconductor Test outpacing the total). Let the Base driver point to the consensus path rather than re-quoting both revenue figures.",
+      "status": "addressed",
+      "note": "The full four-figure ramp now appears once (growth.points[0]). Thesis refers in words ('revenue and earnings rising steeply into FY27'); Base driver points to 'the consensus path'; Bear driver to 'the FY27E path'; multiplesCommentary to 'the FY27E consensus EPS'. Only $11.65 is re-quoted, in the Bull driver as the specific beat target — a legitimate single refer-back."
+    },
+    {
+      "id": "F-5",
+      "severity": "Important",
+      "field": "sections.finalRecommendation.body[1]",
+      "quote": "Teradyne's own history shows revenue and earnings fall in downturns, third-quarter guidance already steps down sequentially, and the shares discount much of the good news",
+      "issue": "Repetition across sections. Three claims are each argued in more than one place: (1) 'third-quarter guidance steps down sequentially' appears in the thesis, in the executiveSummary.risks[1] pointer, and here in finalRecommendation; (2) 'the memory portion is the most cyclical' appears in businessMoat.durability and in risks.idiosyncratic[0]; (3) the Q2 operating margin of 32.9% is stated in financials.incomeCommentary and again in growth.points[1]. Exec-summary pointers may flag these, but the argument itself is duplicated in two full sections each.",
+      "fix": "Give each claim one home and refer back in words elsewhere: argue the Q3 step-down once (thesis) and let finalRecommendation point to it; state 'memory is the most cyclical' once; introduce the 32.9% Q2 operating margin once (incomeCommentary) and refer to it in words in growth.",
+      "status": "addressed",
+      "note": "(1) Q3 step-down removed from the thesis; now only the exec-summary pointer plus the finalRecommendation recap. (2) 'most cyclical' now appears once (risks.idiosyncratic[0]); durability no longer carries it. (3) 32.9% appears once (incomeCommentary); growth.points[1] now says 'lifted operating margin sharply' in words."
+    },
+    {
+      "id": "F-6",
+      "severity": "Minor",
+      "field": "sections.management.governance",
+      "quote": "the proxy names nine independent directors and discloses that several serve on the boards of Teradyne customers or suppliers",
+      "issue": "Honest dating. The proxy determined nine people independent, but one of the nine — Ford Tamer — 'resigned from the Board effective May 9, 2025', so the current board has eight independent directors. 'Names nine independent directors' reads as the present count and omits the resignation the proxy discloses.",
+      "fix": "Say the proxy determined nine directors independent, one of whom (Ford Tamer) resigned in May 2025, leaving eight; or characterise it as 'a majority-independent board of eight' with the resignation noted.",
+      "status": "addressed",
+      "note": "Now reads 'the proxy identifies nine directors it determined independent for fiscal 2025 — one of whom, Ford Tamer, resigned effective May 9, 2025' — the resignation the proxy discloses is stated."
+    },
+    {
+      "id": "F-7",
+      "severity": "Minor",
+      "field": "meta.subtitle",
+      "quote": "Automated semiconductor-test leader in a memory-driven AI-test upcycle; record revenue and a net-cash balance sheet against a rich, cyclical-peak multiple.",
+      "issue": "Voice. 'Leader' asserts a market-rank the grounding surface does not state — the company description characterises the business, not its ranking. 'Record revenue' and 'net-cash' are supported (press release; balance sheet), but 'leader' is an unearned characterisation under the no-unearned-superlatives rule.",
+      "fix": "Replace 'leader' with a supported description (e.g., 'Automated semiconductor-test supplier' or 'automated-test franchise'), or drop the ranking word; the moat section's 'few credible suppliers' framing can carry the positioning without asserting rank in the subtitle.",
+      "status": "addressed",
+      "note": "Subtitle now reads 'Automated semiconductor-test and robotics maker in a memory-driven AI-test upcycle; a net-cash balance sheet against a rich, cyclical-peak multiple.' — 'leader' replaced with 'maker'; no unearned rank remains."
+    }
+  ]
+}

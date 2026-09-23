@@ -1,0 +1,98 @@
+{
+  "judgmentSha256": "0f469cd5e11a29c4f18b5e22442b32039304662488f3c3897b144f8b55c4f8c4",
+  "reviewedAt": "2026-09-22T22:35:00Z",
+  "reviewer": "claude-opus-4-8",
+  "round": 2,
+  "verdict": "approved-with-minors",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "The vendor's peer set includes AEP, DUK, SO, NEE and VST, but no comparable multiples sit on the grounding surface, so a formal peer comparison is pending a peer data source.",
+      "issue": "The named peer set is not on the grounding surface. The prompt Facts block only carries 'Multiples (company column; peers pending a peer data source)' with no tickers, and the report's own multiples note says 'Peer multiples pending a peer data source.' Naming AEP, DUK, SO, NEE and VST is a recalled-from-memory claim (rubric 2). It is also factually wrong: the FactPack peer set is AEP, CWEN, DUK and GEV. The sentence contradicts itself by naming a specific peer set while saying no peer data sits on the surface.",
+      "fix": "Remove the specific tickers. State only that a peer set and comparable multiples are not on the grounding surface and that a formal peer comparison is pending a peer data source.",
+      "status": "addressed",
+      "note": "Fixed. multiplesCommentary now reads 'A comparable peer set and peer multiples are not on the grounding surface, so a formal peer comparison is pending a peer data source' and 'we therefore anchor valuation on the company's own multiples' — the AEP/DUK/SO/NEE/VST tickers are gone and no peer set is named."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.executiveSummary.catalysts[4]",
+      "quote": "Delivery against the consensus FY27E revenue of $36.4B and EPS of $12.13 and $13.25 that frame the growth outlook.",
+      "issue": "The period label is wrong for one EPS figure. Per the Estimates block, $12.13 is the FY26E EPS and only $13.25 is the FY27E EPS ($36.4B is FY27E revenue). Filing both EPS numbers under 'FY27E' attaches $12.13 to the wrong period (rubric 1/3); a reader parses both EPS as FY27E.",
+      "fix": "Label the periods explicitly, e.g. 'consensus FY27E revenue of $36.4B, with EPS of $12.13 (FY26E) and $13.25 (FY27E),' or drop the FY26E EPS from this FY27E pointer.",
+      "status": "addressed",
+      "note": "Fixed. catalysts[4] now reads 'consensus FY27E revenue of $36.4B, with EPS of $12.13 (FY26E) and $13.25 (FY27E)' — each EPS is labeled to its correct period."
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.management.insiderOwnership",
+      "quote": "Ownership is concentrated among institutions: The Vanguard Group at 11.7%, BlackRock at 7.2%, ECP ControlCo at 7.0% in a Schedule 13G filed January 14, 2026, State Street at 5.7% and Capital International Investors at 5.5%.",
+      "issue": "Stale holdings presented as current (rubric 3). Per the proxy footnotes, Vanguard's 11.7% comes from a Schedule 13G/A filed February 13, 2024 as of December 29, 2023, and BlackRock's 7.2% from a 13G/A filed January 26, 2024 as of December 29, 2023. Only ECP's stake (January 14, 2026) was dated; Vanguard's and BlackRock's were shown undated as if current concentration.",
+      "fix": "Date the stale holders, noting Vanguard's and BlackRock's percentages are from the December 2023 13G/A filings, or flag that the >5% holder table mixes 2023-vintage 13G/A data with the January 2026 ECP filing rather than presenting a single current snapshot.",
+      "status": "addressed",
+      "note": "Fixed. insiderOwnership now reads 'The proxy's list of holders above 5% mixes filing vintages rather than a single current snapshot: The Vanguard Group at 11.7% and BlackRock at 7.2% are drawn from Schedule 13G/A filings as of December 29, 2023, whereas ECP ControlCo's 7.0% comes from a Schedule 13G filed January 14, 2026.'"
+    },
+    {
+      "id": "F-4",
+      "severity": "Important",
+      "field": "sections.risks.systemic",
+      "quote": "the shares already trade about 36% below their 52-week high of $412.70, which shows how quickly that premium can move.",
+      "issue": "The '~36% below the 52-week high of $412.70' claim was stated in full in at least four places: analystCommentary, sections.executiveSummary.thesis, sections.finalRecommendation.body[0] and here in sections.risks.systemic (the Base scenario driver also cited the $412.70 high). Rubric 7 asks that a figure be introduced once and referred back in words; this was the same claim repeated across sections rather than pointed to.",
+      "fix": "State the 36% / $412.70 figure once (thesis) and refer back in words elsewhere without repeating the number in every section.",
+      "status": "addressed",
+      "note": "Fixed. The 36%/$412.70 figure now appears once, in thesis ('roughly 36% below the 52-week high of $412.70'). analystCommentary ('well off its 52-week high'), risks.systemic ('well below their 52-week high'), finalRecommendation.body[0] ('still well below its 52-week high') and the Base driver ('below last year's high') refer back in words only."
+    },
+    {
+      "id": "F-5",
+      "severity": "Important",
+      "field": "sections.management.governance",
+      "quote": "The proxy describes pay-for-performance practices: a majority of NEO pay is variable cash and equity, incentive awards are capped and subject to clawback, change-in-control benefits use double-trigger vesting, and there are no employment agreements with the CEO or NEOs, no hedging or pledging of company stock, and no option repricing without stockholder approval.",
+      "issue": "The governance paragraph catalogued proxy facts (board independence, the pay-practice list, no related-party transactions) but reached no view the reader can act on (rubric 4). The neighbouring leadership, capitalAllocation and insiderOwnership subfields each interpret; governance only listed.",
+      "fix": "Add a reading of what this governance profile means for a minority holder — e.g. that full board/committee independence plus capped, clawback-subject, double-trigger pay design tempers agency risk around a large, dilutive acquisition.",
+      "status": "addressed",
+      "note": "Fixed. governance now closes with a view: 'For a minority holder we read this profile as a governance mitigant rather than a concern: full board and committee independence, paired with capped, clawback-subject and double-trigger pay ... tempers agency risk at a moment when management is executing a large, dilutive acquisition and has flagged possible pressure on the dividend.'"
+    },
+    {
+      "id": "F-6",
+      "severity": "Important",
+      "field": "sections.executiveSummary.risks",
+      "quote": "Power and fuel price exposure: the 10-K states earnings and cash flows vary with spot and forward power prices, and baseload nuclear can see negative pricing when supply exceeds demand.",
+      "issue": "The executive-summary risk pointers stated the full substance rather than pointing, and sections.risks.idiosyncratic then repeated it under the same lead labels (rubric 7 paraphrase): 'Power and fuel price exposure' vs idiosyncratic[1]; 'Calpine integration and dilution' vs idiosyncratic[0]; 'Nuclear fuel supply' vs idiosyncratic[3] all carried near-identical 10-K content in two places.",
+      "fix": "Make the executive-summary risks one-line pointers ('commodity-price exposure; see Risks') and let the idiosyncratic section carry the mechanism and what-to-watch.",
+      "status": "addressed",
+      "note": "Fixed. The five executive-summary risks are now one-line pointers each ending 'see Risks' ('Commodity-price exposure across power and fuel; see Risks', 'Calpine integration and dividend risk; see Risks', etc.); the mechanism and 10-K detail are carried only in risks.idiosyncratic."
+    },
+    {
+      "id": "F-7",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.companyOverview",
+      "quote": "Its 10-Q for the period ended 2026-06-30 describes a fleet of 55 gigawatts spanning nuclear, natural gas, oil, geothermal, hydro, wind and solar",
+      "issue": "ISO-format dates in prose (rubric 9). '2026-06-30' appeared here and in analystCommentary ('period ended 2026-06-30' and 'as of 2026-09-22'), where house style calls for prose dates.",
+      "fix": "Render dates in prose form, e.g. 'its 10-Q for the quarter ended June 30, 2026' and 'as of September 22, 2026'.",
+      "status": "addressed",
+      "note": "Fixed. companyOverview now reads 'its 10-Q for the period ended June 30, 2026' and analystCommentary 'as of September 22, 2026'. A scan of the judgment finds no ISO-format (YYYY-MM-DD) dates remaining."
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "sections.businessMoat.segments[0].body",
+      "quote": "the Pastoria Solar Project and Power Bank sit in California under a 15-year PPA with Pacific Gas and Electric Company.",
+      "issue": "Wrong counterparty for the solar project (rubric 1/2). The MD&A states the 105 MW Pastoria Solar Project is 'the largest renewable energy project contracted by the California Department of Water Resources,' while only the Pastoria Power Bank is 'contracted and supported by a 15-year power purchase agreement with Pacific Gas and Electric Company.' The body attached the 15-year PG&E PPA to the Solar Project as well, which the pack does not support.",
+      "fix": "Attribute the 15-year PG&E PPA to the Pastoria Power Bank only, and note the Solar Project is contracted by the California Department of Water Resources.",
+      "status": "addressed",
+      "note": "Fixed. segments[0].body now reads 'the Pastoria Solar Project is contracted by the California Department of Water Resources and the co-located Pastoria Power Bank carries a 15-year power purchase agreement with Pacific Gas and Electric Company' — the PG&E PPA is attached to the Power Bank only."
+    },
+    {
+      "id": "F-9",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "Our target range of $290 to $350 brackets the base case and sits below the Street's consensus target, reflecting the commodity sensitivity and integration risk that temper an otherwise constructive demand story.",
+      "issue": "Precision slip (rubric 6). The prose says the '$290 to $350' band 'sits below the Street's consensus target,' but the Street consensus target on the grounding surface is $348.55, and the band's top of $350 is $1.45 above it. The below-consensus point holds for the probability-weighted fair value (~$299) and the base case ($300) but not for the full stated band, so applying 'sits below' to the range as written is inaccurate at the top. analystCommentary and thesis correctly frame this against the fair value ('below the Street's $348.55 consensus target'); only scenarioCommentary extends the claim to the range.",
+      "fix": "Attach the below-consensus claim to the base case / fair value rather than the whole band (e.g. 'the band brackets the base case, and our fair value sits below the Street's consensus target of $348.55'), or note the top of the range is essentially at consensus.",
+      "status": "open"
+    }
+  ]
+}

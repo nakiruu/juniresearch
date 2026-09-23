@@ -1,0 +1,584 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "ALL",
+  "cik": 899051,
+  "company": "The Allstate Corporation",
+  "exchange": "NYSE",
+  "sic": 6331,
+  "sicDescription": "Fire, Marine & Casualty Insurance",
+  "goodwill": [
+    3502000000,
+    3502000000,
+    3502000000,
+    3245000000,
+    3118000000
+  ],
+  "filing": {
+    "form": "10-Q",
+    "accession": "0000899051-26-000118",
+    "filedDate": "2026-08-05",
+    "periodEnd": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/899051/000089905126000118/all-20260630.htm"
+  },
+  "capturedAt": "2026-09-22T22:15:07.009Z",
+  "quote": {
+    "price": 229.5,
+    "marketCap": 58030899200,
+    "sharesOutstanding": 252857948.583878,
+    "sharesSource": "derived",
+    "week52Low": 188.08,
+    "week52High": 277.22,
+    "dividendYield": 0.0178,
+    "asOf": "2026-09-22"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          50601000000,
+          51411000000,
+          57094000000,
+          64106000000,
+          67685000000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          1614000000,
+          -1289000000,
+          -188000000,
+          4667000000,
+          10282000000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          5.01,
+          -5.14,
+          -1.2,
+          16.99,
+          38.06
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          7976000000,
+          7964000000,
+          7942000000,
+          8085000000,
+          7490000000
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          24892000000,
+          17363000000,
+          17630000000,
+          21367000000,
+          30589000000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          5116000000,
+          5121000000,
+          4228000000,
+          8931000000,
+          10110000000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -345000000,
+          -420000000,
+          -267000000,
+          -210000000,
+          -228000000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          -3120000000,
+          -2520000000,
+          -335000000,
+          -2000000,
+          -1233000000
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          -885000000,
+          -926000000,
+          -925000000,
+          -962000000,
+          -1036000000
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          4771000000,
+          4701000000,
+          3961000000,
+          8721000000,
+          9882000000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q2'26",
+    "periodEnd": "2026-06-30",
+    "revenue": 18596000000,
+    "operatingMargin": null,
+    "revenueYoY": 0.1180183971622677
+  },
+  "ttm": {
+    "pe": 4.594594594594595,
+    "ps": 0.8273935183997034,
+    "evToEbitda": null,
+    "grossMargin": null,
+    "operatingMargin": null,
+    "netMargin": 0.1897144160714031,
+    "netDebtToEbitda": null,
+    "interestCoverage": null,
+    "currentRatio": null,
+    "fcfYield": 0.21107720488329088
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 70151112590,
+      "eps": 35.262
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 72627998010,
+      "eps": 27.63648
+    }
+  },
+  "analysts": {
+    "count": 25,
+    "buy": 10,
+    "hold": 10,
+    "sell": 5,
+    "consensusRating": "Hold",
+    "consensusTarget": 274.77274,
+    "medianTarget": 281,
+    "highTarget": 334,
+    "lowTarget": 191,
+    "asOf": "2026-09-22"
+  },
+  "segments": {
+    "basis": "FY25 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 67685000000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "AFL",
+      "pe": 12.362459,
+      "ps": 3.1796968,
+      "evToEbitda": 10.715
+    },
+    {
+      "ticker": "CB",
+      "pe": 11.894084,
+      "ps": 2.092866,
+      "evToEbitda": 10.256
+    },
+    {
+      "ticker": "CINF",
+      "pe": 7.829556,
+      "ps": 1.8239404,
+      "evToEbitda": 5.634
+    },
+    {
+      "ticker": "HIG",
+      "pe": 8.890193,
+      "ps": 1.1894712,
+      "evToEbitda": 6.469
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-11",
+      "close": 262.2300109863281
+    },
+    {
+      "date": "2026-08-12",
+      "close": 255.83999633789062
+    },
+    {
+      "date": "2026-08-13",
+      "close": 260.4800109863281
+    },
+    {
+      "date": "2026-08-14",
+      "close": 261.4100036621094
+    },
+    {
+      "date": "2026-08-17",
+      "close": 258.1000061035156
+    },
+    {
+      "date": "2026-08-18",
+      "close": 261.1499938964844
+    },
+    {
+      "date": "2026-08-19",
+      "close": 259.739990234375
+    },
+    {
+      "date": "2026-08-20",
+      "close": 254.5399932861328
+    },
+    {
+      "date": "2026-08-21",
+      "close": 253.8300018310547
+    },
+    {
+      "date": "2026-08-24",
+      "close": 260.19000244140625
+    },
+    {
+      "date": "2026-08-25",
+      "close": 257.6199951171875
+    },
+    {
+      "date": "2026-08-26",
+      "close": 261.80999755859375
+    },
+    {
+      "date": "2026-08-27",
+      "close": 257.6199951171875
+    },
+    {
+      "date": "2026-08-28",
+      "close": 260.5799865722656
+    },
+    {
+      "date": "2026-08-31",
+      "close": 257.79998779296875
+    },
+    {
+      "date": "2026-09-01",
+      "close": 257.8699951171875
+    },
+    {
+      "date": "2026-09-02",
+      "close": 259.3399963378906
+    },
+    {
+      "date": "2026-09-03",
+      "close": 263.1099853515625
+    },
+    {
+      "date": "2026-09-04",
+      "close": 259.57000732421875
+    },
+    {
+      "date": "2026-09-08",
+      "close": 253.4600067138672
+    },
+    {
+      "date": "2026-09-09",
+      "close": 253.5800018310547
+    },
+    {
+      "date": "2026-09-10",
+      "close": 251.7899932861328
+    },
+    {
+      "date": "2026-09-11",
+      "close": 253.7100067138672
+    },
+    {
+      "date": "2026-09-14",
+      "close": 258.4800109863281
+    },
+    {
+      "date": "2026-09-15",
+      "close": 257.2099914550781
+    },
+    {
+      "date": "2026-09-16",
+      "close": 254.85000610351562
+    },
+    {
+      "date": "2026-09-17",
+      "close": 252.2100067138672
+    },
+    {
+      "date": "2026-09-18",
+      "close": 249.8300018310547
+    },
+    {
+      "date": "2026-09-21",
+      "close": 242.86000061035156
+    },
+    {
+      "date": "2026-09-22",
+      "close": 229.5
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "The Allstate Corporation, together with its subsidiaries, provides property and casualty, and other insurance products in the United States and Canada. It operates in four segments: Allstate Protection; Run-off Property-Liability; Protection Services; and Corporate and Other. The company offers private passenger auto, homeowners, other personal lines and commercial insurance through exclusive agents, independent agents, contact centers and online under the Allstate, National General, Direct Auto and Answer Financial brands. It also provides consumer product protection plans, device and mobile data collection services, and analytic solutions using automotive telematics information, roadside assistance, and protection plans; and insurance products, such as identity protection and restoration. In addition, the company offers property and casualty insurance, as well as engages in company activities and certain non-insurance operations, including expenses associated with strategic initiatives. Further, it offers automotive protection; vehicle service contracts, guaranteed asset protection, road hazard tires and wheels, and paintless dent repair protection; and roadside assistance, mobility data collection services, and analytic solutions using automotive telematics information, identity theft protection, and remediation services. The Allstate Corporation was founded in 1931 and is headquartered in Northbrook, Illinois.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-22"
+    },
+    "mdaExcerpt": {
+      "text": "Item 2. Management's Discussion and Analysis of Financial Condition and Results of Operations\nOverview\nThe following discussion highlights significant factors influencing the consolidated financial position and results of operations of The Allstate Corporation (referred to in this document as \"we,\" \"our,\" \"us,\" the \"Company\" or \"Allstate\"). It should be read in conjunction with the condensed consolidated financial statements and related notes thereto found under Part I. Item 1. contained herein, and with the discussion, analysis, consolidated financial statements and notes thereto in Part I. Item 1. and Part II. Item 7. and Item 8. of The Allstate Corporation annual report on Form 10-K for 2025.\nFurther analysis of our insurance segments Allstate Protection and Run-off Property-Liability, together Property-Liability Operations, and Protection Services, is provided in Management's Discussion and Analysis (\"MD&A\"). The segments are consistent with the way in which the chief operating decision maker reviews financial performance and makes decisions about the allocation of resources.\nMeasuring segment profit or loss\nThe measure of segment profit or loss used in evaluating performance is underwriting income for the Allstate Protection and Run-off Property-Liability segments and adjusted net income for the Protection Services and Corporate segments. We use these measures in our evaluation of results of operations to analyze profitability.\nUnderwriting income (loss) is calculated as premiums earned and other revenue, less claims and claims expense (\"losses\"), amortization of deferred policy acquisition costs (\"DAC\"), operating costs and expenses, amortization or impairment of purchased intangibles and restructuring and related charges, as determined using GAAP.\nAdjusted net income (loss) is net income (loss) applicable to common shareholders, excluding:\nNet gains and losses on investments and derivatives\nPension and other postretirement remeasurement gains and losses\nAmortization or impairment of purchased intangibles\nGain or loss on disposition\nAdjustments for other significant non-recurring, infrequent or unusual items, when (a) the nature of the charge or gain is such that it is reasonably unlikely to recur within two years, or (b) there has been no similar charge or gain within the prior two years\nIncome tax expense or benefit on reconciling items\nMacroeconomic impacts\nMacroeconomic factors have and may continue to impact the results of our operations, financial condition and liquidity. These conditions include U.S. government fiscal and monetary policies, tariff measures, major combat operations in Iran, the Russia/Ukraine conflict, supply chain disruptions, volatility in global energy markets and labor availability. Increased oil prices may contribute to higher transportation, manufacturing and repair costs. If sustained, these conditions may change claims frequency in auto coverages and may increase severity in auto and homeowners coverages and place additional pressure on operating costs and consumer affordability. We continue to monitor these conditions and reflect our current expectations in pricing and reserving; however, uncertainty remains regarding the extent and duration of these impacts.\nCorporate strategy\nOur strategy has two components: increase personal property-liability market share and expand protection offerings by leveraging the Allstate brand, customer base and capabilities.\nTransformative Growth is a comprehensive plan to improve Allstate's competitive position by providing affordable, simple and connected protection through multiple distribution methods. The ultimate objective is to enhance customer value to drive growth in all businesses.\nIn the personal property-liability businesses, this has five key components:\nImproving customer value\nExpanding customer access\nIncreasing sophistication and investment in customer acquisition\nDeploying new technology ecosystems\nDriving organizational transformation\nWe are expanding Protection Services businesses internationally and by leveraging the Allstate brand, customer base and capabilities.\n44 www.allstate.com\nFinancial Highlights\n($ in millions)\nQ1\nQ2\nConsolidated net income applicable to common shareholders increased $1.16 billion to $3.24 billion in the second quarter of 2026 and increased $3.02 billion to $5.67 billion in the first six months of 2026 compared to the same periods of 2025, primarily due to higher underwriting income and valuation gains on equity investments.\nTotal revenue increased 11.8% to $18.60 billion in the second quarter of 2026 and increased 7.4% to $35.54 billion in the first six months of 2026 compared to the same periods of 2025, primarily due to higher auto and homeowners insurance policies in force and valuation gains on equity investments.\nNet investment income increased $255 million to $1.01 billion in the second quarter of 2026 and increased $339 million to $1.95 billion in the first six months of 2026 compared to the same periods of 2025, primarily due to higher market-based and performance-based investment results.\nInvestments totaled $87.80 billion as of June 30, 2026, increasing from $83.24 billion as of December 31, 2025.\nAllstate shareholders' equity was $33.70 billion as of June 30, 2026, increasing from $30.61 billion as of December 31, 2025, primarily due to net income, partially offset by common share repurchases, dividends to shareholders and unrealized net capital losses.\nBook value per diluted common share (ratio of Allstate common shareholders' equity to total common shares outstanding and dilutive potential common shares outstanding) was $123.38 as of June 30, 2026, an increase of 49.7% from $82.40 as of June 30, 2025, and an increase of 13.8% from $108.45 as of December 31, 2025.\nReturn on average Allstate common shareholders' equity for the twelve months ended June 30, 2026, was 49.1%, an increase of 19.5 points from 29.6% for the twelve months ended June 30, 2025.\nSecond Quarter 2026 Form 10-Q 45\nProperty-Liability Operations\nProperty-Liability Operations\nOverview Property-Liability operations consist of two reportable segments: Allstate Protection and Run-off Property-Liability. These segments are consistent with the groupings of financial information that management uses to evaluate performance and to determine the allocation of resources.\nWe do not allocate Property-Liability investment income, net gains and losses on investments and derivatives, or assets to the Allstate Protection and Run-off Property-Liability segments. Management reviews assets at the Property-Liability level for decision-making purposes.\nFor segment results, services provided by Protection Services to Allstate Protection are not eliminated as management considers those transactions in assessing the results of the respective segments. The effects of inter-segment transactions are eliminated in the consolidated results.\nGAAP operating ratios are used to measure our profitability to enhance an investor's understanding of our financial results and are calculated as follows:\nLoss ratio: the ratio of claims and claims expense (loss adjustment expenses), to premiums earned. Loss ratios include the impact of catastrophe losses and prior year reserve reestimates.\nExpense ratio: the ratio of amortization of DAC, operating costs and expenses, amortization or impairment of purchased intangibles and restructuring and related charges, less other revenue to premiums earned.\nCombined ratio: the sum of the loss ratio and the expense ratio.\nWe have also calculated the following impacts of specific items on the GAAP operating ratios because of the volatility of these items between periods. The impacts are calculated by taking the specific items noted below divided by Property-Liability premiums earned:\nEffect of catastrophe losses on combined ratio: includes catastrophe losses and prior year reserve reestimates of catastrophe losses included in claims and claims expense\nEffect of prior year reserve reestimates on combined ratio\nEffect of restructuring and related charges on combined ratio\nEffect of amortization of purchased intangibles on combined ratio\nEffect of Run-off Property-Liability business on combined ratio: includes claims and claims expense, restructuring and related charges and operating costs and expenses in the Run-off Property-Liability segment\nPremium measures and statistics are used to analyze our premium trends and are calculated as follows:\nPIF : policy counts are based on items rather than customers. A multi-car customer would generate multiple item (policy) counts, even if all cars were insured under one policy. Lender-placed policies are excluded from policy counts.\nNew issued applications : item counts of automobile or homeowner insurance applications for insurance policies that were issued during the period, regardless of whether the customer was previously insured by another Allstate brand.\nAverage premium-gross written (\"average premium\"): gross premiums written divided by issued item count. Gross premiums written include the impacts from discounts, surcharges and ceded reinsurance premiums and exclude the impacts from mid-term premium adjustments and premium refund accruals. Average premiums represent the appropriate policy term for each line, typically six months for an auto policy and twelve months for a homeowners policy.\nImplemented rate changes: represents the impact in the locations (U.S. states, the District of Columbia or Canadian provinces) where rate changes were implemented during the period as a percentage of total prior year-end premiums written.\n46 www.allstate.com\nProperty-Liability Operations\nUnderwriting results\nThree months ended June 30,\nSix months ended June 30,\n($ in millions, except ratios)\n2026\n2025\n2026\n2025\nPremiums written\n$\n15,431\n$\n15,047\n$\n30,056\n$\n29,344\nPremiums earned\n$\n14,918\n$\n14,346\n$\n29,720\n$\n28,373\nOther revenue\n568\n504\n1,112\n992\nTotal revenue\n15,486\n14,850\n30,832\n29,365\nClaims and claims expense\n(9,668)\n(10,084)\n(18,660)\n(20,744)\nAmortization of DAC\n(1,840)\n(1,742)\n(3,661)\n(3,474)\nOther costs and expenses\n(1,928)\n(1,685)\n(3,763)\n(3,386)\nRestructuring and related charges\n(6)\n(13)\n(7)\n(29)\nAmortization of purchased intangibles\n(38)\n(46)\n(77)\n(92)\nUnderwriting income\n$\n2,006\n$\n1,280\n$\n4,664\n$\n1,640\nCatastrophe losses\nCatastrophe losses, excluding reserve reestimates\n$\n1,671\n$\n1,984\n$\n2,899\n$\n4,202\nCatastrophe reserve reestimates (1)\n51\n6\n63\n(10)\nTotal catastrophe losses\n$\n1,722\n$\n1,990\n$\n2,962\n$\n4,192\nPrior year reserve reestimates, excluding catastrophes (1)\n$\n(692)\n$\n(376)\n$\n(1,708)\n$\n(611)\nPrior year reserve reestimates (1)\n(641)\n(370)\n(1,645)\n(621)\nGAAP operating ratios\nLoss ratio\n64.8\n70.3\n62.8\n73.1\nExpense ratio (2)\n21.8\n20.8\n21.5\n21.1\nCombined ratio\n86.6\n91.1\n84.3\n94.2\nEffect of catastrophe losses on combined ratio\n11.5\n13.9\n10.0\n14.8\nEffect of prior year reserve reestimates on combined ratio\n(4.3)\n(2.6)\n(5.6)\n(2.2)\nEffect of catastrophe losses included in prior year reserve reestimates on combined ratio\n0.3\n0.2\nEffect of restructuring and related charges on combined ratio\n0.1\n0.1\nEffect of amortization of purchased intangibles on combined ratio\n0.3\n0.3\n0.3\n0.3\nEffect of Run-off Property-Liability business on combined ratio\n(1) Reserve releases are shown in parentheses.\n(2) Other revenue is deducted from operating costs and expenses in the expense ratio calculation.\nSecond Quarter 2026 Form 10-Q 47\nSegment Results Allstate Protection\nAllstate Protection Segment\nUnderwriting results\nThree months ended June 30,\nSix months ended June 30,\n($ in millions)\n2026\n2025\n2026\n2025\nPremiums written\n$\n15,431\n$\n15,047\n$\n30,056\n$\n29,344\nPremiums earned\n$\n14,918\n$\n14,346\n$\n29,720\n$\n28,373\nOther revenue\n568\n504\n1,112\n992\nTotal revenue\n15,486\n14,850\n30,832\n29,365\nClaims and claims expense\n(9,668)\n(10,082)\n(18,660)\n(20,739)\nAmortization of DAC\n(1,840)\n(1,742)\n(3,661)\n(3,474)\nOther costs and expenses\n(1,928)\n(1,684)\n(3,762)\n(3,384)\nRestructuring and related charges\n(6)\n(13)\n(7)\n(29)\nAmortization of purchased intangibles\n(38)\n(46)\n(77)\n(92)\nUnderwriting income\n$\n2,006\n$\n1,283\n$\n4,665\n$\n1,647\nCatastrophe losses\n$\n1,722\n$\n1,990\n$\n2,962\n$\n4,192\nUnderwriting income increased $723 million and increased $3.02 billion in the second quarter and first six months of 2026, respectively, compared to the same periods of 2025, primarily due to an increase in premiums earned, lower catastrophe losses and the benefit of prior year reserve releases, partially offset by higher expenses.\nUnderwriting income (loss)\nThree months ended June 30,\nSix months ended June 30,\n($ in millions)\n2026\n2025\n2026\n2025\nAuto\n$\n1,606\n$\n1,331\n$\n3,335\n$\n2,147\nHomeowners\n226\n(76)\n911\n(527)\nSpecialty lines (1)\n108\n(11)\n265\n(76)\nCommercial lines\n13\n(17)\n34\n(1)\nBrokered solutions and collateral protection (2)\n52\n54\n116\n95\nAnswer Financial\n1\n2\n4\n9\nTotal\n$\n2,006\n$\n1,283\n$\n4,665\n$\n1,647\n(1) Includes renters, condominium, landlord, boat, umbrella, manufactured home, scheduled personal property, auto assigned risk and valuable item protection products.\n(2) Brokered solutions and collateral protection includes brokered property and casualty and life and annuity products, and lender-placed products.\nChange in underwriting results from prior year period - three months ended\n($ in millions)\n48 www.allstate.com\nAllstate Protection Segment Results\nChange in underwriting results from prior year period - six months ended\n($ in millions)\nPremium measures and statistics include PIF, new issued applications and average premiums. Premiums written is the amount of premiums charged for policies issued during a reporting period. Premiums are considered earned and are included in the financial results on a pro-rata basis over the policy period. The portion of premiums written applicable to the unexpired term of the policies is recorded as unearned premiums on our Condensed Consolidated Statements of Financial Position.\nPremiums written\nThree months ended June 30,\nSix months ended June 30,\n($ in millions)\n2026\n2025\n2026\n2025\nAuto\n$\n9,572\n$\n9,533\n$\n19,422\n$\n19,381\nHomeowners\n4,752\n4,395\n8,493\n7,848\nSpecialty lines\n886\n865\n1,654\n1,594\nCommercial lines\n121\n100\n233\n194\nBrokered solutions and collateral protection\n100\n154\n254\n327\nTotal premiums written\n$\n15,431\n$\n15,047\n$\n30,056\n$\n29,344\nPremiums earned\nThree months ended June 30,\nSix months ended June 30,\n($ in millions)\n2026\n2025\n2026\n2025\nAuto\n$\n9,644\n$\n9,528\n$\n19,191\n$\n18,875\nHomeowners\n4,201\n3,771\n8,365\n7,428\nSpecialty lines\n822\n779\n1,642\n1,520\nCommercial lines\n107\n104\n208\n217\nBrokered solutions and collateral protection\n144\n164\n314\n333\nTotal premiums earned\n$\n14,918\n$\n14,346\n$\n29,720\n$\n28,373\nPolicies in force\nAs of June 30,\n(In thousands)\n2026\n2025\nAuto\n25,951\n25,243\nHomeowners\n7,819\n7,596\nSpecialty lines\n4,945\n4,885\nCommercial lines\n182\n176\nTotal\n38,897\n37,900\nAuto insurance premiums written increased $39 million in the second quarter of 2026 compared to the second quarter of 2025 and increased $41 million in the first six months of 2026 compared to the first six months of 2025, primarily due to the following factors:\nIncreased new issued applications in all channels\nPIF increased 2.8% or 708 thousand to 25,951 thousand as of June 30, 2026 compared to June 30, 2025\nLower Allstate brand average premiums resulting from a shift in product mix towards affordable, simple and connected protection\nSecond Quarter 2026 Form 10-Q 49\nSegment Results Allstate Protection\nWe will pursue rate adjustments in states where we are achieving acceptable returns, while implementing rates where needed to keep pace with increasing costs.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/899051/000089905126000118/all-20260630.htm",
+      "asOf": "2026-08-05",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "Item 1A. Risk Factors\nSummary Risks are grouped into three categories: (1) insurance and financial services, (2) business, strategy and operations and (3) macro, regulatory and risk environment. Many risks may affect more than one category and are included where the impact is most significant. If some of these risk factors occur, they may cause the emergence of or exacerbate the impact of other risk factors, which could materially increase the severity of the impact of these risks on the business, results of operations, financial condition or liquidity. The table below includes examples of risks from each category.\nInsurance and financial services\nBusiness, strategy and operations\nMacro, regulatory\nand risk environment\nRisks related to the insurance and financial services industries\nRisks related to Allstate's business and operating model\nRisks that impact most companies\nComplexity and uncertainty of loss cost estimates and reserves\nClaim frequency and severity volatility\nCatastrophes and severe weather\nAbility to obtain approval for rate increases or new products\nInvestment results are subject to market volatility and valuation judgments\nHighly competitive industry\nChanging consumer preferences\nNew or changing technologies\nIneffective Transformative Growth strategy\nAbility to maintain catastrophe reinsurance programs and limits\nFluctuations in financial strength and ratings\nLoss of key business relationships\nCybersecurity and privacy events\nAbility to attract, develop and retain talent\nAdverse changes in economic and capital market conditions\nLarge-scale disruptive or destabilizing events\nChanging climate conditions\nEvolving environmental and social expectations of stakeholders\nRegulatory and political changes\nThe Allstate Corporation Board of Directors (\"Allstate Board\") has overall responsibility for oversight of Management's design and implementation of our Enterprise Risk and Return Management (\"ERRM\") framework that manages the business on an integrated basis following risk and return principles. The Risk and Return Committee of the Allstate Board oversees effectiveness of the ERRM program, governance structure and risk-related decision-making, while focusing on the Company's overall risk profile.\nSee Management's Discussion and Analysis (\"MD&A\"), Enterprise Risk and Return Management for further details.\nConsider these cautionary statements carefully together with other factors discussed elsewhere in this document, in filings with the Securities and Exchange Commission (\"SEC\") or in materials incorporated therein by reference.\nInsurance and financial services\nProperty and casualty actual claim costs may exceed current reserves established for claims due to changes in the inflationary, regulatory and litigation environment\nEstimating claim reserves is an inherently uncertain and complex process. We continually refine our best estimates of losses after considering known facts and interpretations of the circumstances.\nThe reserving methodology may be impacted by the following:\nModels that rely on the assumption that past loss development patterns will persist into the future\nInternal factors including experience with similar cases, actual claims paid, historical trends involving claim payment and case reserving patterns, pending levels of unpaid claims, loss management programs, product mix, contractual terms and changes in claim reporting and settlement practices\nExternal factors such as inflation, court decisions, changes in law or litigation imposing unintended coverage or an unexpected increase in the number, size or types of claims, regulatory requirements, changes in driving patterns, delays in reporting of claims and economic conditions, the imposition and impact of tariffs, supply chain disruptions and labor shortages\nThe ultimate cost of losses, or current estimates, have and may continue to vary materially from recorded reserves and such variance may adversely affect the results of operations and financial condition as the reserves and amounts due from reinsurers are reestimated.\nFor further details, see MD&A, Application of Critical Accounting Estimates.\nIncreases in the frequency or severity of property and casualty claims may adversely affect our results of operations and financial condition\nA significant increase in claim frequency could adversely affect the results of operations and financial condition. Changes in mix of business, miles driven, weather patterns, driving behaviors, technology or\nThe Allstate Corporation 21\n2025 Form 10-K Part I - Item 1A. Risk Factors and Other Disclosures\nother factors can lead to changes in claim frequency. We may experience volatility in claim frequency, and short-term trends may not be predictive of future losses over the longer term.\nThe following factors have and may continue to impact claim severity for auto bodily injury, auto physical damage (including collision and property damage) and homeowners coverages:\nBodily injury more severe accidents, an increase in claims with attorney representation, higher medical consumption and inflation\nVehicle physical damage inflation, supply chain disruptions, labor shortages, labor rates, tariffs impacting vehicle and parts prices, increased repair costs for components that have embedded advanced driver assistance systems such as cameras and sensors, length of claim resolution, delays in the receipt of third-party carrier claims, and a higher mix of total losses\nHomeowners inflation in the construction industry, building materials and home furnishings, changes in the mix of loss type, changes in building codes and other economic and environmental factors, including short-term supply imbalances for services, supplies in areas affected by catastrophes, labor shortages, labor rates and tariffs\nCatastrophes and severe weather events may subject us to significant losses\nCatastrophic events could adversely affect operating results and cause them to vary significantly from one period to the next. Climate change could contribute to increased variability of catastrophe losses and underwriting results. Also, liquidity could be constrained by a catastrophe, or multiple catastrophes, which could result in extraordinary losses, sales of investments or a downgrade of our debt or financial strength ratings.\nCatastrophic losses are caused by wind and hail, wildfires, tornadoes, hurricanes, tropical storms, earthquakes, severe freeze events, volcanic eruptions, terrorism, cyberattacks, civil unrest, industrial accidents and other such events.\nOur personal property insurance business may incur catastrophe losses greater than:\nThose experienced in prior years\nThe expected level used in pricing\nCurrent reinsurance coverage limits\nLoss estimates from hurricane and earthquake models at various levels of probability\nProperty and casualty businesses are subject to claims arising from severe weather events such as wildfires, winter storms, rain, hail and high winds. The incidence and severity of weather conditions resulting in claims are extremely volatile.\nThe total number of policyholders affected by the event, the severity of the event and the coverage provided contribute to catastrophe and severe weather losses. Increases in the insured values of\ncovered property, geographic concentration and the number of policyholders exposed to certain events could increase the severity of claims from catastrophic and severe weather events. Where appropriate and supportable, the Company pursues subrogation of its losses resulting from catastrophes and severe weather events. These efforts may be impacted by external factors that vary by jurisdiction, including developments in the law that may restrict subrogation recoveries, including such claims against utility companies.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/899051/000089905126000031/all-20251231.htm",
+      "asOf": "2026-02-20",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-K",
+    "pressRelease": null,
+    "proxyStatement": {
+      "text": "Compensation discussion and analysis:\nCompensation Discussion and Analysis\nMessage from the Compensation and Human Capital Committee\nAllstate's compensation philosophy is to pay for performance over short- and long-term periods, with a focus on financial, operating and strategic metrics that are designed to drive shareholder long-term value. Each year, the committee reviews the named executives' performance and uses a balanced and disciplined approach to determine base salaries and variable compensation awards. In 2025, a number of alternative compensation structures were considered with feedback from shareholders, as inputs into compensation decisions. During 2025, the committee also focused on senior leadership development, succession planning, and enterprise organizational health. We appreciate the feedback on all of these topics and hope to have your support on this year's say-on-pay vote.\nWHERE TO FIND\n2025 Executive Compensation At-a-Glance\n48\nCompensation Decisions for 2025\n61\nCompensation Risk\n68\nOther Elements of Compensation\n65\nCompensation Committee Report\n68\nIncentive Design and Goal-Setting\n51\nCompensation Governance Practices\n67\nSummary Compensation Table\n69\nShareholder Engagement and 2025 Say-on-Pay Results\n52\nNon-GAAP Performance Measures for 2025\n83\nEquity Ownership Requirements\n67\nTiming of Equity Awards and Grant Practices\n52\nPolicies on Hedging and Pledging Securities\n67\nPay Ratio\n87\nPay Versus Performance Table\n88\nPeer Benchmarking\n53\nClawback of Compensation\n68\nCompensation Elements\n54\nThe Allstate Corporation | AllstateInvestors.com\n47\nIntroduction\nCorporate\nGovernance\nExecutive\nCompensation\nAudit\nMatters\nShareholder Proposal\nStock\nOwnership\nOther\nInformation\nLinks and\nResources\n1\n2025 Executive Compensation At-a-Glance\nAllstate's executive compensation program is designed to ensure that the interests of our executives are aligned with our shareholders.\nPay for Performance\nOver 90% of our CEO's and over 80% of our other Named Executive Officers' (NEOs') compensation opportunity is at-risk and based on measurable performance goals.\nEstablish a Strong Link Between Performance Measures and Strategic Objectives\nPerformance measures are linked to operating priorities designed to create long-term shareholder value.\nAlignment of Pay with Performance\nAllstate's executive compensation program is designed to align pay with performance and reinforce long term shareholder value creation. Annual cash incentives are linked to near-term operating priorities and long-term equity measures are based on shareholder value creation.\nProgram Design and Philosophy\nA significant portion of the named executives' compensation is at-risk and tied to achievement of key financial and strategic goals. Collectively, approximately 88% of their average target compensation is dependent on performance outcomes.\nIncentive compensation plans incorporate metrics that incentivize our executive leadership team to achieve Allstate's short and long term business objectives.\nThese metrics align with our business strategy and support shareholder value creation at all points in the business cycle.\nEquity-based programs use performance measures correlated with long term shareholder value.\nEvidence of Alignment in Incentive Outcomes\nOur results this past year demonstrate the executive compensation program operates as intended and aligns outcomes with shareholder expectations. When performance exceeds goals, executives earn above-target compensation, whereas when performance is below expectations, payouts are reduced accordingly.\nAnnual Incentive Plan (AIP)\nIn 2025, net income increased to $10.2 billion due to improvements across Allstate's businesses.\nAs a result, the AIP funded at 127.2% of target for 2025.\nThis compares to 188.1% in 2024 and 50% in 2023.\n2025 Annual Cash Incentive\n127.2%\nPayout as a percentage of target pool funding\nPerformance Stock Awards (PSAs)\nThe 2023 2025 PSA program resulted in a payout of 157.4% . This compares to the 2022 2024 PSA program which paid out at 62.2%, reflecting the impact of auto insurance results on returns in 2022 and 2023.\n2023-2025 Performance Share Stock Awards\n157.4%\nShares vested as a percentage of target\nFiscal 2025 Variable Pay Components\nFor fiscal 2025, the variable pay components (described below) are comprised of short and long-term metrics intended to align with our pay-for-performance compensation philosophy which delivered the following outcomes:\nTotal policies in force grew by 3% over 2024 to 211 million, marking a return to growth in the property- liability businesses,\nNet Income applicable to common shareholders rose to $10.2 billion, a 123% increase over 2024, and\nShareholders were provided with over $2.2 billion of cash returns through dividends and share repurchases, an increase of 136% over 2024.\nFor more information about the metrics we use to measure compensation and the resulting payouts, see the Compensation Elements section of the Compensation Discussion and Analysis (CD&A).\n\nSecurity ownership:\nSecurity Ownership of Certain Beneficial Owners\nThe following table shows the shareholders that we know to be the beneficial owners of more than 5% of the outstanding shares of Allstate common shares as of April 1, 2026. (1)\nTitle of Class\nName and Address of Beneficial Owner\nAmount and Nature of\nBeneficial Ownership\nPercent\nof Class\nCommon\nBlackRock Inc. 50 Hudson Yards, New York,\nNY 10001\n22,236,119\n(2)\n8.4\n%\n(2)\n(1) On March 26, 2026, The Vanguard Group, Inc. filed a Schedule 13G/A reporting that on January 12, 2026, it underwent an internal realignment such that The Vanguard Group, Inc. and its subsidiaries or business divisions of subsidiaries will report beneficial ownership separately (on a disaggregated basis) from The Vanguard Group, Inc. Consequently, in such filing The Vanguard Group reported that it held 0 shares with sole voting power, 0 shares with shared voting power, 0 shares with sole dispositive power and 0 shares with shared dispositive power. Prior to such filing, The Vanguard Group reported that, as of December 31, 2023, it held 0 shares with sole voting power; 327,195 shares with shared voting power; 31,030,890 shares with sole dispositive power; and 1,153,426 shares with shared dispositive power.\n(2) Reflects shares beneficially owned as of December 31, 2024, as set forth in a Schedule 13G/A filed on February 3, 2025 . Of these shares, BlackRock reported it held 19,742,720 shares with sole voting power; 0 shares with shared voting power; 22,236,119 shares with sole dispositive power; and 0 shares with shared dispositive power.\n\nRelated-person transactions:\nRelated Person Transactions\nThe Nominating, Governance and Social Responsibility Committee has adopted a written policy on the review, approval, or ratification of transactions with related persons, which is posted on the Corporate Governance section of www.allstateinvestors.com .\nSince the beginning of 2025, there were no related person transactions identified.\nThe committee or committee chair reviews transactions with Allstate in which the amount involved exceeds $120,000 and in which any related person had, has, or will have a direct or indirect material interest. In general, related persons are directors, executive officers, their immediate family members and shareholders beneficially owning more than 5% of our outstanding stock. The committee or committee chair approves or ratifies only those transactions that are in, or not inconsistent with, the best interests of Allstate and its shareholders. Transactions are reviewed and approved or ratified by the committee chair when it is not practicable or desirable to delay review of a transaction until a committee meeting. The committee chair reports any approved transactions to the committee. Any ongoing, previously approved or ratified related person transactions are reviewed annually.\n24\nThe Allstate Corporation | AllstateInvestors.com\nIntroduction\nCorporate\nGovernance\nExecutive\nCompensation\nAudit\nMatters\nShareholder Proposal\nStock\nOwnership\nOther\nInformation\nLinks and\nResources\nCorporate Governance Highlights\nAllstate has a history of strong corporate governance guided by independence, transparency and accountability . The Board has enhanced policies and standards over time to align with best practices and serve the interests of shareholders. Our foundation in governance positions the Board to effectively oversee the execution of our strategy and sustained long- term value. We provide an overview of some of our corporate governance practices below.",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/899051/000089905126000063/all-20260410.htm",
+      "asOf": "2026-04-10",
+      "truncated": true
+    },
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-22T22:15:07.009Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-09-22T22:15:07.009Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-22T22:15:07.009Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-22T22:15:07.009Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-22T22:15:07.009Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-22T22:15:07.009Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-22T22:15:07.009Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-22T22:15:07.009Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-22T22:15:07.009Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-22T22:15:07.009Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-22T22:15:07.009Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-22T22:15:07.009Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-22T22:15:07.009Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-22T22:15:07.009Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-22T22:15:07.009Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-09-22T22:15:07.009Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-09-22T22:15:07.009Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-09-22T22:15:07.009Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-22T22:15:07.009Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-22T22:15:07.009Z"
+    }
+  ]
+}

@@ -1,0 +1,731 @@
+{
+  "schemaVersion": "1.1.0",
+  "meta": {
+    "company": "Palantir Technologies Inc.",
+    "ticker": "PLTR",
+    "exchange": "NASDAQGS",
+    "subtitle": "Rapid growth and a GAAP-profit inflection meet a priced-for-perfection multiple; the scenario math supports a HOLD.",
+    "reportDate": "September 22, 2026",
+    "asOf": "Sep 22, 2026",
+    "analyst": "Juniper Finance Research Desk",
+    "analystName": "Nico — Senior Analyst",
+    "fiscalYearEnd": "December 31",
+    "currency": "USD",
+    "filing": {
+      "form": "10-Q",
+      "fiscalPeriod": "fiscal Q2 2026",
+      "filedDate": "Aug 4, 2026",
+      "accession": "0001321655-26-000041"
+    }
+  },
+  "quote": {
+    "currentPrice": 184.99,
+    "marketCap": 444541796352,
+    "sharesOutstanding": 2300713329,
+    "week52Low": 106.37,
+    "week52High": 207.52,
+    "dividendYield": 0,
+    "history": [
+      {
+        "date": "2026-08-11",
+        "close": 174.94000244140625
+      },
+      {
+        "date": "2026-08-12",
+        "close": 171.0399932861328
+      },
+      {
+        "date": "2026-08-13",
+        "close": 179.00999450683594
+      },
+      {
+        "date": "2026-08-14",
+        "close": 174.0399932861328
+      },
+      {
+        "date": "2026-08-17",
+        "close": 172.5500030517578
+      },
+      {
+        "date": "2026-08-18",
+        "close": 171.5399932861328
+      },
+      {
+        "date": "2026-08-19",
+        "close": 175.19000244140625
+      },
+      {
+        "date": "2026-08-20",
+        "close": 173.9600067138672
+      },
+      {
+        "date": "2026-08-21",
+        "close": 179.94000244140625
+      },
+      {
+        "date": "2026-08-24",
+        "close": 175.88999938964844
+      },
+      {
+        "date": "2026-08-25",
+        "close": 172.72999572753906
+      },
+      {
+        "date": "2026-08-26",
+        "close": 177.5
+      },
+      {
+        "date": "2026-08-27",
+        "close": 185.92999267578125
+      },
+      {
+        "date": "2026-08-28",
+        "close": 186.2899932861328
+      },
+      {
+        "date": "2026-08-31",
+        "close": 186.3800048828125
+      },
+      {
+        "date": "2026-09-01",
+        "close": 179.9199981689453
+      },
+      {
+        "date": "2026-09-02",
+        "close": 169.4600067138672
+      },
+      {
+        "date": "2026-09-03",
+        "close": 182.52999877929688
+      },
+      {
+        "date": "2026-09-04",
+        "close": 174.3300018310547
+      },
+      {
+        "date": "2026-09-08",
+        "close": 170.3000030517578
+      },
+      {
+        "date": "2026-09-09",
+        "close": 169.52999877929688
+      },
+      {
+        "date": "2026-09-10",
+        "close": 165.86000061035156
+      },
+      {
+        "date": "2026-09-11",
+        "close": 167.22999572753906
+      },
+      {
+        "date": "2026-09-14",
+        "close": 173.30999755859375
+      },
+      {
+        "date": "2026-09-15",
+        "close": 172.55999755859375
+      },
+      {
+        "date": "2026-09-16",
+        "close": 174.33999633789062
+      },
+      {
+        "date": "2026-09-17",
+        "close": 176.24000549316406
+      },
+      {
+        "date": "2026-09-18",
+        "close": 177.63999938964844
+      },
+      {
+        "date": "2026-09-21",
+        "close": 183.08999633789062
+      },
+      {
+        "date": "2026-09-22",
+        "close": 184.99000549316406
+      }
+    ]
+  },
+  "rating": {
+    "label": "HOLD",
+    "tone": "secondary",
+    "targetLow": 160,
+    "targetHigh": 225,
+    "conviction": {
+      "expectedUpside": 0.044651062219579485,
+      "bearDownside": 0.35131628736688475,
+      "rewardRisk": 0.12709647638098182,
+      "derivedLabel": "HOLD"
+    },
+    "gate": {
+      "sector": "industrial",
+      "ceiling": "STRONG BUY",
+      "gatedLabel": "HOLD",
+      "distress": "SAFE",
+      "piotroski": 6,
+      "accruals": null,
+      "confidence": "medium",
+      "flags": []
+    },
+    "decision": {
+      "conviction": 77,
+      "tier": "high",
+      "proposed": "HOLD",
+      "reasons": [
+        "E/R proposed HOLD"
+      ],
+      "advisories": [],
+      "moat": {
+        "width": "WIDE",
+        "trend": "STABLE",
+        "contingent": false,
+        "bearFloor": 0.15
+      },
+      "intrinsic": {
+        "marginOfSafety": -0.6831357019577106,
+        "impliedGrowth": 0.3686993619734643,
+        "achievableGrowth": 0.2
+      },
+      "composite": {
+        "percentile": 66.37065377347709,
+        "confidence": "high"
+      },
+      "uncertainty": {
+        "tier": "low",
+        "points": 2,
+        "drivers": [
+          "wide analyst-target dispersion (+2)"
+        ]
+      }
+    }
+  },
+  "snapshot": [
+    {
+      "label": "Current Price",
+      "value": 184.99,
+      "unit": "usd"
+    },
+    {
+      "label": "Market Cap",
+      "value": 444541796352,
+      "unit": "usdLarge",
+      "approx": true
+    },
+    {
+      "label": "52-Week Range",
+      "raw": "$106.37 – $207.52"
+    },
+    {
+      "label": "Shares Outstanding",
+      "value": 2300713329,
+      "unit": "shares",
+      "approx": false
+    },
+    {
+      "label": "P/E (TTM)",
+      "value": 158.11111111111114,
+      "unit": "mult"
+    },
+    {
+      "label": "Consensus Target",
+      "value": 196.84074,
+      "unit": "usd",
+      "change": 0.06406151683874795
+    },
+    {
+      "label": "EV/EBITDA (TTM)",
+      "unit": "mult"
+    },
+    {
+      "label": "Analyst Consensus",
+      "raw": "Buy (21 B / 9 H / 2 S)"
+    },
+    {
+      "label": "FY25 Revenue",
+      "value": 4475446000,
+      "unit": "usdLarge",
+      "change": 0.5618339093221549
+    },
+    {
+      "label": "FY25 Net Income",
+      "value": 1625033000,
+      "unit": "usdLarge"
+    },
+    {
+      "label": "FY25 Diluted EPS",
+      "value": 0.63,
+      "unit": "usd"
+    },
+    {
+      "label": "FY26E Revenue",
+      "value": 8187709600,
+      "unit": "usdLarge",
+      "approx": true,
+      "change": 0.829473442423392,
+      "changeDp": 0
+    },
+    {
+      "label": "Q2'26 Revenue",
+      "value": 1935464000,
+      "unit": "usdLarge",
+      "change": 0.928334945705726,
+      "changeDp": 0
+    },
+    {
+      "label": "Q2'26 Operating Margin",
+      "value": 0.4712069043908851,
+      "unit": "pct",
+      "dp": 0
+    },
+    {
+      "label": "Fwd P/E (FY27E)",
+      "value": 79.63443665276218,
+      "unit": "mult",
+      "approx": true
+    },
+    {
+      "label": "Dividend Yield",
+      "value": 0,
+      "unit": "pct",
+      "dp": 2
+    },
+    {
+      "label": "FY25 Free Cash Flow",
+      "value": 2100591000,
+      "unit": "usdLarge"
+    },
+    {
+      "label": "FY25 Gross Margin",
+      "value": 0.8236651721415028,
+      "unit": "pct"
+    },
+    {
+      "label": "FCF Yield (TTM)",
+      "value": 0.007554457258144589,
+      "unit": "pct",
+      "dp": 1
+    },
+    {
+      "label": "Current Ratio (TTM)",
+      "raw": "7.23"
+    }
+  ],
+  "analystSentiment": {
+    "numAnalysts": 32,
+    "buy": 21,
+    "hold": 9,
+    "sell": 2,
+    "consensusRating": "Buy",
+    "consensusTarget": 196.84074,
+    "medianTarget": 205.1,
+    "highTarget": 255,
+    "lowTarget": 80,
+    "commentary": "We rate Palantir a HOLD with a $160-$225 fair-value range against the $184.99 price on September 22, 2026. The operating story is strong: Q2'26 revenue rose {+ 93% year-over-year +} to $1.935 billion, and GAAP income from operations reached $912 million, a 47% margin, led by an accelerating U.S. commercial business and a customer base that keeps expanding. Management also raised its full-year 2026 guidance. The problem is price, not performance: the shares trade at a steep premium to earnings and sales, detailed in the valuation section, so the multiple already discounts years of sustained rapid growth. Our three scenarios weight to a fair value close to the $196.84 consensus target (+6.4%), leaving modest expected upside against a bear case near $120, roughly a third below the current price. That reward/risk does not justify adding at today's level, while the franchise quality and cash generation do not justify a SELL."
+  },
+  "sections": {
+    "executiveSummary": {
+      "companyOverview": "Palantir Technologies Inc. builds and deploys software platforms that help organizations integrate their data, decisions, and operations at scale. The company was founded in 2003, began by serving the U.S. intelligence community, and is headquartered in Aventura, Florida. It sells four principal platforms: Gotham, its original offering for defense and intelligence missions; Foundry, its data-operations platform built around what it calls the Ontology; Apollo, its continuous-delivery platform offered commercially since 2021; and the Artificial Intelligence Platform (AIP), its generative-AI platform introduced in 2023 that connects large language models to customer data and workflows. Palantir serves both commercial enterprises and government agencies, and counted 1,049 customers in the trailing twelve months ended June 30, 2026, up from 849 a year earlier. In the six months ended June 30, 2026, 52% of revenue came from government customers and 48% from commercial customers, and 80% of revenue came from U.S. customers with the remaining 20% from non-U.S. customers.",
+      "thesis": {
+        "label": "HOLD",
+        "body": "Palantir is growing revenue quickly while sustaining the GAAP profitability it first reached in FY23, including positive GAAP net income in Q2'26 as detailed in the financials section. The bull case rests on AIP adoption, an accelerating U.S. commercial business, durable government and defense demand, strong free-cash-flow generation, and a Rule of 40 score of 155% in Q2'26 — the sum of the 93% revenue growth rate and the 62% adjusted operating margin. The bear case is not about the business; it is about the price paid for it. At the premium multiples set out in the valuation section, the stock already embeds years of high growth, so even a strong result that merely meets expectations can leave the multiple exposed. Stock-based compensation, customer and government concentration, and intense competition compound that risk. Our scenario-weighted value sits close to the current price, which is why we rate the shares a HOLD rather than chasing the momentum or shorting the franchise."
+      },
+      "catalysts": [
+        "Management raised its full-year 2026 revenue guidance to $8.150-$8.158 billion and its adjusted free-cash-flow guidance to $4.5-$4.7 billion in the Q2'26 release; delivery against a raised bar is the near-term proof point.",
+        "U.S. commercial remaining deal value reached $6.238 billion at quarter-end, up {+ 124% year-over-year +}; converting that backlog into recognized revenue is the clearest signal that the commercial acceleration can persist.",
+        "Land-and-expand is extending the runway: average revenue from the top twenty customers reached $124 million in the trailing twelve months ended June 30, 2026, up {+ 67% +}, evidence that existing accounts keep spending more.",
+        "Sustaining GAAP profitability while growth stays high is itself the re-rating catalyst that would let the shares grow into their premium multiple; each quarter that pairs the two, as Q2'26 did, strengthens that case."
+      ],
+      "risks": [
+        "Valuation is the whole risk: the premium multiples set out in the valuation section leave little room for any deceleration in growth, and a stock this richly priced re-rates quickly on a stumble.",
+        "Stock-based compensation drives a wide gap between GAAP and adjusted profitability and dilutes shareholders faster than the modest buyback offsets, as the financials section quantifies.",
+        "A limited number of customers, plus the government-heavy and U.S.-heavy revenue mix quantified in the overview, leave results exposed to a few large relationships, to government budget cycles, and to contracts terminable for convenience.",
+        "The Founders control close to half the voting power through a multi-class structure, limiting the influence of outside shareholders."
+      ]
+    },
+    "financials": {
+      "income": {
+        "columns": [
+          "Metric",
+          "FY21",
+          "FY22",
+          "FY23",
+          "FY24",
+          "FY25"
+        ],
+        "rows": [
+          {
+            "label": "Revenue ($B)",
+            "values": [
+              1541889000,
+              1905871000,
+              2225012000,
+              2865507000,
+              4475446000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "YoY Growth",
+            "values": [
+              null,
+              0.23606238840798532,
+              0.1674515221649313,
+              0.2878613688375613,
+              0.5618339093221549
+            ],
+            "format": "pctSigned"
+          },
+          {
+            "label": "Gross Margin",
+            "values": [
+              0.7798777992449522,
+              0.7856365934525474,
+              0.8062459887856784,
+              0.8024817248745161,
+              0.8236651721415028
+            ],
+            "format": "pct"
+          },
+          {
+            "label": "Operating Income ($B)",
+            "values": [
+              -411046000,
+              -161201000,
+              119966000,
+              310403000,
+              1414015000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Operating Margin",
+            "values": [
+              -0.2665859864101761,
+              -0.08458127543784442,
+              0.05391701258240405,
+              0.10832393709036481,
+              0.3159495165398041
+            ],
+            "format": "pct"
+          },
+          {
+            "label": "EBITDA ($B)",
+            "values": [
+              -396149000,
+              -138679000,
+              153320000,
+              341990000,
+              1440160000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Net Income ($B)",
+            "values": [
+              -520379000,
+              -373705000,
+              209825000,
+              462190000,
+              1625033000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Diluted EPS ($)*",
+            "values": [
+              -0.27,
+              -0.18,
+              0.09,
+              0.19,
+              0.63
+            ],
+            "format": "eps"
+          }
+        ],
+        "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
+      },
+      "incomeCommentary": "Revenue grew from $1.5 billion in FY21 to $4.5 billion in FY25, with the annual growth rate accelerating from {+ +23.6% +} in FY22 to {+ +56.2% +} in FY25. The pace stepped up again in 2026: Q2'26 revenue was $1.935 billion, up {+ 93% year-over-year +} from $1.0 billion in Q2'25, and first-half revenue was $3.6 billion, up {+ 89% +}. Gross margin has held in a narrow band, from 78.0% in FY21 to 82.4% in FY25, and reached 85% in Q2'26 on a GAAP basis. Operating results have inflected: GAAP operating margin moved from {- -26.7% -} in FY21 to {+ 31.6% +} in FY25. In Q2'26 the GAAP operating margin was 47%, well below the 62% adjusted operating margin the company reported for the quarter; the difference is stock-based compensation and related employer payroll taxes, which remain a real economic cost even though they are non-cash. Diluted EPS turned positive in FY23 at $0.09 and reached $0.63 in FY25; GAAP diluted EPS was $0.41 in Q2'26, equal to adjusted diluted EPS in the quarter. Net income was $1.6 billion in FY25 and $1.062 billion in Q2'26, a 55% margin.",
+      "balance": {
+        "columns": [
+          "Metric ($B)",
+          "FY21",
+          "FY22",
+          "FY23",
+          "FY24",
+          "FY25"
+        ],
+        "rows": [
+          {
+            "label": "Cash & ST Investments",
+            "values": [
+              2524827000,
+              2633675000,
+              3674179000,
+              5229987000,
+              7177043000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Total Debt",
+            "values": [
+              0,
+              null,
+              null,
+              null,
+              null
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Net Debt",
+            "values": [
+              -2290674000,
+              null,
+              null,
+              null,
+              null
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Total Equity",
+            "values": [
+              2291030000,
+              2642437000,
+              3560965000,
+              5094407000,
+              7488011000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Current Ratio",
+            "values": [
+              4.33785665264271,
+              5.173269086523988,
+              5.547611451734409,
+              5.958013810995384,
+              7.109823993412619
+            ],
+            "format": "num2"
+          }
+        ],
+        "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
+      },
+      "balanceCommentary": "Palantir carries a strong balance sheet with little financial debt. Total debt was $0.0 billion in FY21; later-year debt is not populated in the pack, though the Q2'26 cash position points to a net-cash company. Cash and short-term investments grew from $2.5 billion in FY21 to $7.2 billion in FY25, and the Q2'26 release put cash, cash equivalents, and short-term U.S. Treasury securities at $9.2 billion. Total equity rose from $2.3 billion in FY21 to $7.5 billion in FY25. Liquidity is ample: the current ratio improved from 4.34 in FY21 to 7.11 in FY25 and stood at 7.23 on a trailing-twelve-month basis. The main caveat is that the company holds strategic investments in privately-held and publicly-traded companies, which it flags as a risk it may not recover, so a portion of the balance-sheet strength is exposed to marks on those positions rather than to operating cash alone.",
+      "cashflow": {
+        "columns": [
+          "Metric ($B)",
+          "FY21",
+          "FY22",
+          "FY23",
+          "FY24",
+          "FY25"
+        ],
+        "rows": [
+          {
+            "label": "Operating Cash Flow",
+            "values": [
+              333851000,
+              223737000,
+              712183000,
+              1153865000,
+              2134473000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Capital Expenditure",
+            "values": [
+              -12627000,
+              -40027000,
+              -15114000,
+              -12634000,
+              -33882000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Share Repurchases",
+            "values": [
+              0,
+              0,
+              0,
+              -64196000,
+              -74985000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Dividends Paid",
+            "values": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Free Cash Flow",
+            "values": [
+              321224000,
+              183710000,
+              697069000,
+              1141231000,
+              2100591000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "FCF Margin",
+            "values": [
+              0.20833146873737343,
+              0.0963916235673873,
+              0.3132877485604572,
+              0.3982649492742471,
+              0.4693590314797676
+            ],
+            "format": "pct"
+          }
+        ],
+        "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
+      },
+      "cashflowCommentary": "Cash generation has scaled with the business. Operating cash flow grew from $0.3 billion in FY21 to $2.1 billion in FY25, and free cash flow rose from $0.3 billion to the same $2.1 billion over that span, lifting the FCF margin from 20.8% in FY21 to {+ 46.9% +} in FY25. Capital intensity is minimal: FY25 capital expenditure was just $33.9 million. In Q2'26 the company reported cash from operations of $1.216 billion, a 63% margin, and adjusted free cash flow of $1.220 billion, also a 63% margin; management's raised full-year adjusted free-cash-flow guidance is noted among the catalysts. Two cautions belong alongside those figures. First, reported cash flow benefits from adding back stock-based compensation, which is a genuine cost of the equity the company issues and drives the GAAP-to-adjusted margin gap discussed in the income section. Second, share repurchases were only $75 million in FY25, far too small to offset the dilution that stock compensation creates, and Palantir pays no dividend, a 0.00% yield, so shareholders are not yet receiving cash returns of consequence."
+    },
+    "valuation": {
+      "multiples": {
+        "columns": [
+          "Multiple (TTM)",
+          "PLTR"
+        ],
+        "rows": [
+          {
+            "label": "P/E",
+            "values": [
+              158.11111111111114
+            ],
+            "format": "mult"
+          },
+          {
+            "label": "P/S",
+            "values": [
+              72.21345954290335
+            ],
+            "format": "mult"
+          },
+          {
+            "label": "EV/EBITDA",
+            "values": [
+              null
+            ],
+            "format": "mult"
+          },
+          {
+            "label": "Fwd P/E (NTM)",
+            "values": [
+              115.0893390404141
+            ],
+            "format": "mult"
+          }
+        ],
+        "note": "Peer multiples pending a peer data source."
+      },
+      "multiplesCommentary": "By almost any yardstick the stock is expensive. It trades at 158.1x trailing earnings, 72.2x trailing sales, and 115.1x forward next-twelve-month earnings; on FY27E EPS of $2.32 the forward multiple is roughly 79.6x. The trailing free-cash-flow yield is 0.8%. EV/EBITDA is not meaningful on the data available. The Street is divided rather than uniformly bullish: of 32 analysts, 21 rate the stock Buy, 9 Hold, and 2 Sell, and while the consensus rating is Buy, the consensus target of $196.84 implies only 6.4% upside from the current price. Price targets span an unusually wide $80 to $255, with a median of $205.10, which captures how much the outcome depends on assumptions about growth durability. We do not show peer multiples here; a peer comparison is pending a peer data source, and we will not anchor the call on invented peer figures. The honest read is that the valuation prices in years of continued rapid growth, and that is the fact the rating has to weigh against the operating momentum.",
+      "scenarios": [
+        {
+          "name": "Bull",
+          "driver": "AIP adoption and U.S. commercial growth stay near current rates, government demand holds, and the market keeps awarding a premium multiple; the FY27 earnings estimate cited in the valuation section supports a price above the Street's high target.",
+          "impliedPrice": 260,
+          "probability": 0.25
+        },
+        {
+          "name": "Base",
+          "driver": "Palantir meets its raised FY26 guidance and growth stays high but decelerates as the base enlarges; the multiple compresses modestly, leaving the shares near the median analyst target.",
+          "impliedPrice": 205,
+          "probability": 0.45
+        },
+        {
+          "name": "Bear",
+          "driver": "Growth decelerates or a government-budget or competitive shock lands, and a stock priced at a steep forward multiple re-rates toward the low end of its range, near the $106.37 fifty-two-week low.",
+          "impliedPrice": 120,
+          "probability": 0.3
+        }
+      ],
+      "scenarioCommentary": "The three scenarios are built around one question: how long can Palantir grow fast enough to justify the multiple. The Bull case at $260 assumes U.S. commercial and AIP momentum persists and the premium multiple holds; we assign it a 25% probability. The Base case at $205 assumes the raised FY26 guidance is met and growth stays high but decelerates as the revenue base enlarges, with the multiple compressing toward the median target noted in the valuation section; we weight it at 45%. The Bear case at $120 reflects the asymmetry embedded in that forward multiple: a growth stumble, a government-budget disruption, or a broad risk-off move could re-rate the shares by more than a third, toward the fifty-two-week low; we assign 30%. The probabilities weight to a fair value near the current price and the consensus target, so the expected upside is modest while the bear-case downside is large. That skew, not any doubt about the quality of the business, is what produces the HOLD."
+    },
+    "businessMoat": {
+      "segments": [
+        {
+          "name": "Consolidated",
+          "sharePct": 1,
+          "revenue": 4475446000,
+          "body": "Palantir reports as a single reportable segment, so the consolidated business is the unit of analysis. Within that total the Q2'26 release breaks revenue out by customer group: total U.S. revenue was $1.573 billion, up {+ 115% year-over-year +}, and it comprises the U.S. commercial line and the larger U.S. government line whose figures are set out in the growth section, with the balance of revenue coming from non-U.S. customers. The mix shows a business still anchored in U.S. government work while its U.S. commercial line grows more quickly, as the growth section details."
+        }
+      ],
+      "segmentsBasis": "FY25 (single reportable segment) mix",
+      "geographyBasis": "FY25",
+      "geoMix": [],
+      "moatRating": "NARROW",
+      "moatFactors": [
+        {
+          "name": "Switching costs via the Ontology",
+          "strength": "Strong",
+          "body": "Foundry and the Ontology become the operating system for a customer's data, logic, and workflows, and contracts typically run one to five years. Expansion within existing accounts is evident in the rising top-customer revenue cited among the catalysts. The counter is that many contracts are terminable for convenience, which caps how much lock-in the company can claim."
+        },
+        {
+          "name": "Government entrenchment",
+          "strength": "Strong",
+          "body": "Gotham has served defense and intelligence agencies for over a decade, and government customers remain the majority of first-half 2026 revenue. That installed base and the accreditations behind it are hard for competitors to replicate quickly. The offset is that government revenue is exposed to budget cycles, procurement delays, and policy changes that the company lists among its risk factors."
+        },
+        {
+          "name": "AIP platform and partnerships",
+          "strength": "Moderate",
+          "body": "AIP, introduced in 2023, connects large language models to customer data and workflows, and the company has announced a collaboration with NVIDIA for sovereign AI environments. The platform is central to the U.S. commercial acceleration. The counter is that the company states it faces intense competition, and the pace of change in AI makes any technical lead difficult to hold."
+        },
+        {
+          "name": "Cash-funded product development",
+          "strength": "Moderate",
+          "body": "With the large cash position detailed in the balance-sheet section and the free cash flow detailed in the cash-flow section, Palantir can fund product development without external capital, which is a durable advantage in a downturn. It is, however, a resource rather than a structural barrier, and does not by itself prevent competitive entry."
+        }
+      ],
+      "durability": "The moat is real but not unassailable, which is why we rate it narrow rather than wide. Switching costs, government accreditation, and an expanding installed base give Palantir genuine staying power, and the high gross margin shown in the financials section reflects the software economics that entrenchment produces. Working against durability are contracts that customers can terminate for convenience, government budgets that can tighten, and a competitive field the company itself describes as intense. AIP has extended the platform into generative AI, but that market is young and fast-moving, and the company cautions that the market for its platforms may develop more slowly than it expects. On balance the franchise should persist, but its durability is a reasonable subject for debate at the price the market is paying."
+    },
+    "growth": {
+      "points": [
+        "U.S. commercial revenue reached $764 million in Q2'26, up {+ 149% year-over-year +}, and the company closed $2.132 billion of U.S. commercial contract value, up {+ 153% +}; the pushback is that this growth comes off a small base, concentrates the business further in the United States, and largely sits in the backlog noted among the catalysts rather than in recognized revenue.",
+        "U.S. government revenue was $809 million in Q2'26, up {+ 90% year-over-year +}, and government remained the majority of first-half revenue; the counter is that government demand is subject to budget cycles, procurement timing, and contracts terminable for convenience.",
+        "Palantir closed 220 deals of at least $1 million in Q2'26, and its trailing-twelve-month customer base has grown as noted in the overview; the offset is that new-customer acquisition can slow with macro conditions, which the company flags directly.",
+        "Management guided Q3'26 revenue to $2.160-$2.164 billion and raised its full-year 2026 outlook as noted among the catalysts; against that, the company warns its growth rate has fluctuated and that prior-period growth should not be relied on as an indicator.",
+        "The much-cited Rule of 40 score combines the revenue growth rate with the adjusted operating margin, so it flatters the picture by excluding stock-based compensation; measured on the GAAP operating margin the figure would be lower."
+      ]
+    },
+    "management": {
+      "leadership": "Palantir is led by its founders. Alexander Karp is Co-Founder, Chief Executive Officer, and a Director; Stephen Cohen is Co-Founder, President, Secretary, and a Director. The senior team also includes Shyam Sankar as Chief Technology Officer and Executive Vice President, David Glazer as Chief Financial Officer and Treasurer, and Ryan Taylor as Chief Revenue Officer and Chief Legal Officer. The team took the company from operating losses to consistent GAAP profitability, which it first reached in FY23, and reported positive GAAP net income in each quarter of FY25. The main caution about leadership is one of tone: the company's public communications are unusually promotional, which can make it harder for investors to separate durable results from message.",
+      "capitalAllocation": "Capital allocation is growth-first and equity-heavy. Capital expenditure is minimal, so the business converts revenue to cash efficiently, and the company returns little to shareholders: the buyback discussed in the cash-flow section is small relative to stock-based compensation, and there is no dividend. Stock-based compensation is a primary tool for paying employees, so per-share value leaks even as reported profits grow. Cash is being retained on the balance sheet and partly deployed into strategic investments in private and public companies that the company acknowledges may not pay off. For now the capital-allocation question is less about what is returned and more about the ongoing cost of equity issuance.",
+      "governance": "Governance is founder-controlled through a multi-class structure of Class A, Class B, and Class F shares, reinforced by a Founder Voting Trust Agreement and a Founder Voting Agreement. As of the April 6, 2026 record date reported in the DEF 14A, the Founders — Alexander Karp, Stephen Cohen, and Peter Thiel — held voting power totaling 49.999999% of the vote, and all executive officers and directors as a group controlled 50.8%. Outside holders therefore have limited ability to influence corporate decisions. The board maintains a majority of independent directors, with Messrs. Moore and Woersching and Mses. Schiff and Stat determined to be independent under Nasdaq rules, and the Compensation, Nominating & Governance Committee retained Semler Brossy as its independent consultant. Related-party dealings are disclosed: in the year ended December 31, 2025, Palantir received $17.66 million from Anduril and $167,782 from Chapter, companies connected to Mr. Thiel, though the company states he has no material interest in those transactions.",
+      "insiderOwnership": "Insider voting power is concentrated among a few individuals. As of the April 6, 2026 record date disclosed in the proxy statement, Mr. Karp held 11.4% of the total vote, Mr. Thiel 7.9%, and Mr. Cohen 3.0%, and the Founder arrangements bring the Founder total to just under half the vote, as set out in the governance section. Among outside holders, BlackRock, Inc. owned 6.9% of the Class A shares, equal to 3.5% of the vote. The takeaway for a minority investor is that economic ownership and voting power are decoupled: the Founders' control does not depend on their economic stake and is durable regardless of new share issuance."
+    },
+    "risks": {
+      "idiosyncratic": [
+        "Valuation is the dominant risk: at the premium multiples set out in the valuation section, the shares are priced for sustained rapid growth, and any deceleration or guidance miss could compress the multiple sharply, independent of how the business performs.",
+        "Stock-based compensation is a persistent economic cost: the gap between GAAP and adjusted profitability quantified in the financials section, together with a buyback too small to offset dilution, means per-share value leaks even as reported profits grow.",
+        "Customer and government concentration cuts both ways: a limited number of customers account for a substantial portion of revenue, and the government-heavy and U.S.-heavy revenue mix quantified in the overview leaves results exposed to a few large relationships and to U.S. government budgets.",
+        "Competition is intense by the company's own description, and the AI market that AIP addresses is young; a faster-moving rival or a shift in AI economics could erode the growth premium the stock relies on.",
+        "Founder voting control near half the vote limits outside shareholders' ability to force change if strategy or capital allocation disappoints."
+      ],
+      "systemic": "Palantir is exposed to the macro backdrop it describes in its filing: geopolitical tensions including the Russia-Ukraine and Middle East conflicts, fluctuating interest rates and monetary policy, and foreign-currency movements in the euro, British pound, and Japanese yen, though it states these were not material to first-half 2026 results. A high-multiple stock carries an additional systemic sensitivity: because so much of Palantir's value is in expected future growth, its price is unusually sensitive to rising discount rates and to broad risk-off moves in equity markets, which can compress valuations regardless of company-specific news."
+    },
+    "finalRecommendation": {
+      "body": [
+        "Our HOLD rests on a simple tension: an excellent operating quarter — rapid revenue growth, expanding GAAP profitability, and raised full-year guidance, all detailed above — set against a valuation that already assumes many more quarters like it. The reservation is not the strength of the business but the price the market is charging for it, which is why our fair-value range of $160 to $225 brackets rather than clears the current price.",
+        "Weighted across our scenarios, fair value sits close to the current price and the $196.84 consensus target, so expected upside is modest while the bear case near $120 implies downside of more than a third. That reward/risk does not support buying at today's premium multiple, and the quality of the franchise and its cash generation do not support selling. Investors who own the shares can reasonably hold; new money should wait for a lower entry or for further evidence that growth can grow into the multiple."
+      ]
+    }
+  },
+  "disclaimer": "DISCLAIMER: This report is for informational/educational purposes only and does not constitute investment advice. All equity securities carry risk and can be volatile, and past performance is not indicative of future results. Conduct your own due diligence. The author may hold positions in securities discussed."
+}

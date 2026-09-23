@@ -322,3 +322,53 @@ describe("Q4 derivation for a non-December (June) fiscal year-end", () => {
     expect(last.net_income).toBe(800 - (150 + 200 + 250)); // 200
   });
 });
+
+describe("net income from ProfitLoss (incl. NCI) fallback when NetIncomeLoss is untagged", () => {
+  // A filer (Bloom Energy from FY2024) tags its net-income line as us-gaap:ProfitLoss
+  // (net loss including noncontrolling interests) with no plain us-gaap:NetIncomeLoss.
+  // Net income attributable to the parent = ProfitLoss − the NCI portion.
+  const facts = {
+    facts: {
+      "us-gaap": {
+        Revenues: {
+          units: {
+            USD: [
+              { start: "2023-01-01", end: "2023-12-31", val: 1400, form: "10-K", filed: "2024-02-20" },
+              { start: "2024-01-01", end: "2024-12-31", val: 1441, form: "10-K", filed: "2025-02-20" },
+              { start: "2025-01-01", end: "2025-12-31", val: 2001, form: "10-K", filed: "2026-02-20" },
+            ],
+          },
+        },
+        // NetIncomeLoss (parent-attributable) present ONLY for 2023, absent 2024+.
+        NetIncomeLoss: {
+          units: { USD: [{ start: "2023-01-01", end: "2023-12-31", val: -302, form: "10-K", filed: "2024-02-20" }] },
+        },
+        ProfitLoss: {
+          units: {
+            USD: [
+              { start: "2023-01-01", end: "2023-12-31", val: -999, form: "10-K", filed: "2024-02-20" }, // must be ignored (2023 has NetIncomeLoss)
+              { start: "2024-01-01", end: "2024-12-31", val: -27, form: "10-K", filed: "2025-02-20" },
+              { start: "2025-01-01", end: "2025-12-31", val: -87, form: "10-K", filed: "2026-02-20" },
+            ],
+          },
+        },
+        NetIncomeLossAttributableToNoncontrollingInterest: {
+          units: {
+            USD: [
+              { start: "2024-01-01", end: "2024-12-31", val: -2, form: "10-K", filed: "2025-02-20" },
+              { start: "2025-01-01", end: "2025-12-31", val: -1, form: "10-K", filed: "2026-02-20" },
+            ],
+          },
+        },
+      },
+    },
+  };
+
+  it("keeps parent-attributable NetIncomeLoss where tagged, and fills gaps with ProfitLoss minus NCI", () => {
+    const { annual } = parseCompanyFacts(facts);
+    const fy = (y: number) => annual.find((p) => p.fiscal_year === y)!;
+    expect(fy(2023).net_income).toBe(-302);       // NetIncomeLoss kept (fill-gaps-only), NOT ProfitLoss(-999)
+    expect(fy(2024).net_income).toBe(-27 - -2);   // ProfitLoss − NCI = -25
+    expect(fy(2025).net_income).toBe(-87 - -1);   // -86
+  });
+});

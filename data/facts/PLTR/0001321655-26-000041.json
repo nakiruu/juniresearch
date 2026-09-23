@@ -1,0 +1,597 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "PLTR",
+  "cik": 1321655,
+  "company": "Palantir Technologies Inc.",
+  "exchange": "NASDAQGS",
+  "sic": 7372,
+  "sicDescription": "Services-Prepackaged Software",
+  "goodwill": [
+    null,
+    37938000,
+    null,
+    null,
+    null
+  ],
+  "filing": {
+    "form": "10-Q",
+    "accession": "0001321655-26-000041",
+    "filedDate": "2026-08-04",
+    "periodEnd": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/pltr-20260630.htm"
+  },
+  "capturedAt": "2026-09-22T22:08:58.250Z",
+  "quote": {
+    "price": 184.99,
+    "marketCap": 444541796352,
+    "sharesOutstanding": 2300713329,
+    "sharesSource": "cover",
+    "week52Low": 106.37,
+    "week52High": 207.52,
+    "dividendYield": 0,
+    "asOf": "2026-09-22"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          1541889000,
+          1905871000,
+          2225012000,
+          2865507000,
+          4475446000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          1202485000,
+          1497322000,
+          1793907000,
+          2299517000,
+          3686269000
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          -411046000,
+          -161201000,
+          119966000,
+          310403000,
+          1414015000
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          -396149000,
+          -138679000,
+          153320000,
+          341990000,
+          1440160000
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          -520379000,
+          -373705000,
+          209825000,
+          462190000,
+          1625033000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          -0.27,
+          -0.18,
+          0.09,
+          0.19,
+          0.63
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          2524827000,
+          2633675000,
+          3674179000,
+          5229987000,
+          7177043000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          0,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          -2290674000,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          2291030000,
+          2642437000,
+          3560965000,
+          5094407000,
+          7488011000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          4.33785665264271,
+          5.173269086523988,
+          5.547611451734409,
+          5.958013810995384,
+          7.109823993412619
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          333851000,
+          223737000,
+          712183000,
+          1153865000,
+          2134473000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -12627000,
+          -40027000,
+          -15114000,
+          -12634000,
+          -33882000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          0,
+          0,
+          0,
+          -64196000,
+          -74985000
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          321224000,
+          183710000,
+          697069000,
+          1141231000,
+          2100591000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q2'26",
+    "periodEnd": "2026-06-30",
+    "revenue": 1935464000,
+    "operatingMargin": 0.4712069043908851,
+    "revenueYoY": 0.928334945705726
+  },
+  "ttm": {
+    "pe": 158.11111111111114,
+    "ps": 72.21345954290335,
+    "evToEbitda": null,
+    "grossMargin": 0.8479613433592037,
+    "operatingMargin": 0.4279852584682017,
+    "netMargin": 0.49004563234118065,
+    "netDebtToEbitda": null,
+    "interestCoverage": null,
+    "currentRatio": 7.228212495327504,
+    "fcfYield": 0.007554457258144589
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 8187709600,
+      "eps": 1.60736
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 12211305260,
+      "eps": 2.32299
+    }
+  },
+  "analysts": {
+    "count": 32,
+    "buy": 21,
+    "hold": 9,
+    "sell": 2,
+    "consensusRating": "Buy",
+    "consensusTarget": 196.84074,
+    "medianTarget": 205.1,
+    "highTarget": 255,
+    "lowTarget": 80,
+    "asOf": "2026-09-22"
+  },
+  "segments": {
+    "basis": "FY25 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 4475446000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "ADBE",
+      "pe": 13.295201,
+      "ps": 3.6466837,
+      "evToEbitda": 10.219
+    },
+    {
+      "ticker": "AMD",
+      "pe": 158.31726,
+      "ps": 24.652922,
+      "evToEbitda": 104.161
+    },
+    {
+      "ticker": "ASML",
+      "pe": 60.08594,
+      "ps": 19.00413,
+      "evToEbitda": 2706.924
+    },
+    {
+      "ticker": "CRM",
+      "pe": 21.362637,
+      "ps": 4.369553,
+      "evToEbitda": 17.486
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-11",
+      "close": 174.94000244140625
+    },
+    {
+      "date": "2026-08-12",
+      "close": 171.0399932861328
+    },
+    {
+      "date": "2026-08-13",
+      "close": 179.00999450683594
+    },
+    {
+      "date": "2026-08-14",
+      "close": 174.0399932861328
+    },
+    {
+      "date": "2026-08-17",
+      "close": 172.5500030517578
+    },
+    {
+      "date": "2026-08-18",
+      "close": 171.5399932861328
+    },
+    {
+      "date": "2026-08-19",
+      "close": 175.19000244140625
+    },
+    {
+      "date": "2026-08-20",
+      "close": 173.9600067138672
+    },
+    {
+      "date": "2026-08-21",
+      "close": 179.94000244140625
+    },
+    {
+      "date": "2026-08-24",
+      "close": 175.88999938964844
+    },
+    {
+      "date": "2026-08-25",
+      "close": 172.72999572753906
+    },
+    {
+      "date": "2026-08-26",
+      "close": 177.5
+    },
+    {
+      "date": "2026-08-27",
+      "close": 185.92999267578125
+    },
+    {
+      "date": "2026-08-28",
+      "close": 186.2899932861328
+    },
+    {
+      "date": "2026-08-31",
+      "close": 186.3800048828125
+    },
+    {
+      "date": "2026-09-01",
+      "close": 179.9199981689453
+    },
+    {
+      "date": "2026-09-02",
+      "close": 169.4600067138672
+    },
+    {
+      "date": "2026-09-03",
+      "close": 182.52999877929688
+    },
+    {
+      "date": "2026-09-04",
+      "close": 174.3300018310547
+    },
+    {
+      "date": "2026-09-08",
+      "close": 170.3000030517578
+    },
+    {
+      "date": "2026-09-09",
+      "close": 169.52999877929688
+    },
+    {
+      "date": "2026-09-10",
+      "close": 165.86000061035156
+    },
+    {
+      "date": "2026-09-11",
+      "close": 167.22999572753906
+    },
+    {
+      "date": "2026-09-14",
+      "close": 173.30999755859375
+    },
+    {
+      "date": "2026-09-15",
+      "close": 172.55999755859375
+    },
+    {
+      "date": "2026-09-16",
+      "close": 174.33999633789062
+    },
+    {
+      "date": "2026-09-17",
+      "close": 176.24000549316406
+    },
+    {
+      "date": "2026-09-18",
+      "close": 177.63999938964844
+    },
+    {
+      "date": "2026-09-21",
+      "close": 183.08999633789062
+    },
+    {
+      "date": "2026-09-22",
+      "close": 184.99000549316406
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "Palantir Technologies Inc. builds and deploys software platforms for the intelligence community to assist in counterterrorism investigations and operations in the United States, the United Kingdom, and internationally. It provides Palantir Gotham integrates with other platforms for defense offerings which enables users to see, understand, and act in the modern battlespace; operations centers to the tactical edge; integrating data from domains and sensors in near real-time; and situational awareness and accelerating operational decision-making, as well as facilitates the hand-off between analysts and operational users, helping operators plan and execute real-world responses to threats that have been identified within the platform. It also offers Palantir Foundry, a platform that helps organizations operate by creating a central operating system for their data; and allows individual users to integrate and analyze the data they need in one place. In addition, it provides Palantir Apollo, a software that delivers software and updates across the business, as well as enables customers to deploy their software virtually in any environment; and Palantir Artificial Intelligence Platform that provides unified access to open-source, self-hosted, and commercial large language models (LLMs) that can transform structured and unstructured data into LLM-understandable objects and can turn organizations' actions and processes into tools for humans and LLM-driven agents. The company also has a strategic partnership with Ondas Inc. to develop and deploy AI-enabled operational capabilities to scale stratospheric, aerial, and land-based ISR missions. The company has a strategic collaboration with NVIDIA to deliver an intelligent engine for running NVIDIA AI and Nemotron open models in sovereign environments and with PwC to transform critical business operations and deliver measurable enterprise value. The company was incorporated in 2003 and is headquartered in Aventura, Florida.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-22"
+    },
+    "mdaExcerpt": {
+      "text": "ITEM 2. MANAGEMENT'S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS\nThe following discussion and analysis of our financial condition and results of operations should be read in conjunction with our condensed consolidated financial statements and the accompanying notes thereto included elsewhere in this Quarterly Report on Form 10-Q. This discussion contains forward-looking statements based upon current plans, expectations, and beliefs, involving risks and uncertainties. Our actual results may differ materially from those anticipated in these forward-looking statements. You should review the section titled \"Special Note Regarding Forward-Looking Statements\" for a discussion of forward-looking statements and the section titled \"Risk Factors\" for a discussion of factors that could cause actual results to differ materially from the results described in or implied by the forward-looking statements contained in the following discussion and analysis and elsewhere in this Quarterly Report on Form 10-Q. Our historical results are not necessarily indicative of the results that may be expected for any period in the future.\nOverview\nWe build software that empowers organizations to effectively integrate their data, decisions, and operations at scale.\nWe were founded in 2003 and started building software for the intelligence community in the United States to assist in counterterrorism investigations and operations. We later began working with commercial enterprises, who often faced fundamentally similar challenges in working with data.\nWe have built four principal software platforms, Gotham, Foundry, Apollo, and our Artificial Intelligence Platform (\"AIP\"). Foundry is our foundational data operations platform, which provides the core capabilities for data management, logic authoring, systemic mapping development through our Ontology, analytics, and workflow development. AIP is our generative AI platform, which provides secure connectivity to third-party-provided large language models (\"LLMs\"), a development toolchain for building AI-powered agents and automations, an array of AI-enabled end user applications, a broad evaluations framework for governing AI workflows in production, and more. Apollo is our continuous delivery platform, enabling the orchestration of upgrades of services and assets every day to manage the underlying infrastructure that hosts our other platforms. Gotham integrates with our other platforms, as well as our broader defense offerings, to power a wide array of missions across allied defense and intelligence operations.\nFor over a decade, Gotham has surfaced insights for global defense agencies, the intelligence community, disaster relief organizations and beyond. Foundry is becoming a central operating system not only for individual institutions but also for entire industries. Apollo, which we began offering as a commercial solution in 2021, is a cloud-agnostic, single control layer that coordinates ongoing delivery of new features, security updates, and platform configurations, helping to ensure the continuous operation of critical systems. Apollo allows our customers to run their software in virtually any environment.\nIn 2023, we began deploying our newest offering, AIP, which is designed for customers across the commercial and government sectors, enabling them to derive value from recent breakthroughs in artificial intelligence via the combination of our existing software platforms with generative AI models, including LLMs. We believe AIP uniquely allows users to connect LLMs and other AI with their data and operations to facilitate decision-making within the legal, ethical, and security constraints that they require.\nThe Ontology has continuously evolved over time, serving as the heart of our platforms by activating data and analytics inside operations, enabling real-time connectivity between data, analytics, and operational teams, as well as AI. Ontology generally refers to the systematic mapping of data to meaningful context. The Palantir Ontology goes far beyond the traditional concept by integrating the elements of a decision the data, logic, and actions into a foundational representation of the organization, and allowing users to build interconnected workflows, turning specialized expertise into shared infrastructure to dynamically optimize decision-making across the enterprise. The Ontology can help create a shared understanding across all users in a data ecosystem regardless of technical skills, enabling organizations to scale more efficiently and rapidly.\nWhile our focus in the short term remains on making our software platforms available to increasingly broad swaths of the market, we are also working to identify additional component parts and products embedded within those platforms that have potential as commercial offerings on their own.\nWe believe that every institution faces challenges that our platforms and products were designed to address. Our approach with all our clients is to establish a partnership that transforms the way they use data in pursuit of their goals.\nWe regularly evaluate partnerships and investment opportunities in complementary businesses, employee teams, technologies, and intellectual property rights in an effort to expand our product and service offerings.\n22\nTable of contents\nOur Business\nOur customers pay us to use the software platforms we have built. While we generally offer contract terms of one to five years in length, our customers sometimes enter into shorter-term contracts. Revenue is generally recognized ratably over the contract term. Many of our customer contracts contain termination for convenience provisions.\nFor the three months ended June 30, 2026, we generated $1.9 billion in revenue, reflecting a 93% growth rate from the three months ended June 30, 2025 when we generated $1.0 billion in revenue. For the six months ended June 30, 2026, we generated $3.6 billion in revenue, reflecting a 89% growth rate from the six months ended June 30, 2025 when we generated $1.9 billion in revenue.\nIn the three months ended June 30, 2026 and 2025, we generated income from operations of $912 million and $269 million, respectively, or adjusted income from operations of $1.2 billion and $0.5 billion, respectively, when excluding stock-based compensation and related employer payroll taxes. In the six months ended June 30, 2026 and 2025, we generated income from operations of $1.7 billion and $0.4 billion, respectively, or adjusted income from operations of $2.2 billion and $0.9 billion, respectively, when excluding stock-based compensation and related employer payroll taxes.\nIn the three months ended June 30, 2026 and 2025, our gross profit was $1.6 billion and $0.8 billion, respectively, reflecting a gross margin of 85% and 81%, respectively, or 86% and 82%, respectively, when excluding stock-based compensation. In the six months ended June 30, 2026 and 2025, our gross profit was $3.1 billion and $1.5 billion, respectively, reflecting a gross margin of 86% and 81%, respectively, or 87% and 82%, respectively, when excluding stock-based compensation.\nFor more information about our adjusted income from operations, which excludes stock-based compensation and related employer payroll taxes; and gross profit and gross margin, when excluding stock-based compensation; as well as reconciliations from income from operations and gross profit, see the section titled \"Non-GAAP Reconciliations\" below .\nOur Customers\nWe define a customer as an organization from which we have recognized revenue during the trailing twelve-month period. During the period ended June 30, 2026 and 2025, we had 1,049 and 849 customers, respectively, including companies in various commercial sectors and government agencies around the world.\nFor large government agencies, where a single institution has multiple divisions, units, or subsidiary agencies, each such division, unit, or subsidiary agency that enters into a separate contract with us and is invoiced as a separate entity is treated as a separate customer. For example, while the U.S. Food and Drug Administration, Centers for Disease Control and Prevention, and National Institutes of Health are subsidiary agencies of the U.S. Department of Health and Human Services, we treat each of those agencies as a separate customer given that the governing structures and procurement processes of each agency are independent.\nWe have built lasting and significant customer relationships and partnerships with some of the world's leading government institutions and companies. Our average revenue for the top twenty customers during the trailing twelve months ended June 30, 2026 was $124 million, which grew 67% from an average of $75 million in revenue from the top twenty customers during the trailing twelve months ended June 30, 2025, demonstrating our expanding relationships with existing customers.\nOrganizations in the commercial and government sectors face similar challenges when it comes to managing data, and we intend to expand our reach in both markets moving forward. Our decisions about which customer relationships require further investment may change over time, based on our assessment of the potential long-term value that our software can generate for them. We conduct pilots and bootcamps with customers, generally at our own expense and without a guarantee of future returns, in order to access a unique set of opportunities that others may pass over for lack of resources and shorter investment horizons. We manage customers at the account level, not by industry or sector, so that we can optimize on the specific growth opportunities for each customer. In the six months ended June 30, 2026, 52% of our revenue came from government customers and 48% came from commercial customers.\nOur U.S. customers have been a meaningful source of revenue growth for our business and, in recent periods, has represented an increasing portion of our total revenue. In the six months ended June 30, 2026, we generated 80% of our revenue from customers in the United States and the remaining 20% from non-U.S. customers. Revenue from our U.S. customers during the trailing twelve months ended June 30, 2026 was $4.8 billion, which grew 99% from the prior twelve-month period. We expect that U.S. customers will continue to be a source of significant revenue growth for us.\nWe continue to believe that our government customers remain a meaningful source of revenue for our business, particularly during periods of economic uncertainty. However, large government customers, in particular, are generally subject to a number\n23\nTable of contents\nof uncertainties regarding budgets and spending levels, changes in timing and spending priorities, and regulatory and policy changes, which can make it difficult to predict when, or if, we will make sales to such customers or the size and scope of any contract awards. See also the discussion of \"Risks Related to Relationships and Business with the Public Sector\" within \" Item 1A. Risk Factors\" included in this Quarterly Report on Form 10-Q.\nExpansion of Access to Platforms\nThe speed with which our platforms can be deployed has significantly expanded the range of potential customers with which we plan on partnering over the long term. We anticipate that our reach among an increasingly broad set of customers, in both the commercial and government sectors, will accelerate moving forward. We believe that, as these new partners grow, we will grow with them.\nOur proximity to these businesses and the industries in which they are operating has enhanced, and is expected to continue enhancing, our own product and business development efforts, as we continue expanding access to our platforms to the broadest possible set of customers.\nMacroeconomic Trends\nAs a corporation with an international presence, we are subject to risks and uncertainties caused by significant events with macroeconomic impacts, including, but not limited to, geopolitical tensions, fluctuating interest rates, monetary policy changes, supply chain disruptions, geopolitical or economic uncertainty, foreign currency fluctuations, and the potential or actual imposition of tariffs or other impacts on trade relations. Additionally, these macroeconomic impacts have disrupted, and may continue to disrupt, the operations of our customers and prospective customers. In particular, if the portion of total revenue attributable to the United States remains at current levels or continues to increase, our business and financial condition could be more exposed to any future adverse conditions such as these in the United States. We continuously monitor the direct and indirect impacts of these circumstances on our business and financial results, as well as the overall global economy and geopolitical landscape.\nSee the section titled \"Risk Factors\" included elsewhere in this Quarterly Report on Form 10-Q for further discussion of the impact of macroeconomic trends on our business.\nGeopolitical Tensions\nOur business operations are subject to interruption by events that are beyond our control, including geopolitical tensions. We continue to closely monitor the impact of various geopolitical tensions and their global impacts on our business. While the ongoing Russia-Ukraine, Israel, and broader Middle East conflicts, including the escalation of hostilities resulting from the recent strikes by the United States and Israel on Iran and retaliatory strikes related thereto, and other global conflicts are still evolving and the outcomes remain highly uncertain, we do not expect that the resulting challenging macroeconomic conditions will have a material impact on our business or results of operations.\nWe do not currently have office locations in Russia or Palestinian territories and none of our revenues came from sales to entities headquartered in those countries or territories. Our current operations related to Ukraine, Israel, and broader Middle East regions are not material to our financial position or results of operations. If the respective conflicts continue or worsen, leading to greater disruptions and uncertainty within the technology industry or global economy, our business and results of operations could be negatively impacted.\nForeign Currency Exchange Rates\nExchange rates are subject to significant and rapid fluctuations due to a number of factors, including interest rate changes, monetary policy changes, and political and economic uncertainty which may adversely affect our results of operations or financial position.\nOur contracts with customers and vendors are primarily denominated in U.S. dollars. However, when the U.S. dollar strengthens compared to other currencies (primarily the Euro (\"EUR\") and British pound sterling (\"GBP\")), it has had, and could in the future have, an unfavorable impact on our revenues and expenses from certain non-U.S. customers or vendors whose contracts are denominated in currencies other than the U.S. dollar. Additionally, certain of our U.S. and non-U.S. subsidiaries may hold monetary assets and liabilities in currencies other than their functional currency (primarily the Japanese Yen (\"JPY\"), EUR, and GBP), which could subject our results of operations and cash flows to adverse fluctuations due to changes in such foreign currency exchange rates as compared to the U.S. dollar. For the six months ended June 30, 2026 such impacts were not material to our financial position or results of operations.\n24\nTable of contents\nCustomer Impacts\nMacroeconomic conditions have impacted, and may continue to adversely impact, our customers' businesses. With economic uncertainty, we may experience additional negative impacts on new customer acquisition, customer renewals, and customer collections, among other things, which could negatively impact our business and results of operations.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/pltr-20260630.htm",
+      "asOf": "2026-08-04",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "ITEM 1A. RISK FACTORS\nInvesting in our Class A common stock involves a high degree of risk. You should carefully consider the risks and uncertainties described below, together with all of the other information in this Quarterly Report on Form 10-Q, including the section titled \"Management's Discussion and Analysis of Financial Condition and Results of Operations\" and our condensed consolidated financial statements and accompanying notes, before making a decision to invest in our Class A common stock. Our business, financial condition, results of operations, or prospects could also be harmed by risks and uncertainties not currently known to us or that we currently do not believe are material. If any of the risks actually occur, our business, financial condition, results of operations, and prospects could be adversely affected. In that event, the trading price of our Class A common stock could decline, and you could lose part or all of your investment.\nRisk Factor Summary\nOur business is subject to numerous risks and uncertainties that you should consider before investing in our Class A common stock. These risks are described more fully below and include, but are not limited to, risks relating to the following:\nwe may not be able to sustain our revenue growth;\nour sales efforts involve considerable time and expense and our sales cycle is often long and unpredictable;\na limited number of customers account for a substantial portion of our revenue;\nwe may not realize the full deal value of our customer contracts;\nwe anticipate our operating expenses will continue to increase and we may not be able to maintain profitability in the future;\nour results of operations and our key business measures are likely to fluctuate significantly on a quarterly basis;\nseasonality may cause fluctuations in our results of operations and financial position;\nwe may not successfully develop and deploy new technologies (such as technologies incorporating AI) to address the needs of our customers;\nwe may not be able to maintain and enhance our brand and reputation;\nour reputation and business may be harmed by news or social media coverage or other external scrutiny of Palantir or our leadership;\nwe may be unable to hire, retain, train, and motivate qualified personnel and senior management and deploy our personnel and resources to meet customer demand;\nwe may be unable to successfully build, expand, and deploy our marketing and sales organization;\nour platforms are complex and may have a lengthy implementation process;\nexclusive arrangements or unique terms with customers or partners may result in significant risks or liabilities to us;\nwe face intense competition in our markets;\nour platforms must operate with third-party products and services;\nthe market for our platforms and services may develop more slowly than we expect;\n36\nTable of contents\nwe may be unable to maintain or properly manage our culture as we grow;\nwe may not enter into relationships with potential customers if we consider their activities to be inconsistent with our organizational mission or values;\njoint ventures, channel sales relationships, platform partnerships, and strategic alliances may be unsuccessful;\nwe may not be successful in executing our strategy to increase our sales to larger customers;\nbreach of the systems of any third parties upon which we rely, our customers' systems, locations, or environments, or our internal systems or unauthorized access to data;\nwe have made and may continue to make strategic investments to support key business initiatives, including in privately-held and publicly-traded companies, as well as alternative investments, and we may not realize a return on these investments;\nissues raised by the use of AI (including machine learning, large language, and other generative or agentic AI models and applications, and software functionality to operationalize the foregoing) in our platforms and business may result in reputational harm or liability;\nwe depend on computing infrastructure of third parties and they may experience errors, disruption, performance problems, or failure;\nwe may fail to adequately obtain, maintain, protect, and enforce our intellectual property and other proprietary rights;\nwe may be subject to intellectual property rights claims;\nthere may be real or perceived errors, failures, defects, or bugs in our platforms;\nwe rely on the availability of third-party technology that may be difficult to replace or that may cause errors;\nour business is subject to complex and evolving U.S. and non-U.S. laws and regulations regarding privacy, data protection and security, technology protection, and other matters;\nour non-U.S. sales and operations subject us to additional risks and regulations;\nwe may encounter unfavorable outcomes in legal, regulatory, and administrative inquiries and proceedings;\nwe may fail to receive and maintain government contracts or there may be changes in the contracting or fiscal policies of the public sector;\nmany of our customer contracts may be terminated by the customer at any time for convenience and may contain other provisions permitting the customer to discontinue contract performance;\nthere may be a decline in the U.S. and other government budgets, changes in spending or budgetary priorities, or delays in contract awards; and\nthe multi-class structure of our common stock, the Founder Voting Trust Agreement, and the Founder Voting Agreement concentrate voting power with certain stockholders, in particular, Stephen Cohen, Alexander Karp, and Peter Thiel (our \"Founders\") and their affiliates.\nRisks Related to Our Business and Industry\nWe may not be able to sustain our revenue growth in the future.\nAlthough our revenue has increased in recent periods, there can be no assurances that our revenue will continue to grow or do so at current rates, and you should not rely on the revenue of any prior quarterly or annual period as an indication of our future performance. Our revenue growth rate has fluctuated in the past, and may continue to fluctuate in future periods. In addition, as we continue to expand our platform and product offerings, or experience greater adoption of certain of our platform and product offerings, we have and may continue to experience variability in our revenue growth in certain markets or with certain customer segments relative to other markets or customer segments. In recent periods, the United States has represented an increasing portion of our total revenue. If the portion of total revenue attributable to the United States remains at current levels or continues to increase, our business and financial condition could be more exposed to any future adverse conditions in the United States, including, but not limited to, macroeconomic conditions, fluctuating interest rates, monetary policy changes, supply chain disruptions, geopolitical or economic uncertainty, the potential or actual imposition of tariffs or other impacts on trade relations, and other factors. Many factors may contribute to declines or variability in our revenue growth, including macroeconomic factors, increased competition, slowing demand for our platforms from existing and new customers, a failure by us to continue capitalizing on growth opportunities, terminations of existing contracts or failure to exercise existing options by our customers, and the maturation of our business, among others. If our revenue growth or revenue growth rate declines\n37\nTable of contents\noverall, or with respect to certain areas of our business, our business, financial condition, and results of operations could be adversely affected.\nOur sales efforts involve considerable time and expense, and our sales cycle is often long and unpredictable.\nOur results of operations may fluctuate, in part, because of the intensive nature of our sales efforts and the length and unpredictability of our sales cycle.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/pltr-20260630.htm",
+      "asOf": "2026-08-04",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-Q",
+    "pressRelease": {
+      "text": "EX-99.1\n2\na2026q2ex991pressrelease.htm\nEX-99.1\nDocument\nExhibit 99.1\nPalantir Reports Q2 2026 U.S. Comm Revenue Growth of 149% Y Y and Revenue Growth of 93% Y Y Raises FY 2026 Revenue Guidance to 82% Y Y Growth and U.S. Comm Revenue Guidance to 134% Y Y, Crushing Consensus Expectations\n8 3 2026\nMIAMI (BUSINESS WIRE) Palantir Technologies Inc. (NASDAQ PLTR) today announced financial results for the second quarter ended June 30, 2026.\n\"Demand for AI sovereignty has now been unleashed. And Palantir is the only company that has demonstrated it can transform tokens into actual economic value. Our customers trust us to provide them with maximal control over their operations, data, and decisions. Their competitive advantage should never become the training data for future models. This quarter was otherworldly our U.S. commercial revenue grew 149% year-over-year, our overall revenue grew 93% year-over-year, and our Rule of 40 score climbed to 155%. The sovereign AI revolution makes us very optimistic about the future,\" said Alex Karp, Co-Founder and Chief Executive Officer of Palantir Technologies.\nQ2 2026 Highlights\nU.S. revenue grew 115% year-over-year and 23% quarter-over-quarter to $1.573 billion\nU.S. commercial revenue grew 149% year-over-year and 28% quarter-over-quarter to $764 million\nU.S. government revenue grew 90% year-over-year and 18% quarter-over-quarter to $809 million\nRevenue grew 93% year-over-year and 19% quarter-over-quarter to $1.935 billion\nClosed 220 deals of at least $1 million, 98 deals of at least $5 million, and 73 deals of at least $10 million\nClosed total contract value (\"TCV\") of $3.373 billion, up 49% year-over-year\nClosed a record-setting $2.132 billion of U.S. commercial TCV, up 153% year-over-year\nU.S. commercial remaining deal value (\"RDV\") of $6.238 billion, up 124% year-over-year and 27% quarter-over-quarter\nGAAP income from operations of $912 million, representing a 47% margin\nAdjusted income from operations of $1.194 billion, representing a 62% margin\nRule of 40 score of 155%\nGAAP net income of $1.062 billion, representing a 55% margin\nCash from operations of $1.216 billion, representing a 63% margin\nAdjusted free cash flow of $1.220 billion, representing a 63% margin\nGAAP earnings per share (\"EPS\") of $0.41\nAdjusted EPS of $0.41\nCash, cash equivalents, and short-term U.S. Treasury securities of $9.2 billion\nQ2 2026 Financial Summary\n(Unaudited)\n(Amounts in thousands, except percentages and per share amounts)\nSecond Quarter\nAmount\nRevenue\n$\n1,935,464\nYear-over-year growth\n93\n%\nAmount\nMargin\nIncome from Operations\n$\n912,004\n47\n%\nAdjusted Income from Operations\n$\n1,194,472\n62\n%\nCash from Operations\n$\n1,216,167\n63\n%\nAdjusted Free Cash Flow\n$\n1,220,359\n63\n%\nNet Income Attributable to Common Stockholders\n$\n1,061,890\n55\n%\nAdjusted Net Income Attributable to Common Stockholders\n$\n1,047,001\nAdjusted EBITDA\n$\n1,202,692\n62\n%\nGAAP EPS, Diluted\n$\n0.41\nAdjusted EPS, Diluted\n$\n0.41\nOutlook\nFor Q3 2026, we expect\nRevenue of between $2.160 $2.164 billion.\nAdjusted income from operations of between $1.292 $1.296 billion.\nFor full year 2026\nWe are raising our revenue guidance to between $8.150 $8.158 billion.\nWe are raising our U.S. commercial revenue guidance to in excess of $3.424 billion, representing a growth rate of at least 134%.\nWe are raising our adjusted income from operations guidance to between $4.889 $4.897 billion.\nWe are raising our adjusted free cash flow guidance to between $4.5 $4.7 billion.\nAnd we continue to expect GAAP operating income and net income in each quarter of this year.\nCEO Letter\nPalantir CEO Alex Karp's quarterly letter is available through Palantir's website at https www.palantir.com newsroom letters.\nEarnings Webcast\nA live public webcast will be held at 5 00 PM ET today to discuss the results for our second quarter ended June 30, 2026 and financial outlook. The webcast can be accessed by registering online at https palantir.events palantirearnings-q22026. A replay of the webcast will be available at https investors.palantir.com following the event.\nAn investor presentation, including supplemental financial information and reconciliations of certain non-GAAP measures to their nearest comparable GAAP measures, will be available through Palantir's Investor Relations website at https investors.palantir.com.\nForward-Looking Statements\nThis press release and statements on our earnings webcast contain \"forward-looking statements\" within the meaning of the \"safe harbor\" provisions of the Private Securities Litigation Reform Act of 1995, including, but not limited to, statements regarding our financial outlook, product development and related timing, distribution, and pricing, expected benefits of and applications for our software platforms, business strategy, and plans (including strategy and plans relating to our Artificial Intelligence Platform (\"AIP\"), sales and marketing efforts, sales force, partnerships, and customers), investments in our business, market trends and market size, opportunities (including growth opportunities), our expectations regarding our existing and potential investments in, and commercial contracts with, various entities, and our expectations regarding macroeconomic\nevents. These forward-looking statements are made as of the date they were first issued and were based on current expectations, estimates, forecasts, and projections as well as the beliefs and assumptions of management. Words such as \"guidance,\" \"expect,\" \"anticipate,\" \"should,\" \"believe,\" \"hope,\" \"target,\" \"project,\" \"plan,\" \"goals,\" \"estimate,\" \"potential,\" \"predict,\" \"may,\" \"will,\" \"might,\" \"could,\" \"intend,\" \"shall,\" and variations of these terms or the negative of these terms and similar expressions are intended to identify these forward-looking statements. Forward-looking statements are subject to a number of risks and uncertainties, many of which involve factors or circumstances that are beyond our control. Our actual results could differ materially from those stated or implied in forward-looking statements due to a number of factors, including but not limited to risks detailed in our filings with the Securities and Exchange Commission (the \"SEC\"), including in our Annual Report on Form 10-K for the fiscal year ended December 31, 2025 and other filings and reports that we may file from time to time with the SEC, including our Quarterly Report on Form 10-Q for the quarter ended June 30, 2026. In particular, the following factors, among others, could cause our results to differ materially from those expressed or implied by such forward-looking statements our ability to successfully execute our business and growth strategy the sufficiency of our available funds to meet our liquidity needs the demand for our platforms, product offerings, and services in general our ability to increase our number of new customers and revenue generated from customers our ability to realize some or all of the total contract value of customer contracts as revenue, including any contractual options available to customers or contractual periods that are subject to termination for convenience provisions our long and unpredictable sales cycle our ability to successfully execute our channel sales and other strategic initiatives with third parties our ability to retain and expand our customer base the fluctuation of our results of operations and our key business measures on a quarterly basis in future periods the seasonality of our business the implementation process for our platforms, which may be complex and lengthy our ability to successfully develop and deploy new technologies to address the needs of our existing or prospective customers our ability to make our platforms and product offerings easier to install, consume, and use our ability to maintain and enhance our brand and reputation our ability to maintain and enhance our culture as our business grows and as we pursue our business and financial goals news or social media coverage about us or our leadership, including but not limited to coverage that presents, or relies on, inaccurate, misleading, incomplete, or otherwise damaging information the impact of recent, ongoing, or future global macroeconomic and geopolitical events, fluctuating interest rates, monetary policy changes, foreign currency fluctuations, or the potential or actual imposition of tariffs or other impacts on trade relations on the business and operations of our company or of our existing or prospective customers and partners issues raised by the use of artificial intelligence in our platforms and any breach or access to our or customer or third-party data.\nThe forward-looking statements included in this press release represent our views as of the date of this press release. We anticipate that subsequent events and developments will cause our views to change. We undertake no intention or obligation to update or revise any forward-looking statements, whether as a result of new information, future events or otherwise. These forward-looking statements should not be relied upon as representing our views as of any date subsequent to the date of this press release. Past performance is not necessarily indicative of future results.\nAdditional Definitions\nFor the purpose of this press release, our earnings webcast, and our CEO's letter\nTotal contract value (\"TCV\") is the total potential lifetime value of contracts entered into with, or awarded by, our customers at the time of contract execution, annual contract value (\"ACV\") is defined as the total value of contracts closed in the period divided by the dollar-weighted average contract duration of those same contracts, and remaining deal value (\"RDV\") is the total remaining value of contracts as of the end of the reporting period. Except as noted below, TCV, ACV, and RDV each presume the exercise of all contract options available to our customers and no termination of contracts. However, the majority of our contracts are subject to termination provisions, including for convenience, and there can be no guarantee that contracts are not terminated or that contract options will be exercised. Further, RDV may exclude all or some portion of the value of certain commercial contracts as a result of our ongoing assessments of customers' financial condition, including the consideration of such customers' ability and intention to pay, and whether such contracts continue to meet the criteria for revenue recognition, among other factors.\nRemaining performance obligations (\"RPO\") reflect the total values of contracts that have been entered into with, or awarded by, our customers, and represent non-cancelable contracted revenue that has not yet been recognized, which includes deferred revenue and, in certain instances, amounts that will be invoiced. We have elected the practical expedient, as permitted under Accounting Standards Codification 606 Revenue from Contracts with Customers , to not disclose remaining performance obligations for contracts with original terms of twelve months or less.\nThe term \"strategic commercial contracts\" is as defined in our Quarterly Report on Form 10-Q for the fiscal quarter ended March 31, 2026.\n\"Dollar-weighted duration basis\" is the total value of contracts closed in the applicable period, divided by the dollar-weighted average contract duration of those same contracts.\nThe term \"Rule of 40\" refers to the sum of our revenue growth rate year-over-year and our adjusted operating margin for each of the periods presented.\nNon-GAAP Financial Measures\nThis press release and the accompanying tables, as well as our earnings webcast, and our CEO's letter, contain the non-GAAP financial measures adjusted income from operations, which excludes stock-based compensation and related employer payroll taxes adjusted operating margin adjusted free cash flow adjusted free cash flow margin adjusted earnings before interest, taxes, depreciation, and amortization (\"adjusted EBITDA\") adjusted EBITDA margin adjusted net income attributable to common stockholders and adjusted EPS, diluted.\nWe believe these non-GAAP financial measures and other metrics described in this press release help us evaluate our business, identify trends affecting Palantir's business, formulate business plans and financial projections, and make strategic decisions. We exclude stock-based compensation, which is a non-cash expense, from these non-GAAP financial measures because we believe that excluding this item provides meaningful supplemental information regarding operational performance and provides useful information to investors and others in understanding and evaluating our operating results in the same manner as our management team. We exclude employer payroll taxes related to stock-based compensation as it is difficult to predict and outside of Palantir's control.\nOur definitions may differ from the definitions used by other companies and therefore comparability may be limited. In addition, other companies may not publish these or similar metrics. Further, these metrics have certain limitations as they do not include the impact of certain expenses that are reflected in our consolidated statements of operations. For example, adjusted free cash flow does not reflect our future contractual commitments or the total increase or decrease in our cash balances for a given period. Thus, our non-GAAP financial measures should be considered in addition to, not as a substitute for, or in isolation from, measures prepared in accordance with GAAP.\nWe compensate for these limitations by providing a reconciliation of each of these non-GAAP measures to the most comparable GAAP measure. We encourage investors and others to review our business, results of operations, and financial information in their entirety, not to rely on any single financial measure, and to view these non-GAAP measures in conjunction with the most directly comparable GAAP financial measure.\nA reconciliation table of the most comparable GAAP financial measure to each non-GAAP financial measure used in this press release is included at the end of this release. A reconciliation of non-GAAP guidance measures to corresponding GAAP measures is not available on a forward-looking basis without unreasonable effort due to the uncertainty regarding, and the potential variability of, reconciling items that may be incurred in the future, such as stock-based compensation and related employer payroll taxes, the effect of which may be significant.\nAvailable Information\nPalantir uses its Investor Relations website at https investors.palantir.com as a means of disclosing material non-public information and for complying with its disclosure obligations under Regulation FD. Accordingly, investors should monitor Palantir's Investor Relations website, in addition to following our press releases, SEC filings, public conference calls, and webcasts.\nAbout Palantir Technologies Inc.\nFoundational software of tomorrow. Delivered today. Additional information is available at https www.palantir.com.\nContacts\nInvestor Relations\ninvestors palantir.com\nMedia\nmedia palantir.com\nPalantir Technologies Inc.",
+      "source": "edgar:8-K ex-99.1",
+      "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm",
+      "asOf": "2026-08-03",
+      "truncated": true
+    },
+    "proxyStatement": {
+      "text": "Board and director independence:\nDirector Independence\nOur Class A common stock is listed on Nasdaq. As a company listed on Nasdaq, we are required under Nasdaq listing rules to maintain a board consisting of a majority of independent directors as determined affirmatively by our Board of Directors. Under Nasdaq listing rules, a director will only qualify as an independent director if that listed company's board of directors affirmatively determines that the director does not have a relationship which, in the opinion of the board of directors, would interfere with the exercise of independent judgment in carrying out the responsibilities of a director. In\n9\nTable of Content s\naddition, Nasdaq listing rules require that, subject to specified exceptions, each member of our Audit and Compensation, Nominating & Governance Committees be independent.\nAudit Committee members must also satisfy the additional independence criteria set forth in Rule 10A-3 under the Exchange Act and Nasdaq listing rules applicable to Audit Committee members. Compensation, Nominating & Governance Committee members must also satisfy the additional independence criteria set forth in Rule 10C-1 under the Exchange Act and Nasdaq listing rules applicable to members of compensation committees.\nOur Board of Directors has undertaken a review of the independence of our directors. Based on information provided by each director concerning his or her background, employment, and affiliations, our Board of Directors has determined that each of Messrs. Moore and Woersching and Mses. Schiff and Stat do not have any relationships which, in the opinion of our Board of Directors, would interfere with their exercise of independent judgment in carrying out the responsibilities of a director and that each of these directors is \"independent\" as that term is defined under Nasdaq listing rules.\nIn making these determinations, our Board of Directors considered the current and prior relationships that each non-employee director has with Palantir and all other facts and circumstances that our Board of Directors deemed relevant in determining their independence, including the beneficial ownership of our capital stock by each non-employee director, and the transactions involving them described in the section titled \" Certain Relationships and Related Party Transactions .\"\nThere are no family relationships among any of our directors or executive officers.\nLeadership Structure of our Board of Directors\nOur corporate governance framework provides our Board of Directors flexibility to determine the appropriate leadership structure for Palantir, and whether the roles of chairperson and CEO should be separated or combined. In making this determination, our Board of Directors considers many factors, including the needs of the business, our Board of Directors' assessment of its leadership needs from time to time, and the best interests of our stockholders.\n\nCompensation discussion and analysis:\nCompensation Discussion and Analysis\nThis Compensation Discussion and Analysis (\"CD&A\") includes a detailed discussion of compensation for the following executive officers during the fiscal year ended December 31, 2025, which we refer to as our Named Executive Officers (\"NEOs\" or \"named executive officers\"):\nAlexander Karp\nCo-Founder, Chief Executive Officer, and Director\nStephen Cohen\nCo-Founder, President, Secretary, and Director\nShyam Sankar\nChief Technology Officer and Executive Vice President\nDavid Glazer\nChief Financial Officer and Treasurer\nRyan Taylor\nChief Revenue Officer and Chief Legal Officer\nExecutive Summary\nOur fiscal year 2025 financial results showed year-over-year growth, including year-over-year revenue growth of 56% and another year of positive GAAP net income and GAAP income from operations in each quarter. We look forward to carrying our momentum and profitability into 2026 and beyond.\nWe believe that our executive compensation program should directly support our business strategy and continue to help drive our success and retention of our NEOs, with a structure designed to attract and retain our leadership team in the highly competitive technology talent market while also motivating our executives and aligning their interests with those of our stockholders. Given the highly competitive market, we recognize that in order to attract and retain our leadership team, we must continue to assess, refresh and refine our long-term executive compensation strategy.\nIn 2020, our Board of Directors or its committees designed award packages for all of our NEOs for navigating Palantir through the listing process and leading a public company, and in order to incentivize and retain them through the direct listing process, the critical early days as a public company, and through the following several years. We believed, and continue to believe, these outstanding awards effectively served as a primary supporter of alignment between NEO incentives, our business objectives, and the interests of our stockholders for several years, while understanding that new equity grants to certain of our NEOs needed to be considered beginning in 2024 and beyond given the full vesting of these prior awards. During 2024 and into 2025, our Compensation, Nominating & Governance Committee, working with its independent compensation consultant, Semler Brossy, and management, considered potential designs for, and determined that it was appropriate to transition to, a longer-term executive compensation program to continue this alignment into the future. In an effort to retain and incentivize Messrs. Glazer and Taylor, each of whom had fully vested in their awards granted in 2024, during 2025 our Compensation, Nominating & Governance Committee, after consultation with Semler Brossy, granted each of Messrs. Glazer and Taylor RSUs and stock appreciation rights (\"SARs\") as discussed in more detail below.\nCompensation Philosophy\nOur executive compensation philosophy is shaped by a strong belief that competitiveness of pay opportunities alongside a long-term, performance-based pay orientation drives our success and returns for our stockholders. The objective of our executive compensation program is to attract, retain, and incentivize the most talented personnel who embody our mission and values, increase the competitiveness of our overall compensation program relative to other companies we compete with for such personnel, and incentivize them to work diligently to further our growth and profitability. We do this by designing programs that link executive compensation to overall company performance and the interests of our stockholders.\nAs our business needs evolve and retention considerations change, we intend to continually evaluate our compensation programs, and we intend to review executive compensation in light of Palantir's performance, macroeconomic and sector-specific developments, technology company pay practices, and other trends that may impact executive compensation. We will undertake future evaluations with the support of and input from outside executive compensation consultants and other relevant experts.\n34\nTable of Content s\nOur compensation philosophy is centered around the following principles:\nCompetitiveness: we embrace the different facets of competitiveness our employees are competitive in that they strive for excellence and measure themselves against goals and metrics of success. In order to retain this caliber of talent, we must provide competitive pay opportunities in a highly competitive talent market in the software and data analytics space.\nLong-term alignment: our main priority is the sustainable creation of long-term value for our stockholders and the retention of our top executives. Our executive compensation program is designed to retain our executives through equity awards that vest over an extended time period and/or contain share holding requirements or transfer restrictions.\n\nSecurity ownership:\nSECURITY OWNERSHIP OF CERTAIN BENEFICIAL OWNERS AND MANAGEMENT\nThe following table sets forth certain information with respect to the beneficial ownership of our capital stock as of April 6, 2026, for:\neach of our named executive officers;\neach of our directors;\nall of our directors and executive officers as a group; and\neach person known by us to be the beneficial owner of more than five percent of any class of our voting securities.\nThe amounts and percentages of Class A common stock, Class B common stock and Class F common stock beneficially owned are reported on the basis of the regulations of the SEC governing the determination of beneficial ownership of securities. Under these rules, a person is considered to be a beneficial owner of a security if that person has or shares voting power, which includes the power to vote or to direct the voting of such security, or investment power, which includes the power to dispose of or to direct the disposition of such security and under these rules, more than one person may be considered to be a beneficial owner of the same securities. We have deemed shares of our Class A common stock and Class B common stock subject to stock options that are currently exercisable or exercisable within 60 days of April 6, 2026 assuming continued service through that period or issuable pursuant to RSUs which are subject to vesting and settlement conditions expected to occur within 60 days of April 6, 2026 assuming continued service through that period to be outstanding and to be beneficially owned by the person holding the stock option or RSU for the purpose of computing the percentage ownership of that person. We did not deem these shares outstanding, however, for the purpose of computing the percentage ownership of any other person, and we did not deem these shares to be outstanding or beneficially owned for the purpose of the calculation of percentage of votes (record date outstanding shares) in the table below. Unless otherwise indicated, the address of each beneficial owner is c/o Palantir Technologies Inc., 19505 Biscayne Boulevard, Suite 2350, Aventura, Florida 33180.\nShares Beneficially Owned\nClass A\nClass B\nClass F\nPercentage\nof Votes\n(Record\nDate\nOutstanding\nShares) %\nShares\n%\nShares\n%\nShares\n%\nNamed Executive Officers and Directors:\nAlexander Karp (1)\n6,432,258\n*\n86,907,993\n64.0\n335,000\n33.3\n11.4\nStephen Cohen (2)\n592\n*\n36,048,506\n29.4\n335,000\n33.3\n3.0\nShyam Sankar (3)\n1,392,685\n*\n4,989,112\n4.9\n*\n*\nDavid Glazer (4)\n783,370\n*\n*\n*\n*\nRyan Taylor (5)\n219,421\n*\n2,307\n*\n*\n*\nAlexander Moore (6)\n1,156,978\n*\n*\n*\n*\nAlexandra Schiff (7)\n186,965\n*\n10,000\n*\n*\n*\nLauren Friedman Stat (8)\n109,416\n*\n*\n*\n*\nPeter Thiel (9)\n68,871,556\n3.0\n29,128,444\n29.1\n335,000\n33.3\n7.9\nEric Woersching (10)\n2,348\n*\n*\n*\n*\nAll executive officers and directors (10 persons) (11)\n79,155,589\n3.4\n157,086,362\n98.3\n1,005,000\n100.0\n50.8\nGreater than 5% Stockholders:\nBlackRock, Inc. (12)\n158,217,849\n6.9\n*\n*\n3.5\nFounder Voting Control:\nShares subject to the Founder Voting Agreement (13)\n20,166,475\n*\n149,121,982\n94.2\n*\n20.4\nFounder Voting Trust (14)\n*\n*\n1,005,000\n100.0\n27.7\nDesignated Founders' Excluded Shares (15)\n55,137,931\n2.4\n2,962,961\n3.0\n*\n1.9\nFounder Total\n75,304,406\n3.3\n152,084,943\n96.1\n1,005,000\n100.0\n49.999999\n_______________\n* Represents less than one percent (1%)\nPercentage of votes (record date outstanding shares) represents the percentage of the total votes attributable to all shares of our Class A common stock, Class B common stock and Class F common stock outstanding as of the record date, as though all such shares were voted with respect to a matter submitted to our\n55\nTable of Content s\nstockholders. With respect to Messrs.\n\nRelated-person transactions:\nCERTAIN RELATIONSHIPS AND RELATED PARTY TRANSACTIONS\nThe following is a description of each transaction since the beginning of our last fiscal year, and each currently proposed transaction, in which:\nwe have been or are to be a participant;\nthe amount involved exceeded or exceeds $120,000; and\nany of our directors (including director nominees), executive officers, or beneficial holders of more than 5% of any class of our voting securities, or any immediate family member of, or person sharing the household with, any of these individuals or entities, had or will have a direct or indirect material interest.\nCommercial Arrangements\nMr. Thiel, a member of our Board of Directors, is president of an investment firm and a partner of a venture capital firm, and serves on the investment committees of certain other venture capital firms. As a result, he has extensive holdings in, and therefore may be deemed to have beneficial ownership of, private and public companies where he is not involved in management or daily operations. From time to time, in the ordinary course of business, we engage in commercial transactions with companies in which Mr. Thiel holds, or may be deemed to be the beneficial owner of, more than 10% of the outstanding shares through his related entities, but Mr. Thiel does not have a material interest in such transactions.\nWe have a commercial relationship with each of Anduril Industries, Inc. (\"Anduril\") and Memoir, Inc. (d.b.a. Chapter) (\"Chapter\"). Mr. Thiel may be deemed to have shared voting, investment, and dispositive power with respect to more than 10% of each of Anduril and Chapter through Mr. Thiel's related entities. During the year ended December 31, 2025, (i) we received payments of $17.66 million for our products and services from Anduril, and (ii) we received payments of $167,782 for our products and services from Chapter.",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000019/pltr-20260423.htm",
+      "asOf": "2026-04-24",
+      "truncated": true
+    },
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-22T22:08:58.250Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-22T22:08:58.250Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-22T22:08:58.250Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-22T22:08:58.250Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "edgar primary document (cover page)",
+      "source": "edgar",
+      "capturedAt": "2026-09-22T22:08:58.250Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-22T22:08:58.250Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-22T22:08:58.250Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-22T22:08:58.250Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-22T22:08:58.250Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-22T22:08:58.250Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-22T22:08:58.250Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-22T22:08:58.250Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-22T22:08:58.250Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-22T22:08:58.250Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-22T22:08:58.250Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-09-22T22:08:58.250Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-09-22T22:08:58.250Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-09-22T22:08:58.250Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-22T22:08:58.250Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-22T22:08:58.250Z"
+    }
+  ],
+  "sbc": [
+    778215000,
+    564798000,
+    475903000,
+    691638000,
+    684033000
+  ]
+}

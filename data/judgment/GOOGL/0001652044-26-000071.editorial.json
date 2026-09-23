@@ -1,0 +1,39 @@
+{
+  "judgmentSha256": "e32db0b62f5282a6e3f6ca17f4cf40864cec4a5929d02e74c82295dfad2c3f65",
+  "reviewedAt": "2026-09-22T23:10:00Z",
+  "reviewer": "claude-opus-4-8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.growth.points",
+      "quote": "Google Cloud is the standout growth line: revenue rose {+ 82% +} to $24.8 billion in the quarter and segment operating income reached $8,814 million from $2,826 million a year earlier, as enterprises bought AI infrastructure and platform services.",
+      "issue": "Cross-section figure repetition breaches house style (\"No sentence appears in two sections\"; introduce each figure once, refer back in words). Three near-verbatim duplications: (1) the Google Cloud Q2'26 segment operating income $8,814M vs $2,826M appears here in growth.points[0] AND in businessMoat.segments[0].body (\"segment operating income of $8,814 million against $2,826 million a year earlier\"), each with the same \"as enterprises adopt/bought AI infrastructure and platform\" clause; (2) the forward path $498.5B FY26E / $613.7B FY27E / FY27E EPS $14.91 appears in growth.points[2] AND in financials.incomeCommentary; (3) the $98.0 billion one-time equity gain is quoted as a hard figure in both financials.incomeCommentary and valuation.multiplesCommentary.",
+      "fix": "Give each figure one home and refer back in words elsewhere. Keep the Cloud segment-income figures in the moat section and have growth.points[0] point to it (e.g. \"cloud swung to the segment profit the moat section quantifies\"); keep the FY26E/FY27E estimates in incomeCommentary and have growth refer to \"the consensus path the financials section lays out\"; in multiplesCommentary refer back to \"the one-time equity gain quantified in the financials section\" rather than re-stating $98.0 billion.",
+      "status": "addressed",
+      "note": "Addressed. The three cross-section duplications are gone: Cloud segment income ($8,814M/$2,826M) now lives only in businessMoat.segments[0]; the forward estimates ($498.5B/$613.7B/$14.91) only in incomeCommentary; the $98.0B one-time gain no longer restated in multiplesCommentary (it refers back in words). The growth bullets now point to those sections in words. Verified each figure appears once at its home and is referenced, not re-quoted, elsewhere."
+    },
+    {
+      "id": "F-2",
+      "severity": "Minor",
+      "field": "sections.businessMoat.moatFactors[0].body",
+      "quote": "Google advertising overall is more than 70% of total revenue.",
+      "issue": "The sourced fact is period- and label-specific: the 10-K risk factor states \"We generated more than 70% of total revenues from online advertising in 2025.\" Here (and in risks.idiosyncratic[0], \"Google advertising is more than 70% of total revenue\") it is presented in the present tense with no period and relabelled \"Google advertising.\" On the Q2'26 supplemental table Google advertising was $81,629M of $119,796M, ~68%, so the un-dated present-tense form slightly overstates the current quarter. companyOverview handles it correctly (\"More than 70% of 2025 revenue came from online advertising\").",
+      "fix": "Stamp the period and match the source label as companyOverview does: \"more than 70% of 2025 revenue came from online advertising\" (or \"in 2025\"), rather than an undated present-tense \"Google advertising is more than 70% of total revenue.\"",
+      "status": "addressed",
+      "note": "The undated present-tense \">70%\" claim is removed from both places. moatFactors[0] now leads with the Q2'26 figures ($63,271M Search & other; $81,629M Google advertising in total) and drops the percentage; risks.idiosyncratic[0] now reads \"Advertising was the large majority of Alphabet's revenue in 2025, as the overview notes.\" The \"70%\" figure now appears only in companyOverview, correctly dated to 2025."
+    },
+    {
+      "id": "F-3",
+      "severity": "Minor",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "alongside 9.6x sales and the 34% operating margin the business actually runs at",
+      "issue": "34% is the single latest quarter's (Q2'26) operating margin; presenting it as the run-rate the business \"actually runs at\" cherry-picks the highest recent reading. The grounding surface also carries a TTM operating margin of 33.1% and FY25 of 32.0%, both lower, so \"actually runs at\" overstates the durable margin.",
+      "fix": "Either label 34% as the latest-quarter margin, or use the on-surface TTM operating margin (33.1%) when characterising the level the business runs at, so the run-rate claim is not anchored on a single peak quarter.",
+      "status": "addressed",
+      "note": "Rewritten to \"alongside 9.6x sales and a trailing operating margin of 33.1%\" — the on-surface TTM figure, not the peak Q2'26 34%. The \"actually runs at\" phrasing is gone."
+    }
+  ]
+}

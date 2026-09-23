@@ -1,0 +1,89 @@
+{
+  "judgmentSha256": "3bda275aab70b224f6e22e46bc334277c0875155369f66caaad4ddbc0832a4f6",
+  "reviewedAt": "2026-09-22T13:00:00Z",
+  "reviewer": "Claude Opus 4.8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "so reward and risk are close to one-for-one, near a reward/risk of 0.5x",
+      "issue": "The prose describes the risk-reward as balanced when the page's own numbers show it is roughly 2-to-1 against. Expected upside is +8.5% and bear downside is -17.2%, so reward/risk = 0.49x (correctly quoted). A reward/risk of 0.5x is not 'one-for-one' or 'balanced' — the downside is about twice the upside. The same mischaracterisation recurs in analystCommentary ('Reward and risk are close to balanced, which is a Hold') and in sections.finalRecommendation.body ('close to one-for-one against the upside'). This is the core rating argument, so the internal contradiction (0.5x described as 1:1) matters.",
+      "fix": "Reword all three places so the ratio and its description agree: downside is roughly twice the upside (reward/risk ~0.5x), which is exactly why the risk-reward is a Hold, not a buy. Drop 'one-for-one' / 'balanced'.",
+      "status": "addressed",
+      "note": "Fixed in all three cited places. scenarioCommentary now reads 'roughly twice the expected upside, a reward/risk of about 0.5x'; analystCommentary 'downside runs roughly twice the expected upside (a reward/risk near 0.5x)'; finalRecommendation 'downside runs roughly twice the upside'. 'one-for-one'/'balanced' removed; confirmed absent in rendered all.json."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "the low end approximates a normalized-earnings floor near book-value support",
+      "issue": "The target low of $205 is tied to 'book-value support,' but book value per diluted share on the page is $123.38 — the $205 low is ~1.7x book, not near book value. The same anchor is repeated in sections.finalRecommendation.body ('a pullback toward the target low near book-value support'). The claim reads as a downside floor the numbers on the page do not support.",
+      "fix": "Either drop 'near book-value support' or reconcile it with the $123.38 book value on the page — e.g. frame $205 as a normalized-earnings floor (a lower multiple on FY27E EPS), noting book value sits well below at ~$123 and is not the support level implied.",
+      "status": "addressed",
+      "note": "scenarioCommentary now frames $205 as 'a normalized-earnings floor, a lower multiple on the FY27E EPS estimate that still sits well above the $123.38 book value, so book value is not the support level'; finalRecommendation echoes 'a normalized-earnings floor that sits well above book value.'"
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.management.insiderOwnership",
+      "quote": "BlackRock reported 22,236,119 shares, or 8.4% of the class, as of the most recent Schedule 13G/A referenced in the proxy.",
+      "issue": "The BlackRock stake is presented without a date, implied current. The FactPack proxy (context.proxyStatement.text) footnote (2) states this amount 'Reflects shares beneficially owned as of December 31, 2024, as set forth in a Schedule 13G/A filed on February 3, 2025.' The holding is therefore ~18 months stale relative to the report (September 2026), and 'as of the most recent Schedule 13G/A referenced in the proxy' hides that. Rubric item 3 requires a sourced fact to carry its period wherever age changes its meaning.",
+      "fix": "Date the figure: BlackRock's 22,236,119 shares / 8.4% is as of December 31, 2024 (per the Schedule 13G/A filed February 3, 2025 cited in the proxy). State that current ownership is not disclosed more recently in the pack.",
+      "status": "addressed",
+      "note": "Now dated: 'BlackRock reported 22,236,119 shares, or 8.4% of the class, as of December 31, 2024 (per the Schedule 13G/A filed February 3, 2025 cited in the proxy); no more recent figure is disclosed in the pack.' Matches the FactPack proxy footnote (2)."
+    },
+    {
+      "id": "F-4",
+      "severity": "Important",
+      "field": "sections.growth.points",
+      "quote": "Premiums earned are rising across the book: auto reached $9,644 million and homeowners $4,201 million in Q2'26, up from $9,528 million and $3,771 million, as both price and units grew.",
+      "issue": "The blanket 'as both price and units grew' is not supported for auto. The MD&A (Context) attributes the auto increase to 'Increased new issued applications in all channels' and explicitly to 'Lower Allstate brand average premiums resulting from a shift in product mix towards affordable, simple and connected protection'; auto premiums written rose only $39 million in Q2. Auto growth was unit-led with a lower average premium, not 'both price and units.' The report's own catalyst even says growth is 'offsetting lower average premiums.' Relatedly, the growth section is one-sided (rubric item 5): every point is bullish and the natural counter-case — that unit growth comes with falling average premiums / revenue per policy — appears in catalysts and risks but is missing here.",
+      "fix": "Qualify the auto driver (units and new applications drove auto while average premium fell on the mix shift; homeowners carried the price/rate gain), and add the counter-case to the growth section: unit-led growth with lower average premiums pressures revenue per policy.",
+      "status": "addressed",
+      "note": "'both price and units grew' removed; points[0] now reads 'homeowners carried the rate/price gain, while auto growth was unit-led, on more new issued applications.' A counter-case point (points[4]) was added: unit gain reflects lower Allstate-brand average premiums on a mix shift, so 'rising policy counts do not translate one-for-one into premium growth.'"
+    },
+    {
+      "id": "F-5",
+      "severity": "Important",
+      "field": "sections.management.insiderOwnership",
+      "quote": "The proxy discloses no related person transactions since the beginning of 2025.",
+      "issue": "The same related-person-transactions fact is stated in two sections. sections.management.governance already says 'the Nominating, Governance and Social Responsibility Committee reported no related person transactions since the beginning of 2025, and reviews any transaction above $120,000 in which a related person has a material interest.' Repeating it in insiderOwnership is a paraphrase duplication (rubric item 7).",
+      "fix": "Keep the related-party point once (in governance, where it argues) and remove it from insiderOwnership, or refer back to it in words rather than restating the claim.",
+      "status": "addressed",
+      "note": "The related-person-transactions sentence has been removed from insiderOwnership; the point now appears only once, in governance."
+    },
+    {
+      "id": "F-6",
+      "severity": "Important",
+      "field": "sections.executiveSummary.catalysts",
+      "quote": "Favorable reserve development: prior-year reserve releases of {+ $1,708 million +} across the first half lowered reported losses, and their continuation would keep flattering results.",
+      "issue": "$1,708 million is the MD&A line 'Prior year reserve reestimates, excluding catastrophes' for the six months, not total prior-year reserve releases. The all-in 'Prior year reserve reestimates' (release) for the first half is $1,645 million (the $63 million adverse catastrophe reserve reestimate offsets the ex-cat figure). Labelling the ex-catastrophe figure as 'prior-year reserve releases' without the qualifier attaches it to a slightly different quantity, and reserve releases carry the bear thesis.",
+      "fix": "Add the qualifier — 'prior-year reserve releases (excluding catastrophes) of $1,708 million' — or use the total first-half prior-year reserve release of $1,645 million.",
+      "status": "addressed",
+      "note": "Catalyst now reads 'prior-year reserve releases, excluding catastrophes, of $1,708 million across the first half' — qualifier added and attached to the correct MD&A line; the {+ +} span was also removed."
+    },
+    {
+      "id": "F-7",
+      "severity": "Minor",
+      "field": "sections.management.leadership",
+      "quote": "the 2025 annual incentive funded at 127.2% of target, up from 50% in 2023, tracking the earnings recovery",
+      "issue": "The gloss 'tracking the earnings recovery' cherry-picks 2023 (50%) and omits the intervening 2024, which funded higher at 188.1% per the proxy (context.proxyStatement.text) even though earnings kept rising into 2025. The AIP fell from 188.1% (2024) to 127.2% (2025), so it did not move monotonically with the earnings recovery. The individual figures are correct; the inference is only partly supported.",
+      "fix": "Either drop 'tracking the earnings recovery' or acknowledge the 2024 payout (188.1%) so the trend is stated accurately; the PSA (62.2% for 2022-2024 to 157.4% for 2023-2025) is the cleaner example of tracking.",
+      "status": "addressed",
+      "note": "Author took the offered remedy of acknowledging 2024: leadership now shows the full series 'down from 188.1% in 2024 and up from 50% in 2023,' so the trend is stated accurately and the reader can see the 2024-to-2025 decline rather than only the 2023 base."
+    },
+    {
+      "id": "F-8",
+      "severity": "Minor",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "Allstate shareholders' equity rose to {+ $33.70 billion +} at June 30, 2026 from $30.61 billion at year-end 2025",
+      "issue": "The {+ +} span wraps a level ($33.70 billion of equity) rather than the signed change; the increase is the movement to it. The same pattern appears in sections.valuation.multiplesCommentary, where {+ 10 buys +} and {- 5 sells -} wrap analyst-rating counts rather than signed changes or explicit positives/negatives. Rubric item 9 limits spans to signed changes and explicit positives/negatives.",
+      "fix": "Move the spans onto the signed change (e.g. the increase in equity) or remove them from levels and counts; leave the raw figures unspanned.",
+      "status": "addressed",
+      "note": "The {+ +} span was removed from the $33.70 billion equity level in balanceCommentary, and the buy/sell counts in multiplesCommentary now read plain ('10 buys, 10 holds and 5 sells'). A sweep of the judgment confirms remaining spans sit only on signed changes and explicit positives/negatives."
+    }
+  ]
+}
