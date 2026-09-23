@@ -13,7 +13,7 @@ const args = process.argv.slice(2);
 const flag = (name: string) => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : undefined; };
 const asOf = flag("--date") ?? new Date().toISOString().slice(0, 10);
 const overrides: Partial<PortfolioConfig> = {};
-for (const k of ["wMax", "alpha", "cashCeiling", "sectorMax"] as const) {
+for (const k of ["wMax", "sectorMax", "cashCeiling", "muExp", "convExp", "rExp"] as const) {
   const v = flag(`--${k}`);
   if (v != null) {
     const n = Number(v);

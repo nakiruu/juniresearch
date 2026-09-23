@@ -8,9 +8,13 @@ export interface PortfolioConfig {
   rMin: number;             // min reward/risk (e.g. 0.5)
   convictionMin: number;    // min decision.conviction 0-100 (e.g. 45)
   stalenessMaxDays: number; // drop reports older than this (e.g. 120)
-  // Sizing (§6)
-  alpha: number;            // Kelly fraction (e.g. 0.4)
-  sigmaMin: number;         // floor on scenario sigma to avoid blow-up (e.g. 0.05)
+  // Sizing (§6) — score = mu^muExp * conviction^convExp * R^rExp * recency.
+  // Bigger weight for higher expected return, higher conviction, higher reward/risk.
+  muExp: number;            // score emphasis on expected return mu (e.g. 1)
+  convExp: number;          // score emphasis on conviction kappa (e.g. 1)
+  rExp: number;             // score emphasis on reward/risk R (e.g. 1)
+  alpha: number;            // legacy Kelly fraction — unused by the score-based sizer, kept for config/CLI back-compat
+  sigmaMin: number;         // legacy sigma floor — unused by the score-based sizer
   qGainComposite: number;   // quality-tilt gain on composite percentile (e.g. 0.10)
   qGainMoat: number;        // quality-tilt gain on moat score (e.g. 0.20)
   qPenaltyEroding: number;  // quality-tilt penalty for an eroding moat (e.g. 0.10)
@@ -28,6 +32,7 @@ export interface PortfolioConfig {
 
 export const DEFAULT_CONFIG: PortfolioConfig = {
   muMin: 0.05, rMin: 0.5, convictionMin: 45, stalenessMaxDays: 120,
+  muExp: 1, convExp: 1, rExp: 1,
   alpha: 0.4, sigmaMin: 0.05,
   qGainComposite: 0.10, qGainMoat: 0.20, qPenaltyEroding: 0.10, qLo: 0.8, qHi: 1.2,
   stalenessHalfLifeDays: 90,
