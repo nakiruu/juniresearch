@@ -1,6 +1,6 @@
 import type { Signal } from "./signal";
 import type { PortfolioConfig } from "./config";
-import { assessEligibility } from "./eligibility";
+import { assessEligibility, isBannedTicker } from "./eligibility";
 
 /**
  * scoreWeight — a name's desirability score, which drives its share of the book.
@@ -138,7 +138,11 @@ export function sizePortfolio(signals: Signal[], config: PortfolioConfig): Sized
     if (scored.length === 0) break;
   }
 
-  holdings = holdings.filter((w) => w.weight > 0);
+  // Defense in depth for the hard ban (see eligibility.ts BANNED_TICKERS): a banned
+  // name is already stopped at the eligibility gate, so this can only fire if that
+  // gate is ever bypassed by a future refactor. If it does, drop the name — its
+  // weight falls to cash — rather than ever letting it into the book.
+  holdings = holdings.filter((w) => w.weight > 0 && !isBannedTicker(w.ticker));
   const invested = holdings.reduce((a, w) => a + w.weight, 0);
   const cash = 1 - invested;
   return { holdings, cash, excluded };

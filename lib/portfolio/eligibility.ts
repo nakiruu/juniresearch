@@ -3,7 +3,30 @@ import type { PortfolioConfig } from "./config";
 
 const BUY_SIDE = new Set(["BUY", "STRONG BUY"]);
 
+/**
+ * Tickers the portfolio is HARD-BANNED from ever holding, whatever the rating,
+ * conviction, or expected upside. This is a compliance guardrail, NOT a tunable
+ * knob: it deliberately lives outside PortfolioConfig so that no CLI flag, config
+ * override, or scenario re-mark can switch it off.
+ *
+ *   ICE (Intercontinental Exchange) — the portfolio owner is an ICE employee, so
+ *   discretionary positions beyond company-vested shares carry insider-trading /
+ *   conflict-of-interest risk. The book must never take an ICE position.
+ */
+export const BANNED_TICKERS: ReadonlySet<string> = new Set(["ICE"]);
+
+/** True if `ticker` is on the hard-ban list (whitespace- and case-insensitive). */
+export function isBannedTicker(ticker: string): boolean {
+  return BANNED_TICKERS.has(ticker.trim().toUpperCase());
+}
+
 export function assessEligibility(s: Signal, config: PortfolioConfig): { eligible: boolean; reasons: string[] } {
+  // Hard ban short-circuits every other signal: a banned name is never held,
+  // however strong its report. It still surfaces in the snapshot's `excluded`
+  // list with this reason, so the ban stays visible and auditable each run.
+  if (isBannedTicker(s.ticker)) {
+    return { eligible: false, reasons: [`banned: ${s.ticker} (employer holding restriction)`] };
+  }
   const reasons: string[] = [];
   if (!BUY_SIDE.has(s.label)) reasons.push(`label ${s.label} not buy-side`);
   if (s.gatedLabel && !BUY_SIDE.has(s.gatedLabel)) reasons.push(`gate ceiling ${s.gatedLabel}`);

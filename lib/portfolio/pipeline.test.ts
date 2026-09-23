@@ -28,4 +28,23 @@ describe("portfolio pipeline (golden)", () => {
     // No weight exceeds the 10% cap.
     for (const h of snap.holdings) expect(h.weight).toBeLessThanOrEqual(DEFAULT_CONFIG.wMax + 1e-9);
   });
+
+  it("never holds hard-banned ICE, even as a top-tier BUY, and lists it excluded", () => {
+    const today = new Date("2026-09-01T00:00:00Z");
+    const reports = [
+      // ICE has the strongest signal in the universe — absent the ban it would be the top holding.
+      fixtureReport({ ticker: "ICE",    label: "STRONG BUY", conviction: 90, scenarios: [[200, 0.4], [175, 0.4], [150, 0.2]] }),
+      fixtureReport({ ticker: "STRONG", label: "BUY",        conviction: 80, scenarios: [[160, 0.3], [130, 0.5], [80, 0.2]] }),
+    ];
+    const prices: Record<string, number> = { ICE: 100, STRONG: 100 };
+    const signals = reports.map((r) => buildSignal(r, prices[r.meta.ticker], 6200, today, DEFAULT_CONFIG));
+    const sized = sizePortfolio(signals, DEFAULT_CONFIG);
+    const active = activeWeights(signals.map((s) => s.ticker), sized.holdings);
+    const snap = assembleSnapshot({ asOf: "2026-09-01", signals, sized, active, spyPrice: 640, config: DEFAULT_CONFIG });
+
+    expect(() => PortfolioSnapshot.parse(snap)).not.toThrow();
+    expect(snap.holdings.map((h) => h.ticker)).not.toContain("ICE");
+    const iceExclusion = snap.excluded.find((e) => e.ticker === "ICE");
+    expect(iceExclusion?.reasons).toContain("banned: ICE (employer holding restriction)");
+  });
 });
