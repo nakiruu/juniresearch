@@ -1,0 +1,583 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "VSH",
+  "cik": 103730,
+  "company": "Vishay Intertechnology, Inc.",
+  "exchange": "NYSE",
+  "sic": 3670,
+  "sicDescription": "Electronic Components & Accessories",
+  "filing": {
+    "form": "10-Q",
+    "accession": "0000103730-26-000065",
+    "filedDate": "2026-08-05",
+    "periodEnd": "2026-07-04",
+    "url": "https://www.sec.gov/Archives/edgar/data/103730/000010373026000065/form10q.htm"
+  },
+  "capturedAt": "2026-09-23T04:07:36.546Z",
+  "quote": {
+    "price": 33.14,
+    "marketCap": 5082985472,
+    "sharesOutstanding": 141282019,
+    "sharesSource": "cover",
+    "week52Low": 11.77,
+    "week52High": 69.47,
+    "dividendYield": 0.0123000005,
+    "asOf": "2026-09-23"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          3240487000,
+          3497401000,
+          3402045000,
+          2937587000,
+          3069048000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          887913000,
+          1058989000,
+          974493000,
+          626292000,
+          594883000
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          467802000,
+          615486000,
+          486144000,
+          5627000,
+          56868000
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          634839000,
+          779477000,
+          670517000,
+          216272000,
+          281606000
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          297970000,
+          428810000,
+          323820000,
+          -31150000,
+          -8978000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          2.05,
+          2.98,
+          2.31,
+          -0.23,
+          -0.07
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          920851000,
+          916097000,
+          1008527000,
+          606416000,
+          515231000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          455666000,
+          500937000,
+          818188000,
+          905019000,
+          950893000
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          -318442000,
+          -109888000,
+          -154531000,
+          314733000,
+          435927000
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          1746720000,
+          2050150000,
+          2200806000,
+          2028962000,
+          2088273000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          2.8983618941076914,
+          2.920738910965525,
+          3.320200903342367,
+          2.7041891838474874,
+          2.6196167267699946
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          457104000,
+          484288000,
+          365703000,
+          173702000,
+          184308000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -218372000,
+          -325308000,
+          -329410000,
+          -320079000,
+          -273293000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          0,
+          -82972000,
+          -78684000,
+          -50406000,
+          -12528000
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          238732000,
+          158980000,
+          36293000,
+          -146377000,
+          -88985000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q3'26",
+    "periodEnd": "2026-07-04",
+    "revenue": 888575000,
+    "operatingMargin": 0.06023802155136032,
+    "revenueYoY": 0.12386800566629574
+  },
+  "ttm": {
+    "pe": 174.42105263157896,
+    "ps": 1.5313061485295894,
+    "evToEbitda": null,
+    "grossMargin": 0.20926805887486785,
+    "operatingMargin": 0.03301370527439018,
+    "netMargin": 0.008555214695278845,
+    "netDebtToEbitda": null,
+    "interestCoverage": 2.7687662649384777,
+    "currentRatio": 1.8022310394387082,
+    "fcfYield": null
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 3706496670,
+      "eps": 0.84103
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 4302062460,
+      "eps": 1.74181
+    }
+  },
+  "analysts": {
+    "count": 7,
+    "buy": 5,
+    "hold": 1,
+    "sell": 1,
+    "consensusRating": "Buy",
+    "consensusTarget": 40,
+    "medianTarget": 42,
+    "highTarget": 45,
+    "lowTarget": 26,
+    "asOf": "2026-09-23"
+  },
+  "segments": {
+    "basis": "FY25 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 3069048000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "AAOI",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "ACLS",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "ACMR",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "AI",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-10",
+      "close": 33.13999938964844
+    },
+    {
+      "date": "2026-08-11",
+      "close": 33.290000915527344
+    },
+    {
+      "date": "2026-08-12",
+      "close": 33.54999923706055
+    },
+    {
+      "date": "2026-08-13",
+      "close": 33.31999969482422
+    },
+    {
+      "date": "2026-08-14",
+      "close": 35.08000183105469
+    },
+    {
+      "date": "2026-08-17",
+      "close": 35.58000183105469
+    },
+    {
+      "date": "2026-08-18",
+      "close": 33.52000045776367
+    },
+    {
+      "date": "2026-08-19",
+      "close": 31.959999084472656
+    },
+    {
+      "date": "2026-08-20",
+      "close": 31.829999923706055
+    },
+    {
+      "date": "2026-08-21",
+      "close": 31.6299991607666
+    },
+    {
+      "date": "2026-08-24",
+      "close": 30.43000030517578
+    },
+    {
+      "date": "2026-08-25",
+      "close": 31.309999465942383
+    },
+    {
+      "date": "2026-08-26",
+      "close": 30.65999984741211
+    },
+    {
+      "date": "2026-08-27",
+      "close": 31.739999771118164
+    },
+    {
+      "date": "2026-08-28",
+      "close": 30.559999465942383
+    },
+    {
+      "date": "2026-08-31",
+      "close": 30.43000030517578
+    },
+    {
+      "date": "2026-09-01",
+      "close": 29.6299991607666
+    },
+    {
+      "date": "2026-09-02",
+      "close": 30.610000610351562
+    },
+    {
+      "date": "2026-09-03",
+      "close": 30.450000762939453
+    },
+    {
+      "date": "2026-09-04",
+      "close": 31.799999237060547
+    },
+    {
+      "date": "2026-09-08",
+      "close": 31.469999313354492
+    },
+    {
+      "date": "2026-09-09",
+      "close": 31.690000534057617
+    },
+    {
+      "date": "2026-09-10",
+      "close": 31.290000915527344
+    },
+    {
+      "date": "2026-09-11",
+      "close": 33.209999084472656
+    },
+    {
+      "date": "2026-09-14",
+      "close": 30.799999237060547
+    },
+    {
+      "date": "2026-09-15",
+      "close": 31.43000030517578
+    },
+    {
+      "date": "2026-09-16",
+      "close": 31.31999969482422
+    },
+    {
+      "date": "2026-09-17",
+      "close": 31.850000381469727
+    },
+    {
+      "date": "2026-09-18",
+      "close": 32.5099983215332
+    },
+    {
+      "date": "2026-09-21",
+      "close": 32.619998931884766
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "Vishay Intertechnology, Inc. manufactures and sells discrete semiconductors and passive electronic components in the United States, Germany, rest of Europe, Israel, and Asia. The company operates through six segments: Metal Oxide Semiconductor Field Effect Transistors (MOSFETs), Diodes, Optoelectronic Components, Resistors, Inductors, and Capacitors segments. The MOSFETs segment offers low- and medium-voltage TrenchFET MOSFETs, high-voltage planar MOSFETs, high voltage Super Junction MOSFETs, power integrated circuits, and integrated function power devices. The Diodes segment provides rectifiers, small signal diodes, protection diodes, thyristors/silicon-controlled rectifiers, and power modules. The Optoelectronic Components segment offers standard and customer specific optoelectronic components, such as infrared (IR) emitters and detectors, IR remote control receivers, optocouplers, solid-state relays, optical sensors, light-emitting diodes, 7-segment displays, and IR data transceiver modules. The Resistors segment provides resistors used in various forms of electronic circuitry to adjust and regulate levels of voltage and current. The Inductors segment provides inductors for use as an internal magnetic field to change alternating current phase and resist alternating current. The Capacitors segment offers capacitors that store energy and discharge. It sells its products under the Siliconix, Dale, Draloric, Beyschlag, Sfernice, MCB, UltraSource, Applied Thin-Film Products, IHLP, HiRel Systems, Sprague, Vitramon, Barry, Roederstein, ESTA, Ametherm, and BCcomponents brand names. The company serves automotive, industrial, computing, consumer, telecommunications, military, aerospace, and healthcare markets. Vishay Intertechnology, Inc. was incorporated in 1962 and is headquartered in Malvern, Pennsylvania.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-23"
+    },
+    "mdaExcerpt": {
+      "text": "Item 2. Management's Discussion and Analysis of Financial Condition and Results of Operations\nThis Management's Discussion and Analysis (\"MD&A\") is intended to provide an understanding of Vishay's financial condition, results of operations and cash flows by focusing on changes in certain key measures from period to period. The MD&A should be read in conjunction with our Consolidated Condensed Financial Statements and accompanying Notes included in Item 1. This discussion contains forward-looking statements that involve risks and uncertainties. Our actual results could differ materially from those anticipated in these forward-looking statements as a result of various factors, including those discussed in our Annual Report on Form 10-K, particularly in Item 1A. \"Risk Factors,\" filed with the Securities and Exchange Commission on February 13, 2026.\nOverview\nVishay Intertechnology, Inc. (\"Vishay,\" \"we,\" \"us,\" or \"our\") manufactures one of the world's largest portfolios of discrete semiconductors and passive electronic components that are essential to innovative designs in the automotive, industrial, computing, consumer, telecommunications, military, aerospace, and healthcare markets.\nWe operate in six segments based on product functionality: MOSFETs, Diodes, Optoelectronic Components, Resistors, Inductors, and Capacitors.\nOur goal is to enhance stockholder value by growing our business and improving earnings per share. Since 1985, we have pursued a business strategy of growth through focused research and development and acquisitions. We plan to continue to grow our business through intensified internal growth supplemented by opportunistic acquisitions, while maintaining a prudent capital structure. As we advance our Think Customer First organizational culture in 2026, we are focused on maintaining capacity readiness to fulfill rising demand, growing existing customer relationships, attracting new customer relationships, driving innovation, delivering new products and solutions, and expanding production in low cost countries to support our regional competitiveness. We continue to evaluate our manufacturing footprint for ways to improve efficiency and profitability while maintaining capacity readiness.\nWe are focused on realizing the full value of our broad product portfolio, becoming a customer-first company, and capitalizing on the mega trends of e-mobility, sustainability, and connectivity to drive top line growth, expand margins, and optimize stockholder returns. We are using eight strategic levers to achieve these goals. Our elevated capital expenditure levels over the past three years have positioned us with increased capacity in an effort to ensure our customers of reliable supply as they scale production and to supply more part numbers to them. We are committed to completing our capacity expansion projects, but have modulated and will continue to modulate spending in response to order flow, timing of customer demand and qualification, changes in lead times for equipment, and increases in subcontractor capacity. For 2026, we plan to spend between $400 million to $440 million for capital expenditures, approximately half of which will be invested in our 12-inch wafer fab we are building in Itzehoe, Germany.\nOn July 1, 2026, we completed an underwritten public offering of 17.25 million shares of our common stock at a price to the public of $50.00 per share for proceeds of $830.25 million, net of underwriting discounts and issuance costs. We intend to use the net proceeds from the sale of our common stock in this offering to accelerate our growth initiatives and for general corporate purposes, including to reduce borrowings under our revolving credit facility.\nIn addition to enhancing stockholder value through growing our business, we continue to follow our Stockholder Return Policy, which calls for us to return at least 70% of free cash flow, net of scheduled principal payments of long-term debt, on an annual basis. See further discussion in \"Stockholder Return Policy\" below.\nOur business and operating results have been and will continue to be impacted by worldwide economic conditions. Our revenues are dependent on end markets that are impacted by consumer and industrial demand, and our operating results can be adversely affected by reduced demand in those global markets. In this volatile economic environment, we continue to closely monitor our fixed costs, capital expenditure plans, inventory, and capital resources to respond to changing conditions and to ensure we have the management, business processes, and resources to meet our future needs. We believe we can react quickly and professionally to changes in demand to minimize manufacturing inefficiencies and excess inventory build in periods of decline and maximize opportunities in periods of growth. We believe we have sufficient liquidity to withstand temporary disruptions in the economic environment.\nWe utilize several financial metrics, including net revenues, gross profit margin, operating margin, segment operating income, segment operating margin, end-of-period backlog, book-to-bill ratio, inventory turnover, change in average selling prices, net cash and short-term investments (debt), and free cash generation to evaluate the performance and assess the future direction of our business. See further discussion in \"Financial Metrics\" and \"Financial Condition, Liquidity, and Capital Resources\" below. Nearly all key financial metrics increased versus the prior fiscal quarter and prior year periods. Net revenues increased versus the prior fiscal quarter and the prior year periods primarily due to higher sales volume. Margins were positively impacted by higher sales volume and associated manufacturing efficiencies, which offset higher metals and materials costs. The order level remained at a high level and backlog continued to increase.\n25\nNet revenues for the fiscal quarter ended July 4, 2026 were $888.6 million, compared to $839.2 million and $762.3 million for the fiscal quarters ended April 4, 2026 and June 28, 2025, respectively. Net earnings for the fiscal quarter ended July 4, 2026 were $28.1 million, or $0.19 per diluted share, compared to net earnings of $7.2 million, or $0.05 per diluted share for the fiscal quarter ended April 4, 2026, and net earnings of $2.0 million, or $0.01 per diluted share for the fiscal quarter ended June 28, 2025.\nNet revenues for the six fiscal months ended July 4, 2026 were $1,727.8 million, compared to $1,477.5 million for the six fiscal months ended June 28, 2025. Net earnings for the six fiscal months ended July 4, 2026 were $35.3 million , or $0.25 per diluted share, compared to a net loss of $(2.1) million , or $(0.02) per share for the six fiscal months ended June 28, 2025.\nMeasures such as adjusted net earnings (loss), free cash, and segment operating income are considered non-GAAP measures. We define adjusted net earnings (loss) as net earnings (loss) determined in accordance with GAAP adjusted for various items that management believes are not indicative of the intrinsic operating performance of our business. We define free cash as the cash flows generated from continuing operations less capital expenditures plus net proceeds from the sale of property and equipment. We define segment operating income as operating income excluding selling, general, and administrative costs of our global operations, sales and marketing, information systems, finance, and administrative groups, as well as restructuring and severance costs, goodwill impairments, and other items affecting comparability. The reconciliations of adjusted net earnings (loss), adjusted net earnings (loss) per share, and free cash are below. Note 10 to our consolidated condensed financial statements includes the reconciliation for segment operating income. These non-GAAP measures should not be viewed as alternatives to GAAP measures of performance or liquidity. Non-GAAP measures such as adjusted net earnings (loss), adjusted net earnings (loss) per share, free cash, and segment operating income do not have uniform definitions. These measures, as calculated by Vishay, may not be comparable to similarly titled measures used by other companies. Management believes that adjusted net earnings (loss) and adjusted net earnings (loss) per share are meaningful because they provide insight with respect to our intrinsic operating results. Management believes that free cash is a meaningful measure of our ability to fund acquisitions, repay debt, and otherwise enhance stockholder value through stock repurchases or dividends. We utilize the free cash metric in defining our Stockholder Return Policy. Management uses segment operating income, along with segment gross profit, to make decisions, allocate resources, and assess performance of its operating segments.\nNet earnings (loss) attributable to Vishay stockholders include items affecting comparability. The items affecting comparability are (in thousands, except per share amounts) :\nFiscal quarters ended\nSix fiscal months ended\nJuly 4, 2026\nApril 4, 2026\nJune 28, 2025\nJuly 4, 2026\nJune 28, 2025\nNet earnings (loss)\n$\n28,124\n$\n7,164\n$\n2,004\n$\n35,288\n$\n(2,088\n)\nReconciling items affecting net revenues:\nTariff refunds passed through to customers\n30,008\n-\n-\n30,008\n-\nOther reconciling items affecting gross profit:\nTariff refunds received from U.S. government\n(30,008\n)\n-\n-\n(30,008\n)\n-\nOther reconciling items affecting operating income:\nFavorable resolution of contingency\n-\n-\n(11,293\n)\n-\n(11,293\n)\nAdjusted net earnings (loss)\n$\n28,124\n$\n7,164\n$\n(9,289\n)\n$\n35,288\n$\n(13,381\n)\nAdjusted weighted average diluted shares outstanding\n147,901\n137,471\n135,702\n142,680\n135,750\nAdjusted earnings (loss) per diluted share\n$\n0.19\n$\n0.05\n$\n(0.07\n)\n$\n0.25\n$\n(0.10\n)\nAlthough the term \"free cash\" is not defined in GAAP, each of the elements used to calculate free cash for the year-to-date period is presented as a line item on the face of our consolidated condensed statement of cash flows prepared in accordance with GAAP and the quarterly amounts are derived from the year-to-date GAAP statements as of the beginning and end of the respective quarter. Free cash results are as follows ( in thousands ) :\nFiscal quarters ended\nSix fiscal months ended\nJuly 4, 2026\nApril 4, 2026\nJune 28, 2025\nJuly 4, 2026\nJune 28, 2025\nNet cash provided by (used in) continuing operating activities\n$\n105,359\n$\n63,669\n$\n(8,791\n)\n$\n169,028\n$\n7,307\nProceeds from sale of property and equipment\n155\n66\n215\n221\n494\nLess: Capital expenditures\n(95,201\n)\n(110,661\n)\n(64,598\n)\n(205,862\n)\n(126,167\n)\nFree cash\n$\n10,313\n$\n(46,926\n)\n$\n(73,174\n)\n$\n(36,613\n)\n$\n(118,366\n)\nOur accelerated investments to expand capacity have positioned us to be able to better serve our customers and capture the early stages of upturns in end market demand. The long-term outlook for our business remains strong.\n26\nRecent Developments\nOn July 1, 2026, we completed an underwritten public offering of 17.25 million shares of our common stock at a price to the public of $50.00 per share for proceeds of $830.25 million, net of underwriting discounts and issuance costs. We intend to use the net proceeds from the sale of our common stock in this offering to accelerate our growth initiatives and for general corporate purposes, including to reduce borrowings under our revolving credit facility. These growth initiatives may include investments in capacity expansion, manufacturing optimization, technology innovation research and development, and other strategic priorities intended to support long-term growth. Pending these uses, we may invest the net proceeds in short-term, investment-grade instruments. We may also use a portion of the net proceeds to acquire or invest in businesses, products and/or technologies that are complementary to our own, although we have no current plans, commitments, or agreements with respect to any acquisitions. In the third fiscal quarter of 2026, we reduced the outstanding balance of the revolving credit facility to zero using the proceeds of the offering.\nOn February 20, 2026, the United States Supreme Court issued a ruling striking down certain tariffs previously imposed under the International Emergency Economic Powers Act (\"IEEPA\"). Following the Supreme Court's decision, the U.S. administration announced its intention to invoke other laws to collect tariffs and announced new tariffs on imports from all countries, in addition to any existing non-IEEPA tariffs. There remains substantial uncertainty regarding the duration of existing and newly announced tariffs, potential changes or pauses to such tariffs, tariff levels, and whether further additional tariffs or other retaliatory actions may be imposed, modified, or suspended, and the impacts of such actions on our business. We continue to monitor and evaluate these developments and assess their potential impact on our business, financial condition, and results of operations.\nIn the fiscal quarter ended July 4, 2026, we received refunds of IEEPA tariffs from the U.S. government, of which $30.0 million will be passed through to customers. The tariff refunds received were recognized as a reduction of costs of products sold. Tariff refunds to be passed through to customers are recorded as a reduction of net revenues. Interest on tariff refunds was recorded as interest income and was not material.\nStockholder Return Policy\nIn 2022, our Board of Directors adopted a Stockholder Return Policy, which calls for us to return at least 70% of free cash flow, net of scheduled principal payments of long-term debt, on an annual basis. We intend to return such amounts to stockholders directly, in the form of dividends, or indirectly, in the form of stock repurchases. The policy sets forth our intention, but does not obligate us to acquire any shares of common stock or declare any dividends, and the policy may be terminated or suspended at any time at our discretion, in accordance with applicable laws and regulations. For 2026, we expect to maintain our dividend and opportunistically repurchase shares in line with this policy. We did not repurchase any shares of common stock in the second fiscal quarter of 2026. We expect to be in compliance with our Stockholder Return Policy without repurchasing any common stock in 2026.\n27\nFinancial Metrics\nWe utilize several financial metrics to evaluate the performance and assess the future direction of our business. These key financial measures and metrics include net revenues, gross profit margin, operating margin, segment operating income, segment operating margin, end-of-period backlog, and the book-to-bill ratio. We also monitor changes in inventory turnover and our or publicly available average selling prices (\"ASP\").\nGross profit margin is computed as gross profit as a percentage of net revenues. Gross profit is generally net revenues less costs of products sold, but also deducts certain other period costs, particularly losses on purchase commitments and inventory write-downs. Losses on purchase commitments and inventory write-downs have the impact of reducing gross profit margin in the period of the charge, but result in improved gross profit margins in subsequent periods by reducing costs of products sold as inventory is used. We also regularly evaluate gross profit by segment to assist in the analysis of consolidated gross profit. Gross profit margin and gross profit margin by segment are clearly a function of net revenues, but also reflect our cost management programs and our ability to contain fixed costs.\nOperating margin is computed as gross profit less operating expenses, expressed as a percentage of net revenues. Operating margin is clearly a function of net revenues, but also reflects our cost management programs and our ability to contain fixed costs.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/103730/000010373026000065/form10q.htm",
+      "asOf": "2026-08-05",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "Item 1A. RISK FACTORS\nFrom time to time, information provided by us, including but not limited to statements in this report, or other statements made by or on our behalf, may contain\n\"forward-looking\" information within the meaning of the Private Securities Litigation Reform Act of 1995. Such statements involve a number of risks, uncertainties, and contingencies, many of which are beyond our control, which may cause actual\nresults, performance, or achievements to differ materially from those anticipated. Set forth below are important factors that could cause our results, performance, or achievements to differ materially from those in any forward-looking statements made\nby us or on our behalf. You should understand that it is not possible to predict or identify all such factors. Consequently, you should not consider the following to be a complete discussion of all potential risks or uncertainties.\nRisks relating to our business\nOur business is cyclical and future periods of decline and increased demand are not predictable.\nWe make significant decisions, including order acceptance, production schedules, personnel needs, material purchases, and other resource requirements,\nbased on customer forecasts and estimates of customer requirements. The electronic component industry is highly cyclical and experiences periods of decline from time to time. We and others in the electronic components industry have experienced\nthese conditions in the recent past and cannot predict when we may experience downturns in the future. If demand falls below customers' forecasts or if customers do not control their inventory effectively, customers may significantly and abruptly\nreduce their demand, or even cancel orders. Orders for materials purchases from certain suppliers may include noncancellable purchase commitments or advance payments from us, and those obligations and commitments could reduce our ability to adjust\nour inventory or expense levels to reflect declining market demands. Because certain of our sales, research and development, and internal manufacturing overhead expenses are relatively fixed, a reduction in customer demand likely would decrease our\ngross margins and operating income. Unexpected declines in customer demands can also result in lower average selling prices and additional expenses.\nWe may also experience intense demand for our products in periods of a rising economy and we may have difficulty expanding our manufacturing capacity to\nsatisfy demand during such periods. We may not be able to purchase sufficient supplies, allocate sufficient manufacturing capacity, hire skilled personnel, or expand our facilities to meet such increases in demand. Rapid customer ramp-up and\nsignificant increases in demand may strain our resources or negatively affect our margins. Inability to satisfy customer demand in a timely manner may harm our reputation, reduce our other opportunities, damage our relationships with customers,\nreduce our market share, reduce revenue growth, and/or cause us to incur contractual penalties.\nChanges in the demand mix, needed technologies, and these end markets may adversely affect our ability to match our products, inventory, and capacity to\nmeet customer demand and could adversely affect our operating results and financial condition. A slowdown in demand or recessionary trends in the global economy makes it more difficult for us to predict our future sales and manage our operations,\nand could adversely impact our results of operations. Capacity that we add during upturns in the business cycle may result in excess capacity during periods when demand for our products recede, resulting in inefficient use of capital which could\nalso adversely affect us.\nA downturn in our business in general, or isolated to a particular sector, could require us to incur restructuring and severance charges and/or asset\nwrite-downs.\nWe face significant challenges managing our capacity expansion strategy.\nAs part of our strategy to drive growth and increase capacity to assure customers of reliable\nvolume as they scale, we are increasing internal capacity by heavily investing in capital expenditures, and plan to increase external capacity by outsourcing additional commodity products to subcontractors. Our capacity expansion plans include\nthe expansion of the recently acquired Newport wafer fab, building a 12-inch wafer fab in Itzehoe, Germany adjacent to our existing 8-inch wafer fab, a new site in Mexico for power inductors and non-linear resistors, a resistor manufacturing\nexpansion in Mexico, and expanded diode manufacturing in Taiwan and Turin, Italy. There are demand-related risks associated with all growth initiatives. There are also inherent execution risks in\nbuilding and starting new wafer fabs, acquiring existing wafer fabs, and expanding production capacity at our own facilities or that of new or existing subcontractors that could significantly increase costs and negatively impact our operating\nresults. The execution risks include, but are not limited to, the following:\ndesign and construction delays and cost overruns;\nissues installing and qualifying new equipment and ramping production;\npoor production process yields and reduced quality control; and\ninsufficient personnel with requisite expertise and experience to operate the facilities.\n16\nWe have incurred, and may in the future incur, restructuring costs and associated asset write-downs.\nTo remain competitive, particularly when business conditions are difficult, or to implement organizational change, we sometimes\nimplement restructuring programs. The programs attempt to reduce our cost structure by achieving synergies, eliminating redundant facilities and staff positions, and moving operations, where possible, to jurisdictions with lower labor costs. In\n2024, we announced a restructuring program that primarily focuses on optimizing our manufacturing footprint and streamlining business decision making.\nAdditionally, our long-term strategy includes growing through the integration of acquired businesses, and GAAP requires plant closure\nand employee termination costs that we incur in connection with our acquisition activities to be recorded as expenses in our consolidated statement of operations, as such expenses are incurred. For this reason, we expect to have some level of\nfuture restructuring expenses due to acquisitions.\nOur business may be adversely affected by the widespread outbreak of diseases and the mitigation efforts\nby governments worldwide to control their spread.\nWe cannot predict when future disease outbreaks or pandemics will occur. The potential risks and effects of future disease outbreaks and the\nrelated economic impact that could have an adverse effect on our business include, but are not limited to:\nAdverse impact on our customers and supply channels;\nDecrease in sales, product demand and pricing and unfavorable economic and market conditions;\nIncreased costs, including higher shipping costs due to reduced shipping capacity;\nRestrictions on our manufacturing, support operations or workforce, or similar limitations for our customers, vendors, and suppliers, that could limit our\nability to meet customer demand;\nPotential increased credit risk if customers, distributors, and resellers are unable to pay us, or must delay paying their obligations to us;\nRestrictions or disruptions of transportation, such as reduced availability of air transport, port closures, and increased border controls or closures could\nresult in delays;\nImpact on our workforce/employees due to the spread of viruses or diseases and any shelter-in-place orders; and\nCybersecurity risks as a result of extended periods of remote work arrangements.\nSuch effects could result in us being required to record impairment charges related to our property and equipment, intangible assets, or\ngoodwill.\nIn the past we have grown through successful integration of acquired businesses, but this may not continue.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/103730/000010373026000019/form10k.htm",
+      "asOf": "2026-02-13",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-K",
+    "pressRelease": {
+      "text": "EX-99.1\n5\nexhibit99-1.htm\nEXHIBIT 99.1\nExhibit 99.1\n&#xa0;\nVishay Intertechnology Reports Second Quarter\n2026 Results\n&#xa0;\nMalvern, PA, August 5, 2026 &#x2013;\nVishay Intertechnology, Inc., (NYSE:&#xa0;VSH), one of the world's largest\nmanufacturers of discrete semiconductors and passive electronic components,\ntoday announced results for the fiscal second quarter ended July 4, 2026.\n&#xa0;\nHighlights\n2Q 2026 GAAP revenues of $888.6 million; adjusted revenues of $918.6 million\nGAAP revenues reduced by $30.0 million of tariff refunds passed through to customers, with no impact on gross profit\nGross margin was 23.3%; adjusted gross margin was 22.6%\nOperating margin was 6.0%; adjusted operating margin was 5.8%\n2Q 2026 diluted EPS of $0.19\n2Q 2026 book-to-bill of 1.32 with book-to-bill of 1.23 for semiconductors and 1.40 for passive components\nBacklog at quarter end was 6.1 months\n&#x201c;For the second quarter, Vishay delivered 9.5%\nsequential growth to adjusted revenue of $919 million, exceeding the top end of\nour revenue guidance and representing continued strengthening demand across all\nend markets, channels and regions,&#x201d; said Joel Smejkel, president and CEO. &#x201c;Executing\nas a new company, Vishay 3.0 is focused on supplying our increasing customer\ncount and taking full advantage of the upcycle, outpacing industry growth, while\nlaying the foundation to leverage multi-year demand across all end markets for\nsustained growth, expanded margins and enhanced stockholder returns.&#x201d;\n&#xa0;\n3Q 2026 Outlook\nFor\nthe third quarter of 2026, management expects revenues in the range of $945 million and $975 million and a gross profit margin in the range of 24.0% +/- 50\nbasis points.\n&#xa0;\nConference Call\nA conference call to discuss\nVishay&#x2019;s&#xa0;second quarter financial results is scheduled for\nWednesday,&#xa0;August 5,&#xa0;2026,&#xa0;at 9:00 a.m.\nET.&#xa0;To&#xa0;participate&#xa0;in the live conference call, please pre-register\nhere .&#xa0; Upon\nregistering, you will be&#xa0;emailed&#xa0;a dial-in number, and unique\nPIN.&#xa0;&#xa0;\n&#xa0;\nA live audio webcast of the conference call and a\nPDF copy of the press release and the quarterly presentation will be accessible\ndirectly from the Investor Relations section of the Vishay website at\nhttp://ir.vishay.com.&#xa0;\n&#xa0;\nThere&#xa0;will be a&#xa0;replay&#xa0;of&#xa0;the\nconference call&#xa0;available&#xa0;on&#xa0;the Investor Relations&#xa0;website\napproximately one hour following the&#xa0;call&#xa0;and&#xa0;will remain\navailable for&#xa0;30 days.&#xa0;&#xa0;\n&#xa0;\n1\n&#xa0;\nAbout Vishay\nVishay\nmanufactures one of the world&#x2019;s largest portfolios of discrete semiconductors\nand passive electronic components that are essential to innovative designs in\nthe automotive, industrial, computing, consumer, telecommunications, military,\naerospace, and healthcare markets. Serving customers worldwide, Vishay is&#xa0; The DNA of\ntech &#xae;.\nVishay\nIntertechnology, Inc. is a Fortune 1,000 Company listed on the NYSE (VSH). More\non Vishay at&#xa0; www.Vishay.com .\n&#xa0;\nThis press release includes\ncertain financial measures which are not recognized in accordance with U.S.\ngenerally accepted accounting principles (\"GAAP\"), including adjusted net earnings; adjusted earnings per share; adjusted net revenues; adjusted gross margin; adjusted operating margin; free\ncash; earnings before interest, taxes, depreciation and amortization\n(\"EBITDA\"); adjusted EBITDA; and adjusted EBITDA margin; which are considered \"non-GAAP\nfinancial measures\" under the U.S. Securities and Exchange Commission\nrules. These non-GAAP measures supplement our GAAP measures of performance or\nliquidity and should not be viewed as an alternative to GAAP measures of\nperformance or liquidity. Non-GAAP measures such as adjusted net earnings, adjusted earnings per share, adjusted net revenues, adjusted gross margin, adjusted operating margin, free cash, EBITDA, adjusted EBITDA, and adjusted EBITDA margin do not have uniform definitions. These measures, as calculated by\nVishay, may not be comparable to similarly titled measures used by other\ncompanies. Management believes that such measures are meaningful to investors\nbecause they provide insight with respect to intrinsic operating results and financial trends of the\nCompany. Although the terms \"free cash\" and \"EBITDA\" are\nnot defined in GAAP, the measures are derived using various line items measured\nin accordance with GAAP. &#xa0; Reconciling items to arrive at adjusted net earnings represent significant charges or credits that are important to understanding the Company's intrinsic operations.&#xa0; Reconciling items to calculate adjusted net revenues, adjusted gross margin, adjusted operating margin, and adjusted EBITDA represent those same items used in computing adjusted net earnings, as relevant.&#xa0; Furthermore, the presented calculation of adjusted EBITDA is substantially similar to, but not identical to, a measure used in the calculation of financial ratios required for covenant compliance under Vishay's revolving credit facility.&#xa0;&#xa0; These reconciling items are indicated on the accompanying reconciliation schedules\nand are more fully described in the Company&#x2019;s financial statements presented in\nits annual report on Form 10-K and its quarterly reports presented on Forms\n10-Q.\n&#xa0;\nStatements contained herein that relate to\nthe Company's future performance, including forecasted revenues and margins,\ncapacity expansion, multi-year customer demand, stockholder returns, and the\nperformance of the economy in general, are forward-looking statements within\nthe safe harbor provisions of Private Securities Litigation Reform Act of 1995.\nWords and expressions such as &#x201c;will,&#x201d; &#x201c;expect,&#x201d; &#x201c;going forward&#x201d; or other\nsimilar words or expressions often identify forward-looking statements. Such\nstatements are based on current expectations only, and are subject to certain\nrisks, uncertainties and assumptions, many of which are beyond our control.\nShould one or more of these risks or uncertainties materialize, or should\nunderlying assumptions prove incorrect, actual results, performance, or\nachievements may vary materially from those anticipated, estimated or\nprojected. Among the factors that could cause actual results to materially\ndiffer include: general business and economic conditions; manufacturing or\nsupply chain interruptions or changes in customer demand; delays or\ndifficulties in implementing our cost reduction strategies; delays or\ndifficulties in expanding our manufacturing capacities; an inability to attract\nand retain highly qualified personnel; changes in foreign currency exchange\nrates; uncertainty related to the effects of changes in foreign currency\nexchange rates; competition and technological changes in our industries;\ndifficulties in new product development; difficulties in identifying suitable\nacquisition candidates, consummating a transaction on terms which we consider\nacceptable, and integration and performance of acquired businesses; changes in\nU.S. and foreign trade regulations and tariffs, and uncertainty regarding the\nsame; volatility in prices for metals and materials; &#xa0; changes in applicable domestic and foreign tax regulations,\nand uncertainty regarding the same; changes in applicable accounting standards\nand other factors affecting our operations that are set forth in our filings with\nthe Securities and Exchange Commission, including our annual reports on Form\n10-K and our quarterly reports on Form 10-Q. We undertake no obligation to\npublicly update or revise any forward-looking statements, whether as a result\nof new information, future events or otherwise.\n&#xa0;\nThe DNA of tech &#xae; is a trademark of Vishay\nIntertechnology.\n&#xa0;\n&#xa0;\nContact:\nVishay Intertechnology, Inc.\nPeter Henrici\nExecutive Vice President, Corporate Development\n+1-610-644-1300\n2\n&#xa0;\n&#xa0;\nVISHAY INTERTECHNOLOGY, INC.\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\nSummary of Operations\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n(Unaudited - In thousands, except per share amounts)\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\nFiscal quarters ended\n&#xa0;\n&#xa0;\n&#xa0;\nJuly 4, 2026\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\nApril 4, 2026\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\nJune 28, 2025\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\nNet revenues (a)\n$\n888,575\n&#xa0;\n&#xa0;\n$\n839,242\n&#xa0;\n&#xa0;\n$\n762,250\n&#xa0;\nCosts of products sold (b)\n&#xa0;\n&#xa0;\n681,193\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n662,630\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n613,567\n&#xa0;\nGross profit\n&#xa0;\n&#xa0;\n207,382\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n176,612\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n148,683\n&#xa0;\nGross margin\n&#xa0;\n&#xa0;\n23.3\n%\n&#xa0;\n&#xa0;\n&#xa0;\n21.0\n%\n&#xa0;\n&#xa0;\n&#xa0;\n19.5\n%\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\nSelling, general, and administrative expenses (c)\n&#xa0;\n&#xa0;\n153,856\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n154,488\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n126,565\n&#xa0;\nOperating income\n&#xa0;\n&#xa0;\n53,526\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n22,124\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n22,118\n&#xa0;\nOperating margin\n&#xa0;\n&#xa0;\n6.0\n%\n&#xa0;\n&#xa0;\n&#xa0;\n2.6\n%\n&#xa0;\n&#xa0;\n&#xa0;\n2.9\n%\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\nOther income (expense):\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\nInterest expense\n&#xa0;\n&#xa0;\n(10,333\n)&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n(9,973\n)&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n(10,588\n)&#xa0;\nOther\n&#xa0;\n&#xa0;\n(794\n)&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n701\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n747\n&#xa0;\nTotal other income (expense) - net\n&#xa0;\n&#xa0;\n(11,127\n)&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n(9,272\n)&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n(9,841\n)&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\nIncome before taxes\n&#xa0;\n&#xa0;\n42,399\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n12,852\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n12,277\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\nIncome tax expense\n&#xa0;\n&#xa0;\n14,275\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n5,688\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n10,273\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\nNet earnings\n&#xa0;\n$\n28,124\n&#xa0;\n&#xa0;\n&#xa0;\n$\n7,164\n&#xa0;\n&#xa0;\n&#xa0;\n$\n2,004\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\nBasic earnings per share\n&#xa0;\n$\n0.21\n&#xa0;\n&#xa0;\n&#xa0;\n$\n0.05\n&#xa0;\n&#xa0;\n&#xa0;\n$\n0.01\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\nDiluted earnings per share\n&#xa0;\n$\n0.19\n&#xa0;\n&#xa0;\n&#xa0;\n$\n0.05\n&#xa0;\n&#xa0;\n&#xa0;\n$\n0.01\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\nWeighted average shares outstanding - basic\n&#xa0;\n&#xa0;\n136,824\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n136,045\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n135,702\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\nWeighted average shares outstanding - diluted\n&#xa0;\n&#xa0;\n147,901\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n137,471\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n136,167\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\nCash dividends per share\n&#xa0;\n$\n0.10\n&#xa0;\n&#xa0;\n&#xa0;\n$\n0.10\n&#xa0;\n&#xa0;\n&#xa0;\n$\n0.10\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n(a) Net revenues for the fiscal quarter ended July 4, 2026 are reduced by ($30,008) for tariff refunds passed through to customers, with no impact on gross profit.\n(b) Costs of product sold for the fiscal quarter ended July 4, 2026 are reduced by ($30,008) for tariff refunds received from the U.S. government, with no impact on gross profit.\n(c) Selling, general, and administrative expenses for the fiscal quarter ended June 28, 2025 include a ($11,293) benefit recognized upon the favorable resolution of a contingency.\n&#xa0;\n3\n&#xa0;\n&#xa0;\nVISHAY INTERTECHNOLOGY, INC.\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\nSummary of Operations\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n(Unaudited - In thousands, except per share amounts)\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\nSix fiscal months ended\n&#xa0;\n&#xa0;\n&#xa0;\nJuly 4, 2026\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\nJune 28, 2025\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\nNet revenues (d)\n$\n1,727,817\n&#xa0;\n&#xa0;\n$\n1,477,486\n&#xa0;\nCosts of products sold (e)\n&#xa0;\n&#xa0;\n1,343,823\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n1,193,249\n&#xa0;\nGross profit\n&#xa0;\n&#xa0;\n383,994\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n284,237\n&#xa0;\nGross margin\n&#xa0;\n&#xa0;\n22.2\n%\n&#xa0;\n&#xa0;\n&#xa0;\n19.2\n%\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\nSelling, general, and administrative expenses (f)\n&#xa0;\n&#xa0;\n308,344\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n261,304\n&#xa0;\nOperating income\n&#xa0;\n&#xa0;\n75,650\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n22,933\n&#xa0;\nOperating margin\n&#xa0;\n&#xa0;\n4.4\n%\n&#xa0;\n&#xa0;\n&#xa0;\n1.6\n%\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\nOther income (expense):\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\nInterest expense\n&#xa0;\n&#xa0;\n(20,306\n)&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n(19,378\n)&#xa0;\nOther\n&#xa0;\n&#xa0;\n(93\n)&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n4,494\n&#xa0;\nTotal other income (expense) - net\n&#xa0;\n&#xa0;\n(20,399\n)&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n(14,884\n)&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\nIncome before taxes\n&#xa0;\n&#xa0;\n55,251\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n8,049\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\nIncome tax expense\n&#xa0;\n&#xa0;\n19,963\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n10,137\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\nNet earnings (loss)\n&#xa0;\n$\n35,288\n&#xa0;\n&#xa0;\n&#xa0;\n$\n(2,088\n)&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\nBasic earnings (loss) per share attributable to Vishay stockholders\n&#xa0;\n$\n0.26\n&#xa0;\n&#xa0;\n&#xa0;\n$\n(0.02\n)&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\nDiluted earnings (loss) per share attributable to Vishay stockholders\n&#xa0;\n$\n0.25\n&#xa0;\n&#xa0;\n&#xa0;\n$\n(0.02\n)&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\nWeighted average shares outstanding - basic\n&#xa0;\n&#xa0;\n136,428\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n135,750\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\nWeighted average shares outstanding - diluted\n&#xa0;\n&#xa0;\n142,680\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n135,750\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\nCash dividends per share\n&#xa0;\n$\n0.20\n&#xa0;\n&#xa0;\n&#xa0;\n$\n0.20\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n&#xa0;\n(d) Net revenues for the six fiscal months ended July 4, 2026 are reduced by ($30,008) for tariff refunds passed through to customers, with no impact on gross profit.\n(e) Costs of product sold for the six fiscal months ended July 4, 2026 are reduced by ($30,008) for tariff refunds received from the U.S.",
+      "source": "edgar:8-K ex-99.1",
+      "url": "https://www.sec.gov/Archives/edgar/data/103730/000010373026000064/exhibit99-1.htm",
+      "asOf": "2026-08-05",
+      "truncated": true
+    },
+    "proxyStatement": {
+      "text": "Compensation discussion and analysis:\nCompensation Discussion and Analysis\nThis section describes overall compensation practices at Vishay and specifically\ndescribes the total compensation of our Named Executive Officers (as defined below). Our Named Executive Officers for the 2025 fiscal year along with their respective ages and positions with Vishay were as follows:\nNAME\nAGE\nPOSITION\nMarc Zandman\n64\nExecutive Chairman of the Board, Chief Business Development Officer, President Vishay Israel Ltd.\nJoel Smejkal\n59\nChief Executive Officer, President and Director\nDavid McConnell\n59\nExecutive Vice President and Chief Financial Officer\nRoy Shoshani\n52\nExecutive Vice President - Chief Operating Officer - Semiconductors and Chief Technical Officer\nPeter Henrici\n70\nExecutive Vice President - Corporate Development\nJeff Webster (1)\n55\nFormer Executive Vice President and Chief Operating Officer\n(1)\nMr. Webster stepped down from his position of Executive Vice President and Chief Operating Officer effective January 13, 2025.\nOverview\nThe Compensation Committee of the Board of Directors establishes and approves all compensation for our executive officers and administers Vishay's incentive and equity-based\ncompensation plan.\nSEC disclosure rules require tabular presentation regarding the compensation of the registrant's principal executive officer (\"PEO\"), principal financial officer (\"PFO\"), and the\nregistrant's three most highly compensated executive officers other than the PEO and PFO employed at December 31, 2025. Additionally, up to two additional individuals, who are among the three most highly compensated employees other than the PEO or PFO\nnot serving as an executive officer at December 31, 2025, are required to be disclosed. While the Compensation Committee determines compensation for all executive officers, this Compensation Discussion and Analysis is focused on the six individuals\nlisted in the Summary Compensation Table on page 43 (our \"Named Executive Officers\").\nCompensation Philosophy Generally\nVishay's compensation programs are designed to support our business goals and promote the short- and long-term profitable growth of the Company. Vishay's equity plans are designed\nto ensure that executive compensation programs and practices are aligned with the long-term interests of Vishay's stockholders. Total compensation of each individual varies with individual performance and Vishay's overall performance in achieving\nfinancial and non-financial objectives.\nThe Compensation Committee and Vishay's management believe that compensation should help to recruit, retain, and motivate key employees who can function effectively both in periods\nof recession and economic expansion. Ordinarily an executive officer's total compensation should consist of a combination of cash payments and equity awards, to achieve the right balance between short- and long-term performance. Equity-based\ncompensation should serve to align the interests of management with those of stockholders. Severance protection and retirement benefits should provide executives with an appropriate level of economic security, commensurate with their contributions\nto the Company and their tenure.\nThe Compensation Committee, in consultation with its independent compensation consultant, our Chief Executive Officer, and our Executive\nChairman, undertakes an annual review of the compensation arrangements of Vishay's other executive officers.\nVishay Intertechnology, Inc. | 2026 Proxy Statement\n29\n2026 Proxy Statement | Executive Compensation\nTable of Contents\nPerformance Philosophy\ns\nThe Company's compensation philosophy is intended to integrate with its philosophy of evaluating operating performance. The Company utilizes several measures and metrics to\nevaluate its performance, as further described in \"Performance Measures and Metrics\" below, and in turn, the Compensation Committee utilizes similar measures in evaluating executive officer compensation.\ns\nThe Compensation Committee believes that the elements of compensation for the Company's senior executives reward intrinsically sound management decisions and do not encourage\nrisk-taking to enhance short-term profitability at the expense of the long-term health and viability of the enterprise. While the design of our executive compensation program is primarily performance-based, we do not believe that it encourages\nexcessive risk-taking. The Compensation Committee believes that the Company's senior executives have taken a prudent approach to corporate risk management. In addition, the Company has in place a risk management program designed to identify, evaluate\nand control risks. Through this program, we take a company-wide view of risks and have a network of systems and oversight to ensure that risks are not viewed in isolation and are appropriately controlled and reported, including a system of reporting\nto the full Board and its Committees. We believe that our compensation programs work within this system.\n\nSecurity ownership:\nSECURITY OWNERSHIP OF CERTAIN\nBENEFICIAL OWNERS AND MANAGEMENT\nOn April 6, 2026, the record date for the 2026 Annual Meeting, Vishay had\n124,008,087 shares of common stock and 12,097,148 shares of Class B common stock outstanding and entitled to vote.\nEach share of common stock outstanding and eligible to vote entitles the\nholder to one vote, and each share of Class B common stock entitles the holder to ten votes.\nClass B shares are transferable only to certain permitted transferees while the common stock is freely transferable. Class B shares are convertible on a one-for-one basis at any time\ninto shares of common stock. Transfers of Class B shares other than to permitted transferees result in the automatic conversion of the Class B shares into common stock. Voting is not cumulative. The percentage of total voting power below represents\nvoting power with respect to all shares of common stock and Class B common stock, as a single class, calculated on the basis of ten votes per share of Class B common stock and one vote per share of common stock.\nThe following table shows the number of shares of Vishay common stock and Class B common stock beneficially owned by (a) each director and director nominee, (b) each Named Executive\nOfficer, (c) the directors, director nominees, and executive officers of Vishay as a group, and (d) any person owning more than 5% of Vishay common stock or the Class B common stock. Unless otherwise noted, the information is stated as of the record\ndate, and the beneficial owners exercise sole voting or dispositive power over their shares. The\npercentages of class and voting power amounts set forth in the table below are based on the number of shares outstanding and eligible to vote as of the record date, rather than based on the percentages set forth in stockholders' Schedules\n13G or 13D, as applicable, filed with the SEC.\nCOMMON STOCK\nCLASS B COMMON STOCK\nNAME\nSHARES OF STOCK\nPERCENT OF CLASS\nSHARES OF STOCK\nPERCENT OF CLASS\nVOTING POWER\nDirectors and Named Executive Officers\nMarc Zandman\n18,554\n*\n8,618,334\n(2)\n71.2\n%\n35.2\n%\nDr. Renee B. Booth\n16,511\n*\n-\n-\n*\nMichael J. Cody\n43,364\n*\n-\n-\n*\nPeter Henrici\n15,751\n*\n-\n-\n*\nDr. Michiko Kurahashi\n16,446\n*\n-\n-\n*\nDr. Abraham Ludomirski\n61,313\n*\n-\n-\n*\nJohn Malvisi\n8,929\n*\n-\n-\n*\nDavid McConnell\n18,938\n*\n-\n-\n-\nRoy Shoshani\n48,813\n*\n-\n-\n*\nJoel Smejkal\n163,145\n*\n-\n-\n*\nJeff Webster\n39,093\n*\n-\n-\n*\nRuta Zandman\n70,998\n*\n10,849,383\n(1)\n89.7\n%\n44.3\n%\nRaanan Zilberman\n16,575\n*\n-\n-\n*\nAll Directors and Executive Officers as a group (13 Persons) (4)(5)\n510,378\n*\n10,850,883\n89.7\n%\n44.3\n%\n5% Stockholders\nZiv Shoshani\n70,016\n*\n8,616,834\n(3)\n71.2\n%\n35.2\n%\nEugenia Ames (7)\n-\n*\n2,232,549\n18.5\n%\n*\n(6)\nDeborah S. Larkin (8)\n-\n*\n706,755\n5.8\n%\n2.9\n%\nBlackRock, Inc. (9)\n17,163,352\n13.8\n%\n-\n-\n7.0\n%\nDimensional Fund Advisors, LP (10)\n7,643,262\n6.2\n%\n-\n-\n3.1\n%\nWoodline Partners (11)\n10,107,022\n8.2\n%\n4.1\n%\n* Represents less than 1% of the outstanding shares of such class or the total voting power, as the case may be.\nVishay Intertechnology, Inc. | 2026 Proxy Statement\n24\n2026 Proxy Statement | Security Ownership of Certain Beneficial Owners and Management\nTable of Contents\n(1)\nIncludes 8,616,834 shares of Class B common stock held in a family trust, of which Mrs. Ruta Zandman, Mr. Marc Zandman and Mr. Ziv Shoshani, a former member of the company's Board of Directors and a nephew of\nMrs. Ruta Zandman, are co-trustees, and have shared voting power. Pursuant to an agreement related to that family trust, each of Mrs. Zandman and Messrs. Zandman and Shoshani is required to cause shares controlled by the trust to be voted in\nsupport of the election of each of the co-trustees as directors of the Company. Additionally, includes 2,232,549 shares of Class B common stock that are subject to a voting agreement pursuant to which Mrs. Zandman, as Voting Representative,\nmay direct the voting of such shares.\n(2)\nIncludes the same 8,616,834 shares of Class B common stock held in a family trust, of which Mrs.\n\nRelated-person transactions:\nRelated Party Transactions Policy\nSecurities Trading Policy\nSustainability Report\nTo view these documents, access ir.Vishay.com and click on \"Corporate Governance.\" Any of these documents can be obtained in print by any stockholder upon written request to\nVishay's investor relations department.\nWe intend to post any amendments to, or any waivers from, a provision of our Code of Business Conduct and Ethics or Code of Ethics for Financial Officers on our website.\nVishay Intertechnology, Inc. | 2026 Proxy Statement\n12\n2026 Proxy Statement | Governance of the Company\nTable of Contents\nWhat is the composition of our Board of Directors?\nVishay has a staggered Board of Directors divided into three classes. The number of directors is fixed by the Board of Directors, subject to a minimum of three and a maximum of fifteen directors as\nprovided in the Company's charter documents. As described in Proposal One, four directors are nominated for election as Class II directors for a term expiring at the 2029 Annual Meeting of Stockholders. Biographical information on each of the\ncurrent and nominated directors is included under the heading \"Directors\" beginning on page 4.\nHow does the Board determine which directors are considered\nindependent?\nThe Board has adopted a formal set of director qualification standards used to determine director independence which meet the independence requirements of the NYSE corporate governance listing\nstandards. The Board has determined that, to be considered independent, a director may not have a direct or indirect material relationship with the Company other than as a director. A material relationship is one which impairs or inhibits, or has\nthe potential to impair or inhibit, a director's exercise of critical and disinterested judgment on behalf of the Company and its stockholders.",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/103730/000010373026000029/vishay_def14a.htm",
+      "asOf": "2026-04-08",
+      "truncated": true
+    },
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T04:07:36.546Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T04:07:36.546Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T04:07:36.546Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T04:07:36.546Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "edgar primary document (cover page)",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T04:07:36.546Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T04:07:36.546Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T04:07:36.546Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T04:07:36.546Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T04:07:36.546Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T04:07:36.546Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T04:07:36.546Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T04:07:36.546Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-23T04:07:36.546Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-23T04:07:36.546Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T04:07:36.546Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T04:07:36.546Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T04:07:36.546Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T04:07:36.546Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T04:07:36.546Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T04:07:36.546Z"
+    }
+  ]
+}

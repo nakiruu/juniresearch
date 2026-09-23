@@ -1,0 +1,49 @@
+{
+  "judgmentSha256": "e7656e261ba921621657023657ec4fcd5a801d44e4b53eced3048bd4f937bdde",
+  "reviewedAt": "2026-09-23T19:45:00Z",
+  "reviewer": "claude-opus-4-8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "Direct public comparables are scarce: the peer set the pack assembles spans optical-component and broader semiconductor suppliers rather than pure directed-energy laser makers, so the peer multiples are a loose reference rather than a clean benchmark.",
+      "issue": "The grounding surface carries no assembled peer set and no peer multiples. The prompt Facts header reads \"Multiples (company column; peers pending a peer data source)\" and the report's own multiples table note reads \"Peer multiples pending a peer data source.\" The prose nonetheless asserts a peer set exists (\"the peer set the pack assembles\"), characterizes its composition (\"optical-component and broader semiconductor suppliers\"), and treats peer multiples as usable (\"a loose reference\"). That is a characterization the pack does not carry and it contradicts the report's own rendered table. (For the record, the raw FactPack peers are AAOI, HIMX, JAMF, LSPD with all-null P/E, P/S and EV/EBITDA; JAMF and LSPD are software companies, so even the underlying list is not \"optical-component and broader semiconductor suppliers.\")",
+      "fix": "Drop the claim that a peer set was assembled and that peer multiples serve as a reference. State plainly that no peer comparables were available in the pack (peers pending a data source), consistent with the multiples-table note, and rest the \"expensive\" conclusion on the company's own P/S of 7.6x and NTM P/E of 83.1x.",
+      "status": "addressed",
+      "note": "Rewrite removes the fabricated peer set. Now reads \"No peer-multiple comparison is available in the pack, where peer data is pending a source, so we anchor on nLIGHT's own trading history and on the Street's targets rather than on a comparable-company set,\" consistent with the multiples-table note, and rests the expensive call on the grounded P/S 7.6x and NTM P/E 83.1x."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.executiveSummary.catalysts / sections.growth.points / sections.valuation.scenarios / sections.risks.idiosyncratic / sections.businessMoat.moatFactors",
+      "quote": "management points to the Department of War's Joint Laser Weapon Systems award as a template for more program wins. || management frames the Department of War's Joint Laser Weapon Systems award as a template for further directed-energy wins.",
+      "issue": "The same claims recur across sections in paraphrase (rubric item 7). (a) The Joint Laser Weapon Systems \"template for [more/further] wins\" line appears in executiveSummary.catalysts[0] and again, nearly verbatim, in growth.points[1]. (b) The ~$17M of Q3 product revenue delayed by the supply chain appears in catalysts[1], growth.points[3] and risks.idiosyncratic[0]. (c) The $305.9M/$347.1M consensus revenue path appears in catalysts[2], growth.points[2] and valuation.scenarios[1].driver. (d) The Aerospace and Defense +40.8% Q2 YoY figure appears in catalysts[0] and businessMoat.moatFactors[1]. (e) The 83.1x NTM P/E appears in executiveSummary.thesis.body and valuation.multiplesCommentary. Exec-summary catalysts should point; the body sections should argue distinct points rather than restate the pointer.",
+      "fix": "Give each figure one home section that states it in full, and refer back in words elsewhere. E.g. state the $17M delay once (risks) and have growth refer to \"the delayed shipments noted under risks\"; let growth.points[1] argue a point distinct from the catalyst rather than repeat the JLWS-template line; give the $305.9M/$347.1M consensus path a single home and point to it from the others.",
+      "status": "addressed",
+      "note": "All five resolved. (a) growth.points[1] now argues 2025 A&D +60% to $175.3M, not the JLWS line (which stays only in catalysts[0]). (b) $17M stated once in risks.idiosyncratic[0]; catalysts[1] refers in words, growth.points[3] uses the distinct $63-73M Q3 range. (c) $305.9M/$347.1M homed in growth.points[2]; catalysts[2] and the Base driver refer in words. (d) +40.8% dropped from moatFactors[1]. (e) 83.1x dropped from thesis.body, kept only in multiplesCommentary."
+    },
+    {
+      "id": "F-3",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.companyOverview",
+      "quote": "as a defense-led ramp reshaped the top line and returned the company to double-digit revenue growth.",
+      "issue": "The five-year income series on the page shows YoY growth of -10.4% (FY22), -13.3% (FY23), -5.4% (FY24) and +31.6% (FY25), with FY21 YoY blank; it never shows a prior year of positive double-digit growth. \"returned ... to double-digit revenue growth\" implies a prior double-digit-growth state the series does not support (rubric item 2 / item 9).",
+      "fix": "Write \"returned the company to growth\" or \"delivered double-digit revenue growth\" — both supported by the series — and drop the \"returned to double-digit\" implication.",
+      "status": "addressed",
+      "note": "Now reads \"A defense-led ramp reshaped the top line in 2025 and delivered double-digit revenue growth after several years of decline.\" The \"returned to double-digit\" implication is gone; +31.6% FY25 after three down years supports the wording."
+    },
+    {
+      "id": "F-4",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarios[0].driver",
+      "quote": "prompting a re-rating toward the analyst target range of $81.00 to $100.00 while the shares stay below their 52-week high of $86.95.",
+      "issue": "The Bull scenario's implied price is $70 and the report's target high is $68, but the Bull driver narrates a re-rating \"toward the analyst target range of $81.00 to $100.00\" and cites the $86.95 52-week high. Set beside a $70 implied price, the $81-100 figures read as more upside than the scenario itself carries (rubric item 6, coherence within the Bull box). The individual figures are grounded (Street range $81-100; 52-week high $86.95); the issue is internal consistency.",
+      "fix": "Anchor the Bull narrative to its own ~$70 implied price, or state explicitly that the bull case stops short of the Street's $81-100 range (a partial re-rating), so the driver and the implied price agree.",
+      "status": "addressed",
+      "note": "Bull driver now ends \"driving a partial re-rating that recovers part of the drop from the 52-week high but stops short of the Street's more bullish targets.\" The specific $81-100 / $86.95 figures are gone and the narrative is coherent with the $70 implied price."
+    }
+  ]
+}
