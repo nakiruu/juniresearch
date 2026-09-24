@@ -1,0 +1,69 @@
+{
+  "judgmentSha256": "68ac4715cee0131281b68b90640a6e844ad9d267ac0264f8bd963123d46a169c",
+  "reviewedAt": "2026-09-24T15:00:00Z",
+  "reviewer": "claude-opus-4-8",
+  "round": 2,
+  "verdict": "approved-with-minors",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "operating margin rebuilt from 6.0% in FY23 to 9.9% in FY25 after the pandemic-testing unwind and the Fortrea spin-off.",
+      "issue": "\"the pandemic-testing unwind\" is not on the grounding surface. Neither the Facts block nor any Context excerpt mentions pandemic or COVID testing; it is introduced from outside knowledge as the explanation for the FY21-onward margin decline and recovery — an unsupported causal/contextual attribution (rubric item 2). The Fortrea spin-off half IS grounded (MD&A forward-looking factor 44), but the pandemic half is not.",
+      "fix": "Drop \"the pandemic-testing unwind.\" State the margin recovery from the five-year series and, if a cause is named, keep only the grounded one (the Fortrea spin-off).",
+      "status": "addressed",
+      "note": "Fixed. The phrase was removed; incomeCommentary now reads \"...operating margin rebuilt from 6.0% in FY23 to 9.9% in FY25 following the Fortrea spin-off,\" keeping only the grounded cause."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.growth.points[3]",
+      "quote": "Biopharma backlog rose only 0.2% year over year and Early Development revenue fell 1.4%, the softer side of the growth story.",
+      "issue": "The biopharma soft-spot (Early Development -1.4%, backlog +0.2%) is argued twice in near-identical terms — here in the growth section and again in sections.risks.idiosyncratic[2] (\"Central Labs is growing while Early Development contracts, and total backlog is barely higher than a year ago\"). It also appears as the executive-summary pointer sections.executiveSummary.risks[2], and the -1.4% recurs in sections.financials.incomeCommentary and sections.businessMoat.segments[0].body. Rubric item 7: a claim should be argued once and referred back in words, not restated as a substantive point in two argument sections.",
+      "fix": "Keep the argued treatment in one section (idiosyncratic risks), let the executive-summary risk bullet point to it, and in the growth section refer back in words rather than re-stating the two figures.",
+      "status": "addressed",
+      "note": "Fixed. growth.points[3] no longer restates the two figures; it now reads \"...led by Central Labs even as Early Development lags, the soft spot covered under risks,\" referring back in words while the argued treatment stays in risks.idiosyncratic[2]."
+    },
+    {
+      "id": "F-3",
+      "severity": "Minor",
+      "field": "sections.management.capitalAllocation",
+      "quote": "it retired $500.0 million in senior notes in June",
+      "issue": "Incidental cross-section factual echoes (rubric item 7). The $500.0M senior-notes retirement is stated in near-identical words in two sections — sections.financials.balanceCommentary (\"In June the company retired $500.0 million in senior notes\") and here. Separately, the Q2 segment growth figures (Dx +5.5%, BLS +6.5%, Central Labs +9.8%, Early Development -1.4%) appear in both sections.financials.incomeCommentary and sections.businessMoat.segments[0].body.",
+      "fix": "State the $500M note retirement once (capital-allocation section) and refer to it in words in the balance commentary. In the moat segment body, refer back to the segment growth already given in income commentary rather than re-listing the percentages; keep the moat-relevant additions (segment AOI margins 18.0% / 17.0%).",
+      "status": "open",
+      "note": "Not addressed. balanceCommentary still says \"In June the company retired $500.0 million in senior notes\" and capitalAllocation still says \"it retired $500.0 million in senior notes in June\" — the retirement is stated twice. businessMoat.segments[0].body still re-lists the Q2 segment growth (5.5%, 6.5%, Central Labs 9.8%, Early Development slipped 1.4%) already in incomeCommentary."
+    },
+    {
+      "id": "F-4",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.companyOverview",
+      "quote": "The business splits into a larger Diagnostics Laboratories segment and a smaller Biopharma Laboratory Services segment.",
+      "issue": "This closing sentence restates the two-segment structure already given in the opening sentence (\"provides laboratory services through two operating segments, Diagnostics Laboratories and Biopharma Laboratory Services\"), adding only \"larger/smaller.\" Redundant filler within the section (rubric items 7 and 10).",
+      "fix": "Remove the closing sentence, or fold the larger/smaller distinction into the opening sentence so the segment structure is stated once, leaving the section room to spare on its cap.",
+      "status": "open",
+      "note": "Not addressed. companyOverview still closes with the identical sentence restating the two-segment structure already given in the opening sentence."
+    },
+    {
+      "id": "F-5",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarios[1].driver",
+      "quote": "with the forward multiple roughly held. The outcome sits near the Street's consensus and median price targets. Mid-single-digit organic growth and steady margin gains, not multiple expansion, drive the return.",
+      "issue": "Calls-coherence nuance (rubric item 6). The base implied price of 352 against FY27E EPS of $19.84 works out to roughly 17.7x, above the 16.6x NTM forward multiple the driver says is \"roughly held\" (16.6x applied to FY27E EPS gives about 329). So the base return in fact embeds a modest re-rating and effectively leans on the Street median target ($352.50), which the driver also cites — the \"not multiple expansion\" statement slightly misdescribes what produces 352.",
+      "fix": "Anchor the base explicitly to the Street median (a valid surface figure) and drop the \"multiple roughly held / not multiple expansion\" mechanism, or reconcile the two by acknowledging a modest re-rating toward the median.",
+      "status": "open",
+      "note": "Not addressed. scenarios[1].driver is unchanged; base implied 352 against FY27E EPS $19.84 is ~17.7x, above the 16.6x NTM multiple the driver says is \"roughly held,\" so \"not multiple expansion\" still misdescribes the base return."
+    },
+    {
+      "id": "F-6",
+      "severity": "Minor",
+      "field": "sections.management.governance",
+      "quote": "Governance rests on the DEF 14A proxy statement dated 2026-04-10.",
+      "issue": "The date is written in ISO form (2026-04-10) in prose; rubric item 9 requires prose date form. The report writes other dates correctly in prose (\"enacted July 4, 2025,\" \"since January 1, 2025\"), so this is an isolated inconsistency.",
+      "fix": "Write the date in prose form, e.g., \"dated April 10, 2026.\"",
+      "status": "open",
+      "note": "Not addressed. governance still reads \"dated 2026-04-10\" in ISO form rather than prose form (\"April 10, 2026\")."
+    }
+  ]
+}

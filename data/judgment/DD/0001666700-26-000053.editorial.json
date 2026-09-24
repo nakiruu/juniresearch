@@ -1,0 +1,49 @@
+{
+  "judgmentSha256": "4c63d38f8c2991eb09ebc39ace8d89ba749d0b9634429ab541c9b13e108b728c",
+  "reviewedAt": "2026-09-24T14:12:00Z",
+  "reviewer": "Claude Opus 4.8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body; sections.businessMoat.moatFactors[2].body; sections.growth.points[0]; sections.valuation.scenarioCommentary",
+      "quote": "Both continuing segments grew organically in the quarter. ... Both segments grew organically in the second quarter, which cushions the group against a downturn in any one market. ... Both continuing segments grew organically in the second quarter of 2026 — Healthcare & Water Technologies up 4% and Diversified Industrials up 3%. ... the chief uncertainty is not near-term demand — both segments grew organically in the quarter",
+      "issue": "The same fact — that both continuing segments grew organically in Q2'26 — is stated four times in four sections (thesis, the 'Diversified end-markets' moat factor, growth point 1, and scenarioCommentary). This is the paraphrase-repetition rubric 7 targets: introduce a figure once, then refer back in words. Here it is re-introduced with fresh framing in each place rather than pointed back to.",
+      "fix": "Keep the full statement once — growth point 1, which carries the per-segment 4%/3% detail — and in the other three places refer back in words (e.g. 'with both segments contributing') rather than re-stating the organic-growth fact.",
+      "status": "addressed",
+      "note": "Fixed as directed. The full statement is kept once in growth.points[0] ('Healthcare & Water Technologies up 4% and Diversified Industrials up 3%'). thesis now states only 'net sales rose 4% to $1,819 million'; moatFactors[2] refers back as 'showed through in the quarter's broad-based growth'; scenarioCommentary refers back as 'which held up across the business in the quarter.' No longer re-introduced."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[4] (duplicates sections.executiveSummary.risks[3]); also analystCommentary, thesis, valuation.multiplesCommentary, finalRecommendation",
+      "quote": "The trailing P/E is distorted by one-time and separation charges, so a slower-than-expected normalization of reported earnings could weigh on sentiment. ... Distorted reported earnings: with a trailing P/E of 233.7x and a 0.8% net margin skewed by one-time charges, reported GAAP metrics are hard to interpret and could mislead until they normalize.",
+      "issue": "The 'trailing P/E / net margin is distorted by separation and one-time charges' caveat appears in six places: analystCommentary, thesis, valuation.multiplesCommentary, executiveSummary.risks[3], risks.idiosyncratic[4] and finalRecommendation. executiveSummary.risks[3] and risks.idiosyncratic[4] are near-duplicates of one another — the exec-summary pointer and the detailed risk say the same thing without the detail section adding a distinct argument. The word 'distorted' is also a recurring tic (rubric 9). The caveat is a valuation-interpretation point already made (twice) in the valuation section, not a distinct idiosyncratic business risk.",
+      "fix": "Argue the distorted-earnings point once, in valuation.multiplesCommentary. Remove risks.idiosyncratic[4] (it is not a business risk and duplicates the exec-summary risk), or replace it with a genuine idiosyncratic exposure. Let the exec-summary risk[3] remain a one-line pointer and vary the wording elsewhere so 'distorted' does not repeat.",
+      "status": "addressed",
+      "note": "Fixed as directed. The distorted-earnings point is argued once in multiplesCommentary; risks.idiosyncratic[4] is replaced with a genuine exposure (Aramids non-cash proceeds — a $300M note and a $325M Arclin equity interest whose value depends on Arclin). exec-summary risk[3] is now a one-line pointer. Wording is varied — 'depressed' (analystCommentary), 'held down' (thesis), 'skewed' (finalRecommendation) — so 'distorted' now appears only once (multiplesCommentary)."
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.growth.points",
+      "quote": "The reset post-separation cost base — lower amortization of intangibles at $68 million versus $74 million and reduced separation costs — supports operating leverage as sales grow.",
+      "issue": "The growth section is five uniformly bullish points (organic growth, raised guidance, consensus growth, cited demand drivers, operating leverage) with no offsetting consideration. The prompt's own house style requires that 'every bullish section names the counter-case,' and rubric 5 flags a bull section with no bear sentence. A counter is available on the page: R&D fell to $42 million from $53 million in the quarter (and to $89 million from $103 million over six months), which the durability paragraph itself calls out as something to watch because sustained innovation is what keeps specialty materials specified.",
+      "fix": "Add one point that names the reading cutting the other way using an on-page figure — e.g. that R&D spend fell year on year ($42M vs $53M in the quarter), which could pressure the innovation pipeline that underpins the growth drivers, or that Diversified Industrials growth depends on cyclical construction/industrial demand.",
+      "status": "addressed",
+      "note": "Fixed as directed. A sixth growth point now names the counter-case using an on-page figure: 'research and development spend fell to $42 million in the quarter from $53 million a year earlier, and a lighter innovation budget could slow the new-product cadence that underpins the demand drivers above.' The figures tie to the MD&A ($42M vs $53M)."
+    },
+    {
+      "id": "F-4",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarios[1].driver; sections.valuation.scenarioCommentary",
+      "quote": "the shares track toward the middle of the analyst target range, near our $165 Base ... supporting a valuation in the middle of the Street's target range; our Base implied price is $165.",
+      "issue": "The Base implied price of $165 is described as 'the middle of the analyst target range' / 'the middle of the Street's target range,' but the analyst range on the page is $156.00–$186.00 (midpoint $171), with a $170.00 consensus target and a $171.00 median. $165 sits below that midpoint; it is actually the midpoint of the report's own $150–$180 target band. The characterization mildly overstates where $165 falls within the Street range.",
+      "fix": "Either describe $165 as 'toward the lower-middle of the Street's $156–$186 range' / 'the midpoint of our $150–$180 target band,' or move the Base to the actual midpoint (~$171 / near the $170 consensus) and keep the language.",
+      "status": "addressed",
+      "note": "Fixed as directed. Both places now say 'lower half of the analyst target range' instead of 'middle' — scenarios[1].driver: 'track toward the lower half of the analyst target range, near our $165 Base'; scenarioCommentary: 'supporting a valuation in the lower half of the Street's target range; our Base implied price is $165.' $165 is correctly in the lower half of $156–$186 (midpoint $171)."
+    }
+  ]
+}

@@ -1,0 +1,597 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "DD",
+  "cik": 1666700,
+  "company": "DuPont de Nemours, Inc.",
+  "exchange": "NYSE",
+  "sic": 2821,
+  "sicDescription": "Plastic Materials, Synth Resins & Nonvulcan Elastomers",
+  "goodwill": [
+    19578000000,
+    16663000000,
+    16720000000,
+    16567000000,
+    7915000000
+  ],
+  "filing": {
+    "form": "10-Q",
+    "accession": "0001666700-26-000053",
+    "filedDate": "2026-08-04",
+    "periodEnd": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1666700/000166670026000053/dd-20260630.htm"
+  },
+  "capturedAt": "2026-09-24T12:01:21.763Z",
+  "quote": {
+    "price": 130.88,
+    "marketCap": 17674426368,
+    "sharesOutstanding": 135042988.75305623,
+    "sharesSource": "derived",
+    "week52Low": 92.48536,
+    "week52High": 157.98,
+    "dividendYield": 0.0183,
+    "asOf": "2026-09-24"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          12566000000,
+          13017000000,
+          6614000000,
+          6719000000,
+          6849000000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          4595000000,
+          4615000000,
+          2172000000,
+          2220000000,
+          2363000000
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          1299000000,
+          1257000000,
+          -359000000,
+          228000000,
+          186000000
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          2411000000,
+          2392000000,
+          221000000,
+          863000000,
+          833000000
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          6467000000,
+          5868000000,
+          423000000,
+          703000000,
+          -779000000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          11.89,
+          11.75,
+          0.94,
+          1.68,
+          -1.86
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          1972000000,
+          4964000000,
+          2392000000,
+          1792000000,
+          715000000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          10932000000,
+          8445000000,
+          7859000000,
+          1848000000,
+          60000000
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          8960000000,
+          4783000000,
+          5467000000,
+          56000000,
+          -655000000
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          27050000000,
+          27017000000,
+          24725000000,
+          23793000000,
+          14103000000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          2.900628675725005,
+          3.0190195553174393,
+          2.425435765009684,
+          3.7800218340611353,
+          2.418655097613883
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          2281000000,
+          588000000,
+          845000000,
+          765000000,
+          560000000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -788000000,
+          -662000000,
+          -302000000,
+          -285000000,
+          -333000000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          -2143000000,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          -630000000,
+          -652000000,
+          -651000000,
+          -635000000,
+          -597000000
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          1493000000,
+          -74000000,
+          543000000,
+          480000000,
+          227000000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q2'26",
+    "periodEnd": "2026-06-30",
+    "revenue": 1819000000,
+    "operatingMargin": 0.12314458493677845,
+    "revenueYoY": 0.04002287021154949
+  },
+  "ttm": {
+    "pe": 233.71428571428572,
+    "ps": 2.5292539164281624,
+    "evToEbitda": 14.472685166212534,
+    "grossMargin": 0.3513165426445335,
+    "operatingMargin": 0.06740125930166,
+    "netMargin": 0.007870635374928448,
+    "netDebtToEbitda": -1.5803814713896458,
+    "interestCoverage": null,
+    "currentRatio": 2.4267866066966515,
+    "fcfYield": 0.03971840360663636
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 7166237490,
+      "eps": 7.26015
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 7448501780,
+      "eps": 7.96476
+    }
+  },
+  "analysts": {
+    "count": 17,
+    "buy": 14,
+    "hold": 3,
+    "sell": 0,
+    "consensusRating": "Buy",
+    "consensusTarget": 170,
+    "medianTarget": 171,
+    "highTarget": 186,
+    "lowTarget": 156,
+    "asOf": "2026-09-24"
+  },
+  "segments": {
+    "basis": "FY25 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 6849000000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "AGI",
+      "pe": 12.362008,
+      "ps": 6.478939,
+      "evToEbitda": 8.989
+    },
+    {
+      "ticker": "ALB",
+      "pe": 420.25925,
+      "ps": 2.266461,
+      "evToEbitda": 10.962
+    },
+    {
+      "ticker": "CF",
+      "pe": 8.949555,
+      "ps": 2.3591464,
+      "evToEbitda": 5.826
+    },
+    {
+      "ticker": "CX",
+      "pe": 27.885715,
+      "ps": 0.8265887,
+      "evToEbitda": 6.397
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-11",
+      "close": 144.49000549316406
+    },
+    {
+      "date": "2026-08-12",
+      "close": 144.3699951171875
+    },
+    {
+      "date": "2026-08-13",
+      "close": 144.10000610351562
+    },
+    {
+      "date": "2026-08-14",
+      "close": 146.25999450683594
+    },
+    {
+      "date": "2026-08-17",
+      "close": 143.07000732421875
+    },
+    {
+      "date": "2026-08-18",
+      "close": 138.80999755859375
+    },
+    {
+      "date": "2026-08-19",
+      "close": 139.67999267578125
+    },
+    {
+      "date": "2026-08-20",
+      "close": 138.4600067138672
+    },
+    {
+      "date": "2026-08-21",
+      "close": 138.3300018310547
+    },
+    {
+      "date": "2026-08-24",
+      "close": 136.6699981689453
+    },
+    {
+      "date": "2026-08-25",
+      "close": 136.0399932861328
+    },
+    {
+      "date": "2026-08-26",
+      "close": 137.97999572753906
+    },
+    {
+      "date": "2026-08-27",
+      "close": 138.8000030517578
+    },
+    {
+      "date": "2026-08-28",
+      "close": 136.97999572753906
+    },
+    {
+      "date": "2026-08-31",
+      "close": 134.58999633789062
+    },
+    {
+      "date": "2026-09-01",
+      "close": 132.11000061035156
+    },
+    {
+      "date": "2026-09-02",
+      "close": 132.92999267578125
+    },
+    {
+      "date": "2026-09-03",
+      "close": 131.1300048828125
+    },
+    {
+      "date": "2026-09-04",
+      "close": 131.58999633789062
+    },
+    {
+      "date": "2026-09-08",
+      "close": 131.32000732421875
+    },
+    {
+      "date": "2026-09-09",
+      "close": 127.91999816894531
+    },
+    {
+      "date": "2026-09-10",
+      "close": 127.31999969482422
+    },
+    {
+      "date": "2026-09-11",
+      "close": 126.98999786376953
+    },
+    {
+      "date": "2026-09-14",
+      "close": 124.29000091552734
+    },
+    {
+      "date": "2026-09-15",
+      "close": 128.0399932861328
+    },
+    {
+      "date": "2026-09-16",
+      "close": 127.56999969482422
+    },
+    {
+      "date": "2026-09-17",
+      "close": 128.4600067138672
+    },
+    {
+      "date": "2026-09-18",
+      "close": 129.00999450683594
+    },
+    {
+      "date": "2026-09-21",
+      "close": 129.7899932861328
+    },
+    {
+      "date": "2026-09-23",
+      "close": 130.8800048828125
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "DuPont de Nemours, Inc. provides technology-based materials and solutions in the United States, Canada, the Asia Pacific, Latin America, Europe, the Middle East, and Africa. It operates through two segments, Healthcare & Water Technologies and Diversified Industrials. The company offers specialty components for medical devices, packaging and garments, and protective suits under the brand TYVEK; provides water filtration and separation solutions, including elements, modules, and systems serving primarily industrial wastewater and energy markets, municipal and desalination applications, and life sciences and specialty sectors. It also offers AMBERLITE ion exchange resins, FILMTEC reverse osmosis and nanofiltration elements, and INGE and ITEGRATEC ultrafiltration modules. In addition, the company offers engineered products and integrated solutions for the non-residential, residential, and repair-and-remodel construction markets, includes TYVEK house wrap, STYROFOAM insulation, and CORIAN solid surface. Further, it engages in the design and production of engineered components, systems, and process solutions used in OEM and operational applications, such as automotive, aerospace, printing, and packaging. Additionally, the company offers Vespel shapes and parts, MOLYKOTE specialty lubricants, BETAFORCE and BETASEAL structural adhesives, and Cyrel flexographic printing plates. The company was formerly known as DowDuPont Inc. and changed its name to DuPont de Nemours, Inc. in June 2019. DuPont de Nemours, Inc. was incorporated in 2015 and is headquartered in Wilmington, Delaware.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-24"
+    },
+    "mdaExcerpt": {
+      "text": "ITEM 2. MANAGEMENT'S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS\nManagement's discussion and analysis of financial condition and results of operations is provided as a supplement to, and should be read in conjunction with, the interim Consolidated Financial Statements and related notes to enhance the understanding of the Company's operations and present business environment. Components of management's discussion and analysis of financial condition and results of operations include:\nOverview\nResult of Operations\nSegment Results\nChanges in Financial Condition\nOVERVIEW\nDuPont is a leading provider of advanced solutions that improve everyday life across healthcare, water, construction and industrial markets. The Company is committed to helping customers advance their technology pipelines and provide solutions that address their unique challenges. From delivering clean water to enabling medical packaging solutions which enhance safety and performance, DuPont's innovations power the essential products and technologies people rely on every day.\nAs of June 30, 2026, the Company had $2.9 billion of working capital and approximately $1.7 billion in cash and cash equivalents. The Company expects its cash and cash equivalents, cash generated from operations, and ability to access the debt capital markets to provide sufficient liquidity and financial flexibility to meet the liquidity requirements associated with its continuing operations.\nOutlined below are material historical transactions and recent developments impacting this Quarterly Report on Form 10-Q.\nAramids Divestiture\nOn April 1, 2026, DuPont completed the sale of the Aramids business (the \"Aramids Divestiture\") to Arclin, a portfolio company of an affiliate of TJC LP, (\"TJC\"), in return for pre-tax cash proceeds of approximately $1.2 billion, subject to customary transaction adjustments, a note receivable in the principal amount of $300 million (the \"Aramids Note Receivable\") and a non-controlling common equity interest (the \"Aramids Equity Consideration\"), valued at $325 million in the New Arclin U.S. Holding Corp (\"Arclin\") that holds the Arclin global materials business and the Aramids business being divested. The financial results of the Aramids divested business are reflected in DuPont's interim Consolidated Financial Statements as discontinued operations, along with comparative periods.\nElectronics Separation\nOn November 1, 2025, the Company completed the separation of its semiconductor and interconnect solutions businesses, (the \"Electronics Business\" and the separation of the Electronics Business, the \"Electronics Separation\") into an independent public company, Qnity Electronics, Inc. (\"Qnity\"), by way of the distribution to DuPont's stockholders of record as of October 22, 2025, of all the issued and outstanding common stock of Qnity on November 1, 2025 (the \"Qnity Distribution\"). As a result, the results of operations of the Electronics Business are reflected in DuPont's interim Consolidated Financial Statements as discontinued operations for all periods.\nRecent Developments\nReverse Stock Split\nOn May 26, 2026, DuPont's Board of Directors (the \"Board of Directors\"), announced a reverse stock split of the Company's common stock, par value $0.01 per share, at a ratio of 1-for-3, as approved by shareholders, and amended the Certificate of Incorporation to reflect a corresponding reduction in the number of authorized shares of the Company's common stock (the \"Reverse Stock Split\"). The Reverse Stock Split became effective on June 24, 2026. All share and share-related information presented in these interim Consolidated Financial Statements have been retroactively adjusted in all periods presented to reflect the decreased number of shares resulting from the Reverse Stock Split and related impacts.\nMacroeconomic Conditions\nIn February 2026, military conflict in the Middle East involving the United States, Israel, and Iran heightened geopolitical uncertainty. The Company does not have operations in Iran, and the conflict has not had a material impact on the Company's financial condition or results of operations to date. The impact on the Company's business, financial condition, or results of operations will depend on factors such as the severity and duration of the conflict, the scope and enforcement of related\n47\nTable of Contents\ngovernmental actions and the degree of disruption to global logistics and supply chains. The Company continues to monitor developments and assess potential impacts.\nSee Part II, Item 1A. Risk Factors for additional information.\nInternational Emergency Economic Powers Act Tariffs\nIn February 2026, the U.S. Supreme Court invalidated certain tariffs imposed under the International Emergency Economic Powers Act, and the collecting agency subsequently ceased assessing those tariffs. While a refund process has been established, the ruling remains subject to further appeal by the U.S. government. Through June 30, 2026, the Company began to receive refunds and was notified the U.S. Treasury approved payment for the first phase of claim submissions, which did not have a material impact on the Company's results of continuing operations. Further, in accordance with the Electronics Tax Matters Agreement, the Company shares with Qnity 44 percent of the refunds related to tariffs paid prior to November 1, 2025. The Company continues to monitor developments related to the ruling, the ultimate outcome of which could affect future results.\nDividends\nOn April 15, 2026, the Board of Directors declared a second quarter 2026 dividend of $0.60 per share, retrospectively adjusted for the Reverse Stock Split, which was paid on May 29, 2026 to shareholders of record on May 15, 2026.\nOn June 24, 2026, the Board of Directors declared a third quarter 2026 dividend of $0.60 per share, which is payable on September 15, 2026 to shareholders of record on August 31, 2026.\nThe Company expects to continue to pay quarterly dividends, although each dividend is subject to the approval of the Company's Board of Directors.\n48\nTable of Contents\nRESULTS OF OPERATIONS\nSummary of Sales Results\nThree Months Ended June 30,\nSix Months Ended June 30,\nIn millions\n2026\n2025\n2026\n2025\nNet sales\n$\n1,819\n$\n1,749\n$\n3,500\n$\n3,361\nThe following table summarizes sales variances by segment from the prior year:\nSales Variances by Segment\nPercentage change from prior year\nThree Months Ended\nJune 30, 2026\nSix Months Ended\nJune 30, 2026\nOrganic Sales 1\nCurrency\nPortfolio & Other\nTotal\nOrganic Sales 1\nCurrency\nPortfolio & Other\nTotal\nHealthcare & Water Technologies\n4\n%\n1\n%\n%\n5\n%\n3\n%\n2\n%\n%\n5\n%\nDiversified Industrials\n3\n3\n2\n1\n3\nTotal\n4\n%\n%\n%\n4\n%\n3\n%\n1\n%\n%\n4\n%\n1. Organic sales (which includes both volume and selling price impacts), is defined as the change in net sales, absent the impacts from currency and portfolio. DuPont believes this information is useful to investors and management in understanding ongoing operations and in analysis of ongoing operating trends.\nThe Company reported net sales for the three months ended June 30, 2026 of $1.8 billion, up 4 percent from $1.7 billion for the three months ended June 30, 2025, due to a 4 percent increase in organic sales. Organic sales increased in Healthcare & Water Technologies (up 4 percent) and Diversified Industrials (up 3 percent).\nThe Company reported net sales for the six months ended June 30, 2026 of $3.5 billion, up 4 percent from $3.4 billion for the six months ended June 30, 2025, due to a 3 percent increase in organic sales and a 1 percent favorable currency impact. Organic sales increased in Healthcare & Water Technologies (up 3 percent) and Diversified Industrials (up 2 percent). The currency impact was primarily driven by the weakening of the U.S. dollar compared to the Euro.\nCost of Sales\nCost of sales was $1.2 billion for the three months ended June 30, 2026, up slightly from $1.1 billion for the three months ended June 30, 2025. Cost of sales for the three months ended June 30, 2026 primarily reflects increased sales volume.\nCost of sales as a percentage of net sales was consistent at 65 percent for the three months ended June 30, 2026 and 2025.\nCost of sales was $2.3 billion for the six months ended June 30, 2026, slightly up from $2.2 billion and June 30, 2025. Cost of sales for the six months ended June 30, 2026 primarily reflects increased sales volume and productivity initiatives.\nCost of sales as a percentage of net sales was 65 percent and 66 percent for the six months ended June 30, 2026 and 2025, respectively.\nResearch and Development Expenses (\"R&D\")\nR&D expenses totaled $42 million in the second quarter of 2026, down from $53 million in the second quarter of 2025. R&D as a percentage of net sales for the three months ended June 30, 2026 was relatively consistent at 2 percent compared with 3 percent for the three months ended June 30, 2025.\nR&D expenses totaled $89 million in the first six months of 2026, down from $103 million in the first six months of 2025. R&D as a percentage of net sales was consistent period over period at 3 percent for the six months ended June 30, 2026 and 2025.\nSelling, General and Administrative Expenses (\"SG&A\")\nSG&A expenses were $269 million in the second quarter of 2026, slightly up from $262 million in the second quarter of 2025. SG&A as a percentage of net sales was consistent period over period at 15 percent for the three months ended June 30, 2026 and 2025.\nFor the first six months of 2026, SG&A expenses were $524 million, up from $496 million in the first six months of 2025. SG&A as a percentage of net sales was consistent period over period at 15 percent for the six months ended June 30, 2026 and 2025.\n49\nTable of Contents\nAmortization of Intangibles\nAmortization of intangibles was $68 million in the second quarter of 2026, down from $74 million in the second quarter of 2025. In the first six months of 2026, amortization of intangibles was $136 million, down from $149 million in the same period of the prior year. The decrease for the three and six months ended June 30, 2026 as compared with the same periods of the prior year was primarily due to the absence of amortization in the current period from fully amortized assets.\nRestructuring and Asset Related (Benefits) Charges - Net\nRestructuring and asset related (benefits) charges net were $3 million of benefits and $43 million of charges for the three and six months ended June 30, 2026, respectively, primarily reflecting activity related to the 2026 DuPont Restructuring Program. Comparatively, Restructuring and asset related (benefits) charges net for the first six months of 2025 were $39 million, primarily reflecting charges related to the Transformational Separation-Related Restructuring Program during the first quarter of 2025. See Note 5 to the interim Consolidated Financial Statements for additional information.\nAcquisition, Integration and Separation Costs\nAcquisition, integration and separation costs primarily consist of financial advisory, information technology, legal, accounting, consulting, other professional advisory fees, other contractual transaction payments and certain costs to achieve cost savings targets following the Electronics Separation and the Aramids Divestiture. The Company recorded $7 million in costs for the three and six months ended June 30, 2026, primarily related to costs to achieve cost savings targets following the Aramids Divestiture and Electronics Separation. Comparatively, the Company recorded $55 million and $105 million in costs for the three and six months ended June 30, 2025, respectively, which were primarily related to preparations for the Electronics Separation and Aramids Divestiture.\nEquity in Earnings (Loss) of Nonconsolidated Affiliates\nThe Company's share of earnings from nonconsolidated affiliates was flat at $9 million for the three months ended June 30, 2026 and 2025. In the first six months of 2026, the Company's share of earnings of nonconsolidated affiliates was $8 million. The Company's share of loss of nonconsolidated affiliates was $6 million first six months of 2025. The increase in earnings of nonconsolidated affiliates over the six month periods was primarily driven by higher equity earnings from Derby in the first six months of 2026 compared to 2025. See Note 10 to the interim Consolidated Financial Statements for additional information.\nSundry Income (Expense) Net\nSundry income (expense) net includes a variety of income and expense items such as foreign currency exchange gains or losses, interest income, dividends from investments, gains and losses on sales of investments, losses on debt extinguishments and assets, non-operating pension and other post-employment benefit plan credits or costs, interest rate swap mark-to-market adjustments, interest rate swap net interest settlement and certain litigation matters.\nSundry income (expense) net in the second quarter of 2026 was income of $42 million compared with expense of $9 million in the second quarter of 2025. The increase in income was primarily driven by the absence of a non-cash mark-to-market loss related to the 2022 Swaps and 2024 Swaps, as well as foreign exchange gains in 2026 compared to losses in the prior-year period. Sundry income (expense) - net for the first six months of 2026 was income of $78 million, compared with income of $91 million in the first six months of 2025. The decrease was primarily driven by the absence of a non-cash mark-to-market gain related to the 2022 Swaps and 2024 Swaps, offset by a foreign exchange gains in 2026 compared to losses in the prior-year period. See Notes 6 and 17 to the interim Consolidated Financial Statements for additional information.\nInterest Expense\nInterest expense was $41 million and $84 million for the three months ended June 30, 2026 and 2025, respectively, and $81 million and $167 million for the six months ended June 30, 2026 and 2025, respectively. The decrease in interest expense from the prior year for both periods is primarily due to the changes in capital structure during 2025 as a result of the Electronics Separation, partially offset by a reduction in capitalized interest and interest expense from the interest rate swap.\nProvision for Income Taxes on Continuing Operations\nThe Company's effective tax rate fluctuates based on, among other factors, where income is earned and the level of income relative to tax attributes. The effective tax rate on continuing operations for the second quarter of 2026 was 28.2 percent, compared with an effective tax rate of 69.2 percent for the second quarter of 2025. The decrease in the effective tax rate for 2026, compared with 2025, was primarily due to transaction-related items recognized in 2025. For the first six months of 2026, the effective tax rate on continuing operations was 23.7 percent, compared with 40.6 percent for the first six months of 2025. The decrease in the effective tax rate for 2026, compared with 2025, was primarily due to transaction-related items recognized in 2025.\n50\nTable of Contents\nSEGMENT RESULTS\nThe Company's measure of profit/loss for segment reporting purposes is Operating EBITDA as this is the manner in which the Company's chief operating decision maker (\"CODM\") assesses performance and allocates resources.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/1666700/000166670026000053/dd-20260630.htm",
+      "asOf": "2026-08-04",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "ITEM 1A. RISK FACTORS\nThe Company's operations could be affected by various risks, many of which are beyond its control. Based on current information, the Company believes that the following identifies the most material risk factors that could affect its operations. Past financial performance may not be a reliable indicator of future performance and historical trends should not be used to anticipate results or trends in future periods.\nRisks Relating to the Qnity Distribution, M&M Divestitures, N&B Transaction, the DWDP Distributions and the Aramids Divestiture\nIf the Qnity Distribution, together with certain related transactions, including the cash distribution Qnity made to DuPont prior to the Qnity Distribution, were to fail to qualify for non-recognition treatment for U.S. federal income tax purposes, then DuPont could be subject to significant tax liability.\nDuPont received an opinion of counsel as a condition to the Qnity Distribution, in form and substance acceptable to DuPont, substantially to the effect that, among other things, the Qnity Distribution along with certain related transactions will qualify for non-recognition treatment under the Internal Revenue Code of 1986, as amended (the \"Code\", and such opinion, the \"Tax Opinion\"). The Tax Opinion relied on certain facts, assumptions, and undertakings, and certain representations from DuPont and Qnity, regarding the past and future conduct of each of their respective businesses and other matters. Notwithstanding the receipt of the Tax Opinion, the Internal Revenue Service (the \"IRS\") could determine on audit that the Qnity Distribution and/or certain related transactions should be treated as taxable transactions if it determines that any of these facts, assumptions, representations or undertakings are not correct or have been violated, or that the Qnity Distribution should be taxable for other reasons, including if the IRS were to disagree with the conclusions of the Tax Opinion. If the Qnity Distribution and/or certain related transactions fail to qualify for tax-free treatment under U.S. federal, state and local tax law and/or foreign tax law, it is expected that DuPont could incur significant tax liabilities under U.S. federal, state, local and/or foreign tax law.\nGenerally, corporate taxes resulting from the failure of the Qnity Distribution to qualify for tax-free treatment for U.S. federal income tax purposes would be imposed on DuPont. Under the Tax Matters Agreement, effective as of November 1, 2025, between DuPont and Qnity (the \"Electronics Tax Matters Agreement\"), the responsibility for such taxes may be allocated between DuPont and Qnity under certain circumstances and each of DuPont and Qnity may be obligated to indemnify the other against any such taxes imposed on it. To the extent that DuPont is responsible for any liability as a result of the failure of the Qnity Distribution and/or certain related transactions to qualify for non-recognition treatment for U.S. federal income tax purposes, there could be a material adverse impact on DuPont's business, financial condition, results of operations and cash flows in subsequent reporting periods.\nDuPont could incur additional tax liabilities if certain internal transactions undertaken in connection with the completed divestiture of a majority of the Mobility & Materials business to Celanese and divestiture of the Delrin business to TJC (the \"M&M Divestitures\"), fail to qualify for their intended tax treatment.\nPrior to the closing of the M&M Divestitures, DuPont engaged in certain internal reorganization activities to separate into and to separately align the legal entities holding the M&M Business and the Delrin business for disposition. DuPont has recognized a tax liability pursuant to these reorganization activities related to the M&M Divestitures. However, if certain of these internal reorganization activities fail to qualify for their intended tax treatment under U.S. federal, state, local tax and/or foreign tax law, DuPont could incur additional tax liabilities. Pursuant to the Electronics Tax Matters Agreement, any such additional tax liabilities incurred by DuPont (if any) will be contractually allocated between DuPont and Qnity generally based on their respective Applicable Percentage, as defined in the Separation and Distribution Agreement, effective as of November 1, 2025, between DuPont and Qnity (the \"Electronics Separation and Distribution Agreement\"). The Applicable Percentage for DuPont is 56 percent and for Qnity is 44 percent.\nThe separation and combination of DuPont's Nutrition & Biosciences business with IFF could result in a significant tax liability to DuPont.\nThe distribution by DuPont to its stockholders of all the issued and outstanding shares of N&B through the Exchange Offer (\"N&B Distribution\") and the merger of N&B with a wholly-owned subsidiary of IFF (\"N&B Merger\") are expected to be tax-free to DuPont stockholders for U.S. federal income tax purposes (except to the extent that cash was paid to DuPont stockholders in lieu of fractional shares pursuant to the N&B Merger Agreement), and the N&B Contribution, defined below, N&B Distribution, and the one-time payment from N&B to DuPont of approximately $7.3 billion (\"Special Cash Payment\") are expected to result in no recognition of gain or loss by DuPont for U.S. federal income tax purposes.\nDuPont received an opinion of counsel and also obtained a private letter ruling from the IRS regarding certain matters impacting the U.S. federal income tax treatment of the separation and transfer by DuPont of its N&B Business (the \"N&B Contribution\"), N&B Distribution, Special Cash Payment and certain related transactions. The conclusions of the IRS private\n14\nTable of Contents\nletter ruling were based, among other things, on various factual assumptions DuPont authorized and representations DuPont made to the IRS. If any of those assumptions or representations are, or become, inaccurate or incomplete, reliance on the IRS private letter ruling may be affected.\nIf the N&B Contribution and N&B Distribution failed to qualify for the treatment described above, DuPont would be required to generally recognize a taxable gain on the transactions and stockholders of DuPont who receive N&B Common Stock (and subsequently, IFF Common Stock) would be subject to tax on their receipt of the N&B Common Stock. Additionally, if the Special Cash Payment or certain internal transactions related to the separation of the Nutrition & Biosciences business fail to qualify for their intended tax-free treatment under U.S. federal, state, local tax and/or foreign tax law, DuPont could incur additional tax liabilities. Pursuant to the Electronics Tax Matters Agreement, such additional tax liabilities described in the preceding two sentences (if any) will be contractually allocated between DuPont and Qnity generally based on their respective Applicable Percentage.\nUnder the Tax Matters Agreement by and among DuPont, N&B and IFF, N&B or IFF is generally required to indemnify DuPont for any taxes resulting from the separation of the Nutrition & Biosciences business (and any related costs and other damages) to the extent such amounts resulted from (i) certain actions taken by N&B or IFF involving the capital stock of N&B or IFF or any assets of the N&B group (excluding actions required by the documents governing the proposed transactions), or (ii) any breach of certain representations and covenants made by N&B or IFF.\nDuPont is subject to continuing contingent tax-related liabilities of Dow and Corteva following the DWDP Distributions.\nAfter the DWDP Distributions, there are several significant areas where the liabilities of Dow and Corteva may become the Company's obligations, either in whole or in part.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/1666700/000166670026000013/dd-20251231.htm",
+      "asOf": "2026-02-17",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-K",
+    "pressRelease": {
+      "text": "EX-99.1\n2\nexhibit991enrschedules-2q26.htm\nEX-99.1\nDocument\nExhibit 99.1\nDuPont Reports Second Quarter 2026 Results\nExceeds Second Quarter 2026 Guidance\nRaises Full Year 2026 Guidance\nSecond Quarter 2026 Highlights\nNet Sales of $1.8 billion increased 4% organic sales increased 4% versus year-ago period\nGAAP Income from continuing operations of $191 million operating EBITDA of $448 million\nGAAP EPS from continuing operations of $1.37 adjusted EPS of $1.88\nCash provided by operating activities from continuing operations of $400 million transaction-adjusted free cash flow of $326 million representing 127% conversion\nAnnounces intent to repurchase $250 million of shares in the third quarter\nAnnounces the Company's Global Industry Classification Standard (GICS) code has changed to Industrials effective July 31, 2026\nWILMINGTON, Del., Aug. 4, 2026 - DuPont (NYSE DD) announced its financial results (1) for the second quarter ended June 30, 2026 and raised financial guidance for the full year 2026.\n\"We delivered another strong quarter, exceeding our financial guidance and demonstrating our focus on consistent execution\" said Lori Koch, DuPont Chief Executive Officer. \"Mid-single digit organic growth, strong margin expansion, coupled with robust adjusted EPS growth and free cash flow generation underscore the strength of our market-leading businesses and reflect disciplined execution of our strategic priorities, supported by our ongoing focus on excellence and productivity.\"\n\"We are delivering on our commitments, creating value for all of our key stakeholders and further strengthening the foundation for sustainable, long-term profitable growth,\" Koch concluded.\nSecond Quarter 2026 Consolidated Results (1)\nDollars in millions, except EPS\n2Q'26\n2Q'25\nChange\nvs. 2Q'25\nOrganic Sales (2)\nvs. 2Q'25\nNet sales\n$1,819\n$1,749\n4%\n4%\nGAAP Income from continuing operations\n$191\n$24\nn.m.\nOperating EBITDA (2)\n$448\n$423\n6%\nOperating EBITDA margin (2) %\n24.6\n%\n24.2\n%\n40 bps\nGAAP EPS from continuing operations\n$1.37\n$0.17\nn.m.\nAdjusted EPS (2)\n$1.88\n$1.27\n48%\nCash provided by operating activities cont. ops.\n$400\n$74\nn.m.\nTransaction-adjusted free cash flow (2)\n$326\n$107\n205%\n(1) Results and cash flows are presented on a continuing operations basis. See page 6 for further information, including the basis of presentation included in this release.\n(2) Organic sales, operating EBITDA, operating EBITDA margin, adjusted EPS, transaction-adjusted free cash flow and transaction-adjusted free cash flow conversion are non-GAAP measures and only reflect continuing operations. See page 6 for further discussion, including a definition of significant items. Reconciliation to the most directly comparable GAAP measure, including details of significant items begins on page 13 of this communication.\nNet sales\nNet sales were up 4% on a 4% increase in organic sales.\n4% organic sales growth in Healthcare Water Technologies 3% organic sales growth in Diversified Industrials.\nGAAP Income from continuing operations\nGAAP Income GAAP EPS from continuing operations improved on higher segment earnings and lower interest expense and transaction costs.\nOperating EBITDA\nOperating EBITDA increased on organic growth and productivity.\nAdjusted EPS\nAdjusted EPS increased on higher segment earnings, lower net interest expense and a lower tax rate.\nCash provided by operating activities from continuing operations\nCash provided by operating activities from continuing operations in the quarter of $400 million, capital expenditures of $76 million and separation-related transaction costs and other payments of $2 million resulted in transaction-adjusted free cash flow and related conversion of $326 million and 127%, respectively.\nSecond Quarter 2026 Segment Highlights\nHealthcare Water Technologies\nDollars in millions\n2Q'26\n2Q'25\nChange\nvs. 2Q'25\nOrganic Sales (2)\nvs. 2Q'25\nNet sales\n$856\n$817\n5%\n4%\nOperating EBITDA\n$258\n$248\n4%\nOperating EBITDA margin %\n30.1\n%\n30.4\n%\n(30) bps\nNet sales\nNet sales increased 5% on organic sales growth of 4% and a currency benefit of 1%.\nHealthcare Technologies sales up mid-single digits on an organic basis on broad-based growth led by personal protection and biopharma.\nWater Technologies sales up low-single digits on an organic basis on continued strength in industrial water and semiconductor markets, partially offset by weakness in the Middle East.\nOperating EBITDA\nOperating EBITDA increased on organic growth and productivity, partially offset by growth investments.\nOperating EBITDA margin of 30.1% decreased 30 basis points as organic growth and productivity were more than offset by less favorable mix and growth investments.\n2\nDiversified Industrials\nDollars in millions\n2Q'26\n2Q'25\nChange\nvs. 2Q'25\nOrganic Sales (2)\nvs. 2Q'25\nNet sales\n$963\n$932\n3%\n3%\nOperating EBITDA\n$213\n$199\n7%\nOperating EBITDA margin %\n22.1\n%\n21.4\n%\n70 bps\nNet sales\nNet sales increased 3% on organic sales growth in the quarter.\nBuilding Technologies sales up low-single digits on an organic basis due to growth in residential and non-residential construction markets.\nIndustrial Technologies sales up mid-single digits on an organic basis on continued strength in aerospace coupled with growth in electric vehicle applications.\nOperating EBITDA\nOperating EBITDA and margin increased on organic growth, favorable mix and productivity.\n2026 Financial Outlook\nDollars in millions, except EPS\n2H'26E\nFull Year 2026E\nNet sales\n$3,660 - $3,690\n$7,160 - $7,190\nOperating EBITDA (2)\n$890 - $910\n$1,750 - $1,770\nAdjusted EPS (2)\n$3.65 - $3.80\n$7.17 - $7.32\n\"Our strong execution and market-driven growth continue to translate into higher earnings and free cash flow generation. As a result of our second quarter outperformance, we are again raising the midpoint of our full-year 2026 operating EBITDA guidance to approximately $1.76 billion and adjusted EPS guidance to $7.24 per share, while increasing our expectation for organic sales growth to slightly above 4%,\" said Antonella Franzen, DuPont Chief Financial Officer.\n\"With continued strength across healthcare, industrial water, and aerospace end-markets, we expect mid-single digit organic sales growth in the second half and remain focused on driving profitable growth and value creation for shareholders.\" Franzen concluded.\n3\nConference Call\nThe Company will host a live webcast of its quarterly earnings conference call with investors to discuss its results and business outlook beginning today at 8 00 a.m. ET. The slide presentation that accompanies the conference call will be posted on the DuPont's Investor Relations Events and Presentations page . A replay of the webcast also will be available on the DuPont's Investor Relations Events and Presentations page following the live event.\nAbout DuPont\nDuPont (NYSE DD) is a global innovation leader, providing advanced solutions that help transform industries and improve everyday life across our key markets of healthcare, water, construction, and industrial. More information about the company, its businesses and solutions can be found at www.dupont.com . Investors can access information included on the Investor Relations section of the website at investors.dupont.com .\nFor further information contact\nDuPont\nInvestors\nAnn Giancristoforo\nann.giancristoforo dupont.com\nMedia\nDan Turner\ndaniel.a.turner dupont.com\nDuPont TM and all products, unless otherwise noted, denoted with TM , SM or are trademarks, service marks or registered trademarks of affiliates of DuPont de Nemours, Inc.\n4\nOverview\nOn May 26, 2026, DuPont's Board of Directors announced a reverse stock split of the Company's common stock, par value $0.01 per share, at a ratio of 1-for-3, as well as a reduction in the number of authorized shares of its common stock by a corresponding ratio (the Reverse Stock Split ), as approved by shareholders. The Reverse Stock Split became effective on June 24, 2026. All share and share-related information presented in these interim Consolidated Financial Statements has been retroactively adjusted in all periods presented to reflect the decreased number of shares resulting from the Reverse Stock Split and related impacts.\nOn April 1, 2026, DuPont completed the sale of the Aramids business (the Aramids Business and the divestiture of the Aramids Business, the Aramids Divestiture ) to Arclin, a portfolio company of an affiliate of TJC LP for pre-tax cash proceeds of approximately $1.2 billion, subject to customary transaction adjustments, a note receivable in the principal amount of $300 million (the Aramids Note Receivable ) and a non-controlling common equity interest (the Aramids Equity Consideration ), valued at $325 million, in New Arclin U.S. Holding Corp., which now owns the Arclin global materials business and the Aramids Business. The financial results of the divested Aramids Business are reflected in DuPont's interim Consolidated Financial Statements as discontinued operations, along with comparative periods.\nOn November 1, 2025, DuPont completed the separation of its semiconductor and interconnect solutions businesses (the Electronics Business and the separation of the Electronics Business, the \"Electronics Separation\") into an independent public company, Qnity Electronics, Inc. ( Qnity ), by way of the distribution to DuPont's stockholders of record as of October 22, 2025 of all the issued and outstanding common stock of Qnity on November 1, 2025 (the Qnity Distribution ). As a result, the financial results of the divested Electronics Business are reflected in DuPont's interim Consolidated Financial Statements as discontinued operations for all periods.\nCautionary Statement Regarding Forward-looking Statements\nCertain statements in this release may be considered forward-looking statements, within the meaning of the federal securities laws, including Section 27A of the Securities Act of 1933, as amended, and Section 21E of the Securities Exchange Act of 1934, as amended (the Exchange Act ). Forward-looking statements often contain words such as \"expect\", \"anticipate\", \"intend\", \"plan\", \"believe\", \"seek\", \"see\", \"will\", \"would\", \"target\", \"outlook\", \"stabilization\", \"confident\", \"preliminary\", \"initial\", \"continue\", \"may\", \"could\", \"project\", \"estimate\", \"forecast\" and similar expressions and variations or negatives of these words. All statements, other than statements of historical fact, are forward-looking statements. Forward-looking statements address matters that are, to varying degrees, uncertain and subject to risks, uncertainties, and assumptions, many of which are beyond DuPont's control, that could cause actual results to differ materially from those expressed in any forward-looking statements.\nForward-looking statements are not guarantees of future results. Some of the important factors that could cause DuPont's actual results to differ materially from those projected in any such forward-looking statements include, but are not limited to (i) the ability to realize the intended benefits of the Electronics Separation and the Qnity Distribution, including achievement of the intended tax treatment, contractual allocation to, and assumption by Qnity of certain liabilities, including certain legacy liabilities with respect to per- and polyfluoroalkyl substances ( PFAS ) and the possibility of disputes, litigation or unanticipated costs in connection with the Electronics Separation and Qnity Distribution (ii) the impact of the Aramids Divestiture on DuPont's balance sheet, financial condition and future results of operations (iii) risks and costs related to the impact of the arrangement to share future eligible PFAS costs by and among DuPont, Corteva, Inc. and The Chemours Company, including the outcome of pending or future litigation related to PFAS or PFOA, which includes personal injury claims and natural resource damages claims the extent and cost of ongoing and potential future remediation obligations and changes in laws and regulations applicable to PFAS chemicals (iv) the failure to realize expected benefits and effectively manage and achieve anticipated synergies and operational efficiencies in connection with the Electronics Separation, the Aramids Divestiture and completed and future, if any, divestitures, mergers, acquisitions, and other portfolio management, productivity and infrastructure actions (v) risks and uncertainties that are outside the Company's control but adversely impact the overall environment in which DuPont, its customers and or its suppliers operate, including changes in economic, political, regulatory, international trade, geopolitical, military conflicts, capital markets and other external conditions, including pandemics and responsive actions, as well as natural and other disasters or weather-related events (vi) the ability to offset increases in cost of inputs, including raw materials, energy and logistics (vii) the risks and uncertainties associated with continuing or expanding geopolitical conflicts or trade disputes or restrictions and responsive actions, new or increased tariffs or export controls, including on exports to China of U.S.-regulated products and technology (viii) other risks to DuPont's business and operations, including the risk of impairment (ix) risks and uncertainties in connection with completing the $2 billion share buyback announced on November 6, 2025, including timeline, associated costs and the possibility that the authorization may be suspended or discontinued prior to completion (x) the ability to realize the intended benefits of the Reverse Stock Split (xi) the impact of the invalidation of certain tariffs imposed under the International Emergency Economic Powers Act and (xii) other risk factors discussed in DuPont's most recent annual report on Form 10-K, and subsequent quarterly reports on Form 10-Q and current reports on Form 8-K filed with the U.S. Securities and Exchange Commission.\nUnlisted factors may present significant additional obstacles to the realization of forward-looking statements. Consequences of material differences in results as compared with those anticipated in the forward-looking statements could include, among other things, business or supply chain disruption, operational problems, financial loss, legal liability to third parties and similar risks, any of which could have a material adverse effect on DuPont's consolidated financial condition, results of operations, credit rating or liquidity. Undue reliance should not be placed on forward-looking statements, which speak only as of the date they are made. DuPont assumes no obligation to publicly provide revisions or updates to any forward-looking statements whether as a result of new information, future developments or otherwise, should circumstances change, except as otherwise required by securities and other applicable laws.\n5\nNon-GAAP Financial Measures\nUnless otherwise indicated, all financial metrics presented reflect continuing operations only.\nThis communication includes information that does not conform to accounting principles generally accepted in the United States of America (\"U.S. GAAP\") and are considered non-GAAP measures. Management uses these measures internally for planning, forecasting and evaluating the performance of the Company, including allocating resources. DuPont's management believes these non-GAAP financial measures are useful to investors because they provide additional information related to the ongoing performance of DuPont to offer a more meaningful comparison related to future results of operations. These non-GAAP financial measures supplement disclosures prepared in accordance with U.S. GAAP, and should not be viewed as an alternative to U.S. GAAP. Furthermore, such non-GAAP measures may not be consistent with similar measures provided or used by other companies. Reconciliations for these Non-GAAP measures to U.S. GAAP are provided in the Selected Financial Information and Non-GAAP Measures starting on page 12.",
+      "source": "edgar:8-K ex-99.1",
+      "url": "https://www.sec.gov/Archives/edgar/data/1666700/000166670026000049/exhibit991enrschedules-2q26.htm",
+      "asOf": "2026-08-04",
+      "truncated": true
+    },
+    "proxyStatement": {
+      "text": "Board and director independence:\nDirector Independence\nThe Board has assessed the independence of each director who is currently on the Board or who served on the Board during the last fiscal year in accordance with the standards of independence of the NYSE rules and as described in the Corporate Governance Guidelines. Based upon these standards, the Board has determined that all of the directors who are currently on the Board or who served on the Board during the last fiscal year other than Mr. Breen and Ms. Koch are independent. The current independent directors constitute a \"substantial majority\" of the Board, consistent with our Corporate Governance Guidelines. In addition, the Board has determined that each of the nominees for director other than Mr. Breen and Ms. Koch is independent. The Nomination and Governance Committee, as well as the Board, annually reviews relationships that directors may have with the Company and members of management to make a determination as to whether there are any material relationships that would preclude a director from being independent.\nAll members of the Audit Committee, the People and Compensation Committee and the Nomination and Governance Committee (each, a \"Committee\" and collectively, the \"Committees\") are independent directors under the Corporate Governance Guidelines and applicable regulatory and NYSE listing standards.\n2026 Proxy Statement\n9\nTable of Contents\nCorporate Governance\nBoard Leadership Structure\nThe Board is responsible for broad corporate policy and overall performance of the Company through oversight of management and stewardship of the Company. Among other duties, the Board appoints the Company's officers, assigns to them responsibility for management of the Company's operations, and reviews their performance.\nOur governing documents provide the Board with the flexibility to determine the optimal leadership structure for the Company, including, when appropriate, separating the positions of Chair of the Board and Chief Executive Officer (\"CEO\"). We believe that it is important for the Board to determine, on a case-by-case basis, the most effective leadership structure for us. We believe that the Company and its stockholders benefit from this flexibility, and that the directors are best positioned to lead this evaluation given their knowledge of our leadership team, strategic goals, opportunities, and challenges.\nThe Board has determined that, at the present time, it is in the best interest of stockholders and the Board to have Mr. Breen continue serving as the Chairman of the Board. This is due, in part, to Mr. Breen's tenure as the Company's CEO prior to his transition to full-time Executive Chairman of the Board and then to non-executive Chairman, including his role in orchestrating the strategic transformation of our Company, as well as his tenure as Executive Chairman. Mr.\n\nRelated-person transactions:\nRelated Person Transactions\nThe Board has adopted written policies and procedures relating to the approval or ratification of each \"Related Person Transaction.\" Under the policies and procedures, the Nomination and Governance Committee (or any other committee comprised of independent directors designated by the Board) reviews the relevant facts of all proposed Related Person Transactions and either approves, disapproves or ratifies the entry into a particular Related Person Transaction, by taking into account, among other factors it deems appropriate:\n(i)\nthe commercial reasonableness of the transaction;\n(ii)\nthe materiality of the Related Person's direct or indirect interest in the transaction;\n(iii)\nwhether the transaction may involve a conflict of interest, or the appearance of one;\n(iv)\nwhether the transaction was in the ordinary course of business; and\n(v)\nthe impact of the transaction on the Related Person's independence under the Corporate Governance Guidelines and applicable regulatory and listing standards.\nNo director may participate in any discussion or approval of a Related Person Transaction for which he/she or any of his/her immediate family members is the Related Person. Related Person Transactions are approved or ratified only if they are determined to be in the best interests of DuPont and its stockholders.\nIf a Related Person Transaction that has not been previously approved or previously ratified is discovered, the Related Person Transaction will be presented to the Nomination and Governance Committee for ratification. If the Nomination and Governance Committee does not ratify the Related Person Transaction, then the Company either ensures all appropriate disclosures regarding the transaction are made or, if appropriate, takes all reasonable actions to attempt to terminate the Company's participation in the transaction.",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/1666700/000119312526151204/d11932ddef14a.htm",
+      "asOf": "2026-04-10",
+      "truncated": true
+    },
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:21.763Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:21.763Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:21.763Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:21.763Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:21.763Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:21.763Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:21.763Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:21.763Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:21.763Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:21.763Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:21.763Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:21.763Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-24T12:01:21.763Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-24T12:01:21.763Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-24T12:01:21.763Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-09-24T12:01:21.763Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-09-24T12:01:21.763Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-09-24T12:01:21.763Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:21.763Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:21.763Z"
+    }
+  ],
+  "sbc": [
+    null,
+    null,
+    null,
+    77000000,
+    38000000
+  ]
+}

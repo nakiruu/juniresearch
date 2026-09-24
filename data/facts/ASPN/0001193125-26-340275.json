@@ -1,0 +1,584 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "ASPN",
+  "cik": 1145986,
+  "company": "Aspen Aerogels, Inc.",
+  "exchange": "NYSE",
+  "sic": 5030,
+  "sicDescription": "Wholesale-Lumber & Other Construction Materials",
+  "filing": {
+    "form": "10-Q",
+    "accession": "0001193125-26-340275",
+    "filedDate": "2026-08-07",
+    "periodEnd": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1145986/000119312526340275/aspn-20260630.htm"
+  },
+  "capturedAt": "2026-09-24T12:01:18.845Z",
+  "quote": {
+    "price": 5.68,
+    "marketCap": 471376288,
+    "sharesOutstanding": 82988783.09859155,
+    "sharesSource": "derived",
+    "week52Low": 2.3,
+    "week52High": 9.348,
+    "dividendYield": 0,
+    "asOf": "2026-09-24"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          121622000,
+          180364000,
+          238718000,
+          452699000,
+          271103000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          9937000,
+          4976000,
+          56921000,
+          182897000,
+          45998000
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          -40599000,
+          -79245000,
+          -49203000,
+          54535000,
+          -378228000
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          -37094000,
+          -82738000,
+          -45811000,
+          13375000,
+          -389552000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          -1.22,
+          -2.1,
+          -0.66,
+          0.17,
+          -4.73
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          76564000,
+          281335000,
+          139723000,
+          220882000,
+          156857000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          null,
+          null,
+          null,
+          114711000,
+          90570000
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          null,
+          null,
+          null,
+          -106171000,
+          -66287000
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          128408000,
+          447435000,
+          488055000,
+          614705000,
+          235518000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          3.0679797565312543,
+          4.682817151181202,
+          3.410346373007235,
+          3.7184684684684686,
+          3.9025070536074162
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          -18628000,
+          -94399000,
+          -42612000,
+          45549000,
+          32872000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -13778000,
+          -177974000,
+          -175455000,
+          -86262000,
+          -37449000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          -32406000,
+          -272373000,
+          -218067000,
+          -40713000,
+          -4577000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q2'26",
+    "periodEnd": "2026-06-30",
+    "revenue": 49849000,
+    "operatingMargin": -0.5774238199362074,
+    "revenueYoY": -0.36110683892135753
+  },
+  "ttm": {
+    "pe": -3.7368421052631566,
+    "ps": 2.332518286497533,
+    "evToEbitda": null,
+    "grossMargin": 0.026770383345951537,
+    "operatingMargin": -0.6103746369173978,
+    "netMargin": -0.624487230873526,
+    "netDebtToEbitda": null,
+    "interestCoverage": null,
+    "currentRatio": 2.5189713022939917,
+    "fcfYield": 0.0729353615682934
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 218188800,
+      "eps": -0.62767
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 283691400,
+      "eps": -0.155
+    }
+  },
+  "analysts": {
+    "count": 6,
+    "buy": 4,
+    "hold": 1,
+    "sell": 1,
+    "consensusRating": "None",
+    "consensusTarget": 7.75,
+    "medianTarget": 7.75,
+    "highTarget": 10,
+    "lowTarget": 5,
+    "asOf": "2026-09-24"
+  },
+  "segments": {
+    "basis": "FY25 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 271103000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "ADSE",
+      "pe": null,
+      "ps": 26.15869,
+      "evToEbitda": -17.028
+    },
+    {
+      "ticker": "APOG",
+      "pe": 11.52978,
+      "ps": 0.5479287,
+      "evToEbitda": 6.282
+    },
+    {
+      "ticker": "BXC",
+      "pe": null,
+      "ps": 0.20842017,
+      "evToEbitda": 12.382
+    },
+    {
+      "ticker": "EH",
+      "pe": null,
+      "ps": 0.9090764,
+      "evToEbitda": -0.062
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-11",
+      "close": 6.139999866485596
+    },
+    {
+      "date": "2026-08-12",
+      "close": 6.150000095367432
+    },
+    {
+      "date": "2026-08-13",
+      "close": 6.070000171661377
+    },
+    {
+      "date": "2026-08-14",
+      "close": 5.849999904632568
+    },
+    {
+      "date": "2026-08-17",
+      "close": 5.820000171661377
+    },
+    {
+      "date": "2026-08-18",
+      "close": 5.579999923706055
+    },
+    {
+      "date": "2026-08-19",
+      "close": 5.449999809265137
+    },
+    {
+      "date": "2026-08-20",
+      "close": 5.110000133514404
+    },
+    {
+      "date": "2026-08-21",
+      "close": 5.179999828338623
+    },
+    {
+      "date": "2026-08-24",
+      "close": 5.010000228881836
+    },
+    {
+      "date": "2026-08-25",
+      "close": 5.230000019073486
+    },
+    {
+      "date": "2026-08-26",
+      "close": 5.190000057220459
+    },
+    {
+      "date": "2026-08-27",
+      "close": 5.230000019073486
+    },
+    {
+      "date": "2026-08-28",
+      "close": 4.929999828338623
+    },
+    {
+      "date": "2026-08-31",
+      "close": 4.929999828338623
+    },
+    {
+      "date": "2026-09-01",
+      "close": 4.840000152587891
+    },
+    {
+      "date": "2026-09-02",
+      "close": 4.920000076293945
+    },
+    {
+      "date": "2026-09-03",
+      "close": 4.78000020980835
+    },
+    {
+      "date": "2026-09-04",
+      "close": 4.920000076293945
+    },
+    {
+      "date": "2026-09-08",
+      "close": 4.909999847412109
+    },
+    {
+      "date": "2026-09-09",
+      "close": 4.840000152587891
+    },
+    {
+      "date": "2026-09-10",
+      "close": 4.760000228881836
+    },
+    {
+      "date": "2026-09-11",
+      "close": 4.909999847412109
+    },
+    {
+      "date": "2026-09-14",
+      "close": 4.869999885559082
+    },
+    {
+      "date": "2026-09-15",
+      "close": 4.860000133514404
+    },
+    {
+      "date": "2026-09-16",
+      "close": 4.929999828338623
+    },
+    {
+      "date": "2026-09-17",
+      "close": 5.130000114440918
+    },
+    {
+      "date": "2026-09-18",
+      "close": 5.070000171661377
+    },
+    {
+      "date": "2026-09-21",
+      "close": 5.190000057220459
+    },
+    {
+      "date": "2026-09-23",
+      "close": 5.679999828338623
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "Aspen Aerogels, Inc., an aerogel technology company, designs, develops, manufactures, and sells aerogel materials primarily for use in the energy industrial, sustainable insulation materials, and electric vehicle (EV) markets in the United States, Canada, Asia, Europe, and Latin America. It operates through two segments: Thermal Barrier and Energy Industrial. The company offers PyroThin aerogel thermal barriers for use in battery packs in EVs; Pyrogel XTE for refineries and petrochemical facilities; Pyrogel HPS for high temperatures and in demanding thermal applications in refining and chemical processing systems; Pyrogel XTF for protection against fire; Cryogel Z for sub-ambient and cryogenic applications; Spaceloft Subsea for pipe-in-pipe applications in offshore oil production; and Cryogel X201 for cold system designs. It serves EV manufacturers, automotive suppliers, lithium-ion battery manufacturers, and e-mobility and energy storage companies. The company was founded in 2001 and is headquartered in Northborough, Massachusetts.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-24"
+    },
+    "mdaExcerpt": {
+      "text": "Item 2. Management's Discussion and Analysis of Financial Condition and Results of Operations.\nThe following information should be read in conjunction with the unaudited financial information and the notes thereto included in this Quarterly Report on Form 10-Q and the audited financial information and the notes thereto included in the Annual Report on Form 10-K for the year ended December 31, 2025, filed with the U.S. Securities and Exchange Commission (SEC) on March 13, 2026, as amended on March 23, 2026, which we refer to as the Annual Report.\nCertain matters discussed in this Quarterly Report on Form 10-Q may be deemed to be forward-looking statements that involve risks and uncertainties. We make such forward-looking statements pursuant to the safe harbor provisions of the Private Securities Litigation Reform Act of 1995 and other federal securities laws. In this Quarterly Report on Form 10-Q, words such as \"may,\" \"will,\" \"anticipate,\" \"estimate,\" \"expects,\" \"projects,\" \"intends,\" \"plans,\" \"believes\" and similar expressions (as well as other words or expressions referencing future events, conditions or circumstances) are intended to identify forward-looking statements.\nOur actual results and the timing of certain events may differ materially from the results discussed, projected, anticipated, or indicated in any forward-looking statements. We caution you that forward-looking statements are not guarantees of future performance and that our actual results of operations, financial condition and liquidity, and the development of the industry in which we operate may differ materially from the forward-looking statements contained in this Quarterly Report on Form 10-Q. In addition, even if our results of operations, financial condition and liquidity, and the development of the industry in which we operate are consistent with the forward-looking statements contained in this Quarterly Report on Form 10-Q, they may not be predictive of results or developments in future periods.\nThe following information and any forward-looking statements should be considered in light of factors discussed elsewhere in this Quarterly Report on Form 10-Q, including Part I, Item 1 \"Financial Statements,\" which includes our financial statements and related notes, and under the sections titled \"Risk Factors\" in Item 1A of the Annual Report, our Quarterly Report on Form 10-Q for the quarter ended March 31, 2026, and this Quarterly Report on Form 10-Q.\nWe caution readers not to place undue reliance on any forward-looking statements made by us, which speak only as of the date they are made. We disclaim any obligation, except as specifically required by law and the rules of the SEC, to publicly update or revise any such statements to reflect any change in our expectations or in events, conditions or circumstances on which any such statements may be based, or that may affect the likelihood that actual results will differ from those set forth in the forward-looking statements.\nInvestors and others should note that we routinely use the Investors section of our website to announce material information to investors and the marketplace. While not all of the information that we post on the Investors section of our website is of a material nature, some information could be deemed to be material. Accordingly, we encourage investors, the media, and others interested in us to review the information that we share on the Investors section of our website, https://www.aerogel.com . The information contained on, or that can be accessed through, our website is not a part of, or incorporated by reference in, this Quarterly Report on Form 10-Q or our other filings with the SEC. We have included our website address in this Quarterly Report on Form 10-Q solely as an inactive textual reference.\nProducts\nOur core businesses are organized into two reportable segments: Thermal Barrier and Energy Industrial. The following describes our key product offerings and new product innovations by reportable segment.\nThermal Barrier\nWe have developed a number of promising aerogel products and technologies for the electric vehicle (EV) market, including our proprietary line of PyroThin aerogel thermal barriers for use in battery packs in EVs. Our PyroThin product is an ultra-thin, lightweight and flexible thermal barrier designed with other functional layers to impede the propagation of thermal runaway across multiple lithium-ion battery system architectures. Our thermal barrier technology is designed to offer a unique combination of thermal management, mechanical performance and fire protection properties. These properties enable EV manufacturers to achieve critical battery performance and safety goals by impeding the propagation of thermal runaway in lithium-ion battery systems at the battery cell, module, and pack levels across multiple lithium-ion battery system architectures. Our ultra-thin, lightweight, and flexible thermal barriers are designed to allow battery manufacturers to achieve critical safety goals without sacrificing energy density.\n22\nWe have entered into multi-year production contracts with a number of automotive EV original equipment manufacturer (OEM) customers to supply fabricated, multi-part thermal barriers for use in the battery systems of their EV models. These customers include General Motors LLC (GM), Toyota, Scania, Automotive Cells Company, which is a battery cell joint venture between Stellantis N.V., Saft-TotalEnergies and Mercedes-Benz (collectively, ACC), Volvo, and Volvo Truck. We are currently supplying thermal barrier production parts to GM, Toyota, and ACC, and thermal barrier prototype parts to a number of global manufacturers of EVs, grid storage and home battery systems. During 2025, 2024 and 2023, we sold $168.9 million, $306.8 million and $110.1 million, respectively, of our PyroThin thermal barriers, primarily to GM.\nOur patented aerogel products and manufacturing technologies are significant assets. Silica aerogels are complex structures in which 97% of the volume consists of air trapped between intertwined clusters of amorphous silica solids. We believe these extremely low-density solids provide superior thermal and acoustic insulating properties. Although silica aerogels are usually fragile materials, we have developed innovative and proprietary manufacturing processes that enable us to produce industrially robust aerogel insulation cost-effectively and at commercial scale.\nOur aerogel thermal barrier products are designed to enable our customers to enhance the safety and performance of their lithium-ion battery systems. These barriers are designed to impede the propagation of thermal runaway in lithium-ion battery systems at the battery cell, module, and pack levels across multiple lithium-ion battery system architectures. Our ultra-thin, lightweight and flexible thermal barriers are designed to allow battery manufacturers to achieve critical safety goals without sacrificing energy density. We believe our array of aerogel insulation product attributes provides strong competitive advantages over traditional insulation.\nEnergy Industrial\nWe design, develop and manufacture innovative, high-performance aerogel insulation used primarily in the energy industrial market. We believe our aerogel blankets deliver the best thermal performance of any widely used insulation product available on the market today and provide a combination of performance attributes unmatched by traditional insulation materials. Our insulation products help end-users to improve resource efficiency, reduce energy consumption, and reduce the carbon footprint of their operations. These products enable compact system design, reduce installation time and costs, promote freight and logistics cost savings, reduce system weight, minimize required storage space and enhance job site safety. Our insulation products reduce the incidence of corrosion under insulation, which is a significant maintenance cost and safety issue in energy industrial facilities. Many of our insulation products also offer strong fire protection, which is a critical performance requirement in the markets we service. We believe our array of product attributes provides strong competitive advantages over traditional insulation.\nOur end-user customers select our products where thermal performance is critical and to save money, improve resource efficiency, enhance sustainability, preserve operating assets and protect workers. Our insulation is used by oil producers and the owners and operators of refineries, petrochemical plants, liquefied natural gas (LNG) facilities, power generating assets, and other energy industrial sites. Our Pyrogel and Cryogel aerogel insulation product lines have undergone rigorous technical validation by industry leading end-users and achieved significant market adoption.\nWe also derive revenue from a number of other end markets. Customers in these markets have used our products for applications such as military aircraft, trains, and buses. We believe we will have additional opportunities to address high-value applications in the global insulation market, as well as in adjacent market opportunities such as energy storage applications, including battery energy storage systems, electrification applications, and other potential adjacent applications subject to their commercial potential, the differentiation of our products, and the ability to leverage our existing manufacturing platform.\nOur technologically advanced insulation products are targeted at the multi-billion dollar global market for energy industrial insulation materials. Our products replace traditional insulation in existing facilities during regular maintenance, upgrades, and capacity expansions. In addition, our aerogel products are also specified for use in new-build energy industrial facilities.\nWe have grown our business by forming technical and commercial relationships with industry leaders that have allowed us to optimize our products to meet the particular demands of target market sectors. We have benefited from our technical and commercial relationships with ExxonMobil in the oil refinery and petrochemical sectors, and with TechnipFMC in the offshore oil sector. We will continue our strategy of working with innovative companies to target and penetrate additional opportunities in the energy industrial and sustainable insulation materials markets. We believe that our long-term record of success positions us for future growth and the opportunity to gain market share in the energy industrial and sustainable insulation markets.\nWe market and sell our products primarily through a sales force based in North America, Europe and Asia. The efforts of our sales force are supported by a small number of sales consultants with extensive knowledge of a particular market or region. Our sales force is responsible for establishing and maintaining customer and partner relationships, delivering highly technical information and ensuring high-quality customer service.\n23\nOur salespeople work directly with end-user customers and engineering firms to promote the qualification, specification and acceptance of our aerogel and thermal barrier products. We also rely on an existing and well-established channel of qualified insulation distributors and contractors in more than 50 countries around the world to help provide rapid delivery of our aerogel products and strong end-user support.\nManufacturing Operations\nWe manufacture our products using our proprietary technology at our facility in East Providence, Rhode Island, which we have operated since 2008, as well as by utilizing our external manufacturing facility in China. We manage the capacity of our East Providence facility on an ongoing basis in order to meet expected demand for our aerogel products. We also utilize a flexible supply strategy, including, but not limited to, use of our external manufacturing facility in China, which currently supports our Energy Industrial segment. We are working closely with our external manufacturing facility as we seek to expand its capabilities to support our Energy Industrial and Thermal Barrier segments and to enhance short- and long-term supply flexibility. Pursuant to our supply contract with this contract manufacturer, they are obligated to deliver products to us as we issue purchase orders on an as-needed basis through the term of the contract. The contract automatically renews year-to-year unless either party notifies the other of its intention not to renew the contract. While we have agreed to purchase our requirement for certain Energy Industrial products from the contract manufacturer, we have no obligation to purchase any minimum quantity under the contract, and we may terminate the contract at any time and for any or no reason. Additionally, we previously entered into a contract with Prodensa Servicios de Consultora (Prodensa) to establish OPE Manufacturer Mexico S de RL de CV, a maquiladora located in Mexico (OPE), which assembles thermal barrier PyroThin products and operates an automated fabrication facility for PyroThin. We subsequently purchased OPE for a nominal value in accordance with the terms of the agreement.\nOn April 8, 2026, an explosion occurred at our manufacturing facility in East Providence, Rhode Island. The incident related to a high temperature oven and resulted in damage to a portion of the facility's production space and the temporary cessation of operations (the April 2026 Incident). On May 14, 2026, we initiated a staged restart of the facility and we are proceeding with a phased ramp-up of production. To date, we believe we have mitigated any significant commercial impact of the disruption by working through existing inventory, leveraging the capacity of our external manufacturing facility, and resuming limited production at our East Providence facility. However, our ability to continue to mitigate the impacts of the disruption assumes that the staged restart of our East Providence manufacturing facility proceeds as we currently expect, and that we are able to continue to meet customer demand for our products through a combination of restored production in East Providence, production at our external manufacturing facility, and other efforts to mitigate the impact of the disruptions. If we are unable to resume normal operations at our manufacturing facility in East Providence in a timely manner or manufacture the full array of our products, it may impact our ability to meet customer demand, which could have a material adverse impact on our business, results of operations and financial condition. Even if we are successful in our mitigation efforts, if we experience increased customer demand, we may be unable to produce sufficient product to meet such increased customer demand, which could have a material adverse impact on our business, results of operations and financial condition.\nFinancial Summary\nOur revenue for the six months ended June 30, 2026 was $87.7 million, which represented a decrease of $69.0 million, or 44%, from $156.7 million of revenue for the six months ended June 30, 2025. Net loss for the six months ended June 30, 2026 was $47.0 million and net loss per share was $0.57. Net loss for the six months ended June 30, 2025 was $310.3 million and net loss per share was $3.78. Revenue for the six months ended June 30, 2026 includes $8.4 million of revenue from a settlement agreement with a customer for $37.6 million for a claim for certain losses incurred arising from lower forecasted long-term demand by the customer which is being deferred and recognized as revenue over a period of approximately two years from the settlement date.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/1145986/000119312526340275/aspn-20260630.htm",
+      "asOf": "2026-08-07",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "Item 1A. RISK FACTORS\nSummary of Risk Factors\nOur business is subject to numerous risks and uncertainties, including those highlighted in this section below, that represent challenges that we face in connection with the successful implementation of our strategy. The occurrence of one or more of the events or circumstances described in more detail in the risk factors below, alone or in combination with other events or circumstances, may have an adverse effect on our business, cash flows, financial condition and results of operations. Such risks include, but are not limited to:\nWe previously incurred annual net losses, and we may incur net losses in the future and may never reach profitability.\nWe will require additional capital to pursue our growth strategy, but we may not be able to obtain additional financing on acceptable terms or at all.\nOur efforts in developing, selling, and supplying products in EV market may subject us to increased financial, operational, and legal risks that could materially adversely impact our business, financial conditions, and results of operations and may also increase our costs and make it difficult for us to operate profitably.\nWe have engaged third-party external manufacturing facilities in China to supplement our supply of our aerogel products. Our reliance on these external manufacturing facilities subjects us to operational, quality, regulatory, and geopolitical risks that could disrupt our supply chain, harm our reputation, and adversely affect our business operations.\nOur estimates regarding market opportunity for our products in the EV market and the assumptions on which our financial targets and our planned production capacity increases are based may prove to be inaccurate, which may cause our actual results to materially differ from such targets, which may adversely affect our future profitability, cash flows, and stock price.\nWhile we achieved positive operating cash flows for the fiscal years ended December 31, 2025 and 2024, our ability to continue generating positive cash flow is uncertain.\nOur working capital requirements involve estimates based on demand and production expectations and may decrease or increase beyond those currently anticipated, which could materially harm our results of operations and financial condition.\nOur relationships with automotive OEM customers involve multiple interconnected risks that could materially adversely impact our business, revenues, and profitability. These risks include but are not limited to being party to contracts without minimum commitments, pricing pressures, and cost reduction initiatives, selection of cell chemistries, battery pack system architectures, and customer market share and production declines.\nA substantial portion of our revenue comes from sales in foreign countries, and we are planning to further expand our operations outside of the United States, which subjects us to increased economic, trade, foreign exchange, operational, and political risks that could materially adversely impact our business, financial conditions and results of operations and also increase our costs and make it difficult for us to operate profitably.\nWe rely on sales to a limited number of direct customers, including distributors, contractors, OEMs, partners and end-user customers for the substantial majority of our revenue, and the loss of one or more significant direct customers or several of our smaller direct customers could materially harm our business. In addition, we understand from our customers that a substantial majority of their sales of our products are to a small number of end-user customers and the loss of one or more significant end-user customers or several of our smaller end-user customers could materially harm our business.\nWe are currently dependent on a single manufacturing facility located in East Providence, RI, as well as our third-party external manufacturing facilities in China. Any significant disruption to these facilities or the failure of any one of our three production lines in our East Providence, RI facility to operate\n18\naccording to our expectation could have a material adverse effect on our business and results of operations.\nA sustained downturn in the energy industry, due to lower oil and gas prices or reduced energy demand, could decrease demand for some or all of our products and services, which could have a material adverse effect on our business, financial condition and results of operations.\nThe insulation markets we serve are highly competitive. If we are unable to compete successfully, we may not be able to increase or maintain our market share and revenues.\nThe qualification process for our products can be lengthy and unpredictable, potentially delaying adoption of our products and causing us to incur significant expense, potentially without recovery.\nOur revenue may fluctuate, which may result in a high degree of variability in our results of operations and make it difficult for us to plan based on our future outlook and to forecast our future performance, and the results of our operations could be materially adversely affected if our operating expenses incurred do not correspond with the timing of our revenues.\nWe may face certain product liability or warranty claims on our products, including from improper installation of our products by third parties. Consequently, we could lose existing and future business and our ability to develop, market and sell our insulation could be harmed.\nWe may incur significant costs complying with environmental, health and safety laws and related claims, and failure to comply with these laws and regulations could expose us to significant liabilities, which could materially adversely affect our results of operations.\nBreakdowns, security breaches, loss of data, and other disruptions of our information technology systems could compromise sensitive information related to our business, prevent us from accessing critical information, and expose us to liability, which would cause our business and reputation to suffer.\nOur ability to use our net operating loss carryforwards may be subject to limitation, which could result in a higher effective tax rate and adversely affect our financial condition and results of operations.\nWe may be adversely affected by the effects of inflation.\nWe or the third parties upon which we depend may be adversely affected by general political, unstable market and economic conditions, and other events beyond our control and our business continuity and disaster recovery plans may not adequately protect us from a serious disaster.\nOur inability to protect our intellectual property rights and trade secrets could negatively affect our business and results of operations.\nWe have in the past initiated intellectual property litigation and any future intellectual property litigation may be costly, and could limit or invalidate our intellectual property rights, divert time and efforts away from business operations, require us to pay damages and/or costs and expenses and/or otherwise have a material adverse impact on our business, and we could become subject to additional such intellectual property litigation in the future.\nBecause we are a public company, we are obligated to develop and maintain proper and effective internal control over financial reporting. If our internal controls over financial reporting are determined to be ineffective, or if our auditors are otherwise unable to attest to their effectiveness, investor confidence in our company, and our common stock price, may be adversely affected.\nOur stockholders may experience future dilution as a result of future equity offerings.\nRisks Related to Our Business and Strategy\nWe previously incurred annual net losses, and we may incur net losses in the future and may never reach profitability.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/1145986/000119312526106453/aspn-20251231.htm",
+      "asOf": "2026-03-13",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-K",
+    "pressRelease": null,
+    "proxyStatement": {
+      "text": "Board and director independence:\nDirector Independence\nOur Board of Directors has reviewed the materiality of any relationship that each of our directors has with Aspen Aerogels, either directly or indirectly. Based upon this review, our Board has determined that all of our current directors, other than Donald R. Young, our President and Chief Executive Officer, are \"independent directors\" as defined by the New York Stock Exchange. Ms. Blalock and Mr. Noetzel, who served on the Board in 2025 and resigned effective April 30, 2025, were \"independent directors\" as defined by the New York Stock Exchange.\nCommittees of the Board of Directors and Meetings\nMeeting Attendance . During the fiscal year ended December 31, 2025, there were 13 meetings of our Board of Directors, and the various committees of the Board met a total of 19 times. No director attended fewer than 75% of the total number of meetings of the Board and of committees of the Board on which he or she served during fiscal year 2025. The Board has adopted a policy under which each member of the Board is strongly encouraged but not required to attend each annual meeting of our stockholders. All of our then-serving directors attended the annual meeting of our stockholders held in 2025.\nAudit Committee . The Audit Committee of the Board (the \"Audit Committee\") met 8 times during fiscal year 2025. This committee currently has three members: Kathleen M. Kool (chair), Cari Robinson and James E. Sweetnam. Our Audit Committee's role and responsibilities are set forth in the Audit Committee's written charter and include the authority to retain and terminate the services of our independent registered public accounting firm. In addition, the Audit Committee reviews our annual and quarterly financial statements, considers matters relating to accounting policy and internal controls and reviews the scope of annual audits. All members of the Audit Committee satisfy the current independence standards promulgated by the SEC and by the New York Stock Exchange, as such standards apply specifically to members of audit committees. Our Board of Directors has determined that Ms. Kool is an \"audit committee financial expert,\" as the SEC has defined that term in Item 407 of Regulation S-K.\n\nCompensation discussion and analysis:\nC OMPENSATION DISCUSSION AND ANALYSIS\nThis section discusses the principles underlying our policies and decisions with respect to the compensation of our executive officers who are named in the Summary Compensation Table below, or our \"named executive officers,\" and all material factors relevant to an analysis of these policies and decisions. During 2025, the following were our named executive officers:\nDonald R. Young, our President and Chief Executive Officer\nGrant D. Thoele, our Chief Financial Officer and Treasurer\nCorby C. Whitaker, our Chief Commercial Officer\nGregg R. Landes, our Chief Operating Officer\nGlenn E. Deegan, our Chief Administrative Officer, General Counsel and Corporate Secretary\nRicardo C. Rodriguez, former Chief Financial Officer and Treasurer\nVirginia H. Johnson, former Chief Legal Officer, General Counsel and Corporate Secretary\nKeith L. Schilling, former Senior Vice President, Technology\nCompensation Overview\nThis \"Compensation Overview\" section discusses the compensation programs and policies for our executive officers and the roles of our Compensation and Leadership Development Committee and our Board in the design and administration of these programs and policies, including specific compensation decisions in connection with our executive officers, including our named executive officers.\nOur Compensation Committee has the sole authority and responsibility to review and determine, or recommend to the Board for approval in the case of our Chief Executive Officer, the compensation of each of our named executive officers. Our Compensation Committee also considers the design and effectiveness of the compensation program for our executive officers and approves the final compensation package, employment agreements, equity-based compensation awards and cash bonuses for all of our executive officers, except our Chief Executive Officer, whose compensation is approved by the Board upon the recommendation of the Compensation Committee. Our Compensation Committee is composed entirely of independent directors who have never served as officers of the Company.\nSet forth below is a discussion of the policies and decisions that shape our executive compensation program, including the specific objectives and elements.\nExecutive Summary\n2025 Highlights and Recent Business Developments:\nAwarded North Sea pipe-in-pipe subsea project with expected delivery in Q3 2026\nSupported several LNG projects as part of an expanding gas infrastructure portfolio\nAwarded PyroThin Thermal Barrier contract from Volvo Cars with expected start of production in 2027\nAwarded PyroThin contract from a leading American OEM for a vehicle platform with expected start of production in 2028\nRemoved approximately $75 million of structural fixed costs, materially lowering EBITDA breakeven\nEnded 2025 with approximately $159 million in cash; expect nearly $38 million GM payment in Q1 2026\nPursuing sale of Plant II assets to further strengthen the balance sheet\n28\nGeneral Executive Compensation Philosophy and Principles\nThe objective of our executive compensation program is to attract, retain and motivate talented executives who are critical to our continued growth and success of building a profitable business, and to further align the interests of these executives with those of our stockholders. To achieve this objective, besides annual base salaries, our executive compensation program utilizes a combination of annual cash incentive opportunities tied to the achievement of pre-determined performance goals and long-term incentives through equity-based compensation. In establishing overall executive compensation levels, our Compensation Committee considers a number of criteria, including the executive's scope of responsibilities, prior and current period of performance, attainment of overall Company, individual executive performance objectives and retention concerns, as well as relevant compensation market data.\nIn order to achieve the Company's mix of pay objectives, we believe that it is critical for a significant portion of each named executive officer's target total direct compensation opportunity (that is, the combination of annual base salary, target annual cash bonus opportunity and the grant date value of the long-term equity incentive opportunity under our regular annual grant program) to be at-risk and tied to the achievement of performance criteria, stockholder value, or both. Our incentive compensation programs are performance-oriented, with a primary focus on the achievement of financial performance goals, while maintaining limited ability for the Compensation Committee to differentiate payouts based upon individual performance.\nAs depicted below, for the 2025 fiscal year approximately 80% of our CEO's overall target total direct compensation, and, on average, 73% of the target total direct compensation of our other named executive officers, was structured as at-risk compensation.\n\nSecurity ownership:\nSE CURITY OWNERSHIP OF CERTAIN BENEFICIAL OWNERS AND MANAGEMENT\nThe following table sets forth certain information with respect to the beneficial ownership of our common stock as of the Record Date for (a) the executive officers named in the Summary Compensation Table on page 42 of this proxy statement, (b) each of our current directors and director nominees, (c) all of our current directors, director nominees and current executive officers as a group and (d) each stockholder known by us to own beneficially more than 5% of our common stock.\nBeneficial ownership is determined in accordance with the rules of the SEC and includes voting or investment power with respect to the securities. We deem shares of common stock that may be acquired by an individual or group within 60 days of the Record Date pursuant to the exercise of options or warrants, conversion of notes, or the vesting of restricted stock units (\"RSUs\") to be outstanding for the purpose of computing the percentage ownership of such individual or group, but such shares are not deemed to be outstanding for the purpose of computing the percentage ownership of any other person shown in the table.\nExcept as indicated in footnotes to this table, we believe that the stockholders named in this table have sole voting and investment power with respect to all shares of common stock shown to be beneficially owned by them based on information provided to us by these stockholders. Percentage of ownership is based on 82,825,603 shares of common stock outstanding on the Record Date.\nShares beneficially owned\nName of Beneficial Owner\nNumber\nPercentage\nDirectors and Named Executive Officers:\nDonald R. Young, President & Chief Executive Officer (1)\n1,213,305\n1.46\n%\nGrant D. Thoele, Chief Financial Officer & Treasurer (2)\n34,627\n*\nCorby C. Whitaker, Chief Commercial Officer (3)\n310,253\n*\nGregg R. Landes, Chief Operating Officer (4)\n340,211\n*\nGlenn E. Deegan, Chief Administrative Officer, General Counsel & Secretary (5)\n*\nRicardo C. Rodriguez, former Chief Financial Officer & Treasurer (6)\n198,440\n*\nVirginia H. Johnson, former Chief Legal Officer, General Counsel & Secretary (7)\n140,677\n*\nKeith L. Schilling, former Senior Vice President, Technology (8)\n162,497\n*\nKathleen M. Kool, Director (9)\n42,427\n*\nSteven R. Mitchell, Director (10)\n238,370\n*\nWilliam P. Noglows, Director (11)\n200,829\n*\nCari Robinson, Director (12)\n23,027\n*\nJames E. Sweetnam, Director (13)\n48,305\n*\nAll directors and current executive officers as a group (10 persons) (14)\n2,451,354\n2.96\n%\nFive Percent Stockholders:\nEntities affiliated with Koch, Inc. (15)\n12,280,426\n14.83\n%\nOaktop Capital Management II, L.P. (16)\n4,394,525\n5.31\n%\nNeedham Investment Management L.L.C. and affiliates (17)\n4,351,700\n5.25\n%\n* Represents beneficial ownership of less than 1% of the outstanding shares of our common stock.\n(1) For Mr. Young, consists of 438,349 shares of our common stock and 774,956 shares of our common stock issuable upon the exercise of options exercisable within 60 days following the Record Date.\n(2) Mr. Thoele was appointed Chief Financial Officer and Treasurer, effective October 1, 2025. Consists of 10,111 shares of our common stock and 24,516 shares of our common stock issuable upon the exercise of options exercisable within 60 days following the Record Date.\n(3) For Mr. Whitaker, consists of 128,170 shares of our common stock and 182,083 shares of our common stock issuable upon the exercise of options exercisable within 60 days following the Record Date.\n(4) For Mr. Landes, consists of 26,317 shares of our common stock and 313,894 shares of our common stock issuable upon the exercise of options exercisable within 60 days following the Record Date.\n10\n(5) Mr. Deegan was appointed Chief Administrative Officer, General Counsel and Secretary effective September 22, 2025.\n(6) Ricardo C. Rodriguez, former Chief Financial Officer and Treasurer, departed the Company effective October 1, 2025.",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/1145986/000119312526129161/aspn-20260326.htm",
+      "asOf": "2026-03-27",
+      "truncated": true
+    },
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:18.845Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:18.845Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:18.845Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:18.845Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:18.845Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:18.845Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:18.845Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:18.845Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:18.845Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:18.845Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:18.845Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:18.845Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-24T12:01:18.845Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-24T12:01:18.845Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-24T12:01:18.845Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-09-24T12:01:18.845Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-09-24T12:01:18.845Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-09-24T12:01:18.845Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:18.845Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:18.845Z"
+    }
+  ],
+  "sbc": [
+    null,
+    null,
+    null,
+    null,
+    8628000
+  ]
+}
