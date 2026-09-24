@@ -1,0 +1,74 @@
+/**
+ * pipeline.ts — one run, end to end, with the broker used only for reads in planRun (spec §7, §9, §10).
+ * executeOrders is the only writer of fills.jsonl.
+ */
+import type { Report } from "../report.schema";
+import { buildSignal, type Signal } from "../portfolio/signal";
+import type { BrokerAdapter } from "../broker/adapter";
+import { TERMINAL_STATUSES } from "../broker/adapter";
+import { guardedSubmit, type GuardContext } from "../broker/guards";
+import type { TradeConfig } from "./config";
+import { assertCalendar, prevTradingDay, isTradingDay, type TradingDay } from "./calendar";
+import { appendFill, type Fill } from "./fills";
+import { locksFor, type Locks } from "./locks";
+import { reconcile, weightsOf, positionsOf, type Ledger } from "./ledger";
+import { emitTrades, type TradePlan } from "./rebalance";
+import { tradesToOrders, type SizedOrders } from "./orders";
+import type { RunRecord } from "./run-record";
+
+export interface PlanRunInput {
+  adapter: BrokerAdapter; reports: Report[]; sics: Record<string, number | null>; marketCapUsd: Record<string, number | null>;
+  fills: Fill[]; today: TradingDay; cfg: TradeConfig; runId: string;
+}
+export interface PlanRunOutput {
+  ledger: Ledger; calendar: TradingDay[]; markDate: TradingDay; marks: Record<string, number>; signals: Signal[];
+  locks: Locks; plan: TradePlan; sized: SizedOrders; record: RunRecord;
+}
+
+const shiftDays = (d: string, n: number) => new Date(new Date(d + "T00:00:00Z").getTime() + n * 86_400_000).toISOString().slice(0, 10);
+
+export async function planRun(input: PlanRunInput): Promise<PlanRunOutput> {
+  const { adapter, reports, sics, marketCapUsd, fills, today, cfg, runId } = input;
+  const calendar = (await adapter.getCalendar(shiftDays(today, -90), shiftDays(today, 45))).map((d) => d.date);
+  assertCalendar(calendar);
+  const markDate = cfg.markMode === "settled" || !isTradingDay(calendar, today) ? prevTradingDay(calendar, today) : today;
+  const tickers = reports.map((r) => r.meta.ticker);
+  const held = (await adapter.getPositions()).map((p) => p.symbol);
+  const marks = await adapter.getLastClose([...new Set([...tickers, ...held])], markDate);
+  const ledger = reconcile({ asOf: today, account: await adapter.getAccount(), positions: await adapter.getPositions(), fills });
+  const todayDate = new Date(today + "T00:00:00Z");
+  const signals = reports.map((r) => buildSignal(r, marks[r.meta.ticker], sics[r.meta.ticker] ?? null, todayDate, cfg));
+  const locks = locksFor(fills, calendar, cfg.lockBusinessDays);
+  const plan = emitTrades({ signals, currentWeights: weightsOf(ledger), locks, today, cfg });
+  const buyTickers = plan.trades.filter((t) => t.side === "buy").map((t) => t.ticker);
+  const fractionable = buyTickers.length ? await adapter.isFractionable(buyTickers) : {};
+  const sized = tradesToOrders({ plan, nav: ledger.nav, marks, positions: positionsOf(ledger), fractionalOk: (t) => fractionable[t] ?? false, marketCapUsd, runId, cfg });
+  const record: RunRecord = {
+    runId, today, markMode: cfg.markMode, broker: adapter.kind, marks,
+    signals: signals.map((s) => ({ ticker: s.ticker, label: s.label, gatedLabel: s.gatedLabel, mu: s.mu, R: s.R, kappa: s.kappa, quality: s.quality, ageDays: s.ageDays })),
+    classifications: plan.classifications, locks,
+    plan: { frozenWeight: plan.frozenWeight, sizingTarget: plan.sizingTarget, plannedInvested: plan.plannedInvested, plannedCash: plan.plannedCash, buyScale: plan.buyScale, trades: plan.trades, skipped: plan.skipped },
+    orders: sized.orders as unknown as Record<string, unknown>[], fills: [], notes: sized.skippedDust.map((d) => `dust skipped: ${d.ticker} $${d.deltaUsd.toFixed(2)}`),
+  };
+  return { ledger, calendar, markDate, marks, signals, locks, plan, sized, record };
+}
+
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+export async function executeOrders(input: { adapter: BrokerAdapter; sized: SizedOrders; ctx: GuardContext; runId: string; fillsPath: string; pollMs?: number }): Promise<Fill[]> {
+  const { adapter, sized, ctx, runId, fillsPath, pollMs = 1000 } = input;
+  const fills: Fill[] = [];
+  for (const o of sized.orders) {
+    let order = await guardedSubmit(adapter, { symbol: o.ticker, side: o.side, qty: o.kind === "qty" ? o.qty : undefined, notional: o.kind === "notional" ? o.notional : undefined, clientOrderId: o.clientOrderId, estNotionalUsd: o.deltaUsd }, ctx);
+    for (let i = 0; i < 60 && !TERMINAL_STATUSES.has(order.status); i++) {
+      await sleep(pollMs);
+      order = (await adapter.getOrders("all")).find((x) => x.clientOrderId === o.clientOrderId) ?? order;
+    }
+    if (order.filledQty > 0 && order.filledAvgPrice != null && order.filledAt) {
+      const fill: Fill = { ticker: o.ticker, side: o.side, qty: order.filledQty, price: order.filledAvgPrice, filledAt: order.filledAt, tradingDate: order.filledAt.slice(0, 10), orderId: order.id, runId };
+      appendFill(fillsPath, fill);
+      fills.push(fill);
+    }
+  }
+  return fills;
+}

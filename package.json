@@ -20,7 +20,10 @@
     "synth:prompt": "node --env-file-if-exists=.env.local --import tsx scripts/synth-prompt.ts",
     "synth:build": "node --env-file-if-exists=.env.local --import tsx scripts/synth-build.ts",
     "synth:review-brief": "node --env-file-if-exists=.env.local --import tsx scripts/synth-review-brief.ts",
-    "portfolio:build": "node --env-file-if-exists=.env.local --import tsx scripts/portfolio-build.ts"
+    "portfolio:build": "node --env-file-if-exists=.env.local --import tsx scripts/portfolio-build.ts",
+    "trade:plan": "node --env-file-if-exists=.env.local --import tsx scripts/trade-plan.ts",
+    "trade:reconcile": "node --env-file-if-exists=.env.local --import tsx scripts/trade-reconcile.ts",
+    "trade:execute": "node --env-file-if-exists=.env.local --import tsx scripts/trade-execute.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",
