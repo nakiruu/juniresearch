@@ -123,8 +123,8 @@ describe("addTradingDays", () => {
   it("steps forward n trading days, skipping the weekend and the holiday", () => {
     expect(addTradingDays(CAL, "2026-09-21", 1)).toBe("2026-09-22");
     expect(addTradingDays(CAL, "2026-09-23", 1)).toBe("2026-09-25"); // skips holiday
-    expect(addTradingDays(CAL, "2026-09-21", 5)).toBe("2026-09-28"); // Mon +5 → next Mon (holiday inside)
-    expect(addTradingDays(CAL, "2026-09-21", 6)).toBe("2026-09-29");
+    expect(addTradingDays(CAL, "2026-09-21", 5)).toBe("2026-09-29"); // Mon +5 → Tue 09-29: the holiday pushes it a day past "next Mon"
+    expect(addTradingDays(CAL, "2026-09-21", 6)).toBe("2026-09-30");
   });
   it("requires `from` to be a trading day and stays inside the calendar", () => {
     expect(() => addTradingDays(CAL, "2026-09-24", 1)).toThrow(/not a trading day/);
@@ -324,30 +324,30 @@ const f = (side: "buy" | "sell", tradingDate: string, ticker = "NVT"): Fill =>
   ({ ticker, side, qty: 1, price: 1, filledAt: `${tradingDate}T15:00:00Z`, tradingDate, orderId: "o", runId: "r" });
 
 describe("locksFor", () => {
-  it("a Monday buy with the 6-day default is sellable the Tuesday after next-week Monday (holiday inside)", () => {
+  it("a Monday buy with the 6-day default is sellable on Wed 09-30 (six trading days on, holiday skipped)", () => {
     const L = locksFor([f("buy", "2026-09-21")], CAL, 6);
-    expect(L.sellLockUntil.NVT).toBe("2026-09-29");
-    expect(isSellLocked(L, "NVT", "2026-09-28")).toBe(true);   // day before first legal
-    expect(isSellLocked(L, "NVT", "2026-09-29")).toBe(false);  // first legal day
+    expect(L.sellLockUntil.NVT).toBe("2026-09-30");
+    expect(isSellLocked(L, "NVT", "2026-09-29")).toBe(true);   // day before first legal
+    expect(isSellLocked(L, "NVT", "2026-09-30")).toBe(false);  // first legal day
     expect(isBuyLocked(L, "NVT", "2026-09-22")).toBe(false);   // buys are not locked by a buy
   });
-  it("with 5 days (the 'count the transaction day' reading) the same buy is sellable next Monday", () => {
-    expect(locksFor([f("buy", "2026-09-21")], CAL, 5).sellLockUntil.NVT).toBe("2026-09-28");
+  it("with 5 days (the 'count the transaction day' reading) the same buy is sellable on Tue 09-29", () => {
+    expect(locksFor([f("buy", "2026-09-21")], CAL, 5).sellLockUntil.NVT).toBe("2026-09-29");
   });
   it("a sell locks buys, not sells", () => {
     const L = locksFor([f("sell", "2026-09-23")], CAL, 6);
-    expect(L.buyLockUntil.NVT).toBe("2026-10-01");
+    expect(L.buyLockUntil.NVT).toBe("2026-10-02");
     expect(isBuyLocked(L, "NVT", "2026-09-30")).toBe(true);
     expect(isSellLocked(L, "NVT", "2026-09-25")).toBe(false);
   });
   it("adding to a position restarts the whole-ticker sell-lock (later fill wins)", () => {
     const L = locksFor([f("buy", "2026-09-21"), f("buy", "2026-09-23")], CAL, 6);
-    expect(L.sellLockUntil.NVT).toBe("2026-10-01"); // from the 09-23 fill, not 09-21
+    expect(L.sellLockUntil.NVT).toBe("2026-10-02"); // from the 09-23 fill, not 09-21
   });
   it("locks are per ticker", () => {
     const L = locksFor([f("buy", "2026-09-21", "NVT"), f("sell", "2026-09-21", "MP")], CAL, 6);
-    expect(L.sellLockUntil).toEqual({ NVT: "2026-09-29" });
-    expect(L.buyLockUntil).toEqual({ MP: "2026-09-29" });
+    expect(L.sellLockUntil).toEqual({ NVT: "2026-09-30" });
+    expect(L.buyLockUntil).toEqual({ MP: "2026-09-30" });
   });
   it("a fill dated on a non-trading day is an error (fills must carry the fill's trading date)", () => {
     expect(() => locksFor([f("buy", "2026-09-24")], CAL, 6)).toThrow(/not a trading day/);
@@ -441,7 +441,7 @@ export function isSellLocked(locks: Locks, ticker: string, today: TradingDay): b
 - [ ] **Step 4: Run the tests to verify they pass**
 
 Run: `npx vitest run lib/trade/fills.test.ts lib/trade/locks.test.ts`
-Expected: PASS (3 + 7 tests). Note the holiday case: a 09-21 buy at n=6 lands on 09-29 because 09-24 is skipped.
+Expected: PASS (3 + 7 tests). Note the holiday case: a 09-21 buy at n=6 lands on 09-30 — six trading days on, with 09-24 skipped.
 
 - [ ] **Step 5: Commit**
 
@@ -452,7 +452,7 @@ git commit -m "feat(trade): fills log schema and whole-ticker compliance locks
 Spec §3, §6.2. The lock clock starts on the fill's trading date; a buy
 locks sells and a sell locks buys for lockBusinessDays trading days,
 holidays and weekends skipped via the calendar. lockUntil is the first
-legal day, so a 09-21 buy with n=6 is sellable on 09-29 when 09-24 is a
+legal day, so a 09-21 buy with n=6 is sellable on 09-30 when 09-24 is a
 holiday.
 
 Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
@@ -1961,7 +1961,7 @@ import type { GuardContext } from "../broker/guards";
 const CAL = ["2026-09-21", "2026-09-22", "2026-09-23", "2026-09-24", "2026-09-25"].map((date) => ({ date, open: "09:30", close: "16:00" }));
 const closes = (p: number) => Object.fromEntries(CAL.map((d) => [d.date, p]));
 const cfg = resolveTradeConfig({ wMax: 1, sectorMax: 1 });
-const nvt = fixtureReport({ ticker: "NVT", label: "BUY", conviction: 70, scenarios: [[150, 0.3], [120, 0.5], [80, 0.2]] }); // at 100: mu +17%, R 0.85
+const nvt = fixtureReport({ ticker: "NVT", label: "BUY", conviction: 70, scenarios: [[150, 0.3], [120, 0.5], [80, 0.2]] }); // at 100: mu +21%, R 1.05
 
 describe("planRun", () => {
   it("marks at the previous settled close, reconciles an empty book, and plans an ENTER", async () => {
@@ -2319,7 +2319,7 @@ import type { GuardContext } from "../broker/guards";
 const DAYS = ["2026-09-21", "2026-09-22", "2026-09-23", "2026-09-25", "2026-09-28", "2026-09-29", "2026-09-30", "2026-10-01", "2026-10-02"];
 const CAL = DAYS.map((date) => ({ date, open: "09:30", close: "16:00" }));
 const cfg = resolveTradeConfig({ wMax: 1, sectorMax: 1 });
-// Scenarios fixed; price path drives mu/R. At 100: mu +17%, R 0.85 → ENTER. At 125: mu −6%, R → EXIT.
+// Scenarios fixed; price path drives mu/R. At 100: mu +21%, R 1.05 → ENTER. At 125: mu ≈ −3%, below muExit → EXIT.
 const nvt = fixtureReport({ ticker: "NVT", label: "BUY", conviction: 70, scenarios: [[150, 0.3], [120, 0.5], [80, 0.2]] });
 const path = (d: string) => (d < "2026-09-23" ? 100 : 125); // rallies through fair value from 09-23
 
@@ -2345,37 +2345,31 @@ describe("e2e: a whipsaw cannot happen inside the lock window; the deferred exit
 
     // Day 2 (Wed 09-23, marked at Tue's 100): HOLD, nothing to do.
     const d2 = await run("2026-09-23");
-    expect(d2.out.locks.sellLockUntil.NVT).toBe("2026-09-30");      // 09-22 + 6 trading days, holiday skipped
+    expect(d2.out.locks.sellLockUntil.NVT).toBe("2026-10-01");      // 09-22 + 6 trading days, holiday skipped
     expect(d2.out.plan.trades).toEqual([]);
 
     // Day 3 (Fri 09-25, marked at Wed's 125): the thesis played out → EXIT wanted, but sell-locked → DEFERRED.
     const d3 = await run("2026-09-25");
-    expect(d3.out.plan.skipped).toContainEqual(expect.objectContaining({ ticker: "NVT", code: "DEFER_EXIT", unlockOn: "2026-09-30" }));
+    expect(d3.out.plan.skipped).toContainEqual(expect.objectContaining({ ticker: "NVT", code: "DEFER_EXIT", unlockOn: "2026-10-01" }));
     expect(d3.fills).toEqual([]);
     expect(d3.out.plan.frozenWeight).toBeGreaterThan(0.9);
 
-    // Day 4 (Tue 09-29, the day before unlock): still deferred.
-    expect((await run("2026-09-29")).fills).toEqual([]);
+    // Day 4 (Wed 09-30, the day before unlock): still deferred.
+    expect((await run("2026-09-30")).fills).toEqual([]);
 
-    // Day 5 (Wed 09-30, first legal day): the exit fires and fills.
-    const d5 = await run("2026-09-30");
+    // Day 5 (Thu 10-01, first legal day): the exit fires and fills.
+    const d5 = await run("2026-10-01");
     expect(d5.out.plan.trades).toEqual([expect.objectContaining({ ticker: "NVT", reason: "EXIT" })]);
-    expect(d5.fills).toEqual([expect.objectContaining({ side: "sell", tradingDate: "2026-09-30" })]);
+    expect(d5.fills).toEqual([expect.objectContaining({ side: "sell", tradingDate: "2026-10-01" })]);
     expect(await b.getPositions()).toEqual([]);
 
-    // Day 6 (Thu 10-01): the price is still 125 so NVT is INELIGIBLE anyway — but even if it were a BUY,
-    // the sell on 09-30 buy-locks it until 10-01 + 6 trading days, which is beyond the loaded calendar.
-    const d6 = await run("2026-10-01");
-    expect(d6.out.locks.buyLockUntil.NVT).toBeUndefined(); // …so locksFor throws? No: the calendar covers +45 days in planRun.
+    // Day 6 (Fri 10-02): the 10-01 sell buy-locks NVT six trading days out — beyond this test's
+    // 9-day calendar. A lock that cannot be dated is a hard error, never silently absent (which is
+    // why planRun loads 45 days of calendar in production).
+    await expect(run("2026-10-02")).rejects.toThrow(/beyond the loaded calendar/);
   });
 });
 ```
-
-  > The final assertion must reflect the real calendar length: in this test `getCalendar` returns only `CAL` (9 days), so `addTradingDays("2026-09-30", 6)` is **beyond the loaded calendar** and `locksFor` throws. Replace the last two lines with:
-  > ```ts
-  >     await expect(run("2026-10-01")).rejects.toThrow(/beyond the loaded calendar/);
-  > ```
-  > That is the correct behaviour — a lock that cannot be dated is a hard error, never silently absent — and it is why `planRun` requests a calendar 45 days ahead.
 
 - [ ] **Step 2: Run it** — `npx vitest run lib/trade/e2e.test.ts` → PASS.
 
