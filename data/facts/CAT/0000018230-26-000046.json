@@ -1,0 +1,590 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "CAT",
+  "cik": 18230,
+  "company": "Caterpillar Inc.",
+  "exchange": "NYSE",
+  "sic": 3531,
+  "sicDescription": "Construction Machinery & Equip",
+  "goodwill": [
+    6324000000,
+    5288000000,
+    5308000000,
+    5241000000,
+    5321000000
+  ],
+  "filing": {
+    "form": "10-Q",
+    "accession": "0000018230-26-000046",
+    "filedDate": "2026-08-05",
+    "periodEnd": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000046/cat-20260630.htm"
+  },
+  "capturedAt": "2026-09-24T01:40:16.952Z",
+  "quote": {
+    "price": 812.02,
+    "marketCap": 373265203200,
+    "sharesOutstanding": 459674888.79584247,
+    "sharesSource": "derived",
+    "week52Low": 459.58,
+    "week52High": 1073.46,
+    "dividendYield": 0.0081,
+    "asOf": "2026-09-24"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          50971000000,
+          59427000000,
+          67060000000,
+          64809000000,
+          67589000000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          15458000000,
+          59014000000,
+          66900000000,
+          64776000000,
+          67540000000
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          6878000000,
+          7904000000,
+          12966000000,
+          13072000000,
+          11151000000
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          9230000000,
+          10123000000,
+          15110000000,
+          15225000000,
+          13413000000
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          6489000000,
+          6705000000,
+          10335000000,
+          10792000000,
+          8884000000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          11.83,
+          12.64,
+          20.12,
+          22.05,
+          18.81
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          9254000000,
+          7004000000,
+          6978000000,
+          6889000000,
+          9980000000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          31437000000,
+          31671000000,
+          29115000000,
+          31744000000,
+          36210000000
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          22183000000,
+          24667000000,
+          22137000000,
+          24855000000,
+          26230000000
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          16516000000,
+          15891000000,
+          19503000000,
+          19494000000,
+          21318000000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          1.455925218614936,
+          1.3886334083917415,
+          1.3519062428011979,
+          1.4155304908279622,
+          1.4356638765796816
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          7198000000,
+          7766000000,
+          12885000000,
+          12035000000,
+          11739000000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -1093000000,
+          -1296000000,
+          -1597000000,
+          -1988000000,
+          -2821000000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          -2668000000,
+          -4230000000,
+          -4975000000,
+          -7697000000,
+          -5190000000
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          -2332000000,
+          -2440000000,
+          -2563000000,
+          -2646000000,
+          -2749000000
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          6105000000,
+          6470000000,
+          11288000000,
+          10047000000,
+          8918000000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q2'26",
+    "periodEnd": "2026-06-30",
+    "revenue": 20543000000,
+    "operatingMargin": 0.209073650391861,
+    "revenueYoY": 0.23984549459834636
+  },
+  "ttm": {
+    "pe": 34.95566078346965,
+    "ps": 4.994917678545143,
+    "evToEbitda": null,
+    "grossMargin": 0.8219968151587737,
+    "operatingMargin": 0.17519303081802245,
+    "netMargin": 0.14511100108391656,
+    "netDebtToEbitda": null,
+    "interestCoverage": null,
+    "currentRatio": 1.3684342799698417,
+    "fcfYield": 0.028660587454405393
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 79153079140,
+      "eps": 27.18657
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 88053195170,
+      "eps": 32.37734
+    }
+  },
+  "analysts": {
+    "count": 28,
+    "buy": 14,
+    "hold": 12,
+    "sell": 2,
+    "consensusRating": "Buy",
+    "consensusTarget": 975.60614,
+    "medianTarget": 980.5,
+    "highTarget": 1225,
+    "lowTarget": 575,
+    "asOf": "2026-09-24"
+  },
+  "segments": {
+    "basis": "FY25 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 67589000000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "AGCO",
+      "pe": 16.691359,
+      "ps": 0.82340115,
+      "evToEbitda": 11.001
+    },
+    {
+      "ticker": "ASTE",
+      "pe": 49.261906,
+      "ps": 0.611816,
+      "evToEbitda": 9.369
+    },
+    {
+      "ticker": "DE",
+      "pe": 39.068283,
+      "ps": 3.9913583,
+      "evToEbitda": 28.951
+    },
+    {
+      "ticker": "ETN",
+      "pe": 45.04723,
+      "ps": 5.675561,
+      "evToEbitda": 28.783
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-11",
+      "close": 843.3699951171875
+    },
+    {
+      "date": "2026-08-12",
+      "close": 855.5999755859375
+    },
+    {
+      "date": "2026-08-13",
+      "close": 854.5999755859375
+    },
+    {
+      "date": "2026-08-14",
+      "close": 856.5700073242188
+    },
+    {
+      "date": "2026-08-17",
+      "close": 881.6500244140625
+    },
+    {
+      "date": "2026-08-18",
+      "close": 840.8699951171875
+    },
+    {
+      "date": "2026-08-19",
+      "close": 816.1500244140625
+    },
+    {
+      "date": "2026-08-20",
+      "close": 815.3900146484375
+    },
+    {
+      "date": "2026-08-21",
+      "close": 827.9000244140625
+    },
+    {
+      "date": "2026-08-24",
+      "close": 811.02001953125
+    },
+    {
+      "date": "2026-08-25",
+      "close": 811.2899780273438
+    },
+    {
+      "date": "2026-08-26",
+      "close": 821.9299926757812
+    },
+    {
+      "date": "2026-08-27",
+      "close": 817
+    },
+    {
+      "date": "2026-08-28",
+      "close": 800.25
+    },
+    {
+      "date": "2026-08-31",
+      "close": 797.469970703125
+    },
+    {
+      "date": "2026-09-01",
+      "close": 779.1599731445312
+    },
+    {
+      "date": "2026-09-02",
+      "close": 792.280029296875
+    },
+    {
+      "date": "2026-09-03",
+      "close": 800.1400146484375
+    },
+    {
+      "date": "2026-09-04",
+      "close": 813.9400024414062
+    },
+    {
+      "date": "2026-09-08",
+      "close": 822.47998046875
+    },
+    {
+      "date": "2026-09-09",
+      "close": 815.5599975585938
+    },
+    {
+      "date": "2026-09-10",
+      "close": 805
+    },
+    {
+      "date": "2026-09-11",
+      "close": 818.5700073242188
+    },
+    {
+      "date": "2026-09-14",
+      "close": 784
+    },
+    {
+      "date": "2026-09-15",
+      "close": 783.5399780273438
+    },
+    {
+      "date": "2026-09-16",
+      "close": 782.719970703125
+    },
+    {
+      "date": "2026-09-17",
+      "close": 798.5700073242188
+    },
+    {
+      "date": "2026-09-18",
+      "close": 808.989990234375
+    },
+    {
+      "date": "2026-09-21",
+      "close": 816.5
+    },
+    {
+      "date": "2026-09-23",
+      "close": 812.02001953125
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "Caterpillar Inc. provides construction and mining equipment, off-highway diesel and natural gas engines, industrial gas turbines, and diesel-electric locomotives in the United States and internationally. The Construction Industries segment offers asphalt pavers, cold planers, compactors, forestry machines, material handlers, motor graders, pipelayers, road reclaimers, telehandlers, track-type tractors, and track and wheel excavators; backhoe, compact track, skid steer, track-type, and wheel loaders; and related parts and work tools. Its Resource Industries segment provides electric rope and hydraulic shovels, draglines, rotary drills, hard rock vehicles, mining trucks, wheel loaders, off-highway and articulated trucks, wide-body trucks, wheel tractor scrapers and dozers, and landfill and soil compactors; machinery components, and wear and maintenance components; and technology products and services for fleet management, equipment management analytics, autonomous machine capabilities, safety services, and mining performance solutions. The Energy & Transportation segment offers reciprocating engine powered generator sets; reciprocating engines, drivetrain, and integrated systems and solutions; centrifugal gas compressors and related services; and diesel-electric locomotive components, and other rail-related products. Its Financial Products segment provides operating and finance leases, revolving charge accounts, installment sale contracts, repair/rebuild financing, working capital loans, and wholesale financing; and insurance and risk management products and services. The All Other segment offers parts distribution; logistics and distribution services; electronics and control systems; dealer portfolio management; brand management and marketing strategy; and digital investment services. It also provides mining software solutions. The company was formerly known as Caterpillar Tractor Co. Caterpillar Inc. was incorporated in 1925 and is headquartered in Irving, Texas.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-24"
+    },
+    "mdaExcerpt": {
+      "text": "Item 2. Management's Discussion and Analysis of Financial Condition and Results of Operations\nThe following Management's Discussion and Analysis of Financial Condition and Results of Operations (MD&A) is intended to provide information that will assist the reader in understanding the company's Consolidated Financial Statements, the changes in certain key items in those financial statements between select periods and the primary factors that accounted for those changes. In addition, we discuss how certain accounting principles, policies and critical estimates affect our Consolidated Financial Statements. Our discussion also contains certain forward-looking statements related to future events and expectations as well as a discussion of the many factors that we believe may have an impact on our business on an ongoing basis. This MD&A should be read in conjunction with our discussion of cautionary statements and significant risks to the company's business under Part I, Item 1A. Risk Factors of the 2025 Form 10-K .\nHighlights for the second quarter of 2026 include:\nTotal sales and revenues for the second quarter of 2026 were $20.543 billion, an increase of $3.974 billion, or 24 percent, compared with $16.569 billion in the second quarter of 2025. Sales were higher across the three primary segments.\nOperating profit margin was 20.9 percent for the second quarter of 2026, compared with 17.3 percent for the second quarter of 2025. Adjusted operating profit margin was 21.9 percent for the second quarter of 2026, compared with 17.6 percent for the second quarter of 2025.\nSecond-quarter 2026 profit per share was $7.77, and excluding the items in the table below, adjusted profit per share was $8.17. Second-quarter 2025 profit per share was $4.62, and excluding the item in the table below, adjusted profit per share was $4.72.\nCaterpillar ended the second quarter of 2026 with $6.7 billion of enterprise cash.\nHighlights for the six months ended June 30, 2026 include:\nTotal sales and revenues were $37.958 billion for the six months ended June 30, 2026, an increase of $7.140 billion, or 23 percent, compared with $30.818 billion for the six months ended June 30, 2025.\nOperating profit margin was 19.4 percent for the six months ended June 30, 2026, compared with 17.6 percent for the six months ended June 30, 2025. Adjusted operating profit margin was 20.1 percent for the six months ended June 30, 2026, compared with 17.9 percent for the six months ended June 30, 2025.\nProfit per share for the six months ended June 30, 2026, was $13.23, and excluding the items in the table below, adjusted profit per share was $13.70. Profit per share for the six months ended June 30, 2025, was $8.82, and excluding the item in the table below, adjusted profit per share was $8.97.\nEnterprise operating cash flow was $6.2 billion for the six months ended June 30, 2026.\nIn order for our results to be more meaningful to our readers, we have separately quantified the impact of significant items.\nThree Months Ended\nJune 30, 2026\nThree Months Ended\nJune 30, 2025\nSix Months Ended\nJune 30, 2026\nSix Months Ended\nJune 30, 2025\n(Dollars in millions except per share data)\nProfit Before Taxes\nProfit\nPer Share\nProfit Before Taxes\nProfit\nPer Share\nProfit Before Taxes\nProfit\nPer Share\nProfit Before Taxes\nProfit\nPer Share\nProfit\n$\n4,558\n$\n7.77\n$\n2,818\n$\n4.62\n$\n7,769\n$\n13.23\n$\n5,388\n$\n8.82\nRestructuring costs - divestiture of certain non-U.S. entities\n139\n0.30\n139\n0.30\nOther restructuring (income) costs\n63\n0.10\n56\n0.10\n104\n0.17\n89\n0.15\nAdjusted profit\n$\n4,760\n$\n8.17\n$\n2,874\n$\n4.72\n$\n8,012\n$\n13.70\n$\n5,477\n$\n8.97\nA detailed reconciliation of GAAP to non-GAAP financial measures is included on pages 71 - 73 .\nOverview\nTotal sales and revenues for the second quarter of 2026 were $20.543 billion, an increase of $3.974 billion, or 24 percent, compared with $16.569 billion in the second quarter of 2025. The increase was primarily due to higher sales volume of $3.1 billion and favorable price realization of $595 million.\nSecond-quarter 2026 profit per share was $7.77, compared with $4.62 profit per share in the second quarter of 2025. In the second quarter of 2026 and 2025, profit per share included restructuring costs. Profit for the second quarter of 2026 was $3.593 billion, an increase of $1.414 billion, or 65 percent, compared with $2.179 billion for the second quarter of 2025. The increase was mainly due to the profit impact of higher sales volume.\n51\nTable of Contents\nTrends and Economic Conditions\nOutlook for Key End Markets\nWe continue to see strong momentum in our end markets despite ongoing uncertainty due to geopolitical events. We are also progressing on our capacity expansion plans, and we expect to increase our throughput in the second half of 2026.\nIn Power & Energy , our positive outlook for 2026 continues to reflect strong demand in both Power Generation and Oil & Gas. We continue to anticipate growth in Power Generation for both reciprocating engines and turbines and turbine-related services , driven by increasing energy demand to support data center build-out related to cloud computing and generative Artificial Intelligence (AI). Additionally, prime power demand continues to trend higher for turbines and turbine-related services and for reciprocating engine products and services to support their need for power solutions. Oil & Gas is expected to grow moderately in 2026 as compared to 2025. Reciprocating engine sales are anticipated to increase, driven by strong demand in gas compression applications. We expect continued momentum in demand for reciprocating engine aftermarket parts. For turbines and turbine-related services used in Oil & Gas applications, sales are expected to grow while the backlog remains healthy, with continued solid order and inquiry activity. Demand for products in Industrial applications is expected to grow moderately in 2026 as compared to 2025.\nIn Construction Industries , in 2026 as compared to 2025, we continue to expect growth in sales of equipment to end users supported by strong order rates. The outlook for North America remains positive, as sales of equipment to end users are anticipated to grow in 2026 as compared to 2025. Construction spending remains at healthy levels supported by the Infrastructure Investment and Jobs Act (IIJA), with the remaining funds to be spent over the next few years. Non-residential investment in critical infrastructure programs, heavy construction and data centers is contributing to overall construction spending levels. We expect dealer rental fleet loading will continue to grow in 2026 compared to 2025, including additional fleet loading for Major Projects in the third quarter of 2026. In EAME , Europe is expected to remain stable in 2026 as compared to 2025, supported by non-residential construction, and construction activity in Africa is projected to remain strong. While the Middle East continues to be challenged, we currently anticipate only a limited impact on sales of equipment to end users in EAME. In Asia Pacific, outside of China, softer economic conditions are expected in 2026. In China, we anticipate moderate conditions, with growth in the above 10-ton excavator industry in 2026, off of low levels of activity. Growth in Latin America is expected to continue.\nIn Resource Industries , we are seeing continued positive momentum with robust order rates and strong backlog growth. Sales of equipment to end users are expected to increase in 2026 as compared to 2025, primarily driven by rising demand for copper and gold, and positive dynamics in Heavy Construction and Quarry and Aggregates. In Mining, most key commodities remain above investment thresholds, customer product utilization is high, and the age of the fleet remains elevated. While some commodity prices have increased recently, customers remain focused on the long-term. We now expect rebuild activity in 2026 to increase moderately as compared to 2025. Rail services and locomotive deliveries are both anticipated to grow in 2026 as compared to 2025.\nThird-Quarter 2026 Company Trends and Expectations\nIn the third quarter of 2026 as compared to the third quarter of 2025, we anticipate strong sales and revenues growth, primarily driven by higher sales volume and favorable price realization in each of our three primary segments. We expect higher sales volume to be mainly driven by higher sales of equipment to end users across all three primary segments in the third quarter of 2026 as compared to the third quarter of 2025.\nIn the third quarter of 2026 as compared to the third quarter of 2025, we anticipate strong sales growth in Power & Energy, driven by continued strength in Power Generation and in Oil & Gas, and modest growth in Industrial applications as it continues to recover. We expect favorable price realization in Power & Energy. In Construction Industries, we expect strong sales growth primarily due to higher sales volume and favorable price realization. We expect higher sales volume to be primarily driven by higher sales of equipment to end users, partially offset by the impact from changes in dealer inventories . We expect a slight increase in dealer inventory in the third quarter of 2026, but modestly lower than the increase in the third quarter of 2025. In Resource Industries, we expect strong sales growth primarily due to higher sales volume. We expect higher sales volume to be mainly driven by higher sales of equipment to end users. We also expect services revenues growth in the third quarter of 2026 as compared to the third quarter of 2025. We anticipate favorable price realization in Resource Industries in the third quarter of 2026 as compared to the third quarter of 2025, but to a lesser extent than the second quarter of 2026 as compared to the second quarter of 2025.\nWe anticipate tariff costs of around $600 million in the third quarter of 2026, which is similar to what was incurred in the third quarter of 2025. We expect about 50 percent of the tariff costs to be incurred in Construction Industries and 25 percent in both Power & Energy and Resource Industries.\n52\nTable of Contents\nIn the third quarter of 2026 as compared to the third quarter of 2025, we expect the profit impact of higher sales volume and favorable price realization to be partially offset by unfavorable manufacturing costs and higher selling, general and administrative (SG&A) and research and development (R&D) expenses.\nIn the third quarter of 2026 as compared to the third quarter of 2025, in Power & Energy, we anticipate the profit impact of higher sales volume and favorable price realization to be partially offset by unfavorable manufacturing costs and higher SG&A/R&D expenses. In Construction Industries, we anticipate favorable price realization and the profit impact of higher sales volume to be partially offset by unfavorable manufacturing costs and higher SG&A/R&D expenses. In Resource Industries, we anticipate the profit impact of higher sales volume and favorable price realization will be partially offset by unfavorable manufacturing costs and higher SG&A/R&D expenses.\nFull-Year 2026 Company Trends and Expectations\nWe now anticipate sales and revenues growth in the mid-to-high teens for 2026 as compared to 2025. We expect strong sales growth across each of our primary segments, mainly driven by higher sales volume and favorable price realization. Services revenues are also expected to grow in 2026 as compared to 2025. We expect higher sales and revenues in the second half of 2026 as compared to the first half of 2025 following the typical seasonable trend. We expect a more typical decrease in Construction Industries' dealer inventory of over $1.0 billion in the fourth quarter of 2026. We also expect Construction Industries' dealer inventory will be higher at year-end 2026 as compared to year-end 2025. As a result, we expect an unfavorable impact from changes in dealer inventories for Construction Industries' sales volume in the second half of 2026 as compared to the second half of 2025.\nExcluding the expected IEEPA tariff recoveries in the second quarter of 2026, we now expect 2026 tariff costs of around $2.2 billion. Our outlook does not include any additional IEEPA tariff recoveries in the second half of 2026.\nIn 2026 as compared to 2025, we expect the profit impact of higher sales volume and favorable price realization to be partially offset by unfavorable manufacturing costs and higher SG&A/R&D expenses.\nIn 2026, we continue to expect restructuring costs of approximately $300 to $350 million, and capital expenditures of approximately $3.5 billion. We anticipate our estimated annual effective tax rate to be 23.0 percent, excluding discrete items.\nGlobal Business Conditions\nWe continue to monitor a variety of external factors around the world, such as supply chain disruptions, inflationary cost, labor pressures and the impact of trade policies. Areas of particular focus include transportation, certain components and raw materials. We continue to work to minimize supply chain challenges that may impact our ability to meet customer demand. We continue to assess the environment to determine if additional actions need to be taken.\nOn February 20, 2026, the U.S. Supreme Court ruled that tariffs imposed under the IEEPA on goods imported into the United States were unauthorized. During 2025 and until CBP ceased collecting IEEPA tariffs in 2026, the company's total IEEPA tariff costs were approximately $1.0 billion.\nDuring the second quarter of 2026, CBP launched the CAPE system, which enabled the submission of certain IEEPA refund claims. For both the three and six months ended June 30, 2026, the company recorded $392 million of expected IEEPA tariff recoveries for claims submitted and accepted through the CAPE system. These recoveries were deemed probable and were recorded in Current assets: Receivables - trade and other within the Consolidated Statement of Financial Position and in Cost of goods sold within the Consolidated Statement of Results of Operations.\nThe company continues to assess the availability, timing and amounts of additional claim submissions for the remaining amounts paid under IEEPA, as these remain uncertain and were not deemed to be probable as of June 30, 2026.\nRisk Factors\nRisk factors are disclosed within Item 1A. Risk Factors of the 2025 Form 10-K.\nNotes:\nGlossary of terms is included on pages 65 - 67 ; first occurrence of terms shown in bold italics.\nInformation on non-GAAP financial measures is included on pages 71 - 73 .\nCertain amounts may not add due to rounding.\n53\nTable of Contents\nConsolidated Results of Operations\nTHREE MONTHS ENDED JUNE 30, 2026, COMPARED WITH THREE MONTHS ENDED JUNE 30, 2025\nCONSOLIDATED SALES AND REVENUES\nThe chart above graphically illustrates reasons for the change in consolidated sales and revenues between the second quarter of 2025 (at left) and the second quarter of 2026 (at right). Caterpillar management utilizes these charts internally to visually communicate with the company's board of directors and employees.\nTotal sales and revenues for the second quarter of 2026 were $20.543 billion, an increase of $3.974 billion, or 24 percent, compared with $16.569 billion in the second quarter of 2025. The increase was primarily due to higher sales volume of $3.1 billion and favorable price realization of $595 million. Higher sales volume was mainly driven by higher sales of equipment to end users.\nSales were higher across the three primary segments.\nNorth America sales increased 39 percent due to higher sales volume and favorable price realization. The increase in sales volume was mainly driven by higher sales of equipment to end users.\nSales increased 10 percent in Latin America primarily due to higher sales volume. The increase in sales volume was mainly driven by higher sales of equipment to end users.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000046/cat-20260630.htm",
+      "asOf": "2026-08-05",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "Item 1A. Risk Factors.\nThe statements in this section describe the most significant risks to our business and should be considered carefully in conjunction with Part II, Item 7 \"Management's Discussion and Analysis of Financial Condition and Results of Operations\" and the \"Notes to Consolidated Financial Statements\" of Part II, Item 8 \"Financial Statements and Supplementary Data\" to this Form 10-K. In addition, the statements in this section and other sections of this Form 10-K, including in Part II, Item 7 \"Management's Discussion and Analysis of Financial Condition and Results of Operations,\" include \"forward-looking statements\" as that term is defined in the Private Securities Litigation Reform Act of 1995 and involve uncertainties that could significantly impact results. Forward-looking statements give current expectations or forecasts of future events about the company or our outlook. You can identify forward-looking statements by the fact they do not relate to historical or current facts and by the use of words such as \"believe,\" \"expect,\" \"estimate,\" \"anticipate,\" \"will be,\" \"should,\" \"plan,\" \"forecast,\" \"target,\" \"guide,\" \"project,\" \"intend,\" \"could\" and similar words or expressions.\nForward-looking statements are based on assumptions and on known risks and uncertainties. Although we believe we have been prudent in our assumptions, any or all of our forward-looking statements may prove to be inaccurate, and we can make no guarantees about our future performance. Should known or unknown risks or uncertainties materialize or underlying assumptions prove inaccurate, actual results could materially differ from past results and/or those anticipated, estimated or projected.\n9\nTable of Contents\nWe undertake no obligation to publicly update forward-looking statements, whether as a result of new information, future events or otherwise. You should, however, consult any subsequent disclosures we make in our filings with the SEC on Form 10-Q or Form 8-K.\nThe following is a cautionary discussion of risks, uncertainties and assumptions that we believe are material to our business. In addition to the factors discussed elsewhere in this report, the following are some of the important factors that, individually or in the aggregate, we believe could make our actual results differ materially from those described in any forward-looking statements. It is impossible to predict or identify all such factors and, as a result, you should not consider the following factors to be a complete discussion of risks, uncertainties and assumptions.\nMACROECONOMIC RISKS\nOur business and the industries we serve are highly sensitive to global and regional economic conditions.\nOur results of operations are materially affected by economic conditions globally and regionally and in the particular industries we serve. The demand for our products and services tends to be cyclical and can be significantly reduced in periods of economic weakness characterized by lower levels of government and business investment, lower levels of business confidence, lower corporate earnings, high real interest rates, lower credit activity or tighter credit conditions, perceived or actual industry overcapacity, higher unemployment and lower consumer spending. A prolonged period of economic weakness may also result in increased expenses due to higher allowances for doubtful accounts and potential goodwill and asset impairment charges. Economic conditions vary across regions and countries, and demand for our products and services generally increases in those regions and countries experiencing economic growth and investment. Slower economic growth or a change in the global mix of regions and countries experiencing economic growth and investment could have an adverse effect on our business, results of operations and financial condition.\nThe energy, transportation, and mining industries are significant adopters of Caterpillar products. In these industries customers are likely to base their purchase decisions upon expected future commodity dynamics, including price. Commodity price volatility may be abrupt and unpredictable in response to global economic conditions, government actions, regulatory changes, supply/demand dynamics, innovation, and commodity substitutions among others. Economic conditions affecting the industries we serve may reduce capital expenditures in response to a variety of the aforementioned conditions. Reduction in these capital expenditures may lead to decreased demand for Caterpillar products and services as well as aftermarket parts as customers may choose to extend preventative maintenance and delay overhauls when possible.\nThe rates of infrastructure spending, commercial construction and housing starts also play a significant role in our results. Our products are an integral component of these activities, and as these activities decrease, demand for our products and services may be significantly impacted, which could negatively impact our results.\nCatastrophic events could materially adversely affect our business, results of operations and/or financial condition.\nThe occurrence of a major earthquake, fire, flood, tsunami or other weather event, power loss, telecommunications failure, software or hardware malfunctions, pandemics, cyber-attack, war, terrorist attack or other catastrophic event that our disaster recovery plans do not adequately address, could adversely affect our employees, our systems, our ability to produce and distribute our products, and our reputation. Pandemics can have a significant impact around the world, prompting governments and businesses to take unprecedented measures in response. Such measures could include travel bans and restrictions, quarantines, shelter in place orders and shutdowns. Those measures could impact all or portions of our workforce and operations and the operations of our customers, dealers and suppliers. Material and component shortages, logistics constraints and labor inefficiencies could limit our ability to meet customer demand, which could have a material adverse effect on our business, results of operations and/or financial condition.\nThese catastrophic events can significantly increase economic and customer demand uncertainty, cause inflationary pressure in the U.S. and elsewhere and lead to volatility in customer demand for the Company's products and services and cause supply chain disruptions. Economic uncertainties could affect customer demand for the Company's products and services, the value of the equipment financed or leased, the demand for financing and the financial condition and credit risk of our dealers and customers.\nA catastrophic event resulting in the destruction or disruption of our workforce, our systems, our ability to produce and distribute our products, any of our data centers or our critical business or information technology systems could adversely affect our ability to conduct normal business operations and our operating results or cash flows. The adverse effects of any such catastrophic event would be exacerbated if experienced at the same time as another unexpected and adverse event.\n10\nTable of Contents\nCommodity price changes, material price increases, fluctuations in demand for our products and services, significant disruptions to our supply chains or significant shortages of labor and material may adversely impact our financial results or our ability to meet commitments to customers.\nWe are a significant user of steel and many other commodities required for the manufacture of our products. Increases in the prices of such commodities would increase our costs, negatively impacting our business, results of operations and financial condition if we are unable to fully offset the effect of these increased costs through price increases, productivity improvements, cost reduction programs or hedging programs.\nWe rely on suppliers to produce or secure material required for the manufacture of our products.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000008/cat-20251231.htm",
+      "asOf": "2026-02-13",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-K",
+    "pressRelease": {
+      "text": "EX-99.1\n2\nex991toformcat2q2026earnin.htm\nEX-99.1\nDocument\nExhibit 99.1\nCaterpillar Inc.\n2Q 2026 Earnings Release\nFOR IMMEDIATE RELEASE\nCaterpillar Reports Second-Quarter 2026 Results\nSecond Quarter\n($ in billions except profit per share)\n2026\n2025\nSales and Revenues\n$20.5\n$16.6\nProfit Per Share\n$7.77\n$4.62\nAdjusted Profit Per Share\n$8.17\n$4.72\nPlease see a reconciliation of GAAP to non-GAAP financial measures in the appendix on pages 12 and 13.\nSecond-quarter 2026 sales and revenues increased 24% to $20.5 billion\nSecond-quarter 2026 profit per share of $7.77 adjusted profit per share of $8.17\nDeployed $2.2 billion of cash for share repurchases and dividends in the second quarter\nIRVING, Texas, Aug. 4, 2026 Caterpillar Inc. (NYSE CAT) announced second-quarter 2026 results.\n\"This is the first time in company history that we have generated over $20 billion in sales and revenues in a single quarter,\" said Caterpillar Chairman and CEO Joe Creed. \"This milestone underscores both the essential work our customers do every day and the dedication of Caterpillar employees worldwide to solving our customers' toughest challenges. Strong order rates and a growing backlog reflect broadening momentum across all three of our primary segments.\"\nSales and revenues for the second quarter of 2026 were $20.5 billion, a 24% increase compared with $16.6 billion in the second quarter of 2025. The increase was primarily due to higher sales volume of $3.1 billion and favorable price realization of $595 million.\nOperating profit margin was 20.9% for the second quarter of 2026, compared with 17.3% for the second quarter of 2025. Adjusted operating profit margin was 21.9% for the second quarter of 2026, compared with 17.6% for the second quarter of 2025. Second-quarter 2026 profit per share was $7.77, compared with second-quarter 2025 profit per share of $4.62. Adjusted profit per share in the second quarter of 2026 was $8.17, compared with second-quarter 2025 adjusted profit per share of $4.72. For the second quarter of 2026 and 2025, adjusted operating profit margin and adjusted profit per share excluded restructuring costs.\nFor the second quarter of 2026, enterprise operating cash flow was $4.4 billion, and the company ended the second quarter with $6.7 billion of enterprise cash. In the quarter, the company deployed $1.5 billion of cash for repurchases of Caterpillar common stock and $0.7 billion of cash for dividends.\n(more)\n2\nCONSOLIDATED RESULTS\nConsolidated Sales and Revenues\nThe chart above graphically illustrates reasons for the change in consolidated sales and revenues between the second quarter of 2025 (at left) and the second quarter of 2026 (at right). Caterpillar management utilizes these charts internally to visually communicate with the company's board of directors and employees.\nTotal sales and revenues for the second quarter of 2026 were $20.543 billion, an increase of $3.974 billion, or 24%, compared with $16.569 billion in the second quarter of 2025. The increase was primarily due to higher sales volume of $3.1 billion and favorable price realization of $595 million. Higher sales volume was mainly driven by higher sales of equipment to end users.\nSales were higher across the three primary segments.\nSales and Revenues by Segment\n(Millions of dollars)\nSecond Quarter 2025\nSales\nVolume\nPrice\nRealization\nCurrency\nInter-Segment Other\nSecond Quarter 2026\n$\nChange\n%\nChange\nPower Energy\n$\n7,037\n$\n736\n$\n212\n$\n53\n$\n200\n$\n8,238\n$\n1,201\n17%\nConstruction Industries\n6,190\n1,755\n309\n74\n18\n8,346\n2,156\n35%\nResource Industries\n3,886\n639\n75\n65\n(17)\n4,648\n762\n20%\nAll Other Segment\n85\n1\n1\n(3)\n84\n(1)\n(1%)\nCorporate Items and Eliminations\n(1,524)\n(18)\n(2)\n7\n(198)\n(1,735)\n(211)\nMachinery, Power Energy\n15,674\n3,113\n595\n199\n19,581\n3,907\n25%\nFinancial Products Segment\n1,042\n103\n1,145\n103\n10%\nCorporate Items and Eliminations\n(147)\n(36)\n(183)\n(36)\nFinancial Products Revenues\n895\n67\n962\n67\n7%\nConsolidated Sales and Revenues\n$\n16,569\n$\n3,113\n$\n595\n$\n199\n$\n67\n$\n20,543\n$\n3,974\n24%\n(more)\n3\nSales and Revenues by Geographic Region\nNorth America\nLatin America\nEAME\nAsia Pacific\nExternal Sales and Revenues\nInter-Segment\nTotal Sales and Revenues\n(Millions of dollars)\n$\n% Chg\n$\n% Chg\n$\n% Chg\n$\n% Chg\n$\n% Chg\n$\n% Chg\n$\n% Chg\nSecond Quarter 2026\nPower Energy\n$\n4,182\n30%\n$\n373\n(16%)\n$\n1,348\n3%\n$\n892\n9%\n$\n6,795\n17%\n$\n1,443\n16%\n$\n8,238\n17%\nConstruction Industries\n5,065\n50%\n676\n25%\n1,456\n23%\n1,064\n3%\n8,261\n35%\n85\n27%\n8,346\n35%\nResource Industries\n2,230\n34%\n671\n13%\n713\n22%\n954\n1%\n4,568\n21%\n80\n(18%)\n4,648\n20%\nAll Other Segment\n9\n50%\n1\n%\n2\n100%\n3\n(50%)\n15\n15%\n69\n(4%)\n84\n(1%)\nCorporate Items and Eliminations\n(51)\n1\n(1)\n(7)\n(58)\n(1,677)\n(1,735)\nMachinery, Power Energy\n11,435\n39%\n1,722\n10%\n3,518\n15%\n2,906\n4%\n19,581\n25%\n%\n19,581\n25%\nFinancial Products Segment\n765\n9%\n122\n16%\n137\n9%\n121\n12%\n1,145\n10%\n%\n1,145\n10%\nCorporate Items and Eliminations\n(106)\n(23)\n(30)\n(24)\n(183)\n(183)\nFinancial Products Revenues\n659\n7%\n99\n16%\n107\n(1%)\n97\n11%\n962\n7%\n%\n962\n7%\nConsolidated Sales and Revenues\n$\n12,094\n37%\n$\n1,821\n10%\n$\n3,625\n14%\n$\n3,003\n4%\n$\n20,543\n24%\n$\n%\n$\n20,543\n24%\nSecond Quarter 2025\nPower Energy\n$\n3,225\n$\n442\n$\n1,306\n$\n821\n$\n5,794\n$\n1,243\n$\n7,037\nConstruction Industries\n3,369\n540\n1,185\n1,029\n6,123\n67\n6,190\nResource Industries\n1,668\n592\n584\n945\n3,789\n97\n3,886\nAll Other Segment\n6\n1\n6\n13\n72\n85\nCorporate Items and Eliminations\n(32)\n(3)\n(4)\n(6)\n(45)\n(1,479)\n(1,524)\nMachinery, Power Energy\n8,236\n1,571\n3,072\n2,795\n15,674\n15,674\nFinancial Products Segment\n703\n105\n126\n108\n1,042\n1,042\nCorporate Items and Eliminations\n(88)\n(20)\n(18)\n(21)\n(147)\n(147)\nFinancial Products Revenues\n615\n85\n108\n87\n895\n895\nConsolidated Sales and Revenues\n$\n8,851\n$\n1,656\n$\n3,180\n$\n2,882\n$\n16,569\n$\n$\n16,569\n(more)\n4\nConsolidated Operating Profit\nThe chart above graphically illustrates reasons for the change in consolidated operating profit between the second quarter of 2025 (at left) and the second quarter of 2026 (at right). Caterpillar management utilizes these charts internally to visually communicate with the company's board of directors and employe es. The bar titled Other includes consolidating adjustments and Machinery, Power Energy's other operating (income) expenses.\nOperating profit for the second quarter of 2026 was $4.295 billion, an increase of $1.435 billion, or 50%, compared with $2.860 billion in the second quarter of 2025. The increase was primarily due to the profit impact of higher sales volume.\nOperating profit in the second quarter of 2026 included $392 million of expected International Emergency Economic Power Act (IEEPA) tariff recoveries.\nProfit (Loss) by Segment\n(Millions of dollars)\nSecond Quarter 2026\nSecond Quarter 2025\n$\nChange\n%\nChange\nPower Energy\n$\n2,027\n$\n1,554\n$\n473\n30\n%\nConstruction Industries\n1,947\n1,244\n703\n57\n%\nResource Industries\n693\n563\n130\n23\n%\nAll Other Segment\n%\nCorporate Items and Eliminations\n(453)\n(566)\n113\nMachinery, Power Energy\n4,214\n2,795\n1,419\n51\n%\nFinancial Products Segment\n328\n248\n80\n32\n%\nCorporate Items and Eliminations\n(65)\n(36)\n(29)\nFinancial Products\n263\n212\n51\n24\n%\nConsolidating Adjustments\n(182)\n(147)\n(35)\nConsolidated Operating Profit\n$\n4,295\n$\n2,860\n$\n1,435\n50\n%\n(more)\n5\nOther Profit Loss and Tax Items\nOther income (expense) in the second quarter of 2026 was income of $398 million, compared with income of $84 million in the second quarter of 2025. The change was primarily driven by favorable impacts from foreign currency, total return swap contracts and investment and interest income.\nThe effective tax rate for the second quarter of 2026 was 23.1% compared to 23.0% for the second quarter of 2025. Excluding the discrete items discussed below, the global estimated annual effective tax rate was 23.0% for the second quarters of 2026 and 2025.\nA discrete tax benefit of $26 million was recorded in the second quarter of 2026, compared with a $1 million benefit in the second quarter of 2025, for the settlement of stock-based compensation awards with associated tax deductions in excess of cumulative U.S. GAAP compensation expense.\nIn addition, the global estimated annual effective tax rate in the second quarter of 2026 excluded the impact of second quarter losses of $139 million for the divestiture of certain non-U.S. entities with no related tax benefit.\nPlease see a reconciliation of GAAP to non-GAAP financial measures in the appendix on pages 12 and 13.\n(more)\n6\nPOWER ENERGY\n(Millions of dollars)\nSegment Sales\nSecond Quarter 2025\nSales Volume\nPrice Realization\nCurrency\nInter-Segment\nSecond Quarter 2026\n$\nChange\n%\nChange\nTotal Sales\n$\n7,037\n$\n736\n$\n212\n$\n53\n$\n200\n$\n8,238\n$\n1,201\n17\n%\nSales by Application\nSecond Quarter 2026\nSecond Quarter 2025\n$\nChange\n%\nChange\nPower Generation\n$\n3,098\n$\n2,407\n$\n691\n29\n%\nOil and Gas\n2,044\n1,867\n177\n9\n%\nIndustrial\n1,653\n1,520\n133\n9\n%\nExternal Sales\n6,795\n5,794\n1,001\n17\n%\nInter-segment\n1,443\n1,243\n200\n16\n%\nTotal Sales\n$\n8,238\n$\n7,037\n$\n1,201\n17\n%\nSegment Profit\nSecond Quarter 2026\nSecond Quarter 2025\nChange\n%\nChange\nSegment Profit\n$\n2,027\n$\n1,554\n$\n473\n30\n%\nSegment Profit Margin\n24.6\n%\n22.1\n%\n2.5\npts\nPower Energy's total sales were $8.238 billion in the second quarter of 2026, an increase of $1.201 billion, or 17%, compared with $7.037 billion in the second quarter of 2025. The increase was primarily due to higher sales volume of $736 million, favorable price realization of $212 million and higher inter-segment sales of $200 million.\nPower Generation Sales increased in large reciprocating engines and in turbines and turbine-related services, primarily in data center applications.\nOil and Gas Sales increased in reciprocating engines used in gas compression applications and in reciprocating engine aftermarket parts, partially offset by lower sales of reciprocating engines used in well servicing applications. Sales also increased in turbines and turbine-related services.\nIndustrial Sales increased primarily in North America and EAME.\nPower Energy's segment profit was $2.027 billion in the second quarter of 2026, an increase of $473 million, or 30%, compared with $1.554 billion in the second quarter of 2025. The increase was mainly due to the profit impact of higher sales volume of $457 million and favorable price realization of $212 million, partially offset by unfavorable manufacturing costs of $149 million. Unfavorable manufacturing costs largely reflected increased period manufacturing costs.\n(more)\n7\nCONSTRUCTION INDUSTRIES\n(Millions of dollars)\nSegment Sales\nSecond Quarter 2025\nSales Volume\nPrice Realization\nCurrency\nInter-Segment\nSecond Quarter 2026\n$\nChange\n%\nChange\nTotal Sales\n$\n6,190\n$\n1,755\n$\n309\n$\n74\n$\n18\n$\n8,346\n$\n2,156\n35\n%\nSales by Geographic Region\nSecond Quarter 2026\nSecond Quarter 2025\n$\nChange\n%\nChange\nNorth America\n$\n5,065\n$\n3,369\n$\n1,696\n50\n%\nLatin America\n676\n540\n136\n25\n%\nEAME\n1,456\n1,185\n271\n23\n%\nAsia Pacific\n1,064\n1,029\n35\n3\n%\nExternal Sales\n8,261\n6,123\n2,138\n35\n%\nInter-segment\n85\n67\n18\n27\n%\nTotal Sales\n$\n8,346\n$\n6,190\n$\n2,156\n35\n%\nSegment Profit\nSecond Quarter 2026\nSecond Quarter 2025\nChange\n%\nChange\nSegment Profit\n$\n1,947\n$\n1,244\n$\n703\n57\n%\nSegment Profit Margin\n23.3\n%\n20.1\n%\n3.2\npts\nConstruction Industries' total sales were $8.346 billion in the second quarter of 2026, an increase of $2.156 billion, or 35%, compared with $6.190 billion in the second quarter of 2025. The increase in sales was mainly due to higher sales volume of $1.8 billion and favorable price realization of $309 million. Higher sales volume was primarily driven by higher sales of equipment to end users.\nIn North America, sales increased primarily due to higher sales volume and favorable price realization. Higher sales volume was mainly driven by higher sales of equipment to end users and by the impact from changes in dealer inventories.\nSales increased in Latin America mainly due to higher sales volume and favorable currency impacts primarily related to the Brazilian real. Higher sales volume was mainly driven by higher sales of equipment to end users.\nIn EAME, sales increased primarily due to higher sales volume and favorable currency impacts mainly related to the euro. Higher sales volume was primarily driven by higher sales of equipment to end users.\nSales increased in Asia Pacific mainly due to higher sales volume. Higher sales volume was primarily driven by higher sales of equipment to end users.\nConstruction Industries' segment profit was $1.947 billion in the second quarter of 2026, an increase of $703 million, or 57%, compared with $1.244 billion in the second quarter of 2025. The increase was primarily due to the profit impact of higher sales volume.\n(more)\n8\nRESOURCE INDUSTRIES\n(Millions of dollars)\nSegment Sales\nSecond Quarter 2025\nSales Volume\nPrice Realization\nCurrency\nInter-Segment\nSecond Quarter 2026\n$\nChange\n%\nChange\nTotal Sales\n$\n3,886\n$\n639\n$\n75\n$\n65\n$\n(17)\n$\n4,648\n$\n762\n20\n%\nSales by Industry\nSecond Quarter 2026\nSecond Quarter 2025\n$\nChange\n%\nChange\nMining, HC and Q A*\n$\n3,685\n$\n3,024\n$\n661\n22\n%\nRail\n883\n765\n118\n15\n%\nExternal Sales\n4,568\n3,789\n779\n21\n%\nInter-segment\n80\n97\n(17)\n(18\n%)\nTotal Sales\n$\n4,648\n$\n3,886\n$\n762\n20\n%\n* Heavy Construction and Quarry Aggregates (HC and Q A)\nSegment Profit\nSecond Quarter 2026\nSecond Quarter 2025\nChange\n%\nChange\nSegment Profit\n$\n693\n$\n563\n$\n130\n23\n%\nSegment Profit Margin\n14.9\n%\n14.5\n%\n0.4\npts\nResource Industries' total sales were $4.648 billion in the second quarter of 2026, an increase of $762 million, or 20%, compared with $3.886 billion in the second quarter of 2025. The increase was primarily due to higher sales volume. Higher sales volume was primarily driven by higher sales of equipment to end users.\nMining, Heavy Construction and Quarry Aggregates Sales increased primarily due to higher sales of equipment to end users.\nRail Sales increased due to higher international locomotive deliveries. Sales also increased in rail services.\nResource Industries' segment profit was $693 million in the second quarter of 2026, an increase of $130 million, or 23%, compared with $563 million in the second quarter of 2025. The increase was mainly due to the profit impact of higher sales volume of $269 million, partially offset by unfavorable manufacturing costs of $158 million. Unfavorable manufacturing costs primarily reflected increased period manufacturing costs.\n(more)\n9\nFINANCIAL PRODUCTS SEGMENT\n(Millions of dollars)\nRevenues by Geographic Region\nSecond Quarter 2026\nSecond Quarter 2025\n$\nChange\n%\nChange\nNorth America\n$\n765\n$\n703\n$\n62\n9\n%\nLatin America\n122\n105\n17\n16\n%\nEAME\n137\n126\n11\n9\n%\nAsia Pacific\n121\n108\n13\n12\n%\nTotal Revenues\n$\n1,145\n$\n1,042\n$\n103\n10\n%\nSegment Profit\nSecond Quarter 2026\nSecond Quarter 2025\nChange\n%\nChange\nSegment Profit\n$\n328\n$\n248\n$\n80\n32\n%\nFinancial Products' segment revenues were $1.145 billion in the second quarter of 2026, an increase of $103 million, or 10%, compared with $1.042 billion in the second quarter of 2025. The increase was primarily due to a favorable impact from higher average earning assets across all regions.\nFinancial Products' segment profit was $328 million in the second quarter of 2026, an increase of $80 million, or 32%, compared with $248 million in the second quarter of 2025. The increase was mainly due to favorable impacts from higher average earning assets of $44 million, equity securities at Insurance Services of $22 million and higher margins at Insurance Services of $21 million, partially offset by higher provision for credit losses at Cat Financial of $22 million.\nAt the end of the second quarter of 2026, past dues at Cat Financial were 1.31%, compared with 1.62% at the end of the second quarter of 2025. Write-offs, net of recoveries, were $20 million for the second quarter of 2026 compared with $18 million for the second quarter of 2025. As of June 30, 2026, Cat Financial's allowance for credit losses totaled $294 million, or 0.84% of finance receivables, compared with $283 million, or 0.86% of finance receivables at March 31, 2026.",
+      "source": "edgar:8-K ex-99.1",
+      "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000040/ex991toformcat2q2026earnin.htm",
+      "asOf": "2026-08-04",
+      "truncated": true
+    },
+    "proxyStatement": {
+      "text": "Board and director independence:\nDIRECTOR INDEPENDENCE DETERMINATIONS\nThe\ncompany's Guidelines on Corporate Governance Issues establish that no more than two non-independent directors may serve\non the board at any point in time. A director is \"independent\" if he or she has no direct or indirect material\nrelationship with the company or with senior management of the company and their respective affiliates. Annually, the board\nmakes an affirmative determination regarding the independence of each director based upon the recommendation of the NGC and\nin accordance with the standards in the company's Guidelines on Corporate Governance Issues, which are available on our\nwebsite at www.caterpillar.com/governance .\nApplying these standards, the board\ndetermined that each director who served on the board in 2025 and each of the director nominees met the independence standards, except\nMr. Umpleby and Mr. Creed.\nCOMMUNICATION WITH THE BOARD\nShareholders, employees and all\nother interested parties may communicate with any of our directors individually, our board as a group, our independent directors as a\ngroup or any board committee as a group by email or regular mail:\nBY\nEMAIL\nsend an\nemail to\ndirectors@cat.com\nBY\nMAIL\nmail to\nCaterpillar Inc.\nc/o Corporate Secretary\n5205 N. O'Connor Boulevard, Suite 100, Irving, TX 75039\nTable of Contents\nProxy Statement 2026\n35\nDIRECTORS & GOVERNANCE\nCONTACTING CATERPILLAR\nWhile the board oversees management,\nit does not participate in day-to-day management functions or business operations. If you wish to submit questions or comments relating\nto these matters, please use the Contact Us form on our website at www.caterpillar.com/contact , which will help direct your message\nto the appropriate area of our company.\nAll communications regarding personal\ngrievances, administrative matters, the conduct of the company's ordinary business operations, billing issues, product or service-related\ninquiries, order requests and similar issues will be directed to the appropriate individual within the company. The chairman of the board\nhas instructed the corporate secretary to consult with him if she is unsure who should receive the communication.\nINVESTOR OUTREACH\nWe conduct an annual governance\nreview and shareholder outreach throughout the year to ensure management and the board understand and consider the issues that matter\nmost to our shareholders and reflect the insights and perspectives of our many stakeholders. We greatly value our relationships with our\nshareholders and hearing their feedback directly. The governance engagements summarized below are in addition to the regular discussions\nthat our senior leadership and Investor Relations teams have with many institutional and retail shareholders which may also include governance,\nsustainability and similar matters.\n\nRelated-person transactions:\nRELATED PARTY TRANSACTIONS\nCaterpillar has a written policy\ngoverning the approval of transactions with the company that are expected to exceed $120,000 in any calendar year in which any director,\nexecutive officer or their immediate family members will have a direct or indirect material interest. Under the policy, all such transactions\nmust be approved in advance by the NGC.\nThe director or officer must submit\nthe details of the transaction to the company's chief legal officer & general counsel and the corporate secretary, including\nwhether the related person or his or her immediate family member has or will have a direct or indirect interest (other than solely as\na result of being a director or a less than 10% beneficial owner of an entity involved in the transaction). The chief legal officer &\ngeneral counsel and the corporate secretary will then submit the matter to the NGC for its consideration.\nFrom time to time, related persons\nof Caterpillar may purchase products or services of the company and its subsidiaries. In connection with these purchases, Caterpillar\nmay provide marketing support directly or indirectly through independent dealers, consistent with sales under similar circumstances to\nunaffiliated third parties.\nIn February 2025, Mr. Creed's\nbrother-in-law's employment with the company ceased and he received $183,089 pursuant to a separation agreement.\nMr. Jason Kaiser's brother-in-law\nis employed by the company as a manager product support and, consistent with the company's compensation policies applicable to other employees\nof similar title and responsibility, earned aggregate annual compensation of approximately $210,000 for fiscal year 2025.",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/18230/000130817926000358/cat014496-def14a.htm",
+      "asOf": "2026-04-30",
+      "truncated": true
+    },
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T01:40:16.952Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T01:40:16.952Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T01:40:16.952Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T01:40:16.952Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T01:40:16.952Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T01:40:16.952Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T01:40:16.952Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T01:40:16.952Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T01:40:16.952Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T01:40:16.952Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T01:40:16.952Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T01:40:16.952Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-24T01:40:16.952Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-24T01:40:16.952Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-24T01:40:16.952Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-09-24T01:40:16.952Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-09-24T01:40:16.952Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-09-24T01:40:16.952Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T01:40:16.952Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T01:40:16.952Z"
+    }
+  ]
+}

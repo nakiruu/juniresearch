@@ -14,7 +14,16 @@ if (!tickerArg || !accession) { console.error("usage: npm run facts:free -- <TIC
 const ticker = tickerArg.toUpperCase();
 const contact = requireContact();
 
-const { cik } = await resolveCik(ticker, contact);
+// Prefer the curated watchlist CIK over SEC's ticker map. After a corporate
+// reorganization the ticker map can point at a brand-new holding-company CIK whose
+// companyfacts history is empty (e.g. XOM → "ExxonMobil Holdings Corp" CIK 2115436 in
+// mid-2026), while the operating company's full XBRL history — and the cross-filed
+// current 10-Q — still sit under the legacy CIK (34088). facts:prepare and the pack's
+// downstream enrich already key off the watchlist CIK; align facts:free with them so a
+// single curated watchlist entry fixes the whole pipeline. resolveCik stays the fallback
+// for a ticker not (yet) on the watchlist.
+const watch = (JSON.parse(readFileSync("data/edgar/watchlist.json", "utf8")) as { ticker: string; cik: number }[]).find((w) => w.ticker === ticker);
+const cik = watch?.cik ?? (await resolveCik(ticker, contact)).cik;
 
 let sec: ReturnType<typeof parseCompanyFacts>;
 try {

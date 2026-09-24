@@ -1,0 +1,69 @@
+{
+  "judgmentSha256": "26c03df09c150fc50eac55a4efc8e41ab6fe57bf3de8d8beee7e464b1f1a7bf1",
+  "reviewedAt": "2026-09-24T02:40:00Z",
+  "reviewer": "Claude Opus 4.8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "analystCommentary",
+      "quote": "Our BUY reflects a reward that modestly outweighs the risk, not a conviction that the multiple re-rates from here.",
+      "issue": "The prose asserts the reward outweighs the risk, but the page's own conviction math renders reward/risk R = 0.99x (expected upside +17.5% vs bear downside 17.8%), i.e. reward is marginally BELOW risk, not above it. The claim recurs in three places: analystCommentary here; sections.valuation.scenarioCommentary ('The reward modestly outweighs the downside, which supports a BUY'); and sections.finalRecommendation.body[2] ('Net, the reward modestly outweighs the risk'). A reader comparing the rendered 0.99x reward/risk to 'reward outweighs risk' sees a contradiction.",
+      "fix": "Reword to match the rendered R (0.99x): the reward roughly balances the risk, with a positive probability-weighted expected value (~+17.5%) that still supports BUY. Apply the same correction in scenarioCommentary and finalRecommendation.body[2]. The BUY rating itself is validly derived (E >= +10%, R >= 0.5x); only the 'outweighs' characterisation needs fixing.",
+      "status": "addressed",
+      "note": "Fixed in all three loci. analystCommentary now reads 'with reward/risk near 0.99x the reward roughly balances the risk'; scenarioCommentary 'a reward/risk near 0.99x, so the reward roughly balances the risk'; finalRecommendation.body[2] 'the reward roughly balances the risk — reward/risk near 0.99x on a positive expected value'. Consistent with the rendered R (E=+17.5%, D=17.8%, R=0.99x)."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.businessMoat.segments[0].body",
+      "quote": "Amazon reports a single consolidated business, but the Q2'26 press release breaks out operating income by segment and shows where the profit sits.",
+      "issue": "'Amazon reports a single consolidated business' contradicts the report's own companyOverview ('The company reports three segments: North America, International, and Amazon Web Services (AWS)') and the press release, which reports three segments with sales and operating income for each. The 'single reportable segment' framing comes from the vendor's segment note (a data limitation), not from how Amazon actually reports. The report uses both characterisations in different sections without flagging the disagreement.",
+      "fix": "Reframe: the vendor supplies no revenue split, but Amazon reports three segments (North America, International, AWS), and the Q2'26 press release breaks them out — quote the AWS/NA/International figures as the actual segment disclosure. Do not state that Amazon reports a single consolidated business.",
+      "status": "addressed",
+      "note": "Reframed to 'The vendor's data feed supplies no revenue split, so this pack carries one consolidated line, but Amazon reports three segments — North America, International, and Amazon Web Services (AWS) — and the Q2'26 press release breaks them out', then quotes AWS $16.6B/$42.2B/+37%, NA $9.1B/$116.2B/+16%, International $1.7B/+15%. The 'single consolidated business' assertion is gone and the disagreement is flagged."
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.growth.points",
+      "quote": "The AI and chips businesses each exceeded a $25 billion annualized run rate with triple-digit percentage growth, and Trainium commitments from Anthropic and OpenAI convert that demand into multi-year backlog.",
+      "issue": "The growth section is a near 1:1 restatement of the executive-summary catalysts rather than the argument behind them. All four catalysts reappear as growth points with the same figures: catalysts[0]/growth[0] (AWS $169B run rate), catalysts[1]/growth[1] (AI+chips $25B run rate, Trainium/Anthropic/OpenAI), catalysts[2]/growth[2] (advertising 26%), catalysts[3]/growth[4] (Q3'26 OI $22.5B-$26.5B vs $17.4B). Catalysts should point; the growth section should add mechanism, magnitude and what-to-watch, and name the reading that cuts the other way — it does neither.",
+      "fix": "Keep the exec-summary catalysts as short pointers and rebuild growth.points to argue: for each lever add the mechanism, the base-rate/what-to-watch, and a counter-sentence (e.g. AWS growth is the swing factor and could normalise) so the section is not a duplicate.",
+      "status": "addressed",
+      "note": "growth.points rebuilt to argue rather than restate: each lever now carries a mechanism plus a counter-case/what-to-watch (AWS swing factor and quarterly growth rate to watch; silicon execution risk on capacity; advertising ad-load/privacy watch), and two new grounded points were added (retail volume NA +16%/Intl +15% with margin risk; Q3'26 revenue $197.0-202.0B implying 9-12% deceleration with Prime Day/FX). Not a duplicate of the pointers. New figures verified against the press release."
+    },
+    {
+      "id": "F-4",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[1]",
+      "quote": "Reported earnings quality is uneven. Q2'26 net income of $62.6 billion included $53.4 billion of non-operating pre-tax other income, primarily from the Anthropic investment; the FY26 consensus EPS of $12.88 exceeds FY27's $10.48 largely because of that gain, so headline profitability overstates the operating run rate.",
+      "issue": "The $62.6B net income / $53.4B non-operating Anthropic-gain fact and its 'headline overstates operating earnings' conclusion are repeated near-verbatim across four places: executiveSummary.risks[3], financials.incomeCommentary, this idiosyncratic risk, and (for the FY26 $12.88 vs FY27 $10.48 'inflated by the gain' point) valuation.multiplesCommentary. This is paraphrase repetition — the same claim made in different words in multiple sections.",
+      "fix": "Introduce the $53.4B gain and its EPS distortion once (idiosyncratic risk is the natural home), refer back in words elsewhere. The exec-summary risk should point only; incomeCommentary can note the flattered net income without re-arguing the FY26/FY27 EPS point already made in multiplesCommentary.",
+      "status": "addressed",
+      "note": "De-duplicated. The $53.4B gain and the FY26 $12.88 vs FY27 $10.48 EPS distortion now appear once, in risks.idiosyncratic[1]. executiveSummary.risks[3] points only ('detailed under risks'); financials.incomeCommentary notes the flattered net income without figures or the EPS re-argument; valuation.multiplesCommentary refers back ('lifted by a one-time non-operating gain detailed under risks')."
+    },
+    {
+      "id": "F-5",
+      "severity": "Minor",
+      "field": "sections.growth.points[2]",
+      "quote": "Advertising grew 26% year over year in Q2'26, a high-margin stream that scales with retail and Prime Video traffic and carries margins well above the retail base.",
+      "issue": "'carries margins well above the retail base' is a comparative margin claim with no supporting figure on the grounding surface — Amazon does not disclose advertising-segment margin in the pack. (AWS's high margin, by contrast, is computable from the press release: $16.6B op income on $42.2B sales.) The same unsupported 'high-margin' characterisation of advertising recurs in thesis, catalysts[2] and moatFactors[3].",
+      "fix": "Keep the grounded 26% growth figure; drop or attribute the margin comparison (e.g. 'advertising, an industry-typically high-margin business') rather than asserting margins 'well above the retail base' without a figure.",
+      "status": "addressed",
+      "note": "The comparative 'well above the retail base' is removed everywhere. growth.points[2] now reads 'a second high-margin engine typical of the industry' and moatFactors[3] 'an industry-typically high-margin stream', matching the suggested fix; the grounded 26% growth figure is retained."
+    },
+    {
+      "id": "F-6",
+      "severity": "Minor",
+      "field": "sections.management.governance",
+      "quote": "The board is majority independent: the proxy names Gen. Alexander, Ms. Cooper, Ms. Gorelick, Dr. Huttenlocher, Dr. Ng, Mrs. Nooyi, Mr. Rubinstein, Mr. Smith, Ms. Stonesifer, and Mr. Weeks as independent under Nasdaq rules",
+      "issue": "'majority independent' is an inference the proxy excerpt invites but does not make: it names ten independent directors but does not state the total board size, so the majority cannot be confirmed from the surface.",
+      "fix": "State what the surface supports — 'the proxy names ten directors as independent under Nasdaq rules' — without asserting a majority, or note the total board count is not given in the captured excerpt.",
+      "status": "addressed",
+      "note": "The 'majority independent' inference is removed. Governance now names the ten independents and adds 'the captured excerpt does not give the total board size, so we note the named independents rather than infer a majority', exactly as the fix directed."
+    }
+  ]
+}
