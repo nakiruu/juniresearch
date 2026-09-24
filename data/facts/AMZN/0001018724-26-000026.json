@@ -1,0 +1,597 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "AMZN",
+  "cik": 1018724,
+  "company": "Amazon.com, Inc.",
+  "exchange": "NASDAQGS",
+  "sic": 5961,
+  "sicDescription": "Retail-Catalog & Mail-Order Houses",
+  "goodwill": [
+    15371000000,
+    20288000000,
+    22789000000,
+    23074000000,
+    23273000000
+  ],
+  "filing": {
+    "form": "10-Q",
+    "accession": "0001018724-26-000026",
+    "filedDate": "2026-07-31",
+    "periodEnd": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm"
+  },
+  "capturedAt": "2026-09-24T01:43:10.480Z",
+  "quote": {
+    "price": 249.27,
+    "marketCap": 2688704315392,
+    "sharesOutstanding": 10786313296.393469,
+    "sharesSource": "derived",
+    "week52Low": 196,
+    "week52High": 287.2,
+    "dividendYield": 0,
+    "asOf": "2026-09-24"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          469822000000,
+          513983000000,
+          574785000000,
+          637959000000,
+          716924000000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          197478000000,
+          225152000000,
+          270046000000,
+          311671000000,
+          360510000000
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          24879000000,
+          12248000000,
+          36852000000,
+          68593000000,
+          79975000000
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          59312000000,
+          54169000000,
+          85515000000,
+          121388000000,
+          145731000000
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          33364000000,
+          -2722000000,
+          30425000000,
+          59248000000,
+          77670000000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          3.24,
+          -0.27,
+          2.9,
+          5.53,
+          7.17
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          96049000000,
+          70026000000,
+          86780000000,
+          101202000000,
+          123029000000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          50235000000,
+          70149000000,
+          66955000000,
+          57791000000,
+          68851000000
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          14015000000,
+          16261000000,
+          -6432000000,
+          -20988000000,
+          -17959000000
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          138245000000,
+          146043000000,
+          201875000000,
+          285970000000,
+          411065000000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          1.1357597739445826,
+          0.9446435811136924,
+          1.0450772206625152,
+          1.063734806137178,
+          1.0508153482718285
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          46327000000,
+          46752000000,
+          84946000000,
+          115877000000,
+          139514000000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -61053000000,
+          -63645000000,
+          -52729000000,
+          -82999000000,
+          -131819000000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          0,
+          -6000000000,
+          0,
+          0,
+          null
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          -14726000000,
+          -16893000000,
+          32217000000,
+          32878000000,
+          7695000000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q2'26",
+    "periodEnd": "2026-06-30",
+    "revenue": 200606000000,
+    "operatingMargin": 0.1368902226254449,
+    "revenueYoY": 0.19620517346245125
+  },
+  "ttm": {
+    "pe": 20.053901850362028,
+    "ps": 3.466254532013201,
+    "evToEbitda": 16.239463835559345,
+    "grossMargin": 0.5076964727722773,
+    "operatingMargin": 0.12081270627062707,
+    "netMargin": 0.1744031043729373,
+    "netDebtToEbitda": 0.32168229610684856,
+    "interestCoverage": 28.13329330531372,
+    "currentRatio": 1.0331158765552857,
+    "fcfYield": -0.004323643895481728
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 828283165220,
+      "eps": 12.87793
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 947791141040,
+      "eps": 10.48489
+    }
+  },
+  "analysts": {
+    "count": 59,
+    "buy": 57,
+    "hold": 2,
+    "sell": 0,
+    "consensusRating": "Strong Buy",
+    "consensusTarget": 329.28864,
+    "medianTarget": 328,
+    "highTarget": 405,
+    "lowTarget": 230,
+    "asOf": "2026-09-24"
+  },
+  "segments": {
+    "basis": "FY25 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 716924000000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "BABA",
+      "pe": 26.255926,
+      "ps": 0.26363376,
+      "evToEbitda": 2.053
+    },
+    {
+      "ticker": "CASY",
+      "pe": 28.175,
+      "ps": 1.1823205,
+      "evToEbitda": 15.625
+    },
+    {
+      "ticker": "ETSY",
+      "pe": 23.322783,
+      "ps": 2.2994137,
+      "evToEbitda": 18.517
+    },
+    {
+      "ticker": "GME",
+      "pe": 15.816995,
+      "ps": 3.438359,
+      "evToEbitda": 22.7
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-12",
+      "close": 267.2799987792969
+    },
+    {
+      "date": "2026-08-13",
+      "close": 265.1300048828125
+    },
+    {
+      "date": "2026-08-14",
+      "close": 262.6499938964844
+    },
+    {
+      "date": "2026-08-17",
+      "close": 261.30999755859375
+    },
+    {
+      "date": "2026-08-18",
+      "close": 259.45001220703125
+    },
+    {
+      "date": "2026-08-19",
+      "close": 265.8399963378906
+    },
+    {
+      "date": "2026-08-20",
+      "close": 260.1099853515625
+    },
+    {
+      "date": "2026-08-21",
+      "close": 258.6300048828125
+    },
+    {
+      "date": "2026-08-24",
+      "close": 262.07000732421875
+    },
+    {
+      "date": "2026-08-25",
+      "close": 261.05999755859375
+    },
+    {
+      "date": "2026-08-26",
+      "close": 260.2799987792969
+    },
+    {
+      "date": "2026-08-27",
+      "close": 256.260009765625
+    },
+    {
+      "date": "2026-08-28",
+      "close": 266.42999267578125
+    },
+    {
+      "date": "2026-08-31",
+      "close": 259.7699890136719
+    },
+    {
+      "date": "2026-09-01",
+      "close": 254.9199981689453
+    },
+    {
+      "date": "2026-09-02",
+      "close": 254.97999572753906
+    },
+    {
+      "date": "2026-09-03",
+      "close": 258.8999938964844
+    },
+    {
+      "date": "2026-09-04",
+      "close": 258.510009765625
+    },
+    {
+      "date": "2026-09-08",
+      "close": 256.9700012207031
+    },
+    {
+      "date": "2026-09-09",
+      "close": 252.39999389648438
+    },
+    {
+      "date": "2026-09-10",
+      "close": 251.88999938964844
+    },
+    {
+      "date": "2026-09-11",
+      "close": 256.7799987792969
+    },
+    {
+      "date": "2026-09-14",
+      "close": 253.5399932861328
+    },
+    {
+      "date": "2026-09-15",
+      "close": 248.4199981689453
+    },
+    {
+      "date": "2026-09-16",
+      "close": 245.9600067138672
+    },
+    {
+      "date": "2026-09-17",
+      "close": 251.19000244140625
+    },
+    {
+      "date": "2026-09-18",
+      "close": 253.7100067138672
+    },
+    {
+      "date": "2026-09-21",
+      "close": 258.45001220703125
+    },
+    {
+      "date": "2026-09-22",
+      "close": 254.97999572753906
+    },
+    {
+      "date": "2026-09-23",
+      "close": 249.27000427246094
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "Amazon.com, Inc. engages in the retail sale of consumer products, advertising, and subscriptions service through online and physical stores in North America and internationally. The company operates through three segments: North America, International, and Amazon Web Services (AWS). It also manufactures and sells electronic devices, including Kindle, fire tablets, fire TVs, echo, ring, blink, and eero; and develops and produces media content. In addition, the company offers programs that enable sellers to sell their products in its stores; and programs that allow authors, independent publishers, musicians, filmmakers, Twitch streamers, skill and app developers, and others to publish and sell content. Further, it provides compute, storage, Artificial intelligence, database, analytics, machine learning, and other services, as well as advertising services through programs, such as sponsored ads, display, and video advertising. Additionally, the company offers Amazon Prime, a membership program. The company's products offered through its stores include merchandise and content purchased for resale and products offered by third-party sellers. It serves consumers, sellers, developers, enterprises, content creators, advertisers, and employees. The company was incorporated in 1994 and is headquartered in Seattle, Washington.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-24"
+    },
+    "mdaExcerpt": {
+      "text": "Item 2.\nManagement's Discussion and Analysis of Financial Condition and Results of Operations\nForward-Looking Statements\nThis Quarterly Report on Form 10-Q includes forward-looking statements within the meaning of the Private Securities Litigation Reform Act of 1995. All statements other than statements of historical fact, including statements regarding guidance, industry prospects, or future results of operations or financial position, made in this Quarterly Report on Form 10-Q are forward-looking. We use words such as anticipates, believes, expects, future, intends, and similar expressions to identify forward-looking statements. Forward-looking statements reflect management's current expectations and are inherently uncertain. Actual results and outcomes could differ materially for a variety of reasons, including, among others, fluctuations in foreign exchange rates and energy prices, changes in global economic conditions, tariff and trade policies, resource and supply volatility, including for memory chips, and customer demand and spending, inflation, interest rates, regional labor market constraints, world events, the rate of growth of the internet, online commerce, cloud services, and new and emerging technologies, the amount that Amazon.com invests in new business opportunities and the timing of those investments, the mix of products and services sold to customers, the mix of net sales derived from products as compared with services, the extent to which we owe income or other taxes, competition, management of growth, potential fluctuations in operating results, international growth and expansion, the outcomes of claims, litigation, government investigations, and other proceedings, fulfillment, sortation, delivery, and data center optimization, risks of inventory management, variability in demand, the degree to which we enter into, maintain, and develop commercial agreements, proposed and completed acquisitions and strategic transactions, payments risks, and risks of fulfillment throughput and productivity. In addition, global economic and geopolitical conditions and additional or unforeseen circumstances, developments, or events may give rise to or amplify many of these risks. These risks and uncertainties, as well as other risks and uncertainties that could cause our actual results or outcomes to differ significantly from management's expectations, are described in greater detail in Item 1A of Part II, \"Risk Factors.\"\nFor additional information, see Item 7 of Part II, \"Management's Discussion and Analysis of Financial Condition and Results of Operations Overview\" of our 2025 Annual Report on Form 10-K.\nCritical Accounting Estimates\nThe preparation of financial statements in conformity with GAAP requires estimates and assumptions that affect the reported amounts of assets and liabilities, revenues and expenses, and related disclosures of contingent liabilities in the consolidated financial statements and accompanying notes. Critical accounting estimates are those estimates made in accordance with GAAP that involve a significant level of estimation uncertainty and have had or are reasonably likely to have a material impact on the financial condition or results of operations of the Company. Based on this definition, we have identified the critical accounting estimates addressed below. We also have other key accounting policies, which involve the use of estimates, judgments, and assumptions that are significant to understanding our results. For additional information, see Item 8 of Part II, \"Financial Statements and Supplementary Data Note 1 Description of Business, Accounting Policies, and Supplemental Disclosures\" of our 2025 Annual Report on Form 10-K and Item 1 of Part I, \"Financial Statements Note 1 Accounting Policies and Supplemental Disclosures,\" of this Form 10-Q. Although we believe that our estimates, assumptions, and judgments are reasonable, they are based upon information presently available. Actual results may differ significantly from these estimates under different assumptions, judgments, or conditions.\nInventories\nInventories, consisting of products available for sale, are primarily accounted for using the first-in, first-out method, and are valued at the lower of cost and net realizable value. This valuation requires us to make judgments, based on currently available information, about the likely method of disposition, such as through sales to individual customers, returns to product vendors, or liquidations, and expected recoverable values of each disposition category. These assumptions about future disposition of inventory are inherently uncertain and changes in our estimates and assumptions may cause us to realize material write-downs in the future. As a measure of sensitivity, for every 1% of additional inventory valuation allowance as of June 30, 2026, we would have recorded an additional cost of sales of approximately $405 million.\nIn addition, we enter into supplier commitments for certain electronic device components and certain products. These commitments are based on forecasted customer demand. If we reduce these commitments, we may incur additional costs.\nIncome Taxes\nWe are subject to income taxes in the U.S. (federal and state) and numerous foreign jurisdictions. Tax laws, regulations, administrative practices, principles, and interpretations in various jurisdictions may be subject to significant change, with or without notice, due to economic, political, and other conditions, and significant judgment is required in evaluating and estimating our provision and accruals for these taxes. There are many transactions that occur during the ordinary course of business for which the ultimate tax determination is uncertain. In addition, our actual and forecasted earnings are subject to\n26\nTable of Contents\nchange due to economic, political, and other conditions and significant judgment is required in determining our ability to use our deferred tax assets.\nOur effective tax rates could be affected by numerous factors, such as changes in our business operations, acquisitions, investments, entry into new businesses and geographies, intercompany transactions, the relative amount of our foreign earnings, including earnings being lower than anticipated in jurisdictions where we have lower statutory rates and higher than anticipated in jurisdictions where we have higher statutory rates, losses incurred in jurisdictions for which we are not able to realize related tax benefits, the applicability of special tax regimes, changes in foreign exchange rates, changes in our stock price, changes to our forecasts of income and loss and the mix of jurisdictions to which they relate, changes in our deferred tax assets and liabilities and their valuation, changes in the laws, regulations, administrative practices, principles, and interpretations related to tax, including changes to the global tax framework, competition, and other laws and accounting rules in various jurisdictions. In addition, a number of countries have enacted or are actively pursuing changes to their tax laws applicable to corporate multinationals.\nWe are also currently subject to tax controversies in various jurisdictions, and these jurisdictions may assess additional income tax liabilities against us. Developments in an audit, investigation, or other tax controversy could have a material effect on our operating results or cash flows in the period or periods for which that development occurs, as well as for prior and subsequent periods. We regularly assess the likelihood of an adverse outcome resulting from these proceedings to determine the adequacy of our tax accruals. Although we believe our tax estimates are reasonable, the final outcome of audits, investigations, and any other tax controversies could be materially different from our historical income tax provisions and accruals.\nLiquidity and Capital Resources\nCash flow information is as follows (in millions):\nThree Months Ended\nJune 30,\nSix Months Ended\nJune 30,\nTwelve Months Ended\nJune 30,\n2025\n2026\n2025\n2026\n2025\n2026\nCash provided by (used in):\nOperating activities\n$\n32,515\n$\n45,387\n$\n49,530\n$\n71,419\n$\n121,137\n$\n161,403\nInvesting activities\n(39,424)\n(79,245)\n(69,227)\n(143,457)\n(123,569)\n(216,775)\nFinancing activities\n(2,539)\n10,146\n(2,586)\n62,913\n(8,652)\n75,160\nOur principal sources of liquidity are cash flows generated from operations and our cash, cash equivalents, and marketable securities balances, which, at fair value, were $123.0 billion as of December 31, 2025 and June 30, 2026. Amounts held in foreign currencies were $29.7 billion and $20.4 billion as of December 31, 2025 and June 30, 2026. Our foreign currency balances include British Pounds, Canadian Dollars, Euros, Indian Rupees, and Japanese Yen.\nCash provided by (used in) operating activities was $32.5 billion and $45.4 billion for Q2 2025 and Q2 2026, and $49.5 billion and $71.4 billion for the six months ended June 30, 2025 and 2026. Our operating cash flows result primarily from cash received from our consumer, seller, developer, enterprise, and content creator customers, and advertisers, offset by cash payments we make for products and services, employee compensation, payment processing and related transaction costs, operating leases, and interest payments. Cash received from our customers and other activities generally corresponds to our net sales. The increase in operating cash flow for the trailing twelve months ended June 30, 2026, compared to the comparable prior year period, was due to an increase in net income, excluding non-cash income and expenses, and changes in working capital. Working capital at any specific point in time is subject to many variables, including variability in demand, inventory management and category expansion, the timing of cash receipts and payments, customer and vendor payment terms, and fluctuations in foreign exchange rates.\nCash provided by (used in) investing activities corresponds with cash capital expenditures, including leasehold improvements, incentives received from property and equipment vendors, proceeds from asset sales, cash outlays for acquisitions, investments in other companies and intellectual property rights, and purchases, sales, and maturities of marketable securities. Cash provided by (used in) investing activities was $(39.4) billion and $(79.2) billion for Q2 2025 and Q2 2026, and $(69.2) billion and $(143.5) billion for the six months ended June 30, 2025 and 2026, with the variability caused primarily by purchases, sales, and maturities of marketable securities and cash capital expenditures. Cash capital expenditures were $31.4 billion and $53.1 billion during Q2 2025 and Q2 2026, and $55.6 billion and $96.3 billion for the six months ended June 30, 2025 and 2026, which primarily reflect investments in technology infrastructure (the majority of which is to support AWS business growth) and in additional capacity to support our fulfillment network, both of which we expect to increase in 2026. We made cash payments, net of acquired cash, related to acquisition and other investment activity of $1.7 billion and $24.4 billion during Q2 2025 and Q2 2026, and $1.7 billion and $39.8 billion for the six months ended June 30, 2025 and 2026. In Q2 2025, we invested $1.3 billion in convertible notes from Anthropic. We invested $28.7 billion in OpenAI's Series C Preferred Stock for the six months ended June 30, 2026, including $13.7 billion invested in Q2 2026. Subsequent to June 30, 2026, we funded\n27\nTable of Contents\nthe remaining Commitment Amount of $21.3 billion. In Q2 2026, we also invested $10.0 billion in Anthropic nonvoting preferred stock.\nCash provided by (used in) financing activities was $(2.5) billion and $10.1 billion for Q2 2025 and Q2 2026, and $(2.6) billion and $62.9 billion for the six months ended June 30, 2025 and 2026. Cash inflows from financing activities resulted from proceeds from short-term debt, and other and long-term debt of $2.1 billion and $22.9 billion for Q2 2025 and Q2 2026, and $4.7 billion and $82.4 billion for the six months ended June 30, 2025 and 2026. We expect to undertake additional financing activities in 2026. Cash outflows from financing activities resulted from payments of short-term debt, and other, long-term debt, finance leases, and financing obligations of $4.6 billion and $12.8 billion for Q2 2025 and Q2 2026, and $7.2 billion and $19.5 billion for the six months ended June 30, 2025 and 2026. Property and equipment acquired under finance leases was $937 million and $563 million during Q2 2025 and Q2 2026, and $991 million and $2.1 billion for the six months ended June 30, 2025 and 2026.\nWe had no borrowings outstanding under the two unsecured revolving credit facilities or the commercial paper programs as of June 30, 2026. See Item 1 of Part I, \"Financial Statements Note 5 Debt\" for additional information.\nCertain foreign subsidiary earnings and losses are subject to current U.S. taxation and the subsequent repatriation of those earnings is not subject to tax in the U.S. We intend to invest substantially all of our foreign subsidiary earnings, as well as our capital in our foreign subsidiaries, indefinitely outside of the U.S. in those jurisdictions in which we would incur significant, additional costs upon repatriation of such amounts.\nOur U.S. taxable income is reduced by accelerated depreciation deductions and the amortization of previously capitalized research and development costs. U.S. tax rules provide for enhanced accelerated depreciation deductions by allowing the election of full expensing of qualified property, as well as various alternatives for amortizing previously capitalized research and development costs. The 2026 Notice, which applied retroactively to 2025, is expected to result in a significant decrease of 2024 and 2025 cash taxes paid. Cash paid for U.S. (federal and state) and foreign income taxes (net of refunds) totaled $4.8 billion and $2.7 billion for Q2 2025 and Q2 2026, and $5.6 billion and $4.0 billion for the six months ended June 30, 2025 and 2026.\nAs of December 31, 2025 and June 30, 2026, restricted cash, cash equivalents, and marketable securities were $3.3 billion and $2.7 billion. See Item 1 of Part I, \"Financial Statements Note 4 Commitments and Contingencies\" and \"Financial Statements Note 5 Debt\" for additional discussion of our principal contractual commitments, as well as our pledged assets. Additionally, we have purchase obligations and open purchase orders, including for inventory and capital expenditures, that support normal operations and are primarily due in the next twelve months. These purchase obligations and open purchase orders are generally cancellable in full or in part through the contractual provisions.\nWe believe that cash flows generated from operations and our cash, cash equivalents, and marketable securities balances, as well as our borrowing arrangements and other financing activities, will be sufficient to meet our anticipated operating cash needs for at least the next twelve months. However, any projections of future cash needs and cash flows are subject to substantial uncertainty. See Item 1A of Part II, \"Risk Factors.\" We continually evaluate opportunities to sell additional equity or debt securities, obtain credit facilities, obtain finance and operating lease arrangements, enter into financing obligations, repurchase common stock, pay dividends, repurchase, refinance, or otherwise restructure our debt, or access capital through other financing arrangements for strategic reasons or to further strengthen our financial position.\nThe sale of additional equity or convertible debt securities would be dilutive to our shareholders.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm",
+      "asOf": "2026-07-31",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "Item 1A.\nRisk Factors\nPlease carefully consider the following discussion of significant factors, events, and uncertainties that make an investment in our securities risky. The events and consequences discussed in these risk factors could, in circumstances we may or may not be able to accurately predict, recognize, or control, have a material adverse effect on our business, growth, reputation, prospects, financial condition, operating results (including components of our financial results), cash flows, liquidity, and stock price. These risk factors do not identify all risks that we face; our operations could also be affected by factors, events, or uncertainties that are not presently known to us or that we currently do not consider to present significant risks to our operations. In addition to the factors discussed in Item 7 of Part II, \"Management's Discussion and Analysis of Financial Condition and Results of Operations,\" and in the risk factors below, global economic and geopolitical conditions and additional or unforeseen circumstances, developments, or events may give rise to or amplify many of the risks discussed below. Many of the risks discussed below also impact our customers, including third-party sellers, which could indirectly have a material adverse effect on us. The disclosures in this section reflect our beliefs and opinions as to factors that could materially and adversely affect us in the future. References to past events are provided by way of example only and are not intended to be a complete listing or a representation as to whether or not such factors have occurred in the past.\nBusiness and Industry Risks\nWe Face Intense Competition\nOur businesses are rapidly evolving and intensely competitive, and we have many competitors across geographies, including cross-border competition, and in different industries, including physical, e-commerce, and omnichannel retail, e-commerce services, web and infrastructure computing services, electronic devices, digital content, advertising, grocery, healthcare, communications, and transportation and logistics services. Some of our current and potential competitors have greater resources, longer histories, more customers, and/or greater brand recognition, particularly with our newly-launched products and services and in our newer geographic regions. They may secure better terms from vendors, adopt more aggressive pricing, and devote more resources to technology, infrastructure, fulfillment, and marketing.\nCompetition continues to intensify, including with the development of new business models and the entry of new and well-funded competitors, and as our competitors enter into business combinations or alliances and established companies in other market segments expand to become competitive with our business. In addition, new and enhanced technologies, including search, web and infrastructure computing services, practical applications of artificial intelligence and machine learning, digital content, satellites, and electronic devices continue to increase our competition. The internet and other technologies including artificial intelligence facilitate competitive entry and comparison shopping, which enhances the ability of new, smaller, or lesser-known businesses to compete against us. As a result of competition, our product and service offerings may not be successful, we may fail to gain or may lose business, and we may be required to increase our spending or lower prices, any of which could materially reduce our sales and profits.\nOur Expansion into New Products, Services, Technologies, and Geographic Regions Subjects Us to Additional Risks\nWe may have limited or no experience in our newer market segments, and our customers may not adopt our product or service offerings. These offerings, which can present new and difficult technology challenges, may subject us to claims if customers of these offerings experience, or are otherwise impacted by, service disruptions, delays, setbacks, or failures or quality issues. In addition, profitability or other intended benefits, if any, in our newer activities (including development and adoption of automation, artificial intelligence, and machine learning technologies for customer and internal use), may not meet our expectations, and we may not be successful enough in these newer activities to recoup our investments in them, which investments are often significant. Failure to realize the benefits of amounts we invest in new technologies, products, or services could result in the value of those investments being written down or written off. In addition, our sustainability initiatives may be unsuccessful for a variety of reasons, including if we are unable to realize the expected benefits of new technologies or if we do not successfully plan or execute new strategies, which could harm our business or damage our reputation.\n38\nTable of Contents\nOur International Operations Expose Us to a Number of Risks\nOur international activities are significant to our revenues and profits, and we plan to further expand internationally. In certain international market segments, we have relatively little operating experience and may not benefit from any first-to-market advantages or otherwise succeed. It is costly to establish, develop, and maintain international operations and stores, and promote our brand internationally. Our international operations may not become profitable on a sustained basis.\nIn addition to risks described elsewhere in this section, our international sales and operations are subject to a number of risks, including:\nlocal economic and political conditions;\ngovernment regulation (such as regulation of our product and service offerings and of competition); restrictive governmental actions (such as trade protection or retaliatory measures, including export duties and quotas and custom duties and tariffs, and restrictions around the import and export of certain products, technologies, and components); nationalization; and restrictions on foreign ownership;\nrestrictions on sales or distribution of certain products or services and uncertainty regarding liability for products, services, and content, including uncertainty as a result of less internet-friendly legal systems, local laws, lack of legal precedent, and varying rules, regulations, and practices regarding the physical and digital distribution of media products and enforcement of intellectual property rights;\nbusiness licensing or certification requirements, such as for imports, exports, web services, electronic devices, and communications services;\nlimitations on the repatriation and investment of funds and foreign currency exchange restrictions;\nlimited fulfillment and technology infrastructure;\nshorter payable and longer receivable cycles and the resultant negative impact on cash flow;\nlaws and regulations regarding privacy, data use, data protection, data security, data localization, network security, consumer protection, payments, advertising, and restrictions on pricing or discounts;\nlower levels of use of the internet;\nlower levels of consumer spending and fewer opportunities for growth compared to the U.S.;\nlower levels of credit card usage and increased payment risk;\ndifficulty in staffing, developing, and managing foreign operations as a result of distance, language, and cultural differences;\ndifferent employee/employer relationships and the existence of works councils and labor unions;\ncompliance with the U.S. Foreign Corrupt Practices Act and other applicable U.S. and foreign laws prohibiting corrupt payments to government officials and other third parties;\nlaws and policies of the U.S. and other jurisdictions affecting trade (such as tariff policy changes), foreign investment, loans, and taxes; and\ngeopolitical events, including war and terrorism.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm",
+      "asOf": "2026-07-31",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-Q",
+    "pressRelease": {
+      "text": "EX-99.1\n2\namzn-20260630xex991.htm\nEX-99.1\nDocument\nExhibit 99.1\nAMAZON.COM ANNOUNCES SECOND QUARTER RESULTS\nNet sales increased 20% year-over-year\nOperating income was $27.5 billion, up 43% year-over-year\nAWS net sales increased 37% its fastest growth in 18 quarters to a $169 billion annualized revenue run rate\nSEATTLE (BUSINESS WIRE) July 30, 2026 Amazon.com, Inc. (NASDAQ AMZN) today announced financial results for its second quarter ended June 30, 2026.\nNet sales increased 20% to $200.6 billion in the second quarter, compared with $167.7 billion in second quarter 2025. Excluding the $0.1 billion favorable impact from year-over-year changes in foreign exchange rates throughout the quarter, net sales increased 20% compared with second quarter 2025.\nNorth America segment sales increased 16% year-over-year to $116.2 billion.\nInternational segment sales increased 15% year-over-year to $42.2 billion.\nAWS segment sales increased 37% year-over-year to $42.2 billion.\nOperating income increased to $27.5 billion in the second quarter, compared with $19.2 billion in second quarter 2025.\nNorth America segment operating income was $9.1 billion, compared with $7.5 billion in second quarter 2025.\nInternational segment operating income was $1.7 billion, compared with $1.5 billion in second quarter 2025.\nAWS segment operating income was $16.6 billion, compared with $10.2 billion in second quarter 2025.\nNet income increased to $62.6 billion in the second quarter, or $5.75 per diluted share, compared with $18.2 billion, or $1.68 per diluted share, in second quarter 2025.\nSecond quarter 2026 net income includes non-operating pre-tax other income of $53.4 billion, primarily from our investments in Anthropic.\nOperating cash flow increased 33% to $161.4 billion for the trailing twelve months, compared with $121.1 billion for the trailing twelve months ended June 30, 2025.\nFree cash flow decreased to an outflow of $7.6 billion for the trailing twelve months, driven primarily by a year-over-year increase of $66.1 billion in purchases of property and equipment, net of proceeds from sales and incentives. This increase primarily reflects investments in artificial intelligence. This compares to free cash flow inflow of $18.2 billion for the trailing twelve months ended June 30, 2025.\n\"AWS is booming, growing 36.7% year-over-year in Q2 our fastest growth in 18 quarters and our AI and Chips businesses each eclipsed run rates of more than $25 billion,\" said Andy Jassy, President and CEO, Amazon. \"In Stores, we again set record delivery speeds for Prime members in the first half of the year over 40% more items delivered same-day or overnight, with Grocery and Everyday Essentials growing meaningfully faster than the rest of the business. And, Advertising had another strong quarter with 26% year-over-year growth. There's a lot to be excited about, and we have much more coming for customers in the second half of the year and beyond.\"\nSome other highlights since the company's last earnings announcement include that Amazon\nExceeded a $25 billion annual revenue run rate for AWS's AI business, growing triple-digit percentages year-over-year.\nExceeded a $25 billion annual revenue run rate for its chips business, growing triple-digit percentages year-over-year.\nContinued gaining momentum with Trainium, with the two leading AI labs in the world, Anthropic and OpenAI, making multi-year, multi-gigawatt commitments an increasing number of AI start-ups adopting Trainium, including unicorns like NEURA Robotics and Odyssey and commitments from other startups like TwelveLabs, Decart, Poolside, Karakuri, Inc., Metagenomi Therapeutics, Inc., NetoAI, and Splash Music, as well as larger companies like Uber and Pinterest.\nReleased Graviton5 into general availability. Graviton delivers up to 30 to 40% better price-performance than comparable instances, and Graviton5 delivers up to 25% better compute performance than Graviton4. Graviton is used by 98% of the top 1,000 EC2 customers, revenue commitments have increased nearly 3x quarter-over-quarter, and Graviton5 is growing nearly 2x faster than Graviton4 did.\nAdded 10+ fully managed foundation models to Amazon Bedrock, including OpenAI's GPT-5.6, Anthropic's Claude Opus 5, Google DeepMind's Gemma 4, and SpaceXAI's Grok 4.3. Amazon Bedrock provides the best selection of leading models, at superior performance, and with the governance and security controls that companies need, and it's continuing to grow quickly hundreds of thousands of customers now use Bedrock, more customers were added in the last six months than in the first two years after launch, and customers spent more in Q2 than all prior quarters combined.\nPreviewed AWS Continuum, which discovers, prioritizes, validates, and remediates code vulnerabilities. It starts by ingesting the backlog of vulnerabilities a team already has, and then leverages the new frontier models to run comprehensive scans. Continuum uses agents and each company's own business context to prioritize what matters, then validates vulnerabilities in a sandbox and recommends the fix.\nAdded new capabilities to Bedrock AgentCore, which provides the building blocks that companies need to quickly and securely deploy and operate agents at scale. New capabilities include Payments (so agents can execute transactions autonomously), Web Search (to ground agents' knowledge without having to leave AWS), and Harness, which further speeds up how fast customers can stitch together all the infrastructure they need for their agents.\nMade Amazon Quick an intelligent AI work companion that helps manage, search, and automate digital workloads across email, calendar, local or cloud files, and custom workflows even more capable, adding autonomous agents that customers set up in plain language to run continuously in the background and carry out multi-step tasks a personalized activity feed that pulls email, messages, calendar, and tasks into one prioritized view and 16 new integrations, including Adobe, Moody's, and Snowflake. Quick manages across leading SaaS tools like Slack, Salesforce, Jira, Teams, and ServiceNow enforces a company's existing access controls and takes actions like scheduling meetings, drafting and sending email, updating a CRM record, building a dashboard, and more.\nMade its spec-drive coding agent, Kiro, available on iOS so developers can now kick off a new project, monitor progress, steer an agent, and interact with Kiro sessions from their phone, desktop, command line, and the web. Kiro is up to 50% more cost-effective than alternatives and tripled in usage quarter-over-quarter.\nAdded new capabilities to AWS DevOps Agent, an always-available software operations teammate that helps developers ship software safely and reliably, including Release Management to perform readiness reviews of code changes and autonomously test releases to spot potential issues before they go live.\nLaunched serverless infrastructure for agentic AI that scales on demand, including\nLambda MicroVMs, a new flavor of the popular AWS Lambda serverless compute service that not only offers instant start times with the ability to scale all the way up or down depending on demand, but also now provides a stateful runtime with sessions that can last up to 8 hours ideal for long-running agent loops, multi-step pipelines, or persistent database engines.\nNext-generation OpenSearch Serverless, which gives agents fast access to search across massive volumes of data, scales capacity up to 20x faster than the previous generation, and offers up to 60% cost savings versus provisioning for peak.\nPurpose-built log analytics engine for Amazon OpenSearch Service, designed to keep pace with the vast increase in logs being produced by agentic workloads. It delivers up to 4x better price performance compared to the existing general-purpose engine, up to 2x higher data ingestion on the same hardware, and up to 2x faster analytical queries, while retaining up to 3x more data at the same cost enabling teams to retain and analyze more observability data without choosing between insight and budget.\nAnnounced an investment of $1 billion to create AWS Forward Deployed Engineering, a team of AI engineers embedded directly with customers to co-develop and deploy agentic AI solutions in days rather than months. Early customers include Allen Institute, Cox Automotive, the NBA, the NFL, Ricoh, and Southwest Airlines.\nAnnounced general availability of AWS Secret Cloud for Industry, giving defense contractors a faster, more secure path to classified innovation, with Northrop Grumman first to run classified workloads on the platform, and committed up to $1 billion in cloud credits to accelerate U.S. Intelligence Community cloud migration and modernization.\nAnnounced its global data centers are over 7x more water-efficient than the industry average. Amazon also reached 75% progress toward its goal to be water positive across global data center operations by 2030, and achieved water-positive status across its direct operations in India ahead of its 2027 target.\nAnnounced new AWS agreements with Warner Bros. Discovery, Vodafone, Siemens Energy, Ryanair, Pinterest, Snowflake, Moody's, Danske Bank, WNBA, Pennymac, Fiserv, WPP Enterprise Solutions, Vonage, Recursive, fal, Chai Discovery, Odyssey, TwelveLabs, Reactor, OpenRouter, Dash0, New York State Office of Information Technology Services, State of Iowa, University of South Florida, and The University of Utah.\nContinued to expand its ultra-fast delivery service, Amazon Now, which offers delivery in 30 minutes or less on thousands of everyday essentials adding 80 new cities and towns across the U.S. and several major cities in Egypt. Amazon Now is available in nine countries and over 250 cities and towns globally, and customers love it, with over 80% growth in gross sales and units sold quarter-over-quarter and over 60% more customers served quarter-over-quarter.\nAdded millions of new products to its selection, including over 700,000 from notable brands like ADT Blu, Bobbi Brown, BROWN GIRL Jane, CR7 Underwear, LeGer, Mamonde, OLIVA COSMETICS, Rabanne, and Ted Baker.\nBrought together Rufus and Alexa+ into Alexa for Shopping, an agentic AI shopping assistant that offers personalized recommendations, product comparisons, price history, and the ability to automate shopping through features like Price Alerts and Auto-Buy. Worldwide customer adoption and engagement accelerated in Q2, with active users close to doubling and interactions up over 5x year-over-year.\nLaunched Amazon Supply Chain Services so any business can move, store, and deliver everything from raw materials to finished products using the same supply chain that supports Amazon, with Procter Gamble, 3M, Lands' End, and American Eagle Outfitters among the first customers.\nReached $60 billion in annualized gross sales for Amazon Business and continued to expand selection adding nearly 30% more items compared to last year, including Same-Day Delivery of fresh groceries for businesses in 2,300+ U.S. cities and towns.\nIntroduced the next-generation of Proteus, an autonomous robot that assists Amazon fulfillment center employees by moving goods up to 1,300 pounds, reducing heavy lifting and further increasing safety. Using AI, employees can now direct Proteus with plain, conversational language.\nGrew the number of new customers for Amazon Pharmacy by more than 2x in the first six months of the year, and same-day prescription deliveries nearly 5x. Also saved customers nearly $250 million so far this year in out-of-pocket costs, up more than 400% year-over-year, through manufacturer discounts applied automatically on an expanded selection of widely prescribed medications.\nExpanded Ads Agent an AI-powered tool that simplifies planning, launching, and managing advertising campaigns and turns hours of setup and targeting into minutes to 11 new countries so far this year. Advertisers using Ads Agent see 8% lower cost-per-impression and 6% lower cost-per-acquisition than those that don't use it.\nExpanded Alexa+ to Germany, Austria, France, and Brazil, with hundreds of millions of customers now using new Alexa experiences, and that number growing every month. Alexa continues to drive meaningful momentum for the business, including in the U.S., where customers who use Alexa for Shopping spend an average of over 40% more per order than those who don't, and customers who have tried Alexa+ are signing up for Prime at a nearly 25% higher rate.\nDrew 36 million viewers globally for the series premiere of Off Campus on Prime Video in its first 12 days, becoming Prime Video's No. 3 top-viewed series debut ever.\nDelivered strong viewership for inaugural season of NBA on Prime Video, with a peak of 6.5 million U.S. viewers for Game 7 of the Eastern Conference Semifinals (outperforming Game 7 on broadcast in 2025). In Europe, viewership of the NBA more than doubled year-over-year on Prime Video, with the highest average viewership on record.\nAveraged 2.3 million viewers during the second season of NASCAR on Prime Video and attracted the youngest audience the last two years among NASCAR broadcasters since 2017.\nCompleted four additional launches for Amazon Leo, its low Earth orbit satellite network, bringing the total constellation to nearly 400 satellites in orbit enough to begin initial satellite internet service this year.\nReceived approval from the National Highway Traffic Safety Administration (Part 555 Exemption) for Zoox to charge for rides the first purpose-built robotaxi to receive this exemption paving the way for Zoox to begin offering paid commercial service to customers.\nSupported relief efforts following earthquakes in Venezuela with its Amazon Disaster Relief program, donating and delivering more than 650,000 emergency supplies to more than a dozen nonprofits and establishing weekly humanitarian relief flights to Caracas in a first-of-its-kind collaboration with Airlink, the U.S. State Department, and World Food Programme, delivering approximately 120 tons of supplies.\nFinancial Guidance\nThe following forward-looking statements reflect Amazon.com's expectations as of July 30, 2026, and are subject to substantial uncertainty. Our results are inherently unpredictable and may be materially affected by many factors, such as fluctuations in foreign exchange rates and energy prices, changes in global economic and geopolitical conditions, tariff and trade policies, resource and supply volatility, including for memory chips, and customer demand and spending (including the impact of recessionary fears), inflation, interest rates, regional labor market constraints, world events, the rate of growth of the internet, online commerce, cloud services, and new and emerging technologies, and the various factors detailed below.\nThird Quarter 2026 Guidance\nNet sales are expected to be between $197.0 billion and $202.0 billion, or to grow between 9% and 12% compared with third quarter 2025. Excluding the impact of Prime Day in both 2025 and 2026, third quarter 2026 year-over-year growth would be nearly 400 basis points higher. This guidance anticipates an unfavorable impact of approximately 80 basis points from foreign exchange rates.\nOperating income is expected to be between $22.5 billion and $26.5 billion, compared with $17.4 billion in third quarter 2025.\nThis guidance assumes, among other things, no impact from energy derivative contract remeasurements, and that no additional business acquisitions, restructurings, or legal settlements are concluded.\nConference Call Information\nA conference call will be webcast live today at 2 00 p.m. PT 5 00 p.m. ET, and will be available for at least three months at amazon.com ir. This call will contain forward-looking statements and other material information regarding the Company's financial and operating results.\nForward-Looking Statements\nThese forward-looking statements are inherently difficult to predict.",
+      "source": "edgar:8-K ex-99.1",
+      "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000024/amzn-20260630xex991.htm",
+      "asOf": "2026-07-30",
+      "truncated": true
+    },
+    "proxyStatement": {
+      "text": "Board and director independence:\nDirector Independence\nThe Board has determined that the following directors are independent as defined by Nasdaq rules: Gen. Alexander, Ms. Cooper, Ms. Gorelick, Dr. Huttenlocher, Dr. Ng, Mrs. Nooyi, Mr. Rubinstein, Mr. Smith, Ms. Stonesifer, and Mr. Weeks. In assessing directors' independence, the Board took into account certain transactions, relationships, and arrangements involving some of the directors and concluded that such transactions, relationships, and arrangements did not impair the independence of the director. For Mr. Weeks, the Board considered payments in the past three years in the ordinary course of business from the Company to Corning Incorporated or its affiliates. For Dr. Ng, the Board considered payments in the past year in the ordinary course of business from the Company to DeepLearning.AI LLC or its affiliates. All such payments were not significant for any of these companies.\nRisk Oversight\nAs part of regular Board and committee meetings, the directors oversee executives' management of risks relevant to the Company. While the full Board has overall responsibility for risk oversight, the Board has delegated responsibility related to certain risks to the Audit Committee, the Leadership Development and Compensation Committee, the Nominating and Corporate Governance Committee, and the Security Committee.\nThe Audit Committee is responsible for overseeing management of risks related to our financial statements and financial reporting process, assessment of risks related to business continuity and operational risks, the qualifications, independence, and performance of our independent auditors, the performance of our internal audit function, legal and regulatory matters, our compliance policies and procedures, tax planning and compliance, and political contributions and lobbying expenses.\nThe Leadership Development and Compensation Committee is responsible for overseeing management of risks related to succession planning and compensation for our executive officers and our overall compensation program, including our equity-based compensation plans, as well as risks related to other human capital management matters, including workplace health and safety, culture, diversity, discrimination, and harassment. The Nominating and Corporate Governance Committee is responsible for overseeing management of risks related to our sustainability and other environmental and corporate social responsibility practices, including risks related to our operations and supply chain and responsible AI development and AI governance. In particular, the Nominating and Corporate Governance Committee and the Leadership Development and Compensation Committee oversee and receive regular reports from, and provide direction to, management on our strategies related to sustainability, human capital, health and safety, and diversity and inclusion.\n\nCompensation discussion and analysis:\nCompensation Discussion and Analysis\nOverview\nOur executive compensation philosophy is anchored on periodic grants of time-vested restricted stock units that vest over the long term, which strongly and directly align our executives' compensation with the returns we deliver to shareholders and focus our executives on the long-term success of our business. As a result, we avoid tying compensation to discrete, short-term performance goals, financial or otherwise, which could result in our executives focusing on limited and selective short-term objectives at the expense of building long-term shareholder value. Instead, we focus on realizable compensation by assessing the potential annual value of equity awards vesting over the long term.\nOur executives' compensation is very simple and generally has two basic components:\nBase salaries designed to be significantly less than those paid to senior leadership at similarly situated companies; and\nPeriodic grants of time-vested restricted stock units subject to long-term vesting requirements that assume a fixed annual increase in the stock price, so that compensation is negatively impacted if our stock price is flat or declines.\nWe also provide security services to certain executives, some of which are reportable as perquisites, although we view all Company-incurred security costs as reasonable and necessary and for the Company's benefit.\n2025 Compensation Review\nThe Leadership Development and Compensation Committee did not grant an equity award to Mr. Jassy and, consistent with its past practice of granting periodic long-term restricted stock unit awards every other year, did not grant equity awards to any of the other named executive officers.\nThe Committee has not granted Mr. Jassy an equity award since 2021, consistent with the Committee's previous statement that the restricted stock unit award granted to Mr. Jassy in 2021, in connection with his promotion to President and CEO of Amazon, was intended to represent most of his compensation in the coming years.\nMr. Jassy's 2025 realized compensation (salary plus \"all other compensation\" as reported in the Summary Compensation Table, plus the value of stock vested during the year) increased compared to 2024 due to our stock price performance, partially offset by the decrease in the number of restricted stock units vesting during the year.\nWe believe our approach to executive compensation and its focus on building long-term shareholder value resonates with our shareholders. In the years following the Leadership Development and Compensation Committee's 2021 restricted stock unit grant to Mr. Jassy, directors serving on the Committee and our Lead Independent Director have actively engaged with and were responsive to our shareholders regarding our executive compensation program. At our 2025 Annual Meeting of Shareholders, 78% of the votes cast supported our advisory vote to approve the compensation of our named executive officers. We are pleased with the broad support among our shareholders for our compensation practices.\nThrough our extensive outreach on our executive compensation program, we believe that shareholders have come to appreciate the view supported by a number of academic studies and endorsed by the Council of Institutional Investors, Norges Bank Investment Management, and some of our other largest investors, that restricted stock units, such as the ones granted to our executives, are sufficiently long-term in nature to align executives' realized compensation with long-term performance. We are also pleased that, based on feedback from its policy surveys and compensation policy roundtables, ISS revised its benchmark voting policy for 2026 to view time-based equity awards with extended time horizons positively.\nOur independent directors, with the support of our ESG Engagement and Investor Relations teams, continue to participate in our year-round engagement with our shareholders, and remain responsive to shareholders regarding our executive compensation program.",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/1018724/000110465926041026/tm261382-1_def14a.htm",
+      "asOf": "2026-04-09",
+      "truncated": true
+    },
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T01:43:10.480Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T01:43:10.480Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T01:43:10.480Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T01:43:10.480Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T01:43:10.480Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T01:43:10.480Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T01:43:10.480Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T01:43:10.480Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T01:43:10.480Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T01:43:10.480Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T01:43:10.480Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T01:43:10.480Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-24T01:43:10.480Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-24T01:43:10.480Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-24T01:43:10.480Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-09-24T01:43:10.480Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-09-24T01:43:10.480Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-09-24T01:43:10.480Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T01:43:10.480Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T01:43:10.480Z"
+    }
+  ],
+  "sbc": [
+    12757000000,
+    19621000000,
+    24023000000,
+    22011000000,
+    19467000000
+  ]
+}

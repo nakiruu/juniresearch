@@ -24,7 +24,7 @@ export interface PortfolioConfig {
   // Constraints (§7)
   wMax: number;             // hard per-name cap — THE knob (default 0.10)
   sectorMax: number;        // max weight per SIC-2-digit sector (e.g. 0.30)
-  wMin: number;             // dust floor; below this a name is dropped (e.g. 0.015)
+  wMin: number;             // dust floor; below this a name is dropped (0 = no floor, hold every eligible name)
   cashFloor: number;        // frictional min cash (e.g. 0.01)
   cashCeiling: number;      // soft max cash (e.g. 0.35)
   minNamesForCeiling: number; // ceiling binds only with at least this many holdings (e.g. 4)
@@ -36,7 +36,7 @@ export const DEFAULT_CONFIG: PortfolioConfig = {
   alpha: 0.4, sigmaMin: 0.05,
   qGainComposite: 0.10, qGainMoat: 0.20, qPenaltyEroding: 0.10, qLo: 0.8, qHi: 1.2,
   stalenessHalfLifeDays: 90,
-  wMax: 0.10, sectorMax: 0.30, wMin: 0.015,
+  wMax: 0.10, sectorMax: 0.30, wMin: 0,
   cashFloor: 0.01, cashCeiling: 0.35, minNamesForCeiling: 4,
 };
 

@@ -1,0 +1,59 @@
+{
+  "judgmentSha256": "5c00887cf22433da3bdebf96ec8e64523d47bb3f0e6aaa5c8fa4f576ee2b1eec",
+  "reviewedAt": "2026-09-23T21:40:00Z",
+  "reviewer": "claude-opus-4-8",
+  "round": 2,
+  "verdict": "approved-with-minors",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "The peer set of integrated majors — BP, Shell, Chevron, TotalEnergies, Equinor, and Suncor — is genuinely comparable, but no peer multiples were available in this pack, so we anchor on the company's own history and on the Street",
+      "issue": "The peerless-peer trap. The grounding surface names no peer set: the prompt's Multiples block is a company-only column marked 'peers pending a peer data source,' and the report's own multiples table repeats 'Peer multiples pending a peer data source.' Naming 'BP, Shell, Chevron, TotalEnergies, Equinor, and Suncor' as the comparable set — and asserting it 'is genuinely comparable' — is a statement of fact the surface does not support. Four of the six (Shell, TotalEnergies, Equinor, Suncor) appear nowhere in the pack.",
+      "fix": "Drop the invented peer list. Say plainly that no peer multiples were captured, so the valuation anchors on ExxonMobil's own history and on the Street's targets. If a peer group must be characterised, describe it generically (large integrated oil majors) without naming specific companies the pack does not carry.",
+      "status": "addressed",
+      "note": "Fixed. multiplesCommentary now reads 'No peer multiples were captured in this pack, so we do not benchmark the company against other large integrated oil majors and instead anchor on its own history and on the Street.' The named peer list is gone and the group is described generically."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.executiveSummary.companyOverview",
+      "quote": "changed its name from Exxon Mobil Corporation to ExxonMobil Holdings Corporation in July 2026 as part of a corporate reorganization; its financial history is that of the operating company.",
+      "issue": "Two claims the surface does not make. The company description says only that the company 'changed its name to ExxonMobil Holdings Corporation in July 2026'; it does not state the rename was 'part of a corporate reorganization,' nor that 'its financial history is that of the operating company.' Both are inferences the pack invites (the 'Holdings' form, the proposed Texas Redomiciliation) but does not establish.",
+      "fix": "State only what the description supports — the name change to ExxonMobil Holdings Corporation in July 2026 — and drop 'as part of a corporate reorganization' and the accounting-continuity clause, or replace them with a hedge that the pack does not describe the corporate structure behind the rename.",
+      "status": "addressed",
+      "note": "Fixed. companyOverview now reads 'changed its name from Exxon Mobil Corporation to ExxonMobil Holdings Corporation in July 2026; the pack does not describe the corporate structure behind the rename.' The 'corporate reorganization' and operating-company continuity claims are removed and replaced with the hedge the fix requested."
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.growth.points[1]",
+      "quote": "Consensus sees FY26E revenue of ~$411B, up {+ +24% +} on FY25's $332.2B, driven mainly by price and margin rather than volume; the FY27E estimate steps back to $402.9B.",
+      "issue": "Unsupported causal decomposition. The pack gives no price/volume breakdown of the FY26E revenue estimate, so 'driven mainly by price and margin rather than volume' is not established. It is also muddled: refining margins lift earnings, not revenue, and the MD&A says crude prices 'remained within the 10-year historical range,' so neither price nor margin is shown to drive the top line. analystCommentary's parallel 'That surge is largely price- and margin-led' is defensible for earnings but not when applied to revenue growth here.",
+      "fix": "Either attribute the FY26E revenue step-up to the elevated-margin / supply-disruption environment the MD&A describes without asserting a price-vs-volume split, or drop 'driven mainly by price and margin rather than volume.' Keep the margin-led framing to the earnings discussion, where the MD&A supports it.",
+      "status": "addressed",
+      "note": "Fixed. growth.points[1] now reads 'up {+ +24% +} on FY25's $332.2B, against the supply-disrupted market conditions the 10-Q describes for the period' — the price/volume split is gone, and analystCommentary no longer applies a 'price- and margin-led' decomposition to revenue."
+    },
+    {
+      "id": "F-4",
+      "severity": "Important",
+      "field": "sections.executiveSummary.catalysts + businessMoat.moatFactors + growth.points + management + valuation.scenarioCommentary + finalRecommendation",
+      "quote": "Capital returns: FY25 dividends of $17.2B, which the proxy notes ranked second among S&P 500 companies per Bloomberg, alongside a 2.60% dividend yield.",
+      "issue": "The same claims are argued in full across sections instead of exec-summary items pointing while the sections argue. (1) 'dividends of $17.2B ... second among S&P 500 companies per Bloomberg' appears in analystCommentary, catalysts[3] and capitalAllocation. (2) 'Structural cost savings of $16.3B ... additional $1.2B in the first six months of 2026' appears in catalysts[2], moatFactors 'Structural cost discipline' and growth.points[2]. (3) The leading earnings/cash-flow CAGR proxy footnote appears in businessMoat.durability and again in management.leadership. (4) The probability weighting and 'expected upside low-single-digit / unfavourable reward-risk / Bear at $130 ~a fifth below' are stated in scenarioCommentary and restated in finalRecommendation.body[1].",
+      "fix": "Introduce each figure once and refer back in words. Make the exec-summary catalysts one- to two-sentence pointers (e.g., 'sector-leading dividend; see Capital allocation') and let the body carry the detail. State the scenario weights and the reward/risk verdict once (scenarioCommentary) and have finalRecommendation reference the conclusion rather than repeat the numbers.",
+      "status": "addressed",
+      "note": "Fixed on all four counts. (1) The $17.2B / S&P-500-ranking detail now lives only in capitalAllocation; catalysts[3] and analystCommentary are pointers. (2) The $16.3B / $1.2B figures now appear only in moatFactors; catalysts[2] and growth.points[2] point to it. (3) The CAGR footnote now appears only in management.leadership; durability no longer carries it. (4) Scenario weights and the reward/risk verdict are stated once in scenarioCommentary; finalRecommendation.body[1] references 'the Scenarios section' without repeating the numbers."
+    },
+    {
+      "id": "F-5",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "The 10-Q attributes Q2'26 conditions to Middle East supply disruptions and global refining capacity reductions that pushed industry refining margins sharply above their 10-year historical range.",
+      "issue": "Voice tic: the near-verbatim phrase 'refining margins sharply above their 10-year (historical) range' recurs about eight times — analystCommentary, thesis, catalysts[0], executiveSummary.risks[0], incomeCommentary, valuation.scenarioCommentary, risks.idiosyncratic[0] and finalRecommendation.body[0]. The underlying fact legitimately anchors the thesis, but repeating the identical wording this often reads as a tic rather than a referred-back point.",
+      "fix": "Keep the full phrasing where the point is first argued (thesis or incomeCommentary) and vary the reference elsewhere ('the above-range refining margins,' 'today's elevated margins,' 'the same margin strength'), so the phrase is not repeated verbatim past the point of notice.",
+      "status": "open",
+      "note": "Still open. The phrase 'refining margins sharply above their 10-year (historical) range' remains verbatim in all eight originally flagged fields — analystCommentary, thesis.body, catalysts[0], executiveSummary.risks[0], incomeCommentary, scenarioCommentary, risks.idiosyncratic[0] and finalRecommendation.body[0]. The wording was not varied; the scenario drivers vary it but those were never among the flagged occurrences."
+    }
+  ]
+}

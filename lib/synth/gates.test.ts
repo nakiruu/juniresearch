@@ -84,6 +84,14 @@ describe("sectorFromSic", () => {
     expect(sectorFromSic(null)).toBeNull();
     expect(sectorFromSic(undefined)).toBeNull();
   });
+
+  it("classes asset managers / investment advisers (SIC 6282) as financial, not industrial", () => {
+    // BAM (Brookfield Asset Management, SIC 6282) is fee-based: Piotroski's gross-margin /
+    // asset-turnover / current-ratio components are structurally inapplicable, as for a bank.
+    expect(sectorFromSic(6282)).toBe("financial");
+    // Exchanges (SIC 6200) remain industrial by design — they pass Piotroski cleanly.
+    expect(sectorFromSic(6200)).toBe("industrial");
+  });
 });
 
 describe("REIT distress does not misfire (I2)", () => {

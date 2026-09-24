@@ -1,0 +1,49 @@
+{
+  "judgmentSha256": "2dce6f251df7cd46e6d1dabae6a01c95ece07d19b4530505c54831278ba344ce",
+  "reviewedAt": "2026-09-23T19:45:00Z",
+  "reviewer": "Claude Opus 4.8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "Gross margin has widened from 28.5% in FY22 to 31.0% in FY26",
+      "issue": "The gross-margin widening (28.5% FY22 to 31.0% FY26) is reintroduced with the numbers restated in four sections: thesis, financials.incomeCommentary (\"gross margin widened from 28.5% to 31.0%\"), businessMoat.moatFactors[Value gap] (\"a widening gross margin, from 28.5% in FY22 to 31.0% in FY26\") and growth.points (\"gross margin has risen to 31.0% in FY26 from 28.5% in FY22\"). The same restate-the-figure pattern affects three more clusters: the raised 7,500-store target with the +300/+200 split (analystCommentary, thesis, catalysts, businessMoat.segments, growth.points, capitalAllocation, finalRecommendation); the FY26 capital-returns figures ($4.3B returned, $1.3B in Q2, $2.5B repurchases, $1.8B dividends) across thesis, cashflowCommentary, capitalAllocation and finalRecommendation; and the consensus $169.80 / +29.0% across analystCommentary, catalysts, multiplesCommentary, scenarioCommentary and finalRecommendation. Rubric 7 asks that each figure be introduced once and referred back to in words.",
+      "fix": "Introduce each figure once in its home section and refer back in words elsewhere (e.g. \"the same gross-margin gain\", \"the raised store target\", \"the returns noted above\", \"the consensus target\") instead of restating the numbers each time.",
+      "status": "addressed",
+      "note": "Fixed across all four clusters. Gross margin now shows 28.5%/31.0% only in incomeCommentary; thesis, moatFactors[Value gap] and growth.points refer in words (\"widened over recent years\"). The 7,500/+300/+200 store target appears numerically only in growth.points; other sections say \"raised store target\". Returns: cashflowCommentary carries $2.5B/$1.8B, capitalAllocation carries $4.3B/$1.3B, thesis and finalRecommendation point in words (\"FY26 shareholder returns noted above\"). Consensus $169.80/+29.0% is numeric only in multiplesCommentary; elsewhere \"the consensus target\"."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.finalRecommendation.body[0]",
+      "quote": "a target range of $150 to $180, above the current $131.59 and below the $169.80 consensus",
+      "issue": "The target high of $180 sits above the $169.80 consensus, so describing the $150 to $180 range as \"below the $169.80 consensus\" is internally inconsistent (rubric 6, calls coherence). Only the Base ($158) and the band midpoint ($165) are below consensus; the top is roughly 6% above it. scenarioCommentary carries the same loose framing: \"the target range of $150 to $180 is set below the street to respect the non-recurring share of recent margin gains.\"",
+      "fix": "Attach the conservative framing to the base/midpoint, e.g. \"our Base at $158 and the band midpoint sit below the $169.80 consensus, while the $180 top allows modest upside beyond it,\" so the stated band stays consistent with the consensus anchor.",
+      "status": "addressed",
+      "note": "Resolved in both places. finalRecommendation.body[0] now reads \"our Base at $158 and the low end of the range sit below the consensus target, while the $180 top allows modest upside beyond it\"; scenarioCommentary now reads \"Our Base and the low end of the range stay below consensus, while the $180 top of the range allows modest upside beyond it.\" The band is now consistent with the $169.80 consensus anchor."
+    },
+    {
+      "id": "F-3",
+      "severity": "Minor",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "a net-cash position that has deepened across the past five years",
+      "issue": "The net-debt series on the page does not deepen steadily: net cash was $2.9B in FY22 (net debt -2.9), fell to $2.1B in FY23 (-2.1), then -2.7 (FY24), -2.5 (FY25) and -3.4 (FY26). The endpoint is deeper than the start, but \"deepened across the past five years\" overstates the consistency of a series that wobbled in the middle years (rubric 2/9).",
+      "fix": "State that the balance sheet ended FY26 at its deepest net-cash position of the five years (-$3.4B), rather than implying a steady year-by-year deepening.",
+      "status": "addressed",
+      "note": "Rewritten to \"Net debt was -$3.4 billion in FY26, more net cash than the -$2.9 billion of FY22, though the balance did not build steadily — it narrowed to -$2.1 billion in FY23 before rebuilding to the FY26 level.\" The claim of a steady year-by-year deepening is gone."
+    },
+    {
+      "id": "F-4",
+      "severity": "Minor",
+      "field": "sections.management.governance",
+      "quote": "at compensation consistent with peers",
+      "issue": "The proxy states the related-party amounts were \"consistent with other Associates at their levels and responsibilities.\" \"Consistent with peers\" in an executive-pay context can read as market or peer-company benchmarking rather than same-level colleagues; here the source's phrasing is the point (rubric 9).",
+      "fix": "Use the proxy's wording — \"consistent with other Associates at their levels and responsibilities\" — in place of \"consistent with peers.\"",
+      "status": "addressed",
+      "note": "Now uses the proxy's exact phrasing: \"at compensation the proxy describes as consistent with other Associates at their levels and responsibilities.\""
+    }
+  ]
+}

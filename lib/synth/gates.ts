@@ -104,14 +104,16 @@ export function gateAdvisory(label: RatingLabel, gate: GateResult): string | nul
 /**
  * SEC SIC → coarse gate sector. "financial" is the set where industrial solvency
  * ratios are structurally inapplicable: depository/credit institutions (6000-6199),
- * security brokers/investment banks (6211), and insurers (6300-6499). Utilities are
- * electric/gas/water/sanitary (4900-4999). Everything else — including exchanges
- * (SIC 6200: ICE, CME) and networks (7389: V), which are capital-light and net-cash —
- * is industrial, so the ratios still carry meaning. Returns null when SIC is absent.
+ * security brokers/investment banks (6211), fee-based asset managers / investment
+ * advisers (6282: BAM), and insurers (6300-6499). Utilities are electric/gas/water/
+ * sanitary (4900-4999). Everything else — including exchanges (SIC 6200: ICE, CME)
+ * and networks (7389: V), which are capital-light and net-cash but still pass
+ * Piotroski cleanly — is industrial, so the ratios still carry meaning. Returns
+ * null when SIC is absent.
  */
 export function sectorFromSic(sic: number | null | undefined): Sector | null {
   if (sic == null || !Number.isFinite(sic)) return null;
-  if ((sic >= 6000 && sic <= 6199) || sic === 6211 || sic === 6712 || (sic >= 6300 && sic <= 6499)) return "financial"; // banks, credit, broker-dealers, bank-holding cos, insurers
+  if ((sic >= 6000 && sic <= 6199) || sic === 6211 || sic === 6282 || sic === 6712 || (sic >= 6300 && sic <= 6499)) return "financial"; // banks, credit, broker-dealers, asset managers/investment advisers, bank-holding cos, insurers
   if ((sic >= 4900 && sic <= 4999) || (sic >= 6790 && sic <= 6799)) return "utility"; // utilities and REITs: high leverage / sub-1 current ratio are structural, not distress
   return "industrial";
 }

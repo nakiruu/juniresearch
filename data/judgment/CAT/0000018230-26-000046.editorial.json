@@ -1,0 +1,79 @@
+{
+  "judgmentSha256": "6eb3d9eca1477530af037fd98b36b02f558f93f885e7e679ffb82c3a204b578b",
+  "reviewedAt": "2026-09-24T04:00:00Z",
+  "reviewer": "claude-opus-4-8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "Favorable price realization of $595 million and higher sales volume of $3.1 billion together lifted quarterly profit 65 percent to $3.593 billion.",
+      "issue": "This conflates the revenue bridge with the profit bridge. The MD&A gives $3.1 billion of higher sales volume and $595 million of favorable price realization as the drivers of the 24 percent, $3.974 billion increase in sales and revenues — not of profit. It then states the separate profit rise ('an increase of $1.414 billion, or 65 percent') 'was mainly due to the profit impact of higher sales volume,' and does not credit the $595 million price figure or the $3.1 billion figure to consolidated profit. Attaching two revenue-change magnitudes to the profit result, and naming price as a co-driver the pack does not credit at the consolidated level, is an unsupported causal/attribution claim.",
+      "fix": "Separate the two bridges: state that sales rose 24 percent to $20.543 billion on $3.1 billion higher volume and $595 million favorable price, and, separately, that quarterly profit rose 65 percent to $3.593 billion, which the MD&A attributes mainly to the profit impact of higher sales volume. Do not present the $595 million/$3.1 billion revenue figures as the drivers of profit.",
+      "status": "addressed",
+      "note": "Round 2: the thesis now separates the two bridges — sales +24% to $20.543B on $3.1B volume and $595M price, and, separately, profit +65% to $3.593B 'which the MD&A attributes mainly to the profit impact of higher sales volume', matching the MD&A (prompt lines 228-229). Resolved."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.management.capitalAllocation",
+      "quote": "In FY25 the company repurchased $5.2 billion of stock and paid $2.7 billion in dividends, and in the second quarter of 2026 it deployed $2.2 billion for the two combined, being $1.5 billion of repurchases and $0.7 billion of dividends. Free cash flow was $8.9 billion in FY25. Capital expenditure is rising, from $2.8 billion in FY25 toward a guided $3.5 billion in 2026",
+      "issue": "capitalAllocation is a near-verbatim restatement of cashflowCommentary rather than a distinct read. Both carry the same figures (FY25 buybacks $5.2B, dividends $2.7B; Q2'26 $2.2B combined = $1.5B/$0.7B; FCF $8.9B; capex $2.8B rising to $3.5B; 0.81% yield), and the clauses 'deployed $2.2 billion for the two combined, being $1.5 billion of repurchases and $0.7 billion of dividends' and 'the return of capital comes mostly through repurchases/buybacks' appear in both sections almost word-for-word. Rubric item 7: no sentence should appear in two sections; introduce a figure once and refer back in words.",
+      "fix": "Establish the capital-return figures once (in cashflowCommentary), and in capitalAllocation reach a judgment instead of repeating them: e.g. how the rising $3.5B capex plan changes the buyback pace, whether the 0.81% yield/buyback mix is sustainable through a downturn, or what the FCF cover of returns implies. Refer back to the figures in words rather than restating the amounts.",
+      "status": "addressed",
+      "note": "Round 2: capitalAllocation now reaches a distinct judgment — affordability (FCF covers returns), the capex step-up slowing the buyback pace, dividend-vs-buyback flexibility, and FCF tracking the cycle — and refers back to the figures 'detailed above' in words. The amounts now live once, in cashflowCommentary. Resolved."
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.businessMoat.segments[0].body",
+      "quote": "In the second quarter of 2026 Construction Industries sales were $8.346 billion, up 35 percent; Power & Energy sales were $8.238 billion, up 17 percent, with Power Generation the main driver on data-center demand; and Resource Industries sales were $4.648 billion, up 20 percent, tied to mining and commodity demand.",
+      "issue": "The Q2'26 segment-sales trio and the data-center/Power Generation point are stated in full in three places. Construction $8.346B/+35% and Power & Energy $8.238B/+17% appear in the executive-summary thesis and again here; Power Generation +29% appears in the thesis, in this segment body ('main driver on data-center demand') and in growth.points[1]. The 'first time in company history above $20 billion / over $20 billion in a single quarter' claim likewise recurs across the subtitle, growth.points[0] and management.leadership. Rubric item 7: figures introduced in the exec summary should be pointed to, not re-stated verbatim in the body sections.",
+      "fix": "Introduce each segment figure once (the businessMoat/segments body is the natural home) and have the thesis and growth points refer back in words rather than repeat the same billions and percentages. Keep the '$20 billion first' claim in one place and reference it elsewhere in prose.",
+      "status": "addressed",
+      "note": "Round 2: the Q2'26 segment trio now appears once, in segments[0].body (Power Generation +29% with it); the thesis refers to it in words ('sales higher across all three primary segments') and growth.points no longer restate the figures. The '$20 billion first' claim sits once in management.leadership, with the subtitle referencing 'a $20 billion quarter' only as framing. Resolved."
+    },
+    {
+      "id": "F-4",
+      "severity": "Important",
+      "field": "sections.businessMoat.durability",
+      "quote": "FY25 operating margin fell to 16.5 percent from 20.2 percent even as revenue grew, and the 2025 Form 10-K warns that demand is highly sensitive to global and regional economic conditions and commodity prices.",
+      "issue": "The FY25 operating-margin decline (16.5 percent from 20.2 percent) is used as a stand-alone claim in three sections: financials.incomeCommentary ('operating margin narrowed to {- 16.5 percent -} from 20.2 percent in FY24'), this durability paragraph, and risks.idiosyncratic ('operating margin fell to 16.5 percent from 20.2 percent even as revenue grew 4.3 percent'). Same figure, same argument (margin fragility), made three times in different words. Rubric item 7 paraphrase repetition.",
+      "fix": "State the FY25 margin compression once with its number (incomeCommentary), then in durability and the idiosyncratic risk refer to it in words ('the FY25 margin slip shown above') rather than re-quoting 16.5 percent from 20.2 percent.",
+      "status": "addressed",
+      "note": "Round 2: the 16.5%-from-20.2% figure is stated once, in incomeCommentary. durability now says 'the FY25 margin slip shown in the income-statement discussion' and risks.idiosyncratic[3] says 'the FY25 operating-margin decline noted in the income-statement discussion' — both refer back in words with no restated figures. Resolved."
+    },
+    {
+      "id": "F-5",
+      "severity": "Minor",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "operating income fell to $11.2 billion and operating margin narrowed to {- 16.5 percent -} from 20.2 percent in FY24",
+      "issue": "The {- -} span wraps a bare level ('16.5 percent'), not a signed change. House style / rubric item 9 restricts spans to signed changes or explicit positives/negatives; 16.5 percent in isolation is a positive margin, and the fall is expressed by the surrounding words 'narrowed ... from 20.2 percent', which sit outside the span.",
+      "fix": "Either drop the span, or move it onto the signed change itself (e.g. the decline in points), so the marker sits on an explicit negative rather than on a standalone level.",
+      "status": "addressed",
+      "note": "Round 2: the span now reads '{- narrowed to 16.5 percent from 20.2 percent -}', wrapping the decline phrase — an explicit negative that includes the direction word and both endpoints — rather than the bare level '16.5 percent'. The marker sits on the negative change, satisfying the span rule, and it is a clause, not a whole sentence. Resolved."
+    },
+    {
+      "id": "F-6",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.catalysts[4]",
+      "quote": "Construction momentum: North America sales increased 39 percent in the quarter, supported by Infrastructure Investment and Jobs Act spending still to be deployed.",
+      "issue": "The 39 percent figure is grounded (the MD&A states 'North America sales increased 39 percent'), but it is the total Machinery, Energy & Transportation North America figure, not Construction Industries. Construction Industries' own North America sales rose 50 percent, and consolidated North America (including Financial Products) rose 37 percent. Labelling a total-region figure 'Construction momentum' and pairing it with IIJA construction spending implies it is a construction-segment number, which is imprecise.",
+      "fix": "Either use the Construction Industries North America figure (+50 percent) under the 'Construction momentum' label, or relabel the bullet to make clear the 39 percent is total North America sales and keep the IIJA point as context.",
+      "status": "addressed",
+      "note": "Round 2: the bullet now reads 'Construction Industries' North America sales rose 50 percent in the quarter', using the segment's own figure (grounded at Construction Industries NA $5,065M vs $3,369M, +50%) under the 'Construction momentum' label. Resolved."
+    },
+    {
+      "id": "F-7",
+      "severity": "Minor",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "The debt figure is large relative to equity, but much of it funds the Financial Products lending book rather than industrial operations",
+      "issue": "The pack does not split total debt ($36.2B) between the Financial Products lending book and industrial operations. Financial Products is disclosed as a captive lender (Q2'26 revenue $1.145B), which invites the inference, but the surface carries no debt breakdown, so 'much of it funds the Financial Products lending book' is an unsupported quantitative characterization (rubric item 2).",
+      "fix": "Either hedge to what the pack supports (Caterpillar carries a captive-finance arm whose receivables are debt-funded) without asserting the share of total debt it represents, or ground the split from a source that quantifies Financial Products borrowings.",
+      "status": "addressed",
+      "note": "Round 2: balanceCommentary now hedges to what the pack supports — 'Caterpillar runs a captive-finance arm, Financial Products, whose finance receivables are debt-funded' — and states explicitly that 'the pack does not split borrowings between that lending book and the industrial business ... without quantifying by how much'. The unsupported share-of-debt assertion is gone. Resolved."
+    }
+  ]
+}

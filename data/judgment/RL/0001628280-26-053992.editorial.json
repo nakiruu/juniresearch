@@ -1,0 +1,39 @@
+{
+  "judgmentSha256": "29fe24c26c8ec4db9d338486833d72d36cc879d77c5123d5c13180a758acac29",
+  "reviewedAt": "2026-09-24T03:10:40Z",
+  "reviewer": "Claude Opus 4.8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[1]",
+      "quote": "AUR growth and favorable channel and geographic mix more than offset that incremental pressure in the first quarter of Fiscal 2027, with gross margin still expanding 140 basis points.",
+      "issue": "This inverts the source. The earnings press release (Context) states gross margin expansion \"was driven by AUR growth as well as favorable channel and geographic mix shifts, more than offsetting incremental pressure from tariffs and other product costs\" — i.e., the tariff/product-cost pressure was MORE THAN offset (gross margin expanded 140 bps). The round-1 text said it was \"only partly offset,\" and the same inversion appeared in sections.executiveSummary.risks[1].",
+      "fix": "Reword both risk bullets so tariffs and other product costs were an incremental pressure this quarter that AUR growth and favorable mix more than offset, with gross margin still expanding 140 bps; the forward risk can be stated without misdescribing the quarter just reported.",
+      "status": "addressed",
+      "note": "Resolved. idiosyncratic[1] now reads that AUR growth and favorable mix 'more than offset that incremental pressure... with gross margin still expanding 140 basis points,' and the forward risk is framed as the offset possibly not persisting as tariff rates rise in the back half. executiveSummary.risks[1] matches ('more than offset that pressure this quarter, but the offset may thin as tariff rates rise later in the year'), and both now agree with sections.financials.incomeCommentary."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.businessMoat.segments[0].body",
+      "quote": "The vendor tearsheet does not break out a revenue mix and shows only the consolidated total, but the earnings press release reports North America, Europe, and Asia as the Company's three reportable segments; we use the filing's segment detail.",
+      "issue": "The grounding surface disagreed with itself and the report silently picked the wrong side (rubric item 8): the Facts block asserts a single reportable segment, but the press release states North America, Europe and Asia ARE the Company's three reportable segments. The round-1 prose also contradicted itself, calling it a 'single consolidated business' while quoting 'segment operating income of $171 million.'",
+      "fix": "Reconcile the two sources once and state which is used; either present North America, Europe and Asia as reportable segments or note the vendor tearsheet does not break them out while the filing does, and remove the internal contradiction.",
+      "status": "addressed",
+      "note": "Resolved. The body now reconciles the two sources once ('The vendor tearsheet does not break out a revenue mix... but the earnings press release reports North America, Europe, and Asia as the Company's three reportable segments; we use the filing's segment detail') and drops the 'single consolidated business' contradiction. The three segments' revenue and operating-income figures all tie to the press release. The structural key stays 'Consolidated,' which the round-1 finding explicitly permitted for the build validator."
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "In the first quarter of Fiscal 2027 average unit retail rose across the direct-to-consumer network with lower-than-planned promotions, and gross and operating margins expanded, as the income commentary details.",
+      "issue": "Near-duplicate sentences repeated across sections rather than being introduced once and referred back in words (rubric item 7): the round-1 thesis restated the 15% AUR / 73.7% / 140 bps figures that also appeared in moatFactors[0] and incomeCommentary, and the Asia/China figures were stated in full in both growth.points[1] and segments[0].body (recurring again in catalysts and scenarioCommentary).",
+      "fix": "Introduce each figure once in the section that argues it (AUR/gross margin in the income/moat section; Asia/China in the segments section) and refer back in words elsewhere, keeping the executive-summary items as pointers.",
+      "status": "addressed",
+      "note": "Resolved. The thesis now refers back in words ('as the income commentary details') and moatFactors[0] does the same ('the resulting gross-margin expansion, detailed in the income commentary'). The 15% AUR / 73.7% / 140 bps figures now appear in full only in incomeCommentary; the Asia/China figures appear in full only in segments[0], with growth.points[1], catalysts and scenarioCommentary now pointing back ('as the segment detail sets out') rather than restating the numbers."
+    }
+  ]
+}
