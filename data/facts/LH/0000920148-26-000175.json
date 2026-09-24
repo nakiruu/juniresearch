@@ -1,0 +1,597 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "LH",
+  "cik": 920148,
+  "company": "Labcorp Holdings Inc.",
+  "exchange": "NYSE",
+  "sic": 8071,
+  "sicDescription": "Services-Medical Laboratories",
+  "goodwill": [
+    8121000000,
+    null,
+    6142500000,
+    6369700000,
+    6789500000
+  ],
+  "filing": {
+    "form": "10-Q",
+    "accession": "0000920148-26-000175",
+    "filedDate": "2026-08-05",
+    "periodEnd": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/920148/000092014826000175/lh-20260630.htm"
+  },
+  "capturedAt": "2026-09-24T12:01:26.607Z",
+  "quote": {
+    "price": 303.98,
+    "marketCap": 24652779520,
+    "sharesOutstanding": 81100005.00032896,
+    "sharesSource": "derived",
+    "week52Low": 244.52,
+    "week52High": 341.8,
+    "dividendYield": 0.0095,
+    "asOf": "2026-09-24"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          13136100000,
+          11863900000,
+          12161600000,
+          13008900000,
+          13951700000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          4992400000,
+          3708900000,
+          3364900000,
+          3624400000,
+          4012500000
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          3048600000,
+          1436500000,
+          725600000,
+          1086700000,
+          1384700000
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          3625600000,
+          1973700000,
+          1302900000,
+          1730200000,
+          2065800000
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          2377300000,
+          1279100000,
+          418000000,
+          746000000,
+          876500000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          24.39,
+          13.97,
+          4.77,
+          8.84,
+          10.46
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          1472700000,
+          320600000,
+          536800000,
+          1518700000,
+          532300000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          5418000000,
+          5340100000,
+          5054500000,
+          6331500000,
+          5584700000
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          3945300000,
+          5019500000,
+          4517700000,
+          4812800000,
+          5052400000
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          10273400000,
+          10096600000,
+          7875000000,
+          8052200000,
+          8619800000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          1.9154479140464982,
+          1.5023550430404418,
+          1.1674934887758899,
+          1.4433067083058075,
+          1.4239419160616256
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          3109600000,
+          1955900000,
+          1327700000,
+          1585800000,
+          1640500000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -421500000,
+          -429300000,
+          -453600000,
+          -489900000,
+          -434500000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          -1668500000,
+          -1100000000,
+          -1000000000,
+          -250100000,
+          -450000000
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          null,
+          -195200000,
+          -254000000,
+          -243100000,
+          -240700000
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          2688100000,
+          1526600000,
+          874100000,
+          1095900000,
+          1206000000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q2'26",
+    "periodEnd": "2026-06-30",
+    "revenue": 3731100000,
+    "operatingMargin": 0.12103669159229181,
+    "revenueYoY": 0.05777790377909442
+  },
+  "ttm": {
+    "pe": 25.14309346567411,
+    "ps": 1.7182032004460552,
+    "evToEbitda": 13.849003383647226,
+    "grossMargin": 0.28882771117925843,
+    "operatingMargin": 0.10430722051853918,
+    "netMargin": 0.06985642598271537,
+    "netDebtToEbitda": 2.6069132199370695,
+    "interestCoverage": 6.587147887323944,
+    "currentRatio": 1.7955850513037748,
+    "fcfYield": 0.04685881358987629
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 14749307680,
+      "eps": 18.34745
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 15479533030,
+      "eps": 19.84413
+    }
+  },
+  "analysts": {
+    "count": 18,
+    "buy": 13,
+    "hold": 4,
+    "sell": 1,
+    "consensusRating": "Buy",
+    "consensusTarget": 344.8125,
+    "medianTarget": 352.5,
+    "highTarget": 385,
+    "lowTarget": 293,
+    "asOf": "2026-09-24"
+  },
+  "segments": {
+    "basis": "FY25 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 13951700000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "BIIB",
+      "pe": 39.297066,
+      "ps": 3.3524933,
+      "evToEbitda": 12.113
+    },
+    {
+      "ticker": "DGX",
+      "pe": 25.774336,
+      "ps": 2.2246535,
+      "evToEbitda": 14.068
+    },
+    {
+      "ticker": "DXCM",
+      "pe": 34.67589,
+      "ps": 6.662211,
+      "evToEbitda": 23.202
+    },
+    {
+      "ticker": "ILMN",
+      "pe": 46.097473,
+      "ps": 8.580859,
+      "evToEbitda": 34.564
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-11",
+      "close": 322.4200134277344
+    },
+    {
+      "date": "2026-08-12",
+      "close": 323.4800109863281
+    },
+    {
+      "date": "2026-08-13",
+      "close": 322.5899963378906
+    },
+    {
+      "date": "2026-08-14",
+      "close": 318.1300048828125
+    },
+    {
+      "date": "2026-08-17",
+      "close": 323.3399963378906
+    },
+    {
+      "date": "2026-08-18",
+      "close": 322.17999267578125
+    },
+    {
+      "date": "2026-08-19",
+      "close": 330.44000244140625
+    },
+    {
+      "date": "2026-08-20",
+      "close": 332.80999755859375
+    },
+    {
+      "date": "2026-08-21",
+      "close": 336.3399963378906
+    },
+    {
+      "date": "2026-08-24",
+      "close": 339.3399963378906
+    },
+    {
+      "date": "2026-08-25",
+      "close": 337.67999267578125
+    },
+    {
+      "date": "2026-08-26",
+      "close": 335.7200012207031
+    },
+    {
+      "date": "2026-08-27",
+      "close": 336.5400085449219
+    },
+    {
+      "date": "2026-08-28",
+      "close": 335.1099853515625
+    },
+    {
+      "date": "2026-08-31",
+      "close": 332.6600036621094
+    },
+    {
+      "date": "2026-09-01",
+      "close": 327.6099853515625
+    },
+    {
+      "date": "2026-09-02",
+      "close": 331.6600036621094
+    },
+    {
+      "date": "2026-09-03",
+      "close": 331.5
+    },
+    {
+      "date": "2026-09-04",
+      "close": 326.8900146484375
+    },
+    {
+      "date": "2026-09-08",
+      "close": 324.8599853515625
+    },
+    {
+      "date": "2026-09-09",
+      "close": 321.1000061035156
+    },
+    {
+      "date": "2026-09-10",
+      "close": 306.9599914550781
+    },
+    {
+      "date": "2026-09-11",
+      "close": 311.5400085449219
+    },
+    {
+      "date": "2026-09-14",
+      "close": 315.30999755859375
+    },
+    {
+      "date": "2026-09-15",
+      "close": 323.9700012207031
+    },
+    {
+      "date": "2026-09-16",
+      "close": 324.510009765625
+    },
+    {
+      "date": "2026-09-17",
+      "close": 322.7300109863281
+    },
+    {
+      "date": "2026-09-18",
+      "close": 320.7099914550781
+    },
+    {
+      "date": "2026-09-21",
+      "close": 320.989990234375
+    },
+    {
+      "date": "2026-09-23",
+      "close": 303.9800109863281
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "Labcorp Holdings Inc. provides laboratory services. It operates in Diagnostics Laboratories and Biopharma Laboratory Services segments. The company offers various tests, such as blood chemistry analyses, urinalyses, blood cell counts, thyroid tests, PAP tests, hemoglobin A1C, PSA, tests for sexually transmitted diseases, vitamin D testing, microbiology cultures and procedures, and alcohol and other substance abuse tests. It also provides specialty testing services comprising gene-based and esoteric testing; advanced tests target specific diseases; services related to anatomic pathology/oncology, cardiovascular disease, coagulation, diagnostic genetics, endocrinology, infectious disease, women's health, pharmacogenetics, parentage and donor testing, occupational testing service, medical drug monitoring services, chronic disease programs, and kidney stone prevention tests; and health and wellness services to employers and managed care organizations. In addition, it offers digital pathology solutions, a pathology platforms that support the digitization, centralized review, and sharing of pathology slides; provider and payer digital platforms, an online applications for providers, MCOs, and ACOs; online and mobile applications that enable patients to check offerings, schedule PSC visits, check-in upon PSC arrival, complete documentation, access tests and test results, and manage their accounts; and Generative AI enabled Test Selection, a generative AI enabled tool. It serves clients, third party, medicare/medicaid, patients, pharmaceutical, biotechnology, medical device, diagnostic companies, and CROs. It has a strategic collaboration with the Children's Hospital of Philadelphia to accelerate the discovery, development, and availability of pediatric diagnostics; a strategic alliance with the National Association of Community Health Centers to support current and emerging clinical leaders through the NACHC Leadership Exchange for Chief Medical Officers; and Alliance for Clinical Trials in Oncology to advance national clinical trial for patients diagnosed with colorectal cancer. The company was founded in 1995 and is headquartered in Burlington, North Carolina.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-24"
+    },
+    "mdaExcerpt": {
+      "text": "ITEM 2. MANAGEMENT'S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS\nFORWARD-LOOKING STATEMENTS\nIn this Quarterly Report on Form 10-Q (Quarterly Report), Labcorp Holdings Inc. together with its subsidiaries (Labcorp, LHI or the Company) has made, and from time to time may otherwise make in its public filings, press releases, and discussions by Company management, forward-looking statements concerning the Company's operations, performance, and financial condition, as well as its strategic objectives. Some of these forward-looking statements relate to future events and expectations and can be identified by the use of forward-looking words such as \"believes\", \"expects\", \"may\", \"will\", \"should\", \"seeks\", \"approximately\", \"intends\", \"plans\", \"estimates\", or \"anticipates\" or the negative of those words or other comparable terminology. Such forward-looking statements speak only as of the time they are made and are subject to various risks and uncertainties and the Company claims the protection afforded by the safe harbor for forward-looking statements contained in the Private Securities Litigation Reform Act of 1995. Actual results could differ materially from those currently anticipated due to a number of factors in addition to those discussed elsewhere herein, including in the \"Risk Factors\" section of the Annual Report, and in the Company's other public filings, press releases, and discussions with Company management, including:\n1. changes in government and third-party payer regulations, reimbursement, or coverage policies or other future reforms in the U.S. healthcare system (or in the interpretation of current regulations), new insurance or payment systems, including state, regional or private insurance cooperatives (e.g., health insurance exchanges) affecting governmental and third-party coverage or reimbursement for commercial laboratory testing, including the impact of the U.S. Protecting Access to Medicare Act;\n2. significant monetary damages, and penalties, and/or exclusion from or ineligibility to participate in government programs, among other adverse consequences, arising from enforcement of anti-fraud and abuse laws and other laws applicable to the Company in jurisdictions in which the Company conducts business;\n3. significant fines, penalties, costs, unanticipated compliance expenditures, and/or damage to the Company's reputation arising from the failure to comply with applicable privacy and security laws and regulations;\n4. loss or suspension of a license or imposition of fines or penalties under, or future changes in or interpretations of the U.S. Clinical Laboratory Improvement Amendments of 1988, Medicare, Medicaid, or other national, state, or local laws or regulations of the U.S. and other countries where the Company operates laboratories;\n5. penalties or loss of license arising from the failure to comply with applicable occupational and workplace safety laws and regulations, including the U.S. Occupational Safety and Health Administration requirements, the U.S. Needlestick Safety and Prevention Act, and similar laws and regulations in jurisdictions in which the Company conducts business;\n6. fines, unanticipated compliance expenditures, suspension of manufacturing, enforcement actions, damage to the Company's reputation, injunctions, or criminal prosecution arising from failure to maintain compliance with Current Good Manufacturing Practice regulations and similar requirements of various regulatory agencies in jurisdictions in which the Company conducts business;\n7. sanctions or other remedies, including fines, unanticipated compliance expenditures, enforcement actions, injunctions or criminal prosecution arising from failure to comply with the U.S. Animal Welfare Act or applicable national, state, and local laws and regulations in jurisdictions in which the Company conducts business;\n8. changes in testing guidelines or recommendations by government agencies, medical specialty societies, and other authoritative bodies affecting the development, validation, approval, clearance, commercialization, or utilization of laboratory tests;\n9. changes in and failure to comply with the applicable regulations of pharmaceutical and medical device regulators affecting the approval, availability of, and the selling and marketing of diagnostic tests, including laboratory-developed tests, drug development, or the conduct of drug development and medical device and diagnostic studies and trials, including regulations and policies of the U.S. Food and Drug Administration, the U.S. Department of Agriculture, the Medicines and Healthcare Products Regulatory Agency in the U.K., the National Medical Products Administration in China, the Pharmaceutical and Medical Devices Agency in Japan, the European Union, the European Medicines Agency, and similar regulations and policies of agencies in other jurisdictions in which the Company conducts business;\n10. changes in government regulations pertaining to the pharmaceutical, biotechnology, medical device, and diagnostic industries, changes in reimbursement of pharmaceutical products, or reduced spending on research and development by pharmaceutical, biotechnology, medical device, and diagnostic customers;\n11. liabilities that result from the failure to comply with corporate governance requirements;\n12. increased competition, including price competition, potential reduction in rates in response to price transparency initiatives and consumerism, competitive bidding and/or changes or reductions to fee schedules, and competition from companies that do not comply with existing applicable laws or regulations or otherwise disregard compliance standards in the industry;\n13. changes in payer mix or payment structure or process, including insurance carrier participation in health insurance exchanges, an increase in capitated reimbursement mechanisms, the impact of clearinghouses on the claims reimbursement\n24\nTABLE OF CONTENTS\nprocess, the impact of a shift to consumer-driven health plans or plans carrying an increased level of member cost-sharing, and adverse changes in payer reimbursement or payer coverage policies (implemented directly or through a third-party utilization management organization) related to specific diagnostic tests, categories of testing, or testing methodologies;\n14. failure to retain or attract business from MCOs as a result of changes in strategy or business models;\n15. failure to obtain and retain new customers, an unfavorable change in the mix of testing services ordered, or a reduction in tests ordered, specimens submitted, or services requested by existing customers, and delays in payments from customers;\n16. consolidation and convergence of customers, competitors, and suppliers, potentially causing material shifts in insourcing, utilization, pricing, reimbursement, and supply chain access;\n17. failure to invest in or effectively develop and deploy new systems, system modifications or enhancements required in response to evolving market, business, and customer trends and needs;\n18. failure to identify, successfully close, and effectively integrate and/or manage acquisitions of new businesses or failure to maintain key customers and/or employees as a result of uncertainty surrounding the integration of acquisitions;\n19. inability to achieve the expected benefits and synergies of newly acquired businesses, including due to items not discovered in the due diligence process, and the impact on the Company's cash position, levels of indebtedness, and stock price;\n20. termination, loss, delay, reduction in scope, or increased costs of contracts;\n21. liability arising from errors or omissions in the performance of testing and other services or other contractual arrangements;\n22. changes or disruption in the provision or transportation of services or supplies provided by third parties; or their termination for failure to follow the Company's performance standards and requirements;\n23. damage or disruption to the Company's facilities;\n24. impact on the Company's reputation, or business, from acts of animal rights activists or potential harm, liability, or operational disruptions arising from, or increased regulations and restrictions, of animal research activities;\n25. adverse results in litigation matters;\n26. inability to attract, retain, and develop experienced and qualified personnel, including personnel in key roles and critical positions, due to increased competition for talent, wage growth, or other market factors beyond the Company's control;\n27. failure to develop or acquire licenses for new or improved technologies, such as point-of-care testing, mobile health technologies, and digital pathology, or potential use of new technologies by customers and/or consumers to perform their own tests;\n28. substantial costs arising from the inability to commercialize newly licensed tests or technologies or to obtain appropriate coverage or reimbursement for such tests;\n29. failure to obtain, maintain, and enforce intellectual property rights for protection of the Company's offerings and defend against challenges to those rights;\n30. scope, validity, and enforceability of patents and other proprietary rights held by third parties that may impact the Company's ability to develop, perform, or market the Company's offerings or operate its business;\n31. business interruption, receivables impairment, delays in cash collection impacting days sales outstanding, supply chain disruptions or inventory obsolescence, increases in the Company's material costs or other operating costs, or other impacts on the business due to natural disasters, adverse weather, geopolitical events, public health crises, and other events beyond the Company's control;\n32. discontinuation or recalls of existing products used in the performance of testing;\n33. a failure in the information technology systems of the Company or newly-acquired businesses, the failure of the Company or its third-party suppliers and vendors to maintain the security of their information technology systems or to protect against cybersecurity incidents, failures in the development and implementation of the Company's automation platforms, or adverse effects from the use of or regulation of artificial intelligence and machine learning tools;\n34. business interruption, increased costs, and other adverse effects on the Company's operations due to the unionization of employees, union strikes, work stoppages, general labor unrest, or failure to comply with labor or employment laws;\n35. failure to maintain the Company's days sales outstanding levels, cash collections (in light of increasing levels of patient responsibility), profitability and/or reimbursement arising from unfavorable changes in third-party payer policies, payment delays introduced by third-party utilization management organizations, and increasing levels of patient payment responsibility;\n36. impact on the Company's revenues, cash collections, and the availability of credit for general liquidity or other financing needs arising from a significant deterioration in the economy or financial markets or in the Company's credit ratings by S&P and/or Moody's;\n37. failure to maintain the expected capital structure for the Company, including failure to maintain the Company's investment grade rating, or leverage ratio covenants under its revolving credit facility;\n38. changes in reimbursement by foreign governments and foreign currency fluctuations;\n39. inability to obtain certain billing information from physicians, resulting in increased costs and complexity, a temporary disruption in receipts, and ongoing reductions in reimbursements and revenues;\n40. expenses and risks associated with international operations, including, but not limited to, compliance with the U.S. Foreign Corrupt Practices Act, the U.K. Bribery Act, other applicable anti-corruption laws and regulations, trade sanction laws and regulations, and economic, political, legal, and other operational risks associated with foreign jurisdictions;\n25\nTABLE OF CONTENTS\n41. failure to achieve expected efficiencies, benefits, and savings in connection with the Company's business process improvement initiatives;\n42. changes in tax laws and regulations or changes in their interpretation;\n43. changing global economic conditions and government and regulatory changes; and\n44. risks associated with the impacts and expected benefits and costs of the completed Spin-off of the Company's former clinical development and commercialization services business, Fortrea, including but not limited to factors that could adversely affect the Company's ability to realize the expected benefits of the Spin-off or the failure of the Spin-off to qualify as a tax-free transaction for U.S. federal income tax purposes.\nExcept as may be required by applicable law, the Company undertakes no obligation to publicly update or revise any forward-looking statements, whether as a result of new information, future events or otherwise. Given these uncertainties, one should not put undue reliance on any forward-looking statement.\nGENERAL (dollars in millions)\nFor the three months ended June 30, 2026, the Company's revenues were $3,731.1, an increase of 5.8% from $3,527.3 for the corresponding period in 2025. The 5.8% increase for the three months ended June 30, 2026, as compared to the corresponding period in 2025, was primarily due to organic revenue of 4.2%, acquisitions, net of divestitures, of 1.2%, and favorable foreign currency translation of 0.4%.\nFor the six months ended June 30, 2026, the Company's revenues were $7,268.7, an increase of 5.8% from $6,872.4 for the corresponding period in 2025. The 5.8% increase for the six months ended June 30, 2026, as compared to the corresponding period in 2025, was due to organic revenue of 3.6%, acquisitions, net of divestitures, of 1.3%, and favorable foreign currency translation of 0.9%.\nThe Company defines organic revenue and organic growth as the increase in revenues excluding the year-over-year impact of acquisitions, divestitures, and currency, as well as other strategic actions taken in ED. The impacts relating to acquisitions, divestitures, and other strategic actions are considered for a 12-month period following the closing of each transaction.\nOn July 4, 2025, the U.S. government enacted the OBBBA, which included provisions addressing regulations and federal funding affecting healthcare. These provisions include, but are not limited to, changes to Medicaid and the Affordable Care Act, and could lead to revised regulatory requirements and reduced federal funding. As a result of these changes, the Company could experience a decline in utilization of its diagnostics testing services due to a reduction in overall insurance coverage, which may cause the Company's revenue to decrease. However, the Company currently believes any such reduction would not likely have a material impact on its results of operations in future periods. The potential impacts described above represent the Company's assessment at this time, and the Company will continue to evaluate the impact of the OBBBA on its business and operations as the legislation's provisions continue to become effective through 2028.\nRESULTS OF OPERATIONS (dollars in millions)\nThe following tables present the financial measures that management considers to be the most significant indicators of the Company ' s performance.\nRevenues\nThree Months Ended June 30,\n2026\n2025\nChange\nDx\n$\n2,900.7\n$\n2,748.8\n5.5\n%\nBLS\n836.2\n784.8\n6.5\n%\nIntercompany eliminations and other\n(5.8)\n(6.3)\n(11.5)\n%\nTotal\n$\n3,731.1\n$\n3,527.3\n5.8\n%\nDx revenues for the three months ended June 30, 2026, were $2,900.7, an increase of 5.5% over $2,748.8 in the second quarter of 2025. The increase was primarily due to organic revenue of 3.6% and acquisitions, net of divestitures, of 1.9%.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/920148/000092014826000175/lh-20260630.htm",
+      "asOf": "2026-08-05",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "Item 1A. RISK FACTORS\nInvestors should carefully consider all of the information set forth in this Annual Report, including the following risk factors, before deciding to invest in any of the Company's securities. The risks below are not the only ones that the Company faces. Additional risks not presently known to the Company, or that it presently deems immaterial, may also negatively impact the Company. The Company's business, consolidated financial condition, revenues, results of operations, profitability, reputation, or cash flows could be materially impacted by any of these factors.\nRisks Related to the Company's Business and Operations\nGeneral or macro-economic factors and significant fluctuations in economic conditions in the U.S. and globally may have a material adverse effect on the Company.\nThe Company's business depends on sustained demand for diagnostic testing and biopharma laboratory services by patients, physicians, hospitals, MCOs, CROs, pharmaceutical, biotechnology, medical device companies, and others. Significant changes in global economic conditions, inflationary pressures, and credit market volatility could negatively affect testing volumes, the demand for biopharma laboratory services, cash collections, profitability, and access to financing. Pressure on and uncertainty surrounding the U.S. federal government budget and potential changes in budgeting priorities could adversely affect the funding for government programs that comprise a portion of the Company's revenue. In addition, uncertainty in the credit markets and interest rate volatility could reduce the availability and increase the cost of credit and impact the Company's ability to meet its financing needs in the future.\nOperations may be disrupted and adversely impacted by events beyond the Company's control, including natural disasters, adverse weather, geopolitical events, public health crises, supply chain disruptions, and inaccessibility of natural resources.\nNatural disasters (e.g., severe weather, fires, and earthquakes), geopolitical events (e.g., terrorism, war, and political instability), public health crises, criminal activity, supply chain disruptions, and other events beyond the Company's control could negatively affect the Company's operations. These disruptions may temporarily reduce testing volumes, delay study progress, hinder specimen transport, limit access to laboratories and IT systems, and interrupt supply deliveries. They may also affect customer operations, further decreasing demand. Prolonged disruptions caused by such events, especially in key operational locations, could harm the Company's results of operations.\nAn inability to attract, retain, and develop experienced and qualified personnel, including personnel in key roles and critical positions, and increased personnel costs, could adversely affect the Company's business.\nThe loss of personnel in key roles and critical positions or the inability to attract, retain, and develop experienced and qualified employees, at the Company's clinical laboratories, drug development, and diagnostic facilities, and increased costs related to such personnel and employees, could adversely affect the business. Success in maintaining the Company's leadership position in genomic and other advanced testing and diagnostic technologies will depend in part on the Company's ability to attract and retain skilled research professionals. In addition, the success of the Company's early discovery, clinical, and commercial laboratories also depends on employing and retaining qualified and experienced professionals, including specialists, who perform laboratory research activities and testing services. The same is true for patient-facing staff with specialized training required to perform activities related to specimen collection or clinical research activities. In the future, if competition for the services of these professionals increases, the Company may not be able to continue to attract and retain individuals in its markets. Changes to personnel in key roles and critical positions, and the ability to attract, develop, and retain qualified personnel, as a result of increased competition for talent, wage growth, or other market factors, could lead to strategic and operational challenges and uncertainties, distractions of management from other key initiatives, and inefficiencies and increased costs, any of which could adversely affect the Company's business, financial condition, results of operations, and cash flows.\nContinued changes in healthcare reimbursement models and products (e.g., health insurance exchanges), changes in government payment and reimbursement systems, or changes in payer mix, including an increase in third-party benefits management and value-based payment models, could have a material adverse effect on the Company's revenues, profitability, and cash flow.\nThe Company's diagnostic testing services are primarily billed to third parties, including MCOs, employer plans, and other health insurance providers. A shift toward a higher mix of government and MCO payers may adversely effect revenues due to lower reimbursement rates. Ongoing efforts by payers to reduce reimbursement, tighten payment policies, and control utilization are expected to continue. If the Company cannot offset these reductions through cost efficiencies, increased volume or new services, its revenues, profitability, and cash flows may be materially impacted. PAMA has already reduced Medicare reimbursement rates for many tests, and further reductions are expected, although rate reductions are frozen for 2026 and capped at 15% per year for 2027-2029. Delays and changes in coding, billing, and payer policies have historically impacted\n22\nTABLE OF CONTENTS\nrevenue and margins, and similar disruptions may continue. Increasing patient cost-sharing and evolving value-based care models also pose collection challenges and may affect the Company's ability to attract and retain MCOs.\nChanges in government regulation or in practices relating to the pharmaceutical, biotechnology, or medical device industries could decrease the need for certain services that BLS provides.\nBLS supports pharmaceutical, biotechnology, and medical device companies in navigating the regulatory approval and post-approval compliance requirements process. Changes in government regulations, whether easing or tightening requirements and changes in government operations, including staff reductions and reorganization efforts, could reduce the demand for BLS's services or make them less competitive. Additionally, efforts to control drug and device costs, or changes in insurer reimbursement practices, may lead customers to reduce R&D spending, which could adversely affect BLS's business.\nIncreased competition, including price competition, could have an adverse effect on the Company's revenues and profitability.\nAs further described in Item 1 and Item 1A of Part I of this Annual Report, both Dx and BLS operate in highly competitive industries and selection of a commercial laboratory or a drug development partner is based on a number of competitive factors. The commercial laboratory business is intensely competitive in terms of price, service, specialty offerings, and the type and number of commercial laboratories. Dx and BLS compete against a wide range of businesses, as well as in-house departments of pharmaceutical, biotechnology, medical device, and diagnostic companies, and, to a lesser extent, selected academic research centers, universities, and teaching hospitals. In addition, BLS's services are subject to increased price competition that may have an adverse effect on the segment's profitability and consolidated revenues and net earnings. Dx's or BLS's inability to compete effectively with other businesses as it relates to certain competitive factors, including the factors mentioned above, could have an adverse effect on the Company's revenues and profitability.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/920148/000092014826000111/lh-20251231.htm",
+      "asOf": "2026-02-24",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-K",
+    "pressRelease": {
+      "text": "EX-99.1\n2\nform8-kexhibit9912q26.htm\nEX-99.1\nDocument\nFOR IMMEDIATE RELEASE\nContact\nDewey Steadman - Investors\nRacquel White - Media\nInvestor labcorp.com\nMedia labcorp.com\nLabcorp Announces 2026 Second Quarter Results Raises Full Year 2026 Guidance\nResults from operations for second quarter 2026 versus second quarter 2025\nRevenue $3.73 billion vs. $3.53 billion, up 5.8%\nDiluted EPS $3.64 vs. $2.84, up 28.5%\nAdjusted EPS $4.99 vs. $4.35, up 14.9%\nRaised full-year enterprise revenue growth and adjusted EPS guidance\nAnnual revenue growth guidance of 5.4% to 6.3% up 30 basis points at the midpoint\nAdjusted EPS range of $18.10 to $18.55 up 30 cents at the midpoint\nAnnounced $1.0 billion increase in share repurchase authorization, bringing the remaining total authorization to $1.4 billion\nAdvanced Labcorp Oncology offerings in lung, colorectal, and prostate cancers, expanding access to screening, improving diagnosis, guiding treatment selection, and monitoring recurrence\nAnnounced the launch of Marker by Labcorp , a genetic health panel that provides consumers with personalized genetic insights\nBURLINGTON, N.C., July 30, 2026 Labcorp Holdings Inc. (NYSE LH), a global leader of innovative and comprehensive laboratory services, today announced results for the second quarter ended June 30, 2026 and updated its full-year financial guidance.\n\"Labcorp delivered another very strong quarter, with 6% revenue growth, significant margin expansion, and double-digit adjusted EPS growth reflecting continued momentum across the business,\" said Adam Schechter, Chairman and CEO of Labcorp. \"During the second quarter, we expanded our leadership in oncology and other high-growth specialty areas, strengthened our position as the partner of choice for health systems, biopharmaceutical companies, and regional local laboratories, and advanced our use of technology to improve the experience for consumers and providers. Our performance and continued execution position us well to deliver sustainable growth and long-term value for customers and shareholders.\"\n1\nLabcorp continues to advance its strategic priorities\nLead in specialty testing, with several advancements in Labcorp Oncology\nAdded an advanced DPYD genotyping test that helps identify patients at risk for severe chemotherapy treatment-related toxicity.\nLaunched ColoSense nationwide, the first FDA-approved, RNA-based colorectal cancer screening test with at-home collection. With Medicare and expanding commercial payer coverage, this test increases patient access to screening and enables earlier detection. As ColoSense's primary nationwide distributor, we are further strengthening our comprehensive colorectal cancer portfolio.\nEntered into a clinical trial collaboration with Fox Chase Cancer Center to evaluate Labcorp's Plasma Detect Genome MRD in patients at risk of early-stage non-small cell lung cancer recurrence.\nExpanded nationwide access to Roche's FDA-approved VENTANA PTEN (SP218) companion diagnostic for people living with prostate cancer who may now be eligible for combination treatment with AstraZeneca's targeted therapy TRUQAP.\nBe a partner of choice for health systems and regional local laboratories\nAwarded once again a Department of Defense contract to provide laboratory testing for service members and their families across military hospitals worldwide.\nCompleted the acquisition of select outreach laboratory services from Parkview Health in Indiana and Ohio.\nCompleted the acquisition of Tribal Diagnostics, a clinical laboratory serving communities in Oklahoma and Texas.\nGrow Consumer Health\nAnnounced the Marker by Labcorp Genetic Health Panel through Labcorp OnDemand where consumers can get their biomarker and genetic testing and insights from a single source.\nIntroduced Canada's first at-home, self-collection test to measure women's fertility-related hormones and men's testosterone levels.\nLaunched an AI-powered app, MyLabcorp, which has been downloaded by millions of consumers. The app allows patients to schedule appointments, view their test results, and gain deeper insights into their health.\nShape our future through technology and innovation\nExpanded a collaboration with Epic to place 6,500-plus diagnostic tests on Epic's Aura platform.\nEnhanced the patient experience at Labcorp's Patient Service Centers, through expanded appointment availability, streamlined scheduling, and proactive rescheduling reminders and assistance.\n2\nLabcorp also remains committed to a disciplined allocation of capital. In the second quarter of 2026, the company invested $225.7 million in acquisitions, repurchased $353.8 million of stock, and paid out $58.7 million in dividends. The company also paid down $500.0 million in senior notes in June. On July 9, 2026, the company announced a quarterly cash dividend of $0.72 per share of common stock, payable on September 11, 2026, to stockholders of record at the close of business on August 28, 2026. In July, the Board of Directors approved an increase of $1.0 billion in the company's share repurchase authorization, bringing the remaining total authorization to $1.4 billion.\n3\nLABCORP HOLDINGS INC. AND SUBSIDIARIES\nCONSOLIDATED RESULTS\nThree Months Ended June 30,\nSix Months Ended June 30,\n2026\n2025\nDelta\n2026\n2025\nDelta\nRevenue Summary (Dollars in millions)\nTotal Revenue\n$\n3,731.1\n$\n3,527.3\n5.8\n%\n$\n7,268.7\n$\n6,872.4\n5.8\n%\nOrganic (1)\n4.2\n%\n3.6\n%\nAcquisitions, net of Divestitures (2)\n1.2\n%\n1.3\n%\nForeign Exchange\n0.4\n%\n0.9\n%\n(1) Excludes the impact from acquisitions, divestitures, and currency, as well as other strategic actions taken in Early Development.\n(2) Includes the impact from strategic actions taken in Early Development.\nEarnings Summary (Dollars in millions, except per share data)\nOperating Income (\"OI\")\n$\n451.6\n$\n394.5\n$\n832.4\n$\n720.5\nOI as % of Revenue\n12.1\n%\n11.2\n%\n90 bps\n11.5\n%\n10.5\n%\n100 bps\nAdjustments (3)\n$\n137.1\n$\n137.1\n$\n264.2\n$\n280.1\nAdjusted Operating Income (\"AOI\") (4)\n$\n588.7\n(5)\n$\n531.6\n$\n1,096.6\n$\n1,000.6\nAOI as % of Revenue\n15.8\n%\n(5)\n15.1\n%\n70 bps\n15.1\n%\n14.6\n%\n50 bps\nNet Earnings Attributable to Labcorp Holdings Inc.\n$\n298.7\n$\n237.9\n$\n576.5\n$\n450.7\nDiluted EPS\n$\n3.64\n$\n2.84\n$\n6.99\n$\n5.36\nAdjusted EPS (4)\n$\n4.99\n$\n4.35\n14.9\n%\n$\n9.24\n$\n8.19\n12.8\n%\n(3) Adjustments include amortization, impairment charges, restructuring charges, and special items.\n(4) Non-GAAP financial measure. See \"Reconciliation of Non-GAAP Measures\" for additional information.\n(5) The increase in adjusted operating income and margin was due to organic growth and operating efficiencies.\n4\nLABCORP HOLDINGS INC. AND SUBSIDIARIES\nCONSOLIDATED RESULTS\nThree Months Ended June 30,\nSix Months Ended June 30,\n2026\n2025\n2026\n2025\nCash Flow Summary (Dollars in millions)\nOperating Cash Flow\n$\n445.5\n$\n620.6\n$\n637.0\n$\n639.1\nCapital Expenditures\n131.6\n77.9\n252.6\n203.9\nFree Cash Flow\n$\n313.9\n(1)\n$\n542.7\n$\n384.4\n$\n435.2\n(1) The difference in free cash flow was primarily due to working capital timing and planned increases in capital expenditures.\nCapital Allocation Summary\nAt the end of the quarter, Labcorp's cash and cash equivalents balance was $141.8 million and total debt was $5.86 billion. In June, we retired $500.0 million in senior notes.\nDuring the quarter, the company invested $225.7 million in acquisitions, repurchased $353.8 million of stock, and paid out $58.7 million in dividends.\n5\nLABCORP HOLDINGS INC. AND SUBSIDIARIES\nDiagnostics Laboratories Segment Summary\nThree Months Ended June 30,\n2026\n2025\nDelta\nRevenue Summary (Dollars in millions)\nTotal Revenue\n$\n2,900.7\n$\n2,748.8\n5.5\n%\nOrganic\n3.6\n%\nAcquisitions, net of Divestitures\n1.9\n%\nEarnings Summary (1) (Dollars in millions)\nAdjusted Operating Income (\"AOI\") (2)\n$\n522.6\n(3)\n$\n482.8\nAOI as % of Revenue\n18.0\n%\n(3)\n17.6\n%\n50 bps\n(1) Non-GAAP financial measure. See \"Reconciliation of Non-GAAP Measures\" for additional information.\n(2) Excludes amortization, restructuring charges, special items, and unallocated corporate expenses.\n(3) Adjusted Operating Income and margin increased due to organic growth and operating efficiencies.\nThree Months Ended June 30, 2026\nRequisition\nPrice Mix\nVolume Delta (4)\nDelta (4)\nMetrics Summary\nTotal\n3.0\n%\n2.5\n%\nOrganic (5)\n1.8\n%\n1.8\n%\nAcquisitions, net of Divestitures\n1.3\n%\n0.6\n%\nForeign Exchange\n%\n%\n(4) Column shows changes versus the three months ended June 30, 2025.\n(5) Organic price mix includes lab management agreements.\n6\nLABCORP HOLDINGS INC. AND SUBSIDIARIES\nBiopharma Laboratory Services Segment Summary\nThree Months Ended June 30,\n2026\n2025\nDelta\nRevenue Summary (Dollars in millions)\nTotal Revenue\n$\n836.2\n$\n784.8\n6.5\n%\n(1)\nOrganic (2)\n6.2\n%\nAcquisitions, net of Divestitures (3)\n(1.4)\n%\nForeign Exchange\n1.8\n%\n(1) Central Labs revenue growth of 9.8% Early Development revenue was down 1.4%.\n(2) Excludes the impact from acquisitions, divestitures, and currency, as well as other strategic actions taken in Early Development.\n(3) Includes the impact from strategic actions taken in Early Development.\nEarnings Summary (4) (Dollars in millions)\nAdjusted Operating Income (\"AOI\") (5)\n$\n142.2\n(6)\n$\n123.3\nAOI as % of Revenue\n17.0\n%\n(6)\n15.7\n%\n130 bps\n(4) Non-GAAP financial measure. See \"Reconciliation of Non-GAAP Measures\" for additional information.\n(5) Excludes amortization, restructuring charges, special items, and unallocated corporate expenses.\n(6) Adjusted Operating Income and margin increased, driven by organic growth and operating efficiencies from the strategic actions taken in Early Development.\nAs of\nJune 30, 2026\nMetrics Summary (Dollars in billions)\nTTM Net Orders\n$\n3.32\nTTM Book to Bill\n1.03\nBacklog\n$\n8.73\n(7)\nNext Twelve Months Forecast Backlog Conversion\n$\n2.75\n(7) Backlog increased 0.2% compared to this period last year.\n7\nGuidance for 2026\nLabcorp is updating 2026 full year guidance to reflect its second quarter performance and full year outlook. The following guidance assumes foreign exchange rates effective as of June 30, 2026. Enterprise level guidance includes the estimated impact from currently anticipated capital allocation, including acquisitions, share repurchases, and dividends.\n(Dollars in millions, except per share data)\nPrevious\nUpdated\n2026 Guidance\n2026 Guidance\nLow\nHigh\nLow\nHigh\nRevenue\nLabcorp Enterprise (1)(2)\n$14,649\n$14,803\n$14,710\n$14,827\nGrowth (3)\n5.0%\n6.1%\n5.4%\n6.3%\nDiagnostics Laboratories\n$11,431\n$11,518\n$11,450\n$11,532\nGrowth (3)\n5.1%\n5.9%\n5.3%\n6.0%\nBiopharma Laboratory Services (4)\n$3,216\n$3,266\n$3,269\n$3,300\nGrowth (3)\n3.8%\n5.4%\n5.5%\n6.5%\nAdjusted EPS\n$17.70\n$18.35\n$18.10\n$18.55\nFree Cash Flow\n$1,240\n$1,360\n$1,240\n$1,360\n(1) 2026 Updated Enterprise guidance includes an impact from foreign currency translation of 0.4%.\n(2) Enterprise level revenue is presented net of intercompany transaction eliminations.\n(3) Growth based on 2025 Enterprise revenue of $13,952 million, Diagnostics Laboratories revenue of $10,876 million, and Biopharma Laboratory Services revenue of $3,098 million.\n(4) 2026 Updated Biopharma Laboratory Services guidance includes an impact from foreign currency translation of 1.5%.\n8\nUse of Adjusted Measures\nThe company has provided in this press release and accompanying tables \"adjusted\" financial information that has not been prepared in accordance with GAAP, including adjusted net income, adjusted EPS (or adjusted net income per share), adjusted operating income, adjusted operating margin, free cash flow, and certain segment information. The company believes these adjusted measures are useful to investors as a supplement to, but not as a substitute for, GAAP measures, in evaluating the company's operational performance. The company further believes that the use of these non-GAAP financial measures provides an additional tool for investors in evaluating operating results and trends, and growth and shareholder returns, as well as in comparing the company's financial results with the financial results of other companies. However, the company notes that these adjusted measures may be different from and not directly comparable to the measures presented by other companies. Reconciliations of these non-GAAP measures to the most comparable GAAP measures and an identification of the components that comprise \"special items\" used for certain adjusted financial information are included in the tables accompanying this press release.\nThe company today is providing an investor relations presentation with additional information on its business and operations, which is available in the investor relations section of the company's website at https ir.labcorp.com. Analysts and investors are directed to the website to review this supplemental information.\nA webcast discussing Labcorp's quarterly results will be held today at 9 00 a.m. ET and is available by accessing the Labcorp investor relations website and navigating to the \"Events\" section. Alternatively, the live webcast can be accessed on this link. This webcast will be archived and accessible for one year.\n9\nAbout Labcorp\nLabcorp (NYSE LH) is a global leader of innovative and comprehensive laboratory services that helps doctors, hospitals, pharmaceutical companies, researchers, and patients make clear and confident decisions. We provide insights and advance science to improve health and improve lives through our unparalleled diagnostics and drug development laboratory capabilities. The company's nearly 71,000 employees serve clients in approximately 100 countries, provided support for more than 85% of the new drugs and therapeutic products approved by the FDA in 2025, and performed more than 750 million tests for patients around the world. Learn more at www.labcorp.com.\nC autionary Statement Regarding Forward-Looking Statements\nThis press release contains forward-looking statements, including, but not limited to, statements with respect to (i) the estimated 2026 guidance and related assumptions, (ii) the impact of various factors on operating and financial results, including global economic and market conditions on the company's businesses, operating results, cash flows and or financial condition, (iii) future business strategies, (iv) expected savings, synergies and other benefits to the company, customers or patients from acquisitions and other transactions and partnerships, and (v) opportunities for future growth.\nEach of the forward-looking statements is subject to change based on various important factors, many of which are beyond the company's control, including without limitation (i) the failure to receive tax-free treatment with respect to the spin-off of the company's former Clinical Development and Commercialization Services business for U.S.",
+      "source": "edgar:8-K ex-99.1",
+      "url": "https://www.sec.gov/Archives/edgar/data/920148/000092014826000162/form8-kexhibit9912q26.htm",
+      "asOf": "2026-07-30",
+      "truncated": true
+    },
+    "proxyStatement": {
+      "text": "Board and director independence:\nBoard Independence\nThe Board believes that a substantial majority of its members should be independent, non-employee directors. The Board has established guidelines for determining director independence that are consistent with the current listing standards (the \"Listing Standards\") of the New York Stock Exchange (the \"NYSE\"). In addition, director affiliations and transactions are regularly reviewed to ensure that there are no conflicts or relationships that might impair a director's independence from the Company, senior management, and our independent registered accounting firm, as defined in the Listing Standards. Other than Mr. Schechter, all of our current Board members and all of the nominees for director qualify as \"independent\" as defined in the Listing Standards.\nBoard Leadership Structure\nThe Chair of the Board leads the Board and oversees Board meetings and the delivery of information necessary for the Board's informed decision making. The Chair also serves as the principal liaison between the Board and our management. The Board and the Board's Nominating and Corporate Governance Committee routinely evaluate whether the roles of Chair and CEO should be separated or combined based on its judgment as to the structure that best serves the interests of the Company at the time. At this time, the Board believes that the positions of Chair and CEO should be held by the same person, as this combination provides unified leadership and direction in the management of the Company, contributing to cohesive, strong, and effective long-term vision and strategy, and delivering superior performance for our shareholders. This perspective also takes into account that the Company's business is complex, with nearly 71,000 people employed worldwide. Our CEO has a deep understanding of the Company's complex and multifaceted business and global operations, and we therefore believe that he is best placed to raise critical issues that require Board attention and facilitate timely and unfiltered communication between the Board and management.\nLead Independent Director\nTo ensure strong independent oversight under this leadership structure, since 2009, the Board has required that an independent director serve as Lead Independent Director when (i) the CEO also serves as Chair; or (ii) the Chair otherwise is not an independent director. Accordingly, since 2009, the Board has appointed an active Lead Independent Director, with clearly defined roles and responsibilities that support independent oversight of management. In appointing the Lead Independent Director, the Board carefully considers the skills and experience necessary to undertake the role.\n\nRelated-person transactions:\nRelated Party Transactions\nThe Board has adopted a Related Party Transaction Policy pursuant to which, and in accordance with its charter, the Board's Audit Committee, or the full Board, is responsible for reviewing and approving the terms and conditions of related party transactions. The Company's directors and key employees, including all members of senior management, complete annual reports disclosing, or certifying the absence of, any related party transactions. The Audit Committee reviews all potential transactions involving related persons (as such transactions are defined by Item 404(a) of Regulation S-K as promulgated by the SEC) before allowing the Company to enter into any such transaction. Based on the Company's review of its transactions, there have been no transactions or proposed transactions considered to be related party transactions since January 1, 2025.\n30 LABCORP HOLDINGS INC.\nThe Company's non-employee director compensation is designed to attract and retain highly qualified, independent directors to represent shareholders on the Board and act in their best interest. The CHC Committee, which consists solely of independent directors, has primary responsibility for setting our non-employee director compensation. FW Cook, the Committee's independent compensation consultant, assists the CHC Committee in evaluating our non-employee director compensation program.\nElements of Non-E mployee Director Compensation\nLabcorp's non-employee director compensation is designed to align with emerging best practices and reflect the Board's belief that non-employee director compensation should not depend upon the number of meetings held, but rather on the ongoing work and role of the directors throughout the year. The 2025 elements of our non-employee director compensation included the following:\nAnnual Retainer . An annual retainer of $120,000 was paid to each non-employee director in quarterly installments.\nCommittee Chair Annual Retainer.",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/920148/000119312526150752/lh-20260410.htm",
+      "asOf": "2026-04-10",
+      "truncated": true
+    },
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:26.607Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:26.607Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:26.607Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:26.607Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:26.607Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:26.607Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:26.607Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:26.607Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:26.607Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:26.607Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:26.607Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:26.607Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-24T12:01:26.607Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-24T12:01:26.607Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-24T12:01:26.607Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-09-24T12:01:26.607Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-09-24T12:01:26.607Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-09-24T12:01:26.607Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:26.607Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T12:01:26.607Z"
+    }
+  ],
+  "sbc": [
+    144100000,
+    null,
+    128700000,
+    116700000,
+    125800000
+  ]
+}
