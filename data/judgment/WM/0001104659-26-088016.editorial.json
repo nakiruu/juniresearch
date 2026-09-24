@@ -1,0 +1,59 @@
+{
+  "judgmentSha256": "4a1ad9e7d6b009521c10aa238635f92e154e78990bc8ca13965c3d854486dc42",
+  "reviewedAt": "2026-09-23T22:12:00Z",
+  "reviewer": "claude-opus-4-8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "Gross margin, by contrast, has trended up every year to 40.4% in FY25.",
+      "issue": "The income table on the same page contradicts \"every year\": gross margin is 38.0% (FY21), 37.6% (FY22), 38.3% (FY23), 39.3% (FY24), 40.4% (FY25). FY21 to FY22 is a decline (38.0% to 37.6%), so the series does not show an every-year rise. The 40.4% FY25 endpoint is correct, but the monotonic-trend characterisation is not supported by the grounding surface.",
+      "fix": "Reword to the supported pattern, e.g. \"gross margin has risen from 38.0% in FY21 to 40.4% in FY25, up in four of the last five years\" or \"trended higher over the period,\" dropping the \"every year\" claim that the table disproves.",
+      "status": "addressed",
+      "note": "Revised text now reads \"Gross margin, by contrast, has trended higher over the period, from 38.0% in FY21 to 40.4% in FY25.\" The monotonic \"every year\" claim is removed; both endpoints (38.0% FY21, 40.4% FY25) are on the income table. Fixed as suggested."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "diluted EPS eased to $6.70 from $6.81, as integration costs and acquisition financing weighed even though EBITDA rose to $7.2B from $6.3B and net income held at $2.7B.",
+      "issue": "Causal claim (\"as ... weighed\") the grounding surface does not establish. The Facts block gives the FY25 figures (operating margin 17.1% vs 18.4%, EPS $6.70 vs $6.81) but no attribution of the decline to \"integration costs and acquisition financing.\" The 10-K risk factors flag integration expense and indebtedness only as forward risks; they do not state these drove the FY25 margin/EPS move. This is an inference presented as fact.",
+      "fix": "Either drop the causal clause and state the change without a cause, or attribute it explicitly as the desk's read (e.g. \"we attribute the margin slip to acquisition-related depreciation and integration costs\") so it is not read as a sourced fact.",
+      "status": "addressed",
+      "note": "The unsourced causal clause is removed. Revised sentence states the change plainly: \"operating margin slipped to 17.1% from 18.4% in FY24, and diluted EPS eased to $6.70 from $6.81, even though EBITDA rose to $7.2B from $6.3B and net income held at $2.7B.\" No causation asserted; all figures grounded."
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.management.capitalAllocation",
+      "quote": "the company returned $1.04 billion to shareholders in Q2'26 alone, comprising $659 million of buybacks and $379 million of dividends.",
+      "issue": "Same claims restated with full figures in multiple sections rather than introduced once and referred back to in words (house style / rubric item 7). Three recurrences: (1) the capital-returns breakdown ($1.04B / $659M buybacks / $379M dividends) appears here AND verbatim-in-substance in financials.cashflowCommentary (\"WM returned $1.04 billion to shareholders, split between $659 million of buybacks and $379 million of dividends\"); (2) the pivotal-metric sentence is near-duplicated in valuation.scenarioCommentary (\"The single most important swing factor is whether core pricing (5.7% in Q2'26) can keep outrunning cost inflation while volumes stay soft\") and finalRecommendation (\"The pivotal metric to watch is whether core pricing keeps outrunning cost inflation while volumes stay soft\"); (3) the single-stream $75/$84 commodity pair is re-cited with full numbers in executiveSummary.risks, businessMoat.segments, valuation Bear driver and risks.idiosyncratic.",
+      "fix": "Keep one full numeric statement of each figure in its home section and refer back in words elsewhere (e.g. \"the $1.04bn of Q2 returns noted above\"; state the $75/$84 recycled price once and say \"the same commodity weakness\" thereafter; carry the pivotal-metric sentence in only one of scenarioCommentary or finalRecommendation).",
+      "status": "addressed",
+      "note": "All three recurrences resolved. (1) The $1.04B/$659M/$379M breakdown now appears only in capitalAllocation; cashflowCommentary points in words (\"Q2'26 free cash flow funded continued buybacks and dividends, quantified under capital allocation\"). (2) The pivotal-metric sentence is gone from scenarioCommentary and kept only in finalRecommendation. (3) The $75/$84 (and $2.33/$2.53, $2.23/$2.81) commodity numbers now appear once, in risks.idiosyncratic; executiveSummary.risks, businessMoat.segments and the Bear driver refer to \"prices fell year over year\" in words."
+    },
+    {
+      "id": "F-4",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.catalysts[4]",
+      "quote": "Capital returns: after a subdued FY25 for buybacks, WM resumed meaningful repurchases alongside its dividend in Q2'26.",
+      "issue": "The FY25 share-repurchase figure is not on the grounding surface: the cash-flow table shows FY25 Share Repurchases as null (\"—\", \"not captured\" in the prompt). \"Subdued FY25 for buybacks\" therefore characterises a period whose figure the pack does not carry. FY24 buybacks (-$0.3B) are on the surface and are the low year; FY25 is simply absent.",
+      "fix": "Re-anchor to a figure that exists (e.g. \"after FY24 buybacks fell to $0.3B\") or reframe as the absence of reported FY25 repurchases, rather than asserting FY25 buybacks were subdued.",
+      "status": "addressed",
+      "note": "Re-anchored to an on-surface figure: catalyst now reads \"WM stepped up share repurchases alongside its dividend in Q2'26, after FY24 buybacks fell to $0.3 billion.\" FY24 Share Repurchases (-$262M ~= -$0.3B) is on the cash-flow table; the unsupported FY25 characterisation is gone."
+    },
+    {
+      "id": "F-5",
+      "severity": "Minor",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "operating margin slipped to {-17.1%-} from 18.4% in FY24",
+      "issue": "The bearish span wraps a level (17.1%), not a signed change. House style limits {+ +}/{- -} to signed changes or explicit positives/negatives; the negative event here is the slip, not the 17.1% figure itself. Contrast the correct usage of {-0.6%-} for the outlook reduction, which is a signed change.",
+      "fix": "Move the marker onto the change rather than the level (e.g. span the decline, \"{-down 1.3 points-}\", or leave 17.1% unspanned and let \"slipped\" carry the direction).",
+      "status": "addressed",
+      "note": "The {- -} span is removed from the level. Revised text reads \"operating margin slipped to 17.1% from 18.4% in FY24\" with 17.1% unspanned and \"slipped\" carrying the direction, as suggested."
+    }
+  ]
+}

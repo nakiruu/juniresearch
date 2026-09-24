@@ -1,0 +1,537 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "BAM",
+  "cik": 1937926,
+  "company": "Brookfield Asset Management Ltd.",
+  "exchange": "NYSE",
+  "sic": 6282,
+  "sicDescription": "Investment Advice",
+  "filing": {
+    "form": "10-Q",
+    "accession": "0001628280-26-054933",
+    "filedDate": "2026-08-10",
+    "periodEnd": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1937926/000162828026054933/bam-20260630.htm"
+  },
+  "capturedAt": "2026-09-23T10:37:07.041Z",
+  "quote": {
+    "price": 46.01,
+    "marketCap": 73489539072,
+    "sharesOutstanding": 1597251446.9028473,
+    "sharesSource": "derived",
+    "week52Low": 42.2,
+    "week52High": 62.57,
+    "dividendYield": 0.0435,
+    "asOf": "2026-09-23"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          3142000000,
+          3381000000,
+          3944000000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          2137000000,
+          2108000000,
+          2398000000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          1.16,
+          1.34,
+          1.52
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          9000000,
+          404000000,
+          1583000000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          9299000000,
+          9088000000,
+          8912000000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          null,
+          null,
+          null
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          1439000000,
+          1612000000,
+          2101000000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -17000000,
+          -8000000,
+          -9000000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          -2101000000,
+          -2478000000,
+          -2818000000
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          1422000000,
+          1604000000,
+          2092000000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q2'26",
+    "periodEnd": "2026-06-30",
+    "revenue": 1047000000,
+    "operatingMargin": null,
+    "revenueYoY": 0.12459720730397428
+  },
+  "ttm": {
+    "pe": 26.595375,
+    "ps": 17.941782,
+    "evToEbitda": null,
+    "grossMargin": null,
+    "operatingMargin": null,
+    "netMargin": 0.748291015625,
+    "netDebtToEbitda": null,
+    "interestCoverage": null,
+    "currentRatio": null,
+    "fcfYield": 0.031555511563734304
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 6085609320,
+      "eps": 1.83345
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 7052925110,
+      "eps": 2.17104
+    }
+  },
+  "analysts": {
+    "count": 18,
+    "buy": 9,
+    "hold": 8,
+    "sell": 1,
+    "consensusRating": "Buy",
+    "consensusTarget": 57.52444,
+    "medianTarget": 55.5,
+    "highTarget": 70,
+    "lowTarget": 44,
+    "asOf": "2026-09-23"
+  },
+  "segments": {
+    "basis": "FY25 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 3944000000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "APO",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "BK",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "BMO",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "BN",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-10",
+      "close": 52.84000015258789
+    },
+    {
+      "date": "2026-08-11",
+      "close": 55.36000061035156
+    },
+    {
+      "date": "2026-08-12",
+      "close": 54.5
+    },
+    {
+      "date": "2026-08-13",
+      "close": 55.86000061035156
+    },
+    {
+      "date": "2026-08-14",
+      "close": 54.310001373291016
+    },
+    {
+      "date": "2026-08-17",
+      "close": 52.56999969482422
+    },
+    {
+      "date": "2026-08-18",
+      "close": 51.470001220703125
+    },
+    {
+      "date": "2026-08-19",
+      "close": 52.650001525878906
+    },
+    {
+      "date": "2026-08-20",
+      "close": 51.52000045776367
+    },
+    {
+      "date": "2026-08-21",
+      "close": 52.29999923706055
+    },
+    {
+      "date": "2026-08-24",
+      "close": 52.310001373291016
+    },
+    {
+      "date": "2026-08-25",
+      "close": 52.5
+    },
+    {
+      "date": "2026-08-26",
+      "close": 52.0099983215332
+    },
+    {
+      "date": "2026-08-27",
+      "close": 52.06999969482422
+    },
+    {
+      "date": "2026-08-28",
+      "close": 52.119998931884766
+    },
+    {
+      "date": "2026-08-31",
+      "close": 51.5
+    },
+    {
+      "date": "2026-09-01",
+      "close": 49.65999984741211
+    },
+    {
+      "date": "2026-09-02",
+      "close": 49.66999816894531
+    },
+    {
+      "date": "2026-09-03",
+      "close": 50.290000915527344
+    },
+    {
+      "date": "2026-09-04",
+      "close": 50.599998474121094
+    },
+    {
+      "date": "2026-09-08",
+      "close": 48.869998931884766
+    },
+    {
+      "date": "2026-09-09",
+      "close": 47.720001220703125
+    },
+    {
+      "date": "2026-09-10",
+      "close": 47.2400016784668
+    },
+    {
+      "date": "2026-09-11",
+      "close": 47.2599983215332
+    },
+    {
+      "date": "2026-09-14",
+      "close": 46.630001068115234
+    },
+    {
+      "date": "2026-09-15",
+      "close": 45.84000015258789
+    },
+    {
+      "date": "2026-09-16",
+      "close": 45.18000030517578
+    },
+    {
+      "date": "2026-09-17",
+      "close": 45.41999816894531
+    },
+    {
+      "date": "2026-09-18",
+      "close": 46.060001373291016
+    },
+    {
+      "date": "2026-09-21",
+      "close": 46.220001220703125
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "Brookfield Asset Management Ltd. is a private equity firm specializing in acquisitions and growth capital investments. The firm primarily provides its services to institutional clients, high net worth individuals, financial institutions, public and private pension plans, sovereign wealth funds, endowments, and foundations. The firm manages separate client-focused public and private fund portfolios, listed partnerships, separate accounts, and co-investments. The firm invests in real assets, including real estate, infrastructure, renewable power, private equity, and credit. The firm employs fundamental and operational analysis to make its investments. The firm uses both in-house and external research to complement its investment process. It was founded in 2022 and is based in New York. Brookfield Asset Management Ltd. operates as a subsidiary of Brookfield Corporation.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-23"
+    },
+    "mdaExcerpt": {
+      "text": "ITEM 2. MANAGEMENT'S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS\nThe following discussion and analysis should be read in conjunction with BAM's condensed consolidated financial statements and the related notes included within this Quarterly Report on Form 10-Q. In this report, references to \"BAM\", the \"Company\", \"we\", \"us\", or \"our\" refer to Brookfield Asset Management Ltd.\nAmounts and percentages presented throughout our discussion and analysis of financial condition and results of operations may reflect rounded results in millions (unless otherwise indicated) and consequently, totals may not appear to sum. In addition, illustrative charts may not be presented at scale.\nThe changes from current period compared to prior period may be deemed to be not meaningful and are designated as \"NM\" within this discussion and analysis.\nBusiness Overview\nWe are a leading global alternative asset manager, headquartered in New York, NY, with over $1 trillion of Assets Under Management across infrastructure, energy, private equity, real estate, and credit. We invest client capital for the long-term with a focus on real assets and essential service businesses that form the backbone of the global economy.\nWe offer a range of alternative investment products to over 2,500 institutional clients around the world including public and private pension plans, endowments and foundations, sovereign wealth funds, financial institutions, insurance companies and private wealth investors which also continues to grow with approximately 69,000 clients. We earn asset management income for doing so and ensure strong alignment of interests with our clients by investing Brookfield capital alongside them. Our deep operating expertise, global reach and access to large-scale flexible capital enable us to identify attractive investment opportunities and make investments on a proprietary basis in sizable, premier assets and businesses across geographies and asset classes that we believe few others can.\nTo do this, we leverage our team of over 5,800 investment and asset management professionals and employees, including over 300 client service professionals across 32 global offices, to ensure that the business exceeds our clients' service expectations. We also have a dedicated team of approximately 150 people that are focused on distributing and developing catered products to the private wealth channel. Our disciplined investment approach and strong track record have been the foundation and driver of our growth. We draw on Brookfield's heritage as an owner and operator to invest for value and generate strong returns for our clients, across economic cycles.\nWe provide a highly diversified suite of alternative investment strategies to our clients and are constantly seeking to innovate new strategies to meet their needs. We have 59 unique active strategies that span a wide range of risk-adjusted returns, including opportunistic, value-add, core, super-core, and credit. We evaluate the performance of these product offerings and our investment strategies using a number of non-GAAP measures, including Fee-Bearing Capital, Fee Revenues, Fee-Related Earnings and Distributable Earnings.\nOur guiding principle is to operate our business and conduct our relationships with the highest level of integrity. Our emphasis on a culture of collaboration allows us to attract and retain top talent.\nThe Class A Shares are co-listed on the New York Stock Exchange (\"NYSE\") and the Toronto Stock Exchange (\"TSX\") under the symbol \"BAM\".\nBusiness Environment\nOur business remains well-positioned within the alternative asset management landscape by leveraging a strategic and agile approach to investment opportunities. As investors seek diversification and innovative solutions, we are equipped to navigate market complexities and evolving government policies, by delivering value through disciplined strategies. Our ability to adapt to shifting economic conditions and capitalize on emerging trends ensures we remain a trusted partner in achieving long-term financial outcomes.\nIn terms of economic conditions in the U.S., real gross domestic product (\"GDP\") is estimated to have grown by 1.7% for the quarter ended June 30, 2026, compared to an increase of 2.1% for the quarter ended March 31, 2026. U.S. inflation accelerated over the second quarter of 2026 with estimates reporting that the annual U.S. inflation rate increased to 3.5% as of June 30, 2026, compared to 3.3% as of March 31, 2026. The U.S. unemployment rate saw a modest movement to 4.2% in June 2026 from 4.3% in March 2026, according to data from the U.S. Bureau of Labor Statistics. As of July 2026, the International Monetary Fund estimated that the U.S. economy will move modestly to 2.3% in 2026 and 2.2% in 2027 from 2.0% in 2025, on account of the solid consumer demand and continued AI related investments.\nThe U.S. Federal Reserve maintained the Federal Funds target range at 3.50% 3.75% in June 2026, extending its pause following a series of rate cuts in late 2025. While the Federal Open Market Committee acknowledged that economic activity continues to expand at a solid pace and labor market conditions remain resilient, it emphasized that inflation remains above its 2% objective, reflecting ongoing supply-side pressures, particularly from higher energy prices. The June Summary of Economic Projections revised down the\n46\nmedian GDP growth forecast for 2026 while raising inflation projections. The U.S. Federal Reserve continues to indicate that future policy decisions will depend on incoming economic data and evolving risks to both inflation and growth. During the quarter ended June 30, 2026, the 10-year government bond yields increased 14 basis points in the United States.\nOutside the U.S., GDP growth in the Eurozone remained subdued over the second quarter of 2026, with activity proving resilient but modest amid elevated geopolitical uncertainty and higher energy prices. At its June meeting, the European Central Bank raised its three key policy rates by 25 basis points, bringing the deposit facility rate to 2.25%, in response to increased inflationary pressures stemming primarily from the recent energy price shock. In China, real GDP slowed to 4.3% for the quarter ended June 30, 2026, down from 5.0% in the first quarter of 2026, as robust export growth was offset by weak domestic demand. The 1-year prime rate set by the People's Bank of China was 3.00% as of June 30, 2026, unchanged from March 31 2026.\nFor the quarter ended June 30, 2026, the S&P 500 was up by 14.9%, the MSCI Europe Index was up by 9.2%, the MSCI Asia Index was up 21.0%, and the MSCI World Index increased by 13.3%. During the quarter ended June 30, 2026, U.S. investment grade corporate bond spreads (BofA US Corporate Bond Index) tightened by 14 basis points, and the high yield credit spreads were down by 71 basis points.\nOur asset management business is affected by the financial market and economic conditions in the various countries and regions in which we operate. Price fluctuations within equity, credit, interest rates and foreign exchange markets can be volatile and mixed across the various geographies, which can have a substantial impact on the performance of our business in various ways.\nProducts and Principal Strategies\nOur products broadly fall into one of three categories: (i) long-term private funds, (ii) permanent capital vehicles and perpetual strategies, and (iii) liquid strategies. These are invested across five principal strategies: (i) infrastructure, (ii) energy, (iii) private equity, (iv) real estate, and (v) credit.\nAs of June 30, 2026\nSize ($ billions)\nPersonnel (approx.)\nPlatform\nAUM\nFee-Bearing Capital\nInvestment and\nasset management\nprofessionals 1\nOperating\nemployees\nInfrastructure\nOne of the world's largest investment managers in infrastructure\n$262\n$114\n~230\n~64,000\nProducts: Infrastructure Core Plus; Infrastructure Structured Solutions; Artificial Intelligence Infrastructure; Brookfield Infrastructure Partners; Perpetual Super-Core Infrastructure; Infrastructure Income Fund\nEnergy\nOne of the largest investors in energy investments\n$144\n$74\n~175\n~20,100\nProducts: Global Transition; Catalytic Transition; Brookfield Renewable Partners\nPrivate Equity\nOne of the best long-term track records for investing in private equity\n$166\n$54\n~260\n~136,900\nProducts: Opportunistic Private Equity; Special Investments; Venture Secondaries; Regional Private Equity; Thematic Private Equity; Brookfield Business Corporation; Brookfield Private Equity\nReal Estate\nOne of the world's largest investment managers in real estate\n$280\n$104\n~2,150\n~23,900\nProducts: Real Estate Opportunistic; Real Estate Secondaries; Brookfield Property Group; Perpetual Core Plus Real Estate; Brookfield REIT\nCredit\nOne of the world's largest and most experienced credit managers\n$416\n$326\n~1,800\n~4,900\nProducts: Opportunistic Credit; Global Private Debt; Infrastructure Debt; Real Estate Debt; Oaktree Specialty Lending Corporation; Insurance Capital\n1. Includes Oaktree employees that have become BAM employees following the completion of the Oaktree Acquisition and approximately 1,500 fully-dedicated Brookfield operating employees, that are integral to the business, including individuals focused on our core investment strategies and those undertaking various corporate activities.\n47\nInfrastructure\nOverview\nWe are one of the world's largest investment managers in infrastructure, with $262 billion of AUM and $114 billion of Fee-Bearing Capital as of June 30, 2026.\nWe focus on acquiring high-quality real assets and operating businesses on behalf of our clients that deliver essential goods and services, diversified across the utilities, transport, midstream and data sectors. We partner closely with management teams to enable long-term success through operational and other improvements.\nWe have approximately 230 investment and asset management professionals globally that are focused on our infrastructure strategy, supported by approximately 64,000 operating employees in the infrastructure operating businesses that we manage.\nOur Products\nLong-term Private Funds\nBrookfield Infrastructure Fund (\"BIF\") is our flagship infrastructure fund series. In this product offering, we invest on behalf of our clients in high-quality infrastructure assets on a value basis and seek to add value through the investment life cycle by utilizing our operations-oriented approach.\nBrookfield AI Infrastructure Fund (\"BAIIF\"), our strategy focused on the development of AI infrastructure, is designed to meet the growing demand from hyperscalers, enterprises, and governments for scalable, integrated solutions.\nBrookfield Infrastructure Structured Solutions Fund (\"BISS\") seeks to invest structured equity and non-control common equity in the infrastructure mid-market. The fund is focused on deploying our capabilities to partner with sponsors, developers, and corporates to access attractive development opportunities.\nPermanent Capital Vehicles and Perpetual Strategies\nWe manage Brookfield Infrastructure Partners L.P. (\"BIP\"), one of the largest, pure-play, publicly traded global infrastructure platforms, which is listed on the NYSE and TSX and had a market capitalization of $29.3 billion as of June 30, 2026.\nWe manage Brookfield Super-Core Infrastructure Partners, which is our perpetual infrastructure private fund strategy. In this product offering, we invest on behalf of our clients in core infrastructure assets in developed markets, with a focus on yield, diversification, and inflation-protection.\nWe also manage Brookfield Infrastructure Income Fund (\"BII\"), a semi-liquid infrastructure strategy, offering private wealth investors access to our best-in-class infrastructure platform.\nThe infrastructure investments that we manage provide a diversified exposure for our clients to scarce, high-quality businesses that benefit from significant barriers to entry and deliver essential goods and services to generate resilient and inflation-protected cash flow streams. Through the various products outlined, we have invested in:\nRegulated or contracted businesses that earn a return on an asset base, including electricity and gas connections, natural gas pipelines and electricity transmission lines;\nSystems involved in the movement of freight, commodities and passengers, including rail operations, toll roads, terminal and export facilities;\nAssets that handle the movement and storage of commodities from a source of supply to a demand center, including transmission pipelines, natural gas process plants and natural gas storage; and\nBusinesses that provide essential services and critical infrastructure to transmit and store data globally, including telecom towers and active rooftop sites, fiber optic cable and data centers.\nEnergy\nOverview\nWe are one of the largest investors in energy investments, with $144 billion of AUM and $74 billion of Fee-Bearing Capital as of June 30, 2026.\nWe believe that the growing global demand for low-cost, low-carbon energy, especially amongst corporate off-takers, will lead to continued growth opportunities for us in the future. The investment environment for energy remains favorable and we\n48\nexpect to continue to advance our substantial pipeline of energy opportunities on behalf of our clients and managed assets.\nWe have approximately 175 investment and asset management professionals globally that are focused on our energy strategy, supported by approximately 20,100 operating employees in the energy operating businesses that we manage. Our extensive experience and knowledge in this industry enable us to be a leader in all major technologies with deep operating and development capabilities.\nOur Products\nLong-term Private Funds\nBrookfield Global Transition Fund (\"BGTF\") is our flagship transition fund series which is focused on investments aimed at accelerating the global transition to a net-zero carbon economy. The mandate of this product is to assist utility, energy and industrial businesses to reduce carbon dioxide emissions, expand low-carbon and renewable energy production and advance sustainable solutions.\nOur recently launched Catalytic Transition Fund (\"CTF\") focuses on directing capital into clean energy and transition assets in emerging markets in South and Central America, South and Southeast Asia, the Middle East, and Eastern Europe. CTF will help drive clean energy investment in emerging markets.\nPermanent Capital Vehicles and Perpetual Strategies\nWe also manage Brookfield Renewable Partners L.P. (\"BEP\"), one of the world's largest publicly traded renewable power platforms, which is listed on the NYSE and TSX and had a market capitalization of over $24.4 billion as of June 30, 2026.\nAcross our energy products, we have invested on behalf of our clients in:\nHydroelectric operations, through river systems and facilities that provide electricity and have grid stabilizing capabilities;\nUtility-scale solar operations that harness energy from the sun to generate electricity;\nDistributed energy and storage, which provides small-scale generation that can be locally installed, and pump storage facilities;\nBattery energy storage systems;\nWind operations that use turbines to create electricity; and\nSustainable solutions including nuclear services, renewable natural gas, carbon capture and storage, recycling, cogeneration, biomass, power transformation, and sustainable aviation fuel.\nPrivate Equity\nOverview\nWe have one of the best long-term track records for investing in private equity with $166 billion of AUM and $54 billion of Fee-Bearing Capital as of June 30, 2026.\nWe focus on high-quality businesses that provide essential products and services, diversified across business services and industrials sectors. We partner closely with management teams to enable long-term success through operational and other improvements.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/1937926/000162828026054933/bam-20260630.htm",
+      "asOf": "2026-08-10",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "ITEM 1A. RISK FACTORS\nYou should carefully consider the following risk factors, in addition to other information set forth in this Annual Report. If any of the following risks were actually to occur, our business, financial condition and results of operations and the prospects and value of the Class A Shares would likely be materially impacted.\nRisks Relating to Our Business\nThe trading price of the Class A Shares is subject to volatility due to market conditions and other factors and cannot be predicted.\nThe market price of our Class A Shares may be volatile and could fluctuate significantly in response to factors both related and unrelated to our operating performance and/or future prospects, including, but not limited to: (i) variations in our operating results and financial condition; (ii) actual or prospective changes in government laws, rules or regulations affecting our business and our managed assets; (iii) material announcements by us, our affiliates or our competitors; (iv) the general state of the securities markets; (v) market conditions and events specific to the industries in which we and our managed assets operate; (vi) changes and developments in general economic, political, or social conditions, including as a result of pandemics/epidemics and related economic disruptions; (vii) changes in the values of our investments and distributions or changes in the amount of interest paid in respect of investments; (viii) differences between our actual financial results and those expected by investors and analysts; (ix) changes in analysts' recommendations or earnings projections; (x) the depth and liquidity of the market for the Class A Shares; (xi) dilution from the issuance of additional\n22\nequity; (xii) investor perception of our business, our managed assets and the sectors in which we deploy the funds from our strategies; (xiii) investment restrictions; (xiv) our dividend policy; (xv) the departure of key executives; (xvi) sales of Class A Shares by senior management or significant shareholders; and (xvii) the materialization of other risks.\nDeficiencies in our public company financial reporting and disclosures could adversely impact our reputation.\nAs we expand the size and scope of our business, there is a greater susceptibility that our financial reporting and other public disclosure documents may contain material misstatements and that the controls we maintain to attempt to ensure the complete accuracy of our public disclosures may fail to operate as intended. The occurrence of such events could adversely impact our reputation and financial condition. In addition, we disclose certain metrics that do not have standardized meaning, are based on our own methodologies and assumptions and may not properly convey the information they purport to reflect.\nManagement is responsible for establishing and maintaining adequate internal control over financial reporting to give our stakeholders assurance regarding the reliability of our financial reporting and the preparation of financial statements for external purposes in conformity with U.S. GAAP. However, the process for establishing and maintaining adequate internal control over financial reporting has inherent limitations, including the possibility of human error. In addition, we may exclude recently acquired companies from our evaluation of internal controls.\nOur internal control over financial reporting may not prevent or detect misstatements in our financial disclosures on a timely basis, or at all. Some of these processes may be new for certain subsidiaries in our structure, and in the case of acquisitions, may take time to be fully implemented.\nOur disclosure controls and procedures are designed to provide assurance that information required to be disclosed by us in reports filed or submitted under U.S. and Canadian securities laws is recorded, processed, summarized and reported within the time periods specified. Our policies and procedures governing disclosures may not ensure that all material information regarding us is disclosed in a proper and timely fashion, or that we will be successful in preventing the disclosure of material information to a single person or a limited group of people before such information is generally disseminated.\nAs at December 31, 2025, the results of our asset management business are consolidated into BAM's financial statements. However, as a result of the 2025 Arrangement, management has excluded from its evaluation the internal control over financial reporting of our asset management business. The total assets, net assets, total revenues and net income subject to our asset management business' internal control over financial reporting of the consolidated financial statement amounts as of and for the year ended December 31, 2025 are disclosed in \"Part II Item 9A. Controls and Procedures\" in this report.\nIf BAM or our auditors were to conclude that our internal control over financial reporting were not effective in respect of any reporting period, investors could lose confidence in our reported financial information and the price of our Class A Shares could decline. Our failure to achieve and maintain effective internal controls could have a materially adverse effect on our business, our ability to access capital markets and our reputation. In addition, material weaknesses in our internal controls could require significant expense and management time to remediate.\nInvestors may find it difficult or impossible to effect service of process and enforce judgments against us, our directors and our executive officers.\nBAM is headquartered in New York, NY, but some of its officers and directors are not residents of the U.S., and a portion of the assets of BAM and said persons are located outside the U.S.. As a result, it may be difficult for U.S. investors to: (i) effect service of process within the U.S. upon BAM or those directors and officers who are not residents of the U.S.; or (ii) realize in the U.S. upon judgments of courts of the U.S. predicated upon the civil liability provisions of the U.S. federal securities laws. Investors outside of the U.S. will similarly find it difficult to enforce judgments obtained outside of the U.S.\nWe are subject to numerous laws, rules and regulatory requirements which may impact our business, including resulting in financial penalties, loss of business and/or damage to our reputation in instances of non-compliance.\nThere are many laws, governmental rules and regulations and listing exchange rules that apply to our business and our managed assets. Changes in these laws, rules and regulations, or their interpretation by governmental agencies or the courts, could adversely affect our business, our managed assets, or our prospects, or those of our affiliates, customers, clients or partners. The failure of BAM, our asset management business or the entities that we manage to comply with these laws, rules and regulations, or with the rules and registration requirements of the respective stock exchanges on which we and they are listed, could adversely affect our reputation and financial condition.\nOur business, including our investment advisory and broker-dealer business, is subject to substantial and increasing regulatory compliance obligations and oversight, and this higher level of scrutiny may lead to more regulatory enforcement actions. There continues to be uncertainty regarding the appropriate level of regulation and oversight of asset management businesses in a number of jurisdictions in which we operate. The financial services industry has been the subject of heightened scrutiny and enforcement actions. Regulatory investigations and/or enforcement actions by our regulators could have a material adverse effect on our business and/or\n23\nreputation.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/1937926/000162828026013098/bam-20251231.htm",
+      "asOf": "2026-03-02",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-K",
+    "pressRelease": null,
+    "proxyStatement": null,
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T10:37:07.041Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T10:37:07.041Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T10:37:07.041Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T10:37:07.041Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T10:37:07.041Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T10:37:07.041Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T10:37:07.041Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T10:37:07.041Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T10:37:07.041Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T10:37:07.041Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T10:37:07.041Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T10:37:07.041Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-23T10:37:07.041Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-23T10:37:07.041Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T10:37:07.041Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T10:37:07.041Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T10:37:07.041Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T10:37:07.041Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T10:37:07.041Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T10:37:07.041Z"
+    }
+  ]
+}

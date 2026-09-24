@@ -1,0 +1,69 @@
+{
+  "judgmentSha256": "4d50445426e7a7dcc15ef6b90800f24b216204813c3e7d300cfba94f4c22c70e",
+  "reviewedAt": "2026-09-23T16:45:00Z",
+  "reviewer": "claude-opus-4-8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "analystCommentary",
+      "quote": "Trailing P/E of 29.8x rests on a depressed FY25 diluted EPS of $0.68; the forward P/E of 10.7x on FY26E EPS of $3.02 is the more representative lens, and that gap is the debate.",
+      "issue": "The 29.8x figure is the P/E (TTM) from the Facts block, not a multiple of the FY25 diluted EPS of $0.68. At $32.20, $0.68 implies a ~47x multiple; 29.8x implies trailing EPS near $1.08, so the TTM multiple already reflects the recovered trailing-twelve-month earnings and does not 'rest on' the $0.68 FY25 figure. The forward side ties ($32.20/$3.02 = 10.7x; /$2.82 = 11.4x) but the trailing side does not. The same wrong derivational link recurs in sections.valuation.multiplesCommentary ('the trailing earnings multiple rests on a depressed FY25 diluted EPS of $0.68'). financials.incomeCommentary handles it correctly, noting $0.68 'sits below even a single quarter's diluted result.'",
+      "fix": "Stop pinning the 29.8x TTM P/E to the $0.68 FY25 EPS. Present 29.8x as a trailing-twelve-month multiple that already embeds ~$1.08 of trailing EPS, and treat $0.68 as a vendor-annual anomaly (below a single quarter) rather than the denominator of 29.8x. Keep the trailing-vs-forward gap (29.8x vs 10.7x on FY26E $3.02) but align analystCommentary and valuation.multiplesCommentary with the careful framing already in incomeCommentary.",
+      "status": "addressed",
+      "note": "Resolved. analystCommentary now reads ‘Trailing P/E of 29.8x is elevated because trailing earnings are still recovering from the FY23-25 trough’ and calls the vendor full-year FY25 diluted EPS of $0.68 ‘an annual anomaly, not the trailing denominator.’ valuation.multiplesCommentary matches. The false causal tie of 29.8x to $0.68 is gone; no invented TTM EPS was introduced (the ~$1.08 stays unstated), and the FY23-25 trough framing is supported by the FY23-25 EPS series and the H1’25 six-month figure."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.growth.points",
+      "quote": "Margin-led earnings: the taxable-equivalent net interest margin widened to 3.97% in Q2'26 from 3.51% a year earlier, lifting six-month return on average total assets to 1.69% from 1.28%.",
+      "issue": "The growth points re-quote figures already argued elsewhere instead of referring back in words. points[0] repeats the NIM 3.97%-from-3.51% and ROAA 1.69%-from-1.28% pair from financials.incomeCommentary and executiveSummary.thesis.body; points[3] ('book value per share grew to $23.34 ... tangible book value to $18.73 ... from $21.00 and $16.11') duplicates financials.balanceCommentary; points[1] repeats the $45,163,767 / $5,195,511 AUM figures from businessMoat.segments[0].body. Separately, executiveSummary.thesis.body is a near-verbatim paraphrase of analystCommentary (same NIM, ROAA, BVPS, ROATCE and NCO pairs in the same order).",
+      "fix": "Introduce each metric once (in financials/moat) and have the growth points and thesis point to them in words rather than restating the numbers. Re-cast the growth points around forward drivers (the FY26E/FY27E trajectory, AUM as a compounding trend, the acquired-scale step-up) and trim the thesis so it does not duplicate analystCommentary's figure list.",
+      "status": "addressed",
+      "note": "Resolved. The five growth points are recast around forward drivers (FY26E/FY27E EPS trajectory, the FY26E revenue step-up, AUM compounding) and now refer back in words — 'as detailed in the financials' for margin/returns and 'as shown in the balance-sheet discussion' for book value — instead of re-quoting the NIM/ROAA/BVPS/TBVPS/AUM figures. executiveSummary.thesis.body is rewritten qualitatively ('margin, returns and book value all improved year over year, as the financials lay out'; 'net charge-offs higher than a year ago') and no longer restates analystCommentary's figure list."
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.management.insiderOwnership",
+      "quote": "Aggregate insider ownership is modest but includes one long-tenured holding, aligning some management and shareholder interests without concentrating control.",
+      "issue": "'one long-tenured holding' characterizes Randy L. Newman's 806,584-share (3.2%) stake as long-tenured, but the proxy excerpt on the grounding surface only lists him in the beneficial-ownership table; it establishes neither his tenure nor how long the shares have been held. This reads as a recalled-from-memory fact about Newman rather than one supported by the pack.",
+      "fix": "Drop 'long-tenured' or replace it with what the surface supports — e.g. that Newman's 3.2% is by far the largest individual insider holding (against the CEO's 32,717 shares). Do not assert tenure the proxy excerpt does not state.",
+      "status": "addressed",
+      "note": "Resolved. Now reads 'Aggregate insider ownership is modest; Newman's stake stands well above the CEO's holding and the sub-one-percent positions of other directors and officers, aligning insider and shareholder interests without concentrating control.' The tenure claim is gone; the replacement rests on the proxy table (Newman 806,584 / 3.2% vs Lorenson 32,717 and the sub-1% directors)."
+    },
+    {
+      "id": "F-4",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "further Federal Reserve cuts from the 3.50% to 3.75% target range could pressure the margin that drove the beat.",
+      "issue": "'the beat' asserts that Q2'26 beat expectations, but no quarterly consensus estimate is on the grounding surface — the estimates block carries only annual FY26E/FY27E figures — so there is nothing to establish a beat.",
+      "fix": "Replace 'the beat' with a grounded phrase such as 'the margin that drove the quarter' or 'the wider Q2 margin.' The surface supports the margin improvement but not an estimate beat.",
+      "status": "addressed",
+      "note": "Resolved. thesis.body now reads 'a further Federal Reserve cut could pressure the net interest margin that has been the main earnings tailwind.' The 'beat' claim is removed (executiveSummary.risks[1] similarly says 'the net interest margin that drove the quarter')."
+    },
+    {
+      "id": "F-5",
+      "severity": "Minor",
+      "field": "sections.financials.cashflowCommentary",
+      "quote": "up from $0.21 in each of the prior two quarters",
+      "issue": "The MD&A dividends-declared row on the surface gives $0.22 (Q2'26), $0.21 (Q1'26) and $0.21 (Q2'25). Only Q1'26 is an immediately prior quarter at $0.21; the second $0.21 shown is Q2'25 (a year earlier), and Q4'25 — the other of the 'prior two quarters' — is not on the surface, so 'each of the prior two quarters' overstates what is grounded.",
+      "fix": "Say 'up from $0.21 in the prior quarter (Q1'26)' or 'up from $0.21 a year earlier,' matching the two $0.21 figures actually on the surface.",
+      "status": "addressed",
+      "note": "Resolved. cashflowCommentary now reads 'up from $0.21 in Q1'26,' matching the immediately prior quarter on the MD&A dividends-declared row."
+    },
+    {
+      "id": "F-6",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "The June quarter shows a franchise earning well through a rate-cut cycle",
+      "issue": "The surface (10-K excerpt) documents a single cut — the FOMC 'decreased the target range for the federal funds rate to a range of 3.50% to 3.75%' in Q4'25, following a series of increases since 2023. 'a rate-cut cycle,' and 'The Federal Reserve has been lowering its federal funds target range' in sections.risks.systemic, imply an ongoing series of cuts the pack does not show.",
+      "fix": "Tie the language to the one documented Q4'25 cut (e.g. 'after the Fed's Q4'25 cut to 3.50%-3.75%') and keep further cuts framed as the hypothetical the 10-K uses ('if the FOMC further alters the targeted federal funds rates').",
+      "status": "addressed",
+      "note": "Resolved. The 'rate-cut cycle' phrasing is gone from thesis.body. risks.systemic now reads 'The FOMC lowered its federal funds target range to 3.50% to 3.75% in the fourth quarter of 2025; a further cut would pressure the net interest margin...' — tied to the single documented Q4'25 cut with further cuts framed as hypothetical. executiveSummary.risks[1] and businessMoat.durability use the same single-cut framing."
+    }
+  ]
+}

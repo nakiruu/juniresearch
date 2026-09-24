@@ -1,0 +1,577 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "CFG",
+  "cik": 759944,
+  "company": "Citizens Financial Group, Inc.",
+  "exchange": "NYSE",
+  "sic": 6022,
+  "sicDescription": "State Commercial Banks",
+  "filing": {
+    "form": "10-Q",
+    "accession": "0000759944-26-000148",
+    "filedDate": "2026-08-03",
+    "periodEnd": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/759944/000075994426000148/cfg-20260630.htm"
+  },
+  "capturedAt": "2026-09-23T15:58:29.348Z",
+  "quote": {
+    "price": 65.26,
+    "marketCap": 27485999104,
+    "sharesOutstanding": 421176817.40729386,
+    "sharesSource": "derived",
+    "week52Low": 47.955,
+    "week52High": 75.33,
+    "dividendYield": 0.028099999,
+    "asOf": "2026-09-23"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          1325000000,
+          1299000000,
+          1266000000,
+          1533000000,
+          1635000000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          2319000000,
+          2073000000,
+          1608000000,
+          1509000000,
+          1831000000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          5.16,
+          4.1,
+          3.13,
+          3.03,
+          3.86
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          7006000000,
+          15890000000,
+          13972000000,
+          12401000000,
+          11282000000
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          23420000000,
+          23690000000,
+          24342000000,
+          24254000000,
+          26317000000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          2275000000,
+          4119000000,
+          2961000000,
+          2001000000,
+          2211000000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          -295000000,
+          -153000000,
+          -906000000,
+          -1050000000,
+          -600000000
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          -670000000,
+          -779000000,
+          -808000000,
+          -769000000,
+          -755000000
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q2'26",
+    "periodEnd": "2026-06-30",
+    "revenue": 451000000,
+    "operatingMargin": null,
+    "revenueYoY": 0.17754569190600522
+  },
+  "ttm": {
+    "pe": 14.186956521739132,
+    "ps": 15.6973153078241,
+    "evToEbitda": null,
+    "grossMargin": null,
+    "operatingMargin": null,
+    "netMargin": 1.2141633352370074,
+    "netDebtToEbitda": null,
+    "interestCoverage": null,
+    "currentRatio": null,
+    "fcfYield": null
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 9177401330,
+      "eps": 5.29576
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 9976497370,
+      "eps": 6.53296
+    }
+  },
+  "analysts": {
+    "count": 18,
+    "buy": 15,
+    "hold": 3,
+    "sell": 0,
+    "consensusRating": "Buy",
+    "consensusTarget": 81.29412,
+    "medianTarget": 82,
+    "highTarget": 90,
+    "lowTarget": 70,
+    "asOf": "2026-09-23"
+  },
+  "segments": {
+    "basis": "FY25 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 1635000000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "CMA",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "FHN",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "FITB",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "HBAN",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-11",
+      "close": 72.98999786376953
+    },
+    {
+      "date": "2026-08-12",
+      "close": 73.91000366210938
+    },
+    {
+      "date": "2026-08-13",
+      "close": 74.11000061035156
+    },
+    {
+      "date": "2026-08-14",
+      "close": 74.7300033569336
+    },
+    {
+      "date": "2026-08-17",
+      "close": 74.30999755859375
+    },
+    {
+      "date": "2026-08-18",
+      "close": 73.45999908447266
+    },
+    {
+      "date": "2026-08-19",
+      "close": 70.76000213623047
+    },
+    {
+      "date": "2026-08-20",
+      "close": 69.70999908447266
+    },
+    {
+      "date": "2026-08-21",
+      "close": 69.86000061035156
+    },
+    {
+      "date": "2026-08-24",
+      "close": 70.2300033569336
+    },
+    {
+      "date": "2026-08-25",
+      "close": 69.83000183105469
+    },
+    {
+      "date": "2026-08-26",
+      "close": 70.48999786376953
+    },
+    {
+      "date": "2026-08-27",
+      "close": 70.18000030517578
+    },
+    {
+      "date": "2026-08-28",
+      "close": 69.70999908447266
+    },
+    {
+      "date": "2026-08-31",
+      "close": 68.87000274658203
+    },
+    {
+      "date": "2026-09-01",
+      "close": 68.16000366210938
+    },
+    {
+      "date": "2026-09-02",
+      "close": 69.77999877929688
+    },
+    {
+      "date": "2026-09-03",
+      "close": 70.83000183105469
+    },
+    {
+      "date": "2026-09-04",
+      "close": 70.77999877929688
+    },
+    {
+      "date": "2026-09-08",
+      "close": 69.98999786376953
+    },
+    {
+      "date": "2026-09-09",
+      "close": 69.37000274658203
+    },
+    {
+      "date": "2026-09-10",
+      "close": 69.62999725341797
+    },
+    {
+      "date": "2026-09-11",
+      "close": 70.4800033569336
+    },
+    {
+      "date": "2026-09-14",
+      "close": 70.54000091552734
+    },
+    {
+      "date": "2026-09-15",
+      "close": 70.23999786376953
+    },
+    {
+      "date": "2026-09-16",
+      "close": 66.83999633789062
+    },
+    {
+      "date": "2026-09-17",
+      "close": 67.38999938964844
+    },
+    {
+      "date": "2026-09-18",
+      "close": 67.04000091552734
+    },
+    {
+      "date": "2026-09-21",
+      "close": 67.36000061035156
+    },
+    {
+      "date": "2026-09-23",
+      "close": 65.26000213623047
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "Citizens Financial Group, Inc. operates as the bank holding company that provides retail and commercial banking products and services to individuals, small businesses, middle-market companies, large corporations, and institutions in the United States. The company operates through two segments, Consumer Banking and Commercial Banking. The Consumer Banking segment offers deposit products, mortgage and home equity lending products, credit cards, business loans, and wealth management services; and education and point-of-sale finance loans, as well as digital deposit products. This segment serves its customers through telephone service centers, as well as through its online and mobile platforms. The Commercial Banking segment provides various financial products and solutions, including lending and leasing, deposit and treasury management services, foreign exchange, and interest rate and commodity risk management solutions, as well as syndicated loans, corporate finance, mergers and acquisitions, and debt and equity capital markets services. The company serves customers and small businesses, high- and ultra-high-net-worth individuals and families, as well as investors, entrepreneurs, and companies and institutions, as well as multifamily, office, industrial, retail, healthcare, and hospitality sectors. The company was formerly known as RBS Citizens Financial Group, Inc. and changed its name to Citizens Financial Group, Inc. in April 2014. Citizens Financial Group, Inc. was founded in 1828 and is headquartered in Providence, Rhode Island.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-23"
+    },
+    "mdaExcerpt": {
+      "text": "ITEM 2. MANAGEMENT'S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS\nPage\nForward-Looking Statements\n6\nIntroduction\n7\nExecutive Summary\n7\nConsolidated Statement of Operations Analysis\n10\nConsolidated Balance Sheet Analysis\n15\nBusiness Segments\n17\nRisk Management\n19\nCredit Risk\n19\nMarket Risk\n24\nLiquidity Risk\n27\nOperational Risk\n30\nCompliance Risk\n31\nCapital\n31\nCritical Accounting Estimates\n34\nAccounting and Reporting Developments\n36\nNon-GAAP Financial Measures\n38\nCitizens Financial Group, Inc. | 5\nFORWARD-LOOKING STATEMENTS\nThis document contains forward-looking statements within the meaning of the Private Securities Litigation Reform Act of 1995. Any statement that does not describe historical or current facts is a forward-looking statement. These statements often include the words \"believes,\" \"expects,\" \"anticipates,\" \"estimates,\" \"intends,\" \"plans,\" \"goals,\" \"targets,\" \"initiatives,\" \"potentially,\" \"probably,\" \"projects,\" \"outlook,\" and \"guidance\", or similar expressions or future conditional verbs such as \"may,\" \"will,\" \"likely,\" \"should,\" \"would,\" and \"could.\"\nForward-looking statements are based upon the current beliefs and expectations of management and on information currently available to management. Our statements speak as of the date hereof, and we do not assume any obligation to update these statements or to update the reasons why actual results could differ from those contained in such statements in light of new information or future events. We caution you, therefore, against relying on any of these forward-looking statements. They are neither statements of historical fact nor guarantees or assurances of future performance. While there is no assurance that any list of risks and uncertainties or risk factors is complete, important factors that could cause actual results to differ materially from those in the forward-looking statements include the following, without limitation:\nNegative economic, business, and political conditions, including as a result of the interest rate environment, supply chain disruptions, tariffs, inflationary pressures, and labor shortages that adversely affect the general economy, housing prices, the job market, consumer confidence, and spending habits;\nThe general state of the economy and employment, as well as general business and economic conditions, and changes in the competitive environment;\nOur capital and liquidity requirements under regulatory standards and our ability to generate capital and liquidity on favorable terms;\nThe effect of changes in our credit ratings on our cost of funding, access to capital markets, ability to market our securities, and overall liquidity position;\nThe effect of changes in the level of commercial and consumer deposits on our funding costs and net interest margin;\nOur ability to achieve our financial performance goals and execute on our strategic business initiatives, including the continued expansion of Private Bank and Private Wealth, and our aim to position us as a more innovative, modern, and customer-centric bank;\nThe effects of geopolitical instability, including the war in Ukraine and the conflict in the Middle East, on economic and market conditions, inflationary pressures and the interest rate environment, commodity price and foreign exchange rate volatility, and heightened cybersecurity risks;\nOur ability to comply with supervisory requirements and expectations as well as new or amended regulations;\nLiabilities and business restrictions resulting from litigation and regulatory investigations;\nThe impact of changes in interest rates on our net interest income, net interest margin, mortgage originations, and mortgage servicing rights, as well as on market liquidity, which could affect our funding sources and ability to originate and distribute financial products in the primary and secondary markets;\nFinancial services reform and other current, pending, or future legislation or regulation that could have a negative effect on our revenue and businesses;\nEnvironmental risks, such as physical or transition risks associated with climate change, and social and governance risks that could adversely affect our reputation, operations, business, and customers;\nA failure in, or breach of, our compliance with laws, as well as operational or security systems or infrastructure, or those of our third-party vendors or other service providers, including as a result of cyberattacks; and\nManagement's ability to identify and manage these and other risks.\nCitizens Financial Group, Inc. | 6\nIn addition to the above factors, we also caution that the actual amounts and timing of any future common stock dividends or share repurchases will be subject to various factors, including our capital position, financial performance, balance sheet growth, market conditions, and regulatory considerations, as well as any other factors that our Board of Directors deems relevant in making such a determination. Therefore, there can be no assurance that we will repurchase shares from, or pay any dividends to, holders of our common stock, or as to the amount of any such repurchases or dividends.\nMore information about factors that could cause actual results to differ materially from those described in the forward-looking statements can be found in the \"Risk Factors\" section in Part I, Item 1A of our 2025 Form 10-K.\nINTRODUCTION\nCitizens Financial Group, Inc., headquartered in Providence, Rhode Island, is one of the nation's oldest and largest financial institutions. We offer a broad range of retail, private banking, wealth management, and commercial banking products and services to individuals, small businesses, middle-market companies, large corporations, and institutions. We help our customers reach their potential by listening to them and by understanding their needs in order to offer tailored advice, ideas, and solutions. In Consumer Banking, we provide an integrated experience that includes mobile and online banking, a full-service customer contact center, and the convenience of approximately 3,000 ATMs and approximately 1,000 branches in 14 states and the District of Columbia. Consumer Banking products and services include a full range of banking, lending, savings, wealth management, and small business offerings. Consumer Banking includes Citizens Private Bank and Private Wealth, which integrate banking services and wealth management solutions to serve high- and ultra-high-net-worth individuals and families, as well as investors, entrepreneurs, and businesses. In Commercial Banking, we offer a broad complement of financial products and solutions, including lending and leasing, deposit and treasury management services, foreign exchange, interest rate and commodity risk management solutions, as well as loan syndication, corporate finance, merger and acquisition, and debt and equity capital markets capabilities.\nAt June 30, 2026, we had total assets of $233.8 billion, total deposits of $185.6 billion, and total stockholders' equity of $26.2 billion. In addition, we had total client assets of $65.7 billion, including assets under management of $38.7 billion, representing assets for which continuous and regular supervisory or management services are provided, and transactional assets of $27.0 billion, representing assets for which execution, custody, recordkeeping, reporting, and other services are provided.\nThe following MD&A is intended to assist readers in their analysis of the accompanying unaudited interim Consolidated Financial Statements and supplemental financial information. It should be read in conjunction with the unaudited interim Consolidated Financial Statements and Notes to Consolidated Financial Statements in Part I, Item 1, as well as other information contained in this document and our 2025 Form 10-K.\nEXECUTIVE SUMMARY\nThis summary highlights select financial information of the Company as well as information regarding certain significant events and transactions occurring during the period. This summary should be read in conjunction with this entire document for a more complete understanding of trends, events, commitments, uncertainties, liquidity, capital resources, and critical accounting policies and estimates. Each of these items, taken individually or collectively, could have an impact on the Company's financial condition, results of operations, and cash flows. For additional information regarding our financial performance and condition, see \"Consolidated Statement of Operations Analysis\" and \"Consolidated Balance Sheet Analysis.\"\nKey Financial Highlights\nNet income of $587 million and $1.1 billion for the three and six months ended June 30, 2026, respectively, increased $151 million and $295 million, with earnings per diluted common share up $0.38 to $1.30 and up $0.73 to $2.42, compared to the same periods in 2025.\nNet interest income of $1.6 billion and $3.2 billion for the three and six months ended June 30, 2026, respectively, increased $194 million and $365 million, and net interest margin of 3.16% and 3.15%, respectively, increased 22 basis points and 24 basis points, compared to the same periods in 2025. The increase in net interest income reflects an increase in interest-earning assets, higher net interest margin, terminated swap impacts, and fixed-rate asset repricing benefits.\nCitizens Financial Group, Inc. | 7\nNoninterest income of $652 million and $1.3 billion for the three and six months ended June 30, 2026, respectively, increased $52 million and $114 million compared to the same periods in 2025, driven by growth across numerous fee categories, primarily capital markets and wealth fees, partially offset by mortgage banking fees driven by lower MSR valuation results, net of hedge impact.\nNoninterest expense of $1.4 billion and $2.8 billion for the three and six months ended June 30, 2026, respectively, increased $75 million and $139 million compared to the same periods in 2025, driven by salaries and employee benefits reflecting hiring related to the Private Bank and Private Wealth build-out, and compensation associated with growth in capital markets fees.\nProvision expense of $134 million and $274 million for the three and six months ended June 30, 2026, respectively, decreased $30 million and $43 million compared to the same periods in 2025, reflecting the runoff of certain retail portfolios and improving credit trends and loan mix.\nThe efficiency ratio of 61.1% and 62.3% for the three and six months ended June 30, 2026, respectively, compared to 64.8% and 66.3% for the same periods in 2025.\nROTCE of 13.9% and 13.1% for the three and six months ended June 30, 2026, respectively, compared to 11.0% and 10.4% for the same periods in 2025.\nTangible book value per common share of $38.29 at June 30, 2026 was broadly stable compared to $38.07 at December 31, 2025.\nSee \"Non-GAAP Financial Measures\" for more information regarding the ROTCE and tangible book value per common share non-GAAP financial measures presented herein.\nShare Repurchases\nDuring the three months ended June 30, 2026, the Parent Company repurchased $225 million of its outstanding common stock, with remaining capacity of $775 million as of June 30, 2026. See Note 10 and Item 2 for additional information on share repurchase activity.\nPreferred Stock\nOn July 30, 2026, we issued $400 million, or 400,000 shares, of 6.750% Fixed-Rate Reset Non-Cumulative Perpetual Preferred Stock, Series J (the \"Series J Preferred Stock\"), par value of $25 per share with a liquidation preference of $1,000 per share. Holders of the Series J Preferred Stock will be entitled to receive dividend payments only when, as, and if declared by our Board of Directors. Any such dividends will be payable quarterly in arrears beginning on January 6, 2027.\nWe intend to use the net proceeds from the issuance of the Series J Preferred Stock to redeem some or all outstanding shares of our Series G Preferred Stock on the dividend payment date of October 6, 2026. Any remaining proceeds will be used for general corporate purposes. If we decide to redeem some or all of the Series G Preferred Stock, we will announce the redemption by press release or Form 8-K and an appropriate notice of redemption.\nRegulatory Developments\nCapital\nIn March 2026, the FRB, FDIC, and OCC issued joint proposals to modernize the regulatory capital framework for banking organizations. The first proposal would subject Category I and II banking organizations to a single set of risk-based capital requirements under an expanded risk-based approach (\"ERBA\") and a revised market risk framework (the \"ERBA proposal\"). Category III and Category IV banking organizations would be subject to the revised market risk framework if specified thresholds for aggregate trading assets and liabilities are met and would also have the option to adopt the ERBA in its entirety. The second proposal would revise certain elements of the capital rule under the standardized approach (the \"revised standardized approach proposal\") and would apply to banking organizations that are not classified as Category I or II and have not elected to adopt the ERBA.\nCitizens Financial Group, Inc. | 8\nThe ERBA proposal would introduce differentiated capital requirements based on specified credit risk factors, establish a standardized operational risk requirement aligned with a banking organization's business volume, and implement a revised market risk framework. The proposal would also increase the aggregate trading assets and liabilities threshold for application of the market risk framework from $1 billion to $5 billion for non-Category I and II banking organizations. The revised standardized approach proposal would modify risk-based capital requirements by introducing a broader range of risk weights for residential mortgages based on more granular risk factors and reducing risk weights for certain other exposures. The proposal would also require most elements of AOCI to be recognized in regulatory capital, subject to a five-year transition period. We continue to monitor these proposals and evaluate their potential impact on our regulatory capital ratios.\nDeposit Insurance\nIn June 2026, the FDIC issued a notice of proposed rulemaking to amend its regulations for determining risk-based deposit insurance assessments for IDIs. The proposal would decrease initial base deposit insurance assessment rate schedules by 1 basis point and provide a downward resolution readiness adjustment to assessment rates for large institutions, such as CBNA. The resolution readiness adjustment includes a 0.5 basis point adjustment for passing virtual data room testing and a 0.5 basis point adjustment for providing prescribed data access. We are currently evaluating the proposal to determine the benefit to the Company.\nCitizens Financial Group, Inc. | 9\nCONSOLIDATED STATEMENT OF OPERATIONS ANALYSIS\nNet Interest Income\nNet interest income is our largest source of revenue and is the difference between the interest earned on interest-earning assets (generally loans and investment securities) and the interest expense incurred in connection with interest-bearing liabilities (generally deposits and borrowed funds). The level of net interest income is primarily a function of the difference between the effective yield on our average interest-earning assets and the effective cost of our average interest-bearing liabilities. Factors that influence our net interest income include, but are not limited to, the pricing and mix of interest-earning assets and interest-bearing liabilities which, in turn, are impacted by external factors such as economic conditions, competition for loans and deposits, the monetary policy of the FRB, and market interest rates. For further discussion, refer to the \"Market Risk\" section of our 2025 Form 10-K.\nCitizens Financial Group, Inc. | 10\nThe following tables present the major components of our net interest income.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/759944/000075994426000148/cfg-20260630.htm",
+      "asOf": "2026-08-03",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "ITEM 1A. RISK FACTORS\nWe are subject to a number of risks potentially impacting our business, financial condition, results of operations, and cash flows. As a financial services organization, certain elements of risk are inherent in what we do and the decisions we make. Therefore, we encounter risk as part of the normal course of our business and design risk management processes to help manage these risks. See the \"Risk Management\" section in Item 7 for a discussion of our risk management framework and the primary risks we face.\nYou should carefully consider the following risk factors that may affect our business, financial condition, results of operations, or cash flows. However, the risk factors described below are not the only ones we face and should not be considered a complete list of risks that we may encounter. Additional risks not presently known to us or that we believe to be immaterial may also adversely affect our business. See the \"Forward-Looking Statements\" section above for other factors that could affect us.\nRisks Related to Our Business\nWe may not be able to successfully execute our business strategy.\nOur future success and the value of our stock depends, in part, on our ability to effectively implement our business strategy and achieve our financial performance goals across our Consumer and Commercial businesses, including our Private Bank. Risks and uncertainties associated with each element of our strategy exist, many of which are not within our control. If we are not able to successfully execute our business strategy, we may not achieve our financial performance goals and any shortfall may be material. See the \"Business Strategy\" section in Item 1 for further information.\nSupervisory requirements and expectations on us as a financial holding company and a bank holding company and any regulator-imposed limits on our activities could adversely affect our ability to implement our strategic plan, expand our business, continue to improve our financial performance, and make capital distributions to our stockholders.\nOur operations are subject to regulation, supervision, and examination by the federal banking regulators, as well as the CFPB. As part of the supervisory and examination process, if we are unsuccessful in meeting the regulatory requirements and supervisory expectations that apply to us, regulatory agencies may from time to time take supervisory actions against us, including actions that may not be publicly disclosed. Such actions may include restrictions on our activities or the activities of our subsidiaries, informal (nonpublic) or formal (public) supervisory actions, or public enforcement actions, including the payment of civil money penalties, which could increase our costs and limit our ability to implement our strategic plans and expand our business and, as a result, could have a material adverse effect on our business, financial condition, or results of operations. See the \"Regulation and Supervision\" section in Item 1 for further information.\nCitizens Financial Group, Inc. | 20\nInflationary pressures could have an adverse effect on our business, financial position, and results of operations.\nVolatility and uncertainty related to inflation and its associated effects may enhance or contribute to certain risks that we face by negatively impacting our funding costs and expenses, including increasing funding costs and expenses related to talent acquisition and retention. Inflation may also negatively impact consumer demand and client purchasing power for our products and services, as well as the ability of our borrowers to repay their obligations. These inflationary pressures would likely have an adverse impact on our business, financial position, and results of operations.\nOur ability to meet our obligations, and the cost of funds to do so, depend on our ability to access identified sources of liquidity at a reasonable cost.\nLiquidity risk is the risk arising from the inability to meet our obligations when they come due. We must maintain adequate funding to meet current and future obligations, including customer loan requests, deposit maturities and withdrawals, debt service, leases, and other cash commitments, under both normal operating conditions and periods of company-specific and/or market stress.\nWe rely on customer deposits to be our primary stable and low-cost source of funding. Our other funding sources are dependent on our ability to securitize loans in secondary markets, raise funds in the debt and equity capital markets, pledge loans and/or securities for borrowing from the FHLB, pledge securities as collateral for borrowing under repurchase agreements, and sell AFS securities.\nOur ability to meet our obligations and support our operations could be materially affected by a variety of conditions, including market-wide illiquidity or disruption, a general loss of market or customer confidence in the financial services industry or in the Company specifically, or reductions in one or more of our credit ratings. These conditions could limit our ability to retain deposits, securitize or sell assets, access debt and equity capital markets, or otherwise borrow money at a reasonable cost. If these conditions, among others, are severe enough they could also create unanticipated material outflows of cash due to, among other factors, draws on unfunded commitments or deposit attrition, which could have a significant adverse impact on our liquidity. In addition, changes to the FHLB's or the FRB's underwriting guidelines for wholesale borrowings or lending policies may limit or restrict our ability to borrow and could have a significant adverse impact on our liquidity as a result.\nChanges in interest rates may have an adverse effect on our liquidity and profitability.\nChanges in interest rates can have a material impact on the value of our securities portfolio, the primary objective of which is to provide a readily available source of liquidity. An increase in rates could lower the collateral value of these securities, reducing the amount we could borrow and leading to losses in the event of their sale.\nSince our earning assets are primarily in the form of loans and debt securities, changes in interest rates can have a material impact on our net interest income, net interest margin, fee income, and credit costs. Our asset yields and funding costs may not rise or fall in parallel in response to changes in interest rates, causing our net interest income to increase or decrease and our net interest margin to expand or contract. If our funding costs rise faster than our asset yields, or if our asset yields fall faster than our funding costs, our net interest income could decrease and our net interest margin could contract.\nAn increase in interest rates could weaken demand for loans by customers, reducing our net interest income due to lower loan balances and origination-related fee income due to lower production volume. An increase in rates could also have an adverse impact on our credit costs, as borrowers may have difficulty in making higher interest payments, as well as on our AFS securities portfolio, which could trigger the recognition of losses in the event the securities need to be sold.\nSimilarly, a decrease in interest rates could reduce our net interest income, net interest margin, and fee income. A prolonged period of low interest rates may result in us holding lower yielding loans and securities should rates rise rapidly after such a period.\nChanges in the spread between short-term and long-term interest rates (i.e., the yield curve) can also have a material impact on our net interest income and net interest margin.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/759944/000075994426000028/cfg-20251231.htm",
+      "asOf": "2026-02-12",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-K",
+    "pressRelease": null,
+    "proxyStatement": {
+      "text": "Board and director independence:\nBoard Independence and Oversight\nAll director nominees are independent except for the Chairman who also serves as the CEO of the Company\nNon-classified board structure\nIndependent Lead Director with formally defined role and responsibilities\nExecutive sessions of independent directors held at every regularly scheduled meeting\nKey committees are fully independent (Audit, Risk, Compensation and HR and Nominating and Corporate Governance)\nBoard Qualifications and Evaluations\nBoard skills and experience aligned with strategy\nBoard orientation and continuing education program supports ongoing director development\nBoard, committee and individual self-assessments conducted annually with an external facilitator\nBoard mentoring program and informal feedback sessions with senior management facilitate engagement and deeper understanding of the organization\nBoard Composition and Refreshment\nMandatory retirement age of 75 for directors promotes Board refreshment\nDirector recruitment and selection process considers leadership, relevant experience and skills, independence and perspectives\nDiversity of tenure provides balance of historical knowledge and fresh perspectives\nDiversity of age provides balance of extensive experience and new outlooks\nGender and racial diversity represented on the Board\nBoard Practices\nService on other public company boards limited in accordance with our Corporate Governance Guidelines\nStock ownership and retention guidelines for directors and executive officers\nAnnual review of Corporate Governance Guidelines ensures alignment with best practices\nSuccession planning discussions conducted throughout the year\nBoard Oversight of Risk\nBoard oversight of risk is led by the Risk and Audit Committees\nRisk Committee is responsible for reviewing and approving the Enterprise Risk Management Governance Framework and ensuring risks are properly managed to the risk appetites set for each material risk category\nUpdates on cybersecurity risk presented to the Risk Committee at each meeting with additional reporting provided regularly to the Board and Audit Committee\nShareholder Rights and Engagement\nAnnual election of directors with majority vote standard for uncontested elections\nAnnual advisory vote on executive compensation\nCapital structure with one vote per common share\nShareholders have proxy access\nShareholders have the right to call a special meeting\nNo poison pill\nAnnual Board review of Charter and Bylaw provisions\nAnnual shareholder outreach program with feedback from engagements shared with and discussed by the Board\nSimple majority vote to amend Certificate of Incorporation\nOversight of Sustainability\nBoard oversight of sustainability-related matters\nOn-going review of environmental, social, governance, and sustainability-related matters by the Executive Committee\nAnnual voluntary reporting aligned to Global Reporting Initiative (\"GRI\") and Sustainability Accounting Standards Board (\"SASB\") reporting frameworks\nClimate reporting aligned\n\nCompensation discussion and analysis:\nCompensation Discussion and Analysis\nThis Compensation Discussion and Analysis (the \"CD&A\") describes our executive compensation program, the decision-making process, and the resulting decisions of the Compensation and HR Committee regarding the 2025 compensation of our named executive officers (\"NEOs\"). The Company's NEOs for the 2025 year are as follows.\nName of Executive\nPosition\nBruce Van Saun\nChairman and Chief Executive Officer\nAunoy Banerjee\nExecutive Vice President and Chief Financial Officer\nBrendan Coughlin\nPresident and Head of Consumer, Private Banking and Wealth\nDonald H. McCree III\nChair of Commercial Banking\nTheodore Swimmer\nExecutive Vice President and Head of Commercial Banking\nJohn F. Woods\nFormer Chief Financial Officer\nChristopher Emerson\nFormer Interim Chief Financial Officer\nDuring 2025 there were several leadership and role changes among our NEOs. On April 30, 2025, Brendan Coughlin was named President and it was announced that John Woods would be leaving the Company. Mr. Woods left the Company on August 15, 2025 and Christopher Emerson served as Interim Chief Financial Officer until Aunoy Banerjee joined the Company on October 24, 2025. Following Mr. Banerjee joining the Company, Mr. Emerson continued in his prior role as Head of Corporate Planning and Enterprise Finance. On October 7, 2025, it was announced that Don McCree was transitioning into the role of Chair of Commercial Banking until his retirement at the end of March 2026 and Theodore Swimmer was appointed as Head of Commercial Banking.\n2025 Performance\nThe Company delivered good financial results in 2025, in line with our expectations at the beginning of the year despite periods of market uncertainty and an intensely competitive environment, demonstrating the strength, resilience, and adaptability of our business. Please see \"About Citizens Our 2025 Performance \" for a more detailed summary of performance highlights.\nDiluted Earnings\nPer Share (EPS)\nReturn On Tangible Common Equity (ROTCE)\nEfficiency\nRatio\nPre-Provision Net Revenue (PPNR)\nTotal Shareholder Return (TSR)\nCET1 Ratio\n$3.86\n11.20%\n64.4%\n$2,936MM\n2nd\namong peer group\n10.6%\nExecutive Compensation Overview\nThe Compensation and HR Committee has designed and administered an executive compensation program that has a demonstrated history of maintaining appropriate alignment between executive compensation and Company performance, accounts for and has been responsive to shareholder feedback, and is supported by effective corporate governance and risk management.\nResponsiveness to Shareholders and Say-on-Pay Outcome\nEngagement Overview\nDuring the last two years, support for our say-on-pay proposal has reflected a decrease in support (approximately 59% in 2025 and 63% in 2024) as compared to historic support levels averaging 93%. The Compensation and HR Committee takes all forms of feedback seriously, including our say-on-pay support level. The Company maintains an open dialogue with shareholders through our long-standing shareholder outreach program, through which conversations with shareholders are held twice annually, during the fall and in the early spring after we file our proxy statement.\n50\n2026 Proxy Statement\nCompensation Matters\nDuring 2025, the Company met with shareholders holding approximately 50% of our outstanding shares, including shareholders that voted both in favor of and against our 2025 say-on-pay proposal, and also met with Institutional Shareholder Services and Glass Lewis to gain their perspectives. Many shareholder conversations during 2025 were led by Edward J. Kelly III, our Lead Director and Chair of our Compensation and HR Committee. Discussions also included Susan LaMonica, our Chief Human Resources Officer, as well as representatives from our Human Resources, Legal, Investor Relations, and Sustainability teams. Please see \"Proxy Statement Summary Responsiveness to Shareholders and Say-on-Pay Outcome\" for details on our shareholder outreach program.\nKey 2025 Shareholder Feedback Regarding Compensation\nShareholders feel the amount of executive compensation has been appropriately and consistently aligned with Company performance.\nShareholders, including select shareholders that tend to prefer formulaic programs, are pleased with the changes we made in 2024 to our compensation program structure and related disclosure, which continued for 2025.\nAlthough select shareholders prefer a formulaic program, shareholders generally understand the Compensation and HR Committee's desire to maintain our current program and understand the related industry and regulatory context for that decision. Shareholders were otherwise generally pleased with our compensation program structure, which reflected the changes we made to the structure in 2024.\nThe Leadership Succession Awards granted in June 2024 were discussed on most calls, including the extraordinary circumstances that warranted the awards.\n\nSecurity ownership:\nSecurity Ownership of Certain Beneficial Owners and Management\nThe following tables indicate information regarding the beneficial ownership of our common stock by:\neach person whom we know to own beneficially more than 5% of our common stock;\neach of the directors, nominees, and named executive officers individually; and\nall directors, nominees, and executive officers as a group.\nIn accordance with SEC rules, beneficial ownership includes sole or shared voting or investment power with respect to securities and includes the shares issuable pursuant to restricted stock units and performance stock units that will become vested within 60 days of the date of determination. Under these rules, one or more persons may be a deemed beneficial owner of the same securities and a person may be deemed a beneficial owner of securities to which such person has no economic interest. Unless otherwise indicated, the persons or entities identified in this table have sole voting and investment power with respect to all shares shown as beneficially owned by them, subject to applicable community property laws.\nUnless otherwise noted, the number of shares and percentage of beneficial ownership for each of the directors and named executive officers individually, all directors and executive officers as a group, and persons whom we know to beneficially own more than five percent of our common stock in the table below are as of February 27, 2026. As of February 27, 2026, there were 424,993,893 shares of our common stock outstanding and entitled to vote. Information with respect to beneficial ownership has been furnished by each director, officer, or beneficial owner of more than five percent of the shares of our common stock. Except as otherwise noted below, the address for each person listed on the table is c/o Citizens Financial Group, Inc., 600 Washington Boulevard, Stamford, Connecticut 06901.\nBeneficial Ownership of Directors and Named Executive Officers\nNAME\nTOTAL\n%\nBruce Van Saun\n1,152,397\n(1)\n<1\nAunoy Banerjee\n15\n(2)\n<1\nBrendan Coughlin\n118,250\n(3)\n<1\nChristopher Emerson\n20,873\n(4)\n<1\nDonald H. McCree III\n318,796\n(5)\n<1\nTheodore Swimmer\n24,291\n(6)\n<1\nJohn F. Woods\n226,805\n(7)\n<1\nLee Alexander\n23,324\n(8)\n<1\nTracy A. Atkinson\n9,936\n(9)\n<1\nChristine M. Cumming\n49,733\n(10)\n<1\nKevin Cummings\n528,960\n(11)\n<1\nWilliam P. Hankowsky\n78,027\n(12)\n<1\nEdward J. Kelly III\n36,758\n(13)\n<1\nRobert G. Leary\n30,715\n(14)\n<1\nTerrance J. Lillis\n40,758\n(15)\n<1\nMichele N. Siekerka\n70,248\n(16)\n<1\nChristopher J. Swift\n23,324\n(17)\n<1\nClaude E. Wade\n4,942\n(18)\n<1\nMarita Zuraitis\n54,862\n(19)\n<1\nAll directors and current executive officers as a group (22 persons)\n2,831,371\n(20)\n<1\n98\n2026 Proxy Statement\nOther Items\n(1) Includes 75,934 restricted stock units, including performance-based restricted stock units, which will vest and be distributed in an equivalent number of shares of our common stock within 60 days of February 27, 2026.\n(2) Mr. Banerjee does not have any restricted stock units that will vest and be distributed in an equivalent number of shares of our common stock within 60 days of February 27, 2026.\n(3) Includes 24,206 restricted stock units, including performance-based restricted stock units, which will vest and be distributed in an equivalent number of shares of our common stock within 60 days of February 27, 2026. Also includes 35 shares which Mr. Coughlin has the right to acquire through the Company's Employee Stock Purchase Plan based on the closing of price of our stock as of February 27, 2026. The actual number of shares acquired will be determined using the closing price on March 31, 2026.\n(4) Includes 4,361 restricted stock units, including performance-based restricted stock units, which will vest and be distributed in an equivalent number of shares of our common stock within 60 days of February 27, 2026.\n\nRelated-person transactions:\nRelated Person Transactions\nPolicies and Procedures for Related Person Transactions\nThe Board has adopted a written policy governing transactions with related persons. Under the Related Person Transaction Policy, our executive officers, directors, significant shareholders, and their immediate family members (each a \"Related Person\"), are not permitted to enter into a transaction with the Company without approval from our Nominating and Corporate Governance Committee. In accordance with the policy, any request to enter into a transaction with an executive officer, director, significant shareholder, or any of such persons' immediate family members, in which the amount involved exceeds $120,000, and in which the Related Person has a direct or indirect material interest is required to be presented to our Nominating and Corporate Governance Committee for review, consideration, and approval.\nCitizens Financial Group\n37\nCorporate Governance Matters\nUnder the policy, the Nominating and Corporate Governance Committee has pre-approved transactions which do not pose a risk of creating conflicts of interest because they arise in the ordinary course of business, and the interests of the Related Person are not material even if the amount involved exceeds $120,000.",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/759944/000075994426000064/cfg-20260309.htm",
+      "asOf": "2026-03-09",
+      "truncated": true
+    },
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T15:58:29.348Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T15:58:29.348Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T15:58:29.348Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T15:58:29.348Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T15:58:29.348Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T15:58:29.348Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T15:58:29.348Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T15:58:29.348Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T15:58:29.348Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T15:58:29.348Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T15:58:29.348Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T15:58:29.348Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-23T15:58:29.348Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-23T15:58:29.348Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T15:58:29.348Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T15:58:29.348Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T15:58:29.348Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T15:58:29.348Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T15:58:29.348Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T15:58:29.348Z"
+    }
+  ]
+}

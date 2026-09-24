@@ -1,0 +1,49 @@
+{
+  "judgmentSha256": "8e589437d7eee62c8e8d4b0c553863f94b122c4f8b921cf34a2ce4d500e7f8b6",
+  "reviewedAt": "2026-09-23T19:20:00Z",
+  "reviewer": "Claude Opus 4.8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "Consensus expects revenue to grow to $138.6M in FY27E with EPS of $0.23, and to $157.2M in FY28E with EPS of $0.32, which would mark a return to GAAP profitability.",
+      "issue": "The consensus EPS estimates ($0.23 FY27E, $0.32 FY28E) are quoted correctly, but nothing on the grounding surface labels them GAAP or non-GAAP; the Facts estimates block gives 'EPS $0.23 / $0.32' with no basis. The press release states EPS guidance is 'provided only on a non-GAAP basis,' and the company already prints positive non-GAAP EPS ($0.15 in FY26). Asserting the estimate 'would mark a return to GAAP profitability' presupposes a GAAP basis the pack does not establish. The same GAAP-return framing recurs as 'a return to positive EPS' in analystCommentary, executiveSummary.catalysts[0], growth.points[5] and finalRecommendation.body[0]; if the estimates are non-GAAP, the 'return' framing is wrong because non-GAAP EPS is already positive. This is the report's thesis-carrying profitability-inflection claim.",
+      "fix": "Drop the word 'GAAP', or state that the consensus EPS basis is not labelled in the pack. Frame it as consensus modelling positive EPS ($0.23/$0.32) versus the FY26 GAAP loss of $-0.10, without asserting the estimate itself is GAAP. Apply the same hedge everywhere the 'return to positive EPS / profitability' framing appears.",
+      "status": "addressed",
+      "note": "Resolved. The 'return to GAAP profitability' clause is gone. incomeCommentary now reads: 'the pack does not label those estimates GAAP or non-GAAP, so we read them as positive forward EPS set against the FY26 GAAP loss rather than as a confirmed GAAP profit, especially since the company already prints positive non-GAAP EPS.' analystCommentary, catalysts[0], growth.points and finalRecommendation.body[0] now hedge the basis; zero occurrences of 'return to GAAP', 'GAAP profitability' or 'return to positive' remain report-wide."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.businessMoat (segments[0].body, moatFactors[2].body, durability); growth.points[3]; management.capitalAllocation",
+      "quote": "Gross margin for the consolidated business was 43.8% in FY26.",
+      "issue": "Load-bearing figures are restated rather than introduced once and referred back in words (rubric 7). Gross margin 43.8% appears three times inside the businessMoat section alone: segments[0].body ('Gross margin for the consolidated business was 43.8% in FY26'), moatFactors[2] Pricing power ('Gross margin improved to 43.8% in FY26, but operating margin was still -3.4%') and durability ('Gross margin of 43.8% and a net cash balance sheet...'); it recurs about seven times report-wide. The Nero acquisition economics ($5.3M annual revenue / $4.5M ARR) are restated in full in catalysts[2], growth.points[3] and capitalAllocation, and the 'Software and Services above 10% on a pro forma basis' claim appears in catalysts[2], growth.points[3], segments[0].body and durability. FY27E $138.6M / $0.23 likewise recurs across analystCommentary, thesis, catalysts, valuation, growth and finalRecommendation.",
+      "fix": "Introduce each figure once in its home section (gross margin in the segment line; Nero economics in either growth or capital allocation, not both; FY27E consensus in valuation) and refer back in words elsewhere ('the same 43.8% margin', 'the acquisition above'). Keep executive-summary catalysts as pointers instead of repeating the full numbers the later sections carry.",
+      "status": "addressed",
+      "note": "Resolved. Each figure now appears once in prose and is referred back in words. Gross margin 43.8% appears once (incomeCommentary); businessMoat segments/moatFactors/durability point to it ('as the financials section details', 'the improved gross margin'). FY27E $138.6M/$0.23 and FY28E $157.2M/$0.32 appear once (incomeCommentary). Nero $5.3M/$4.5M ARR and 'Software & Services above 10% pro forma' appear once (growth.points[3]); catalysts[2] and capitalAllocation now point to the growth section rather than restating the numbers."
+    },
+    {
+      "id": "F-3",
+      "severity": "Minor",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "Q4'26 revenue was $31.2M, up 4.6% year over year on the desk's figures; the company's press release described the same quarter as up 8%, and I used the 4.6% figure.",
+      "issue": "Disclosing the source disagreement (desk +4.6% vs press release +8%) and stating which figure was used is correct (rubric 8). The voice, though, slips into first-person singular ('I used the 4.6% figure') where the rest of the report speaks collectively as 'we' / 'the desk' ('We rate', 'Our target range', 'on the desk's figures' in the same sentence). One inconsistent voice tic.",
+      "fix": "Recast in the report's collective voice, e.g. 'the desk used the 4.6% figure' or 'we use the 4.6% figure', to match 'We rate' / 'Our target' elsewhere.",
+      "status": "addressed",
+      "note": "Resolved. Recast to the collective voice: 'the company's press release described the same quarter as up 8%, and we use the 4.6% figure.' No first-person singular 'I used' remains."
+    },
+    {
+      "id": "F-4",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarios[1].driver",
+      "quote": "Revenue grows at a double-digit rate toward the FY27E consensus of $138.6M, EPS turns positive at $0.23, and the stock holds a mid-2x sales multiple, landing near the lower half of the Street target range.",
+      "issue": "The Base implied price is $9.00. On ~46.71M shares that is a ~$420M market cap, which on FY27E revenue of $138.6M is ~3.0x sales, not the 'mid-2x sales multiple' the driver states (a mid-2x multiple on $138.6M would imply roughly $7.4). The stated multiple is internally inconsistent with the $9.00 it is meant to justify; the price is really pegged to the 'lower half of the Street target range' clause, not to the multiple.",
+      "fix": "Either state ~3x forward sales (consistent with $9.00) or drop the multiple and anchor the base explicitly to the lower half of the Street $8-12 range. Current P/S is 2.4x, so if you keep a sales-multiple anchor, note that the base assumes modest multiple expansion.",
+      "status": "addressed",
+      "note": "Resolved. The inconsistent 'mid-2x sales multiple' clause is dropped. The Base driver now reads: 'Revenue grows toward the FY27E consensus, the Street's positive EPS estimates hold, and the stock re-rates into the lower half of the Street target range on modest multiple expansion from the current 2.4x sales.' This anchors the $9.00 base to the lower half of the Street range and flags multiple expansion, matching the fix."
+    }
+  ]
+}

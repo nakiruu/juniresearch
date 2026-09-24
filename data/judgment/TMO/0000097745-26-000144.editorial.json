@@ -1,0 +1,39 @@
+{
+  "judgmentSha256": "09a174c1570cdfc034e7188e18483627cca8626f1604729a146ecb6c6d70e8ea",
+  "reviewedAt": "2026-09-23T14:30:00Z",
+  "reviewer": "claude-opus-4-8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.growth.points[2]",
+      "quote": "the September 2025 filtration-and-separation deal drove bioproduction growth of $196 million",
+      "issue": "The MD&A (Life Sciences Solutions, Q2) states the bioproduction business grew $196 million 'driven by higher demand from pharma and biotech customers, as well as the impact from the 2025 acquisition of the filtration and separation business' — two drivers, organic demand named first. The draft pins the whole $196 million on the acquisition and drops the organic-demand co-driver, overstating the deal's contribution. By contrast the parallel Clario claim ($441 million of clinical-research revenue) is supported because the MD&A attributes that growth 'primarily' to the acquisition; this one is not.",
+      "fix": "Attribute the $196 million to both drivers, e.g. 'bioproduction grew $196 million on stronger pharma-and-biotech demand and the 2025 filtration-and-separation acquisition', or soften 'drove' to 'contributed to' so the claim matches the pack.",
+      "status": "addressed",
+      "note": "Resolved. growth.points[2] now reads 'bioproduction grew $196 million on stronger pharma-and-biotech demand alongside the September 2025 filtration-and-separation acquisition' — organic demand named first, the acquisition second, matching the MD&A's two-driver wording. The parallel Clario claim is correctly qualified 'which the filing attributes primarily to the deal'."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.businessMoat.segments[0].body",
+      "quote": "Laboratory Products and Biopharma Services generated $6,693 million of revenue (up 12%) at a 14.0% income margin, aided by the March 2026 Clario acquisition, which added $441 million of clinical-research revenue; Life Sciences Solutions generated $2,815 million (up 13%) at a 37.0% margin on bioproduction demand; Analytical Instruments $1,847 million (up 7%) with margin up 4.2 points to 23.0%; and Specialty Diagnostics $1,205 million (up 6%) at 27.7%…",
+      "issue": "The moat section restates the full per-segment revenue, growth and margin set (and the Clario $441M) already given verbatim in financials.incomeCommentary, rather than referring back in words; the segment revenues appear a third time in executiveSummary.companyOverview. Related cross-section repetition: the leverage cluster (net debt $32.9B / total debt $42.7B / interest coverage 5.6x) recurs in balanceCommentary, management.capitalAllocation, risks.idiosyncratic[4], executiveSummary.risks[4] and finalRecommendation; the valuation cluster (35.4x trailing, 26.2x forward, 52-week high $671.47, consensus $649.96 below the current price, 24 of 29 Buy) recurs across thesis, valuation.multiplesCommentary, risks.idiosyncratic[2] and finalRecommendation.",
+      "fix": "In businessMoat reference the segment mix in words and keep only the margin points the moat argument needs, dropping the restated revenue/growth list. Introduce each figure once per section and refer back qualitatively; let the exec-summary risk bullets point rather than carry the same figures the body sections argue.",
+      "status": "addressed",
+      "note": "Resolved. businessMoat now refers back ('set out with revenue and margins in the financials section') and ranks margins qualitatively; the per-segment revenue set (6,693/2,815/1,847/1,205) appears once, in incomeCommentary; companyOverview points rather than restating. Leverage figures (32.9B/42.7B/5.6x) now appear once each in balanceCommentary, cited in words elsewhere. Valuation cluster argued once in multiplesCommentary; thesis keeps only 35.4x as an anchor; risks.idiosyncratic[2], exec-summary risks and finalRecommendation are now qualitative pointers."
+    },
+    {
+      "id": "F-3",
+      "severity": "Minor",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "interest income fell to $207 million from $297 million as rates and cash balances shifted",
+      "issue": "The $207M and $297M figures are grounded (Q2 press-release income statement), but the causal clause 'as rates and cash balances shifted' is not supported by the pack, which carries no interest-rate or period-end cash data behind the quarterly decline. It is also loose: FY25 cash and short-term investments rose ($5.6B to $10.1B), so a 'cash balances shifted' rationale cuts against the fall in interest income rather than explaining it.",
+      "fix": "Drop the unsupported causal clause and state the figures plainly, e.g. 'quarterly interest income fell to $207 million from $297 million a year earlier', or attribute the decline only to what the pack supports.",
+      "status": "addressed",
+      "note": "Resolved. balanceCommentary now reads 'quarterly interest income fell to $207 million from $297 million a year earlier' — the unsupported 'as rates and cash balances shifted' clause is removed; figures stated plainly and grounded in the Q2 income statement."
+    }
+  ]
+}

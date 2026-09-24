@@ -1,0 +1,583 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "SCHW",
+  "cik": 316709,
+  "company": "The Charles Schwab Corporation",
+  "exchange": "NYSE",
+  "sic": 6211,
+  "sicDescription": "Security Brokers, Dealers & Flotation Companies",
+  "filing": {
+    "form": "10-Q",
+    "accession": "0000316709-26-000031",
+    "filedDate": "2026-08-07",
+    "periodEnd": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/316709/000031670926000031/schw-20260630.htm"
+  },
+  "capturedAt": "2026-09-23T16:35:43.949Z",
+  "quote": {
+    "price": 100.21,
+    "marketCap": 173296730112,
+    "sharesOutstanding": 1729335696.1580682,
+    "sharesSource": "derived",
+    "week52Low": 83.96,
+    "week52High": 114.53,
+    "dividendYield": 0.0128,
+    "asOf": "2026-09-23"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          18520000000,
+          20762000000,
+          18837000000,
+          19606000000,
+          23921000000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          5855000000,
+          7183000000,
+          5067000000,
+          5942000000,
+          8852000000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          2.83,
+          3.5,
+          2.54,
+          2.99,
+          4.65
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          62975000000,
+          40195000000,
+          43337000000,
+          42083000000,
+          46030000000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          23769000000,
+          17050000000,
+          0,
+          0,
+          1900000000
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          -39206000000,
+          -23145000000,
+          -43337000000,
+          -42083000000,
+          -44130000000
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          56261000000,
+          36608000000,
+          40958000000,
+          48375000000,
+          49425000000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          2118000000,
+          2057000000,
+          19587000000,
+          2670000000,
+          9311000000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -916000000,
+          -971000000,
+          -700000000,
+          -620000000,
+          -548000000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          0,
+          -3395000000,
+          -2842000000,
+          0,
+          -7346000000
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          -1822000000,
+          -2110000000,
+          -2276000000,
+          -2275000000,
+          -2329000000
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          1202000000,
+          1086000000,
+          18887000000,
+          2050000000,
+          8763000000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q2'26",
+    "periodEnd": "2026-06-30",
+    "revenue": 7072000000,
+    "operatingMargin": null,
+    "revenueYoY": 0.2086822765339258
+  },
+  "ttm": {
+    "pe": 18.253187613843348,
+    "ps": 6.6588561042074925,
+    "evToEbitda": null,
+    "grossMargin": null,
+    "operatingMargin": null,
+    "netMargin": 0.3879346781940442,
+    "netDebtToEbitda": null,
+    "interestCoverage": null,
+    "currentRatio": null,
+    "fcfYield": 0.06225737781103644
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 28268736270,
+      "eps": 6.48723
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 31651039710,
+      "eps": 7.83027
+    }
+  },
+  "analysts": {
+    "count": 22,
+    "buy": 18,
+    "hold": 3,
+    "sell": 1,
+    "consensusRating": "Buy",
+    "consensusTarget": 125.45,
+    "medianTarget": 125.5,
+    "highTarget": 145,
+    "lowTarget": 91,
+    "asOf": "2026-09-23"
+  },
+  "segments": {
+    "basis": "FY25 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 23921000000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "BAC",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "BLK",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "BX",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "C",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-11",
+      "close": 107.69999694824219
+    },
+    {
+      "date": "2026-08-12",
+      "close": 109.33999633789062
+    },
+    {
+      "date": "2026-08-13",
+      "close": 110.05999755859375
+    },
+    {
+      "date": "2026-08-14",
+      "close": 111.08999633789062
+    },
+    {
+      "date": "2026-08-17",
+      "close": 110.58000183105469
+    },
+    {
+      "date": "2026-08-18",
+      "close": 111.68000030517578
+    },
+    {
+      "date": "2026-08-19",
+      "close": 110.87999725341797
+    },
+    {
+      "date": "2026-08-20",
+      "close": 109.79000091552734
+    },
+    {
+      "date": "2026-08-21",
+      "close": 112.30000305175781
+    },
+    {
+      "date": "2026-08-24",
+      "close": 113.6500015258789
+    },
+    {
+      "date": "2026-08-25",
+      "close": 112.2699966430664
+    },
+    {
+      "date": "2026-08-26",
+      "close": 109.38999938964844
+    },
+    {
+      "date": "2026-08-27",
+      "close": 108.05000305175781
+    },
+    {
+      "date": "2026-08-28",
+      "close": 110.16000366210938
+    },
+    {
+      "date": "2026-08-31",
+      "close": 109.81999969482422
+    },
+    {
+      "date": "2026-09-01",
+      "close": 108.27999877929688
+    },
+    {
+      "date": "2026-09-02",
+      "close": 108.23999786376953
+    },
+    {
+      "date": "2026-09-03",
+      "close": 110.37999725341797
+    },
+    {
+      "date": "2026-09-04",
+      "close": 109.29000091552734
+    },
+    {
+      "date": "2026-09-08",
+      "close": 106.87000274658203
+    },
+    {
+      "date": "2026-09-09",
+      "close": 106.54000091552734
+    },
+    {
+      "date": "2026-09-10",
+      "close": 107.33000183105469
+    },
+    {
+      "date": "2026-09-11",
+      "close": 107.25
+    },
+    {
+      "date": "2026-09-14",
+      "close": 107.30999755859375
+    },
+    {
+      "date": "2026-09-15",
+      "close": 107.79000091552734
+    },
+    {
+      "date": "2026-09-16",
+      "close": 105.16000366210938
+    },
+    {
+      "date": "2026-09-17",
+      "close": 104.62999725341797
+    },
+    {
+      "date": "2026-09-18",
+      "close": 105.25
+    },
+    {
+      "date": "2026-09-21",
+      "close": 106.87999725341797
+    },
+    {
+      "date": "2026-09-23",
+      "close": 100.19499969482422
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "The Charles Schwab Corporation, together with its subsidiaries, operates as a savings and loan holding company that provides wealth management, securities brokerage, banking, asset management, custody, and financial advisory services in the United States and internationally. The company operates in two segments, Investor Services and Advisor Services. It offers brokerage accounts with equity and fixed income trading, margin lending, options trading, futures and forex trading, and cash management capabilities, including money market funds, and certificates of deposit; third-party mutual funds through the Mutual Fund Marketplace and Mutual Fund OneSource service, as well as mutual fund trading and clearing services to broker-dealers; exchange-traded funds; advisory solutions for managed portfolios, separately managed accounts, customized personal advice for tailored portfolios, specialized planning, and full-time portfolio management; banking products comprising checking and savings accounts, first lien residential real estate mortgage loans, home equity lines of credit, and pledged asset lines; and trust custody services, personal trust reporting services, and administrative trustee services. It provides digital and software based trading platforms; research tools, and multichannel support, real-time market data, options trading; equity compensation plan sponsors full-service recordkeeping for stock plans, stock options, restricted stock, performance shares, and stock appreciation rights; retirement plan services; mutual fund clearing services; and advisor services, including interactive tools and educational content. The Company operates through branch offices. The Charles Schwab Corporation was founded in 1971 and is headquartered in Westlake, Texas.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-23"
+    },
+    "mdaExcerpt": {
+      "text": "Item 2. Management's Discussion and Analysis of Financial Condition and Results of Operations\nINTRODUCTION\nThe Charles Schwab Corporation (CSC) is a savings and loan holding company. CSC engages, through its subsidiaries (collectively referred to as Schwab or the Company), in wealth management, securities brokerage, banking, asset management, custody, and financial advisory services.\nPrincipal business subsidiaries of CSC include the following:\nCharles Schwab & Co., Inc. (CS&Co), incorporated in 1971, a securities broker-dealer;\nCharles Schwab Bank, SSB (CSB), our principal banking entity; and\nCharles Schwab Investment Management, Inc. (CSIM), the investment advisor for Schwab's proprietary mutual funds (Schwab Funds ) and for Schwab's exchange-traded funds (Schwab ETFs).\nUnless otherwise indicated, the terms \"Schwab,\" \"the Company,\" \"we,\" \"us,\" or \"our\" mean CSC together with its consolidated subsidiaries.\nSchwab provides financial services to individuals and institutional clients through two segments Investor Services and Advisor Services. The Investor Services segment provides retail brokerage, investment advisory, and banking and trust services to individual investors, and retirement plan and business services, as well as other corporate brokerage services, to businesses and their employees. The Advisor Services segment provides custodial, trading, banking and trust, and support services to independent registered investment advisors (RIAs), independent retirement advisors, and recordkeepers.\nSchwab was founded on the belief that all Americans deserve access to a better investing experience. Although much has changed in the intervening years, our purpose remains clear to champion every client's goals with passion and integrity. Guided by this purpose and our vision of creating the most trusted leader in investment services, management has adopted a strategy described as \"Through Clients' Eyes.\"\nThis strategy emphasizes placing clients' perspectives, needs, and desires at the forefront. Because investing plays a fundamental role in building financial security, we strive to deliver a better investing experience for our clients individual investors and the people and institutions who serve them by disrupting longstanding industry practices on their behalf and providing superior service. We also aim to offer a broad range of products and solutions to meet client needs with a focus on transparency, value, and trust. In addition, management works to couple Schwab's scale and resources with ongoing expense discipline to keep costs low and ensure that products and solutions are affordable as well as responsive to client needs. In combination, these are the key elements of our \"no trade-offs\" approach to serving investors. We believe that following this strategy is the best way to maximize our market valuation and stockholder returns over time.\nManagement estimates that investable wealth in the United States (U.S.) (consisting of assets in defined contribution, retail wealth management and brokerage, and RIA channels, along with bank deposits) currently exceeds $90 trillion, which means the Company's $13.08 trillion in client assets leaves substantial opportunity for growth. Our strategy is based on the principle that developing trusted relationships will translate into more assets from both new and existing clients, ultimately driving more revenue, and along with expense discipline and thoughtful capital management, will generate earnings growth and build long-term stockholder value.\nThis Management's Discussion and Analysis should be read in conjunction with our Annual Report on Form 10-K for the fiscal year ended December 31, 2025 (2025 Form 10-K).\nOn our website, https://www.aboutschwab.com , we post the following filings after they are electronically filed with or furnished to the Securities and Exchange Commission (SEC or Commission): annual reports on Form 10-K, quarterly reports on Form 10-Q, current reports on Form 8-K, and any amendments to those reports filed or furnished pursuant to Section 13(a) or 15(d) of the Securities Exchange Act of 1934. In addition, we post to the website the Dodd-Frank stress test results, our regulatory capital disclosures based on Basel III, our average liquidity coverage ratio (LCR), and our average net stable funding ratio (NSFR). The SEC maintains a website at https://www.sec.gov that contains reports, proxy statements, and other information that we file electronically with the Commission.\n- 1 -\nTHE CHARLES SCHWAB CORPORATION\nManagement's Discussion and Analysis of Financial Condition and Results of Operations\n(Tabular Amounts in Millions, Except Ratios, or as Noted)\nFORWARD-LOOKING STATEMENTS\nIn addition to historical information, this Quarterly Report on Form 10-Q contains \"forward-looking statements\" within the meaning of Section 27A of the Securities Act and Section 21E of the Securities Exchange Act of 1934. Forward-looking statements are identified by words such as \"believe,\" \"anticipate,\" \"expect,\" \"intend,\" \"plan,\" \"will,\" \"may,\" \"estimate,\" \"appear,\" \"could,\" \"would,\" \"aim,\" \"maintain,\" \"continue,\" \"seek,\" and other similar expressions. In addition, any statements that refer to expectations, strategy, objectives, projections, or other characterizations of future events or circumstances are forward-looking statements.\nThese forward-looking statements, which reflect management's expectations and objectives as of the date hereof, are based on the best judgment of Schwab's senior management. These statements relate to, among other things:\nMaximizing our market valuation and stockholder returns over time; and our belief that developing trusted relationships will translate into more client assets which drives revenue and, along with expense discipline and thoughtful capital management, generates earnings growth and builds stockholder value (see Introduction in Part I Item 2);\nIndustry and competitive trends including artificial intelligence, digital assets, private company securities and other alternative investments;\nThe Company's spot crypto trading offer (see Overview in Part I Item 2);\nThe integration of Forge Global Holdings, Inc. and its private market capabilities (see Overview in Part I Item 2);\nEstimates of market opportunity (see Introduction in Part I Item 2);\nGrowth of our client base and our business, strong client engagement, sustained demand for the Company's offerings and solutions, and strategic initiatives (see Overview in Part I Item 2);\nCapital expenditures and expense management (see Results of Operations in Part I Item 2);\nSEC transaction fee increases (see Results of Operations in Part I Item 2);\nNet interest revenue, client cash allocation, and adjustment of rates paid on client-related liabilities (see Results of Operations in Part I Item 2);\nWholesale funding and funding strategy (see Results of Operations in Part I Item 2, and Liquidity Risk in Part I Item 2);\nManagement of interest rate risk; modeling and assumptions, the impact of changes in interest rates on net interest margin and revenue, bank deposit account fee revenue, economic value of equity (EVE), and liability and asset duration (see Risk Management in Part I Item 2);\nSources and uses of liquidity (see Liquidity Risk in Part I Item 2);\nCapital management; long-term operating objective; and uses of capital and return of excess capital to stockholders (see Capital Management in Part I Item 2);\nThe expected impact of proposed and final rules (see Current Regulatory and Other Developments in Part I Item 2);\nThe likelihood of indemnification and guarantee payment obligations and clients failing to fulfill contractual obligations (see Commitments and Contingencies in Part I Item 1 Financial Information Notes to Condensed Consolidated Financial Statements (Item 1) Note 11, and Financial Instruments Subject to Off-Balance Sheet Credit Risk in Item 1 Note 13); and\nThe outcome and impact of legal proceedings and regulatory matters (see Legal Proceedings in Part II Item 1, and Commitments and Contingencies in Item 1 Note 11).\nAchievement of these expectations and objectives is subject to certain risks and uncertainties that could cause actual results to differ materially. Readers are cautioned not to place undue reliance on these forward-looking statements, which speak only as of the date of this Quarterly Report on Form 10-Q or, in the case of documents incorporated by reference, as of the date of those documents.\nImportant factors that may cause actual results to differ include, but are not limited to:\nGeneral economic and market conditions, including the level of interest rates, equity market valuations and volatility;\nThe impact of new and emerging technologies;\nOur ability to attract and retain clients, develop trusted relationships, and grow client assets;\nClient use of our advisory and lending solutions and other products and services;\nThe level of client assets, including cash balances;\nClient cash allocations and sensitivity to deposit rates;\nCompetitive pressure on pricing, including deposit rates;\n- 2 -\nTHE CHARLES SCHWAB CORPORATION\nManagement's Discussion and Analysis of Financial Condition and Results of Operations\n(Tabular Amounts in Millions, Except Ratios, or as Noted)\nThe level and mix of client trading activity, including daily average trades (DATs), margin balances, and balance sheet cash;\nRegulatory guidance and adverse impacts from new or changed legislation, rulemaking or regulatory expectations;\nCapital and liquidity needs and management;\nOur ability to manage expenses;\nOur ability to attract and retain talent;\nOur ability to develop and launch new and enhanced products, services, and capabilities, as well as enhance our infrastructure, in a timely and successful manner;\nOur ability to support client activity levels;\nIncreased compensation and other costs;\nRe al estate and workforce decisions;\nThe timing and scope of technology projects;\nBalance sheet positioning relative to changes in interest rates;\nInterest-earning asset mix and growth;\nOur ability to access funding sources and the cost of funding;\nPrepayment levels for mortgage-backed securities;\nRegulatory and legislative developments;\nAdverse developments in litigation or regulatory matters and any related charges; and\nPotential breaches of contractual terms for which we have indemnification and guarantee obligations.\nCertain of these factors, as well as general risk factors affecting the Company, are discussed in greater detail in Part I Item 1A Risk Factors in the 2025 Form 10-K.\n- 3 -\nTHE CHARLES SCHWAB CORPORATION\nManagement's Discussion and Analysis of Financial Condition and Results of Operations\n(Tabular Amounts in Millions, Except Ratios, or as Noted)\nOVERVIEW\nManagement focuses on several client activity and financial metrics in evaluating Schwab's financial position and operating performance. Results for the second quarter and first six months of 2026 and 2025 are as follows:\nThree Months Ended\nJune 30,\nPercent\nChange\nSix Months Ended\nJune 30,\nPercent\nChange\n2026\n2025\n2026\n2025\nClient Metrics\nNet new client assets (in billions) (1)\n$\n118.7\n$\n73.6\n61\n%\n$\n258.6\n$\n206.0\n26\n%\nCore net new client assets (in billions)\n$\n119.8\n$\n80.3\n49\n%\n$\n259.8\n$\n218.0\n19\n%\nClient assets (in billions, at quarter end)\n$\n13,084.9\n$\n10,757.3\n22\n%\nAverage client assets (in billions)\n$\n12,723.5\n$\n10,108.5\n26\n%\n$\n12,386.9\n$\n10,160.3\n22\n%\nNew brokerage accounts (in thousands)\n1,388\n1,098\n26\n%\n2,687\n2,281\n18\n%\nActive brokerage accounts (in thousands, at quarter end)\n39,802\n37,476\n6\n%\nAssets receiving ongoing advisory services (in billions,\nat quarter end)\n$\n6,671.7\n$\n5,425.0\n23\n%\nClient cash as a percentage of client assets (at quarter end)\n9.0\n%\n9.9\n%\nCompany Financial Information and Metrics\nTotal net revenues\n$\n7,072\n$\n5,851\n21\n%\n$\n13,554\n$\n11,450\n18\n%\nTotal expenses excluding interest\n3,403\n3,048\n12\n%\n6,697\n6,192\n8\n%\nIncome before taxes on income\n3,669\n2,803\n31\n%\n6,857\n5,258\n30\n%\nTaxes on income\n869\n677\n28\n%\n1,578\n1,223\n29\n%\nNet income\n2,800\n2,126\n32\n%\n5,279\n4,035\n31\n%\nPreferred stock dividends and other\n119\n149\n(20)\n%\n201\n262\n(23)\n%\nNet income available to common stockholders\n$\n2,681\n$\n1,977\n36\n%\n$\n5,078\n$\n3,773\n35\n%\nEarnings per common share (EPS) diluted\n$\n1.54\n$\n1.08\n43\n%\n$\n2.91\n$\n2.07\n41\n%\nNet revenue change from prior year\n21\n%\n25\n%\n18\n%\n21\n%\nPre-tax profit margin\n51.9\n%\n47.9\n%\n50.6\n%\n45.9\n%\nReturn on average common stockholders' equity (annualized)\n25\n%\n19\n%\n23\n%\n18\n%\nExpenses excluding interest as a percentage of average client\nassets (annualized)\n0.11\n%\n0.12\n%\n0.11\n%\n0.12\n%\nConsolidated Tier 1 Leverage Ratio (at quarter end)\n8.7\n%\n9.8\n%\nNon-GAAP Financial Measures (2)\nAdjusted total expenses\n$\n3,233\n$\n2,920\n$\n6,384\n$\n5,934\nAdjusted diluted EPS\n$\n1.62\n$\n1.14\n$\n3.05\n$\n2.17\nReturn on tangible common equity (annualized)\n44\n%\n35\n%\n41\n%\n34\n%\nAdjusted Tier 1 Leverage Ratio (consolidated)\n6.8\n%\n7.2\n%\n(1) The second quarter and first six months of 2026 include net outflows of $1.1 billion and $1.2 billion, respectively, from off-platform brokered certificates of deposit (CDs) issued by CSB. The second quarter and first six months of 2025 include net outflows of $6.7 billion and $12.0 billion, respectively, from off-platform brokered CDs issued by CSB.\n(2) See Non-GAAP Financial Measures for further details and a reconciliation of such measures to GAAP reported results.\nThe second quarter and first six months of 2026 was a changing but generally positive macroeconomic environment for clients. While equity markets declined amid elevated volatility in the first quarter of 2026, market returns rebounded strongly positive and volatility eased in the second quarter, as the Standard and Poor's 500 Index and NASDAQ Composite rose 15% and 21%, respectively, in the second quarter, finishing the first half of the year up 10% and 13%, respectively. The Federal Reserve kept the target federal funds overnight rate unchanged throughout the first six months of 2026, while the 10-year U.S. Treasury yield rose 25 basis points to 4.44% at June 30.\nSupported by equity market growth and strong asset gathering, total client assets increased to $13.08 trillion at June 30, up 10% from year-end 2025. Schwab attracted core net new assets of $119.8 billion in the second quarter of 2026, up 49% from the same period in 2025, bringing the total for the first half of the year to $259.8 billion, up 19% from the first half of 2025. New brokerage accounts were 1.4 million and 2.7 million in the second quarter and first half of 2026, respectively, up 26% and 18% from the same prior-year periods, and active brokerage accounts reached 39.8 million at June 30, 2026, up 6% year-over-year. Clients continued to be highly engaged in the markets throughout the first half of 2026, with DATs reaching 11.9 million and 10.9 million in the second quarter and first six months of 2026, respectively, higher by 57% and 46% from the respective 2025 periods.\n- 4 -\nTHE CHARLES SCHWAB CORPORATION\nManagement's Discussion and Analysis of Financial Condition and Results of Operations\n(Tabular Amounts in Millions, Except Ratios, or as Noted)\nSchwab's financial results for the second quarter and first six months of 2026 reflected the growth of our client base, strong client engagement, and sustained demand for Schwab's lending offerings and managed investing solutions. Net income increased to $2.8 billion and $5.3 billion in the second quarter and first six months of 2026, respectively, higher by 32% and 31% from the same periods in 2025. Diluted EPS was $1.54 and $2.91 in the second quarter and first six months of 2026, respectively, rising year-over-year 43% and 41%, respectively. Adjusted diluted EPS (1) was $1.62 and $3.05 in the second quarter and first six months of 2026, respectively, up 42% and 41% from the same prior-year periods.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/316709/000031670926000031/schw-20260630.htm",
+      "asOf": "2026-08-07",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "Item 1A. Risk Factors\nWe face a variety of risks that may affect our operations, financial results, or stock price and many of those risks are driven by factors that we cannot control or predict. The following discussion addresses those risks that management believes are the most significant, although there may be other risks that could arise, or may prove to be more significant than expected, that may affect our operations or financial results. For a discussion of our risk management governance and processes, including operational risk, compliance risk, credit risk, market risk, and liquidity risk, see Risk Management and Capital Management in Part II Item 7. For additional information regarding cybersecurity risk, see Item 1C. Cybersecurity.\n- 10 -\nTHE CHARLES SCHWAB CORPORATION\nEconomic and Market Risks\nDevelopments in the business, economic, and geopolitical environment could negatively impact our business.\nOur business can be adversely affected by the general environment economic, corporate, securities market, regulatory, and geopolitical developments all play a role in client asset valuations, trading activity, interest rates, and overall investor engagement, and are outside of our control. Deterioration in the housing and credit markets and decreases in securities valuations negatively impact our results of operations and capital resources.\nThe monetary policies of the Federal Reserve, which regulates the supply of money and credit in the United States, have a significant effect on our operating results. Actions taken by the Federal Reserve, including changes in its target funds rate and its own balance sheet management, are difficu lt to predict and can affect our financial results, including net interest revenue and bank deposit account fees, and the market value of our investment securities. These policies can have implications for clients' allocation to cash as we experienced in recent years, and higher or lower client cash balances have an impact on our capital requirements, as well as liquidity implications if such changes in allocation are sudden. Investor sentiment and market and trading dynamics can affect client preferences and security selection, and can impact transactions and asset-based revenues. Market-driven changes, such as declines in equity markets, can also reduce client demand for margin lending, which is a significant source of net interest revenue.\nA significant change in client cash allocations could negatively impact our income.\nClient cash balances are a significant funding source for the generation of the Company's revenue. Cash awaiting investment may be used to extend margin loans to clients or be swept to our banking subsidiaries and those bank deposits are then used to extend loans to clients and purchase investment securities. We also sweep a portion of such cash to the TD Depository Institutions pursuant to the 2023 IDA agreement, through which we earn bank deposit account fees. A significant reduction in our clients' allocation to cash, a change in the allocation of that cash, or a transfer of cash away from the Company, would likely reduce our income. For example, as a result of rapid increases in short-term interest rates in 2022 and 2023, the Company saw a significant decrease in clients' asset allocation to sweep cash and greater client investment in higher-yielding alternatives at Schwab such as fixed income investments and proprietary purchased money market funds. To help support these changes in client cash allocations, the Company extensively utilized higher-cost funding sources, which negatively impacted the Company's net income.\nSignificant interest rate changes could affect our profitability.\nThe direction and level of interest rates are important factors in our earnings. A decline in interest rates may have a negative impact on our net interest revenue and our bank deposit account fee revenue. The Company's interest-earning assets include significant holdings of investment securities, which include fixed- and floating-rate debt securities, including substantial holdings of mortgage-backed securities, as well as margin loans, mortgages, and PALs. The Company could be adversely affected by a decline in interest rates if the rates that the Company earns on interest-earning assets decline more than the rates that the Company pays on its funding sources, or if prepayment rates increase on the mortgages and mortgage-backed securities that the Company holds. A low interest rate environment may also have a negative impact on our asset management and administration fee revenues when we have to waive a portion of our management fees, as we experienced in 2020 and 2021, for certain Schwab-sponsored money market mutual funds in order to continue providing a positive return to clients. A decline in interest rates may also negatively impact our bank deposit account fee revenue, pursuant to the 2023 IDA agreement.\nThough the Company may benefit from a rising interest rate environment, a rise in interest rates may cause our funding costs to increase. The competitive environment may induce us to raise our interest rates to avoid losing deposits, or we may need to replace deposits with higher-cost funding sources as we experienced in recent years. In such situations, without offsetting increases in yields on interest-earning assets, the benefit of higher market interest rates to our net interest revenue may be reduced. The rapid increases in market interest rates experienced in 2022 and 2023 also contributed to increased unrealized losses on our investment securities portfolios. Increased unrealized losses on investment securities or other assets on our balance sheet can reduce market or client confidence in us, which could limit our ability to attract new client assets and accounts or result in the transfer of client assets and accounts from the Company.\nA rise in interest rates may also reduce our bank deposit account fee revenue, as clients may reallocate assets out of bank deposit account balances and into higher-yielding investment alternatives, as we experienced in recent years. The 2023 IDA agreement involves certain commitments, including the maintenance of prescribed minimum and maximum insured deposit account balances (IDA balances), that limit our ability to respond to changes in interest rates and may impact our profitability and bank deposit account fee revenue. The bank deposit account fee revenue that we earn related to the 2023 IDA agreement may be less\n- 11 -\nTHE CHARLES SCHWAB CORPORATION\nthan the net interest revenue that we could have earned if the deposit balances were used to extend margin loans or swept to our banking subsidiaries rather than the TD Depository Institutions.\nProblems encountered by other financial institutions and responsive measures to manage such problems could have direct adverse effects on financial markets generally and our financial position or results of operations, as well as indirect adverse effects on us.\nConcerns regarding the soundness or creditworthiness of other financial institutions can cause substantial disruption within the financial markets and have negative impacts for us and our industry, including reductions in availability of liquidity, higher borrowing costs, and higher costs of capital. Such concerns regarding one or more financial institutions may also advance public concerns regarding Schwab or the financial services industry more broadly, which could harm our reputation and adversely affect our results of operations and financial condition, even if underlying matters impacting other financial institutions are of limited or no direct applicability to us. Financial institutions are interrelated through trading, clearing, custody, or other relationships, and, as a result, concerns about the financial condition of one or more institutions could lead to significant market-wide liquidity and credit problems, losses, or defaults by other institutions.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/316709/000031670926000009/schw-20251231.htm",
+      "asOf": "2026-02-25",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-K",
+    "pressRelease": {
+      "text": "EX-99.1\n2\na2q26exhibit991.htm\nEX-99.1\nDocument\nExhibit 99.1\nSCHWAB REPORTS RECORD QUARTERLY REVENUE AND EARNINGS\nRecord June Core Net New Assets Grew 47% Year-Over-Year to $62.7 Billion\n2Q Net Revenues Reached a Record $7.1 Billion, Up 21% Year-Over-Year\nRecord GAAP Earnings Per Share of $1.54 $1.62 Adjusted (1) up 42% versus 2Q25\nWESTLAKE, Texas, July 21, 2026 The Charles Schwab Corporation reported net income for the second quarter totaling $2.8 billion, or earnings per share of $1.54. Excluding $170 million of pre-tax transaction-related costs, adjusted (1) net income and earnings per share equaled $2.9 billion and $1.62, respectively.\nClient Driven\nGrowth\n$120B\n2Q26 Core\nNet New Assets\n\"Schwab's leading value proposition continued to resonate in 2Q26, as investors opened 1.4 million new brokerage accounts and brought $120 billion in core net new assets to the firm. June core asset gathering totaled a record $62.7 billion an annualized organic growth rate of 5.8%.\"\nPresident CEO Rick Wurster\nDeepen Client Relationships\n53%\n2Q26 Managed Investing\nNet Flows Growth\n\"Investors continued to engage with Schwab's expanding set of solutions during 2Q as daily average trades reached a record 11.9 million, net flows into Schwab Wealth Advisory TM increased 80% year-over-year, and Pledged Asset Line TM balances equaled $33.4 billion up 59% from 2Q25.\"\nPresident CEO Rick Wurster\nDiversified Revenue Growth\n21%\n2Q26 Revenue\nGrowth vs. 2Q25\n\"Our ability to do more for clients throughout their financial lives enables Schwab to deliver robust results across a range of environments. During the second quarter, strong client engagement helped drive year-over-year revenue growth of 21% to a record $7.1 billion.\"\nCFO Mike Verdeschi\nStrong Earnings Momentum\n43%\n2Q26 GAAP EPS\nGrowth vs. 2Q25\n\"During 2Q26, the strength of Schwab's diversified business model, our industry-leading scale, and opportunistic capital return in multiple forms combined to deliver year-over-year GAAP earnings growth of 43% to a record $1.54 per share, or $1.62 on an adjusted (1) basis.\"\nCFO Mike Verdeschi\n2Q26 Client and Business Highlights\nTotal client assets increased 22% year-over-year to $13.08 trillion\nCore net new assets totaled $119.8 billion, up 49% versus 2Q25\nNew brokerage account openings equaled 1.4 million, helping bring total client accounts to 48.0 million\nManaged Investing Solutions net flows grew 53% versus 2Q25\nBank loan balances equaled $67.0 billion at June month-end, up 33% year-over-year\nMargin loan balances increased 30% quarter-over-quarter to $165.1 billion at quarter-end\nLong short strategy interest remained strong amongst RIA clients (2) , with margin loan debits and short cash credits equaling $42.1 billion and $43.7 billion, respectively, as of June 30, 2026\nDaily average trading volume reached a record 11.9 million up 57% versus 2Q25\nLaunched Schwab Crypto TM , providing direct access to Bitcoin and Ethereum trading for retail clients\nIntroduced Portfolio Insights, a generative AI-powered capability that helps investors understand portfolio performance (3)\nSchwab recognized as the Best Investing Platform by U.S. News for the 4 th consecutive year (4)\n- 1 -\nThree Months Ended\nJune 30,\n%\nSix Months Ended\nJune 30,\n%\nFinancial Highlights\n2026\n2025\nChange\n2026\n2025\nChange\nNet revenues (in millions)\n$\n7,072\n$\n5,851\n21%\n$\n13,554\n$\n11,450\n18%\nNet income (in millions)\nGAAP\n$\n2,800\n$\n2,126\n32%\n$\n5,279\n$\n4,035\n31%\nAdjusted\n$\n2,930\n$\n2,222\n32%\n$\n5,518\n$\n4,230\n30%\nDiluted earnings per common share\nGAAP\n$\n1.54\n$\n1.08\n43%\n$\n2.91\n$\n2.07\n41%\nAdjusted\n$\n1.62\n$\n1.14\n42%\n$\n3.05\n$\n2.17\n41%\nPre-tax profit margin\nGAAP\n51.9\n%\n47.9\n%\n50.6\n%\n45.9\n%\nAdjusted\n54.3\n%\n50.1\n%\n52.9\n%\n48.2\n%\nReturn on average common\nstockholders' equity (annualized)\n25\n%\n19\n%\n23\n%\n18\n%\nReturn on tangible\ncommon equity (annualized)\n44\n%\n35\n%\n41\n%\n34\n%\nNote Items labeled \"adjusted\" are non-GAAP financial measures further details are included on pages 10-12 of this release. All per-share results are rounded to the nearest cent, based on weighted-average diluted common shares outstanding.\n2Q26 Financial Commentary\nQuarterly net revenues grew year-over-year by 21% to a record $7.1 billion\nNet interest margin for the quarter expanded 12 basis points quarter-over-quarter to 3.00%\nClient transactional sweep cash balances ended June at $485.7 billion, an increase of $24.2 billion versus the prior quarter-end, reflecting typical 2Q tax seasonality, organic growth, and client asset allocation decisions\nAverage interest-earning assets for the quarter equaled $445.0 billion, up 5% versus 2Q25\nAsset management and administration fees grew by 16% year-over-year to $1.8 billion, powered by the firm's organic growth and investors' increased utilization of our wealth and asset management solutions\nRecord client trading activity drove trading revenue of $1.2 billion, up 28% year-over-year\nGAAP expenses for the quarter increased 12% year-over-year excluding acquisition and integration-related costs and the amortization of acquired intangibles of $170 million, adjusted total expenses (1) were up 11% relative to 2Q25\nCapital ratios across the firm remained strong including preliminary consolidated Tier 1 Leverage and adjusted Tier 1 Leverage (1) equaling 8.7% and 6.8%, respectively\nRedeemed $2.1 billion Series I Preferred Stock and issued $1.5 billion Series L Preferred Stock\nRepurchased 11.2 million shares of our common stock for $1.0 billion during the quarter\n(1) Further details on non-GAAP financial measures and a reconciliation of such measures to GAAP reported results are included on pages 10-12 of this release.\n(2) Client margin loans and short credits related to certain long short strategies utilized by RIAs are excluded from interest-earning assets and company funding sources.\n(3) Portfolio Insights (Insights) is a generative artificial intelligence feature designed to provide (1) a narrative snapshot of a client's Portfolio's Day Change performance as of now versus the prior trading day's close (2) a recap of recent news about the top S P 500 equity movers (up to five securities) most affecting the value of a client's portfolio and (3) snippets of the day's Schwab Center for Financial Research and other Schwab expert content related to a client's portfolio. The summaries can be refreshed throughout the day. Insights into specific securities are not necessarily representative of a client's portfolio. The securities referenced to prepare each Insight vary and certain asset types are excluded. Insights should not be construed as investment advice or recommendations and are for informational and educational purposes only. Generative AI output may be inaccurate, containing hallucinated, stale, or incomplete information. Clients should consult their Account Statement(s) for complete account information. For more information about Schwab Portfolio Insights, please visit https www.schwab.com legal portfolio-insights-disclosure .\n(4) U.S. News World Report's Best Investing Platforms awards were given on 04 16 2026. The criteria, evaluation, and ranking were determined by U.S. News World Report. See https money.usnews.com investing best-brokers methodology for more information. Schwab paid a licensing fee to U.S. News World Report for use of the award and logos.\nSummer Business Update\nThe company will host its Summer Business Update for institutional investors this morning from 7 30 a.m. - 8 30 a.m. CT, 8 30 a.m. - 9 30 a.m. ET.\nRegistration for this Update webcast is accessible at https www.aboutschwab.com schwabevents .\n- 2 -\nForward-Looking Statements\nThis press release contains forward-looking statements relating to the company's diversified business model, scale, solutions, client engagement, and capital return. These forward-looking statements reflect management's expectations as of the date hereof. Achievement of these expectations and objectives is subject to risks and uncertainties that could cause actual results to differ materially from the expressed expectations. Important factors that may cause such differences are described in the company's most recent reports on Form 10-K and Form 10-Q, which have been filed with the Securities and Exchange Commission and are available on the company's website ( https www.aboutschwab.com financial-reports ) and on the Securities and Exchange Commission's website ( https www.sec.gov ) . The company makes no commitment to update any forward-looking statements.\nAbout Charles Schwab\nThe Charles Schwab Corporation (NYSE SCHW) is a leading provider of financial services, with 39.8 million active brokerage accounts, 5.9 million workplace plan participant accounts, 2.4 million banking accounts, and $13.08 trillion in client assets. Through its operating subsidiaries, the company provides a full range of wealth management, securities brokerage, banking, asset management, custody, and financial advisory services to individual investors and independent investment advisors. Its broker-dealer subsidiary, Charles Schwab Co., Inc. (member SIPC, https www.sipc.org ), and its affiliates offer a complete range of investment services and products including an extensive selection of mutual funds financial planning and investment advice retirement plan and equity compensation plan services referrals to independent, fee-based investment advisors and custodial, operational and trading support for independent, fee-based investment advisors through Schwab Advisor Services TM . Its primary banking subsidiary, Charles Schwab Bank, SSB (member FDIC and an Equal Housing Lender), provides banking and lending services and products. More information is available at https www.aboutschwab.com .\nContact Information\nMEDIA\nMayura Hooper, 415-667-1525\npublic.relations schwab.com\nINVESTORS ANALYSTS\nJeff Edwards, 817-854-6177\ninvestor.relations schwab.com\n- 3 -\nT HE C HARLES S CHWAB C ORPORATION\nConsolidated Statements of Income\n(In millions, except per share amounts)\n(Unaudited)\nThree Months Ended\nJune 30,\nSix Months Ended\nJune 30,\n2026\n2025\n2026\n2025\nNet Revenues\nInterest revenue\n$\n4,432\n$\n3,787\n$\n8,394\n$\n7,544\nInterest expense\n(1,075)\n(965)\n(1,893)\n(2,016)\nNet interest revenue\n3,357\n2,822\n6,501\n5,528\nAsset management and administration fees\n1,825\n1,570\n3,584\n3,100\nTrading revenue\n1,215\n952\n2,304\n1,860\nBank deposit account fees\n333\n247\n628\n492\nOther\n342\n260\n537\n470\nTotal net revenues\n7,072\n5,851\n13,554\n11,450\nExpenses Excluding Interest\nCompensation and benefits\n1,790\n1,536\n3,602\n3,208\nProfessional services\n307\n291\n610\n560\nOccupancy and equipment\n301\n270\n586\n544\nAdvertising and market development\n111\n108\n212\n204\nCommunications\n198\n176\n361\n329\nDepreciation and amortization\n198\n215\n399\n432\nAmortization of acquired intangible assets\n142\n128\n274\n258\nRegulatory fees and assessments\n63\n77\n138\n166\nOther\n293\n247\n515\n491\nTotal expenses excluding interest\n3,403\n3,048\n6,697\n6,192\nIncome before taxes on income\n3,669\n2,803\n6,857\n5,258\nTaxes on income\n869\n677\n1,578\n1,223\nNet Income\n2,800\n2,126\n5,279\n4,035\nPreferred stock dividends and other\n119\n149\n201\n262\nNet Income Available to Common Stockholders\n$\n2,681\n$\n1,977\n$\n5,078\n$\n3,773\nWeighted-Average Common Shares Outstanding\nBasic\n1,735\n1,817\n1,740\n1,819\nDiluted\n1,739\n1,822\n1,745\n1,825\nEarnings Per Common Shares Outstanding\nBasic\n$\n1.55\n$\n1.09\n$\n2.92\n$\n2.07\nDiluted\n$\n1.54\n$\n1.08\n$\n2.91\n$\n2.07\n- 4 -\nTHE CHARLES SCHWAB CORPORATION\nFinancial and Operating Highlights\n(Unaudited)\nQ2-26 % change\n2026\n2025\nvs.\nvs.\nSecond\nFirst\nFourth\nThird\nSecond\n(In millions, except per share amounts and as noted)\nQ2-25\nQ1-26\nQuarter\nQuarter\nQuarter\nQuarter\nQuarter\nNet Revenues\nNet interest revenue\n19\n%\n7\n%\n$\n3,357\n$\n3,144\n$\n3,172\n$\n3,050\n$\n2,822\nAsset management and administration fees\n16\n%\n4\n%\n1,825\n1,759\n1,733\n1,673\n1,570\nTrading revenue\n28\n%\n12\n%\n1,215\n1,089\n1,066\n995\n952\nBank deposit account fees\n35\n%\n13\n%\n333\n295\n238\n247\n247\nOther\n32\n%\n75\n%\n342\n195\n127\n170\n260\nTotal net revenues\n21\n%\n9\n%\n7,072\n6,482\n6,336\n6,135\n5,851\nExpenses Excluding Interest\nCompensation and benefits\n17\n%\n(1)\n%\n1,790\n1,812\n1,630\n1,653\n1,536\nProfessional services\n5\n%\n1\n%\n307\n303\n344\n293\n291\nOccupancy and equipment\n11\n%\n6\n%\n301\n285\n293\n280\n270\nAdvertising and market development\n3\n%\n10\n%\n111\n101\n115\n101\n108\nCommunications\n13\n%\n21\n%\n198\n163\n142\n149\n176\nDepreciation and amortization\n(8)\n%\n(1)\n%\n198\n201\n206\n212\n215\nAmortization of acquired intangible assets\n11\n%\n8\n%\n142\n132\n127\n127\n128\nRegulatory fees and assessments\n(18)\n%\n(16)\n%\n63\n75\n62\n59\n77\nOther\n19\n%\n32\n%\n293\n222\n237\n240\n247\nTotal expenses excluding interest\n12\n%\n3\n%\n3,403\n3,294\n3,156\n3,114\n3,048\nIncome before taxes on income\n31\n%\n15\n%\n3,669\n3,188\n3,180\n3,021\n2,803\nTaxes on income\n28\n%\n23\n%\n869\n709\n721\n663\n677\nNet Income\n32\n%\n13\n%\n2,800\n2,479\n2,459\n2,358\n2,126\nPreferred stock dividends and other\n(20)\n%\n45\n%\n119\n82\n92\n81\n149\nNet Income Available to Common Stockholders\n36\n%\n12\n%\n$\n2,681\n$\n2,397\n$\n2,367\n$\n2,277\n$\n1,977\nEarnings per common share\nBasic\n42\n%\n13\n%\n$\n1.55\n$\n1.37\n$\n1.34\n$\n1.26\n$\n1.09\nDiluted\n43\n%\n12\n%\n$\n1.54\n$\n1.37\n$\n1.33\n$\n1.26\n$\n1.08\nDividends declared per common share\n19\n%\n$\n.32\n$\n.32\n$\n.27\n$\n.27\n$\n.27\nWeighted-average common shares outstanding\nBasic\n(5)\n%\n(1)\n%\n1,735\n1,746\n1,772\n1,806\n1,817\nDiluted\n(5)\n%\n(1)\n%\n1,739\n1,752\n1,777\n1,811\n1,822\nPerformance Measures\nPre-tax profit margin\n51.9\n%\n49.2\n%\n50.2\n%\n49.2\n%\n47.9\n%\nReturn on average common stockholders' equity (annualized) (1)\n25\n%\n23\n%\n22\n%\n21\n%\n19\n%\nFinancial Condition (at quarter end, in billions)\nCash and cash equivalents\n26\n%\n(10)\n%\n$\n40.6\n$\n45.0\n$\n46.0\n$\n30.6\n$\n32.2\nCash and investments segregated\n(28)\n%\n(17)\n%\n33.0\n39.8\n42.9\n47.8\n45.6\nReceivables from brokers, dealers, and clearing organizations\nN M\n86\n%\n22.0\n11.8\n7.2\n4.7\n4.3\nReceivables from brokerage clients net\n48\n%\n16\n%\n122.8\n106.2\n104.7\n93.8\n82.8\nAvailable for sale securities\n(8)\n%\n2\n%\n62.5\n61.1\n62.4\n62.3\n67.6\nHeld to maturity securities\n(7)\n%\n(1)\n%\n130.6\n131.7\n134.0\n136.7\n139.7\nBank loans net\n33\n%\n10\n%\n67.0\n60.9\n58.0\n53.6\n50.4\nTotal assets\n13\n%\n5\n%\n517.3\n493.3\n491.0\n465.3\n458.9\nBank deposits\n7\n%\n(1)\n%\n249.7\n253.0\n255.7\n239.1\n233.1\nPayables to brokers, dealers, and clearing organizations\n135\n%\n56\n%\n43.8\n28.1\n25.7\n22.4\n18.6\nPayables to brokerage clients\n13\n%\n5\n%\n124.0\n118.0\n116.3\n115.4\n109.4\nAccrued expenses and other liabilities\n16\n%\n4\n%\n12.5\n12.0\n12.8\n11.4\n10.8\nOther short-term borrowings\n64\n%\n11\n%\n13.9\n12.5\n6.9\n6.5\n8.5\nFederal Home Loan Bank borrowings\n(94)\n%\nN M\n0.5\n1.9\n0.9\n9.0\nLong-term debt\n12\n%\n11\n%\n22.7\n20.5\n22.2\n20.2\n20.2\nTotal liabilities\n14\n%\n5\n%\n467.1\n444.1\n441.6\n415.9\n409.5\nStockholders' equity\n1\n%\n2\n%\n50.1\n49.2\n49.4\n49.4\n49.5\nTotal liabilities and stockholders' equity\n13\n%\n5\n%\n517.3\n493.3\n491.0\n465.3\n458.9\nOther\nFull-time equivalent employees (at quarter end, in thousands)\n3\n%\n1\n%\n33.7\n33.5\n33.0\n32.7\n32.6\nCapital expenditures purchases of equipment, office facilities, and property,\nnet (in millions) (2)\nN M\nN M\n$\n792\n$\n173\n$\n158\n$\n152\n$\n136\nExpenses excluding interest as a percentage of average client assets (annualized)\n0.11\n%\n0.11\n%\n0.11\n%\n0.11\n%\n0.12\n%\nClients' Daily Average Trades (DATs) (in thousands)\n57\n%\n20\n%\n11,920\n9,899\n8,274\n7,421\n7,571\nNumber of Trading Days\n2\n%\n62.0\n61.0\n63.0\n63.5\n62.0\nRevenue Per Trade (3)\n(19)\n%\n(9)\n%\n$\n1.64\n$\n1.80\n$\n2.05\n$\n2.11\n$\n2.03\n(1) Return on average common stockholders' equity is calculated using net income available to common stockholders divided by average common stockholders' equity.\n(2) Second quarter of 2026 includes incremental capital expenditures of $633 million related to a multi-year software license agreement with a corresponding liability recognized in long-term debt.\n(3) Revenue per trade is calculated as trading revenue divided by the product of DATs and the number of trading days.\nN M Not meaningful. Percentage changes greater than 200% are presented as not meaningful.",
+      "source": "edgar:8-K ex-99.1",
+      "url": "https://www.sec.gov/Archives/edgar/data/316709/000031670926000027/a2q26exhibit991.htm",
+      "asOf": "2026-07-21",
+      "truncated": true
+    },
+    "proxyStatement": {
+      "text": "Board and director independence:\nDirector Independence\nWe have considered the independence of each director in accordance with New York Stock Exchange (NYSE) corporate governance standards. Based on these standards, we have determined that each of the company's directors, except Mr. Schwab, Mr. Bettinger, Mr. Wurster, and Ms. Schwab-Pomerantz, is independent. To assist us in our determination, we have general guidelines for independence. These guidelines for independence are available on the company's website at www.aboutschwab.com/governance.\nIn determining independence, the board considers broadly all relevant facts and circumstances regarding a director's relationships with the company. All non-employee directors receive compensation from the company for their service as directors, as disclosed in the \"Director Compensation\" section of this proxy statement, and are entitled to receive reimbursement for their expenses in traveling to and participating in board and committee meetings. As disclosed in the \"Transactions with Related Persons\" section of this proxy statement, some directors and entities with which they are affiliated have credit transactions with the company's banking and brokerage subsidiaries, such as mortgage loans, revolving lines of credit, or other extensions of credit. These transactions with directors and their affiliates are made in the ordinary course of business and as permitted by all applicable laws and regulations, including the Sarbanes-Oxley Act of 2002. Such transactions are on substantially the same terms, including interest rates and collateral (where applicable), as those prevailing at the time for comparable transactions with persons not related to the company and do not involve more than the normal risk of collectability or present other unfavorable features.\nTHE CHARLES SCHWAB CORPORATION 2026 PROXY STATEMENT\n7\nTable of Contents\nCORPORATE GOVERNANCE\nIn addition to the relationships outlined above and in \"Transactions with Related Persons\" the board considered the following as part of its determination of independence:\nMarianne C. Brown serves as a director of technology companies to which, or to the parent company of which, the company has made payments for products and services.\nArun Sarin serves as a director of a consulting firm to which the company has made payments for consulting services.\nBoard Structure and Committees\nThe authorized number of directors is currently 14, and the company has 14 directors. There are four nominees for election this year and nine directors will continue to serve the terms described in their biographies. Ms. Martin-Flickinger's term is expiring at the annual meeting and she is not standing for re-election as a director; accordingly, the authorized number of directors will be reduced from 14 to 13 effective at the annual meeting.\nDirectors currently serve staggered terms. Directors are divided into three classes and each director who is elected at an annual meeting of stockholders serves a three-year term.\n\nCompensation discussion and analysis:\nCompensation Discussion and Analysis\nExecutive Summary\nThis section describes the company's executive compensation program, policies, and practices, and how executive compensation is designed to support the company's strategic objectives. It also summarizes the compensation decisions made for the company's NEOs during 2025:\nNamed Executive Officer\nTitle 1\nRichard A. Wurster\nPresident and Chief Executive Officer (CEO)\nMichael D. Verdeschi\nManaging Director and Chief Financial Officer (CFO)\nWalter W. Bettinger II\nCo-Chairman of the Board\nCharles R. Schwab\nCo-Chairman of the Board\nJonathan M. Craig\nManaging Director and Head of Investor Services\n1\nTitles as of December 31, 2025.\n38\nTHE CHARLES SCHWAB CORPORATION 2026 PROXY STATEMENT\nTable of Contents\nPROPOSAL THREE: ADVISORY APPROVAL OF NAMED EXECUTIVE OFFICER COMPENSATION\nCompensation Discussion and Analysis Table of Contents\nSummary of the Executive Compensation Program\n43\nCompensation Planning and the Decision-Making Process\n44\nPlan Design and Compensation Decisions\n46\nCompensation Policies\n52\n2025 Company Performance Highlights\nIn pursuing the \"Through Clients' Eyes\" strategy, the company achieved the following performance results for 2025:\nTotal Client Assets\n$11.9\ntrillion\n18% increase year-over-year\nNet Revenue\n$23.9\nbillion\n22% increase year-over-year\nActive Brokerage Accounts\n38.5\nmillion\n6% increase year-over-year\nDiluted EPS\n$4.65\n56% increase year-over-year\nAdjusted Diluted EPS (1)\n$4.87\nROCE\n21%\nROTCE (1)\n38%\nCore Net New Assets\n$519.4\nbillion\n42% increase year-over-year\n(1)\nFor reconciliation of our results as reported under GAAP to non-GAAP financial measures, including diluted earnings per common share (EPS) to adjusted diluted EPS and ROCE to ROTCE, please see Appendix A beginning on page Appendix A-1.\nIn addition, we are honored to be the recipient of a number of awards and recognitions, including those listed below.\nStockBrokers.com recognized the company as Best Overall Broker for the second consecutive year in 2025 in its 2026 Annual Awards.\nFor the third year in a row, U.S News & World Report recognized the company as the Best Investing Platform Overall in its 2025 U.S News Money Awards, as well as best platform for stock, options, and forex trading.\nFor the 13 th year, Investor's Business Daily recognized the company as a Best Online Broker in its 2026 rankings.\nNewsweek recognized Charles Schwab for America's Best Customer Service 2025 in its 2025 rankings.\nFor the seventh year in a row, CSB ranked #1 in J.D. Power's U.S. Direct Banking Satisfaction Study.\nKiplinger recognized the company as #1 in education and service for 2025.\nThe company ranked #1 in the Advanced Trading, Ease of Use, Customer Service, Stock Research, Mobile Trading Apps and High Net Worth Investors categories of StockBrokers.com 2026 Broker Industry Award rankings.\nFor the ninth year in a row, Points of Light, the world's largest organization dedicated to volunteer service, recognized the company as one of America's 50 most community-minded companies.\nTHE CHARLES SCHWAB CORPORATION 2026 PROXY STATEMENT\n39\nTable of Contents\nPROPOSAL THREE: ADVISORY APPROVAL OF NAMED EXECUTIVE OFFICER COMPENSATION\n2025 was a record year for Schwab. Our clear purpose and unabated focus on serving our clients led to growth on all fronts. Our client focused framework centered on four pillars: offering new products and tools to meet the unique needs of our clients, executing brilliantly on the basics, seeking continuous improvements to scale and efficiency, and attracting talent and empowering that talent to best serve our clients. Our results demonstrate the success of this collective dedication. Doing more for our growing client base bolstered Schwab's diversified revenue model. Clients are conducting more of their lives at Schwab, with record engagement across wealth management, trading, and banking. The combination of our business momentum, strong engagement, and favorable equity markets drove the strong performance results we achieved in 2025.\nWith a relentless focus on clients, we are continuing to innovate with solutions, capabilities, and experiences to meet investors' evolving needs. With strong competitive positioning, healthy business fundamentals, and a growing diverse client base our momentum continues to be strong. We are confident that the combination of our \"Through Clients' Eyes\" strategy and managing \"through the cycle\" financial formula will continue to drive sustained long-term profitable growth for our clients and stockholders.\nOverview of the Executive Compensation Program\nThe executive compensation program supports the company's strategic objectives through the following design principles:\nPay for Performance\nStockholder Value Creation\nRisk Management\nLink executives' pay with company financial and stock price performance.\nReward executives for individual performance.\nPromote profitable growth that delivers on the annual and long-term operating plan.\n\nSecurity ownership:\nSecurity Ownership of Certain Beneficial Owners and Management\nThis table shows common stock that is beneficially owned by (i) the company's directors, named executive officers, and directors and executive officers as a group in each case as of the close of business on March 3, 2026 and (ii) any other known beneficial owner of more than 5% of the outstanding common stock based on the owner's most recent Schedule 13D/13G filed with the SEC.\nAmount and Nature of Beneficial Ownership\nPercent of\nOutstanding\nShares\nName of Beneficial Owner\nShares\nOwned 1\nRight to\nAcquire\nWithin 60 Days 2\nTotal Beneficial\nOwnership 3\nCharles R. Schwab\n102,195,300\n4\n844,613\n103,039,913\n5.9\n%\nBlackrock, Inc.\n96,697,577\n5\n96,697,577\n5.6\n%\nJohn K. Adams, Jr.\n45,450\n42,192\n87,642\n*\nWalter W. Bettinger II\n685,343\n6\n2,082,542\n2,767,885\n*\nMarianne C. Brown\n11,684\n17,755\n29,439\n*\nJonathan M. Craig\n392,566\n392,566\n*\nJoan T. Dea\n23,606\n35,967\n59,573\n*\nChristopher V. Dodds\n449,406\n7\n2,824\n452,230\n*\nStephen A. Ellis\n87,563\n8\n101,729\n189,292\n*\nFrank C. Herringer\n222,130\n9\n63,068\n285,198\n*\nGerri K. Martin-Flickinger\n10,155\n17,755\n27,910\n*\nCharles A. Ruffel\n19,169\n62,467\n81,636\n*\nArun Sarin\n25,216\n10\n50,058\n75,274\n*\nCarolyn Schwab-Pomerantz\n1,682,113\n11\n24,625\n1,706,738\n*\nPaula A. Sneed\n99,077\n12\n21,304\n120,381\n*\nMichael D. Verdeschi\n34,798\n34,798\n*\nRichard A. Wurster\n188,475\n508,328\n696,803\n*\nDirectors and Executive Officers as a Group (21 Persons) 1 3\n105,744,687\n4,302,591\n110,047,278\n6.3\n%\n*\nLess than 1%\n(1)\nThis column includes outstanding shares for which the named person has sole or shared voting or investment power or holds in an account under The Charles Schwab Corporation Dividend Reinvestment Plan, ESPP and/or The SchwabPlan Retirement Savings and Investment Plan. This column excludes RSUs held by directors under the company's 2004 Stock Incentive Plan, the 2013 Stock Incentive Plan, the 2022 Stock Incentive Plan, and the DCP2, which do not have voting rights. Under the DCP2, the RSUs are converted into shares of common stock and paid in a lump sum by the end of February in the year following a director's termination of board service. As of March 3, 2026, there are no RSUs under the DCP2 that are convertible within 60 days. Information on these RSUs is contained in the \"Director Compensation\" section of this proxy statement. This column also excludes PBRSUs held by executive officers under the 2013 Stock Incentive Plan and the 2022 Stock Incentive Plan, which do not have voting rights.\n68\nTHE CHARLES SCHWAB CORPORATION 2026 PROXY STATEMENT\nTable of Contents\nSECURITY OWNERSHIP OF CERTAIN BENEFICIAL OWNERS AND MANAGEMENT\n(2)\nShares that can be acquired through stock option exercises or through settlement of RSUs within 60 days of March 3, 2026. As of March 3, 2026, there are no RSUs held by directors and no PBRSUs held by executive officers that vest within 60 days.\n(3)\nThis column includes the total number of shares beneficially owned, including shares owned and the number of shares underlying RSUs and stock options exercisable within 60 days of March 3, 2026.\n(4)\nIncludes 55,746,284 shares held by trusts for which Mr. Schwab serves as trustee, 9,509,797 shares held by trusts for which Mr. Schwab's spouse serves as trustee, 30,483,368 shares held by family limited partnerships, 44,025 shares held by 188 Corp, and 6,411,826 shares (for which Mr. Schwab disclaims beneficial ownership) held by nonprofit public benefit corporations established by Mr. Schwab. Mr. Schwab's address is c/o The Charles Schwab Corporation, 3000 Schwab Way, Westlake, TX 76262.\n(5)\nIncludes shares held by BlackRock, Inc. (BlackRock) as reported on its Schedule 13G/A filed with the SEC on January 31, 2024 and includes 85,960,974 shares for which BlackRock has sole voting power and 96,697,577 shares for which BlackRock has sole dispositive power. The address of BlackRock is 55 East 52 nd Street, New York, NY 10055.\n(6)\nIncludes 610,360 shares held a family trust for which Mr.\n\nRelated-person transactions:\nTRANSACTIONS WITH RELATED PERSONS\nTransactions With Related Persons\nAmeritrade Transactions\nOn February 12, 2025, TD Bank, which was at the time the beneficial owner of 5% or more of the company's common stock, completed the offering and sale of 133.8 million shares of the company's voting common stock and 31.7 million shares of the company's non-voting common stock in an underwritten public offering (the Resale Offering) pursuant to its \"demand\" registration rights under the Registration Rights Agreement (as defined below) for an aggregate sale price of $13.1 billion. Also on February 12, 2025, in connection with and subject to the Resale Offering, the company repurchased 19.2 million additional shares of its non-voting common stock from TD Bank for an aggregate purchase price of $1.5 billion (the Repurchase). As a result of the Resale Offering and the Repurchase, TD Bank no longer beneficially owns 5% of the company's common stock. In connection with the Resale Offering, the company entered into an underwriting agreement, dated February 10, 2025, by and among the company, TD Bank, and TD Securities (USA) LLC, which is an affiliate of TD Bank, and Goldman Sachs & Co. LLC, as representatives of the underwriters.\nIn November 2019, in connection with the Ameritrade Acquisition, the company entered into a stockholder agreement with TD Bank (the Stockholder Agreement) effective as of the closing of the Ameritrade Acquisition that governed certain rights and obligations of TD Bank with respect to shares of the company's voting and non-voting common stock that TD Bank acquired as part of the Ameritrade Acquisition. The Stockholder Agreement set out, among other things, standstill restrictions, a voting agreement, board designation rights, and transfer restrictions. The Stockholder Agreement was terminated on February 12, 2025.",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/316709/000119312526142826/d930509ddef14a.htm",
+      "asOf": "2026-04-06",
+      "truncated": true
+    },
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T16:35:43.949Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T16:35:43.949Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T16:35:43.949Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T16:35:43.949Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T16:35:43.949Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T16:35:43.949Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T16:35:43.949Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T16:35:43.949Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T16:35:43.949Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T16:35:43.949Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T16:35:43.949Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T16:35:43.949Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-23T16:35:43.949Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-23T16:35:43.949Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T16:35:43.949Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T16:35:43.949Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T16:35:43.949Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T16:35:43.949Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T16:35:43.949Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T16:35:43.949Z"
+    }
+  ]
+}

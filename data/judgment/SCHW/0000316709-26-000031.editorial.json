@@ -1,0 +1,39 @@
+{
+  "judgmentSha256": "abe1ec049ba9a3108b3a9fa15a6f313e01a61cb1667dd24be5790ac092b3864b",
+  "reviewedAt": "2026-09-23T17:50:00Z",
+  "reviewer": "Claude Opus 4.8 (desk orchestrator; inline review — subagent runner stalled)",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "core net new assets of $119.8 billion, up 49% year-over-year",
+      "issue": "Cross-section repetition of headline metrics and the rate narrative. Core net new assets $119.8B/+49% was stated in full in analystCommentary, thesis.body and growth.points[0]. Client assets $13.08T recurred in analystCommentary, companyOverview, moatFactors, growth.points[1] and finalRecommendation. ROTCE 44% recurred in analystCommentary, incomeCommentary, thesis.body, leadership and finalRecommendation. The 2022-2023 cash-sorting mechanism was argued in full in analystCommentary, risks.idiosyncratic[0], durability, scenarioCommentary and finalRecommendation.",
+      "fix": "Introduce each headline metric once in its home section and refer back in words; keep the cash-sorting mechanism in one home (risks.idiosyncratic[0]).",
+      "status": "addressed",
+      "note": "Addressed. thesis.body rewritten to point to Growth for core NNA and to the financials for the revenue-line growth, and no longer restates ROTCE 44%. businessMoat.durability now points to Risks for the 2022-2023 cash-sorting episode and drops the 9.0%/9.9% restatement. finalRecommendation.body[0] drops 'ROTCE of 44% annualized' for 'high returns on tangible equity'. Each headline metric now has one home; the residual figure-repeat-unit lint warnings are non-blocking cross-subsection notes, not this finding."
+    },
+    {
+      "id": "F-2",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "{+ about 12.8x FY27E earnings +}",
+      "issue": "A {+ +} bullish span wrapped a valuation multiple, not a signed change or explicit positive/negative (rubric item 9).",
+      "fix": "Remove the span.",
+      "status": "addressed",
+      "note": "Addressed. The span is gone; thesis.body now reads 'about 12.8x FY27E earnings' unmarked."
+    },
+    {
+      "id": "F-3",
+      "severity": "Minor",
+      "field": "analystCommentary",
+      "quote": "the period ended 2026-06-30",
+      "issue": "ISO-form dates in prose ('2026-06-30' in analystCommentary; 'DEF 14A, filed 2026-04-06' in management.governance); rubric item 9 wants prose-form dates.",
+      "fix": "Write 'June 30, 2026' and 'filed April 6, 2026'.",
+      "status": "addressed",
+      "note": "Addressed. analystCommentary now reads 'the period ended June 30, 2026' and governance 'DEF 14A, filed April 6, 2026'. No ISO dates remain in prose."
+    }
+  ]
+}

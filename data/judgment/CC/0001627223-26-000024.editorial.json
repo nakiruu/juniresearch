@@ -1,0 +1,39 @@
+{
+  "judgmentSha256": "dfc87a946909634a111df6294322bc13a18115bf29ae58b4b38f58515faee2d0",
+  "reviewedAt": "2026-09-23T22:32:29Z",
+  "reviewer": "claude-opus-4-8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.finalRecommendation.body",
+      "quote": "The equity is genuinely cheap on normalized numbers, about 7.6x FY27E EPS of $1.93 and 0.4x sales, and the deleveraging story is real, with second-quarter 2026 Free Cash Flows of $114 million and net leverage guided toward 3.8x by year-end.",
+      "issue": "Rubric 7 (repetition/paraphrase). The core claims recur in different words across sections rather than being introduced once and referred back to. (a) The valuation multiple 'about 7.6x FY27E EPS of $1.93 and 0.4x sales' appears in analystCommentary, executiveSummary.thesis.body, valuation.multiplesCommentary, and here in finalRecommendation.body[0] — four places. (b) The bull re-rate path (2026 Adjusted EBITDA $775M-$825M holds + TiO2 pricing + APM data-center/semiconductor demand + deleveraging toward 3.8x) is stated in thesis.body ('The bull case is that Adjusted EBITDA guidance of $775 million to $825 million for 2026 holds, TiO2 pricing sticks...'), enumerated in executiveSummary.catalysts, restated in valuation.scenarios[Bull].driver, and paraphrased again in finalRecommendation.body[1] ('Delivery of full-year 2026 Adjusted EBITDA within the $775 million to $825 million guide, continued TiO2 pricing traction...would...justify a BUY'). Q2'26 FCF of $114M and the 3.8x target likewise appear in three-plus sections.",
+      "fix": "Introduce each figure/claim once in its home section and point to it in words elsewhere. Keep the 7.6x/0.4x multiple in valuation.multiplesCommentary and reduce the thesis/finalRecommendation to a verbal pointer ('cheap on the metrics discussed below'). State the bull re-rate path once (thesis or scenarios) and have catalysts and finalRecommendation reference it rather than re-list the four drivers with the dollar guide re-quoted.",
+      "status": "addressed",
+      "note": "All four resolved. The 7.6x/0.4x multiple is now quoted once in valuation.multiplesCommentary; thesis, analystCommentary and finalRecommendation point to it verbally ('cheap on the forward metrics discussed in valuation'). The bull re-rate bundle is argued once in scenarios[Bull].driver; thesis and finalRecommendation now point to 'the Bull scenario'. Q2'26 FCF $114M appears only in cashflowCommentary. The 3.8x target appears only in balanceCommentary; elsewhere it is 'leverage falling on plan' / 'the year-end net leverage target'."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.growth.points",
+      "quote": "Advanced Performance Materials Performance Solutions Net Sales grew 42% sequentially in the second quarter of 2026, reflecting order-book strength in high-value specialty products for data-center and semiconductor markets.",
+      "issue": "Rubric 5 (counter-case) and rubric 4 (judgment, not restatement). The growth section is one-directional: revenue/EPS recovery, a 42% sequential APM Performance Solutions gain, an 18% sequential TT gain, and the $775M-$825M EBITDA guide, with no reading that cuts the other way, though the offsetting figures are already on the page. The large sequential jumps are off a depressed Q1'26 base (APM's Washington Works outage; the press release shows TT Q1'26 Net Sales $559M vs $661M and APM Q2 Net Sales down 6% YoY), and management guides Q3'26 TSS Net Sales down mid-teens to 20% sequentially — none of which the section notes. As written the points largely restate consensus/press-release figures without reaching a view.",
+      "fix": "Add one counter-sentence using figures already on the page: note the sequential gains are partly recovery off a weak Q1 (Washington Works outage, seasonal trough) and that APM Net Sales fell 6% YoY and TSS Net Sales are guided down mid-teens to 20% into Q3'26, so 2026 revenue growth is guided at only 1%-5%. Frame the EPS recovery to $1.93 as the hurdle the bull case must clear rather than a given.",
+      "status": "addressed",
+      "note": "Addressed. growth.points now carries the counter-case: 2026 revenue guided only 1%-5% vs consensus +2%; $1.93 FY27E EPS framed as 'the hurdle the bull case must clear'; APM's 42% sequential gain set against segment Net Sales down 6% YoY to $326M off the post-Washington-Works Q1; TT's 18% sequential gain set against the weak $559M Q1 base, YoY 'essentially flat'; TSS guided down mid-teens to 20% sequentially, consolidated lower into Q3. Segment figures reconcile to the press release; no cross-segment misattribution."
+    },
+    {
+      "id": "F-3",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "an open-ended PFAS liability tied to the Fayetteville Consent Order",
+      "issue": "Rubric 2/9 (characterization). 'Open-ended' leans slightly beyond the filing's own language. The Fayetteville Consent Order and Addendum specify a defined remedial program (barrier wall with groundwater extraction system); the risk factor supports that the estimated liabilities 'may vary significantly and may exceed the recorded reserve estimates, which could be material' and are 'difficult to accurately predict' — it does not describe the liability as open-ended/unbounded. The report elsewhere (risks.idiosyncratic, scenarioCommentary) already uses the grounded 'may exceed reserves' phrasing, so this is a defensible but stronger synonym worth tightening.",
+      "fix": "Soften to the filing's language, e.g. 'a PFAS liability tied to the Fayetteville Consent Order that the company says may exceed reserves and is difficult to predict,' to keep the thesis consistent with the grounded characterization used later in the report.",
+      "status": "addressed",
+      "note": "Addressed. 'open-ended' no longer appears anywhere in the judgment. thesis.body now reads the liability 'proves larger than reserved, which the company says may exceed reserves and is difficult to predict', matching the filing's Fayetteville CO/Addendum risk-factor language and the phrasing already used in analystCommentary, risks.idiosyncratic and scenarioCommentary."
+    }
+  ]
+}

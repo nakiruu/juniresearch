@@ -1,0 +1,583 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "TMO",
+  "cik": 97745,
+  "company": "Thermo Fisher Scientific Inc.",
+  "exchange": "NYSE",
+  "sic": 3829,
+  "sicDescription": "Measuring & Controlling Devices, NEC",
+  "filing": {
+    "form": "10-Q",
+    "accession": "0000097745-26-000144",
+    "filedDate": "2026-07-31",
+    "periodEnd": "2026-06-27",
+    "url": "https://www.sec.gov/Archives/edgar/data/97745/000009774526000144/tmo-20260627.htm"
+  },
+  "capturedAt": "2026-09-23T18:55:22.898Z",
+  "quote": {
+    "price": 658.92,
+    "marketCap": 243633881088,
+    "sharesOutstanding": 369747285.0846841,
+    "sharesSource": "derived",
+    "week52Low": 435.27,
+    "week52High": 671.47,
+    "dividendYield": 0.0029,
+    "asOf": "2026-09-23"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          39211000000,
+          44915000000,
+          42857000000,
+          42879000000,
+          44556000000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          10028000000,
+          8393000000,
+          6859000000,
+          7337000000,
+          7746000000
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          7725000000,
+          6950000000,
+          5995000000,
+          6335000000,
+          6704000000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          19.46,
+          17.63,
+          15.45,
+          16.53,
+          17.74
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          4477000000,
+          8524000000,
+          8080000000,
+          5570000000,
+          10105000000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          37207000000,
+          39857000000,
+          38336000000,
+          33286000000,
+          42705000000
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          32730000000,
+          31333000000,
+          30259000000,
+          29277000000,
+          32853000000
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          40855000000,
+          44032000000,
+          46724000000,
+          49551000000,
+          53415000000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          1.496948496576362,
+          1.4831863609641387,
+          1.7548529831572937,
+          1.6604410441044104,
+          1.8899861742050168
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          9312000000,
+          9154000000,
+          8406000000,
+          8667000000,
+          7818000000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -2523000000,
+          -2243000000,
+          -1479000000,
+          -1400000000,
+          -1525000000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          -2000000000,
+          -3000000000,
+          -3000000000,
+          -4000000000,
+          -3000000000
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          -395000000,
+          -455000000,
+          -523000000,
+          -583000000,
+          -636000000
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          6789000000,
+          6911000000,
+          6927000000,
+          7267000000,
+          6293000000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q2'26",
+    "periodEnd": "2026-06-27",
+    "revenue": 11994000000,
+    "operatingMargin": 0.1740036685009171,
+    "revenueYoY": 0.10492860432980189
+  },
+  "ttm": {
+    "pe": 35.44486282947822,
+    "ps": 5.257982585635359,
+    "evToEbitda": null,
+    "grossMargin": null,
+    "operatingMargin": 0.17580283149171272,
+    "netMargin": 0.15035825276243095,
+    "netDebtToEbitda": null,
+    "interestCoverage": 5.552828902522154,
+    "currentRatio": 1.5505342093038688,
+    "fcfYield": 0.030036873226826587
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 47873244210,
+      "eps": 25.13141
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 50333872530,
+      "eps": 27.54296
+    }
+  },
+  "analysts": {
+    "count": 29,
+    "buy": 24,
+    "hold": 4,
+    "sell": 1,
+    "consensusRating": "Buy",
+    "consensusTarget": 649.96295,
+    "medianTarget": 650,
+    "highTarget": 780,
+    "lowTarget": 520,
+    "asOf": "2026-09-23"
+  },
+  "segments": {
+    "basis": "FY25 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 44556000000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "A",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "ABT",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "AMGN",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "AZN",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-11",
+      "close": 605
+    },
+    {
+      "date": "2026-08-12",
+      "close": 603.010009765625
+    },
+    {
+      "date": "2026-08-13",
+      "close": 595.8900146484375
+    },
+    {
+      "date": "2026-08-14",
+      "close": 588.2899780273438
+    },
+    {
+      "date": "2026-08-17",
+      "close": 585.510009765625
+    },
+    {
+      "date": "2026-08-18",
+      "close": 589.0399780273438
+    },
+    {
+      "date": "2026-08-19",
+      "close": 613.5399780273438
+    },
+    {
+      "date": "2026-08-20",
+      "close": 627.5499877929688
+    },
+    {
+      "date": "2026-08-21",
+      "close": 629.27001953125
+    },
+    {
+      "date": "2026-08-24",
+      "close": 628.739990234375
+    },
+    {
+      "date": "2026-08-25",
+      "close": 628.1500244140625
+    },
+    {
+      "date": "2026-08-26",
+      "close": 633.7100219726562
+    },
+    {
+      "date": "2026-08-27",
+      "close": 630.7000122070312
+    },
+    {
+      "date": "2026-08-28",
+      "close": 622.1799926757812
+    },
+    {
+      "date": "2026-08-31",
+      "close": 617.0999755859375
+    },
+    {
+      "date": "2026-09-01",
+      "close": 600.5
+    },
+    {
+      "date": "2026-09-02",
+      "close": 608.5399780273438
+    },
+    {
+      "date": "2026-09-03",
+      "close": 618.4299926757812
+    },
+    {
+      "date": "2026-09-04",
+      "close": 613.780029296875
+    },
+    {
+      "date": "2026-09-08",
+      "close": 603.02001953125
+    },
+    {
+      "date": "2026-09-09",
+      "close": 605.6900024414062
+    },
+    {
+      "date": "2026-09-10",
+      "close": 603.1799926757812
+    },
+    {
+      "date": "2026-09-11",
+      "close": 609.8200073242188
+    },
+    {
+      "date": "2026-09-14",
+      "close": 613.6199951171875
+    },
+    {
+      "date": "2026-09-15",
+      "close": 641.3900146484375
+    },
+    {
+      "date": "2026-09-16",
+      "close": 648.4299926757812
+    },
+    {
+      "date": "2026-09-17",
+      "close": 658.3200073242188
+    },
+    {
+      "date": "2026-09-18",
+      "close": 651.4500122070312
+    },
+    {
+      "date": "2026-09-21",
+      "close": 658.760009765625
+    },
+    {
+      "date": "2026-09-23",
+      "close": 658.9199829101562
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "Thermo Fisher Scientific Inc. provides life sciences solutions, analytical instruments, specialty diagnostics, and laboratory products and biopharma services internationally. It operates through four segments: Life Sciences Solutions, Analytical Instruments, Specialty Diagnostics, and Laboratory Products and Biopharma Services. The Life Sciences Solutions segment includes reagents, instruments, and consumables for biological and medical research; discovery and production of drugs and vaccines; and diagnosis of infections and diseases. Its Analytical Instruments segment provides instruments, consumables, software, and services for pharmaceutical, biotechnology, academic, government, environmental, and other research and industrial markets, as well as clinical laboratories. The Specialty Diagnostics segment offers clinical diagnostics products, such as liquid ready-to-use and lyophilized immunodiagnostic reagent kits, calibrators, controls, protein detection assays, and instruments; immunodiagnostic offerings comprising developing, manufacturing, and marketing of complete blood-test systems for the clinical diagnosis and monitoring of allergy, asthma and autoimmune diseases; microbiology offerings, such as dehydrated and prepared culture media, collection and transport systems, instrumentation and consumables to detect pathogens in blood, diagnostic and rapid direct specimen tests, quality-control products, and associated products; transplant diagnostics products, including human leukocyte antigen typing and testing for the organ transplant market; and healthcare market channel offerings. Its Laboratory Products and Biopharma Services segment provides laboratory products, research and safety market channel, and pharma services and clinical research. Thermo Fisher Scientific Inc. was founded in 1956 and is headquartered in Waltham, Massachusetts.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-23"
+    },
+    "mdaExcerpt": {
+      "text": "Item 2. Management's Discussion and Analysis of Financial Condition and Results of Operations\nThis Management's Discussion and Analysis of Financial Condition and Results of Operations contains \"forward-looking statements\", within the meaning of the Private Securities Litigation Reform Act of 1995 and other applicable securities laws. Forward-looking statements are based on current expectations and assumptions that are subject to risks and uncertainties, and are often identified by words such as \"expects,\" \"anticipates,\" \"intends,\" \"plans,\" \"believes,\" \"seeks,\" \"estimates,\" \"may,\" \"will,\" \"should,\" or similar expressions or words with similar meanings. Any statements contained herein that are not statements of historical fact should be considered forward-looking statements.\nForward-looking statements in this Management's Discussion and Analysis of Financial Condition and Results of Operations include, among others, statements regarding:\nfinancial expectations , including projections of revenues, expenses, margins, earnings, cash flows, liquidity, capital allocation plans, and tax matters;\noperational matters , including business strategies, productivity initiatives, restructuring activities, cost-reduction programs, and new product or service developments;\nmarket and competitive conditions , including customer demand trends, industry dynamics, pricing, and competitive positioning;\nstrategic actions , including planned acquisitions, divestitures, investments, and partnerships;\nlegal, regulatory, macroeconomic, geopolitical, public health, supply chain, technology, and cybersecurity developments and their potential impacts on the company; and\nthe timing and outcomes of any of the foregoing.\nEach forward-looking statement contained in this Management's Discussion and Analysis of Financial Condition and Results of Operations is inherently uncertain and involves significant risks, assumptions, and factors that could cause actual results to differ materially from those expressed or implied. Important risks and uncertainties that could cause such differences are detailed under the caption \"Risk Factors\" in the company's Annual Report on Form 10-K for the year ended December 31, 2025, which is on file with the Securities and Exchange Commission (SEC).\nForward-looking statements in this Management's Discussion and Analysis of Financial Condition and Results of Operations speak only as of the dates on which they are made. While the company may elect to update forward-looking statements in the future, it specifically disclaims any obligation to do so, in the event of new information, future developments, or otherwise, except as required by law.\nThe company refers to various amounts or measures not prepared in accordance with generally accepted accounting principles (non-GAAP measures). These non-GAAP measures are further described and reconciled to their most directly comparable amount or measure under the section \" Non-GAAP Measures \" later in this \"Management's Discussion and Analysis of Financial Condition and Results of Operations.\"\nCertain amounts and percentages reported within this Quarterly Report on Form 10-Q are presented and calculated based on underlying unrounded amounts. As a result, the sum of components may not equal corresponding totals due to rounding.\nOverview\nThermo Fisher Scientific Inc. enables customers to make the world healthier, cleaner and safer by helping them accelerate life sciences research, solve complex analytical challenges, increase laboratory productivity, and improve patient health through diagnostics and the development and manufacture of life-changing therapies. Markets served include pharmaceutical and biotech, academic and government, industrial and applied, as well as healthcare and diagnostics. The company's operations fall into four segments (Note 11): Life Sciences Solutions; Analytical Instruments; Specialty Diagnostics; and Laboratory Products and Biopharma Services.\n28\nTHERMO FISHER SCIENTIFIC INC.\nConsolidated Results\nThree months ended\nSix months ended\nJune 27,\nJune 28,\nJune 27,\nJune 28,\n(Dollars in millions except per share amounts)\n2026\n2025\nChange\n2026\n2025\nChange\nRevenues\n$\n11,994\n$\n10,855\n10\n%\n$\n22,999\n$\n21,219\n8\n%\nGAAP operating income\n2,087\n1,834\n14\n%\n3,950\n3,551\n11\n%\nGAAP operating income margin\n17.4\n%\n16.9\n%\n0.5\npt\n17.2\n%\n16.7\n%\n0.5\npt\nAdjusted operating income (non-GAAP measure)\n2,735\n2,375\n15\n%\n5,133\n4,644\n11\n%\nAdjusted operating income margin (non-GAAP measure)\n22.8\n%\n21.9\n%\n0.9\npt\n22.3\n%\n21.9\n%\n0.4\npt\nGAAP diluted earnings per share attributable to Thermo Fisher Scientific Inc.\n4.68\n4.28\n9\n%\n9.10\n8.26\n10\n%\nAdjusted earnings per share (non-GAAP measure)\n6.03\n5.36\n13\n%\n11.47\n10.51\n9\n%\nOrganic Revenue Growth\nThree months ended\nSix months ended\nJune 27, 2026\nJune 27, 2026\nRevenue growth\n10\n%\n8\n%\nImpact of acquisitions\n5\n%\n4\n%\nImpact of currency translation\n1\n%\n2\n%\nOrganic revenue growth (non-GAAP measure)\n5\n%\n3\n%\nDuring the second quarter of 2026, customer activity continued to strengthen across our end markets. Revenue growth was strong in the pharma and biotech market, with performance driven by strengthening underlying market conditions. Revenues in the academic and government market grew, and growth in the industrial and applied market was strong, both driven by customer demand for our innovative high-end instruments. Revenue to customers in the diagnostics and healthcare market was also strong. During the second quarter of 2026, sales increased across all major geographies. Revenue growth was strong in Europe and Asia-Pacific, including China. Contributions to organic revenue during the second quarter of 2026 were led by the Laboratory Products and Biopharma Services segment and the Analytical Instruments segment.\nDuring the first six months of 2026, revenue growth in the pharma and biotech market was strong, with performance driven by strengthening underlying market conditions. Revenues to customers in the industrial and applied market increased, driven by customer demand for our innovative high-end instruments. Revenues in the academic and government as well as the diagnostics and healthcare market were flat. During the first six months of 2026, sales grew in North America and Asia-Pacific, including China. Revenue growth in Europe was strong. Contributions to organic revenue during the first six months of 2026 were led by the Laboratory Products and Biopharma Services segment.\nThe company continues to execute its proven growth strategy which consists of three pillars:\nHigh-impact innovation;\nOur trusted partner status with customers; and\nOur unparalleled commercial engine.\nGAAP operating income margin and adjusted operating income margin increased in the second quarter of 2026 due primarily to strong productivity improvements, offset in part by unfavorable business mix.\nGAAP operating income margin and adjusted operating income margin increased in the first six months of 2026 due primarily to very strong productivity improvements, offset in part by unfavorable business mix and strategic investments.\nThe company's references to strategic investments generally refer to targeted spending for enhancing commercial capabilities, including expansion of geographic sales reach and e-commerce platforms, marketing initiatives, expanded service and operational infrastructure, research and development projects and other expenditures to enhance the customer experience, as well as incentive compensation and recognition for employees. The company's references throughout this discussion to productivity improvements generally refer to the impact of its Practical Process Improvement (PPI) Business System to address inflation, drive cost efficiencies and improve profitability. The benefits of PPI include optimized price realization, reduced costs resulting from implementing continuous improvement methodologies, global sourcing initiatives, a lower cost structure following restructuring actions including headcount reductions and consolidation of facilities, and low cost region manufacturing.\n29\nTHERMO FISHER SCIENTIFIC INC.\nNotable Recent Acquisitions\nOn March 24, 2026, the company acquired, within the Laboratory Products and Biopharma Services segment, Clario Holdings, Inc., a U.S.-based leading provider of endpoint data solutions for clinical trials. The acquisition expands the segment's portfolio with the addition of highly complementary clinical research offerings, enabling customers to gain critical insights from clinical data to improve decision-making, accelerate innovation and drive greater productivity.\nOn September 1, 2025, the company acquired, within the Life Sciences Solutions segment, our filtration and separation business, a leading provider of purification and filtration technologies used in the production of biologics as well as in medical technologies and industrial applications, from Solventum Corporation. The business strengthens the segment's bioproduction offerings with advanced filtration technologies that improve quality and efficiency across upstream and downstream workflows. In addition, its industrial filtration and membrane solutions will expand our reach into industries including battery, semiconductor and medical device manufacturing.\nSegment Results\nThe company's management evaluates segment operating performance using operating income before certain charges/credits as defined in Note 11 to the Consolidated Financial Statements of the company's Annual Report on Form 10-K for 2025. Accordingly, the following segment data are reported on this basis.\nThree months ended\nSix months ended\n(Dollars in millions)\nJune 27, 2026\nJune 28, 2025\nJune 27, 2026\nJune 28, 2025\nRevenues\nLife Sciences Solutions\n$\n2,815\n$\n2,499\n$\n5,450\n$\n4,840\nAnalytical Instruments\n1,847\n1,728\n3,563\n3,446\nSpecialty Diagnostics\n1,205\n1,134\n2,346\n2,282\nLaboratory Products and Biopharma Services\n6,693\n5,995\n12,729\n11,635\nEliminations\n(565)\n(501)\n(1,089)\n(983)\nConsolidated revenues\n$\n11,994\n$\n10,855\n$\n22,999\n$\n21,219\nLife Sciences Solutions\nThree months ended\nOrganic (non-GAAP measure)\n(Dollars in millions)\nJune 27,\n2026\nJune 28,\n2025\nTotal\nChange\nAcquisitions/ Divestitures\nCurrency\nTranslation\nRevenues\n$\n2,815\n$\n2,499\n13\n%\n9\n%\n1\n%\n3\n%\nSegment income\n1,041\n919\n13\n%\nSegment income margin\n37.0\n%\n36.8\n%\n0.2\npt\nThe increase in organic revenues in the second quarter of 2026 was primarily driven by the bioproduction business. On a reported basis, the bioproduction business grew $196 million, which contributed 8 percentage points of reported growth in the segment, driven by higher demand from pharma and biotech customers, as well as the impact from the 2025 acquisition of the filtration and separation business. The increase in segment income margin resulted primarily from very strong productivity improvements, offset in part by the impact from the acquisition of the filtration and separation business and unfavorable business mix.\nSix months ended\nOrganic (non-GAAP measure)\n(Dollars in millions)\nJune 27,\n2026\nJune 28,\n2025\nTotal\nChange\nAcquisitions/ Divestitures\nCurrency\nTranslation\nRevenues\n$\n5,450\n$\n4,840\n13\n%\n9\n%\n2\n%\n2\n%\nSegment income\n1,994\n1,753\n14\n%\nSegment income margin\n36.6\n%\n36.2\n%\n0.4\npt\nThe increase in organic revenues in the first six months of 2026 was driven by the bioproduction business, partially offset by declines in the biosciences business. On a reported basis, the bioproduction business grew $417 million, driven by higher demand from pharma and biotech customers, as well as the impact from the 2025 acquisition of the filtration and separation business. The increase in segment income margin resulted primarily from exceptionally strong productivity improvements, partially offset by the impact from the filtration and separation business acquisition and unfavorable business mix.\n30\nTHERMO FISHER SCIENTIFIC INC.\nAnalytical Instruments\nThree months ended\nOrganic (non-GAAP measure)\n(Dollars in millions)\nJune 27,\n2026\nJune 28,\n2025\nTotal\nChange\nAcquisitions/ Divestitures\nCurrency\nTranslation\nRevenues\n$\n1,847\n$\n1,728\n7\n%\n0\n%\n0\n%\n7\n%\nSegment income\n424\n325\n30\n%\nSegment income margin\n23.0\n%\n18.8\n%\n4.2\npt\nThe increase in organic revenues in the second quarter of 2026 was driven by growth across all three of the segment's businesses, led by the electron microscopy business. On a reported basis, the electron microscopy, chromatography and mass spectrometry, and chemical analysis businesses increased $55 million, $37 million, and $26 million, respectively. The increase in segment income margin was driven by very strong productivity improvements, favorable volume leverage, and the favorable impact of foreign exchange.\nSix months ended\nOrganic (non-GAAP measure)\n(Dollars in millions)\nJune 27,\n2026\nJune 28,\n2025\nTotal\nChange\nAcquisitions/ Divestitures\nCurrency\nTranslation\nRevenues\n$\n3,563\n$\n3,446\n3\n%\n0\n%\n1\n%\n2\n%\nSegment income\n779\n724\n8\n%\nSegment income margin\n21.9\n%\n21.0\n%\n0.9\npt\nThe increase in organic revenues in the first six months of 2026 was primarily due to growth in the chromatography and mass spectrometry business. On a reported basis, the chromatography and mass spectrometry business grew $63 million, which contributed 2 percentage points of reported growth in the segment. The increase in segment income margin was primarily driven by productivity improvements.\nSpecialty Diagnostics\nThree months ended\nOrganic (non-GAAP measure)\n(Dollars in millions)\nJune 27,\n2026\nJune 28,\n2025\nTotal\nChange\nAcquisitions/ Divestitures\nCurrency\nTranslation\nRevenues\n$\n1,205\n$\n1,134\n6\n%\n0\n%\n1\n%\n5\n%\nSegment income\n334\n306\n9\n%\nSegment income margin\n27.7\n%\n27.0\n%\n0.7\npt\nThe increase in organic revenues in the second quarter of 2026 was primarily driven by growth in the healthcare market channel and immunodiagnostics business. On a reported basis, the healthcare market channel, clinical diagnostics business, and immunodiagnostics business increased $36 million, $14 million, and $14 million, respectively. The increase in segment income margin was driven by favorable volume leverage and strong productivity, offset in part by unfavorable business mix.\nSix months ended\nOrganic (non-GAAP measure)\n(Dollars in millions)\nJune 27,\n2026\nJune 28,\n2025\nTotal\nChange\nAcquisitions/ Divestitures\nCurrency\nTranslation\nRevenues\n$\n2,346\n$\n2,282\n3\n%\n0\n%\n2\n%\n1\n%\nSegment income\n646\n610\n6\n%\nSegment income margin\n27.6\n%\n26.7\n%\n0.9\npt\nThe increase in organic revenues in the first six months of 2026 was principally driven by growth in the transplant diagnostics business and the immunodiagnostics business. On a reported basis, the immunodiagnostics business grew $26 million, and the clinical diagnostics business grew $22 million, which were the principal drivers of reported revenue growth in the segment. The increase in segment income margin was primarily due to strong productivity improvements.\n31\nTHERMO FISHER SCIENTIFIC INC.\nLaboratory Products and Biopharma Services\nThree months ended\nOrganic (non-GAAP measure)\n(Dollars in millions)\nJune 27,\n2026\nJune 28,\n2025\nTotal\nChange\nAcquisitions/ Divestitures\nCurrency\nTranslation\nRevenues\n$\n6,693\n$\n5,995\n12\n%\n6\n%\n1\n%\n5\n%\nSegment income\n936\n825\n13\n%\nSegment income margin\n14.0\n%\n13.8\n%\n0.2\npt\nThe increase in organic revenues in the second quarter of 2026 was primarily due to growth in the research and safety market channel and the clinical research business. On a reported basis, the clinical research business grew $441 million, which contributed 7 percentage points of reported growth in the segment, primarily driven by the impact of the Clario acquisition. The research and safety market channel and pharma services business grew $153 million and $99 million, respectively, which contributed 3 percentage points and 2 percentage points, respectively, of reported growth in the segment. The increase in segment income margin was driven by strong productivity improvements and the impact of acquisitions, partially offset by unfavorable business mix and strategic investments.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/97745/000009774526000144/tmo-20260627.htm",
+      "asOf": "2026-07-31",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "Item 1A. Risk Factors\nSet forth below are the risks, some of which have occurred and any of which may occur in the future, that we believe are material to our investors. This section contains forward-looking statements. You should refer to the explanation of the qualifications and limitations on forward-looking statements in Item 1. Business under the caption \"Forward-looking Statements\".\nIndustry and Economic Risks\nOur growth would be impacted if the markets into which we sell our products and services decline, do not grow as anticipated or experience cyclicality. Our growth depends in part on the growth of the markets which we serve. Any decline or lower than expected growth in our served markets would diminish demand for our products and services, which would adversely affect our financial statements. Certain of our businesses operate in industries that may experience periodic, cyclical downturns.\nOur business is affected by general economic conditions and related uncertainties affecting markets in which we operate. Our business is affected by general economic conditions, both inside and outside the U.S. Both domestic and international markets experienced significant inflationary pressures in 2025 and inflation rates in the U.S., as well as in other countries in which we operate, continue at elevated levels. If the global economy and financial markets, or economic conditions in Europe, the U.S. or other key markets, are unstable, that could adversely affect the business, results of operations and financial condition of the company and its customers, distributors, and suppliers, having the effect of:\nreducing demand for some of our products and services;\nincreasing the rate of order cancellations or delays;\nincreasing the risk of excess and obsolete inventories;\nincreasing pressure on the prices for our products and services;\ncausing supply interruptions, which could disrupt our ability to produce our products; and\ncreating longer sales cycles, and greater difficulty in collecting sales proceeds and slower adoption of new technologies.\n9\nTHERMO FISHER SCIENTIFIC INC.\nEconomic, political, foreign currency and other risks associated with international sales and operations could adversely affect our results of operations. International markets contribute a substantial portion of our revenues, and we intend to continue expanding our presence in these regions. The exposure to fluctuations in currency exchange rates takes on different forms. International revenues and costs are subject to the risk that fluctuations in exchange rates could adversely affect our reported revenues and profitability when translated into U.S. dollars for financial reporting purposes. These fluctuations could also adversely affect the demand for products and services provided by us. As a multinational corporation, our businesses occasionally invoice third-party customers in currencies other than the one in which they primarily do business (which we refer to as the functional currency). Movements in the invoiced currency relative to the functional currency could adversely impact our cash flows and our results of operations. As our international sales grow, exposure to fluctuations in currency exchange rates could have a larger effect on our financial results. In 2025, currency translation had a favorable effect of $0.37 billion on revenues due to the weakening of the U.S. dollar relative to other currencies in which the company sells products and services.\nSome emerging market countries may be particularly vulnerable to periods of global and local political, legal, regulatory and financial instability, including issues of geopolitical relations, the imposition of international sanctions in response to certain state actions and/or sovereign debt issues, and may have a higher incidence of corruption and fraudulent business practices. As a result of these and other factors, our strategy to grow in emerging markets may not be successful, and growth rates in these markets may not be sustainable.\nIn addition, many of our employees, contract manufacturers, suppliers, job functions, outsourcing activities and manufacturing facilities are located outside the U.S. Accordingly, our prior results have been and our future results could be harmed by a variety of factors, including:\ntariffs imposed by the U.S. on goods from other countries and tariffs imposed by other countries, on certain U.S. goods (including volatility resulting from the imposition of (and changing policies around) tariffs and related countermeasures);\ninterruption to transportation flows for delivery of raw materials or parts to us and finished goods to our customers;\nchanges in a specific country's or region's political, economic, social or other conditions;\nchanges in diplomatic and trade relationships, including new tariffs, trade protection measures, import or export licensing requirements, trade embargoes and sanctions and other trade barriers;\nthe impact of public health emergencies, pandemics, epidemics or other health outbreaks on the global economy;\nuncertainties regarding the collectability of accounts receivable;\nChinese regulations requiring the use of local suppliers, which compel companies that do business in China to partner with local companies to conduct business and provide incentives to government-backed local customers to buy from local suppliers;\nthe imposition of governmental controls;\ndiverse data privacy, protection and localization requirements;\nsupply interruptions, which could disrupt our ability to produce our products;\nincreases in materials, energy, labor or other manufacturing-related costs or higher supply chain logistics costs;\nnegative consequences from changes in or interpretation of laws and regulations, including those related to tax and import/export;\ndifficulty in staffing and managing widespread operations;\ndiffering labor regulations;\ndiffering protection of intellectual property;\nunexpected changes in regulatory requirements; and\ngeopolitical uncertainty or turmoil, including terrorism and war.\nDemand for some of our products depends on capital spending policies of our customers and on government funding policies. Our customers include pharmaceutical and biotechnology companies, laboratories, universities, healthcare providers, government agencies and public and private research institutions. Many factors, including public policy spending priorities such as national procurement initiatives, available resources, cost reimbursement policies, and product and economic cycles, have had and we expect to have a significant effect on the capital spending policies of these entities. Spending by some of these customers fluctuates based on budget allocations and the timely passage of the annual federal budget. In October 2025, the federal government entered a shutdown due to a lapse in appropriations, resulting from an inability by Congress to pass a budget or continuing resolution. A similar impasse in federal government budget decisions could lead to substantial delays or reductions in federal spending.\n10\nTHERMO FISHER SCIENTIFIC INC.\nWe are subject to risks associated with public health emergencies, pandemics, epidemics, or other health outbreaks. Our global operations expose us to risks associated with public health emergencies, epidemics, pandemics and other health outbreaks. These events have had an adverse impact on certain of our operations, supply chains and distribution systems in the past, and may again in the future, and we may experience unpredictable reductions in supply and demand for certain of our products and services. National, state and local governments may implement safety precautions, including quarantines, border closures, increased border controls, travel restrictions, shelter in place orders and shutdowns and other measures.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/97745/000009774526000018/tmo-20251231.htm",
+      "asOf": "2026-02-26",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-K",
+    "pressRelease": {
+      "text": "EX-99.1\n2\nq22026earnings8kex99_1.htm\nEX-99.1\nDocument\nExhibit 99.1\nNews\nMedia Contact Information\nSandy Pound\nThermo Fisher Scientific\nInvestor Contact Information\nRafael Tejada\nThermo Fisher Scientific\nPhone 781-622-1223\nPhone 781-622-1356\nE-mail sandy.pound thermofisher.com\nE-mail rafael.tejada thermofisher.com\nThermo Fisher Scientific Reports Second Quarter 2026 Results\nRevenue Grew 10% Including 5% Organic Revenue Growth\nGrew GAAP Diluted EPS 9% and Adjusted EPS 13%\nCustomer Activity Across Our End Markets Continued to Strengthen\nWALTHAM, Mass. (July 23, 2026) Thermo Fisher Scientific Inc. (NYSE TMO), the world leader in serving science, today reported its financial results for the second quarter ended June 27, 2026.\nSecond Quarter Highlights\nSecond quarter revenue grew 10% to $11.99 billion\nSecond quarter GAAP diluted earnings per share (EPS) grew 9% to $4.68\nSecond quarter adjusted EPS grew 13% to $6.03\n\"We delivered outstanding performance in the second quarter, reflecting the strength of our proven growth strategy, our team's excellent execution and the power of our PPI Business System,\" said Marc N. Casper, chairman and chief executive officer of Thermo Fisher Scientific. \"Our end markets continue to strengthen and we're making great progress enhancing our capabilities, and further advancing our trusted partner status with customers, leading to continued share gain.\"\nCasper added, \"At the halfway point of the year, we are well positioned to deliver a great 2026 and build an even brighter future for our company.\"\nGrowth Strategy and Capital Deployment\nAdvanced our proven growth strategy, launching a range of high-impact, innovative new products during the quarter. At the American Society for Mass Spectrometry conference, we introduced next-generation Orbitrap platforms with AI-driven analytics. Highlights include the Thermo Scientific Orbitrap Tribrid Apex Mass Spectrometer, which enables researchers to study complex biology across multiomics, structural biology, biopharma characterization and small-molecule analysis on a single system, and the Thermo Scientific Orbitrap Excedion Mass Spectrometer, which enables scientists to identify hard-to-detect molecules in drug development, reducing risk and accelerating time to market. We also introduced the Applied Biosystems PowerFlex Thermal Cycler , a next-generation PCR system designed to improve workflow flexibility, speed and reproducibility for molecular biology laboratories.\nStrengthened our industry-leading commercial engine and deepened our trusted partner status with customers. During the quarter, we opened our flagship U.S. Bioprocess Design Center in Plainville, Massachusetts, expanding our global network of collaborative innovation hubs enabling pharma and biotech customers to accelerate drug development and optimize manufacturing. We also announced a strategic collaboration with Precision Health Research, Singapore to support the PRECISE-SG100K population health study, leveraging our integrated proteomics capabilities, including Olink technology and the Thermo Scientific Orbitrap Astral mass spectrometry system, to advance precision medicine.\nContinued to successfully execute our capital deployment strategy. During the quarter, we announced the divestiture of our microbiology business and repurchased $1.0 billion of stock.\nFinancial Results\nRevenue for the second quarter of 2026 grew 10% to $11.99 billion, versus $10.85 billion in the same quarter of 2025. Organic revenue growth was 5%.\nGAAP Earnings Results\nGAAP diluted EPS in the second quarter of 2026 was $4.68, 9% growth versus the second quarter of 2025. GAAP operating income for the second quarter of 2026 was $2.09 billion, 14% higher than the year-ago quarter. GAAP operating margin was 17.4%, compared with 16.9% in the second quarter of 2025.\nNon-GAAP Earnings Results\nAdjusted EPS for the second quarter of 2026 was $6.03, 13% growth versus the second quarter of 2025. Adjusted operating income for the second quarter of 2026 was $2.73 billion, 15% higher than the year-ago quarter. Adjusted operating margin was 22.8%, compared with 21.9% in the second quarter of 2025.\nAnnual Guidance for 2026\nThe company will provide updated 2026 financial guidance during its earnings conference call this morning at 8 30 a.m. Eastern Time.\nUse of Non-GAAP Financial Measures\nAdjusted EPS, adjusted net income, adjusted operating income, adjusted operating margin, free cash flow, and organic revenue growth are non-GAAP measures that exclude certain items detailed after the tables that accompany this press release, under the heading \"Supplemental Information Regarding Non-GAAP Financial Measures.\" The reconciliations of GAAP to non-GAAP financial measures are provided in the tables that accompany this press release.\nNote on Presentation\nCertain amounts and percentages reported within this press release are presented and calculated based on underlying unrounded amounts. As a result, the sum of components may not equal corresponding totals due to rounding.\nConference Call\nThermo Fisher Scientific will hold its earnings conference call today, July 23, 2026, at 8 30 a.m. Eastern Time. During the call, the company will discuss its financial performance, as well as future expectations.\nThe call will be webcast live on the \"Investors\" section of our website, www.thermofisher.com. You can access the conference call by dialing (833) 461-5787 within the U.S. or +1 (585) 542-9983 outside the U.S. The access code is 835035800.\nThe earnings press release and related information can also be found on the Investor Relations section of our website, under the heading \"Financials\". A replay of the call will be available under \"News, Events Presentations\" through Tuesday, October 20, 2026.\nAbout Thermo Fisher Scientific\nThermo Fisher Scientific Inc. is the world leader in serving science, with annual revenue over $45 billion. Our Mission is to enable our customers to make the world healthier, cleaner and safer. Whether our customers are accelerating life sciences research, solving complex analytical challenges, increasing productivity in their laboratories, improving patient health through diagnostics or the development and manufacture of life-changing therapies, we are here to support them. Our global team delivers an unrivaled combination of innovative technologies, purchasing convenience and pharmaceutical services through our industry-leading brands, including Thermo Scientific, Applied Biosystems, Invitrogen, Gibco, Fisher Scientific, Unity Lab Services, Patheon and PPD. For more information, please visit www.thermofisher.com.\nSafe Harbor Statement\nThe following constitutes a \"Safe Harbor\" statement under the Private Securities Litigation Reform Act of 1995 This press release contains forward-looking statements that involve a number of risks and uncertainties. Important factors that could cause actual results to differ materially from those indicated by forward-looking statements include risks and uncertainties relating to the need to develop new products and adapt to significant technological change implementation of strategies for improving growth general economic conditions and related uncertainties dependence on customers' capital spending policies and government funding policies the effect of economic and political conditions and exchange rate fluctuations on international operations use and protection of intellectual property the effect of changes in governmental regulations any natural disaster, public health crisis or other catastrophic event and the effect of laws and regulations governing government contracts, as well as the possibility that expected benefits related to recent or pending acquisitions, may not materialize as expected. Additional important factors that could cause actual results to differ materially from those indicated by such forward-looking statements are set forth in our most recent reports on Form 10-K and Form 10-Q under the heading \"Risk Factors.\" These filings are on file with the SEC and available in the \"Investors\" section of our website under the\nheading \"SEC Filings.\" These forward-looking statements are based on our current expectations and speak only as of the date of this press release. While we may elect to update forward-looking statements at some point in the future, we specifically disclaim any obligation to do so, in the event of new information, future developments or otherwise.\n###\nCondensed Consolidated Statements of Income (unaudited)\nThree months ended\nJune 27,\n% of\nJune 28,\n% of\n(Dollars in millions except per share amounts)\n2026\nRevenues\n2025\nRevenues\nRevenues\n$\n11,994\n$\n10,855\nCosts and operating expenses\nCost of revenues (a)\n7,051\n58.8\n%\n6,378\n58.8\n%\nSelling, general and administrative expenses (b)\n1,909\n15.9\n%\n1,779\n16.4\n%\nAmortization of acquisition-related intangible assets\n485\n4.0\n%\n429\n4.0\n%\nResearch and development expenses\n364\n3.0\n%\n352\n3.2\n%\nRestructuring and other costs (c)\n98\n0.8\n%\n82\n0.8\n%\nTotal costs and operating expenses\n9,907\n82.6\n%\n9,021\n83.1\n%\nOperating income\n2,087\n17.4\n%\n1,834\n16.9\n%\nInterest income\n207\n297\nInterest expense\n(401)\n(404)\nOther income (expense) (d)\n31\n(19)\nIncome before income taxes\n1,924\n1,709\nBenefit from (provision for) income taxes (e)\n(167)\n(92)\nEquity in earnings (losses) of unconsolidated entities\n(15)\n2\nNet income\n1,741\n1,618\nLess net income (loss) attributable to noncontrolling interests and redeemable noncontrolling interest (f)\n5\n2\nNet income attributable to Thermo Fisher Scientific Inc.\n$\n1,736\n14.5\n%\n$\n1,617\n14.9\n%\nEarnings per share attributable to Thermo Fisher Scientific Inc.\nBasic\n$\n4.68\n$\n4.28\nDiluted\n$\n4.68\n$\n4.28\nWeighted average shares\nBasic\n371\n378\nDiluted\n371\n378\nReconciliation of adjusted operating income and adjusted operating margin\nGAAP operating income\n$\n2,087\n17.4\n%\n$\n1,834\n16.9\n%\nCost of revenues adjustments (a)\n28\n0.2\n%\n10\n0.1\n%\nSelling, general and administrative expenses adjustments (b)\n36\n0.3\n%\n20\n0.2\n%\nRestructuring and other costs (c)\n98\n0.8\n%\n82\n0.8\n%\nAmortization of acquisition-related intangible assets\n485\n4.0\n%\n429\n4.0\n%\nAdjusted operating income (non-GAAP measure)\n$\n2,735\n22.8\n%\n$\n2,375\n21.9\n%\nReconciliation of adjusted net income\nGAAP net income attributable to Thermo Fisher Scientific Inc.\n$\n1,736\n$\n1,617\nCost of revenues adjustments (a)\n28\n10\nSelling, general and administrative expenses adjustments (b)\n36\n20\nRestructuring and other costs (c)\n98\n82\nAmortization of acquisition-related intangible assets\n485\n429\nOther income expense adjustments (d)\n(31)\n5\nIncome taxes adjustments (e)\n(127)\n(133)\nEquity in earnings losses of unconsolidated entities\n15\n(2)\nNoncontrolling interests adjustments (f)\n(1)\nAdjusted net income (non-GAAP measure)\n$\n2,241\n$\n2,026\nReconciliation of adjusted earnings per share\nGAAP diluted EPS attributable to Thermo Fisher Scientific Inc.\n$\n4.68\n$\n4.28\nCost of revenues adjustments (a)\n0.07\n0.03\nSelling, general and administrative expenses adjustments (b)\n0.10\n0.05\nRestructuring and other costs (c)\n0.27\n0.22\nAmortization of acquisition-related intangible assets\n1.31\n1.14\nOther income expense adjustments (d)\n(0.08)\n0.01\nIncome taxes adjustments (e)\n(0.34)\n(0.35)\nEquity in earnings losses of unconsolidated entities\n0.04\n(0.01)\nNoncontrolling interests adjustments (f)\n0.00\nAdjusted EPS (non-GAAP measure)\n$\n6.03\n$\n5.36\nReconciliation of free cash flow\nGAAP net cash provided by operating activities\n$\n2,125\n$\n1,399\nPurchases of property, plant and equipment\n(450)\n(294)\nProceeds from sale of property, plant and equipment\n3\n1\nFree cash flow (non-GAAP measure)\n$\n1,678\n$\n1,105\nBusiness Segment Information\nThree months ended\nJune 27,\n% of\nJune 28,\n% of\n(Dollars in millions)\n2026\nRevenues\n2025\nRevenues\nRevenues\nLife Sciences Solutions\n$\n2,815\n23.5\n%\n$\n2,499\n23.0\n%\nAnalytical Instruments\n1,847\n15.4\n%\n1,728\n15.9\n%\nSpecialty Diagnostics\n1,205\n10.0\n%\n1,134\n10.4\n%\nLaboratory Products and Biopharma Services\n6,693\n55.8\n%\n5,995\n55.2\n%\nEliminations\n(565)\n-4.7\n%\n(501)\n-4.6\n%\nConsolidated revenues\n$\n11,994\n100.0\n%\n$\n10,855\n100.0\n%\nSegment income and segment income margin\nLife Sciences Solutions\n$\n1,041\n37.0\n%\n$\n919\n36.8\n%\nAnalytical Instruments\n424\n23.0\n%\n325\n18.8\n%\nSpecialty Diagnostics\n334\n27.7\n%\n306\n27.0\n%\nLaboratory Products and Biopharma Services\n936\n14.0\n%\n825\n13.8\n%\nSubtotal reportable segments\n2,735\n22.8\n%\n2,375\n21.9\n%\nCost of revenues adjustments (a)\n(28)\n-0.2\n%\n(10)\n-0.1\n%\nSelling, general and administrative expenses adjustments (b)\n(36)\n-0.3\n%\n(20)\n-0.2\n%\nRestructuring and other costs (c)\n(98)\n-0.8\n%\n(82)\n-0.8\n%\nAmortization of acquisition-related intangible assets\n(485)\n-4.0\n%\n(429)\n-4.0\n%\nConsolidated GAAP operating income\n$\n2,087\n17.4\n%\n$\n1,834\n16.9\n%\n(a) Adjusted results exclude accelerated depreciation on manufacturing assets to be abandoned due to facility consolidations. Adjusted results in 2026 also exclude $6 of transaction-related costs. Adjusted results in 2025 also exclude $5 of charges for the sale of inventory revalued at the date of acquisition.\n(b) Adjusted results exclude certain third-party expenses, principally transaction integration costs, charges credits for changes in estimates of contingent acquisition consideration, and accelerated depreciation on fixed assets to be abandoned due to facility consolidations.\n(c) Adjusted results exclude restructuring and other costs consisting principally of severance, impairments of long-lived assets, net charges credits for pre-acquisition litigation and other matters, net gains losses on the sale of real estate, and abandoned facility and other expenses of headcount reductions and real estate consolidations.\n(d) Adjusted results exclude net gains losses on investments. Adjusted results in 2026 and 2025 also exclude $6 of business interruption recoveries and $5 for settlement charges for pension plans, respectively.\n(e) Adjusted results exclude incremental tax impacts for the reconciling items between GAAP and adjusted net income, incremental tax impacts as a result of tax rate law changes and the tax impacts from audit settlements.\n(f) Adjusted results in 2025 exclude the incremental impacts for the reconciling items between GAAP and adjusted net income attributable to noncontrolling interests.\nNote\nConsolidated depreciation expense is $331 and $256 in 2026 and 2025, respectively.\nOrganic revenue growth\nThree months ended\nJune 27, 2026\nRevenue growth\n10\n%\nAcquisitions\n5\n%\nCurrency translation\n1\n%\nOrganic revenue growth (non-GAAP measure)\n5\n%\nNote\nFor more information related to non-GAAP financial measures, refer to the section titled \"Supplemental Information Regarding Non-GAAP Financial Measures\" of this release.\nCondensed Consolidated Statements of Income (unaudited)\nSix months ended\nJune 27,\n% of\nJune 28,\n% of\n(Dollars in millions except per share amounts)\n2026\nRevenues\n2025\nRevenues\nRevenues\n$\n22,999\n$\n21,219\nCosts and operating expenses\nCost of revenues (a)\n13,580\n59.0\n%\n12,435\n58.6\n%\nSelling, general and administrative expenses (b)\n3,707\n16.1\n%\n3,500\n16.5\n%\nAmortization of acquisition-related intangible assets\n915\n4.0\n%\n859\n4.0\n%\nResearch and development expenses\n700\n3.0\n%\n695\n3.3\n%\nRestructuring and other costs (c)\n147\n0.6\n%\n180\n0.9\n%\nTotal costs and operating expenses\n19,049\n82.8\n%\n17,668\n83.3\n%\nOperating income\n3,950\n17.2\n%\n3,551\n16.7\n%\nInterest income\n440\n501\nInterest expense\n(755)\n(707)\nOther income (expense) (d)\n22\n(16)\nIncome before income taxes\n3,658\n3,329\nBenefit from (provision for) income taxes (e)\n(238)\n(187)\nEquity in earnings (losses) of unconsolidated entities\n(23)\n(12)\nNet income\n3,397\n3,130\nLess net income (loss) attributable to noncontrolling interests and redeemable noncontrolling interest (f)\n10\n6\nNet income attributable to Thermo Fisher Scientific Inc.\n$\n3,387\n14.7\n%\n$\n3,124\n14.7\n%\nEarnings per share attributable to Thermo Fisher Scientific Inc.",
+      "source": "edgar:8-K ex-99.1",
+      "url": "https://www.sec.gov/Archives/edgar/data/97745/000009774526000138/q22026earnings8kex99_1.htm",
+      "asOf": "2026-07-23",
+      "truncated": true
+    },
+    "proxyStatement": {
+      "text": "Board and director independence:\nDirector independence review standards\nThe Company's Corporate Governance Guidelines require that a majority of directors and each member of the Audit Committee, Compensation Committee and N&CG committee be independent. In assessing director independence, the Board observes all relevant criteria under New York Stock Exchange (\"NYSE\") listing standards and Securities and Exchange Commission (\"SEC\") rules as well as categorical independence standards set forth under in the Company's Corporate Governance Guidelines. The following types and categories of transactions, relationships, and arrangements are considered by our Board in making its independence determinations:\nRecent employment with the Company, or an immediate family member's recent service as a Company executive officer.\nDirect compensation from the Company exceeding $120,000 in any twelve-month period, excluding standard director fees and non-contingent deferred compensation.\nCurrent or recent relationships with the Company's internal or external auditor involving the director or an immediate family member.\nInterlocking compensation committee relationships, where a director or immediate family member served as an executive officer of another company while a Company executive officer served on that company's compensation committee.\nEmployment with or greater than 10% ownership (by the director or an immediate family member) in a company that engaged in transactions with the Company exceeding $1 million or 2% of the other company's consolidated gross revenues in any of the last three fiscal years.\nEmployment with or greater than 10% ownership in a company that is indebted to the Company, or to which the Company is indebted, in an amount that exceeds one percent (1%) of the total consolidated assets of the other company.\nLeadership roles at tax-exempt organizations that received discretionary Company contributions exceeding the greater of $1 million or 2% of the organization's consolidated gross revenues in any single fiscal year within the past three years.\nThe Company also considers additional factors with respect to independence not covered by the above standards, which may be relevant to their determination. For example, the Board considers tenure as it relates to independence for each director with over 9 years of Board Service. For more information on the importance of having directors with differing tenures, see \"Active Board refreshment A balanced mix of tenures\" on page 19.\nIndependence determinations\nAfter a review of all relevant transactions and relationships, the Board has determined that of all our directors, 10 qualify as independent directors. The Board also has determined that each member of the Audit Committee, Compensation Committee and N&CG Committee is independent as required under the NYSE and SEC rules.\n\nCompensation discussion and analysis:\nCompensation discussion and analysis\nThis compensation discussion and analysis provides an overview of the components of our 2025 executive compensation program and the decisions of the Compensation Committee (referred to in this \"Compensation discussion and analysis\" section as the \"Compensation Committee\" or \"Committee\") for our 2025 NEOs, who are:\nNamed Executive Officer\n2025 Title\nMarc N. Casper*\nChairman, President and Chief Executive Officer\nStephen Williamson**\nSenior Vice President and Chief Financial Officer\nMichel Lagarde***\nExecutive Vice President and Chief Operating Officer\nGianluca Pettiti*\nExecutive Vice President\nFrederick Lowery***\nExecutive Vice President\n*\nAs announced on January 12, 2026, effective March 1, 2026 Marc N. Casper became Chairman and Chief Executive Officer, and Gianluca Pettiti was promoted to the role of President and Chief Operating Officer.\n**\nAs announced on July 23, 2025, Mr. Williamson retired effective March 31, 2026. Mr. James R. Meyer succeeded Mr. Williamson as Senior Vice President and Chief Financial Officer as of March 1, 2026.\n***\nAs announced on January 12, 2026, each of Mr. Lagarde and Mr. Lowery decided to leave Thermo Fisher to pursue other opportunities. Mr. Lagarde departed the Company as of March 31, 2026 and Mr. Lowery departed the Company as of February 28, 2026.\nCompensation philosophy and objectives\nThe core design principles of our executive compensation program include the following:\nPerformance-based : A substantial portion of executive compensation is \"at-risk\" and contingent on the achievement of predetermined performance objectives, which is intended to reward superior performance while holding executives accountable for under-performance\nShareholder-aligned : Incentive programs are structured to align executive rewards with the creation of shareholder value over both the short-term and long-term.\nMarket-competitive : Compensation levels are competitive with those of companies with which we compete for executive talent, which is achieved by positioning target compensation within a competitive range around the market median, with adjustments based on individual performance, experience and enterprise impact.\nBy adhering to these principles, we believe our executive compensation program effectively supports our strategic and financial objectives, promotes sustained performance, and drives long-term value creation for shareholders, while enabling us to attract and retain the leadership talent necessary to successfully manage and grow our business. They also serve as the foundation for the Committee's ongoing evaluation and enhancement of the effectiveness of our executive compensation program.\n36\nThermo Fisher Scientific 2026 Proxy Statement\nTable of Contents\nEXECUTIVE COMPENSATION\nCompensation governance practices\nTo achieve the objectives of our executive compensation program and emphasize pay-for-performance principles, the Compensation Committee has continued to employ strong governance practices, including mitigating undue risk associated with compensation by using a combination of vehicles that collectively promote the achievement of business results, retention and sustainable long-term value creation, as well as using stock ownership guidelines, a clawback policy, a stock holding requirement for our CEO, and other risk mitigation tools.\nThe Compensation Committee recognizes that the long-term success of our executive compensation program requires a robust framework of compensation governance, and regularly reviews external executive compensation practices, shareholder feedback and trends and considers them when updating our executive compensation program, as highlighted below.\n\nSecurity ownership:\nSecurity ownership of certain beneficial owners and management\nThe following table sets forth, as of February 28, 2026, the beneficial ownership of common stock by (a) each director and nominee for director, (b) each NEO, (c) all current directors and executive officers as a group, and (d) persons known to the Company to be the beneficial owner of more than 5 percent of the Company's common stock.\nAmount and Nature of Beneficial Ownership\nName and Address of Beneficial Owner (1)\nShares\nOwned\nDirectly or\nIndirectly (2)\nCommon Stock\nSubject to\nOptions\nExercisable\non or Prior to\nApril 28, 2026\nRestricted\nStock Units\nwhich vest on\nor prior to\nApril 28, 2026\nTotal\nPercent of\nShares\nBeneficially\nOwned\nThe Vanguard Group\n32,977,462\n32,977,462\n(3)\n8.87\n%\nBlackRock, Inc.\n28,329,861\n28,329,861\n(4)\n7.62\n%\nMarc N. Casper\n116,779\n323,471\n9,411\n449,661\n(5)(6)\n*\nNelson J. Chai\n14,252\n0\n0\n14,252\n*\nRuby R. Chandy\n2,399\n0\n0\n2,399\n*\nC. Martin Harris\n8,468\n0\n0\n8,468\n*\nTyler Jacks\n8,398\n0\n0\n8,398\n*\nJennifer M. Johnson\n339\n0\n0\n339\n*\nR. Alexandra Keith\n1,538\n0\n0\n1,538\n*\nMichel Lagarde\n77,390\n92,742\n0\n170,132\n*\nFrederick M. Lowery\n10,756\n87,763\n2,996\n101,515\n(5)(7)\n*\nKaren S. Lynch\n171\n0\n0\n171\n(8)\n*\nJames C. Mullen\n2,828\n0\n0\n2,828\n*\nGianluca Pettiti\n14,649\n77,850\n0\n92,499\n*\nDebora L. Spar\n1,546\n0\n0\n1,546\n*\nScott M. Sperling\n68,415\n0\n0\n68,415\n*\nDion J. Weisler\n4,463\n0\n0\n4,463\n*\nStephen Williamson\n26,403\n112,525\n6,096\n145,024\n(5)(9)\n*\nAll current directors and executive officers as a group (19 individuals)\n384,288\n802,350\n21,294\n1,207,932\n*\n*\nLess than one percent.\n(1)\nThe address of each of the Company's executive officers and directors is c/o Thermo Fisher Scientific Inc., 168 Third Avenue, Waltham, MA 02451. Except as reflected in the footnotes to this table, shares of common stock beneficially owned by executive officers and directors consist of shares owned by the indicated person, and all share ownership includes sole voting and investment power.\n(2)\nOur non-employee directors have the option to elect to defer all or a portion of their cash retainer into deferred stock units. The deferred units are not paid out until the beginning of the next fiscal year after the director leaves the Board, and may not be voted or transferred until they become shares of common stock. As a result, the deferred units are not included in this table. See the \"Director compensation table\" on page 30 for the number of deferred units accrued by non-employee directors in 2025, as applicable.\n(3)\nThis information was obtained from Schedule 13G/A filed with the Securities and Exchange Commission on February 13, 2024, by The Vanguard Group (\"Vanguard\"), 100 Vanguard Blvd., Malvern, PA 19355, reporting (i) sole voting power with respect to 0 shares, (ii) shared voting power with respect to 502,965 shares, (iii) sole dispositive power with respect to 31,326,761 shares, and (iv) shared dispositive power with respect to 1,650,701 shares. The percentage of shares beneficially owned was calculated using the number of shares of common stock outstanding as of February 28, 2026. According to the most recent Schedule 13G/A filed by Vanguard with the SEC on March 27, 2026, Vanguard reported that it beneficially owns 0.0% as of March 13, 2026 following an internal reorganization pursuant to which Vanguard's beneficial ownership has been disaggregated. In the March 27, 2026 Schedule 13G/A, Vanguard noted that certain subsidiaries or business divisions of subsidiaries of Vanguard that formerly had, or were deemed to have, beneficial ownership with Vanguard, will report beneficial ownership separately (on a disaggregated basis) from Vanguard.\n(4)\nThis information was obtained from Schedule 13G filed with the Securities and Exchange Commission on February 8, 2024, by BlackRock, Inc. (\"BlackRock\"), 50 Hudson Yards, New York, NY 10001. The percentage of shares beneficially owned was calculated using the number of shares of common stock outstanding as of February 28, 2026.",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/97745/000119312526144585/d66426ddef14a.htm",
+      "asOf": "2026-04-07",
+      "truncated": true
+    },
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T18:55:22.898Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T18:55:22.898Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T18:55:22.898Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T18:55:22.898Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T18:55:22.898Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T18:55:22.898Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T18:55:22.898Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T18:55:22.898Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T18:55:22.898Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T18:55:22.898Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T18:55:22.898Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T18:55:22.898Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-23T18:55:22.898Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-23T18:55:22.898Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T18:55:22.898Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T18:55:22.898Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T18:55:22.898Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T18:55:22.898Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T18:55:22.898Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T18:55:22.898Z"
+    }
+  ]
+}

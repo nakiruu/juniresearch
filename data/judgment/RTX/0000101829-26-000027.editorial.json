@@ -1,0 +1,59 @@
+{
+  "judgmentSha256": "5874bb7b9964631e78909f27f83ad895953aab8c9b42ebe5d7b55fade6f1644c",
+  "reviewedAt": "2026-09-23T13:00:00Z",
+  "reviewer": "claude-opus-4-8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "revenue was $24.7B, up 14% year over year, or 14.5% on the trailing-twelve-month view, at an operating margin near 11% (11.4% in the trailing-twelve-month detail)",
+      "issue": "The 14.5% revenue growth and 11.4% operating margin are the vendor's LATEST-QUARTER (Q2'26) figures in the Facts 'Trailing twelve months' block ('Latest quarter Q2'26 ... operating margin 11.4%, revenue +14.5% YoY'), not trailing-twelve-month figures. The pack's actual TTM operating margin is 11.2%, so calling 11.4% the 'trailing-twelve-month detail' is a wrong-period attribution that also conflicts with the real TTM value. Separately, 14% (press-release rounding) and 14.5% (vendor) describe the SAME quantity, Q2'26 revenue YoY, so framing them as 'year over year' vs 'trailing-twelve-month view' mislabels a source/rounding difference as two periods.",
+      "fix": "Relabel 14.5% and 11.4% as the vendor's latest-quarter Q2'26 figures, not TTM. If reconciling the press release's rounded 14% with the vendor's 14.5% (and 11% vs 11.4%), state it once as a source/rounding difference for the same Q2'26 quantity, and reserve 'trailing-twelve-month' for the pack's actual TTM figures (operating margin 11.2%).",
+      "status": "addressed",
+      "note": "Addressed. incomeCommentary now labels 14.5% and 11.4% as the vendor's latest-quarter Q2'26 figures ('the vendor's latest-quarter data shows as 14.5%'; 'the vendor's latest-quarter feed rounds to 11.4%'), states the 14% vs 14.5% and 11% vs 11.4% gaps once as a source/rounding difference for the same Q2'26 quantity, and reserves 'trailing-twelve-month' for the pack's actual TTM op margin of 11.2%. All three TTM labels in the section (op margin 11.2%, current ratio 1.01, FCF yield 4.4%) now match the Facts TTM block."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.growth.points",
+      "quote": "Defense demand is supported by a proposed $1.5 trillion FY2027 defense budget and the July 2025 Act's $24.4B Golden Dome and $25.4B munitions and supply-chain provisions.",
+      "issue": "growth.points repeat the executive-summary catalysts almost verbatim rather than arguing behind them. growth.points[3] restates catalysts[1] ('the proposed $1.5 trillion FY2027 defense budget and the July 2025 Act's $24.4B Golden Dome and $25.4B munitions provisions point to demand for RTX missiles and munitions'), and growth.points[0] ('Backlog of $289B, up 22% ... splits into $170B commercial and $119B defense and underpins the raised full-year outlook') restates catalysts[0] ('the commercial and defense backlog, split $170B and $119B, underpins the raised full-year sales and EPS outlook'). Same figures, same claim, no added mechanism. Rubric item 7: catalysts should point; the section behind them should argue.",
+      "fix": "Let the exec-summary catalysts point, and have the growth section add mechanism / what-to-watch instead of re-listing the figures — e.g., how the $289B backlog converts to the 8-9% organic guide, or which RTX awards map to Golden Dome and munitions funding — rather than repeating $289B/$170B/$119B and $1.5T/$24.4B/$25.4B.",
+      "status": "addressed",
+      "note": "Addressed. growth.points no longer restate the catalysts. points[0] argues the backlog-conversion mechanism (ships over multi-year aftermarket/program cycles, turning order coverage into revenue) without repeating $289B/$170B/$119B; points[3] now maps Golden Dome and munitions funding to RTX's missile/munitions franchises with awards, timing and appropriations as the swing factors, dropping the $1.5T/$24.4B/$25.4B restatement. The catalysts keep the figures and point; the growth section now carries mechanism."
+    },
+    {
+      "id": "F-3",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.thesis.body (+5 fields)",
+      "quote": "margin expansion across all three segments",
+      "issue": "The phrase 'margin expansion across all three segments' (or 'across all three') recurs six times: thesis.body, catalysts[2] ('operating-margin gains across all three segments'), growth.points[4], businessMoat.segments[0].body ('with margin expansion across all three'), management.leadership, and finalRecommendation.body[0]. A tic repeated past the point of notice (rubric item 9).",
+      "fix": "Keep the phrase once (it is Calio's framing) and refer back in words elsewhere — e.g., cite the specific segment ROS moves (Collins +50bps, P&W +190bps, Raytheon +110bps) or 'the same broad-based margin gain' — so it is not repeated verbatim across six fields.",
+      "status": "addressed",
+      "note": "Addressed. The phrase now appears once, in catalysts[2] ('Margin expansion across all three segments'), as the fix allowed. thesis.body, businessMoat.segments[0], management.leadership and finalRecommendation.body[0] now read 'wider segment margins' / 'each business posted higher margins' / 'wider margins'; growth.points[4] drops it entirely. No margin 'across all three (segments)' phrasing recurs (the remaining 'three segments' mentions are structural/scale, not margin)."
+    },
+    {
+      "id": "F-4",
+      "severity": "Minor",
+      "field": "sections.management.governance",
+      "quote": "Governance rests on the DEF 14A proxy statement dated 2026-03-09.",
+      "issue": "The proxy date is written in ISO form (2026-03-09) in prose. Rubric item 9 requires dates in prose form, not ISO.",
+      "fix": "Write 'dated March 9, 2026.'",
+      "status": "addressed",
+      "note": "Addressed. management.governance now reads 'Governance rests on the DEF 14A proxy statement dated March 9, 2026.' No ISO dates remain in prose across the judgment."
+    },
+    {
+      "id": "F-5",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "our $205-$255 target range brackets the $218 Base case while sitting below the consensus target",
+      "issue": "The top of the target range ($255) is above the $234.41 consensus target (and above the $240 median), so the range does not sit 'below the consensus target' — only the Base case ($218) and the range midpoint ($230) do. The finalRecommendation states it correctly ('Our Base case of $218 sits below the $234.41 consensus target').",
+      "fix": "Say the Base case (or the range midpoint) sits below consensus while the full range brackets it, or drop the 'below the consensus target' clause, keeping it consistent with the finalRecommendation phrasing.",
+      "status": "addressed",
+      "note": "Addressed. scenarioCommentary now reads 'Our $205-$255 target range brackets the $218 Base case; the Base sits below consensus, while the upper end of the range runs above the consensus target.' Consistent with finalRecommendation and with $218 < $234.41 < $255."
+    }
+  ]
+}

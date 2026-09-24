@@ -1,0 +1,69 @@
+{
+  "judgmentSha256": "c948afedab92aa0d02960638abaa5b51dcc0749b5fb2d6a5549bade881f2fa5e",
+  "reviewedAt": "2026-09-23T15:20:00Z",
+  "reviewer": "Claude Opus 4.8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.management.capitalAllocation",
+      "quote": "Dividends paid rose from $2.1B in FY23 to $2.5B in FY24 and $2.8B in FY25, and the FY25 payout exceeded both net income of $2.4B and free cash flow of $2.1B.",
+      "issue": "The distribution-coverage claim (FY25 dividends of $2.8B running ahead of net income $2.4B and FCF $2.1B) is argued in full in three separate sections with the same figures: here in capitalAllocation, in financials.cashflowCommentary ('the FY25 distribution ... exceeded both net income of $2.4B and free cash flow'), and in risks.idiosyncratic[0] ('FY25 dividends paid of $2.8B ran ahead of both net income of $2.4B and free cash flow of $2.1B'). It is also stated in the thesis and in exec risks[0]. Item 7: the same claim is made in different words in multiple places, which is paraphrase repetition beyond the exec-summary pointer.",
+      "fix": "Argue the payout-coverage mechanism in full in one home section (cashflowCommentary is the natural place, since it already carries 'coverage of the distribution is the item to watch'), and in capitalAllocation and risks.idiosyncratic refer back to it in words rather than re-stating the $2.8B / $2.4B / $2.1B triplet and the 'runs ahead of FCF' mechanism a second and third time.",
+      "status": "addressed",
+      "note": "Fixed. The $2.8B/$2.4B/$2.1B coverage triplet now appears in full only in cashflowCommentary. capitalAllocation now says 'the payout has run ahead of free cash flow, as set out under cash flow'; risks.idiosyncratic[0] says 'as detailed under cash flow'; the thesis dropped the payout-coverage claim; exec risks[1] is a one-line pointer. No second/third restatement of the triplet remains."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic",
+      "quote": "Internal-control scope: per the 10-K, the asset management business is consolidated into BAM but was excluded from management's evaluation of internal control over financial reporting following the 2025 Arrangement, leaving a portion of reported results outside that assessment.",
+      "issue": "The risks.idiosyncratic bullets restate points already argued in their home sections, in different words: [1] internal-control exclusion duplicates balanceCommentary ('per the 10-K, the results of the asset management business are consolidated into BAM but were excluded from management's evaluation of internal control ... as a result of the 2025 Arrangement'); [2] non-standard metrics duplicates businessMoat.durability ('some of its metrics are non-standard and based on its own methodologies, which limits comparability'); [4] controlled structure / non-U.S. directors duplicates management.governance ('some of BAM's officers and directors are not U.S. residents ... which could make service of process ... difficult'). Separately, management.insiderOwnership restates governance's controlling-parent point ('subsidiary of Brookfield Corporation ... controlling relationship above the Class A float'). Item 7 paraphrase repetition.",
+      "fix": "Keep each argument in one section and make the risks.idiosyncratic bullets true pointers, or cut the duplicate. Argue internal-control once (balance or risks, not both), non-standard metrics once (durability or risks), and the controlled/non-U.S.-directors structure once (governance or risks). In insiderOwnership, point back to governance for the controlling-parent fact rather than repeating it.",
+      "status": "addressed",
+      "note": "Fixed. balanceCommentary no longer carries the internal-control exclusion (now only risks.idiosyncratic[1]); durability no longer carries the non-standard-metrics line (now only risks.idiosyncratic[2]); the controlled/non-U.S.-directors bullet was removed from risks, leaving that point only in governance; insiderOwnership now points back — 'the controlling-parent relationship noted under governance' — rather than restating it."
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.businessMoat.moatFactors",
+      "quote": "Over 2,500 institutional clients and roughly 69,000 clients in total, served by over 5,800 professionals across 32 offices, with a dedicated team building products for the private wealth channel.",
+      "issue": "The client/professional/office headcount roster is restated as a near-identical set of facts across four sections: this moatFactors 'Client and distribution reach' body; management.leadership ('over 5,800 investment and asset management professionals and employees, including over 300 client service professionals, across 32 global offices, plus a dedicated team of roughly 150 focused on the private wealth channel'); executiveSummary.companyOverview ('over 5,800 investment and asset management professionals and employees across 32 global offices'); and growth.points[3] ('a dedicated team of roughly 150 people ... beyond the 2,500 institutional clients'). Item 7: the same descriptive roster appears in different words in several places.",
+      "fix": "Introduce the headcount roster (2,500 institutional / ~69,000 total clients, 5,800 professionals, 32 offices, ~150 private-wealth team) once, then refer back in words. Let each later section make its own distinct point (moat = distribution reach as a barrier; leadership = org depth; growth = the private-wealth channel opening a new pool) without re-listing the same figures.",
+      "status": "addressed",
+      "note": "Fixed. The roster is now introduced once, in companyOverview. The moatFactors 'Client and distribution reach' body carries no figures and argues distribution reach as a barrier; leadership speaks of 'a deep bench ... across a wide global office network' in words; the growth private-wealth point drops the 150/2,500 figures and makes the new-pool point. No re-listing of the same headcount figures remains."
+    },
+    {
+      "id": "F-4",
+      "severity": "Important",
+      "field": "sections.growth.points",
+      "quote": "Consensus expects FY26E revenue of about $6.1B, {+ up 54% +} from $3.9B in FY25, then $7.1B in FY27E; EPS is seen rising from $1.52 to $1.83 and $2.17.",
+      "issue": "The +54% FY26E revenue step-up to $6.1B is used as the growth anchor (growth.points[0]), a catalyst (via the EPS path), and the base-case anchor ('Revenue advances toward the consensus FY26E figure of about $6.1B') without naming the reading that cuts the other way, which is already on the page: Q2'26 revenue was about $1B and grew only +12.5% year over year, a run-rate far below a +54% full-year jump. Item 5: the growth judgment leans bullish on a figure whose counter-case (the current quarterly trend) is available on the surface but never stated or reconciled.",
+      "fix": "Add one sentence in the growth section (or the base-case driver) acknowledging that the consensus +54% FY26E step-up sits well above the +12.5% latest-quarter revenue trend, and say why the report still leans on it (or flag the gap as a risk to the base case). Use figures already on the page; do not compute new ones.",
+      "status": "addressed",
+      "note": "Fixed. growth.points[1] now names the counter-case: 'That step-up runs well above the +12.5% year-over-year growth in Q2'26 revenue of about $1B, so the full-year jump leans on a re-acceleration or on consolidation effects the latest quarter does not yet show; we treat that gap as the main risk to the base case.' The thesis echoes it ('the FY26E step-up ... is large relative to recent quarterly trends'). Figures already on the page; none computed."
+    },
+    {
+      "id": "F-5",
+      "severity": "Important",
+      "field": "analystCommentary",
+      "quote": "FY25 revenue rose {+ +16.7% +} to $3.9B and net income reached $2.4B, a 74.8% trailing net margin that reflects an asset-light, fee-driven model.",
+      "issue": "The 74.8% figure is the TTM net margin (the pack lists it under 'Trailing twelve months: Net margin 74.8%'), but here it is placed in apposition to FY25 net income of $2.4B on FY25 revenue of $3.9B, which reads as the FY25 margin. FY25 net income divided by FY25 revenue is about 61%, not 74.8%, so the juxtaposition attaches a trailing-period figure to a full-year quantity and invites the reader to a wrong ratio. Item 1: a figure presented against the wrong period. incomeCommentary states it cleanly ('the trailing net margin is 74.8%') and is the model.",
+      "fix": "Separate the trailing net margin from the FY25 revenue/net-income line, as incomeCommentary does, e.g. state FY25 revenue and net income, then note the trailing net margin of 74.8% as a distinct TTM statistic, so the two periods are not conflated.",
+      "status": "addressed",
+      "note": "Fixed. analystCommentary now reads: 'FY25 revenue rose +16.7% to $3.9B and net income reached $2.4B. The trailing net margin is 74.8%, reflecting an asset-light, fee-driven model.' The 74.8% is a standalone sentence labelled 'trailing', no longer in apposition to the FY25 revenue/net-income figures, so the two periods are not conflated."
+    },
+    {
+      "id": "F-6",
+      "severity": "Minor",
+      "field": "sections.financials.cashflowCommentary",
+      "quote": "and the FY25 distribution {- exceeded both net income of $2.4B and free cash flow -}",
+      "issue": "The bearish span wraps a whole clause, including the neutral figure '$2.4B', rather than a signed change or an explicit negative token. House style: use {- -} only around signed changes or explicit positives/negatives, never around a whole sentence or clause. Item 9 (Voice).",
+      "fix": "Tighten the span to the negative element only (or drop the span and let the sentence carry the point), and keep the neutral figure $2.4B outside the marker.",
+      "status": "addressed",
+      "note": "Fixed. The {- -} span was dropped; the clause now reads plainly 'the FY25 distribution outran both net income of $2.4B and free cash flow.' The only remaining bearish span in the judgment wraps the signed change '{- -17.4% -}' in scenarioCommentary, which is a valid use."
+    }
+  ]
+}

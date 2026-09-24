@@ -1,0 +1,733 @@
+{
+  "schemaVersion": "1.1.0",
+  "meta": {
+    "company": "MDU Resources Group, Inc.",
+    "ticker": "MDU",
+    "exchange": "NYSE",
+    "subtitle": "Pure-play regulated energy utility trading at a full multiple as a leveraged capital program outruns free cash flow",
+    "reportDate": "September 23, 2026",
+    "asOf": "Sep 23, 2026",
+    "analyst": "Juniper Finance Research Desk",
+    "analystName": "Nico — Senior Analyst",
+    "fiscalYearEnd": "December 31",
+    "currency": "USD",
+    "filing": {
+      "form": "10-Q",
+      "fiscalPeriod": "fiscal Q2 2026",
+      "filedDate": "Aug 6, 2026",
+      "accession": "0000067716-26-000072"
+    }
+  },
+  "quote": {
+    "currentPrice": 18.325,
+    "marketCap": 3854653952,
+    "sharesOutstanding": 210349465.32060027,
+    "week52Low": 17.01,
+    "week52High": 22.98,
+    "dividendYield": 0.0304,
+    "history": [
+      {
+        "date": "2026-08-11",
+        "close": 20.5
+      },
+      {
+        "date": "2026-08-12",
+        "close": 20.520000457763672
+      },
+      {
+        "date": "2026-08-13",
+        "close": 20.290000915527344
+      },
+      {
+        "date": "2026-08-14",
+        "close": 20.649999618530273
+      },
+      {
+        "date": "2026-08-17",
+        "close": 20.56999969482422
+      },
+      {
+        "date": "2026-08-18",
+        "close": 20.440000534057617
+      },
+      {
+        "date": "2026-08-19",
+        "close": 20.5
+      },
+      {
+        "date": "2026-08-20",
+        "close": 20.309999465942383
+      },
+      {
+        "date": "2026-08-21",
+        "close": 19.950000762939453
+      },
+      {
+        "date": "2026-08-24",
+        "close": 19.959999084472656
+      },
+      {
+        "date": "2026-08-25",
+        "close": 19.979999542236328
+      },
+      {
+        "date": "2026-08-26",
+        "close": 20.290000915527344
+      },
+      {
+        "date": "2026-08-27",
+        "close": 20.18000030517578
+      },
+      {
+        "date": "2026-08-28",
+        "close": 19.790000915527344
+      },
+      {
+        "date": "2026-08-31",
+        "close": 19.920000076293945
+      },
+      {
+        "date": "2026-09-01",
+        "close": 19.950000762939453
+      },
+      {
+        "date": "2026-09-02",
+        "close": 19.809999465942383
+      },
+      {
+        "date": "2026-09-03",
+        "close": 19.729999542236328
+      },
+      {
+        "date": "2026-09-04",
+        "close": 19.56999969482422
+      },
+      {
+        "date": "2026-09-08",
+        "close": 19.84000015258789
+      },
+      {
+        "date": "2026-09-09",
+        "close": 19.59000015258789
+      },
+      {
+        "date": "2026-09-10",
+        "close": 19.239999771118164
+      },
+      {
+        "date": "2026-09-11",
+        "close": 19.200000762939453
+      },
+      {
+        "date": "2026-09-14",
+        "close": 18.719999313354492
+      },
+      {
+        "date": "2026-09-15",
+        "close": 18.59000015258789
+      },
+      {
+        "date": "2026-09-16",
+        "close": 18.649999618530273
+      },
+      {
+        "date": "2026-09-17",
+        "close": 18.719999313354492
+      },
+      {
+        "date": "2026-09-18",
+        "close": 18.559999465942383
+      },
+      {
+        "date": "2026-09-21",
+        "close": 18.559999465942383
+      },
+      {
+        "date": "2026-09-23",
+        "close": 18.325000762939453
+      }
+    ]
+  },
+  "rating": {
+    "label": "HOLD",
+    "tone": "secondary",
+    "targetLow": 18,
+    "targetHigh": 23,
+    "conviction": {
+      "expectedUpside": 0.09481582537517053,
+      "bearDownside": 0.16780354706684852,
+      "rewardRisk": 0.5650406504065042,
+      "derivedLabel": "HOLD"
+    },
+    "gate": {
+      "sector": "industrial",
+      "ceiling": "SELL",
+      "gatedLabel": "SELL",
+      "distress": "DISTRESS",
+      "piotroski": 4,
+      "accruals": "LOW",
+      "confidence": "medium",
+      "flags": [
+        "distress"
+      ]
+    },
+    "decision": {
+      "conviction": 61,
+      "tier": "moderate",
+      "proposed": "HOLD",
+      "reasons": [
+        "E/R proposed HOLD"
+      ],
+      "advisories": [
+        "gate ceiling SELL (distress) — advisory, not applied"
+      ],
+      "moat": {
+        "width": "NONE",
+        "trend": "STABLE",
+        "contingent": false,
+        "bearFloor": 0.3
+      },
+      "intrinsic": null,
+      "composite": {
+        "percentile": 44.7019844127368,
+        "confidence": "low"
+      },
+      "uncertainty": {
+        "tier": "high",
+        "points": 5,
+        "drivers": [
+          "elevated leverage (+2)",
+          "cyclical industry (+2)",
+          "layers abstained / thin data (+1)"
+        ]
+      }
+    }
+  },
+  "snapshot": [
+    {
+      "label": "Current Price",
+      "value": 18.325,
+      "unit": "usd"
+    },
+    {
+      "label": "Market Cap",
+      "value": 3854653952,
+      "unit": "usdLarge",
+      "approx": true
+    },
+    {
+      "label": "52-Week Range",
+      "raw": "$17.01 – $22.98"
+    },
+    {
+      "label": "Shares Outstanding",
+      "value": 210349465.32060027,
+      "unit": "shares",
+      "approx": true
+    },
+    {
+      "label": "P/E (TTM)",
+      "value": 19.289473684210527,
+      "unit": "mult"
+    },
+    {
+      "label": "Consensus Target",
+      "value": 23.625,
+      "unit": "usd",
+      "change": 0.2892223738062756
+    },
+    {
+      "label": "EV/EBITDA (TTM)",
+      "value": 12.191081032784256,
+      "unit": "mult"
+    },
+    {
+      "label": "Analyst Consensus",
+      "raw": "None (6 B / 3 H / 0 S)"
+    },
+    {
+      "label": "FY25 Revenue",
+      "value": 1862918000,
+      "unit": "usdLarge",
+      "change": 0.06270582631439336
+    },
+    {
+      "label": "FY25 Net Income",
+      "value": 190395000,
+      "unit": "usdLarge"
+    },
+    {
+      "label": "FY25 Diluted EPS",
+      "value": 0.93,
+      "unit": "usd"
+    },
+    {
+      "label": "FY26E Revenue",
+      "value": 1994550000,
+      "unit": "usdLarge",
+      "approx": true,
+      "change": 0.07065904135340362,
+      "changeDp": 0
+    },
+    {
+      "label": "Q2'26 Revenue",
+      "value": 372921000,
+      "unit": "usdLarge",
+      "change": 0.06952833273105852,
+      "changeDp": 0
+    },
+    {
+      "label": "Q2'26 Operating Margin",
+      "value": 0.1285661038128719,
+      "unit": "pct",
+      "dp": 0
+    },
+    {
+      "label": "Fwd P/E (FY27E)",
+      "value": 17.283985550305122,
+      "unit": "mult",
+      "approx": true
+    },
+    {
+      "label": "Dividend Yield",
+      "value": 0.0304,
+      "unit": "pct",
+      "dp": 2
+    },
+    {
+      "label": "Net Debt / EBITDA (TTM)",
+      "value": 4.831893819636952,
+      "unit": "mult"
+    },
+    {
+      "label": "Interest Coverage (TTM)",
+      "value": 2.5964331955059934,
+      "unit": "mult"
+    },
+    {
+      "label": "FCF Yield (TTM)",
+      "value": -0.10017267563010543,
+      "unit": "pct",
+      "dp": 1
+    },
+    {
+      "label": "FY25 Capital Expenditure",
+      "value": -770394000,
+      "unit": "usdLarge"
+    }
+  ],
+  "analystSentiment": {
+    "numAnalysts": 9,
+    "buy": 6,
+    "hold": 3,
+    "sell": 0,
+    "consensusRating": "None",
+    "consensusTarget": 23.625,
+    "medianTarget": 23,
+    "highTarget": 27,
+    "lowTarget": 21,
+    "commentary": "MDU Resources is now a pure-play regulated energy delivery utility, and its 10-Q for the quarter ended June 30, 2026 shows the model working as designed. Second-quarter revenue rose {+ 7.0% +} year over year to $372.9M. Income from continuing operations rose to $19.3M from $14.1M, driven by new and interim rates in Montana, Wyoming, Idaho and Washington, higher retail sales volumes, and the Badger Wind Farm, which added $3.3M to quarterly earnings. Reported net income climbed {+ 55.5% +} to $21.3M from $13.7M, and diluted EPS to $0.10 from $0.07; part of that increase came from a swing in discontinued operations to $2.0M from a $0.4M loss, reflecting a $1.5M tax benefit rather than operations. Management reaffirmed its 2026 EPS guidance and its long-term EPS growth objective.\n\nThe counter-case is valuation and balance-sheet strain. At $18.33 the shares trade at 18.7x next-twelve-month earnings and 19.3x trailing earnings, a full multiple for a utility guiding to that growth rate. The balance sheet carries elevated leverage and thin interest coverage, and heavy capital spending kept free cash flow negative in FY25, so the growth plan leans on external financing. I rate the shares HOLD, with a 12-month fair-value range of $18.00 to $23.00; the Street is more constructive, with a $23.63 consensus target and six of nine analysts at Buy."
+  },
+  "sections": {
+    "executiveSummary": {
+      "companyOverview": "MDU Resources Group, Inc. was incorporated in 1924 and is headquartered in Bismarck, North Dakota. Following the separation of its non-regulated businesses, the company operates as a pure-play regulated energy delivery enterprise, and the proxy statement describes 2025 as its first full year operating exclusively in that form. It runs three regulated businesses. The electric business generates, transmits and distributes electricity in Montana, North Dakota, South Dakota and Wyoming across roughly 3,400 miles of transmission and 4,900 miles of distribution lines. The natural gas distribution business serves customers in Idaho, Minnesota, Montana, North Dakota, Oregon, South Dakota, Washington and Wyoming through about 22,000 miles of distribution mains. The pipeline business provides regulated natural gas transportation and underground storage, primarily in the Rocky Mountain and northern Great Plains regions, over a network the company describes as more than 3,800 miles. In total MDU serves more than 1.2 million customers and is a member of the S&P SmallCap 600 index. FY25 revenue was $1.9B, up 6.3%, with net income of $190.4M and diluted EPS of $0.93.",
+      "thesis": {
+        "label": "HOLD",
+        "body": "MDU is a regulated utility whose earnings power rests on rate-base growth and constructive regulatory outcomes rather than on cyclical demand. The near-term evidence is favorable: new and interim rates across several states, retail sales volume growth, and the Badger Wind Farm lifted second-quarter income from continuing operations to $19.3M from $14.1M. Reported net income rose 55.5% to $21.3M, though part of that step-up came from a discontinued-operations tax benefit rather than from operations, and management reaffirmed both its 2026 EPS guidance and a long-term growth objective. Data-center demand and the proposed $2.7B to $3.2B Bakken East Pipeline Project add optionality. The offsetting concern is that the market already prices much of this: the shares carry a full forward multiple for the growth rate, while elevated leverage, thin interest coverage and negative free cash flow mean the capital program depends on continued access to debt and, likely, equity. On the numbers the expected upside sits just short of the desk's buy threshold, which supports a HOLD rather than a buy at the current price."
+      },
+      "catalysts": [
+        "Pending rate cases could lift regulated earnings: North Dakota's electric filing requests a $34.5M annual increase, with interim rates of about $26.3M from Sept. 1, 2026.",
+        "The proposed Bakken East Pipeline Project is expected to reach a FERC Section 7(c) application in the fourth quarter of 2026, a step toward a final investment decision.",
+        "Data-center demand is emerging as a growth driver, including an electric service agreement with Applied Digital for a site that would require up to 430 megawatts at full capacity.",
+        "Management reaffirmed full-year 2026 EPS guidance and its long-term growth objective, signaling confidence in near-term execution."
+      ],
+      "risks": [
+        "Leverage is elevated and interest coverage is thin, and higher interest expense already partly offset second-quarter segment gains.",
+        "Free cash flow was negative in FY25, so the capital plan relies on external financing that could dilute shareholders or add debt.",
+        "Regulatory lag and the risk of cost disallowance can delay or reduce recovery of the investments that underpin earnings growth.",
+        "The shares trade at a full forward multiple of 18.7x, leaving little room for execution missteps against the long-term growth objective."
+      ]
+    },
+    "financials": {
+      "income": {
+        "columns": [
+          "Metric",
+          "FY21",
+          "FY22",
+          "FY23",
+          "FY24",
+          "FY25"
+        ],
+        "rows": [
+          {
+            "label": "Revenue ($B)",
+            "values": [
+              3402191000,
+              1754158000,
+              1805807000,
+              1752995000,
+              1862918000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "YoY Growth",
+            "values": [
+              null,
+              -0.48440343296422805,
+              0.0294437559216445,
+              -0.029245650282671454,
+              0.06270582631439336
+            ],
+            "format": "pctSigned"
+          },
+          {
+            "label": "Gross Margin",
+            "values": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "format": "pct"
+          },
+          {
+            "label": "Operating Income ($B)",
+            "values": [
+              331051000,
+              200870000,
+              224944000,
+              265642000,
+              290377000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Operating Margin",
+            "values": [
+              0.09730523653727847,
+              0.11451077953069222,
+              0.12456702183566683,
+              0.15153608538529773,
+              0.1558721317846518
+            ],
+            "format": "pct"
+          },
+          {
+            "label": "EBITDA ($B)",
+            "values": [
+              529291000,
+              389430000,
+              415394000,
+              465720000,
+              497085000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Net Income ($B)",
+            "values": [
+              378131000,
+              367489000,
+              414707000,
+              281108000,
+              190395000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Diluted EPS ($)*",
+            "values": [
+              1.87,
+              1.81,
+              2.03,
+              1.37,
+              0.93
+            ],
+            "format": "eps"
+          }
+        ],
+        "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
+      },
+      "incomeCommentary": "Second-quarter revenue rose {+ 7.0% +} year over year to $372.9M, and the operating margin was 12.9%. The results are cleaner below the revenue line once continuing and discontinued operations are separated. Income from continuing operations rose to $19.3M from $14.1M a year earlier, and this is the figure the operational drivers explain. Reported net income increased {+ 55.5% +} to $21.3M from $13.7M, and diluted EPS to $0.10 from $0.07; the gap between the two growth rates is a swing in discontinued operations, which moved to $2.0M from a $0.4M loss on a $1.5M tax benefit tied to a change in tax method for certain strategic initiative costs. For the six months, net income was $102.1M versus $95.7M. By segment, quarterly earnings were $14.7M at electric (from $10.4M), a narrower seasonal loss of $3.9M at natural gas distribution (from a $7.4M loss), and $14.4M at pipeline (from $15.4M); the Other category was a $5.9M loss. The electric gain came from renewable-investment recovery including the Badger Wind Farm, which contributed $3.3M, plus interim Montana and new Wyoming rates and 8.2% higher retail sales volumes. The vendor reports a single consolidated revenue line, so no segment revenue split is available. On an annual basis, the figures track the shift to a pure-play regulated utility: revenue fell 48.4% in FY22 as the portfolio was reshaped, held near $1.8B for two years, then rose 6.3% to $1.9B in FY25. Diluted EPS declined from $2.03 in FY23 to $0.93 in FY25, reflecting the narrower regulated-only earnings base after non-regulated businesses were separated. The TTM operating margin was 17.2% and the net margin 10.9%.",
+      "balance": {
+        "columns": [
+          "Metric ($B)",
+          "FY21",
+          "FY22",
+          "FY23",
+          "FY24",
+          "FY25"
+        ],
+        "rows": [
+          {
+            "label": "Cash & ST Investments",
+            "values": [
+              54161000,
+              70428000,
+              60473000,
+              66904000,
+              28212000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Total Debt",
+            "values": [
+              2741900000,
+              2404167000,
+              2261223000,
+              2292610000,
+              2676855000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Net Debt",
+            "values": [
+              2687739000,
+              2333739000,
+              2200750000,
+              2225706000,
+              2648643000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Total Equity",
+            "values": [
+              3382874000,
+              3587129000,
+              2905233000,
+              2690574000,
+              2772917000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Current Ratio",
+            "values": [
+              1.4199653922214899,
+              1.359653907162935,
+              1.2677151300555063,
+              0.9818169225373491,
+              0.83540103002964
+            ],
+            "format": "num2"
+          }
+        ],
+        "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
+      },
+      "balanceCommentary": "MDU carries the leverage typical of a capital-intensive regulated utility, but at the higher end, and this is where the investment case is most stretched. Total debt was $2.7B at FY25 year-end and net debt $2.6B, against total equity of $2.8B. On a trailing-twelve-month basis, net debt to EBITDA was 4.8x and interest coverage 2.6x — a thin cushion for a company still adding debt to fund its build. Management's disclosures attribute part of the higher interest expense in both the electric and natural gas segments to debt issuances funding recent capital investment, including the Badger Wind Farm, so the cost of leverage is already visible in segment earnings. Near-term liquidity is tight: the current ratio was 0.84 at FY25 year-end and 0.99 on a trailing-twelve-month basis, down from 1.27 in FY23. For a rate-regulated business these ratios are more tolerable than for an industrial, because regulators allow recovery of prudent financing costs through rates, but the combination of rising debt balances and thin coverage leaves little room if rate relief lags investment.",
+      "cashflow": {
+        "columns": [
+          "Metric ($B)",
+          "FY21",
+          "FY22",
+          "FY23",
+          "FY24",
+          "FY25"
+        ],
+        "rows": [
+          {
+            "label": "Operating Cash Flow",
+            "values": [
+              495777000,
+              510064000,
+              332627000,
+              502318000,
+              473365000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Capital Expenditure",
+            "values": [
+              -485197000,
+              -442582000,
+              -484136000,
+              -522824000,
+              -770394000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Share Repurchases",
+            "values": [
+              -6701000,
+              -7399000,
+              -4811000,
+              0,
+              0
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Dividends Paid",
+            "values": [
+              -171354000,
+              -176915000,
+              -161316000,
+              -102939000,
+              -108244000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Free Cash Flow",
+            "values": [
+              10580000,
+              67482000,
+              -151509000,
+              -20506000,
+              -297029000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "FCF Margin",
+            "values": [
+              0.0031097607394764137,
+              0.03846973875785419,
+              -0.08390099274174925,
+              -0.011697694517097882,
+              -0.15944287402880858
+            ],
+            "format": "pct"
+          }
+        ],
+        "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
+      },
+      "cashflowCommentary": "The cash-flow statement is where the growth strategy shows its cost. FY25 operating cash flow was about $0.5B, but capital expenditure was $770.4M, leaving free cash flow of {- negative $297M -} and an FCF margin of -15.9%. The trailing FCF yield was -10.0%. The proxy statement describes $792 million of capital investment advanced in 2025; the two figures differ because they measure slightly different things, and I anchor the free-cash-flow analysis on that capital-expenditure line from the cash-flow statement. FY25 dividends paid were $108.2M and share repurchases were zero, consistent with a company funding a rate-base build rather than returning capital beyond the dividend. Negative free cash flow of this size means the capital plan is financed externally; continued debt issuance raises interest expense, and equity issuance would dilute per-share earnings. This is the central tension in the investment case: the same capital spending that grows the rate base and future earnings currently consumes cash."
+    },
+    "valuation": {
+      "multiples": {
+        "columns": [
+          "Multiple (TTM)",
+          "MDU"
+        ],
+        "rows": [
+          {
+            "label": "P/E",
+            "values": [
+              19.289473684210527
+            ],
+            "format": "mult"
+          },
+          {
+            "label": "P/S",
+            "values": [
+              2.131463643531989
+            ],
+            "format": "mult"
+          },
+          {
+            "label": "EV/EBITDA",
+            "values": [
+              12.191081032784256
+            ],
+            "format": "mult"
+          },
+          {
+            "label": "Fwd P/E (NTM)",
+            "values": [
+              18.712536633683587
+            ],
+            "format": "mult"
+          }
+        ],
+        "note": "Peer multiples pending a peer data source."
+      },
+      "multiplesCommentary": "At $18.33 MDU trades at 19.3x trailing earnings, 18.7x next-twelve-month earnings and 17.3x FY27 consensus EPS of $1.06. On sales the multiple is 2.1x and on enterprise value to EBITDA 12.2x. These are not distressed multiples; they are broadly in line with a regulated utility guiding to its long-term EPS growth objective, which is why I do not see a wide margin of safety at the current price. The dividend yield is 3.04%, supported by a long history of uninterrupted payments and a board target payout of 60% to 70% of regulated energy delivery earnings. The Street is more optimistic: the consensus price target is $23.63, the median $23.00, and the range $21.00 to $27.00, with six of nine analysts at Buy and none at Sell. My range sits below consensus because the forward multiple already embeds much of the rate-base growth story while leverage and negative free cash flow cap the re-rating case.",
+      "scenarios": [
+        {
+          "name": "Bull",
+          "driver": "Rate cases are approved near requested levels, data-center load and the Bakken East Pipeline Project convert to funded rate base, and the multiple re-rates toward the Street's view; EPS compounds toward the high end of its long-term growth objective and the shares approach the Street's consensus target range.",
+          "impliedPrice": 24,
+          "probability": 0.25
+        },
+        {
+          "name": "Base",
+          "driver": "MDU delivers full-year 2026 EPS within its reaffirmed guidance and grows toward FY27 consensus, rate relief broadly offsets rising interest expense, and the shares hold roughly their current forward multiple on modestly higher earnings, leaving total return led by the dividend and mid-single-digit EPS growth.",
+          "impliedPrice": 20.5,
+          "probability": 0.5
+        },
+        {
+          "name": "Bear",
+          "driver": "Regulatory lag or cost disallowances slow cost recovery, higher-for-longer interest rates pressure an already leveraged balance sheet, and persistent negative free cash flow forces dilutive equity issuance; the forward multiple compresses and the shares fall roughly 17% below the current price.",
+          "impliedPrice": 15.25,
+          "probability": 0.25
+        }
+      ],
+      "scenarioCommentary": "The three scenarios are weighted 25% Bull, 50% Base and 25% Bear. The base case reflects a utility executing its plan without a re-rating: earnings grow toward FY27 consensus while the multiple holds, and the return is carried mostly by the dividend. The bull case requires both operational delivery and multiple expansion toward the Street's target, which is plausible if data-center load and Bakken East move from proposal to funded rate base. The bear case is a genuine downside, not a formality: it turns on the balance sheet, where elevated leverage and thin coverage leave limited room if rate relief lags a capital program that already runs free cash flow negative. On these weights the probability-weighted fair value implies expected upside of about 9.5%, against a bear-case downside of about 16.8%; the setup is modestly downside-skewed, and the reward/risk of about 0.57x clears the desk's 0.50x floor for a buy. The reason the derived reading is a HOLD is narrower than that: that upside falls just short of the +10% threshold a buy requires, so the rating turns on the return being not quite large enough rather than on the reward/risk being balanced. My 12-month fair-value range is $18.00 to $23.00, bracketing the base case and sitting below consensus."
+    },
+    "businessMoat": {
+      "segments": [
+        {
+          "name": "Consolidated",
+          "sharePct": 1,
+          "revenue": 1862918000,
+          "body": "The vendor provides only a consolidated revenue line, so no segment revenue split is available; MDU itself reports three business segments — Electric, Natural Gas Distribution and Pipeline. The electric operation earned $14.7M in the second quarter of 2026, up from $10.4M, on renewable-investment recovery including the Badger Wind Farm — a 49% interest that added $3.3M — together with interim Montana and new Wyoming rates and 8.2% higher retail sales volumes. The natural gas distribution operation narrowed its seasonal loss to $3.9M from $7.4M on new rates in Idaho, Washington, Montana and Wyoming, 6.7% higher volumes and 1.6% customer growth. The pipeline operation earned $14.4M versus $15.4M as lower other income and higher depreciation offset firm transportation demand, and it holds significant growth optionality through the proposed Bakken East Pipeline Project and a FERC rate case filed in May 2026 seeking a $31M annual increase."
+        }
+      ],
+      "segmentsBasis": "FY25 (single reportable segment) mix",
+      "geographyBasis": "FY25",
+      "geoMix": [],
+      "moatRating": "NARROW",
+      "moatFactors": [
+        {
+          "name": "Regulated service-territory monopoly",
+          "strength": "Strong",
+          "body": "MDU's electric and natural gas distribution utilities operate as regulated monopolies in their service territories, serving more than 1.2 million customers. Barriers to entry are effectively absolute: a competitor cannot economically build a parallel distribution network, and rates are set by regulators to allow recovery of prudent investment and a permitted return. This franchise is the core of the moat."
+        },
+        {
+          "name": "Rate-base growth with cost recovery",
+          "strength": "Moderate",
+          "body": "Earnings grow as the utility invests in infrastructure and regulators approve recovery through rates. Tracking mechanisms in certain jurisdictions reduce regulatory lag, and management targets long-term EPS growth off a rising rate base. The strength is bounded by the regulatory process itself, which can delay or disallow recovery."
+        },
+        {
+          "name": "Pipeline network and contracts",
+          "strength": "Moderate",
+          "body": "The pipeline operation runs a network the company describes as more than 3,800 miles with contracted transportation and storage. Long-term precedent agreements — including nearly 1.2 billion cubic feet per day tied to the proposed Bakken East project — create durable, fee-based revenue, though large new projects carry construction, permitting and financing risk before they earn a return."
+        },
+        {
+          "name": "Essential-service demand",
+          "strength": "Moderate",
+          "body": "Electricity and natural gas distribution are essential services with inelastic demand, and weather-normalization and decoupling mechanisms in certain jurisdictions stabilize distribution margins against volume swings. Emerging data-center load, including a pending 430-megawatt service agreement, could add a new demand layer, though it also concentrates revenue."
+        }
+      ],
+      "durability": "The moat is durable but returns-capped, which is why I rate it narrow rather than wide. As a regulated monopoly, MDU is insulated from direct competition, its distribution assets have very long lives, and the utility has a long, uninterrupted dividend history. The same regulation that protects the franchise also limits upside: allowed returns are set by commissions, recovery of investment is subject to prudence review and regulatory lag, and rate relief must keep pace with a large capital program to protect margins. The principal threats to durability are financial rather than competitive — the balance sheet carries elevated leverage and thin interest coverage, and a sustained period of high interest rates or a major cost disallowance would erode the economics faster than any competitor could. The transition to a pure-play regulated model has narrowed the business but made its cash flows more predictable, which supports the durability of the earnings base even as leverage bears watching."
+    },
+    "growth": {
+      "points": [
+        "Rate-base investment is the primary growth engine: the proxy describes $792 million of capital investment advanced in 2025, funding electric, gas and pipeline infrastructure that management expects to earn regulated returns and support a 6% to 8% long-term EPS growth objective.",
+        "Multiple rate cases are in progress: North Dakota electric ($34.5M requested, $26.3M interim from Sept. 1, 2026), Montana electric interim rates of $10.4M with a $10.0M settlement pending, a Wyoming settlement of $5.8M effective April 1, 2026, Washington gas ($25.1M year one, $18.1M year two) and an Oregon settlement of $12.2M.",
+        "The proposed Bakken East Pipeline Project, designed for up to 1.4 billion cubic feet per day and budgeted at $2.7B to $3.2B, would add material fee-based rate base if it clears a FERC Section 7(c) application expected in the fourth quarter of 2026.",
+        "Data-center and industrial load is an emerging driver, including the pending Applied Digital electric service agreement (up to 430 megawatts) and the Minot Industrial Project, an approximately 90-mile pipeline from Tioga to Minot, North Dakota.",
+        "Other pipeline projects are advancing, including the Line Section 32 Expansion, which filed a FERC 7(c) application in March 2026 and targets a late-2028 in-service date."
+      ]
+    },
+    "management": {
+      "leadership": "MDU is led by president and CEO Nicole A. Kivisto, with Jason L. Vollmer as chief financial officer, Garret Senger as chief utilities officer, Anthony D. Foti as chief legal officer and corporate secretary, and Rob L. Johnson as president of WBI Energy, Inc. The leadership team has overseen the company's transformation into a pure-play regulated energy business, completing its first full year in that form in 2025. In the second-quarter release, Kivisto framed the strategy around new rates, customer growth and investments such as the Badger Wind Farm, alongside advancing the proposed Bakken East Pipeline Project. Execution against the reaffirmed 2026 EPS guidance of $0.93 to $1.00 and the long-term growth objective is the near-term test of that leadership.",
+      "capitalAllocation": "Capital allocation is dominated by the rate-base build. The proxy describes $792 million of capital investment advanced in 2025, including a 49% interest in the Badger Wind Farm, and an expanded five-year capital plan supports continued infrastructure modernization. Dividends are the primary form of shareholder return: FY25 dividends paid were $108.2M, the board targets a payout of 60% to 70% of regulated energy delivery earnings, and the company has an 88-year history of uninterrupted payments. There were no share repurchases in FY25, appropriate for a company funding growth investment rather than returning surplus capital. The discipline to watch is financing: with free cash flow negative in FY25, the plan depends on debt and potentially equity issuance, and management has said it continues to evaluate all financing and partnership options for the Bakken East project.",
+      "governance": "Governance rests on the DEF 14A proxy statement filed April 1, 2026. The board separates the roles of chair and CEO, and the bylaws and corporate governance guidelines require the chair of the board to be independent. Executive pay is performance-weighted: for 2025 the executive incentive compensation plan set financial goals at a 70% weight alongside customer-satisfaction, reliability and safety measures, and NEOs earned 126.4% of target after the company posted maximum results on customer satisfaction and reliability and above-target results on financial and safety goals. Long-term incentives consist mainly of performance share awards — split evenly between three-year cumulative adjusted EPS and three-year relative total shareholder return — with restricted stock units the remainder, aligning management with both earnings and market performance. The proxy reports no related person transactions in 2025, with any transaction above $120,000 subject to audit committee review."
+    },
+    "risks": {
+      "idiosyncratic": [
+        "Balance-sheet and financing risk. Leverage is elevated and interest coverage thin, and management attributes part of the higher interest expense in both utility segments to debt issued for recent capital investment. With free cash flow negative in FY25, a funding plan that leans on debt raises interest costs while equity issuance would dilute per-share earnings.",
+        "Regulatory risk. Earnings depend on timely, adequate rate relief; the 10-K warns that rate review in some jurisdictions can take as long as eleven months, that costs may be found imprudent and disallowed, and that early asset retirements could leave stranded costs. If rate relief lags the capital program, margins compress.",
+        "Execution risk on large projects. The proposed $2.7B to $3.2B Bakken East Pipeline Project has not reached a final investment decision, and its FERC Section 7(c) application is only expected in the fourth quarter of 2026, with in-service dates in late 2029 and late 2030; delays, cost overruns or financing shortfalls would defer the expected returns.",
+        "Demand concentration and weather. Adding large data-center customers, such as the pending 430-megawatt Applied Digital agreement, can raise revenue and earnings volatility and concentrate sales, and utility demand remains sensitive to weather despite decoupling mechanisms."
+      ],
+      "systemic": "Interest rates are the dominant systemic factor. A capital-intensive, leveraged utility carrying $2.7B of total debt is exposed to refinancing and new-issuance costs; higher-for-longer rates raise interest expense and can compress the spread between allowed returns and the cost of capital, and rate-regulated utilities also tend to de-rate when bond yields rise and a 3.04% dividend yield looks less attractive against risk-free alternatives. Broader inflation and tariffs are a second factor: the MD&A notes elevated costs and long lead times for steel and electrical equipment, which raise the cost of the capital program and can widen regulatory lag before recovery. Economic conditions in the service territories affect customer growth, usage and the ability of customers to pay, and severe weather or catastrophic events — wildfires, storms, cyberattacks — could impose losses not fully covered by insurance."
+    },
+    "finalRecommendation": {
+      "body": [
+        "I rate MDU Resources HOLD with a 12-month fair-value range of $18.00 to $23.00. The company has completed a credible transformation into a pure-play regulated utility, and the second quarter showed the model working: income from continuing operations rose to $19.3M from $14.1M on new rates, volume growth and the Badger Wind Farm, while reported net income rose 55.5% to $21.3M with the balance of that step-up coming from a discontinued-operations tax benefit. Management reaffirmed its full-year guidance and long-term growth objective. The problem is price, not quality: at 18.7x forward earnings the shares already reflect that growth, and elevated leverage, thin interest coverage and negative free cash flow leave little margin for error.",
+        "The setup is modestly downside-skewed rather than balanced: my base case values the shares at $20.50, modestly above the current $18.33, with most of the return carried by the 3.04% dividend, while the bear case at $15.25 is roughly 17% lower and turns on financing strain if rate relief lags. Expected upside of about 9.5% sits just short of the +10% threshold a buy requires, even though the reward/risk of about 0.57x clears the desk's floor, so the rating turns on the return being not quite large enough. I would become more constructive on a lower entry price, on evidence that the major rate cases and the Bakken East project are converting to funded rate base, or on a clear path to positive free cash flow. Until then the $23.63 Street consensus looks optimistic relative to the leverage and cash-flow profile, and HOLD is the right call."
+      ]
+    }
+  },
+  "disclaimer": "DISCLAIMER: This report is for informational/educational purposes only and does not constitute investment advice. All equity securities carry risk and can be volatile, and past performance is not indicative of future results. Conduct your own due diligence. The author may hold positions in securities discussed."
+}

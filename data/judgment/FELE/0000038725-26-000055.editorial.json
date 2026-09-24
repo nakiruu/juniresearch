@@ -1,0 +1,49 @@
+{
+  "judgmentSha256": "06085168b3a1f2086a9750b6cf17981af621aa5b9bc3ad828502aea32d05f00d",
+  "reviewedAt": "2026-09-23T18:30:00Z",
+  "reviewer": "Claude Opus 4.8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.management.insiderOwnership",
+      "quote": "Institutions dominate the register: BlackRock held 14.34%, The Vanguard Group 9.80%, and Diane D. Humphrey 6.05% as of the proxy.",
+      "issue": "Diane D. Humphrey is an individual, not an institution. The proxy lists her among beneficial owners of >5% with a residential address (2279 East 250 North, Bluffton, IN) and a footnote giving the Company a right of first refusal over 2,362,118 of her shares — the profile of a founder/family-linked individual holder, not an index fund. The proxy nowhere characterises these holders as 'institutions.' Grouping her under 'Institutions dominate the register' is a mischaracterisation of the ownership source, and it buries a more meaningful ownership signal (a 6.05% individual block with a company right of first refusal) that this section is supposed to read for the holder.",
+      "fix": "Separate the holders: name BlackRock (14.34%) and Vanguard (9.80%) as the dominant institutional/index holders, and describe Humphrey's 6.05% as an individual holding, noting the Company's right of first refusal over 2,362,118 of her shares. Do not label her an institution.",
+      "status": "addressed",
+      "note": "Resolved. insiderOwnership now reads BlackRock 14.34% and Vanguard 9.80% as 'the dominant institutional holders... each reporting on Schedule 13F,' and 'Diane D. Humphrey is an individual holder with 6.05%, and the Company holds a right of first refusal over 2,362,118 of her shares.' Holder types separated exactly as the fix directed; all figures match the proxy (2,670,922/6.05%; ROFR 2,362,118). No longer labels her an institution."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.businessMoat.durability",
+      "quote": "the FY25 balance sheet was net cash, with -$67.8M net debt and 23.5x TTM interest coverage, so the company can fund acquisitions and buybacks without strain.",
+      "issue": "The 'net cash (-$67.8M) / 23.5x coverage → funds acquisitions, buybacks and dividend without strain' claim is made in near-identical words in at least four places: analystCommentary ('funds a 1.18% dividend and buybacks'), financials.balanceCommentary ('leave room to fund acquisitions, buybacks, and the dividend without strain'), businessMoat.durability (quoted), and finalRecommendation.body[0] ('fund a 1.18% dividend and continuing buybacks'); capitalAllocation restates it again ('leave flexibility for further bolt-on deals'). Same figure and same conclusion repeated as paraphrase across sections rather than introduced once and referred back to in words (rubric item 7).",
+      "fix": "Introduce the -$67.8M net-cash / 23.5x coverage figure and its 'funds returns without strain' conclusion once (balanceCommentary is the natural home), then refer back in words elsewhere (e.g. 'the net-cash balance sheet noted above') instead of restating the numbers and the same clause. The cyclicality line ('demand is cyclical, tied to housing starts and to the energy and mining industries') and the bear-case '$80.00, more than 15% below the current price' line show the same paraphrase-repetition and can be thinned the same way.",
+      "status": "addressed",
+      "note": "Resolved. The numbers (-$67.8M, 0.0x, 23.5x) and the 'funds returns without strain' clause now appear once, in balanceCommentary. durability uses 'The net-cash balance sheet noted above supports steady investment and bolt-on deals'; capitalAllocation, the moat factor and finalRecommendation refer to the net-cash balance sheet in words only. The bear '$80.00 / more than 15% below' line sits once in scenarioCommentary; finalRecommendation now points back with 'set out above.' Genuinely consolidated to one home section."
+    },
+    {
+      "id": "F-3",
+      "severity": "Minor",
+      "field": "sections.risks.systemic",
+      "quote": "Changes in international tax rules, including the OECD Pillar Two framework, could raise the effective tax rate over time, though the company expects a limited near-term impact.",
+      "issue": "The 10-K states Pillar Two 'has not had a material impact... nor does the Company expect a material impact in the future,' and that a January 2026 OECD safe harbor is expected to 'largely reduce the impact' for the Company. Framing the reassurance as a 'limited near-term impact' implies the company expects a larger impact later, which softens/misstates the source, whose expectation of immateriality extends to the future, not just the near term.",
+      "fix": "Align to the source: note the company does not expect a material Pillar Two impact, near-term or in the future, citing the January 2026 safe harbor, while still flagging residual local minimum-tax exposure as the genuine open risk.",
+      "status": "addressed",
+      "note": "Resolved. risks.systemic now reads: 'The 10-K's January 2026 safe-harbor guidance under the OECD Pillar Two framework is expected to largely reduce its impact, and the company expects no material impact on its taxes now or in the future.' Matches the 10-K's future-tense immateriality and the safe-harbor point; the misleading 'limited near-term impact' framing is gone. (Residual local minimum-tax exposure is left unstated, but that was optional colour, not required.)"
+    },
+    {
+      "id": "F-4",
+      "severity": "Minor",
+      "field": "analystCommentary",
+      "quote": "That range sits inside the Street's target spread and near the $118.50 consensus.",
+      "issue": "The report's target range is $105.00 to $125.00, which is exactly the Street's target range ($105.00 low to $125.00 high per the Facts Street view). It is coextensive with, not 'inside' (i.e. narrower than), the Street spread. 'Sits inside' overstates the precision of the call.",
+      "fix": "Say the range spans the Street's full target range and brackets the $118.50 consensus and $122.00 median, or narrow the desk range so 'inside' is literally true.",
+      "status": "addressed",
+      "note": "Resolved. analystCommentary now reads 'That range matches the full width of the Street's target range and sits near the $118.50 consensus.' With the desk range $105.00-$125.00 equal to the Street range, 'matches the full width' is literally accurate; the overstated 'sits inside' is gone."
+    }
+  ]
+}

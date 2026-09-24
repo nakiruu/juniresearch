@@ -1,0 +1,583 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "LTRX",
+  "cik": 1114925,
+  "company": "Lantronix, Inc.",
+  "exchange": "NASDAQCM",
+  "sic": 3576,
+  "sicDescription": "Computer Communications Equipment",
+  "filing": {
+    "form": "10-K",
+    "accession": "0001683168-26-006754",
+    "filedDate": "2026-08-27",
+    "periodEnd": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1114925/000168316826006754/lantronix_i10k-063026.htm"
+  },
+  "capturedAt": "2026-09-23T11:57:20.996Z",
+  "quote": {
+    "price": 6.25,
+    "marketCap": 291908192,
+    "sharesOutstanding": 46705310.72,
+    "sharesSource": "derived",
+    "week52Low": 4.37,
+    "week52High": 8.75,
+    "dividendYield": 0,
+    "asOf": "2026-09-23"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25",
+      "FY26"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          129655000,
+          131189000,
+          160327000,
+          122923000,
+          120899000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          55586000,
+          56264000,
+          64354000,
+          51699000,
+          52923000
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          -5011000,
+          -6674000,
+          -2862000,
+          -11001000,
+          -4121000
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          -3983000,
+          null,
+          -699000,
+          -8917000,
+          -2519000
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          -5362000,
+          -8980000,
+          -4516000,
+          -11373000,
+          -4181000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          -0.16,
+          -0.25,
+          -0.12,
+          -0.29,
+          -0.1
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          17221000,
+          13452000,
+          26237000,
+          20098000,
+          60466000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          17616000,
+          21707000,
+          19223000,
+          14824000,
+          0
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          395000,
+          8255000,
+          -7014000,
+          -5274000,
+          -60466000
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          79896000,
+          77556000,
+          81355000,
+          74378000,
+          119276000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          2.5346414796880716,
+          2.0813788048633266,
+          2.9496617588539595,
+          2.5439813293011637,
+          3.661231488698363
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          -9416000,
+          237000,
+          18623000,
+          7285000,
+          9877000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -2118000,
+          -2673000,
+          -1479000,
+          -505000,
+          -612000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          -11534000,
+          -2436000,
+          17144000,
+          6780000,
+          9265000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q4'26",
+    "periodEnd": "2026-06-30",
+    "revenue": 31154000,
+    "operatingMargin": -0.012582653912820183,
+    "revenueYoY": 0.0463491636998723
+  },
+  "ttm": {
+    "pe": -62.5,
+    "ps": 2.414479788914714,
+    "evToEbitda": null,
+    "grossMargin": 0.4377455562080745,
+    "operatingMargin": -0.03408630344337009,
+    "netMargin": -0.03458258546389962,
+    "netDebtToEbitda": null,
+    "interestCoverage": null,
+    "currentRatio": 3.661231488698363,
+    "fcfYield": null
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY27E",
+      "revenue": 138634670,
+      "eps": 0.23167
+    },
+    "followingFY": {
+      "label": "FY28E",
+      "revenue": 157153330,
+      "eps": 0.32
+    }
+  },
+  "analysts": {
+    "count": 6,
+    "buy": 6,
+    "hold": 0,
+    "sell": 0,
+    "consensusRating": "None",
+    "consensusTarget": 10.25,
+    "medianTarget": 10.5,
+    "highTarget": 12,
+    "lowTarget": 8,
+    "asOf": "2026-09-23"
+  },
+  "segments": {
+    "basis": "FY26 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 120899000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY26",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "ARAI",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "AXTI",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "CRNT",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "DVLT",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-10",
+      "close": 5.730000019073486
+    },
+    {
+      "date": "2026-08-11",
+      "close": 5.909999847412109
+    },
+    {
+      "date": "2026-08-12",
+      "close": 6.170000076293945
+    },
+    {
+      "date": "2026-08-13",
+      "close": 6.090000152587891
+    },
+    {
+      "date": "2026-08-14",
+      "close": 6.46999979019165
+    },
+    {
+      "date": "2026-08-17",
+      "close": 6.650000095367432
+    },
+    {
+      "date": "2026-08-18",
+      "close": 6.28000020980835
+    },
+    {
+      "date": "2026-08-19",
+      "close": 6.010000228881836
+    },
+    {
+      "date": "2026-08-20",
+      "close": 6.070000171661377
+    },
+    {
+      "date": "2026-08-21",
+      "close": 5.980000019073486
+    },
+    {
+      "date": "2026-08-24",
+      "close": 5.739999771118164
+    },
+    {
+      "date": "2026-08-25",
+      "close": 5.860000133514404
+    },
+    {
+      "date": "2026-08-26",
+      "close": 5.659999847412109
+    },
+    {
+      "date": "2026-08-27",
+      "close": 6.03000020980835
+    },
+    {
+      "date": "2026-08-28",
+      "close": 5.369999885559082
+    },
+    {
+      "date": "2026-08-31",
+      "close": 5.300000190734863
+    },
+    {
+      "date": "2026-09-01",
+      "close": 5.150000095367432
+    },
+    {
+      "date": "2026-09-02",
+      "close": 5.260000228881836
+    },
+    {
+      "date": "2026-09-03",
+      "close": 5.21999979019165
+    },
+    {
+      "date": "2026-09-04",
+      "close": 5.21999979019165
+    },
+    {
+      "date": "2026-09-08",
+      "close": 5.269999980926514
+    },
+    {
+      "date": "2026-09-09",
+      "close": 5.059999942779541
+    },
+    {
+      "date": "2026-09-10",
+      "close": 5.059999942779541
+    },
+    {
+      "date": "2026-09-11",
+      "close": 5.239999771118164
+    },
+    {
+      "date": "2026-09-14",
+      "close": 5.050000190734863
+    },
+    {
+      "date": "2026-09-15",
+      "close": 5.329999923706055
+    },
+    {
+      "date": "2026-09-16",
+      "close": 5.420000076293945
+    },
+    {
+      "date": "2026-09-17",
+      "close": 5.820000171661377
+    },
+    {
+      "date": "2026-09-18",
+      "close": 5.849999904632568
+    },
+    {
+      "date": "2026-09-21",
+      "close": 6.179999828338623
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "Lantronix, Inc. develops, markets, and sells industrial and enterprise internet of things (IoT) products and services in the Americas, Europe, the Middle East, Africa, and the Asia Pacific Japan. The company's embedded IoT solutions provides embedded products, including compute system-on-module and system-in-package solutions; and application processing solutions for data transformation, computer vision, machine learning, augmented/virtual reality, audio/video aggregation and distribution, and custom applications. It also provides IoT systems solutions, which includes routing, switching or gateway functionalities, telematics, and media conversion; wired and wireless connections which enhances modern electronic systems and equipment by providing secure network connectivity, power for IoT end devices through power over ethernet, application hosting, protocol conversion, media conversion, secure access for distributed IoT deployments, and other functions; and pre-certified products. In addition, the company offers single-pane-of-glass management for out-of-band (OOB) and industrial IoT deployments that enables customers to deploy, monitor, manage, and automate deployments; GPS-based vehicle and asset tracking capabilities for fleet, municipal, and industrial asset tracking customers; engineering services comprising turnkey product development or team augmentation; extended warranty, support, and maintenance services related to OOB and certain other product families. Further, it provides intelligent computing, secure connectivity, and remote management for mission-critical applications, enabling customers to optimize operations, enhance security and accelerate digital transformation; and hardware, software, services, and powers applications from mission-critical autonomous platforms and edge analytics for critical infrastructure to intelligent surveillance and secure network management. Lantronix, Inc. was incorporated in 1989 and is headquartered in Irvine, California.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-23"
+    },
+    "mdaExcerpt": {
+      "text": "ITEM 7.\nMANAGEMENT'S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS\nYou should read the following discussion and analysis in conjunction\nwith our consolidated financial statements and the accompanying notes thereto included in Part II, Item 8 of this Annual Report on Form\n10-K for the fiscal year ended June 30, 2026 (this \"Report\"). This discussion and analysis contains forward-looking statements\nthat are based on our management's current beliefs and assumptions, which statements are subject to substantial risks and uncertainties.\nOur actual results may differ materially from those expressed or implied by these forward-looking statements as a result of many factors,\nincluding those discussed in \" Risk Factors \" included in Part I, Item 1A of this Report. Please also see \" Cautionary Note Regarding Forward-Looking Statements \" at the beginning of this Report.\nOverview\nLantronix, Inc. is a global leader in Edge AI and Industrial IoT solutions\nthat power NDAA-compliant unmanned systems, critical infrastructure and resilient enterprise networks. We deliver intelligent computing,\nsecure connectivity, and remote management for mission-critical applications, enabling customers to optimize operations, enhance security\nand accelerate digital transformation. Our comprehensive portfolio of hardware, software, and services, powers applications ranging from\nmission-critical autonomous platforms and edge analytics for critical infrastructure to intelligent surveillance and secure network management.\nBy bringing intelligence to the network edge, we help organizations achieve efficiency, security, and a competitive edge in today's\nAI-driven world.\nWe conduct our business globally and manage our sales teams by three geographic\nregions: the Americas; EMEA; and APJ.\nReferences to \"fiscal 2026\" refer to the fiscal year ended\nJune 30, 2026 and references to \"fiscal 2025\" refer to the fiscal year ended June 30, 2025.\n25\nProducts and Solutions\nWe organize our portfolio services and products into the following product\nlines: Embedded IoT Solutions, IoT Systems Solutions, and Software and Services. Refer to \"Products and Solutions\" included\nin Part I, Item 1 of this Report, which is incorporated herein by reference, for further discussion.\nRecent Developments\nIn March 2026, the U.S. Court of International Trade issued a ruling\nindicating that importers that paid tariffs under the International Emergency Economic Powers Act (\"IEEPA\") may be entitled\nto refunds. We have paid tariffs on certain imported products and materials that were subject to IEEPA-based duties. The nature, timing,\nand extent of any such refunds remain uncertain. As of June 30, 2026, we have not recognized any amounts related to the potential recovery\nof such tariff-related costs.\nOn July 7, 2026, we entered into an asset purchase agreement to acquire\nthe industrial IoT business of Vecima Networks Inc., including its Nero Global Tracking software-as-a-service platform, for aggregate\nconsideration of approximately $11.7 million, excluding working capital adjustments and other customary purchase price adjustments. The\nacquired business provides GPS-based fleet and asset tracking solutions and serves customers across the fleet, municipal, restoration\nand industrial asset-tracking markets in North America. We closed the transaction on August 1, 2026. Since the transaction closed after\nthe fiscal year ended on June 30, 2026, we have not recorded any amounts in the accompanying consolidated financial statements. We are\nin the process of evaluating the acquisition and, therefore, determining the preliminary allocation of the purchase price, including the\nidentification and valuation of acquired intangible assets and any associated goodwill. Additional disclosures required by ASC 805,\nBusiness Combinations , will be provided for the quarter ending September 30, 2026 following the completion of the preliminary purchase\naccounting assessment.\nRecent Accounting Pronouncements\nRefer to Note 1 of Notes to Consolidated Financial Statements included\nin Part II, Item 8 of this Report, which is incorporated herein by reference, for a discussion of recent accounting pronouncements.\nCritical Accounting Policies and Estimates\nThe preparation of financial statements and related disclosures in accordance\nwith U.S. generally accepted accounting principles (\"GAAP\") requires us to make judgments, estimates and assumptions that\naffect the reported amounts of assets and liabilities at the date of the financial statements and the reported amounts of net revenue\nand expenses during the reporting period. We regularly evaluate our estimates and assumptions related to revenue recognition, sales returns\nand allowances, inventory valuation, valuation of deferred income taxes, valuation of goodwill and long-lived and intangible assets. We\nbase our estimates and assumptions on historical experience and on various other factors that we believe to be reasonable under the circumstances,\nthe results of which form the basis for making judgments about the carrying values of assets and liabilities that are not readily apparent\nfrom other sources. To the extent there are material differences between our estimates and the actual results, our future results of operations\nwill be affected.\nWe believe the following critical accounting policies require us to make\nsignificant judgments and estimates in the preparation of our consolidated financial statements:\n26\nRevenue Recognition\nRevenue is recognized upon the transfer of control of promised products\nor services to customers in an amount that reflects the consideration we expect to receive in exchange for those products or services.\nWe apply the following five-step approach in determining the amount and timing of revenue to be recognized: (i) identifying the contract\nwith a customer, (ii) identifying the performance obligations in the contract, (iii) determining the transaction price, (iv) allocating\nthe transaction price to the performance obligations in the contract and (v) recognizing revenue when the performance obligation\nis satisfied.\nA significant portion of our products are sold to distributors under\nagreements which contain (i) limited rights to return unsold products and (ii) price adjustment provisions, both of which are accounted\nfor as variable consideration when estimating the amount of revenue to recognize. Establishing accruals for product returns and pricing\nadjustments requires the use of judgment and estimates that impact the amount and timing of revenue recognition. When product revenue\nis recognized, we establish an estimated allowance for future product returns based primarily on historical returns experience and other\nknown or anticipated returns. We also record reductions of revenue for pricing adjustments, such as competitive pricing programs and rebates,\nin the same period that the related revenue is recognized, based primarily on approved pricing adjustments and our historical experience.\nActual product returns or pricing adjustments that differ from our estimates could result in increases or decreases to our net revenue.\nA portion of our revenues are derived from engineering and related consulting\nservice contracts with customers. These contracts generally include performance obligations in which control is transferred over time\nbecause the customer either simultaneously receives and consumes the benefits provided or our performance on the contract creates or enhances\nan asset that the customer controls. These contracts typically provide services on the following basis:\nTime & Materials (\"T&M\") services consist of revenues from software modification, consulting implementation, training and integration services. These services are set forth separately in the contractual arrangements such that the total price of the customer arrangement is expected to vary depending on the actual time and materials incurred based on the customer's needs.\nFixed Price arrangements to render specific consulting and software modification services which tend to be more complex.\nPerformance obligations for T&M contracts qualify for the \"Right\nto Invoice\" practical expedient within the revenue guidance. Under this practical expedient, we may recognize revenue, over time,\nin the amount to which we have a right to invoice. In addition, we are not required to estimate variable consideration upon inception\nof the contract and reassess the estimate each reporting period. We determined that this method best represents the transfer of services\nas, upon billing, we have a right to consideration from a customer in an amount that directly corresponds with the value to the customer\nof our performance completed to date.\nWe recognize revenue on fixed price contracts, over time, using an input\nmethod based on the proportion of our actual costs incurred (generally labor hours expended) to the total costs expected to complete the\ncontract performance obligation. We determined that this method best represents the transfer of services as the proportion closely depicts\nthe efforts or inputs completed towards the satisfaction of a fixed price contract performance obligation.\nFrom time to time, we may enter into contracts with customers that include\npromises to transfer multiple performance obligations that may include sales of products, professional engineering services and other\nproduct qualification or certification services. Determining whether the promises in these arrangements are considered distinct performance\nobligations, that should be accounted for separately versus together, often requires judgment. We consider performance obligations to\nbe distinct when the customer can benefit from the promised good or service on its own or by combining it with other resources readily\navailable and when the promised good or service is separately identifiable from other promised goods or services in the contract. In these\narrangements, we allocate revenue on a relative standalone selling price basis by maximizing the use of observable inputs to determine\nthe standalone selling price for each performance obligation. Additionally, estimating standalone selling prices for separate performance\nobligations within a contract may require significant judgment and consideration of various factors including market conditions, items\ncontemplated during negotiation of customer arrangements and internally developed pricing models. Changes to performance obligations that\nwe identify, or the estimated selling prices pertaining to a contract, could materially impact the amounts of earned and unearned revenue\nthat we record.\n27\nInventory Valuation\nWe value inventories at the lower of cost (on a first-in, first-out basis)\nor net realizable value, whereby we make estimates regarding the market value of our inventories, including an assessment of excess and\nobsolete inventories. We determine excess and obsolete inventories based on an estimate of the future sales demand for our products within\na specified time horizon, which is generally 12 to 24 months. In addition, specific reserve estimates are recorded to cover risks for\nend-of-life products, inventory located at our contract manufacturers and warranty replacement stock. The estimates we use for demand\nare also used for near-term capacity planning and inventory purchasing. Demand for our products can fluctuate significantly from period\nto period. A significant decrease in demand could result in an increase in the amount of excess inventory on hand. In addition, our industry\nis characterized by rapid technological change, frequent new product development and product obsolescence that could result in an increase\nin the amount of obsolete inventory quantities on hand. Our estimates of future product demand and judgement to determine excess inventory\nmay prove to be inaccurate, in which case we may have understated or overstated the reduction to the total carrying value of our inventory\nfor excess and obsolete inventory. In the future, if our inventory is determined to be overvalued, we would be required to recognize such\ncosts in our cost of goods sold, resulting in a reduction in our gross margins, at the time of such determination. Although we make every\neffort to ensure the accuracy of our forecasts of future product demand, any significant unanticipated changes in demand or technological\ndevelopments could have a significant impact on the value of our inventory and our results of operations.\nValuation of Deferred Income Taxes\nWe have recorded a valuation allowance to reduce our net deferred tax assets\nto zero, primarily due to historical net operating losses (\"NOLs\") and uncertainty of generating future taxable income. We\nconsider estimated future taxable income and ongoing prudent and feasible tax planning strategies in assessing the need for a valuation\nallowance. If we determine that it is more likely than not that we will realize a deferred tax asset that currently has a valuation allowance,\nwe would be required to reverse the valuation allowance, which would be reflected as an income tax benefit in our consolidated statements\nof operations at that time.\nGoodwill Impairment Testing\nWe evaluate goodwill for impairment on an annual basis on May 31, or more\nfrequently if we believe indicators of impairment exist that would more likely than not reduce the fair value of our single reporting\nunit below its carrying amount.\nWe begin our evaluation of goodwill for impairment by assessing qualitative\nfactors to determine whether it is more likely than not that the fair value of our single reporting unit is less than its carrying value.\nSome factors that we consider important in the qualitative assessment which could trigger a goodwill impairment review include:\nsignificant underperformance relative to historical or projected future operating results;\nsignificant changes in the manner of our use of the acquired assets or the strategy for our overall business;\nsignificant negative industry or economic trends;\na significant decline in our stock price for a sustained period; and\na significant change in our market capitalization relative to our book value.\nBased on our qualitative assessment, if we conclude that it is more likely\nthan not that the fair value of our single reporting unit is less than its carrying value, we conduct a quantitative goodwill impairment\ntest, which involves comparing the estimated fair value of our single reporting unit with its carrying value, including goodwill. We estimate\nthe fair value of our single reporting unit using a combination of the income and market approach. If the carrying value of the reporting\nunit exceeds its estimated fair value, we recognize an impairment loss for the difference.\nDuring the fourth quarter of fiscal 2026, we made a qualitative assessment\nof whether goodwill impairment existed. Since our assessment of the qualitative factors did not result in a determination that it was\nmore likely than not that the fair value of our single reporting unit is less than its carrying value, we were not required to perform\nthe quantitative goodwill impairment test.\n28\nLong-Lived Assets and Intangible Assets\nWe assess the impairment of long-lived assets and intangible assets whenever\nevents or changes in circumstances indicate that the carrying value of such assets may not be recoverable.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/1114925/000168316826006754/lantronix_i10k-063026.htm",
+      "asOf": "2026-08-27",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "ITEM 1A.\nRISK FACTORS\nWe operate in a rapidly changing environment that involves numerous\nrisks and uncertainties. Before deciding to purchase, hold or sell our common stock, you should carefully consider the risks described\nin this section, as well as other information contained in this Report and in our other filings with the SEC. This section should be read\nin conjunction with the consolidated financial statements and accompanying notes thereto included in Part II, Item 8 of this Report, and\n\" Management's Discussion and Analysis of Financial Condition and Results of Operations \" included in Part II, Item 7\nof this Report. If any of these risks or uncertainties actually occurs, our business, financial condition, results of operations or prospects\ncould be materially harmed. In that event, the market price for our common stock could decline and you could lose all or part of your\ninvestment. In addition, risks and uncertainties not presently known to us or that we currently deem immaterial may also adversely affect\nour business.\nRisks Related to Our Operations and Industry\nWe depend upon a relatively small number of distributors and end-user\ncustomers for a large portion of our revenue, and a decline in sales to these major customers would materially adversely affect our business,\nfinancial condition, and results of operations.\nHistorically, we have relied upon a small number of distributors and end-user\ncustomers for a significant portion of our net revenue. Our customer concentration could fluctuate, depending on future customer requirements,\nwhich will depend on market conditions in the industry segments in which our customers participate. The loss of one or more significant\ncustomers or a decline in sales to our significant customers could result in a material loss of sales and possible increase in excess\ninventories which would adversely affect our business, financial condition, and results of operations.\nWe have experienced and may in the future experience constraints\nin the supply of certain materials and components that could affect our operating results.\nSome of our integrated circuits are only available from a single source\nand in some cases, are no longer being manufactured. From time to time, integrated circuits, and potentially other components used in\nour products, will be phased out of production by the manufacturer. When this happens, we attempt to purchase sufficient inventory to\nmeet our needs until a substitute component can be incorporated into our products. Nonetheless, we may be unable to purchase sufficient\ncomponents to meet our demands, or we may incorrectly forecast our demands, and purchase too many or too few components. In addition,\nour products use components that have been in the past and may in the future be subject to market shortages and substantial price fluctuations,\nwhether due to a pandemic or epidemic, the war between Ukraine and Russia, conflict in the Middle East, hostilities in the Red Sea, tensions\nbetween China and Taiwan, increased tariffs and changes in U.S. trade policies or otherwise. For instance, the market is currently experiencing\nmemory supply shortages, which has led to higher costs and constrained availability of memory components. From time to time, we have been\nunable to meet customer orders because we were unable to purchase necessary components for our products. We do not have long-term supply\narrangements with most of our vendors to obtain necessary components, including semiconductor chips, or technology for our products and\ninstead purchase components on a purchase order basis. If we are unable to purchase components from these suppliers, our product shipments\ncould be prevented or delayed, which could result in a loss of sales. If we are unable to meet existing orders or to enter into new orders\nbecause of a shortage in components, we will likely lose net revenue, risk losing customers and risk harm to our reputation in the marketplace,\nwhich could adversely affect our business, financial condition or results of operations.\nOur business related to government contracts subjects us to additional\nrisks.\nWe believe that the continued growth of our presence in the drone and defense\ntechnology markets will depend, to a certain degree, on the ability of our customers to win government contracts and subcontracts, in\nparticular from the U.S. Department of War. The funding of U.S. government programs is uncertain and dependent on continued congressional\nappropriations and administrative allotment of funds based on an annual budgeting process. Many government customers are subject to budgetary\nconstraints and our continued performance under these contracts or subcontracts, or award of additional contracts or subcontracts from\nthese agencies, has in the past and could in the future be impacted by spending reductions, budget cutbacks, or government shutdowns.\nA significant decline in government expenditures generally, or with respect to programs for which we provide products, could lead to delays\nin negotiations of contracts or increased costs and could adversely affect our business.\n7\nU.S. government contracts generally permit the government to terminate\nthe contract without prior notice, at the government's convenience. On contracts for which we are a subcontractor or for which we\nprovide our products to the contractor or subcontractor, the U.S. government could terminate the contract for convenience or otherwise,\nirrespective of our performance. Also, sales to the U.S. government and its contractors as well as foreign military and government customers,\neither directly or as a subcontractor to other contractors, often use a competitive bidding process and have unique purchasing and delivery\nrequirements, which often makes the timing of sales to these customers unpredictable.\nIn addition, maintaining compliance with government regulations, including\naudit requirements of the U.S. government and our customers that are subject to these requirements, could require us to put in place controls\nand procedures to monitor compliance with applicable regulations that may be costly or burdensome to implement. Failure to comply with\nthe terms of applicable government contracts or regulations, or an unfavorable audit, could result in the government or our customers\nceasing to buy our products and services, a reduction of revenue, fines or civil or criminal liability, all of which could have a material\nadverse effect on our business, financial condition, results of operations and prospects.\nFuture operating results depend upon our ability to timely obtain\ncomponents in sufficient quantities and on acceptable terms.\nWe and our contract manufacturers are responsible for procuring raw materials\nfor our products. Our products incorporate some components and technologies that are only available from single or limited sources of\nsupply. Depending on a limited number of suppliers exposes us to risks, including limited control over pricing, availability, quality\nand delivery schedules. Moreover, due to our limited sales, we may not be able to convince suppliers to continue to make components available\nto us unless there is demand for these components from their other customers. If any one or more of our suppliers cease to provide us\nwith sufficient quantities of components in a timely manner or on terms acceptable to us, we would have to seek alternative sources of\nsupply and we may have difficulty identifying additional or replacement suppliers for some of our components.\nWe outsource substantially all of our manufacturing to contract manufacturers\nin Asia. If our contract manufacturers are unable or unwilling to manufacture our products at the quality and quantity we request, our\nbusiness could be harmed.\nWe use contract manufacturers based in Asia to manufacture substantially\nall of our products. Generally, we do not have guaranteed supply agreements with our contract manufacturers or suppliers.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/1114925/000168316826006754/lantronix_i10k-063026.htm",
+      "asOf": "2026-08-27",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-K",
+    "pressRelease": {
+      "text": "EX-99.1\n2\nlantronix_ex9901.htm\nPRESS RELEASE, DATED AUGUST 26, 2026\nExhibit 99.1\nLantronix Reports Fiscal Fourth-Quarter and\nFull-Year 2026 Financial Results\nFourth-Quarter\nRevenue Increased 8% Year- Over- Year to $31.2 Million\nGAAP\nEPS of ($0.01)\nNon-GAAP\nEPS of $0.04\nFiscal\n2026 Unmanned Systems Revenue of $12.6 Million, Above the Midpoint of the Prior Guidance Range\n$60 Million in Cash and No Debt at Year-End\nCompany Expects Double-Digit Revenue Growth\nin Fiscal 2027\nIRVINE, Calif., Aug. 26, 2026 Lantronix\nInc. ( Nasdaq: LTRX ) , a global provider of Edge AI and Industrial IoT solutions that power NDAA-compliant unmanned systems,\ncritical infrastructure and resilient enterprise networks, today reported results for the fiscal fourth quarter and full year ended June\n30, 2026.\nManagement Commentary\n\"Fiscal 2026 was a year of measurable progress for Lantronix,\"\nsaid Saleel Awsare, president and CEO of Lantronix. \"We returned the core business to growth, significantly strengthened our balance\nsheet, and closed the year with our fifth consecutive quarter of sequential revenue growth. We also established unmanned systems as a\nmeaningful growth engine, expanded recurring revenue, and continued transforming Lantronix from a broad-based hardware provider into a\nmore focused, higher-margin solutions platform.\n\"Today, we are seeing strong momentum across our three strategic\nfocus areas: unmanned systems, critical infrastructure, and enterprise networking. Unmanned systems grew from a minimal contribution a\nyear ago to $12.6 million in fiscal 2026 revenue, and we expect the business to represent 15% to 20% of total revenue in fiscal 2027.\nAs we move further up the technology stack and expand our role across the broader autonomy ecosystem, we believe Lantronix is becoming\nthe go-to edge compute company for unmanned systems. At the same time, our IoT Systems business is reaccelerating, and the Nero Global\nTracking acquisition is expanding ARR while moving Software & Services above 10% of total revenue on a pro forma basis. We enter fiscal\n2027 in the strongest financial position in our company's history, with multiple engines of profitable growth and confidence in\nour ability to deliver double-digit revenue growth in the year ahead.\"\n1\nQ4 FY2026 Financial Results\nNet Revenue:\n$31.2 million\nGAAP EPS: ($0.01)\nNon-GAAP EPS: $0.04\nFY2026 Financial Results\nNet Revenue: $120.9 million\nGAAP EPS: ($0.10)\nNon-GAAP EPS: $0.15\nQ4 FY2026 and Recent Business Highlights\nUnmanned Systems Momentum\nGenerated\n$12.6 million in fiscal 2026 drone unmanned systems revenue, above the midpoint of the Company's previously communicated\n$10 million to $14 million outlook, compared with a minimal contribution in fiscal 2025.\nExpanded active unmanned systems engagements to more than\n30 at year-end from approximately 10 at the beginning of FY 2026.\nCollaboration with Swarmer, Inc. (Nasdaq: SWMR) to develop\na custom compute platform based on Lantronix's system-on-module technology, providing more than four times the onboard AI processing\npower to support combat-proven autonomy software across Group 1 unmanned aerial systems for Ukraine, the United States and allied defense\nprograms.\nPartnership with DoD Solution, an Estonian-Ukrainian developer\nof onboard drone autonomy platforms, integrating Lantronix's Qualcomm-based Open-Q 6490CS platform with DoD Solution's\nAURA AI platform to support FPV drones, fixed-wing UAVs and interceptor systems.\nPartnership\nwith AVT Australia, a CACI company, integrating Lantronix's system-on-module technology into advanced gimballed camera\npayloads for unmanned systems.\nAcquired Vecima Networks' Industrial IoT business ,\nincluding its Nero Global Tracking SaaS platform, which is expected to add approximately $5.3 million of annual revenue, including approximately\n$4.5 million of ARR, and approximately 125,000 asset tags under management. On a pro forma basis, the acquisition increases Software &\nServices to more than 10% of total company revenue.\nLaunched the SLC 9000 Out-of-Band console manager integrated\nwith Percepxion, targeting the AI data center networking market with secure remote access, autonomous provisioning and cloud-native\nfleet management to minimizing downtime and cut deployment costs.\nAdded to the Russell 3000 Index as part of the 2026\nreconstitution, reflecting Lantronix's progress toward higher growth, higher-value end markets and broadening the Company's\nvisibility within the investment community.\nQ1 FY2027 Financial Outlook\nRevenue:\n$31.0 million to $33.0 million\nNon-GAAP EPS: $0.04 to $0.06\n2\nConference Call and Webcast\nManagement will host an investor conference call and audio webcast\ntoday (Wednesday, Aug. 26, 2026) at 1:30 p.m. Pacific Time (4:30 p.m. Eastern Time) to discuss its results for the fiscal fourth quarter\nand full year of 2026. To access the live conference call, investors should dial 1-844-802-2442 (U.S./Canada) or 1-412-317-5135 (international)\nand indicate they are participating in the Lantronix fiscal 2026 fourth-quarter call. The webcast will also be available simultaneously\nvia the investor relations section of the Company's\nwebsite.\nInvestors can access a conference call replay starting at approximately\n4:00 p.m. Pacific Time on Aug. 26, 2026, on the Lantronix\nwebsite. A telephonic replay will also be available through Sept. 2, 2026, by dialing 1-855-669-9658 (U.S./Canada) or 1-412-317-0088\n(international) and entering passcode 3642439.\nAbout Lantronix\nLantronix Inc.\n(NASDAQ: LTRX) is a global leader in Edge AI and Industrial IoT solutions that power NDAA-compliant unmanned systems, critical infrastructure\nand resilient enterprise networks. It delivers intelligent computing, secure connectivity and remote management for mission-critical\napplications enabling customers to optimize operations, enhance security and accelerate digital transformation. Its comprehensive\nportfolio of hardware, software and services powers applications ranging from mission-critical autonomous platforms and edge analytics\nfor critical infrastructure to intelligent surveillance and secure network management. By bringing intelligence to the network edge, Lantronix helps\norganizations achieve efficiency, security and a competitive edge in today's AI-driven world. For more information, visit\nthe Lantronix website.\nDiscussion of Non-GAAP Financial Measures\nLantronix believes that the presentation of non-GAAP financial information,\nwhen presented in conjunction with the corresponding GAAP measures, provides important supplemental information to management and investors\nregarding financial and business trends relating to the company's financial condition and results of operations. Management uses\nthe aforementioned non-GAAP measures to monitor and evaluate ongoing operating results and trends to gain an understanding of our comparative\noperating performance. The non-GAAP financial measures disclosed by the company should not be considered a substitute for, or superior\nto, financial measures calculated in accordance with GAAP, and the financial results calculated in accordance with GAAP and reconciliations\nof the non-GAAP financial measures to the financial measures calculated in accordance with GAAP should be carefully evaluated. The non-GAAP\nfinancial measures used by the company may be calculated differently from, and therefore may not be comparable to, similarly titled measures\nused by other companies. The company has provided reconciliations of the non-GAAP financial measures to the most directly comparable GAAP\nfinancial measures.\nNon-GAAP net loss consists of net loss excluding (i) share-based compensation\nand the employer portion of withholding taxes on stock grants, (ii) depreciation and amortization, (iii) interest income (expense), (iv)\nother income (expense), (v) income tax provision (benefit), (vi) restructuring, severance and related charges, (vii) acquisition related\ncosts, (viii) impairment of long-lived assets, (ix) amortization of purchased intangibles, (x) amortization of manufacturing profit in\nacquired inventory, (xi) fair value remeasurement of earnout consideration, and (xii) loss on extinguishment of debt.\nNon-GAAP EPS is calculated by dividing non-GAAP net income by non-GAAP\nweighted-average shares outstanding (diluted). For purposes of calculating non-GAAP EPS, the calculation of GAAP weighted-average shares\noutstanding (diluted) is adjusted to exclude share-based compensation, which, for GAAP purposes, is treated as proceeds assumed to be\nused to repurchase shares under the GAAP treasury stock method.\nGuidance on earnings per share growth is provided only on a non-GAAP\nbasis due to the inherent difficulty of forecasting the timing or amount of certain items that have been excluded from the forward-looking\nnon-GAAP measures, and a reconciliation to the comparable GAAP guidance has not been provided because certain factors that are materially\nsignificant to Lantronix's ability to estimate the excluded items are not accessible or estimable on a forward-looking basis without\nunreasonable effort.\n3\nForward-Looking Statements\nThis news release contains forward-looking statements, including statements\nconcerning our expectations for revenue and earnings for the first quarter of fiscal 2027, revenue for our unmanned systems and drone\nbusiness for fiscal 2027, and revenue growth for fiscal 2027; our positioning to become the provider of choice for unmanned systems compute\nand strengthen our business as a critical platform partner to the unmanned ecosystem; and our expectations regarding the future benefits\nof our recent collaborations, partnerships and customer wins. These forward-looking statements are intended to qualify for the safe harbor\nfrom liability established by the Private Securities Litigation Reform Act of 1995. We have based our forward-looking statements on our\ncurrent expectations and projections about trends affecting our business and industry, and other future events. Although we do not make\nforward-looking statements unless we believe we have a reasonable basis for doing so, we cannot guarantee their accuracy. Forward-looking\nstatements are subject to substantial risks and uncertainties that could cause our results or experiences, or future business, financial\ncondition, results of operations or performance, to differ materially from our historical results or those expressed or implied in any\nforward-looking statement contained in this news release. Other factors which could have a material adverse effect on our operations and\nfuture prospects or which could cause actual results to differ materially from our expectations include, but are not limited to: the effects\nof negative or worsening regional and worldwide economic conditions or market instability on our business, including effects on purchasing\ndecisions by our customers; our ability to mitigate any disruption in our and our suppliers' and vendors' supply chains due\nto changes in U.S. trade policy, including recently increased or future tariffs, a pandemic or similar outbreak, wars and recent conflicts\nin Europe, Asia and the Middle East, hostilities in the Red Sea, or other causes; our ability to successfully convert our backlog and\ncurrent demand; the impact of a pandemic or similar outbreak on our business, employees, customers, supply and distribution chains\nand the global economy; our ability to successfully implement our acquisition strategy or integrate acquired companies; uncertainty as\nto the future profitability of acquired businesses, and delays in the realization of, or the failure to realize, any accretion from acquisition\ntransactions; acquiring, managing and integrating new operations, businesses or assets, and the associated diversion of management attention\nor other related costs or difficulties; our ability to continue to generate revenue from products sold into mature markets; our ability\nto develop, market, and sell new products; our ability to succeed with our new software offerings; our use of AI may result in reputational,\ncompetitive or financial harm and liability; fluctuations in our revenue due to the project-based timing of orders from certain customers;\nunpredictable timing of our revenues due to the lengthy sales cycle for our products and services and potential delays in customer completion\nof projects; our ability to accurately forecast future demand for our products; delays in qualifying revisions of existing products; constraints\nor delays in the supply of, or quality control issues with, certain materials or components; difficulties associated with the delivery,\nquality or cost of our products from our contract manufacturers or suppliers; risks related to the outsourcing of manufacturing and international\noperations; difficulties associated with our distributors or resellers; intense competition in our industry and resultant downward price\npressure; rises in inventory levels and inventory obsolescence; undetected software or hardware errors or defects in our products; cybersecurity\nrisks; our ability to obtain appropriate industry certifications or approvals from governmental regulatory bodies; changes in applicable\nU.S. and foreign government laws, regulations, and tariffs; our ability to protect patents and other proprietary rights and avoid infringement\nof others' proprietary technology rights; issues relating to the stability of our financial and banking institutions and relationships;\nthe level of our indebtedness, our ability to service our indebtedness and the restrictions in our debt agreements; the impact of rising\ninterest rates; our ability to attract and retain qualified management; and any additional factors included in our Report on Form 10-K\nfor the fiscal year ended June 30, 2025, filed with the Securities and Exchange Commission (the \"SEC\") on Aug. 29, 2025, including\nin the section entitled \"Risk Factors\" in Item 1A of Part I of that report; in our Quarterly Report on Form 10-Q for\nthe fiscal quarter ended Dec. 31, 2025, filed with the SEC on Feb. 5, 2026, including in the section entitled \"Risk Factors\"\nin Item 1A of Part II of such report; and in our other public filings with the SEC. In addition, actual results may differ as a result\nof additional risks and uncertainties of which we are currently unaware or which we do not currently view as material to our business.\nFor these reasons, investors are cautioned not to place undue reliance on any forward-looking statements. The forward-looking statements\nwe make speak only as of the date on which they are made. We expressly disclaim any intent or obligation to update any forward-looking\nstatements after the date hereof to conform such statements to actual results or to changes in our opinions or expectations, except as\nrequired by applicable law or the rules of the Nasdaq Stock Market LLC. If we do update or correct any forward-looking statements, investors\nshould not conclude that we will make additional updates or corrections.\n2026 Lantronix, Inc. All rights reserved. Lantronix is a registered\ntrademark. Other trademarks and trade names are those of their respective owners.\n# # #\nLantronix Investor Contact:\nMatt Glover and Greg Robles\nGateway Group, Inc.\ninvestors@lantronix.com\n4\nLANTRONIX, INC.",
+      "source": "edgar:8-K ex-99.1",
+      "url": "https://www.sec.gov/Archives/edgar/data/1114925/000168316826006732/lantronix_ex9901.htm",
+      "asOf": "2026-08-26",
+      "truncated": true
+    },
+    "proxyStatement": {
+      "text": "Security ownership:\nSECURITY OWNERSHIP OF CERTAIN BENEFICIAL OWNERS AND MANAGEMENT AND RELATED STOCKHOLDER MATTERS\nBeneficial Ownership Table\nThe following table sets forth certain information with respect to beneficial ownership of our common stock as of September 8, 2025 (except as otherwise indicated in the footnotes to the table below), based on the most recent filings and other information available to the Company as of that date, by: (1) each stockholder known by us to be the beneficial owner of more than 5% of our common stock based on filings pursuant to Section 13 or Section 16 of the Exchange Act; (2) each of our current directors; (3) each of the named executive officers set forth in the Summary Compensation Table; and (4) all current directors and executive officers as a group.\nBeneficial ownership is determined in accordance with the rules of the SEC and includes voting or investment power with respect to the securities. Except as otherwise indicated in the footnotes to the table, and subject to community property laws, where applicable, we believe the persons and entities identified in the table below have sole voting and investment power with respect to all shares beneficially owned. The percentage of shares beneficially owned is based on 39,271,361 shares of our common stock outstanding as of September 8, 2025. In addition, the number of shares of common stock outstanding used in calculating the percentage for each listed person includes shares of common stock underlying options or warrants held by such person that are exercisable within 60 calendar days of September 8, 2025 but excludes shares of common stock underlying options or warrants held by any other person.\nBeneficial Ownership\nBeneficial Owner Name and Address (1)\nNumber of\nShares\nOwned\nRight to\nAcquire (2)\nTotal\nPercentage\nOwnership\nGreater than 5% Stockholders:\nBernhard Bruscha\nBiesingerstrasse 27\nT bingen, D-72072\nGermany\n5,322,925 (3)\n100,432 (4)\n5,423,357\n13.8%\nChain of Lakes Group\n3,072,343 (5)\n3,072,343\n7.8%\nDirectors and Named Executive Officers:\nSaleel Awsare,\nPresident, Chief Executive Officer and Director\n291,208\n156,752\n447,960\n1.1%\nJames Auker,\nDirector\n10,387\n10,387\n*\nSailesh Chittipeddi,\nDirector\n10,000\n13,751\n23,751\n*\nNarbeh Derhacobian,\nDirector Nominee\n24,799\n9,800\n34,599\n*\nKevin Palatnik,\nDirector Nominee\n29,799\n9,800\n39,599\n*\nHoshi Printer,\nDirector\n211,224\n9,800\n221,024\n*\nMathi Gurusamy,\nChief Product & Strategy Officer\n56,119\n56,119\n*\nKurt Hoff,\nChief Revenue Officer\n32,585\n32,585\n*\nAll current executive officers and directors as a group (9 persons) (6)\n741,174\n210,290\n951,464\n2.4%\n*\nRepresents beneficial ownership of less than 1% of the outstanding shares of our common stock.\n(1)\nUnless otherwise indicated, the address of each beneficial owner listed is c/o Lantronix, Inc., 48 Discovery, Suite 250, Irvine, California 92618.\n(2)\nRepresents shares of common stock issuable upon exercise of stock options or upon vesting of restricted stock units (\"RSUs\") within 60 days of September 8, 2025.\n41\nTABLE OF CONTENTS\n(3)\nBased upon information contained in a Form 4 filed by Mr. Bruscha with the SEC on September 8, 2025. According to the Form 4, 5,166,471 of the shares are owned by TL Investment GmbH, of which Mr. Bruscha is the managing director. The remaining shares are owned directly by Mr. Bruscha.\n(4)\nBased on information available to the Company at the time of filing.\n(5)\nBased upon information contained in a Schedule 13D/A filed by Chain of Lakes Investment Fund, LLC (\"Chain of Lakes\"), Christopher B. Woodruff, Haluk L. Bayraktar and Emre Aciksoz with the SEC on July 1, 2025. According to the Schedule 13D/A, Chain of Lakes has shared voting and dispositive power over 1,184,152 shares of the Company's common stock, Mr. Woodruff has shared voting and dispositive power over 1,184,152 shares of the Company's common stock, Mr. Bayraktar has shared voting and dispositive power over 1,668,191 shares of the Company's common stock and Mr.\n\nRelated-person transactions:\nRelated Party Transactions\nThere were no transactions with related persons that required disclosure under applicable SEC rules during fiscal 2025 and 2024, nor are any such transactions currently proposed.\nIndemnification and Insurance\nPursuant to our Amended and Restated Certificate of Incorporation and Bylaws, the Company indemnifies its directors and officers to the fullest extent permitted by law. The Company has also entered into indemnification agreements with each of its directors and executive officers contractually committing the Company to provide this indemnification to the directors and executive officers.\nAnnual Report on Form 10-K\nThe Company will furnish without charge, to each person whose proxy is solicited upon the written request of such person, a copy of our Annual Report on Form 10-K for the fiscal year ended June 30, 2025, as filed with the SEC, including the financial statements and financial statement schedules. In addition, upon request, the exhibits to that document will be furnished subject to payment of a specified fee. Requests for copies of these documents should be directed to: Lantronix, Inc., 48 Discovery, Suite 250, Irvine, California 92618, Attention: Corporate Secretary.\n44\nTABLE OF CONTENTS\nWhere You Can Find More Information\nOur Annual Reports on Form 10-K, Quarterly Reports on Form 10-Q, Current Reports on Form 8-K, Proxy Statements on Schedule 14A and other reports and information that we file or furnish pursuant to the Exchange Act are available free of charge on our website at www.lantronix.com as soon as reasonably practicable after filing or furnishing such reports with the SEC. The SEC also maintains a website at www.sec.gov that contains reports, proxy and information statements, and other information regarding issuers that file electronically.",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/1114925/000114036125036002/ny20053505x1_def14a.htm",
+      "asOf": "2025-09-24",
+      "truncated": true
+    },
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T11:57:20.996Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T11:57:20.996Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T11:57:20.996Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T11:57:20.996Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T11:57:20.996Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T11:57:20.996Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T11:57:20.996Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T11:57:20.996Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T11:57:20.996Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T11:57:20.996Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T11:57:20.996Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T11:57:20.996Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-23T11:57:20.996Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-23T11:57:20.996Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T11:57:20.996Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T11:57:20.996Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T11:57:20.996Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T11:57:20.996Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T11:57:20.996Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T11:57:20.996Z"
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "judgmentSha256": "7dfd54a98b8a6084de33ea3accb8decd8cda867f205f87df68d838f2d2cde2d1",
+  "reviewedAt": "2026-09-23T21:55:26Z",
+  "reviewer": "claude-opus-4-8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body (also analystCommentary, finalRecommendation.body[0])",
+      "quote": "new and interim rates across several states, retail sales volume growth, and the Badger Wind Farm lifted second-quarter net income 55.5% to $21.3M",
+      "issue": "The 55.5% consolidated net-income increase (to $21.3M from $13.7M) is credited to operational drivers. But the MD&A shows the $7.6M consolidated earnings increase included a discontinued-operations swing from $(0.4)M to $2.0M, driven by a $1.5M tax benefit; income from continuing operations rose only from $14.1M to $19.3M (~37%). The operational drivers cited explain the continuing-ops gain, not the full 55.5%. The report never distinguishes continuing-ops from total net income, so crediting operations with the headline 55.5% reads fuller than the pack supports. The same framing recurs in analystCommentary ('...drove the gain') and finalRecommendation.body[0] ('net income rose 55.5% to $21.3M on new rates, volume growth and the Badger Wind Farm').",
+      "fix": "Distinguish income from continuing operations (up ~37%, $14.1M to $19.3M) from total net income (up 55.5%), and note that part of the total increase came from a discontinued-operations tax benefit ($1.5M) per the MD&A. Attach the operational drivers to the continuing-ops improvement rather than to the headline 55.5%.",
+      "status": "addressed",
+      "note": "Fixed. thesis, analystCommentary, incomeCommentary and finalRecommendation.body[0] now attach the operational drivers (rates, volumes, Badger $3.3M) to income from continuing operations rising to $19.3M from $14.1M, and separately state reported net income rose 55.5% to $21.3M with the balance from the discontinued-operations swing to $2.0M from a $0.4M loss on a $1.5M tax benefit. All figures ground to the MD&A segment/EPS table."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "the reward-to-risk is close to balanced, which is why the derived reading is a HOLD rather than a buy.",
+      "issue": "Two problems against the report's own conviction figures (expected upside +9.5%, bear downside -16.8%, reward/risk 0.57x). (1) 'Close to balanced' overstates symmetry: bear-case downside (16.8%) is nearly double the probability-weighted upside (9.5%); the setup is downside-skewed. (2) The stated reason for HOLD is imprecise. Under the desk's rule a BUY needs E >= +10.0% AND R >= 0.50x; here R = 0.57x already clears the 0.50x reward/risk floor, and the binding constraint is E = 9.5%, just short of +10.0%. So the HOLD follows from expected upside below the BUY threshold, not from reward/risk being 'balanced.' The same 'reward-to-risk is close to balanced' claim also opens finalRecommendation.body[1].",
+      "fix": "State that the setup is modestly downside-skewed (upside ~9.5% vs downside ~16.8%, reward/risk ~0.57x) and attribute the HOLD to expected upside falling just short of the +10% BUY threshold rather than to a balanced reward/risk. Reconcile the wording between scenarioCommentary and finalRecommendation.",
+      "status": "addressed",
+      "note": "Fixed. scenarioCommentary now reads 'the setup is modestly downside-skewed, and the reward/risk of about 0.57x clears the desk's 0.50x floor for a buy,' and attributes the HOLD to upside falling 'just short of the +10% threshold ... rather than on the reward/risk being balanced.' finalRecommendation.body[1] now opens 'The setup is modestly downside-skewed rather than balanced' with the same reasoning. Numbers (9.5% / 16.8% / 0.57x) match rating.conviction."
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[0] (also balanceCommentary, valuation.scenarioCommentary, businessMoat.durability, finalRecommendation.body[0], analystCommentary, executiveSummary.risks[0])",
+      "quote": "Net debt to EBITDA of 4.8x and interest coverage of 2.6x leave a thin cushion",
+      "issue": "The 4.8x net-debt/EBITDA and 2.6x interest-coverage pair is restated in full, with the same 'thin cushion / limited room / little margin for error' framing, in at least seven places: analystCommentary, executiveSummary.risks[0], financials.balanceCommentary, valuation.scenarioCommentary, businessMoat.durability, risks.idiosyncratic[0] and finalRecommendation.body[0]. Rubric 7 asks that each figure be introduced once per section and referred back in words, with exec-summary risks pointing and later sections arguing; here the numeric pair and its interpretation are argued in full across many sections. The negative $297M FCF, the $0.93-$1.00 guidance and the 6%-8% objective recur across sections in the same way.",
+      "fix": "Argue the leverage/coverage point once (balanceCommentary and/or risks), have the exec-summary risk point to it, and let the final recommendation refer back in words without re-citing 4.8x/2.6x each time. Apply the same discipline to the $0.93-$1.00 guidance and the 6%-8% objective.",
+      "status": "addressed",
+      "note": "Fixed. The 4.8x/2.6x numeric pair now appears only in balanceCommentary; the other six locations (analystCommentary, exec-summary risk, scenarioCommentary, durability, idiosyncratic[0], finalRecommendation) refer to 'elevated leverage and thin interest coverage' in words. The $0.93-$1.00 guidance figure now appears once (management.leadership) and the 6%-8% objective once (growth.points[0]); elsewhere both are referred to in words."
+    },
+    {
+      "id": "F-4",
+      "severity": "Minor",
+      "field": "analystCommentary (also sections.management.governance)",
+      "quote": "MDU Resources is now a pure-play regulated energy delivery utility, and its 10-Q for the quarter ended 2026-06-30 shows the model working as designed.",
+      "issue": "ISO-format dates appear in prose, against rubric 9 ('Dates in prose form, not ISO'). analystCommentary uses 'the quarter ended 2026-06-30'; governance uses 'the DEF 14A proxy statement filed 2026-04-01.'",
+      "fix": "Use prose dates: 'the quarter ended June 30, 2026' and 'the DEF 14A proxy statement filed April 1, 2026.'",
+      "status": "addressed",
+      "note": "Fixed. analystCommentary now reads 'the quarter ended June 30, 2026' and governance 'the DEF 14A proxy statement filed April 1, 2026.' No ISO dates remain in prose."
+    },
+    {
+      "id": "F-5",
+      "severity": "Minor",
+      "field": "sections.businessMoat.segments[0].body",
+      "quote": "MDU reports as a single consolidated business, and the vendor provides no segment revenue split",
+      "issue": "The phrase presents the missing revenue split as MDU's own single-business reporting. The grounding surface says otherwise: the company description states MDU 'operates through three segments: Electric, Natural Gas Distribution, and Pipeline,' and the MD&A carries a three-segment (plus Other) earnings table referencing Note 14 business segments. The single consolidated line is a vendor limitation, which incomeCommentary states correctly ('The vendor reports a single consolidated revenue line, so no segment revenue split is available'); the moat body is inconsistent with it.",
+      "fix": "Attribute the single line to the vendor, e.g. 'The vendor provides only a consolidated revenue line, so no segment revenue split is available; MDU itself reports three business segments (Electric, Natural Gas Distribution, Pipeline).'",
+      "status": "addressed",
+      "note": "Fixed. Moat body now reads 'The vendor provides only a consolidated revenue line, so no segment revenue split is available; MDU itself reports three business segments — Electric, Natural Gas Distribution and Pipeline,' consistent with incomeCommentary."
+    },
+    {
+      "id": "F-6",
+      "severity": "Minor",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "Measured against roughly $0.5B of FY25 EBITDA, net debt to EBITDA was 4.8x on a trailing basis.",
+      "issue": "The 4.8x is a trailing-twelve-months figure (Facts list it under 'Trailing twelve months'), but it is presented as measured against FY25 EBITDA. The displayed inputs do not reproduce it: $2.6B net debt / $0.5B FY25 EBITDA implies ~5.2x, not 4.8x (the 4.8x uses TTM EBITDA of ~$0.55B). Mixing the FY25 EBITDA basis with the TTM ratio is a minor period/basis slip and leaves the arithmetic looking inconsistent to a reader.",
+      "fix": "Label the EBITDA basis as trailing-twelve-months to match the 4.8x, or note that $2.6B net debt against FY25 EBITDA is ~5.2x while the TTM ratio is 4.8x.",
+      "status": "addressed",
+      "note": "Fixed. balanceCommentary now reads 'On a trailing-twelve-month basis, net debt to EBITDA was 4.8x and interest coverage 2.6x'; the earlier FY25-EBITDA basis phrasing is gone, so the ratio and its basis now agree."
+    }
+  ]
+}

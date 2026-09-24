@@ -1,0 +1,583 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "DOW",
+  "cik": 1751788,
+  "company": "Dow Inc.",
+  "exchange": "NYSE",
+  "sic": 2821,
+  "sicDescription": "Plastic Materials, Synth Resins & Nonvulcan Elastomers",
+  "filing": {
+    "form": "10-Q",
+    "accession": "0001751788-26-000147",
+    "filedDate": "2026-07-24",
+    "periodEnd": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1751788/000175178826000147/dow-20260630.htm"
+  },
+  "capturedAt": "2026-09-23T22:13:27.681Z",
+  "quote": {
+    "price": 28.65,
+    "marketCap": 20695062528,
+    "sharesOutstanding": 722340751.4136126,
+    "sharesSource": "derived",
+    "week52Low": 20.65,
+    "week52High": 42.74,
+    "dividendYield": 0.0496,
+    "asOf": "2026-09-23"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          54968000000,
+          56902000000,
+          44622000000,
+          42964000000,
+          39968000000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          10777000000,
+          8564000000,
+          4880000000,
+          4606000000,
+          2533000000
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          8180000000,
+          5363000000,
+          936000000,
+          1185000000,
+          -2651000000
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          11022000000,
+          8121000000,
+          3547000000,
+          4079000000,
+          183000000
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          6311000000,
+          4582000000,
+          589000000,
+          1116000000,
+          -2623000000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          8.38,
+          6.28,
+          0.82,
+          1.57,
+          -3.7
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          2988000000,
+          3886000000,
+          2987000000,
+          2189000000,
+          3816000000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          14672000000,
+          15422000000,
+          62000000,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          11684000000,
+          11536000000,
+          -2925000000,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          18739000000,
+          21247000000,
+          19108000000,
+          17851000000,
+          17522000000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          1.5762891274761832,
+          1.807166181272615,
+          1.769006728934418,
+          1.6125583203732503,
+          1.966895350103452
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          7009000000,
+          7475000000,
+          5196000000,
+          2914000000,
+          1032000000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -1501000000,
+          -1823000000,
+          -2356000000,
+          -2940000000,
+          -2479000000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          -1000000000,
+          -2325000000,
+          -625000000,
+          -494000000,
+          0
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          -2073000000,
+          -2006000000,
+          -1972000000,
+          -1966000000,
+          -1490000000
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          5508000000,
+          5652000000,
+          2840000000,
+          -26000000,
+          -1447000000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q2'26",
+    "periodEnd": "2026-06-30",
+    "revenue": 12092000000,
+    "operatingMargin": 0.061693681773073106,
+    "revenueYoY": 0.19675376088677754
+  },
+  "ttm": {
+    "pe": -15.65573770491803,
+    "ps": 0.5008606822043128,
+    "evToEbitda": null,
+    "grossMargin": 0.09888913090829884,
+    "operatingMargin": -0.029598973837701784,
+    "netMargin": -0.031293109707398535,
+    "netDebtToEbitda": null,
+    "interestCoverage": null,
+    "currentRatio": 1.7493085240130752,
+    "fcfYield": null
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 43618525680,
+      "eps": 2.38547
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 42903158340,
+      "eps": 1.77929
+    }
+  },
+  "analysts": {
+    "count": 19,
+    "buy": 6,
+    "hold": 12,
+    "sell": 1,
+    "consensusRating": "Buy",
+    "consensusTarget": 34.4375,
+    "medianTarget": 34,
+    "highTarget": 41,
+    "lowTarget": 29,
+    "asOf": "2026-09-23"
+  },
+  "segments": {
+    "basis": "FY25 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 39968000000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "ALB",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "CX",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "DD",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "IFF",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-11",
+      "close": 31.260000228881836
+    },
+    {
+      "date": "2026-08-12",
+      "close": 30.56999969482422
+    },
+    {
+      "date": "2026-08-13",
+      "close": 30.360000610351562
+    },
+    {
+      "date": "2026-08-14",
+      "close": 31.06999969482422
+    },
+    {
+      "date": "2026-08-17",
+      "close": 31.34000015258789
+    },
+    {
+      "date": "2026-08-18",
+      "close": 31.190000534057617
+    },
+    {
+      "date": "2026-08-19",
+      "close": 31.75
+    },
+    {
+      "date": "2026-08-20",
+      "close": 32.900001525878906
+    },
+    {
+      "date": "2026-08-21",
+      "close": 32.349998474121094
+    },
+    {
+      "date": "2026-08-24",
+      "close": 31.440000534057617
+    },
+    {
+      "date": "2026-08-25",
+      "close": 30.15999984741211
+    },
+    {
+      "date": "2026-08-26",
+      "close": 30.329999923706055
+    },
+    {
+      "date": "2026-08-27",
+      "close": 30.329999923706055
+    },
+    {
+      "date": "2026-08-28",
+      "close": 30.510000228881836
+    },
+    {
+      "date": "2026-08-31",
+      "close": 30.520000457763672
+    },
+    {
+      "date": "2026-09-01",
+      "close": 30.459999084472656
+    },
+    {
+      "date": "2026-09-02",
+      "close": 31.280000686645508
+    },
+    {
+      "date": "2026-09-03",
+      "close": 30.360000610351562
+    },
+    {
+      "date": "2026-09-04",
+      "close": 29.440000534057617
+    },
+    {
+      "date": "2026-09-08",
+      "close": 29.56999969482422
+    },
+    {
+      "date": "2026-09-09",
+      "close": 29.399999618530273
+    },
+    {
+      "date": "2026-09-10",
+      "close": 29.639999389648438
+    },
+    {
+      "date": "2026-09-11",
+      "close": 29.030000686645508
+    },
+    {
+      "date": "2026-09-14",
+      "close": 28.899999618530273
+    },
+    {
+      "date": "2026-09-15",
+      "close": 29.850000381469727
+    },
+    {
+      "date": "2026-09-16",
+      "close": 30.079999923706055
+    },
+    {
+      "date": "2026-09-17",
+      "close": 29.489999771118164
+    },
+    {
+      "date": "2026-09-18",
+      "close": 28.729999542236328
+    },
+    {
+      "date": "2026-09-21",
+      "close": 28.270000457763672
+    },
+    {
+      "date": "2026-09-23",
+      "close": 28.649999618530273
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "Dow Inc., through its subsidiaries, provides various materials science solutions for packaging, infrastructure, mobility, and consumer applications in the United States, Canada, Europe, the Middle East, Africa, India, the Asia Pacific, and Latin America. The company operates through Packaging & Specialty Plastics, Industrial Intermediates & Infrastructure, and Performance Materials & Coatings segments. The Packaging & Specialty Plastics segment provides ethylene, propylene, polyethylene, and aromatics products; and other ethylene derivatives, such as polyolefin elastomers, ethylene vinyl acetate, and ethylene propylene diene monomer rubber. The Industrial Intermediates & Infrastructure segment offers polyurethanes, including propylene oxide, propylene glycol, and polyether polyols; aromatic isocyanates and fully formulated polyurethane systems; and chlor-alkali and vinyl comprising chlorine and caustic soda, ethylene dichloride, and vinyl chloride monomer; and construction chemicals consisting of cellulose ethers, redispersible latex powders, and acrylic emulsions, as well as coatings, adhesives, sealants, elastomers, and composites. The Performance Materials & Coatings segment provides architectural paints and coatings, and industrial coatings; and acrylics-based building blocks, silicon metals, siloxanes, and intermediates. The company also engages in the property and casualty insurance, as well as reinsurance business. The company was founded in 1897 and is headquartered in Midland, Michigan.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-23"
+    },
+    "mdaExcerpt": {
+      "text": "ITEM 2. MANAGEMENT'S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS.\nThis Quarterly Report on Form 10-Q is a combined report being filed by Dow Inc. and The Dow Chemical Company and its consolidated subsidiaries (\"TDCC\" and together with Dow Inc., \"Dow\" or the \"Company\") due to the parent/subsidiary relationship between Dow Inc. and TDCC. The information reflected in the report is equally applicable to both Dow Inc. and TDCC, except where otherwise noted. Each of Dow Inc. and TDCC is filing information in this report on its own behalf and neither company makes any representation to the information relating to the other company.\nPursuant to General Instruction H(1)(a) and (b) for Form 10-Q \"Omission of Information by Certain Wholly-Owned Subsidiaries,\" TDCC is filing this Form 10-Q with the reduced disclosure format.\nExcept as otherwise indicated by the context, the term \"Union Carbide\" means Union Carbide Corporation, a wholly owned subsidiary of the Company. Additionally, the term \"Diamond Infrastructure Solutions\" means Dow InfraCo, LLC, an entity that owns and operates infrastructure assets at certain Dow locations on the U.S. Gulf Coast and became a consolidated variable interest entity upon the sale of a portion of the entity's membership interests on May 1, 2025. The term \"EMEAI\" refers to the geographic region of Europe, Middle East, Africa and India.\nDow's website and its content are not deemed incorporated by reference into this report.\nSTATEMENT ON MIDDLE EAST CONFLICT\nDuring 2026, geopolitical instability in the Middle East, including the conflict involving Iran, Israel, and the United States and related tensions affecting maritime transit through the Strait of Hormuz, has disrupted global energy and petrochemical supply chains. The Strait of Hormuz remains a critical shipping corridor for crude oil, refined products, natural gas, and chemical feedstocks. Although the intensity and nature of the conflict have changed over time and diplomatic efforts continue, periodic security incidents, shipping restrictions and uncertainty regarding access to regional ports and trade routes have continued to affect global markets. These conditions have contributed to volatility in energy and feedstock prices, disruptions to regional production and logistics networks, longer transit times, and shifts in global trade flows as production and sourcing have been rebalanced to alternative regions. As a result, portions of the global chemical industry have experienced supply constraints, increased transportation and operating costs, and reduced supply chain reliability, particularly in Asia Pacific and Europe. Additionally, the Company's joint ventures located in the Middle East have been directly impacted by the conflict.\nThe Company operates in cost-advantaged geographic regions, including the U.S. & Canada and Latin America, which have not been directly impacted by the Middle East conflict. Additionally, the Company's feedstock flexibility has allowed the Company to operate its European assets competitively, despite the volatile energy and feedstock environment.\nTRANSFORM TO OUTPERFORM\nIn 2026, the Company announced Transform to Outperform, a comprehensive set of actions designed to improve near-term Operating EBITDA by simplifying the Company's operating model, reducing its cost structure and delivering faster growth. Transform to Outperform is expected to deliver at least $2 billion near-term Operating EBITDA improvement from productivity improvements and growth and is accretive to the $1 billion structural cost reductions announced in the first quarter of 2025. In the first half of 2026, the Company delivered $190 million in Operating EBITDA improvement from Transform to Outperform.\nOUTLOOK\nIn the second half of 2026, Dow will continue to build a more agile and resilient company that sets a new competitive standard. The Company will do so by advancing three priorities: growth and innovation in attractive end markets, investing in and strengthening its portfolio, and ensuring balanced capital allocation. Aligned to this, Transform to Outperform is delivering improvements in both growth and productivity, and the Company expects the impact of these efforts to ramp significantly throughout the remainder of this year and into 2027. Taken together, Dow's collective actions are focused on enhancing the long-term value the Company delivers across the cycle.\n46\nTable of Contents\nOVERVIEW\nThe following is a summary of the results for the three months ended June 30, 2026:\nThe Company reported net sales in the second quarter of 2026 of $12.1 billion, up 20 percent from $10.1 billion in the second quarter of 2025; Packaging & Specialty Plastics (up 27 percent), Industrial Intermediates & Infrastructure (up 14 percent) and Performance Materials & Coatings (up 11 percent). Net sales increased in all geographic regions; Latin America (up 41 percent), the U.S. & Canada and EMEAI (both up 20 percent), and Asia Pacific (up 5 percent).\nLocal price increased 20 percent compared with the second quarter of 2025 and was up in all operating segments; Packaging & Specialty Plastics (up 30 percent), Industrial Intermediates & Infrastructure (up 15 percent) and Performance Materials & Coatings (up 4 percent). Local price was up in all geographic regions; Latin America (up 32 percent), EMEAI (up 21 percent), the U.S. & Canada (up 17 percent) and Asia Pacific (up 14 percent).\nCurrency had a favorable impact of 1 percent on net sales compared with the second quarter of 2025, driven by EMEAI (up 3 percent).\nVolume decreased 1 percent compared with the second quarter of 2025 and was mixed by operating segment; Packaging & Specialty Plastics (down 4 percent), Industrial Intermediates & Infrastructure (down 2 percent) and Performance Materials & Coatings (up 6 percent). Volume increased in Latin America (up 9 percent) and in the U.S. & Canada (up 3 percent) and was more than offset by a decrease in Asia Pacific (down 9 percent) and EMEAI (down 4 percent).\nRestructuring and asset related charges - net was $503 million in the second quarter of 2026, compared with $591 million in the second quarter of 2025. The second quarter of 2026 included pretax charges related to severance and related benefit costs associated with Transform to Outperform, as well as exit and disposal costs and asset write-downs and write-offs associated with the 2025 Restructuring Program. The second quarter of 2025 included asset write-downs and write-offs, severance and related benefits costs, and exit and disposal costs related to asset actions associated with the 2025 Restructuring Program.\nEquity in earnings (losses) of nonconsolidated affiliates was earnings of $36 million in the second quarter of 2026, compared with equity in losses of nonconsolidated affiliates of $30 million in the second quarter of 2025. The increase in equity earnings was primarily driven by the Company's suspension of the recognition of its share of equity losses from the Sadara joint venture in 2026.\nNet income attributable to noncontrolling interests was $81 million in the second quarter of 2026, compared with $34 million in the second quarter of 2025. The increase reflects the ownership interest in Diamond Infrastructure Solutions held by InfraPark Holdings, LLC (\"InfraPark\"), a subsidiary of a fund managed by Macquarie Asset Management. InfraPark purchased 40 percent of the membership interests in Diamond Infrastructure Solutions in the second quarter of 2025 and an additional 9 percent in the third quarter of 2025.\nNet income (loss) available for Dow Inc. and TDCC common stockholder(s) was income of $721 million and $715 million, respectively, in the second quarter of 2026, compared with a loss of $835 million and $816 million, respectively, in the second quarter of 2025. Earnings (loss) per share for Dow Inc. was earnings of $0.99 per share in the second quarter of 2026, compared with a loss of $1.18 per share in the second quarter of 2025.\nCash provided by operating activities - continuing operations was $1,324 million in the second quarter of 2026, up $1,794 million compared with the second quarter of 2025. The increase is primarily driven by improved earnings in the second quarter of 2026.\nOn April 9, 2026, Dow Inc. announced results from the 2026 Annual Stockholder Meeting, including the election of all incumbent directors to its Board of Directors (\"Board\").\nOn April 9, 2026, Dow Inc. announced that its Board declared a dividend of $0.35 per share, payable on June 12, 2026, to shareholders of record as of May 29, 2026. This marks the 459th consecutive dividend paid by the Company or its affiliates since 1912.\nOn April 14, 2026, Dow Inc. announced that its Board appointed Karen S. Carter as Chief Executive Officer of the Company, effective July 1, 2026. Ms. Carter succeeded Jim Fitterling, who transitioned from Chief Executive Officer to Executive Chair, effective July 1, 2026. The Board also appointed Karen S. Carter to serve as a Director of the Board, effective July 1, 2026.\nAt June 30, 2026, the Company had approximately 32,800 employees.\n47\nTable of Contents\nIn addition, the following events occurred subsequent to the second quarter of 2026:\nOn July 15, 2026, the Company received a refund from the Canada Revenue Agency of $452 million Canadian dollars (equivalent to approximately $318 million U.S. dollars) associated with withholding taxes on the judgment paid by Nova Chemicals Corporation (\"Nova\") in connection with a legal matter in the first quarter of 2026.\nRESULTS OF OPERATIONS\nNet Sales\nThe following tables summarize net sales and sales variances by operating segment and geographic region from the prior year:\nSummary of Sales Results\nThree Months Ended\nSix Months Ended\nIn millions\nJun 30, 2026\nJun 30, 2025\nJun 30, 2026\nJun 30, 2025\nNet sales\n$\n12,092\n$\n10,104\n$\n21,886\n$\n20,535\nSales Variances by Operating Segment and Geographic Region\nThree Months Ended Jun 30, 2026\nSix Months Ended Jun 30, 2026\nLocal Price & Product Mix\nCurrency\nVolume\nTotal\nLocal Price & Product Mix\nCurrency\nVolume\nTotal\nPercentage change from prior year\nPackaging & Specialty Plastics\n30\n%\n1\n%\n(4)\n%\n27\n%\n10\n%\n2\n%\n(3)\n%\n9\n%\nIndustrial Intermediates & Infrastructure\n15\n1\n(2)\n14\n3\n3\n(3)\n3\nPerformance Materials & Coatings\n4\n1\n6\n11\n2\n4\n6\nTotal\n20\n%\n1\n%\n(1)\n%\n20\n%\n6\n%\n2\n%\n(1)\n%\n7\n%\nTotal, excluding the Hydrocarbons & Energy business\n18\n%\n1\n%\n%\n19\n%\n6\n%\n2\n%\n%\n8\n%\nU.S. & Canada\n17\n%\n%\n3\n%\n20\n%\n5\n%\n%\n(1)\n%\n4\n%\nEMEAI\n21\n3\n(4)\n20\n7\n6\n(4)\n9\nAsia Pacific\n14\n(9)\n5\n3\n1\n(5)\n(1)\nLatin America\n32\n9\n41\n12\n9\n21\nTotal\n20\n%\n1\n%\n(1)\n%\n20\n%\n6\n%\n2\n%\n(1)\n%\n7\n%\nNet sales in the second quarter of 2026 were $12.1 billion, up 20 percent from $10.1 billion in the second quarter of 2025, with local price up 20 percent, a favorable currency impact of 1 percent, and volume down 1 percent. Net sales increased in all operating segments and all geographic regions. Local price increased in all geographic regions and all operating segments, with Packaging & Specialty Plastics up 30 percent, Industrial Intermediates & Infrastructure up 15 percent, and Performance Materials & Coatings up 4 percent. Volume decreased 1 percent, driven by Asia Pacific (down 9 percent) and EMEAI (down 4 percent), partially offset by increases in Latin America (up 9 percent) and U.S. & Canada (up 3 percent). Volume decreased in Packaging & Specialty Plastics (down 4 percent) and Industrial Intermediates & Infrastructure (down 2 percent) and increased in Performance Materials & Coatings (up 6 percent). Currency favorably impacted net sales by 1 percent, driven by EMEAI (up 3 percent). Excluding the Hydrocarbons & Energy business, net sales increased 19 percent.\nNet sales in the first six months of 2026 were $21.9 billion, up 7 percent from $20.5 billion in the first six months of 2025, with local price up 6 percent, a favorable currency impact of 2 percent, and volume down 1 percent. Net sales increased in all operating segments and all geographic regions except Asia Pacific. Local price increased in all geographic regions and in Packaging & Specialty Plastics (up 10 percent) and Industrial Intermediates & Infrastructure (up 3 percent) and was flat in Performance Materials & Coatings. Volume decreased 1 percent, driven by Asia Pacific (down 5 percent), EMEAI (down 4 percent) and U.S. & Canada (down 1 percent), partially offset by increases in Latin America (up 9 percent). Volume decreased in Packaging & Specialty Plastics (down 3 percent) and Industrial Intermediates & Infrastructure (down 3 percent) and increased in Performance Materials & Coatings (up 4 percent). Currency favorably impacted net sales by 2 percent, driven by EMEAI (up 6 percent) and Asia Pacific (up 1 percent). Excluding the Hydrocarbons & Energy business, net sales increased 8 percent.\n48\nTable of Contents\nCost of Sales\nCost of sales (\"COS\") was $9.9 billion in the second quarter of 2026, compared with $9.5 billion in the second quarter of 2025. COS increased in the second quarter of 2026 primarily due to the impact of performance-based compensation costs, higher logistics costs, and higher raw material, feedstock and energy costs, partially offset by the Company's cost reduction initiatives. For the first six months of 2026, COS was $19.1 billion compared with $19.3 billion in the first six months of 2025. COS for the first six months of 2026 decreased primarily due to the Company's cost reduction initiatives and lower raw material, feedstock and energy costs, partially offset by higher performance-based compensation costs and higher logistics costs. COS as a percentage of net sales was 82.1 percent in the second quarter of 2026 (94.2 percent in the second quarter of 2025) and 87.2 percent for the first six months of 2026 (93.9 percent for the first six months of 2025).\nResearch and Development Expenses\nResearch and development (\"R&D\") expenses totaled $207 million in the second quarter of 2026, compared with $188 million in the second quarter of 2025. R&D expenses increased in the second quarter of 2026 primarily due to higher performance-based compensation costs which more than offset the impact of the Company's cost reduction initiatives. R&D expenses for the first six months of 2026 and 2025 were $388 million as higher performance-based compensation costs were offset by the Company's cost reduction initiatives.\nSelling, General and Administrative Expenses\nSelling, general and administrative (\"SG&A\") expenses totaled $535 million in the second quarter of 2026, compared with $347 million in the second quarter of 2025. SG&A expenses increased in the second quarter of 2026 primarily due to costs to achieve Transform to Outperform and higher performance-based compensation costs which more than offset the Company's cost reduction initiatives. For the first six months of 2026, SG&A expenses were $952 million, compared with $713 million in the first six months of 2025. SG&A expenses for the first six months of 2026 increased primarily due to costs to achieve Transform to Outperform and higher performance-based compensation costs, partially offset by the Company's cost reduction initiatives .\nAmortization of Intangibles\nAmortization of intangibles was $40 million in the second quarter of 2026 compared with $63 million in the second quarter of 2025. In the first six months of 2026, amortization of intangibles was $86 million, compared with $139 million in the first six months of 2025. Amortization of intangibles decreased primarily due to certain intangible assets becoming fully amortized in 2025.\nRestructuring and Asset Related Charges - Net\nTransform to Outperform\nOn January 26, 2026, the Dow Inc. Board of Directors (\"Board\") approved Transform to Outperform, a comprehensive set of actions designed to improve near-term Operating EBITDA by simplifying the Company's operating model, reducing its cost structure and delivering faster growth.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/1751788/000175178826000147/dow-20260630.htm",
+      "asOf": "2026-07-24",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "ITEM 1A. RISK FACTORS\nThe factors described below represent the Company's principal risks.\nCLIMATE CHANGE - RELATED RISKS\nClimate Change: Climate change-related risks and uncertainties, legal or regulatory responses to climate change and failure to meet the Company's climate change commitments could negatively impact the Company's results of operations, financial condition and/or reputation.\nThe Company is subject to increasing climate-related risks and uncertainties, many of which are outside of its control. Climate change may result in more frequent and damaging severe weather and weather-related events, potential changes in precipitation patterns and extreme variability in weather patterns. These short- and long-term weather and weather-related events can disrupt the operations of the Company as well as those of its customers, partners and vendors due to damage to local infrastructure and other property damage limiting site access, and causing water scarcity and lack of access to high-quality water, among other factors. These risks and uncertainties may also directly or indirectly impact decisions to invest in the construction and/or renovation of new or existing manufacturing sites and other Company facilities and locations.\nThe transition to lower greenhouse gas emissions technology, the effects of carbon pricing and changes in public sentiment, incentives, regulations, taxes, public mandates or requirements and increases in climate-related lawsuits, insurance premiums and implementation of more robust disaster recovery and business continuity plans could increase costs to maintain or resume the Company's operations or achieve its sustainability commitments in the expected timeframes, which would negatively impact the Company's results of operations.\nIn 2020, the Company announced commitments to reduce its net annual Scope 1 and 2 carbon dioxide equivalent (\"CO 2 e\") emissions by an additional 5 million metric tons, approximately a 15 percent reduction compared with its 2020 baseline, by 2030 (the 2020 baseline represents a 15 percent reduction in greenhouse gas emissions since 2005) and its intention to be carbon neutral by 2050 (Scope 1+2+3, as defined by the Greenhouse Gas Protocol Corporate Accounting and Reporting Standard, plus product benefits). In November 2023, the Board approved the final investment decision to build the world's first net-zero Scope 1 and 2 CO 2 e emissions integrated ethylene cracker and derivatives facility in Alberta, Canada, a key element for the Company to achieve its 2030 greenhouse gas emissions reduction commitment.\nThe commitments reflect the Company's current plans and targets and are not guarantees that it will be able to achieve them. The execution and achievement of the Company's commitments within projected cost estimates and expected timeframes, including the success of the Company's integrated ethylene cracker and derivatives facility in Alberta, Canada, are subject to risks and uncertainties which include, but are not limited to: advancement, availability, development and affordability of technology necessary to achieve these commitments; unforeseen design, operational and technological difficulties; availability and cost of necessary materials and components; adapting products to customer preferences and customer acceptance of sustainable supply chain solutions; changes in public sentiment and political leadership, including government incentives and tax credits to promote emission reductions; the Company's ability to comply with changing regulations, taxes, mandates or requirements related to greenhouse gas emissions or other climate-related matters, including prescriptive reporting of climate-related matters; and the Company's ability to adequately fund capital expenditures necessary to complete its planned projects. In addition, standards for tracking and reporting on sustainability matters have not been harmonized, continue to evolve and may change over time, which could result in significant revisions to the Company's performance metrics, commitments or reported progress in achieving such commitments. If the Company fails to meet its climate change commitments within the committed timeframe, coupled with its significant investments to meet those commitments, and adopt policies and practices to enhance sustainability, the Company's reputation and its customer and other stakeholder relationships could be negatively impacted, reducing demand for the Company's products, and it may be more difficult for the Company to compete effectively or gain access to financing on acceptable terms when needed, which could negatively impact the Company's financial condition, results of operations and cash flows.\n21\nTable of Contents\nMACROECONOMIC RISKS\nFinancial Commitments and Credit Markets: Market conditions, availability of credit and changes in the Company's credit ratings could reduce the Company's flexibility to respond to changing economic and business conditions or fund capital needs and could increase borrowing costs.\nThe Company utilizes cash from operations and its ability to access capital markets to meet the Company's cash requirements for working capital, capital projects, debt maturities and other needs. Adverse economic conditions, a contraction in the availability of credit in the marketplace, or changes in the Company's credit ratings, including failure to maintain an investment grade rating, could increase borrowing costs and reduce sources of liquidity, restricting the Company's flexibility to respond to changing business and economic conditions or to fund capital projects and working capital needs, which could adversely impact the Company's results of operations and liquidity.\nGlobal Economic Considerations: The Company operates in a global, competitive environment which gives rise to operating and market risk exposure.\nThe Company sells its broad range of products and services in a competitive, global environment, and competes worldwide for sales on the basis of product quality, price, technology and customer service. Increased levels of competition have resulted in lower prices and lower sales volume, which have had a negative impact on the Company's results of operations. These factors are expected to continue and may worsen in the near term, which could continue to challenge the Company's ongoing results of operations. To address these challenges amidst the ongoing macroeconomic uncertainty, the Company has taken targeted cost reduction initiatives and other actions to advance its balanced capital allocation approach and enhance financial flexibility, and will continue to seek additional actions to mitigate the impact of macroeconomic uncertainty. Unforeseen macroeconomic conditions could result in additional actions that could adversely affect equity performance until market conditions improve. For additional information, see Part II Item 7. Management's Discussion and Analysis of Financial Condition and Results of Operations and Note 5 to the Consolidated Financial Statements.\nSales of the Company's products are also subject to extensive federal, state, local and foreign laws and regulations; trade agreements; import and export controls; taxes; and duties and tariffs. The imposition of additional regulations, controls, taxes, duties and tariffs or changes to bilateral and regional trade agreements could also result in lower sales volume, which could negatively impact the Company's results of operations.\nDuring 2025, the United States changed its long-standing trade policies and announced significant new tariffs, with certain exceptions, on virtually all imported goods. These actions triggered the negotiation of new trade agreements with certain U.S. trading partners. While these negotiations resulted in the reduction of certain recently imposed tariffs, the average U.S. tariff rate remains at its highest level since the 1930s. In response to the changes in U.S.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/1751788/000175178826000018/dow-20251231.htm",
+      "asOf": "2026-02-03",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-K",
+    "pressRelease": {
+      "text": "EX-99.1\n2\nexhibit991enrschedules2q26.htm\nEX-99.1\nDocument\nExhibit 99.1\nJuly 23, 2026\nDow reports second quarter 2026 results\nFINANCIAL HIGHLIGHTS\nNet sales were $12.1 billion, up 20% year-over-year, reflecting increases in all operating segments and regions.\nLocal price increased 20% versus the year-ago period, led by gains in Packaging Specialty Plastics, with higher polyethylene prices in all regions. Currency increased 1% year-over-year.\nVolume decreased 1% year-over-year. Gains in Performance Materials Coatings across both businesses were more than offset by declines in Packaging Specialty Plastics largely due to planned maintenance activity.\nGAAP net income was $802 million. Op. EBIT 1 was $1.6 billion, up $1.7 billion year-over-year, primarily driven by higher prices as well as the Company's self-help initiatives.\nGAAP earnings per share (EPS) was $0.99 operating EPS 1 was $1.44, compared to a loss of $0.42 in the year-ago period. Op. EPS excludes significant items totaling $0.45 per share, driven by costs associated with Transform to Outperform, partially offset by an income tax adjustment associated with a payment from NOVA Chemicals.\nCash provided by operating activities continuing operations was $1.3 billion, primarily driven by higher earnings across all businesses, more than offsetting an expected working capital build, reflecting revenue growth.\nReturns to shareholders totaled $253 million of dividends in the quarter.\nCEO QUOTE\n\"Team Dow delivered strong second quarter results through disciplined and timely execution, reliably serving our customers, and accelerating our self-help actions,\" said Karen S. Carter, Dow CEO. \"Market conditions were supportive this quarter, and our self-help initiatives delivered ahead of plan, further reinforcing the improvement in our earnings as we continue to strengthen Dow's resilience and agility. We now expect to generate approximately $200 million more in benefits from Transform to Outperform this year, enabling us to increase the total in-year benefits from self-help to greater than $1.3 billion. Our actions to become a leaner, more competitive company position Dow well to continue winning with our customers while delivering enhanced long-term shareholder value.\"\nSUMMARY FINANCIAL RESULTS\nThree Months Ended Jun 30\nIn millions, except per share amounts\n2Q26\n2Q25\nvs. SQLY B (W)\nNet Sales\n$\n12,092\n$\n10,104\n$\n1,988\nGAAP Income (Loss), Net of Tax\n$\n802\n$\n(801)\n$\n1,603\nOperating EBIT 1\n$\n1,648\n$\n(21)\n$\n1,669\nOperating EBITDA 1\n$\n2,312\n$\n703\n$\n1,609\nGAAP Earnings (Loss) Per Share\n$\n0.99\n$\n(1.18)\n$\n2.17\nOperating Earnings Per Share 1\n$\n1.44\n$\n(0.42)\n$\n1.86\nCash Provided by (Used for) Operating Activities - Cont. Ops\n$\n1,324\n$\n(470)\n$\n1,794\n1. Op. Earnings Per Share, Op. EBIT, Op. EBIT Margin and Op. EBITDA, Free Cash Flow and Cash Flow Conversion are non-GAAP measures. See page 5 for further discussion.\nTM Trademark of The Dow Chemical Company or an affiliated company of Dow\n1\nDow reports second quarter 2026 results\nSEGMENT HIGHLIGHTS\nPackaging Specialty Plastics\nThree Months Ended Jun 30\nIn millions\n2Q26\n2Q25\nvs. SQLY\nB (W)\nNet Sales\n$\n6,385\n$\n5,025\n$\n1,360\nOperating EBIT\n$\n1,278\n$\n71\n$\n1,207\nPackaging Specialty Plastics segment net sales in the quarter were $6.4 billion, up 27% versus the year-ago period. Local price increased 30% year-over-year, primarily driven by higher polyethylene prices in all regions. Currency increased net sales by 1%. Volume decreased 4% year-over-year, driven by lower volumes in both businesses, including higher planned maintenance activity in Hydrocarbons Energy, resulting in lower merchant sales.\nOp. EBIT was $1.3 billion, an increase of $1.2 billion compared to the year-ago period, driven by higher integrated margins as a result of higher polyethylene prices contributing to margin expansion and tailwinds from the Company's self-help initiatives, which were partly offset by higher planned maintenance activity.\nPackaging and Specialty Plastics business reported a net sales increase versus the year-ago period, reflecting higher polyethylene prices, most notably in flexible packaging applications and in all regions. This more than offset lower polyethylene volumes, driven by declines in Europe, the Middle East, Africa and India (EMEAI) and Asia Pacific impacted by the Middle East conflict.\nHydrocarbons Energy business reported a net sales increase year-over-year, driven by higher olefins prices, which more than offset lower volumes due to planned maintenance activity in the U.S. Gulf Coast and the idling of a cracker in EMEAI in mid-2025, which successfully restarted in June.\nIndustrial Intermediates Infrastructure\nThree Months Ended Jun 30\nIn millions\n2Q26\n2Q25\nvs. SQLY\nB (W)\nNet Sales\n$\n3,166\n$\n2,786\n$\n380\nOperating EBIT\n$\n246\n$\n(185)\n$\n431\nIndustrial Intermediates Infrastructure segment net sales in the quarter were $3.2 billion, up 14% versus the year-ago period. Local price increased 15% year-over-year, reflecting gains in both businesses and in all regions. Currency increased net sales by 1%. Volume decreased 2% year-over-year, driven by lower volumes in Polyurethanes Construction Chemicals, including impacts from the Middle East conflict, which were partially offset by increased volume in Industrial Solutions.\nOp. EBIT was $246 million, an increase of $431 million versus the year-ago period, driven by higher margins, tailwinds from the Company's self-help initiatives, lower planned maintenance activity and the suspension of the recognition of equity losses from Sadara.\nPolyurethanes Construction Chemicals business reported an increase in net sales compared to the year-ago period, primarily driven by local price gains, which were partly offset by lower volumes. Volume growth across industrial market applications was more than offset by impacts from the Middle East conflict.\nIndustrial Solutions business reported an increase in net sales, with local price gains in all regions compared to the year-ago period. Volume growth was driven by recent alkoxylation investments and increased demand for data center applications, partially offset by impacts from the Middle East conflict.\n2\nDow reports second quarter 2026 results\nPerformance Materials Coatings\nThree Months Ended Jun 30\nIn millions\n2Q26\n2Q25\nvs. SQLY\nB (W)\nNet Sales\n$\n2,361\n$\n2,129\n$\n232\nOperating EBIT\n$\n133\n$\n152\n$\n(19)\nPerformance Materials Coatings segment net sales in the quarter were $2.4 billion, up 11% versus the year-ago period. Local price increased 4% year-over-year, driven by an increase in Coatings Performance Monomers. Currency increased net sales by 1%. Volume increased 6% year-over-year, driven by higher volumes in both businesses, led by growth in downstream silicones.\nOp. EBIT was $133 million, a decrease of $19 million versus the year-ago period, as tailwinds from the Company's self-help initiatives were more than offset by higher fixed costs, including turnaround activity in the quarter and the costs associated with the in-period shutdown of our Barry, U.K. upstream siloxanes plant.\nConsumer Solutions business reported an increase in net sales versus the year-ago period, driven by volume gains in downstream silicones, led by consumer, electronics and home care applications.\nCoatings Performance Monomers business reported an increase in net sales across all regions compared to the year-ago period, led by higher price and volume in both acrylic monomers and architectural coatings.\nOUTLOOK\n\"As we look into the second half of 2026, we will continue to build a more agile and resilient company that sets a new competitive standard,\" said Carter. \"We will do so by advancing three priorities growth and innovation in attractive end markets, investing in and strengthening our portfolio, and ensuring balanced capital allocation. Aligned to this, Transform to Outperform is delivering improvements in both growth and productivity, and we expect the impact of these efforts to ramp significantly throughout the remainder of this year and into 2027. Taken together, our collective actions are focused on enhancing the long-term value Dow delivers across the cycle.\"\nConference Call\nDow will host a live webcast of its quarterly earnings conference call with investors to discuss its results, business outlook and other matters today at 8 00 a.m. ET. The webcast and slide presentation that accompany the conference call will be posted on the events and presentations page of investors.dow.com.\nAbout Dow\nDow (NYSE DOW) is one of the world's leading materials science companies, serving customers in high-growth markets such as packaging, infrastructure, mobility and consumer applications. Our global breadth, asset integration and scale, customer-focused innovation and leading business positions enable us to achieve profitable growth and help deliver a sustainable future. We operate manufacturing sites in 29 countries and employed approximately 34,600 people as of year-end 2025. Dow delivered sales of approximately $40 billion in 2025. References to Dow or the Company mean Dow Inc. and its subsidiaries. Learn more about us at www.dow.com .\n###\nFor further information, please contact\nInvestors\nMedia\nAndrew Riker\nRachelle Schikorra\najriker dow.com\nryschikorra dow.com\n3\nDow reports second quarter 2026 results\nCautionary Statement about Forward-Looking Statements\nCertain statements in this press release are \"forward-looking statements\" within the meaning of the federal securities laws, including Section 27A of the Securities Act of 1933, as amended, and Section 21E of the Securities Exchange Act of 1934, as amended. Such statements often address expected future business and financial performance, financial condition, and other matters, and often contain words or phrases such as \"anticipate,\" \"believe,\" \"could,\" \"estimate,\" \"expect,\" \"intend,\" \"may,\" \"opportunity,\" \"outlook,\" \"plan,\" \"project,\" \"seek,\" \"should,\" \"strategy,\" \"target,\" \"will,\" \"will be,\" \"will continue,\" \"will likely result,\" \"would\" and similar expressions, and variations or negatives of these words or phrases.\nForward-looking statements are based on current assumptions and expectations of future events that are subject to risks, uncertainties and other factors that are beyond Dow's control, which may cause actual results to differ materially from those projected, anticipated or implied in the forward-looking statements and speak only as of the date the statements were made. These factors include, but are not limited to sales of Dow's products Dow's expenses, future revenues and profitability any supply chain, operational or other disruptions, sanctions, export restrictions, or increased economic uncertainty related to the ongoing conflicts between Russia and Ukraine and in the Middle East capital requirements and need for and availability of financing unexpected barriers in the development of technology, including with respect to Dow's contemplated capital and operating projects Dow's ability to realize its commitment to carbon neutrality on the contemplated timeframe, including the completion and success of its integrated ethylene cracker and derivatives facility in Alberta, Canada size of the markets for Dow's products and services and ability to compete in such markets Dow's ability to develop and market new products and optimally manage product life cycles the rate and degree of market acceptance of Dow's products significant litigation and environmental matters and related contingencies and unexpected expenses the success of competing technologies that are or may become available the ability to protect Dow's intellectual property in the United States and abroad Dow's ability to realize expected benefits from Transform to Outperform on the contemplated timeframe developments related to contemplated restructuring activities and proposed divestitures or acquisitions such as workforce reduction, manufacturing facility and or asset closure and related exit and disposal activities, and the benefits and costs associated with each of the foregoing fluctuations in energy and raw material prices management of process safety and product stewardship changes in relationships with Dow's significant customers and suppliers changes in public sentiment and political leadership increased concerns about plastics in the environment and lack of a circular economy for plastics at scale changes in consumer preferences and demand changes in laws and regulations, political conditions, tariffs and trade policies, or industry development global economic and capital markets conditions, such as inflation, market uncertainty, interest and currency exchange rates, and equity and commodity prices business, logistics, and supply disruptions security threats, such as acts of sabotage, terrorism or war, including the ongoing conflicts between Russia and Ukraine and in the Middle East weather events and natural disasters disruptions in Dow's information technology networks and systems, including the impact of cyberattacks risks related to Dow's separation from DowDuPont Inc. such as Dow's obligation to indemnify DuPont de Nemours, Inc. and or Corteva, Inc. for certain liabilities and any global and regional economic impacts of a pandemic or other public health-related risks and events on Dow's business.\nWhere, in any forward-looking statement, an expectation or belief as to future results or events is expressed, such expectation or belief is based on the current plans and expectations of management and expressed in good faith and believed to have a reasonable basis, but there can be no assurance that the expectation or belief will result or be achieved or accomplished. A detailed discussion of principal risks and uncertainties which may cause actual results and events to differ materially from such forward-looking statements is included in the section titled \"Risk Factors\" contained in the Company's Annual Report on Form 10-K for the year ended December 31, 2025, and the Company's subsequent reports filed with the U.S. Securities and Exchange Commission. These are not the only risks and uncertainties that Dow faces. There may be other risks and uncertainties that Dow is unable to identify at this time or that Dow does not currently expect to have a material impact on its business. If any of those risks or uncertainties develops into an actual event, it could have a material adverse effect on Dow's business. Dow Inc. and The Dow Chemical Company and its consolidated subsidiaries assume no obligation to update or revise publicly any forward-looking statements whether because of new information, future events, or otherwise, except as required by securities and other applicable laws.\nTM Trademark of The Dow Chemical Company or an affiliated company of Dow\n4\nNon-GAAP Financial Measures\nThis earnings release includes information that does not conform to GAAP and are considered non-GAAP measures. Management uses these measures internally for planning, forecasting and evaluating the performance of the Company's segments, including allocating resources. Dow's management believes that these non-GAAP measures best reflect the ongoing performance of the Company during the periods presented and provide more relevant and meaningful information to investors as they provide insight with respect to ongoing operating results of the Company and a more useful comparison of year-over-year results. These non-GAAP measures supplement the Company's GAAP disclosures and should not be viewed as alternatives to GAAP measures of performance. Furthermore, such non-GAAP measures may not be consistent with similar measures provided or used by other companies. Non-GAAP measures included in this release are defined below. Reconciliations for these non-GAAP measures to GAAP are provided in the Selected Financial Information and Non-GAAP Measures section starting on page 10.",
+      "source": "edgar:8-K ex-99.1",
+      "url": "https://www.sec.gov/Archives/edgar/data/1751788/000175178826000144/exhibit991enrschedules2q26.htm",
+      "asOf": "2026-07-23",
+      "truncated": true
+    },
+    "proxyStatement": {
+      "text": "Board and director independence:\nDirector Indepen dence\nThe Board has assessed the independence of each non-employee Director in accordance with the standards of independence of the NYSE, SEC rules and as described in the Corporate Governance Guidelines. Based upon these standards, the Board has determined that each of the following Director nominees are independent: Samuel R. Allen, Gaurdie E. Banister Jr., Wesley G. Bush, Richard K. Davis, Jerri DeVard, Debra L. Dial, Jeff M. Fettig, Jacqueline C. Hinman, Luis Alberto Moreno, Jill S. Wyant and Daniel W. Yohannes. These independent Director nominees constitute a \"substantial majority\" of the Board, consistent with the Corporate Governance Guidelines. The Corporate Governance Committee, as well as the Board, reviews relationships that Directors may have with the Company, and its affiliates, and members of management at least annually to make a determination as to whether there are any material relationships that would preclude a Director from being independent. Mr. Fitterling, Dow's Chair and CEO, is not independent.\nAll members of the Audit, Compensation and Leadership Development, Corporate Governance, and Environment, Health, Safety & Technology Committees are independent Directors as required by the Corporate Governance Guidelines and applicable regulatory and listing standards.\nThe Board has also determined that Rebecca B. Liebert, who served as a Director from April 10, 2025 until January 2, 2026, was independent during the time she served as a Director.\n14 2026 | Dow Proxy Statement\nTable of Contents\nBoard Lead ership Structure\nThe Board is responsible for broad corporate policy and overall performance of the Company through oversight of management and stewardship of the Company. Among other duties, the Board has responsibility for overseeing the strategy, risk management, and environmental, social and governance priorities of the Company. The Board appoints the Company's officers, assigns them responsibility for management of the Company's operations, and reviews their performance.\nThe Board recognizes that the leadership structure and combination or separation of the Chair and CEO roles are driven by the needs of the Company. As a result, no policy exists requiring combination or separation of leadership roles. This determination is made on an annual basis by the Board, which allows the Board the flexibility to make changes to Board leadership that are in the best interests of the Company and its stockholders. As a part of that process, the Board reviews whether the existing leadership structure provides strong independent oversight while balancing the need for extensive knowledge of business operations, risks and strategy implementation and accountability for Company performance. Regardless of the specific Board leadership structure, the Company has consistently incorporated a strong defined leadership role for an independent Director, as described below.\n\nRelated-person transactions:\nRelated Person Transa ctions\nThe Board has adopted written policies and procedures relating to the approval or ratification of each \"Related Person Transaction.\" Under Dow's policies and procedures, a \"Related Person Transaction\" is generally any financial transaction, arrangement or relationship (including any indebtedness or guarantee of indebtedness) or any series of similar transactions, arrangements or relationships, in which (a) the Company is a participant, and (b) any Related Person has or will have a direct or indirect material interest. A \"Related Person\" is any (a) person who is or was (since the beginning of the last fiscal year for which the Company has filed a Form 10-K and proxy statement, even if they do not presently serve in that role) an executive officer, director or nominee for election as a director of the Company, (b) person who is a greater than 5 percent beneficial owner of the Company's outstanding common stock, or (c) immediate family member of any of the foregoing.\nUnder the policies and procedures, the Corporate Governance Committee (or its Chair, under some circumstances) reviews the relevant facts of all proposed Related Person Transactions and either approves or disapproves of the entry into a particular Related Person Transaction, by taking into account, among other factors it deems appropriate: (i) the commercial reasonableness of the transaction; (ii) the materiality of the Related Person's direct or indirect interest in the transaction; (iii) whether the transaction may involve a conflict of interest, or the appearance of one; (iv) whether the transaction was in the ordinary course of business; and (v) the impact of the transaction on the Related Person's independence under the Corporate Governance Guidelines and applicable regulatory and listing standards.",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/1751788/000119312526082583/dow-20260227.htm",
+      "asOf": "2026-02-27",
+      "truncated": true
+    },
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T22:13:27.681Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T22:13:27.681Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T22:13:27.681Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T22:13:27.681Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T22:13:27.681Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T22:13:27.681Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T22:13:27.681Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T22:13:27.681Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T22:13:27.681Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T22:13:27.681Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T22:13:27.681Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T22:13:27.681Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-23T22:13:27.681Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-23T22:13:27.681Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T22:13:27.681Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T22:13:27.681Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T22:13:27.681Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T22:13:27.681Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T22:13:27.681Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T22:13:27.681Z"
+    }
+  ]
+}

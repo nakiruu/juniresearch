@@ -1,0 +1,583 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "CC",
+  "cik": 1627223,
+  "company": "The Chemours Company",
+  "exchange": "NYSE",
+  "sic": 2800,
+  "sicDescription": "Chemicals & Allied Products",
+  "filing": {
+    "form": "10-Q",
+    "accession": "0001627223-26-000024",
+    "filedDate": "2026-08-05",
+    "periodEnd": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1627223/000162722326000024/cc-20260630.htm"
+  },
+  "capturedAt": "2026-09-23T21:45:20.648Z",
+  "quote": {
+    "price": 14.74,
+    "marketCap": 2218355200,
+    "sharesOutstanding": 150498995.9294437,
+    "sharesSource": "derived",
+    "week52Low": 10.44,
+    "week52High": 28.67,
+    "dividendYield": 0.0234,
+    "asOf": "2026-09-23"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          6345000000,
+          6831000000,
+          6078000000,
+          5782000000,
+          5808000000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          1381000000,
+          1616000000,
+          1302000000,
+          1142000000,
+          902000000
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          608000000,
+          578000000,
+          -253000000,
+          69000000,
+          -386000000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          3.6,
+          3.65,
+          -1.7,
+          0.46,
+          -2.57
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          1451000000,
+          1102000000,
+          1203000000,
+          713000000,
+          670000000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          3749000000,
+          3633000000,
+          4040000000,
+          4113000000,
+          4111000000
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          2298000000,
+          2531000000,
+          2837000000,
+          3400000000,
+          3441000000
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          1082000000,
+          1106000000,
+          723000000,
+          572000000,
+          567000000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          1.8003229278794401,
+          1.699629825489159,
+          1.5456373140329716,
+          1.6576923076923078,
+          1.7991606714628297
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          814000000,
+          755000000,
+          556000000,
+          -633000000,
+          264000000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -277000000,
+          -307000000,
+          -370000000,
+          -360000000,
+          -213000000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          -173000000,
+          -495000000,
+          -69000000,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          -164000000,
+          -154000000,
+          -149000000,
+          -148000000,
+          -78000000
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          537000000,
+          448000000,
+          186000000,
+          -993000000,
+          51000000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q2'26",
+    "periodEnd": "2026-06-30",
+    "revenue": 1591000000,
+    "operatingMargin": null,
+    "revenueYoY": -0.014860681114551078
+  },
+  "ttm": {
+    "pe": -7.333333333333333,
+    "ps": 0.3826729687769536,
+    "evToEbitda": null,
+    "grossMargin": 0.15283767465930653,
+    "operatingMargin": null,
+    "netMargin": -0.052440917716060034,
+    "netDebtToEbitda": null,
+    "interestCoverage": null,
+    "currentRatio": 1.662547017732402,
+    "fcfYield": 0.09827100727602144
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 5922007260,
+      "eps": 1.00897
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 6211109050,
+      "eps": 1.92807
+    }
+  },
+  "analysts": {
+    "count": 9,
+    "buy": 4,
+    "hold": 5,
+    "sell": 0,
+    "consensusRating": "Buy",
+    "consensusTarget": 18.77778,
+    "medianTarget": 18,
+    "highTarget": 24,
+    "lowTarget": 15,
+    "asOf": "2026-09-23"
+  },
+  "segments": {
+    "basis": "FY25 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 5808000000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "APD",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "ASH",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "AXTA",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "CBT",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-11",
+      "close": 14.800000190734863
+    },
+    {
+      "date": "2026-08-12",
+      "close": 15.239999771118164
+    },
+    {
+      "date": "2026-08-13",
+      "close": 15.260000228881836
+    },
+    {
+      "date": "2026-08-14",
+      "close": 15.850000381469727
+    },
+    {
+      "date": "2026-08-17",
+      "close": 15.720000267028809
+    },
+    {
+      "date": "2026-08-18",
+      "close": 15.420000076293945
+    },
+    {
+      "date": "2026-08-19",
+      "close": 15.90999984741211
+    },
+    {
+      "date": "2026-08-20",
+      "close": 15.6899995803833
+    },
+    {
+      "date": "2026-08-21",
+      "close": 15.970000267028809
+    },
+    {
+      "date": "2026-08-24",
+      "close": 15.390000343322754
+    },
+    {
+      "date": "2026-08-25",
+      "close": 15.770000457763672
+    },
+    {
+      "date": "2026-08-26",
+      "close": 15.779999732971191
+    },
+    {
+      "date": "2026-08-27",
+      "close": 15.880000114440918
+    },
+    {
+      "date": "2026-08-28",
+      "close": 15.619999885559082
+    },
+    {
+      "date": "2026-08-31",
+      "close": 15.5600004196167
+    },
+    {
+      "date": "2026-09-01",
+      "close": 15.100000381469727
+    },
+    {
+      "date": "2026-09-02",
+      "close": 15.680000305175781
+    },
+    {
+      "date": "2026-09-03",
+      "close": 15.479999542236328
+    },
+    {
+      "date": "2026-09-04",
+      "close": 15.300000190734863
+    },
+    {
+      "date": "2026-09-08",
+      "close": 15.449999809265137
+    },
+    {
+      "date": "2026-09-09",
+      "close": 15.039999961853027
+    },
+    {
+      "date": "2026-09-10",
+      "close": 15.069999694824219
+    },
+    {
+      "date": "2026-09-11",
+      "close": 15.029999732971191
+    },
+    {
+      "date": "2026-09-14",
+      "close": 14.579999923706055
+    },
+    {
+      "date": "2026-09-15",
+      "close": 14.680000305175781
+    },
+    {
+      "date": "2026-09-16",
+      "close": 14.420000076293945
+    },
+    {
+      "date": "2026-09-17",
+      "close": 14.4399995803833
+    },
+    {
+      "date": "2026-09-18",
+      "close": 14.34000015258789
+    },
+    {
+      "date": "2026-09-21",
+      "close": 14.529999732971191
+    },
+    {
+      "date": "2026-09-23",
+      "close": 14.739999771118164
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "The Chemours Company provides performance chemicals in North America, the Asia Pacific, Europe, the Middle East, Africa, and Latin America. The company operates through three segments: Thermal & Specialized Solutions, Titanium Technologies, and Advanced Performance Materials. The Thermal & Specialized Solutions segment provides refrigerants, thermal management solutions, propellants, foam blowing agents, and specialty solvents under the Freon and Opteon brand names. The Titanium Technologies segment offers TiO2 pigment, a white pigment that delivers whiteness, brightness, opacity, durability, efficiency, and protection in applications, including architectural and industrial coatings, flexible and rigid plastic packaging, polyvinylchloride, laminate papers used for furniture and building materials, coated paper, and coated paperboard for use in packaging under the Ti-Pure brand name. The Advanced Performance Materials segment products portfolio includes various specialty product solutions, membranes, industrial resins, additives, films, and coatings for consumer electronics, semiconductors, digital communications, transportation, energy, oil and gas, and medical markets under the Teflon, Viton, Krytox, and Nafion brand names. It sells its products through direct and indirect channels, as well as through a network of resellers, third-party sales agents, and distributors. The Chemours Company was incorporated in 2014 and is headquartered in Wilmington, Delaware.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-23"
+    },
+    "mdaExcerpt": {
+      "text": "Item 2. MANAGEMENT'S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS\nThis Management's Discussion and Analysis of Financial Condition and Results of Operations (\"MD&A\") supplements the unaudited Interim Consolidated Financial Statements and the related notes thereto included elsewhere herein to help provide an understanding of our financial condition, changes in our financial condition, and the results of our operations for the periods presented. Unless the context otherwise requires, references herein to \"The Chemours Company\", \"Chemours\", \"the Company\", \"our Company\", \"we\", \"us\", and \"our\" refer to The Chemours Company and its consolidated subsidiaries. References herein to \"EID\" refer to EIDP, Inc., formerly known as E. I. du Pont de Nemours and Company, which is our former parent company and is now a subsidiary of Corteva, Inc. (\"Corteva\"), a Delaware corporation. References herein to \"DuPont\" refer to DuPont de Nemours, Inc., a Delaware Corporation.\nThis MD&A should be read in conjunction with the unaudited Interim Consolidated Financial Statements and the related notes thereto included in Item 1 of this Quarterly Report on Form 10-Q, as well as our audited Consolidated Financial Statements and the related notes thereto included in our Annual Report on Form 10-K for the year ended December 31, 2025.\nThis section and other parts of this Quarterly Report on Form 10-Q contain forward-looking statements, within the meaning of the federal securities laws, that involve risks and uncertainties. Forward-looking statements provide current expectations of future events based on certain assumptions and include any statement that does not directly relate to any historical or current fact. The words \"believe\", \"expect\", \"anticipate\", \"plan\", \"estimate\", \"target\", \"project\", and similar expressions, among others, generally identify \"forward-looking statements\", which speak only as of the date the statements were made. The matters discussed in these forward-looking statements are subject to risks, uncertainties, and other factors that could cause actual results to differ materially from those set forth in the forward-looking statements.\nOur forward-looking statements are based on certain assumptions and expectations of future events that may not be accurate or realized. These statements, as well as our historical performance, are not guarantees of future performance. Forward-looking statements also involve risks and uncertainties that are beyond our control. Additionally, there may be other risks and uncertainties that we are unable to identify at this time or that we do not currently expect to have a material impact on our business. Factors that could cause or contribute to these differences include, but are not limited to, the risks, uncertainties, and other factors discussed in the Forward-looking Statements and the Risk Factors sections in our Annual Report on Form 10-K for the year ended December 31, 2025, and as otherwise discussed in this report. We assume no obligation to revise or update any forward-looking statement for any reason, except as required by law.\nOverview\nWe are a leading, global provider of performance chemicals that are key inputs in end-products and processes in a variety of industries. We deliver customized solutions with a wide range of industrial and specialty chemical products for markets, including refrigeration and air conditioning, paints and coatings, plastics, transportation, semiconductor and consumer electronics, general industrial, and oil and gas. Our principal products include refrigerants, titanium dioxide (\"TiO 2 \") pigment and industrial fluoropolymer resins. We manage and report our operating results through three principal reportable segments: Thermal & Specialized Solutions, Titanium Technologies, and Advanced Performance Materials. Our Thermal & Specialized Solutions segment is a leading, global provider of refrigerants, thermal management solutions, propellants, blowing agents, and specialty solvents. Our Titanium Technologies segment is a leading, global provider of TiO 2 pigment, a premium white pigment used to deliver whiteness, brightness, opacity, and protection in a variety of applications. Our Advanced Performance Materials segment is a leading, global provider of high-end polymers and advanced materials that deliver unique attributes, including low friction coefficients, extreme temperature resistance, weather resistance, ultraviolet and chemical resistance, and electrical insulation.\nOur world-class product portfolio enables the performance and convenience of everyday products, processes, and technologies people rely on in their daily lives, making our products and the solutions they enable both vital and essential. We are committed to creating value for our customers and stakeholders by leveraging strengths that we use to create competitive advantage: our innovation and technical expertise, our ability to operate complex manufacturing sites safely, our deep customer relationships based on trust and reliability, and our talented workforce. Every day our people bring our chemistry to life, guided by five core values that form the bedrock foundation for how we operate: (i) Safety we are committed to protecting people and the environment; (ii) Integrity we do what's right; (iii) Partnership we win through collaboration with the right internal and external partners; (iv) Ownership we are each accountable for the Company's success; (v) Respect we treat people well, include others, and value diverse perspectives.\nOur core values, in unison with our company vision of Trusted Chemistry, helping people live better lives and communities thrive, underpin our commitment to our stakeholders. Our values and vision cannot be separated from our business strategy.\n73\nThe Chemours Company\nAt Chemours, our approach to Sustainability begins with our vision to deliver Trusted Chemistry that helps people live better lives and communities to thrive. In 2018, we set forth ambitious Corporate Responsibility Commitment (\"CRC\") goals that we aim to achieve by 2030. These goals are designed to promote accountability and enable us to measure and transparently report the progress and impact of our sustainability commitment. Leveraging a robust governance framework, we are working to integrate sustainability across our organization and our business management processes. Our work in sustainability creates value for our shareholders by protecting our right to operate, meeting the needs of our customers, and advancing our corporate strategy, Pathway to Thrive. We understand that maintaining safe, sustainable operations has an impact on us, our communities, the environment, and our collective future. We deliver for our customers and society by designing sustainable offerings that perform at the highest level while minimizing impact on the environment. We are a leader in responsible manufacturing and we value partnership and collaboration to drive change. We are committed to continue working with policymakers, our value chain, and other organizations to find solutions that meet science-based regulations and address community needs.\nRecent Developments\nTariffs\nThe chemicals sector has been and continues to be impacted by changes in U.S. and foreign trade policies, particularly the introduction and adjustment of tariffs by the United States as well as foreign retaliatory tariffs. We actively monitor changes and adjust our operations accordingly to enhance supply chain flexibility, including taking certain pricing actions and evaluating opportunities to source products not directly impacted by existing or potential tariffs. After the U.S. Supreme Court ruled in February 2026 that the International Emergency Economic Powers Act (\"IEEPA\") does not authorize the President of the United States (the \"President\") to impose tariffs, U.S. Customs and Border Protection established a process to return paid IEEPA tariffs to importers. The Company began receiving IEEPA refunds during the second quarter of 2026. In July 2026, the President imposed additional tariffs under Section 301 of the Trade Act of 1974 and Section 338 of the Tariff Act of 1930, which apply to the vast majority of U.S. imports. The President also has imposed additional tariffs on certain products under Section 232 of the Trade Expansion Act of 1962. The long-term impact of tariffs, including potential changes to existing tariffs or the imposition of further retaliatory trade measures, as well as possible tariff refunds, on our business, financial condition and results of operations remains uncertain.\n74\nThe Chemours Company\nResults of Operations and Business Highlights\nResults of Operations\nThe following table sets forth our results of operations for the three and six months ended June 30, 2026 and 2025.\nThree Months Ended June 30,\nSix Months Ended June 30,\n(Dollars in millions, except per share amounts)\n2026\n2025\n2026\n2025\nNet sales\n$\n1,591\n$\n1,615\n$\n2,972\n$\n2,983\nCost of goods sold\n1,305\n1,337\n2,474\n2,469\nGross profit\n286\n278\n498\n514\nSelling, general, and administrative expense\n469\n424\n616\n547\nResearch and development expense\n27\n28\n53\n55\nRestructuring, asset-related, and other charges\n3\n18\n16\n51\nTotal other operating expenses\n499\n470\n685\n653\nEquity in earnings of affiliates\n9\n9\n17\n17\nInterest expense, net\n(68\n)\n(67\n)\n(137\n)\n(133\n)\nLoss on extinguishment of debt\n(2\n)\n(11\n)\nOther income, net\n273\n2\n296\n6\nLoss before income taxes\n(1\n)\n(248\n)\n(22\n)\n(249\n)\nProvision for income taxes\n273\n131\n281\n135\nNet loss\n(274\n)\n(379\n)\n(303\n)\n(384\n)\nLess: Net income attributable to non-controlling interests\n1\n1\nNet loss attributable to Chemours\n$\n(274\n)\n$\n(380\n)\n$\n(303\n)\n$\n(385\n)\nPer share data\nBasic (loss) earnings per share of common stock\n$\n(1.81\n)\n$\n(2.53\n)\n$\n(2.01\n)\n$\n(2.56\n)\nDiluted (loss) earnings per share of common stock\n(1.81\n)\n(2.53\n)\n(2.01\n)\n(2.56\n)\n75\nThe Chemours Company\nNet Sales\nThe following table sets forth the impacts of price, volume, currency, and portfolio changes on our net sales for the three and six months ended June 30, 2026.\nChange in net sales from prior period\nThree Months Ended June 30, 2026\nSix Months Ended June 30, 2026\nPrice\n2\n%\n2\n%\nVolume\n(4\n)%\n(4\n)%\nCurrency\n1\n%\n2\n%\nPortfolio\n%\n%\nTotal change in net sales\n(1\n)%\n%\nOur net sales were relatively flat at $1.6 billion for the three months ended June 30, 2026 and 2025, as a decrease in volume of 4% was offset by an increase in price of 2% and favorable currency movements of 1%. The decrease in volume was primarily driven by lower volumes in Thermal & Specialized Solutions (\"TSS\") and Advanced Performance Materials (\"APM\") segments, while the increase in price was attributable to our TSS and Titanium Technologies (\"TT\") segments.\nOur net sales were relatively flat at $3 billion for the six months ended June 30, 2026 and 2025, as a 4% decrease in volume was offset by a 2% increase in price and favorable currency movements adding a 2% tailwind to the segment's net sales as compared to the same period in the prior year. The decrease in volume was primarily driven by lower volumes in our APM and TT segment, while the increase in price was attributable to our TSS segment.\nThe key drivers of these changes for each of our reportable segments are discussed further under the \"Segment Reviews\" section within this MD&A .\nCost of Goods Sold\nOur cost of goods sold (\"COGS\") was relatively flat at $1.3 billion and $2.5 billion for the three and six months ended June 30, 2026, respectively, compared with COGS of $1.3 billion and $2.5 billion for the same periods in 2025.\nSelling, General, and Administrative Expense\nOur selling, general, and administrative (\"SG&A\") expense increased by $45 million (or 11%) and $69 million (or 13%) to $469 million and $616 million for the three and six months ended June 30, 2026, respectively, compared with SG&A expense of $424 million and $547 million for the same periods in 2025. The increase in our SG&A expense for the three months ended June 30, 2026 was primarily attributable to an increase of approximately $120 million related to adjustments to environmental reserves, as well as a decrease of approximately $10 million in the MOU benefit related to litigation costs. This was partially offset by lower corporate litigation related charges and legacy legal fees in the period of approximately $90 million. The increase in our SG&A expense for the six months ended June 30, 2026 was primarily attributable to an increase of approximately $120 million related to adjustments to environmental reserves, and a decrease of approximately $20 million in the MOU benefit related to litigation costs. This was partially offset by lower corporate litigation related charges and legacy legal fees in the period of approximately $60 million.\nResearch and Development Expense\nOur research and development (\"R&D\") expense was largely unchanged at $27 million and $53 million for the three and six months ended June 30, 2026, respectively, compared with R&D expense of $28 million and $55 million for the same periods in 2025.\nRestructuring, Asset-Related, and Other Charges\nOur restructuring, asset-related, and other charges decreased by $15 million (or 83%) and $35 million (or 69%) to $3 million and $16 million for the three and six months ended June 30, 2026, respectively, compared with restructuring, asset-related, and other charges of $18 million and $51 million for the same periods in 2025. Our restructuring, asset-related, and other charges for the three and six months ended June 30, 2026 were attributable to $2 million and $6 million, respectively, of charges related to our decision to exit our SPS Capstone TM business, along with $1 million and $1 million, respectively, of decommissioning and other charges related to the Titanium Technologies Transformation Program. Additionally, for the six months ended June 30, 2026, our restructuring, asset-related, and other charges were attributable to employee separation charges of $9 million related to the 2026 Restructuring Program. Our restructuring, asset-related, and other charges for the three and six months ended June 30, 2025 were primarily attributable to $17 million and $45 million, respectively, of charges related to our decision to exit our SPS Capstone TM business, along with $1 million and $5 million, respectively, of decommissioning and other charges related to the Titanium Technologies Transformation Program.\n76\nThe Chemours Company\nEquity in Earnings of Affiliates\nOur equity in earnings of affiliates was flat at $9 million and $17 million for the three and six months ended June 30, 2026, respectively, compared with equity in earnings of affiliates of $9 million and $17 million for the same periods in 2025.\nInterest Expense, Net\nOur interest expense, net increased by $1 million (or 1%) and $4 million (or 3%) to $68 million and $137 million for the three and six months ended June 30, 2026, respectively, compared with interest expense, net of $67 million and $133 million for the same periods in 2025. The increase in our interest expense, net was primarily attributable to higher interest rates on our variable rate debt following the amendment to the Amended and Restated Credit Agreement related to the 2032 U.S. Dollar Term Loan in October 2025 and higher interest rates on the issuance of the 2034 Notes in March 2026.\nLoss on Extinguishment of Debt\nFor the three and six months ended June 30, 2026, we recognized a loss on extinguishment of debt of $2 million and $11 million, respectively, related to the partial early redemption of the senior secured Euro term loan due August 2028, along with costs associated with early redemption of the senior unsecured notes due May 2027 and partial early redemption of the senior unsecured notes due November 2028, respectively. See \"Note 15 - Debt\" to the Interim Consolidated Financial Statements for further details.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/1627223/000162722326000024/cc-20260630.htm",
+      "asOf": "2026-08-05",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "Item 1A. RISK FACTORS\nExcept for the updated risk factors set forth below, there have been no material changes to the risk factors disclosed in our Annual Report on Form 10-K for the year ended December 31, 2025.\nWe are subject to extensive environmental and health and safety laws and regulations that may result in unanticipated loss or liability related to our current and past operations, or our ability to place our products on the market, and that may result in significant additional compliance costs or obligations, which in either case, could reduce our profitability or liquidity.\nOur operations, products and production facilities are dependent upon attainment and renewal of requisite operating permits and are subject to extensive environmental and health and safety laws, regulations, and enforcements, proceedings or other actions at national, international, and local levels in numerous jurisdictions, relating to pollution, protection of the environment, climate change, transporting and storing raw materials and finished products, storing and disposing of hazardous wastes, and product content and other safety or human rights concerns. Such laws include, but are not limited to:\nU.S.-based regulations, such as the Comprehensive Environmental Response, Compensation, and Liability Act (\"CERCLA\", often referred to as \"Superfund\"), the Resource Conservation and Recovery Act (\"RCRA\") and similar state and global laws for management and remediation of hazardous materials, the Clean Air Act (\"CAA\") and Clean Water Act (\"CWA\") and similar state and global laws for the protection of air and water resources, and the Toxic Substances Control Act (\"TSCA\");\nForeign-based chemical control regulations, such as the Registration, Evaluation, Authorization, and Restriction of Chemicals (\"REACH\") in the EU, the Chemical Substances Control Law (\"CSCL\") in Japan, MEE Order No. 12 in China, and the Toxic Chemical Substance Control Act (\"TCSCA\") in Taiwan for the production and distribution of chemicals in commerce and reporting of potential adverse effects;\nThe EU Emissions Trading System and similar local and global laws for regulating GHG emissions; and,\nNumerous local, state, federal, and foreign laws, regulations, and enforcements governing materials transport and packaging.\nIf we are found to be in violation of these laws or regulations, which may be subject to change based on legislative, scientific, or other factors, we may incur substantial costs, including fines, damages, criminal or civil sanctions, remediation costs, reputational harm, loss of sales or market access, or experience interruptions in our operations. Our operations and production may also be subject to changes based on increased regulation or other changes to, or restrictions imposed by, any such additional regulations. Any operational interruptions or plant shutdowns may result in delays in production or may cause us to incur additional costs to develop redundancies in order to avoid interruptions in our production cycles, which could result in future asset impairments. In addition, the manner in which adopted regulations (including environmental and safety regulations) are ultimately implemented may affect our products, the demand for and public perception of our products, the reputation of our brands, our market access, and our results of operations. In the event of a catastrophic incident involving any of the raw materials we use or chemicals we produce, we could incur material costs to address the consequences of such event and future reputational costs associated with any such event.\n100\nThe Chemours Company\nOur costs to comply with complex environmental laws and regulations, as well as internal and external voluntary programs, are significant and will continue to be significant for the foreseeable future. These laws and regulations may change and could become more stringent over time, which could result in significant additional compliance costs, increased costs of purchased energy or other raw materials, increased transportation costs, investments in, or restrictions on, our operations, installation or modification of emission control equipment, or additional costs associated with emissions control equipment. Additionally, to the extent these laws, regulations and restrictions are not stringently imposed in the countries in which our competitors operate, our competitors could gain cost or other competitive advantages. As a result of our current and historic operations, including the operations of divested businesses and certain discontinued operations, we also expect to continue to incur costs for environmental investigation and remediation activities at a number of our current or former sites and third-party disposal locations. However, the ultimate costs under environmental laws and the timing of these costs are difficult to accurately predict. While we establish accruals in accordance with U.S. generally accepted accounting principles (\"GAAP\"), the ultimate actual costs and liabilities may vary from the accruals because the estimates on which the accruals are based depend on a number of factors (many of which are outside of our control), including the nature of the matter and any associated third-party claims, the complexity of the site, site geology, the nature and extent of contamination, the type of remedy, the outcome of discussions with regulatory agencies and other Potentially Responsible Parties (\"PRPs\") at multi-party sites, and the number and financial viability of other PRPs. We also could incur significant additional costs as a result of additional contamination that is discovered or remedial obligations imposed in the future. Refer to \"Environmental Matters\" within Item 7 Management's Discussion and Analysis of Financial Condition and Results of Operations and \"Note 17 Commitments and Contingent Liabilities\" to the Interim Consolidated Financial Statements for further information.\nAs discussed in \"Note 17 Commitments and Contingent Liabilities\" to the Interim Consolidated Financial Statements , we continue to have active dialogue with the North Carolina Department of Environmental Quality (\"NC DEQ\") and other stakeholders regarding potential remedies that are both economically and technologically feasible to achieve the objectives of the Consent Order (\"CO\") and Addendum (\"Addendum\") related to the discharge of HFPO Dimer Acid and PFAS from Fayetteville into the Cape Fear River, site surface water, groundwater, and air emissions. The Addendum establishes the procedure to implement specified remedial measures for reducing PFAS loadings from Fayetteville to the Cape Fear River, including construction of a barrier wall with a groundwater extraction system. The estimated liabilities of achieving the CO and Addendum objectives consist of several components, each of which may vary significantly and may exceed the recorded reserve estimates, which could be material.\nThere is also a risk that one or more of our manufacturing processes, key raw materials, or products may be found to have, or be characterized or perceived as having, a toxicological or health-related impact on the environment or on our customers or employees or unregulated emissions, which could potentially result in us incurring liability in connection with such characterization and the associated effects of any toxicological or health-related impact. If such a discovery or characterization occurs, we may incur increased costs in order to comply with new regulatory requirements or as a result of litigation. In addition, the relevant materials or products, including products of our customers incorporating our materials or products, may be recalled, phased-out, or banned.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/1627223/000162722326000024/cc-20260630.htm",
+      "asOf": "2026-08-05",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-Q",
+    "pressRelease": {
+      "text": "EX-99.1\n2\ncc-ex99_1.htm\nEX-99.1\nEX-99.1\nEXHIBIT 99.1\nThe Chemours Company Reports Second Quarter Results\nWilmington, Del., August 4, 2026 &#x2013; The Chemours Company (&#x201c;Chemours&#x201d; or &#x201c;the Company&#x201d;) (NYSE: CC), a global chemistry company with leading market positions in Thermal & Specialized Solutions (&#x201c;TSS&#x201d;), Titanium Technologies (&#x201c;TT&#x201d;), and Advanced Performance Materials (&#x201c;APM&#x201d;), today announced its financial results for the second quarter 2026.\nKey Second Quarter 2026 Results & Recent Highlights 1\n&#x2022; Net Sales of $1.6 billion, approximately flat compared to the corresponding prior-year quarter reflecting pricing increases across all businesses\n&#x2022; Net Loss attributable to Chemours of $274 million, or $1.81 per diluted share, compared with Net Loss attributable to Chemours of $380 million, or $2.53 per diluted share, in the corresponding prior-year quarter\n&#x2022; Adjusted Net Income 2 of $64 million, or $0.42 per diluted share, compared to Adjusted Net Income of $91 million, or $0.61 per diluted share, in the corresponding prior-year quarter\n&#x2022; Adjusted EBITDA 2,3 of $247 million compared to $260 million in the corresponding prior-year quarter, reflecting a strong prior-year comparison from TSS aftermarket performance\n&#x2022; Free Cash Flows improved 128% year-over-year, with Free Cash Flow Conversion of 46% and net leverage declining to 4.4x, advancing Chemours toward its long-term target of sustaining leverage below 3x\n&#x2022; Announced an additional global TiO 2 price increase effective June 1, 2026, contributing to an approximately 5% year-to-date TiO 2 price increase in Net Sales\n&#x2022; APM Performance Solutions Net Sales grew 8% year-over-year, underscoring momentum and mix shift towards high value specialty products serving data center and semiconductor end market\n&#x201c;Our second quarter results reflect disciplined execution across our portfolio, with Adjusted EBITDA near the high end of our guidance range and Free Cash Flows above our expectations despite a dynamic macroeconomic environment,&#x201d; said Denise Dignam, Chemours President and CEO. &#x201c;Progress on pricing actions in Titanium Technologies to drive value, and increased sales in APM&#x2019;s high-value Performance Solutions portfolio supporting our momentum serving data center and semiconductor applications, and continued traction in our liquid cooling solutions, highlight our efforts to drive commercial excellence and growth.&#x201d;\nDignam continued, &#x201c;Chemours also made meaningful progress strengthening its balance sheet through improved cash generation and reduced gross debt, while advancing resolution of notable legacy litigation. Looking ahead to the second half of the year, we remain focused on the actions within our control and committed to executing against our Pathway to Thrive strategy.&#x201d;\n1 Certain prior period amounts have been revised to correct for certain immaterial errors as further described in our Annual Report on Form 10-K for the year ended December 31, 2025.\n2 Non-GAAP measures, including Adjusted Net Income, Adjusted EPS and Adjusted EBITDA referred to throughout, principally exclude the impact of recent litigation settlements for legacy environmental matters and associated fees, in addition to other unallocated items &#x2013; please refer to the attached Reconciliation of GAAP Financial Measures to Non-GAAP Financial Measures (Unaudited)&#x201d;.\n3 Adjusted EBITDA excludes net income attributable to noncontrolling interests, net interest expense, depreciation and amortization, and all remaining provision for income taxes from Adjusted Net Income. See the corresponding reconciliation referenced in footnote #2.\nEXHIBIT 99.1\nTotal Chemours\nQ2 2026\nQ2 2025\nY-o-Y % &#x2206;\nQ1 2026\nQ-o-Q % &#x2206;\nNet Sales (millions)\n$1,591\n$1,615\n(1%)\n$1,381\n15%\nNet Income (Loss) attributable to Chemours ( millions)\n($274)\n($380)\n28%\n($29)\n(845%)\nEarnings (Loss) Per Share 4\n($1.81)\n($2.53)\n28%\n($0.19)\n(853%)\nAdjusted Net Income\n$64\n$91\n(30%)\n$8\n700%\nAdjusted EPS\n$0.42\n$0.61\n(31%)\n$0.05\n740%\nAdjusted EBITDA (millions)\n$247\n$260\n(5%)\n$169\n46%\nSecond quarter 2026 Net Sales were approximately $1.6 billion, a decrease of approximately 1% compared to the prior-year quarter. The year-over-year decrease in Net Sales was driven by a 4% decrease in volumes, partially offset by a 2% increase in price and a 1% currency tailwind. The volume decline was primarily driven by lower TSS Opteon blends aftermarket refrigerant sales, compared with elevated demand in Q2 2025 driven by the initial aftermarket channel fill associated with stationary technology AC transition under the U.S. AIM Act, as well as lower volumes associated with the APM SPS Capstone line closure completed in the third quarter of 2025. These volume headwinds were partially offset by pricing strength across all three segments, including price increases in TT.\nSecond quarter 2026 Net Loss attributable to Chemours was ($274) million, or ($1.81) per diluted share, compared to Net Loss attributable to Chemours of ($380) million, or ($2.53) per diluted share, in the prior-year quarter. The prior-year second quarter loss includes the impact of the announced settlement with the State of New Jersey and related legal and environmental reserves recognized and corresponding tax impacts, while the current-year second quarter loss includes the impact of legal and environmental reserves related to the announced settlement with the EPA and WVDEP as well as ongoing litigation, and corresponding tax impacts, partially offset by a gain on the Kuan Yin property sales. Second quarter Adjusted Net Income decreased compared with the prior-year quarter, primarily due to additional income tax impacts related to the Kuan Yin property sales completed during the second quarter of 2026.\nAdjusted EBITDA for the second quarter of 2026 was $247 million, compared to $260 million in the prior-year quarter. The decrease was driven by the anticipated higher APM costs associated with the recently resolved outage at the Washington Works site, as well as lower sales from APM&#x2019;s SPS Capstone line closure completed in the third quarter of 2025, partially offset by pricing increases across all segments.\n4 On a diluted earnings per share basis.\nEXHIBIT 99.1\nThermal & Specialized Solutions\nQ2 2026\nQ2 2025\nY-o-Y % &#x2206;\nQ1 2026\nQ-o-Q % &#x2206;\nNet Sales (millions)\n$591\n$597\n(1%)\n$568\n4%\nOpteon Refrigerants\n$337\n$375\n(10%)\n$313\n8%\nFreon Refrigerants\n$150\n$123\n22%\n$162\n(7%)\nFoam, Propellants & Other (FP&O)\n$104\n$99\n5%\n$93\n12%\nAdjusted EBITDA (millions)\n$213\n$207\n3%\n$190\n12%\nAdjusted EBITDA Margin\n36%\n35%\n1 ppts\n33%\n3 ppts\nTSS segment second quarter 2026 Net Sales were $591 million, a decrease of 1% versus the prior-year quarter, driven by a 4% decrease in volumes, partially offset by a 2% increase in price and a slight currency tailwind.\nThe decrease in volumes was primarily attributable to lower stationary AC aftermarket refrigerant sales of TSS Opteon blends in North America, compared with elevated demand in Q2 2025 driven by the initial aftermarket channel fill associated with the stationary technology AC transition under the U.S. AIM Act, partially offset by higher Freon prices, primarily in automotive applications.\nAdjusted EBITDA for the quarter increased 3% to $213 million, while Adjusted EBITDA Margin increased one point to 36%. The increase in Adjusted EBITDA was driven by higher pricing, aided by the timing of certain costs in the quarter.\nSequentially, TSS Net Sales increased 4%, driven by a 5% seasonal volume increase, partially offset by mix-related pricing and currency headwinds.\nTitanium Technologies\nQ2 2026\nQ2 2025\nY-o-Y % &#x2206;\nQ1 2026\nQ-o-Q % &#x2206;\nNet Sales (millions)\n$661\n$657\n1%\n$559\n18%\nTiO 2 Pigment\n$639\n$629\n2%\n$541\n18%\nMinerals\n$22\n$28\n(21%)\n$18\n22%\nAdjusted EBITDA (millions)\n$48\n$47\n2%\n$18\n167%\nAdjusted EBITDA Margin\n7%\n7%\n0 ppts\n3%\n4 ppts\nTT segment second quarter 2026 Net Sales were $661 million, a 1% increase compared to the prior-year quarter. The increase was driven by a 2% increase in global pricing and a 1% currency tailwind, more than offsetting a 2% decline in global volumes. Pricing increased across all regions, while the volume decline was driven by lower TiO 2 sales across key end markets, with the exception of Asia excluding China and Latin America.\nTT segment second quarter 2026 Adjusted EBITDA increased to $48 million from $47 million in the prior-year quarter, while Adjusted EBITDA Margin was flat. The increase in Adjusted EBITDA was primarily driven by the global pricing strength noted above, partially offset by higher costs due to inflation.\nSequentially, TT segment second quarter 2026 Net Sales increased 18%, driven by a 15% increase in global volumes and a 3% increase in price, reflecting continued execution of recent TiO 2 pricing actions. Sequential price and volume increases were reflected across all regions.\n4 On a diluted earnings per share basis.\nEXHIBIT 99.1\nAdvanced Performance Materials\nQ2 2026\nQ2 2025\nY-o-Y % &#x2206;\nQ1 2026\nQ-o-Q % &#x2206;\nNet Sales (millions)\n$326\n$346\n(6%)\n$243\n34%\nAdvanced Materials\n$184\n$214\n(14%)\n$143\n29%\nPerformance Solutions\n$142\n$132\n8%\n$100\n42%\nAdjusted EBITDA (millions)\n$26\n$50\n(48%)\n$5\n420%\nAdjusted EBITDA Margin\n8%\n14%\n(6) ppt\n2%\n6 ppts\nAPM segment second quarter 2026 Net Sales were $326 million, a 6% decrease compared to the prior-year quarter. The decrease was driven by a 9% decrease in volumes, partially offset by a 2% increase in price and a slight currency tailwind. The volume decline was primarily driven by the APM SPS Capstone line closure completed in the third quarter of 2025. Performance Solutions Net Sales increased 8% year-over-year, supported by order book strength and continued momentum in high-value specialty products serving data center and semiconductor end markets.\nAPM segment second quarter 2026 Adjusted EBITDA decreased 48% to $26 million compared to the prior-year quarter, while Adjusted EBITDA Margin decreased six percentage points to 8%. The decrease in Adjusted EBITDA was primarily driven by lower sales associated with the SPS Capstone line closure, as well as higher costs from the now-resolved outage at the Washington Works site.\nSequentially, APM segment second quarter 2026 Net Sales increased approximately 34%, driven by a 31% increase in volumes reflecting more normalized operations at the Washington Works site and a 4% pricing uplift, partially offset by a slight currency headwind. Performance Solutions Net Sales increased 42% sequentially, reflecting continued order book strength and momentum in high-value specialty products serving data center and semiconductor end markets.\nEXHIBIT 99.1\nOther Non-Reportable Segment\nThe Performance Chemicals and Intermediates business in the Company&#x2019;s Other Non-Reportable Segment had Net Sales and Adjusted EBITDA for the second quarter 2026 of $13 million and $2 million, respectively.\nCorporate Expenses\nCorporate Expenses were $42 million in the second quarter of 2026, a decrease of approximately $4 million compared to the prior-year quarter. This was primarily due to lower costs associated with legacy litigation activities.\nLiquidity and Capital Allocation\nAs of June 30, 2026, consolidated gross debt was $3.9 billion. Debt, net of $671 million in unrestricted cash and cash equivalents, was $3.2 billion, resulting in a net leverage ratio of approximately 4.4x on a trailing twelve-month Adjusted EBITDA basis. Total liquidity was $1.6 billion, comprised of $671 million in unrestricted 5 cash and cash equivalents and $953 million of revolving credit facility capacity, net of outstanding letters of credit.\nDuring the quarter, the Company paid down &#x20ac;230 million of the outstanding tranche of the B-3 Euro-denominated Term Loan due August 2028, using a mixture of proceeds from the previously announced Kuan Yin land sale and organic cash. The Company anticipates further debt repayments in 2026.\nOperating cash flows for the second quarter of 2026 were $158 million, compared to $93 million in the prior-year quarter, highlighting improvements in net working capital performance.\nCapital expenditures for the second quarter of 2026 amounted to $44 million, an increase compared to $43 million in the prior-year quarter.\nFree Cash Flows for the second quarter of 2026 were $114 million, compared to $50 million in the second quarter of 2025.\n5 Restricted cash approximated $52 million of the end of the second quarter of 2026, reflecting primarily escrow payments Chemours has made related to the MOU agreement with DuPont, Corteva and EID as further described in our Quarterly Report on Form 10-Q for the quarter ended June 30, 2026.\nEXHIBIT 99.1\nThird Quarter 2026 Outlook\nIn the third quarter, the Company expects consolidated Net Sales to decrease in the range of 5% to flat, sequentially, driven by weaker Opteon blends aftermarket refrigerant demand in TSS, with consolidated Adjusted EBITDA expected to range between $175 million and $205 million. Corporate Expenses are expected to approximate $40 million to $45 million. The Company also anticipates capital expenditures to approximate $65 million, with Free Cash Flows of at least $50 million, reflecting the timing of payments for plant turnaround activities commencing later in the third quarter.\nTSS expects Net Sales will sequentially decrease in the mid-teens to 20% range, driven by less favorable seasonality in connection with the 2026 cooling season in the Northern Hemisphere and weaker Opteon blends aftermarket refrigerant demand in North America due to elevated market inventory levels from the initial channel fill in mid-2025. Adjusted EBITDA is expected to be between $125 million and $140 million.\nTT expects a sequential Net Sales increase in the low-to-mid single-digit percentage range, driven by recent pricing announcements, with stable volumes. Adjusted EBITDA is expected to range between $70 million and $80 million.\nAPM expects a sequential Net Sales increase in the mid-to-high single-digit percentage range, driven by a return to normal operating levels at the Washington Works facility and continued strength in the Performance Solutions order book in high-value specialty products primarily serving data center and semiconductor end markets. Adjusted EBITDA for APM is expected to be between $20 million and $30 million.\nFull Year 2026 Outlook\nThe Company continues to expect 2026 Net Sales to grow in the range of 1% to 5% over 2025, with Adjusted EBITDA between $775 million and $825 million. Moving later into the second half, this outlook is supported by broader pricing momentum in TT with seasonal volume declines offset by anticipated cost improvements, APM&#x2019;s demand strength in high-value end markets supported by operational improvements driving earnings above near-term levels, and TSS aftermarket weakness driving slightly weaker earnings to end the year. Capital expenditures are anticipated to be between $250 million and $280 million, with overall Free Cash Flow Conversion above 25%, due to increased earnings and improvements in working capital throughout the year. The Company continues to anticipate achieving a net leverage ratio of around 3.8x by the end of 2026.\nEXHIBIT 99.1\nConference Call\nAs previously announced, Chemours will hold a conference call and webcast on August 5, 2026, at 8:00 AM Eastern Daylight Time. The webcast and materials can be accessed by visiting the Events & Presentations page of Chemours&#x2019; investor website, investors.chemours.com . A webcast replay of the conference call will be available on Chemours&#x2019; investor website.",
+      "source": "edgar:8-K ex-99.1",
+      "url": "https://www.sec.gov/Archives/edgar/data/1627223/000162722326000021/cc-ex99_1.htm",
+      "asOf": "2026-08-04",
+      "truncated": true
+    },
+    "proxyStatement": {
+      "text": "Board and director independence:\nDIRECTOR INDEPENDENCE\nThe NCG Committee is responsible for reviewing the qualifications and independence of members of the Board and its various committees on a periodic basis, as well as the composition of the Board as a whole. This assessment includes members' qualifications as independent, as well as consideration of skills and experience specific to the needs of the Board.\nDirector nominees are recommended to the Board by the NCG Committee in accordance with the policies and principles set forth in the NCG Committee Charter. The ultimate responsibility for selection of director nominees resides with the Board. The qualifications that the Board considers when nominating directors is discussed in more detail under \"Director Qualification Process\" in this Proxy Statement.\nINDEPENDENT DIRECTORS\nThe Board assesses the independence of each director and examines the nature and extent of any relationships between the Company and directors, their families and their affiliates. The Corporate Governance Guidelines provide that a director is \"independent\" if he or she satisfies the NYSE Listing Standards on director independence and the Board affirmatively determines that the director has no material relationship with the Company (either directly, or as a partner, shareholder or officer of an organization that has a relationship with the Company). The Board has determined that, with the exception of our CEO, Denise Dignam, each of the director nominees George R. Brokaw, Alister Cowan, Mary B. Cranston, Pamela F. Fletcher, Erin N. Kane, Joseph D. Kava, Sean D. Keohane, Courtney R. Mather, Livingston (Tony) L. Satterthwaite and Leslie M. Turner are independent.\nINDEPENDENT COMMITTEES\nAll members serving on the Audit Committee, CLDC and NCG Committee must be independent as defined by the Company's Corporate Governance Guidelines.\nIn addition, Audit Committee members must meet heightened independence criteria under NYSE Listing Standards and the rules and regulations of the SEC relating to audit committees. Each CLDC member also meets the heightened independence criteria under NYSE Listing Standards and the rules and regulations of the SEC relating to compensation committees and is a \"non-employee director\" pursuant to the Securities Exchange Act of 1934, as amended (the \"Exchange Act\").\nThe Board has determined that each member of the Audit Committee, CLDC and NCG Committee meets the requisite independence criteria and related requirements.\nDIRECTOR EDUCATION\nNew directors participate in an orientation process to become familiar with the Company and its strategic plans and businesses, significant financial matters and core values including ethics, compliance programs, corporate governance practices and other key policies and practices, through a review of background materials, meetings with senior executives and visits to Company facilities.\n\nCompensation discussion and analysis:\nCOMPENSATION DISCUSSION AND ANALYSIS\nNAMED EXECUTIVE OFFICERS FOR FISCAL YEAR 2025\nThis Compensation Discussion and Analysis (\"CD&A\") primarily focuses on the compensation of our NEOs for fiscal year 2025. The table below represents our NEOs for fiscal year 2025 and their respective titles at the end of fiscal year 2025:\nDENISE DIGNAM\nPresident and Chief Executive Officer\nSHANE HOSTETTER\nSenior Vice President, Chief Financial Officer\nKRISTINE WELLMAN\nSenior Vice President, General Counsel and Corporate Secretary\nJOSEPH MARTINKO\nPresident, Thermal and Specialized Solutions\nGERARDO FAMILIAR\nPresident, Advanced Performance Materials\nThe CD&A is organized into six sections:\n1.\n2.\n3.\n4.\n5.\n6.\nExecutive Summary\nExecutive Compensation Philosophy and Pay-for- Performance\nExecutive Compensation Decision Making\n2025 Executive Compensation Highlights\nCompany Sponsored Employee Benefits\nOther Compensation Matters\n2026 PROXY STATEMENT |\n43\nTABLE OF CONTENTS\nEXECUTIVE SUMMARY\n2025 BUSINESS HIGHLIGHTS\nIn 2025, Chemours made significant progress executing our PTT strategy with discipline to strengthen our long-term position, while maintaining the flexibility needed to seize new growth opportunities, despite a challenging macroeconomic environment. Over the course of the year, the Company continued to reinforce its leadership role in the U.S. technology transition advancing critical solutions that enable next-generation mobility, energy efficiency, and advanced manufacturing while driving meaningful growth opportunities for Chemours. The Company drove out costs and positioned itself for stronger cash generation, reshaped its portfolio to support high-value applications, resolved legacy liabilities and continued to advocate for its essential chemistries and science-based regulation globally.\nThe management team continued to focus on cash generation and the rebalancing of our debt profile, making notable progress toward our long-term target of achieving a net leverage ratio below 3x across economic cycles.\nAs a part of its annual financial performance, Chemours drove double-digit growth in the Opteon refrigerants portfolio, resulting in record sales results for TSS in each quarter and the full year for 2025, while also ending the year with volume and pricing stability in the TT segment. The APM portfolio faced continued weak and cyclically sensitive end-markets, but was able to position itself for long term growth in high-value semiconductor and data center end-markets as a part of the Company's focus to pursue selective growth.\nWhile unfavorable factors impacted financial performance, Chemours provided added clarity around its business priorities under PTT emphasizing its resolve to deliver long-term shareholder value underpinned by a conservative capital allocation policy to drive cash flow and de-lever over time.\nOur 2025 results include 4 :\nNet Sales of $5.8 billion, flat compared to the prior year\nNet Loss of $386 million with EPS of ($2.57), a decline of $3.03 year-over-year\nAdjusted Net Income of $143 million with Adjusted EPS of $0.95, down $0.24 year-over-year 5\nAdjusted EBITDA of $742 million, down 3% year-over-year\nReturned $78 million to shareholders in dividends\nFull year 2025 Net Sales of $5.8 billion were flat compared to the prior year, with record annual sales in TSS driven by double-digit year-over-year sales growth in Opteon .\nAdjusted EBITDA for the full year 2025 was $742 million, compared to $768 million in the prior year. This decrease was primarily driven by lower cost absorption tied to lower production levels concentrated in APM and TT paired with operational disruptions, partially offset by volume increases in TSS and global cost reduction efforts.\nOperating cash provided for the full year 2025 totaled $264 million, an increase of $897 million compared to the prior year. The increase of operating cash flow reflects business cash flow performance from earnings and working capital compared with an increased cash usage in 2024 related to the release of the $592 million of restricted cash and cash equivalents per the terms of the U.S. Public Water System Class Action Suit Settlement agreement, along with cash impacts due to the unwinding of 2023 year-end net working capital actions. Capital\n4\nAdjusted EBITDA, Adjusted EPS and Adjusted Net Income are non-GAAP financial measures. Please refer to the Appendix A for a reconciliation of these non-GAAP measures to the most directly comparable GAAP measures.\n5\nIn 2025, Chemours recorded litigation-related charges pertaining to litigation settlements, PFOA drinking water treatment accruals, and other related legal fees.\n\nSecurity ownership:\nSECURITY OWNERSHIP OF CERTAIN BENEFICIAL OWNERS AND MANAGEMENT\nSECURITY OWNERSHIP OF DIRECTORS AND MANAGEMENT\nThe following table sets forth information with respect to the beneficial ownership of Chemours' common stock as of March 2, 2026 by each of the Company's directors and nominees, NEOs, and all directors, nominees and executive officers as a group.\nAmount and nature of beneficial ownership:\nName of Beneficial Owner\nDirect (1)\nIndirect (2)\nRight to\nAcquire (3)\nTotal\nPercent of\nClass\nDenise Dignam\n79,875\n390,527\n470,402\n*\nShane Hostetter\n16,875\n61,763\n78,638\n*\nKristine M. Wellman\n33,302\n117,114\n150,416\n*\nJoseph Martinko\n12,215\n72,312\n84,527\n*\nGerardo Familiar\n17,398\n70,434\n87,832\n*\nMichael Foley\n3,500\n3,500\n*\nGeorge R. Brokaw\n14,389\n14,389\n*\nAlister Cowan\n10,200\n26,368\n36,568\n*\nMary B. Cranston\n22,643\n76,623\n99,266\n*\nPamela F. Fletcher\n25,076\n25,076\n*\nErin N. Kane\n66,549\n66,549\n*\nJoseph D. Kava\n17,335\n17,335\n*\nSean D. Keohane\n5,858\n59,220\n65,078\n*\nCourtney R. Mather (4)\n20,605\n20,605\n*\nLivingston L. Satterthwaite\n24,499\n24,499\n*\nLeslie M. Turner\n17,335\n17,335\n*\nDirectors, nominees and executive officers, as\na group (17 persons)\n208,004\n1,072,379\n1,280,383\n*\n*\nIndicates ownership of less than 1% of the outstanding shares of Chemours common stock. Each of the Company's executive officers, directors and nominees may be contacted at 1007 Market Street, Wilmington, DE 19801.\n(1)\nShares held individually or jointly with others, or in the name of a bank, broker or nominee for the individual's account.\n(2)\nShares over which directors, nominees and executive officers may be deemed to have or share voting or investment power, including shares owned by trusts and certain relatives.\n(3)\nShares which directors and executive officers had a right to acquire beneficial ownership of within 60 days from March 2, 2026, through the exercise of stock options or through the conversion of stock units held under the Company's equity-based compensation plans.\n(4)\nMr. Mather is an officer of Vision One Management Partners, LP or one of its affiliates (collectively, \"Vision One\"). Mr. Mather disclaims beneficial ownership of the 1,720,189 shares of common stock of the Company beneficially owned by Vision One.\n2026 PROXY STATEMENT |\n41\nTABLE OF CONTENTS\nSECURITY OWNERSHIP OF 5% BENEFICIAL OWNERS\nThe following table sets forth, as of March 2, 2026, information regarding ownership of Chemours common stock by any entity or person, to the extent known by us or ascertainable from public filings, that is the beneficial owner of more than five percent of the common stock.\nName and Address of Beneficial Owner\nNumber of Shares\nBeneficially Owned\nPercent of\nClass ( 1)\nBlackRock, Inc ( 2)\n50 Hudson Yards\nNew York, NY 10001\n55 East 52nd Street\n25,235,416\n16.81%\nThe Vanguard Group ( 3)\n100 Vanguard Blvd.\nMalvern, PA 19355\n17,663,980\n11.76%\n(1)\nOwnership percentages based on 150,111,263 shares outstanding as of March 2, 2026.\n(2)\nBased solely on a Schedule 13G/A regarding holdings in Chemours common stock filed with the SEC on July 17, 2025, BlackRock, Inc. reported that it had sole voting power with respect to 24,977,712 shares and sole dispositive power with respect to 25,235,416 shares as of June 30, 2025.\n(3)\nBased solely on a Schedule 13G/A regarding holdings in Chemours common stock filed with the SEC on July 29, 2025, The Vanguard Group reported that it had shared voting power with respect to 181,238 shares, sole dispositive power with respect to 17,324,381 shares, and shared dispositive power with respect to 339,599 shares as of June 30, 2025.\n42\n| 2026 PROXY STATEMENT\nTABLE OF CONTENTS\n2025 EXECUTIVE COMPENSATION OVERVIEW",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/1627223/000110465926025935/tm2530256-1_def14a.htm",
+      "asOf": "2026-03-10",
+      "truncated": true
+    },
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T21:45:20.648Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T21:45:20.648Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T21:45:20.648Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T21:45:20.648Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T21:45:20.648Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T21:45:20.648Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T21:45:20.648Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T21:45:20.648Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T21:45:20.648Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T21:45:20.648Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T21:45:20.648Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T21:45:20.648Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-23T21:45:20.648Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-23T21:45:20.648Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T21:45:20.648Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T21:45:20.648Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T21:45:20.648Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T21:45:20.648Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T21:45:20.648Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T21:45:20.648Z"
+    }
+  ]
+}

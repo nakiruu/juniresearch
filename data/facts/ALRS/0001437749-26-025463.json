@@ -1,0 +1,577 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "ALRS",
+  "cik": 903419,
+  "company": "Alerus Financial Corporation",
+  "exchange": "NASDAQCM",
+  "sic": 6021,
+  "sicDescription": "National Commercial Banks",
+  "filing": {
+    "form": "10-Q",
+    "accession": "0001437749-26-025463",
+    "filedDate": "2026-08-03",
+    "periodEnd": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/903419/000143774926025463/alrs20260630_10q.htm"
+  },
+  "capturedAt": "2026-09-23T10:37:09.257Z",
+  "quote": {
+    "price": 32.2,
+    "marketCap": 802666368,
+    "sharesOutstanding": 24927526.95652174,
+    "sharesSource": "derived",
+    "week52Low": 20.31,
+    "week52High": 34.4,
+    "dividendYield": 0.0271,
+    "asOf": "2026-09-23"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          234486000,
+          210952000,
+          168068000,
+          221975000,
+          224375000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          52681000,
+          40005000,
+          11696000,
+          17780000,
+          17439000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          2.97,
+          2.1,
+          0.58,
+          0.83,
+          0.68
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          242311000,
+          58242000,
+          129893000,
+          61239000,
+          67192000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          58933000,
+          436923000,
+          373126000,
+          298029000,
+          367982000
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          -183378000,
+          378681000,
+          243233000,
+          236790000,
+          300790000
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          359403000,
+          356872000,
+          369127000,
+          495410000,
+          564934000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          149832000,
+          102966000,
+          26819000,
+          21746000,
+          67530000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -1706000,
+          -1789000,
+          -3073000,
+          -12370000,
+          -8699000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          -712000,
+          -738000,
+          -6638000,
+          -276000,
+          -737000
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          -10751000,
+          -12800000,
+          -14822000,
+          -15445000,
+          -20823000
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          148126000,
+          101177000,
+          23746000,
+          9376000,
+          58831000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q2'26",
+    "periodEnd": "2026-06-30",
+    "revenue": 80657000,
+    "operatingMargin": null,
+    "revenueYoY": 0.0783742228758606
+  },
+  "ttm": {
+    "pe": 29.814814814814817,
+    "ps": 3.383822433570679,
+    "evToEbitda": null,
+    "grossMargin": null,
+    "operatingMargin": null,
+    "netMargin": 0.11680515330491933,
+    "netDebtToEbitda": null,
+    "interestCoverage": null,
+    "currentRatio": null,
+    "fcfYield": 0.1112678985448659
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 311084200,
+      "eps": 3.016
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 319401200,
+      "eps": 2.82
+    }
+  },
+  "analysts": {
+    "count": 5,
+    "buy": 1,
+    "hold": 4,
+    "sell": 0,
+    "consensusRating": "None",
+    "consensusTarget": 35.4,
+    "medianTarget": 36,
+    "highTarget": 37,
+    "lowTarget": 32,
+    "asOf": "2026-09-23"
+  },
+  "segments": {
+    "basis": "FY25 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 224375000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "AROW",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "BHB",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "BWB",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "FMNB",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-10",
+      "close": 33.209999084472656
+    },
+    {
+      "date": "2026-08-11",
+      "close": 33.439998626708984
+    },
+    {
+      "date": "2026-08-12",
+      "close": 33.84000015258789
+    },
+    {
+      "date": "2026-08-13",
+      "close": 33.900001525878906
+    },
+    {
+      "date": "2026-08-14",
+      "close": 33.66999816894531
+    },
+    {
+      "date": "2026-08-17",
+      "close": 33.4900016784668
+    },
+    {
+      "date": "2026-08-18",
+      "close": 33.599998474121094
+    },
+    {
+      "date": "2026-08-19",
+      "close": 32.68000030517578
+    },
+    {
+      "date": "2026-08-20",
+      "close": 32.59000015258789
+    },
+    {
+      "date": "2026-08-21",
+      "close": 32.77000045776367
+    },
+    {
+      "date": "2026-08-24",
+      "close": 32.86000061035156
+    },
+    {
+      "date": "2026-08-25",
+      "close": 33.06999969482422
+    },
+    {
+      "date": "2026-08-26",
+      "close": 33.22999954223633
+    },
+    {
+      "date": "2026-08-27",
+      "close": 33.2400016784668
+    },
+    {
+      "date": "2026-08-28",
+      "close": 33.119998931884766
+    },
+    {
+      "date": "2026-08-31",
+      "close": 32.900001525878906
+    },
+    {
+      "date": "2026-09-01",
+      "close": 32.61000061035156
+    },
+    {
+      "date": "2026-09-02",
+      "close": 33.310001373291016
+    },
+    {
+      "date": "2026-09-03",
+      "close": 33.369998931884766
+    },
+    {
+      "date": "2026-09-04",
+      "close": 33.790000915527344
+    },
+    {
+      "date": "2026-09-08",
+      "close": 33.22999954223633
+    },
+    {
+      "date": "2026-09-09",
+      "close": 32.79999923706055
+    },
+    {
+      "date": "2026-09-10",
+      "close": 32.93000030517578
+    },
+    {
+      "date": "2026-09-11",
+      "close": 33.27000045776367
+    },
+    {
+      "date": "2026-09-14",
+      "close": 33.31999969482422
+    },
+    {
+      "date": "2026-09-15",
+      "close": 33.369998931884766
+    },
+    {
+      "date": "2026-09-16",
+      "close": 33.040000915527344
+    },
+    {
+      "date": "2026-09-17",
+      "close": 32.779998779296875
+    },
+    {
+      "date": "2026-09-18",
+      "close": 32.75
+    },
+    {
+      "date": "2026-09-21",
+      "close": 32.439998626708984
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "Alerus Financial Corporation operates as the bank holding company for Alerus Financial, National Association that provides various financial services to businesses and consumers in the United States. The company operates in three segments: Banking, Retirement and Benefit Services, and Wealth. It offers demand deposits, interest-bearing transaction accounts, money market accounts, time and savings deposits, noninterest-bearing deposits, interest-bearing checking accounts, and certificates of deposit; and treasury management products, including electronic receivables management, remote deposit capture, cash vault, merchant, and other cash management services. The company also provides commercial loans, business term loans, and lines of credit; commercial real estate, and commercial and industrial loans; consumer lending products, including residential first mortgage loans; and installment loans, and loans collateralized by cash and marketable securities. In addition, it offers retirement plan, and investment advisory services, employee stock ownership plan, investment fiduciary services, health savings accounts, flex spending accounts, COBRA recordkeeping, and other administration services, as well as individual retirement accounts; and financial planning, investment management, personal and corporate trust, estate administration, and custody services. Further, the company provides debit cards, personal and business loans, credit cards, online and mobile banking/wallet, private banking, deposit and payment solutions, mortgages, administration, and government health insurance program services. The company was formerly known as First National Bank North Dakota and changed its name to Alerus Financial Corporation in 2000. Alerus Financial Corporation was founded in 1879 and is headquartered in Grand Forks, North Dakota.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-23"
+    },
+    "mdaExcerpt": {
+      "text": "ITEM 2 MANAGEMENT'S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS\nGeneral\nThe following discussion explains the Company ' s financial condition and results of operations as of and for the three and six months ended June 30, 2026 and 2025 . Annualized results for this interim period may not be indicative of results for the full year or future periods. The following discussion and analysis should be read in conjunction with the consolidated financial statements and related notes presented elsewhere in this report and the Company ' s Annual Report on Form 10-K for the year ended December 31, 2025 , filed with the SEC on March 4, 2026.\nForward-Looking Statements\nThis Quarterly Report on Form 10-Q contains \"forward-looking statements\" within the meaning of Section 27A of the Securities Act of 1933, as amended, and Section 21E of the Securities Exchange Act of 1934, as amended. The Company intends such forward-looking statements to be covered by the safe harbor provisions of the U.S. Private Securities Litigation Reform Act of 1995. Forward-looking statements include, without limitation, statements concerning plans, estimates, calculations, forecasts and projections with respect to the anticipated future performance of Alerus Financial Corporation. These statements are often, but not always, identified by words such as \"may,\" \"might,\" \"should,\" \"could,\" \"predict,\" \"potential,\" \"believe,\" \"expect,\" \"continue,\" \"will,\" \"anticipate,\" \"seek,\" \"estimate,\" \"intend,\" \"plan,\" \"projection,\" \"would,\" \"annualized,\" \"target\" and \"outlook,\" or the negative version of those words or other comparable words of a future or forward-looking nature. Examples of forward-looking statements include, among others, statements the Company makes regarding the Company's projected growth, anticipated future financial performance, financial condition, credit quality, management's long-term performance goals and the future plans and prospects of Alerus Financial Corporation.\nForward-looking statements are neither historical facts nor assurances of future performance. Instead, they are based only on the Company's current beliefs, expectations and assumptions regarding the Company's business, future plans and strategies, projections, anticipated events and trends, the economy and other future conditions. Because forward-looking statements relate to the future, they are subject to inherent known and unknown uncertainties, risks, changes in circumstances, and other factors that are difficult to predict and many of which are outside of the Company's control. The Company's actual results and financial condition may differ materially from those indicated in forward-looking statements. Therefore, you should not rely on any of these forward-looking statements. Important factors that could cause the Company's actual results and financial condition to differ materially from those indicated in forward-looking statements include, among others, the following:\nthe strength of the local, state, national and international economies and financial markets (including effects of inflationary pressures and future monetary policies of the Board of Governors of the Federal Reserve System (the \"Federal Reserve\") and executive orders in response thereto);\ninterest rate risk, including the effects of changes in interest rates;\neffects on the U.S. economy resulting from actions taken by the federal government, including the threat or implementation of tariffs, immigration enforcement, executive orders, and changes in foreign policy;\ndisruptions to the global supply chain, including as a result of domestic or foreign policies;\nthe Company's ability to successfully manage credit risk, including in the CRE portfolio, and maintain an adequate level of allowance for credit losses;\nbusiness and economic conditions generally and in the financial services industry, nationally and within the Company's market areas, including the level and impact of inflation rates and possible recession;\nthe Company's ability to raise additional capital to implement its business plan;\ncredit risks and risks from concentrations (including by type of borrower, geographic area, collateral, and industry) within the Company's loan portfolio;\nthe concentration of large loans to certain borrowers (including CRE loans);\nthe level of nonperforming assets on the Company's balance sheet;\nthe Company's ability to implement organic and acquisition growth strategies;\nthe commencement, cost, and outcome of litigation and other legal proceedings and regulatory actions against the Company or to which the Company may become subject, including with respect to pending actions relating to the Company's previous ESOP fiduciary services commenced by government and private parties;\nthe impact of economic or market conditions on the Company's fee-based services;\nthe Company's ability to continue to grow the retirement and benefit services business;\nthe Company's ability to continue to originate a sufficient volume of residential mortgages;\nthe occurrence of fraudulent activity, breaches or failures of the Company's or its third-party vendors' information security controls or cybersecurity-related incidents, including as a result of sophisticated attacks using artificial intelligence and similar tools or as a result of insider fraud;\n40\nTable of Contents\ninterruptions involving the Company's information technology and telecommunications systems or third-party servicers;\npotential losses incurred in connection with mortgage loan repurchases;\nthe composition of the Company's executive management team and the Company's ability to attract and retain key personnel;\nrapid and expensive technological changes implemented by the Company and other parties in the financial services industry, including third-party vendors, which may be more difficult to implement or more expensive than anticipated or which may have unforeseen consequences to us and our customers, including the development and implementation of tools incorporating artificial intelligence;\nemerging issues related to the development and use of artificial intelligence that could give rise to legal or regulatory action, damage our reputation, or otherwise materially harm our business or customers;\nincreased competition in the financial services industry, including from non-banks such as credit unions, financial technology companies and digital asset service providers;\nthe Company's ability to successfully manage liquidity risk, including the Company's need to access higher cost sources of funds such as fed funds purchased and short-term borrowings;\nthe concentration of large deposits from certain clients, including those who have balances above current Federal Deposit Insurance Corporation (\"FDIC\") insurance limits;\nthe effectiveness of the Company's risk management framework;\npotential impairment to the goodwill the Company recorded in connection with the Company's past acquisitions, including the acquisitions of Metro Phoenix Bank and HMN Financial, Inc. (\"HMNF\");\nthe extensive regulatory framework that applies to the Company;\nthe ability of the Bank to pay dividends to the Company, and the Company's ability to pay dividends to its stockholders;\nnew or revised accounting standards, as may be adopted by state and federal regulatory agencies, the FASB, the SEC or the Public Company Accounting Oversight Board;\nfluctuations in the values of the securities held in the Company's securities portfolio, including as a result of changes in interest rates;\ngovernmental monetary, trade and fiscal policies;\nrisks related to climate change and the negative impact it may have on the Company's customers and their businesses;\nsevere weather, natural disasters, and widespread disease or pandemics;\nacts of war, military conflicts, or terrorism, including the wars in Iran and Ukraine, ongoing conflicts in the Middle East, and other international military conflicts, or adverse external events and changes in foreign relations that can increase levels of political and economic unpredictability, contribute to rising energy and commodity prices, affect global supply chains, increase the volatility of financial markets, and other matters beyond our control;\nthe availability of future equity and debt issuances and other capital raising opportunities on favorable terms;\nany material weaknesses in the Company's internal control over financial reporting;\nthe Company's success at managing and responding to the risks involved in the foregoing items; and\nany other risks described in the \"Risk Factors\" section of this report and in other reports filed by Alerus Financial Corporation with the SEC.\nAny forward-looking statement made by the Company in this report is based only on information currently available to the Company and speaks only as of the date on which it is made. The Company undertakes no obligation to publicly update any forward-looking statement, whether written or oral, that may be made from time to time, whether as a result of new information, future developments or otherwise.\nOverview\nThe Company is a commercial wealth advisory services bank and national retirement and benefit services provider headquartered in Grand Forks, North Dakota. Through the Company's subsidiary, Alerus Financial, National Association, the Company provides financial solutions to businesses and consumers through three distinct business lines banking, retirement and benefit services, and wealth advisory services. These solutions are delivered through a relationship oriented primary point of contact along with responsive and client friendly technology.\nThe Company's business model produces strong financial performance and a diversified revenue stream, which has helped the Company establish a brand and culture yielding both a loyal client base and passionate and dedicated employees. The Company generates a majority of overall revenue from noninterest income, which is driven primarily by the Company's retirement and benefit services and wealth advisory services business lines. The remainder of the Company's revenue consists of net interest income, which the Company derives from offering traditional banking products and services.\n41\nTable of Contents\nCritical Accounting Policies\nCritical accounting policies are defined as those that are reflective of significant judgements and uncertainties and could potentially result in materially different results under different assumptions and conditions. In preparing the Company's consolidated financial statements, management is required to make significant estimates and assumptions that affect assets, liabilities, revenues, and expenses reported. Actual results could differ materially from our current estimates as a result of changing conditions and future events. Several estimates are particularly critical and are susceptible to significant near term change, including (i) the ACL on loans; (ii) goodwill impairment; and (iii) fair value of loans acquired in business combinations.\nThe Company's Annual Report on Form 10-K for the year ended December 31, 2025 includes a discussion of the Company's critical accounting policies. There have been no material changes to the Company's critical accounting policies from those disclosed within its Annual Report on Form 10-K for the year ended December 31, 2025.\nRefer to \"NOTE 2 Recent Accounting Pronouncements\" of the consolidated financial statements included in this report for a discussion of accounting pronouncements issued but yet to be adopted and implemented.\nRecent Developments\nStockholder Dividend\nOn May 21, 2026, the Board of Directors of the Company declared a quarterly cash dividend of $0.22 per share of common stock. This dividend was paid on July 10, 2026, to stockholders of record at the close of business on June 26, 2026.\nProperty Sales\nThe Company's West Fargo, North Dakota branch is listed for sale for $3.8 million and is expected to sell within the next 12 months. At June 30, 2026, the facility had a carrying value of approximately $0.4 million. The Company expects to record a gain on the sale upon closing, as the expected sale price is greater than the property's carrying value.\nOperating Results Overview\nThe following table summarizes key financial results as of and for the periods indicated:\nThree months ended\nSix months ended\nJune 30,\nMarch 31,\nJune 30,\nJune 30,\nJune 30,\n(dollars and shares in thousands, except per share data)\n2026\n2026\n2025\n2026\n2025\nPerformance Ratios\nReturn on average total assets\n1.60\n%\n1.79\n%\n1.53\n%\n1.69\n%\n1.28\n%\nAdjusted return on average total assets (1)\n1.58\n%\n1.79\n%\n1.41\n%\n1.68\n%\n1.26\n%\nReturn on average common equity\n14.56\n%\n16.44\n%\n15.82\n%\n15.49\n%\n13.37\n%\nReturn on average tangible common equity (1)\n19.33\n%\n21.85\n%\n22.65\n%\n20.57\n%\n19.66\n%\nAdjusted return on average tangible common equity (1)\n19.04\n%\n21.96\n%\n21.02\n%\n20.48\n%\n19.36\n%\nNoninterest income as a % of revenue\n40.85\n%\n40.72\n%\n42.47\n%\n40.78\n%\n41.37\n%\nAdjusted noninterest (loss) income as a % of revenue (1)\n40.36\n%\n40.73\n%\n40.86\n%\n40.54\n%\n40.52\n%\nNet interest margin (taxable-equivalent basis) (1)\n3.97\n%\n3.77\n%\n3.51\n%\n3.87\n%\n3.46\n%\nEfficiency ratio (1)\n62.53\n%\n63.39\n%\n60.66\n%\n62.95\n%\n64.54\n%\nAdjusted efficiency ratio (1)\n62.76\n%\n63.20\n%\n62.35\n%\n62.97\n%\n64.55\n%\nNet charge-offs (recoveries) to average loans (1)\n0.26\n%\n0.71\n%\n0.37\n%\n0.48\n%\n0.21\n%\nDividend payout ratio\n27.16\n%\n23.60\n%\n26.92\n%\n25.29\n%\n31.54\n%\nPer Common Share\nEarnings per common share basic\n$\n0.82\n$\n0.90\n$\n0.79\n$\n1.72\n$\n1.31\nEarnings per common share diluted\n$\n0.81\n$\n0.89\n$\n0.78\n$\n1.70\n$\n1.30\nAdjusted earnings per common share diluted (1)\n$\n0.80\n$\n0.89\n$\n0.72\n$\n1.69\n$\n1.27\nDividends declared per common share\n$\n0.22\n$\n0.21\n$\n0.21\n$\n0.43\n$\n0.41\nBook value per common share\n$\n23.34\n$\n22.79\n$\n21.00\nTangible book value per common share (1)\n$\n18.73\n$\n18.15\n$\n16.11\nAverage common shares outstanding basic\n25,081\n25,380\n25,368\n25,230\n25,363\nAverage common shares outstanding diluted\n25,395\n25,679\n25,714\n25,537\n25,683\nOther Data\nRetirement and benefit services assets under administration/management\n$\n45,163,767\n$\n42,273,839\n$\n42,451,544\nWealth advisory services assets under administration/management\n$\n5,195,511\n$\n4,792,609\n$\n4,613,102\nMortgage originations\n$\n113,450\n$\n94,434\n$\n134,634\n$\n207,884\n$\n205,227\n(1)\nRepresents a non-GAAP financial measure.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/903419/000143774926025463/alrs20260630_10q.htm",
+      "asOf": "2026-08-03",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "ITEM 1A. RISK FACTORS\nInvesting in the Company ' s common stock involves a high degree of risk. The material risks and uncertainties that management believes affect the Company are described below. Before you decide to invest, you should carefully review and consider the risks described below, together with all other information included in this report and other documents the Company files with the SEC. Any of the following risks, as well as risks that the Company does not know or currently deem immaterial, could have a material adverse effect on the Company ' s business, financial condition, results of operations and growth prospects.\nSummary\nThis is a summary of some of the material risks and uncertainties that management believes affects the Company. The list is not exhaustive but provides a high-level summary of some of the material risks that are further described in this Item 1A. The Company encourages you to read Item 1A in its entirety.\nMarket and Interest Rate Risks\ninterest rate risks associated with the Company's business;\nfluctuations in the values of the securities held in the Company's securities portfolio; and\ngovernmental monetary, trade and fiscal policies.\nCredit Risks\nthe Company's ability to successfully manage credit risk, including risks from concentrations within the Company's loan portfolio and large loans to certain borrowers, and maintain an adequate level of allowance for credit losses;\nbusiness and economic conditions in the Company's market areas;\nthe overall health of the local and national real estate market;\nconcentrations within the Company's loan portfolio; and\nthe level of nonperforming assets on the Company's balance sheet.\nOperational, Strategic and Reputational Risks\nthe impact of economic or market conditions on the Company's fee-based services;\nthe Company's ability to implement organic and strategic acquisition growth strategies;\nthe Company's ability to raise additional capital to implement its business plan;\npotential impairment to the goodwill the Company recorded in connection with the Company's past acquisitions;\nthe Company's ability to continue to grow the retirement and benefit services business;\nthe occurrence of fraudulent activity, breaches or failures of the Company's or its third-party vendors' information security controls or cybersecurity-related incidents, including those employing artificial intelligence or resulting from insider fraud;\ninterruptions involving the Company's information technology and telecommunications systems or third-party services;\npotential losses incurred in connection with mortgage loan repurchases;\nthe composition of the Company's executive management team and the Company's ability to attract and retain key personnel;\nlabor shortages;\nregulatory scrutiny concerning the Company's third-party business relationships;\nchanges in the Company's dividend policy;\nincreased competition in the financial services industry from non-banks;\nglobal economic and trade conditions; and\nsevere weather, natural disasters, effects of climate change, widespread disease or pandemics, acts of war or terrorism, civil unrest or other adverse external events.\n16\nTable of Contents\nLiquidity and Funding Risks\nthe Company's ability to successfully manage liquidity risk, including the Company's need to access higher cost sources of funds such as fed funds purchased and short-term borrowings;\nconcentrations of large depositors who may have deposits above the FDIC insurance limit;\nthe Company's dependence on dividends from the Bank; and\nthe Company's ability to maintain sufficient capital and raise additional capital.\nLegal, Accounting and Compliance Risks\nthe effectiveness of the Company's risk management framework;\nthe accuracy of the techniques, models and assumptions underlying the Company's accounting estimates and risk management processes and controls;\nnew or revised accounting standards;\nany material weaknesses in the Company's internal control over financial reporting;\nthe commencement, cost and outcome of litigation and other legal proceedings and regulatory actions and investigations against the Company or to which the Company may become subject, including investigations and litigation relating to the Company's ESOP and retirement plan fiduciary services commenced by the DOL or third parties;\nthe extensive regulatory framework that applies to us; and\nthe impact of recent and future legislative and regulatory changes, including policies proposed by the new presidential administration.\nMarket and Interest Rate Risks\nThe Company ' s business is subject to interest rate risk, and fluctuations in interest rates may adversely affect the Company ' s earnings.\nFluctuations in interest rates may negatively affect the Company's business and may weaken demand for some of the Company's products. The Company's earnings and cash flows are dependent, in part, on net interest income, which is the difference between the interest income that the Company earns on interest-earning assets, such as loans and investment securities, and the interest expense that the Company pays on interest-bearing liabilities, such as deposits and borrowings. Changes in interest rates might also impact the values of equity and debt securities under management and administration by the retirement and benefit services and wealth businesses which may have a negative impact on the Company's fee income. Additionally, changes in interest rates also affect the Company's ability to fund operations with client deposits and the fair value of securities in the Company's investment portfolio. Therefore, any change in general market interest rates, including changes in federal fiscal and monetary policies, could have a material adverse effect on the Company's business, financial condition, results of operations and growth prospects.\nIt is currently expected that, during 2026, the Federal Open Market Committee of the Federal Reserve (\"FOMC\") will continue to closely monitor interest rates, in part to manage the rate of inflation to its preferred level. In the fourth quarter of 2025, the FOMC decreased the target range for the federal funds rate to a range of 3.50% to 3.75%, following a series of significant increases beginning in 2023. If the FOMC further alters the targeted federal funds rates, overall interest rates likely will continue to change, which may impact the entire national economy. Changes in interest rates directly impact the Company's net interest income and also may affect the demand for loans and the value of fixed-rate investment securities. These effects from interest rate changes or from other sustained economic stress or a recession, among other matters, could have a material adverse effect on the Company's business, financial condition, liquidity and results of operations.\nThe Company's interest-earning assets and interest-bearing liabilities may react in different degrees to changes in market interest rates. Interest rates on some types of assets and liabilities may fluctuate prior to changes in broader market interest rates, while rates on other types of assets and liabilities may lag behind. The result of these changes to rates may cause differing spreads on interest-earning assets and interest-bearing liabilities. The Company cannot control or accurately predict changes in market rates of interest.\nIn addition, the Company could be prevented from altering the interest rates charged on loans or from maintaining the interest rates offered on deposits and money market savings accounts due to \"price\" competition from other banks and financial institutions with which the Company competes. As of December 31, 2025, the Company had $807.9 million of non-maturity, noninterest bearing deposit accounts and $2.8 billion of non-maturity interest bearing deposit accounts.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/903419/000143774926006820/alrs20251231_10k.htm",
+      "asOf": "2026-03-04",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-K",
+    "pressRelease": null,
+    "proxyStatement": {
+      "text": "Compensation discussion and analysis:\nCompensation Discussion and Analysis\nThis Compensation Discussion and Analysis describes our compensation philosophy and policies as applicable to the named executive officers (\" NEOs \") listed below for 2025. This CD&A also describes the Compensation Committee's process for making pay decisions, as well as the rationale for specific decisions related to the fiscal year ended December 31, 2025.\nNAMED EXECUTIVE OFFICERS\nOur NEOs for 2025, which consist of our principal executive officer, our principal financial officer, and the Company's three other most highly compensated executive officers, were:\nKatie A. Lorenson, President and Chief Executive Officer;\nAlan A. Villalon, Executive Vice President and Chief Financial Officer;\nJim R. Collins, Executive Vice President and Chief Banking and Revenue Officer;\nKarin M. Taylor, Executive Vice President and Chief Operating Officer; and\nForrest R. Wilson, Executive Vice President and Chief Retirement Services Officer.\nOUR COMPENSATION PHILOSOPHY AND GOVERNANCE PRACTICES\nThe Compensation Committee, which consists solely of independent directors, oversees our compensation program and reviews and approves the compensation of our NEOs. The primary objectives of our executive compensation program are to (1) align compensation programs with stockholder interests, (2) utilize compensation programs that support the Company's core values and promote high ethical standards, (3) incorporate risk management features that encourage prudent decision-making without excessive risk, (4) ensure compensation programs reflect regulatory guidance, and (5) attract, motivate, and retain talented individuals. Our Board believes the executive compensation packages that we provide to our executives, including our NEOs, should include both cash and equity components that reward performance as measured against established Company goals. We compensate our NEOs with a combination of base salary, annual cash incentive bonuses, annual grants of equity, and other benefits (including perquisites). Each element is designed to achieve a specific purpose and to contribute to a total package that is competitive with similar packages provided by other institutions that compete for the services of individuals like our NEOs.\n2026 Proxy Statement\n21\nElements of Compensation\nThe Compensation Committee reviews and evaluates all components of each NEO's total compensation package, including cash payments and non-cash incentives and benefits. The chart below summarizes the major elements of NEO compensation.\nPay Element\nKey Characteristics\nWhy We Pay this\nElement\nHow We Determine\nthe Amount\n2025 Decisions\nBase Salary\nFixed compensation paid in cash. Reviewed annually and adjusted when appropriate.\nProvide a competitive base salary to attract and retain critical executive talent.\nExperience, industry knowledge, peer data, company performance, and individual performance.\nBase salary increases ranged from 4.0% to 7.1%.\nAnnual Bonus\nVariable compensation paid in cash. Target bonuses are established as a percentage of annual salary, and payment is capped at 150% of target.\nMotivate and reward executive officers for delivering on annual financial objectives that contribute to the creation of stockholder value.\nMarket practices with payouts based on level of achievement of Company performance goals.\nAnnual bonus paid out at 141% of target for all NEOs.\nLong-Term Incentives\nVariable compensation paid in restricted stock units. NEOs receive 60% performance-based restricted stock units capped at 150% of target, and 40% time-based restricted stock units.\nMotivate executives to execute on longer-term financial goals that drive the creation of stockholder value in support of the Company's strategic direction.\nMarket practices with payouts based on level of achievement of Company performance goals.\nPerformance-based restricted stock units for the 2023-2025 Long-Term Incentive Plan paid out at 112% based on performance against three-year Cumulative Net Income target (as described in the \"Equity Awards - Long-Term Incentive Plan\" section below).\nOther Compensation\nand Perquisites\nCompensation to provide basic competitive benefits.\nProvide a base level of competitive compensation to attract and retain critical executive talent.\nPeriodic assessment of competitive offerings.\nBeginning in 2025, a Company contribution to a non-qualified deferred compensation plan was provided to all executives.\nRole of the Compensation Committee\nThe Compensation Committee has overall responsibility for evaluating the compensation plans, policies, and programs relating to the NEOs. The Compensation Committee is comprised of independent directors of the Board. The Compensation Committee works very closely with its independent compensation consultant and management to examine the effectiveness of the Company's executive compensation throughout the year.\n\nSecurity ownership:\nSecurity Ownership of Certain Beneficial Owners\nThe following table sets forth information regarding the beneficial ownership of the Company's Common Stock, as of the close of business on March 16, 2026, by:\neach stockholder known by us to beneficially own more than 5% of our outstanding Common Stock;\neach of the Company's NEOs;\neach of the Company's directors; and\nall of the Company's directors and executive officers as a group.\nWe have determined beneficial ownership in accordance with the rules of the SEC. These rules generally provide that a person is the beneficial owner of securities if such person has or shares the power to vote or direct the voting of securities, or to dispose or direct the disposition of securities, or has the right to acquire such powers within 60 days, including any right to acquire such securities (i) through the exercise of any option, warrant or right, (ii) through the conversion of a security, (iii) pursuant to the power to revoke a trust, discretionary account or similar arrangement or (iv) pursuant to the automatic termination of a trust, discretionary account or similar arrangement. For purposes of calculating each person's percentage ownership, Common Stock issuable pursuant to options exercisable within 60 days are included as outstanding and beneficially owned for that person or group, but are not deemed outstanding for the purposes of computing the percentage ownership of any other person. Except as disclosed in the footnotes to this table and subject to applicable community property laws, we believe that each person identified in the table has sole voting and investment power over all of the shares shown opposite such person's name.\nThe percentage of beneficial ownership is based on 25,560,231 shares of our Common Stock outstanding as of the close of business on March 16, 2026.\n2026 Proxy Statement\n38\nExcept as otherwise indicated, the address for each stockholder listed in the table below is: c/o Alerus Financial Corporation, 401 Demers Avenue, Grand Forks, North Dakota 58201.\nSHARES BENEFICIALLY OWNED (1)\nNAME\n#\n%\n5% stockholders:\nBlackRock, Inc. (2) 50 Hudson Yards New York, NY 10001\n1,843,231\n7.2\n%\nThe Vanguard Group (3) 100 Vanguard Blvd. Malvern, PA 19355\n1,289,690\n5.0\n%\nDirectors and named executive officers:\nJeffrey W. Bolton (4)\n11,391\n*\n%\nJim R. Collins (5)\n16,860\n*\n%\nDaniel E. Coughlin (6)\n47,311\n*\n%\nJanet O. Estep (7)\n13,069\n*\n%\nKatie A. Lorenson (8)\n32,717\n*\n%\nRandy L. Newman (9)\n806,584\n3.2\n%\nNikki L. Sorum (10)\n5,580\n*\n%\nKarin M. Taylor (11)\n30,830\n*\n%\nJohn Uribe (12)\n5,580\n*\n%\nGalen G. Vetter (13)\n52,244\n*\n%\nAlan. A Villalon (14)\n16,521\n*\n%\nForrest R. Wilson (15)\n14,648\n*\n%\nMary E. Zimmer (16)\n10,602\n*\n%\nAll directors and executive officers as a group (14 persons) (17)\n1,088,003\n4.3\n%\n* Indicates one percent or less.\n(1)\nBeneficial ownership includes shares of unvested restricted stock that stockholders are entitled to vote, but does not include shares underlying time-based and performance-based restricted stock units not entitled to vote and that are subject to time-based vesting or vesting to the extent performance objectives are achieved.\n(2)\nInformation based solely on a Schedule 13G/A filed on February 5, 2025. According to the Schedule 13G/A, Blackrock, Inc. has sole voting power with respect to 1,797,343 of these shares and sole dispositive power with respect to 1,843,231 of these shares.\n(3)\nInformation based solely on a Schedule 13G filed on January 30, 2026. According to the Schedule 13G, The Vanguard Group has shared voting power with respect to 172,955 of these shares and shared dispositive power with respect to 1,289,690 of these shares.\n(4)\nIncludes 2,354 shares of restricted stock.\n(5)\nIncludes 752 shares held in the ESOP. Excludes 26,220 shares underlying time-based and performance based restricted stock units not entitled to vote and that are subject to time-based vesting or vesting to the extent performance objectives are achieved.\n\nRelated-person transactions:\nCertain Relationships and Related Party Transactions\nIn addition to the compensation arrangements with directors and executive officers described in the \"Executive Compensation\" section above, the following is a description of transactions since January 1, 2025 to which we have been a party, in which the amount involved exceeded or will exceed $120,000, and in which any of our directors, executive officers or beneficial holders of more than five percent of any class of our voting securities, or their immediate family members or entities affiliated with them, had or will have a direct or indirect material interest.\nORDINARY BANKING RELATIONSHIPS\nCertain of our directors, officers, beneficial owners of more than five percent of our Common Stock and their respective associates were clients of and had banking transactions with the Bank during the year ended December 31, 2025, and additional banking transactions with these persons are expected to continue to take place in the future. All outstanding loans and commitments to lend with these persons were made in the ordinary course of business, were made on substantially the same terms, including interest rates and collateral, as those prevailing at the time for comparable loans with persons not related to the Company or the Bank, and did not involve more than the normal risk of collectability or present other unfavorable features. All such loans are approved by the Bank's board of directors in accordance with applicable bank regulatory requirements. Similarly, all certificates of deposit and depository relationships with these persons were made in the ordinary course of business and involved substantially the same terms, including interest rates, as those prevailing at the time for comparable depository relationships with persons not related to the Company or the Bank.\nOTHER RELATED PARTY TRANSACTIONS\nBill Carlson is the brother-in-law of Mr.",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/903419/000143774926010883/alrs20251215_def14a.htm",
+      "asOf": "2026-04-01",
+      "truncated": true
+    },
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T10:37:09.257Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T10:37:09.257Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T10:37:09.257Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T10:37:09.257Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T10:37:09.257Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T10:37:09.257Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T10:37:09.257Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T10:37:09.257Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T10:37:09.257Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T10:37:09.257Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T10:37:09.257Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T10:37:09.257Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-23T10:37:09.257Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-23T10:37:09.257Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T10:37:09.257Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T10:37:09.257Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T10:37:09.257Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T10:37:09.257Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T10:37:09.257Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T10:37:09.257Z"
+    }
+  ]
+}

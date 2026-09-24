@@ -1,0 +1,39 @@
+{
+  "judgmentSha256": "ae93c47e1d7ed51de07bab6d312c30d780058f9e4bc6d811da267e30309bde31",
+  "reviewedAt": "2026-09-23T20:15:00Z",
+  "reviewer": "Claude Opus 4.8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.financials.cashflowCommentary (also sections.risks.idiosyncratic[0])",
+      "quote": "The FY25 FCF yield was -8.8%.",
+      "issue": "The -8.8% FCF yield appears on the grounding surface only under the Trailing-twelve-months block (Facts: 'FCF yield -8.8%'; highlight key fcfYield = FCF Yield (TTM) = -8.8%). No FY25 FCF yield is given. Labeling it 'FY25 FCF yield' attaches a TTM figure to the wrong period, and it does not tie to the FY25 FCF of -$97.8M against the $596.5M market cap (which would imply roughly -16%). The same TTM figure is again presented as FY25 in risks.idiosyncratic[0]: 'FY25 free cash flow was -$97.8M and the FCF yield -8.8%.'",
+      "fix": "Relabel -8.8% as the trailing-twelve-month FCF yield (or drop it), keeping the -$97.8M explicitly as the FY25 free cash flow. Apply the same relabel in risks.idiosyncratic[0].",
+      "status": "addressed",
+      "note": "Fixed in both places. cashflowCommentary now reads 'The trailing-twelve-month FCF yield was -8.8%'; risks.idiosyncratic[0] now reads 'the trailing-twelve-month FCF yield -8.8%'. FY25 FCF kept explicit at -$97.8M; no invented FY25 FCF-yield figure. The -8.8% now matches its TTM source period."
+    },
+    {
+      "id": "F-2",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarioCommentary (also sections.executiveSummary.thesis.body)",
+      "quote": "The reward-to-risk is roughly balanced, which supports a HOLD rather than a directional call.",
+      "issue": "With probability-weighted value of ~$3.61 vs the $3.59 price (expected upside ~+0.4%) and a Bear at $2.10 (-41.5%), the reward/risk is heavily downside-skewed (R ~0.01x), not 'roughly balanced.' The thesis makes the same claim ('so risk and reward are balanced'), while finalRecommendation.body[1] states the opposite: 'the reward does not compensate for the downside.' The HOLD is sound (weighted value ~= price), but 'balanced reward/risk' overstates symmetry and conflicts with the final section.",
+      "fix": "Reword to say the shares screen fairly valued (expected value ~= current price) so there is no directional edge, and align the phrasing with finalRecommendation's point that the ~flat upside does not compensate for the -41.5% bear downside.",
+      "status": "addressed",
+      "note": "Reworded in both places. scenarioCommentary now reads 'The thin upside does not offset the far larger bear-case downside, so the shares look fairly valued with no directional edge'; thesis.body now reads 'the bear case dwarfs the thin upside, so I see no directional edge.' The false-symmetry claim is gone and both align with finalRecommendation. (body[1]'s 'The setup is balanced rather than directional' is immediately qualified by 'the reward does not compensate for the downside', so it does not re-assert symmetry.)"
+    },
+    {
+      "id": "F-3",
+      "severity": "Minor",
+      "field": "sections.finalRecommendation.body[0]",
+      "quote": "the six-month operating loss narrowed to $(17,285) thousand from $(52,113) thousand as SG&A fell 20.8% and R&D dropped to $19,607 thousand",
+      "issue": "These exact figures — the $(17,285)/$(52,113) six-month operating loss, the 20.8% SG&A decline and the $19,607 thousand R&D — are introduced and argued in financials.incomeCommentary and already pointed to in executiveSummary.catalysts[0] and analystCommentary. Re-quoting them verbatim in the final section repeats rather than refers back in words, against the house style 'introduce each figure once per section and refer back in words afterwards.'",
+      "fix": "In finalRecommendation, refer back to the narrowing operating loss and cost cuts in words (e.g., 'the sharply narrower six-month operating loss on lower SG&A and R&D') without re-quoting the thousands-level figures already given in the financials section.",
+      "status": "addressed",
+      "note": "Fixed. finalRecommendation.body[0] now refers back in words — 'the six-month operating loss has narrowed sharply as the 2025 Restructuring Plan lowered SG&A and R&D' — with none of the thousands-level figures re-quoted."
+    }
+  ]
+}

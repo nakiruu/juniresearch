@@ -1,0 +1,583 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "WTTR",
+  "cik": 1693256,
+  "company": "Select Water Solutions, Inc.",
+  "exchange": "NYSE",
+  "sic": 1389,
+  "sicDescription": "Oil & Gas Field Services, NEC",
+  "filing": {
+    "form": "10-Q",
+    "accession": "0001104659-26-091156",
+    "filedDate": "2026-08-05",
+    "periodEnd": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1693256/000110465926091156/wttr-20260630x10q.htm"
+  },
+  "capturedAt": "2026-09-23T12:54:09.662Z",
+  "quote": {
+    "price": 20.27,
+    "marketCap": 2893213440,
+    "sharesOutstanding": 142733766.1568821,
+    "sharesSource": "derived",
+    "week52Low": 9.285,
+    "week52High": 22.55,
+    "dividendYield": 0.0138,
+    "asOf": "2026-09-23"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          764620000,
+          1387420000,
+          1585353000,
+          1452075000,
+          1407344000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          20860000,
+          160755000,
+          231662000,
+          219466000,
+          202398000
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          -65540000,
+          39162000,
+          61189000,
+          54489000,
+          28806000
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          26918000,
+          154878000,
+          63465000,
+          57893000,
+          34127000
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          -42225000,
+          48278000,
+          74403000,
+          30644000,
+          21223000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          null,
+          null,
+          0.72,
+          0.3,
+          0.21
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          85801000,
+          7322000,
+          57083000,
+          19978000,
+          18084000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          null,
+          16000000,
+          0,
+          85000000,
+          316293000
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          null,
+          8678000,
+          -57083000,
+          65022000,
+          298209000
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          695174000,
+          883728000,
+          892172000,
+          915534000,
+          927067000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          2.4363490496173785,
+          2.2393358986553675,
+          2.146374091809385,
+          1.6518393144081414,
+          1.5701917623706225
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          -16248000,
+          33231000,
+          285355000,
+          234886000,
+          214673000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -39994000,
+          -71884000,
+          -135866000,
+          -173153000,
+          -294562000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          -1206000,
+          -20210000,
+          -61770000,
+          -7912000,
+          -7286000
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          null,
+          -6020000,
+          -24924000,
+          -29745000,
+          -33655000
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          -56242000,
+          -38653000,
+          149489000,
+          61733000,
+          -79889000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q2'26",
+    "periodEnd": "2026-06-30",
+    "revenue": 395807000,
+    "operatingMargin": 0.08676956193296227,
+    "revenueYoY": 0.08673997501475772
+  },
+  "ttm": {
+    "pe": 72.39286,
+    "ps": 2.0225048688929124,
+    "evToEbitda": 45.74043872254318,
+    "grossMargin": 0.16147807425323835,
+    "operatingMargin": 0.035058825174238556,
+    "netMargin": 0.022354265262039413,
+    "netDebtToEbitda": 3.316710167453591,
+    "interestCoverage": 2.1261658470408684,
+    "currentRatio": 1.5780624151967435,
+    "fcfYield": -0.028341842626031767
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 1539473090,
+      "eps": 0.53733
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 1591616160,
+      "eps": 0.6729
+    }
+  },
+  "analysts": {
+    "count": 7,
+    "buy": 7,
+    "hold": 0,
+    "sell": 0,
+    "consensusRating": "None",
+    "consensusTarget": 24,
+    "medianTarget": 24,
+    "highTarget": 26,
+    "lowTarget": 21,
+    "asOf": "2026-09-23"
+  },
+  "segments": {
+    "basis": "FY25 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 1407344000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "ARTNA",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "CWCO",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "EAI",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "EDN",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-10",
+      "close": 20.889999389648438
+    },
+    {
+      "date": "2026-08-11",
+      "close": 21.110000610351562
+    },
+    {
+      "date": "2026-08-12",
+      "close": 21.209999084472656
+    },
+    {
+      "date": "2026-08-13",
+      "close": 20.3700008392334
+    },
+    {
+      "date": "2026-08-14",
+      "close": 20.860000610351562
+    },
+    {
+      "date": "2026-08-17",
+      "close": 21.31999969482422
+    },
+    {
+      "date": "2026-08-18",
+      "close": 21.09000015258789
+    },
+    {
+      "date": "2026-08-19",
+      "close": 20.450000762939453
+    },
+    {
+      "date": "2026-08-20",
+      "close": 19.959999084472656
+    },
+    {
+      "date": "2026-08-21",
+      "close": 19.719999313354492
+    },
+    {
+      "date": "2026-08-24",
+      "close": 19.209999084472656
+    },
+    {
+      "date": "2026-08-25",
+      "close": 18.969999313354492
+    },
+    {
+      "date": "2026-08-26",
+      "close": 19.229999542236328
+    },
+    {
+      "date": "2026-08-27",
+      "close": 19.540000915527344
+    },
+    {
+      "date": "2026-08-28",
+      "close": 19.280000686645508
+    },
+    {
+      "date": "2026-08-31",
+      "close": 19.5
+    },
+    {
+      "date": "2026-09-01",
+      "close": 20.06999969482422
+    },
+    {
+      "date": "2026-09-02",
+      "close": 19.770000457763672
+    },
+    {
+      "date": "2026-09-03",
+      "close": 20.170000076293945
+    },
+    {
+      "date": "2026-09-04",
+      "close": 20.059999465942383
+    },
+    {
+      "date": "2026-09-08",
+      "close": 20.799999237060547
+    },
+    {
+      "date": "2026-09-09",
+      "close": 20.5
+    },
+    {
+      "date": "2026-09-10",
+      "close": 20.360000610351562
+    },
+    {
+      "date": "2026-09-11",
+      "close": 20.639999389648438
+    },
+    {
+      "date": "2026-09-14",
+      "close": 20.049999237060547
+    },
+    {
+      "date": "2026-09-15",
+      "close": 20.670000076293945
+    },
+    {
+      "date": "2026-09-16",
+      "close": 20.309999465942383
+    },
+    {
+      "date": "2026-09-17",
+      "close": 20.360000610351562
+    },
+    {
+      "date": "2026-09-18",
+      "close": 20.780000686645508
+    },
+    {
+      "date": "2026-09-21",
+      "close": 20.600000381469727
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "Select Water Solutions, Inc. provides water management solutions to the energy industry in the United States. It operates in three segments: Water Infrastructure, Water Services, and Chemical Technologies. Its Water Infrastructure segment engages in the recycling, gathering, transferring, and disposal of water through a network of permanent pipeline infrastructure, water recycling and treatment facilities, water storage facilities, and SWDs and landfills; fluid disposals; pipelines and logistics; and solid management services. The Water Services segment offers water-related services, including water sourcing, water transfer, flowback and well testing, water containment, fluids hauling, water monitoring, and water network automation; AquaView automation services; technology solutions comprising hydrographic mapping, water volume and quality monitoring, remote pit and tank monitoring, leak detection, asset and fuel tracking, and automated-equipment services; and various surface rental equipment and workforce accommodation services. The Chemical Technologies segment offers technical solutions, products, and services related to chemical applications in the oil and gas industry; and water treatment and flow assurance solutions. This segment also develops, manufactures, manages logistics, and provides chemicals, including polymers for use in hydraulic fracturing, stimulation, cementing, and well completions; and offers production chemical solutions for underperforming wells, corrosion and scale monitoring, chemical inventory management, well failure analysis, and lab services. It serves oil and gas producers. The company was formerly known as Select Energy Services, Inc. and changed its name to Select Water Solutions, Inc. in May 2023. Select Water Solutions, Inc. was founded in 2008 and is headquartered in Gainesville, Texas.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-23"
+    },
+    "mdaExcerpt": {
+      "text": "Item 2. Management's Discussion and Analysis of Financial Condition and Results of Operations\nThe following discussion and analysis of our financial condition and results of operations should be read in conjunction with our consolidated financial statements and related notes included elsewhere in this report, as well as the historical consolidated financial statements and notes thereto included in our Annual Report on Form 10-K for the year ended December 31, 2025, filed with the Securities and Exchange Commission on February 18, 2026 (our \"2025 Form 10-K\") and in our Quarterly Report on Form 10-Q for the period ended March 31, 2026, filed with the Securities and Exchange Commission on May 6, 2026 (our \"Q1 2026 Form 10-Q\"). This discussion and analysis contains forward-looking statements based upon our current expectations that involve risks and uncertainties. Our actual results may differ materially from those anticipated in these forward-looking statements as a result of various factors as described under \"Cautionary Note Regarding Forward-Looking Statements\" and other cautionary statements described under the heading \"Risk Factors\" included in our 2025 Form 10-K, our Q1 2026 Form 10-Q and this Quarterly Report on Form 10-Q. We assume no obligation to update any of these forward-looking statements.\nThis discussion relates to the three and six months ended June 30, 2026 (the \"Current Quarter\" and the \"Current Period\", respectively) and the three and six months ended June 30, 2025 (the \"Prior Quarter\" and the \"Prior Period\", respectively).\nOverview\nWe are a leading provider of sustainable water and chemical solutions to the energy industry in the U.S. These solutions are supported by our water infrastructure assets, chemical manufacturing and water treatment and recycling capabilities.\nRecent Developments\nInfrastructure Investments and Contracted Growth Initiatives\nWe are prioritizing investments in Water Infrastructure projects, which often bring a more predictable and steady revenue stream through long-term contracts and production-related operations. These investments typically produce higher gross margins and also foster stronger partnerships with customers, as we become an integral partner in ensuring well productivity for ongoing customer production over the life of a well. Our focus is on integrated solutions that enhance contracted infrastructure projects with logistics services and chemical solutions, and expanding the value we provide to our customers. Our approach has been to streamline operations and offer a more comprehensive and valuable overall package to customers that is built around optimizing the entire water lifecycle, as such integrated solutions drive revenue growth and enhance overall value to clients.\nWater Infrastructure\nDuring the Current Quarter, we continued executing our strategy of expanding our Water Infrastructure segment as a key component of our long-term growth platform. Our integrated water management systems support operators by providing produced water gathering, transportation, recycling, and disposal services designed to reduce costs to our customers, reduce trucking activity, improve operational reliability, and increase water management efficiency across development programs.\nOur infrastructure footprint in the Northern Delaware Basin represents a core area of development for our business. Our in-service and under construction systems in New Mexico in Eddy and Lea counties include approximately 1.7 million barrels per day of active fixed recycling capacity, more than 400 miles of pipeline, and 22.2 million barrels of storage capacity across more than 1.5 million dedicated acres. This interconnected infrastructure network positions us to manage large volumes of produced water and support customer development programs across the region.\n40\nTable of Contents\nPeak Rentals Update\nIn August 2025, we announced that we had started an evaluation of strategic alternatives for Peak Rentals business within our Water Services segment. Peak Rentals currently includes our accommodations and rentals platform, including distributed power solutions, as well as our well testing and flowback operations. This evaluation includes a range of potential paths forward, including capital structure initiatives and other portfolio optimization opportunities. As of June 30, 2026, no transaction is pending or imminent, and we continue to own 100% of the business. We are continuing to evaluate strategic alternatives for Peak Rentals in the ordinary course; however, there can be no assurance that any particular outcome will ultimately be pursued or completed.\nChemical Technologies\nDuring the Current Quarter, we continued to compete across a range of completion chemistry applications through our Chemical Technologies segment. Our in-basin manufacturing capabilities and continued research and development investments support our ability to supply friction reducers, surfactants and other completion chemistry products used in increasingly complex completion designs, including longer laterals and high-intensity completion programs. Demand for friction reducers and customized surfactant offerings remained supported by completion activity levels and the increasing use of recycled produced water in hydraulic fracturing operations.\nLong-Term Contract Revenue\nDuring the Current Quarter, we entered into a long-term produced water transportation agreement with a major operator to design, construct, and operate a new large-scale pipeline system in the Delaware Basin. The agreement includes the largest minimum volume commitment in the Company's history, totaling approximately 127.75 million barrels over the initial term, and provides for firm long-term throughput supported by deficiency payment provisions. In connection with the agreement, we received ownership of multiple saltwater disposal wells as non-cash consideration, further enhancing our disposal capacity and integrated water infrastructure footprint in the region. This transaction reflects a strategic partnership with a key customer and is expected to strengthen our long-term earnings through contracted volumes and expanded asset integration.\nDuring the Current Quarter, we continued to expand our portfolio of contracted and recurring revenue opportunities through new and amended commercial agreements across our water infrastructure footprint, including produced water takeaway and disposal arrangements, water supply agreements, minimum volume commitments, acreage-wide right-of-first-refusal arrangements and additional delivery point commitments. These included multiple agreements in the Northern Delaware portion of the Permian Basin, including a water treatment and supply agreement with a minimum volume commitment, multiple water sales agreements and several interruptible takeaway arrangements. We also executed a water treatment agreement in the Midland Basin and a produced water disposal agreement in the Bakken with a minimum volume commitment, a disposal agreement in the Northeast with a right-of-first-refusal structure, a disposal agreement in the MidCon region, supported by a four million barrel minimum volume commitment, and an interruptible takeaway arrangement in the Haynesville region. Collectively, these agreements are intended to drive higher utilization of existing infrastructure, support capital-efficient growth and provide greater certainty around future revenue streams.\nDiversification\nDuring the Current Quarter, we continued advancing certain diversification initiatives, including opportunities related to municipal and industrial water markets, lithium extraction partnerships, and beneficial reuse technologies. These initiatives are intended to evaluate potential opportunities to leverage our existing water infrastructure platform across additional end markets.\nDuring the Current Quarter, we entered into a definitive agreement with subsidiaries of ISE Chemicals Corporation (\"ISE\") providing for the development of commercial-scale iodine extraction and refining facilities utilizing produced water sourced through our Water Infrastructure network across Texas, New Mexico and Oklahoma. Under the\n41\nTable of Contents\nagreement, ISE Chemicals would fund, construct, own and operate the facilities, while Select would provide produced water sourcing, transportation, storage, pretreatment, recycling and infrastructure support in exchange for royalty payments. The initial commercial facility is expected to be commissioned in 2027 within our Permian Basin footprint, with the collaboration targeting approximately 3,000 tons of annual iodine production by the end of 2030.\nIn addition, lithium extraction partnerships across the Haynesville, Midland, and Northern Delaware basins continue to progress, with initial royalty-based revenues currently expected to begin in 2027.\nWe also continued pilot testing of advanced treatment technologies intended to evaluate beneficial reuse opportunities for produced water in the Permian and DJ basins. These pilot programs are designed to assess the feasibility of converting produced water into resources that could potentially be used in agricultural or other applications.\nMarket Trends and Outlook\nGeopolitical Conflicts\nGeopolitical tensions and related hostilities across the Middle East continued during the second quarter of 2026, resulting in increased instability in oil and gas-producing regions as well as in key adjacent shipping lanes and supply chains. These developments have heightened concerns over potential supply disruptions and transportation risks, contributing to volatility in global oil and natural gas prices. In particular, disruptions to maritime traffic through key shipping corridors, including the Strait of Hormuz have adversely affected global energy markets and contributed to volatility and elevated prices for oil and natural gas.\nFurther, disruptions to maritime traffic through key shipping corridors have caused disruptions to the global chemicals and oil-derived goods markets, reducing supplies and availability worldwide and resulting in increased prices. While we are not reliant on any chemicals or other commodities that are exclusively transported through any single shipping corridor due to our continued focus on domestic sourcing, such global disruptions to commodities markets can have downstream effects in the domestic markets, including elevated domestic prices, reduced supply and business interruptions to our suppliers. While the ultimate duration, impact and magnitude of these disruptions is currently unknown, a prolonged interruption to the global chemicals commodities and oil-derived goods markets has the potential to materially adversely affect our business and operations and those of our suppliers.\nAdditionally, the armed conflict between Ukraine and Russia has continued into 2026. Severe sanctions imposed by the U.S., U.K., European Union and other actors on Russian entities have driven significant volatility in global oil and natural gas prices. U.S. actions in Venezuela, including tanker seizures and a limited military intervention in early 2026, have added uncertainty; as relations stabilize, the potential release of previously sanctioned oil into global markets could depress prices. Changes in sanctions, regimes, waivers, export restrictions or other governmental actions affecting the global energy markets may have a significant effect on hydrocarbon prices. Such commodity swings, combined with higher inflation and interest rates that have raised our cost of capital, have created a more challenging planning environment for us and our customers. The ultimate outcomes remain unpredictable and could materially affect the world economy, customer activity levels, and demand for our services.\nCommodity Prices\nIndustry conditions during the first half of 2026 reflected a relatively disciplined North American upstream activity environment. Commodity prices, while significantly fluctuating in the first half of 2026, remained supportive of development activity, although, even with the recent increases in oil prices following geopolitical tensions in the Middle East, North American operators continued to emphasize capital efficiency, free cash flow generation, and moderated production growth. As a result, drilling and completion activity across key U.S. basins remained generally stable compared to recent periods, with the Permian Basin continuing to represent the primary area of development and the largest concentration of completions activity and associated water handling demand.\nSince 2021, OPEC+ countries have instituted production cuts (as well as voluntary production cuts). More recently, however, OPEC+ has announced a phased return of previously curtailed production. OPEC+ may, at its\n42\nTable of Contents\ndiscretion, continue to decrease or increase production, which will continue to impact crude oil and natural gas price volatility. The actions of OPEC+ countries with respect to oil production levels and announcements of potential changes in such levels, including agreement on and compliance with production targets may result in volatility in the industry in which we and our customers operate.\nThough geopolitical tensions remained elevated across the Middle East, production from OPEC+ countries increased during the Current Quarter as shipments through major oil transit routes, including the Strait of Hormuz partially recovered. However, uncertainty remains regarding the flow of traffic through key shipping lanes as tensions in the Middle East continue. The average price of West Texas Intermediate (\"WTI\") crude oil increased in the Current Quarter versus the Prior Quarter due to a combination of factors, including geopolitical developments in the Middle East, heightened trade tensions, global demand, and other various influences and impacts. During the Current Quarter, the average spot price of WTI crude oil was $95.65 versus an average price of $64.57 for the Prior Quarter. The average Henry Hub natural gas spot price during the Current Quarter was $2.95 versus an average of $3.19 for the Prior Quarter. Henry Hub natural gas price levels in the Current Quarter decreased relative to the Prior Quarter due to a variety of factors, including easing concerns over near-term supply disruptions and continued strength in domestic natural gas production.\nCommodity markets during the quarter were influenced by geopolitical developments in the Middle East, which contributed to volatility in global oil prices and increased market attention on potential supply disruptions. Higher commodity prices during portions of the quarter improved operator cash flows and supported the economics of ongoing development programs, which may contribute to sustained activity levels across core U.S. basins.\nIndustry Consolidation and Customer Demand for Water Solutions\nDemand for produced water gathering, transportation, disposal, and recycling services remained closely linked to industry activity levels and the steady growth in produced water volumes associated with existing production. Produced water generation continues to increase as operators develop longer laterals and higher-intensity completion designs. Additionally, water-to-oil ratios in the Southern Delaware and Northern Delaware Basins are among the highest within the Permian Basin, and even furthermore, across the United States, contributing to growing produced water volumes in the Permian Basin. These structural trends continue to support demand for integrated water management infrastructure, including pipeline gathering systems, disposal capacity, and recycling capabilities.\nAcross the Permian Basin and the broader industry, operators increasingly utilize pipeline-based gathering systems and centralized disposal and recycling facilities to manage water volumes more efficiently.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/1693256/000110465926091156/wttr-20260630x10q.htm",
+      "asOf": "2026-08-05",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "Item 1A. Risk Factors\nOur results of operations and financial condition are subject to various risks and uncertainties as disclosed in Part I, Item 1A. of our Annual Report on Form 10-K for the year ended December 31, 2025 (\"2025 Form 10-K\"). The following information updates, and should be read in conjunction with, the information disclosed in Part I, Item 1A, Risk Factors of our 2025 Form 10-K, which are incorporated herein by reference. You should carefully consider the risks set forth in our 2025 Form 10-K and the following risks, together with all the other information in this report, including our condensed consolidated financial statements and notes thereto. If any of the risks actually materialize, our operating results, financial condition and liquidity could be materially and adversely affected. Except as disclosed below, there have been no material changes from the risk factors disclosed in our 2025 Form 10-K. The following risk factors below are hereby added to the risk factors disclosed in our 2025 Form 10-K.\nGlobal geopolitical conflicts may increase our costs and disrupt our supply chain.\nEscalating conflict in or near major oil-producing or shipping corridors could lead to higher fuel and energy prices, increasing our transportation, manufacturing, and distribution costs, as well as resulting in downstream effects to global chemicals commodities markets. In particular, ongoing geopolitical tensions and military conflicts in key oil-producing regions, including potential disruptions to major shipping routes, may adversely affect our operations. Disruptions to global shipping corridors have caused disruptions to the global chemicals and oil-derived goods markets, reducing supplies and availability worldwide and resulting in increased prices. While we are not reliant on any chemicals or other commodities that are exclusively transported through any single shipping corridor due to our continued focus on domestic sourcing, such global disruptions to commodities markets can have downstream effects in the domestic markets, including elevated domestic prices, reduced supply and business interruptions to our suppliers. These events may also cause shipping delays, rerouted freight, port congestion, or higher logistics and insurance costs, which could disrupt the movement of raw materials upon which our suppliers rely. While the ultimate duration, impact and magnitude of these disruptions is currently unknown, a prolonged interruption to the global chemicals commodities and oil-derived goods markets has the potential to materially adversely affect our business and operations and those of our suppliers.\n59\nTable of Contents",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/1693256/000110465926091156/wttr-20260630x10q.htm",
+      "asOf": "2026-08-05",
+      "truncated": false
+    },
+    "riskFactorsSource": "10-Q",
+    "pressRelease": {
+      "text": "EX-99.1\n2\nef20079476_ex99-1.htm\nEXHIBIT 99.1\nExhibit 99.1\nN ews Release\nContacts:\nSelect Water Solutions, Inc.\nGarrett Williams VP, Corporate Finance & Investor Relations\nFOR IMMEDIATE RELEASE\n(713) 296-1010\nIR@selectwater.com\nDennard Lascar Investor Relations\nKen Dennard / Natalie Hairston\n(713) 529-6600\nWTTR@dennardlascar.com\nSelect Water Solutions Announces Second Quarter 2026 Financial, Operational and Strategic Updates\nGenerated second quarter 2026 consolidated revenue of $396 million, an increase of $30 million or 8% sequentially, as compared to\nthe first quarter of 2026\nIncreased net income by $13 million and improved Adjusted EBITDA by $15 million sequentially during the second quarter of 2026\nrelative to the first quarter of 2026\nGenerated record Water Infrastructure revenue of $102 million, an increase of $5 million or 5% as compared to the first quarter\nof 2026, and an increase of $21 million or 26% as compared to the second quarter of 2025\nGenerated record Chemical Technologies revenue of $96 million, an increase of $18 million or 23% sequentially, as compared to the\nfirst quarter of 2026\nExecuted Definitive Agreement with a large public operator for the conveyance of 14 saltwater disposal wells (\"SWDs\") as well as\nthe development of a new pipeline project supported by a 128-million-barrel minimum volume commitment in the Northern Delaware Basin\nGainesville, TX August 4, 2026 Select Water Solutions, Inc. (NYSE: WTTR) (\"Select,\" the \"Company,\" \"we\" or \"us\"), a leading provider of sustainable water and\nchemical solutions, today announced its financial and operating results for the quarter ended June 30, 2026.\nJohn Schmitz, Chairman of the Board, President and CEO, stated, \" The second quarter was a very strong quarter for Select across all three\noperating segments, with both our Water Infrastructure and Chemical Technologies segments producing record revenue and gross profit in the quarter. During the second quarter of 2026, we delivered strong consolidated revenue and gross profit growth,\nresulting in $23 million of net income and $93 million of Adjusted EBITDA, respectively.\n\"We continue to increase our produced water volumes handled in the Water Infrastructure segment, with approximately 1.5 million barrels of produced water recycled or\ndisposed per day in the second quarter, while also seeing the benefit of increased skim oil volumes and pricing, resulting in record quarterly revenue of $102 million and gross margins before D&A of 58% for the segment in the second quarter. We\nexpect to see further growth in the third quarter and are well on track to meet the upper end of our full year guidance for the segment, setting the stage for solid year-over-year growth into 2027. Further supporting this growth profile is the\nexpansion of our multi-basin relationship and operations with a key customer through the execution of a strategic minimum volume commitment contract award, comprised of a 128-million-barrel commitment over a seven-year term. Furthermore, the\nagreement includes the direct conveyance of a portfolio of underutilized, but strategic SWDs across Lea and Eddy Counties, New Mexico. We continue to find ways to collaborate with our customers to maximize the value of existing assets and to\noptimize produced water management as part of their long-term development planning. We view this contract as a strong validation of the strategic value proposition of Select's broad and expanding commercial network of integrated recycling and\ndisposal solutions.\n\"As our system continues to grow throughout the Northern Delaware Basin, Select's backlog of potential opportunities has continued to evolve as well, and we are\nacutely focused on prudent growth that prioritizes long-term contracts, strong cash flow streams, and increased utilization across our networks. In support of our latest infrastructure contract awards and opportunities, we now expect net capital\nexpenditures of $250 $290 million in 2026.\n\"Elsewhere, our Chemical Technologies segment saw significant sequential improvement, coming in well above our expectations, with a 23% increase in revenue and 30%\nincrease in gross profit before D&A as compared to the first quarter of 2026. The $96 million of Chemical Technologies revenue in the second quarter was a segment record, and we continue to identify ways to deliver strong margins, despite\nincreases to oil-based raw material input costs, with margins of 20% in the quarter. Our in-basin manufacturing, rapid new product development pace, and steady field execution have driven market share gains while increased completions intensity and\ncomplexity, and growing interest in surfactant technology, have supported increased demand for our higher margin product offerings.\n\"Our Water Services segment also outperformed our expectations during the second quarter, with revenue growth of 4% and gross profit before D&A growth of 9% as\ncompared to the first quarter of 2026. We have been pleased with the year-to-date performance of our last-mile water logistics and delivery business, and current macro trends remain supportive of sustained performance\nover the second half of the year.\n\"In summary, I am pleased with the ongoing strategic execution in our Water Infrastructure business, and our ability to grow and take market share in our Water\nServices and Chemical Technologies segments. Altogether we expect another strong quarter ahead, and on a consolidated basis, we anticipate Adjusted EBITDA in the third quarter to be an estimated $90 $94 million. With the support of a healthy\nbalance sheet, we are well positioned to continue to invest in the attractive growth opportunities in front of us in order to deliver long-term value to our customers, employees, and stakeholders,\" concluded Schmitz.\n2\nSecond Quarter 2026 Consolidated Financial Information\nRevenue for the second quarter of 2026 was $395.8 million as compared to $366.0 million in the first quarter of 2026 and $364.2 million in the second quarter of 2025.\nNet income for the second quarter of 2026 was $22.6 million as compared to net income of $9.4 million in the first quarter of 2026 and net income of $11.7 million in the second quarter of 2025.\nFor the second quarter of 2026, gross profit was $76.8 million, as compared to $65.3 million in the first quarter of 2026 and $57.8 million in the second quarter of\n2025. Total gross margin was 19.4% in the second quarter of 2026 as compared to 17.8% in the first quarter of 2026 and 15.9% in the second quarter of 2025. Gross profit before D&A was $124.1 million for the second quarter of 2026 as compared to\n$111.0 million for the first quarter of 2026 and $98.8 million for the second quarter of 2025. Gross margin before D&A for the second quarter of 2026 was 31.3% as compared to 30.3% for the first quarter of 2026 and 27.1% for the second quarter\nof 2025.\nSG&A during the second quarter of 2026 was $41.2 million as compared to $40.6 million during the first quarter of 2026 and $38.9 million during the second quarter\nof 2025. SG&A during the second and first quarters of 2026 was impacted by transaction costs of $0.6 million and $0.3 million, respectively, while SG&A during the second quarter of 2025 was impacted by transaction costs of $1.7 million.\nAdjusted EBITDA was $92.7 million in the second quarter of 2026 as compared to $77.6 million in the first quarter of 2026 and $72.6 million in the second quarter of\n2025. Adjusted EBITDA during the second quarter of 2026 was adjusted for $0.6 million of non-recurring transaction costs, $0.6 million of non-cash losses in equity investments, $0.2 million of impairments and abandonments, and $0.6 million in other\nadjustments. Non-cash compensation expense accounted for an additional $8.4 million adjustment during the second quarter of 2026. Please refer to the end of this release for reconciliations of gross profit before D&A (non-GAAP measure) to gross\nprofit and of Adjusted EBITDA (non-GAAP measure) to net income.\nBusiness Segment Information\nThe Water Infrastructure segment generated revenues of\n$101.6 million in the second quarter of 2026 as compared to $96.7 million in the first quarter of 2026 and $80.9 million in the second quarter of 2025. Gross margin before D&A for Water Infrastructure was 58.3% in the second quarter of 2026 as\ncompared to 56.2% in the first quarter of 2026 and 55.2% in the second quarter of 2025. Water Infrastructure revenues increased 5.0% sequentially relative to the first quarter of 2026, driven by increases in total produced water volumes handled as\nwell as the benefit of increased skim oil volumes and pricing. Looking ahead, the Company anticipates Water Infrastructure revenues to increase 5% 10% as compared to the second quarter of 2026 with margins in the 56%\n58% range in the third quarter of 2026.\n3\nThe Water Services segment generated revenues of $198.2\nmillion in the second quarter of 2026 as compared to $191.2 million in the first quarter of 2026 and $215.7 million in the second quarter of 2025. Gross margin before D&A for Water Services was 23.0% in the second quarter of 2026 as compared to\n21.8% in the first quarter of 2026 and 19.6% in the second quarter of 2025. The Water Services segment revenues increased 3.6% sequentially, partially driven by modestly improved customer activity levels. For the third quarter of 2026, the Company\nexpects steady revenues relative to the second quarter of 2026 with gross margins before D&A in the 21% 22% range during the third quarter of 2026.\nThe Chemical Technologies segment generated revenues of\n$96.0 million in the second quarter of 2026 as compared to $78.0 million in the first quarter of 2026 and $67.7 million in the second quarter of 2025. Gross margin before D&A for Chemical Technologies was 20.2% in the second quarter of 2026 as\ncompared to 19.1% in the first quarter of 2026 and 17.5% in the second quarter of 2025. For the third quarter of 2026, the Company anticipates revenues of $85 $90 million and gross margins before D&A of 20% 21% for the segment.\nCash Flow and Capital Expenditures\nCash flow provided by operating activities for the second quarter of 2026 was $86.7 million as compared to $10.2 million in the first quarter of 2026 and $82.6 million\nin the second quarter of 2025. Free cash flow in the second quarter of 2026 and the first quarter of 2026 was $17.0 million and ($67.1) million, respectively and $10.8\nmillion in the second quarter of 2025. Please refer to the end of this release for reconciliations of free cash flow (non-GAAP measure) to cash flow provided by operating activities.\nNet capital expenditures for the second quarter of 2026 were $69.7 million, comprised of $71.0 million of capital expenditures partially offset by $1.3 million of cash\nproceeds from asset sales. Cash flows from investing activities also included $42.0 million of acquisition-related outflows for the Black River Ranch acquisition, multiple disposal acquisitions in the Northern Delaware Basin and the buyout of\nmultiple strategic operating facility leases across our operations in Texas.\nCash flows provided by financing activities during the second quarter of 2026 were $2.9 million, primarily reflecting $13.0 million of net proceeds from an\nagricultural loan related to the Black River Ranch acquisition, partially offset by the payment of $9.6 million of quarterly dividends and distributions.\nBalance Sheet and Capital Structure\nTotal cash and cash equivalents were $33.4 million as of June 30, 2026, as compared to $56.0 million and $18.1 million as of March 31, 2026, and December 31, 2025,\nrespectively. As of June 30, 2026, the Company had $250.0 million of borrowings outstanding under the term loan component of its sustainability-linked credit facility, $12.9 million under the agricultural loan related to the Black River Ranch\nacquisition and no amounts drawn on the revolving credit facility, compared to $250.0 million of outstanding borrowings under the term loan and no amounts drawn on the revolving credit facility as of March 31, 2026 and $250.0 million of outstanding\nborrowings under the term loan and $70.0 million drawn on the revolving credit facility as of December 31, 2025, respectively.\n4\nAs of June 30, 2026, the borrowing base under the Company's sustainability-linked credit facility was $264.0 million, compared to $271.3 million and $235.1 million as\nof March 31, 2026, and December 31, 2025, respectively. Available borrowing capacity under the sustainability-linked credit facility was approximately $244.4 million as of June 30, 2026, after giving effect to outstanding borrowings and letters of\ncredit totaling $19.6 million. As of March 31, 2026, available borrowing capacity under the credit facility was approximately $251.7 million, after accounting for outstanding borrowings and letters of credit totaling $19.6 million.\nTotal liquidity was $277.8 million as of June 30, 2026, as compared to $307.7 million as of March 31, 2026, and $163.6 million as of December 31, 2025. The Company had\n123,146,866 weighted average shares of Class A common stock and 12,733,751 weighted average shares of Class B common stock outstanding during the second quarter of 2026. The Company had 127,073,462 Class A shares and 11,158,101 Class B shares\nissued and outstanding as of June 30, 2026.\nWater Infrastructure Commercial Development and Acquisition Updates\nIn the second quarter of 2026, Select signed a seven-year agreement with a large public operator (the \"Operator\") for produced water transportation across Select's\nNorthern Delaware Basin infrastructure footprint. Under the agreement, the Operator has conveyed 14 saltwater disposal well facilities and related assets to Select in Lea and Eddy Counties, New Mexico. Additionally, Select has agreed to construct\n19 miles of large-diameter pipeline to tie into Select's existing Northern Delaware Basin network to transport, recycle and/or dispose of the Operator's produced water in the region. The agreement is supported by a sizable 128-million-barrel\nminimum volume commitment (\"MVC\") over the seven-year contract period. The full project is expected to cost approximately $25 $30 million and be operational within the next twelve months.\nDuring the second quarter of 2026, Select also completed two additional disposal facility acquisitions in the Northern Delaware Basin to support ongoing infrastructure\nprojects and future development opportunities. In total, during the second quarter of 2026, Select added sixteen SWDs through both direct asset conveyance and acquisition to help support our growing infrastructure development activities in the\nPermian Basin.\nIn addition to the above outlined projects and acquisitions, Select signed multiple additional commercialization contracts during the second quarter of 2026 requiring\nminimal incremental capital expenditures, including several MVC agreements, acreage dedications and interruptible tie-in agreements across the Permian, Bakken, MidCon and Northeast regions as well as a new mineral extraction agreement with a key\nstrategic partner for the development of iodine extraction across the portfolio.\n5\nSecond Quarter Earnings Conference Call\nIn conjunction with today's release, Select has scheduled a conference call on Wednesday, August 5, 2026, at 11:00 a.m. Eastern time / 10:00 a.m. Central time. Please\ndial 201-389-0872 and ask for the Select Water Solutions call at least 10 minutes prior to the start time of the call, or listen to the call live over the Internet by logging on to the website at the address https://investors.selectwater.com/events-presentations/current . A telephonic replay of the conference call will be available through August 19, 2026, and may be accessed by calling 201-612-7415 using\npasscode 13757760#. A webcast archive will also be available at the link above shortly after the call and will be accessible for approximately 90 days.\nAbout Select Water Solutions, Inc.",
+      "source": "edgar:8-K ex-99.1",
+      "url": "https://www.sec.gov/Archives/edgar/data/1693256/000114036126031155/ef20079476_ex99-1.htm",
+      "asOf": "2026-08-04",
+      "truncated": true
+    },
+    "proxyStatement": {
+      "text": "Board and director independence:\nDirector Independence\nAs a public company, we are subject to various requirements of the Sarbanes-Oxley Act of 2002 (\"Sarbanes-Oxley\") and the rules of the New York Stock Exchange (the \"NYSE\"), the NYSE Texas, Inc. (the \"NYSE Texas\") and the SEC. Generally, these rules require that a specified number or percentage of directors serving on the board and certain committees meet applicable standards of independence. Our Board may increase the number of directorships to ensure that our Board includes the requisite number of independent directors pursuant to Sarbanes-Oxley and rules of the NYSE, the NYSE Texas and the SEC.\nIn evaluating director candidates, we assess whether a candidate possesses the integrity, judgment, knowledge, experience, diversity, skills, and expertise that are likely to enhance the board's ability to manage and direct our affairs and business, including, when applicable, to enhance the ability of the committees of the board to fulfill their duties. Our Board has determined that, with the exception of Mr. Schmitz, all of our current directors (Mmes. Burleson and Fielder and Messrs. Burnett, Cope, Fernandez-Moreno, Roberts, and Wall) are independent under the independence standards of the NYSE and NYSE Texas. In making this determination, the Board affirmatively determined that each independent director has no material relationship with the Company.\nLeadership Structure of the Board\nThe Bylaws and Corporate Governance Guidelines provide the Board with flexibility to combine or separate the positions of Chairman of the Board and Chief Executive Officer and/or to appoint a lead independent director (the \"Lead Director\") in accordance with its determination that utilizing one or the other structure would be in the best interests of our Company. Since January 2021, Mr. Schmitz has served as our President, Chief Executive Officer, and Chairman of the Board. He facilitates communications between members of the Board and works with management in the preparation of the agenda for each Board meeting. All of our directors are encouraged to make suggestions for Board agenda items or pre-meeting materials. Mr. Burnett was appointed in March 2023 as Lead Director, effective following our 2023 Annual Meeting of Stockholders. The Board annually reaffirms the Lead Director role, and most recently reaffirmed his appointment as Lead Director in February 2026. As Lead Director, Mr. Burnett establishes the agenda for the meetings of the independent directors in executive sessions and presides over these gatherings. He offers guidance and feedback to our management team on behalf of the independent directors, while also contributing valuable input regarding the Board's structure. Additionally, when necessary, Mr. Burnett serves as the Board's representative in communications with stockholders and other stakeholders. Mr.\n\nCompensation discussion and analysis:\nCOMPENSATION DISCUSSION AND ANALYSIS\nThis Compensation Discussion and Analysis (\"CD&A\") provides information regarding the compensation of our Named Executive Officers (\"NEOs\"), including the objectives, principles, policies, and practices of our executive compensation program. Our NEOs for the year ended December 31, 2025, were as follows:\nNAME\nPRINCIPAL POSITION\nJohn D. Schmitz\nChairman of the Board, President, and Chief Executive Officer\nChristopher K. George\nExecutive Vice President and Chief Financial Officer\nMichael C. Skarke\nExecutive Vice President and Chief Operating Officer\nMichael J. Lyons\nExecutive Vice President, Chief Strategy & Technology Officer\nCody J. Ortowski\nExecutive Vice President, Business and Regulatory Affairs\nExecutive Summary\nOur executive compensation program is structured to achieve a number of objectives, including:\naligning executive interests with our long-term strategy and those of our stockholders;\ntying a significant portion of compensation directly to our operating and financial performance and execution of strategic objectives;\nenabling us to attract and retain high performing executives through competitive pay practices; and\naligning pay and performance in a way that is transparent and understood by all executives and stockholders.\nThis CD&A provides detail on how our Company achieves these objectives and best aligns our NEO interests with those of our stockholders.\n2025 Performance Highlights\nSelect Water Solutions delivered strong performance in 2025, demonstrating resilience and growth in a challenging market environment, including:\ngenerated full year 2025 consolidated revenue of $1.41 billion;\ndelivered Water Infrastructure full year 2025 revenues of $313 million, up 8% year-over-year;\n30\nSelect Water Solutions\nTABLE OF CONTENTS\nincreased recycled produced water volumes by 18% as compared to 2024;\nachieved Chemical Technologies full year 2025 revenues of $308 million, up 19% year-over-year;\nrealized full year 2025 operating cash flow of $215 million; and\nexpanded contract portfolio of long-term dedication and right-of-first refusal agreements, adding more than 950,000 acres under leasehold or right-of-first-refusal dedication.\n2025 Executive Compensation Highlights\nOur 2025 executive compensation decisions reflect our strong performance and commitment to aligning pay with stockholder interests:\nAnnual Bonus Payout Based on our 2025 performance, the Compensation Committee determined an annual bonus funding level of up to 94.1% of target for our NEOs. Actual incentive payouts, which may differ from this funding level based on individual performance and other factors, are described under \" Annual Cash Incentives 2025 Annual Incentive Payouts \" below.\nVesting of 2023 PSUs The performance share units (PSUs) granted in 2023 based on relative return on assets (ROA) performance vested at 124% of target, and PSUs based on Free Cash Flow (FCF) performance vested at 90% of target over the three-year performance period ending December 31, 2025.\n2025 LTI Design Changes For the 2025 long-term incentive (LTI) awards, we removed relative Return on Assets (ROA) and absolute Total Shareholder Return (TSR) and replaced it with relative Total Shareholder Return (TSR) as compared to a peer group with a modifier tied to absolute TSR performance.\nThese compensation decisions and program enhancements reinforce our pay-for-performance philosophy and commitment to creating long-term stockholder value.\n2025 Compensation Components\nOur executive compensation program consists of the following key components and are detailed below:\nPRINCIPAL COMPONENTS OF EXECUTIVE COMPENSATION PROGRAM\nATTRACT/\nRETAIN/\nMOTIVATE\nPAY FOR\nPERFORMANCE\nSTOCKHOLDER\nALIGNMENT\nBase Salary\nSalary is an essential factor in attracting and retaining qualified personnel.\nAnnual Cash Incentives\nPerformance-based, short-term cash incentive opportunity that incentivizes the creation of stockholder value through achievement of the following metrics:\nAdjusted EBITDA;\nFCF;\nSafety;\nEnvironmental and sustainability performance; and\nOther strategic goals.\nLong-Term Incentives\nEquity incentive compensation that promotes alignment with stockholders by tying executive compensation to creation of long-term stockholder value and encouraging executives to build meaningful equity ownership stakes through a combination of time-based awards and performance-based awards subject to Relative and Absolute TSR performance\n2026 Proxy Statement\n31\nTABLE OF CONTENTS\nCompensation Governance Best Practices\nWe follow good governance practices that our Compensation Committee believes are in the best interests of our stockholders.\n\nSecurity ownership:\nSECURITY OWNERSHIP OF CERTAIN BENEFICIAL OWNERS AND MANAGEMENT\nThe following table sets forth information regarding the beneficial ownership of our common stock as of March 10, 2026, the record date, based on information filed with the SEC or obtained from the persons named below, with respect to the beneficial ownership of shares of our common stock by:\neach person known by us to be the beneficial owner of more than 5% of our outstanding shares of common stock;\neach of our Named Executive Officers and directors (including our nominees) that beneficially owns shares of our common stock; and\nall of our current executive officers and directors as a group.\nUnless otherwise indicated and subject to applicable community property rules, we believe that all persons named in the table have sole voting and investment power with respect to all shares of common stock beneficially owned by them. Other than as specifically noted below, the mailing address for each listed beneficial owner is in care of Select Water Solutions, Inc., 1820 N I-35, Gainesville, TX 76240. The percentages are based on 121,843,494 shares of Class A common stock and 16,221,101 shares of Class B common stock outstanding.\nName of Beneficial Owner\nClass A\nCommon Stock\nClass B\nCommon Stock\nCombined Voting\nPower (1)(2)\n(#)\n(%)\n(#)\n(%)\n(#)\n(%)\nGreater Than 5% Stockholders:\nSES Legacy Holdings, LLC (3)(4)\n16,221,101\n100.0 %\n16,221,101\n11.7 %\nCrestview Partners II GP, LP (5)\n3,802,972\n3.1 %\n16,221,101\n100.0 %\n20,024,073\n14.5 %\nFranklin Mutual Advisors, LLC (6)\n7,553,093\n6.2 %\n7,553,093\n5.5 %\nBlackRock, Inc. (7)\n6,618,849\n5.4 %\n6,618,849\n4.8 %\nDimensional Fund Advisors LP (8)\n6,364,488\n5.2 %\n6,364,488\n4.6 %\nThe Vanguard Group (9)\n6,072,722\n5.0 %\n6,072,722\n4.4 %\nDirectors, Director Nominees and\nNamed Executive Officers:\nJohn D. Schmitz (10)\n4,362,636\n3.6 %\n4,362,636\n3.2 %\nGayle L. Burleson\n85,768\n*\n85,768\n*\n58\nSelect Water Solutions\nTABLE OF CONTENTS\nName of Beneficial Owner\nClass A\nCommon Stock\nClass B\nCommon Stock\nCombined Voting\nPower (1)(2)\n(#)\n(%)\n(#)\n(%)\n(#)\n(%)\nRichard A. Burnett (11)\n132,466\n*\n132,466\n*\nBruce E. Cope\n17,422\n*\n17,422\n*\nLuis Fernandez-Moreno\n69,206\n*\n69,206\n*\nRobin H. Fielder\n60,879\n*\n60,879\n*\nTimothy A. Roberts\n17,422\n*\n17,422\n*\nDouglas J. Wall (12)\n128,058\n*\n128,058\n*\nChristopher K. George (13)\n343,139\n*\n343,139\n*\nMichael C. Skarke\n470,738\n*\n470,738\n*\nMichael J. Lyons\n144,595\n*\n144,595\n*\nCody J. Ortowski (14)\n1,539,524\n1.3 %\n1,539,524\n1.1 %\nAll Current Executive Officers, Directors and Director Nominees as\na Group (14 persons) (15)\n7,506,605\n6.2 %\n7,506,605\n5.4 %\n*\nRepresents less than 1% of the outstanding shares of common stock.\n(1)\nFor each stockholder, in accordance with Rule 13d-3 promulgated under the Exchange Act, this percentage is determined by assuming the named stockholder exercises all options, warrants and other instruments pursuant to which the stockholder has the right to acquire shares of our common stock within 60 days, but that no other person exercises any options, warrants or other purchase rights (except with respect to the calculation of the beneficial ownership of all directors and executive officers as a group, for which the percentage assumes that all directors and executive officers exercise any options, warrants or other purchase rights).\n(2)\nRepresents percentage of voting power of our Class A common stock and Class B common stock voting together as a single class. Each holder of limited liability company units in SES Holdings (each, an \"SES Holdings Unit\") will hold one share of Class B common stock for each SES Holdings Unit that it owns. Each share of Class B common stock has no economic rights, but entitles the holder thereof to one vote.\n\nRelated-person transactions:\nRelated Party Transactions\nSES Holdings Agreement\nExchange Rights. Each holder of SES Holdings Units (other than us and our subsidiaries) holds one share of our Class B common stock for each SES Holdings Unit held by such holder. Subject to certain limitations, pursuant to the Eighth Amended and Restated Limited Liability Company Agreement of SES Holdings, as amended from time to time (the \"SES Holdings Agreement\"), holders of SES Holdings Units other than us and our subsidiaries have the right (the \"Exchange Right\") to exchange such holder's SES Holdings Units for, at SES Holdings' election, (i) shares of our Class A common stock on a one-for-one basis, subject to conversion rate adjustments for stock splits, stock dividends, reclassification and other similar transactions, or (ii) cash in an amount equal to the Cash Election Value (as defined below) of such Class A common stock. Alternatively, upon any exercise of any Exchange Right, we (instead of SES Holdings) will have the right (our \"Call Right\") to acquire the tendered SES Holdings Units from the exchanging unitholder\n2026 Proxy Statement\n55\nTABLE OF CONTENTS\nfor, at our election, (i) the number of shares of our Class A common stock the exchanging unitholder would have received pursuant to the Exchange Right, or (ii) cash in an amount equal to the Cash Election Value. In connection with any exchange of SES Holdings Units pursuant to an Exchange Right or our Call Right, the corresponding number of shares of Class B common stock will be cancelled. As holders exchange their SES Holdings Units, our membership interest in SES Holdings will be correspondingly increased, the number of shares of Class A common stock outstanding will be increased, and the number of shares of Class B common stock outstanding will be reduced.",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/1693256/000110465926033864/tm261432-1_def14a.htm",
+      "asOf": "2026-03-24",
+      "truncated": true
+    },
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T12:54:09.662Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T12:54:09.662Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T12:54:09.662Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T12:54:09.662Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T12:54:09.662Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T12:54:09.662Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T12:54:09.662Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T12:54:09.662Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T12:54:09.662Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T12:54:09.662Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T12:54:09.662Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T12:54:09.662Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-23T12:54:09.662Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-23T12:54:09.662Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T12:54:09.662Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T12:54:09.662Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T12:54:09.662Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T12:54:09.662Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T12:54:09.662Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T12:54:09.662Z"
+    }
+  ]
+}

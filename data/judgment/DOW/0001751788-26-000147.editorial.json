@@ -1,0 +1,48 @@
+{
+  "judgmentSha256": "78e3a9c90e9fd770df362025483f7d2e596c220c60f9b8e123fbad795d287233",
+  "reviewedAt": "2026-09-24T03:20:00Z",
+  "reviewer": "Claude Opus 4.8",
+  "round": 2,
+  "verdict": "approved-with-minors",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "the FY23 figures predate two years of losses and negative free cash flow that would have drawn on the balance sheet",
+      "issue": "\"Two years of losses\" (FY24 and FY25) is contradicted by the income statement on the same page: FY24 operating income was +$1.2B and FY24 net income +$1.1B (+$1.57 diluted EPS) — FY24 was profitable, not a loss year. Only FY25 was a net/operating loss. The same error recurs at sections.risks.idiosyncratic[3]: \"current leverage and net-debt/EBITDA cannot be verified from this report after two loss-making years.\" (FY24 did have marginally negative FCF of -$26M, but that is negative cash flow, not a loss.) The mischaracterization overstates the depth and duration of the downturn.",
+      "fix": "Recast to what the surface supports: FY23 total/net debt predate FY24-FY25 of weak-to-negative free cash flow (FY24 roughly breakeven at -$26M, FY25 -$1.4B) and the FY25 net loss. Do not call FY24 a loss year. Apply the same correction to the idiosyncratic-risk bullet (\"after a loss-making FY25 and two years of negative free cash flow\").",
+      "status": "addressed",
+      "note": "Resolved. balanceCommentary now reads \"the FY23 figures predate FY24 and FY25, years of weak-to-negative free cash flow and, in FY25, a net loss that would have drawn on the balance sheet\" — FY24 is no longer called a loss year and the characterisation matches the surface (FY24 FCF ~breakeven/-0.1%). idiosyncratic[3] now reads \"after a loss-making FY25 and two years of negative free cash flow.\" No residual \"two years of losses\"/\"two loss-making years\" phrasing anywhere in the draft."
+    },
+    {
+      "id": "F-2",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarios[2].driver",
+      "quote": "the shares retest toward the 52-week low of $20.65, about 23% below the $28.65 price",
+      "issue": "The \"about 23%\" downside belongs to the $22 Bear implied price ((28.65-22)/28.65 = 23.2%, the page's bearDownside), not to the $20.65 52-week low, which is ~27.9% below $28.65. As written the clause reads as though $20.65 is 23% below the price. scenarioCommentary states the relationship correctly (\"our Bear implied price of $22 about 23% below the current price\"), so the driver is the loose one.",
+      "fix": "Attach the 23% to the $22 bear implied price, e.g. \"the shares retest toward the 52-week low of $20.65; our $22 bear case is about 23% below the $28.65 price,\" so the percentage matches the calls math.",
+      "status": "addressed",
+      "note": "Resolved. scenarios[2].driver now reads \"the shares retest toward the 52-week low of $20.65, with our $22 bear case about 23% below the $28.65 price\" — the 23% is attached to the $22 bear implied price ((28.65-22)/28.65 = 23.2%), and $20.65 is stated without a percentage. Consistent with scenarioCommentary, analystCommentary and finalRecommendation, which all tie the 23% to the $22 bear case."
+    },
+    {
+      "id": "F-3",
+      "severity": "Minor",
+      "field": "sections.management.capitalAllocation",
+      "quote": "operating cash flow was $1,324 million in the quarter, up $1,794 million year-over-year",
+      "issue": "Cross-section numeric repetition. The Q2'26 operating-cash-flow pair ($1,324M, up $1,794M YoY) is introduced in cashflowCommentary (\"Cash provided by operating activities was $1,324 million in Q2'26, up $1,794 million year-over-year from -$470 million\") and re-quoted verbatim here. The FY25 free-cash-flow / dividend pair (-$1.4B FCF vs $1.5B dividends) is likewise re-quoted numerically across cashflowCommentary, capitalAllocation and finalRecommendation. The rubric asks that each figure be introduced once and referred back to in words.",
+      "fix": "In capitalAllocation, refer back in words (e.g. \"operating cash flow turned sharply positive in the quarter\") rather than re-quoting $1,324M/$1,794M, and carry the -$1.4B/$1.5B pair with numbers in one section, in words elsewhere.",
+      "status": "addressed",
+      "note": "Resolved for the named pairs. The Q2'26 OCF pair ($1,324M / up $1,794M) now carries numbers only in cashflowCommentary; capitalAllocation refers back in words (\"operating cash flow turned sharply positive year-over-year\"). The FY25 -$1.4B FCF / $1.5B dividend pair now carries numbers only in cashflowCommentary and appears in words elsewhere (capitalAllocation, finalRecommendation, idiosyncratic[0]). A smaller residual $253M/$0.00 repeat is raised separately as F-4."
+    },
+    {
+      "id": "F-4",
+      "severity": "Minor",
+      "field": "sections.management.capitalAllocation",
+      "quote": "repurchased no stock (FY25 repurchases $0.00), so the payout ran ahead of internally generated cash",
+      "issue": "Residual cross-section numeric repetition of the same shape F-3 fixed, left in the newly-revised capitalAllocation. The FY25 buyback figure \"(FY25 repurchases $0.00)\" appears verbatim in both cashflowCommentary (\"suspended buybacks (FY25 repurchases $0.00)\") and capitalAllocation. The Q2'26 dividend \"$253 million\" is quoted with numbers in both cashflowCommentary (\"Dividends in the quarter were $253 million\") and capitalAllocation (\"paid $253 million in Q2'26\"). Under the rubric each figure should carry numbers once and be referred back to in words; the identical \"(FY25 repurchases $0.00)\" parenthetical is also the mechanical same-token case.",
+      "fix": "Keep each figure numeric in one section — the $0.00 buybacks and the $253M quarterly dividend in cashflowCommentary — and refer back in words in capitalAllocation (e.g. \"with buybacks suspended and the quarterly dividend still paid\"), so no figure is re-quoted numerically across the two sections.",
+      "status": "open"
+    }
+  ]
+}

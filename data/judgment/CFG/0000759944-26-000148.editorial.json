@@ -1,0 +1,49 @@
+{
+  "judgmentSha256": "2b27a868d160dc93b718f0e95f63e5bc86cfc95706795c97b50b3ef8054ceba3",
+  "reviewedAt": "2026-09-23T18:05:00Z",
+  "reviewer": "Claude Opus 4.8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.businessMoat.moatFactors[2].body",
+      "quote": "Citizens Private Bank and Private Wealth held $65.7 billion of total client assets including $38.7 billion of assets under management at June 30, 2026.",
+      "issue": "The MD&A reports $65.7B total client assets (AUM $38.7B, transactional $27.0B) as a company-wide figure ('we had total client assets of $65.7 billion'), not the Citizens Private Bank and Private Wealth unit's book. The author's own companyOverview correctly attributes it to 'the company,' but this moat factor and growth.points[2] ('The Private Bank and Private Wealth build-out is expanding client assets, which reached $65.7 billion') re-scope the same total onto one business line the filing does not isolate. A company-wide total attached to a specific unit is a scoping/attribution error, and the internal inconsistency shows it.",
+      "fix": "Attribute $65.7B (and the $38.7B AUM) to the company as the filing does, e.g. 'Citizens reported $65.7 billion of total client assets, including $38.7 billion of AUM, at June 30, 2026,' and characterize the Private Bank/Private Wealth build-out as adding to that base without claiming it holds the whole total. Apply the same fix to growth.points[2].",
+      "status": "addressed",
+      "note": "moatFactors[2].body now reads 'Citizens reported $65.7 billion of total client assets, including $38.7 billion of assets under management, at June 30, 2026' and frames the build-out as 'adding to that base.' growth.points[2] now attributes the $65.7B/$38.7B to the company and calls the build-out a growth investment adding to the company's client-asset base. companyOverview stays company-wide; scoping is consistent."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.executiveSummary.catalysts[1]",
+      "quote": "Fee-income growth from the Private Bank and Private Wealth build-out, which drove capital markets and wealth fees and lifted noninterest income $52 million year over year in Q2'26.",
+      "issue": "Causal claim the pack does not establish. The MD&A attributes the $52M noninterest-income increase to 'growth across numerous fee categories, primarily capital markets and wealth fees' and cites the Private Bank/Private Wealth build-out only as a driver of the noninterest-expense increase (hiring). It never links the build-out to fee growth, and capital markets fees are a Commercial Banking activity, not a Private Bank/Private Wealth product. The same over-crediting appears in analystCommentary ('efficiency ratio down to 61.1% ... helped by ... the Private Bank and Private Wealth build-out'), where the build-out in fact raised expense.",
+      "fix": "State the grounded facts without the causal over-reach: noninterest income rose $52M in Q2'26, led by capital markets and wealth fees. If the build-out is named as a fee catalyst, tie it only to wealth fees (its actual product) and drop the capital-markets link. Remove or requalify the analystCommentary phrase crediting the build-out for the efficiency-ratio gain.",
+      "status": "addressed",
+      "note": "catalysts[1] now reads noninterest income rose $52M in Q2'26 'led by capital markets and wealth fees, with the Private Bank and Private Wealth build-out a longer-term contributor to wealth fees' — the capital-markets causal link is dropped and the build-out is tied only to wealth fees, as the fix directed. analystCommentary now credits the efficiency-ratio gain to 'revenue outpaced expense growth,' no longer to the build-out."
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "the reward-to-risk supports a BUY, with one notch of conservatism held back because the favorable rate and credit backdrop that is driving the current results can reverse.",
+      "issue": "Mischaracterizes the rating derivation. The rule allows the derived label or one notch more conservative. Here expected upside is +17.1% (below the +20% STRONG BUY threshold) and reward/risk 0.84x, so the derived label is BUY and the author chose BUY — no notch was withheld (conviction.derivedLabel and gatedLabel both 'BUY'). Telling the reader a notch of conservatism was held back implies the model signalled STRONG BUY, which it did not. The claim is repeated in finalRecommendation.body[1] ('with one notch of conservatism held back because a bank's earnings are levered to a rate and credit backdrop that can turn quickly').",
+      "fix": "Drop the 'one notch of conservatism held back' framing, or reword to reflect that BUY is the model-derived label and that caution is expressed through the probability weights and a target band set below consensus, not through a withheld rating notch. Fix both scenarioCommentary and finalRecommendation.body[1].",
+      "status": "addressed",
+      "note": "scenarioCommentary and finalRecommendation.body[1] now state BUY is 'the label the expected-upside and reward/risk math derives' and place caution in the probability weights and below-consensus target band, not a withheld notch. Matches the rebuilt report (derivedLabel BUY, gatedLabel BUY, E +17.1%, R 0.84x). 'One notch of conservatism held back' is gone from both fields."
+    },
+    {
+      "id": "F-4",
+      "severity": "Minor",
+      "field": "sections.management.governance",
+      "quote": "Governance rests on the DEF 14A filed 2026-03-09.",
+      "issue": "House style calls for dates in prose form, not ISO. Every other date in the judgment (October 24, 2025; August 15, 2025; February 27, 2026) is in prose form; only this governance date uses ISO 2026-03-09.",
+      "fix": "Write the date as 'the DEF 14A filed March 9, 2026.'",
+      "status": "addressed",
+      "note": "governance now reads 'the DEF 14A filed March 9, 2026'; no ISO-format dates remain in the judgment prose."
+    }
+  ]
+}

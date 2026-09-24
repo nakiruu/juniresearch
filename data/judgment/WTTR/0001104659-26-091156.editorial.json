@@ -1,0 +1,29 @@
+{
+  "judgmentSha256": "85def2a995d5fe168e2b7820f2063b06c08300c8f76cd4384e64811a6d102569",
+  "reviewedAt": "2026-09-23T19:20:00Z",
+  "reviewer": "claude-opus-4-8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.finalRecommendation.body",
+      "quote": "The scenarios weight to a fair value of $21.00, an expected upside of about 3.6% from the current price, against a bear case 26% lower, so the reward-to-risk near 0.14x does not compensate for the downside.",
+      "issue": "This restates, in near-identical words, sections.valuation.scenarioCommentary (\"The scenarios weight to a fair value of $21.00, an expected upside of roughly 3.6% over the current price. The bear case sits 26% below the current price, so the reward-to-risk is skewed to the downside at about 0.14x\"). The same load-bearing derivation (fair value $21.00, ~3.6% upside, bear 26% below, reward/risk ~0.14x) appears twice. The recurring-figure paraphrase also shows elsewhere: the WTI pair $95.65 vs $64.57 is stated numerically in four places (executiveSummary.risks[1], businessMoat.moatFactors[3].body, valuation.scenarios[2].driver, risks.idiosyncratic[2]) and the 72.4x/45.7x multiple pair across executiveSummary, valuation.multiplesCommentary, risks.idiosyncratic[0] and finalRecommendation, rather than being referred back in words.",
+      "fix": "Introduce the weighted fair value, expected upside, bear downside and reward/risk once (in scenarioCommentary); have the final recommendation refer back in words (e.g. \"the scenarios above imply a HOLD; the reward/risk does not compensate\") without re-stating the four numbers. Likewise state the WTI pair and the trailing multiples numerically once per topic and refer back thereafter.",
+      "status": "addressed",
+      "note": "Consolidated to one home each with word-pointers elsewhere. Scenario derivation ($21.00/3.6%/26%/0.14x) now only in scenarioCommentary; finalRecommendation.body[1] refers back in words (\"only slim expected upside against a materially larger bear-case downside\"), no numbers. WTI $95.65/$64.57 numeric only in executiveSummary.risks[1]; moatFactors[3], scenarios[2].driver, idiosyncratic[2] now word-only. 72.4x/45.7x numeric only in multiplesCommentary; idiosyncratic[0] and finalRecommendation point back in words. Derivations recompute correctly; no invented figures."
+    },
+    {
+      "id": "F-2",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.risks[1]",
+      "quote": "The quarter's activity was supported by an oil-price spike, average WTI of $95.65, up from $64.57 a quarter earlier, that was tied to Middle East tensions and could unwind.",
+      "issue": "\"Oil-price spike\" is a characterisation the source does not use for a quarterly average, and the framing implies the WTI rise drove Select's Q2 activity. The MD&A stresses the opposite temper: activity \"remained generally stable\" with operators emphasising \"capital efficiency\" and \"moderated production growth\" even as prices rose, and the company attributes Q2 strength to produced-water volumes, skim oil, and record Chemical Technologies revenue. The causal link is only softly supported (MD&A: higher prices \"supported the economics of ongoing development programs\"), so this is a voice/emphasis overstatement rather than an ungrounded claim.",
+      "fix": "Drop \"spike\" and describe it plainly as the rise in average WTI to $95.65 from $64.57; frame the higher oil price as a supportive macro backdrop that could reverse, not as what drove the quarter's activity.",
+      "status": "addressed",
+      "note": "Rewritten to \"The quarter's average WTI rose to $95.65 from $64.57 a quarter earlier on Middle East tensions, a supportive macro backdrop rather than the driver of activity, which the MD&A describes as stable and capital-disciplined; that oil-price support could reverse.\" \"Spike\" is gone (no occurrence remains); the rise is now framed as a supportive backdrop, not the driver, and the MD&A's stable/capital-disciplined temper (Commodity Prices section) is cited. Grounded and matches the fix."
+    }
+  ]
+}

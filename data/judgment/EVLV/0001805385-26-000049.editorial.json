@@ -1,0 +1,39 @@
+{
+  "judgmentSha256": "2368e74b5edc46a8afefdfae0e8b448625cecccd58a71b4ed4af5033eb242e84",
+  "reviewedAt": "2026-09-23T13:22:00Z",
+  "reviewer": "Claude Opus 4.8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "analystCommentary; sections.executiveSummary.risks[0]",
+      "quote": "a restatement of the 2022 and 2023 annual periods and several 2024 quarters",
+      "issue": "Overstates the restatement's 2024 scope. The 10-K risk-factor excerpt (grounding surface) says the material weaknesses contributed to the restatement of the annual periods ended December 31, 2022 and 2023 and \"the quarterly periods as of and for the periods ended March 31, 2024 and June 30, 2024\" — exactly two 2024 quarters, not \"several.\" \"Several\" conventionally means more than two, so this inflates a control/restatement disclosure the reader is asked to weigh. It appears twice: in analystCommentary and in sections.executiveSummary.risks[0]. The precise scope is stated correctly in sections.risks.idiosyncratic[0] (\"the March 31, 2024 and June 30, 2024 quarters\"), so the two summary spots are inconsistent with the report's own accurate version.",
+      "fix": "In both places replace \"several 2024 quarters\" with the accurate count, e.g. \"two 2024 quarters\" or \"the first two quarters of 2024 (Q1 and Q2),\" matching the precise scope already stated in risks.idiosyncratic[0].",
+      "status": "addressed",
+      "note": "Fixed. Both analystCommentary and executiveSummary.risks[0] now read \"the 2022 and 2023 annual periods and two 2024 quarters\"; the string \"several 2024 quarters\" is gone from the judgment and the built report (0 occurrences). risks.idiosyncratic[0] still names exactly \"the March 31, 2024 and June 30, 2024 quarters\" (with the grounded 2022/2023 quarterly detail beginning Q2 2022), so all three spots are now consistent on exactly two 2024 quarters."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.finalRecommendation.body; sections.valuation.scenarioCommentary",
+      "quote": "The Bear at $3.60, about a quarter below the current price and below the 52-week low of $4.79, is a real scenario, not a formality.",
+      "issue": "Cross-section repetition (rubric item 7: no sentence repeated across sections; introduce a figure once and refer back in words). (1) This Bear clause near-verbatim duplicates sections.valuation.scenarioCommentary (\"The Bear at $3.60 sits about a quarter below the current price and below the 52-week low of $4.79...\"). (2) The half-year loss figure pair is re-quoted in full in four sections rather than referred back in words: analystCommentary (\"shrank to $14.3M from $42.2M\"), sections.executiveSummary.thesis.body (\"fell to $14.3M from $42.2M\"), sections.financials.incomeCommentary (\"narrowed to $14.3M in 2026 from $42.2M in 2025\"), and sections.finalRecommendation.body[0] (\"falling to $14.3M from $42.2M\"). (3) The executive-summary catalysts largely restate the growth.points levers (Columbia Tech shift, Plexus, international) rather than pointing while the growth section argues.",
+      "fix": "In finalRecommendation, refer back to the Bear scenario in words instead of re-quoting the $3.60 / quarter-below / $4.79 specifics already argued in scenarioCommentary. State the half-year loss figures once (in incomeCommentary or thesis) and refer to \"the half-year loss reduction noted above\" elsewhere. Trim the catalysts to true one-line pointers and let the growth section carry the mechanism.",
+      "status": "addressed",
+      "note": "Fixed on all three counts. (1) finalRecommendation.body[1] refers to the Bear in words (‘a genuine downside, not a formality’); the $3.60 / quarter-below / $4.79 specifics live only in scenarioCommentary. (2) The $14.3M-from-$42.2M pair appears once (incomeCommentary); analystCommentary, thesis and finalRecommendation refer to it in words (‘narrowed sharply’) — one full quote in judgment and built report. (3) Catalysts are one-line pointers (Columbia Tech, Plexus, international) while growth.points carry the dates/mechanism. A mild echo remains but is within the refer-back allowance."
+    },
+    {
+      "id": "F-3",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "Gross margin has climbed from 40.1% in FY23 to 51.6% in FY25",
+      "issue": "Endpoint framing that obscures the most recent year. The report's own income table and incomeCommentary show FY24 gross margin at 57.2%, so FY25's 51.6% is a ~560bp decline from the FY24 peak, not a continued climb. Presenting margin as a clean two-point ascent in the bull thesis, while the latest annual print fell, slightly overstates the margin trajectory that supports the case. Both endpoints (40.1%, 51.6%) are correctly sourced, so this is a framing/selection issue rather than a wrong figure.",
+      "fix": "Acknowledge the FY24 peak, e.g. \"gross margin recovered to 51.6% in FY25 from 40.1% in FY23, off a 57.2% peak in FY24,\" or soften \"climbed\" so the thesis does not imply an uninterrupted uptrend the series contradicts.",
+      "status": "addressed",
+      "note": "Fixed. thesis.body now reads \"Gross margin recovered to 51.6% in FY25 from 40.1% in FY23, though it stepped down from a 57.2% peak in FY24,\" which acknowledges the FY24 peak and drops the \"climbed\" framing, matching the suggested fix."
+    }
+  ]
+}
