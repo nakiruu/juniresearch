@@ -1,0 +1,89 @@
+{
+  "judgmentSha256": "4018012c9fdc1e29ac347a3df7c4aed6f1230437321fcb6942d0bc80f13faf6a",
+  "reviewedAt": "2026-09-24T19:30:00Z",
+  "reviewer": "Claude Opus 4.8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.risks.systemic",
+      "quote": "The 10-K flags macro exposures including inflation, currency, elevated hardware-component costs and tariff and trade policy, and public-sector customers add budget-cycle timing risk.",
+      "issue": "This macro list — inflationary pressure, foreign-currency fluctuations, elevated hardware-component costs and tariff/trade policies — and the public-sector budget-appropriations point come from the 10-Q MD&A (its \"Macroeconomic Trends\" and Revenue sections in Context), not the 10-K risk-factors excerpt. The 10-K excerpt in the pack carries only the growth-rate-decline, history-of-losses and new-use-case risks. Attaching these facts to \"the 10-K\" attaches them to a source that did not carry them (over-attribution).",
+      "fix": "Attribute the macro-exposure list and the public-sector budget-cycle point to the 10-Q MD&A, where the pack carries them, or drop the source label and state the exposures plainly. Reserve \"the 10-K\" for the growth-decline and expansion risks it actually contains.",
+      "status": "addressed",
+      "note": "Rewrite changed \"The 10-K flags\" to \"The filing flags,\" correctly tying the macro list to the 10-Q MD&A; public-sector customers \"subject to annual budget appropriations\" is now the filing's point too. Attribution correct."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.growth.points",
+      "quote": "Consensus models FY2027 revenue of $2.05B and FY2028 revenue of $2.45B, with EPS rising from $0.77 to $0.95.",
+      "issue": "FY2028 revenue of $2.45B is not on the grounding surface. The Facts Estimates block gives \"FY28E revenue $2.5B,\" and the report's own calls carry no FY2028 revenue figure; $2.45B is a more precise number than the surface supports and differs from the grounded $2.5B. (FY2027 $2.05B is grounded by the report's FY27E Revenue call of $2,045,465,180, and the $0.77/$0.95 EPS pair is grounded.)",
+      "fix": "Quote FY2028 estimated revenue as $2.5B, exactly as the Facts block gives it, or omit the figure. Do not introduce a $2.45B that appears nowhere on the surface.",
+      "status": "addressed",
+      "note": "Growth point now reads \"FY2027 revenue of $2B and FY2028 revenue of $2.5B,\" matching the Facts Estimates block exactly."
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.growth.points",
+      "quote": "Annual recurring revenue reached $2,124,742 thousand from $1,640,113 thousand",
+      "issue": "This identical clause appears in two sections: the executive-summary thesis (\"Annual recurring revenue reached $2,124,742 thousand from $1,640,113 thousand, gross margin is 76.7%, and free cash flow is now positive\") and again here in the growth points. The rubric requires no sentence appear in two sections — the exec summary should point and the growth section argue, not restate the same figure in the same words.",
+      "fix": "State the ARR figure once, in the growth section where it belongs, and refer back to it in words in the thesis (e.g., recurring revenue keeps compounding) rather than repeating \"$2,124,742 thousand from $1,640,113 thousand\" verbatim.",
+      "status": "addressed",
+      "note": "Growth point now reads \"annual recurring revenue kept compounding at a similar pace\" (with customers 3,605 from 2,771); the verbatim ARR clause survives only once, in the thesis."
+    },
+    {
+      "id": "F-4",
+      "severity": "Important",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "The consensus target of $52.16 sits 34.1% above the price, the median is $53.00, and the range runs $39.00 to $60.00, leaving the stock near the bottom of the analyst spread.",
+      "issue": "The same claim — consensus $52.16 (+34.1%), median $53.00, range $39.00–$60.00, shares near the low end — is made in analystCommentary (\"The consensus price target is $52.16, about 34.1% above the current $38.90, with a median of $53.00 and a range of $39.00 to $60.00 — the shares sit near the low end of that range\") and again here, only reworded. That is a paraphrase repetition across two blocks.",
+      "fix": "Give the full consensus-target spread once (analystCommentary), and in the valuation section refer to it in words while adding the valuation argument — what the forward multiple should be — rather than restating the target, median, range and near-low-end position a second time.",
+      "status": "addressed",
+      "note": "multiplesCommentary now reads \"Analysts' price targets sit above the current price and leave the stock near the bottom of their spread\"; the full spread appears once, in analystCommentary."
+    },
+    {
+      "id": "F-5",
+      "severity": "Important",
+      "field": "sections.management.capitalAllocation",
+      "quote": "stock-based compensation, which financed the growth that produced the $1,619.1 million accumulated deficit and continues to dilute shareholders as the company scales.",
+      "issue": "The SBC-funded-the-accumulated-deficit-and-dilutes-shareholders narrative is retold in three sections in different words: cashflowCommentary (\"a large share of reported profitability rests on the gap between cash flow and GAAP created by stock-based compensation... dilutes shareholders even as it flatters the cash line\"), capitalAllocation (this quote), and risks.idiosyncratic (\"the equity-funded model produced a $1,619.1 million accumulated deficit, and ongoing SBC dilutes holders while flattering cash relative to GAAP earnings\"), with the $1,619.1M figure also in balanceCommentary and the exec-summary risks. One story is argued repeatedly.",
+      "fix": "Make the SBC-dilution / accumulated-deficit argument once, with capitalAllocation the natural home, state the $1,619.1M figure once outside the exec-summary pointer, and refer back in words in cashflow and risks rather than re-arguing the flatters-cash-versus-GAAP point in each.",
+      "status": "addressed",
+      "note": "$1,619.1M removed from balanceCommentary (now \"a large accumulated deficit\") and from risks.idiosyncratic; the figure now appears once outside the exec pointer, in capitalAllocation. cashflow and risks refer to SBC in words. This follows the prescribed fix; residual overlap is section-appropriate (cash quality / trajectory / dilution risk)."
+    },
+    {
+      "id": "F-6",
+      "severity": "Important",
+      "field": "sections.management.governance",
+      "quote": "Founder leadership and a multi-class share structure concentrate control with the founders, a common arrangement for founder-led technology companies that shareholders should weigh.",
+      "issue": "The section asserts founder control from the multi-class structure but leaves the on-surface control figures unread. The proxy in Context supplies the quantities that make the point actionable: Class B carries ten votes per share, Sanjit Biswas holds 39.6% of total voting power and John Bicket 38.4%, and all directors and officers as a group hold 77.5% of total voting power. Rubric item 4 asks that a control figure be read for the holder — what a 77.5% voting bloc lets insiders do that an ordinary float would not — rather than characterised generically.",
+      "fix": "Quote the insider/founder voting power (e.g., insiders ~77.5% of the vote via ten-votes-per-share Class B; Biswas ~39.6%) and read it for the holder — public shareholders cannot outvote the founders on any matter put to a vote — so the paragraph reaches an actionable governance view instead of a general caution.",
+      "status": "addressed",
+      "note": "New insiderOwnership field quotes the dual-class figures (370,981,108 Class A vs 211,728,974 super-voting Class B; Biswas 99,968,305 Class B / 39.6% voting power; Bicket 95,533,040 / 38.4%; together a controlling majority) and reads them for the holder (\"public Class A holders... limited ability to sway board or governance outcomes\"); governance now points to it. All figures verified against the proxy."
+    },
+    {
+      "id": "F-7",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "revenue growth has decelerated for four straight years",
+      "issue": "The income series on the page shows year-over-year growth for four fiscal years only (FY23 +52.3%, FY24 +43.7%, FY25 +33.3%, FY26 +29.6%); FY22's YoY cell is blank. Four data points give three consecutive decelerations, not four, so the series does not show four straight years of deceleration.",
+      "fix": "Say growth has fallen each year across the four years shown, or \"three straight years of deceleration,\" to match what the series demonstrates.",
+      "status": "addressed",
+      "note": "thesis now reads \"revenue growth has slowed for three straight years,\" matching the three consecutive decelerations the series shows."
+    },
+    {
+      "id": "F-8",
+      "severity": "Minor",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "the filing calls this the second quarter of fiscal 2027, while the page snapshot renders it \"Q3'26\" on a calendar mapping; I use the filing's own second-quarter figures throughout.",
+      "issue": "Flagging the period label is the right call — the snapshot's \"Q3'26\" and meta \"fiscal Q3 2026\" are a calendar-mapping artifact for a company whose fiscal year ends the Saturday closest to Feb 1. But the MD&A excerpt in Context does not literally label the period \"the second quarter of fiscal 2027\"; it says \"the three months ended August 1, 2026\" and that \"fiscal years 2027 and 2026 each consist of 52 weeks.\" \"The filing calls this\" over-attributes a verbatim label the excerpt does not show.",
+      "fix": "Keep the label clarification, but phrase it as the period ended August 1, 2026 falling in the second quarter of fiscal 2027, rather than \"the filing calls this,\" unless the 10-Q body beyond the excerpt is confirmed to use that exact designation.",
+      "status": "addressed",
+      "note": "incomeCommentary now states \"this is the three months ended August 1, 2026, Samsara's second quarter of fiscal 2027\" as the desk's own characterization, no longer attributing the verbatim label to the filing."
+    }
+  ]
+}
