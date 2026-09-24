@@ -44,6 +44,10 @@ export function tradesToOrders(input: {
       orders.push({ ...common, side: "sell", kind: "qty", qty });
       continue;
     }
+    // Buys always carry deltaUsd >= 0 (emitTrades' ENTER/ADD deltas are positive and buyScale keeps
+    // them non-negative), so this bare `<` is exactly the |deltaUsd| the TRIM branch above spells out.
+    // Do NOT "symmetrize" this to Math.abs: that would let a malformed negative-delta buy PASS the dust
+    // gate and emit a negative-notional order — dropping it here is the safe behavior.
     if (deltaUsd < cfg.minOrderUsd) { skippedDust.push({ ticker: t.ticker, deltaUsd }); continue; }
     if (fractionalOk(t.ticker)) { orders.push({ ...common, side: "buy", kind: "notional", notional: deltaUsd }); continue; }
     const qty = Math.floor(deltaUsd / mark);
