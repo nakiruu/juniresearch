@@ -1,0 +1,68 @@
+{
+  "judgmentSha256": "4757659a06427280815679521555841baca2e67c672d25ea3080e238bf06c02b",
+  "reviewedAt": "2026-09-24T14:40:00Z",
+  "reviewer": "claude-opus-4-8",
+  "round": 2,
+  "verdict": "approved-with-minors",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.management.insiderOwnership; sections.management.governance",
+      "quote": "Investors should note that the 10-K lists a risk factor titled that management has voting control of the Company, and that Mr. Thompson's role at Dronazon is a related-party consideration.",
+      "issue": "Rubric 4 (judgment, not restatement). The governance paragraph reports the 10-K risk factor \"management has voting control of the Company,\" while insiderOwnership reports Thompson at 11.3% and all officers and directors as a group at 12.5% — and the proxy's own Voting Power column equals beneficial ownership (one share, one vote, no super-voting class shown). The report never reconciles how a ~12.5% economic stake constitutes \"voting control,\" so the reader cannot tell whether management actually controls the vote or whether the risk-factor title overstates it. The insiderOwnership section otherwise restates the proxy table and closes only with the boilerplate \"worth monitoring,\" without reading what the stake lets the holder do.",
+      "fix": "Read the control figure for the holder: either explain the mechanism behind the \"voting control\" risk factor (e.g., founder influence / board control) against the 11.3%/12.5% stake, or note the tension that ~12.5% one-vote-per-share ownership does not by itself confer voting control. Turn the ownership recital into a view the reader can act on rather than a table restatement.",
+      "status": "addressed",
+      "note": "Governance now reconciles the risk-factor title against the figures: \"an insider block of that size, one vote per share, gives management strong influence but not, by itself, control of the vote.\" insiderOwnership now reaches an actionable read: \"no single holder controls the vote, so a takeover or governance change is not blocked by insiders, while pledged shares and insider forward sales are a modest, monitorable source of share supply.\" The \"worth monitoring\" boilerplate is gone."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.executiveSummary.risks[1]",
+      "quote": "Heavy cash burn: operating activities used $78.7 million in the six months ended June 30, 2026, up $49.9 million, or 173%, from a year earlier.",
+      "issue": "Rubric 7 (repetition and pointers). This executive-summary risk is not a pointer; it restates the full quantified cash-burn mechanism that appears near-verbatim in financials.cashflowCommentary and again in risks.idiosyncratic[1] and finalRecommendation.body[1] — the same claim in four sections. Relatedly, the \"May Registered Direct Offering of approximately $258.75 million\" is repeated as the same descriptive phrase across at least six sections rather than being referred back to in words after first use.",
+      "fix": "Make the executive-summary risks one- or two-sentence pointers (e.g., \"Heavy cash burn funded by equity issuance — see Cash flow\") and let cashflowCommentary carry the $78.7M/173% mechanism once. After the offering's first mention, refer back in words (\"the May raise\") instead of re-stating \"approximately $258.75 million\" in every section.",
+      "status": "addressed",
+      "note": "executiveSummary.risks[1] is now a pointer (\"the shortfall is funded by equity issuance rather than internal cash flow — see the cash-flow section\"). The $78.7M/$49.9M/173% mechanism now appears only in cashflowCommentary; risks.idiosyncratic[1] refers back (\"as the cash-flow section quantifies\") and finalRecommendation.body[1] says \"the pace shown in the cash-flow section.\" The $258.75M figure now appears once (cashflowCommentary); other sections say \"the May raise\" or \"detailed in the cash-flow section.\""
+    },
+    {
+      "id": "F-3",
+      "severity": "Minor",
+      "field": "sections.management.governance",
+      "quote": "Governance rests on the DEF 14A dated 2026-04-30.",
+      "issue": "Rubric 9 (voice). Dates in prose should be in prose form, not ISO. \"2026-04-30\" is the only ISO-format date in the prose; every other date in the report is written out.",
+      "fix": "Write \"dated April 30, 2026.\"",
+      "status": "addressed",
+      "note": "Now reads \"Governance rests on the DEF 14A dated April 30, 2026.\" — prose form, no ISO dates remain in the prose."
+    },
+    {
+      "id": "F-4",
+      "severity": "Minor",
+      "field": "sections.management.insiderOwnership",
+      "quote": "under the September 2025 Contract he may deliver up to 750,000 shares on September 15, 2026, priced against a forward floor of $9.14 and a cap of $13.44.",
+      "issue": "Rubric 3 (honest dating). The report's as-of date is September 24, 2026, so the September 15, 2026 settlement date has already passed, yet it is presented as a pending future event (\"he may deliver up to 750,000 shares on September 15, 2026\"). The report does not flag that the settlement has occurred, and leaves unremarked that the current price ($6.59) is below the $9.14 forward floor.",
+      "fix": "Note that the September 2025 Contract's scheduled settlement date (September 15, 2026) has passed as of the report date, rather than presenting it as future; ideally observe that the price sits below the $9.14 floor.",
+      "status": "addressed",
+      "note": "Reframed to past tense: \"Mr. Thompson was scheduled to settle up to 750,000 shares on September 15, 2026 ... with the option to settle in cash and retain the shares.\" No longer presented as a pending future event, satisfying the mandatory part of the fix. The price-below-floor observation was optional (\"ideally\") and remains unmade, but that is not required."
+    },
+    {
+      "id": "F-5",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "the Bear case implies a price 15% or more below today's level and a wide drawdown",
+      "issue": "Rubric 6 (calls coherence). The Bear scenario's implied price of $3.50 is roughly 47% below the $6.59 current price. Characterizing it as \"15% or more below today's level\" echoes the authoring-contract minimum bear threshold and materially understates the actual downside the scenario table shows.",
+      "fix": "Quote the actual bear downside the calls produce (roughly a 47% decline to the $3.50 Bear implied price) instead of \"15% or more below today's level.\"",
+      "status": "addressed",
+      "note": "Now quotes the actual downside: \"the Bear case implies a price of $3.50 ... closer to a halving of the stock.\" The understated \"15% or more below today's level\" characterization is gone. (See new finding F-6 on the residual reference to the 15% authoring threshold.)"
+    },
+    {
+      "id": "F-6",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "the Bear case implies a price of $3.50, far past the 15% floor a bear scenario must clear and closer to a halving of the stock",
+      "issue": "Rubric 9 (voice). The F-5 rewrite fixed the understated downside but introduced a reference to the internal authoring rule — \"the 15% floor a bear scenario must clear\" — into reader-facing prose. A published note should not expose the desk's authoring-contract methodology (that a bear scenario is required to sit at least 15% below the price); the reader has no context for why a bear \"must clear\" a 15% floor, and it reads as process leakage.",
+      "fix": "Drop the reference to the internal 15% floor; the magnitude already lands from the figures, e.g. \"the Bear case implies a price of $3.50, closer to a halving of the stock than a routine drawdown.\"",
+      "status": "open"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "judgmentSha256": "80c0d8dc58ced6563c4d9b50ab5300ecd5cc0a7397ff4470546d1b4b8ddd5ab2",
+  "reviewedAt": "2026-09-24T11:08:52Z",
+  "reviewer": "Claude Opus 4.8",
+  "round": 2,
+  "verdict": "approved-with-minors",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.financials.cashflowCommentary",
+      "quote": "free cash flow $0.4 billion, an FCF margin of 9.6%, {- down from 18.9% in FY24 -} as working capital absorbed cash during rapid growth",
+      "issue": "The FCF-margin fall from 18.9% (FY24) to 9.6% (FY25) is given a specific cause — \"as working capital absorbed cash during rapid growth\" — that the grounding surface does not establish. The Facts block carries no working-capital line: it shows operating cash flow falling to $0.5B from $0.6B, capex of $93.3M and FCF of $0.4B, but nothing that attributes the decline to working capital. Rubric item 2 treats a causal claim the pack does not establish as Critical.",
+      "fix": "Drop the causal clause. State the FCF-margin fall as reported and, if a driver is wanted, attribute only what the pack shows (operating cash flow eased to $0.5B from $0.6B against $93.3M of capex). Do not assert a working-capital cause absent supporting data.",
+      "status": "addressed",
+      "note": "Round 2: the causal clause is removed. cashflowCommentary now reads \"...an FCF margin of 9.6%, {- down from 18.9% in FY24 -}, against $93.3 million of capital expenditure,\" attributing only what the pack shows (op cash flow $0.5B from $0.6B; $93.3M capex, per capexLatestFY). No working-capital cause remains. Resolved."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[1].driver",
+      "quote": "Growth decelerates from the Q2 pace of 52.8% as the acquisition anniversaries but stays healthy on the infrastructure tailwind; FY27E EPS of $6.48 is met and the multiple compresses toward 25.1x.",
+      "issue": "The Base implied price is $190, but 25.1x on FY27E EPS of $6.48 is about $163 (roughly the current $162.85), not $190; reaching $190 would need about 29.3x on FY27E EPS. The stated anchor — multiple easing to 25.1x on $6.48 — produces essentially the current price, so it does not support the $190 Base. The same inconsistent anchor recurs in analystCommentary (\"our Base case of $190 assumes ... the multiple compresses toward the 25.1x implied by FY27E EPS of $6.48\") and finalRecommendation.body[1] (\"easing to 25.1x on FY27E EPS of $6.48\"). Rubric item 6: the base case must be anchored to something on the surface and be consistent with the price it produces.",
+      "fix": "Make the arithmetic tie. Either state the multiple that yields $190 on FY27E EPS $6.48 (~29x) and explain why the multiple settles there rather than at 25.1x, or re-anchor the Base to a later EPS, or lower the Base toward the ~$163 the 25.1x anchor implies. Apply the correction in all three places (Base driver, analystCommentary, finalRecommendation).",
+      "status": "addressed",
+      "note": "Round 2: all three places re-anchored. Base driver now says the shares \"hold a premium forward multiple rather than derating to the 25.1x FY27E level the current price implies\"; analystCommentary reads \"hold a premium forward multiple, above the 25.1x on FY27E EPS of $6.48 that the current price already reflects\"; finalRecommendation says $190 \"needs the shares to hold a premium to those forward levels.\" $190 (~29x on $6.48) is now consistent with a premium-above-25.1x anchor, below the $206.67/$210 consensus. Resolved."
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.management.capitalAllocation",
+      "quote": "It returned approximately $383 million to shareholders, $253.1 million of buybacks and $130.4 million of dividends in FY25 ... Free cash flow was $0.4 billion (a 9.6% margin) on the vendor basis, or $561 million on the proxy's continuing-operations basis. The dividend yield is 0.52% and the FCF yield 2.2%",
+      "issue": "The same figures are stated numerically in sections.financials.cashflowCommentary (\"$253.1 million of share repurchases and $130.4 million of dividends ... approximately $383 million combined per the proxy, while the dividend yield is only 0.52%. The FCF yield is 2.2% ... free cash flow $0.4 billion, an FCF margin of 9.6% ... total free cash flow $561 million\"), and the $383M/$253.1M return figures also appear in executiveSummary.catalysts[4]. The FY25 capital-return and FCF figures are introduced in full in two body sections rather than argued once and referred back to in words. Rubric item 7 (paraphrase repetition across sections).",
+      "fix": "Introduce the FY25 capital-return and FCF figures once (in cashflowCommentary) and, in capitalAllocation, refer back in words while reserving the section for the allocation judgment (reinvestment/acquisitions over yield) rather than restating the numbers.",
+      "status": "addressed",
+      "note": "Round 2: capitalAllocation no longer restates the capital-return/FCF figures. It now points back in words — \"The FY25 buybacks, dividends and free cash flow detailed under cash flow show returns that are modest relative to the share price, with thin dividend and free-cash-flow yields\" — and reserves the section for the allocation judgment (reinvestment/acquisitions over yield). The figures now live once, in cashflowCommentary; catalysts[4] is reworded without numbers. Resolved."
+    },
+    {
+      "id": "F-4",
+      "severity": "Minor",
+      "field": "sections.growth.points[0]",
+      "quote": "Q2 2026 net sales rose 52.8% year over year to $1,471.3 million, with organic growth of 46.9 points, acquisitions 5.4 points and currency 0.5 points.",
+      "issue": "The Q2 headline (52.8% / $1,471.3M / 20.4% margin) and its organic/acquisition/currency decomposition (46.9 / 5.4 / 0.5) are restated numerically in analystCommentary, executiveSummary.thesis, financials.incomeCommentary, this growth point and finalRecommendation.body[0] (\"net sales rose 52.8% ... 46.9 points of the increase were organic\"). The 44.4x trailing multiple is likewise restated as a figure in analystCommentary, cashflowCommentary, valuation.multiplesCommentary, the Bear driver and risks.idiosyncratic[3]. Rubric item 7 asks that each figure be introduced once per section and referred back to in words.",
+      "fix": "Keep the full Q2 decomposition in one place (the growth section) and, in the exec summary and final recommendation, refer back in words. State 44.4x once and refer to \"the trailing multiple\" thereafter.",
+      "status": "open",
+      "note": "Round 2: unaddressed (this Minor was omitted from the author's brief, which carried only F-1/F-2/F-3). growth.points[0] is unchanged; the Q2 52.8%/$1,471.3M/46.9-5.4-0.5 split still recurs numerically in analystCommentary, executiveSummary.thesis, financials.incomeCommentary, growth.points[0] and finalRecommendation.body[0]; 44.4x still appears as a figure in analystCommentary, thesis, cashflowCommentary, multiplesCommentary, the Bear driver and risks.idiosyncratic[3]. Still open."
+    }
+  ]
+}

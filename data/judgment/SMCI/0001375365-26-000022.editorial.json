@@ -1,0 +1,49 @@
+{
+  "judgmentSha256": "d97b0eb908d3c86eeaeafb4a5bc2ef776e6a203ef4ace65542abe4a22cb881bf",
+  "reviewedAt": "2026-09-24T14:35:00Z",
+  "reviewer": "Claude Opus 4.8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "In the Bull case (25% probability, implied $60), FY2027 revenue reaches the top of the $65.0 billion to $72.0 billion guidance, the Q4'26 gross margin of 17.5% proves representative, and audited results clear the review; the stock re-rates toward its 52-week high of $58.78.",
+      "issue": "The scenarioCommentary re-narrates all three scenario drivers almost verbatim from the scenarios[] array, which the page already renders. The Bull sentence here duplicates scenarios[0].driver ($65-72B guidance, 17.5% GM proving representative, review cleared, re-rate to $58.78); the Base and Bear sentences likewise restate scenarios[1] and scenarios[2]. Under rubric item 7, each scenario should be argued once, not restated in two places. Only the final two sentences (blended fair value modestly above $41.44, target range brackets Base, reward/risk below the Buy bar) add anything the scenario cards do not.",
+      "fix": "Cut the driver-by-driver restatement and let scenarioCommentary do the work the cards cannot: argue why the probabilities are 25/50/25, reconcile the ~$44.5 probability-weighted fair value and the $37-$52 band to the current price, and state the reward/risk conclusion. Refer back to each scenario in words rather than repeating its driver text.",
+      "status": "addressed",
+      "note": "Rewritten. The commentary no longer restates the driver text; it now argues the 25/50/25 weights, reconciles the ~$44.50 weighted fair value and the $37-$52 band to the $41.44 price, and states the reward/risk conclusion, referring to each scenario in words ('durable margin recovery paired with a clean audit', 'a restatement, a financing squeeze, or a large-customer pullback')."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.growth.points[1]",
+      "quote": "Management guides FY2027 net sales to a range of $65.0 billion to $72.0 billion and cites more than $60 billion in new orders and backlog entering fiscal 2027.",
+      "issue": "The press release attaches the $60 billion figure to new orders specifically ('generated more than $60 billion in new orders, and booked record backlog entering fiscal 2027') — backlog is described separately as 'record' and is not quantified. Here and in analystCommentary ('more than $60 billion in new orders and backlog entering fiscal 2027') the figure is attached to the broader quantity 'new orders and backlog.' The report is also internally inconsistent: sections.executiveSummary.thesis.body and finalRecommendation.body[0] correctly write 'more than $60 billion in new orders.'",
+      "fix": "Attach the $60B figure to new orders only, matching the press release and the report's own thesis/final-recommendation wording. If backlog is mentioned alongside, present it as separate 'record backlog' (unquantified on the grounding surface) rather than folding it into the $60B.",
+      "status": "addressed",
+      "note": "growth.points[1] now reads 'more than $60 billion in new orders generated over the past year' and analystCommentary now reads 'cites more than $60 billion in new orders'. The $60B is attached to new orders only, matching the press release and the thesis/final-recommendation wording; backlog is no longer folded in. Consistent across all four fields."
+    },
+    {
+      "id": "F-3",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "The investment question is whether Supermicro can turn extraordinary top-line growth into durable profit and cash.",
+      "issue": "House style bans hype vocabulary and unearned superlatives, asking the numbers to carry the weight. 'extraordinary top-line growth' here, and 'FY2026 was a year of exceptional growth' in finalRecommendation.body[0], are hype adjectives layered on the 77.8% figure that already speaks for itself.",
+      "fix": "Drop 'extraordinary' and 'exceptional' and let the 77.8% growth figure stand on its own (e.g. 'turn 77.8% top-line growth into durable profit and cash').",
+      "status": "addressed",
+      "note": "'extraordinary' in thesis.body and 'exceptional' in finalRecommendation.body[0] are both replaced with the neutral 'rapid'; the 77.8% figure carries the weight. Hype vocabulary removed."
+    },
+    {
+      "id": "F-4",
+      "severity": "Minor",
+      "field": "sections.businessMoat.durability",
+      "quote": "The durability question is whether DCBBS and a richer enterprise mix can lift margins durably, as the Q4'26 gross margin of 17.5% hints, or whether competitive pricing keeps full-year margin near 11%.",
+      "issue": "The exact figure 'Q4'26 gross margin of 17.5%' is repeated across many fields — analystCommentary, executiveSummary.thesis.body, financials.incomeCommentary, businessMoat moatFactors[1] and durability, valuation scenarios[0].driver and scenarioCommentary, and finalRecommendation.body[1] — past the point of notice (rubric item 9 tic / item 7 refer-back). It is the crux of the bull case, so some recurrence is warranted, but the same phrase in eight places reads as a tic.",
+      "fix": "Introduce the 17.5% Q4'26 gross margin once where it is argued (the income commentary), then refer back in words ('the exit-quarter margin recovery', 'that 17.5% print') in the moat, scenario and recommendation sections rather than restating the figure each time.",
+      "status": "addressed",
+      "note": "Cut from eight fields to five. The named durability field now refers back in words ('the exit quarter's sharp margin recovery hints'); scenarioCommentary ('a durable margin recovery') and finalRecommendation.body[1] ('the exit-quarter gross-margin recovery') also drop the figure. The remaining appearances each sit once per section with refer-back-in-words where a section would use it twice, matching rubric item 7 for a crux figure."
+    }
+  ]
+}
