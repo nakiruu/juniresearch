@@ -1,0 +1,577 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "AIP",
+  "cik": 1667011,
+  "company": "Arteris, Inc.",
+  "exchange": "NASDAQGM",
+  "sic": 3674,
+  "sicDescription": "Semiconductors & Related Devices",
+  "filing": {
+    "form": "10-Q",
+    "accession": "0001628280-26-054464",
+    "filedDate": "2026-08-06",
+    "periodEnd": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1667011/000162828026054464/aip-20260630.htm"
+  },
+  "capturedAt": "2026-09-23T03:48:44.157Z",
+  "quote": {
+    "price": 24.78,
+    "marketCap": 1217989120,
+    "sharesOutstanding": 49152103.30912025,
+    "sharesSource": "derived",
+    "week52Low": 9.46,
+    "week52High": 50.26,
+    "dividendYield": 0,
+    "asOf": "2026-09-23"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          37864000,
+          50378000,
+          53666000,
+          57724000,
+          70579000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          34133000,
+          46097000,
+          48589000,
+          51762000,
+          63684000
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          -21765000,
+          -28856000,
+          -35142000,
+          -31596000,
+          -33137000
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          -20273000,
+          -26757000,
+          -32073000,
+          -28234000,
+          -29761000
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          -23384000,
+          -27387000,
+          -36869000,
+          -33638000,
+          -34746000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          -1.06,
+          -0.84,
+          -1.03,
+          -0.86,
+          -0.82
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          85825000,
+          68151000,
+          41173000,
+          43841000,
+          33901000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          52904000,
+          37535000,
+          15103000,
+          -1188000,
+          -14632000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          2.5098136119740184,
+          1.8574274657079393,
+          1.259212964958407,
+          1.165328430214905,
+          1.1255464480874318
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          -814000,
+          -6767000,
+          -15729000,
+          -720000,
+          6733000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -808000,
+          -1051000,
+          -1503000,
+          -324000,
+          -1388000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          -1622000,
+          -7818000,
+          -17232000,
+          -1044000,
+          5345000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q2'26",
+    "periodEnd": "2026-06-30",
+    "revenue": 24134000,
+    "operatingMargin": -0.5762824231374823,
+    "revenueYoY": 0.46248939522482124
+  },
+  "ttm": {
+    "pe": -28.482758620689662,
+    "ps": 14.394482302192282,
+    "evToEbitda": null,
+    "grossMargin": 0.8760976186255393,
+    "operatingMargin": -0.4773267151214324,
+    "netMargin": -0.46704485020386455,
+    "netDebtToEbitda": null,
+    "interestCoverage": -236.19298245614036,
+    "currentRatio": 1.5677433177995608,
+    "fcfYield": 0.005555057831715279
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 96701290,
+      "eps": -0.17571
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 116962570,
+      "eps": 0.12429
+    }
+  },
+  "analysts": {
+    "count": 7,
+    "buy": 7,
+    "hold": 0,
+    "sell": 0,
+    "consensusRating": "Strong Buy",
+    "consensusTarget": 39.42857,
+    "medianTarget": 40,
+    "highTarget": 50,
+    "lowTarget": 30,
+    "asOf": "2026-09-23"
+  },
+  "segments": {
+    "basis": "FY25 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 70579000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "AMBQ",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "AXTI",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "BLZE",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "CCSI",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-10",
+      "close": 27.1299991607666
+    },
+    {
+      "date": "2026-08-11",
+      "close": 27.450000762939453
+    },
+    {
+      "date": "2026-08-12",
+      "close": 28.18000030517578
+    },
+    {
+      "date": "2026-08-13",
+      "close": 27.59000015258789
+    },
+    {
+      "date": "2026-08-14",
+      "close": 28.31999969482422
+    },
+    {
+      "date": "2026-08-17",
+      "close": 27.829999923706055
+    },
+    {
+      "date": "2026-08-18",
+      "close": 25.809999465942383
+    },
+    {
+      "date": "2026-08-19",
+      "close": 24.829999923706055
+    },
+    {
+      "date": "2026-08-20",
+      "close": 23.959999084472656
+    },
+    {
+      "date": "2026-08-21",
+      "close": 23.889999389648438
+    },
+    {
+      "date": "2026-08-24",
+      "close": 22.610000610351562
+    },
+    {
+      "date": "2026-08-25",
+      "close": 23.229999542236328
+    },
+    {
+      "date": "2026-08-26",
+      "close": 22.809999465942383
+    },
+    {
+      "date": "2026-08-27",
+      "close": 23.610000610351562
+    },
+    {
+      "date": "2026-08-28",
+      "close": 22.010000228881836
+    },
+    {
+      "date": "2026-08-31",
+      "close": 21.8799991607666
+    },
+    {
+      "date": "2026-09-01",
+      "close": 20.739999771118164
+    },
+    {
+      "date": "2026-09-02",
+      "close": 20.84000015258789
+    },
+    {
+      "date": "2026-09-03",
+      "close": 20.68000030517578
+    },
+    {
+      "date": "2026-09-04",
+      "close": 21.3700008392334
+    },
+    {
+      "date": "2026-09-08",
+      "close": 22.719999313354492
+    },
+    {
+      "date": "2026-09-09",
+      "close": 22.670000076293945
+    },
+    {
+      "date": "2026-09-10",
+      "close": 22.40999984741211
+    },
+    {
+      "date": "2026-09-11",
+      "close": 22.690000534057617
+    },
+    {
+      "date": "2026-09-14",
+      "close": 20.610000610351562
+    },
+    {
+      "date": "2026-09-15",
+      "close": 20.40999984741211
+    },
+    {
+      "date": "2026-09-16",
+      "close": 20.8700008392334
+    },
+    {
+      "date": "2026-09-17",
+      "close": 22.3700008392334
+    },
+    {
+      "date": "2026-09-18",
+      "close": 22.299999237060547
+    },
+    {
+      "date": "2026-09-21",
+      "close": 24.15999984741211
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "Arteris, Inc., together with its subsidiaries, provides semiconductor system intellectual property (IP) solutions in the United States, rest of the Americas, China, Korea, the rest of the Asia Pacific, Europe, and the Middle East. It manages on-chip communications and IP block deployments in System-on-Chip (SoC) semiconductors and systems of chiplets. The company offers Network-on-Chip (NoC) IP Products, such as FlexGen, FlexNoC, and FlexWay, a non-coherent NoC IP; Ncore, a cache-coherent NoC IP; and CodaCache, a last-level cache. It also provides hardware security verification software products, such as Cycuity Radix-S to detect and remediate security issues in IP blocks and subsystems of an SoC; Cycuity Radix-M for hardware security verification emulation for system-level SoC and firmware; and Cycuity Radix-ST, a static security analyzer that identifies potential design weaknesses early in the development lifecycle, as well as SoC integration automation software solutions products, including Magillem Connectivity and Registers, and CSRCompiler. In addition, the company offers professional services, such as training, design assistance, and consulting; licensing services for software and intellectual properties; IP support and maintenance; and on-site support services. It serves the automotive, communications, enterprise computing, consumer electronics, and industrial markets. Arteris, Inc. was founded in 2003 and is headquartered in Campbell, California.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-23"
+    },
+    "mdaExcerpt": null,
+    "riskFactorsExcerpt": {
+      "text": "Item 1A. Risk Factors\nInvesting in our common stock involves a high degree of risk. Before making your decision to invest in shares of our common stock, you should carefully consider and read carefully all of the risks described below, together with the other information contained in this report, including our financial statements and the related notes and the section titled \"Management's Discussion and Analysis of Financial Condition and Results of Operations\" in this report. We cannot assure you that any of the events discussed below will not occur. These events could have a material and adverse impact on our business, financial condition, results of operations and prospects. Unless otherwise indicated, references to our business being harmed in these risk factors will include harm to our business, reputation, financial condition, results of operations, revenue and future prospects. In such an event, the trading price of our common stock could decline, and you could lose all or part of your investment. Additional risks and uncertainties not presently known to us or not believed by us to be material may also negatively impact us.\nRisk Factors Summary\nThis risk factor summary contains a high-level summary of risks associated with our business. It does not contain all of the information that may be important to you, and you should read this risk factor summary together with the more detailed discussion of risks and uncertainties set forth following this summary. The principal risks and uncertainties affecting our business include, but is not limited to, the following:\nWe face significant competition from larger companies and third-party providers that may deploy their resources so they can develop their IP solutions internally;\nWe have a history of net losses, and we may not achieve or maintain profitability in the future;\nBecause our IP solutions are components of end products, if semiconductor, system producers and/or end product producer companies in the aerospace and defense market, automotive market, communications market, consumer electronics market, enterprise computing market, and industrial market do not incorporate our solutions into their end products or if the end products of our customers do not achieve market acceptance, we may not be able to generate adequate license sales and royalty income from our products;\nWe depend on market acceptance of third-party semiconductor IP;\nThe success of our business depends on sustaining or growing our licensing revenue, and the failure to achieve such revenue would lead to a material decline in our results of operations;\nThe nature of the design win process requires us to incur significant expenses without any guarantee that research and development and sales efforts will generate revenue, which could adversely affect our financial results;\nEven if we succeed in securing design wins for our IP interconnect and other solutions and our System-on-Chip ( SoC) Integration Automation software solutions , we may not generate timely or sufficient margins or margins from those wins and our financial results could suffer;\nWe continually pursue new IP interconnect, SoC integration automation, and other technology initiatives, and if we fail to successfully carry out these initiatives, our business could be harmed;\nWe may have to invest more resources in research and development than anticipated, which could increase our operating expenses and negatively affect our operating results;\nProduct errors or defects could expose us to liability and harm our reputation and we could lose market share;\nIf we fail to offer high-quality products and support, our reputation could suffer;\n47\nTable of Contents\nOur dependence on international customers and operations also subjects us to a range of other additional regulatory, trade policy, operational, financial, and political risks that could adversely affect our financial results;\nChanges in legislation and regulation in the United States and other countries, including new trade policies and the imposition of tariffs, may adversely impact our business and our customers' businesses, and may impact our results of operations and financial condition;\nIf we are unable to protect our proprietary technology and inventions through patents and other intellectual property rights, or experience a high level of artificial intelligence (AI) related product disruption, our ability to compete successfully and our financial results could be adversely impacted;\nWe are subject to government regulations, including import, export and economic sanctions laws and artificial intelligence regulations that may restrict our ability to sell to or get paid by customers in certain regions, or expose us to liability and increase our costs;\nWe face risks associated with doing business in China; and\nLitigation, including securities class action litigation, may impair our reputation and lead us to incur significant costs.\nRisks Related to Our Business and Industry\nWe face significant competition from larger companies and third-party providers that may deploy their resources so they can develop their IP solutions internally.\nWe are engaged in a competitive segment of the global semiconductor industry. Our competitive landscape is characterized by competition from companies that have greater resources than us. A variety of factors could adversely impact our ability to compete, including rapid technological change in product design and manufacturing, customers that make purchase decisions based on a mix of factors of varying importance and continuous declines in average selling prices (ASPs). We compete principally on the basis of technology, product quality and features, license, royalty and usage terms, post-contract customer support, interoperability among products, and price and payment terms.\nWe operate in industries characterized by rapidly changing technologies as well as rapid innovation and technological obsolescence. The appearance of new competitors, including start-up enterprises, introduction of new products by our competitors or our failure to timely develop new or enhanced products or technologies in response to changing market demand, whether due to technological shifts or otherwise, could result in the loss of customers and decreased revenue and have an adverse effect on our business, financial condition, and results of operations.\nOften, we compete against larger companies that possess substantial financial, technical, research and development and engineering resources that can be deployed so they can develop their IP solutions internally. In addition, we compete against other third-party providers of IP integration solutions, such as Arm and Cadence that similarly possess substantial financial, technical, research and development and engineering resources. In certain cases, competitive companies may be supported by local or international government funding and similar resources. Varying combinations of these resources provide advantages to these competitors that enable them to influence industry trends and the pace at which they adapt to these trends. A strong competitive response from one or more of our competitors to our marketplace efforts, or a shift in customer preferences to competitors' products, could result in increased pressure to lower our prices more rapidly than anticipated, increased sales and marketing expense, and/or market share loss. The consolidation of our competitors or collaboration among our competitors to deliver more comprehensive offerings than they could individually, may also impact our ability to compete effectively. To the extent our revenue is negatively impacted by competitive pressures and reduced pricing, our business could be harmed.\nOur ability to compete in our market is subject to a variety of factors, many of which are beyond our control.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/1667011/000162828026054464/aip-20260630.htm",
+      "asOf": "2026-08-06",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-Q",
+    "pressRelease": {
+      "text": "EX-99.1\n2\nexhibit991q2fy268-k.htm\nEX-99.1\nDocument\nArteris Announces Financial Results for the Second Quarter and Estimated Third Quarter and Updated Full Year 2026 Guidance\nCAMPBELL, Calif. - August 6, 2026 - Arteris, Inc. (Nasdaq AIP), a leading provider of semiconductor technology for accelerating innovation in the AI era, today announced financial results for the second quarter ended June 30, 2026 and provided estimated third quarter and updated full year 2026 guidance.\nIn the second quarter we delivered multiple record-breaking results, including new highs in Annual Contract Value plus royalties exiting the quarter at $99.5 million, up 44% year-over-year, and record revenue, royalties and Remaining Performance Obligation\" said K. Charles Janac, President and Chief Executive Officer of Arteris. Customer design activity remained strong, with number of design starts up 21% over the trailing-twelve-months compared to the previous trailing-twelve-months, as the majority of new designs now incorporate some form of AI compute. Data center chip and chiplet development remains a key growth driver, with enterprise computing averaging 29% of our Annual Contract Value plus royalties over the past four quarters and AI infrastructure deals among our largest in the quarter. With this momentum, we believe we remain well positioned to support our customers as they innovate across data centers, edge devices, and physical AI systems in the years ahead,\" concluded Janac.\nSecond Quarter 2026 Financial Highlights\nRevenue of $24.1 million , up 46% year-over-year\nTrailing-twelve-months variable royalties of $8.6 million , up 65% year-over-year\nAnnual Contract Value (ACV) plus royalties of $99.5 million, up 44% year-over-year\nRemaining Performance Obligation (RP O) of $135 million, up 36% year-over-year\nOperating loss of $13.9 million , compared to an operating loss of $8.2 million in the second quarter of 2025\nNon-GAAP operating loss of $4.6 million, compared to a Non-GAAP operating loss of $3.5 million in the second quarter of 2025\nNet loss of $14.1 million or $0.30 per share\nNon-GAAP net loss of $4.7 million or $0.10 per share\nSecond Quarter 2026 Business Highlights\nSecond quarter deal activity was driven by record customer engagement in enterprise computing, automotive, aerospace and defense, communications, consumer electronics, and industrial markets\nHealthy design activity in the quarter, with a 21% year-over-year increase in customer confirmed design starts in the trailing-twelve-months ended June 30, 2026 compared to the previous trailing-twelve-months\nSpeedata, developer of the purpose-built Analytics Processing Unit (APU), has deployed Arteris in its Callisto processor for large-volume analytics processing for applications\nLi Auto, a leader in China's new energy vehicle market, deployed its in-house designed autonomous driving chips in their newest SUV, leveraging Arteris technology\nSiEngine, a provider of advanced automotive chips, selected Arteris for its intelligent cockpit, advanced driver assistance, and AI cockpit-drive fusion solutions\nArm expanded its partnership with Arteris, licensing Arteris hardware security assurance technology, already in use in selected Arm CPUs and\nSaurabh Sinha will join Arteris as Chief Financial Officer starting September 8, 2026. Saurabh joins from Aeva Technologies where he was instrumental in taking the company public on Nasdaq and in managing financial operations, capital allocation and investor relations.\nNon-GAAP gross profit, Non-GAAP gross margin, Non-GAAP operating loss, Non-GAAP net loss, Non-GAAP net loss per share, and free cash flow are Non-GAAP financial measures. Additional information on Arteris' historic reported results, including a reconciliation of these Non-GAAP financial measures to their most comparable GAAP measures, is included in the financial tables below.\nEstimated Third Quarter and Updated Full Year 2026 Guidance\nQ3 2026\nFY 2026\n(in millions)\nACV + royalties\n$99.0 - $103.0\n$102.0 - $106.0\nRevenue\n$24.0 - $25.0\n$95.0 - $98.0\nNon-GAAP operating loss\n$1.0 - $3.0\n$7.0 - $10.0\nFree cash flow\n*\n$5.0 - $9.0\n*As previously mentioned during the first quarter 2026 earnings call, we will no longer provide quarterly free cash flow guidance.\nThe guidance provided above are forward-looking statements and reflects Arteris' expectations as of today's date. Actual results may differ materially. Refer to the section titled Forward-Looking Statements below for information on the factors, among others, that could cause our actual results to differ materially from these forward-looking statements.\nA reconciliation of Non-GAAP guidance measures reported above to corresponding GAAP measures is not available on a forward-looking basis without unreasonable effort due to the uncertainty of expenses that may be incurred in the future, although it is important to note that these factors could be material to Arteris' results computed in accordance with GAAP.\nDefinitions of the other business metrics used in this press release including ACV, confirmed design starts and RPO are included below under the heading \"Other Business Metrics.\"\nConference Call\nArteris will host a conference call today on August 6, 2026 to review its second quarter 2026 financial results and to discuss its financial outlook.\nTime\n4 30PM ET\nUnited States Canada Toll Free\n1-800-717-1738\nInternational Toll\n1-646-307-1865\nA live webcast will also be available in the Investor Relations section of Arteris' website at https ir.arteris.com events-and-presentations\nA replay of the webcast will be available in the Investor Relations section of Arteris' website approximately two hours after the conclusion of the call and remain available for approximately 30 calendar days.\nAbout Arteris\nArteris is a leading provider of semiconductor technology that accelerates the creation of high-performance, power-efficient silicon with built-in safety, reliability, and security. Innovative Arteris products are designed to optimize data movement and help ease complexity in the modern AI era with network-on-chip (NoC) interconnect intellectual property (IP), system-on-chip (SoC) software for integration automation and hardware security assurance. All are used by the world's top technology companies to improve overall performance and engineering productivity, reduce risk, lower costs, and bring cutting-edge designs to market faster. Learn more at arteris.com.\n2004-2026 Arteris, Inc. All rights reserved worldwide. Arteris, Arteris IP, the Arteris IP logo, and the other Arteris marks found at https www.arteris.com trademarks are trademarks or registered trademarks of Arteris, Inc. or its subsidiaries. All other trademarks are the property of their respective owners.\nInvestor Contacts\nArteris\nNick Hawkins\nChief Financial Officer\nIR arteris.com\nSapphire Investor Relations, LLC\nErica Mannion and Michael Funari\n+1 617 542 6180\nIR arteris.com\nForward-Looking Statements\nThis press release contains forward-looking statements within the meaning of the Private Securities Litigation Reform Act of 1995, as amended, including but not limited to, statements regarding market trends and whether we are well positioned to serve our customers as they innovate across data centers, edge devices, and physical AI systems in the years ahead, our long-term growth opportunity and future financial and operating performance, including our GAAP and Non-GAAP estimated third quarter and updated full year 2026 guidance. The words such as may, will, could, expect, approximately, believe, estimate, future, guidance, outlook, and similar words or expressions are intended to identify forward-looking statements, although not all forward-looking statements contain these identifying words. Any forward-looking statements contained herein are based on our historical performance and our current plans, estimates and expectations and are not a representation that such plans, estimates, or expectations will be achieved. These forward-looking statements represent our expectations as of the date of this press release. Subsequent events may cause these expectations to change, and we disclaim any obligation to update the forward-looking statements in the future, except as required by law. These forward-looking statements are subject to known and unknown risks and uncertainties that may cause actual results to differ materially from our current expectations. Important factors that could cause actual results to differ materially from those anticipated in our forward-looking statements include, but are not limited to, the significant competition we face from larger companies and third-party providers our history of net losses the amount of our future revenue recognition as it relates to our RPO as of June 30, 2026 whether semiconductor companies in the aerospace and defense market, automotive market, communications market, consumer electronics market, enterprise computing market, and industrial market incorporate our solutions into their end products and the growth and economic stability of these end markets our ability to attract new customers and the extent to which our customers renew their subscriptions for our solutions the ability of our customers' end products achieving market acceptance or growth our ability to sustain or grow our licensing revenue our ability, and the cost, to successfully execute on research and development efforts the occurrence of product errors or defects in our solutions if we fail to offer high-quality support the occurrence of macro-economic conditions that adversely impact us, our customers and their end product markets including, but not limited to, the imposition of tariffs in markets where we operate the effects of geopolitical conflicts, such as the military conflict between Russia and Ukraine as well as the ongoing conflict in the Middle East the range of regulatory, operational, financial and political risks we are exposed to as a result of our dependence on international customers and operations our ability to protect our proprietary technology and inventions through patents and other IP rights whether we are subject to any liabilities or fines as a result of government regulation, including import, export and economic sanctions laws and regulations the occurrence of a disruption in our networks or a security breach risks associated with doing business in China, including as a result of changes to trade relations between the United States and China and the other factors described under the heading \"Risk Factors\" in our Quarterly Report on Form 10-Q for the quarter ended June 30, 2026 to be filed with the Securities and Exchange Commission (SEC) on August 6, 2026. All forward-looking statements reflect our beliefs and assumptions only as of the date of this press release. We undertake no obligation to update forward-looking statements to reflect future events or circumstances. Our results for the quarter ended June 30, 2026 are not necessarily indicative of our operating results for any future periods.\nArteris, Inc.\nCondensed Consolidated Statements of Operations\n(In thousands, except share and per share data)\n(Unaudited)\nThree Months Ended\nJune 30,\nSix Months Ended\nJune 30,\n2026\n2025\n2026\n2025\nRevenue\nLicensing, support and maintenance\n$\n20,824\n$\n15,088\n$\n40,096\n$\n30,423\nVariable royalties\n2,103\n1,402\n4,606\n2,569\nProfessional services and other\n1,207\n12\n2,368\n42\nTotal revenue\n24,134\n16,502\n47,070\n33,034\nCost of revenue\n3,607\n1,742\n6,857\n3,268\nGross profit\n20,527\n14,760\n40,213\n29,766\nOperating expenses\nResearch and development\n16,762\n12,171\n31,219\n24,033\nSales and marketing\n9,386\n6,335\n17,916\n12,864\nGeneral and administrative\n6,072\n4,502\n11,487\n8,825\nAcquisition-related costs\n2,215\n2,799\nTotal operating expenses\n34,435\n23,008\n63,421\n45,722\nLoss from operations\n(13,908)\n(8,248)\n(23,208)\n(15,956)\nInterest expense\n(30)\n(42)\n(68)\n(90)\nOther income (expense), net\n570\n786\n1,240\n1,504\nLoss before income taxes and loss from equity method investment\n(13,368)\n(7,504)\n(22,036)\n(14,542)\nLoss from equity method investment, net of tax\n780\n2,989\n1,595\nLoss before income taxes\n(13,368)\n(8,284)\n(25,025)\n(16,137)\nProvision for (benefit from) income taxes\n697\n846\n(3,001)\n1,114\nNet loss\n$\n(14,065)\n$\n(9,130)\n$\n(22,024)\n$\n(17,251)\nNet loss per share attributable to common stockholders, basic and diluted\n$\n(0.30)\n$\n(0.22)\n$\n(0.47)\n$\n(0.42)\nWeighted-average shares used in computing per share amounts, basic and diluted\n47,276,533\n41,819,427\n46,415,392\n41,338,907\nArteris, Inc.\nCondensed Consolidated Balance Sheets\n(In thousands, except share and per share data)\nAs of\nJune 30,\nDecember 31,\n2026\n2025\nASSETS\nCurrent assets\nCash and cash equivalents\n$\n93,270\n$\n33,901\nShort-term investments\n28,794\n20,698\nAccounts receivable, net of allowance of $73 as of both June 30, 2026 and December 31, 2025\n15,222\n19,183\nPrepaid expenses and other current assets\n9,055\n8,608\nTotal current assets\n146,341\n82,390\nProperty and equipment, net\n5,968\n3,872\nLong-term investments\n1,198\n4,946\nEquity method investment\n2,989\nOperating lease right-of-use assets\n4,918\n3,919\nIntangibles, net\n18,767\n2,168\nGoodwill\n35,299\n4,178\nOther assets\n12,222\n10,569\nTOTAL ASSETS\n$\n224,713\n$\n115,031\nLIABILITIES AND STOCKHOLDERS' EQUITY (DEFICIT)\nCurrent liabilities\nAccounts payable\n$\n558\n$\n340\nAccrued expenses and other current liabilities\n30,442\n19,094\nOperating lease liabilities, current\n1,466\n1,233\nDeferred revenue, current\n59,577\n51,367\nVendor financing arrangements, current\n1,302\n1,166\nTotal current liabilities\n93,345\n73,200\nDeferred revenue, noncurrent\n49,280\n43,974\nOperating lease liabilities, noncurrent\n3,725\n3,116\nVendor financing arrangements, noncurrent\n2,193\n452\nDeferred income, noncurrent\n5,867\n6,452\nOther liabilities\n2,629\n2,469\nTotal liabilities\n157,039\n129,663\nStockholders' equity (deficit)\nPreferred stock, par value of $0.001 - 10,000,000 shares authorized and no shares issued and outstanding as of both June 30, 2026 and December 31, 2025\nCommon stock, par value of $0.001 - 300,000,000 shares authorized as of both June 30, 2026 and December 31, 2025 49,051,892 and 44,268,816 shares issued and outstanding as of June 30, 2026 and December 31, 2025, respectively\n49\n44\nAdditional paid-in capital\n261,174\n156,776\nAccumulated other comprehensive income\n106\n179\nAccumulated deficit\n(193,655)\n(171,631)\nTotal stockholders' equity (deficit)\n67,674\n(14,632)\nTOTAL LIABILITIES AND STOCKHOLDERS' EQUITY (DEFICIT)\n$\n224,713\n$\n115,031\nArteris, Inc.",
+      "source": "edgar:8-K ex-99.1",
+      "url": "https://www.sec.gov/Archives/edgar/data/1667011/000162828026054325/exhibit991q2fy268-k.htm",
+      "asOf": "2026-08-06",
+      "truncated": true
+    },
+    "proxyStatement": {
+      "text": "Security ownership:\nSECURITY OWNERSHIP OF CERTAIN BENEFICIAL OWNERS AND MANAGEMENT\nThe following table presents information as to the beneficial ownership of our common stock as of April 9, 2026 for:\neach person, or group of affiliated persons, known by us to beneficially own more than 5% of our common stock;\neach named executive officer as set forth in the summary compensation table above;\neach of our directors; and\nall executive officers and directors as a group.\nBeneficial ownership is determined in accordance with the rules of the SEC and generally includes voting or investment power with respect to securities. Unless otherwise indicated below, to our knowledge, the persons and entities named in the table have sole voting and sole investment power with respect to all shares beneficially owned, subject to community property laws where applicable. Shares of our common stock subject to options and RSUs that are currently exercisable or exercisable within 60 days of April 9, 2026 are deemed to be outstanding and to be beneficially owned by the person holding the stock options and RSUs for the purpose of computing the percentage ownership of that person but are not treated as outstanding for the purpose of computing the percentage ownership of any other person.\nPercentage ownership of our common stock in the table is based on 46,092,618 shares of our common stock issued and outstanding on April 9, 2026. This table is based upon information supplied by officers, directors and principal stockholders and Schedules 13D and Schedules 13G, if any, filed with the SEC. Unless otherwise indicated, the address of each of the individuals and entities named below is c/o Arteris, Inc., 900 E. Hamilton Ave., Suite 300, Campbell, CA 95008.\nBeneficial Ownership\nName of Beneficial Owner\nNumber of\nOutstanding Shares\nBeneficially Owned\nNumber of Shares\nExercisable\nWithin 60 Days\nNumber of Shares\nBeneficially\nOwned\nPercentage of\nBeneficial\nOwnership\n5% and Greater Stockholders:\nBayview Legacy, LLC(1)\n9,119,071\n9,119,071\n19.8\n%\nNeedham Investment Management, LLC(2)\n3,325,000\n3,325,000\n7.2\n%\nNamed Executive Officers and Directors:\nK. Charles Janac(3)\n9,178,358\n31,250\n9,209,608\n20.0\n%\nWayne C. Cantwell(4)\n266,959\n75,000\n341,959\n*\nRaman K. Chitkara(5)\n72,250\n72,250\n*\nS. Atiq Raza(6)\n390,000\n20,839\n410,839\n*\nAntonio J. Viana(7)\n164,621\n77,089\n241,710\n*\nClaudia Fan Munce(8)\n80,012\n20,839\n100,851\n*\nJoachim Kunkel(9)\n*\nLaurent R. Moll(10)\n169,460\n12,500\n181,960\n*\nNicholas B. Hawkins(11)\n14,158\n213,021\n227,179\n*\nAll directors and executive officers as a group (10 persons)(12)\n10,341,820\n518,038\n10,859,858\n23.3\n%\n*\nIndicates beneficial ownership of less than 1% of the total outstanding common stock.\n33\nTable of Contents\n(1)\nConsists of 9,119,071 shares of common stock directly held by Bayview Legacy, LLC (\"Bayview\"). K. Charles Janac, our President, Chief Executive Officer and a member of our Board, is the manager of Bayview, and has shared dispositive power over the shares of our common stock owned by Bayview.\n(2)\nAs reported in Schedule 13G of Needham Investment Management, LLC. reflecting beneficial ownership as of September 30, 2025, which was filed on November 13, 2025 with the SEC. Needham Investment Management, LLC. reported sole voting and dispositive power with respect to no shares, and shared voting and dispositive power with respect to 3,325,000 shares. The address of Needham Investment Management, LLC is 250 Park Avenue, 10 th Floor, New York, New York 10117.\n(3)\nK. Charles Janac is the manager of Bayview and may be deemed to beneficially own the shares discussed in footnote (1) above. In addition to the shares discussed in footnote (1) above, consists of (i) 3,035 shares of common stock held directly by K. Charles Janac, (ii) 56,252 shares of common stock held by Charles and Lydia Janac Trust and (iii) 31,250 shares of common stock that may be acquired pursuant to the exercise of stock options within 60 days of April 9, 2026.\n\nRelated-person transactions:\nTRANSACTIONS WITH RELATED PERSONS\nWe describe below transactions and series of similar transactions, since January 1, 2024, to which we were a party or will be a party, in which the amount involved exceeded or will exceed the lesser of $120,000 or one percent of the average of our total assets at year-end for the last two completed years with any of our directors, executive officers or holders of more than 5% of our common stock, or an affiliate or immediate family member thereof, had or will have a direct or indirect material interest.\nTranschip License Agreement\nIn February 2022, Arteris IP (Hong Kong) Ltd., now Arteris HK Limited, our wholly owned subsidiary, entered into a Share Purchase and Shareholders Agreement (the \"SPA\") with certain investors and Ningbo Transchip Information Consulting Partnership. The transaction closed on June 20, 2022.\nPursuant to the SPA, we subscribed to the registered capital of Transchip Technology (Nanjing) Co., Ltd. (\"Transchip\"), our formerly wholly owned subsidiary. As a result, the registered capital of Transchip increased to $29.4 million. We subscribed for the registered capital of approximately $11.9 million, of which $11.6 million of the contribution was contributed in-kind by way of an interconnect solutions and software technology license by us pursuant to a five-year technology license and services agreement which can be extended for another five-year term, and the remaining was paid in cash. Upon closing of the transaction, Transchip was deconsolidated as our subsidiary.\nFollowing the consummation of the foregoing transactions, we held approximately 40% of the common stock of Transchip on a fully diluted basis. In September 2022, Transchip completed a second funding with additional investors. We did not provide additional investments in the second funding. As a result, our ownership interest in Transchip was diluted to 35.0% of the common stock of Transchip on a fully diluted basis.",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/1667011/000119312526166706/d885938ddef14a.htm",
+      "asOf": "2026-04-21",
+      "truncated": true
+    },
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T03:48:44.157Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T03:48:44.157Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T03:48:44.157Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T03:48:44.157Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T03:48:44.157Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T03:48:44.157Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T03:48:44.157Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T03:48:44.157Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T03:48:44.157Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T03:48:44.157Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T03:48:44.157Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T03:48:44.157Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-23T03:48:44.157Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-23T03:48:44.157Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T03:48:44.157Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T03:48:44.157Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T03:48:44.157Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-09-23T03:48:44.157Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T03:48:44.157Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-23T03:48:44.157Z"
+    }
+  ]
+}

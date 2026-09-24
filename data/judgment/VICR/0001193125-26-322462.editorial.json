@@ -1,0 +1,49 @@
+{
+  "judgmentSha256": "f5d4d52ecbdf5cc9e5413d737f218acc475486349a5a905028e19cde6c5a29d1",
+  "reviewedAt": "2026-09-23T07:35:00Z",
+  "reviewer": "claude-opus-4-8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "On a trailing-twelve-month basis the operating margin is 18.6% and the net margin is 30.6%, the latter lifted by the settlement and the tax benefits.",
+      "issue": "The $45.0M patent litigation settlement was recognized entirely in Q2 2025 (the press-release income statement shows it in both the quarter-ended and six-months-ended June 30, 2025 columns). The TTM window here ends 2026-06-30, so it spans Q3 2025 through Q2 2026 and excludes Q2 2025. The settlement therefore is not in the TTM net income and cannot have lifted the TTM net margin. This is a causal claim the grounding surface does not support and in fact contradicts on timing. Only the tax benefits (Q1 and Q2 2026, both inside the window) belong in the attribution.",
+      "fix": "Drop 'the settlement' from the TTM attribution. The net margin's excess over operating margin reflects the 2026 share-based-compensation tax benefits and other income, both inside the trailing-twelve-month window; the Q2'25 settlement falls outside it. Reserve the settlement caveat for FY25 / year-ago-quarter comparisons, where it belongs.",
+      "status": "addressed",
+      "note": "Fixed. The TTM sentence now reads the net margin sits above the operating margin 'because of the 2026 share-based-compensation tax benefits and other income, both of which fall inside the trailing window, and not because of the 2025 settlement, which does not.' The settlement is no longer attributed to the TTM; the FactPack income statement confirms the $45.0M sits only in the Q2'25 / six-months-'25 columns, outside the window."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.growth.points[4]",
+      "quote": "Gross margin has room to recover further, from 58.0% in the second quarter toward the 63.6% posted in FY25, if volume and royalty mix stay favorable.",
+      "issue": "The FY25 gross margin of 63.6% embeds the one-time $45.0M patent litigation settlement, which was booked in the gross-margin line in Q2'25 (Q2'25 reported gross margin $92,128K = ~$47,128K product gross profit + $45,000K settlement). That single item added roughly 11 points to the full-year figure; without it FY25 gross margin is near the low-50s, consistent with FY24's 51.2%. The report itself strips the settlement out when discussing the year-ago quarter but here holds up the settlement-inflated 63.6% as an organic recovery target, which overstates achievable margin. The clean TTM gross margin on the surface is 56.6% — already below Q2'26's 58.0%. Same overstated target recurs in sections.executiveSummary.catalysts[3] ('Further gross-margin recovery toward the FY25 level of 63.6%').",
+      "fix": "Anchor the recovery target to an organic level (e.g. the TTM 56.6% or the Q2'26 58.0%), or explicitly note that FY25's 63.6% was lifted by the $45.0M settlement and is not a clean run-rate. Apply the same correction to catalysts[3].",
+      "status": "addressed",
+      "note": "Fixed. growth.points[4] now anchors the organic target to the second-quarter run-rate, which sits above the TTM 56.6%, and states the FY25 63.6% headline 'was inflated by a one-time litigation settlement and is not a clean baseline.' catalysts[3] no longer cites the 63.6% FY25 level; it now reads 'Further gross-margin recovery as volume and product mix improve off the current quarterly run-rate.'"
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.risks.systemic",
+      "quote": "Roughly half of revenue is earned outside the United States, at 50.8% in 2025, so trade policy, tariffs, export controls, and the strength of the U.S. dollar all bear on demand and margins.",
+      "issue": "Sourced figures are restated across sections instead of being introduced once and referred back to in words, against house style ('No sentence appears in two sections'; exec-summary items point, later sections argue). Near-verbatim duplications: this systemic sentence repeats executiveSummary.risks[2] ('Trade exposure: roughly half of revenue is earned outside the United States, at 50.8% in 2025'); and executiveSummary.risks[3] ('$45.0 million patent litigation settlement, and royalty revenue is lumpy') is repeated almost word-for-word in risks.idiosyncratic[3]. All four executiveSummary.catalysts are restated with little added mechanism as growth.points (second-fab catalyst[1] vs growth.points[2]; gross-margin catalyst[3] vs growth.points[4]; IP-licensing catalyst[2] vs growth.points[1]; order-book catalyst[0] vs growth.points[0]). Export ~46.0% appears in companyOverview and businessMoat.segments[0]; FY25 FCF $119.2M and buybacks $35.2M appear in both cashflowCommentary and management.capitalAllocation; 86.0x and Advanced Products +45.0% and backlog ~$380M/+145% each recur numerically in three-plus sections.",
+      "fix": "Introduce each sourced figure once, then refer back in words ('the export share noted above', 'the trailing multiple'). Make the growth points argue mechanism and what-to-watch rather than restate the catalyst pointers, and de-duplicate the near-identical risk sentences between the executive summary and the risks section.",
+      "status": "addressed",
+      "note": "Fixed. The 50.8% export figure now appears once (systemic); exec risks[2] is a figure-free pointer. 46.0% export, FY25 FCF $119.2M/buybacks $35.2M, 86.0x, +45.0% and backlog ~$380M/+145% each now appear once and are referred back in words (capitalAllocation 'detailed in the cash-flow section'; idiosyncratic[1] 'the premium multiple discussed in the valuation section'). Catalysts are now short pointers; growth.points add mechanism and a what-to-watch, and the comparability risk is a pointer-plus-argument pair, not a verbatim repeat."
+    },
+    {
+      "id": "F-4",
+      "severity": "Minor",
+      "field": "meta.subtitle",
+      "quote": "Modular-power leader riding the AI datacenter power ramp; strong Q2 execution against a rich multiple",
+      "issue": "In the desk's own voice the subtitle calls Vicor a 'Modular-power leader'. The grounding surface supports only the narrower, company-stated claim of 'a leadership position in the emerging market segment for powering high-performance processors used for acceleration of ... artificial intelligence' (MD&A). Generalizing that self-stated AI-segment leadership into an unqualified 'modular-power leader' is an unearned superlative in the report's voice.",
+      "fix": "Narrow the claim (e.g. 'AI power-delivery leader' or 'modular-power specialist') so the subtitle matches what the source actually supports, or attribute the leadership claim to the company.",
+      "status": "addressed",
+      "note": "Fixed. Subtitle now reads 'AI datacenter power-delivery specialist; strong Q2 execution and rising royalties against a rich multiple' — 'specialist' replaces the unearned 'Modular-power leader' superlative and matches the company's self-stated AI-segment framing."
+    }
+  ]
+}
