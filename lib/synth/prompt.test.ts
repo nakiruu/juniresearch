@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { FactPack } from "@/lib/facts/schema";
 import { projectReportFacts } from "@/lib/facts/project";
 import { Desk } from "@/lib/synth/desk.schema";
-import { renderFactsBlock, renderContextBlock, renderPrompt, renderCalls } from "@/lib/synth/prompt";
+import { renderFactsBlock, renderContextBlock, renderPrompt, renderCalls, renderTraps, promptTail } from "@/lib/synth/prompt";
 import { EditorialReview } from "@/lib/synth/editorial.schema";
 
 const pack = FactPack.parse(JSON.parse(readFileSync("data/facts/AVGO/0001730168-26-000080.json", "utf8")));
@@ -138,8 +138,50 @@ describe("renderPrompt", () => {
     expect(a).toBe(b);
     expect(a.length).toBeGreaterThan(30000);
     // Raised from 60000: the Context block now also carries the earnings press release excerpt
-    // (Task 5), which for AVGO alone runs to ~15,000 characters.
-    expect(a.length).toBeLessThan(90000);
+    // (Task 5), which for AVGO alone runs to ~15,000 characters. Raised again from 90000: the
+    // token-lean pass added the "# Known traps" section (~1.5K chars) between contract and calls.
+    expect(a.length).toBeLessThan(95000);
+  });
+});
+
+describe("known traps in the prompt", () => {
+  it("renders the desk's recurring traps as their own section, between the contract and the calls", () => {
+    const p = renderPrompt(pack, facts, desk);
+    expect(p).toContain("# Known traps (avoid these)");
+    expect(p).toContain(desk.recurringTraps[0]);
+    const i = p.indexOf("# Known traps");
+    expect(i).toBeGreaterThan(p.indexOf("# Authoring contract"));
+    expect(i).toBeLessThan(p.indexOf("# Calls"));
+  });
+  it("drops the section entirely when the desk lists no traps", () => {
+    expect(renderTraps([])).toBe("");
+    const bare = Desk.parse({ ...JSON.parse(readFileSync("data/desk/desk.json", "utf8")), recurringTraps: [] });
+    expect(renderPrompt(pack, facts, bare)).not.toContain("# Known traps");
+  });
+});
+
+describe("promptTail — the re-render delta", () => {
+  const errors = ["rating.label: BUY is inconsistent with an upside of -3.0%"];
+  const review = EditorialReview.parse({
+    judgmentSha256: "c".repeat(64), reviewedAt: "2026-09-14T10:00:00Z", reviewer: "opus", round: 1,
+    verdict: "needs-fix-round",
+    findings: [{ id: "F-1", severity: "Critical", field: "analystCommentary", quote: "up 121%", issue: "wrong period", fix: "date it", status: "open" }],
+  });
+  it("is empty on a first pass", () => {
+    expect(promptTail({})).toBe("");
+  });
+  it("carries the prior errors and the open findings, in that order, and nothing else", () => {
+    const tail = promptTail({ priorErrors: errors, editorial: review });
+    expect(tail).toContain("# Prior errors");
+    expect(tail).toContain(errors[0]);
+    expect(tail).toContain("# Editorial findings");
+    expect(tail.indexOf("# Prior errors")).toBeLessThan(tail.indexOf("# Editorial findings"));
+    expect(tail).not.toContain("# Facts");
+    expect(tail).not.toContain("# Calls");
+  });
+  it("is exactly the tail the full prompt ends with, so the delta and the prompt cannot drift", () => {
+    const opts = { priorErrors: errors, editorial: review };
+    expect(renderPrompt(pack, facts, desk, opts).endsWith(promptTail(opts) + "\n")).toBe(true);
   });
 });
 
