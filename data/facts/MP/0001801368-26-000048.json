@@ -1,0 +1,584 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "MP",
+  "cik": 1801368,
+  "company": "MP Materials Corp.",
+  "exchange": "NYSE",
+  "sic": 1000,
+  "sicDescription": "Metal Mining",
+  "filing": {
+    "form": "10-Q",
+    "accession": "0001801368-26-000048",
+    "filedDate": "2026-08-07",
+    "periodEnd": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1801368/000180136826000048/mp-20260630.htm"
+  },
+  "capturedAt": "2026-09-24T15:58:05.646Z",
+  "quote": {
+    "price": 49.3,
+    "marketCap": 8780407808,
+    "sharesOutstanding": 178101578.2555781,
+    "sharesSource": "derived",
+    "week52Low": 37.81,
+    "week52High": 100.251,
+    "dividendYield": 0,
+    "asOf": "2026-09-24"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          331952000,
+          527510000,
+          253445000,
+          203855000,
+          224441000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          165345000,
+          327411000,
+          -17719000,
+          -169426000,
+          -149374000
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          189727000,
+          345767000,
+          37990000,
+          -91369000,
+          -60107000
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          135037000,
+          289004000,
+          24307000,
+          -65424000,
+          -85874000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          0.73,
+          1.52,
+          0.14,
+          -0.57,
+          -0.5
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          1179297000,
+          1182345000,
+          997844000,
+          850868000,
+          1830286000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          674927000,
+          678444000,
+          681980000,
+          908729000,
+          998741000
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          -504370000,
+          541817000,
+          418629000,
+          626287000,
+          -167270000
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          1008732000,
+          1312634000,
+          1365779000,
+          1054880000,
+          1978757000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          21.443444233579093,
+          13.272617227972631,
+          10.420792261630584,
+          6.287820313500265,
+          7.242294740995622
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          101971000,
+          343514000,
+          62699000,
+          13349000,
+          -155755000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -123870000,
+          -326595000,
+          -261897000,
+          -186418000,
+          -172375000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          null,
+          0,
+          0,
+          -225068000,
+          0
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          -21899000,
+          16919000,
+          -199198000,
+          -173069000,
+          -328130000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q2'26",
+    "periodEnd": "2026-06-30",
+    "revenue": 108490000,
+    "operatingMargin": -0.29522536639321595,
+    "revenueYoY": 0.8903002108271043
+  },
+  "ttm": {
+    "pe": -154.06250000000003,
+    "ps": 28.752682120788403,
+    "evToEbitda": -758.4673534264477,
+    "grossMargin": null,
+    "operatingMargin": -0.41543731191281597,
+    "netMargin": -0.19850217927348818,
+    "netDebtToEbitda": -41.289553214081515,
+    "interestCoverage": -3.338464777242704,
+    "currentRatio": 9.509790887990498,
+    "fcfYield": -0.05746612355980448
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 452750040,
+      "eps": 0.02926
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 804751650,
+      "eps": 0.87391
+    }
+  },
+  "analysts": {
+    "count": 19,
+    "buy": 18,
+    "hold": 1,
+    "sell": 0,
+    "consensusRating": "Strong Buy",
+    "consensusTarget": 74.29412,
+    "medianTarget": 75,
+    "highTarget": 100,
+    "lowTarget": 57,
+    "asOf": "2026-09-24"
+  },
+  "segments": {
+    "basis": "FY25 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 224441000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "AA",
+      "pe": 8.834025,
+      "ps": 0.8260872,
+      "evToEbitda": 5.434
+    },
+    {
+      "ticker": "ALB",
+      "pe": 403.37036,
+      "ps": 2.175379,
+      "evToEbitda": 10.962
+    },
+    {
+      "ticker": "CDE",
+      "pe": 15.810082,
+      "ps": 6.098505,
+      "evToEbitda": 11.98
+    },
+    {
+      "ticker": "EQX",
+      "pe": 17.915386,
+      "ps": 4.692708,
+      "evToEbitda": 8.539
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-13",
+      "close": 55.65999984741211
+    },
+    {
+      "date": "2026-08-14",
+      "close": 58.7400016784668
+    },
+    {
+      "date": "2026-08-17",
+      "close": 58.5099983215332
+    },
+    {
+      "date": "2026-08-18",
+      "close": 56.66999816894531
+    },
+    {
+      "date": "2026-08-19",
+      "close": 56.68000030517578
+    },
+    {
+      "date": "2026-08-20",
+      "close": 55.040000915527344
+    },
+    {
+      "date": "2026-08-21",
+      "close": 60.04999923706055
+    },
+    {
+      "date": "2026-08-24",
+      "close": 57.41999816894531
+    },
+    {
+      "date": "2026-08-25",
+      "close": 60.16999816894531
+    },
+    {
+      "date": "2026-08-26",
+      "close": 59.310001373291016
+    },
+    {
+      "date": "2026-08-27",
+      "close": 59.029998779296875
+    },
+    {
+      "date": "2026-08-28",
+      "close": 56.130001068115234
+    },
+    {
+      "date": "2026-08-31",
+      "close": 54.75
+    },
+    {
+      "date": "2026-09-01",
+      "close": 53.7400016784668
+    },
+    {
+      "date": "2026-09-02",
+      "close": 54.70000076293945
+    },
+    {
+      "date": "2026-09-03",
+      "close": 53.779998779296875
+    },
+    {
+      "date": "2026-09-04",
+      "close": 54.529998779296875
+    },
+    {
+      "date": "2026-09-08",
+      "close": 55.369998931884766
+    },
+    {
+      "date": "2026-09-09",
+      "close": 54.29999923706055
+    },
+    {
+      "date": "2026-09-10",
+      "close": 51.31999969482422
+    },
+    {
+      "date": "2026-09-11",
+      "close": 50.5099983215332
+    },
+    {
+      "date": "2026-09-14",
+      "close": 50.68000030517578
+    },
+    {
+      "date": "2026-09-15",
+      "close": 49.16999816894531
+    },
+    {
+      "date": "2026-09-16",
+      "close": 48.9900016784668
+    },
+    {
+      "date": "2026-09-17",
+      "close": 49.380001068115234
+    },
+    {
+      "date": "2026-09-18",
+      "close": 47.2599983215332
+    },
+    {
+      "date": "2026-09-21",
+      "close": 50
+    },
+    {
+      "date": "2026-09-22",
+      "close": 51.040000915527344
+    },
+    {
+      "date": "2026-09-23",
+      "close": 48.88999938964844
+    },
+    {
+      "date": "2026-09-24",
+      "close": 49.29999923706055
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "MP Materials Corp., together with its subsidiaries, produces rare earth materials in the Western Hemisphere. It operates in two segments, Materials and Magnetics. The Materials segment owns and operates the Mountain Pass Rare Earth Mine and Processing facility located near Mountain Pass, San Bernardino County, California. The Magnetics segment produces magnetic precursor products, including NdPr metal; and manufactures NdFeB permanent magnets. MP Materials Corp. was founded in 2017 and is headquartered in Las Vegas, Nevada.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-24"
+    },
+    "mdaExcerpt": {
+      "text": "ITEM 2. MANAGEMENT'S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS\nThe following discussion and analysis of financial condition, results of operations, liquidity and capital resources should be read in conjunction with, and is qualified in its entirety by, the unaudited Condensed Consolidated Financial Statements and the notes thereto included in this Quarterly Report on Form 10-Q (\"Form 10-Q\"), and the Consolidated Financial Statements and notes thereto and Management's Discussion and Analysis of Financial Condition and Results of Operations contained in the Annual Report on Form 10-K for the year ended December 31, 2025 (\"Form 10-K\"). This discussion and analysis contains forward-looking statements that involve risks, uncertainties and assumptions. The actual results may differ materially from those anticipated in these forward-looking statements as a result of certain factors, including, but not limited to, those set forth under \"Part II. Item 1A. Risk Factors\" and elsewhere in this Form 10-Q and \"Part I. Item 1A. Risk Factors\" and elsewhere in our Form 10-K. See also \"Cautionary Note Regarding Forward-Looking Statements.\"\nBusiness Overview\nMP Materials Corp., including its subsidiaries (\"we,\" \"our,\" \"us\" and the \"Company\"), is the largest producer of rare earth materials in the Western Hemisphere. We own and operate the Mountain Pass Rare Earth Mine and Processing Facility (\"Mountain Pass\") located near Mountain Pass, San Bernardino County, California, the only rare earth mining and processing site of scale in North America. Rare earth products are critical inputs in hundreds of existing and emerging applications including electric vehicles, consumer electronics, robotics, drones, wind turbines, and defense applications. Additionally, we own and operate a rare earth metal, alloy and magnet manufacturing facility in Fort Worth, Texas (\"Independence\" or the \"Independence Facility\").\nOur reportable segments, which are primarily based on our internal organizational structure and types of products, are our two operating segments Materials and Magnetics.\nThe Materials segment represents our upstream and midstream operations, which primarily consist of Mountain Pass, a fully integrated mining and refining facility producing refined rare earth oxides (\"REO\") and related products. The Materials segment generates revenue primarily from sales of neodymium-praseodymium (\"NdPr\") oxide and metal, primarily sold to customers in the United States, Japan, South Korea, and broader Asia. The Materials segment historically generated the majority of its revenue from sales of rare earth concentrate into the Chinese market.\nThe Magnetics segment represents our downstream magnet manufacturing and related operations, which currently consist of (i) the Independence Facility, a fully integrated metal, alloy, and magnet manufacturing plant and (ii) the 10X Facility (discussed below). The Magnetics segment began generating revenue from sales of magnetic precursor products to a single customer in the U.S., in the first quarter of 2025, and commenced the manufacturing of neodymium-iron-boron (\"NdFeB\") permanent magnets in December 2025.\nCertain rare earth elements (\"REE\") serve as critical inputs for the rare earth magnets inside the electric motors and generators powering carbon-reducing technologies such as hybrid and electric vehicles (referred to collectively as \"xEVs\"), advanced electronics, aerospace and defense systems, energy products, robotics and many other high-growth, advanced technologies. Our integrated operations combine low production costs with high environmental standards, thereby restoring American leadership to a critical industry with a strong commitment to sustainability.\nRecent Developments\n10X Facility\nIn February 2026, we announced the selection of a 120 acre site in Northlake, Texas, for our second domestic magnet manufacturing facility (the \"10X Facility\"), as discussed further below. We closed on the purchase of this land in April 2026 at a cost of approximately $80 million where construction of the 10X Facility is currently underway.\nNdPr Offtake Agreement\nIn February 2026, we entered into an NdPr offtake agreement with a leading U.S. technology and industrial company for the purchase of a significant volume of NdPr products.\n30\nT able of Contents\nFactors Affecting Our Performance\nWe believe we are uniquely positioned to capitalize on the trends of electrification and supply chain security, particularly as domestic industrial supply chain initiatives advance. Our continued success depends to a significant extent on our ability to take advantage of the following opportunities and meet the challenges associated with them.\nDemand for REE\nThe drivers for REE demand are a diverse array of growing end markets, including electric mobility; physical AI; industrial, consumer and professional service robotics; renewable power generation; energy-efficient motors, pumps, and compressors; consumer and medical applications; critical defense systems; and catalysts and phosphors.\nThroughout 2025, China imposed and expanded export controls and restrictions on certain rare earths and related materials, requiring companies to secure special export licenses and obtain Chinese government approval for exports of products containing even small amounts of Chinese-origin rare earths, among other restrictions. While in November 2025 the U.S. reached a trade and economic deal in which China agreed to suspend implementation of the expanded export controls and to suspend retaliatory tariffs and non-tariff measures imposed since March 2025, these developments have led and continue to lead to several market trends, which may or may not be permanent, including volatility and disruptions in global supply chains, shortages of rare earth elements, potential price volatility, and an increased demand for alternative supply chains outside of China, all of which, if sustained, may have a material impact on the demand for our products.\nThese developments further catalyzed action by a number of governments and rare earth users to accelerate geographic supply chain diversification for REE products. In particular, the U.S. government has implemented a number of initiatives to restore domestic supply of critical minerals. We believe we are uniquely positioned to benefit from this trend.\nMaximizing Upstream and Midstream Production Efficiency\nAfter an initial ramp and optimization period, we have produced at least 40,000 MTs of REO in concentrate each year since 2021, culminating in record production levels exceeding 50,000 MTs. These results were achieved by optimizing the reagent scheme, adjusting process temperatures, improving tailings facility management, and committing to operational excellence. Our initiative to optimize upstream operations has enabled us to attain what we believe to be world-class production cost levels for rare earth concentrate.\nIn November 2023, we announced our \"Upstream 60K\" strategy whereby we intend to grow our annual REO Production Volume to approximately 60,000 MTs via investments in further beneficiation capacity and through better usage of lower-grade ore and other underutilized parts of the Mountain Pass ore body.\nMidstream operations produce separated REE from our rare earth concentrate. The optimization of our refining capabilities incorporated upgrades and enhancements to the prior facility process flow to produce separated REE at a lower cost while minimizing our impact on the environment. More specifically, we have reintroduced an oxidizing roasting circuit, reoriented portions of the plant process flow, increased product finishing capacity, improved wastewater management, and made other improvements to materials handling and storage. The reintroduction of the oxidizing roasting circuit allows subsequent stages of the production process to occur at lower temperatures, and with lower volumes of materials and reagents, which supports lower operating and maintenance costs and higher uptime than would otherwise be achievable.\nThe success of our business reflects our ability to continue to manage our costs and drive scale. Our upstream production achievements have provided economies of scale to lower production costs per MT of REO produced in concentrate. Furthermore, our midstream process flow was designed to capitalize on the inherent advantages of the bastnaesite ore at Mountain Pass, which is well-suited to low-cost refining by selectively eliminating the need to carry cerium, a lower-value element, through the separations process. Additionally, our location and integration offer cost and transportation advantages that create efficiencies in production, security of incoming supplies and shipping of our final products.\nDuring the second half of 2023, we began producing separated rare earth products, including NdPr oxide, which represents a majority of the value contained in our concentrate. We continue to expect that it may take many quarters to achieve our designed throughput of NdPr oxide. However, as we increase production over time, we expect to reduce our per-unit production costs. Until such time that we achieve our designed throughputs of separated products, including heavy rare earth elements (\"HREE\"), we may experience unstable operations and elevated costs of our initial production of such products.\nIn the second half of 2026, we expect to begin refining HREE with initial production of terbium and dysprosium. As part of our partnership with the United States Department of War (the \"DoW\"), we have committed to further extend our HREE\n31\nT able of Contents\nrefining capabilities to include the separation of samarium oxide and to recommission the chlor-alkali facilities at Mountain Pass. Additionally, as part of our agreement with Apple Inc. (NASDAQ: AAPL) (\"Apple\"), we will develop and install scaled magnet recycling capabilities at Mountain Pass with dedicated capacity for both NdPr and heavy rare earth separation.\nWe currently generate our revenue primarily from our Materials segment, which operates a single site in a single location, and any stoppage in activity, including for reasons outside of our control, could adversely impact our production, results of operations and cash flows.\nDevelopment of Our Downstream Manufacturing Capabilities\nWe are in the final stages of commissioning magnet manufacturing equipment at Independence and continue to develop engineering and manufacturing technology to process NdPr oxide and metal into NdFeB magnets. Our operations also incorporate magnet recycling capabilities. These initiatives are central to our long-term strategy to become a leading, integrated global supplier of rare earth magnets. We believe this vertical integration is a core competitive advantage in the production of a critical industrial output. Furthermore, we expect our downstream manufacturing operations to benefit from geopolitical developments, including initiatives to repatriate critical materials supply chains, including those supported by our agreements with General Motors Company (NYSE: GM) (\"GM\"), the DoW and Apple.\nOur Independence Facility converts NdPr oxide produced at Mountain Pass into permanent magnets and its precursor products, with integrated capabilities to support magnet recycling. Our operations are expected to progress in phases, with magnet production volumes increasing over time as additional capabilities are commissioned and scaled. As part of our partnership with the DoW, we committed to expand capacity of the Independence Facility to a projected 3,000 MTs of magnets annually. Output from the Independence Facility is expected to support a range of end markets, including electric vehicles, robotics, semiconductor manufacturing, clean energy, electronics and defense technologies.\nIn late 2024, we commissioned electrowinning capabilities at the Independence Facility to produce NdPr metal from NdPr oxide. Additionally, in 2025, we added strip casting capabilities to produce NdFeB alloy flake, a key precursor product that is utilized as the material feedstock for magnet manufacturing. We also began trial production of automotive-grade, sintered NdFeB magnets at our new product introduction (\"NPI\") facility within the Independence Facility and recently commenced manufacturing NdFeB magnets on the industrial scale equipment.\nIn the first quarter of 2025, we commenced sales of magnetic precursor products, primarily NdPr metal. We expect to continue selling magnetic precursor products ahead of fully commissioning our magnet manufacturing capabilities, which commissioning began in late 2025. After the Independence Facility is commissioned and scaled, we expect to primarily sell permanent magnets.\nIn July 2025, we entered into definitive agreements with the DoW establishing a transformational public-private partnership with the DoW to accelerate the build-out of an end-to-end U.S. rare earth magnet supply chain. In connection with these agreements, the Company committed to construct the 10X Facility. We expect to invest more than $1.25 billion in this project, which is supported by approximately $200 million of state and local incentive packages, as well as a 10 year magnet offtake agreement with the DoW. The 10X Facility is expected to begin commissioning in 2028, and once completed and scaled, it will produce an estimated 7,000 metric tons (\"MTs\") of magnets per year. When combined with the Independence Facility's 3,000 MTs per year of magnets, our overall U.S. rare earth magnet production capacity will expand to an estimated 10,000 MTs per year.\nWhile we have grown increasingly confident about our future outlook with the progress made to-date, there are inherent risks in finalizing construction and developing the process technology for magnet manufacturing. For instance, unforeseen delays in construction or the installation of specific equipment may occur, or our products may fail to satisfy customer expectations, which could adversely affect both the amount and timing of our revenue from permanent magnets and precursor products.\nOur Mineral Reserves\nOur ore body has proven over more than 70 years of operations to be one of the world's largest and highest-grade rare earth resources. As of December 31, 2025, SRK Consulting (U.S.), Inc., an independent consulting firm that we retained to assess our reserves, estimated total proven and probable reserves of 1.96 million short tons of REO contained in 28.96 million short tons of ore at Mountain Pass, with an average ore grade of 5.89%. These estimates use an estimated economical cut-off grade of 2.50% total rare earth oxide. Based on these estimated reserves and our expected annual production rate of REO upon production ramp-up of our midstream operations, our expected mine life was approximately 28 years as of December 31, 2025.\n32\nT able of Contents\nOver time, we expect to be able to continue to grow our expected mine life through additional exploratory drilling and improved processing capabilities, which may result in changes to various assumptions underlying our mineral reserve estimate.\nMining activities in the U.S. are heavily regulated, particularly in California. Regulatory changes may make it more challenging for us to access our reserves. In addition, new mineral deposits may be discovered elsewhere, which could make our operations less competitive.\nKey Performance Indicators\nIn evaluating the performance of our Materials segment, we use the key performance indicators (\"KPIs\") outlined below. Our calculations of the KPIs presented may differ from similar measures published by other companies in our industry or in other industries. See the \"Materials Segment\" section below for further discussion of year-over-year changes in KPIs. Since the Magnetics segment only recently commenced production, we have not established any KPIs for its operations.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/1801368/000180136826000048/mp-20260630.htm",
+      "asOf": "2026-08-07",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "ITEM 1A. RISK FACTORS\nInvesting in our securities involves a high degree of risk. Investors should carefully consider the risks described below and all of the other information we file with the SEC before deciding to invest in our common stock. If any of the events or developments described below occur, our business, prospects, financial condition, or results of operations could be materially or adversely affected. As a result, the market price of our common stock could decline, and investors could lose all or part of their investment. The risks and uncertainties described below are not the only risks and uncertainties that we face. Additional risks and uncertainties not presently known to us or that we currently deem immaterial may also impair our business operations. The risks discussed below also include forward-looking statements, and our actual results may differ substantially from those discussed in these forward-looking statements. See \"Cautionary Note Regarding Forward-Looking Statements\" above.\nRisk Factor Summary\nOur business is subject to a number of risks and uncertainties, including those highlighted immediately following this summary. Some of these risks are:\nWe may be adversely affected by fluctuations in demand for, and prices of, REE and magnet materials.\nThere can be no assurances that the funding of and support for the transactions contemplated by the DoW Transaction Agreements will not be modified, challenged or impaired in the future, which would have a material adverse effect on our business, results of operations and financial position.\nThe DoW Transaction Agreements contain affirmative and negative covenants that may restrict our ability, and the ability of our subsidiaries, to take actions management believes are important to our long-term strategy and could have a material adverse effect on our business, prospects, financial condition, or results of operations.\nThe success of our business will depend, in part, on the growth of existing and emerging uses for rare earth products.\nWe operate in a highly competitive industry.\nIndustry consolidation may result in increased competition, which could result in a reduction in revenue.\nOur ability to generate revenue will be diminished if we are unable to compete with substitutions for our rare earth materials.\nSignificant political, trade and regulatory developments, and other circumstances beyond our control, could have a material adverse effect on our financial condition or results of operations.\nThe production of rare earth products is a capital-intensive business that requires the commitment of substantial resources; if we do not have sufficient resources to provide for such production, it could have a material adverse effect on our financial condition or results of operations.\nOur continued growth depends on our ability to reach anticipated production rates for the separation of REE as part of midstream operations at Mountain Pass, our only rare earth mining and processing facility.\nIf we infringe, or are accused of infringing, the intellectual property rights of third parties, it may increase our costs or prevent us from being able to commercialize new products.\nWe may not be able to adequately protect our intellectual property rights. If we fail to adequately enforce or defend our intellectual property rights, our business may be harmed.\nWe may not be able to obtain additional patents and the legal protection afforded by any additional patents may not adequately protect our rights or permit us to gain or keep any competitive advantage.\nIf we are unable to perform the obligations under our customer supply agreements, this could have a material adverse effect on our financial position and results of operations.\nWe may not be able to convert current commercial discussions with customers for the sale of our products into contracts, which may have a material adverse effect on our financial position and results of operations.\nThe financial, tax and accounting treatment of the DoW Transactions contemplated by the DoW Transaction Agreements involved significant judgment and may change.\nOutbreaks, epidemics or pandemics could have an adverse effect on our business.\nWe are subject to a number of operational risks of our business, including power outages or shortages at Mountain Pass or Independence; increasing costs or limited access to raw materials; disruptions in transportation or other\n10\nTable of Content s\nservices; inability to process REO that meet individual customer specifications; diminished access to water; uncertainty in our estimates of REO reserves; labor matters/labor relations; information technology and cybersecurity breaches; and/or environmental matters.\nThe conditional conversion features of our Convertible Notes (as defined in Note 10 , \"Debt Obligations \" in the notes to the Consolidated Financial Statements), if triggered, may adversely affect our financial condition and operating results.\nConversion of our Convertible Notes may dilute the ownership interest of our stockholders or may otherwise depress the price of our common stock.\nCertain provisions in the indentures governing the Convertible Notes may delay or prevent an otherwise beneficial takeover attempt of us.\nServicing our debt requires a significant amount of cash, and we may not have sufficient cash flow from our business to pay our debt.\nOur Credit Agreement (as defined in Note 10 , \"Debt Obligations \" in the notes to the Consolidated Financial Statements) contains certain restrictive covenants, and if we are unable to comply with these covenants, then the lenders could declare an event of default wherein we may need to immediately repay the amounts due under the Credit Agreement.\nRisks Relating to our Business and Industry\nWe may be adversely affected by fluctuations in demand for, and prices of, REE and magnet materials.\nBecause our revenue is, and will be for the foreseeable future, from the sale of rare earth products, changes in demand for, and the market price of (including taxes and other tariffs and fees imposed upon) REE and magnet materials could significantly affect our profitability. The Company's arrangements with the DoW are intended to significantly mitigate the risks of commodity price fluctuations associated with NdPr on our results of operations. In particular, the Company entered into the Price Protection Agreement, which provides a price floor of $110 per kilogram (\"kg\") for NdPr products stockpiled, sold to internal affiliates, or sold to third parties. If market prices fall below this threshold, the Company will receive a quarterly payment from the DoW to offset the shortfall. Conversely, once the 10X Facility reaches full production capacity, if the price of NdPr exceeds the threshold, the Company will remit a portion of the upside to the DoW, equal to 30% of the NdPr sales price in excess of $110 per kg. This arrangement allows the Company to sell NdPr at a more stable price, with limited exposure to price declines while retaining upside exposure. This moderates the Company's exposure to the fluctuations in the NdPr commodity market which the Company has experienced in recent years.\nHowever, while this DoW commitment provides a meaningful measure of certainty with respect to our medium- and longer-term NdPr-related cash flows, our business and financial results remain susceptible to the fluctuations in the demand for, and the realized prices of, REE and magnet materials, which may fluctuate and are affected by numerous factors beyond our control such as interest rates, exchange rates, taxes, inflation or deflation, changes in tariffs or trade restrictions, fluctuation in the relative value of the U.S.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/1801368/000180136826000008/mp-20251231.htm",
+      "asOf": "2026-02-26",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-K",
+    "pressRelease": null,
+    "proxyStatement": {
+      "text": "Board and director independence:\nDirector Independence\nOur common stock is listed on the New York Stock Exchange (the \"NYSE\"). Under the rules of the NYSE, independent directors must comprise a majority of a listed company's board of directors. In addition, the rules of the NYSE require that, subject to specified exceptions, each member of a listed company's audit, compensation, and nominating and corporate governance committees be independent. Under the rules of the NYSE, a director will only qualify as an \"independent director\" if the director has no material relationship with the listed company, broadly taking into consideration all relevant facts and circumstances.\nAudit Committee members must also satisfy the independence criteria set forth in Rule 10A-3 under the Exchange Act. In order to be considered independent for purposes of Rule 10A-3, a member of an audit committee of a listed company may not, other than in his or her capacity as a member of the audit committee, the board of directors or any other board committee: (1) accept, directly or indirectly, any consulting, advisory or other compensatory fee from the listed company or any of its subsidiaries or (2) be an affiliated person of the listed company or any of its subsidiaries.\nAt least annually, our Board evaluates all relationships between us and each director in light of relevant facts and circumstances for the purposes of determining whether a material relationship exists that might signal a potential conflict of interest or otherwise interfere with such director's ability to satisfy his or her responsibilities as an independent director. Based on this evaluation, our Board will make an annual determination of whether each director is independent within the meaning of the independence standards of the NYSE and the SEC.\nOur Board has determined that each of Messrs. Donald, McKnight, and Weisenburger, General Myers and Mses. Lavan and Duckworth qualifies as an \"independent director\" as defined under the rules of the NYSE. Mr. Litinsky, who serves as our Chairman and CEO, is not independent. Our Board also has determined that Mr. Weisenburger, and Mses. Duckworth and Lavan, who comprise our Audit Committee, Messrs. McKnight, Donald, and Weisenburger, who comprise our Compensation Committee, and Mses. Duckworth and Lavan, and General Myers, who comprise our Nominating and Corporate Governance Committee, satisfy the independence standards for such committees established by the SEC and the rules of the NYSE, as applicable. In making such determinations, our Board considered the relationships that each such non-employee director has with our Company and all other facts and circumstances our Board deemed relevant in determining independence, including the beneficial ownership of our capital stock by each non-employee director and any institutional stockholder with which he or she is affiliated.\n\nCompensation discussion and analysis:\nCOMPENSATION DISCUSSION AND ANALYSIS\nThis Compensation Discussion and Analysis provides narrative disclosure regarding the compensation plans, programs and arrangements we employed for individuals serving as our Chief Executive Officer, Chief Financial Officer, and our other named executive officers, as determined under the rules of the SEC (collectively, our \"named executive officers\").\nDuring fiscal 2025, our named executive officers were:\nJames H. Litinsky, Chairman of the Board and Chief Executive Officer;\nRyan Corbett, Chief Financial Officer;\nMichael Rosenthal, Chief Operating Officer; and\nElliot D. Hoops, General Counsel and Secretary.\nBusiness Overview\nMP Materials Corp. is the largest producer of rare earth materials in the Western Hemisphere. Separated rare earth elements are critical inputs to the world's most powerful and efficient magnets found in electric vehicles, unmanned aerial vehicles, defense systems, robotics, wind turbines and various advanced technologies. The Company owns and operates the Mountain Pass Rare Earth Mine and Processing Facility (\"Mountain Pass\") in California, North America's only active and scaled rare earth production site. The Company also owns and operates a rare earth metal, alloy and magnet manufacturing facility in Fort Worth, Texas (the \"Independence Facility\"), where the Company produces and sells magnetic precursor products and commenced the manufacturing of neodymium-iron-boron (\"NdFeB\") permanent magnets in December 2025.\nExecutive Compensation Philosophy and Objectives\nIn developing compensation plans for our named executive officers, the Compensation Committee seeks to balance all of our business characteristics and create a program that will motivate and reward named executive officers for their performance and for creating value for our stockholders over time. The Compensation Committee evaluates and revises, as necessary, our compensation program to assess whether they support our business objectives and provide competitive compensation levels for our named executive officers. The business objectives that we seek to recognize in our compensation program include:\nFocusing on prudent growth in both current and future projects;\nMaximizing operational efficiency;\nManaging cash flow for investment;\nMaximizing safety, operating profitability, and production at our Mountain Pass facility and our Independence Facility; and\nCreating long-term value for our stockholders.\nMore specifically, our compensation program strives to support our business needs through the following objectives:\nAllowing us to attract and retain a high-quality management team capable of managing and growing the business for the benefit of our stockholders;\nProviding a competitive compensation program appropriate for the size and complexity of the Company relative to the market for executive pay;\nAligning actual pay results with performance for stockholders, with an opportunity to realize pay above target levels for excellent performance and below target levels for performance below plan;\nIncentivizing management to maximize stockholder value without taking undue financial risks and while maintaining credibility in the capital markets;\nRewarding individual contribution, in addition to team efforts; and\nMaintaining effective incentives during difficult economic environments.\nAlthough we reference the market from time to time for competitive pay practices in setting overall target pay levels for our executives, we do not define a specific percentile of market for targeting executive pay. We consider many factors, including\n30\nTable of Contents\nthe actual performance and contribution of our executives, and internal pay comparisons between our executives, when determining individual executive pay, as discussed in more detail below.\nSpecifically, the Compensation Committee considers market information in light of their individual experience, knowledge of the Company, knowledge of the peer companies discussed below, knowledge of each named executive officer and their business judgment when making decisions regarding our executive compensation program.\nPay for Performance\nMP Materials Corp. has a strong philosophy that executive pay should vary with performance in order to align executive interests with those of our stockholders over time. We believe that our executive pay system is thoughtfully designed to reinforce this philosophy and to drive value-creating financial, operating, and strategic results, while also taking our external environment into account.\n\nSecurity ownership:\nSECURITY OWNERSHIP OF CERTAIN BENEFICIAL OWNERS AND MANAGEMENT\nThe following table sets forth certain information with respect to beneficial ownership of the Company's common stock as of April 13, 2026, by each person, or group of affiliated persons, known to the Company to own beneficially more than 5% of the Company's outstanding common stock, each director and director nominee, each named executive officer and all of the executive officers and directors of the Company as a group. Unless otherwise indicated in the footnotes to the table, the address of each such person is c/o the Company, 1700 S. Pavilion Center Drive, Suite 800, Las Vegas, Nevada 89135.\nBeneficial ownership is determined in accordance with Rule 13d-3 of the Exchange Act. Shares of common stock subject to options currently exercisable or exercisable within 60 days of April 13, 2026, are deemed outstanding for purposes of computing the percentage beneficially owned by such holder, but are not deemed outstanding for purposes of computing the percentage beneficially owned by any other person. Except as otherwise indicated, the Company believes that the beneficial owners of the common stock listed below, based on information furnished by such owners, have sole investment and voting power with respect to such shares, subject to community property laws where applicable, and that there are no other affiliations among the stockholders listed in the table. The percentage for each beneficial owner is calculated based on (i) the aggregate number of shares reported to be owned by such group or individual and (ii) the aggregate number of shares of common stock outstanding as of April 13, 2026 (178,018,991 shares).\n25\nTable of Contents\nName and Address of Beneficial Owner\nNumber of Shares Beneficially Owned\nPercentage of Class\n5% or Greater Stockholders\nHancock Prospecting Pty Limited (1)\n13,861,212\n7.8%\nThe Vanguard Group (2)\n13,635,712\n7.7%\nJames H. Litinsky (3)\n12,809,732\n7.2%\nBlackRock, Inc. (4)\n11,930,482\n6.7%\nNamed Executive Officers and Directors\nJames H. Litinsky (2)\n12,809,732\n7.2%\nAndrew A. McKnight (5)\n23,056\n*\nGeneral (Ret.) Richard B. Myers (6)\n33,994\n*\nRandall J. Weisenburger (7)\n177,101\n*\nMaryanne R. Lavan (8)\n49,955\n*\nConnie K. Duckworth (9)\n67,352\n*\nArnold W. Donald (10)\n22,089\n*\nRyan Corbett\n38,397\n*\nElliot D. Hoops (11)\n7,958\n*\nMichael Rosenthal (12)\n1,346,220\n*\nAll current executive officers and directors as a group (10 persons)\n14,575,854\n8.2%\n* Indicates beneficial ownership of less than 1% of the outstanding shares of the Company's common stock.\n(1) As reported in a statement on Schedule 13G/A filed with the SEC on November 13, 2024, as of September 30, 2024, Hancock Prospecting Pty Ltd had shared voting power and shared dispositive power over 13,861,212 shares of the Company's common stock and Georgina Hope Rinehart had shared voting power and shared dispositive power over 13,861,212 shares of the Company's common stock. The business address of Hancock Prospecting Pty Limited and Georgina Hope Rinehart is Level 3 HPPL House, 28-42 Ventnor Avenue, West Perth, Western Australia 6005, Australia.\n(2) As reported in a statement on Schedule 13G/A filed with the SEC on February 13, 2024, as of December 29, 2023, The Vanguard Group had shared voting power over 44,769 shares of the Company's common stock, sole dispositive power over 13,452,667 shares of the Company's common stock, and shared dispositive power over 183,045 shares of the Company's common stock. The business address of The Vanguard Group is 100 Vanguard Blvd., Malvern, PA 19355. According to the most recent Schedule 13G/A filed by The Vanguard Group with the SEC on March 27, 2026, The Vanguard Group reported that it beneficially owns 0.0% as of March 13, 2026 following an internal reorganization pursuant to which The Vanguard Group's beneficial ownership has been disaggregated.",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/1801368/000180136826000020/mp-20260423.htm",
+      "asOf": "2026-04-24",
+      "truncated": true
+    },
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T15:58:05.646Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T15:58:05.646Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T15:58:05.646Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T15:58:05.646Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T15:58:05.646Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T15:58:05.646Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T15:58:05.646Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T15:58:05.646Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T15:58:05.646Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T15:58:05.646Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T15:58:05.646Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T15:58:05.646Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-24T15:58:05.646Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-24T15:58:05.646Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-24T15:58:05.646Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-09-24T15:58:05.646Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-09-24T15:58:05.646Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-09-24T15:58:05.646Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T15:58:05.646Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-24T15:58:05.646Z"
+    }
+  ],
+  "sbc": [
+    22931000,
+    31780000,
+    25236000,
+    23183000,
+    30163000
+  ]
+}

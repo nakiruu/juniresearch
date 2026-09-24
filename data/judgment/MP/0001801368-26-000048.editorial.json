@@ -1,0 +1,69 @@
+{
+  "judgmentSha256": "23da23ab0ccb9ff1bae0ebec4ef98125102fa244185f44a26872abe63e119c46",
+  "reviewedAt": "2026-09-24T18:10:00Z",
+  "reviewer": "Claude Opus 4.8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.management.leadership",
+      "quote": "James H. Litinsky, the company's founder, serves as Chairman of the Board and Chief Executive Officer.",
+      "issue": "The grounding surface does not state that Litinsky founded MP Materials. The company description (Context) says only \"MP Materials Corp. was founded in 2017\" without naming a founder, and the proxy excerpt gives his title solely as \"Chairman of the Board and Chief Executive Officer.\" \"the company's founder\" is a recalled/unsupported executive attribution. It recurs and carries the equity story: leadership also says \"The business is founder-led\"; governance says \"founder James Litinsky, as Chairman and CEO, is not\" [independent]; insiderOwnership says \"founder and CEO James Litinsky beneficially owned 12,809,732 shares.\"",
+      "fix": "Remove \"founder\"/\"founder-led\" everywhere it appears (leadership, governance, insiderOwnership) unless the proxy or Context supports it. Refer to Litinsky by his grounded title (Chairman and CEO) and keep the leadership-concentration point on the Chair+CEO combination, which the proxy does support.",
+      "status": "addressed",
+      "note": "Fixed. \"founder\"/\"founder-led\" removed throughout: leadership now opens \"James H. Litinsky serves as Chairman of the Board and Chief Executive Officer\"; governance reads \"James Litinsky, as Chairman and CEO, is not\"; insiderOwnership reads \"Chairman and CEO James Litinsky.\" No occurrence of \"founder\" remains in the built report."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.management.insiderOwnership",
+      "quote": "Among disclosed holders, Hancock Prospecting Pty Limited held 7.8% and The Vanguard Group 7.7%, with ownership otherwise dispersed among institutions. The presence of a strategic industrial holder alongside index funds and the founder gives the register a mix of long-term and passive capital rather than a single controlling block.",
+      "issue": "Vanguard 7.7% is presented as a current holder and an \"index funds ... passive capital\" reading is built on it, but the same proxy's footnote (2) states that per Vanguard's most recent Schedule 13G/A (filed March 27, 2026) it \"beneficially owns 0.0% as of March 13, 2026 following an internal reorganization pursuant to which The Vanguard Group's beneficial ownership has been disaggregated.\" The 7.7% derives from a 13G/A as of December 29, 2023 and is superseded — the report silently picks the stale figure (source disagreement not disclosed) and dates it as current. Hancock's 7.8% is likewise as of September 30, 2024 per footnote (1) and is left undated. \"strategic industrial holder\" is not on the surface.",
+      "fix": "State that Vanguard's most recent 13G/A (March 27, 2026) reports 0.0% as of March 13, 2026 after disaggregation, and either drop Vanguard from the register or name the disagreement and which figure you use. Date Hancock's 7.8% (as of September 30, 2024). Drop the ungrounded \"strategic industrial holder\" characterization or replace it with what the proxy carries.",
+      "status": "addressed",
+      "note": "Fixed. The stale Vanguard 7.7% and Hancock 7.8% figures and the ungrounded \"strategic industrial holder\"/\"index funds\" framing are gone. insiderOwnership now keeps only the grounded, dated Litinsky 7.2% (as of April 13, 2026) and states \"The rest of the register is dispersed among institutional holders, with no single outside party holding a controlling block\" — supported by the proxy and free of the superseded figure."
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "Revenue in the second quarter of 2026 was $108.5 million, up 89% from a year earlier",
+      "issue": "Cross-section repetition. This sentence appears verbatim in both sections.executiveSummary.thesis.body and sections.financials.incomeCommentary. Other figures are retold across sections: the full consensus-target set ($74.29 / +50.7% / median $75.00 / range $57.00-$100.00) near-verbatim in analystCommentary and sections.valuation.multiplesCommentary; Q2 operating margin -29.5% in thesis, incomeCommentary and risks.idiosyncratic[0]; FY2025 FCF -$328.1M in cashflowCommentary and risks.idiosyncratic[0]; FY2025 capex $172.4M in cashflowCommentary and management.capitalAllocation; \"$49.30 ... half its 52-week high of $100.25\" in thesis, multiplesCommentary and finalRecommendation[0]; magnet capacity 3,000/7,000/10,000 MT near-verbatim in catalysts and growth.points.",
+      "fix": "Introduce each figure once in its home section and refer back in words elsewhere. The executive summary and analyst preamble should point; the sections argue. Delete the duplicated sentences (especially the verbatim Q2 revenue line and the repeated consensus-target set).",
+      "status": "addressed",
+      "note": "Fixed. Each flagged figure now has a single home: $108.5M only in incomeCommentary (thesis points with \"Revenue grew 89%\"); consensus-target set only in analystCommentary (multiplesCommentary now \"Analysts' price targets sit well above the current price\"); -29.5% only in incomeCommentary; -$328.1M only in cashflowCommentary (risks says \"burned free cash flow\"); $172.4M only in cashflowCommentary (capitalAllocation says \"heavy\"); $100.25 only in thesis (referred to in words elsewhere); the 3,000/7,000 breakdown only in growth.points (catalyst points with \"roughly 10,000\")."
+    },
+    {
+      "id": "F-4",
+      "severity": "Important",
+      "field": "sections.management.governance",
+      "quote": "Standard committee independence and related-party review are in place.",
+      "issue": "Over-attribution. The captured proxy excerpt covers only director and committee independence (the \"Director Independence\" section and the audit/compensation/nominating committee determinations); it does not carry any related-party transaction review. Asserting that \"related-party review\" is in place characterises the proxy with something it does not contain on the surface.",
+      "fix": "Drop the related-party clause, or limit the sentence to what the proxy excerpt supports — the board's independence determinations and that the audit, compensation and nominating committees are composed of independent directors.",
+      "status": "addressed",
+      "note": "Fixed. The \"related-party review\" sentence is removed. governance now closes on the Chair/CEO-concentration point and retains only the grounded independence determinations (six named independent directors; audit, compensation and nominating committees composed of independent directors)."
+    },
+    {
+      "id": "F-5",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarios[2].driver",
+      "quote": "The shares fall back toward the low end of their range.",
+      "issue": "The Bear driver says the shares fall \"toward the low end of their range,\" but the Bear implied price of $32 sits below the 52-week low of $37.81 that is on the surface, so it pierces the range rather than approaching its low end. Minor prose/number inconsistency in the calls.",
+      "fix": "Reword to reflect that the bear case takes the shares below the 52-week low (e.g. \"below the bottom of its 52-week range\"), or otherwise align the language with the $32 figure.",
+      "status": "addressed",
+      "note": "Fixed. The Bear driver now ends \"The shares fall sharply from current levels,\" which is consistent with the $32 implied price (a sharp fall from $49.30) and no longer mischaracterises it as merely approaching the low end of the range."
+    },
+    {
+      "id": "F-6",
+      "severity": "Minor",
+      "field": "sections.risks.systemic",
+      "quote": "supply and pricing are heavily influenced by China, which dominates global rare-earth processing and has used export controls as a policy tool.",
+      "issue": "\"dominates global rare-earth processing\" states a market-share fact not on the grounding surface. The MD&A establishes only that China imposed and expanded rare-earth export controls in 2025 (suspended in November 2025) and that customers are seeking supply outside China — not that China \"dominates global rare-earth processing.\"",
+      "fix": "Frame China's role with what the pack supports (the 2025 export controls, the November 2025 suspension, and demand shifting to non-Chinese supply) and drop the ungrounded \"dominates global rare-earth processing\" claim.",
+      "status": "addressed",
+      "note": "Fixed. systemic now reads \"heavily influenced by China, which imposed and expanded rare-earth export controls in 2025 and can use them as a policy tool\" — grounded in the MD&A. The ungrounded \"dominates global rare-earth processing\" claim is gone."
+    }
+  ]
+}
