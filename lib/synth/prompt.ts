@@ -116,21 +116,24 @@ export function renderCalls(cfg: DeskRating): string {
 - \`highlights\`: up to four keys from the "Highlight cells you may add" list below, no repeats; the code computes the values, you only choose which keys to append.`;
 }
 
-export function renderPrompt(
-  pack: FactPack,
-  facts: ReportFacts,
-  desk: Desk,
-  opts: { priorErrors?: string[]; priorWarnings?: string[]; judgmentPath?: string; editorial?: EditorialReview } = {},
-): string {
-  const path = opts.judgmentPath ?? `data/judgment/${pack.ticker}/${pack.filing.accession}.json`;
-  const parts = [
-    `# Role\n\nYou are ${desk.analystName} at ${desk.analyst}, writing the judgment half of an equity research report on ${pack.company} (${pack.ticker}) following its ${pack.filing.form} for the period ended ${pack.filing.periodEnd}. House style:\n${desk.styleRules.map((r) => `- ${r}`).join("\n")}`,
-    `# Authoring contract\n\n${CONTRACT}`,
-    `# Calls\n\n${renderCalls(desk.rating)}`,
-    `# Facts\n\n${renderFactsBlock(facts, pack)}`,
-    `# Context\n\n${renderContextBlock(pack)}`,
-    `# Output\n\nWrite one JSON object matching this schema, and nothing else, to \`${path}\`. Return the complete object every time.\n\n\`\`\`json\n${JSON.stringify(judgmentJsonSchema(), null, 2)}\n\`\`\``,
-  ];
+/**
+ * The known-traps block: recurring defects the desk has learned to head off, rendered as
+ * avoid-these bullets so the author does not author one in the first draft. Empty string when
+ * the desk lists none, so renderPrompt can drop the section entirely.
+ */
+export function renderTraps(traps: readonly string[]): string {
+  if (!traps.length) return "";
+  return `# Known traps (avoid these)\n\nThe desk has hit each of these before, and each has cost a review round. Do not author one.\n${traps.map((t) => `- ${t}`).join("\n")}`;
+}
+
+/**
+ * The re-prompt tail: prior errors/warnings and open editorial findings, in that order — the
+ * only part of the prompt that changes between rounds. renderPrompt appends it; synth:prompt
+ * also writes it on its own as the round-2+ delta, so the author re-reads what changed, not the
+ * whole ~20K-token brief it already holds. Empty string on a first pass.
+ */
+export function promptTail(opts: { priorErrors?: string[]; priorWarnings?: string[]; editorial?: EditorialReview }): string {
+  const parts: string[] = [];
   const errors = opts.priorErrors ?? [];
   const warnings = opts.priorWarnings ?? [];
   if (errors.length || warnings.length) {
@@ -142,7 +145,27 @@ export function renderPrompt(
       : "";
     parts.push(`# Prior errors\n\n${lead}${tail}`);
   }
-  if (opts.editorial)
-    parts.push(`# Editorial findings\n\n${renderEditorialFindings(opts.editorial)}`);
-  return parts.join("\n\n") + "\n";
+  if (opts.editorial) parts.push(`# Editorial findings\n\n${renderEditorialFindings(opts.editorial)}`);
+  return parts.join("\n\n");
+}
+
+export function renderPrompt(
+  pack: FactPack,
+  facts: ReportFacts,
+  desk: Desk,
+  opts: { priorErrors?: string[]; priorWarnings?: string[]; judgmentPath?: string; editorial?: EditorialReview } = {},
+): string {
+  const path = opts.judgmentPath ?? `data/judgment/${pack.ticker}/${pack.filing.accession}.json`;
+  const traps = renderTraps(desk.recurringTraps);
+  const parts = [
+    `# Role\n\nYou are ${desk.analystName} at ${desk.analyst}, writing the judgment half of an equity research report on ${pack.company} (${pack.ticker}) following its ${pack.filing.form} for the period ended ${pack.filing.periodEnd}. House style:\n${desk.styleRules.map((r) => `- ${r}`).join("\n")}`,
+    `# Authoring contract\n\n${CONTRACT}`,
+    ...(traps ? [traps] : []),
+    `# Calls\n\n${renderCalls(desk.rating)}`,
+    `# Facts\n\n${renderFactsBlock(facts, pack)}`,
+    `# Context\n\n${renderContextBlock(pack)}`,
+    `# Output\n\nWrite one JSON object matching this schema, and nothing else, to \`${path}\`. Return the complete object every time.\n\n\`\`\`json\n${JSON.stringify(judgmentJsonSchema(), null, 2)}\n\`\`\``,
+  ];
+  const tail = promptTail(opts);
+  return (tail ? [...parts, tail] : parts).join("\n\n") + "\n";
 }

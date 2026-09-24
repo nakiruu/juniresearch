@@ -1,0 +1,89 @@
+{
+  "judgmentSha256": "8ab2a19304dea8010bbe6ea4dbcc4eacaca72c7a674ffeb8bd73a51150d3f13a",
+  "reviewedAt": "2026-09-23T06:20:00Z",
+  "reviewer": "Claude Opus 4.8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.management.leadership",
+      "quote": "Arteris is led by co-founder K. Charles Janac, its President and Chief Executive Officer, who has run the company since it was founded in 2003.",
+      "issue": "Two facts here are not on the grounding surface. Nothing in the Facts, the calls or the Context names Janac as a founder or co-founder, and nothing says he has led the company since 2003. The only founding fact in the pack is the bigdata company tearsheet line 'Arteris, Inc. was founded in 2003' — it does not attribute the founding to Janac. The proxy and press release call him only 'President, Chief Executive Officer and a member of our Board.' Asserting co-founder status and a since-2003 tenure is an unsupported statement of fact about the CEO.",
+      "fix": "Drop 'co-founder' and the 'has run the company since it was founded in 2003' tenure claim. Describe him as grounded: President and Chief Executive Officer (and Board member per the proxy). If the founding year is wanted, keep it as a company fact ('the company was founded in 2003') and do not tie Janac to it unless a source in the pack does.",
+      "status": "addressed",
+      "note": "Rewrite now reads 'led by K. Charles Janac, its President and Chief Executive Officer and a member of the Board' (matches proxy footnote 1) and moves the founding year to a standalone company fact ('the company was founded in 2003'). 'co-founder' and the since-2003 tenure claim are gone. Grounded."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.growth.points / executiveSummary.catalysts / financials.balanceCommentary",
+      "quote": "The contracted pipeline is growing faster than reported revenue: annual contract value plus royalties reached $99.5 million, up 44%, and remaining performance obligation $135 million, up 36%.",
+      "issue": "The growth section restates the same figures the executive-summary catalysts already carry rather than arguing behind them, and several figures are introduced full-form in three or more sections. RPO $135M / +36% appears in catalysts, in financials.balanceCommentary and again here in growth.points. Variable royalties $8.6M / +65% appear in catalysts and growth.points. Q2 revenue +46% appears in the thesis, incomeCommentary and growth.points. Design starts +21% appears in catalysts, durability and growth. Gross margin ~90% appears in companyOverview, incomeCommentary, moatFactors and finalRecommendation. Catalysts are meant to point; the sections behind them should carry the argument.",
+      "fix": "Introduce each figure once in its home section and refer back in words elsewhere. Make the executive-summary catalysts one-line pointers, and rewrite growth.points to add mechanism and what-to-watch (why royalties are the operating leverage, how design starts convert) instead of re-quoting the ACV/RPO/royalty/revenue numbers already stated upstream.",
+      "status": "addressed",
+      "note": "Catalysts are now numberless pointers; growth.points rewritten to argue mechanism (royalties as operating leverage, design starts as leading indicator). Each figure now appears once with the number: RPO $135M/+36% in balanceCommentary; royalties $8.6M/+65% in growth; design starts +21% in growth; ACV+royalties $99.5M/+44% only in analystCommentary; Q2 rev +46% in the summary plus its home incomeCommentary; GM 90.2% (FY25) once and 87.6% (TTM) once. Downstream mentions are in words."
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "a 2026 equity raise rebuilt the cash position and restored positive stockholders' equity",
+      "issue": "The pack shows the balance-sheet outcomes — shares outstanding up from 44,268,816 to 49,051,892, additional paid-in capital up from $156,776K to $261,174K, cash up from $33,901K to $93,270K, and total equity restored from -$14,632K to $67,674K — but nowhere states that a discrete '2026 equity raise' occurred or that it 'rebuilt the cash position.' No financing cash flow, offering or ATM is captured. The equity-funding point is grounded by the rising share count; attributing the specific cash rebuild to a named 2026 raise is an inference the pack does not make (part of the paid-in-capital increase could relate to the first-half acquisition). management.capitalAllocation repeats it ('a 2026 raise strengthened the cash position').",
+      "fix": "State only what the surface shows: shares outstanding and paid-in capital rose and equity turned positive by mid-2026, leaving the balance sheet stronger. If you keep 'equity raise,' flag it as inference from the share-count/APIC increase rather than asserting it as a captured event, and align capitalAllocation.",
+      "status": "addressed",
+      "note": "balanceCommentary now states only the observed outcomes: 'shares outstanding and additional paid-in capital had risen, cash had increased, and total stockholders' equity had turned positive.' The named '2026 equity raise' event and the 'rebuilt the cash position' causal claim are removed. capitalAllocation aligned: equity funding 'evident in the rising share count and paid-in capital through mid-2026.'"
+    },
+    {
+      "id": "F-4",
+      "severity": "Important",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "Arteris ended FY25 with $33.9 million in cash and short-term investments",
+      "issue": "Two sources in the pack disagree and the report silently picks the lower one without saying so. The vendor balance table (the report's own call) labels a $33.9M row 'Cash & ST Investments,' but the SEC filing balance sheet captured in Context shows, as of December 31, 2025, cash and cash equivalents of $33,901K PLUS short-term investments of $20,698K — a true cash-and-short-term-investments total of about $54.6M. The prose reproduces the vendor label on a figure that is actually cash alone, understating FY25 liquidity by ~$20.7M.",
+      "fix": "Reconcile the two sources once and state which you used: either relabel the $33.9M as 'cash and equivalents,' or use ~$54.6M for cash plus short-term investments per the filing. Note the vendor/filing discrepancy so the figure is not silently mislabeled.",
+      "status": "addressed",
+      "note": "Now: '$33.9 million of cash and cash equivalents; the vendor tearsheet files that same figure under a cash-and-short-term-investments label, but the filing shows short-term investments reported separately on top, so we use the filing's narrower cash figure here.' The figure is relabeled to match the filing ($33,901K cash and equivalents), the vendor/filing discrepancy is stated once, and the choice is named. Correct and honest."
+    },
+    {
+      "id": "F-5",
+      "severity": "Minor",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "Stripping stock-based compensation and deal costs, the non-GAAP operating loss was $4.6 million against $3.5 million a year earlier",
+      "issue": "The $4.6M and $3.5M non-GAAP operating-loss figures are grounded (press release), and 'deal costs' matches the acquisition-related costs on the income statement. But the non-GAAP reconciliation was not captured in the pack, so naming stock-based compensation as an add-back states a specific component the surface does not show. It is the near-certain remainder of the $9.3M GAAP-to-non-GAAP gap, but it is not on the grounding surface.",
+      "fix": "Reference the non-GAAP operating loss without enumerating un-grounded add-backs (e.g., 'on a non-GAAP basis, which excludes acquisition-related and other items'), or note that the reconciliation was not captured.",
+      "status": "addressed",
+      "note": "Rewritten to 'On a non-GAAP basis, which the company reports to exclude acquisition-related and other items, the operating loss was $4.6 million against $3.5 million a year earlier.' The un-grounded stock-based-compensation add-back is no longer enumerated; wording matches the suggested fix."
+    },
+    {
+      "id": "F-6",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarios[2].driver",
+      "quote": "the shares fall back into the mid-teens, well above the $9.46 52-week low but a painful drawdown from here.",
+      "issue": "The Bear scenario's implied price is 17, which is upper/high-teens, not 'mid-teens.' The prose characterization is slightly inconsistent with the number the page renders for the same scenario.",
+      "fix": "Say 'high teens' (or 'to about $17') so the words match the Bear implied price of $17.",
+      "status": "addressed",
+      "note": "Bear driver now reads 'the shares fall back to the high teens, around $17,' matching the rendered Bear implied price of $17."
+    },
+    {
+      "id": "F-7",
+      "severity": "Minor",
+      "field": "sections.financials.cashflowCommentary",
+      "quote": "helped by growth in deferred revenue as customers prepay",
+      "issue": "This attributes the FY25 free-cash-flow swing to positive to growth in deferred revenue, a causal claim the pack does not establish for FY25. The deferred-revenue increase visible in the pack is mid-2026 ($59,577K) versus FY25 ($51,367K), not a within-FY25 driver of the FY25 result.",
+      "fix": "Drop or hedge the causal attribution; state that FY25 free cash flow turned positive at $5.3M and, if you keep the deferred-revenue point, present it as a structural feature of the subscription model rather than the stated cause of the FY25 swing.",
+      "status": "addressed",
+      "note": "Now: 'The subscription model, which collects cash as deferred revenue ahead of recognition, structurally favors cash conversion, though the pack does not isolate that as the driver of the FY25 swing.' The causal attribution is hedged and framed as a structural feature, with an explicit disclaimer."
+    },
+    {
+      "id": "F-8",
+      "severity": "Minor",
+      "field": "sections.growth.points",
+      "quote": "Revenue growth is running hot: the June 2026 quarter rose 46% year over year.",
+      "issue": "'Running hot' is a hype-adjacent characterization; house style asks that the numbers carry the weight and warns against tics. The +46% figure is also already stated in the thesis and incomeCommentary.",
+      "fix": "State the growth plainly (e.g., 'Revenue rose 46% year over year in the June 2026 quarter') or, better, refer back in words since the figure is introduced elsewhere.",
+      "status": "addressed",
+      "note": "The 'running hot' sentence has been removed from growth.points entirely; the +46% Q2 figure now lives in incomeCommentary (its home) and the analystCommentary summary, no longer duplicated in growth."
+    }
+  ]
+}

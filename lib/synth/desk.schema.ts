@@ -46,6 +46,25 @@ export type DeskLint = z.infer<typeof DeskLint>;
 export const DeskReview = z.strictObject({ model: text(40).default("opus") }).default(() => ({ model: "opus" }));
 export type DeskReview = z.infer<typeof DeskReview>;
 
+/**
+ * Recurring defects the desk has learned to head off. These render into the author prompt
+ * (avoid the trap in the first draft) and into the reviewer's brief (check these first), so a
+ * defect the desk has seen before does not cost a whole review round to catch. Cross-cutting
+ * grounding-discipline traps only — company-type specifics stay in the per-filing Facts block.
+ * Config the desk edits, like styleRules; the model never authors these.
+ */
+export const DESK_TRAPS_DEFAULTS = [
+  "Ungrounded peer: do not name a competitor or peer unless it appears in the Facts or Context blocks; frame competition with figures that are on the surface.",
+  "Recalled executive: every director or officer name, title, tenure and ownership figure comes from the proxy excerpt in Context; if no proxy was captured, say so — never recall one.",
+  "Recalled number: never write a figure that is absent from the Facts or Context blocks, even for a household-name company; make the claim without the number instead.",
+  "Over-attribution: do not say a document \"discloses\", \"states\" or \"calls\" something unless that document is in Context, and do not attach a fact to a source that did not carry it.",
+  "Stale fact as current: date any proxy, press-release, 13G or earnings-call fact that predates the filing; nothing a year old is presented as current.",
+  "Cross-section repetition: make each claim once — the executive summary points, the sections argue; do not retell a figure's story in two places, even in different words.",
+  "Segment/period mismatch: do not multiply a segment share by consolidated revenue when segments are gross of eliminations, and do not attach a total-company YoY to a single segment.",
+];
+
+export const DeskTraps = z.array(text(240)).max(40).default(() => [...DESK_TRAPS_DEFAULTS]);
+
 /** Rating thresholds: the prompt renders them and validate-judgment enforces them from this one source. */
 export const DESK_RATING_DEFAULTS = {
   bearFloor: 0.15,
@@ -82,6 +101,7 @@ export const Desk = z.strictObject({
   analystName: text(80),
   disclaimer: text(1200),
   styleRules: z.array(text(200)).min(3).max(10),
+  recurringTraps: DeskTraps,
   lint: DeskLint,
   review: DeskReview,
   rating: DeskRating,

@@ -1,0 +1,59 @@
+{
+  "judgmentSha256": "70b098d7c76a39a366d7302711c2105c0fabd59b976933ea15044f1d6ef196de",
+  "reviewedAt": "2026-09-24T15:35:18Z",
+  "reviewer": "claude-opus-4-8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "analystCommentary",
+      "quote": "the price already sits near the middle of the analyst target range, so we land one notch below the consensus at HOLD.",
+      "issue": "The characterisation is contradicted by the figures on the page. The analyst target range is $350.00 to $455.00 (midpoint ~$402.50) and the current price is $367.54, which is only ~$17.50 above the low and ~$35 below the midpoint — it sits in the lower portion of the range, not near the middle. This mis-placement props up the HOLD rationale, since a price near the low end of the target range would imply more upside to targets, cutting the other way.",
+      "fix": "Replace 'near the middle of the analyst target range' with the accurate placement (near the low end / lower third of the $350–$455 range), or drop the range-position clause and rest the HOLD on the consensus target being modestly above (+11.9%) plus the transitory-tailwind argument already made.",
+      "status": "addressed",
+      "note": "Fixed. The 'near the middle of the analyst target range' clause is gone; it now reads 'the shares already sit below the Street's consensus and median targets, so even allowing for that we land one notch below at HOLD' — accurate ($367.54 is below both $411.45 and $420.00) and the reasoning acknowledges the implied upside rather than masking it."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "Net sales in the quarter ended July 4, 2026 were $1,557 million, {+ up 20.4% +} from $1,293 million a year earlier, with growth in both segments and across all regions.",
+      "issue": "Silent source disagreement (rubric 8). The prose uses the filing's +20.4% YoY for the reported quarter, but the page's own snapshot/Facts show the same quarter's revenue growth as +18% ('Q3'26 Revenue: $1.6B (+18%)', and TTM block 'revenue +18.0% YoY'). The vendor also labels the July 4, 2026 quarter 'Q3'26' while the filing calls it the second quarter — the calendar-vs-fiscal mapping that produced the wrong label also produced the wrong YoY. The reader sees +18% in the snapshot and +20.4% in the prose with no reconciliation.",
+      "fix": "Add one sentence noting the vendor snapshot computes the quarter's growth at +18% off a mismapped prior period, that the filing reports +20.4% (net sales $1,557M vs $1,293M), and that the report uses the filing figure — consistent with the desk's keep-and-disclose handling of the non-December-FYE quarter-mapping issue.",
+      "status": "addressed",
+      "note": "Fixed. incomeCommentary now discloses it once: 'The page snapshot renders the same quarter as about +18% and labels it Q3'26, reflecting a calendar-quarter mapping; we use the filing's own second-quarter figures throughout.' States which figure is used and why — exactly the keep-and-disclose handling."
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.growth.points / sections.financials.incomeCommentary / sections.management.capitalAllocation / analystCommentary",
+      "quote": "Organic growth is the swing factor: consolidated organic net sales grew 9.2% in the quarter and 6.8% year to date, below the reported rate.",
+      "issue": "Cross-section repetition (rubric 7): the same figures carry their story in multiple sections in near-identical words. (a) The organic '9.2% in the quarter and 6.8% year to date' is stated in incomeCommentary and repeated almost verbatim in this growth point (and again as '9.2% organic' in thesis, idiosyncratic risk 1, scenarioCommentary and finalRecommendation). (b) Buybacks '$568 million ... $268 million in the quarter ... after $587M in FY25' appear near-verbatim in cashflowCommentary and capitalAllocation. (c) FY26 guidance '14% to 16% ... $20.75 to $21.25 ... FCF above $1 billion' recurs across catalysts, growth point 1 and the Base scenario. (d) Consensus target/median/range ($411.45 / $420.00 / $350–455) appears in both analystCommentary and multiplesCommentary.",
+      "fix": "Introduce each figure once in its home section and refer back in words elsewhere. Keep the organic 9.2%/6.8% detail in incomeCommentary and have the growth point point to it (e.g., 'organic growth remains the swing factor, well below the reported rate') without re-quoting; likewise cite the buyback and guidance figures once and refer back; drop the target/median/range restatement in multiplesCommentary since analystCommentary already gives it.",
+      "status": "addressed",
+      "note": "Fixed. (a) 9.2%/6.8% now stated once in incomeCommentary; growth point, idiosyncratic risk, scenarioCommentary and finalRec refer to 'high-single-digit'/'below the reported rate' in words. (b) Buyback figures now only in capitalAllocation; cashflowCommentary and catalyst refer in words. (c) Guidance figures now only in growth point 1; catalyst and Base scenario refer in words. (d) multiplesCommentary now says 'Wall Street's price targets sit modestly above the current price', no restatement."
+    },
+    {
+      "id": "F-4",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.companyOverview",
+      "quote": "expanding the CF portfolio in interactive touchscreens and point-of-sale.",
+      "issue": "Mild unsupported characterisation (rubric 2). The pack establishes that Elo (Elo Touch) was acquired 9/30/25 for ~$1.3B and is included in the CF segment, but it does not state Elo's product line; that Elo is specifically an 'interactive touchscreen and point-of-sale' business is inferred from the name and CF's category list rather than stated. The same characterisation recurs in catalysts ('adds interactive touchscreen and point-of-sale scale').",
+      "fix": "Either attribute the product framing to Zebra's own CF category description, or hedge it (e.g., 'Elo Touch, which the company folds into its Connected Frontline point-of-sale and touchscreen offerings'), so the specific product claim is not presented as a captured fact.",
+      "status": "addressed",
+      "note": "Fixed. companyOverview now reads 'adding to the Connected Frontline segment' and the catalyst 'adds scale to the Connected Frontline segment' — the specific product-line claim is removed; CF inclusion is grounded in the MD&A."
+    },
+    {
+      "id": "F-5",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarios[1].driver",
+      "quote": "The forward multiple holds near 17.5x, leaving the stock close to the consensus target.",
+      "issue": "Calls-coherence nit (rubric 6). The stated mechanism does not produce the Base implied price: 17.5x on the guided FY26 non-GAAP EPS (~$21) is ~$368 (roughly the current price), and 17.5x on FY27 EPS $22.20 is ~$389 — neither reaches the $405 Base implied price, which corresponds to ~19x FY26E. The real anchor is 'close to the consensus target' ($411.45); the '17.5x' clause reads as inconsistent with the $405 output.",
+      "fix": "Anchor the Base explicitly to the consensus target in words, or reconcile the multiple (e.g., note a modest re-rating to ~19x, or price off FY27 EPS) so the stated multiple and the $405 implied price agree.",
+      "status": "addressed",
+      "note": "Fixed. The Base driver drops the specific '17.5x' and now reads 'The stock holds near the consensus target as the market keeps paying a mid-to-high-teens forward multiple on a modestly rising earnings base' — anchored to the consensus target, and the looser multiple is consistent with the $405 implied price."
+    }
+  ]
+}

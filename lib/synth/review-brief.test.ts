@@ -12,10 +12,14 @@ const paths = {
   report: "data/avgo.json",
   prompt: `data/judgment/${ticker}/${accession}.prompt.md`,
   judgment: `data/judgment/${ticker}/${accession}.json`,
-  facts: `data/facts/${ticker}/${accession}.json`,
   findings: `data/judgment/${ticker}/${accession}.editorial.json`,
   rubric: "data/desk/editorial-rubric.md",
 };
+const previousReview = EditorialReview.parse({
+  judgmentSha256: "b".repeat(64), reviewedAt: "2026-09-14T09:00:00Z", reviewer: "opus", round: 1,
+  verdict: "needs-fix-round",
+  findings: [{ id: "F-1", severity: "Critical", field: "sections.financials.incomeCommentary", quote: "up 121%", issue: "wrong period", fix: "date it to FY26", status: "open" }],
+});
 const brief = (over: Partial<Parameters<typeof renderReviewBrief>[0]> = {}) =>
   renderReviewBrief({ ticker, accession, judgmentText, previousReview: null, round: 1, rubric, paths, ...over });
 
@@ -28,13 +32,34 @@ describe("renderReviewBrief", () => {
     expect(text).toMatch(/Do not edit/i);
   });
 
-  it("lists every path the reviewer reads, including the proxy excerpt inside the FactPack", () => {
-    for (const p of [paths.report, paths.prompt, paths.judgment, paths.facts]) expect(text).toContain(p);
-    expect(text).toContain("context.proxyStatement.text");
+  it("lists the report, prompt and judgment as the read set and does not send the reviewer to the raw FactPack", () => {
+    for (const p of [paths.report, paths.prompt, paths.judgment]) expect(text).toContain(p);
+    expect(text).not.toContain(`data/facts/${ticker}/${accession}.json`);
+    expect(text).not.toContain("context.proxyStatement.text");
+  });
+
+  it("points governance claims at the prompt's Context proxy section rather than the FactPack", () => {
+    expect(text).toMatch(/Context \*\*Proxy statement\*\* section is the authoritative source/);
+    expect(text).toMatch(/do not need the raw FactPack/);
   });
 
   it("carries the rubric verbatim", () => {
     expect(text).toContain(rubric.trim());
+  });
+
+  it("renders the desk's recurring traps as a check-these-first section, before the rubric", () => {
+    const traps = [
+      "Ungrounded peer: do not name a competitor unless it appears on the surface.",
+      "Recalled executive: names come from the proxy excerpt or not at all.",
+    ];
+    const t = brief({ recurringTraps: traps });
+    expect(t).toContain("# Known recurring defects (check these first)");
+    for (const trap of traps) expect(t).toContain(trap);
+    expect(t.indexOf("# Known recurring defects")).toBeLessThan(t.indexOf("# The rubric"));
+  });
+
+  it("omits the traps section when the desk lists none", () => {
+    expect(brief({ recurringTraps: [] })).not.toContain("# Known recurring defects");
   });
 
   it("carries the findings path, the schema and the hash to write", () => {
@@ -54,11 +79,6 @@ describe("renderReviewBrief", () => {
   });
 
   it("carries the previous findings verbatim on a re-check, with the verdict instruction", () => {
-    const previousReview = EditorialReview.parse({
-      judgmentSha256: "b".repeat(64), reviewedAt: "2026-09-14T09:00:00Z", reviewer: "opus", round: 1,
-      verdict: "needs-fix-round",
-      findings: [{ id: "F-1", severity: "Critical", field: "sections.financials.incomeCommentary", quote: "up 121%", issue: "wrong period", fix: "date it to FY26", status: "open" }],
-    });
     const recheck = brief({ previousReview, round: 2 });
     expect(recheck).toContain("# Previous findings");
     expect(recheck).toContain(JSON.stringify(previousReview, null, 2));
@@ -66,7 +86,29 @@ describe("renderReviewBrief", () => {
     expect(recheck).toMatch(/before you add/i);
   });
 
+  it("on a warm re-check points at only the changed report and judgment and drops the re-read of prompt + rubric", () => {
+    const recheck = brief({ previousReview, round: 2 });
+    expect(recheck).toContain("# What changed — read only these");
+    expect(recheck).toMatch(/already hold the author's brief/);
+    expect(recheck).not.toContain("# What to read");
+    expect(recheck).not.toContain("# The rubric");
+    expect(recheck).not.toContain(rubric.trim());
+    // the report and judgment (the two things that changed) are still named
+    expect(recheck).toContain(paths.report);
+    expect(recheck).toContain(paths.judgment);
+  });
+
+  it("forces the full cold brief on a re-check when fullBrief is set, for a fresh reviewer picking up round 2", () => {
+    const full = brief({ previousReview, round: 2, fullBrief: true });
+    expect(full).toContain("# What to read");
+    expect(full).toContain("# The rubric");
+    expect(full).toContain(rubric.trim());
+    expect(full).toContain("# Previous findings");
+    expect(full).not.toContain("# What changed — read only these");
+  });
+
   it("is deterministic", () => {
     expect(brief()).toBe(brief());
+    expect(brief({ previousReview, round: 2 })).toBe(brief({ previousReview, round: 2 }));
   });
 });

@@ -1,0 +1,69 @@
+{
+  "judgmentSha256": "453ff7a6586b05fdab08c76c42a50f70c5f9a2754191b4a8d8f2ae16a23a7562",
+  "reviewedAt": "2026-09-23T06:42:22Z",
+  "reviewer": "Claude Opus 4.8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "Revenue in the fiscal quarter ended July 4, 2026 was $888.6 million, up from $762.3 million in the same quarter a year earlier and $839.2 million in the prior quarter.",
+      "issue": "The prose correctly dated the reported quarter but the built report labelled it 'Q3'26' (snapshot rows and filing badge), colliding with catalysts[1] third-quarter guidance of $945-975M, so a reader saw two revenue figures both tagged Q3.",
+      "fix": "Add one clause anchoring the quarter ended July 4, 2026 as the company's second fiscal quarter (2Q 2026) so the guidance reads as the following quarter, and flag the vendor 'Q3'26' snapshot/badge mislabel to the desk.",
+      "status": "addressed",
+      "note": "Fixed. incomeCommentary now opens 'Revenue in Vishay's second fiscal quarter, ended July 4, 2026' and reconciles the feed once ('the data feed labels it Q3, and we follow the company'). analystCommentary and catalysts[1] now say 'second fiscal quarter' / 'next quarter.' The rendered snapshot rows and filing badge in data/vsh.json still show the vendor Q3 label, but that is a build/desk artifact outside the judgment, now reconciled in prose."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.growth.points[1]",
+      "quote": "with the new German 12-inch fab aimed at higher-value power semiconductors.",
+      "issue": "Unsupported characterisation. The grounding surface describes the Itzehoe facility only as a 12-inch wafer fab being built adjacent to an existing 8-inch fab; neither the Facts nor Context state what it will produce, so 'aimed at higher-value power semiconductors' is an inference the pack does not make.",
+      "fix": "Drop the product claim and state only what the surface supports (a new 12-inch wafer fab in Itzehoe, Germany), or requalify to what is grounded.",
+      "status": "addressed",
+      "note": "Fixed. growth.points[1] now reads '...with the new German 12-inch wafer fab adding internal capacity.' The 'higher-value power semiconductors' product claim is removed. Other references (cashflowCommentary, moatFactors[2], risks.idiosyncratic[1]) describe only a 12-inch wafer fab in Itzehoe/Germany and do not reintroduce any product characterisation."
+    },
+    {
+      "id": "F-3",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarios[0].driver",
+      "quote": "gross margin moves back toward the high-20s the company reached in 2021 and 2022",
+      "issue": "Imprecise and internally inconsistent. The income table shows FY22 gross margin of 30.3% (low-30s), which the durability section itself quotes, so 'high-20s ... in 2021 and 2022' understates the 2022 figure and clashes with the moat section.",
+      "fix": "Refer to the peak years accurately, e.g. 'toward the high-20s to low-30s reached in 2021 and 2022', or cite the 2022 peak of 30.3% as the upper reference.",
+      "status": "addressed",
+      "note": "Fixed. scenarios[0].driver now reads 'gross margin moves back toward its 2021 and 2022 highs.' The 'high-20s' characterisation is gone; the phrasing is consistent with the income table (FY21 27.4%, FY22 30.3%) and the durability section's 30.3% in 2022."
+    },
+    {
+      "id": "F-4",
+      "severity": "Minor",
+      "field": "sections.financials.cashflowCommentary",
+      "quote": "free cash turned positive in the latest quarter, after two negative quarters, as earnings improved and spending moderated",
+      "issue": "Only one immediately-preceding quarter (ended April 4, 2026, -$46.9M) was negative; the other negative value on the surface is the year-ago quarter, not the quarter before April, so 'after two negative quarters' implies a consecutive streak the surface does not establish.",
+      "fix": "State only what the quarterly series supports, e.g. 'after the prior quarter's -$46.9 million outflow', or generalise to the FY25 negative free-cash run.",
+      "status": "addressed",
+      "note": "Fixed. cashflowCommentary now reads 'free cash turned positive in the latest quarter, reversing the prior quarter's outflow, as earnings improved and spending moderated.' This matches the quarterly free-cash series (latest +$10.3M, prior -$46.9M) without implying a two-quarter consecutive streak."
+    },
+    {
+      "id": "F-5",
+      "severity": "Minor",
+      "field": "analystCommentary; sections.financials.incomeCommentary",
+      "quote": "diluted EPS was {+ $0.19 +} against {+ $0.01 +} a year ago",
+      "issue": "Span misuse in two places. House style limits {+ +} to signed changes or explicit positives; wrapping the depressed year-ago base of $0.01 in a bullish span styles a weak comparison figure as a positive.",
+      "fix": "Keep the bullish span on the improved figure ({+ $0.19 +}) and leave the prior-year $0.01 unmarked in both fields.",
+      "status": "addressed",
+      "note": "Fixed in both fields. analystCommentary now 'Diluted EPS was {+ $0.19 +} against $0.01 a year earlier'; incomeCommentary now 'diluted EPS was {+ $0.19 +} against $0.01 a year ago.' The year-ago $0.01 is unmarked in both places."
+    },
+    {
+      "id": "F-6",
+      "severity": "Minor",
+      "field": "sections.risks.idiosyncratic[3]",
+      "quote": "The July equity raise diluted shareholders. Issuing 17.25 million shares strengthened the balance sheet but increased the share count against which future earnings are measured.",
+      "issue": "Repetition across sections. balanceCommentary already introduced the raise with the same 17.25 million share figure and the same dilution point, and the risks bullet restated it in different words rather than referring back.",
+      "fix": "Refer back to the July raise in words and make a distinct point, or drop the restated 17.25 million figure already established in balanceCommentary.",
+      "status": "addressed",
+      "note": "Fixed. The July-raise/17.25M dilution bullet is removed from risks.idiosyncratic (the four bullets are now cyclicality, capacity execution, tariff/trade uncertainty, and a grounded restructuring bullet). The equity raise and its dilution are now stated once, in balanceCommentary."
+    }
+  ]
+}
