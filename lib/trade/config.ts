@@ -15,6 +15,7 @@ export interface TradeConfig extends PortfolioConfig {
   minOrderUsd: number;      // skip dust trades below this notional
   maxOrdersPerRun: number;  // run-level sanity cap on order count
   maxNotionalFrac: number;  // run-level cap on total submitted notional as a fraction of NAV
+  useQualityTilt: boolean;  // spec §5.4 — multiply scoreWeight by Signal.quality
 }
 
 export const DEFAULT_TRADE_CONFIG: TradeConfig = {
@@ -22,6 +23,7 @@ export const DEFAULT_TRADE_CONFIG: TradeConfig = {
   muEnter: 0.08, muExit: 0.03, rEnter: 0.6, rExit: 0.35,
   tradeBand: 0.025, lockBusinessDays: 6, markMode: "settled",
   minOrderUsd: 25, maxOrdersPerRun: 40, maxNotionalFrac: 1.0,
+  useQualityTilt: true,
 };
 
 export function resolveTradeConfig(overrides: Partial<TradeConfig> = {}): TradeConfig {
