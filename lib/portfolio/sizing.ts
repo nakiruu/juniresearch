@@ -112,7 +112,14 @@ export interface Sized {
   holdings: Weighted[]; cash: number; excluded: { ticker: string; reasons: string[] }[];
 }
 
-export function sizePortfolio(signals: Signal[], config: PortfolioConfig): Sized {
+export function sizePortfolio(
+  signals: Signal[],
+  config: PortfolioConfig,
+  // The scoring function that drives each name's share of the book. Defaults to the production
+  // score-based sizer; the experimental Kelly-tilt sizer injects its own here (see sizing-v2.ts),
+  // so eligibility, caps, dust and cash are shared unchanged and only the ranking differs.
+  scorer: (s: Signal) => number = (s) => scoreWeight(s, config),
+): Sized {
   const eligible: Signal[] = [];
   const excluded: { ticker: string; reasons: string[] }[] = [];
   for (const s of signals) {
@@ -123,7 +130,7 @@ export function sizePortfolio(signals: Signal[], config: PortfolioConfig): Sized
 
   const target = 1 - config.cashFloor;
   let scored: Scored[] = eligible
-    .map((s) => ({ ticker: s.ticker, sector: s.sector, score: scoreWeight(s, config) }))
+    .map((s) => ({ ticker: s.ticker, sector: s.sector, score: scorer(s) }))
     .filter((i) => i.score > 0);
 
   // Allocate, then drop any dust below wMin and re-allocate the survivors so the
