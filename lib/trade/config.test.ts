@@ -8,7 +8,7 @@ describe("resolveTradeConfig", () => {
     expect(cfg.muExit).toBe(0.03);
     expect(cfg.rEnter).toBe(0.6);
     expect(cfg.rExit).toBe(0.35);
-    expect(cfg.lockBusinessDays).toBe(6);
+    expect(cfg.lockBusinessDays).toBe(5);
     expect(cfg.markMode).toBe("settled");
     // inherits the portfolio config it extends
     expect(cfg.wMax).toBe(DEFAULT_TRADE_CONFIG.wMax);

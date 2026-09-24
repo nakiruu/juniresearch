@@ -10,7 +10,7 @@ export interface TradeConfig extends PortfolioConfig {
   rEnter: number;           // enter only if reward/risk >= this (0.60)
   rExit: number;            // exit only if reward/risk < this (0.35 — asymmetry genuinely gone)
   tradeBand: number;        // no-trade band on held names, absolute weight (0.025)
-  lockBusinessDays: number; // trading days from a fill to the first legal opposite-side trade (6 = conservative)
+  lockBusinessDays: number; // trading days from a fill to the first legal opposite-side trade (5 = ICE rule: 5 business days counting the transaction day → first legal on the 6th trading day; symmetric, whole-ticker)
   markMode: "settled" | "live";
   minOrderUsd: number;      // skip dust trades below this notional
   maxOrdersPerRun: number;  // run-level sanity cap on order count
@@ -21,7 +21,7 @@ export interface TradeConfig extends PortfolioConfig {
 export const DEFAULT_TRADE_CONFIG: TradeConfig = {
   ...DEFAULT_CONFIG,
   muEnter: 0.08, muExit: 0.03, rEnter: 0.6, rExit: 0.35,
-  tradeBand: 0.025, lockBusinessDays: 6, markMode: "settled",
+  tradeBand: 0.025, lockBusinessDays: 5, markMode: "settled",
   minOrderUsd: 25, maxOrdersPerRun: 40, maxNotionalFrac: 1.0,
   useQualityTilt: true,
 };

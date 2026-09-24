@@ -12,7 +12,11 @@ import type { GuardContext } from "../broker/guards";
 // Trading days Mon 09-21 → Fri 10-02 with Thu 09-24 a holiday.
 const DAYS = ["2026-09-21", "2026-09-22", "2026-09-23", "2026-09-25", "2026-09-28", "2026-09-29", "2026-09-30", "2026-10-01", "2026-10-02"];
 const CAL = DAYS.map((date) => ({ date, open: "09:30", close: "16:00" }));
-const cfg = resolveTradeConfig({ wMax: 1, sectorMax: 1 });
+// lockBusinessDays pinned to 6 here (not the production default of 5) so this scenario's
+// sell-lock lands exactly on the 9-day calendar's boundary — the 5-day default is covered in
+// locks.test.ts. The mechanism under test (deferred exit fires on the first legal day) is
+// independent of the specific lock length.
+const cfg = resolveTradeConfig({ wMax: 1, sectorMax: 1, lockBusinessDays: 6 });
 // Scenarios fixed; price path drives mu/R. At 100: mu +21%, R 1.05 → ENTER. At 125: mu ≈ −3%, below muExit → EXIT.
 const nvt = fixtureReport({ ticker: "NVT", label: "BUY", conviction: 70, scenarios: [[150, 0.3], [120, 0.5], [80, 0.2]] });
 const path = (d: string) => (d < "2026-09-23" ? 100 : 125); // rallies through fair value from 09-23
