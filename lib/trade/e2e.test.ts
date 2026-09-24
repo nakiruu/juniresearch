@@ -46,10 +46,13 @@ describe("e2e: a whipsaw cannot happen inside the lock window; the deferred exit
     const d3 = await run("2026-09-25");
     expect(d3.out.plan.skipped).toContainEqual(expect.objectContaining({ ticker: "NVT", code: "DEFER_EXIT", unlockOn: "2026-10-01" }));
     expect(d3.fills).toEqual([]);
+    expect(d3.out.plan.trades).toEqual([]);                          // the EXIT was skipped, not attempted
     expect(d3.out.plan.frozenWeight).toBeGreaterThan(0.9);
 
     // Day 4 (Wed 09-30, the day before unlock): still deferred.
-    expect((await run("2026-09-30")).fills).toEqual([]);
+    const d4 = await run("2026-09-30");
+    expect(d4.fills).toEqual([]);
+    expect(d4.out.plan.skipped).toContainEqual(expect.objectContaining({ ticker: "NVT", code: "DEFER_EXIT", unlockOn: "2026-10-01" }));
 
     // Day 5 (Thu 10-01, first legal day): the exit fires and fills.
     const d5 = await run("2026-10-01");

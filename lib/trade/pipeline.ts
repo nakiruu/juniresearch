@@ -33,9 +33,10 @@ export async function planRun(input: PlanRunInput): Promise<PlanRunOutput> {
   assertCalendar(calendar);
   const markDate = cfg.markMode === "settled" || !isTradingDay(calendar, today) ? prevTradingDay(calendar, today) : today;
   const tickers = reports.map((r) => r.meta.ticker);
-  const held = (await adapter.getPositions()).map((p) => p.symbol);
+  const positions = await adapter.getPositions();
+  const held = positions.map((p) => p.symbol);
   const marks = await adapter.getLastClose([...new Set([...tickers, ...held])], markDate);
-  const ledger = reconcile({ asOf: today, account: await adapter.getAccount(), positions: await adapter.getPositions(), fills });
+  const ledger = reconcile({ asOf: today, account: await adapter.getAccount(), positions, fills });
   const todayDate = new Date(today + "T00:00:00Z");
   const signals = reports.map((r) => buildSignal(r, marks[r.meta.ticker], sics[r.meta.ticker] ?? null, todayDate, cfg));
   const locks = locksFor(fills, calendar, cfg.lockBusinessDays);

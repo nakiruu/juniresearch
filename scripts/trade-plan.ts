@@ -3,7 +3,7 @@ import { resolveTradeConfig } from "../lib/trade/config";
 import { planRun } from "../lib/trade/pipeline";
 import { newRunId, writeRunRecord } from "../lib/trade/run-record";
 import { writeLedger } from "../lib/trade/ledger";
-import { flag, has, loadReportsAndMeta, makeFakeBroker, makeAlpaca, readFills, FILLS_PATH, LEDGER_PATH, RUNS_DIR, shift } from "./_trade-common";
+import { flag, has, loadReportsAndMeta, makeFakeBroker, makeAlpaca, readFills, FILLS_PATH, LEDGER_PATH, RUNS_DIR } from "./_trade-common";
 
 const args = process.argv.slice(2);
 const today = flag(args, "--date") ?? new Date().toISOString().slice(0, 10);
@@ -12,7 +12,7 @@ const cfg = resolveTradeConfig();
 const { reports, sics, marketCapUsd } = await loadReportsAndMeta();
 const tickers = reports.map((r) => r.meta.ticker);
 const fills = readFills(FILLS_PATH);
-const adapter = broker === "alpaca" ? makeAlpaca() : await makeFakeBroker(tickers, today, shift(today, -1));
+const adapter = broker === "alpaca" ? makeAlpaca() : await makeFakeBroker(tickers, today);
 const runId = newRunId(today);
 const out = await planRun({ adapter, reports, sics, marketCapUsd, fills, today, cfg, runId });
 writeLedger(LEDGER_PATH, out.ledger);

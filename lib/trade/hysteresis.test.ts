@@ -32,6 +32,11 @@ describe("classify — not held", () => {
     expect(c.classification).toBe("INELIGIBLE");
     expect(c.reasons[0]).toMatch(/banned/);
   });
+  it("is INELIGIBLE on a null R (fails the entry gate)", () => {
+    const c = classify(sig({ R: null }), false, NONE, TODAY, cfg);
+    expect(c.classification).toBe("INELIGIBLE");
+    expect(c.reasons.some((r) => r.startsWith("R —"))).toBe(true);
+  });
 });
 
 describe("classify — held", () => {
@@ -48,6 +53,11 @@ describe("classify — held", () => {
     for (const o of [{ R: 0.3 }, { label: "HOLD" as const }, { gatedLabel: "SELL" as const }, { ageDays: 121 }, { ticker: "ICE" }]) {
       expect(classify(sig(o), true, NONE, TODAY, cfg).classification).toBe("EXIT");
     }
+  });
+  it("EXITs on a null R (fails the exit gate)", () => {
+    const c = classify(sig({ R: null }), true, NONE, TODAY, cfg);
+    expect(c.classification).toBe("EXIT");
+    expect(c.reasons.some((r) => r.startsWith("R —"))).toBe(true);
   });
   it("DEFERs an exit while sell-locked and reports the unlock date", () => {
     const L: Locks = { buyLockUntil: {}, sellLockUntil: { NVT: "2026-09-29" } };

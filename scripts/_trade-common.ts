@@ -42,26 +42,39 @@ export function weekdayCalendar(from: string, to: string): BrokerCalendarDay[] {
   return out;
 }
 
-async function yahooClose(ticker: string, date: string): Promise<number> {
-  const raw = JSON.parse(await fetchDailyCloses(ticker, date, date));
+async function yahooLastClose(ticker: string, from: string, to: string): Promise<number> {
+  const raw = JSON.parse(await fetchDailyCloses(ticker, from, to));
   const closes: (number | null)[] = raw.chart.result[0].indicators.quote[0].close;
   const c = closes.filter((x): x is number => x != null).at(-1);
-  if (c == null) throw new Error(`Yahoo: no close for ${ticker} on ${date}`);
+  if (c == null) throw new Error(`Yahoo: no close for ${ticker} in ${from}..${to}`);
   return c;
 }
 
-/** The Phase-0 fake: its book comes from the local ledger; marks come from Alpaca (read-only) when keys exist, else Yahoo. */
-export async function makeFakeBroker(tickers: string[], today: string, markDate: string): Promise<FakeBroker> {
+/**
+ * The Phase-0 fake: its book comes from the local ledger; marks come from Alpaca (read-only) when
+ * keys exist, else Yahoo. planRun computes its own mark date (prevTradingDay of the loaded
+ * calendar), which need not equal calendar-yesterday, so we seed the fetched close FLAT across the
+ * whole loaded calendar window (Phase-0 uses a flat-price approximation anyway) — whatever date the
+ * pipeline requests then resolves. The fetch itself uses a small RANGE, not a single date, so it
+ * never targets a non-trading day (weekend/holiday).
+ */
+export async function makeFakeBroker(tickers: string[], today: string): Promise<FakeBroker> {
   const ledger = readLedger(LEDGER_PATH);
-  let calendar: BrokerCalendarDay[], closes: Record<string, Record<string, number>> = {};
+  const from = shift(today, -90), to = shift(today, 45);
+  let calendar: BrokerCalendarDay[];
+  const closes: Record<string, Record<string, number>> = {};
   if (process.env.APCA_API_KEY_ID && process.env.APCA_API_SECRET_KEY) {
     const ro = new AlpacaPaperBroker(requireAlpaca());
-    calendar = await ro.getCalendar(shift(today, -90), shift(today, 45));
-    const last = await ro.getLastClose(tickers, markDate);
-    for (const t of tickers) closes[t] = { [markDate]: last[t], [today]: last[t] };
+    calendar = await ro.getCalendar(from, to);
+    const dates = calendar.map((d) => d.date);
+    const md = dates.filter((d) => d <= today).at(-1) ?? today; // most recent trading day on/before today
+    const last = await ro.getLastClose(tickers, md);
+    const seed = [...new Set([...dates, today])];
+    for (const t of tickers) closes[t] = Object.fromEntries(seed.map((d) => [d, last[t]]));
   } else {
-    calendar = weekdayCalendar(shift(today, -90), shift(today, 45));
-    for (const t of tickers) { const c = await yahooClose(t, markDate); closes[t] = { [markDate]: c, [today]: c }; }
+    calendar = weekdayCalendar(from, to);
+    const seed = [...new Set([...calendar.map((d) => d.date), today])];
+    for (const t of tickers) { const c = await yahooLastClose(t, shift(today, -10), today); closes[t] = Object.fromEntries(seed.map((d) => [d, c])); }
   }
   const b = new FakeBroker({ calendar, closes, equity: ledger?.nav ?? 100_000, cash: ledger?.cash ?? 100_000, isOpen: true, today });
   for (const p of ledger?.positions ?? []) await b.submitOrder({ symbol: p.ticker, side: "buy", qty: p.qty, clientOrderId: `seed-${p.ticker}`, estNotionalUsd: p.marketValue });

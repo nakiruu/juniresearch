@@ -26,6 +26,10 @@ describe("reconcile", () => {
     const l = reconcile({ asOf: "2026-09-25", account: acct, positions: [pos("X", 0, 0)], fills: [] });
     expect(l.positions).toEqual([]);
   });
+  it("drops a negative-qty broker position just like a zero-qty one", () => {
+    const l = reconcile({ asOf: "2026-09-25", account: acct, positions: [pos("X", -5, -100)], fills: [] });
+    expect(l.positions).toEqual([]);
+  });
   it("rejects a non-positive equity", () => {
     expect(() => reconcile({ asOf: "2026-09-25", account: { equity: 0, cash: 0 }, positions: [], fills: [] })).toThrow(ReconcileError);
   });
