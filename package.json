@@ -23,7 +23,9 @@
     "portfolio:build": "node --env-file-if-exists=.env.local --import tsx scripts/portfolio-build.ts",
     "trade:plan": "node --env-file-if-exists=.env.local --import tsx scripts/trade-plan.ts",
     "trade:reconcile": "node --env-file-if-exists=.env.local --import tsx scripts/trade-reconcile.ts",
-    "trade:execute": "node --env-file-if-exists=.env.local --import tsx scripts/trade-execute.ts"
+    "trade:execute": "node --env-file-if-exists=.env.local --import tsx scripts/trade-execute.ts",
+    "trade:cron": "node --env-file-if-exists=.env.local --import tsx scripts/trade-cron.ts",
+    "trade:review": "node --env-file-if-exists=.env.local --import tsx scripts/trade-review.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",

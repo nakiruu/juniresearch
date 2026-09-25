@@ -15,6 +15,11 @@ export const TRADE_DIR = join("data", "trade");
 export const FILLS_PATH = join(TRADE_DIR, "fills.jsonl");
 export const LEDGER_PATH = join(TRADE_DIR, "ledger.json");
 export const RUNS_DIR = join(TRADE_DIR, "runs");
+// Phase-2 scheduler state (spec §2, §3) — shared between trade-cron.ts (writer) and trade-review.ts
+// (reader), so the paths live in one place rather than drifting between the two scripts.
+export const CRON_LOCK_PATH = join(TRADE_DIR, "cron.lock");
+export const CRON_LOG_PATH = join(TRADE_DIR, "cron.log");
+export const HALT_STATE_PATH = join(TRADE_DIR, "halt-state.json");
 
 export const flag = (args: string[], name: string) => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : undefined; };
 export const has = (args: string[], name: string) => args.includes(name);
