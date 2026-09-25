@@ -87,3 +87,32 @@ describe("weekly review digest", () => {
     expect(d.capBindByTicker).toEqual({ NVT: { bound: 2, total: 3 }, AAPL: { bound: 0, total: 1 } });
   });
 });
+
+describe("reconciledEveryRun window-scoping (fix round 2 — a round-1 regression)", () => {
+  const since = "2026-10-01";
+
+  it("does not flag a pre-window fill (present only to widen lock-state) as unreconciled, even though its matching order sits in an excluded pre-window run", () => {
+    // Mirrors printReview exactly: `runs` is already filtered to >= since, so the pre-cutoff run
+    // that actually placed this order is excluded — but `fills` is the WIDENED lockFills set
+    // (fillsNeededForLockState) that still includes the pre-cutoff fill, because lock-violation
+    // detection needs to see it. Round 1 fed that same widened set straight into the
+    // fills-vs-orders cross-check with no window awareness, so this fill read as an orphan even
+    // though it is fully explained by a run outside the printed window — a false "NO" on every
+    // boundary week. Passing `since` must fix it.
+    const runs: ReviewRun[] = []; // the pre-cutoff run that placed the order is excluded, as printReview would
+    const fills: ReviewFill[] = [{ ticker: "NVT", side: "buy", tradingDate: "2026-09-28" }]; // pre-window, only in the widened lock set
+    expect(buildReview(runs, fills, [], CFG, since).reconciledEveryRun).toBe(true);
+  });
+
+  it("still flags a genuine orphan fill dated within the window", () => {
+    const runs: ReviewRun[] = [{ today: since, orders: [{ ticker: "AAPL", side: "buy" }] }];
+    const fills: ReviewFill[] = [{ ticker: "MP", side: "buy", tradingDate: since }]; // no order anywhere placed it
+    expect(buildReview(runs, fills, [], CFG, since).reconciledEveryRun).toBe(false);
+  });
+
+  it("without `since`, keeps checking every provided fill (backward-compatible default — the round-2 regression only exists once a window is in play)", () => {
+    const runs: ReviewRun[] = [];
+    const fills: ReviewFill[] = [{ ticker: "NVT", side: "buy", tradingDate: "2026-09-28" }];
+    expect(buildReview(runs, fills, [], CFG).reconciledEveryRun).toBe(false);
+  });
+});

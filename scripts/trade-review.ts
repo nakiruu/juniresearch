@@ -74,16 +74,31 @@ export function fillsNeededForLockState(fills: ReviewFill[], since: string, lock
 }
 
 /**
- * buildReview(runs, fills, orders, cfg) — the digest, pure over its inputs (Task 7 brief). `orders`
- * is unioned with every run's own `.orders` (each dated by that run's day) rather than required to
- * carry the whole picture itself, so a caller can pass just the run records (as printReview does)
- * or supplement them with an independently-sourced order feed.
+ * buildReview(runs, fills, orders, cfg, since?) — the digest, pure over its inputs (Task 7 brief).
+ * `orders` is unioned with every run's own `.orders` (each dated by that run's day) rather than
+ * required to carry the whole picture itself, so a caller can pass just the run records (as
+ * printReview does) or supplement them with an independently-sourced order feed.
+ *
+ * `since` (fix round 2): `fills` is expected to be the WIDENED lock-state set (see
+ * `fillsNeededForLockState`) when the caller has one — it reaches back before the reviewed window
+ * so lock-violation detection can see a still-active lock from just before `since` (round 1's fix).
+ * But `datedOrders` is built from `runs`, which the caller keeps scoped to `>= since` (round 1 left
+ * that unchanged). Round 1 fed the same widened `fills` straight into the reconciled-vs-orders
+ * cross-check too, so a pre-window fill pulled in only for lock-state — whose real matching order
+ * sits in an excluded pre-window run — read as an unexplained orphan: a false "NO" on every
+ * boundary week. `since`, when given, scopes *only* that reconciliation check back down to
+ * `tradingDate >= since` (the same window `runs` is already in); lock-table construction and
+ * `lockViolations` keep using the full, possibly-widened `fills` as before — only the
+ * reconciliation (and any other reviewed-window aggregate) is window-scoped. Omitting `since`
+ * preserves the original behavior (check every provided fill) for callers/tests with no window
+ * concept at all.
  */
 export function buildReview(
   runs: ReviewRun[],
   fills: ReviewFill[],
   orders: DatedOrder[],
   cfg: Pick<TradeConfig, "lockBusinessDays">,
+  since?: string,
 ): ReviewDigest {
   const turnoverByRun = runs.map((r) => ({
     date: runDate(r),
@@ -106,8 +121,11 @@ export function buildReview(
   // system actually intended to submit somewhere in the window. The strict broker-vs-ledger reconcile
   // (lib/trade/ledger.ts) already runs inside planRun on every cron invocation and HALTS (no run record
   // written at all) on a real mismatch — this digest can only see what's left over: any fill.jsonl entry
-  // an order never accounts for.
-  const reconciledEveryRun = fills.every((f) => datedOrders.some((o) => o.ticker === f.ticker && o.side === f.side));
+  // an order never accounts for. Window-scoped to `>= since` (when given) so a pre-window fill pulled
+  // in only to widen the lock-state window isn't judged against the `>= since`-only `datedOrders` it
+  // was never expected to appear in (fix round 2) — no `since` means no window, so every fill counts.
+  const reconciledFills = since != null ? fills.filter((f) => f.tradingDate >= since) : fills;
+  const reconciledEveryRun = reconciledFills.every((f) => datedOrders.some((o) => o.ticker === f.ticker && o.side === f.side));
 
   // Rebuild the two lock tables from fills (mirrors lib/trade/locks.ts's rule): a BUY fill locks SELLs,
   // a SELL fill locks BUYs, for lockBusinessDays, latest fill per side wins.
@@ -151,7 +169,9 @@ export async function printReview(since: string): Promise<void> {
   // above) — NOT to the fills buildReview uses to reconstruct lock state, which need the wider
   // fillsNeededForLockState window so a still-active lock from just before `since` isn't invisible.
   const lockFills = fillsNeededForLockState(allFills, since, cfg.lockBusinessDays);
-  const d = buildReview(runs, lockFills, [], cfg);
+  // `since` scopes reconciledEveryRun back down to the window (fix round 2) — lockFills stays
+  // widened for lock-table construction/lockViolations, which is exactly what it's for.
+  const d = buildReview(runs, lockFills, [], cfg, since);
 
   console.log(`Weekly review since ${since} — ${runs.length} run(s), ${displayFills.length} fill(s), ${logLines.length} log line(s)`);
   console.log(`Cash range: ${d.cashRange ? `${(d.cashRange.min * 100).toFixed(1)}%–${(d.cashRange.max * 100).toFixed(1)}%` : "n/a"} (band [${(cfg.cashFloor * 100).toFixed(0)}%, ${(cfg.cashCeiling * 100).toFixed(0)}%])`);
