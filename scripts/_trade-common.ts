@@ -8,6 +8,7 @@ import type { BrokerAdapter, BrokerCalendarDay } from "../lib/broker/adapter";
 import { AlpacaPaperBroker } from "../lib/broker/alpaca";
 import { SchwabBroker } from "../lib/broker/schwab";
 import { SchwabTokenStore } from "../lib/broker/schwab-auth";
+import { SCHWAB_HOST } from "../lib/broker/guards";
 import { FakeBroker } from "../lib/broker/fake";
 import { readFills } from "../lib/trade/fills";
 import { readLedger } from "../lib/trade/ledger";
@@ -91,6 +92,13 @@ export async function makeFakeBroker(tickers: string[], today: string): Promise<
 }
 export const shift = (d: string, n: number) => new Date(new Date(d + "T00:00:00Z").getTime() + n * 86_400_000).toISOString().slice(0, 10);
 export function makeAlpaca(): BrokerAdapter { return new AlpacaPaperBroker(requireAlpaca()); }
+
+/** The base URL the GuardContext checks per broker kind (paper host for Alpaca, Schwab host for Schwab). */
+export function brokerBaseUrl(adapter: BrokerAdapter): string {
+  if (adapter.kind === "schwab") return `https://${SCHWAB_HOST}`;
+  if (adapter.kind === "alpaca-paper") return process.env.APCA_API_BASE_URL ?? "https://paper-api.alpaca.markets";
+  return "memory://";
+}
 
 /**
  * The live broker chosen by the BROKER env var: "alpaca-paper" (default, the test rig) or "schwab"

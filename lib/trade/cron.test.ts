@@ -7,6 +7,7 @@ import { FakeBroker } from "../broker/fake";
 import { resolveTradeConfig } from "./config";
 import { readHaltState, bumpHalt } from "./breakers";
 import { readFills } from "./fills";
+import { SchwabAuthError } from "../broker/schwab-auth";
 import { fixtureReport } from "../portfolio/__fixtures__/reports";
 import type { Fill } from "./fills";
 
@@ -202,6 +203,17 @@ describe("runCron", () => {
     expect(notified.some((m) => /broker-truth|discrepanc/i.test(m))).toBe(true);
     expect(readdirSync(paths.runs)).toHaveLength(1); // record written before the check
     expect(existsSync(paths.lock)).toBe(false);       // released
+  });
+
+  it("Schwab re-auth needed: a SchwabAuthError from the first authed call halts (auth) and alerts, no lock left", async () => {
+    const paths = mkPaths();
+    const adapter = mkBroker();
+    adapter.getClock = async () => { throw new SchwabAuthError("No Schwab tokens found — run: npm run trade:auth"); };
+    const notified: string[] = [];
+    const r = await runCron(mkDeps({ paths, adapter, notify: (m) => notified.push(m) }));
+    expect(r).toEqual({ status: "halted", reason: "auth" });
+    expect(notified.some((m) => /trade:auth/.test(m))).toBe(true);
+    expect(existsSync(paths.lock)).toBe(false); // getClock throws before the lock is acquired
   });
 
   it("guard-level kill switch: env.TRADE_DISABLED=1 blocks submission even though step-1 disabled is false", async () => {

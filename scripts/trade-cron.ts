@@ -11,10 +11,8 @@ import { dirname } from "node:path";
 import { runCron, type CronResult } from "../lib/trade/cron";
 import { resolveTradeConfig } from "../lib/trade/config";
 import { newRunId } from "../lib/trade/run-record";
-import { PAPER_HOST } from "../lib/broker/guards";
 import type { BrokerAdapter } from "../lib/broker/adapter";
-import { requireAlpaca } from "./_env";
-import { loadReportsAndMeta, makeAlpaca, readFills, CRON_LOCK_PATH, CRON_LOG_PATH, FILLS_PATH, HALT_STATE_PATH, RUNS_DIR } from "./_trade-common";
+import { loadReportsAndMeta, makeBroker, brokerBaseUrl, readFills, CRON_LOCK_PATH, CRON_LOG_PATH, FILLS_PATH, HALT_STATE_PATH, RUNS_DIR } from "./_trade-common";
 
 /**
  * Step 3b — always append to cron.log; a halt/breaker trip also goes to stderr, which Windows Task
@@ -49,13 +47,11 @@ async function main(): Promise<CronResult> {
   let adapter: BrokerAdapter;
   let configuredBaseUrl = "";
   if (disabled) {
-    // Reach the kill switch without requiring live Alpaca keys (safe-smoke requirement).
+    // Reach the kill switch without requiring live broker keys (safe-smoke requirement).
     adapter = unreachableAdapter();
   } else {
-    const { baseUrl } = requireAlpaca();
-    if (!baseUrl.includes(PAPER_HOST)) { console.error(`APCA_API_BASE_URL is not the paper endpoint: ${baseUrl}`); process.exit(2); }
-    configuredBaseUrl = baseUrl;
-    adapter = makeAlpaca();
+    adapter = makeBroker(); // BROKER=alpaca-paper (default) | schwab (LIVE)
+    configuredBaseUrl = brokerBaseUrl(adapter);
   }
 
   const cfg = resolveTradeConfig();

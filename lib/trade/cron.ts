@@ -14,6 +14,7 @@ import type { TradingDay } from "./calendar";
 import type { Fill } from "./fills";
 import { planRun, executeOrders, mergeExecution, type PlanRunOutput } from "./pipeline";
 import { ReconcileError } from "./ledger";
+import { SchwabAuthError } from "../broker/schwab-auth";
 import { turnoverBreaker, readHaltState, bumpHalt, clearHalt, haltBlocked, acquireLock, releaseLock, DEFAULT_LOCK_STALE_MS } from "./breakers";
 import { crossCheckBroker } from "./audit";
 import { writeRunRecord } from "./run-record";
@@ -80,8 +81,21 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
     return { status: "disabled" };
   }
 
-  // 2. Clock check.
-  if (!(await adapter.getClock()).isOpen) {
+  // 2. Clock check. For a live broker (Schwab) this is also the first authenticated request, so a
+  // dead ~7-day refresh token surfaces here as a SchwabAuthError — halt with a re-auth alert rather
+  // than crash, so cron.log/notify tell the operator to run `trade:auth`.
+  let clockOpen: boolean;
+  try {
+    clockOpen = (await adapter.getClock()).isOpen;
+  } catch (e) {
+    if (e instanceof SchwabAuthError) {
+      notify(`cron halted: ${e.message}`);
+      appendLog(paths.log, logLine(today, runId, "halted", { reason: "auth" }));
+      return { status: "halted", reason: "auth" };
+    }
+    throw e;
+  }
+  if (!clockOpen) {
     appendLog(paths.log, logLine(today, runId, "closed"));
     return { status: "closed" };
   }
@@ -128,6 +142,11 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
         notify(`cron halted: reconcile failed — ${e.message}`);
         appendLog(paths.log, logLine(today, runId, "halted", { reason: "reconcile" }));
         return { status: "halted", reason: "reconcile" };
+      }
+      if (e instanceof SchwabAuthError) { // access token died between the clock check and planRun (rare)
+        notify(`cron halted: ${e.message}`);
+        appendLog(paths.log, logLine(today, runId, "halted", { reason: "auth" }));
+        return { status: "halted", reason: "auth" };
       }
       throw e;
     }
