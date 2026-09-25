@@ -4,7 +4,7 @@
  * clock-check, an exclusive run-lock, the consecutive-halt / reconcile / turnover breakers, the
  * run-record, a one-line run log, and halt-only notify. No plan/size/execute logic lives here.
  */
-import { appendFileSync, mkdirSync } from "node:fs";
+import { appendFileSync, existsSync, mkdirSync } from "node:fs";
 import { dirname } from "node:path";
 import type { Report } from "../report.schema";
 import type { BrokerAdapter } from "../broker/adapter";
@@ -14,7 +14,7 @@ import type { TradingDay } from "./calendar";
 import type { Fill } from "./fills";
 import { planRun, executeOrders, type PlanRunOutput } from "./pipeline";
 import { ReconcileError } from "./ledger";
-import { turnoverBreaker, readHaltState, bumpHalt, clearHalt, haltBlocked, acquireLock, releaseLock } from "./breakers";
+import { turnoverBreaker, readHaltState, bumpHalt, clearHalt, haltBlocked, acquireLock, releaseLock, DEFAULT_LOCK_STALE_MS } from "./breakers";
 import { writeRunRecord } from "./run-record";
 
 export type CronStatus = "disabled" | "closed" | "locked" | "halted" | "noop" | "executed";
@@ -86,8 +86,17 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
   }
 
   // 3. Exclusive run-lock — a held lock returns immediately, before touching halt state or inputs.
-  if (!acquireLock(paths.lock)) {
+  // (spec §3 step 3: "if already held -> log and exit 0.") A lock file already present when we
+  // reach acquireLock, combined with acquireLock succeeding, means the lock we just took was
+  // reclaimed from a stale one (a hard-killed/hung prior run whose `finally` never released it) —
+  // not merely lock-file-didn't-exist-yet; note that in the log so it's visible in cron.log.
+  const lockAlreadyPresent = existsSync(paths.lock);
+  if (!acquireLock(paths.lock, DEFAULT_LOCK_STALE_MS)) {
+    appendLog(paths.log, logLine(today, runId, "locked"));
     return { status: "locked" };
+  }
+  if (lockAlreadyPresent) {
+    appendLog(paths.log, `${today} ${runId} lock-reclaimed-stale`);
   }
 
   try {

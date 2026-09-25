@@ -60,18 +60,48 @@ export function haltBlocked(state: HaltState, cfg: TradeConfig): boolean {
 }
 
 /**
+ * Default staleness threshold for acquireLock: comfortably beyond the scheduler's 30-min
+ * ExecutionTimeLimit, so a genuinely still-running cron never has its lock reclaimed out from
+ * under it, while a hard-killed/hung run (whose `finally` never ran, so the lock file was never
+ * released) doesn't silently halt every future run forever.
+ */
+export const DEFAULT_LOCK_STALE_MS = 60 * 60_000; // 60 min
+
+/**
  * Exclusive run-lock: the presence of the lock file IS the lock. Uses the "wx" flag (create,
  * fail if it exists) so the check-and-create is one atomic syscall rather than an
  * existsSync + writeFileSync race between two cron invocations starting at once.
+ *
+ * Stale-lock recovery: on EEXIST, read the existing lock's own `${pid} ${ISO timestamp}` body. If
+ * its timestamp is older than `staleMs`, the lock is treated as abandoned (the process that held
+ * it was killed or hung past the scheduler's time limit, so its `finally`-release never ran) —
+ * remove it and re-acquire. A timestamp that is still fresh, or that can't be parsed at all
+ * (unexpected/garbage content), is treated conservatively as still held: return false. No
+ * PID-liveness check — cross-platform fiddly, and the timestamp threshold is enough.
  */
-export function acquireLock(path: string): boolean {
+export function acquireLock(path: string, staleMs: number = DEFAULT_LOCK_STALE_MS): boolean {
   mkdirSync(dirname(path), { recursive: true });
   try {
     writeFileSync(path, `${process.pid} ${new Date().toISOString()}`, { flag: "wx" });
     return true;
   } catch (err) {
-    if ((err as NodeJS.ErrnoException).code === "EEXIST") return false;
-    throw err;
+    if ((err as NodeJS.ErrnoException).code !== "EEXIST") throw err;
+    let existing: string;
+    try {
+      existing = readFileSync(path, "utf8");
+    } catch {
+      return false; // lock vanished between our EEXIST and this read — report held, don't guess
+    }
+    const lockMs = Date.parse(existing.split(" ")[1] ?? "");
+    if (!Number.isFinite(lockMs) || Date.now() - lockMs <= staleMs) return false;
+    try {
+      rmSync(path);
+      writeFileSync(path, `${process.pid} ${new Date().toISOString()}`, { flag: "wx" });
+      return true;
+    } catch (err2) {
+      if ((err2 as NodeJS.ErrnoException).code === "EEXIST") return false; // lost the race to reclaim
+      throw err2;
+    }
   }
 }
 

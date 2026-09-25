@@ -92,14 +92,26 @@ describe("runCron", () => {
     expect(readFileSync(paths.log, "utf8")).toMatch(/halted.*turnover|turnover.*halted/i);
   });
 
-  it("run-lock: a pre-existing lock file returns \"locked\" immediately, without loading inputs", async () => {
+  it("run-lock: a pre-existing (fresh) lock file returns \"locked\" immediately, without loading inputs, and logs it", async () => {
     const paths = mkPaths();
-    writeFileSync(paths.lock, "12345 2026-09-25T00:00:00.000Z");
+    const freshLock = `12345 ${new Date().toISOString()}`; // just written — not stale, must not be reclaimed
+    writeFileSync(paths.lock, freshLock);
     let loadInputsCalled = false;
     const r = await runCron(mkDeps({ paths, loadInputs: async () => { loadInputsCalled = true; return { reports: [], sics: {}, marketCapUsd: {}, fills: [] }; } }));
     expect(r).toEqual({ status: "locked" });
     expect(loadInputsCalled).toBe(false);
-    expect(readFileSync(paths.lock, "utf8")).toBe("12345 2026-09-25T00:00:00.000Z"); // untouched — not ours to release
+    expect(readFileSync(paths.lock, "utf8")).toBe(freshLock); // untouched — not ours to release
+    expect(readFileSync(paths.log, "utf8")).toMatch(/locked/);
+  });
+
+  it("run-lock: a stale lock (older than the reclaim threshold) is reclaimed and the run proceeds, logging the reclaim", async () => {
+    const paths = mkPaths();
+    const staleLock = `99999 ${new Date(Date.now() - 2 * 60 * 60_000).toISOString()}`; // 2h old
+    writeFileSync(paths.lock, staleLock);
+    const r = await runCron(mkDeps({ paths }));
+    expect(r).toEqual({ status: "noop" }); // the run proceeded past the lock step to a normal empty plan
+    expect(existsSync(paths.lock)).toBe(false); // reclaimed, then released via finally at run end
+    expect(readFileSync(paths.log, "utf8")).toMatch(/lock-reclaimed-stale/);
   });
 
   it("consecutive-halt: at the configured limit, blocks before planning, notifies", async () => {
