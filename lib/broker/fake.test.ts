@@ -32,3 +32,23 @@ describe("FakeBroker", () => {
     await expect(mk().submitOrder({ symbol: "NVT", side: "sell", qty: 1, clientOrderId: "c", estNotionalUsd: 110 })).rejects.toThrow(/insufficient/);
   });
 });
+
+describe("fake market data", () => {
+  it("returns injected trade/quote with timestamps, null when unset", async () => {
+    const b = new FakeBroker({ calendar: CAL, closes: {}, equity: 10_000, cash: 10_000, isOpen: true, today: "2026-09-25" });
+    b.setTrade("NEE", 80.14, 1234);
+    b.setQuote("NEE", 80.13, 80.15, 1234);
+    expect(await b.getLatestTrade("NEE")).toEqual({ price: 80.14, tsMs: 1234 });
+    expect(await b.getLatestQuote("NEE")).toEqual({ bid: 80.13, ask: 80.15, tsMs: 1234 });
+    expect(await b.getLatestTrade("ZZZ")).toBeNull();
+    expect(await b.getLatestQuote("ZZZ")).toBeNull();
+  });
+  it("setClock flips isOpen for the freshness gate's market-hours tests", async () => {
+    const b = new FakeBroker({ calendar: CAL, closes: {}, equity: 10_000, cash: 10_000, isOpen: true, today: "2026-09-25" });
+    expect((await b.getClock()).isOpen).toBe(true);
+    b.setClock(false);
+    expect((await b.getClock()).isOpen).toBe(false);
+    b.setClock(true);
+    expect((await b.getClock()).isOpen).toBe(true);
+  });
+});

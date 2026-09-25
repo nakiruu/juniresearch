@@ -19,6 +19,8 @@ export interface BrokerAdapter {
   getPositions(): Promise<BrokerPosition[]>;
   getOrders(status: "open" | "closed" | "all", after?: string): Promise<BrokerOrder[]>;
   getLastClose(symbols: string[], tradingDate: string): Promise<Record<string, number>>;
+  getLatestTrade(symbol: string): Promise<{ price: number; tsMs: number } | null>;
+  getLatestQuote(symbol: string): Promise<{ bid: number; ask: number; tsMs: number } | null>;
   isFractionable(symbols: string[]): Promise<Record<string, boolean>>;
   submitOrder(req: SubmitOrderRequest): Promise<BrokerOrder>;
   cancelOrder(id: string): Promise<void>;

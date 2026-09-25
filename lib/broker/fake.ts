@@ -7,18 +7,26 @@ export class FakeBroker implements BrokerAdapter {
   private readonly pos = new Map<string, { qty: number; cost: number }>();
   private readonly orders: BrokerOrder[] = [];
   private today: string;
+  private isOpen: boolean;
+  private readonly trades = new Map<string, { price: number; tsMs: number }>();
+  private readonly quotes = new Map<string, { bid: number; ask: number; tsMs: number }>();
   constructor(private readonly opts: {
     calendar: BrokerCalendarDay[]; closes: Record<string, Record<string, number>>; equity: number; cash: number;
     isOpen: boolean; today: string; fractionable?: Record<string, boolean>;
-  }) { this.cash = opts.cash; this.today = opts.today; }
+  }) { this.cash = opts.cash; this.today = opts.today; this.isOpen = opts.isOpen; }
 
   setToday(d: string): void { this.today = d; }
+  setClock(isOpen: boolean): void { this.isOpen = isOpen; }
+  setTrade(symbol: string, price: number, tsMs: number): void { this.trades.set(symbol, { price, tsMs }); }
+  setQuote(symbol: string, bid: number, ask: number, tsMs: number): void { this.quotes.set(symbol, { bid, ask, tsMs }); }
+  async getLatestTrade(symbol: string): Promise<{ price: number; tsMs: number } | null> { return this.trades.get(symbol) ?? null; }
+  async getLatestQuote(symbol: string): Promise<{ bid: number; ask: number; tsMs: number } | null> { return this.quotes.get(symbol) ?? null; }
   private price(symbol: string, date = this.today): number {
     const p = this.opts.closes[symbol]?.[date];
     if (!(p > 0)) throw new Error(`FakeBroker: no close for ${symbol} on ${date}`);
     return p;
   }
-  async getClock(): Promise<BrokerClock> { return { timestamp: `${this.today}T15:00:00Z`, isOpen: this.opts.isOpen, nextOpen: "", nextClose: "" }; }
+  async getClock(): Promise<BrokerClock> { return { timestamp: `${this.today}T15:00:00Z`, isOpen: this.isOpen, nextOpen: "", nextClose: "" }; }
   async getCalendar(from: string, to: string): Promise<BrokerCalendarDay[]> { return this.opts.calendar.filter((d) => d.date >= from && d.date <= to); }
   async getPositions(): Promise<BrokerPosition[]> {
     return [...this.pos.entries()].filter(([, p]) => p.qty > 0).map(([symbol, p]) => ({ symbol, qty: p.qty, marketValue: p.qty * this.price(symbol), avgEntryPrice: p.cost / p.qty }));

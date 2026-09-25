@@ -21,6 +21,8 @@ const Order = z.object({
 });
 const Bars = z.object({ bars: z.record(z.string(), z.array(z.object({ t: z.string(), c: num }))).default({}) });
 const Asset = z.object({ symbol: z.string(), fractionable: z.boolean() });
+const LatestTrade = z.object({ trade: z.object({ p: numOrNull.optional(), t: z.string().optional() }).optional() });
+const LatestQuote = z.object({ quote: z.object({ bp: numOrNull.optional(), ap: numOrNull.optional(), t: z.string().optional() }).optional() });
 
 export class AlpacaPaperBroker implements BrokerAdapter {
   readonly kind = "alpaca-paper" as const;
@@ -68,6 +70,21 @@ export class AlpacaPaperBroker implements BrokerAdapter {
     const out: Record<string, number> = {};
     for (const s of symbols) { const b = bars[s]; if (!b?.length) throw new Error(`Alpaca: no bar for ${s} on ${tradingDate}`); out[s] = b[b.length - 1].c; }
     return out;
+  }
+  async getLatestTrade(symbol: string): Promise<{ price: number; tsMs: number } | null> {
+    const body = await this.call(LatestTrade, `${this.data}/v2/stocks/${encodeURIComponent(symbol)}/trades/latest?feed=${this.feed}`);
+    const price = body.trade?.p ?? null;
+    const tsMs = body.trade?.t ? Date.parse(body.trade.t) : NaN;
+    if (price == null || !(price > 0) || !Number.isFinite(tsMs)) return null;
+    return { price, tsMs };
+  }
+  async getLatestQuote(symbol: string): Promise<{ bid: number; ask: number; tsMs: number } | null> {
+    const body = await this.call(LatestQuote, `${this.data}/v2/stocks/${encodeURIComponent(symbol)}/quotes/latest?feed=${this.feed}`);
+    const bid = body.quote?.bp ?? null;
+    const ask = body.quote?.ap ?? null;
+    const tsMs = body.quote?.t ? Date.parse(body.quote.t) : NaN;
+    if (bid == null || !(bid > 0) || ask == null || !(ask > 0) || !Number.isFinite(tsMs)) return null;
+    return { bid, ask, tsMs };
   }
   async isFractionable(symbols: string[]): Promise<Record<string, boolean>> {
     const out: Record<string, boolean> = {};
