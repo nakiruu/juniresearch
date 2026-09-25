@@ -1,0 +1,33 @@
+/**
+ * trade:audit -- [--run <runId>] [--date <YYYY-MM-DD>]
+ * Broker-truth cross-check for a run (read-only, spec 2026-09-25-trade-broker-truth-audit).
+ * Fetches the day's Alpaca orders and compares them against fills.jsonl and the run record's
+ * expected orders. Exits 1 on any CRITICAL discrepancy, 0 otherwise (warnings print but pass).
+ * Writes nothing.
+ */
+import { crossCheckBroker } from "../lib/trade/audit";
+import { makeAlpaca, readFills, readRunRecord, latestRunRecord, FILLS_PATH, flag } from "./_trade-common";
+
+const args = process.argv.slice(2);
+if (!process.env.APCA_API_KEY_ID || !process.env.APCA_API_SECRET_KEY) {
+  console.error("trade:audit needs Alpaca PAPER keys (APCA_API_KEY_ID / APCA_API_SECRET_KEY) in .env.local.");
+  process.exit(2);
+}
+
+const runId = flag(args, "--run");
+const rec = runId ? readRunRecord(runId) : latestRunRecord();
+if (!rec) { console.error("No run record found under data/trade/runs — nothing to audit."); process.exit(2); }
+
+const orders = rec.orders as { clientOrderId: string; ticker: string; side: "buy" | "sell" }[];
+const expected = orders.map((o) => ({ clientOrderId: o.clientOrderId, ticker: o.ticker, side: o.side }));
+const fills = readFills(FILLS_PATH).filter((f) => f.runId === rec.runId);
+const brokerOrders = await makeAlpaca().getOrders("all", `${rec.today}T00:00:00Z`);
+
+const r = crossCheckBroker({ expected, brokerOrders, fills });
+console.log(`Audit ${rec.runId} (${rec.today}): expected ${r.checked.expected}, broker-matched ${r.checked.brokerMatched}, fills ${r.checked.fills}`);
+for (const d of r.discrepancies) {
+  console.log(`  [${d.severity.toUpperCase()}] ${d.code} ${d.ticker}${d.orderId ? ` (${d.orderId})` : ""} — ${d.detail}`);
+}
+if (r.ok) console.log(r.warn ? `OK with ${r.warn} warning(s).` : "OK — broker matches the local record exactly.");
+else console.error(`FAIL — ${r.critical} critical discrepancy(ies).`);
+process.exit(r.ok ? 0 : 1);

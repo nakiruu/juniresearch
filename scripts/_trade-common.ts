@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { listReportTickers, loadReport } from "../lib/reports";
 import { FactPack } from "../lib/facts/schema";
@@ -9,6 +9,7 @@ import { AlpacaPaperBroker } from "../lib/broker/alpaca";
 import { FakeBroker } from "../lib/broker/fake";
 import { readFills } from "../lib/trade/fills";
 import { readLedger } from "../lib/trade/ledger";
+import { RunRecord } from "../lib/trade/run-record";
 import { requireAlpaca } from "./_env";
 
 export const TRADE_DIR = join("data", "trade");
@@ -87,4 +88,17 @@ export async function makeFakeBroker(tickers: string[], today: string): Promise<
 }
 export const shift = (d: string, n: number) => new Date(new Date(d + "T00:00:00Z").getTime() + n * 86_400_000).toISOString().slice(0, 10);
 export function makeAlpaca(): BrokerAdapter { return new AlpacaPaperBroker(requireAlpaca()); }
+
+/** Read one run record by id from RUNS_DIR. */
+export function readRunRecord(runId: string): RunRecord {
+  return RunRecord.parse(JSON.parse(readFileSync(join(RUNS_DIR, `${runId}.json`), "utf8")));
+}
+/** The most recently written run record (by mtime), or null if none exist. */
+export function latestRunRecord(): RunRecord | null {
+  if (!existsSync(RUNS_DIR)) return null;
+  const files = readdirSync(RUNS_DIR).filter((f) => f.endsWith(".json"));
+  if (files.length === 0) return null;
+  const latest = files.map((f) => ({ f, m: statSync(join(RUNS_DIR, f)).mtimeMs })).sort((a, b) => b.m - a.m)[0].f;
+  return RunRecord.parse(JSON.parse(readFileSync(join(RUNS_DIR, latest), "utf8")));
+}
 export { readFills };

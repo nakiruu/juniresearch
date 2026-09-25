@@ -25,7 +25,8 @@
     "trade:reconcile": "node --env-file-if-exists=.env.local --import tsx scripts/trade-reconcile.ts",
     "trade:execute": "node --env-file-if-exists=.env.local --import tsx scripts/trade-execute.ts",
     "trade:cron": "node --env-file-if-exists=.env.local --import tsx scripts/trade-cron.ts",
-    "trade:review": "node --env-file-if-exists=.env.local --import tsx scripts/trade-review.ts"
+    "trade:review": "node --env-file-if-exists=.env.local --import tsx scripts/trade-review.ts",
+    "trade:audit": "node --env-file-if-exists=.env.local --import tsx scripts/trade-audit.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",
