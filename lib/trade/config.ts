@@ -48,10 +48,11 @@ export const DEFAULT_TRADE_CONFIG: TradeConfig = {
 };
 
 /**
- * The one shared liquidity-bucket lookup for Phase 2 (spec §7): market-cap large >= $10B,
- * mid >= $2B, else small; null/non-finite -> mid. Shared by τ, τ_max, gapHalt, and maxStale.
+ * The one shared liquidity-bucket lookup (v1 spec §7.8 cost bucket; Phase 2 spec §7 reuses it for
+ * τ, τ_max, gapHalt, and maxStale): market-cap large >= $10B, mid >= $2B, else small;
+ * null/non-finite -> mid. Canonical definition — costs.ts re-exports this, never redefine it.
  */
-export function bucketFor(marketCapUsd: number | null, _cfg: TradeConfig): LiquidityBucket {
+export function bucketFor(marketCapUsd: number | null): LiquidityBucket {
   if (marketCapUsd == null || !Number.isFinite(marketCapUsd)) return "mid";
   if (marketCapUsd >= 10e9) return "large";
   if (marketCapUsd >= 2e9) return "mid";

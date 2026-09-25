@@ -51,11 +51,10 @@ describe("phase-2 config", () => {
     expect(c.consecutiveHaltLimit).toBe(3);
   });
   it("buckets by market cap with null → mid", () => {
-    const c = DEFAULT_TRADE_CONFIG;
-    expect(bucketFor(50e9, c)).toBe("large");
-    expect(bucketFor(5e9, c)).toBe("mid");
-    expect(bucketFor(1e9, c)).toBe("small");
-    expect(bucketFor(null, c)).toBe("mid");
+    expect(bucketFor(50e9)).toBe("large");
+    expect(bucketFor(5e9)).toBe("mid");
+    expect(bucketFor(1e9)).toBe("small");
+    expect(bucketFor(null)).toBe("mid");
   });
   it("rejects an inverted per-bucket cap", () => {
     expect(() => resolveTradeConfig({ limitTolMax: { large: 0.0005, mid: 0.01, small: 0.015 } })).toThrow();
