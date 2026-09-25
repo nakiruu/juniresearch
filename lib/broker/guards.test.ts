@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { assertOrderAllowed, guardedSubmit, GuardError, PAPER_HOST, type GuardContext } from "./guards";
+import { assertOrderAllowed, guardedSubmit, GuardError, PAPER_HOST, SCHWAB_HOST, type GuardContext } from "./guards";
 import { FakeBroker } from "./fake";
 import { DEFAULT_TRADE_CONFIG as cfg } from "../trade/config";
 
@@ -18,6 +18,10 @@ describe("assertOrderAllowed", () => {
   it("refuses a non-paper endpoint for the Alpaca kind, but not for the fake", () => {
     expect(() => assertOrderAllowed(buy, ctx({ configuredBaseUrl: "https://api.alpaca.markets" }))).toThrow(/not the paper endpoint/);
     expect(() => assertOrderAllowed(buy, ctx({ brokerKind: "fake", configuredBaseUrl: "memory://" }))).not.toThrow();
+  });
+  it("schwab kind requires the Schwab host (live), and passes when it is the Schwab host", () => {
+    expect(() => assertOrderAllowed(buy, ctx({ brokerKind: "schwab", configuredBaseUrl: "https://api.alpaca.markets" }))).toThrow(/not the Schwab endpoint/);
+    expect(() => assertOrderAllowed(buy, ctx({ brokerKind: "schwab", configuredBaseUrl: `https://${SCHWAB_HOST}/trader/v1` }))).not.toThrow();
   });
   it("refuses a buy of a banned symbol but allows the disposing sell", () => {
     expect(() => assertOrderAllowed({ ...buy, symbol: "ICE" }, ctx())).toThrow(/banned/);

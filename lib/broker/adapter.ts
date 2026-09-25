@@ -16,7 +16,7 @@ export interface SubmitOrderRequest {
   limitPrice?: number; timeInForce?: "ioc" | "day";
 }
 export interface BrokerAdapter {
-  readonly kind: "alpaca-paper" | "fake";
+  readonly kind: "alpaca-paper" | "schwab" | "fake";
   getClock(): Promise<BrokerClock>;
   getCalendar(from: string, to: string): Promise<BrokerCalendarDay[]>;
   getAccount(): Promise<BrokerAccount>;

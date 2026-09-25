@@ -21,6 +21,7 @@ export const RUNS_DIR = join(TRADE_DIR, "runs");
 export const CRON_LOCK_PATH = join(TRADE_DIR, "cron.lock");
 export const CRON_LOG_PATH = join(TRADE_DIR, "cron.log");
 export const HALT_STATE_PATH = join(TRADE_DIR, "halt-state.json");
+export const SCHWAB_TOKEN_PATH = join(TRADE_DIR, "schwab-token.json");
 
 export const flag = (args: string[], name: string) => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : undefined; };
 export const has = (args: string[], name: string) => args.includes(name);
@@ -88,6 +89,18 @@ export async function makeFakeBroker(tickers: string[], today: string): Promise<
 }
 export const shift = (d: string, n: number) => new Date(new Date(d + "T00:00:00Z").getTime() + n * 86_400_000).toISOString().slice(0, 10);
 export function makeAlpaca(): BrokerAdapter { return new AlpacaPaperBroker(requireAlpaca()); }
+
+/**
+ * The live broker chosen by the BROKER env var: "alpaca-paper" (default, the test rig) or "schwab"
+ * (LIVE real-money trading). Default is paper, so nothing goes live unless BROKER=schwab is set
+ * explicitly. The schwab branch is wired in Task 5 (SchwabBroker).
+ */
+export function makeBroker(): BrokerAdapter {
+  const broker = process.env.BROKER ?? "alpaca-paper";
+  if (broker === "alpaca-paper") return makeAlpaca();
+  if (broker === "schwab") throw new Error("BROKER=schwab: SchwabBroker not wired yet (pending build task)");
+  throw new Error(`BROKER=${broker} is not a known broker (expected "alpaca-paper" or "schwab")`);
+}
 
 /** Read one run record by id from RUNS_DIR. */
 export function readRunRecord(runId: string): RunRecord {
