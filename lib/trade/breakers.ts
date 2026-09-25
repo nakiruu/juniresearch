@@ -22,8 +22,25 @@ export function turnoverBreaker(orders: { qty: number; limitPrice: number }[], n
 
 export interface HaltState { consecutive: number }
 
+/**
+ * Absent state file → {consecutive:0} (first run ever). Any other failure — corrupt JSON, wrong
+ * shape, a permission error — throws rather than silently reporting "all clear": this counter is
+ * what stops automated trading after repeated trouble, so a broken read must fail loud, not fail
+ * open. Mirrors lib/reports.ts's ENOENT-only catch (lines 41-44).
+ */
 export function readHaltState(path: string): HaltState {
-  try { return JSON.parse(readFileSync(path, "utf8")) as HaltState; } catch { return { consecutive: 0 }; }
+  let raw: string;
+  try {
+    raw = readFileSync(path, "utf8");
+  } catch (err) {
+    if ((err as NodeJS.ErrnoException).code === "ENOENT") return { consecutive: 0 };
+    throw err;
+  }
+  const parsed = JSON.parse(raw);
+  if (typeof parsed?.consecutive !== "number" || !Number.isFinite(parsed.consecutive) || parsed.consecutive < 0) {
+    throw new Error(`halt state file ${path} is corrupt: expected {consecutive: number >= 0}, got ${raw}`);
+  }
+  return { consecutive: parsed.consecutive };
 }
 
 export function bumpHalt(path: string): HaltState {
