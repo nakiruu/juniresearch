@@ -1,7 +1,32 @@
 import { describe, it, expect } from "vitest";
-import { buildReview, type ReviewRun, type ReviewFill, type DatedOrder } from "./trade-review";
+import { buildReview, fillsNeededForLockState, type ReviewRun, type ReviewFill, type DatedOrder } from "./trade-review";
 
 const CFG = { lockBusinessDays: 5 };
+
+describe("fillsNeededForLockState (fix round 1 — the printReview window-boundary bug)", () => {
+  it("retains a fill one business day before `since` whose lock window reaches into the review window", () => {
+    // 2026-09-30 (Wed) is one business day before since=2026-10-01 (Thu); +5 biz days -> 2026-10-07, > since.
+    const fills: ReviewFill[] = [{ ticker: "NVT", side: "buy", tradingDate: "2026-09-30" }];
+    expect(fillsNeededForLockState(fills, "2026-10-01", 5)).toEqual(fills);
+  });
+
+  it("drops a fill well before `since` whose lock window has already lapsed", () => {
+    // 2026-09-01 (Tue) + 5 biz days -> 2026-09-08, well short of since=2026-10-01.
+    const fills: ReviewFill[] = [{ ticker: "NVT", side: "buy", tradingDate: "2026-09-01" }];
+    expect(fillsNeededForLockState(fills, "2026-10-01", 5)).toEqual([]);
+  });
+
+  it("drops a fill exactly at the cutoff (its lock expires exactly at `since`, so it can't lock any day in the window)", () => {
+    // addBizDays("2026-09-24", 5) === "2026-10-01" exactly (Thu -> Thu) — until === since is not "> since".
+    const fills: ReviewFill[] = [{ ticker: "NVT", side: "buy", tradingDate: "2026-09-24" }];
+    expect(fillsNeededForLockState(fills, "2026-10-01", 5)).toEqual([]);
+  });
+
+  it("keeps a fill dated on or after `since` unconditionally (still within the reviewed window)", () => {
+    const fills: ReviewFill[] = [{ ticker: "NVT", side: "buy", tradingDate: "2026-10-01" }];
+    expect(fillsNeededForLockState(fills, "2026-10-01", 5)).toEqual(fills);
+  });
+});
 
 describe("weekly review digest", () => {
   it("flags a run whose orders sat in a lock window", () => {

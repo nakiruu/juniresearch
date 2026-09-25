@@ -78,11 +78,12 @@ async function main(): Promise<CronResult> {
 try {
   const result = await main();
   console.log(`trade:cron → ${result.status}${result.reason ? ` (${result.reason})` : ""}${result.orders != null ? ` · ${result.orders} order(s), ${result.fills} fill(s)` : ""}`);
-  // Every CronStatus (disabled/closed/locked/halted/noop/executed) is an expected outcome, not a
-  // failure the scheduler needs to see in its exit code — halts/breaker trips are surfaced via
-  // notify() (cron.log + stderr) instead. Exit 0 covers all of them; only an unexpected throw below
-  // (already caught by this try/catch) exits non-zero.
-  process.exit(0);
+  // Fix round 1 (ruling): "halted" (a breaker trip / reconcile failure / consecutive-halt block)
+  // exits non-zero so Windows Task Scheduler's Last-Run-Result surfaces it independently of
+  // notify()/cron.log. Every other resolved status is benign/expected: "locked" is an overlapping
+  // run declining to double-submit (self-protection, not a failure); disabled/closed/noop/executed
+  // are ordinary outcomes. An unexpected throw (caught below) is the only other non-zero case.
+  process.exit(result.status === "halted" ? 1 : 0);
 } catch (err) {
   console.error(`trade:cron: unexpected error — ${err instanceof Error ? (err.stack ?? err.message) : String(err)}`);
   process.exit(1);

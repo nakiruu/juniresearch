@@ -60,6 +60,20 @@ function addBizDays(date: string, n: number): string {
 }
 
 /**
+ * Which fills matter for reconstructing lock state as of `since` — not just fills dated `>= since`,
+ * but back far enough that a fill's own lock window (tradingDate .. tradingDate + lockBusinessDays)
+ * can still reach *into* the reviewed window. Fix-round-1: printReview previously filtered fills to
+ * `>= since` before calling buildReview, which silently dropped a fill dated just before `since`
+ * whose lock was still active — at the review's weekly cadence (~= the default lockBusinessDays),
+ * that is the boundary every routine run sits on, hiding exactly the violation the tool exists to
+ * catch. Extracted as its own pure function (not inlined in printReview) so the boundary is
+ * unit-testable without touching the filesystem.
+ */
+export function fillsNeededForLockState(fills: ReviewFill[], since: string, lockBusinessDays: number): ReviewFill[] {
+  return fills.filter((f) => addBizDays(f.tradingDate, lockBusinessDays) > since);
+}
+
+/**
  * buildReview(runs, fills, orders, cfg) — the digest, pure over its inputs (Task 7 brief). `orders`
  * is unioned with every run's own `.orders` (each dated by that run's day) rather than required to
  * carry the whole picture itself, so a caller can pass just the run records (as printReview does)
@@ -127,14 +141,19 @@ export async function printReview(since: string): Promise<void> {
         .map((f) => JSON.parse(readFileSync(join(RUNS_DIR, f), "utf8")) as ReviewRun)
         .filter((r) => runDate(r) >= since)
     : [];
-  const fills = readFills(FILLS_PATH).filter((f) => f.tradingDate >= since);
+  const allFills = readFills(FILLS_PATH);
+  const displayFills = allFills.filter((f) => f.tradingDate >= since); // for the printed summary count only
   const logLines = existsSync(CRON_LOG_PATH)
     ? readFileSync(CRON_LOG_PATH, "utf8").split("\n").map((l) => l.trim()).filter((l) => l.length > 0 && l.slice(0, 10) >= since)
     : [];
   const cfg = resolveTradeConfig();
-  const d = buildReview(runs, fills, [], cfg);
+  // The --since filter applies to what's displayed/aggregated (runs, log lines, the fill count
+  // above) — NOT to the fills buildReview uses to reconstruct lock state, which need the wider
+  // fillsNeededForLockState window so a still-active lock from just before `since` isn't invisible.
+  const lockFills = fillsNeededForLockState(allFills, since, cfg.lockBusinessDays);
+  const d = buildReview(runs, lockFills, [], cfg);
 
-  console.log(`Weekly review since ${since} — ${runs.length} run(s), ${fills.length} fill(s), ${logLines.length} log line(s)`);
+  console.log(`Weekly review since ${since} — ${runs.length} run(s), ${displayFills.length} fill(s), ${logLines.length} log line(s)`);
   console.log(`Cash range: ${d.cashRange ? `${(d.cashRange.min * 100).toFixed(1)}%–${(d.cashRange.max * 100).toFixed(1)}%` : "n/a"} (band [${(cfg.cashFloor * 100).toFixed(0)}%, ${(cfg.cashCeiling * 100).toFixed(0)}%])`);
   console.log("Turnover by run:");
   for (const t of d.turnoverByRun) console.log(`  ${t.date}${t.runId ? ` ${t.runId}` : ""} — ${t.turnoverFrac != null ? `${(t.turnoverFrac * 100).toFixed(1)}%` : "n/a"} of NAV (cap ${(cfg.maxRunTurnoverFrac * 100).toFixed(0)}%)`);
