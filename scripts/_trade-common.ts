@@ -6,11 +6,13 @@ import { fetchDailyCloses } from "../lib/prices/yahoo";
 import type { Report } from "../lib/report.schema";
 import type { BrokerAdapter, BrokerCalendarDay } from "../lib/broker/adapter";
 import { AlpacaPaperBroker } from "../lib/broker/alpaca";
+import { SchwabBroker } from "../lib/broker/schwab";
+import { SchwabTokenStore } from "../lib/broker/schwab-auth";
 import { FakeBroker } from "../lib/broker/fake";
 import { readFills } from "../lib/trade/fills";
 import { readLedger } from "../lib/trade/ledger";
 import { RunRecord } from "../lib/trade/run-record";
-import { requireAlpaca } from "./_env";
+import { requireAlpaca, requireSchwab } from "./_env";
 
 export const TRADE_DIR = join("data", "trade");
 export const FILLS_PATH = join(TRADE_DIR, "fills.jsonl");
@@ -98,7 +100,13 @@ export function makeAlpaca(): BrokerAdapter { return new AlpacaPaperBroker(requi
 export function makeBroker(): BrokerAdapter {
   const broker = process.env.BROKER ?? "alpaca-paper";
   if (broker === "alpaca-paper") return makeAlpaca();
-  if (broker === "schwab") throw new Error("BROKER=schwab: SchwabBroker not wired yet (pending build task)");
+  if (broker === "schwab") {
+    const { clientId, clientSecret } = requireSchwab();
+    const tokenStore = new SchwabTokenStore(SCHWAB_TOKEN_PATH);
+    const tokens = tokenStore.read();
+    if (!tokens?.accountHash) { console.error("Schwab account not linked. Run: npm run trade:auth"); process.exit(2); }
+    return new SchwabBroker({ tokenStore, clientId, clientSecret, accountHash: tokens.accountHash });
+  }
   throw new Error(`BROKER=${broker} is not a known broker (expected "alpaca-paper" or "schwab")`);
 }
 
