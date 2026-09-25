@@ -45,6 +45,18 @@ describe("AlpacaPaperBroker", () => {
     expect(body).toEqual({ symbol: "NVT", side: "buy", type: "market", time_in_force: "day", client_order_id: "c1", notional: "1000" });
     expect(o).toEqual(expect.objectContaining({ id: "id1", clientOrderId: "c1", status: "accepted", notional: 1000, qty: null, filledQty: 0, filledAvgPrice: null }));
   });
+  it("posts a limit/ioc order when limitPrice and timeInForce are set", async () => {
+    const { b, calls } = mk({ "/v2/orders": { id: "id1", client_order_id: "c1", symbol: "NVT", side: "buy", status: "accepted", qty: "10", notional: null, filled_qty: "0", filled_avg_price: null, filled_at: null, submitted_at: "t", type: "limit", time_in_force: "ioc" } });
+    await b.submitOrder({ symbol: "NVT", side: "buy", qty: 10, clientOrderId: "c1", estNotionalUsd: 1100, limitPrice: 110, timeInForce: "ioc" });
+    const body = JSON.parse(calls[0].init.body as string);
+    expect(body).toEqual({ symbol: "NVT", side: "buy", type: "limit", limit_price: "110", time_in_force: "ioc", client_order_id: "c1", qty: "10" });
+  });
+  it("defaults time_in_force to day for a limit order when timeInForce is unset", async () => {
+    const { b, calls } = mk({ "/v2/orders": { id: "id2", client_order_id: "c2", symbol: "NVT", side: "buy", status: "accepted", qty: "10", notional: null, filled_qty: "0", filled_avg_price: null, filled_at: null, submitted_at: "t", type: "limit", time_in_force: "day" } });
+    await b.submitOrder({ symbol: "NVT", side: "buy", qty: 10, clientOrderId: "c2", estNotionalUsd: 1100, limitPrice: 110 });
+    const body = JSON.parse(calls[0].init.body as string);
+    expect(body).toEqual({ symbol: "NVT", side: "buy", type: "limit", limit_price: "110", time_in_force: "day", client_order_id: "c2", qty: "10" });
+  });
   it("reads the settled close from daily bars with the iex feed", async () => {
     const { b, calls } = mk({ "/v2/stocks/bars": { bars: { NVT: [{ t: "2026-09-24T04:00:00Z", o: 1, h: 1, l: 1, c: 101.25, v: 1 }] }, next_page_token: null } });
     expect(await b.getLastClose(["NVT"], "2026-09-24")).toEqual({ NVT: 101.25 });

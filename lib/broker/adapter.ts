@@ -10,7 +10,11 @@ export interface BrokerOrder {
   id: string; clientOrderId: string; symbol: string; side: "buy" | "sell"; status: BrokerOrderStatus;
   qty: number | null; notional: number | null; filledQty: number; filledAvgPrice: number | null; filledAt: string | null; submittedAt: string | null;
 }
-export interface SubmitOrderRequest { symbol: string; side: "buy" | "sell"; qty?: number; notional?: number; clientOrderId: string; estNotionalUsd: number }
+export interface SubmitOrderRequest {
+  symbol: string; side: "buy" | "sell"; qty?: number; notional?: number; clientOrderId: string; estNotionalUsd: number;
+  /** Optional slippage cap (spec §Phase 2 Task 4). Unset → market order, exactly as today. */
+  limitPrice?: number; timeInForce?: "ioc" | "day";
+}
 export interface BrokerAdapter {
   readonly kind: "alpaca-paper" | "fake";
   getClock(): Promise<BrokerClock>;

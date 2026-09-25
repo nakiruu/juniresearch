@@ -44,6 +44,20 @@ export class FakeBroker implements BrokerAdapter {
   }
   async submitOrder(req: SubmitOrderRequest): Promise<BrokerOrder> {
     const price = this.price(req.symbol);
+    if (req.limitPrice != null) {
+      const marketable = req.side === "buy" ? req.limitPrice >= price : req.limitPrice <= price;
+      if (!marketable) {
+        // IOC (or any TIF, in the fake) cancels the unfilled remainder immediately — a terminal
+        // zero-fill order, never a resting/open one that executeOrders would have to poll for.
+        const o: BrokerOrder = {
+          id: `fake-${this.orders.length + 1}`, clientOrderId: req.clientOrderId, symbol: req.symbol, side: req.side, status: "canceled",
+          qty: req.qty ?? null, notional: req.notional ?? null, filledQty: 0, filledAvgPrice: null,
+          filledAt: null, submittedAt: `${this.today}T15:30:00Z`,
+        };
+        this.orders.push(o);
+        return o;
+      }
+    }
     const cur = this.pos.get(req.symbol) ?? { qty: 0, cost: 0 };
     let qty: number;
     if (req.side === "buy") {

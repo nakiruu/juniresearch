@@ -32,6 +32,7 @@ export function assertOrderAllowed(req: SubmitOrderRequest, ctx: GuardContext): 
 
 export async function guardedSubmit(adapter: BrokerAdapter, req: SubmitOrderRequest, ctx: GuardContext): Promise<BrokerOrder> {
   assertOrderAllowed(req, ctx);
+  // req (including optional limitPrice/timeInForce) is forwarded whole — no new guard rules on the cap itself.
   const order = await adapter.submitOrder(req);
   ctx.counters.orders += 1;
   ctx.counters.notionalUsd += Math.abs(req.estNotionalUsd);

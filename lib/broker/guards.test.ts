@@ -48,4 +48,14 @@ describe("guardedSubmit", () => {
     await expect(guardedSubmit(b, { ...buy, symbol: "ICE" }, ctx({ brokerKind: "fake", configuredBaseUrl: "memory://" }))).rejects.toThrow(GuardError);
     expect(await b.getOrders("all")).toEqual([]);
   });
+  it("threads limitPrice and timeInForce through to the adapter unchanged", async () => {
+    const b = new FakeBroker({ calendar: [{ date: "2026-09-25", open: "09:30", close: "16:00" }], closes: { NVT: { "2026-09-25": 100 } }, equity: 10_000, cash: 10_000, isOpen: true, today: "2026-09-25" });
+    const c = ctx({ brokerKind: "fake", configuredBaseUrl: "memory://" });
+    // limitPrice 90 on a buy is not marketable against the 100 close — if guardedSubmit dropped the
+    // field, the fake would treat this as a plain market order and fill it instead of cancelling it.
+    const o = await guardedSubmit(b, { ...buy, limitPrice: 90, timeInForce: "ioc" }, c);
+    expect(o.status).toBe("canceled");
+    expect(o.filledQty).toBe(0);
+    expect(c.counters).toEqual({ orders: 1, notionalUsd: 1_000 });
+  });
 });

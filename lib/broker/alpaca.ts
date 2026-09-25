@@ -100,7 +100,10 @@ export class AlpacaPaperBroker implements BrokerAdapter {
   }
   async submitOrder(req: SubmitOrderRequest): Promise<BrokerOrder> {
     if ((req.qty == null) === (req.notional == null)) throw new Error("submitOrder: exactly one of qty or notional");
-    const body = { symbol: req.symbol, side: req.side, type: "market", time_in_force: "day", client_order_id: req.clientOrderId,
+    const body = { symbol: req.symbol, side: req.side, client_order_id: req.clientOrderId,
+      ...(req.limitPrice != null
+        ? { type: "limit", limit_price: String(req.limitPrice), time_in_force: req.timeInForce ?? "day" }
+        : { type: "market", time_in_force: "day" }),
       ...(req.notional != null ? { notional: String(req.notional) } : { qty: String(req.qty) }) };
     return this.toOrder(await this.call(Order, `${this.base}/v2/orders`, { method: "POST", body: JSON.stringify(body) }));
   }

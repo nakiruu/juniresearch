@@ -33,6 +33,38 @@ describe("FakeBroker", () => {
   });
 });
 
+describe("FakeBroker limit orders", () => {
+  it("fills a marketable buy limit at P_fill (limitPrice >= P_fill)", async () => {
+    const b = mk();
+    const o = await b.submitOrder({ symbol: "NVT", side: "buy", qty: 10, clientOrderId: "c1", estNotionalUsd: 1_100, limitPrice: 110, timeInForce: "ioc" });
+    expect(o).toEqual(expect.objectContaining({ status: "filled", filledQty: 10, filledAvgPrice: 110, clientOrderId: "c1" }));
+    expect(await b.getPositions()).toEqual([{ symbol: "NVT", qty: 10, marketValue: 1_100, avgEntryPrice: 110 }]);
+  });
+  it("returns a terminal zero-fill order for a non-marketable buy limit (limitPrice < P_fill)", async () => {
+    const b = mk();
+    const o = await b.submitOrder({ symbol: "NVT", side: "buy", qty: 10, clientOrderId: "c2", estNotionalUsd: 1_050, limitPrice: 105, timeInForce: "ioc" });
+    expect(o).toEqual(expect.objectContaining({ status: "canceled", filledQty: 0, filledAvgPrice: null, clientOrderId: "c2" }));
+    expect(o.filledAt).toBeNull();
+    expect(await b.getPositions()).toEqual([]);
+    expect(await b.getAccount()).toEqual({ equity: 10_000, cash: 10_000, buyingPower: 10_000 });
+  });
+  it("fills a marketable sell limit at P_fill (limitPrice <= P_fill)", async () => {
+    const b = mk();
+    await b.submitOrder({ symbol: "NVT", side: "buy", qty: 10, clientOrderId: "c1", estNotionalUsd: 1_100 });
+    const o = await b.submitOrder({ symbol: "NVT", side: "sell", qty: 10, clientOrderId: "c2", estNotionalUsd: 1_100, limitPrice: 108, timeInForce: "ioc" });
+    expect(o).toEqual(expect.objectContaining({ status: "filled", filledQty: 10, filledAvgPrice: 110, clientOrderId: "c2" }));
+    expect(await b.getPositions()).toEqual([]);
+  });
+  it("returns a terminal zero-fill order for a non-marketable sell limit (limitPrice > P_fill), keeping the position", async () => {
+    const b = mk();
+    await b.submitOrder({ symbol: "NVT", side: "buy", qty: 10, clientOrderId: "c1", estNotionalUsd: 1_100 });
+    const o = await b.submitOrder({ symbol: "NVT", side: "sell", qty: 10, clientOrderId: "c2", estNotionalUsd: 1_100, limitPrice: 115, timeInForce: "ioc" });
+    expect(o).toEqual(expect.objectContaining({ status: "canceled", filledQty: 0, filledAvgPrice: null, clientOrderId: "c2" }));
+    expect(o.filledAt).toBeNull();
+    expect(await b.getPositions()).toEqual([{ symbol: "NVT", qty: 10, marketValue: 1_100, avgEntryPrice: 110 }]);
+  });
+});
+
 describe("fake market data", () => {
   it("returns injected trade/quote with timestamps, null when unset", async () => {
     const b = new FakeBroker({ calendar: CAL, closes: {}, equity: 10_000, cash: 10_000, isOpen: true, today: "2026-09-25" });
