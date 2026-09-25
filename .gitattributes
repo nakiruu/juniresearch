@@ -1,2 +1,5 @@
 # Raw vendor/EDGAR captures are provenance: never convert line endings.
 data/raw/** -text
+
+# Shell scripts must stay LF — a CRLF shebang breaks on Linux ("bad interpreter").
+*.sh text eol=lf
