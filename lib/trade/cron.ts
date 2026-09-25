@@ -17,6 +17,7 @@ import { ReconcileError } from "./ledger";
 import { SchwabAuthError } from "../broker/schwab-auth";
 import { turnoverBreaker, readHaltState, bumpHalt, clearHalt, haltBlocked, acquireLock, releaseLock, DEFAULT_LOCK_STALE_MS } from "./breakers";
 import { crossCheckBroker } from "./audit";
+import { summaryFromRun, type RunSummaryInput } from "./notify";
 import { writeRunRecord } from "./run-record";
 
 export type CronStatus = "disabled" | "closed" | "locked" | "halted" | "noop" | "executed";
@@ -33,6 +34,8 @@ export interface CronDeps {
   paths: { lock: string; haltState: string; log: string; fills: string; runs: string };
   loadInputs: () => Promise<{ reports: Report[]; sics: Record<string, number | null>; marketCapUsd: Record<string, number | null>; fills: Fill[] }>;
   notify: (msg: string) => void;
+  /** Optional rich run summary sink (orders/fills/goal book/audit) — called on executed and noop runs. Injected like notify so cron stays pure and testable; absent → nothing extra happens. */
+  notifySummary?: (s: RunSummaryInput) => void;
   /** Caller passes process.env.TRADE_DISABLED === "1" — cron.ts itself never reads process.env. */
   disabled: boolean;
   /**
@@ -166,6 +169,7 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
       clearHalt(paths.haltState);
       writeRunRecord(paths.runs, out.record);
       appendLog(paths.log, logLine(today, runId, "noop", summaryFields(out)));
+      deps.notifySummary?.(summaryFromRun(out, "noop", []));
       return { status: "noop" };
     }
 
@@ -199,6 +203,7 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
     }
     clearHalt(paths.haltState);
     appendLog(paths.log, logLine(today, runId, "executed", { ...summaryFields(out), haltSkip: out.sized.skippedHalt.length }));
+    deps.notifySummary?.(summaryFromRun(out, "executed", fills, audit));
     if (out.sized.skippedHalt.length) {
       notify(`cron: ${out.sized.skippedHalt.length} order(s) skipped by the per-ticker halt — ${out.sized.skippedHalt.map((h) => `${h.ticker} (${h.reason})`).join(", ")}`);
     }

@@ -11,20 +11,23 @@ import { dirname } from "node:path";
 import { runCron, type CronResult } from "../lib/trade/cron";
 import { resolveTradeConfig } from "../lib/trade/config";
 import { newRunId } from "../lib/trade/run-record";
+import { makeNotifier } from "../lib/trade/notify";
 import type { BrokerAdapter } from "../lib/broker/adapter";
 import { loadReportsAndMeta, makeBroker, brokerBaseUrl, readFills, CRON_LOCK_PATH, CRON_LOG_PATH, FILLS_PATH, HALT_STATE_PATH, RUNS_DIR } from "./_trade-common";
 
 /**
- * Step 3b — always append to cron.log; a halt/breaker trip also goes to stderr, which Windows Task
- * Scheduler captures. runCron only ever calls `notify` for a halt/breaker/refusal condition (clean
- * runs are silent — see lib/trade/cron.ts), so every call here is by construction one of those.
+ * Every alert/summary line lands in cron.log and on stderr (which Windows Task Scheduler captures);
+ * the notifier ALSO posts it to Discord when DISCORD_WEBHOOK_URL is set (best-effort — a Discord
+ * outage never fails the run). Alerts are halt/breaker/refusal conditions; run summaries carry the
+ * orders/fills/goal-book/audit for every executed and noop run.
  */
-function notify(msg: string): void {
+function logLine(msg: string): void {
   const line = `[${new Date().toISOString()}] ${msg}`;
   mkdirSync(dirname(CRON_LOG_PATH), { recursive: true });
   appendFileSync(CRON_LOG_PATH, line + "\n");
   console.error(line);
 }
+const notifier = makeNotifier({ webhookUrl: process.env.DISCORD_WEBHOOK_URL, onLog: logLine });
 
 /**
  * A structurally-valid BrokerAdapter that throws if actually invoked. Used only when
@@ -65,7 +68,8 @@ async function main(): Promise<CronResult> {
       const { reports, sics, marketCapUsd } = await loadReportsAndMeta();
       return { reports, sics, marketCapUsd, fills: readFills(FILLS_PATH) };
     },
-    notify,
+    notify: notifier.message,
+    notifySummary: notifier.runSummary,
     disabled,
     env: process.env, // guard-level TRADE_DISABLED backstop (Task 6) — must be the real environment.
   });
@@ -73,6 +77,7 @@ async function main(): Promise<CronResult> {
 
 try {
   const result = await main();
+  await notifier.flush(); // let any Discord POSTs complete before the process exits
   console.log(`trade:cron → ${result.status}${result.reason ? ` (${result.reason})` : ""}${result.orders != null ? ` · ${result.orders} order(s), ${result.fills} fill(s)` : ""}`);
   // Fix round 1 (ruling): "halted" (a breaker trip / reconcile failure / consecutive-halt block)
   // exits non-zero so Windows Task Scheduler's Last-Run-Result surfaces it independently of
@@ -81,6 +86,8 @@ try {
   // are ordinary outcomes. An unexpected throw (caught below) is the only other non-zero case.
   process.exit(result.status === "halted" ? 1 : 0);
 } catch (err) {
+  notifier.message(`trade:cron: unexpected error — ${err instanceof Error ? err.message : String(err)}`);
+  await notifier.flush();
   console.error(`trade:cron: unexpected error — ${err instanceof Error ? (err.stack ?? err.message) : String(err)}`);
   process.exit(1);
 }

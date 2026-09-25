@@ -216,6 +216,21 @@ describe("runCron", () => {
     expect(existsSync(paths.lock)).toBe(false); // getClock throws before the lock is acquired
   });
 
+  it("calls notifySummary once on an executed run with matching orders/fills", async () => {
+    const paths = mkPaths();
+    const summaries: { status: string; orders: unknown[]; fills: unknown[] }[] = [];
+    const r = await runCron(mkDeps({
+      paths,
+      notifySummary: (s) => summaries.push(s),
+      loadInputs: async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] as Fill[] }),
+    }));
+    expect(r.status).toBe("executed");
+    expect(summaries).toHaveLength(1);
+    expect(summaries[0].status).toBe("executed");
+    expect(summaries[0].orders.length).toBe(r.orders);
+    expect(summaries[0].fills.length).toBe(r.fills);
+  });
+
   it("guard-level kill switch: env.TRADE_DISABLED=1 blocks submission even though step-1 disabled is false", async () => {
     // Step-1 `disabled` is false (as if the caller's process.env check raced or was stale), but the
     // GuardContext carries the real env — assertOrderAllowed's per-submit re-check must still fire.
