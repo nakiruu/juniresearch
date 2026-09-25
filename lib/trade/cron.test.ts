@@ -182,6 +182,28 @@ describe("runCron", () => {
     expect(existsSync(paths.lock)).toBe(false);
   });
 
+  it("broker-truth mismatch: a fill the log missed halts the run (broker-mismatch), bumps the counter, notifies", async () => {
+    // The IOC is not marketable (today's print 999 > the ~$100 limit) so the fake cancels it with a
+    // zero fill and executeOrders records nothing. We then make the post-execute getOrders report that
+    // same order as FILLED — the broker did something the fills log doesn't reflect. The cross-check
+    // must catch it as a critical UNRECORDED_FILL and halt.
+    const paths = mkPaths();
+    const adapter = new FakeBroker({ calendar: CAL, closes: { NVT: { ...closes(100), [TODAY]: 999 } }, equity: 10_000, cash: 10_000, isOpen: true, today: TODAY });
+    const orig = adapter.getOrders.bind(adapter);
+    adapter.getOrders = (async (status: "open" | "closed" | "all") =>
+      (await orig(status)).map((o) => (o.status === "canceled" ? { ...o, status: "filled" as const, filledQty: o.qty ?? 1, filledAvgPrice: 100, filledAt: `${TODAY}T15:30:00Z` } : o))) as typeof adapter.getOrders;
+    const notified: string[] = [];
+    const r = await runCron(mkDeps({
+      paths, adapter, notify: (m) => notified.push(m),
+      loadInputs: async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] }),
+    }));
+    expect(r).toEqual({ status: "halted", reason: "broker-mismatch" });
+    expect(readHaltState(paths.haltState)).toEqual({ consecutive: 1 });
+    expect(notified.some((m) => /broker-truth|discrepanc/i.test(m))).toBe(true);
+    expect(readdirSync(paths.runs)).toHaveLength(1); // record written before the check
+    expect(existsSync(paths.lock)).toBe(false);       // released
+  });
+
   it("guard-level kill switch: env.TRADE_DISABLED=1 blocks submission even though step-1 disabled is false", async () => {
     // Step-1 `disabled` is false (as if the caller's process.env check raced or was stale), but the
     // GuardContext carries the real env — assertOrderAllowed's per-submit re-check must still fire.

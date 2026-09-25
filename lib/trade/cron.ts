@@ -15,6 +15,7 @@ import type { Fill } from "./fills";
 import { planRun, executeOrders, mergeExecution, type PlanRunOutput } from "./pipeline";
 import { ReconcileError } from "./ledger";
 import { turnoverBreaker, readHaltState, bumpHalt, clearHalt, haltBlocked, acquireLock, releaseLock, DEFAULT_LOCK_STALE_MS } from "./breakers";
+import { crossCheckBroker } from "./audit";
 import { writeRunRecord } from "./run-record";
 
 export type CronStatus = "disabled" | "closed" | "locked" | "halted" | "noop" | "executed";
@@ -159,9 +160,25 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
       env, counters: { orders: 0, notionalUsd: 0 },
     };
     const { fills, executed } = await executeOrders({ adapter, sized: out.sized, ctx, runId, fillsPath: paths.fills });
-    clearHalt(paths.haltState);
     const rec = { ...out.record, fills: fills as unknown as Record<string, unknown>[], orders: mergeExecution(out.record.orders, executed) };
     writeRunRecord(paths.runs, rec);
+
+    // 9. Broker-truth cross-check (spec §4). The recorded fills must match what the broker actually
+    // did; a critical discrepancy (an unrecorded or mismatched fill under-sets the lock clock and the
+    // ledger) is a halt — bump the counter, notify, exit non-zero. Warnings pass. Only a clean audit
+    // clears the consecutive-halt counter.
+    const audit = crossCheckBroker({
+      expected: out.sized.orders.map((o) => ({ clientOrderId: o.clientOrderId, ticker: o.ticker, side: o.side })),
+      brokerOrders: await adapter.getOrders("all", `${today}T00:00:00Z`),
+      fills,
+    });
+    if (!audit.ok) {
+      bumpHalt(paths.haltState);
+      notify(`cron halted: broker-truth check found ${audit.critical} critical discrepancy(ies) — ${audit.discrepancies.filter((d) => d.severity === "critical").map((d) => `${d.code} ${d.ticker}`).join(", ")}`);
+      appendLog(paths.log, logLine(today, runId, "halted", { ...summaryFields(out), reason: "broker-mismatch" }));
+      return { status: "halted", reason: "broker-mismatch" };
+    }
+    clearHalt(paths.haltState);
     appendLog(paths.log, logLine(today, runId, "executed", { ...summaryFields(out), haltSkip: out.sized.skippedHalt.length }));
     if (out.sized.skippedHalt.length) {
       notify(`cron: ${out.sized.skippedHalt.length} order(s) skipped by the per-ticker halt — ${out.sized.skippedHalt.map((h) => `${h.ticker} (${h.reason})`).join(", ")}`);
