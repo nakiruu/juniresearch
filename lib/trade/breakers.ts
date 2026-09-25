@@ -95,7 +95,9 @@ export function acquireLock(path: string, staleMs: number = DEFAULT_LOCK_STALE_M
     const lockMs = Date.parse(existing.split(" ")[1] ?? "");
     if (!Number.isFinite(lockMs) || Date.now() - lockMs <= staleMs) return false;
     try {
-      rmSync(path);
+      // force:true — a concurrent reclaimer (or the original owner's releaseLock) may have
+      // already removed this file; an ENOENT here must not escape as an uncaught throw.
+      rmSync(path, { force: true });
       writeFileSync(path, `${process.pid} ${new Date().toISOString()}`, { flag: "wx" });
       return true;
     } catch (err2) {

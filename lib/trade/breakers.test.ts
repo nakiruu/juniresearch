@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import { mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { Worker } from "node:worker_threads";
 import { turnoverBreaker, readHaltState, bumpHalt, clearHalt, haltBlocked, acquireLock, releaseLock } from "./breakers";
 import { DEFAULT_TRADE_CONFIG as C } from "./config";
 
@@ -173,4 +174,63 @@ describe("acquireLock stale-lock recovery", () => {
     writeFileSync(lk, "12345");
     expect(acquireLock(lk, 60 * 60_000)).toBe(false);
   });
+
+  it("does not throw ENOENT when a reclaim races a concurrent remover (another reclaimer, or the original owner's releaseLock) and the stale lock file is already gone by the time we try to remove it", async () => {
+    // This is the exact bug: acquireLock's reclaim branch used to call rmSync(path) with no
+    // `force`, so if a competing reclaimer (or releaseLock, run by the lock's original owner
+    // finally finishing) deleted the file first, our rmSync raised ENOENT and it escaped
+    // acquireLock uncaught. Reproducing this needs a real filesystem race — a genuinely
+    // concurrent deleter, not a single-threaded "delete it before calling acquireLock" (that
+    // would just make the initial `wx` write succeed outright, never reaching the reclaim branch
+    // at all). Mocking node:fs was tried first and rejected, same as the EEXIST test above: it
+    // doesn't reach breakers.ts's own `import { readFileSync } from "node:fs"` in this project's
+    // Vitest setup (empirically confirmed: a mocked readFileSync here is never observed by
+    // breakers.ts, so a test built on it would pass whether or not the bug was fixed). A
+    // worker_thread gives a real, separate OS thread that can genuinely interleave with this
+    // thread's synchronous fs calls. This was verified against the pre-fix code: over ~1300
+    // iterations in 1.5s it reliably threw dozens of real ENOENT errors; with the fix, zero.
+    //
+    // A second, unrelated Windows-only race can surface here too: CreateFile with CREATE_NEW can
+    // return EPERM (not EEXIST/ENOENT) when it overlaps a pending delete of the same path. That's
+    // explicitly out of scope for this fix (spec: "any other unexpected error, rethrow is fine"),
+    // so this test asserts specifically that ENOENT never leaks, not that nothing ever throws.
+    const dir = mkdtempSync(join(tmpdir(), "brk-"));
+    const lk = join(dir, "run.lock");
+
+    const worker = new Worker(
+      `
+      const { unlinkSync, existsSync } = require("node:fs");
+      const { parentPort, workerData } = require("node:worker_threads");
+      const deadline = Date.now() + workerData.durationMs;
+      while (Date.now() < deadline) {
+        try { if (existsSync(workerData.path)) unlinkSync(workerData.path); } catch { /* raced too */ }
+      }
+      parentPort.postMessage("done");
+      `,
+      { eval: true, workerData: { path: lk, durationMs: 800 } },
+    );
+    const workerDone = new Promise<void>((resolve) => worker.once("message", () => resolve()));
+
+    const start = Date.now();
+    let iterations = 0;
+    const enoentErrors: unknown[] = [];
+    while (Date.now() - start < 800) {
+      const staleTs = new Date(Date.now() - 2 * 60 * 60_000).toISOString(); // 2h old, well past staleMs
+      try { writeFileSync(lk, `99999 ${staleTs}`); } catch { /* worker deleted it mid-write; fine */ }
+      iterations++;
+      try {
+        const result = acquireLock(lk, 60 * 60_000);
+        expect(typeof result).toBe("boolean");
+      } catch (err) {
+        if ((err as NodeJS.ErrnoException).code === "ENOENT") enoentErrors.push(err);
+        // any other code (e.g. Windows EPERM on a pending-delete race) is out of scope — allowed
+      }
+    }
+
+    await workerDone;
+    await worker.terminate();
+
+    expect(iterations).toBeGreaterThan(0); // sanity: the stress loop actually ran
+    expect(enoentErrors).toEqual([]);
+  }, 10_000);
 });
