@@ -11,6 +11,13 @@ export interface AlpacaOptions { keyId: string; secretKey: string; baseUrl: stri
 
 const num = z.union([z.number(), z.string()]).transform((v) => { const n = Number(v); if (!Number.isFinite(n)) throw new Error(`not a number: ${v}`); return n; });
 const numOrNull = z.union([num, z.null(), z.undefined()]).transform((v) => (v == null ? null : v));
+// Unlike `num`/`numOrNull`, never throws: a non-numeric value degrades to null instead of aborting the parse.
+// Used for the latest-trade/quote price fields, which must tolerate garbage data and return null (spec: "missing/zero/unparseable → null").
+const numOrNullSoft = z.union([z.number(), z.string(), z.null(), z.undefined()]).transform((v) => {
+  if (v == null) return null;
+  const n = Number(v);
+  return Number.isFinite(n) ? n : null;
+});
 const Account = z.object({ equity: num, cash: num, buying_power: num });
 const Position = z.object({ symbol: z.string(), qty: num, market_value: num, avg_entry_price: num });
 const Clock = z.object({ timestamp: z.string(), is_open: z.boolean(), next_open: z.string(), next_close: z.string() });
@@ -21,8 +28,8 @@ const Order = z.object({
 });
 const Bars = z.object({ bars: z.record(z.string(), z.array(z.object({ t: z.string(), c: num }))).default({}) });
 const Asset = z.object({ symbol: z.string(), fractionable: z.boolean() });
-const LatestTrade = z.object({ trade: z.object({ p: numOrNull.optional(), t: z.string().optional() }).optional() });
-const LatestQuote = z.object({ quote: z.object({ bp: numOrNull.optional(), ap: numOrNull.optional(), t: z.string().optional() }).optional() });
+const LatestTrade = z.object({ trade: z.object({ p: numOrNullSoft.optional(), t: z.string().optional() }).optional() });
+const LatestQuote = z.object({ quote: z.object({ bp: numOrNullSoft.optional(), ap: numOrNullSoft.optional(), t: z.string().optional() }).optional() });
 
 export class AlpacaPaperBroker implements BrokerAdapter {
   readonly kind = "alpaca-paper" as const;
