@@ -33,6 +33,13 @@ export interface CronDeps {
   notify: (msg: string) => void;
   /** Caller passes process.env.TRADE_DISABLED === "1" — cron.ts itself never reads process.env. */
   disabled: boolean;
+  /**
+   * Forwarded verbatim into the GuardContext built for step 8 (mirrors trade-execute.ts's
+   * `env: process.env`). This is the guard-level, per-submit kill-switch re-check
+   * (assertOrderAllowed throws when env.TRADE_DISABLED === "1") — a backstop independent of the
+   * step-1 `disabled` read, so it must carry the real environment, not an empty stand-in.
+   */
+  env: NodeJS.ProcessEnv;
 }
 
 export interface CronResult { status: CronStatus; reason?: string; orders?: number; fills?: number }
@@ -64,7 +71,7 @@ function summaryFields(out: PlanRunOutput): LogFields {
 }
 
 export async function runCron(deps: CronDeps): Promise<CronResult> {
-  const { adapter, cfg, today, nowMs, runId, configuredBaseUrl, paths, loadInputs, notify, disabled } = deps;
+  const { adapter, cfg, today, nowMs, runId, configuredBaseUrl, paths, loadInputs, notify, disabled, env } = deps;
 
   // 1. Kill switch.
   if (disabled) {
@@ -136,9 +143,11 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
     // 8. Execute (reuses pipeline.executeOrders unchanged). ctx is built here from out.locks/out.ledger
     // rather than via an injected builder — the same shape trade-execute.ts assembles, with no extra
     // dependency needed to test it (a "fake"-kind adapter skips the paper-endpoint check entirely).
+    // env is the caller's real environment (not {}): assertOrderAllowed re-checks TRADE_DISABLED on
+    // every submit, and that per-submit backstop must stay live on the unattended path.
     const ctx: GuardContext = {
       brokerKind: adapter.kind, configuredBaseUrl, locks: out.locks, today, nav: out.ledger.nav, cfg,
-      env: {} as NodeJS.ProcessEnv, counters: { orders: 0, notionalUsd: 0 },
+      env, counters: { orders: 0, notionalUsd: 0 },
     };
     const fills = await executeOrders({ adapter, sized: out.sized, ctx, runId, fillsPath: paths.fills });
     clearHalt(paths.haltState);

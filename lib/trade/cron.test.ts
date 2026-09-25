@@ -38,6 +38,7 @@ function mkDeps(overrides: Partial<CronDeps> & { paths: CronDeps["paths"] }): Cr
     loadInputs: async () => ({ reports: [], sics: {}, marketCapUsd: {}, fills: [] }),
     notify: (m: string) => { notified.push(m); },
     disabled: false,
+    env: {} as NodeJS.ProcessEnv,
     ...overrides,
   } as CronDeps & { __notified?: string[] };
 }
@@ -167,5 +168,20 @@ describe("runCron", () => {
     expect(rec.fills.length).toBe(r.fills);
     expect(readFileSync(paths.log, "utf8")).toMatch(/executed/);
     expect(existsSync(paths.lock)).toBe(false);
+  });
+
+  it("guard-level kill switch: env.TRADE_DISABLED=1 blocks submission even though step-1 disabled is false", async () => {
+    // Step-1 `disabled` is false (as if the caller's process.env check raced or was stale), but the
+    // GuardContext carries the real env — assertOrderAllowed's per-submit re-check must still fire.
+    // This proves defense-in-depth: the kill switch isn't only the single step-1 read.
+    const paths = mkPaths();
+    const adapter = mkBroker();
+    await expect(runCron(mkDeps({
+      paths, adapter, disabled: false, env: { TRADE_DISABLED: "1" } as unknown as NodeJS.ProcessEnv,
+      loadInputs: async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] }),
+    }))).rejects.toThrow(/TRADE_DISABLED/);
+    expect(readFills(paths.fills)).toEqual([]); // the guard threw before any fill was recorded
+    expect(await adapter.getOrders("all")).toEqual([]); // never reached adapter.submitOrder
+    expect(existsSync(paths.lock)).toBe(false); // released via finally even on an uncaught throw
   });
 });
