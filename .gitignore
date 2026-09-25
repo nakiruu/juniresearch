@@ -57,3 +57,6 @@ data/judgment/**/*.prompt.delta.md
 data/judgment/**/*.errors.txt
 data/judgment/**/*.review-brief.md
 data/portfolio/
+
+# trade layer runtime state (ledger cache, fills log, run records, calendar cache) — may hold the Schwab OAuth token; never commit
+data/trade/
