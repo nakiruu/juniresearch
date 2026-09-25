@@ -12,7 +12,7 @@ import type { GuardContext } from "../broker/guards";
 import type { TradeConfig } from "./config";
 import type { TradingDay } from "./calendar";
 import type { Fill } from "./fills";
-import { planRun, executeOrders, type PlanRunOutput } from "./pipeline";
+import { planRun, executeOrders, mergeExecution, type PlanRunOutput } from "./pipeline";
 import { ReconcileError } from "./ledger";
 import { turnoverBreaker, readHaltState, bumpHalt, clearHalt, haltBlocked, acquireLock, releaseLock, DEFAULT_LOCK_STALE_MS } from "./breakers";
 import { writeRunRecord } from "./run-record";
@@ -158,9 +158,9 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
       brokerKind: adapter.kind, configuredBaseUrl, locks: out.locks, today, nav: out.ledger.nav, cfg,
       env, counters: { orders: 0, notionalUsd: 0 },
     };
-    const fills = await executeOrders({ adapter, sized: out.sized, ctx, runId, fillsPath: paths.fills });
+    const { fills, executed } = await executeOrders({ adapter, sized: out.sized, ctx, runId, fillsPath: paths.fills });
     clearHalt(paths.haltState);
-    const rec = { ...out.record, fills: fills as unknown as Record<string, unknown>[] };
+    const rec = { ...out.record, fills: fills as unknown as Record<string, unknown>[], orders: mergeExecution(out.record.orders, executed) };
     writeRunRecord(paths.runs, rec);
     appendLog(paths.log, logLine(today, runId, "executed", { ...summaryFields(out), haltSkip: out.sized.skippedHalt.length }));
     if (out.sized.skippedHalt.length) {

@@ -36,7 +36,7 @@ describe("e2e: a whipsaw cannot happen inside the lock window; the deferred exit
       // sequencing). Re-set every call so it never goes stale relative to `nowMs` (Date.now() default).
       b.setTrade("NVT", path(today), Date.now());
       const out = await planRun({ adapter: b, reports: [nvt], sics: {}, marketCapUsd: {}, fills: readFills(fillsPath), today, cfg, runId: `r-${today}` });
-      const fills = await executeOrders({ adapter: b, sized: out.sized, ctx: ctx(today, out.locks, out.ledger.nav), runId: `r-${today}`, fillsPath, pollMs: 0 });
+      const { fills } = await executeOrders({ adapter: b, sized: out.sized, ctx: ctx(today, out.locks, out.ledger.nav), runId: `r-${today}`, fillsPath, pollMs: 0 });
       return { out, fills };
     };
 

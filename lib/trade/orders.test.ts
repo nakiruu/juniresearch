@@ -30,7 +30,7 @@ describe("tradesToOrders", () => {
     // pRef=50, tau=limitTol.large=0.0015 -> target 50.075 -> tick-up 50.08; capPx 50*1.004 tick-down 50.20 -> L=50.08 (not cap-bound)
     const { orders } = tradesToOrders({ ...base, plan: plan([trade({ deltaWeight: 0.1 })]) }); // deltaUsd = $10,000
     expect(orders).toEqual([expect.objectContaining({
-      ticker: "A", side: "buy", kind: "qty", qty: 199, // floor(10_000 / 50.08)
+      ticker: "A", sector: "35", side: "buy", kind: "qty", qty: 199, // floor(10_000 / 50.08)
       limitPrice: 50.08, timeInForce: "ioc", tier: 1, capBound: false, anchorReason: "ok",
       bucket: "large", estCostUsd: 8, reason: "ENTER",
     })]);

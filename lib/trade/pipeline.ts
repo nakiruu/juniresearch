@@ -4,7 +4,7 @@
  */
 import type { Report } from "../report.schema";
 import { buildSignal, type Signal } from "../portfolio/signal";
-import type { BrokerAdapter } from "../broker/adapter";
+import type { BrokerAdapter, BrokerOrderStatus } from "../broker/adapter";
 import { TERMINAL_STATUSES } from "../broker/adapter";
 import { guardedSubmit, type GuardContext } from "../broker/guards";
 import type { TradeConfig } from "./config";
@@ -66,20 +66,37 @@ export async function planRun(input: PlanRunInput): Promise<PlanRunOutput> {
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
-export async function executeOrders(input: { adapter: BrokerAdapter; sized: SizedOrders; ctx: GuardContext; runId: string; fillsPath: string; pollMs?: number }): Promise<Fill[]> {
+/** The terminal broker outcome of one submitted order — the observability the run record persists (spec §2). */
+export interface ExecutedOrder {
+  clientOrderId: string; brokerId: string; status: BrokerOrderStatus;
+  filledQty: number; filledAvgPrice: number | null; submittedAt: string | null;
+}
+
+export async function executeOrders(input: { adapter: BrokerAdapter; sized: SizedOrders; ctx: GuardContext; runId: string; fillsPath: string; pollMs?: number }): Promise<{ fills: Fill[]; executed: ExecutedOrder[] }> {
   const { adapter, sized, ctx, runId, fillsPath, pollMs = 1000 } = input;
   const fills: Fill[] = [];
+  const executed: ExecutedOrder[] = [];
   for (const o of sized.orders) {
     let order = await guardedSubmit(adapter, { symbol: o.ticker, side: o.side, qty: o.qty, limitPrice: o.limitPrice, timeInForce: o.timeInForce, clientOrderId: o.clientOrderId, estNotionalUsd: o.deltaUsd }, ctx);
     for (let i = 0; i < 60 && !TERMINAL_STATUSES.has(order.status); i++) {
       await sleep(pollMs);
       order = (await adapter.getOrders("all")).find((x) => x.clientOrderId === o.clientOrderId) ?? order;
     }
+    executed.push({ clientOrderId: o.clientOrderId, brokerId: order.id, status: order.status, filledQty: order.filledQty, filledAvgPrice: order.filledAvgPrice, submittedAt: order.submittedAt });
     if (order.filledQty > 0 && order.filledAvgPrice != null && order.filledAt) {
       const fill: Fill = { ticker: o.ticker, side: o.side, qty: order.filledQty, price: order.filledAvgPrice, filledAt: order.filledAt, tradingDate: order.filledAt.slice(0, 10), orderId: order.id, runId };
       appendFill(fillsPath, fill);
       fills.push(fill);
     }
   }
-  return fills;
+  return { fills, executed };
+}
+
+/** Merge each order's terminal broker status/id/submittedAt onto the loose run-record orders, by clientOrderId (spec §2). */
+export function mergeExecution(orders: Record<string, unknown>[], executed: ExecutedOrder[]): Record<string, unknown>[] {
+  const byCid = new Map(executed.map((e) => [e.clientOrderId, e]));
+  return orders.map((o) => {
+    const e = byCid.get(o.clientOrderId as string);
+    return e ? { ...o, brokerId: e.brokerId, status: e.status, submittedAt: e.submittedAt } : o;
+  });
 }

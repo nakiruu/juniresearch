@@ -59,9 +59,18 @@ describe("executeOrders", () => {
     const out = await planRun({ adapter: b, reports: [nvt], sics: {}, marketCapUsd: {}, fills: [], today: "2026-09-25", cfg, runId: "r1" });
     const fillsPath = join(mkdtempSync(join(tmpdir(), "exec-")), "fills.jsonl");
     const ctx: GuardContext = { brokerKind: "fake", configuredBaseUrl: "memory://", locks: out.locks, today: "2026-09-25", nav: out.ledger.nav, cfg, env: {} as NodeJS.ProcessEnv, counters: { orders: 0, notionalUsd: 0 } };
-    const fills = await executeOrders({ adapter: b, sized: out.sized, ctx, runId: "r1", fillsPath, pollMs: 0 });
+    const { fills } = await executeOrders({ adapter: b, sized: out.sized, ctx, runId: "r1", fillsPath, pollMs: 0 });
     expect(fills).toEqual([expect.objectContaining({ ticker: "NVT", side: "buy", qty: 49, price: 100, tradingDate: "2026-09-25", runId: "r1" })]);
     expect(readFills(fillsPath)).toEqual(fills);
+  });
+  it("returns the terminal broker outcome per order (status/brokerId/qty), including a zero-fill", async () => {
+    const b = new FakeBroker({ calendar: CAL, closes: { NVT: closes(100) }, equity: 10_000, cash: 10_000, isOpen: true, today: "2026-09-25" });
+    const out = await planRun({ adapter: b, reports: [nvt], sics: {}, marketCapUsd: {}, fills: [], today: "2026-09-25", cfg, runId: "r1" });
+    const fillsPath = join(mkdtempSync(join(tmpdir(), "exec-")), "fills.jsonl");
+    const ctx: GuardContext = { brokerKind: "fake", configuredBaseUrl: "memory://", locks: out.locks, today: "2026-09-25", nav: out.ledger.nav, cfg, env: {} as NodeJS.ProcessEnv, counters: { orders: 0, notionalUsd: 0 } };
+    const { executed } = await executeOrders({ adapter: b, sized: out.sized, ctx, runId: "r1", fillsPath, pollMs: 0 });
+    expect(executed).toEqual([expect.objectContaining({ clientOrderId: out.sized.orders[0].clientOrderId, status: "filled", filledQty: 49, submittedAt: expect.any(String) })]);
+    expect(executed[0].brokerId).toMatch(/^fake-/);
   });
   it("an IOC limit the live price has since moved away from cancels with zero fill", async () => {
     // settled close (the anchor) is $100, but the intraday print at execution time is $999 -> the
@@ -71,7 +80,7 @@ describe("executeOrders", () => {
     expect(out.sized.orders[0]).toEqual(expect.objectContaining({ limitPrice: 100.35 }));
     const fillsPath = join(mkdtempSync(join(tmpdir(), "exec-")), "fills.jsonl");
     const ctx: GuardContext = { brokerKind: "fake", configuredBaseUrl: "memory://", locks: out.locks, today: "2026-09-25", nav: out.ledger.nav, cfg, env: {} as NodeJS.ProcessEnv, counters: { orders: 0, notionalUsd: 0 } };
-    const fills = await executeOrders({ adapter: b, sized: out.sized, ctx, runId: "r1", fillsPath, pollMs: 0 });
+    const { fills } = await executeOrders({ adapter: b, sized: out.sized, ctx, runId: "r1", fillsPath, pollMs: 0 });
     expect(fills).toEqual([]);
     expect(readFills(fillsPath)).toEqual([]);
   });

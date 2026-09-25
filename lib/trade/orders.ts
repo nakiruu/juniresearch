@@ -13,7 +13,7 @@ import { bucketFor, estimateCostUsd, type LiquidityBucket } from "./costs";
 import { computeLimit, type Mkt } from "./limit";
 
 export interface OrderRequest {
-  ticker: string; side: "buy" | "sell"; kind: "qty"; qty: number;
+  ticker: string; sector: string; side: "buy" | "sell"; kind: "qty"; qty: number;
   limitPrice: number; timeInForce: "ioc"; tier: 1 | 2 | 3; capBound: boolean; anchorReason: string;
   clientOrderId: string; reason: TradeReason; deltaUsd: number; estCostUsd: number; bucket: LiquidityBucket;
 }
@@ -48,7 +48,7 @@ export function tradesToOrders(input: {
     if (r.action === "halt") { skippedHalt.push({ ticker: t.ticker, reason: r.reason }); continue; }
     const deltaUsd = round2(t.deltaWeight * nav);
     const bucket = bucketFor(marketCapUsd[t.ticker] ?? null);
-    const common = { ticker: t.ticker, clientOrderId: clientOrderId(runId, t.ticker, t.side, plan.today), reason: t.reason, deltaUsd, estCostUsd: estimateCostUsd(deltaUsd, bucket), bucket };
+    const common = { ticker: t.ticker, sector: t.sector, clientOrderId: clientOrderId(runId, t.ticker, t.side, plan.today), reason: t.reason, deltaUsd, estCostUsd: estimateCostUsd(deltaUsd, bucket), bucket };
     const limitFields = { limitPrice: r.L!, timeInForce: "ioc" as const, tier: r.tier!, capBound: r.capBound!, anchorReason: r.reason };
     if (t.side === "sell") {
       const pos = positions[t.ticker];

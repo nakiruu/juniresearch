@@ -1,7 +1,7 @@
 /** trade:execute -- --paper [--yes]  — plan, confirm, submit to Alpaca PAPER through the guards, record fills. */
 import { createInterface } from "node:readline/promises";
 import { resolveTradeConfig } from "../lib/trade/config";
-import { planRun, executeOrders } from "../lib/trade/pipeline";
+import { planRun, executeOrders, mergeExecution } from "../lib/trade/pipeline";
 import { newRunId, writeRunRecord } from "../lib/trade/run-record";
 import { writeLedger } from "../lib/trade/ledger";
 import { PAPER_HOST } from "../lib/broker/guards";
@@ -28,7 +28,8 @@ if (!has(args, "--yes")) {
   const a = (await rl.question(`Submit ${out.sized.orders.length} order(s) to Alpaca PAPER? [y/N] `)).trim().toLowerCase(); rl.close();
   if (a !== "y") { console.log("Aborted; nothing submitted."); process.exit(0); }
 }
-const fills = await executeOrders({ adapter, sized: out.sized, ctx: { brokerKind: "alpaca-paper", configuredBaseUrl: baseUrl, locks: out.locks, today, nav: out.ledger.nav, cfg, env: process.env, counters: { orders: 0, notionalUsd: 0 } }, runId, fillsPath: FILLS_PATH });
+const { fills, executed } = await executeOrders({ adapter, sized: out.sized, ctx: { brokerKind: "alpaca-paper", configuredBaseUrl: baseUrl, locks: out.locks, today, nav: out.ledger.nav, cfg, env: process.env, counters: { orders: 0, notionalUsd: 0 } }, runId, fillsPath: FILLS_PATH });
 out.record.fills = fills as unknown as Record<string, unknown>[];
+out.record.orders = mergeExecution(out.record.orders, executed);
 const path = writeRunRecord(RUNS_DIR, out.record);
 console.log(`Submitted ${out.sized.orders.length} order(s); ${fills.length} fill(s) recorded to ${FILLS_PATH}. Run record ${path}. Run trade:reconcile before the next plan.`);
