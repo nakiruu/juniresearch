@@ -30,4 +30,7 @@ for (const d of r.discrepancies) {
 }
 if (r.ok) console.log(r.warn ? `OK with ${r.warn} warning(s).` : "OK — broker matches the local record exactly.");
 else console.error(`FAIL — ${r.critical} critical discrepancy(ies).`);
-process.exit(r.ok ? 0 : 1);
+// Set exitCode and let the loop drain rather than process.exit() — an abrupt exit races the tsx
+// loader / keep-alive socket teardown on Windows (libuv async.c assertion). trade:reconcile drains
+// the same way after its Alpaca reads.
+process.exitCode = r.ok ? 0 : 1;
