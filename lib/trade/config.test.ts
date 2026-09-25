@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { DEFAULT_TRADE_CONFIG, resolveTradeConfig } from "./config";
+import { DEFAULT_TRADE_CONFIG, resolveTradeConfig, bucketFor } from "./config";
 
 describe("resolveTradeConfig", () => {
   it("returns the spec §12 defaults when given no overrides", () => {
@@ -35,5 +35,29 @@ describe("resolveTradeConfig", () => {
     expect(() => resolveTradeConfig({ lockBusinessDays: 0 })).toThrow(/positive integer/);
     expect(() => resolveTradeConfig({ lockBusinessDays: -1 })).toThrow(/positive integer/);
     expect(() => resolveTradeConfig({ lockBusinessDays: 2.5 })).toThrow(/positive integer/);
+  });
+});
+
+describe("phase-2 config", () => {
+  it("ships the phase-2 defaults", () => {
+    const c = resolveTradeConfig();
+    expect(c.limitTol).toEqual({ large: 0.0015, mid: 0.0035, small: 0.0080 });
+    expect(c.limitTolMax).toEqual({ large: 0.0040, mid: 0.0100, small: 0.0150 });
+    expect(c.gapHalt).toEqual({ large: 0.10, mid: 0.15, small: 0.25 });
+    expect(c.maxStaleMin).toEqual({ large: 5, mid: 15, small: 60 });
+    expect(c.exitTolMult).toBe(1.5);
+    expect(c.closeAnchorSizeMult).toBe(0.5);
+    expect(c.maxRunTurnoverFrac).toBe(0.15);
+    expect(c.consecutiveHaltLimit).toBe(3);
+  });
+  it("buckets by market cap with null → mid", () => {
+    const c = DEFAULT_TRADE_CONFIG;
+    expect(bucketFor(50e9, c)).toBe("large");
+    expect(bucketFor(5e9, c)).toBe("mid");
+    expect(bucketFor(1e9, c)).toBe("small");
+    expect(bucketFor(null, c)).toBe("mid");
+  });
+  it("rejects an inverted per-bucket cap", () => {
+    expect(() => resolveTradeConfig({ limitTolMax: { large: 0.0005, mid: 0.01, small: 0.015 } })).toThrow();
   });
 });
