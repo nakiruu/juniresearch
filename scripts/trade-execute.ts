@@ -21,7 +21,7 @@ const { reports, sics, marketCapUsd } = await loadReportsAndMeta();
 const runId = newRunId(today);
 const out = await planRun({ adapter, reports, sics, marketCapUsd, fills: readFills(FILLS_PATH), today, cfg, runId });
 writeLedger(LEDGER_PATH, out.ledger);
-for (const o of out.sized.orders) console.log(`  ${o.side} ${o.ticker} ${o.kind === "notional" ? `$${o.notional}` : `${o.qty} sh`} (${o.reason})`);
+for (const o of out.sized.orders) console.log(`  ${o.side} ${o.ticker} ${o.qty} sh @ limit $${o.limitPrice} ioc (${o.reason})`);
 if (out.sized.orders.length === 0) { writeRunRecord(RUNS_DIR, out.record); console.log("Nothing to trade."); process.exit(0); }
 if (!has(args, "--yes")) {
   const rl = createInterface({ input: process.stdin, output: process.stdout });

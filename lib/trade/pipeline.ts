@@ -14,11 +14,14 @@ import { locksFor, type Locks } from "./locks";
 import { reconcile, weightsOf, positionsOf, type Ledger } from "./ledger";
 import { emitTrades, type TradePlan } from "./rebalance";
 import { tradesToOrders, type SizedOrders } from "./orders";
+import type { Mkt } from "./limit";
 import type { RunRecord } from "./run-record";
 
 export interface PlanRunInput {
   adapter: BrokerAdapter; reports: Report[]; sics: Record<string, number | null>; marketCapUsd: Record<string, number | null>;
   fills: Fill[]; today: TradingDay; cfg: TradeConfig; runId: string;
+  /** Execution-only freshness gate for computeLimit; never feeds the decision path. Default Date.now(). */
+  nowMs?: number;
 }
 export interface PlanRunOutput {
   ledger: Ledger; calendar: TradingDay[]; markDate: TradingDay; marks: Record<string, number>; signals: Signal[];
@@ -28,7 +31,7 @@ export interface PlanRunOutput {
 const shiftDays = (d: string, n: number) => new Date(new Date(d + "T00:00:00Z").getTime() + n * 86_400_000).toISOString().slice(0, 10);
 
 export async function planRun(input: PlanRunInput): Promise<PlanRunOutput> {
-  const { adapter, reports, sics, marketCapUsd, fills, today, cfg, runId } = input;
+  const { adapter, reports, sics, marketCapUsd, fills, today, cfg, runId, nowMs = Date.now() } = input;
   const calendar = (await adapter.getCalendar(shiftDays(today, -90), shiftDays(today, 45))).map((d) => d.date);
   assertCalendar(calendar);
   const markDate = cfg.markMode === "settled" || !isTradingDay(calendar, today) ? prevTradingDay(calendar, today) : today;
@@ -41,15 +44,22 @@ export async function planRun(input: PlanRunInput): Promise<PlanRunOutput> {
   const signals = reports.map((r) => buildSignal(r, marks[r.meta.ticker], sics[r.meta.ticker] ?? null, todayDate, cfg));
   const locks = locksFor(fills, calendar, cfg.lockBusinessDays);
   const plan = emitTrades({ signals, currentWeights: weightsOf(ledger), locks, today, cfg });
-  const buyTickers = plan.trades.filter((t) => t.side === "buy").map((t) => t.ticker);
-  const fractionable = buyTickers.length ? await adapter.isFractionable(buyTickers) : {};
-  const sized = tradesToOrders({ plan, nav: ledger.nav, marks, positions: positionsOf(ledger), fractionalOk: (t) => fractionable[t] ?? false, marketCapUsd, runId, cfg });
+  const mkts: Record<string, Mkt> = {};
+  for (const t of plan.trades) {
+    if (mkts[t.ticker]) continue;
+    mkts[t.ticker] = { lastTrade: await adapter.getLatestTrade(t.ticker), quote: await adapter.getLatestQuote(t.ticker), close: marks[t.ticker] };
+  }
+  const sized = tradesToOrders({ plan, nav: ledger.nav, marks, positions: positionsOf(ledger), marketCapUsd, mkts, nowMs, runId, cfg });
   const record: RunRecord = {
     runId, today, markMode: cfg.markMode, broker: adapter.kind, marks,
     signals: signals.map((s) => ({ ticker: s.ticker, label: s.label, gatedLabel: s.gatedLabel, mu: s.mu, R: s.R, kappa: s.kappa, quality: s.quality, ageDays: s.ageDays })),
     classifications: plan.classifications, locks,
     plan: { frozenWeight: plan.frozenWeight, sizingTarget: plan.sizingTarget, plannedInvested: plan.plannedInvested, plannedCash: plan.plannedCash, buyScale: plan.buyScale, trades: plan.trades, skipped: plan.skipped },
-    orders: sized.orders as unknown as Record<string, unknown>[], fills: [], notes: sized.skippedDust.map((d) => `dust skipped: ${d.ticker} $${d.deltaUsd.toFixed(2)}`),
+    orders: sized.orders as unknown as Record<string, unknown>[], fills: [],
+    notes: [
+      ...sized.skippedDust.map((d) => `dust skipped: ${d.ticker} $${d.deltaUsd.toFixed(2)}`),
+      ...sized.skippedHalt.map((h) => `halt skipped: ${h.ticker} — ${h.reason}`),
+    ],
   };
   return { ledger, calendar, markDate, marks, signals, locks, plan, sized, record };
 }
@@ -60,7 +70,7 @@ export async function executeOrders(input: { adapter: BrokerAdapter; sized: Size
   const { adapter, sized, ctx, runId, fillsPath, pollMs = 1000 } = input;
   const fills: Fill[] = [];
   for (const o of sized.orders) {
-    let order = await guardedSubmit(adapter, { symbol: o.ticker, side: o.side, qty: o.kind === "qty" ? o.qty : undefined, notional: o.kind === "notional" ? o.notional : undefined, clientOrderId: o.clientOrderId, estNotionalUsd: o.deltaUsd }, ctx);
+    let order = await guardedSubmit(adapter, { symbol: o.ticker, side: o.side, qty: o.qty, limitPrice: o.limitPrice, timeInForce: o.timeInForce, clientOrderId: o.clientOrderId, estNotionalUsd: o.deltaUsd }, ctx);
     for (let i = 0; i < 60 && !TERMINAL_STATUSES.has(order.status); i++) {
       await sleep(pollMs);
       order = (await adapter.getOrders("all")).find((x) => x.clientOrderId === o.clientOrderId) ?? order;

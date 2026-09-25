@@ -30,6 +30,11 @@ describe("e2e: a whipsaw cannot happen inside the lock window; the deferred exit
       ({ brokerKind: "fake", configuredBaseUrl: "memory://", locks, today, nav, cfg, env: {} as NodeJS.ProcessEnv, counters: { orders: 0, notionalUsd: 0 } });
     const run = async (today: string) => {
       b.setToday(today);
+      // A fresh live last trade at today's real price, so a same-day BUY/SELL anchors tier 1 (full
+      // size) instead of tier 3 close-anchored (spec's closeAnchorSizeMult would otherwise halve Day
+      // 1's ENTER, which is a sizing concern orthogonal to what this scenario tests: lock/whipsaw
+      // sequencing). Re-set every call so it never goes stale relative to `nowMs` (Date.now() default).
+      b.setTrade("NVT", path(today), Date.now());
       const out = await planRun({ adapter: b, reports: [nvt], sics: {}, marketCapUsd: {}, fills: readFills(fillsPath), today, cfg, runId: `r-${today}` });
       const fills = await executeOrders({ adapter: b, sized: out.sized, ctx: ctx(today, out.locks, out.ledger.nav), runId: `r-${today}`, fillsPath, pollMs: 0 });
       return { out, fills };
