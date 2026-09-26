@@ -8,6 +8,8 @@ const holding = z.object({
   ticker: z.string(), company: z.string(), sector: z.string(),
   weight: z.number(), activeWeight: z.number(), label: z.string(),
   mu: z.number(), sigma: z.number(), R: z.number().nullable(), conviction: z.number(),
+  /** Display only: model P(touch fair value within the horizon) — never a sizing input. */
+  touch: z.number().nullable().optional(),
 });
 export const PortfolioSnapshot = z.object({
   meta: z.object({
@@ -36,7 +38,7 @@ export function assembleSnapshot(input: {
       return {
         ticker: h.ticker, company: s.company, sector: h.sector, weight: h.weight,
         activeWeight: activeByTicker.get(h.ticker) ?? h.weight,
-        label: s.label, mu: s.mu, sigma: s.sigma, R: s.R, conviction: Math.round(s.kappa * 100),
+        label: s.label, mu: s.mu, sigma: s.sigma, R: s.R, conviction: Math.round(s.kappa * 100), touch: s.touch ?? null,
       };
     });
   const invested = holdings.reduce((a, h) => a + h.weight, 0);
@@ -59,9 +61,10 @@ export function assembleSnapshot(input: {
 }
 
 export function toCSV(snap: PortfolioSnapshot): string {
-  const header = "ticker,weight,activeWeight,sector,label,mu,sigma,R,conviction";
+  // pTouchFV1y is a model output for display (P(touch fair value), recent-closes σ) — not an input.
+  const header = "ticker,weight,activeWeight,sector,label,mu,sigma,R,conviction,pTouchFV";
   const rows = snap.holdings.map((h) =>
     [h.ticker, h.weight.toFixed(4), h.activeWeight.toFixed(4), h.sector, h.label,
-     h.mu.toFixed(4), h.sigma.toFixed(4), h.R == null ? "" : h.R.toFixed(2), h.conviction].join(","));
-  return [header, ...rows, `CASH,${snap.cash.toFixed(4)},,,,,,,`].join("\n") + "\n";
+     h.mu.toFixed(4), h.sigma.toFixed(4), h.R == null ? "" : h.R.toFixed(2), h.conviction, h.touch == null ? "" : h.touch.toFixed(2)].join(","));
+  return [header, ...rows, `CASH,${snap.cash.toFixed(4)},,,,,,,,`].join("\n") + "\n";
 }
