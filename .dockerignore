@@ -25,6 +25,11 @@ data/judgment/**/*.prompt.md
 data/judgment/**/*.errors.txt
 data/judgment/**/*.review-brief.md
 
+# trade-layer + portfolio runtime state — not read by the static site; data/trade may
+# hold the Schwab OAuth token, so it must never enter even an intermediate build layer
+data/trade
+data/portfolio
+
 # tests, logs, editor, os
 coverage
 test-results

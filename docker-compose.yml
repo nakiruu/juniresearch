@@ -2,12 +2,19 @@
 #   docker compose up --build
 # Host port 58472 is a deliberately uncommon, unassigned high port; the container
 # still listens on 3000 internally (see Dockerfile PORT).
+# Target `trader` is the full app: it serves the site, arms the in-process trade
+# scheduler (instrumentation.ts, gated by TRADE_SCHEDULER_ENABLED), and runs the
+# trade:* CLI via `docker exec` (see README.Docker.md § Operating the trader).
 services:
   web:
     build:
       context: .
       dockerfile: Dockerfile
-    image: juniresearch-web
+      target: trader           # full app: site + in-process scheduler + operable trade CLI
+    image: juniresearch-trader
     ports:
       - "58472:3000"
+    env_file: .env.local        # BROKER, APCA_*/SCHWAB_*, TRADE_SCHEDULER_ENABLED, TRADE_STATUS_TOKEN, DISCORD_WEBHOOK_URL, TRADE_DISABLED?
+    volumes:
+      - ./data/trade:/app/data/trade   # persist fills.jsonl (compliance ledger) + schwab-token.json across rebuilds
     restart: unless-stopped

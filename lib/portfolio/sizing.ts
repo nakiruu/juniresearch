@@ -21,7 +21,7 @@ import { assessEligibility, isBannedTicker } from "./eligibility";
  * requires mu >= muMin, R >= rMin, kappa*100 >= convictionMin), so the product is
  * well-defined and positive. We still guard defensively for a null/degenerate R.
  */
-export function scoreWeight(s: Signal, config: PortfolioConfig): number {
+export function scoreWeight(s: Signal, config: PortfolioConfig, opts: { qualityTilt?: boolean } = {}): number {
   if (s.R == null) return 0;
   const mu = Math.max(s.mu, 0);
   const conv = Math.max(s.kappa, 0);
@@ -30,7 +30,8 @@ export function scoreWeight(s: Signal, config: PortfolioConfig): number {
     Math.pow(mu, config.muExp) *
     Math.pow(conv, config.convExp) *
     Math.pow(r, config.rExp) *
-    s.staleness;
+    s.staleness *
+    (opts.qualityTilt ? s.quality : 1);   // spec §5.4: the moat/composite tilt, opt-in so the analytical snapshot is unchanged
   return Number.isFinite(score) && score > 0 ? score : 0;
 }
 

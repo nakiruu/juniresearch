@@ -34,6 +34,14 @@ describe("scoreWeight", () => {
   it("returns 0 for a name with no reward/risk", () => {
     expect(scoreWeight(sig({ R: null }), DEFAULT_CONFIG)).toBe(0);
   });
+
+  it("ignores quality by default, so the analytical snapshot is unchanged", () => {
+    expect(scoreWeight(sig({ quality: 1.2 }), DEFAULT_CONFIG)).toBeCloseTo(0.12, 9);
+  });
+  it("multiplies by quality when the tilt is requested", () => {
+    expect(scoreWeight(sig({ quality: 1.2 }), DEFAULT_CONFIG, { qualityTilt: true })).toBeCloseTo(0.144, 9);
+    expect(scoreWeight(sig({ quality: 0.8 }), DEFAULT_CONFIG, { qualityTilt: true })).toBeCloseTo(0.096, 9);
+  });
 });
 
 describe("allocateCapped", () => {
