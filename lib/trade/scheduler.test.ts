@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { nextRunAtET, etDateString, shouldCatchUp, shouldArm, startScheduler, getSchedulerStatus, readSchedulerState, writeSchedulerState } from "./scheduler";
+import { nextRunAtET, etDateString, shouldCatchUp, shouldArm, startScheduler, getSchedulerStatus, readSchedulerState, writeSchedulerState, slotAlreadyFired } from "./scheduler";
 import type { CronResult } from "./cron";
 import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -192,5 +192,52 @@ describe("shouldArm", () => {
     expect(shouldArm({ NEXT_RUNTIME: "nodejs", TRADE_SCHEDULER_ENABLED: "1" } as unknown as NodeJS.ProcessEnv)).toBe(true);
     expect(shouldArm({ NEXT_RUNTIME: "edge", TRADE_SCHEDULER_ENABLED: "1" } as unknown as NodeJS.ProcessEnv)).toBe(false);
     expect(shouldArm({ NEXT_RUNTIME: "nodejs" } as unknown as NodeJS.ProcessEnv)).toBe(false);
+  });
+});
+
+describe("multiple daily slots (cronTimesET)", () => {
+  const SLOTS = { cronTimeET: "09:45", cronTimesET: ["09:45", "10:40"] };
+  const at = (etHHMM: string) => Date.parse(`2026-07-01T${etHHMM}:00-04:00`); // EDT
+  const boot = (now: number, dir: string) => {
+    const timer = fakeTimer();
+    let armedFor = 0;
+    const runOnce = vi.fn(async (): Promise<CronResult> => ({ status: "noop" }));
+    const s = startScheduler({
+      runOnce, marketOpenNow: async () => true, cfg: SLOTS, broker: "alpaca-paper", env: {} as unknown as NodeJS.ProcessEnv,
+      now: () => now, setTimer: (f, ms) => { armedFor = now + ms; return timer.setTimer(f, ms); }, stateDir: dir,
+    });
+    return { s, runOnce, timer, armedFor: () => armedFor };
+  };
+  const settle = async () => { await Promise.resolve(); await Promise.resolve(); };
+
+  it("arms for the next slot the same day, not the next day", async () => {
+    const dir = mkdtempSync(join(tmpdir(), "sched-"));
+    writeSchedulerState({ lastFiredDay: "2026-07-01", lastFiredSlot: "09:45" }, dir);
+    const b = boot(at("10:00"), dir);
+    await settle();
+    expect(b.runOnce).not.toHaveBeenCalled();
+    expect(b.armedFor()).toBe(at("10:40"));
+    b.s.stop();
+  });
+  it("catches up the second slot after a restart and stamps it", async () => {
+    const dir = mkdtempSync(join(tmpdir(), "sched-"));
+    writeSchedulerState({ lastFiredDay: "2026-07-01", lastFiredSlot: "09:45" }, dir);
+    const b = boot(at("10:45"), dir);
+    await settle();
+    expect(b.runOnce).toHaveBeenCalledTimes(1);
+    expect(readSchedulerState(dir)).toEqual({ lastFiredDay: "2026-07-01", lastFiredSlot: "10:40" });
+    b.s.stop();
+  });
+  it("never fires the same slot twice", async () => {
+    const dir = mkdtempSync(join(tmpdir(), "sched-"));
+    writeSchedulerState({ lastFiredDay: "2026-07-01", lastFiredSlot: "10:40" }, dir);
+    const b = boot(at("10:50"), dir);
+    await settle();
+    expect(b.runOnce).not.toHaveBeenCalled();
+    b.s.stop();
+  });
+  it("reads old single-slot state (no lastFiredSlot) as the first slot", () => {
+    expect(slotAlreadyFired({ lastFiredDay: "2026-07-01" }, at("10:00"), SLOTS.cronTimesET)).toBe(true);
+    expect(slotAlreadyFired({ lastFiredDay: "2026-07-01" }, at("10:45"), SLOTS.cronTimesET)).toBe(false);
   });
 });

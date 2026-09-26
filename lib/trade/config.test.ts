@@ -38,6 +38,19 @@ describe("resolveTradeConfig", () => {
   });
 });
 
+describe("daily slots config", () => {
+  it("defaults to one slot and keeps cronTimeET as the first slot", () => {
+    expect(resolveTradeConfig()).toMatchObject({ cronTimeET: "09:45", cronTimesET: ["09:45"] });
+    expect(resolveTradeConfig({ cronTimeET: "09:50" }).cronTimesET).toEqual(["09:50"]);
+    expect(resolveTradeConfig({ cronTimesET: ["09:45", "10:40"] }).cronTimeET).toBe("09:45");
+  });
+  it("rejects unsorted, duplicate, malformed, empty or too many slots", () => {
+    for (const cronTimesET of [["10:40", "09:45"], ["09:45", "09:45"], ["9:45"], [], ["09:40", "10:00", "11:00", "12:00", "13:00"]]) {
+      expect(() => resolveTradeConfig({ cronTimesET })).toThrow();
+    }
+  });
+});
+
 describe("fire-window config", () => {
   it("defaults maxLateMin to 20 and validates it and cronTimeET", () => {
     expect(resolveTradeConfig().maxLateMin).toBe(20);

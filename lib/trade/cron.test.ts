@@ -94,6 +94,14 @@ describe("runCron", () => {
     expect(notified.filter((m) => /refresh token/.test(m))).toHaveLength(1); // deduplicated for the day
   });
 
+  it("fire window follows each daily slot (cronTimesET)", async () => {
+    const cfg = resolveTradeConfig({ cronTimesET: ["09:45", "10:40"] });
+    const at = (hhmm: string) => Date.parse(`${TODAY}T${hhmm}:00-04:00`);
+    expect((await runCron(mkDeps({ paths: mkPaths(), cfg, nowMs: at("10:10") }))).status).toBe("late");     // 09:45 + 25m
+    expect((await runCron(mkDeps({ paths: mkPaths(), cfg, nowMs: at("10:45") }))).status).not.toBe("late"); // inside the 10:40 slot
+    expect((await runCron(mkDeps({ paths: mkPaths(), cfg, nowMs: at("11:05") }))).status).toBe("late");
+  });
+
   it("kill switch still wins over the fire window", async () => {
     expect(await runCron(mkDeps({ paths: mkPaths(), nowMs: Date.parse(`${TODAY}T23:00:00.000Z`), disabled: true }))).toEqual({ status: "disabled" });
   });

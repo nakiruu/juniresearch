@@ -67,3 +67,19 @@ export function nextRunAtET(nowMs: number, hhmm: string): number {
   }
   throw new Error(`nextRunAtET: no trading day found within 400 days of ${cursor}`);
 }
+
+/**
+ * The daily fire slot in force at `nowMs`: the latest "HH:MM" slot at or before the ET wall clock, or
+ * null before the first slot of the day. `slots` must be sorted ascending.
+ */
+export function currentSlot(nowMs: number, slots: readonly string[]): string | null {
+  const m = etMinutesOfDay(nowMs);
+  let cur: string | null = null;
+  for (const s of slots) if (hhmmToMinutes(s) <= m) cur = s;
+  return cur;
+}
+
+/** The next fire instant across all daily slots (each on trading days only). */
+export function nextSlotRunAtET(nowMs: number, slots: readonly string[]): number {
+  return Math.min(...slots.map((s) => nextRunAtET(nowMs, s)));
+}

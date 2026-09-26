@@ -19,10 +19,10 @@ import { turnoverBreaker, clipToTurnover, readHaltState, bumpHalt, clearHalt, ha
 import { crossCheckBroker } from "./audit";
 import { summaryFromRun, type RunSummaryInput } from "./notify";
 import { writeRunRecord } from "./run-record";
-import { etMinutesOfDay, hhmmToMinutes } from "./clock";
+import { currentSlot, etMinutesOfDay, hhmmToMinutes } from "./clock";
 import { refreshTokenHealth } from "../broker/schwab-auth";
 import { maybeWarnAuth } from "./auth-health";
-import { nextRunAtET } from "./clock";
+import { nextSlotRunAtET } from "./clock";
 
 export type CronStatus = "disabled" | "late" | "closed" | "locked" | "halted" | "noop" | "executed";
 
@@ -100,7 +100,7 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
   // after a run fails. Deduplicated per ET day; never blocks or fails the run.
   if (deps.refreshObtainedAt && paths.authWarn) {
     try {
-      const nextRunMs = nextRunAtET(nowMs, cfg.cronTimeET);
+      const nextRunMs = nextSlotRunAtET(nowMs, cfg.cronTimesET);
       const health = refreshTokenHealth(deps.refreshObtainedAt(), nowMs, nextRunMs, { lifetimeMs: cfg.schwabRefreshLifetimeDays * 86_400_000, warnHours: cfg.schwabAuthWarnHours });
       maybeWarnAuth(health, nowMs, nextRunMs, paths.authWarn, notify);
     } catch { /* a notice must never fail a run */ }
@@ -109,8 +109,9 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
   // 1b. Fire window. A scheduled run that starts more than maxLateMin after cronTimeET (a missed
   // trigger fired late, a catch-up after a mid-day restart) trades at a worse, unplanned time of day —
   // skip it; the next scheduled morning runs normally. Checked before any broker call.
-  if (!deps.ignoreWindow && etMinutesOfDay(nowMs) > hhmmToMinutes(cfg.cronTimeET) + cfg.maxLateMin) {
-    appendLog(paths.log, logLine(today, runId, "late", { reason: `after ${cfg.cronTimeET} ET + ${cfg.maxLateMin}m` }));
+  const slot = currentSlot(nowMs, cfg.cronTimesET);
+  if (!deps.ignoreWindow && slot && etMinutesOfDay(nowMs) > hhmmToMinutes(slot) + cfg.maxLateMin) {
+    appendLog(paths.log, logLine(today, runId, "late", { reason: `after ${slot} ET + ${cfg.maxLateMin}m` }));
     return { status: "late" };
   }
 
