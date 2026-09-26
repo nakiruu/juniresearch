@@ -121,7 +121,10 @@ export async function executeOrders(input: {
     // Poll window: bounded to just before this submit (60s slack for clock skew) so the broker listing
     // always contains the new order, however long the account's order history grows.
     const pollAfter = new Date(now() - 60_000).toISOString();
-    const req: SubmitOrderRequest = { symbol: o.ticker, side: o.side, qty: o.qty, limitPrice: o.limitPrice, timeInForce: o.timeInForce, clientOrderId: o.clientOrderId, estNotionalUsd: o.deltaUsd };
+    const req: SubmitOrderRequest = { symbol: o.ticker, side: o.side, qty: o.qty, limitPrice: o.limitPrice, timeInForce: o.timeInForce, clientOrderId: o.clientOrderId,
+      // The most an IOC limit order can spend or raise — the same measure as the turnover breaker. deltaUsd
+      // is the pre-sizing weight delta (about 2x a tier-3 order after closeAnchorSizeMult).
+      estNotionalUsd: o.qty * o.limitPrice };
     let order: BrokerOrder;
     try {
       order = await guardedSubmit(adapter, req, ctx);

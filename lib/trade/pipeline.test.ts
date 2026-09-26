@@ -72,6 +72,19 @@ describe("planRun", () => {
 });
 
 describe("executeOrders", () => {
+  it("counts each order against the notional guard at qty × limitPrice (what an IOC limit can spend), not deltaUsd", async () => {
+    const b = new FakeBroker({ calendar: CAL, closes: { NVT: closes(100) }, equity: 10_000, cash: 10_000, isOpen: true, today: "2026-09-25" });
+    const out = await planRun({ adapter: b, reports: [nvt], sics: {}, marketCapUsd: {}, fills: [], today: "2026-09-25", cfg, runId: "r1" });
+    const ctx: GuardContext = { brokerKind: "fake", configuredBaseUrl: "memory://", locks: out.locks, today: "2026-09-25", nav: out.ledger.nav, cfg, env: {} as NodeJS.ProcessEnv, counters: { orders: 0, notionalUsd: 0 } };
+    const sent: number[] = [];
+    const submit = b.submitOrder.bind(b);
+    b.submitOrder = async (req) => { sent.push(req.estNotionalUsd); return submit(req); };
+    await executeOrders({ adapter: b, sized: out.sized, ctx, runId: "r1", fillsPath: join(mkdtempSync(join(tmpdir(), "exec-")), "fills.jsonl"), pollMs: 0 });
+    const [o] = out.sized.orders;
+    expect(sent).toEqual([o.qty * o.limitPrice]);
+    expect(ctx.counters.notionalUsd).toBeCloseTo(o.qty * o.limitPrice, 9);
+    expect(o.qty * o.limitPrice).not.toBeCloseTo(o.deltaUsd, 2); // whole-share flooring (and tier-3 halving) make them differ
+  });
   describe("a submit with an unknown outcome (spec #10)", () => {
     const setup = async () => {
       const b = new FakeBroker({ calendar: CAL, closes: { NVT: closes(100) }, equity: 10_000, cash: 10_000, isOpen: true, today: "2026-09-25" });
