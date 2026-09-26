@@ -17,6 +17,8 @@ export type TradeReason = "ENTER" | "EXIT" | "ADD" | "TRIM";
 export interface Trade {
   ticker: string; sector: string; side: "buy" | "sell"; reason: TradeReason;
   currentWeight: number; targetWeight: number; deltaWeight: number;
+  /** "residual": an ADD that went through the smaller residualBand (topUpRecentBuys). */
+  note?: "residual";
 }
 export type SkipCode = "BELOW_BAND" | "BARRED_ENTRY" | "BARRED_ADD" | "DEFER_EXIT" | "DEFER_TRIM" | "INELIGIBLE" | "NO_SIGNAL" | "NO_CAPACITY" | "TURNOVER_CLIP";
 export interface Skipped {
@@ -89,7 +91,15 @@ export function emitTrades(input: {
     }
     // HOLD: trade only outside the band, and only if the required side is not locked.
     const d = tw - w;
-    if (Math.abs(d) <= cfg.tradeBand) {
+    // Residual top-up (opt-in): a name bought inside the lock window (so it is sell-locked) may keep
+    // BUYING toward target through a smaller band — the unfilled rest of a partial IOC entry would
+    // otherwise sit in cash until drift crosses the full band. It can't churn: the name can't be sold
+    // until the lock clears. Buys only; the sell side and every unlocked name keep tradeBand.
+    const residual = cfg.topUpRecentBuys && d > cfg.residualBand && d <= cfg.tradeBand
+      && isSellLocked(locks, c.ticker, today) && !isBuyLocked(locks, c.ticker, today);
+    if (residual) {
+      trades.push({ ticker: c.ticker, sector: s.sector, side: "buy", reason: "ADD", currentWeight: w, targetWeight: tw, deltaWeight: d, note: "residual" });
+    } else if (Math.abs(d) <= cfg.tradeBand) {
       skipped.push({ ticker: c.ticker, code: "BELOW_BAND", reasons: [`|Δw| ${(Math.abs(d) * 100).toFixed(2)}pp ≤ band ${(cfg.tradeBand * 100).toFixed(2)}pp`], currentWeight: w, targetWeight: tw });
     } else if (d > 0) {
       if (isBuyLocked(locks, c.ticker, today)) skipped.push({ ticker: c.ticker, code: "BARRED_ADD", reasons: ["buy-locked"], unlockOn: locks.buyLockUntil[c.ticker], currentWeight: w, targetWeight: tw });
