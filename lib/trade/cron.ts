@@ -51,6 +51,8 @@ export interface CronDeps {
    * step-1 `disabled` read, so it must carry the real environment, not an empty stand-in.
    */
   env: NodeJS.ProcessEnv;
+  /** Wall clock for per-ticker market-data capture times (latency/freshness); default: frozen at nowMs. */
+  clock?: () => number;
   /** Lookup schedule for an order submit with an unknown outcome (tests pass zeros). */
   resolveDelaysMs?: readonly number[];
   /** Manual run (`trade:cron --now`): skip the fire-window check. The market-clock check still applies. */
@@ -166,7 +168,7 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
     let out: PlanRunOutput;
     try {
       const inputs = await loadInputs();
-      out = await planRun({ ...inputs, today, cfg, runId, nowMs, adapter });
+      out = await planRun({ ...inputs, today, cfg, runId, nowMs, clock: deps.clock, adapter });
     } catch (e) {
       if (e instanceof ReconcileError) {
         bumpHalt(paths.haltState);
@@ -227,7 +229,7 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
       brokerKind: adapter.kind, configuredBaseUrl, locks: out.locks, today, nav: out.ledger.nav, cfg,
       env, cashUsd: out.ledger.cash, counters: { orders: 0, notionalUsd: 0, buyNotionalUsd: 0, sellProceedsUsd: 0 },
     };
-    const { fills, executed, aborted, skippedCash } = await executeOrders({ adapter, sized: out.sized, ctx, runId, fillsPath: paths.fills, resolveDelaysMs: deps.resolveDelaysMs });
+    const { fills, executed, aborted, skippedCash } = await executeOrders({ adapter, sized: out.sized, ctx, runId, fillsPath: paths.fills, resolveDelaysMs: deps.resolveDelaysMs, now: deps.clock });
     const rec = {
       ...out.record, fills: fills as unknown as Record<string, unknown>[], orders: mergeExecution(out.record.orders, executed),
       notes: [...out.record.notes, ...skippedCash.map((s) => `cash skipped: ${s.ticker} — ${s.detail}`)],

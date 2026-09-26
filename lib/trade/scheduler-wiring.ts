@@ -59,6 +59,7 @@ export function buildSchedulerDeps(env: NodeJS.ProcessEnv = process.env): Schedu
       adapter, cfg, today, nowMs, runId: newRunId(today), configuredBaseUrl,
       paths: { lock: CRON_LOCK_PATH, haltState: HALT_STATE_PATH, log: CRON_LOG_PATH, fills: FILLS_PATH, runs: RUNS_DIR, authWarn: AUTH_WARN_PATH },
       refreshObtainedAt: disabled ? undefined : schwabRefreshObtainedAt(env),
+      clock: Date.now,
       loadInputs: async () => { const m = await loadReportsAndMeta(); return { ...m, fills: readFills(FILLS_PATH) }; },
       notify: notifier.message, notifySummary: notifier.runSummary, disabled, env,
     });

@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { planRun, executeOrders, fillTradingDate } from "./pipeline";
+import { planRun, executeOrders, fillTradingDate, mergeExecution } from "./pipeline";
 import { FakeBroker } from "../broker/fake";
 import { resolveTradeConfig } from "./config";
 import { readFills } from "./fills";
@@ -214,5 +214,32 @@ describe("executeOrders — cash backstop (spec F5)", () => {
     const r = await executeOrders({ adapter: b, sized: sized([mkOrder({ ticker: "AAA", side: "buy", qty: 9, limitPrice: 99 }), mkOrder({ ticker: "BBB", side: "buy", qty: 9, limitPrice: 100 })]), ctx, runId: "r", fillsPath, pollMs: 0 });
     expect(r.skippedCash).toEqual([]); // the first IOC didn't fill (99 < 100), so its $891 came back
     expect(ctx.counters.buyNotionalUsd).toBe(900);
+  });
+});
+
+describe("latency timestamps (spec #10)", () => {
+  it("judges freshness when each ticker's data was captured, not at run start, and records the capture time", async () => {
+    const T = Date.parse("2026-09-25T13:45:00Z");
+    const b = new FakeBroker({ calendar: CAL, closes: { NVT: closes(100) }, equity: 10_000, cash: 10_000, isOpen: true, today: "2026-09-25" });
+    b.setTrade("NVT", 100, T - 10 * 60_000); // 10 min old at run start: fresh for the mid bucket (15 min)…
+    let t = T;
+    const clock = () => (t += 10 * 60_000); // …but the fetch happens 10 min later, when it is 20 min old
+    const out = await planRun({ adapter: b, reports: [nvt], sics: {}, marketCapUsd: {}, fills: [], today: "2026-09-25", cfg, runId: "r", nowMs: T, clock });
+    const [o] = out.sized.orders;
+    expect(o.anchorAtMs).toBe(T + 10 * 60_000);
+    expect(o.tier).toBe(3); // stale at capture → close-anchored
+    expect(o.diag?.tradeAgeMs).toBe(20 * 60_000);
+  });
+  it("records submit start/ack/terminal times, filled qty and avg price on each run-record order", async () => {
+    const b = new FakeBroker({ calendar: CAL, closes: { NVT: closes(100) }, equity: 10_000, cash: 10_000, isOpen: true, today: "2026-09-25" });
+    const out = await planRun({ adapter: b, reports: [nvt], sics: {}, marketCapUsd: {}, fills: [], today: "2026-09-25", cfg, runId: "r1" });
+    const ctx: GuardContext = { brokerKind: "fake", configuredBaseUrl: "memory://", locks: out.locks, today: "2026-09-25", nav: out.ledger.nav, cashUsd: out.ledger.cash, cfg, env: {} as NodeJS.ProcessEnv, counters: { orders: 0, notionalUsd: 0, buyNotionalUsd: 0, sellProceedsUsd: 0 } };
+    let t = Date.parse("2026-09-25T13:46:00Z");
+    const { executed } = await executeOrders({ adapter: b, sized: out.sized, ctx, runId: "r1", fillsPath: join(mkdtempSync(join(tmpdir(), "lat-")), "fills.jsonl"), pollMs: 0, now: () => (t += 250) });
+    const [rec] = mergeExecution(out.record.orders, executed) as Record<string, unknown>[];
+    expect(rec).toMatchObject({ filledQty: 49, filledAvgPrice: 100, status: "filled" });
+    const [a, b2, c] = [rec.submitStartAt, rec.submitAckAt, rec.terminalAt].map((x) => Date.parse(x as string));
+    expect(a).toBeLessThan(b2);
+    expect(b2).toBeLessThan(c);
   });
 });

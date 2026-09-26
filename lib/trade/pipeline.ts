@@ -25,6 +25,11 @@ export interface PlanRunInput {
   fills: Fill[]; today: TradingDay; cfg: TradeConfig; runId: string;
   /** Execution-only freshness gate for computeLimit; never feeds the decision path. Default Date.now(). */
   nowMs?: number;
+  /**
+   * Wall clock read per ticker as its market data is captured, so freshness is judged when the quote was
+   * fetched, not at run start (fetches are sequential). Default: a clock frozen at nowMs.
+   */
+  clock?: () => number;
 }
 export interface PlanRunOutput {
   ledger: Ledger; calendar: TradingDay[]; markDate: TradingDay; marks: Record<string, number>; signals: Signal[];
@@ -42,6 +47,7 @@ const shiftDays = (d: string, n: number) => new Date(new Date(d + "T00:00:00Z").
 
 export async function planRun(input: PlanRunInput): Promise<PlanRunOutput> {
   const { adapter, reports, sics, marketCapUsd, fills, today, cfg, runId, nowMs = Date.now() } = input;
+  const clock = input.clock ?? (() => nowMs);
   const calendar = (await adapter.getCalendar(shiftDays(today, -90), shiftDays(today, 45))).map((d) => d.date);
   assertCalendar(calendar);
   const markDate = cfg.markMode === "settled" || !isTradingDay(calendar, today) ? prevTradingDay(calendar, today) : today;
@@ -59,11 +65,13 @@ export async function planRun(input: PlanRunInput): Promise<PlanRunOutput> {
   const locks = locksFor(fills, calendar, cfg.lockBusinessDays);
   const plan = emitTrades({ signals, currentWeights: weightsOf(ledger), locks, today, cfg });
   const mkts: Record<string, Mkt> = {};
+  const anchorAtMs: Record<string, number> = {};
   for (const t of plan.trades) {
     if (mkts[t.ticker]) continue;
     mkts[t.ticker] = { lastTrade: await adapter.getLatestTrade(t.ticker), quote: await adapter.getLatestQuote(t.ticker), close: marks[t.ticker] };
+    anchorAtMs[t.ticker] = clock();
   }
-  const sized = tradesToOrders({ plan, nav: ledger.nav, marks, positions: positionsOf(ledger), marketCapUsd, mkts, nowMs, runId, cfg });
+  const sized = tradesToOrders({ plan, nav: ledger.nav, marks, positions: positionsOf(ledger), marketCapUsd, mkts, nowMs, runId, cfg, anchorAtMs });
   const record: RunRecord = {
     runId, today, markMode: cfg.markMode, broker: adapter.kind, marks,
     signals: signals.map((s) => ({ ticker: s.ticker, label: s.label, gatedLabel: s.gatedLabel, mu: s.mu, R: s.R, kappa: s.kappa, quality: s.quality, ageDays: s.ageDays })),
@@ -85,6 +93,8 @@ export interface ExecutedOrder {
   /** "unknown": the submit's outcome could not be established — the order may exist at the broker. */
   clientOrderId: string; brokerId: string; status: BrokerOrderStatus | "unknown";
   filledQty: number; filledAvgPrice: number | null; submittedAt: string | null;
+  /** Local timestamps (ISO): just before the submit request, when it returned, when the order was seen terminal. */
+  submitStartAt?: string; submitAckAt?: string; terminalAt?: string | null;
 }
 
 /** A buy the broker's cash could not cover at submit time — never sent. */
@@ -133,6 +143,7 @@ export async function executeOrders(input: {
       // is the pre-sizing weight delta (about 2x a tier-3 order after closeAnchorSizeMult).
       estNotionalUsd: o.qty * o.limitPrice };
     let order: BrokerOrder;
+    const submitStartAt = new Date(now()).toISOString();
     try {
       order = await guardedSubmit(adapter, req, ctx);
     } catch (e) {
@@ -141,7 +152,7 @@ export async function executeOrders(input: {
       // The order may exist. Find it; NEVER resend it (a double fill, or a fill we can't record, is worse than a miss).
       const found = await resolveUnknownSubmit(adapter, req, e.submitStartAt, resolveDelaysMs);
       if (!found.order) {
-        executed.push({ clientOrderId: o.clientOrderId, brokerId: "", status: "unknown", filledQty: 0, filledAvgPrice: null, submittedAt: e.submitStartAt });
+        executed.push({ clientOrderId: o.clientOrderId, brokerId: "", status: "unknown", filledQty: 0, filledAvgPrice: null, submittedAt: e.submitStartAt, submitStartAt });
         // Stop the run: every later order would be planned against a book we can't vouch for.
         return { fills, executed, skippedCash, aborted: { ticker: o.ticker, clientOrderId: o.clientOrderId, detail: `${e.message}; lookup: ${found.detail}` } };
       }
@@ -150,12 +161,14 @@ export async function executeOrders(input: {
       ctx.counters.notionalUsd += Math.abs(req.estNotionalUsd);
       if (o.side === "buy") ctx.counters.buyNotionalUsd += Math.abs(req.estNotionalUsd);
     }
+    const submitAckAt = new Date(now()).toISOString();
     for (let i = 0; i < 60 && !TERMINAL_STATUSES.has(order.status); i++) {
       await sleep(pollMs);
       const id = order.id;
       order = (await adapter.getOrders("all", pollAfter)).find((x) => x.id === id || x.clientOrderId === o.clientOrderId) ?? order;
     }
-    executed.push({ clientOrderId: o.clientOrderId, brokerId: order.id, status: order.status, filledQty: order.filledQty, filledAvgPrice: order.filledAvgPrice, submittedAt: order.submittedAt });
+    const terminalAt = TERMINAL_STATUSES.has(order.status) ? new Date(now()).toISOString() : null;
+    executed.push({ clientOrderId: o.clientOrderId, brokerId: order.id, status: order.status, filledQty: order.filledQty, filledAvgPrice: order.filledAvgPrice, submittedAt: order.submittedAt, submitStartAt, submitAckAt, terminalAt });
     // True up the cash backstop: a buy reserved qty × limit at submit; it actually spent filledQty × avg
     // (an IOC that didn't fill releases its reservation). A sell raises cash only for what filled. A
     // working order that never went terminal keeps its full reservation (conservative).
@@ -176,6 +189,10 @@ export function mergeExecution(orders: Record<string, unknown>[], executed: Exec
   const byCid = new Map(executed.map((e) => [e.clientOrderId, e]));
   return orders.map((o) => {
     const e = byCid.get(o.clientOrderId as string);
-    return e ? { ...o, brokerId: e.brokerId, status: e.status, submittedAt: e.submittedAt } : o;
+    return e ? {
+      ...o, brokerId: e.brokerId, status: e.status, submittedAt: e.submittedAt,
+      filledQty: e.filledQty, filledAvgPrice: e.filledAvgPrice,
+      submitStartAt: e.submitStartAt ?? null, submitAckAt: e.submitAckAt ?? null, terminalAt: e.terminalAt ?? null,
+    } : o;
   });
 }

@@ -77,6 +77,7 @@ async function main(): Promise<CronResult> {
     env: process.env, // guard-level TRADE_DISABLED backstop (Task 6) — must be the real environment.
     // `--now`: a deliberate manual run outside the scheduled fire window (the market clock still applies).
     ignoreWindow: process.argv.slice(2).includes("--now"),
+    clock: Date.now, // real per-ticker capture times for freshness + latency
   });
 }
 

@@ -17,6 +17,8 @@ export interface OrderRequest {
   limitPrice: number; timeInForce: "ioc"; tier: 1 | 2 | 3; capBound: boolean; anchorReason: string;
   /** Market snapshot + the τ the spread wanted vs what the cap allowed (spec #9 — the data a τ_max decision needs). */
   pRef?: number; tau?: number; diag?: LimitDiagnostics;
+  /** When this ticker's market data was captured (epoch ms) — the freshness reference and the start of decision→submit latency. */
+  anchorAtMs?: number;
   clientOrderId: string; reason: TradeReason; deltaUsd: number; estCostUsd: number; bucket: LiquidityBucket;
 }
 export interface SizedOrders {
@@ -36,8 +38,10 @@ export function tradesToOrders(input: {
   positions: Record<string, { qty: number; marketValue: number }>;
   marketCapUsd: Record<string, number | null>; mkts: Record<string, Mkt>; nowMs: number;
   runId: string; cfg: TradeConfig;
+  /** Per-ticker capture time of `mkts`; freshness is judged at that instant (falls back to nowMs). */
+  anchorAtMs?: Record<string, number>;
 }): SizedOrders {
-  const { plan, nav, marks, positions, marketCapUsd, mkts, nowMs, runId, cfg } = input;
+  const { plan, nav, marks, positions, marketCapUsd, mkts, nowMs, runId, cfg, anchorAtMs = {} } = input;
   const orders: OrderRequest[] = [];
   const skippedDust: { ticker: string; deltaUsd: number }[] = [];
   const skippedHalt: { ticker: string; reason: string }[] = [];
@@ -46,12 +50,13 @@ export function tradesToOrders(input: {
     if (!(mark > 0)) throw new Error(`tradesToOrders: no mark for ${t.ticker}`);
     const mkt = mkts[t.ticker];
     if (!mkt) { skippedHalt.push({ ticker: t.ticker, reason: "no_market_data" }); continue; }
-    const r = computeLimit({ side: t.side, marketCapUsd: marketCapUsd[t.ticker] ?? null, nowMs, mkt, cfg });
+    const at = anchorAtMs[t.ticker] ?? nowMs;
+    const r = computeLimit({ side: t.side, marketCapUsd: marketCapUsd[t.ticker] ?? null, nowMs: at, mkt, cfg });
     if (r.action === "halt") { skippedHalt.push({ ticker: t.ticker, reason: r.reason }); continue; }
     const deltaUsd = round2(t.deltaWeight * nav);
     const bucket = bucketFor(marketCapUsd[t.ticker] ?? null);
     const common = { ticker: t.ticker, sector: t.sector, clientOrderId: clientOrderId(runId, t.ticker, t.side, plan.today), reason: t.reason, deltaUsd, estCostUsd: estimateCostUsd(deltaUsd, bucket), bucket };
-    const limitFields = { limitPrice: r.L!, timeInForce: "ioc" as const, tier: r.tier!, capBound: r.capBound!, anchorReason: r.reason, pRef: r.pRef, tau: r.tau, diag: r.diag };
+    const limitFields = { limitPrice: r.L!, timeInForce: "ioc" as const, tier: r.tier!, capBound: r.capBound!, anchorReason: r.reason, pRef: r.pRef, tau: r.tau, diag: r.diag, anchorAtMs: at };
     if (t.side === "sell") {
       const pos = positions[t.ticker];
       if (!pos || pos.qty <= 0) throw new Error(`tradesToOrders: sell of ${t.ticker} with no position`);
