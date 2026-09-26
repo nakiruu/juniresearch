@@ -86,7 +86,7 @@ tick = $0.01 for P ≥ $1.00, else $0.0001
 gap_ref = fresh P_last ? P_last : (quote_valid ? mid : C)
 if |gap_ref − C| / C > gapHaltPct[bucket]  →  HALT the name, flag for review
 ```
-Using `gap_ref` (never the ask/bid touch) stops a merely wide quote from masquerading as a gap. `gapHaltPct` uses the **same bucket lookup** as `τ` (default 10 / 15 / 25% large / mid / small). Optional deferred refinement: a vol-adjusted threshold `|gap_ref − C| > k · dailyVol · √days` using the 30-day realized vol the desk already computes.
+Using `gap_ref` (never the ask/bid touch) stops a merely wide quote from masquerading as a gap. `gapHaltPct` uses the **same bucket lookup** as `τ` (default 10 / 15 / 25% large / mid / small). Optional deferred refinement: a vol-adjusted threshold `|gap_ref − C| > k · dailyVol · √days` using a 30-day realized vol (not computed anywhere when this was written; `realizedVol` now exists in `lib/portfolio/touch.ts`).
 
 **Tier-3 (close-anchored) sizing rule.** When `P_ref` falls back to the previous settled close, the anchor may be 15+ hours stale. Do **not** widen `τ` (that pays up for stale information). Instead **halve the notional** for that name that run (`closeAnchorSizeMult` = 0.5; a trim/exit is unaffected) and tag the fill reason `close_anchored`. This should be exceptional (< ~1% of fills on any name); a name that hits it routinely means its bucket's `maxStale` is mis-tuned.
 

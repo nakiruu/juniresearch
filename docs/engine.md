@@ -4,13 +4,16 @@
 > live orders: how a *buy* is derived, how the engine interprets it, how buys and sells are
 > sized and placed, and every piece of math and statistics in between.
 >
-> **Status:** the research → rating → portfolio path is on `main`; the trade layer + multi-broker
-> (Alpaca paper / Schwab live) + Discord notifier + Linux scheduler live on branch `trade-layer`
-> (unmerged, gated). Defaults quoted here are the code defaults as of 2026-09-25.
+> **Status:** the research → rating → portfolio path and the trade layer (Alpaca paper / Schwab live,
+> Discord notifier, schedulers) are on `main`. The 2026-09-26 engine review
+> (`docs/superpowers/specs/2026-09-26-engine-improvements-design.md`) and its six-phase plan are
+> implemented; defaults quoted here are the code defaults after it. Opt-in behaviour is marked
+> "default off".
 >
-> **How to read the "💡 Better idea" callouts:** they mark points where a defensible alternative
-> exists. They are design notes, not TODOs — none is wired in. "🚫 Not an option" callouts mark
-> alternatives that are ruled out by the owner's trading rules or the live broker — don't propose them.
+> **How to read the callouts:** "💡" marks a defensible alternative that is still *not* built (deferred,
+> usually waiting on data). "🚫 Not an option" marks an alternative that was ruled out — by the owner's
+> trading rules, the live broker, or because it didn't survive quantification — don't propose it again.
+> Adopted ideas are described in place as normal text.
 
 ---
 
@@ -80,16 +83,20 @@ A separate scoring layer produces:
 - **`rating.decision.conviction`** — a **0–100** score from a penalty model over the gate + intrinsic
   reverse-DCF + moat (ROIC−WACC) + a cross-sectional composite percentile. This becomes **κ** downstream.
 
-> 💡 **Better idea — a probability-of-reaching-target metric.** Conviction today is a static penalty
-> score. A GBM first-passage ("touch") probability, `P_touch = Φ(d₊) + (H/S₀)^(2ν/σ²)·Φ(d₋)`, would add a
-> *time-and-volatility-aware* estimate of actually reaching fair value. It was prototyped and deliberately
-> **not** adopted as a conviction substitute (touch probability rewards volatility and is drift-sensitive),
-> but it is a strong candidate as an *additional* data point rather than a replacement.
+**P(touch fair value) — display only (`lib/portfolio/touch.ts`).** A GBM first-passage probability,
+`P = Φ((νT−b)/σ√T) + e^{2νb/σ²}·Φ((−b−νT)/σ√T)` with `b = ln(FV/S₀)`, σ from the report's ~30 recent
+closes, T = `touchHorizonYears` (1) and drift `touchDrift` (0). Signals carry it as `touch`; the snapshot
+shows it (`pTouchFV` in the CSV). It is **never** a sizing, eligibility or tie-break input: on the
+published reports it tracks realized volatility (Spearman +0.73) and runs against R (−0.58), so ranking on
+it would tilt the book toward volatile names. Read it as "is this target plausible within a year?"
 
-> 💡 **Better idea — widen bands under uncertainty.** Morningstar-style, the buy/sell thresholds could
-> scale with the dispersion of the scenarios (a 3-point spread with 50% mass on one leg is far less certain
-> than a tight one). Today the bands are fixed; uncertainty only enters later via σ, which the score sizer
-> ignores.
+**Wider bullish bands under uncertainty (`decide()` policy, both off by default).**
+`applyUncertaintyBands` scales the BUY / STRONG BUY minimum upside by the uncertainty tier (×1 / 1.2 /
+1.8 / 2.5, driven by analyst-target dispersion and other risk points); `applyDispersionBands` scales it by
+the author's own scenario dispersion, `clamp(σ / 0.25, 1, 2.5)`. They combine by max and can only lower a
+label. Both live in the advisory `decide()` layer: the published label is still validated against the
+fixed `deriveLabel` bands, so turning either on never invalidates a published report. On the current 68
+reports, dispersion bands would change one label (EVLV STRONG BUY → BUY, already published as BUY).
 
 ---
 
@@ -119,15 +126,16 @@ Notes that matter downstream:
 - **R here uses the empirically worst scenario** as the bear, which equals the report's named bear when
   that is the lowest leg (the usual case).
 
-> 💡 **Better idea — the scenario σ is fragile.** σ and σ↓ come from a **3-point** distribution; a
-> point-mass estimator of variance is noisy and error is amplified in any σ-based optimizer (Michaud). A
-> blend with **trailing realized volatility** (already fetched for the touch-probability work) would give a
-> more stable risk number. Note the production score sizer sidesteps this by not using σ at all (§3.2);
-> only the experimental kellyTilt `invSigma` core would benefit directly.
+> 💡 **Deferred — the scenario σ is fragile.** σ and σ↓ come from a **3-point** distribution; a
+> point-mass estimator of variance is noisy. A blend with trailing realized volatility would steady it —
+> but σ feeds production nowhere (the score sizer ignores it; only the unexposed kellyTilt `invSigma` core
+> reads it), so this waits until invSigma is actually A/B'd, and then on ≥252 closes rather than the ~30
+> the reports carry (`realizedVol` now exists in `lib/portfolio/touch.ts`).
 
-> 💡 **Better idea — σ↓ is computed but unused.** A downside-only risk unit (Sortino-style `μ/σ↓`, or
-> `R` blended with σ↓) is arguably a better "risk" than either the single bear leg or full σ. It is already
-> in the Signal; nothing consumes it.
+> 🚫 **Not an option — σ↓ as the risk unit.** With 3 scenarios and one leg below price (66 of 68
+> reports), σ↓ = √p_bear · D exactly, so μ/σ↓ = R/√p_bear: Spearman(R, μ/σ↓) = 0.996, and swapping it into
+> the score moves 1.8% of the book. It adds no information over R. Revisit only if reports move to 5+
+> scenarios.
 
 ---
 
@@ -162,10 +170,11 @@ score = μ^muExp · κ^convExp · R^rExp · staleness · (Q if useQualityTilt el
 Weight is then allocated *in proportion to score*, so the best names on (expected return × conviction ×
 reward/risk) become the largest holdings. Exponents are tunable knobs (`--muExp/--convExp/--rExp`).
 
-> 💡 **Better idea — the score is a heuristic, not a utility maximization.** `μ·κ·R` is a defensible
-> ranking but not derived from an objective (Kelly, mean-variance, or mean-CVaR). A **mean-CVaR** allocation
-> using σ↓ / the bear leg would optimize the thing the desk actually cares about (downside) rather than a
-> product of factors. The tradeoff is transparency: the current score is trivially explainable per name.
+> 🚫 **Not an option — mean-CVaR allocation.** Single-name CVaR at α ≤ p_bear *is* the bear-leg loss D
+> (already in R), and a portfolio CVaR needs a joint scenario distribution the reports don't have. Assuming
+> comonotonic bears makes it an LP whose solution is bang-bang — 10 names at the cap, or 5 names and ~50%
+> cash at λ = 1 (N_eff ≤ 10 vs 26 today) — a cruder, more concentrated μ − λD that drops κ and per-name
+> explainability. The `μ·κ·R` score stays.
 
 ### 3.3 Water-fill allocation with caps  (`allocateCapped`)
 
@@ -364,11 +373,11 @@ sell:  L = max( floor_tick(pRef·(1−τ)), ceil_tick(pRef·(1−τ_max)) )
 IOC means an unmarketable order (or partial) **cancels the remainder** — a **non-fill is a feature**, the
 slippage cap refusing to chase.
 
-> 💡 **Better idea — τ_max clamps inside the early-session spread.** On the first live run, ~66% of orders
-> were `capBound`: `β·relSpread` wanted a wider limit than τ_max at 09:36, so the limit sat inside the
-> spread and only caught thin liquidity → heavy partials. Two fixes, both cheap: **fire at 09:45** (already
-> the configured `cronTimeET`; deeper/tighter spreads) and, only after ≥3–5 runs of data, consider raising
-> τ_max. Do **not** tune τ on one run.
+> 💡 **Deferred — τ_max vs the early-session spread.** On the first (paper) run ~66% of orders were
+> `capBound`: the spread wanted a wider limit than τ_max. Paper quotes are IEX (thin, wide), so that figure
+> may be a data artifact, not the time of day. Runs fire at 09:45 ET. Raise `limitTolMax[bucket]` only after
+> ≥5 **Schwab** runs, and only if `trade:review` shows cap-bound orders filling below ~50% while
+> τ-wanted/τ_max sits just above 1. Never tune τ on paper.
 
 **Timeouts and unknown submits (`lib/broker/http.ts`).** Every broker/OAuth request has a deadline over
 headers and body (read 10s, submit 15s, token 10s); only idempotent reads are retried (1s, 3s). An order
