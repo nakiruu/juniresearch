@@ -20,7 +20,7 @@ export interface PortfolioConfig {
   qPenaltyEroding: number;  // quality-tilt penalty for an eroding moat (e.g. 0.10)
   qLo: number;              // quality-tilt clamp low (e.g. 0.8)
   qHi: number;              // quality-tilt clamp high (e.g. 1.2)
-  stalenessHalfLifeDays: number; // soft decay half-life (e.g. 90)
+  stalenessHalfLifeDays: number; // soft recency decay half-life in days: staleness = 0.5^(age/h) (e.g. 90)
   // Constraints (§7)
   wMax: number;             // hard per-name cap — THE knob (default 0.10)
   sectorMax: number;        // max weight per SIC-2-digit sector (e.g. 0.30)

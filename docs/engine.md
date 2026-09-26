@@ -106,7 +106,7 @@ D              = max(0, −min rᵢ)                   worst-scenario loss magni
 R              = μ / D    (null if D ≤ 0)          reward / risk
 κ  (kappa)     = decision.conviction / 100         0..1
 Q  (quality)   = clamp( 1 + 0.10·(pctile−50)/50 + 0.20·(moat−0.5) − 0.10·[eroding], 0.8, 1.2 )
-staleness      = exp( −ageDays / 90 )              soft recency decay (half-life 90d)
+staleness      = 0.5 ^ ( ageDays / 90 )             soft recency decay (true half-life 90d)
 sector         = ⌊SIC / 100⌋   (2-digit group)
 ```
 

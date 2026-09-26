@@ -49,7 +49,8 @@ export function buildSignal(report: Report, livePrice: number, sic: number | nul
 
   const reportDate = parseReportDateUTC(report.meta.reportDate);
   const ageDays = Math.max(0, Math.round((today.getTime() - reportDate.getTime()) / 86_400_000));
-  const staleness = Math.exp(-ageDays / config.stalenessHalfLifeDays);
+  // A true half-life: a report stalenessHalfLifeDays old counts half (exp(-age/h) was an e-folding time — ~62-day half-life at h=90).
+  const staleness = Math.pow(0.5, ageDays / config.stalenessHalfLifeDays);
 
   return {
     ticker: report.meta.ticker, company: report.meta.company,
