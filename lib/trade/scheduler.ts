@@ -5,32 +5,10 @@
 import { nyseTradingDays, COVERAGE_START, COVERAGE_END } from "./nyse-calendar";
 import { isTradingDay } from "./calendar";
 
-const TZ = "America/New_York";
-const FMT = new Intl.DateTimeFormat("en-US", {
-  timeZone: TZ, hourCycle: "h23",
-  year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit",
-});
-function partsInTZ(ms: number) {
-  const p = Object.fromEntries(FMT.formatToParts(ms).filter((x) => x.type !== "literal").map((x) => [x.type, x.value]));
-  return { y: +p.year, mo: +p.month, d: +p.day, h: +p.hour, mi: +p.minute, s: +p.second };
-}
-/** offset (ms) such that etWallClockAsUTC - actualUTC. */
-function tzOffsetMs(ms: number): number {
-  const p = partsInTZ(ms);
-  return Date.UTC(p.y, p.mo - 1, p.d, p.h, p.mi, p.s) - ms;
-}
-/** The UTC instant whose America/New_York wall clock is exactly Y-M-D h:mi (DST-correct). */
-function etWallToUtc(y: number, mo: number, d: number, h: number, mi: number): number {
-  const naive = Date.UTC(y, mo - 1, d, h, mi);
-  let utc = naive - tzOffsetMs(naive);      // first correction
-  utc = naive - tzOffsetMs(utc);            // refine at the candidate instant (handles DST edges)
-  return utc;
-}
+import { etDateString, etWallToUtc } from "./clock";
 
-export function etDateString(ms: number): string {
-  const p = partsInTZ(ms);
-  return `${p.y}-${String(p.mo).padStart(2, "0")}-${String(p.d).padStart(2, "0")}`;
-}
+// Re-exported: the ET helpers moved to clock.ts (the one ET clock); scheduler callers keep working.
+export { etDateString, etWallToUtc, todayET, etMinutesOfDay } from "./clock";
 
 const TRADING_DAYS = nyseTradingDays(COVERAGE_START, COVERAGE_END).map((d) => d.date);
 
