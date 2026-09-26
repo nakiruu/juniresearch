@@ -17,6 +17,7 @@ import {
   CRON_LOCK_PATH, CRON_LOG_PATH, FILLS_PATH, HALT_STATE_PATH, RUNS_DIR,
 } from "./runtime";
 import { startScheduler, getSchedulerStatus, type SchedulerDeps } from "./scheduler";
+import { todayET } from "./clock";
 export { startScheduler, getSchedulerStatus };
 
 /**
@@ -52,9 +53,10 @@ export function buildSchedulerDeps(env: NodeJS.ProcessEnv = process.env): Schedu
   const runOnce = async (): Promise<CronResult> => {
     const adapter = disabled ? unreachableAdapter() : makeBroker(env);
     const configuredBaseUrl = disabled ? "" : brokerBaseUrl(adapter);
-    const today = new Date().toISOString().slice(0, 10);
+    const nowMs = Date.now();
+    const today = todayET(nowMs); // one clock read for both, and the ET trading date (not UTC)
     const result = await runCron({
-      adapter, cfg, today, nowMs: Date.now(), runId: newRunId(today), configuredBaseUrl,
+      adapter, cfg, today, nowMs, runId: newRunId(today), configuredBaseUrl,
       paths: { lock: CRON_LOCK_PATH, haltState: HALT_STATE_PATH, log: CRON_LOG_PATH, fills: FILLS_PATH, runs: RUNS_DIR },
       loadInputs: async () => { const m = await loadReportsAndMeta(); return { ...m, fills: readFills(FILLS_PATH) }; },
       notify: notifier.message, notifySummary: notifier.runSummary, disabled, env,

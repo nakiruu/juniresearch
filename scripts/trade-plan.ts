@@ -4,9 +4,10 @@ import { planRun } from "../lib/trade/pipeline";
 import { newRunId, writeRunRecord } from "../lib/trade/run-record";
 import { writeLedger } from "../lib/trade/ledger";
 import { flag, has, loadReportsAndMeta, makeFakeBroker, makeAlpaca, readFills, FILLS_PATH, LEDGER_PATH, RUNS_DIR } from "./_trade-common";
+import { todayET } from "../lib/trade/clock";
 
 const args = process.argv.slice(2);
-const today = flag(args, "--date") ?? new Date().toISOString().slice(0, 10);
+const today = flag(args, "--date") ?? todayET();
 const broker = flag(args, "--broker") ?? "fake";
 const cfg = resolveTradeConfig();
 const { reports, sics, marketCapUsd } = await loadReportsAndMeta();

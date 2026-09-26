@@ -14,7 +14,7 @@ import { z } from "zod";
 import type { BrokerAdapter, BrokerAccount, BrokerCalendarDay, BrokerClock, BrokerOrder, BrokerOrderStatus, BrokerPosition, SubmitOrderRequest } from "./adapter";
 import { SCHWAB_HOST } from "./guards";
 import { nyseTradingDays } from "../trade/nyse-calendar";
-import { etMinutesOfDay, hhmmToMinutes, todayET } from "../trade/clock";
+import { etMinutesOfDay, etWallToUtc, hhmmToMinutes, todayET } from "../trade/clock";
 import { ensureAccessToken, type SchwabTokenStore } from "./schwab-auth";
 
 export interface SchwabOptions {
@@ -118,7 +118,9 @@ export class SchwabBroker implements BrokerAdapter {
       .map((p) => ({ symbol: p.instrument.symbol, qty: p.longQuantity ?? 0, marketValue: p.marketValue ?? 0, avgEntryPrice: p.averagePrice ?? 0 }));
   }
   async getOrders(_status: "open" | "closed" | "all", after?: string): Promise<BrokerOrder[]> {
-    const from = new Date(after ?? new Date(this.now()).toISOString().slice(0, 10) + "T00:00:00Z").toISOString();
+    // Default window starts at ET midnight today (a UTC-midnight default would skip the whole ET day after 20:00 EDT).
+    const [y, mo, d] = todayET(this.now()).split("-").map(Number);
+    const from = new Date(after ?? etWallToUtc(y, mo, d, 0, 0)).toISOString();
     const to = new Date(this.now() + 86_400_000).toISOString();
     const q = new URLSearchParams({ fromEnteredTime: from, toEnteredTime: to, maxResults: "500" });
     const orders = await this.get(z.array(OrderResp), `${this.trader}/accounts/${this.opts.accountHash}/orders?${q}`);

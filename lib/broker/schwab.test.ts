@@ -113,6 +113,15 @@ describe("SchwabBroker reads", () => {
 });
 
 describe("SchwabBroker submit / cancel", () => {
+  it("getOrders' default window starts at ET midnight, even in the evening when the UTC date is tomorrow", async () => {
+    const { fetchImpl, calls } = mockFetch({ orders: [] });
+    const tokenStore = seededStore();
+    tokenStore.write({ ...tokenStore.read()!, accessExpiresAt: Date.parse("2027-01-01T00:00:00Z") });
+    const b = new SchwabBroker({ tokenStore, clientId: "cid", clientSecret: "s", accountHash: HASH, fetchImpl, nowMs: () => Date.parse("2026-09-29T01:00:00Z") }); // 21:00 EDT Mon
+    await b.getOrders("all");
+    const from = new URL(calls.find((c) => c.url.includes("/orders"))!.url).searchParams.get("fromEnteredTime");
+    expect(from).toBe("2026-09-28T04:00:00.000Z"); // 00:00 EDT Mon 09-28, not 00:00Z Tue
+  });
   it("submitOrder parses the Location order id, records the cid map, and getOrders then stamps clientOrderId", async () => {
     const { fetchImpl, calls } = mockFetch({ orders: [{ orderId: 1001, status: "FILLED", quantity: 5, filledQuantity: 5, orderLegCollection: [{ instruction: "BUY", instrument: { symbol: "NEE" } }], orderActivityCollection: [] }] });
     const b = mk(fetchImpl);

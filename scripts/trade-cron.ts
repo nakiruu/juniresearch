@@ -14,6 +14,7 @@ import { newRunId } from "../lib/trade/run-record";
 import { makeNotifier } from "../lib/trade/notify";
 import type { BrokerAdapter } from "../lib/broker/adapter";
 import { loadReportsAndMeta, makeBroker, brokerBaseUrl, readFills, CRON_LOCK_PATH, CRON_LOG_PATH, FILLS_PATH, HALT_STATE_PATH, RUNS_DIR } from "./_trade-common";
+import { todayET } from "../lib/trade/clock";
 
 /**
  * Every alert/summary line lands in cron.log and on stderr (which Windows Task Scheduler captures);
@@ -58,11 +59,12 @@ async function main(): Promise<CronResult> {
   }
 
   const cfg = resolveTradeConfig();
-  const today = new Date().toISOString().slice(0, 10);
+  const nowMs = Date.now();
+  const today = todayET(nowMs); // ET trading date — the UTC date is tomorrow from 20:00 EDT
   const runId = newRunId(today);
 
   return runCron({
-    adapter, cfg, today, nowMs: Date.now(), runId, configuredBaseUrl,
+    adapter, cfg, today, nowMs, runId, configuredBaseUrl,
     paths: { lock: CRON_LOCK_PATH, haltState: HALT_STATE_PATH, log: CRON_LOG_PATH, fills: FILLS_PATH, runs: RUNS_DIR },
     loadInputs: async () => {
       const { reports, sics, marketCapUsd } = await loadReportsAndMeta();

@@ -16,6 +16,7 @@ import { emitTrades, type TradePlan } from "./rebalance";
 import { tradesToOrders, type SizedOrders } from "./orders";
 import type { Mkt } from "./limit";
 import type { RunRecord } from "./run-record";
+import { todayET } from "./clock";
 
 export interface PlanRunInput {
   adapter: BrokerAdapter; reports: Report[]; sics: Record<string, number | null>; marketCapUsd: Record<string, number | null>;
@@ -28,6 +29,13 @@ export interface PlanRunOutput {
   locks: Locks; plan: TradePlan; sized: SizedOrders; record: RunRecord;
 }
 
+/** The fill's ET trading date — the lock clock starts here. Broker timestamps are UTC ("…Z" or "+0000"). */
+export function fillTradingDate(filledAt: string): TradingDay {
+  const ms = Date.parse(filledAt);
+  return Number.isFinite(ms) ? todayET(ms) : filledAt.slice(0, 10);
+}
+
+// Pure date arithmetic on YYYY-MM-DD labels — UTC is correct here (no wall clock involved).
 const shiftDays = (d: string, n: number) => new Date(new Date(d + "T00:00:00Z").getTime() + n * 86_400_000).toISOString().slice(0, 10);
 
 export async function planRun(input: PlanRunInput): Promise<PlanRunOutput> {
@@ -84,7 +92,7 @@ export async function executeOrders(input: { adapter: BrokerAdapter; sized: Size
     }
     executed.push({ clientOrderId: o.clientOrderId, brokerId: order.id, status: order.status, filledQty: order.filledQty, filledAvgPrice: order.filledAvgPrice, submittedAt: order.submittedAt });
     if (order.filledQty > 0 && order.filledAvgPrice != null && order.filledAt) {
-      const fill: Fill = { ticker: o.ticker, side: o.side, qty: order.filledQty, price: order.filledAvgPrice, filledAt: order.filledAt, tradingDate: order.filledAt.slice(0, 10), orderId: order.id, runId };
+      const fill: Fill = { ticker: o.ticker, side: o.side, qty: order.filledQty, price: order.filledAvgPrice, filledAt: order.filledAt, tradingDate: fillTradingDate(order.filledAt), orderId: order.id, runId };
       appendFill(fillsPath, fill);
       fills.push(fill);
     }

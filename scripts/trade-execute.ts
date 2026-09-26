@@ -9,11 +9,12 @@ import { newRunId, writeRunRecord } from "../lib/trade/run-record";
 import { writeLedger } from "../lib/trade/ledger";
 import { SchwabAuthError } from "../lib/broker/schwab-auth";
 import { has, loadReportsAndMeta, makeBroker, brokerBaseUrl, readFills, FILLS_PATH, LEDGER_PATH, RUNS_DIR } from "./_trade-common";
+import { todayET } from "../lib/trade/clock";
 
 const args = process.argv.slice(2);
 if (process.env.TRADE_DISABLED === "1") { console.error("TRADE_DISABLED=1 — refusing to submit."); process.exit(2); }
 const cfg = resolveTradeConfig();
-const today = new Date().toISOString().slice(0, 10);
+const today = todayET();
 const adapter = makeBroker();
 const baseUrl = brokerBaseUrl(adapter);
 const mode = adapter.kind === "schwab" ? ">>> LIVE — Charles Schwab (real money) <<<" : "paper — Alpaca (test)";

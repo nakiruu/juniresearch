@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { planRun, executeOrders } from "./pipeline";
+import { planRun, executeOrders, fillTradingDate } from "./pipeline";
 import { FakeBroker } from "../broker/fake";
 import { resolveTradeConfig } from "./config";
 import { readFills } from "./fills";
@@ -83,5 +83,15 @@ describe("executeOrders", () => {
     const { fills } = await executeOrders({ adapter: b, sized: out.sized, ctx, runId: "r1", fillsPath, pollMs: 0 });
     expect(fills).toEqual([]);
     expect(readFills(fillsPath)).toEqual([]);
+  });
+});
+
+describe("fillTradingDate — the lock clock starts on the fill's ET date", () => {
+  it("uses the ET date, not the UTC date, for an evening-UTC timestamp", () => {
+    expect(fillTradingDate("2026-03-10T00:30:00Z")).toBe("2026-03-09"); // 20:30 EDT on the 9th
+    expect(fillTradingDate("2026-09-28T13:45:00+0000")).toBe("2026-09-28"); // Schwab's offset format
+  });
+  it("falls back to the literal date prefix for an unparseable timestamp", () => {
+    expect(fillTradingDate("garbage")).toBe("garbage".slice(0, 10));
   });
 });
