@@ -9,7 +9,8 @@
 > (unmerged, gated). Defaults quoted here are the code defaults as of 2026-09-25.
 >
 > **How to read the "💡 Better idea" callouts:** they mark points where a defensible alternative
-> exists. They are design notes, not TODOs — none is wired in.
+> exists. They are design notes, not TODOs — none is wired in. "🚫 Not an option" callouts mark
+> alternatives that are ruled out by the owner's trading rules or the live broker — don't propose them.
 
 ---
 
@@ -286,10 +287,9 @@ fill populates `buyLockUntil`. **Same-side adds are not locked** (topping up a p
 ICE ban is re-enforced here and at the broker guard (buys refused; a disposing *sell* of a banned name is
 allowed).
 
-> 💡 **Better idea — whole-ticker vs per-lot.** The lock is whole-ticker (conservative: one fill freezes
-> the whole name). Per-lot locking would allow trimming an old lot while a fresh lot is locked, at the cost
-> of more state. Whole-ticker was chosen deliberately for auditability; per-lot is the natural extension if
-> tax-lot management is ever added.
+> 🚫 **Not an option — per-lot locking.** The lock is whole-ticker by rule: the owner's trading
+> restrictions apply to the whole name, so one fill freezes the ticker. Per-lot locking (trimming an old lot
+> while a fresh lot is locked) would break those rules and must not be added.
 
 ---
 
@@ -311,11 +311,10 @@ skip (skippedHalt)  if  computeLimit returns halt (no price / gap)
 only the *fill* uses the live price — so the plan is backtest-reproducible while execution still crosses at
 a real quote.
 
-> 💡 **Better idea — whole-share only is a forced choice, not always ideal.** Fractional would size high-
-> priced names exactly, but Alpaca allows fractional **only** with `time_in_force:"day"` (not IOC), and
-> Schwab's API has no fractional at all — so IOC ⇒ whole-share. A high-priced name whose target is < 1
-> share rounds to 0 and is dropped (material only at small NAV). A fractional **DAY-limit + cancel-at-close**
-> path for the high-priced tail would recover exact sizing at the cost of intraday resting risk.
+> 🚫 **Not an option — fractional shares.** Orders are whole-share by requirement: Schwab is the live
+> broker and its API has no fractional shares (Alpaca allows fractional only with `time_in_force:"day"`,
+> not IOC, and is paper-only). A high-priced name whose target is < 1 share rounds to 0 and is dropped
+> (material only at small NAV); that is accepted, not a gap to close.
 
 ### 5.2 Liquidity buckets  (`bucketFor`)
 
