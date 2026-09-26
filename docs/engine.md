@@ -375,8 +375,12 @@ between two matches) at 2s/5s/10s. Found → polled and recorded as usual. Not f
 as `unknown`, **no further orders are sent**, and cron halts (`submit-unknown`). If the lost order did
 execute, the next run's reconcile orders-check halts until it is recorded.
 
-> 💡 **Still open — decision→submit latency isn't measured.** The run record doesn't persist per-fetch
-> timestamps, so anchor-capture→fill staleness can't be audited after the fact (plan Phase 4).
+**Execution telemetry.** Every run-record order carries the anchor (`pRef`, `anchorAtMs`), the τ used and
+the τ the spread *wanted* before the cap (`diag.tauWanted`, `relSpread`, bid/ask, quote/trade ages), plus
+`filledQty`, `filledAvgPrice` and local `submitStartAt` / `submitAckAt` / `terminalAt`. Freshness is judged
+when each ticker's quote was fetched, not at run start. `npm run trade:review` reports, **per broker**
+(paper never mixed with live), the fill ratio of cap-bound vs other orders, τ-wanted/τ_max percentiles per
+bucket, and latency percentiles — the evidence a τ_max change must wait for (≥5 Schwab runs).
 
 ---
 

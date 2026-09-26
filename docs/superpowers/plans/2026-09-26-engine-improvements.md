@@ -555,6 +555,10 @@ export function refreshTokenHealth(t: SchwabTokens | null, nowMs: number, nextRu
 
 ## Phase 4 — Observability
 
+> **Status: implemented 2026-09-26** (`7f4417c`, `93ef59b`, `85e3d9c`, and the run-record commit after it).
+> Data collection for the τ_max revisit (L.1) starts with the first Schwab run on this code; the backtest
+> harness (L.2) starts accumulating scenario-risk history from the same point.
+
 ### Task 4.1: Limit diagnostics on every order (#9)
 
 **Files:** `lib/trade/limit.ts` (`LimitResult`), `lib/trade/orders.ts` (`OrderRequest`), `limit.test.ts`,
@@ -563,10 +567,10 @@ export function refreshTokenHealth(t: SchwabTokens | null, nowMs: number, nextRu
 **Fields added:** `relSpread: number | null`, `tauWanted: number`, `bid`, `ask`, `quoteAgeMs`,
 `tradeAgeMs` (all `number | null`).
 
-- [ ] **Step 1:** Write tests: `tauWanted = max(base, β·relSpread)` before the clamp, and
+- [x] **Step 1:** Write tests: `tauWanted = max(base, β·relSpread)` before the clamp, and
   `capBound ⇔ tauWanted > τ_max`.
-- [ ] **Step 2:** Implement: thread the fields through `tradesToOrders`.
-- [ ] **Step 3:** Commit: `feat(trade): persist spread/τ/quote-age diagnostics per order`.
+- [x] **Step 2:** Implement: thread the fields through `tradesToOrders`.
+- [x] **Step 3:** Commit: `feat(trade): persist spread/τ/quote-age diagnostics per order`.
 
 ### Task 4.2: Fill quantities + latency timestamps on executed orders (#9, #10)
 
@@ -584,10 +588,10 @@ export function refreshTokenHealth(t: SchwabTokens | null, nowMs: number, nextRu
 
 **Steps**
 
-- [ ] **Step 1:** Write tests with an injected clock: the order-record timestamps are monotonic, and
+- [x] **Step 1:** Write tests with an injected clock: the order-record timestamps are monotonic, and
   freshness is evaluated at anchor time.
-- [ ] **Step 2:** Implement and go green.
-- [ ] **Step 3:** Commit: `feat(trade): per-order latency timestamps and filled qty in the run record`.
+- [x] **Step 2:** Implement and go green.
+- [x] **Step 3:** Commit: `feat(trade): per-order latency timestamps and filled qty in the run record`.
 
 ### Task 4.3: `trade:review` cap-bind and latency stats
 
@@ -600,10 +604,10 @@ export function refreshTokenHealth(t: SchwabTokens | null, nowMs: number, nextRu
 
 Paper and Schwab are always reported separately.
 
-- [ ] **Step 1:** Write tests with synthetic run records: the stats are correct and the brokers are not
+- [x] **Step 1:** Write tests with synthetic run records: the stats are correct and the brokers are not
   mixed.
-- [ ] **Step 2:** Implement and go green.
-- [ ] **Step 3:** Commit: `feat(review): cap-bind fill ratios and latency percentiles by broker`.
+- [x] **Step 2:** Implement and go green.
+- [x] **Step 3:** Commit: `feat(review): cap-bind fill ratios and latency percentiles by broker`.
 
 ### Task 4.4: Richer `RunRecord.signals` (#6 prerequisite)
 
@@ -612,9 +616,9 @@ Paper and Schwab are always reported separately.
 **Fields added, all optional in zod for back-compat:** `sigma`, `sigmaDown`, `D`, and
 `scenarios: {p, impliedPrice}[]`.
 
-- [ ] **Step 1:** Write tests: an old record still parses, and a new record round-trips.
-- [ ] **Step 2:** Implement and go green.
-- [ ] **Step 3:** Commit: `feat(trade): run record keeps scenario risk fields for future replay`.
+- [x] **Step 1:** Write tests: an old record still parses, and a new record round-trips.
+- [x] **Step 2:** Implement and go green.
+- [x] **Step 3:** Commit: `feat(trade): run record keeps scenario risk fields for future replay`.
 
 **Phase 4 exit:**
 - `trade:review` on a week of paper runs shows the new sections.
