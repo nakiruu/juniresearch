@@ -396,15 +396,23 @@ Cron then:
 
 ## Phase 3 — Guardrails
 
+> **Status: implemented 2026-09-26 except the optional Task 3.4** (`636a3da`, `6fb868a`, `bcd6251`, `7b71c08`).
+> Task 3.4 (fast bootstrap) was deliberately skipped: the ENTER-only clip (3.3) builds a book from cash
+> over several runs within the cap, and `trade:execute` covers a one-shot manual build — a flag that
+> raises the cap to 100% would only add a bypass. Additions beyond the spec: `executeOrders` sends sells
+> before buys and skips (rather than crashing on) a cash-refused buy. Open: whether Schwab resets the
+> 7-day clock when it rotates a refresh token (the code keeps the original issue time, so warnings would
+> only ever come early).
+
 ### Task 3.1: Align notional measures (#11, F8)
 
 **Files:** `lib/trade/pipeline.ts:80`, `guards.test.ts`, `pipeline.test.ts`.
 
-- [ ] **Step 1:** Write tests.
+- [x] **Step 1:** Write tests.
   - The `estNotionalUsd` passed to `guardedSubmit` equals `qty × limitPrice`.
   - For a tier-3 (×0.5) buy, the guard's counted notional is about half of `deltaUsd`.
-- [ ] **Step 2:** Implement: `estNotionalUsd: o.qty * o.limitPrice`.
-- [ ] **Step 3:** Commit: `fix(trade): guard notional counts what an IOC limit can actually spend`.
+- [x] **Step 2:** Implement: `estNotionalUsd: o.qty * o.limitPrice`.
+- [x] **Step 3:** Commit: `fix(trade): guard notional counts what an IOC limit can actually spend`.
 
 ### Task 3.2: Cash backstop in guards (F5)
 
@@ -426,14 +434,14 @@ funds a buy.
 
 **Steps**
 
-- [ ] **Step 1:** Write tests.
+- [x] **Step 1:** Write tests.
   - A buy within cash passes.
   - A buy over cash throws.
   - A filled sell credits cash.
   - An unfilled sell does not.
   - A sell is never refused by the backstop.
-- [ ] **Step 2:** Implement. `cashUsd` comes from `out.ledger.cash`, which is broker truth.
-- [ ] **Step 3:** Commit: `feat(guards): never-leverage cash backstop checked against broker cash`.
+- [x] **Step 2:** Implement. `cashUsd` comes from `out.ledger.cash`, which is broker truth.
+- [x] **Step 3:** Commit: `feat(guards): never-leverage cash backstop checked against broker cash`.
 
 ### Task 3.3: Clip-to-turnover for ENTER-only plans (#11)
 
@@ -463,13 +471,13 @@ export function clipToTurnover<T extends { qty: number; limitPrice: number; reas
 
 **Steps**
 
-- [ ] **Step 1:** Write tests.
+- [x] **Step 1:** Write tests.
   - The clip keeps the top-weight orders and stays ≤ cap.
   - A single order bigger than the cap gives an empty `kept`, which cron treats as noop + notify.
   - A mixed ENTER/ADD plan returns `null`, so it halts.
   - The knob off halts exactly as today.
-- [ ] **Step 2:** Implement and go green.
-- [ ] **Step 3:** Commit: `feat(trade): clip ENTER-only plans to the turnover cap instead of halting`.
+- [x] **Step 2:** Implement and go green.
+- [x] **Step 3:** Commit: `feat(trade): clip ENTER-only plans to the turnover cap instead of halting`.
 
 ### Task 3.4: Guarded fast bootstrap (optional, #11)
 
@@ -525,17 +533,17 @@ export function refreshTokenHealth(t: SchwabTokens | null, nowMs: number, nextRu
 
 **Steps**
 
-- [ ] **Step 1:** Write tests.
+- [x] **Step 1:** Write tests.
   - The level boundaries.
   - On a Friday, a token expiring Saturday 10:00 is critical, because the next run is Monday.
   - A missing field gives unknown.
   - In cron, two runs on the same day notify once, and an escalation notifies again.
-- [ ] **Step 2:** Implement and go green.
-- [ ] **Step 3:** Confirm the rotation semantics. `ensureAccessToken` keeps the old `refreshObtainedAt`
+- [x] **Step 2:** Implement and go green.
+- [x] **Step 3:** Confirm the rotation semantics. `ensureAccessToken` keeps the old `refreshObtainedAt`
   when Schwab rotates the refresh token (spread at line 72). If Schwab resets the 7-day clock on
   rotation, set `refreshObtainedAt: nowMs` whenever `r.refresh_token` differs. Check against a real
   refresh response, and cover the chosen behaviour with a test.
-- [ ] **Step 4:** Commit: `feat(schwab): proactive refresh-token expiry warnings`.
+- [x] **Step 4:** Commit: `feat(schwab): proactive refresh-token expiry warnings`.
 
 **Phase 3 exit:**
 - Paper: a from-flat account with `turnoverClipEnterOnly` builds over several runs without halts.
