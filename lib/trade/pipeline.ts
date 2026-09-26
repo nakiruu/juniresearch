@@ -7,6 +7,8 @@ import { buildSignal, type Signal } from "../portfolio/signal";
 import type { BrokerAdapter, BrokerOrderStatus } from "../broker/adapter";
 import { TERMINAL_STATUSES } from "../broker/adapter";
 import { guardedSubmit, type GuardContext } from "../broker/guards";
+import { SubmitOutcomeUnknownError } from "../broker/http";
+import type { BrokerOrder, SubmitOrderRequest } from "../broker/adapter";
 import type { TradeConfig } from "./config";
 import { assertCalendar, prevTradingDay, isTradingDay, indexOnOrBefore, type TradingDay } from "./calendar";
 import { appendFill, type Fill } from "./fills";
@@ -80,19 +82,62 @@ const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 /** The terminal broker outcome of one submitted order — the observability the run record persists (spec §2). */
 export interface ExecutedOrder {
-  clientOrderId: string; brokerId: string; status: BrokerOrderStatus;
+  /** "unknown": the submit's outcome could not be established — the order may exist at the broker. */
+  clientOrderId: string; brokerId: string; status: BrokerOrderStatus | "unknown";
   filledQty: number; filledAvgPrice: number | null; submittedAt: string | null;
 }
 
-export async function executeOrders(input: { adapter: BrokerAdapter; sized: SizedOrders; ctx: GuardContext; runId: string; fillsPath: string; pollMs?: number; now?: () => number }): Promise<{ fills: Fill[]; executed: ExecutedOrder[] }> {
-  const { adapter, sized, ctx, runId, fillsPath, pollMs = 1000, now = Date.now } = input;
+/** Why a run stopped submitting: a submit whose outcome could not be established. */
+export interface SubmitAbort { ticker: string; clientOrderId: string; detail: string }
+
+/**
+ * Look for the order a lost submit may have placed — read-only, a few times, since a just-accepted
+ * order can take seconds to appear in the broker's listing. Never resubmits.
+ */
+async function resolveUnknownSubmit(adapter: BrokerAdapter, req: SubmitOrderRequest, since: string, delaysMs: readonly number[]): Promise<{ order: BrokerOrder | null; detail: string }> {
+  let detail = "not found at the broker";
+  for (const ms of delaysMs) {
+    await sleep(ms);
+    try {
+      const order = await adapter.findSubmitted(req, since);
+      if (order) return { order, detail: "found" };
+    } catch (e) {
+      detail = e instanceof Error ? e.message : String(e);
+      if (e instanceof Error && e.name === "AmbiguousOrderError") break; // more lookups won't disambiguate
+    }
+  }
+  return { order: null, detail };
+}
+
+export async function executeOrders(input: {
+  adapter: BrokerAdapter; sized: SizedOrders; ctx: GuardContext; runId: string; fillsPath: string; pollMs?: number; now?: () => number;
+  /** Lookup schedule for a submit with an unknown outcome (default 2s, 5s, 10s). */
+  resolveDelaysMs?: readonly number[];
+}): Promise<{ fills: Fill[]; executed: ExecutedOrder[]; aborted?: SubmitAbort }> {
+  const { adapter, sized, ctx, runId, fillsPath, pollMs = 1000, now = Date.now, resolveDelaysMs = [2_000, 5_000, 10_000] } = input;
   const fills: Fill[] = [];
   const executed: ExecutedOrder[] = [];
   for (const o of sized.orders) {
     // Poll window: bounded to just before this submit (60s slack for clock skew) so the broker listing
     // always contains the new order, however long the account's order history grows.
     const pollAfter = new Date(now() - 60_000).toISOString();
-    let order = await guardedSubmit(adapter, { symbol: o.ticker, side: o.side, qty: o.qty, limitPrice: o.limitPrice, timeInForce: o.timeInForce, clientOrderId: o.clientOrderId, estNotionalUsd: o.deltaUsd }, ctx);
+    const req: SubmitOrderRequest = { symbol: o.ticker, side: o.side, qty: o.qty, limitPrice: o.limitPrice, timeInForce: o.timeInForce, clientOrderId: o.clientOrderId, estNotionalUsd: o.deltaUsd };
+    let order: BrokerOrder;
+    try {
+      order = await guardedSubmit(adapter, req, ctx);
+    } catch (e) {
+      if (!(e instanceof SubmitOutcomeUnknownError)) throw e;
+      // The order may exist. Find it; NEVER resend it (a double fill, or a fill we can't record, is worse than a miss).
+      const found = await resolveUnknownSubmit(adapter, req, e.submitStartAt, resolveDelaysMs);
+      if (!found.order) {
+        executed.push({ clientOrderId: o.clientOrderId, brokerId: "", status: "unknown", filledQty: 0, filledAvgPrice: null, submittedAt: e.submitStartAt });
+        // Stop the run: every later order would be planned against a book we can't vouch for.
+        return { fills, executed, aborted: { ticker: o.ticker, clientOrderId: o.clientOrderId, detail: `${e.message}; lookup: ${found.detail}` } };
+      }
+      order = found.order;
+      ctx.counters.orders += 1; // it did go out — count it against the run caps as guardedSubmit would have
+      ctx.counters.notionalUsd += Math.abs(req.estNotionalUsd);
+    }
     for (let i = 0; i < 60 && !TERMINAL_STATUSES.has(order.status); i++) {
       await sleep(pollMs);
       const id = order.id;

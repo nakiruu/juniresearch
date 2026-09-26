@@ -235,6 +235,31 @@ describe("runCron", () => {
     expect(existsSync(paths.lock)).toBe(false);       // released
   });
 
+  it("an order submit with an unknown outcome halts (submit-unknown), sends nothing more, and notifies", async () => {
+    const paths = mkPaths();
+    const adapter = mkBroker();
+    adapter.loseNextSubmitResponse("not-placed");
+    const notified: string[] = [];
+    const r = await runCron(mkDeps({ paths, adapter, notify: (m) => notified.push(m), resolveDelaysMs: [0],
+      loadInputs: async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] }) }));
+    expect(r).toEqual({ status: "halted", reason: "submit-unknown" });
+    expect(adapter.submitCount).toBe(1);
+    expect(readHaltState(paths.haltState)).toEqual({ consecutive: 1 });
+    expect(notified.some((m) => /UNKNOWN outcome.*record-missing/.test(m))).toBe(true);
+    const [rec] = readdirSync(paths.runs);
+    expect(readFileSync(join(paths.runs, rec), "utf8")).toMatch(/"status": "unknown"/);
+  });
+
+  it("an unknown submit that did execute is caught by the next run's reconcile until it is recorded", async () => {
+    const paths = mkPaths();
+    const adapter = mkBroker();
+    adapter.loseNextSubmitResponse("placed");
+    adapter.findSubmitted = async () => null; // e.g. the listing hadn't caught up within the lookup window
+    const inputs = async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: readFills(paths.fills) });
+    expect(await runCron(mkDeps({ paths, adapter, resolveDelaysMs: [0], loadInputs: inputs }))).toEqual({ status: "halted", reason: "submit-unknown" });
+    expect(await runCron(mkDeps({ paths, adapter, runId: "r-cron-2", loadInputs: inputs }))).toEqual({ status: "halted", reason: "reconcile" });
+  });
+
   it("a broker-truth CRITICAL is sticky: every later run halts at reconcile until the fill is recorded", async () => {
     const paths = mkPaths();
     const adapter = mkBroker();

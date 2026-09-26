@@ -72,6 +72,44 @@ describe("planRun", () => {
 });
 
 describe("executeOrders", () => {
+  describe("a submit with an unknown outcome (spec #10)", () => {
+    const setup = async () => {
+      const b = new FakeBroker({ calendar: CAL, closes: { NVT: closes(100) }, equity: 10_000, cash: 10_000, isOpen: true, today: "2026-09-25" });
+      const out = await planRun({ adapter: b, reports: [nvt], sics: {}, marketCapUsd: {}, fills: [], today: "2026-09-25", cfg, runId: "r1" });
+      const ctx: GuardContext = { brokerKind: "fake", configuredBaseUrl: "memory://", locks: out.locks, today: "2026-09-25", nav: out.ledger.nav, cfg, env: {} as NodeJS.ProcessEnv, counters: { orders: 0, notionalUsd: 0 } };
+      const fillsPath = join(mkdtempSync(join(tmpdir(), "exec-")), "fills.jsonl");
+      return { b, out, ctx, fillsPath };
+    };
+    it("placed but the response was lost: found by lookup, fill recorded, submitted exactly once", async () => {
+      const { b, out, ctx, fillsPath } = await setup();
+      b.loseNextSubmitResponse("placed");
+      const r = await executeOrders({ adapter: b, sized: out.sized, ctx, runId: "r1", fillsPath, pollMs: 0, resolveDelaysMs: [0, 0, 0] });
+      expect(b.submitCount).toBe(1);
+      expect(r.aborted).toBeUndefined();
+      expect(r.fills).toHaveLength(1);
+      expect(readFills(fillsPath)).toEqual(r.fills);
+      expect(ctx.counters.orders).toBe(1); // counted against the run caps like any submit
+    });
+    it("never placed: nothing resubmitted, the run stops, the order is recorded as 'unknown'", async () => {
+      const { b, out, ctx, fillsPath } = await setup();
+      b.loseNextSubmitResponse("not-placed");
+      const r = await executeOrders({ adapter: b, sized: out.sized, ctx, runId: "r1", fillsPath, pollMs: 0, resolveDelaysMs: [0, 0, 0] });
+      expect(b.submitCount).toBe(1);
+      expect(await b.getOrders("all")).toEqual([]);
+      expect(r.aborted).toMatchObject({ ticker: "NVT", clientOrderId: out.sized.orders[0].clientOrderId });
+      expect(r.executed).toEqual([expect.objectContaining({ status: "unknown", brokerId: "" })]);
+      expect(r.fills).toEqual([]);
+    });
+    it("an ambiguous lookup also stops the run (never guesses)", async () => {
+      const { b, out, ctx, fillsPath } = await setup();
+      b.loseNextSubmitResponse("not-placed");
+      let lookups = 0;
+      b.findSubmitted = async () => { lookups++; const e = new Error("2 orders match"); e.name = "AmbiguousOrderError"; throw e; };
+      const r = await executeOrders({ adapter: b, sized: out.sized, ctx, runId: "r1", fillsPath, pollMs: 0, resolveDelaysMs: [0, 0, 0] });
+      expect(r.aborted?.detail).toMatch(/2 orders match/);
+      expect(lookups).toBe(1);
+    });
+  });
   it("polls a working order with an `after` bound just before its submit, matched by broker id", async () => {
     const b = new FakeBroker({ calendar: CAL, closes: { NVT: closes(100) }, equity: 10_000, cash: 10_000, isOpen: true, today: "2026-09-25" });
     const out = await planRun({ adapter: b, reports: [nvt], sics: {}, marketCapUsd: {}, fills: [], today: "2026-09-25", cfg, runId: "r1" });

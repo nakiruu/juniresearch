@@ -46,6 +46,8 @@ export interface CronDeps {
    * step-1 `disabled` read, so it must carry the real environment, not an empty stand-in.
    */
   env: NodeJS.ProcessEnv;
+  /** Lookup schedule for an order submit with an unknown outcome (tests pass zeros). */
+  resolveDelaysMs?: readonly number[];
   /** Manual run (`trade:cron --now`): skip the fire-window check. The market-clock check still applies. */
   ignoreWindow?: boolean;
 }
@@ -193,7 +195,7 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
       brokerKind: adapter.kind, configuredBaseUrl, locks: out.locks, today, nav: out.ledger.nav, cfg,
       env, counters: { orders: 0, notionalUsd: 0 },
     };
-    const { fills, executed } = await executeOrders({ adapter, sized: out.sized, ctx, runId, fillsPath: paths.fills });
+    const { fills, executed, aborted } = await executeOrders({ adapter, sized: out.sized, ctx, runId, fillsPath: paths.fills, resolveDelaysMs: deps.resolveDelaysMs });
     const rec = { ...out.record, fills: fills as unknown as Record<string, unknown>[], orders: mergeExecution(out.record.orders, executed) };
     writeRunRecord(paths.runs, rec);
 
@@ -201,11 +203,21 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
     // did; a critical discrepancy (an unrecorded or mismatched fill under-sets the lock clock and the
     // ledger) is a halt — bump the counter, notify, exit non-zero. Warnings pass. Only a clean audit
     // clears the consecutive-halt counter.
+    const brokerIdByCid = new Map(executed.map((e) => [e.clientOrderId, e.brokerId || undefined]));
     const audit = crossCheckBroker({
-      expected: out.sized.orders.map((o) => ({ clientOrderId: o.clientOrderId, ticker: o.ticker, side: o.side })),
+      expected: out.sized.orders.map((o) => ({ clientOrderId: o.clientOrderId, ticker: o.ticker, side: o.side, brokerId: brokerIdByCid.get(o.clientOrderId) })),
       brokerOrders: await adapter.getOrders("all", `${today}T00:00:00Z`),
       fills,
     });
+    // 9b. A submit whose outcome is unknown stopped the run. The order may exist (and may have filled);
+    // halt so a human checks the broker. The next run's reconcile orders-check also refuses to proceed
+    // while any executed order is unrecorded, so this can't be silently traded past.
+    if (aborted) {
+      bumpHalt(paths.haltState);
+      notify(`cron halted: order submit for ${aborted.ticker} has an UNKNOWN outcome (${aborted.detail}). Check the broker's order history; if it executed, run \`npm run trade:reconcile -- --record-missing\`, then clear the halt state to resume.`);
+      appendLog(paths.log, logLine(today, runId, "halted", { ...summaryFields(out), reason: "submit-unknown" }));
+      return { status: "halted", reason: "submit-unknown" };
+    }
     if (!audit.ok) {
       bumpHalt(paths.haltState);
       notify(`cron halted: broker-truth check found ${audit.critical} critical discrepancy(ies) — ${audit.discrepancies.filter((d) => d.severity === "critical").map((d) => `${d.code} ${d.ticker}`).join(", ")}`);

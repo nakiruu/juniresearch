@@ -366,10 +366,17 @@ slippage cap refusing to chase.
 > the configured `cronTimeET`; deeper/tighter spreads) and, only after ≥3–5 runs of data, consider raising
 > τ_max. Do **not** tune τ on one run.
 
-> 💡 **Better idea — decision→submit latency isn't measured.** There is no per-request broker timeout, and
-> the run record doesn't persist per-fetch timestamps, so anchor-capture→fill staleness can't be audited
-> after the fact. A timeout (a hung run is *recovered* by stale-lock reclaim, not *prevented*) and a
-> submit-timestamp field would close both gaps.
+**Timeouts and unknown submits (`lib/broker/http.ts`).** Every broker/OAuth request has a deadline over
+headers and body (read 10s, submit 15s, token 10s); only idempotent reads are retried (1s, 3s). An order
+submit is **never** retried: a timeout, network failure, 5xx, or a Schwab 2xx with no order id raises
+`SubmitOutcomeUnknownError`, and `executeOrders` looks the order up with `findSubmitted` (Alpaca by
+`client_order_id`; Schwab by exact symbol/side/qty/price/type/duration since the submit, refusing to guess
+between two matches) at 2s/5s/10s. Found → polled and recorded as usual. Not found → the order is recorded
+as `unknown`, **no further orders are sent**, and cron halts (`submit-unknown`). If the lost order did
+execute, the next run's reconcile orders-check halts until it is recorded.
+
+> 💡 **Still open — decision→submit latency isn't measured.** The run record doesn't persist per-fetch
+> timestamps, so anchor-capture→fill staleness can't be audited after the fact (plan Phase 4).
 
 ---
 
@@ -380,7 +387,9 @@ slippage cap refusing to chase.
 ```
 turnover breaker      Σ|qty·limitPrice| > maxRunTurnoverFrac (0.15) · NAV     → halt, submit nothing   [cron only]
 consecutive-halt      ≥ consecutiveHaltLimit (3) halted runs in a row         → block further runs
-reconcile-halt        unexplained broker position                            → halt
+reconcile-halt        unexplained broker position, or an executed order in    → halt (repeats until recorded)
+                      the lock window missing from fills.jsonl
+submit-unknown        an order submit whose outcome couldn't be established → stop sending, halt
 notional guard        Σ|estNotionalUsd| > maxNotionalFrac (1.0) · NAV         → refuse (per-submit)     [guards]
 order-count guard     > maxOrdersPerRun (40)                                  → refuse
 kill switch           TRADE_DISABLED=1                                        → refuse everything
