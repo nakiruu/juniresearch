@@ -15,6 +15,7 @@ import { z } from "zod";
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname } from "node:path";
+import { DEFAULT_TIMEOUTS, fetchWithTimeout } from "./http";
 
 export const TOKEN_ENDPOINT = "https://api.schwabapi.com/v1/oauth/token";
 export const AUTHORIZE_ENDPOINT = "https://api.schwabapi.com/v1/oauth/authorize";
@@ -60,12 +61,12 @@ interface Creds { clientId: string; clientSecret: string }
 const basicAuth = (c: Creds) => "Basic " + Buffer.from(`${c.clientId}:${c.clientSecret}`).toString("base64");
 
 async function postToken(body: Record<string, string>, creds: Creds, fetchImpl: typeof fetch): Promise<z.infer<typeof TokenResponse>> {
-  const res = await fetchImpl(TOKEN_ENDPOINT, {
+  const res = await fetchWithTimeout(fetchImpl, TOKEN_ENDPOINT, {
     method: "POST",
     headers: { Authorization: basicAuth(creds), "content-type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams(body).toString(),
-  });
-  const text = await res.text();
+  }, DEFAULT_TIMEOUTS.tokenMs, "token");
+  const text = res.text;
   if (res.status === 400 || res.status === 401) {
     throw new SchwabAuthError(`Schwab token endpoint ${res.status} — the refresh token has expired or was revoked. Run: npm run trade:auth (${text.slice(0, 200)})`);
   }

@@ -41,7 +41,7 @@ function unreachableAdapter(): BrokerAdapter {
     kind: "fake",
     getClock: fail, getCalendar: fail, getAccount: fail, getPositions: fail, getOrders: fail,
     getLastClose: fail, getLatestTrade: fail, getLatestQuote: fail, isFractionable: fail,
-    submitOrder: fail, cancelOrder: fail,
+    submitOrder: fail, findSubmitted: fail, cancelOrder: fail,
   } as unknown as BrokerAdapter;
 }
 

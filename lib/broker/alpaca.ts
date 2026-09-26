@@ -6,8 +6,12 @@
 import { z } from "zod";
 import type { BrokerAdapter, BrokerAccount, BrokerCalendarDay, BrokerClock, BrokerOrder, BrokerOrderStatus, BrokerPosition, SubmitOrderRequest } from "./adapter";
 import { PAPER_HOST } from "./guards";
+import { DEFAULT_TIMEOUTS, BrokerTimeoutError, SubmitOutcomeUnknownError, fetchWithTimeout, withReadRetry } from "./http";
 
-export interface AlpacaOptions { keyId: string; secretKey: string; baseUrl: string; dataBaseUrl?: string; feed?: "iex" | "sip"; fetchImpl?: typeof fetch }
+export interface AlpacaOptions {
+  keyId: string; secretKey: string; baseUrl: string; dataBaseUrl?: string; feed?: "iex" | "sip"; fetchImpl?: typeof fetch;
+  timeouts?: { readMs?: number; submitMs?: number }; retryDelaysMs?: readonly number[];
+}
 
 const num = z.union([z.number(), z.string()]).transform((v) => { const n = Number(v); if (!Number.isFinite(n)) throw new Error(`not a number: ${v}`); return n; });
 const numOrNull = z.union([num, z.null(), z.undefined()]).transform((v) => (v == null ? null : v));
@@ -35,6 +39,7 @@ export class AlpacaPaperBroker implements BrokerAdapter {
   readonly kind = "alpaca-paper" as const;
   private readonly base: string; private readonly data: string; private readonly feed: string; private readonly fetchImpl: typeof fetch;
   private readonly headers: Record<string, string>;
+  private readonly readMs: number; private readonly submitMs: number; private readonly retryDelaysMs?: readonly number[];
   constructor(opts: AlpacaOptions) {
     if (!opts.baseUrl.includes(PAPER_HOST)) throw new Error(`AlpacaPaperBroker: baseUrl must be the paper endpoint (${PAPER_HOST}); got ${opts.baseUrl}`);
     this.base = opts.baseUrl.replace(/\/$/, "");
@@ -42,12 +47,15 @@ export class AlpacaPaperBroker implements BrokerAdapter {
     this.feed = opts.feed ?? "iex";
     this.fetchImpl = opts.fetchImpl ?? fetch;
     this.headers = { "APCA-API-KEY-ID": opts.keyId, "APCA-API-SECRET-KEY": opts.secretKey, accept: "application/json" };
+    this.readMs = opts.timeouts?.readMs ?? DEFAULT_TIMEOUTS.readMs;
+    this.submitMs = opts.timeouts?.submitMs ?? DEFAULT_TIMEOUTS.submitMs;
+    this.retryDelaysMs = opts.retryDelaysMs;
   }
-  private async call<T>(schema: z.ZodType<T>, url: string, init: RequestInit = {}): Promise<T> {
-    const res = await this.fetchImpl(url, { ...init, headers: { ...this.headers, ...(init.body ? { "content-type": "application/json" } : {}), ...(init.headers ?? {}) } });
-    const text = await res.text();
-    if (!res.ok) throw new Error(`Alpaca ${init.method ?? "GET"} ${url} → ${res.status}: ${text.slice(0, 300)}`);
-    return schema.parse(JSON.parse(text));
+  /** An idempotent GET: bounded, retried on transient failure. */
+  private async call<T>(schema: z.ZodType<T>, url: string): Promise<T> {
+    const res = await withReadRetry(() => fetchWithTimeout(this.fetchImpl, url, { headers: this.headers }, this.readMs, "read"), this.retryDelaysMs);
+    if (!res.ok) throw new Error(`Alpaca GET ${url} → ${res.status}: ${res.text.slice(0, 300)}`);
+    return schema.parse(JSON.parse(res.text));
   }
   private toOrder(o: z.infer<typeof Order>): BrokerOrder {
     return { id: o.id, clientOrderId: o.client_order_id, symbol: o.symbol, side: o.side, status: o.status as BrokerOrderStatus,
@@ -107,10 +115,30 @@ export class AlpacaPaperBroker implements BrokerAdapter {
         ? { type: "limit", limit_price: String(req.limitPrice), time_in_force: req.timeInForce ?? "day" }
         : { type: "market", time_in_force: "day" }),
       ...(req.notional != null ? { notional: String(req.notional) } : { qty: String(req.qty) }) };
-    return this.toOrder(await this.call(Order, `${this.base}/v2/orders`, { method: "POST", body: JSON.stringify(body) }));
+    const url = `${this.base}/v2/orders`;
+    const startAt = new Date().toISOString();
+    let res;
+    try {
+      // Never retried: a resend could double the order. An unknown outcome is resolved by findSubmitted.
+      res = await fetchWithTimeout(this.fetchImpl, url, { method: "POST", headers: { ...this.headers, "content-type": "application/json" }, body: JSON.stringify(body) }, this.submitMs, "submit");
+    } catch (e) {
+      if (e instanceof BrokerTimeoutError || e instanceof TypeError) throw new SubmitOutcomeUnknownError(req.clientOrderId, req.symbol, startAt, e.message);
+      throw e;
+    }
+    if (res.status >= 500) throw new SubmitOutcomeUnknownError(req.clientOrderId, req.symbol, startAt, `Alpaca POST → ${res.status}`);
+    if (!res.ok) throw new Error(`Alpaca POST ${url} → ${res.status}: ${res.text.slice(0, 300)}`); // 4xx: definitively not accepted
+    return this.toOrder(Order.parse(JSON.parse(res.text)));
+  }
+  /** Alpaca keeps our client_order_id, so a timed-out submit is found by exact id. */
+  async findSubmitted(req: SubmitOrderRequest): Promise<BrokerOrder | null> {
+    const url = `${this.base}/v2/orders:by_client_order_id?${new URLSearchParams({ client_order_id: req.clientOrderId })}`;
+    const res = await withReadRetry(() => fetchWithTimeout(this.fetchImpl, url, { headers: this.headers }, this.readMs, "read"), this.retryDelaysMs);
+    if (res.status === 404) return null;
+    if (!res.ok) throw new Error(`Alpaca GET ${url} → ${res.status}: ${res.text.slice(0, 300)}`);
+    return this.toOrder(Order.parse(JSON.parse(res.text)));
   }
   async cancelOrder(id: string): Promise<void> {
-    const res = await this.fetchImpl(`${this.base}/v2/orders/${id}`, { method: "DELETE", headers: this.headers });
+    const res = await fetchWithTimeout(this.fetchImpl, `${this.base}/v2/orders/${id}`, { method: "DELETE", headers: this.headers }, this.readMs, "read");
     if (!res.ok && res.status !== 404) throw new Error(`Alpaca DELETE order ${id} → ${res.status}`);
   }
 }

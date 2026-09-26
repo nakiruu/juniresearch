@@ -26,7 +26,16 @@ export interface BrokerAdapter {
   getLatestTrade(symbol: string): Promise<{ price: number; tsMs: number } | null>;
   getLatestQuote(symbol: string): Promise<{ bid: number; ask: number; tsMs: number } | null>;
   isFractionable(symbols: string[]): Promise<Record<string, boolean>>;
+  /**
+   * Throws SubmitOutcomeUnknownError (lib/broker/http.ts) when the order MAY have been placed (timeout,
+   * network failure, 5xx, no order id in the response). Callers must then use findSubmitted — never resubmit.
+   */
   submitOrder(req: SubmitOrderRequest): Promise<BrokerOrder>;
+  /**
+   * Look up the broker order a timed-out submit may have placed, submitted at/after `sinceIso`. null =
+   * not found; throws AmbiguousOrderError when more than one order matches. Read-only.
+   */
+  findSubmitted(req: SubmitOrderRequest, sinceIso: string): Promise<BrokerOrder | null>;
   cancelOrder(id: string): Promise<void>;
 }
 export const TERMINAL_STATUSES: ReadonlySet<BrokerOrderStatus> = new Set(["filled", "canceled", "expired", "rejected", "done_for_day", "stopped", "suspended", "replaced"]);

@@ -16,10 +16,12 @@ import { SCHWAB_HOST } from "./guards";
 import { nyseTradingDays } from "../trade/nyse-calendar";
 import { etMinutesOfDay, etWallToUtc, hhmmToMinutes, todayET } from "../trade/clock";
 import { ensureAccessToken, type SchwabTokenStore } from "./schwab-auth";
+import { AmbiguousOrderError, BrokerTimeoutError, DEFAULT_TIMEOUTS, SubmitOutcomeUnknownError, fetchWithTimeout, withReadRetry } from "./http";
 
 export interface SchwabOptions {
   tokenStore: SchwabTokenStore; clientId: string; clientSecret: string; accountHash: string;
   traderBase?: string; dataBase?: string; fetchImpl?: typeof fetch; nowMs?: () => number;
+  timeouts?: { readMs?: number; submitMs?: number }; retryDelaysMs?: readonly number[];
 }
 
 const num = z.union([z.number(), z.string()]).transform((v) => { const n = Number(v); if (!Number.isFinite(n)) throw new Error(`not a number: ${v}`); return n; });
@@ -34,6 +36,7 @@ const ExecLeg = z.object({ quantity: numSoft.optional(), price: numSoft.optional
 const OrderResp = z.object({
   orderId: z.union([z.number(), z.string()]).transform(String), status: z.string(),
   quantity: numOrNull.optional(), filledQuantity: numOrNull.optional(), enteredTime: z.string().optional(),
+  price: numSoft.optional(), orderType: z.string().optional(), duration: z.string().optional(),
   orderLegCollection: z.array(z.object({ instruction: z.string(), instrument: z.object({ symbol: z.string() }), quantity: numOrNull.optional() })).default([]),
   orderActivityCollection: z.array(z.object({ executionLegs: z.array(ExecLeg).default([]) })).default([]),
 });
@@ -66,18 +69,21 @@ export class SchwabBroker implements BrokerAdapter {
     this.data = (opts.dataBase ?? `https://${SCHWAB_HOST}/marketdata/v1`).replace(/\/$/, "");
     this.fetchImpl = opts.fetchImpl ?? fetch;
     this.now = opts.nowMs ?? Date.now;
+    this.readMs = opts.timeouts?.readMs ?? DEFAULT_TIMEOUTS.readMs;
+    this.submitMs = opts.timeouts?.submitMs ?? DEFAULT_TIMEOUTS.submitMs;
   }
+  private readonly readMs: number; private readonly submitMs: number;
   /** The live base the guard checks against — always the Schwab host. */
   get baseUrl(): string { return this.trader; }
 
   private async authHeader(): Promise<string> {
     return `Bearer ${await ensureAccessToken(this.opts.tokenStore, { clientId: this.opts.clientId, clientSecret: this.opts.clientSecret }, this.fetchImpl, this.now())}`;
   }
+  /** An idempotent GET: bounded, retried on transient failure. */
   private async get<T>(schema: z.ZodType<T>, url: string): Promise<T> {
-    const res = await this.fetchImpl(url, { headers: { Authorization: await this.authHeader(), accept: "application/json" } });
-    const text = await res.text();
-    if (!res.ok) throw new Error(`Schwab GET ${url} → ${res.status}: ${text.slice(0, 300)}`);
-    return schema.parse(JSON.parse(text));
+    const res = await withReadRetry(async () => fetchWithTimeout(this.fetchImpl, url, { headers: { Authorization: await this.authHeader(), accept: "application/json" } }, this.readMs, "read"), this.opts.retryDelaysMs);
+    if (!res.ok) throw new Error(`Schwab GET ${url} → ${res.status}: ${res.text.slice(0, 300)}`);
+    return schema.parse(JSON.parse(res.text));
   }
   private stamp(o: BrokerOrder): BrokerOrder { return { ...o, clientOrderId: this.cidByBrokerId.get(o.id) ?? o.clientOrderId }; }
 
@@ -172,19 +178,58 @@ export class SchwabBroker implements BrokerAdapter {
       ...(req.limitPrice != null ? { price: req.limitPrice } : {}),
       orderLegCollection: [{ instruction: req.side === "buy" ? "BUY" : "SELL", quantity: req.qty, instrument: { symbol: req.symbol, assetType: "EQUITY" } }],
     };
-    const res = await this.fetchImpl(`${this.trader}/accounts/${this.opts.accountHash}/orders`, {
-      method: "POST", headers: { Authorization: await this.authHeader(), "content-type": "application/json", accept: "application/json" }, body: JSON.stringify(body),
-    });
-    if (!res.ok) throw new Error(`Schwab POST order ${req.symbol} → ${res.status}: ${(await res.text()).slice(0, 300)}`);
+    const authorization = await this.authHeader(); // a SchwabAuthError here is definitive: nothing was sent
+    const startAt = new Date(this.now()).toISOString();
+    let res;
+    try {
+      // Never retried: a resend could double the order. An unknown outcome is resolved by findSubmitted.
+      res = await fetchWithTimeout(this.fetchImpl, `${this.trader}/accounts/${this.opts.accountHash}/orders`, {
+        method: "POST", headers: { Authorization: authorization, "content-type": "application/json", accept: "application/json" }, body: JSON.stringify(body),
+      }, this.submitMs, "submit");
+    } catch (e) {
+      if (e instanceof BrokerTimeoutError || e instanceof TypeError) throw new SubmitOutcomeUnknownError(req.clientOrderId, req.symbol, startAt, e.message);
+      throw e;
+    }
+    if (res.status >= 500) throw new SubmitOutcomeUnknownError(req.clientOrderId, req.symbol, startAt, `Schwab POST order → ${res.status}`);
+    if (!res.ok) throw new Error(`Schwab POST order ${req.symbol} → ${res.status}: ${res.text.slice(0, 300)}`); // 4xx: definitively not accepted
     const loc = res.headers.get("location");
     const orderId = loc?.split("/").filter(Boolean).at(-1);
-    if (!orderId) throw new Error(`Schwab POST order ${req.symbol}: no order id in Location header (${loc})`);
+    // Accepted but unidentifiable: the order exists, we just don't know its id — resolve by lookup.
+    if (!orderId) throw new SubmitOutcomeUnknownError(req.clientOrderId, req.symbol, startAt, `Schwab POST order accepted (${res.status}) with no order id in Location (${loc})`);
     this.cidByBrokerId.set(orderId, req.clientOrderId);
     // Return a non-terminal order; executeOrders polls getOrders (which stamps clientOrderId) for the fill.
     return { id: orderId, clientOrderId: req.clientOrderId, symbol: req.symbol, side: req.side, status: "new", qty: req.qty, notional: null, filledQty: 0, filledAvgPrice: null, filledAt: null, submittedAt: new Date(this.now()).toISOString() };
   }
+  /**
+   * Schwab has no client order id, so a timed-out submit is matched on everything we sent: symbol,
+   * instruction, quantity, limit price, order type, duration, and entered at/after the submit (5s skew
+   * slack) — excluding orders already attributed to another cid. One match is adopted (mapped to our
+   * cid); several are ambiguous and must go to a human.
+   */
+  async findSubmitted(req: SubmitOrderRequest, sinceIso: string): Promise<BrokerOrder | null> {
+    const sinceMs = Date.parse(sinceIso) - 5_000;
+    const q = new URLSearchParams({ fromEnteredTime: new Date(sinceMs).toISOString(), toEnteredTime: new Date(this.now() + 86_400_000).toISOString(), maxResults: "500" });
+    const raw = await this.get(z.array(OrderResp), `${this.trader}/accounts/${this.opts.accountHash}/orders?${q}`);
+    const wantType = req.limitPrice != null ? "LIMIT" : "MARKET";
+    const wantDuration = req.timeInForce === "ioc" ? "IMMEDIATE_OR_CANCEL" : "DAY";
+    const matches = raw.filter((o) => {
+      const leg = o.orderLegCollection[0];
+      return leg?.instrument.symbol === req.symbol
+        && leg.instruction.toUpperCase() === (req.side === "buy" ? "BUY" : "SELL")
+        && (o.quantity ?? leg.quantity) === req.qty
+        && (req.limitPrice == null || (o.price != null && Math.abs(o.price - req.limitPrice) < 1e-6))
+        && (o.orderType ?? wantType).toUpperCase() === wantType
+        && (o.duration ?? wantDuration).toUpperCase() === wantDuration
+        && (o.enteredTime == null || Date.parse(o.enteredTime) >= sinceMs)
+        && !this.cidByBrokerId.has(o.orderId);
+    });
+    if (matches.length > 1) throw new AmbiguousOrderError(`${matches.length} Schwab orders match the timed-out ${req.side} ${req.qty} ${req.symbol} @ ${req.limitPrice} (ids ${matches.map((m) => m.orderId).join(", ")})`);
+    if (!matches.length) return null;
+    this.cidByBrokerId.set(matches[0].orderId, req.clientOrderId);
+    return this.stamp(this.toOrder(matches[0]));
+  }
   async cancelOrder(id: string): Promise<void> {
-    const res = await this.fetchImpl(`${this.trader}/accounts/${this.opts.accountHash}/orders/${id}`, { method: "DELETE", headers: { Authorization: await this.authHeader() } });
+    const res = await fetchWithTimeout(this.fetchImpl, `${this.trader}/accounts/${this.opts.accountHash}/orders/${id}`, { method: "DELETE", headers: { Authorization: await this.authHeader() } }, this.readMs, "read");
     if (!res.ok && res.status !== 404) throw new Error(`Schwab DELETE order ${id} → ${res.status}`);
   }
 }

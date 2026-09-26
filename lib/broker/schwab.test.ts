@@ -133,6 +133,68 @@ describe("SchwabBroker submit / cancel", () => {
     const [o] = await b.getOrders("all"); // stamped from the map set at submit
     expect(o.clientOrderId).toBe("cid-xyz");
   });
+  describe("a submit with an unknown outcome is never resent — it is looked up (spec #10)", () => {
+    const REQ = { symbol: "NEE", side: "buy" as const, qty: 5, clientOrderId: "cid-1", estNotionalUsd: 400, limitPrice: 75.68, timeInForce: "ioc" as const };
+    const withPost = (post: () => Promise<Response>) => {
+      const base = mockFetch({});
+      let posts = 0;
+      const fetchImpl = (async (url: string, init: RequestInit = {}) => {
+        if (url.includes("/orders") && init.method === "POST") { posts++; return post(); }
+        return base.fetchImpl(url, init);
+      }) as unknown as typeof fetch;
+      return { b: mk(fetchImpl), posts: () => posts };
+    };
+    it("a network failure, a 5xx, or a 2xx with no order id is SubmitOutcomeUnknown — and POSTed exactly once", async () => {
+      for (const post of [
+        async () => { throw new TypeError("fetch failed"); },
+        async () => new Response("oops", { status: 502 }),
+        async () => new Response(null, { status: 201 }),
+      ]) {
+        const { b, posts } = withPost(post);
+        await expect(b.submitOrder(REQ)).rejects.toMatchObject({ name: "SubmitOutcomeUnknownError", clientOrderId: "cid-1" });
+        expect(posts()).toBe(1);
+      }
+    });
+    it("a timeout is SubmitOutcomeUnknown", async () => {
+      const hang = ((url: string, init: RequestInit = {}) => url.includes("/orders") && init.method === "POST"
+        ? new Promise<Response>((_, reject) => init.signal?.addEventListener("abort", () => reject(new DOMException("aborted", "AbortError"))))
+        : mockFetch({}).fetchImpl(url, init)) as unknown as typeof fetch;
+      const b = new SchwabBroker({ tokenStore: seededStore(), clientId: "cid", clientSecret: "s", accountHash: HASH, fetchImpl: hang, nowMs: () => NOW, timeouts: { submitMs: 20 } });
+      await expect(b.submitOrder(REQ)).rejects.toMatchObject({ name: "SubmitOutcomeUnknownError" });
+    });
+    it("a 4xx is a definitive rejection, not unknown", async () => {
+      const { b } = withPost(async () => new Response("bad", { status: 400 }));
+      await expect(b.submitOrder(REQ)).rejects.toThrow(/→ 400/);
+      await expect(b.submitOrder(REQ)).rejects.not.toMatchObject({ name: "SubmitOutcomeUnknownError" });
+    });
+
+    const raw = (o: { orderId: number; symbol?: string; instruction?: string; quantity?: number; price?: number; enteredTime?: string; duration?: string }) => ({
+      orderId: o.orderId, status: "FILLED", quantity: o.quantity ?? 5, filledQuantity: o.quantity ?? 5, price: o.price ?? 75.68,
+      orderType: "LIMIT", duration: o.duration ?? "IMMEDIATE_OR_CANCEL", enteredTime: o.enteredTime ?? "2026-09-25T13:36:01+0000",
+      orderLegCollection: [{ instruction: o.instruction ?? "BUY", instrument: { symbol: o.symbol ?? "NEE" } }],
+      orderActivityCollection: [{ executionLegs: [{ quantity: o.quantity ?? 5, price: 75.6, time: "2026-09-25T13:36:02+0000" }] }],
+    });
+    const SINCE = "2026-09-25T13:36:00.000Z";
+    it("findSubmitted adopts the single exact match and maps it to our clientOrderId", async () => {
+      const b = mk(mockFetch({ orders: [raw({ orderId: 7 }), raw({ orderId: 8, symbol: "MP" }), raw({ orderId: 9, instruction: "SELL" }), raw({ orderId: 10, price: 75.7 }), raw({ orderId: 11, enteredTime: "2026-09-25T13:30:00+0000" })] }).fetchImpl);
+      const o = await b.findSubmitted(REQ, SINCE);
+      expect(o).toMatchObject({ id: "7", clientOrderId: "cid-1", filledQty: 5 });
+      expect((await b.getOrders("all")).find((x) => x.id === "7")?.clientOrderId).toBe("cid-1"); // now stamped
+    });
+    it("findSubmitted returns null when nothing matches", async () => {
+      expect(await mk(mockFetch({ orders: [raw({ orderId: 8, symbol: "MP" })] }).fetchImpl).findSubmitted(REQ, SINCE)).toBeNull();
+    });
+    it("findSubmitted refuses to guess between two identical orders", async () => {
+      await expect(mk(mockFetch({ orders: [raw({ orderId: 7 }), raw({ orderId: 12 })] }).fetchImpl).findSubmitted(REQ, SINCE)).rejects.toMatchObject({ name: "AmbiguousOrderError" });
+    });
+    it("findSubmitted skips an order already attributed to another clientOrderId", async () => {
+      const { fetchImpl } = mockFetch({ orders: [raw({ orderId: 1001 })], postLocation: `https://api.schwabapi.com/trader/v1/accounts/${HASH}/orders/1001` });
+      const b = mk(fetchImpl);
+      await b.submitOrder({ ...REQ, clientOrderId: "cid-other" }); // 1001 → cid-other
+      expect(await b.findSubmitted(REQ, SINCE)).toBeNull();
+    });
+  });
+
   it("rejects a notional (fractional) order and a non-integer qty", async () => {
     const b = mk(mockFetch({}).fetchImpl);
     await expect(b.submitOrder({ symbol: "NEE", side: "buy", notional: 100, clientOrderId: "c", estNotionalUsd: 100 })).rejects.toThrow(/notional\/fractional/);
