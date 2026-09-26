@@ -10,11 +10,13 @@ import type { TradePlan, TradeReason } from "./rebalance";
 import type { TradeConfig } from "./config";
 import type { TradingDay } from "./calendar";
 import { bucketFor, estimateCostUsd, type LiquidityBucket } from "./costs";
-import { computeLimit, type Mkt } from "./limit";
+import { computeLimit, type LimitDiagnostics, type Mkt } from "./limit";
 
 export interface OrderRequest {
   ticker: string; sector: string; side: "buy" | "sell"; kind: "qty"; qty: number;
   limitPrice: number; timeInForce: "ioc"; tier: 1 | 2 | 3; capBound: boolean; anchorReason: string;
+  /** Market snapshot + the τ the spread wanted vs what the cap allowed (spec #9 — the data a τ_max decision needs). */
+  pRef?: number; tau?: number; diag?: LimitDiagnostics;
   clientOrderId: string; reason: TradeReason; deltaUsd: number; estCostUsd: number; bucket: LiquidityBucket;
 }
 export interface SizedOrders {
@@ -49,7 +51,7 @@ export function tradesToOrders(input: {
     const deltaUsd = round2(t.deltaWeight * nav);
     const bucket = bucketFor(marketCapUsd[t.ticker] ?? null);
     const common = { ticker: t.ticker, sector: t.sector, clientOrderId: clientOrderId(runId, t.ticker, t.side, plan.today), reason: t.reason, deltaUsd, estCostUsd: estimateCostUsd(deltaUsd, bucket), bucket };
-    const limitFields = { limitPrice: r.L!, timeInForce: "ioc" as const, tier: r.tier!, capBound: r.capBound!, anchorReason: r.reason };
+    const limitFields = { limitPrice: r.L!, timeInForce: "ioc" as const, tier: r.tier!, capBound: r.capBound!, anchorReason: r.reason, pRef: r.pRef, tau: r.tau, diag: r.diag };
     if (t.side === "sell") {
       const pos = positions[t.ticker];
       if (!pos || pos.qty <= 0) throw new Error(`tradesToOrders: sell of ${t.ticker} with no position`);
