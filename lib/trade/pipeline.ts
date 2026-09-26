@@ -72,9 +72,14 @@ export async function planRun(input: PlanRunInput): Promise<PlanRunOutput> {
     anchorAtMs[t.ticker] = clock();
   }
   const sized = tradesToOrders({ plan, nav: ledger.nav, marks, positions: positionsOf(ledger), marketCapUsd, mkts, nowMs, runId, cfg, anchorAtMs });
+  const scenariosByTicker = new Map(reports.map((r) => [r.meta.ticker, r.sections.valuation.scenarios.map((x) => ({ name: x.name, impliedPrice: x.impliedPrice, probability: x.probability }))]));
   const record: RunRecord = {
     runId, today, markMode: cfg.markMode, broker: adapter.kind, marks,
-    signals: signals.map((s) => ({ ticker: s.ticker, label: s.label, gatedLabel: s.gatedLabel, mu: s.mu, R: s.R, kappa: s.kappa, quality: s.quality, ageDays: s.ageDays })),
+    signals: signals.map((s) => ({
+      ticker: s.ticker, label: s.label, gatedLabel: s.gatedLabel, mu: s.mu, R: s.R, kappa: s.kappa, quality: s.quality, ageDays: s.ageDays,
+      price: s.price, sigma: s.sigma, sigmaDown: s.sigmaDown, D: s.D, staleness: s.staleness,
+      scenarios: scenariosByTicker.get(s.ticker),
+    })),
     classifications: plan.classifications, locks,
     plan: { frozenWeight: plan.frozenWeight, sizingTarget: plan.sizingTarget, plannedInvested: plan.plannedInvested, plannedCash: plan.plannedCash, buyScale: plan.buyScale, trades: plan.trades, skipped: plan.skipped },
     orders: sized.orders as unknown as Record<string, unknown>[], fills: [],

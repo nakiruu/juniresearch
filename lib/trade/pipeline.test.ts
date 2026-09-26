@@ -243,3 +243,15 @@ describe("latency timestamps (spec #10)", () => {
     expect(b2).toBeLessThan(c);
   });
 });
+
+describe("run record signals keep scenario risk (plan #6 prerequisite)", () => {
+  it("persists price, sigma, sigmaDown, D, staleness and the report's scenarios", async () => {
+    const b = new FakeBroker({ calendar: CAL, closes: { NVT: closes(100) }, equity: 10_000, cash: 10_000, isOpen: true, today: "2026-09-25" });
+    const out = await planRun({ adapter: b, reports: [nvt], sics: {}, marketCapUsd: {}, fills: [], today: "2026-09-25", cfg, runId: "r" });
+    const [sig] = out.record.signals;
+    expect(sig).toMatchObject({ ticker: "NVT", price: 100 });
+    expect(sig.D).toBeCloseTo(0.2, 9);
+    expect(sig.sigma).toBeGreaterThan(0);
+    expect(sig.scenarios?.map((x) => x.impliedPrice)).toEqual([150, 120, 80]);
+  });
+});
