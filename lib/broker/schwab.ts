@@ -14,6 +14,7 @@ import { z } from "zod";
 import type { BrokerAdapter, BrokerAccount, BrokerCalendarDay, BrokerClock, BrokerOrder, BrokerOrderStatus, BrokerPosition, SubmitOrderRequest } from "./adapter";
 import { SCHWAB_HOST } from "./guards";
 import { nyseTradingDays } from "../trade/nyse-calendar";
+import { etMinutesOfDay, hhmmToMinutes, todayET } from "../trade/clock";
 import { ensureAccessToken, type SchwabTokenStore } from "./schwab-auth";
 
 export interface SchwabOptions {
@@ -39,7 +40,15 @@ const OrderResp = z.object({
 const Quote = z.object({ quote: z.object({ lastPrice: numSoft.optional(), bidPrice: numSoft.optional(), askPrice: numSoft.optional(), tradeTime: numSoft.optional(), quoteTime: numSoft.optional() }).optional() });
 const QuotesResp = z.record(z.string(), Quote);
 const PriceHistory = z.object({ candles: z.array(z.object({ close: num, datetime: z.number() })).default([]) });
-const Markets = z.object({ equity: z.record(z.string(), z.object({ isOpen: z.boolean().optional() })).optional() });
+const Session = z.object({ start: z.string(), end: z.string() });
+/** /markets: `isOpen` is a DATE-level flag ("equities trade on this date"), true all day and night on a
+ *  trading day — verified against live responses (__fixtures__/schwab-markets-*.json). The session
+ *  window comes from sessionHours.regularMarket. The inner key varies ("EQ" on a trading day, "equity"
+ *  on a closed one), so the first entry is read. */
+const Markets = z.object({ equity: z.record(z.string(), z.object({
+  isOpen: z.boolean().optional(),
+  sessionHours: z.object({ regularMarket: z.array(Session).optional() }).optional(),
+})).optional() });
 
 /** Schwab order status → the adapter's BrokerOrderStatus (unmapped/working states collapse to the non-terminal "new"). */
 const STATUS: Record<string, BrokerOrderStatus> = {
@@ -72,10 +81,28 @@ export class SchwabBroker implements BrokerAdapter {
   }
   private stamp(o: BrokerOrder): BrokerOrder { return { ...o, clientOrderId: this.cidByBrokerId.get(o.id) ?? o.clientOrderId }; }
 
+  /**
+   * Open only inside today's regular session. Schwab's `isOpen` alone would report "open" at 07:00 or
+   * 23:00 on any trading day, so it is necessary but never sufficient. Without sessionHours, fall back
+   * to the NYSE calendar + 09:30–16:00 ET (fails closed outside calendar coverage).
+   */
   async getClock(): Promise<BrokerClock> {
-    const m = await this.get(Markets, `${this.data}/markets?markets=equity`);
-    const isOpen = Object.values(m.equity ?? {})[0]?.isOpen ?? false;
-    return { timestamp: new Date(this.now()).toISOString(), isOpen, nextOpen: "", nextClose: "" };
+    const now = this.now();
+    const today = todayET(now);
+    const m = await this.get(Markets, `${this.data}/markets?${new URLSearchParams({ markets: "equity", date: today })}`);
+    const entry = Object.values(m.equity ?? {})[0];
+    const regular = entry?.sessionHours?.regularMarket ?? [];
+    const timestamp = new Date(now).toISOString();
+    if (!entry?.isOpen) return { timestamp, isOpen: false, nextOpen: "", nextClose: "" };
+    if (regular.length) {
+      const inSession = regular.some((s) => Date.parse(s.start) <= now && now < Date.parse(s.end));
+      return { timestamp, isOpen: inSession, nextOpen: regular[0].start, nextClose: regular[regular.length - 1].end };
+    }
+    let day: BrokerCalendarDay | undefined;
+    try { day = nyseTradingDays(today, today)[0]; } catch { day = undefined; }
+    if (!day) return { timestamp, isOpen: false, nextOpen: "", nextClose: "" };
+    const mins = etMinutesOfDay(now);
+    return { timestamp, isOpen: hhmmToMinutes(day.open) <= mins && mins < hhmmToMinutes(day.close), nextOpen: "", nextClose: "" };
   }
   async getCalendar(from: string, to: string): Promise<BrokerCalendarDay[]> { return nyseTradingDays(from, to); }
 

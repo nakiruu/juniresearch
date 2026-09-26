@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { mkdtempSync } from "node:fs";
+import { mkdtempSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { SchwabBroker } from "./schwab";
@@ -38,15 +38,53 @@ function mockFetch(handlers: { orders?: unknown[]; postLocation?: string }) {
 
 const mk = (fetchImpl: typeof fetch) => new SchwabBroker({ tokenStore: seededStore(), clientId: "cid", clientSecret: "s", accountHash: HASH, fetchImpl, nowMs: () => NOW });
 
+describe("SchwabBroker.getClock — isOpen is a trading-DAY flag; only the regular session counts as open", () => {
+  // Real /markets payloads captured 2026-09-26 (read-only). nextday = a trading day's entry.
+  const tradingDay = JSON.parse(readFileSync(join(__dirname, "__fixtures__/schwab-markets-nextday.json"), "utf8"));
+  const closedDay = JSON.parse(readFileSync(join(__dirname, "__fixtures__/schwab-markets-weekend.json"), "utf8"));
+  const clockAt = (iso: string, body: unknown) => {
+    const urls: string[] = [];
+    const fetchImpl = (async (url: string) => { urls.push(url); return json(body); }) as unknown as typeof fetch;
+    const tokenStore = seededStore();
+    tokenStore.write({ ...tokenStore.read()!, accessExpiresAt: Date.parse("2027-01-01T00:00:00Z") }); // no refresh at these instants
+    const b = new SchwabBroker({ tokenStore, clientId: "cid", clientSecret: "s", accountHash: HASH, fetchImpl, nowMs: () => Date.parse(iso) });
+    return { clock: b.getClock(), urls };
+  };
+
+  it("is open during the regular session (10:00 ET) and reports the session bounds", async () => {
+    const c = await clockAt("2026-09-28T14:00:00Z", tradingDay).clock;
+    expect(c).toMatchObject({ isOpen: true, nextOpen: "2026-09-28T09:30:00-04:00", nextClose: "2026-09-28T16:00:00-04:00" });
+  });
+  it("is CLOSED after hours even though Schwab says isOpen:true (21:00 ET)", async () => {
+    expect((await clockAt("2026-09-29T01:00:00Z", tradingDay).clock).isOpen).toBe(false);
+  });
+  it("is closed pre-market (08:00 ET) and exactly at the 16:00 close", async () => {
+    expect((await clockAt("2026-09-28T12:00:00Z", tradingDay).clock).isOpen).toBe(false);
+    expect((await clockAt("2026-09-28T20:00:00Z", tradingDay).clock).isOpen).toBe(false);
+    expect((await clockAt("2026-09-28T13:30:00Z", tradingDay).clock).isOpen).toBe(true); // 09:30 sharp
+  });
+  it("is closed when Schwab says the date is not a trading day", async () => {
+    expect((await clockAt("2026-09-26T14:00:00Z", closedDay).clock).isOpen).toBe(false);
+  });
+  it("asks for today's ET date explicitly (the evening UTC date would be tomorrow)", async () => {
+    const { clock, urls } = clockAt("2026-09-29T01:00:00Z", tradingDay);
+    await clock;
+    expect(urls[0]).toContain("date=2026-09-28");
+  });
+  it("falls back to the NYSE calendar + 09:30–16:00 ET when sessionHours are missing", async () => {
+    const bare = { equity: { EQ: { isOpen: true } } };
+    expect((await clockAt("2026-09-28T14:00:00Z", bare).clock).isOpen).toBe(true);   // Mon 10:00 ET
+    expect((await clockAt("2026-09-29T01:00:00Z", bare).clock).isOpen).toBe(false);  // Mon 21:00 ET
+    expect((await clockAt("2026-11-26T15:00:00Z", bare).clock).isOpen).toBe(false);  // Thanksgiving
+  });
+});
+
 describe("SchwabBroker reads", () => {
   it("getAccount maps balances", async () => {
     expect(await mk(mockFetch({}).fetchImpl).getAccount()).toEqual({ equity: 100000, cash: 41487, buyingPower: 41487 });
   });
   it("getPositions maps long positions and drops zero-qty", async () => {
     expect(await mk(mockFetch({}).fetchImpl).getPositions()).toEqual([{ symbol: "NEE", qty: 43, marketValue: 3249, avgEntryPrice: 75.56 }]);
-  });
-  it("getClock reads isOpen", async () => {
-    expect((await mk(mockFetch({}).fetchImpl).getClock()).isOpen).toBe(true);
   });
   it("getLastClose picks the last candle on/before the date", async () => {
     expect(await mk(mockFetch({}).fetchImpl).getLastClose(["NEE"], "2026-09-25")).toEqual({ NEE: 101 }); // not the 09-26 candle (200)
