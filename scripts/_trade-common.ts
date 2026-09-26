@@ -1,45 +1,25 @@
-import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
-import { join } from "node:path";
-import { listReportTickers, loadReport } from "../lib/reports";
-import { FactPack } from "../lib/facts/schema";
 import { fetchDailyCloses } from "../lib/prices/yahoo";
-import type { Report } from "../lib/report.schema";
 import type { BrokerAdapter, BrokerCalendarDay } from "../lib/broker/adapter";
 import { AlpacaPaperBroker } from "../lib/broker/alpaca";
-import { SchwabBroker } from "../lib/broker/schwab";
-import { SchwabTokenStore } from "../lib/broker/schwab-auth";
-import { SCHWAB_HOST } from "../lib/broker/guards";
 import { FakeBroker } from "../lib/broker/fake";
-import { readFills } from "../lib/trade/fills";
 import { readLedger } from "../lib/trade/ledger";
-import { RunRecord } from "../lib/trade/run-record";
-import { requireAlpaca, requireSchwab } from "./_env";
-
-export const TRADE_DIR = join("data", "trade");
-export const FILLS_PATH = join(TRADE_DIR, "fills.jsonl");
-export const LEDGER_PATH = join(TRADE_DIR, "ledger.json");
-export const RUNS_DIR = join(TRADE_DIR, "runs");
-// Phase-2 scheduler state (spec §2, §3) — shared between trade-cron.ts (writer) and trade-review.ts
-// (reader), so the paths live in one place rather than drifting between the two scripts.
-export const CRON_LOCK_PATH = join(TRADE_DIR, "cron.lock");
-export const CRON_LOG_PATH = join(TRADE_DIR, "cron.log");
-export const HALT_STATE_PATH = join(TRADE_DIR, "halt-state.json");
-export const SCHWAB_TOKEN_PATH = join(TRADE_DIR, "schwab-token.json");
+import { requireAlpaca } from "./_env";
+export {
+  TRADE_DIR, FILLS_PATH, LEDGER_PATH, RUNS_DIR, CRON_LOCK_PATH, CRON_LOG_PATH,
+  HALT_STATE_PATH, SCHWAB_TOKEN_PATH, brokerBaseUrl, loadReportsAndMeta,
+  readRunRecord, latestRunRecord, readFills,
+} from "../lib/trade/runtime";
+import * as runtime from "../lib/trade/runtime";
 
 export const flag = (args: string[], name: string) => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : undefined; };
 export const has = (args: string[], name: string) => args.includes(name);
 
-export async function loadReportsAndMeta(): Promise<{ reports: Report[]; sics: Record<string, number | null>; marketCapUsd: Record<string, number | null> }> {
-  const reports: Report[] = [], sics: Record<string, number | null> = {}, marketCapUsd: Record<string, number | null> = {};
-  for (const t of await listReportTickers()) {
-    const r = await loadReport(t); if (!r) continue;
-    reports.push(r);
-    const p = join("data", "facts", r.meta.ticker.toUpperCase(), `${r.meta.filing.accession}.json`);
-    sics[r.meta.ticker] = existsSync(p) ? FactPack.parse(JSON.parse(readFileSync(p, "utf8"))).sic ?? null : null;
-    const cell = (r as unknown as { snapshot?: { label: string; value: unknown }[] }).snapshot?.find((c) => /market cap/i.test(c.label));
-    marketCapUsd[r.meta.ticker] = typeof cell?.value === "number" ? cell.value : null;
-  }
-  return { reports, sics, marketCapUsd };
+/** CLI wrappers: preserve the clean "message + exit 2" UX (runtime throws instead). */
+export function makeAlpaca(): BrokerAdapter {
+  try { return runtime.makeAlpaca(); } catch (e) { console.error(e instanceof Error ? e.message : String(e)); process.exit(2); }
+}
+export function makeBroker(): BrokerAdapter {
+  try { return runtime.makeBroker(); } catch (e) { console.error(e instanceof Error ? e.message : String(e)); process.exit(2); }
 }
 
 /** Weekday calendar for Phase 0 when no Alpaca keys are present (holidays are NOT excluded — a documented approximation). */
@@ -69,7 +49,7 @@ async function yahooLastClose(ticker: string, from: string, to: string): Promise
  * never targets a non-trading day (weekend/holiday).
  */
 export async function makeFakeBroker(tickers: string[], today: string): Promise<FakeBroker> {
-  const ledger = readLedger(LEDGER_PATH);
+  const ledger = readLedger(runtime.LEDGER_PATH);
   const from = shift(today, -90), to = shift(today, 45);
   let calendar: BrokerCalendarDay[];
   const closes: Record<string, Record<string, number>> = {};
@@ -91,43 +71,3 @@ export async function makeFakeBroker(tickers: string[], today: string): Promise<
   return b;
 }
 export const shift = (d: string, n: number) => new Date(new Date(d + "T00:00:00Z").getTime() + n * 86_400_000).toISOString().slice(0, 10);
-export function makeAlpaca(): BrokerAdapter { return new AlpacaPaperBroker(requireAlpaca()); }
-
-/** The base URL the GuardContext checks per broker kind (paper host for Alpaca, Schwab host for Schwab). */
-export function brokerBaseUrl(adapter: BrokerAdapter): string {
-  if (adapter.kind === "schwab") return `https://${SCHWAB_HOST}`;
-  if (adapter.kind === "alpaca-paper") return process.env.APCA_API_BASE_URL ?? "https://paper-api.alpaca.markets";
-  return "memory://";
-}
-
-/**
- * The live broker chosen by the BROKER env var: "alpaca-paper" (default, the test rig) or "schwab"
- * (LIVE real-money trading). Default is paper, so nothing goes live unless BROKER=schwab is set
- * explicitly. The schwab branch is wired in Task 5 (SchwabBroker).
- */
-export function makeBroker(): BrokerAdapter {
-  const broker = process.env.BROKER ?? "alpaca-paper";
-  if (broker === "alpaca-paper") return makeAlpaca();
-  if (broker === "schwab") {
-    const { clientId, clientSecret } = requireSchwab();
-    const tokenStore = new SchwabTokenStore(SCHWAB_TOKEN_PATH);
-    const tokens = tokenStore.read();
-    if (!tokens?.accountHash) { console.error("Schwab account not linked. Run: npm run trade:auth"); process.exit(2); }
-    return new SchwabBroker({ tokenStore, clientId, clientSecret, accountHash: tokens.accountHash });
-  }
-  throw new Error(`BROKER=${broker} is not a known broker (expected "alpaca-paper" or "schwab")`);
-}
-
-/** Read one run record by id from RUNS_DIR. */
-export function readRunRecord(runId: string): RunRecord {
-  return RunRecord.parse(JSON.parse(readFileSync(join(RUNS_DIR, `${runId}.json`), "utf8")));
-}
-/** The most recently written run record (by mtime), or null if none exist. */
-export function latestRunRecord(): RunRecord | null {
-  if (!existsSync(RUNS_DIR)) return null;
-  const files = readdirSync(RUNS_DIR).filter((f) => f.endsWith(".json"));
-  if (files.length === 0) return null;
-  const latest = files.map((f) => ({ f, m: statSync(join(RUNS_DIR, f)).mtimeMs })).sort((a, b) => b.m - a.m)[0].f;
-  return RunRecord.parse(JSON.parse(readFileSync(join(RUNS_DIR, latest), "utf8")));
-}
-export { readFills };
