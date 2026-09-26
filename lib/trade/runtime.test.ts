@@ -9,12 +9,12 @@ describe("lib/trade/runtime", () => {
   });
 
   it("makeBroker THROWS (never process.exits) on missing Alpaca keys", () => {
-    const env = { BROKER: "alpaca-paper" } as NodeJS.ProcessEnv; // no APCA_* keys
+    const env = { BROKER: "alpaca-paper" } as unknown as NodeJS.ProcessEnv; // no APCA_* keys
     expect(() => runtime.makeBroker(env)).toThrowError(/APCA_API_KEY_ID/);
   });
 
   it("makeBroker rejects an unknown broker", () => {
-    expect(() => runtime.makeBroker({ BROKER: "etrade" } as NodeJS.ProcessEnv))
+    expect(() => runtime.makeBroker({ BROKER: "etrade" } as unknown as NodeJS.ProcessEnv))
       .toThrowError(/not a known broker/);
   });
 });
