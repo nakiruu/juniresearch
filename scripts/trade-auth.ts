@@ -29,3 +29,8 @@ if (accounts.length > 1) console.log(`\nMultiple accounts found; using the first
 new SchwabTokenStore(SCHWAB_TOKEN_PATH).write({ ...tokens, accountHash: chosen.hashValue });
 console.log(`\nLinked Schwab account ${chosen.accountNumber}. Tokens stored at ${SCHWAB_TOKEN_PATH}.`);
 console.log("Set BROKER=schwab in .env.local to trade LIVE. Re-run `npm run trade:auth` when the weekly refresh token expires.");
+console.log(`\nFor a host without this token file (e.g. a cloud environment), set these as secret env vars:
+  SCHWAB_ACCOUNT_HASH=${chosen.hashValue}
+  SCHWAB_REFRESH_OBTAINED_AT=${new Date(tokens.refreshObtainedAt ?? Date.now()).toISOString()}
+  SCHWAB_REFRESH_TOKEN=<the "refreshToken" value in ${SCHWAB_TOKEN_PATH} — not printed here>
+If both exist, the env token is tried first and the token file is the fallback.`);

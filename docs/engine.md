@@ -424,7 +424,10 @@ audit) plus halt/auth alerts; best-effort, never fails a run.
   test rig) or `schwab` (LIVE). Both implement one 11-method `BrokerAdapter`; the pure core never names a
   broker. `schwab` is live-by-selection (no paper exists); the guard requires the Schwab host, breakers
   become the only guardrails, and the 7-day OAuth refresh surfaces as `halted(auth)` + alert (`trade:auth`
-  to renew). Marks come from the broker (settled close for decisions, live trade/quote for fill anchors).
+  to renew). Schwab credentials can also come from env (`SCHWAB_REFRESH_TOKEN`, optional
+  `SCHWAB_REFRESH_OBTAINED_AT`, `SCHWAB_ACCOUNT_HASH`) for hosts with no interactive login: the env
+  refresh token is tried first and `data/trade/schwab-token.json` is the fallback when it is out of date
+  (a stale or rotated-away env token is remembered by fingerprint and never retried). Marks come from the broker (settled close for decisions, live trade/quote for fill anchors).
 - **Scheduler:** `register-trade-cron.ps1` (Windows Task Scheduler) / `register-trade-cron.sh` (systemd
   `--user` timer or cron) — both run `npm run trade:cron` at 09:45 ET; broker from `.env.local`.
 - **Rollout gate:** Phase 0 (fake dry-run) → Phase 1 (paper smoke: ≥10 runs, exact reconciliation, zero
