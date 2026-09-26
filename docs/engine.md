@@ -429,7 +429,8 @@ audit) plus halt/auth alerts; best-effort, never fails a run.
   refresh token is tried first and `data/trade/schwab-token.json` is the fallback when it is out of date
   (a stale or rotated-away env token is remembered by fingerprint and never retried). Marks come from the broker (settled close for decisions, live trade/quote for fill anchors).
 - **Scheduler:** `register-trade-cron.ps1` (Windows Task Scheduler) / `register-trade-cron.sh` (systemd
-  `--user` timer or cron) — both run `npm run trade:cron` at 09:45 ET; broker from `.env.local`.
+  `--user` timer or cron) — both read `cronTimeET` from `lib/trade/config.ts` (09:45 ET) and never fire a
+  missed trigger late; broker from `.env.local`.
 - **Rollout gate:** Phase 0 (fake dry-run) → Phase 1 (paper smoke: ≥10 runs, exact reconciliation, zero
   lock/ban violations) → Phase 2 (paper event-driven, 4 weeks clean + weekly review). Merge to `main` only
   after that.
@@ -438,9 +439,15 @@ audit) plus halt/auth alerts; best-effort, never fails a run.
 > only alerts on the *failed* run. A "token expires in N days" notice would move the ~2-minute `trade:auth`
 > onto a schedule instead of after a missed morning.
 
-> 💡 **Better idea — `today` is UTC-derived.** `new Date().toISOString().slice(0,10)` is fine at 09:45 ET
-> (same calendar day) but drifts near ET-midnight. Not a scheduled-run problem, but a manual late-night run
-> could mislabel the trading day; a TZ-aware `today` would remove the footgun.
+- **ET clock (`lib/trade/clock.ts`).** `today`, a fill's `tradingDate`, the fire window and the market-hours
+  check all read America/New_York through one helper (`todayET`, `etMinutesOfDay`) — a UTC date is already
+  tomorrow from 20:00 EDT, which would have run lock checks against the wrong day.
+- **Market clock.** Schwab's `/markets` `isOpen` is a *trading-day* flag (true all day and night on a
+  weekday — verified against live responses). `SchwabBroker.getClock` is open only inside
+  `sessionHours.regularMarket`, falling back to the NYSE calendar + 09:30–16:00 ET.
+- **Fire window.** `trade:cron` refuses a run that starts after `cronTimeET + maxLateMin` (20 min) as
+  `late` — a missed trigger or a mid-day catch-up is skipped, never traded at an unplanned time. A
+  deliberate manual run passes `trade:cron -- --now` (the market clock still applies).
 
 ---
 

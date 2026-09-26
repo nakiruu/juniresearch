@@ -48,7 +48,7 @@ const cfg = resolveTradeConfig(); // defaults: wMax 0.10, sectorMax 0.30, maxRun
 const mkReport = (ticker: string): Report =>
   fixtureReport({ ticker, label: "BUY", conviction: 70, scenarios: [[150, 0.3], [120, 0.5], [80, 0.2]] });
 
-const nowMsFor = (day: string) => Date.parse(`${day}T20:00:00.000Z`);
+const nowMsFor = (day: string) => Date.parse(`${day}T13:50:00.000Z`); // 09:50 EDT — the scheduled morning run, inside the fire window
 
 function mkPaths() {
   const dir = mkdtempSync(join(tmpdir(), "phase2-e2e-"));

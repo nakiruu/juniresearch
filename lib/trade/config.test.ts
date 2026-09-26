@@ -38,6 +38,14 @@ describe("resolveTradeConfig", () => {
   });
 });
 
+describe("fire-window config", () => {
+  it("defaults maxLateMin to 20 and validates it and cronTimeET", () => {
+    expect(resolveTradeConfig().maxLateMin).toBe(20);
+    for (const maxLateMin of [0, -5, 2.5, 391]) expect(() => resolveTradeConfig({ maxLateMin })).toThrow(/maxLateMin/);
+    expect(() => resolveTradeConfig({ cronTimeET: "9:45" })).toThrow(/HH:MM/);
+  });
+});
+
 describe("phase-2 config", () => {
   it("ships the phase-2 defaults", () => {
     const c = resolveTradeConfig();

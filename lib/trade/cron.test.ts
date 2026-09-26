@@ -33,7 +33,7 @@ function mkDeps(overrides: Partial<CronDeps> & { paths: CronDeps["paths"] }): Cr
     adapter: mkBroker(),
     cfg: resolveTradeConfig(), // default wMax=0.10 keeps a single ENTER well under the 15% turnover cap
     today: TODAY,
-    nowMs: Date.parse(`${TODAY}T20:00:00.000Z`),
+    nowMs: Date.parse(`${TODAY}T13:50:00.000Z`), // 09:50 EDT — inside the fire window
     runId: "r-cron-1",
     configuredBaseUrl: "memory://",
     loadInputs: async () => ({ reports: [], sics: {}, marketCapUsd: {}, fills: [] }),
@@ -53,6 +53,36 @@ describe("runCron", () => {
     expect(await adapter.getOrders("all")).toEqual([]);
     expect(existsSync(paths.lock)).toBe(false); // never acquired
     expect(readFileSync(paths.log, "utf8")).toMatch(/closed/);
+  });
+
+  it("fire window: a run starting after cronTimeET + maxLateMin (ET) is 'late' — no broker call, no lock, no halt bump", async () => {
+    const paths = mkPaths();
+    const adapter = mkBroker();
+    let clockCalls = 0;
+    const getClock = adapter.getClock.bind(adapter);
+    adapter.getClock = async () => { clockCalls++; return getClock(); };
+    const r = await runCron(mkDeps({ paths, adapter, nowMs: Date.parse(`${TODAY}T14:06:00.000Z`) })); // 10:06 EDT > 09:45 + 20m
+    expect(r).toEqual({ status: "late" });
+    expect(clockCalls).toBe(0);
+    expect(existsSync(paths.lock)).toBe(false);
+    expect(readHaltState(paths.haltState)).toEqual({ consecutive: 0 });
+    expect(readFileSync(paths.log, "utf8")).toMatch(/late reason=after 09:45 ET \+ 20m/);
+  });
+
+  it("fire window: 10:05 ET (exactly cronTimeET + 20m) still runs; the window is DST-correct (EST)", async () => {
+    expect((await runCron(mkDeps({ paths: mkPaths(), nowMs: Date.parse(`${TODAY}T14:05:00.000Z`) }))).status).not.toBe("late");
+    const est = await runCron(mkDeps({ paths: mkPaths(), nowMs: Date.parse("2026-12-01T14:50:00.000Z") })); // 09:50 EST
+    expect(est.status).not.toBe("late");
+  });
+
+  it("fire window: ignoreWindow (trade:cron --now) skips it; the market clock still applies", async () => {
+    const late = Date.parse(`${TODAY}T18:00:00.000Z`); // 14:00 EDT
+    expect((await runCron(mkDeps({ paths: mkPaths(), nowMs: late, ignoreWindow: true }))).status).not.toBe("late");
+    expect(await runCron(mkDeps({ paths: mkPaths(), nowMs: late, ignoreWindow: true, adapter: mkBroker({ isOpen: false }) }))).toEqual({ status: "closed" });
+  });
+
+  it("kill switch still wins over the fire window", async () => {
+    expect(await runCron(mkDeps({ paths: mkPaths(), nowMs: Date.parse(`${TODAY}T23:00:00.000Z`), disabled: true }))).toEqual({ status: "disabled" });
   });
 
   it("kill switch: disabled short-circuits before even checking the clock", async () => {

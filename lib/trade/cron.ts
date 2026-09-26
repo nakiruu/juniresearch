@@ -19,8 +19,9 @@ import { turnoverBreaker, readHaltState, bumpHalt, clearHalt, haltBlocked, acqui
 import { crossCheckBroker } from "./audit";
 import { summaryFromRun, type RunSummaryInput } from "./notify";
 import { writeRunRecord } from "./run-record";
+import { etMinutesOfDay, hhmmToMinutes } from "./clock";
 
-export type CronStatus = "disabled" | "closed" | "locked" | "halted" | "noop" | "executed";
+export type CronStatus = "disabled" | "late" | "closed" | "locked" | "halted" | "noop" | "executed";
 
 export interface CronDeps {
   adapter: BrokerAdapter;
@@ -45,6 +46,8 @@ export interface CronDeps {
    * step-1 `disabled` read, so it must carry the real environment, not an empty stand-in.
    */
   env: NodeJS.ProcessEnv;
+  /** Manual run (`trade:cron --now`): skip the fire-window check. The market-clock check still applies. */
+  ignoreWindow?: boolean;
 }
 
 export interface CronResult { status: CronStatus; reason?: string; orders?: number; fills?: number }
@@ -82,6 +85,14 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
   if (disabled) {
     appendLog(paths.log, logLine(today, runId, "disabled"));
     return { status: "disabled" };
+  }
+
+  // 1b. Fire window. A scheduled run that starts more than maxLateMin after cronTimeET (a missed
+  // trigger fired late, a catch-up after a mid-day restart) trades at a worse, unplanned time of day —
+  // skip it; the next scheduled morning runs normally. Checked before any broker call.
+  if (!deps.ignoreWindow && etMinutesOfDay(nowMs) > hhmmToMinutes(cfg.cronTimeET) + cfg.maxLateMin) {
+    appendLog(paths.log, logLine(today, runId, "late", { reason: `after ${cfg.cronTimeET} ET + ${cfg.maxLateMin}m` }));
+    return { status: "late" };
   }
 
   // 2. Clock check. For a live broker (Schwab) this is also the first authenticated request, so a

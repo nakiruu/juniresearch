@@ -17,13 +17,19 @@
 $ErrorActionPreference = "Stop"
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
+# The fire time is cronTimeET from lib/trade/config.ts — one source of truth, never a second literal here.
+$cfgMatch = Select-String -Path (Join-Path $repoRoot "lib\trade\config.ts") -Pattern 'cronTimeET: "(\d{2}:\d{2})"' | Select-Object -First 1
+if (-not $cfgMatch) { throw "could not read cronTimeET from lib/trade/config.ts" }
+$cronTimeET = $cfgMatch.Matches[0].Groups[1].Value
 $npmCommand = Get-Command npm.cmd -ErrorAction SilentlyContinue
 if (-not $npmCommand) { $npmCommand = Get-Command npm -ErrorAction Stop }
 $npmCmd = $npmCommand.Source
 
 $action  = New-ScheduledTaskAction -Execute $npmCmd -Argument "run trade:cron" -WorkingDirectory $repoRoot
-$trigger = New-ScheduledTaskTrigger -Daily -At 9:45AM   # ET; set the box/task timezone to America/New_York
-$settings = New-ScheduledTaskSettingsSet -StartWhenAvailable -DontStopOnIdleEnd -ExecutionTimeLimit (New-TimeSpan -Minutes 30)
+$trigger = New-ScheduledTaskTrigger -Daily -At ([datetime]::ParseExact($cronTimeET, "HH:mm", $null))   # ET; set the box/task timezone to America/New_York
+# No -StartWhenAvailable: a missed trigger is SKIPPED, never fired late at a worse time of day (trade:cron
+# also refuses a run that starts after cronTimeET + maxLateMin as "late").
+$settings = New-ScheduledTaskSettingsSet -DontStopOnIdleEnd -ExecutionTimeLimit (New-TimeSpan -Minutes 30)
 
 Register-ScheduledTask `
   -TaskName "juni-trade-cron" `
@@ -33,5 +39,5 @@ Register-ScheduledTask `
   -Description "Phase-2 event-driven paper rebalance (reconcile -> plan -> execute), spec 2026-09-25-trade-layer-phase2-design.md §2-3. Self-guards: exits 0 immediately when the Alpaca clock says the market is closed." `
   -Force
 
-Write-Host "Registered/updated scheduled task 'juni-trade-cron' -> npm run trade:cron (daily 09:45, working dir $repoRoot)."
+Write-Host "Registered/updated scheduled task 'juni-trade-cron' -> npm run trade:cron (daily $cronTimeET, working dir $repoRoot)."
 Write-Host "Verify with: Get-ScheduledTask -TaskName juni-trade-cron | Get-ScheduledTaskInfo"

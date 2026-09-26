@@ -18,7 +18,11 @@ REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 NPM="$(command -v npm || true)"
 NODEBIN="$([ -n "$NPM" ] && dirname "$NPM" || echo /usr/bin)"
 UNIT="juni-trade-cron"
-CAL="Mon..Fri *-*-* 09:45:00 America/New_York"   # systemd >= 252 honors the timezone suffix
+# The fire time is cronTimeET from lib/trade/config.ts — one source of truth, never a second literal here.
+CRON_TIME_ET="$(grep -oE 'cronTimeET: "[0-9]{2}:[0-9]{2}"' "$REPO/lib/trade/config.ts" | grep -oE '[0-9]{2}:[0-9]{2}' | head -1)"
+[ -n "$CRON_TIME_ET" ] || { echo "error: could not read cronTimeET from lib/trade/config.ts" >&2; exit 1; }
+HH="${CRON_TIME_ET%%:*}"; MM="${CRON_TIME_ET##*:}"
+CAL="Mon..Fri *-*-* ${CRON_TIME_ET}:00 America/New_York"   # systemd >= 252 honors the timezone suffix
 USER_UNIT_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/systemd/user"
 
 die(){ echo "error: $*" >&2; exit 1; }
@@ -36,12 +40,12 @@ case "$mode" in
     ;;
 
   --cron)
-    LINE="45 9 * * 1-5 cd $REPO && PATH=$NODEBIN:\$PATH $NPM run trade:cron >> $REPO/data/trade/cron.log 2>&1 # ${UNIT}"
+    LINE="$((10#$MM)) $((10#$HH)) * * 1-5 cd $REPO && PATH=$NODEBIN:\$PATH $NPM run trade:cron >> $REPO/data/trade/cron.log 2>&1 # ${UNIT}"
     ( crontab -l 2>/dev/null | grep -v "# ${UNIT}$"; echo "$LINE" ) | crontab -
     echo "Installed crontab entry:"
     echo "  $LINE"
     echo
-    echo "NOTE: cron fires in the box's LOCAL timezone. For a 09:45 ET fire, set the box timezone to"
+    echo "NOTE: cron fires in the box's LOCAL timezone. For a ${CRON_TIME_ET} ET fire, set the box timezone to"
     echo "America/New_York (timedatectl set-timezone America/New_York), or prefer the systemd timer"
     echo "(run without --cron), which pins ET regardless of the box timezone."
     ;;
@@ -50,9 +54,9 @@ case "$mode" in
     command -v systemctl >/dev/null || die "systemctl not found; re-run with --cron for a crontab entry"
     if ! systemd-analyze calendar "$CAL" >/dev/null 2>&1; then
       echo "warning: this systemd does not accept the timezone suffix in OnCalendar (needs v252+)." >&2
-      echo "         Falling back to a bare 09:45 schedule — set the box timezone to America/New_York" >&2
-      echo "         (timedatectl set-timezone America/New_York) so it fires at 09:45 ET." >&2
-      CAL="Mon..Fri *-*-* 09:45:00"
+      echo "         Falling back to a bare ${CRON_TIME_ET} schedule — set the box timezone to America/New_York" >&2
+      echo "         (timedatectl set-timezone America/New_York) so it fires at ${CRON_TIME_ET} ET." >&2
+      CAL="Mon..Fri *-*-* ${CRON_TIME_ET}:00"
     fi
     mkdir -p "$USER_UNIT_DIR"
     cat > "$USER_UNIT_DIR/${UNIT}.service" <<EOF
@@ -71,13 +75,13 @@ ExecStart=$NPM run trade:cron
 EOF
     cat > "$USER_UNIT_DIR/${UNIT}.timer" <<EOF
 [Unit]
-Description=Run Juniper trade:cron each trading morning (09:45 ET)
+Description=Run Juniper trade:cron each trading morning (${CRON_TIME_ET} ET)
 
 [Timer]
 OnCalendar=$CAL
-# Persistent=false mirrors the Windows job: a missed 09:45 is SKIPPED, never run late at a worse
-# intraday time. trade:cron's clock-guard still blocks after-hours trading; TRADE_DISABLED=1 is the
-# kill switch. Flip to true only if you want a boot after 09:45 to fire the run late.
+# Persistent=false mirrors the Windows job: a missed ${CRON_TIME_ET} is SKIPPED, never run late at a worse
+# intraday time (trade:cron would refuse it as "late" past cronTimeET + maxLateMin anyway). The clock
+# guard blocks after-hours trading; TRADE_DISABLED=1 is the kill switch.
 Persistent=false
 
 [Install]

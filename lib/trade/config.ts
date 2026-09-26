@@ -3,6 +3,7 @@
  * Spec §12. `rMin`/`muMin` stay for the analytical snapshot; trading uses the band pair.
  */
 import { DEFAULT_CONFIG, type PortfolioConfig } from "../portfolio/config";
+import { hhmmToMinutes } from "./clock";
 
 export type LiquidityBucket = "large" | "mid" | "small";
 
@@ -30,6 +31,7 @@ export interface TradeConfig extends PortfolioConfig {
   closeAnchorSizeMult: number;                   // size multiplier when anchored to the prior close (tier 3)
   maxRunTurnoverFrac: number;                    // turnover breaker — fraction of NAV per run
   consecutiveHaltLimit: number;                  // consecutive halted runs before blocking further runs
+  maxLateMin: number;                            // fire window: a cron run starting later than cronTimeET + this (ET) is refused as "late"
 }
 
 export const DEFAULT_TRADE_CONFIG: TradeConfig = {
@@ -45,6 +47,7 @@ export const DEFAULT_TRADE_CONFIG: TradeConfig = {
   gapHalt: { large: 0.10, mid: 0.15, small: 0.25 },
   maxStaleMin: { large: 5, mid: 15, small: 60 },
   closeAnchorSizeMult: 0.5, maxRunTurnoverFrac: 0.15, consecutiveHaltLimit: 3,
+  maxLateMin: 20,
 };
 
 /**
@@ -78,6 +81,8 @@ export function resolveTradeConfig(overrides: Partial<TradeConfig> = {}): TradeC
   if (!(cfg.limitTolMin > 0 && cfg.limitTolMin <= minLimitTol)) throw new Error(`limitTolMin (${cfg.limitTolMin}) must be in (0, ${minLimitTol}]`);
   if (!(cfg.closeAnchorSizeMult > 0 && cfg.closeAnchorSizeMult <= 1)) throw new Error(`closeAnchorSizeMult (${cfg.closeAnchorSizeMult}) must be in (0, 1]`);
   if (!(cfg.maxRunTurnoverFrac > 0 && cfg.maxRunTurnoverFrac <= 1)) throw new Error(`maxRunTurnoverFrac (${cfg.maxRunTurnoverFrac}) must be in (0, 1]`);
+  hhmmToMinutes(cfg.cronTimeET); // throws on a malformed "HH:MM"
+  if (!(Number.isInteger(cfg.maxLateMin) && cfg.maxLateMin > 0 && cfg.maxLateMin <= 390)) throw new Error(`maxLateMin (${cfg.maxLateMin}) must be an integer in (0, 390]`);
   if (!(cfg.consecutiveHaltLimit >= 1)) throw new Error(`consecutiveHaltLimit (${cfg.consecutiveHaltLimit}) must be >= 1`);
 
   return cfg;

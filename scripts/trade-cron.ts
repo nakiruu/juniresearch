@@ -74,6 +74,8 @@ async function main(): Promise<CronResult> {
     notifySummary: notifier.runSummary,
     disabled,
     env: process.env, // guard-level TRADE_DISABLED backstop (Task 6) — must be the real environment.
+    // `--now`: a deliberate manual run outside the scheduled fire window (the market clock still applies).
+    ignoreWindow: process.argv.slice(2).includes("--now"),
   });
 }
 
@@ -85,7 +87,7 @@ try {
   // exits non-zero so Windows Task Scheduler's Last-Run-Result surfaces it independently of
   // notify()/cron.log. Every other resolved status is benign/expected: "locked" is an overlapping
   // run declining to double-submit (self-protection, not a failure); disabled/closed/noop/executed
-  // are ordinary outcomes. An unexpected throw (caught below) is the only other non-zero case.
+  // are ordinary outcomes, as is "late" (a scheduled run that started after the fire window). An unexpected throw (caught below) is the only other non-zero case.
   process.exit(result.status === "halted" ? 1 : 0);
 } catch (err) {
   notifier.message(`trade:cron: unexpected error — ${err instanceof Error ? err.message : String(err)}`);
