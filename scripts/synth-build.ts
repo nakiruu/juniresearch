@@ -10,7 +10,7 @@ import { moatRead, moatApplicable, costOfEquity } from "../lib/synth/moat";
 import { intrinsicRead, dcfApplicable } from "../lib/synth/intrinsic";
 import { compositeScore } from "../lib/synth/composite";
 import { decide, SAFE_DEFAULTS } from "../lib/synth/decide";
-import { computeConviction } from "../lib/synth/conviction";
+import { computeConviction, scenarioDispersion } from "../lib/synth/conviction";
 import { MACRO } from "../lib/synth/macro";
 import { classifySector } from "../lib/synth/gates";
 import { uncertaintyTier, segmentHHI } from "../lib/synth/uncertainty";
@@ -80,7 +80,8 @@ const uncertainty = uncertaintyTier({
   segmentHHI: segmentHHI(pack.segments.items),
   sector: classifySector(pack),
 });
-const dec = decide({ conviction, gate, moat, intrinsic, composite, market: { targetDispersion, divergence }, uncertainty: { tier: uncertainty.tier }, published: judgment.rating.label }, desk.rating, SAFE_DEFAULTS);
+const sigmaScen = scenarioDispersion(judgment.sections.valuation.scenarios, pack.quote.price);
+const dec = decide({ conviction, gate, moat, intrinsic, composite, market: { targetDispersion, divergence }, uncertainty: { tier: uncertainty.tier, scenarioDispersion: sigmaScen }, published: judgment.rating.label }, desk.rating, SAFE_DEFAULTS);
 const gateWarning = gateAdvisory(judgment.rating.label, gate);
 extraWarnings = [
   ...(gateWarning ? [gateWarning] : []),
