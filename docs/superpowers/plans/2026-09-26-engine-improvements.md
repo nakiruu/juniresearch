@@ -707,6 +707,12 @@ then emit `ADD` with a trade note `residual`. The existing sell side and the unl
 
 ## Phase 6 — Research & display
 
+> **Status: implemented 2026-09-26** (`57082e7`, `4da6217`, `587ad48`, `727ebc9`). Deviations: 6.2's
+> tuning lives in `DecisionPolicy` (`dispersionRef`/`dispersionMaxMult`) rather than desk.json, and no
+> `policyVersion` stamp is needed — `decide()` is advisory and published labels are still validated against
+> the unchanged `deriveLabel`. 6.3 has no `showTouch` switch: the field is always present in the snapshot
+> (display only). Measured: 6.1 moves 0.40% of the book (no trades); 6.2 would change one label (EVLV).
+
 ### Task 6.1: Staleness becomes a true 90-day half-life (F9) — **decided: owner chose a true half-life**
 
 **Decision (2026-09-26).** Keep the knob name `stalenessHalfLifeDays` and the value 90, and change the
@@ -743,26 +749,26 @@ The following are unchanged:
 
 **Steps**
 
-- [ ] **Step 1: Write the failing test.** In `signal.test.ts`, with a fixture report dated 90 days
+- [x] **Step 1: Write the failing test.** In `signal.test.ts`, with a fixture report dated 90 days
   before `today`, `buildSignal(...).staleness` is `toBeCloseTo(0.5, 9)`. At 0 days it is `1`, and at
   180 days it is `toBeCloseTo(0.25, 9)`.
-- [ ] **Step 2:** Run it and confirm it fails (it currently returns 0.3679).
-- [ ] **Step 3: Implement.**
+- [x] **Step 2:** Run it and confirm it fails (it currently returns 0.3679).
+- [x] **Step 3: Implement.**
   - Set `const staleness = Math.pow(0.5, ageDays / config.stalenessHalfLifeDays);`.
   - Change the `config.ts` comment to `// soft recency decay half-life in days: staleness = 0.5^(age/h) (e.g. 90)`.
-- [ ] **Step 4: Check for other assertions.** Run the full suite. Existing tests inject `staleness`
+- [x] **Step 4: Check for other assertions.** Run the full suite. Existing tests inject `staleness`
   directly (`sizing.test.ts`, `sizing-v2.test.ts`, `hysteresis.test.ts`, …), so no other assertion should
   move. Fix any snapshot or golden that encodes a computed staleness, and mention it in the PR.
-- [ ] **Step 5: Measure the impact.**
+- [x] **Step 5: Measure the impact.**
   - Run `npm run portfolio:build` (or the scratchpad harness from the review) at the same `--date`
     before and after the change.
   - Record in the PR: N_eff, cash, the largest weight changes and total one-way turnover.
   - The expected effect is small, since most reports are under 60 days old. If turnover is above 5%,
     flag it to the owner before merging.
-- [ ] **Step 6: Update the docs.**
+- [x] **Step 6: Update the docs.**
   - `engine.md` §2: `staleness = 0.5^(ageDays / 90)   soft recency decay (true half-life 90d)`.
   - Update the `stalenessHalfLifeDays` row in the §8 table if it's worded as e-folding.
-- [ ] **Step 7:** Commit: `fix(portfolio): staleness decays with a true 90-day half-life`.
+- [x] **Step 7:** Commit: `fix(portfolio): staleness decays with a true 90-day half-life`.
 
 **Rollout.** This changes the target book, so it can trigger rebalancing trades. Merge it on a day when
 the next cron run can be watched. The no-trade band (2.5pp) should absorb most of the shift.
@@ -783,15 +789,15 @@ only.
 
 **Steps**
 
-- [ ] **Step 1:** Write tests.
+- [x] **Step 1:** Write tests.
   - The knob off gives identical output for every fixture.
   - A KTOS-like fixture (σ high, E just over the band) goes BUY → HOLD.
   - An EVLV-like fixture goes SB → B.
   - The label is never more bullish than with the knob off (property test over a grid).
   - A report without `policyVersion` validates exactly as today.
-- [ ] **Step 2:** Implement and go green. Stamp `policyVersion: 2` only when the knob is on.
-- [ ] **Step 3:** Commit: `feat(synth): opt-in scenario-dispersion band widening, versioned`.
-- [ ] **Step 4:** Update `engine.md` §1.3. Mention the existing `applyUncertaintyBands` (F11) and the new
+- [x] **Step 2:** Implement and go green. Stamp `policyVersion: 2` only when the knob is on.
+- [x] **Step 3:** Commit: `feat(synth): opt-in scenario-dispersion band widening, versioned`.
+- [x] **Step 4:** Update `engine.md` §1.3. Mention the existing `applyUncertaintyBands` (F11) and the new
   knob.
 
 ### Task 6.3: Touch probability, display only (#1)
@@ -812,25 +818,25 @@ export function touchProbability(S0: number, H: number, sigma: number, nu: numbe
 
 **Steps**
 
-- [ ] **Step 1:** Write tests.
+- [x] **Step 1:** Write tests.
   - The closed form agrees with a seeded Monte Carlo (10k paths) within 0.02.
   - Monotonic in σ.
   - `H ≤ S0` returns 1.
   - Fewer than 20 closes → null.
   - **Guard test:** `scoreWeight` and eligibility give identical results with and without `touch`.
-- [ ] **Step 2:** Implement and go green. Label the column "P(touch FV, 1y, model)".
-- [ ] **Step 3:** Commit: `feat(portfolio): display-only touch probability`.
+- [x] **Step 2:** Implement and go green. Label the column "P(touch FV, 1y, model)".
+- [x] **Step 3:** Commit: `feat(portfolio): display-only touch probability`.
 
 ### Task 6.4: Doc corrections (F10, F11; #4/#5 verdicts)
 
 **Files:** `docs/engine.md`, `docs/superpowers/specs/2026-09-25-trade-layer-phase2-design.md:89`.
 
-- [ ] **Step 1:**
+- [x] **Step 1:**
   - Replace the §2 σ↓ callout and the §3.2 mean-CVaR callout with "🚫 Not an option" notes carrying the
     quantified reason (Spearman 0.996; CVaR reduces to D).
   - Fix the "realized vol already fetched" claims.
   - Mention `applyUncertaintyBands` in §1.3.
-- [ ] **Step 2:** Commit: `docs(engine): record rejected ideas and correct stale claims`.
+- [x] **Step 2:** Commit: `docs(engine): record rejected ideas and correct stale claims`.
 
 ---
 
