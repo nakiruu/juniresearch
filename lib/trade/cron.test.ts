@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { mkdtempSync, existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { mkdtempSync, mkdirSync, existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { runCron, type CronDeps } from "./cron";
@@ -308,6 +308,27 @@ describe("runCron", () => {
       const record = JSON.parse(readFileSync(join(paths.runs, rec), "utf8"));
       expect(record.plan.skipped.filter((x: { code: string }) => x.code === "TURNOVER_CLIP")).toHaveLength(names.length - sent.length);
       expect(record.orders).toHaveLength(sent.length);
+    });
+  });
+
+  describe("daily turnover cap across runs (maxDayTurnoverFrac)", () => {
+    const seedEarlierRun = (paths: CronDeps["paths"], usd: number, day = TODAY) => {
+      mkdirSync(paths.runs, { recursive: true });
+      writeFileSync(join(paths.runs, `${day}-earlier.json`), JSON.stringify({ today: day, orders: [{ filledQty: usd / 100, filledAvgPrice: 100 }] }));
+    };
+    const withNvt = { loadInputs: async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] as Fill[] }) };
+    it("halts a later run that would push the day over the cap (reason day-turnover)", async () => {
+      const paths = mkPaths();
+      seedEarlierRun(paths, 2_200); // NAV $10k, daily cap 25% = $2,500 → $300 left, the NVT entry needs more
+      const notified: string[] = [];
+      const r = await runCron(mkDeps({ paths, notify: (m) => notified.push(m), ...withNvt }));
+      expect(r).toEqual({ status: "halted", reason: "day-turnover" });
+      expect(notified.some((m) => /daily cap 25\.0% of NAV \(22\.0% already traded today\)/.test(m))).toBe(true);
+    });
+    it("ignores other days' runs", async () => {
+      const paths = mkPaths();
+      seedEarlierRun(paths, 2_200, "2026-09-24");
+      expect((await runCron(mkDeps({ paths, ...withNvt }))).status).toBe("executed");
     });
   });
 

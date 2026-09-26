@@ -1,9 +1,9 @@
 import { describe, it, expect } from "vitest";
-import { mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { Worker } from "node:worker_threads";
-import { turnoverBreaker, clipToTurnover, readHaltState, bumpHalt, clearHalt, haltBlocked, acquireLock, releaseLock } from "./breakers";
+import { turnoverBreaker, clipToTurnover, dayTurnoverUsd, readHaltState, bumpHalt, clearHalt, haltBlocked, acquireLock, releaseLock } from "./breakers";
 import { DEFAULT_TRADE_CONFIG as C } from "./config";
 
 describe("turnover breaker", () => {
@@ -47,6 +47,23 @@ describe("clipToTurnover (ENTER-only plans)", () => {
   it("never resizes an order, even when it alone exceeds the cap", () => {
     const r = clipToTurnover([enter("BIG", 200, 100)], 100_000, C)!;
     expect(r).toEqual({ kept: [], clipped: [enter("BIG", 200, 100)] });
+  });
+});
+
+describe("dayTurnoverUsd", () => {
+  it("sums today's filled notional across run records, skipping other days and fill-less records", () => {
+    const dir = join(mkdtempSync(join(tmpdir(), "runs-")), "runs");
+    expect(dayTurnoverUsd(dir, "2026-09-28")).toBe(0); // no dir yet
+    mkdirSync(dir, { recursive: true });
+    writeFileSync(join(dir, "a.json"), JSON.stringify({ today: "2026-09-28", orders: [{ filledQty: 10, filledAvgPrice: 100 }, { filledQty: 5, filledAvgPrice: 20 }, { qty: 3 }] }));
+    writeFileSync(join(dir, "b.json"), JSON.stringify({ today: "2026-09-28", orders: [{ filledQty: 1, filledAvgPrice: 50 }] }));
+    writeFileSync(join(dir, "c.json"), JSON.stringify({ today: "2026-09-25", orders: [{ filledQty: 999, filledAvgPrice: 999 }] }));
+    expect(dayTurnoverUsd(dir, "2026-09-28")).toBe(1_150);
+  });
+  it("fails loud on an unreadable record rather than under-counting", () => {
+    const dir = mkdtempSync(join(tmpdir(), "runs-"));
+    writeFileSync(join(dir, "bad.json"), "{nope");
+    expect(() => dayTurnoverUsd(dir, "2026-09-28")).toThrow();
   });
 });
 

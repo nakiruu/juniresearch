@@ -38,6 +38,14 @@ describe("resolveTradeConfig", () => {
   });
 });
 
+describe("daily turnover cap config", () => {
+  it("defaults to 25% and must sit between the per-run cap and 100%", () => {
+    expect(resolveTradeConfig().maxDayTurnoverFrac).toBe(0.25);
+    expect(() => resolveTradeConfig({ maxDayTurnoverFrac: 0.1 })).toThrow(/maxDayTurnoverFrac/);
+    expect(() => resolveTradeConfig({ maxDayTurnoverFrac: 1.5 })).toThrow(/maxDayTurnoverFrac/);
+  });
+});
+
 describe("daily slots config", () => {
   it("defaults to one slot and keeps cronTimeET as the first slot", () => {
     expect(resolveTradeConfig()).toMatchObject({ cronTimeET: "09:45", cronTimesET: ["09:45"] });

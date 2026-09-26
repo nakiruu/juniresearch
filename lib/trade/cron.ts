@@ -15,7 +15,7 @@ import type { Fill } from "./fills";
 import { planRun, executeOrders, mergeExecution, type PlanRunOutput } from "./pipeline";
 import { ReconcileError } from "./ledger";
 import { SchwabAuthError } from "../broker/schwab-auth";
-import { turnoverBreaker, clipToTurnover, readHaltState, bumpHalt, clearHalt, haltBlocked, acquireLock, releaseLock, DEFAULT_LOCK_STALE_MS } from "./breakers";
+import { turnoverBreaker, clipToTurnover, dayTurnoverUsd, readHaltState, bumpHalt, clearHalt, haltBlocked, acquireLock, releaseLock, DEFAULT_LOCK_STALE_MS } from "./breakers";
 import { crossCheckBroker } from "./audit";
 import { summaryFromRun, type RunSummaryInput } from "./notify";
 import { writeRunRecord } from "./run-record";
@@ -187,11 +187,23 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
 
     // 6. Turnover breaker. An ENTER-only plan (opening positions, e.g. building the book from cash) may
     // be clipped to the cap instead of halting — opt-in; every run still stays within the cap.
+    // The budget is the smaller of the per-run cap and what's left of the daily cap after today's
+    // earlier runs (the daily cap only binds with several cronTimesET slots).
     const tb = turnoverBreaker(out.sized.orders, out.ledger.nav, cfg);
-    const clip = tb.tripped && cfg.turnoverClipEnterOnly ? clipToTurnover(out.sized.orders, out.ledger.nav, cfg) : null;
+    const nav = out.ledger.nav;
+    const doneTodayUsd = dayTurnoverUsd(paths.runs, today);
+    const dayLeftUsd = Math.max(0, cfg.maxDayTurnoverFrac * nav - doneTodayUsd);
+    const plannedUsd = tb.frac * nav;
+    const byDay = dayLeftUsd < cfg.maxRunTurnoverFrac * nav;
+    const budgetUsd = Math.min(cfg.maxRunTurnoverFrac * nav, dayLeftUsd);
+    const over = plannedUsd > budgetUsd + 1e-9;
+    const capText = byDay
+      ? `daily cap ${(cfg.maxDayTurnoverFrac * 100).toFixed(1)}% of NAV (${((doneTodayUsd / nav) * 100).toFixed(1)}% already traded today)`
+      : `${(cfg.maxRunTurnoverFrac * 100).toFixed(1)}% per-run cap`;
+    const clip = over && cfg.turnoverClipEnterOnly ? clipToTurnover(out.sized.orders, nav, cfg, budgetUsd) : null;
     if (clip) {
       const clippedCids = new Set(clip.clipped.map((o) => o.clientOrderId));
-      const deferred = clip.clipped.map((o) => ({ ticker: o.ticker, code: "TURNOVER_CLIP" as const, reasons: [`deferred: run turnover capped at ${(cfg.maxRunTurnoverFrac * 100).toFixed(1)}% of NAV`], currentWeight: 0, targetWeight: out.ledger.nav > 0 ? o.deltaUsd / out.ledger.nav : null }));
+      const deferred = clip.clipped.map((o) => ({ ticker: o.ticker, code: "TURNOVER_CLIP" as const, reasons: [`deferred: turnover capped by the ${capText}`], currentWeight: 0, targetWeight: nav > 0 ? o.deltaUsd / nav : null }));
       out = {
         ...out,
         sized: { ...out.sized, orders: clip.kept },
@@ -200,16 +212,17 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
           ...out.record,
           orders: out.record.orders.filter((o) => !clippedCids.has(o.clientOrderId as string)),
           plan: { ...out.record.plan, skipped: [...(out.record.plan.skipped as unknown[]), ...deferred] },
-          notes: [...out.record.notes, `turnover clip: ${(tb.frac * 100).toFixed(1)}% of NAV planned; kept ${clip.kept.length}, deferred ${clip.clipped.length} (${clip.clipped.map((o) => o.ticker).join(", ")})`],
+          notes: [...out.record.notes, `turnover clip: ${(tb.frac * 100).toFixed(1)}% of NAV planned vs the ${capText}; kept ${clip.kept.length}, deferred ${clip.clipped.length} (${clip.clipped.map((o) => o.ticker).join(", ")})`],
         },
       };
-      notify(`cron: ENTER-only plan was ${(tb.frac * 100).toFixed(1)}% of NAV > ${(cfg.maxRunTurnoverFrac * 100).toFixed(1)}% cap — clipped: sending ${clip.kept.length}, deferring ${clip.clipped.length} to later runs`);
-    } else if (tb.tripped) {
+      notify(`cron: ENTER-only plan was ${(tb.frac * 100).toFixed(1)}% of NAV, over the ${capText} — clipped: sending ${clip.kept.length}, deferring ${clip.clipped.length} to later runs`);
+    } else if (over) {
+      const reason = byDay ? "day-turnover" : "turnover";
       bumpHalt(paths.haltState);
-      notify(`cron halted: turnover breaker tripped — ${(tb.frac * 100).toFixed(1)}% of NAV > ${(cfg.maxRunTurnoverFrac * 100).toFixed(1)}% cap`);
+      notify(`cron halted: turnover breaker tripped — ${(tb.frac * 100).toFixed(1)}% of NAV planned, over the ${capText}`);
       writeRunRecord(paths.runs, out.record);
-      appendLog(paths.log, logLine(today, runId, "halted", { ...summaryFields(out), reason: "turnover" }));
-      return { status: "halted", reason: "turnover" };
+      appendLog(paths.log, logLine(today, runId, "halted", { ...summaryFields(out), reason }));
+      return { status: "halted", reason };
     }
 
     // 7. Nothing to trade — a clean run, so it clears any prior halt.

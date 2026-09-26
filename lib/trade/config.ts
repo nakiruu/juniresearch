@@ -31,6 +31,7 @@ export interface TradeConfig extends PortfolioConfig {
   maxStaleMin: Record<LiquidityBucket, number>;  // per-bucket freshness window, minutes
   closeAnchorSizeMult: number;                   // size multiplier when anchored to the prior close (tier 3)
   maxRunTurnoverFrac: number;                    // turnover breaker — fraction of NAV per run
+  maxDayTurnoverFrac: number;                    // …and across all of a day's runs (only binds with several cronTimesET slots)
   consecutiveHaltLimit: number;                  // consecutive halted runs before blocking further runs
   schwabRefreshLifetimeDays: number;             // Schwab refresh-token lifetime after trade:auth (7)
   schwabAuthWarnHours: number;                   // warn when fewer hours than this remain (72 covers a weekend)
@@ -53,7 +54,7 @@ export const DEFAULT_TRADE_CONFIG: TradeConfig = {
   limitTolBeta: 0.5, limitTolMin: 0.0005, exitTolMult: 1.5,
   gapHalt: { large: 0.10, mid: 0.15, small: 0.25 },
   maxStaleMin: { large: 5, mid: 15, small: 60 },
-  closeAnchorSizeMult: 0.5, maxRunTurnoverFrac: 0.15, consecutiveHaltLimit: 3,
+  closeAnchorSizeMult: 0.5, maxRunTurnoverFrac: 0.15, maxDayTurnoverFrac: 0.25, consecutiveHaltLimit: 3,
   maxLateMin: 20, reconcileOrders: true, turnoverClipEnterOnly: false, topUpRecentBuys: false, residualBand: 0.005,
   schwabRefreshLifetimeDays: 7, schwabAuthWarnHours: 72,
 };
@@ -101,6 +102,7 @@ export function resolveTradeConfig(overrides: Partial<TradeConfig> = {}): TradeC
   hhmmToMinutes(cfg.cronTimeET); // throws on a malformed "HH:MM"
   if (!(cfg.residualBand > 0 && cfg.residualBand <= cfg.tradeBand)) throw new Error(`residualBand (${cfg.residualBand}) must be in (0, tradeBand ${cfg.tradeBand}]`);
   if (!(Number.isInteger(cfg.maxLateMin) && cfg.maxLateMin > 0 && cfg.maxLateMin <= 390)) throw new Error(`maxLateMin (${cfg.maxLateMin}) must be an integer in (0, 390]`);
+  if (!(cfg.maxDayTurnoverFrac >= cfg.maxRunTurnoverFrac && cfg.maxDayTurnoverFrac <= 1)) throw new Error(`maxDayTurnoverFrac (${cfg.maxDayTurnoverFrac}) must be in [maxRunTurnoverFrac ${cfg.maxRunTurnoverFrac}, 1]`);
   if (!(cfg.consecutiveHaltLimit >= 1)) throw new Error(`consecutiveHaltLimit (${cfg.consecutiveHaltLimit}) must be >= 1`);
 
   return cfg;
