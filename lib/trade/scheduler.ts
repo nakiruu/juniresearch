@@ -55,3 +55,91 @@ export function shouldCatchUp(a: { lastFiredDay: string | null; todayET: string;
 export function shouldArm(env: NodeJS.ProcessEnv): boolean {
   return env.NEXT_RUNTIME === "nodejs" && env.TRADE_SCHEDULER_ENABLED === "1";
 }
+
+/**
+ * scheduler.ts — stateful section: persisted lastFiredDay, the in-memory status singleton read by
+ * a later status route, and startScheduler with an injected timer/clock for deterministic tests.
+ */
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import type { TradeConfig } from "./config";
+import { TRADE_DIR, latestRunRecord } from "./runtime";
+import type { CronResult } from "./cron";
+
+const STATE_FILE = (dir: string) => join(dir, "scheduler-state.json");
+
+export function readSchedulerState(dir: string = TRADE_DIR): { lastFiredDay: string | null } {
+  const p = STATE_FILE(dir);
+  if (!existsSync(p)) return { lastFiredDay: null };
+  try { return { lastFiredDay: JSON.parse(readFileSync(p, "utf8")).lastFiredDay ?? null }; }
+  catch { return { lastFiredDay: null }; }
+}
+export function writeSchedulerState(s: { lastFiredDay: string | null }, dir: string = TRADE_DIR): void {
+  const p = STATE_FILE(dir);
+  mkdirSync(dirname(p), { recursive: true });
+  writeFileSync(p, JSON.stringify(s, null, 2) + "\n");
+}
+
+export interface SchedulerStatus {
+  armed: boolean; broker: string; tradeDisabled: boolean; nextRunISO: string | null;
+  lastRun: { id: string | null; day: string | null; at: string | null; status: string; orders?: number; fills?: number } | null;
+}
+let _armed = false;
+let _nextRunISO: string | null = null;
+let _lastFire: { at: string; status: string; orders?: number; fills?: number } | null = null;
+
+export function getSchedulerStatus(env: NodeJS.ProcessEnv = process.env): SchedulerStatus {
+  const rec = latestRunRecord();
+  const lastRun = _lastFire || rec
+    ? {
+        id: rec?.runId ?? null, day: rec?.today ?? null, at: _lastFire?.at ?? null,
+        status: _lastFire?.status ?? "unknown",
+        orders: _lastFire?.orders ?? rec?.orders.length, fills: _lastFire?.fills ?? rec?.fills.length,
+      }
+    : null;
+  return {
+    armed: _armed, broker: env.BROKER ?? "alpaca-paper", tradeDisabled: env.TRADE_DISABLED === "1",
+    nextRunISO: _nextRunISO, lastRun,
+  };
+}
+
+export interface SchedulerDeps {
+  runOnce: () => Promise<CronResult>;
+  marketOpenNow: () => Promise<boolean>;
+  cfg: Pick<TradeConfig, "cronTimeET">;
+  broker: string;
+  env: NodeJS.ProcessEnv;
+  now: () => number;
+  setTimer: (fn: () => void, ms: number) => { clear: () => void };
+  stateDir?: string;
+}
+
+export function startScheduler(deps: SchedulerDeps): { stop: () => void } {
+  const dir = deps.stateDir ?? TRADE_DIR;
+  let handle: { clear: () => void } | null = null;
+
+  const fire = async () => {
+    const result = await deps.runOnce();
+    _lastFire = { at: new Date(deps.now()).toISOString(), status: result.status, orders: result.orders, fills: result.fills };
+    writeSchedulerState({ lastFiredDay: etDateString(deps.now()) }, dir);
+    arm(); // re-arm for the next day
+  };
+  const arm = () => {
+    const at = nextRunAtET(deps.now(), deps.cfg.cronTimeET);
+    _nextRunISO = new Date(at).toISOString();
+    handle = deps.setTimer(() => { void fire(); }, Math.max(0, at - deps.now()));
+  };
+
+  _armed = true;
+  void (async () => {
+    const st = readSchedulerState(dir);
+    const todayET = etDateString(deps.now());
+    if (shouldCatchUp({ lastFiredDay: st.lastFiredDay, todayET, marketOpen: await deps.marketOpenNow() })) {
+      await fire();          // fire() re-arms
+    } else {
+      arm();
+    }
+  })();
+
+  return { stop: () => { handle?.clear(); handle = null; _armed = false; _nextRunISO = null; } };
+}

@@ -1,5 +1,9 @@
-import { describe, it, expect } from "vitest";
-import { nextRunAtET, etDateString, shouldCatchUp, shouldArm } from "./scheduler";
+import { describe, it, expect, vi } from "vitest";
+import { nextRunAtET, etDateString, shouldCatchUp, shouldArm, startScheduler, getSchedulerStatus, readSchedulerState, writeSchedulerState } from "./scheduler";
+import type { CronResult } from "./cron";
+import { mkdtempSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 
 // 09:45 EDT (UTC-4) = 13:45Z ; 09:45 EST (UTC-5) = 14:45Z
 describe("nextRunAtET", () => {
@@ -45,6 +49,59 @@ describe("shouldCatchUp", () => {
   });
   it("does not run when the market is closed", () => {
     expect(shouldCatchUp({ lastFiredDay: null, todayET: "2026-07-01", marketOpen: false })).toBe(false);
+  });
+});
+
+function fakeTimer() {
+  let fn: (() => void) | null = null;
+  return {
+    setTimer: (f: () => void, _ms: number) => { fn = f; return { clear: () => { fn = null; } }; },
+    fire: () => { const f = fn; fn = null; f?.(); },
+    pending: () => fn !== null,
+  };
+}
+
+describe("startScheduler", () => {
+  it("catches up on boot when the market is open and not fired today, then arms", async () => {
+    const dir = mkdtempSync(join(tmpdir(), "sched-"));
+    const timer = fakeTimer();
+    const runOnce = vi.fn(async (): Promise<CronResult> => ({ status: "executed", orders: 2, fills: 2 }));
+    const s = startScheduler({
+      runOnce, marketOpenNow: async () => true,
+      cfg: { cronTimeET: "09:45" } as any, broker: "alpaca-paper", env: {} as unknown as NodeJS.ProcessEnv,
+      now: () => Date.parse("2026-07-01T14:00:00Z"), // 10:00 ET, market open, past 09:45
+      setTimer: timer.setTimer, stateDir: dir,
+    });
+    await Promise.resolve(); await Promise.resolve(); // let the async boot settle
+    expect(runOnce).toHaveBeenCalledTimes(1);
+    expect(readSchedulerState(dir).lastFiredDay).toBe("2026-07-01");
+    expect(timer.pending()).toBe(true); // armed for the next day
+    s.stop();
+    expect(timer.pending()).toBe(false);
+  });
+
+  it("does not catch up when already fired today; just arms", async () => {
+    const dir = mkdtempSync(join(tmpdir(), "sched-"));
+    writeSchedulerState({ lastFiredDay: "2026-07-01" }, dir);
+    const timer = fakeTimer();
+    const runOnce = vi.fn(async (): Promise<CronResult> => ({ status: "noop" }));
+    startScheduler({
+      runOnce, marketOpenNow: async () => true,
+      cfg: { cronTimeET: "09:45" } as any, broker: "alpaca-paper", env: {} as unknown as NodeJS.ProcessEnv,
+      now: () => Date.parse("2026-07-01T14:00:00Z"),
+      setTimer: timer.setTimer, stateDir: dir,
+    });
+    await Promise.resolve(); await Promise.resolve();
+    expect(runOnce).not.toHaveBeenCalled();
+    expect(timer.pending()).toBe(true);
+  });
+});
+
+describe("getSchedulerStatus", () => {
+  it("reports broker + kill-switch from env when disarmed", () => {
+    const st = getSchedulerStatus({ BROKER: "schwab", TRADE_DISABLED: "1" } as unknown as NodeJS.ProcessEnv);
+    expect(st.broker).toBe("schwab");
+    expect(st.tradeDisabled).toBe(true);
   });
 });
 
