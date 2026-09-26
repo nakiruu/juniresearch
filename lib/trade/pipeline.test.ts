@@ -8,6 +8,7 @@ import { resolveTradeConfig } from "./config";
 import { readFills } from "./fills";
 import { fixtureReport } from "../portfolio/__fixtures__/reports";
 import type { GuardContext } from "../broker/guards";
+import type { OrderRequest, SizedOrders } from "./orders";
 
 const CAL = ["2026-09-21", "2026-09-22", "2026-09-23", "2026-09-24", "2026-09-25"].map((date) => ({ date, open: "09:30", close: "16:00" }));
 const closes = (p: number) => Object.fromEntries(CAL.map((d) => [d.date, p]));
@@ -75,7 +76,7 @@ describe("executeOrders", () => {
   it("counts each order against the notional guard at qty × limitPrice (what an IOC limit can spend), not deltaUsd", async () => {
     const b = new FakeBroker({ calendar: CAL, closes: { NVT: closes(100) }, equity: 10_000, cash: 10_000, isOpen: true, today: "2026-09-25" });
     const out = await planRun({ adapter: b, reports: [nvt], sics: {}, marketCapUsd: {}, fills: [], today: "2026-09-25", cfg, runId: "r1" });
-    const ctx: GuardContext = { brokerKind: "fake", configuredBaseUrl: "memory://", locks: out.locks, today: "2026-09-25", nav: out.ledger.nav, cfg, env: {} as NodeJS.ProcessEnv, counters: { orders: 0, notionalUsd: 0 } };
+    const ctx: GuardContext = { brokerKind: "fake", configuredBaseUrl: "memory://", locks: out.locks, today: "2026-09-25", nav: out.ledger.nav, cashUsd: out.ledger.cash, cfg, env: {} as NodeJS.ProcessEnv, counters: { orders: 0, notionalUsd: 0, buyNotionalUsd: 0, sellProceedsUsd: 0 } };
     const sent: number[] = [];
     const submit = b.submitOrder.bind(b);
     b.submitOrder = async (req) => { sent.push(req.estNotionalUsd); return submit(req); };
@@ -89,7 +90,7 @@ describe("executeOrders", () => {
     const setup = async () => {
       const b = new FakeBroker({ calendar: CAL, closes: { NVT: closes(100) }, equity: 10_000, cash: 10_000, isOpen: true, today: "2026-09-25" });
       const out = await planRun({ adapter: b, reports: [nvt], sics: {}, marketCapUsd: {}, fills: [], today: "2026-09-25", cfg, runId: "r1" });
-      const ctx: GuardContext = { brokerKind: "fake", configuredBaseUrl: "memory://", locks: out.locks, today: "2026-09-25", nav: out.ledger.nav, cfg, env: {} as NodeJS.ProcessEnv, counters: { orders: 0, notionalUsd: 0 } };
+      const ctx: GuardContext = { brokerKind: "fake", configuredBaseUrl: "memory://", locks: out.locks, today: "2026-09-25", nav: out.ledger.nav, cashUsd: out.ledger.cash, cfg, env: {} as NodeJS.ProcessEnv, counters: { orders: 0, notionalUsd: 0, buyNotionalUsd: 0, sellProceedsUsd: 0 } };
       const fillsPath = join(mkdtempSync(join(tmpdir(), "exec-")), "fills.jsonl");
       return { b, out, ctx, fillsPath };
     };
@@ -131,7 +132,7 @@ describe("executeOrders", () => {
     const afters: (string | undefined)[] = [];
     const list = b.getOrders.bind(b);
     b.getOrders = async (status: "open" | "closed" | "all", after?: string) => { afters.push(after); return (await list(status)).map((o) => ({ ...o, clientOrderId: "" })); }; // Schwab-like: no cid echoed
-    const ctx: GuardContext = { brokerKind: "fake", configuredBaseUrl: "memory://", locks: out.locks, today: "2026-09-25", nav: out.ledger.nav, cfg, env: {} as NodeJS.ProcessEnv, counters: { orders: 0, notionalUsd: 0 } };
+    const ctx: GuardContext = { brokerKind: "fake", configuredBaseUrl: "memory://", locks: out.locks, today: "2026-09-25", nav: out.ledger.nav, cashUsd: out.ledger.cash, cfg, env: {} as NodeJS.ProcessEnv, counters: { orders: 0, notionalUsd: 0, buyNotionalUsd: 0, sellProceedsUsd: 0 } };
     const NOW = Date.parse("2026-09-25T13:46:00Z");
     const { fills } = await executeOrders({ adapter: b, sized: out.sized, ctx, runId: "r1", fillsPath: join(mkdtempSync(join(tmpdir(), "exec-")), "fills.jsonl"), pollMs: 0, now: () => NOW });
     expect(afters[0]).toBe("2026-09-25T13:45:00.000Z");
@@ -141,7 +142,7 @@ describe("executeOrders", () => {
     const b = new FakeBroker({ calendar: CAL, closes: { NVT: closes(100) }, equity: 10_000, cash: 10_000, isOpen: true, today: "2026-09-25" });
     const out = await planRun({ adapter: b, reports: [nvt], sics: {}, marketCapUsd: {}, fills: [], today: "2026-09-25", cfg, runId: "r1" });
     const fillsPath = join(mkdtempSync(join(tmpdir(), "exec-")), "fills.jsonl");
-    const ctx: GuardContext = { brokerKind: "fake", configuredBaseUrl: "memory://", locks: out.locks, today: "2026-09-25", nav: out.ledger.nav, cfg, env: {} as NodeJS.ProcessEnv, counters: { orders: 0, notionalUsd: 0 } };
+    const ctx: GuardContext = { brokerKind: "fake", configuredBaseUrl: "memory://", locks: out.locks, today: "2026-09-25", nav: out.ledger.nav, cashUsd: out.ledger.cash, cfg, env: {} as NodeJS.ProcessEnv, counters: { orders: 0, notionalUsd: 0, buyNotionalUsd: 0, sellProceedsUsd: 0 } };
     const { fills } = await executeOrders({ adapter: b, sized: out.sized, ctx, runId: "r1", fillsPath, pollMs: 0 });
     expect(fills).toEqual([expect.objectContaining({ ticker: "NVT", side: "buy", qty: 49, price: 100, tradingDate: "2026-09-25", runId: "r1" })]);
     expect(readFills(fillsPath)).toEqual(fills);
@@ -150,7 +151,7 @@ describe("executeOrders", () => {
     const b = new FakeBroker({ calendar: CAL, closes: { NVT: closes(100) }, equity: 10_000, cash: 10_000, isOpen: true, today: "2026-09-25" });
     const out = await planRun({ adapter: b, reports: [nvt], sics: {}, marketCapUsd: {}, fills: [], today: "2026-09-25", cfg, runId: "r1" });
     const fillsPath = join(mkdtempSync(join(tmpdir(), "exec-")), "fills.jsonl");
-    const ctx: GuardContext = { brokerKind: "fake", configuredBaseUrl: "memory://", locks: out.locks, today: "2026-09-25", nav: out.ledger.nav, cfg, env: {} as NodeJS.ProcessEnv, counters: { orders: 0, notionalUsd: 0 } };
+    const ctx: GuardContext = { brokerKind: "fake", configuredBaseUrl: "memory://", locks: out.locks, today: "2026-09-25", nav: out.ledger.nav, cashUsd: out.ledger.cash, cfg, env: {} as NodeJS.ProcessEnv, counters: { orders: 0, notionalUsd: 0, buyNotionalUsd: 0, sellProceedsUsd: 0 } };
     const { executed } = await executeOrders({ adapter: b, sized: out.sized, ctx, runId: "r1", fillsPath, pollMs: 0 });
     expect(executed).toEqual([expect.objectContaining({ clientOrderId: out.sized.orders[0].clientOrderId, status: "filled", filledQty: 49, submittedAt: expect.any(String) })]);
     expect(executed[0].brokerId).toMatch(/^fake-/);
@@ -162,7 +163,7 @@ describe("executeOrders", () => {
     const out = await planRun({ adapter: b, reports: [nvt], sics: {}, marketCapUsd: {}, fills: [], today: "2026-09-25", cfg, runId: "r1" });
     expect(out.sized.orders[0]).toEqual(expect.objectContaining({ limitPrice: 100.35 }));
     const fillsPath = join(mkdtempSync(join(tmpdir(), "exec-")), "fills.jsonl");
-    const ctx: GuardContext = { brokerKind: "fake", configuredBaseUrl: "memory://", locks: out.locks, today: "2026-09-25", nav: out.ledger.nav, cfg, env: {} as NodeJS.ProcessEnv, counters: { orders: 0, notionalUsd: 0 } };
+    const ctx: GuardContext = { brokerKind: "fake", configuredBaseUrl: "memory://", locks: out.locks, today: "2026-09-25", nav: out.ledger.nav, cashUsd: out.ledger.cash, cfg, env: {} as NodeJS.ProcessEnv, counters: { orders: 0, notionalUsd: 0, buyNotionalUsd: 0, sellProceedsUsd: 0 } };
     const { fills } = await executeOrders({ adapter: b, sized: out.sized, ctx, runId: "r1", fillsPath, pollMs: 0 });
     expect(fills).toEqual([]);
     expect(readFills(fillsPath)).toEqual([]);
@@ -176,5 +177,42 @@ describe("fillTradingDate — the lock clock starts on the fill's ET date", () =
   });
   it("falls back to the literal date prefix for an unparseable timestamp", () => {
     expect(fillTradingDate("garbage")).toBe("garbage".slice(0, 10));
+  });
+});
+
+describe("executeOrders — cash backstop (spec F5)", () => {
+  const D = "2026-09-25";
+  const mkOrder = (o: Pick<OrderRequest, "ticker" | "side" | "qty" | "limitPrice">): OrderRequest => ({
+    ...o, sector: "0", kind: "qty", timeInForce: "ioc", tier: 1, capBound: false, anchorReason: "fresh_trade",
+    clientOrderId: `c-${o.ticker}-${o.side}`, reason: o.side === "buy" ? "ENTER" : "EXIT", deltaUsd: o.qty * o.limitPrice, estCostUsd: 0, bucket: "large",
+  });
+  /** Account holding 10 AAA @ $100 with $1,000 cash; ctx NAV $5,000 (so the notional cap never binds) → cash floor $50. */
+  const setup = async () => {
+    const b = new FakeBroker({ calendar: CAL, closes: { AAA: { [D]: 100 }, BBB: { [D]: 100 } }, equity: 2_000, cash: 2_000, isOpen: true, today: D });
+    await b.submitOrder({ symbol: "AAA", side: "buy", qty: 10, clientOrderId: "seed", estNotionalUsd: 1_000 });
+    const ctx: GuardContext = { brokerKind: "fake", configuredBaseUrl: "memory://", locks: { buyLockUntil: {}, sellLockUntil: {} }, today: D, nav: 5_000, cashUsd: 1_000, cfg, env: {} as NodeJS.ProcessEnv, counters: { orders: 0, notionalUsd: 0, buyNotionalUsd: 0, sellProceedsUsd: 0 } };
+    return { b, ctx, fillsPath: join(mkdtempSync(join(tmpdir(), "cash-")), "fills.jsonl") };
+  };
+  const sized = (orders: OrderRequest[]): SizedOrders => ({ orders, skippedDust: [], skippedHalt: [] });
+
+  it("sends sells first, so a buy funded by a filled sell goes through", async () => {
+    const { b, ctx, fillsPath } = await setup();
+    const r = await executeOrders({ adapter: b, sized: sized([mkOrder({ ticker: "BBB", side: "buy", qty: 15, limitPrice: 100 }), mkOrder({ ticker: "AAA", side: "sell", qty: 10, limitPrice: 99 })]), ctx, runId: "r", fillsPath, pollMs: 0 });
+    expect(r.executed.map((e) => e.clientOrderId)).toEqual(["c-AAA-sell", "c-BBB-buy"]);
+    expect(r.skippedCash).toEqual([]);
+    expect(ctx.counters).toMatchObject({ sellProceedsUsd: 1_000, buyNotionalUsd: 1_500 }); // trued up to the actual fill
+  });
+  it("skips (never sends, never crashes) a buy whose funding sell did not fill", async () => {
+    const { b, ctx, fillsPath } = await setup();
+    const r = await executeOrders({ adapter: b, sized: sized([mkOrder({ ticker: "AAA", side: "sell", qty: 10, limitPrice: 101 }), mkOrder({ ticker: "BBB", side: "buy", qty: 15, limitPrice: 100 })]), ctx, runId: "r", fillsPath, pollMs: 0 });
+    expect(r.skippedCash).toEqual([expect.objectContaining({ ticker: "BBB", detail: expect.stringMatching(/cash backstop/) })]);
+    expect((await b.getOrders("all")).filter((o) => o.symbol === "BBB")).toEqual([]);
+    expect(r.executed.map((e) => e.clientOrderId)).toEqual(["c-AAA-sell"]); // the sell was sent; it just didn't fill
+  });
+  it("an unfilled buy releases its cash reservation for the next buy", async () => {
+    const { b, ctx, fillsPath } = await setup();
+    const r = await executeOrders({ adapter: b, sized: sized([mkOrder({ ticker: "AAA", side: "buy", qty: 9, limitPrice: 99 }), mkOrder({ ticker: "BBB", side: "buy", qty: 9, limitPrice: 100 })]), ctx, runId: "r", fillsPath, pollMs: 0 });
+    expect(r.skippedCash).toEqual([]); // the first IOC didn't fill (99 < 100), so its $891 came back
+    expect(ctx.counters.buyNotionalUsd).toBe(900);
   });
 });

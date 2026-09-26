@@ -12,9 +12,23 @@ import type { BrokerAdapter, BrokerOrder, SubmitOrderRequest } from "./adapter";
 export const PAPER_HOST = "paper-api.alpaca.markets";
 export const SCHWAB_HOST = "api.schwabapi.com";
 export class GuardError extends Error { constructor(msg: string) { super(msg); this.name = "GuardError"; } }
+/** A buy the broker's cash can't cover. Not a planning bug (an unfilled IOC sell leaves its proceeds unrealized) — the caller skips the order. */
+export class CashBackstopError extends GuardError { constructor(msg: string) { super(msg); this.name = "CashBackstopError"; } }
 export interface GuardContext {
   brokerKind: BrokerAdapter["kind"]; configuredBaseUrl: string; locks: Locks; today: TradingDay;
-  nav: number; cfg: TradeConfig; env: NodeJS.ProcessEnv; counters: { orders: number; notionalUsd: number };
+  nav: number; cfg: TradeConfig; env: NodeJS.ProcessEnv;
+  /** Broker-reported cash at plan time — the never-leverage backstop is checked against this, not the plan. */
+  cashUsd: number;
+  /**
+   * buyNotionalUsd: cash committed to buys (reserved at qty × limit on submit, trued up to the actual fill
+   * by executeOrders); sellProceedsUsd: cash actually raised by FILLED sells (an unfilled IOC sell raises none).
+   */
+  counters: { orders: number; notionalUsd: number; buyNotionalUsd: number; sellProceedsUsd: number };
+}
+
+/** Cash a further buy may use: broker cash + realized sell proceeds − committed buys − the cash floor. */
+export function buyCapacityUsd(ctx: GuardContext): number {
+  return ctx.cashUsd + ctx.counters.sellProceedsUsd - ctx.counters.buyNotionalUsd - ctx.cfg.cashFloor * ctx.nav;
 }
 
 export function assertOrderAllowed(req: SubmitOrderRequest, ctx: GuardContext): void {
@@ -34,6 +48,11 @@ export function assertOrderAllowed(req: SubmitOrderRequest, ctx: GuardContext): 
   if (ctx.counters.notionalUsd + Math.abs(req.estNotionalUsd) > ctx.cfg.maxNotionalFrac * ctx.nav + 1e-9) {
     throw new GuardError(`maxNotionalFrac ${ctx.cfg.maxNotionalFrac} × NAV exceeded`);
   }
+  // Never leverage, checked against BROKER cash: catches a plan built on a wrong book (e.g. a positions
+  // response that silently came back empty) and buys planned on sell proceeds that never filled.
+  if (req.side === "buy" && Math.abs(req.estNotionalUsd) > buyCapacityUsd(ctx) + 1e-9) {
+    throw new CashBackstopError(`cash backstop: buy ${req.symbol} $${Math.abs(req.estNotionalUsd).toFixed(2)} exceeds available cash $${Math.max(0, buyCapacityUsd(ctx)).toFixed(2)} (broker cash + filled sells − committed buys − cash floor)`);
+  }
 }
 
 export async function guardedSubmit(adapter: BrokerAdapter, req: SubmitOrderRequest, ctx: GuardContext): Promise<BrokerOrder> {
@@ -42,5 +61,6 @@ export async function guardedSubmit(adapter: BrokerAdapter, req: SubmitOrderRequ
   const order = await adapter.submitOrder(req);
   ctx.counters.orders += 1;
   ctx.counters.notionalUsd += Math.abs(req.estNotionalUsd);
+  if (req.side === "buy") ctx.counters.buyNotionalUsd += Math.abs(req.estNotionalUsd); // reserved; executeOrders trues it up
   return order;
 }

@@ -25,7 +25,7 @@ describe("broker-truth cross-check over real executeOrders output", () => {
     orders: [order({ ticker: "AAA", clientOrderId: "cA", limitPrice: 105 }), order({ ticker: "BBB", clientOrderId: "cB", limitPrice: 95 })],
     skippedDust: [], skippedHalt: [],
   };
-  const ctx = (nav: number): GuardContext => ({ brokerKind: "fake", configuredBaseUrl: "memory://", locks: { buyLockUntil: {}, sellLockUntil: {} }, today: TODAY, nav, cfg, env: {} as NodeJS.ProcessEnv, counters: { orders: 0, notionalUsd: 0 } });
+  const ctx = (nav: number): GuardContext => ({ brokerKind: "fake", configuredBaseUrl: "memory://", locks: { buyLockUntil: {}, sellLockUntil: {} }, today: TODAY, nav, cashUsd: nav, cfg, env: {} as NodeJS.ProcessEnv, counters: { orders: 0, notionalUsd: 0, buyNotionalUsd: 0, sellProceedsUsd: 0 } });
 
   it("a filled order + a canceled zero-fill reconcile clean against the broker", async () => {
     const b = broker();

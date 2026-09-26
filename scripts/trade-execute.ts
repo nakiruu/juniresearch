@@ -37,9 +37,11 @@ if (!has(args, "--yes")) {
   const a = (await rl.question(`Submit ${out.sized.orders.length} order(s) to ${adapter.kind}${adapter.kind === "schwab" ? " (LIVE)" : " (paper)"}? [y/N] `)).trim().toLowerCase(); rl.close();
   if (a !== "y") { console.log("Aborted; nothing submitted."); process.exit(0); }
 }
-const { fills, executed, aborted } = await executeOrders({ adapter, sized: out.sized, ctx: { brokerKind: adapter.kind, configuredBaseUrl: baseUrl, locks: out.locks, today, nav: out.ledger.nav, cfg, env: process.env, counters: { orders: 0, notionalUsd: 0 } }, runId, fillsPath: FILLS_PATH });
+const { fills, executed, aborted, skippedCash } = await executeOrders({ adapter, sized: out.sized, ctx: { brokerKind: adapter.kind, configuredBaseUrl: baseUrl, locks: out.locks, today, nav: out.ledger.nav, cashUsd: out.ledger.cash, cfg, env: process.env, counters: { orders: 0, notionalUsd: 0, buyNotionalUsd: 0, sellProceedsUsd: 0 } }, runId, fillsPath: FILLS_PATH });
 out.record.fills = fills as unknown as Record<string, unknown>[];
 out.record.orders = mergeExecution(out.record.orders, executed);
+out.record.notes.push(...skippedCash.map((s) => `cash skipped: ${s.ticker} — ${s.detail}`));
+for (const s of skippedCash) console.warn(`  skipped (cash backstop): ${s.ticker} — ${s.detail}`);
 const path = writeRunRecord(RUNS_DIR, out.record);
 console.log(`Submitted ${executed.length} of ${out.sized.orders.length} order(s); ${fills.length} fill(s) recorded to ${FILLS_PATH}. Run record ${path}. Run trade:reconcile before the next plan.`);
 
@@ -48,7 +50,7 @@ console.log(`Submitted ${executed.length} of ${out.sized.orders.length} order(s)
 // exits non-zero so the operator investigates before the next run.
 const brokerIdByCid = new Map(executed.map((e) => [e.clientOrderId, e.brokerId || undefined]));
 const audit = crossCheckBroker({
-  expected: out.sized.orders.map((o) => ({ clientOrderId: o.clientOrderId, ticker: o.ticker, side: o.side, brokerId: brokerIdByCid.get(o.clientOrderId) })),
+  expected: out.sized.orders.filter((o) => brokerIdByCid.has(o.clientOrderId)).map((o) => ({ clientOrderId: o.clientOrderId, ticker: o.ticker, side: o.side, brokerId: brokerIdByCid.get(o.clientOrderId) })),
   brokerOrders: await adapter.getOrders("all", `${today}T00:00:00Z`),
   fills,
 });

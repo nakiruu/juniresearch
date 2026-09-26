@@ -6,7 +6,7 @@ import type { Report } from "../report.schema";
 import { buildSignal, type Signal } from "../portfolio/signal";
 import type { BrokerAdapter, BrokerOrderStatus } from "../broker/adapter";
 import { TERMINAL_STATUSES } from "../broker/adapter";
-import { guardedSubmit, type GuardContext } from "../broker/guards";
+import { CashBackstopError, guardedSubmit, type GuardContext } from "../broker/guards";
 import { SubmitOutcomeUnknownError } from "../broker/http";
 import type { BrokerOrder, SubmitOrderRequest } from "../broker/adapter";
 import type { TradeConfig } from "./config";
@@ -87,6 +87,9 @@ export interface ExecutedOrder {
   filledQty: number; filledAvgPrice: number | null; submittedAt: string | null;
 }
 
+/** A buy the broker's cash could not cover at submit time — never sent. */
+export interface SkippedCash { ticker: string; clientOrderId: string; detail: string }
+
 /** Why a run stopped submitting: a submit whose outcome could not be established. */
 export interface SubmitAbort { ticker: string; clientOrderId: string; detail: string }
 
@@ -113,11 +116,15 @@ export async function executeOrders(input: {
   adapter: BrokerAdapter; sized: SizedOrders; ctx: GuardContext; runId: string; fillsPath: string; pollMs?: number; now?: () => number;
   /** Lookup schedule for a submit with an unknown outcome (default 2s, 5s, 10s). */
   resolveDelaysMs?: readonly number[];
-}): Promise<{ fills: Fill[]; executed: ExecutedOrder[]; aborted?: SubmitAbort }> {
+}): Promise<{ fills: Fill[]; executed: ExecutedOrder[]; aborted?: SubmitAbort; skippedCash: SkippedCash[] }> {
   const { adapter, sized, ctx, runId, fillsPath, pollMs = 1000, now = Date.now, resolveDelaysMs = [2_000, 5_000, 10_000] } = input;
   const fills: Fill[] = [];
   const executed: ExecutedOrder[] = [];
-  for (const o of sized.orders) {
+  const skippedCash: SkippedCash[] = [];
+  // Sells first: buys may be funded by sell proceeds, and the cash backstop only credits proceeds that
+  // actually filled. Order within each side is the plan's.
+  const ordered = [...sized.orders.filter((o) => o.side === "sell"), ...sized.orders.filter((o) => o.side === "buy")];
+  for (const o of ordered) {
     // Poll window: bounded to just before this submit (60s slack for clock skew) so the broker listing
     // always contains the new order, however long the account's order history grows.
     const pollAfter = new Date(now() - 60_000).toISOString();
@@ -129,17 +136,19 @@ export async function executeOrders(input: {
     try {
       order = await guardedSubmit(adapter, req, ctx);
     } catch (e) {
+      if (e instanceof CashBackstopError) { skippedCash.push({ ticker: o.ticker, clientOrderId: o.clientOrderId, detail: e.message }); continue; } // never sent
       if (!(e instanceof SubmitOutcomeUnknownError)) throw e;
       // The order may exist. Find it; NEVER resend it (a double fill, or a fill we can't record, is worse than a miss).
       const found = await resolveUnknownSubmit(adapter, req, e.submitStartAt, resolveDelaysMs);
       if (!found.order) {
         executed.push({ clientOrderId: o.clientOrderId, brokerId: "", status: "unknown", filledQty: 0, filledAvgPrice: null, submittedAt: e.submitStartAt });
         // Stop the run: every later order would be planned against a book we can't vouch for.
-        return { fills, executed, aborted: { ticker: o.ticker, clientOrderId: o.clientOrderId, detail: `${e.message}; lookup: ${found.detail}` } };
+        return { fills, executed, skippedCash, aborted: { ticker: o.ticker, clientOrderId: o.clientOrderId, detail: `${e.message}; lookup: ${found.detail}` } };
       }
       order = found.order;
       ctx.counters.orders += 1; // it did go out — count it against the run caps as guardedSubmit would have
       ctx.counters.notionalUsd += Math.abs(req.estNotionalUsd);
+      if (o.side === "buy") ctx.counters.buyNotionalUsd += Math.abs(req.estNotionalUsd);
     }
     for (let i = 0; i < 60 && !TERMINAL_STATUSES.has(order.status); i++) {
       await sleep(pollMs);
@@ -147,13 +156,19 @@ export async function executeOrders(input: {
       order = (await adapter.getOrders("all", pollAfter)).find((x) => x.id === id || x.clientOrderId === o.clientOrderId) ?? order;
     }
     executed.push({ clientOrderId: o.clientOrderId, brokerId: order.id, status: order.status, filledQty: order.filledQty, filledAvgPrice: order.filledAvgPrice, submittedAt: order.submittedAt });
+    // True up the cash backstop: a buy reserved qty × limit at submit; it actually spent filledQty × avg
+    // (an IOC that didn't fill releases its reservation). A sell raises cash only for what filled. A
+    // working order that never went terminal keeps its full reservation (conservative).
+    const spent = order.filledQty * (order.filledAvgPrice ?? 0);
+    if (o.side === "buy" && TERMINAL_STATUSES.has(order.status)) ctx.counters.buyNotionalUsd += spent - Math.abs(req.estNotionalUsd);
+    if (o.side === "sell") ctx.counters.sellProceedsUsd += spent;
     if (order.filledQty > 0 && order.filledAvgPrice != null && order.filledAt) {
       const fill: Fill = { ticker: o.ticker, side: o.side, qty: order.filledQty, price: order.filledAvgPrice, filledAt: order.filledAt, tradingDate: fillTradingDate(order.filledAt), orderId: order.id, runId };
       appendFill(fillsPath, fill);
       fills.push(fill);
     }
   }
-  return { fills, executed };
+  return { fills, executed, skippedCash };
 }
 
 /** Merge each order's terminal broker status/id/submittedAt onto the loose run-record orders, by clientOrderId (spec §2). */

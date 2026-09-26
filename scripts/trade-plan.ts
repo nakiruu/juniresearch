@@ -26,7 +26,7 @@ for (const s of out.plan.skipped.filter((s) => s.code !== "INELIGIBLE")) console
 console.log(`Recorded ${path}. No orders were submitted.`);
 if (has(args, "--simulate-fills") && adapter.kind === "fake") {
   const { executeOrders } = await import("../lib/trade/pipeline");
-  const n = (await executeOrders({ adapter, sized: out.sized, ctx: { brokerKind: "fake", configuredBaseUrl: "memory://", locks: out.locks, today, nav: out.ledger.nav, cfg, env: process.env, counters: { orders: 0, notionalUsd: 0 } }, runId, fillsPath: FILLS_PATH, pollMs: 0 })).fills.length;
+  const n = (await executeOrders({ adapter, sized: out.sized, ctx: { brokerKind: "fake", configuredBaseUrl: "memory://", locks: out.locks, today, nav: out.ledger.nav, cashUsd: out.ledger.cash, cfg, env: process.env, counters: { orders: 0, notionalUsd: 0, buyNotionalUsd: 0, sellProceedsUsd: 0 } }, runId, fillsPath: FILLS_PATH, pollMs: 0 })).fills.length;
   const acct = await adapter.getAccount();
   writeLedger(LEDGER_PATH, { asOf: today, nav: acct.equity, cash: acct.cash, positions: (await adapter.getPositions()).map((p) => ({ ticker: p.symbol, qty: p.qty, marketValue: p.marketValue, avgCost: p.avgEntryPrice })) });
   console.log(`Simulated ${n} fill(s) into the fake book (Phase 0 only).`);
