@@ -84,22 +84,31 @@ export interface SchedulerStatus {
   armed: boolean; broker: string; tradeDisabled: boolean; nextRunISO: string | null;
   lastRun: { id: string | null; day: string | null; at: string | null; status: string; orders?: number; fills?: number } | null;
 }
-let _armed = false;
-let _nextRunISO: string | null = null;
-let _lastFire: { at: string; status: string; orders?: number; fills?: number } | null = null;
+// Mutable scheduler status lives on a globalThis-keyed singleton, NOT bare module-level `let`s.
+// Why: Next may compile instrumentation.ts (which arms the scheduler, via scheduler-wiring) into a
+// different module graph than app/api/trade/status/route.ts (which reads the status). Each graph
+// would otherwise get its own copy of the module state, so the route could always report armed:false
+// even though the scheduler is armed. A globalThis key is shared across every graph in the process.
+// (In Vitest it's one graph, so behavior is identical to the old module-level state.)
+interface SchedulerState { armed: boolean; nextRunISO: string | null; lastFire: { at: string; status: string; orders?: number; fills?: number } | null }
+const g = globalThis as unknown as { __tradeScheduler?: SchedulerState };
+g.__tradeScheduler ??= { armed: false, nextRunISO: null, lastFire: null };
+const state: SchedulerState = g.__tradeScheduler;
 
 export function getSchedulerStatus(env: NodeJS.ProcessEnv = process.env): SchedulerStatus {
-  const rec = latestRunRecord();
-  const lastRun = _lastFire || rec
+  // A corrupt/mid-write run record must never throw out of the status route — treat it as null.
+  let rec: ReturnType<typeof latestRunRecord> = null;
+  try { rec = latestRunRecord(); } catch { rec = null; }
+  const lastRun = state.lastFire || rec
     ? {
-        id: rec?.runId ?? null, day: rec?.today ?? null, at: _lastFire?.at ?? null,
-        status: _lastFire?.status ?? "unknown",
-        orders: _lastFire?.orders ?? rec?.orders.length, fills: _lastFire?.fills ?? rec?.fills.length,
+        id: rec?.runId ?? null, day: rec?.today ?? null, at: state.lastFire?.at ?? null,
+        status: state.lastFire?.status ?? "unknown",
+        orders: state.lastFire?.orders ?? rec?.orders.length, fills: state.lastFire?.fills ?? rec?.fills.length,
       }
     : null;
   return {
-    armed: _armed, broker: env.BROKER ?? "alpaca-paper", tradeDisabled: env.TRADE_DISABLED === "1",
-    nextRunISO: _nextRunISO, lastRun,
+    armed: state.armed, broker: env.BROKER ?? "alpaca-paper", tradeDisabled: env.TRADE_DISABLED === "1",
+    nextRunISO: state.nextRunISO, lastRun,
   };
 }
 
@@ -119,22 +128,42 @@ export function startScheduler(deps: SchedulerDeps): { stop: () => void } {
   let handle: { clear: () => void } | null = null;
   let stopped = false;
 
+  // fire() MUST NEVER reject: deps.runOnce() can reject (a transient broker error re-thrown by
+  // runCron, or makeBroker throwing on a missing/corrupt Schwab token). An unguarded rejection here
+  // would crash the Node process (there is no unhandledRejection handler → takes /research down) and
+  // skip arm() (the scheduler dies silently). The try/catch/finally makes fire() always resolve and
+  // always re-arm for the next trading day unless stopped.
   const fire = async () => {
     if (stopped) return; // stop() requested before we got here — do not trade after shutdown
-    const result = await deps.runOnce();
-    if (stopped) return; // stop() requested while runOnce() was in flight — do not stamp/re-arm
-    _lastFire = { at: new Date(deps.now()).toISOString(), status: result.status, orders: result.orders, fills: result.fills };
-    writeSchedulerState({ lastFiredDay: etDateString(deps.now()) }, dir);
-    arm(); // re-arm for the next day
+    try {
+      // Same-day double-fire guard: a boot in the 09:30–09:45 ET window catch-up-fires, then arm()
+      // re-arms for the SAME day's (still strictly-future) fire instant. Consult persisted state and
+      // skip runOnce when we've already fired today; the finally below still re-arms.
+      const today = etDateString(deps.now());
+      if (readSchedulerState(dir).lastFiredDay === today) {
+        console.log(`[scheduler] already fired ${today}, skipping`);
+        return;
+      }
+      const result = await deps.runOnce();
+      if (stopped) return; // stop() requested while runOnce() was in flight — do not stamp/re-arm
+      state.lastFire = { at: new Date(deps.now()).toISOString(), status: result.status, orders: result.orders, fills: result.fills };
+      writeSchedulerState({ lastFiredDay: etDateString(deps.now()) }, dir);
+    } catch (e) {
+      if (stopped) return; // shutdown during runOnce() — do not stamp after shutdown
+      state.lastFire = { at: new Date(deps.now()).toISOString(), status: "error" };
+      try { console.error(`[scheduler] runOnce failed — re-arming for the next day: ${e instanceof Error ? e.message : String(e)}`); } catch { /* logging must never break re-arm */ }
+    } finally {
+      arm(); // re-arm for the next day (arm() no-ops when stopped, so a stopped scheduler never re-arms)
+    }
   };
   const arm = () => {
     if (stopped) return;
     const at = nextRunAtET(deps.now(), deps.cfg.cronTimeET);
-    _nextRunISO = new Date(at).toISOString();
+    state.nextRunISO = new Date(at).toISOString();
     handle = deps.setTimer(() => { void fire(); }, Math.max(0, at - deps.now()));
   };
 
-  _armed = true;
+  state.armed = true;
   void (async () => {
     const st = readSchedulerState(dir);
     const todayET = etDateString(deps.now());
@@ -150,7 +179,7 @@ export function startScheduler(deps: SchedulerDeps): { stop: () => void } {
   return {
     stop: () => {
       stopped = true;
-      handle?.clear(); handle = null; _armed = false; _nextRunISO = null;
+      handle?.clear(); handle = null; state.armed = false; state.nextRunISO = null;
     },
   };
 }
