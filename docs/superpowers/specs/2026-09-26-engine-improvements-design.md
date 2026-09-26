@@ -81,7 +81,7 @@ These should be fixed regardless of the ideas themselves.
 9. **The staleness constant is an e-folding time, not a half-life.**
    - `exp(−age/90)` (`signal.ts:52`) has a half-life of about 62 days, not 90.
    - The name `stalenessHalfLifeDays` and the engine.md text are wrong.
-   - Fix the name or the formula (`exp(−age·ln2/90)`). Either one is a behaviour decision.
+   - **Owner decision (2026-09-26): make it a true 90-day half-life,** `0.5^(age/90)`. See plan Task 6.1.
 10. **"Realized vol already fetched" is false.** No code computes it; only 30 daily closes exist
     (`quote.history`). `docs/superpowers/specs/2026-09-25-trade-layer-phase2-design.md:89` repeats the
     claim.

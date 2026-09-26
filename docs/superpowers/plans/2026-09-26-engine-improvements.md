@@ -681,22 +681,65 @@ then emit `ADD` with a trade note `residual`. The existing sell side and the unl
 
 ## Phase 6 — Research & display
 
-### Task 6.1: Staleness constant (F9) — **decision needed first**
+### Task 6.1: Staleness becomes a true 90-day half-life (F9) — **decided: owner chose a true half-life**
 
-**Files:** `lib/portfolio/config.ts`, `lib/portfolio/signal.ts:52`, `docs/engine.md` §2.
+**Decision (2026-09-26).** Keep the knob name `stalenessHalfLifeDays` and the value 90, and change the
+formula so the name is accurate:
 
-**Options:**
-- **(a) Rename only, no behaviour change (default).** Rename `stalenessHalfLifeDays` to
-  `stalenessDecayDays` and keep the old key as a deprecated alias. The comment then reads "e-folding;
-  half-life ≈ 0.693×".
-- **(b) Make it a true half-life.** Use `exp(−age·ln2/90)`. Staleness weight then decays more slowly
-  (at 90 days, 0.50 instead of 0.37), which changes book weights.
+```
+staleness = exp(−ageDays · ln2 / stalenessHalfLifeDays)      // = 0.5 ^ (ageDays / 90)
+```
+
+**Behaviour change.** Every report's staleness multiplier rises, and older reports rise the most:
+
+| ageDays | before `exp(−a/90)` | after `0.5^(a/90)` |
+|---|---|---|
+| 0 | 1.000 | 1.000 |
+| 30 | 0.717 | 0.794 |
+| 60 | 0.513 | 0.630 |
+| 90 | 0.368 | 0.500 |
+| 120 (eligibility max) | 0.264 | 0.397 |
+
+Weights are allocated in proportion to score, so the effect is a *relative* shift of weight toward older
+reports. For example, the ratio between a 0-day and a 120-day report falls from 3.8× to 2.5×. This hits
+the score sizer (`sizing.ts:33`) and `kellyTilt` (`sizing-v2.ts:63`) equally.
+
+The following are unchanged:
+- eligibility, hysteresis and exits, which use `stalenessMaxDays`, not the multiplier;
+- the 120-day cutoff;
+- caps, locks and bands.
+
+**Files:**
+- `lib/portfolio/signal.ts:52`
+- `lib/portfolio/config.ts:23`: fix the comment
+- `lib/portfolio/signal.test.ts`
+- `docs/engine.md` §2 (the `staleness` line)
 
 **Steps**
 
-- [ ] **Step 1:** Ask the owner to choose. Implement (a) unless they choose (b).
-- [ ] **Step 2:** Test that the alias still parses and the value is unchanged under (a).
-- [ ] **Step 3:** Commit: `fix(portfolio): staleness decay constant named for what it is`.
+- [ ] **Step 1: Write the failing test.** In `signal.test.ts`, with a fixture report dated 90 days
+  before `today`, `buildSignal(...).staleness` is `toBeCloseTo(0.5, 9)`. At 0 days it is `1`, and at
+  180 days it is `toBeCloseTo(0.25, 9)`.
+- [ ] **Step 2:** Run it and confirm it fails (it currently returns 0.3679).
+- [ ] **Step 3: Implement.**
+  - Set `const staleness = Math.pow(0.5, ageDays / config.stalenessHalfLifeDays);`.
+  - Change the `config.ts` comment to `// soft recency decay half-life in days: staleness = 0.5^(age/h) (e.g. 90)`.
+- [ ] **Step 4: Check for other assertions.** Run the full suite. Existing tests inject `staleness`
+  directly (`sizing.test.ts`, `sizing-v2.test.ts`, `hysteresis.test.ts`, …), so no other assertion should
+  move. Fix any snapshot or golden that encodes a computed staleness, and mention it in the PR.
+- [ ] **Step 5: Measure the impact.**
+  - Run `npm run portfolio:build` (or the scratchpad harness from the review) at the same `--date`
+    before and after the change.
+  - Record in the PR: N_eff, cash, the largest weight changes and total one-way turnover.
+  - The expected effect is small, since most reports are under 60 days old. If turnover is above 5%,
+    flag it to the owner before merging.
+- [ ] **Step 6: Update the docs.**
+  - `engine.md` §2: `staleness = 0.5^(ageDays / 90)   soft recency decay (true half-life 90d)`.
+  - Update the `stalenessHalfLifeDays` row in the §8 table if it's worded as e-folding.
+- [ ] **Step 7:** Commit: `fix(portfolio): staleness decays with a true 90-day half-life`.
+
+**Rollout.** This changes the target book, so it can trigger rebalancing trades. Merge it on a day when
+the next cron run can be watched. The no-trade band (2.5pp) should absorb most of the shift.
 
 ### Task 6.2: Dispersion-widened rating bands (#2)
 
