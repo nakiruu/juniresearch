@@ -193,15 +193,22 @@ export function etWallToUtc(day: TradingDay, hhmm: string): number; // moved, un
 
 ## Phase 2 — Broker truth
 
+> **Status: implemented 2026-09-26** (`48c13fb`, `12c2593`, `432d0c1`, `5588a1c`, `172fdce`, `eaf4093`).
+> Deviations: timeouts are adapter options (`timeouts`, defaults in `lib/broker/http.ts`) rather than
+> `TradeConfig` knobs, since `makeBroker` has no config; `trade:reconcile -- --record-missing` replaces
+> hand-written manual fills; a Schwab 2xx without an order id is also treated as an unknown outcome.
+> Not yet verified live: Schwab's order JSON carrying `price`/`orderType`/`duration` (used by
+> `findSubmitted`) — check read-only against a real order listing before relying on it.
+
 ### Task 2.1: Bound Alpaca `getOrders` (F6)
 
 **Files:** `lib/broker/alpaca.ts:70-71`, `lib/trade/pipeline.ts:83`, `alpaca.test.ts`.
 
-- [ ] **Step 1:** Test that the fill poll passes `after` and that the URL contains `after=` and
+- [x] **Step 1:** Test that the fill poll passes `after` and that the URL contains `after=` and
   `direction=desc`.
-- [ ] **Step 2:** Change the poll to `adapter.getOrders("all", submitStartIso)`, where `submitStartIso`
+- [x] **Step 2:** Change the poll to `adapter.getOrders("all", submitStartIso)`, where `submitStartIso`
   is taken just before submit minus 60 s. In Alpaca, switch to `direction: "desc"`.
-- [ ] **Step 3:** Commit: `fix(alpaca): bound order polling window so new orders are always visible`.
+- [x] **Step 3:** Commit: `fix(alpaca): bound order polling window so new orders are always visible`.
 
 ### Task 2.2: Schwab-safe standalone audit (F2)
 
@@ -213,13 +220,13 @@ export function etWallToUtc(day: TradingDay, hhmm: string): number; // moved, un
 
 **Steps**
 
-- [ ] **Step 1:** Write tests.
+- [x] **Step 1:** Write tests.
   - Broker orders with `clientOrderId: ""` (Schwab from a fresh process) but ids matching
     `expected.brokerId` produce a clean audit.
   - A foreign order (neither cid nor id) is still ignored.
-- [ ] **Step 2:** Implement. `trade-audit.ts` builds `expected` from `record.orders[].brokerId`, which
+- [x] **Step 2:** Implement. `trade-audit.ts` builds `expected` from `record.orders[].brokerId`, which
   `mergeExecution` already writes.
-- [ ] **Step 3:** Commit: `fix(audit): scope by broker id so trade:audit works on Schwab out-of-process`.
+- [x] **Step 3:** Commit: `fix(audit): scope by broker id so trade:audit works on Schwab out-of-process`.
 
 ### Task 2.3: Orders-aware `reconcile()` (#7)
 
@@ -249,15 +256,15 @@ export function reconcile(input: {
 
 **Steps**
 
-- [ ] **Step 1:** Write tests, using the existing `pos()`/`buy()` helpers plus a new `order()` helper.
+- [x] **Step 1:** Write tests, using the existing `pos()`/`buy()` helpers plus a new `order()` helper.
   - Unrecorded sell → throws.
   - Partial recorded qty → throws.
   - Order before the window → ignored.
   - Open order → throws.
   - Manual order (`clientOrderId: ""`) recorded under `runId:"manual"` → passes.
   - `brokerOrders` absent → identical to today (the existing tests stay unchanged).
-- [ ] **Step 2:** Implement and go green.
-- [ ] **Step 3:** Commit: `feat(trade): reconcile cross-checks broker orders in the lock window by orderId`.
+- [x] **Step 2:** Implement and go green.
+- [x] **Step 3:** Commit: `feat(trade): reconcile cross-checks broker orders in the lock window by orderId`.
 
 ### Task 2.4: Wire the orders check into `planRun` and `trade:reconcile`
 
@@ -269,17 +276,17 @@ export function reconcile(input: {
 
 **Steps**
 
-- [ ] **Step 1:** Write tests.
+- [x] **Step 1:** Write tests.
   - A FakeBroker with an extra filled sell not in the fills → `planRun` rejects with `ReconcileError`.
   - In cron, that halts with `reason:"reconcile"` **on every subsequent run** until the fill is appended.
     This proves F3 is fixed.
-- [ ] **Step 2:** Implement. `lockWindowStart = calendar[idx(today) − (cfg.lockBusinessDays + 1)]`, using
+- [x] **Step 2:** Implement. `lockWindowStart = calendar[idx(today) − (cfg.lockBusinessDays + 1)]`, using
   the existing calendar helpers. When `cfg.reconcileOrders` is set, fetch
   `adapter.getOrders("all", lockWindowStart + "T00:00:00Z")` and pass it in.
-- [ ] **Step 3:** Add a `docs/engine.md` §4.1 note on how the operator appends a manual fill. Add
+- [x] **Step 3:** Add a `docs/engine.md` §4.1 note on how the operator appends a manual fill. Add
   `--manual` support to the fill-append helper in `_trade-common.ts` if it exists; otherwise document the
   JSONL line to write.
-- [ ] **Step 4:** Commit: `feat(trade): planRun reconciles against the lock-window order history`.
+- [x] **Step 4:** Commit: `feat(trade): planRun reconciles against the lock-window order history`.
 
 ### Task 2.5: `fetchWithTimeout` + read retries (#10)
 
@@ -304,14 +311,14 @@ export async function withReadRetry<T>(fn: () => Promise<T>, delaysMs?: number[]
 
 **Steps**
 
-- [ ] **Step 1:** Write tests with fake timers.
+- [x] **Step 1:** Write tests with fake timers.
   - A never-resolving fetch throws `BrokerTimeoutError` after `ms`.
   - A body that stalls after the headers also times out.
   - A read retries twice, then throws.
   - A 400 is not retried.
-- [ ] **Step 2:** Implement and wire it in. **The submit paths use `phase:"submit"` and are never
+- [x] **Step 2:** Implement and wire it in. **The submit paths use `phase:"submit"` and are never
   wrapped in `withReadRetry`.**
-- [ ] **Step 3:** Commit: `feat(broker): per-request timeouts; bounded retries for idempotent reads only`.
+- [x] **Step 3:** Commit: `feat(broker): per-request timeouts; bounded retries for idempotent reads only`.
 
 ### Task 2.6: Unknown submit outcome — `findSubmitted` (#10)
 
@@ -341,12 +348,12 @@ findSubmitted(req: SubmitOrderRequest, sinceIso: string): Promise<BrokerOrder | 
 
 **Steps**
 
-- [ ] **Step 1:** Write the adapter tests.
+- [x] **Step 1:** Write the adapter tests.
   - Alpaca: found, and 404 → null.
   - Schwab: exact match, no match, two matches → ambiguous, and an already-mapped id is excluded.
-- [ ] **Step 2:** Implement. On `BrokerTimeoutError{phase:"submit"}`, `submitOrder` throws
+- [x] **Step 2:** Implement. On `BrokerTimeoutError{phase:"submit"}`, `submitOrder` throws
   `SubmitOutcomeUnknownError`.
-- [ ] **Step 3:** Commit: `feat(broker): findSubmitted — resolve a timed-out submit without resubmitting`.
+- [x] **Step 3:** Commit: `feat(broker): findSubmitted — resolve a timed-out submit without resubmitting`.
 
 ### Task 2.7: `executeOrders` + cron handle unknown submits
 
@@ -372,12 +379,12 @@ Cron then:
 
 **Steps**
 
-- [ ] **Step 1:** Write tests with a Fake that drops the submit response.
+- [x] **Step 1:** Write tests with a Fake that drops the submit response.
   - The order exists at the broker → the fill is recorded and the run completes.
   - The order does not exist → `submitOrder` was called **exactly once**, later orders were not
     submitted, and cron halts with `submit-unknown`.
-- [ ] **Step 2:** Implement and go green.
-- [ ] **Step 3:** Commit: `feat(trade): never resubmit — unknown submit outcome halts the run for operator review`.
+- [x] **Step 2:** Implement and go green.
+- [x] **Step 3:** Commit: `feat(trade): never resubmit — unknown submit outcome halts the run for operator review`.
 
 **Phase 2 exit:**
 - Paper: ≥3 clean cron runs with `reconcileOrders: true`.
