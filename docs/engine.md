@@ -235,10 +235,15 @@ The book is **derived from the broker**, not stored: `reconcile()` reads `getAcc
 throws `ReconcileError` and halts the run. `fills.jsonl` (append-only) is the one record the compliance
 locks derive from.
 
-> 💡 **Better idea — reconcile is buy-side only.** It halts on an unexplained *position* but does not
-> cross-check the day's *orders*; a missed sell fill could under-set a lock. The **broker-truth audit**
-> (§6.2) now covers this at the order level, but folding a `getOrders` check into reconcile itself would
-> make the halt-on-discrepancy guarantee unconditional.
+**Orders check (`reconcileOrders`, default on).** `planRun` also fetches the broker's orders over the
+lock window (`lockBusinessDays + 1` trading days back) and requires every executed order to be recorded in
+`fills.jsonl` for its full quantity, joined on the **broker order id**. That catches what the position
+check can't: a missed *sell* (which would leave `buyLockUntil` unset), an extra buy of a name already held,
+a crash between submit and fill recording, a fill after the poll window, and manual trades in the account.
+Any working (non-terminal) order also halts — this engine only sends IOC. The halt repeats on every run
+until the fills are recorded, so a broker-truth CRITICAL (§6.2) can no longer be followed by a trade
+against an under-set lock. To record real executions from broker truth:
+`npm run trade:reconcile -- --record-missing` (appends them with `runId: "manual"`, printing each).
 
 ### 4.2 Two-sided hysteresis  (`lib/trade/hysteresis.ts`)
 

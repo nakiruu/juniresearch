@@ -235,6 +235,26 @@ describe("runCron", () => {
     expect(existsSync(paths.lock)).toBe(false);       // released
   });
 
+  it("a broker-truth CRITICAL is sticky: every later run halts at reconcile until the fill is recorded", async () => {
+    const paths = mkPaths();
+    const adapter = mkBroker();
+    const orig = adapter.getOrders.bind(adapter);
+    // The order the run submits comes back canceled (no fill recorded), but the broker later reports it filled.
+    adapter.getOrders = (async (status: "open" | "closed" | "all") =>
+      (await orig(status)).map((o) => (o.status === "canceled" ? { ...o, status: "filled" as const, filledQty: o.qty ?? 1, filledAvgPrice: 100, filledAt: `${TODAY}T13:55:00Z` } : o))) as typeof adapter.getOrders;
+    const submit = adapter.submitOrder.bind(adapter);
+    adapter.submitOrder = async (req) => ({ ...(await submit(req)), status: "canceled", filledQty: 0, filledAvgPrice: null, filledAt: null });
+    const inputs = { reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] as Fill[] };
+    const run = (runId: string) => runCron(mkDeps({ paths, adapter, runId, loadInputs: async () => ({ ...inputs, fills: readFills(paths.fills) }) }));
+
+    expect(await run("r1")).toEqual({ status: "halted", reason: "broker-mismatch" });
+    // Before: the next run re-planned and could trade against the under-set lock. Now it halts, and keeps halting.
+    expect(await run("r2")).toEqual({ status: "halted", reason: "reconcile" });
+    expect(await run("r3")).toEqual({ status: "halted", reason: "reconcile" });
+    expect(await run("r4")).toEqual({ status: "halted", reason: "consecutive" }); // counter reached the limit (3)
+    expect(readFileSync(paths.log, "utf8")).toMatch(/r2 halted reason=reconcile/);
+  });
+
   it("Schwab re-auth needed: a SchwabAuthError from the first authed call halts (auth) and alerts, no lock left", async () => {
     const paths = mkPaths();
     const adapter = mkBroker();

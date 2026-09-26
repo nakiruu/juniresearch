@@ -49,7 +49,25 @@ describe("planRun", () => {
   it("halts on a broker position the fills log cannot explain", async () => {
     const b = new FakeBroker({ calendar: CAL, closes: { NVT: closes(100) }, equity: 10_000, cash: 9_000, isOpen: true, today: "2026-09-25" });
     await b.submitOrder({ symbol: "NVT", side: "buy", notional: 1_000, clientOrderId: "manual", estNotionalUsd: 1_000 }); // a trade the log never saw
-    await expect(planRun({ adapter: b, reports: [nvt], sics: {}, marketCapUsd: {}, fills: [], today: "2026-09-25", cfg, runId: "r" })).rejects.toThrow(/no buy fill/);
+    // The orders check (default on) catches it first, by broker order id…
+    await expect(planRun({ adapter: b, reports: [nvt], sics: {}, marketCapUsd: {}, fills: [], today: "2026-09-25", cfg, runId: "r" })).rejects.toThrow(/fake-1 buy NVT filled/);
+    // …and the positions check still stands on its own.
+    await expect(planRun({ adapter: b, reports: [nvt], sics: {}, marketCapUsd: {}, fills: [], today: "2026-09-25", cfg: { ...cfg, reconcileOrders: false }, runId: "r" })).rejects.toThrow(/no buy fill/);
+  });
+  it("halts on an executed SELL the fills log never recorded (the position is still explained by its buy)", async () => {
+    const b = new FakeBroker({ calendar: CAL, closes: { NVT: closes(100) }, equity: 10_000, cash: 10_000, isOpen: true, today: "2026-09-25" });
+    const bought = await b.submitOrder({ symbol: "NVT", side: "buy", qty: 10, clientOrderId: "c1", estNotionalUsd: 1_000 });
+    const buyFill = { ticker: "NVT", side: "buy" as const, qty: 10, price: 100, filledAt: bought.filledAt!, tradingDate: "2026-09-25", orderId: bought.id, runId: "r0" };
+    await b.submitOrder({ symbol: "NVT", side: "sell", qty: 5, clientOrderId: "", estNotionalUsd: 500 }); // e.g. a manual sell, never recorded
+    await expect(planRun({ adapter: b, reports: [nvt], sics: {}, marketCapUsd: {}, fills: [buyFill], today: "2026-09-25", cfg, runId: "r" })).rejects.toThrow(/sell NVT filled 5, fills.jsonl records 0/);
+  });
+  it("looks back only over the lock window", async () => {
+    let after: string | undefined;
+    const b = new FakeBroker({ calendar: CAL, closes: { NVT: closes(100) }, equity: 10_000, cash: 10_000, isOpen: true, today: "2026-09-25" });
+    const list = b.getOrders.bind(b);
+    b.getOrders = async (status: "open" | "closed" | "all", a?: string) => { after = a; return list(status); };
+    await planRun({ adapter: b, reports: [nvt], sics: {}, marketCapUsd: {}, fills: [], today: "2026-09-25", cfg, runId: "r" });
+    expect(after).toBe(`${CAL[0].date}T00:00:00Z`); // the fixture calendar is shorter than lockBusinessDays + 1 → clamps to its first day
   });
 });
 

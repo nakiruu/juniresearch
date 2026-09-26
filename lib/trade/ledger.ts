@@ -48,6 +48,26 @@ export function reconcile(input: {
   });
 }
 
+/**
+ * The fills.jsonl entries that would explain every executed broker order in the window: one per order
+ * whose recorded quantity falls short, for the missing quantity at the broker's average price, dated
+ * by its ET trading day. Used by `trade:reconcile -- --record-missing` (runId "manual") so the operator
+ * records broker truth instead of hand-writing JSONL. Working orders are skipped (they aren't done).
+ */
+export function missingFills(orders: BrokerOrder[], fills: Fill[], windowStart: TradingDay, runId: string): Fill[] {
+  const recorded = new Map<string, number>();
+  for (const f of fills) recorded.set(f.orderId, (recorded.get(f.orderId) ?? 0) + f.qty);
+  const out: Fill[] = [];
+  for (const o of orders) {
+    if (!TERMINAL_STATUSES.has(o.status) || o.filledQty <= QTY_EPS || !o.filledAt || o.filledAvgPrice == null) continue;
+    const day = todayET(Date.parse(o.filledAt));
+    if (day < windowStart) continue;
+    const short = o.filledQty - (recorded.get(o.id) ?? 0);
+    if (short > QTY_EPS) out.push({ ticker: o.symbol, side: o.side, qty: short, price: o.filledAvgPrice, filledAt: o.filledAt, tradingDate: day, orderId: o.id, runId });
+  }
+  return out;
+}
+
 function checkOrdersRecorded(orders: BrokerOrder[], fills: Fill[], windowStart: TradingDay): void {
   const recorded = new Map<string, number>();
   for (const f of fills) recorded.set(f.orderId, (recorded.get(f.orderId) ?? 0) + f.qty);

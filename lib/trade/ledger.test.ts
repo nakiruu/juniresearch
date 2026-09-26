@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { reconcile, weightsOf, positionsOf, readLedger, writeLedger, ReconcileError } from "./ledger";
+import { reconcile, weightsOf, positionsOf, readLedger, writeLedger, ReconcileError, missingFills } from "./ledger";
 import type { Fill } from "./fills";
 import type { BrokerOrder } from "../broker/adapter";
 
@@ -79,6 +79,22 @@ describe("reconcile — broker orders over the lock window (spec #7)", () => {
     const manual = order({ id: "M1", symbol: "AMZN", side: "sell", clientOrderId: "" });
     expect(() => reconcile({ ...base, positions: [], fills: [], brokerOrders: [manual] })).toThrow(/M1 sell AMZN/);
     expect(() => reconcile({ ...base, positions: [], fills: [{ ...f("AMZN", "M1", "sell"), runId: "manual" }], brokerOrders: [manual] })).not.toThrow();
+  });
+  it("missingFills builds broker-truth fills for exactly the unrecorded quantity; reconcile then passes", () => {
+    const orders = [
+      order({ id: "S1", symbol: "MP", side: "sell", filledAvgPrice: 42.5, filledAt: "2026-09-25T00:30:00Z" }), // 20:30 EDT on the 24th
+      order({ id: "B1", symbol: "NVT" }),                                                     // recorded 4 of 10
+      order({ id: "W1", symbol: "X", status: "new", filledQty: 0 }),                          // working — not a fill
+      order({ id: "OLD", symbol: "Y", filledAt: "2026-09-10T14:00:00Z" }),                    // outside the window
+    ];
+    const fills = [f("NVT", "B1", "buy", 4)];
+    const add = missingFills(orders, fills, W, "manual");
+    expect(add).toEqual([
+      { ticker: "MP", side: "sell", qty: 10, price: 42.5, filledAt: "2026-09-25T00:30:00Z", tradingDate: "2026-09-24", orderId: "S1", runId: "manual" },
+      { ticker: "NVT", side: "buy", qty: 6, price: 100, filledAt: "2026-09-24T13:50:00Z", tradingDate: "2026-09-24", orderId: "B1", runId: "manual" },
+    ]);
+    const done = orders.filter((o) => o.id !== "W1");
+    expect(() => reconcile({ ...base, positions: [pos("NVT", 10, 1000)], fills: [...fills, ...add], brokerOrders: done })).not.toThrow();
   });
   it("without brokerOrders behaves exactly as before", () => {
     expect(() => reconcile({ asOf: "2026-09-25", account: acct, positions: [pos("NVT", 10, 1000)], fills: [buy("NVT")] })).not.toThrow();

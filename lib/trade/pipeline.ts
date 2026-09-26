@@ -8,7 +8,7 @@ import type { BrokerAdapter, BrokerOrderStatus } from "../broker/adapter";
 import { TERMINAL_STATUSES } from "../broker/adapter";
 import { guardedSubmit, type GuardContext } from "../broker/guards";
 import type { TradeConfig } from "./config";
-import { assertCalendar, prevTradingDay, isTradingDay, type TradingDay } from "./calendar";
+import { assertCalendar, prevTradingDay, isTradingDay, indexOnOrBefore, type TradingDay } from "./calendar";
 import { appendFill, type Fill } from "./fills";
 import { locksFor, type Locks } from "./locks";
 import { reconcile, weightsOf, positionsOf, type Ledger } from "./ledger";
@@ -47,7 +47,11 @@ export async function planRun(input: PlanRunInput): Promise<PlanRunOutput> {
   const positions = await adapter.getPositions();
   const held = positions.map((p) => p.symbol);
   const marks = await adapter.getLastClose([...new Set([...tickers, ...held])], markDate);
-  const ledger = reconcile({ asOf: today, account: await adapter.getAccount(), positions, fills });
+  // Orders check (spec #7): look back over the lock window (+1 trading day of slack) — an older
+  // execution cannot set a lock that is still active today.
+  const lockWindowStart = calendar[Math.max(0, indexOnOrBefore(calendar, today) - (cfg.lockBusinessDays + 1))];
+  const brokerOrders = cfg.reconcileOrders ? await adapter.getOrders("all", `${lockWindowStart}T00:00:00Z`) : undefined;
+  const ledger = reconcile({ asOf: today, account: await adapter.getAccount(), positions, fills, brokerOrders, lockWindowStart });
   const todayDate = new Date(today + "T00:00:00Z");
   const signals = reports.map((r) => buildSignal(r, marks[r.meta.ticker], sics[r.meta.ticker] ?? null, todayDate, cfg));
   const locks = locksFor(fills, calendar, cfg.lockBusinessDays);
