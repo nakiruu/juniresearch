@@ -20,6 +20,28 @@ export function turnoverBreaker(orders: { qty: number; limitPrice: number }[], n
   return { tripped: frac > cfg.maxRunTurnoverFrac, frac };
 }
 
+/**
+ * Clip-instead-of-halt for a plan that only OPENS positions (every order an ENTER buy): keep whole
+ * orders, largest target first, while the run's notional stays within maxRunTurnoverFrac × NAV; the
+ * rest wait for later runs. Any sell, ADD or TRIM makes the plan unclippable (null → halt as before),
+ * so a runaway rebalance or a wrongly-flat book with trims still trips the breaker. It never raises
+ * the cap: every run stays within it, whatever reconcile believed. Orders are never resized.
+ */
+export function clipToTurnover<T extends { qty: number; limitPrice: number; reason: string; side: "buy" | "sell"; deltaUsd: number }>(
+  orders: T[], nav: number, cfg: TradeConfig,
+): { kept: T[]; clipped: T[] } | null {
+  if (!orders.length || orders.some((o) => o.reason !== "ENTER" || o.side !== "buy")) return null;
+  const cap = cfg.maxRunTurnoverFrac * nav;
+  const kept: T[] = [], clipped: T[] = [];
+  let used = 0;
+  // deltaUsd of an ENTER is target weight × NAV, so this is "largest target first".
+  for (const o of [...orders].sort((a, b) => b.deltaUsd - a.deltaUsd)) {
+    const n = Math.abs(o.qty * o.limitPrice);
+    if (used + n <= cap + 1e-9) { kept.push(o); used += n; } else clipped.push(o);
+  }
+  return { kept, clipped };
+}
+
 export interface HaltState { consecutive: number }
 
 /**

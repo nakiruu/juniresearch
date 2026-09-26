@@ -18,7 +18,7 @@ export interface Trade {
   ticker: string; sector: string; side: "buy" | "sell"; reason: TradeReason;
   currentWeight: number; targetWeight: number; deltaWeight: number;
 }
-export type SkipCode = "BELOW_BAND" | "BARRED_ENTRY" | "BARRED_ADD" | "DEFER_EXIT" | "DEFER_TRIM" | "INELIGIBLE" | "NO_SIGNAL" | "NO_CAPACITY";
+export type SkipCode = "BELOW_BAND" | "BARRED_ENTRY" | "BARRED_ADD" | "DEFER_EXIT" | "DEFER_TRIM" | "INELIGIBLE" | "NO_SIGNAL" | "NO_CAPACITY" | "TURNOVER_CLIP";
 export interface Skipped {
   ticker: string; code: SkipCode; reasons: string[]; unlockOn?: TradingDay;
   currentWeight: number; targetWeight: number | null;

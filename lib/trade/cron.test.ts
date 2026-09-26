@@ -260,6 +260,36 @@ describe("runCron", () => {
     expect(await runCron(mkDeps({ paths, adapter, runId: "r-cron-2", loadInputs: inputs }))).toEqual({ status: "halted", reason: "reconcile" });
   });
 
+  describe("turnover clip for ENTER-only plans (turnoverClipEnterOnly)", () => {
+    const names = ["AAA", "BBB", "CCC"];
+    const reports = names.map((ticker) => fixtureReport({ ticker, label: "BUY", conviction: 70, scenarios: [[150, 0.3], [120, 0.5], [80, 0.2]] }));
+    const flat = () => new FakeBroker({ calendar: CAL, closes: Object.fromEntries(names.map((n) => [n, closes(100)])), equity: 100_000, cash: 100_000, isOpen: true, today: TODAY });
+    const deps = (paths: CronDeps["paths"], adapter: FakeBroker, clip: boolean, notified: string[]) => mkDeps({
+      paths, adapter, notify: (m) => notified.push(m), cfg: resolveTradeConfig({ turnoverClipEnterOnly: clip, maxRunTurnoverFrac: 0.08 }), // tier-3 (close-anchored) buys are half-size: 3 × ~5% ≈ 15% planned
+      loadInputs: async () => ({ reports, sics: {}, marketCapUsd: {}, fills: [] }),
+    });
+
+    it("off (default): a from-cash build over the turnover cap halts exactly as before", async () => {
+      const paths = mkPaths(); const notified: string[] = [];
+      expect(await runCron(deps(paths, flat(), false, notified))).toEqual({ status: "halted", reason: "turnover" });
+    });
+    it("on: sends whole orders up to the cap, defers the rest, does not bump the halt counter, and says so", async () => {
+      const paths = mkPaths(); const notified: string[] = []; const adapter = flat();
+      const r = await runCron(deps(paths, adapter, true, notified));
+      expect(r.status).toBe("executed");
+      const sent = await adapter.getOrders("all");
+      expect(sent.length).toBeGreaterThan(0);
+      expect(sent.length).toBeLessThan(names.length);
+      expect(sent.reduce((a, o) => a + (o.filledQty * (o.filledAvgPrice ?? 0)), 0)).toBeLessThanOrEqual(0.08 * 100_000);
+      expect(readHaltState(paths.haltState)).toEqual({ consecutive: 0 });
+      expect(notified.some((m) => /clipped: sending \d+, deferring \d+/.test(m))).toBe(true);
+      const [rec] = readdirSync(paths.runs);
+      const record = JSON.parse(readFileSync(join(paths.runs, rec), "utf8"));
+      expect(record.plan.skipped.filter((x: { code: string }) => x.code === "TURNOVER_CLIP")).toHaveLength(names.length - sent.length);
+      expect(record.orders).toHaveLength(sent.length);
+    });
+  });
+
   it("a broker-truth CRITICAL is sticky: every later run halts at reconcile until the fill is recorded", async () => {
     const paths = mkPaths();
     const adapter = mkBroker();

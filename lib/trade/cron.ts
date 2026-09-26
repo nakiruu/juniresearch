@@ -15,7 +15,7 @@ import type { Fill } from "./fills";
 import { planRun, executeOrders, mergeExecution, type PlanRunOutput } from "./pipeline";
 import { ReconcileError } from "./ledger";
 import { SchwabAuthError } from "../broker/schwab-auth";
-import { turnoverBreaker, readHaltState, bumpHalt, clearHalt, haltBlocked, acquireLock, releaseLock, DEFAULT_LOCK_STALE_MS } from "./breakers";
+import { turnoverBreaker, clipToTurnover, readHaltState, bumpHalt, clearHalt, haltBlocked, acquireLock, releaseLock, DEFAULT_LOCK_STALE_MS } from "./breakers";
 import { crossCheckBroker } from "./audit";
 import { summaryFromRun, type RunSummaryInput } from "./notify";
 import { writeRunRecord } from "./run-record";
@@ -167,9 +167,26 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
       throw e;
     }
 
-    // 6. Turnover breaker.
+    // 6. Turnover breaker. An ENTER-only plan (opening positions, e.g. building the book from cash) may
+    // be clipped to the cap instead of halting — opt-in; every run still stays within the cap.
     const tb = turnoverBreaker(out.sized.orders, out.ledger.nav, cfg);
-    if (tb.tripped) {
+    const clip = tb.tripped && cfg.turnoverClipEnterOnly ? clipToTurnover(out.sized.orders, out.ledger.nav, cfg) : null;
+    if (clip) {
+      const clippedCids = new Set(clip.clipped.map((o) => o.clientOrderId));
+      const deferred = clip.clipped.map((o) => ({ ticker: o.ticker, code: "TURNOVER_CLIP" as const, reasons: [`deferred: run turnover capped at ${(cfg.maxRunTurnoverFrac * 100).toFixed(1)}% of NAV`], currentWeight: 0, targetWeight: out.ledger.nav > 0 ? o.deltaUsd / out.ledger.nav : null }));
+      out = {
+        ...out,
+        sized: { ...out.sized, orders: clip.kept },
+        plan: { ...out.plan, skipped: [...out.plan.skipped, ...deferred] },
+        record: {
+          ...out.record,
+          orders: out.record.orders.filter((o) => !clippedCids.has(o.clientOrderId as string)),
+          plan: { ...out.record.plan, skipped: [...(out.record.plan.skipped as unknown[]), ...deferred] },
+          notes: [...out.record.notes, `turnover clip: ${(tb.frac * 100).toFixed(1)}% of NAV planned; kept ${clip.kept.length}, deferred ${clip.clipped.length} (${clip.clipped.map((o) => o.ticker).join(", ")})`],
+        },
+      };
+      notify(`cron: ENTER-only plan was ${(tb.frac * 100).toFixed(1)}% of NAV > ${(cfg.maxRunTurnoverFrac * 100).toFixed(1)}% cap — clipped: sending ${clip.kept.length}, deferring ${clip.clipped.length} to later runs`);
+    } else if (tb.tripped) {
       bumpHalt(paths.haltState);
       notify(`cron halted: turnover breaker tripped — ${(tb.frac * 100).toFixed(1)}% of NAV > ${(cfg.maxRunTurnoverFrac * 100).toFixed(1)}% cap`);
       writeRunRecord(paths.runs, out.record);

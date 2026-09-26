@@ -3,7 +3,7 @@ import { mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { Worker } from "node:worker_threads";
-import { turnoverBreaker, readHaltState, bumpHalt, clearHalt, haltBlocked, acquireLock, releaseLock } from "./breakers";
+import { turnoverBreaker, clipToTurnover, readHaltState, bumpHalt, clearHalt, haltBlocked, acquireLock, releaseLock } from "./breakers";
 import { DEFAULT_TRADE_CONFIG as C } from "./config";
 
 describe("turnover breaker", () => {
@@ -28,6 +28,25 @@ describe("turnover breaker", () => {
 
   it("treats no orders as zero turnover", () => {
     expect(turnoverBreaker([], 100_000, C).tripped).toBe(false);
+  });
+});
+
+describe("clipToTurnover (ENTER-only plans)", () => {
+  const enter = (ticker: string, qty: number, limitPrice: number) => ({ ticker, qty, limitPrice, side: "buy" as const, reason: "ENTER", deltaUsd: qty * limitPrice });
+  // NAV 100k, cap 15% = $15,000.
+  it("keeps whole orders, largest target first, up to the cap; defers the rest", () => {
+    const r = clipToTurnover([enter("S", 50, 100), enter("L", 90, 100), enter("M", 60, 100)], 100_000, C)!;
+    expect(r.kept.map((o) => o.ticker)).toEqual(["L", "M"]); // $9k + $6k = exactly the $15k cap
+    expect(r.clipped.map((o) => o.ticker)).toEqual(["S"]);   // $5k more would exceed it
+  });
+  it("returns null (halt as before) when any order is not an ENTER buy", () => {
+    expect(clipToTurnover([enter("A", 100, 100), { ...enter("B", 10, 100), reason: "ADD" }], 100_000, C)).toBeNull();
+    expect(clipToTurnover([enter("A", 100, 100), { ...enter("B", 10, 100), side: "sell" as const, reason: "TRIM" }], 100_000, C)).toBeNull();
+    expect(clipToTurnover([], 100_000, C)).toBeNull();
+  });
+  it("never resizes an order, even when it alone exceeds the cap", () => {
+    const r = clipToTurnover([enter("BIG", 200, 100)], 100_000, C)!;
+    expect(r).toEqual({ kept: [], clipped: [enter("BIG", 200, 100)] });
   });
 });
 
