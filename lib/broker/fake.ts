@@ -35,7 +35,10 @@ export class FakeBroker implements BrokerAdapter {
     const mv = (await this.getPositions()).reduce((a, p) => a + p.marketValue, 0);
     return { equity: this.cash + mv, cash: this.cash, buyingPower: this.cash };
   }
-  async getOrders(status: "open" | "closed" | "all"): Promise<BrokerOrder[]> { return status === "open" ? [] : [...this.orders]; }
+  // `after` is accepted for signature parity but not applied: the fake's fixed submittedAt stamps would
+  // make a time filter test the fake, not the code under test.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async getOrders(status: "open" | "closed" | "all", _after?: string): Promise<BrokerOrder[]> { return status === "open" ? [] : [...this.orders]; }
   async getLastClose(symbols: string[], tradingDate: string): Promise<Record<string, number>> {
     return Object.fromEntries(symbols.map((s) => [s, this.price(s, tradingDate)]));
   }

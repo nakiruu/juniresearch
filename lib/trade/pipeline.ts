@@ -80,15 +80,19 @@ export interface ExecutedOrder {
   filledQty: number; filledAvgPrice: number | null; submittedAt: string | null;
 }
 
-export async function executeOrders(input: { adapter: BrokerAdapter; sized: SizedOrders; ctx: GuardContext; runId: string; fillsPath: string; pollMs?: number }): Promise<{ fills: Fill[]; executed: ExecutedOrder[] }> {
-  const { adapter, sized, ctx, runId, fillsPath, pollMs = 1000 } = input;
+export async function executeOrders(input: { adapter: BrokerAdapter; sized: SizedOrders; ctx: GuardContext; runId: string; fillsPath: string; pollMs?: number; now?: () => number }): Promise<{ fills: Fill[]; executed: ExecutedOrder[] }> {
+  const { adapter, sized, ctx, runId, fillsPath, pollMs = 1000, now = Date.now } = input;
   const fills: Fill[] = [];
   const executed: ExecutedOrder[] = [];
   for (const o of sized.orders) {
+    // Poll window: bounded to just before this submit (60s slack for clock skew) so the broker listing
+    // always contains the new order, however long the account's order history grows.
+    const pollAfter = new Date(now() - 60_000).toISOString();
     let order = await guardedSubmit(adapter, { symbol: o.ticker, side: o.side, qty: o.qty, limitPrice: o.limitPrice, timeInForce: o.timeInForce, clientOrderId: o.clientOrderId, estNotionalUsd: o.deltaUsd }, ctx);
     for (let i = 0; i < 60 && !TERMINAL_STATUSES.has(order.status); i++) {
       await sleep(pollMs);
-      order = (await adapter.getOrders("all")).find((x) => x.clientOrderId === o.clientOrderId) ?? order;
+      const id = order.id;
+      order = (await adapter.getOrders("all", pollAfter)).find((x) => x.id === id || x.clientOrderId === o.clientOrderId) ?? order;
     }
     executed.push({ clientOrderId: o.clientOrderId, brokerId: order.id, status: order.status, filledQty: order.filledQty, filledAvgPrice: order.filledAvgPrice, submittedAt: order.submittedAt });
     if (order.filledQty > 0 && order.filledAvgPrice != null && order.filledAt) {

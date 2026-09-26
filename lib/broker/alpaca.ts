@@ -68,7 +68,9 @@ export class AlpacaPaperBroker implements BrokerAdapter {
     return (await this.call(z.array(Position), `${this.base}/v2/positions`)).map((p) => ({ symbol: p.symbol, qty: p.qty, marketValue: p.market_value, avgEntryPrice: p.avg_entry_price }));
   }
   async getOrders(status: "open" | "closed" | "all", after?: string): Promise<BrokerOrder[]> {
-    const q = new URLSearchParams({ status, limit: "500", direction: "asc" }); if (after) q.set("after", after);
+    // Newest first: with `limit`, an ascending listing past 500 orders would return only the OLDEST
+    // page and a fresh order would never be seen by the fill poll or the audit.
+    const q = new URLSearchParams({ status, limit: "500", direction: "desc" }); if (after) q.set("after", after);
     return (await this.call(z.array(Order), `${this.base}/v2/orders?${q}`)).map((o) => this.toOrder(o));
   }
   async getLastClose(symbols: string[], tradingDate: string): Promise<Record<string, number>> {

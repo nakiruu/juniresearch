@@ -54,6 +54,20 @@ describe("planRun", () => {
 });
 
 describe("executeOrders", () => {
+  it("polls a working order with an `after` bound just before its submit, matched by broker id", async () => {
+    const b = new FakeBroker({ calendar: CAL, closes: { NVT: closes(100) }, equity: 10_000, cash: 10_000, isOpen: true, today: "2026-09-25" });
+    const out = await planRun({ adapter: b, reports: [nvt], sics: {}, marketCapUsd: {}, fills: [], today: "2026-09-25", cfg, runId: "r1" });
+    const submit = b.submitOrder.bind(b);
+    b.submitOrder = async (req) => ({ ...(await submit(req)), status: "new" }); // broker acks as still working
+    const afters: (string | undefined)[] = [];
+    const list = b.getOrders.bind(b);
+    b.getOrders = async (status: "open" | "closed" | "all", after?: string) => { afters.push(after); return (await list(status)).map((o) => ({ ...o, clientOrderId: "" })); }; // Schwab-like: no cid echoed
+    const ctx: GuardContext = { brokerKind: "fake", configuredBaseUrl: "memory://", locks: out.locks, today: "2026-09-25", nav: out.ledger.nav, cfg, env: {} as NodeJS.ProcessEnv, counters: { orders: 0, notionalUsd: 0 } };
+    const NOW = Date.parse("2026-09-25T13:46:00Z");
+    const { fills } = await executeOrders({ adapter: b, sized: out.sized, ctx, runId: "r1", fillsPath: join(mkdtempSync(join(tmpdir(), "exec-")), "fills.jsonl"), pollMs: 0, now: () => NOW });
+    expect(afters[0]).toBe("2026-09-25T13:45:00.000Z");
+    expect(fills).toHaveLength(1); // found by broker id although the listing carries no clientOrderId
+  });
   it("submits a limit order through the guards and appends fills carrying the trading date", async () => {
     const b = new FakeBroker({ calendar: CAL, closes: { NVT: closes(100) }, equity: 10_000, cash: 10_000, isOpen: true, today: "2026-09-25" });
     const out = await planRun({ adapter: b, reports: [nvt], sics: {}, marketCapUsd: {}, fills: [], today: "2026-09-25", cfg, runId: "r1" });

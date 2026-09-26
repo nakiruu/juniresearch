@@ -18,6 +18,13 @@ const mk = (routes: Record<string, unknown>) => {
 };
 
 describe("AlpacaPaperBroker", () => {
+  it("lists orders newest-first and forwards the after bound", async () => {
+    const { b, calls } = mk({ "/v2/orders": [] });
+    await b.getOrders("all", "2026-09-28T13:44:00.000Z");
+    const q = new URL(calls[0].url).searchParams;
+    expect(q.get("direction")).toBe("desc");
+    expect(q.get("after")).toBe("2026-09-28T13:44:00.000Z");
+  });
   it("refuses a non-paper base URL at construction", () => {
     expect(() => new AlpacaPaperBroker({ keyId: "k", secretKey: "s", baseUrl: "https://api.alpaca.markets" })).toThrow(/paper/);
   });
