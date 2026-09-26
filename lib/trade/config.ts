@@ -31,6 +31,8 @@ export interface TradeConfig extends PortfolioConfig {
   closeAnchorSizeMult: number;                   // size multiplier when anchored to the prior close (tier 3)
   maxRunTurnoverFrac: number;                    // turnover breaker — fraction of NAV per run
   consecutiveHaltLimit: number;                  // consecutive halted runs before blocking further runs
+  schwabRefreshLifetimeDays: number;             // Schwab refresh-token lifetime after trade:auth (7)
+  schwabAuthWarnHours: number;                   // warn when fewer hours than this remain (72 covers a weekend)
   turnoverClipEnterOnly: boolean;                // an ENTER-only plan over the turnover cap is clipped to the cap (not halted)
   reconcileOrders: boolean;                      // reconcile also requires every broker order in the lock window to be recorded in fills.jsonl
   maxLateMin: number;                            // fire window: a cron run starting later than cronTimeET + this (ET) is refused as "late"
@@ -50,6 +52,7 @@ export const DEFAULT_TRADE_CONFIG: TradeConfig = {
   maxStaleMin: { large: 5, mid: 15, small: 60 },
   closeAnchorSizeMult: 0.5, maxRunTurnoverFrac: 0.15, consecutiveHaltLimit: 3,
   maxLateMin: 20, reconcileOrders: true, turnoverClipEnterOnly: false,
+  schwabRefreshLifetimeDays: 7, schwabAuthWarnHours: 72,
 };
 
 /**

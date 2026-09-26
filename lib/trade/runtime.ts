@@ -6,7 +6,7 @@ import type { Report } from "../report.schema";
 import type { BrokerAdapter } from "../broker/adapter";
 import { AlpacaPaperBroker } from "../broker/alpaca";
 import { SchwabBroker } from "../broker/schwab";
-import { SchwabTokenStore, refreshSeedFromEnv } from "../broker/schwab-auth";
+import { SchwabTokenStore, currentRefreshObtainedAt, refreshSeedFromEnv } from "../broker/schwab-auth";
 import { SCHWAB_HOST } from "../broker/guards";
 import { readFills } from "./fills";
 import { RunRecord } from "./run-record";
@@ -19,6 +19,13 @@ export const CRON_LOCK_PATH = join(TRADE_DIR, "cron.lock");
 export const CRON_LOG_PATH = join(TRADE_DIR, "cron.log");
 export const HALT_STATE_PATH = join(TRADE_DIR, "halt-state.json");
 export const SCHWAB_TOKEN_PATH = join(TRADE_DIR, "schwab-token.json");
+export const AUTH_WARN_PATH = join(TRADE_DIR, "auth-warn.json");
+
+/** Schwab only: the issue time of the refresh token in use, for the proactive re-auth notice. undefined otherwise. */
+export function schwabRefreshObtainedAt(env: NodeJS.ProcessEnv = process.env): (() => number | undefined) | undefined {
+  if ((env.BROKER ?? "alpaca-paper") !== "schwab") return undefined;
+  return () => currentRefreshObtainedAt(new SchwabTokenStore(SCHWAB_TOKEN_PATH, refreshSeedFromEnv(env)));
+}
 
 export function makeAlpaca(env: NodeJS.ProcessEnv = process.env): BrokerAdapter {
   const keyId = env.APCA_API_KEY_ID, secretKey = env.APCA_API_SECRET_KEY;

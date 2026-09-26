@@ -20,6 +20,9 @@ import { crossCheckBroker } from "./audit";
 import { summaryFromRun, type RunSummaryInput } from "./notify";
 import { writeRunRecord } from "./run-record";
 import { etMinutesOfDay, hhmmToMinutes } from "./clock";
+import { refreshTokenHealth } from "../broker/schwab-auth";
+import { maybeWarnAuth } from "./auth-health";
+import { nextRunAtET } from "./clock";
 
 export type CronStatus = "disabled" | "late" | "closed" | "locked" | "halted" | "noop" | "executed";
 
@@ -32,7 +35,9 @@ export interface CronDeps {
   runId: string;
   /** Forwarded into the GuardContext built after planRun, for the paper-endpoint guard (mirrors trade-execute.ts). Irrelevant for a "fake" adapter. */
   configuredBaseUrl: string;
-  paths: { lock: string; haltState: string; log: string; fills: string; runs: string };
+  paths: { lock: string; haltState: string; log: string; fills: string; runs: string; authWarn?: string };
+  /** Schwab only: the refresh token's issue time (epoch ms, undefined if unknown) for the proactive re-auth notice. */
+  refreshObtainedAt?: () => number | undefined;
   loadInputs: () => Promise<{ reports: Report[]; sics: Record<string, number | null>; marketCapUsd: Record<string, number | null>; fills: Fill[] }>;
   notify: (msg: string) => void;
   /** Optional rich run summary sink (orders/fills/goal book/audit) — called on executed and noop runs. Injected like notify so cron stays pure and testable; absent → nothing extra happens. */
@@ -87,6 +92,16 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
   if (disabled) {
     appendLog(paths.log, logLine(today, runId, "disabled"));
     return { status: "disabled" };
+  }
+
+  // 1a. Proactive re-auth notice (Schwab): warn BEFORE the weekly refresh token dies instead of only
+  // after a run fails. Deduplicated per ET day; never blocks or fails the run.
+  if (deps.refreshObtainedAt && paths.authWarn) {
+    try {
+      const nextRunMs = nextRunAtET(nowMs, cfg.cronTimeET);
+      const health = refreshTokenHealth(deps.refreshObtainedAt(), nowMs, nextRunMs, { lifetimeMs: cfg.schwabRefreshLifetimeDays * 86_400_000, warnHours: cfg.schwabAuthWarnHours });
+      maybeWarnAuth(health, nowMs, nextRunMs, paths.authWarn, notify);
+    } catch { /* a notice must never fail a run */ }
   }
 
   // 1b. Fire window. A scheduled run that starts more than maxLateMin after cronTimeET (a missed

@@ -6,9 +6,25 @@
  */
 import { createInterface } from "node:readline/promises";
 import { z } from "zod";
-import { buildAuthorizeUrl, exchangeCode, parseAuthCode, SchwabTokenStore } from "../lib/broker/schwab-auth";
+import { buildAuthorizeUrl, exchangeCode, parseAuthCode, SchwabTokenStore, refreshTokenHealth, currentRefreshObtainedAt, refreshSeedFromEnv } from "../lib/broker/schwab-auth";
 import { requireSchwab } from "./_env";
 import { SCHWAB_TOKEN_PATH } from "./_trade-common";
+import { resolveTradeConfig } from "../lib/trade/config";
+import { nextRunAtET } from "../lib/trade/clock";
+import { authHealthMessage } from "../lib/trade/auth-health";
+
+// `trade:auth -- --status`: when does the current refresh token expire? Reads only; no login.
+if (process.argv.slice(2).includes("--status")) {
+  const cfg = resolveTradeConfig();
+  const now = Date.now();
+  const next = nextRunAtET(now, cfg.cronTimeET);
+  const h = refreshTokenHealth(currentRefreshObtainedAt(new SchwabTokenStore(SCHWAB_TOKEN_PATH, refreshSeedFromEnv(process.env))), now, next,
+    { lifetimeMs: cfg.schwabRefreshLifetimeDays * 86_400_000, warnHours: cfg.schwabAuthWarnHours });
+  console.log(h.level === "ok"
+    ? `Schwab refresh token OK — expires ${new Date(h.expiresAt!).toISOString()} (${Math.floor(h.remainingMs! / 3_600_000)}h left).`
+    : `[${h.level.toUpperCase()}] ${authHealthMessage(h, next)}`);
+  process.exit(h.level === "ok" ? 0 : 1);
+}
 
 const { clientId, clientSecret, redirectUri } = requireSchwab();
 console.log("\n1) Open this URL, log in to Schwab, and approve access:\n");

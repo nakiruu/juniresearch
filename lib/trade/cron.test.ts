@@ -81,6 +81,19 @@ describe("runCron", () => {
     expect(await runCron(mkDeps({ paths: mkPaths(), nowMs: late, ignoreWindow: true, adapter: mkBroker({ isOpen: false }) }))).toEqual({ status: "closed" });
   });
 
+  it("Schwab re-auth notice: warns before the refresh token dies, once per day, without affecting the run", async () => {
+    const paths = { ...mkPaths(), authWarn: join(mkdtempSync(join(tmpdir(), "aw-")), "auth-warn.json") };
+    const notified: string[] = [];
+    const nowMs = Date.parse(`${TODAY}T13:50:00.000Z`); // Fri 09:50 ET; next run Mon 09:45
+    const obtained = nowMs + 30 * 3_600_000 - 7 * 86_400_000; // expires Sat — before Monday's run
+    const d = mkDeps({ paths, nowMs, refreshObtainedAt: () => obtained, notify: (m) => notified.push(m) });
+    const r = await runCron(d);
+    expect(r.status).toBe("noop"); // the run itself proceeds normally
+    expect(notified.filter((m) => /refresh token expires .*BEFORE the next run/.test(m))).toHaveLength(1);
+    await runCron({ ...d, runId: "r-cron-2" });
+    expect(notified.filter((m) => /refresh token/.test(m))).toHaveLength(1); // deduplicated for the day
+  });
+
   it("kill switch still wins over the fire window", async () => {
     expect(await runCron(mkDeps({ paths: mkPaths(), nowMs: Date.parse(`${TODAY}T23:00:00.000Z`), disabled: true }))).toEqual({ status: "disabled" });
   });

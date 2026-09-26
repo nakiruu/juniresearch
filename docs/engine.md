@@ -396,11 +396,15 @@ kill switch           TRADE_DISABLED=1                                        �
 endpoint guard        broker-aware: alpaca-paper ⇒ paper host, schwab ⇒ schwab host
 ```
 
-> 💡 **Better idea — the turnover breaker can't bootstrap a book.** Building an empty book from cash is
-> ~100% turnover, which trips the 15% breaker — so the initial deploy (and any large top-up) must go through
-> `trade:execute`, not `trade:cron`. That's the breaker doing its job, but an **ENTER-aware exemption**
-> (first-fill / from-flat turnover excluded) would let cron bootstrap safely. Also note the two per-run
-> notional measures differ (guard uses `deltaUsd`; turnover uses `qty·limitPrice`) — align or comment.
+**Turnover clip (`turnoverClipEnterOnly`, default off).** When the breaker trips on a plan that only
+*opens* positions (every order an ENTER buy — e.g. building the book from cash), cron sends whole orders,
+largest target first, up to the cap and defers the rest (`TURNOVER_CLIP`) instead of halting; the book
+fills in over several runs. Any sell/ADD/TRIM still halts, and the cap itself is never raised — so a
+wrongly-read book can't turn into a full re-buy. A one-shot manual build still goes through `trade:execute`.
+
+**Cash backstop (guards).** A buy is refused once committed buys would exceed the broker's cash + *filled*
+sell proceeds − the cash floor; `executeOrders` sends sells first and skips (never sends) a buy the
+backstop refuses. Both caps now measure an order as `qty × limitPrice` — what an IOC limit can spend.
 
 ### 6.2 Broker-truth audit  (`lib/trade/audit.ts` → `crossCheckBroker`)
 
@@ -449,9 +453,12 @@ audit) plus halt/auth alerts; best-effort, never fails a run.
   lock/ban violations) → Phase 2 (paper event-driven, 4 weeks clean + weekly review). Merge to `main` only
   after that.
 
-> 💡 **Better idea — a proactive re-auth warning.** Schwab's refresh token dies weekly; today the system
-> only alerts on the *failed* run. A "token expires in N days" notice would move the ~2-minute `trade:auth`
-> onto a schedule instead of after a missed morning.
+**Re-auth warning (`lib/trade/auth-health.ts`).** On Schwab, each cron run first checks whether the
+refresh token will still be alive at the next scheduled run: **critical** if it dies before then (renew
+today), **warn** under `schwabAuthWarnHours` (72h, covers a weekend), **unknown** if its issue time isn't
+known (env token without `SCHWAB_REFRESH_OBTAINED_AT`). Each level notifies at most once per ET day and
+immediately on escalation; it never affects the run. `npm run trade:auth -- --status` prints the expiry,
+and `GET /api/trade/status` reports `schwabRefreshExpiresAt`.
 
 - **ET clock (`lib/trade/clock.ts`).** `today`, a fill's `tradingDate`, the fire window and the market-hours
   check all read America/New_York through one helper (`todayET`, `etMinutesOfDay`) — a UTC date is already

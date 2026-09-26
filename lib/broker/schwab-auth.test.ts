@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { SchwabTokenStore, ensureAccessToken, exchangeCode, parseAuthCode, buildAuthorizeUrl, SchwabAuthError, TOKEN_ENDPOINT, refreshFingerprint, refreshSeedFromEnv, type SchwabTokens, type RefreshSeed } from "./schwab-auth";
+import { refreshTokenHealth, currentRefreshObtainedAt, SchwabTokenStore, ensureAccessToken, exchangeCode, parseAuthCode, buildAuthorizeUrl, SchwabAuthError, TOKEN_ENDPOINT, refreshFingerprint, refreshSeedFromEnv, type SchwabTokens, type RefreshSeed } from "./schwab-auth";
 
 const creds = { clientId: "cid", clientSecret: "secret" };
 const tmpStore = (seed: RefreshSeed | null = null) => new SchwabTokenStore(join(mkdtempSync(join(tmpdir(), "schwab-")), "token.json"), seed);
@@ -140,6 +140,40 @@ describe("ensureAccessToken with an env refresh token (SCHWAB_REFRESH_TOKEN)", (
     await expect(ensureAccessToken(store, creds, fetchImpl, NOW)).rejects.toThrow(/503/);
     expect(sent).toEqual(["ENV"]);
     expect(store.read()!.staleEnvRefreshFp).toBeUndefined();
+  });
+});
+
+describe("refreshTokenHealth — will the token live to the next scheduled run?", () => {
+  const cfg = { lifetimeMs: 7 * 86_400_000, warnHours: 72 };
+  const H = 3_600_000;
+  const at = (iso: string) => Date.parse(iso);
+  it("ok with plenty of time left", () => {
+    const obtained = at("2026-09-28T14:00:00Z");
+    expect(refreshTokenHealth(obtained, obtained + 1 * 86_400_000, obtained + 1.1 * 86_400_000, cfg)).toMatchObject({ level: "ok", expiresAt: obtained + 7 * 86_400_000 });
+  });
+  it("warn under 72h", () => {
+    const obtained = at("2026-09-28T14:00:00Z");
+    const now = obtained + 7 * 86_400_000 - 71 * H;
+    expect(refreshTokenHealth(obtained, now, now + H, cfg).level).toBe("warn");
+  });
+  it("critical when it dies before the next run — Friday, token expiring Saturday, next run Monday", () => {
+    const obtained = at("2026-09-26T15:00:00Z") - 7 * 86_400_000; // expires Sat 2026-09-26 11:00 ET
+    const friday = at("2026-09-25T14:00:00Z");
+    const monday = at("2026-09-28T13:45:00Z");
+    expect(refreshTokenHealth(obtained, friday, monday, cfg).level).toBe("critical");
+  });
+  it("critical inside the 15-minute slack before the next run", () => {
+    const next = at("2026-09-28T13:45:00Z");
+    expect(refreshTokenHealth(next + 10 * 60_000 - 7 * 86_400_000, next - 5 * H, next, { ...cfg, warnHours: 1 }).level).toBe("critical");
+  });
+  it("unknown without an issue time", () => {
+    expect(refreshTokenHealth(undefined, 0, 0, cfg)).toEqual({ level: "unknown", expiresAt: null, remainingMs: null });
+  });
+  it("currentRefreshObtainedAt prefers the token file, else the env seed", () => {
+    const store = tmpStore({ refreshToken: "ENV", refreshObtainedAt: 111 });
+    expect(currentRefreshObtainedAt(store)).toBe(111);
+    store.write(seed({ refreshObtainedAt: 222 }));
+    expect(currentRefreshObtainedAt(store)).toBe(222);
   });
 });
 

@@ -14,7 +14,7 @@ import { makeNotifier } from "./notify";
 import type { BrokerAdapter } from "../broker/adapter";
 import {
   makeBroker, brokerBaseUrl, loadReportsAndMeta, readFills,
-  CRON_LOCK_PATH, CRON_LOG_PATH, FILLS_PATH, HALT_STATE_PATH, RUNS_DIR,
+  CRON_LOCK_PATH, CRON_LOG_PATH, FILLS_PATH, HALT_STATE_PATH, RUNS_DIR, AUTH_WARN_PATH, schwabRefreshObtainedAt,
 } from "./runtime";
 import { startScheduler, getSchedulerStatus, type SchedulerDeps } from "./scheduler";
 import { todayET } from "./clock";
@@ -57,7 +57,8 @@ export function buildSchedulerDeps(env: NodeJS.ProcessEnv = process.env): Schedu
     const today = todayET(nowMs); // one clock read for both, and the ET trading date (not UTC)
     const result = await runCron({
       adapter, cfg, today, nowMs, runId: newRunId(today), configuredBaseUrl,
-      paths: { lock: CRON_LOCK_PATH, haltState: HALT_STATE_PATH, log: CRON_LOG_PATH, fills: FILLS_PATH, runs: RUNS_DIR },
+      paths: { lock: CRON_LOCK_PATH, haltState: HALT_STATE_PATH, log: CRON_LOG_PATH, fills: FILLS_PATH, runs: RUNS_DIR, authWarn: AUTH_WARN_PATH },
+      refreshObtainedAt: disabled ? undefined : schwabRefreshObtainedAt(env),
       loadInputs: async () => { const m = await loadReportsAndMeta(); return { ...m, fills: readFills(FILLS_PATH) }; },
       notify: notifier.message, notifySummary: notifier.runSummary, disabled, env,
     });

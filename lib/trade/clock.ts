@@ -4,7 +4,8 @@
  * UTC date (`toISOString().slice(0,10)`) is the wrong trading day from 20:00 EDT / 19:00 EST onward.
  * Pure: callers pass `ms` explicitly (todayET defaults to Date.now() for script entry points only).
  */
-import type { TradingDay } from "./calendar";
+import { isTradingDay, type TradingDay } from "./calendar";
+import { nyseTradingDays, COVERAGE_START, COVERAGE_END } from "./nyse-calendar";
 
 const TZ = "America/New_York";
 const FMT = new Intl.DateTimeFormat("en-US", {
@@ -49,4 +50,20 @@ export function hhmmToMinutes(hhmm: string): number {
   const m = /^(\d{2}):(\d{2})$/.exec(hhmm);
   if (!m || +m[1] > 23 || +m[2] > 59) throw new Error(`expected "HH:MM", got "${hhmm}"`);
   return +m[1] * 60 + +m[2];
+}
+
+const TRADING_DAYS = nyseTradingDays(COVERAGE_START, COVERAGE_END).map((d) => d.date);
+
+export function nextRunAtET(nowMs: number, hhmm: string): number {
+  const [h, mi] = hhmm.split(":").map(Number);
+  // Start from today's ET date, walk forward day by day until the fire instant is strictly future AND a trading day.
+  let cursor = etDateString(nowMs);
+  for (let i = 0; i < 400; i++) {
+    const [y, mo, d] = cursor.split("-").map(Number);
+    const fire = etWallToUtc(y, mo, d, h, mi);
+    if (fire > nowMs && isTradingDay(TRADING_DAYS, cursor)) return fire;
+    // advance one calendar day (ET) — build the next date from a noon-UTC step to avoid DST edges
+    cursor = etDateString(Date.parse(`${cursor}T12:00:00Z`) + 86_400_000);
+  }
+  throw new Error(`nextRunAtET: no trading day found within 400 days of ${cursor}`);
 }

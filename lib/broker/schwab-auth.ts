@@ -153,6 +153,32 @@ export async function exchangeCode(code: string, creds: Creds, redirectUri: stri
   return { refreshToken: r.refresh_token, accessToken: r.access_token, accessExpiresAt: nowMs + r.expires_in * 1000, refreshObtainedAt: nowMs };
 }
 
+/** Schwab refresh tokens die this long after the interactive login (a policy — so a default, not a law). */
+export const SCHWAB_REFRESH_LIFETIME_MS = 7 * 86_400_000;
+
+export type RefreshHealthLevel = "ok" | "warn" | "critical" | "unknown";
+export interface RefreshHealth { level: RefreshHealthLevel; expiresAt: number | null; remainingMs: number | null }
+
+/**
+ * Will the refresh token still be alive for the next scheduled run? critical: it dies before the next
+ * run (+15 min slack) — renew today; warn: under `warnHours` left (72h covers a weekend); unknown: the
+ * issue time isn't known (an env token without SCHWAB_REFRESH_OBTAINED_AT). Pure.
+ */
+export function refreshTokenHealth(refreshObtainedAt: number | null | undefined, nowMs: number, nextRunMs: number,
+  cfg: { lifetimeMs: number; warnHours: number }): RefreshHealth {
+  if (refreshObtainedAt == null || !Number.isFinite(refreshObtainedAt)) return { level: "unknown", expiresAt: null, remainingMs: null };
+  const expiresAt = refreshObtainedAt + cfg.lifetimeMs;
+  const remainingMs = expiresAt - nowMs;
+  const level: RefreshHealthLevel = expiresAt <= nextRunMs + 15 * 60_000 ? "critical" : remainingMs < cfg.warnHours * 3_600_000 ? "warn" : "ok";
+  return { level, expiresAt, remainingMs };
+}
+
+/** The issue time of the refresh token in use: the token file's when there is one (it holds the current lineage), else the env seed's. */
+export function currentRefreshObtainedAt(store: SchwabTokenStore): number | undefined {
+  const file = store.read();
+  return file ? file.refreshObtainedAt : store.envSeed?.refreshObtainedAt;
+}
+
 export function buildAuthorizeUrl(clientId: string, redirectUri: string): string {
   return `${AUTHORIZE_ENDPOINT}?${new URLSearchParams({ client_id: clientId, redirect_uri: redirectUri, response_type: "code" })}`;
 }

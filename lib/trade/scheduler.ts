@@ -2,29 +2,11 @@
  * scheduler.ts — pure section: ET time math + arm/catch-up decisions.
  * No I/O, no clock reads inside these functions; callers pass `nowMs`/env explicitly.
  */
-import { nyseTradingDays, COVERAGE_START, COVERAGE_END } from "./nyse-calendar";
-import { isTradingDay } from "./calendar";
 
-import { etDateString, etWallToUtc } from "./clock";
+import { etDateString, nextRunAtET } from "./clock";
 
 // Re-exported: the ET helpers moved to clock.ts (the one ET clock); scheduler callers keep working.
-export { etDateString, etWallToUtc, todayET, etMinutesOfDay } from "./clock";
-
-const TRADING_DAYS = nyseTradingDays(COVERAGE_START, COVERAGE_END).map((d) => d.date);
-
-export function nextRunAtET(nowMs: number, hhmm: string): number {
-  const [h, mi] = hhmm.split(":").map(Number);
-  // Start from today's ET date, walk forward day by day until the fire instant is strictly future AND a trading day.
-  let cursor = etDateString(nowMs);
-  for (let i = 0; i < 400; i++) {
-    const [y, mo, d] = cursor.split("-").map(Number);
-    const fire = etWallToUtc(y, mo, d, h, mi);
-    if (fire > nowMs && isTradingDay(TRADING_DAYS, cursor)) return fire;
-    // advance one calendar day (ET) — build the next date from a noon-UTC step to avoid DST edges
-    cursor = etDateString(Date.parse(`${cursor}T12:00:00Z`) + 86_400_000);
-  }
-  throw new Error(`nextRunAtET: no trading day found within 400 days of ${cursor}`);
-}
+export { etDateString, etWallToUtc, todayET, etMinutesOfDay, nextRunAtET } from "./clock";
 
 export function shouldCatchUp(a: { lastFiredDay: string | null; todayET: string; marketOpen: boolean }): boolean {
   return a.marketOpen && a.lastFiredDay !== a.todayET;
@@ -41,7 +23,8 @@ export function shouldArm(env: NodeJS.ProcessEnv): boolean {
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import type { TradeConfig } from "./config";
-import { TRADE_DIR, latestRunRecord } from "./runtime";
+import { TRADE_DIR, latestRunRecord, schwabRefreshObtainedAt } from "./runtime";
+import { resolveTradeConfig } from "./config";
 import type { CronResult } from "./cron";
 
 const STATE_FILE = (dir: string) => join(dir, "scheduler-state.json");
@@ -61,6 +44,8 @@ export function writeSchedulerState(s: { lastFiredDay: string | null }, dir: str
 export interface SchedulerStatus {
   armed: boolean; broker: string; tradeDisabled: boolean; nextRunISO: string | null;
   lastRun: { id: string | null; day: string | null; at: string | null; status: string; orders?: number; fills?: number } | null;
+  /** Schwab only: when the refresh token expires (ISO), null if unknown/not Schwab. Renew with `npm run trade:auth` before then. */
+  schwabRefreshExpiresAt: string | null;
 }
 // Mutable scheduler status lives on a globalThis-keyed singleton, NOT bare module-level `let`s.
 // Why: Next may compile instrumentation.ts (which arms the scheduler, via scheduler-wiring) into a
@@ -72,6 +57,13 @@ interface SchedulerState { armed: boolean; nextRunISO: string | null; lastFire: 
 const g = globalThis as unknown as { __tradeScheduler?: SchedulerState };
 g.__tradeScheduler ??= { armed: false, nextRunISO: null, lastFire: null };
 const state: SchedulerState = g.__tradeScheduler;
+
+function schwabExpiry(env: NodeJS.ProcessEnv): string | null {
+  try {
+    const at = schwabRefreshObtainedAt(env)?.();
+    return at != null && Number.isFinite(at) ? new Date(at + resolveTradeConfig().schwabRefreshLifetimeDays * 86_400_000).toISOString() : null;
+  } catch { return null; } // the status route must never throw
+}
 
 export function getSchedulerStatus(env: NodeJS.ProcessEnv = process.env): SchedulerStatus {
   // A corrupt/mid-write run record must never throw out of the status route — treat it as null.
@@ -86,7 +78,7 @@ export function getSchedulerStatus(env: NodeJS.ProcessEnv = process.env): Schedu
     : null;
   return {
     armed: state.armed, broker: env.BROKER ?? "alpaca-paper", tradeDisabled: env.TRADE_DISABLED === "1",
-    nextRunISO: state.nextRunISO, lastRun,
+    nextRunISO: state.nextRunISO, lastRun, schwabRefreshExpiresAt: schwabExpiry(env),
   };
 }
 
