@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { buildReview, fillsNeededForLockState, type ReviewRun, type ReviewFill, type DatedOrder } from "./trade-review";
+import { buildReview, executionStats, fillsNeededForLockState, type ReviewRun, type ReviewFill, type DatedOrder, type ReviewOrder } from "./trade-review";
 
 const CFG = { lockBusinessDays: 5 };
 
@@ -114,5 +114,37 @@ describe("reconciledEveryRun window-scoping (fix round 2 — a round-1 regressio
     const runs: ReviewRun[] = [];
     const fills: ReviewFill[] = [{ ticker: "NVT", side: "buy", tradingDate: "2026-09-28" }];
     expect(buildReview(runs, fills, [], CFG).reconciledEveryRun).toBe(false);
+  });
+});
+
+describe("executionStats (spec #9/#10)", () => {
+  const cfg = { limitTolMax: { large: 0.004, mid: 0.01, small: 0.015 } };
+  const t0 = Date.parse("2026-09-28T13:45:00Z");
+  const iso = (dms: number) => new Date(t0 + dms).toISOString();
+  const order = (o: Partial<ReviewOrder>): ReviewOrder => ({ ticker: "A", side: "buy", qty: 10, filledQty: 10, bucket: "large", capBound: false,
+    diag: { tauWanted: 0.002 }, anchorAtMs: t0, submitStartAt: iso(2_000), submitAckAt: iso(2_300), terminalAt: iso(3_000), ...o });
+
+  it("splits fill ratio by capBound and never mixes brokers", () => {
+    const s = executionStats([
+      { broker: "schwab", orders: [order({ capBound: true, filledQty: 2, diag: { tauWanted: 0.006 } }), order({ capBound: true, filledQty: 4, diag: { tauWanted: 0.005 } }), order({})] },
+      { broker: "alpaca-paper", orders: [order({ capBound: true, filledQty: 10 })] },
+    ], cfg);
+    expect(s.schwab.capBound).toEqual({ orders: 2, filledFrac: 0.3 });
+    expect(s.schwab.notCapBound).toEqual({ orders: 1, filledFrac: 1 });
+    expect(s["alpaca-paper"].capBound.filledFrac).toBe(1);
+  });
+  it("reports τ pressure (tauWanted / τ_max) per bucket and latency percentiles in ms", () => {
+    const s = executionStats([{ broker: "schwab", orders: [order({ diag: { tauWanted: 0.006 } }), order({ diag: { tauWanted: 0.002 } })] }], cfg).schwab;
+    expect(s.tauPressure.large.n).toBe(2);
+    expect(s.tauPressure.large.p90).toBeCloseTo(1.5, 9);
+    expect(s.tauPressure.mid.n).toBe(0);
+    expect(s.latency.anchorToSubmit.p50).toBe(2_000);
+    expect(s.latency.submitToAck.p50).toBe(300);
+    expect(s.latency.submitToTerminal.p50).toBe(1_000);
+  });
+  it("tolerates older run records with none of the new fields", () => {
+    const s = executionStats([{ broker: "schwab", orders: [{ ticker: "A", side: "buy", capBound: true }] }], cfg).schwab;
+    expect(s.capBound).toEqual({ orders: 0, filledFrac: null });
+    expect(s.latency.submitToAck.n).toBe(0);
   });
 });
