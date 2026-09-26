@@ -629,6 +629,11 @@ Paper and Schwab are always reported separately.
 
 ## Phase 5 — Deployment (#8)
 
+> **Status: implemented 2026-09-26** (`e9fbac2`, `65d5dcf`, `c5a8f93`). All three are opt-in or
+> non-binding by default: `topUpRecentBuys: false`, `cronTimesET: ["09:45"]`, and `maxDayTurnoverFrac`
+> 0.25 never binds with a single slot (the per-run 15% does first). The Phase 5 exit (2 weeks on paper,
+> compare invested % vs the Phase 4 stats) is still to run.
+
 ### Task 5.1: Residual band for recent entries
 
 **Files:**
@@ -648,15 +653,15 @@ then emit `ADD` with a trade note `residual`. The existing sell side and the unl
 
 **Steps**
 
-- [ ] **Step 1:** Write tests.
+- [x] **Step 1:** Write tests.
   - Knob on, sell-locked held name, 1pp gap → ADD.
   - Same, but not sell-locked → BELOW_BAND.
   - A sell-side gap never gets the exemption.
   - Knob off → exactly today's behaviour.
   - A buy-locked name is never added (it can't be both, but assert it).
-- [ ] **Step 2:** Implement and go green. `minOrderUsd` dust handling in `orders.ts` still applies
+- [x] **Step 2:** Implement and go green. `minOrderUsd` dust handling in `orders.ts` still applies
   unchanged.
-- [ ] **Step 3:** Commit: `feat(trade): opt-in residual band tops up recent entries`.
+- [x] **Step 3:** Commit: `feat(trade): opt-in residual band tops up recent entries`.
 
 ### Task 5.2: Optional second daily run
 
@@ -670,13 +675,13 @@ then emit `ADD` with a trade note `residual`. The existing sell side and the unl
 
 **Steps**
 
-- [ ] **Step 1:** Write tests.
+- [x] **Step 1:** Write tests.
   - Two slots fire once each per day.
   - A missed slot does not catch up past its window.
   - Old state migrates.
   - A second FakeBroker run on the same day uses new clientOrderIds (a new runId).
-- [ ] **Step 2:** Implement and go green.
-- [ ] **Step 3:** Commit: `feat(trade): support multiple daily cron slots`.
+- [x] **Step 2:** Implement and go green.
+- [x] **Step 3:** Commit: `feat(trade): support multiple daily cron slots`.
 
 ### Task 5.3: Daily turnover cap across runs
 
@@ -688,10 +693,10 @@ then emit `ADD` with a trade note `residual`. The existing sell side and the unl
 
 **Steps**
 
-- [ ] **Step 1:** Write tests: a second run that would push the day over the cap halts, or clips when
+- [x] **Step 1:** Write tests: a second run that would push the day over the cap halts, or clips when
   ENTER-only.
-- [ ] **Step 2:** Implement and go green.
-- [ ] **Step 3:** Commit: `feat(trade): cumulative daily turnover cap`.
+- [x] **Step 2:** Implement and go green.
+- [x] **Step 3:** Commit: `feat(trade): cumulative daily turnover cap`.
 
 **Phase 5 exit:**
 - Paper: `topUpRecentBuys` on for 2 weeks.

@@ -278,11 +278,15 @@ misconfigured into an overlap.
 4. **Never leverage:** if frozen + wanted buys would exceed `1 − cashFloor`, buys are scaled down
    (`buyScale`), never cash borrowed; a `plannedCash < 0` assertion is the backstop.
 
-> 💡 **Better idea — the no-trade band abandons the residual.** The 2.5pp band suppresses small top-ups,
-> so after a partial-fill morning the book converges to ~75–80% deployed, not 100% — sub-band gaps sit in
-> cash until price drift crosses the band. A **same-session top-up loop** (reconcile → plan → execute until
-> the gap < band or N passes) would complete the book at one decision timestamp without lowering the band
-> (which would reintroduce churn). This is the cleanest version of "run it twice."
+**Residual top-up (`topUpRecentBuys`, default off).** The 2.5pp band would leave the unfilled rest of a
+partial IOC entry in cash until drift crosses it. With the knob on, a HOLD name that is **sell-locked** —
+bought inside the lock window, so it can't be sold and can't churn — may ADD toward target through the
+smaller `residualBand` (0.5pp). Buys only; `minOrderUsd` still applies.
+
+**Extra daily runs (`cronTimesET`, default `["09:45"]`).** Add a later slot (e.g. `"10:40"`) to give
+partial fills a second, spaced-out chance; an immediate re-run seconds later mostly meets the same book.
+Each slot fires once per day with its own fire window, run id, reconcile, breakers and audit. A daily cap
+`maxDayTurnoverFrac` (25% of NAV) bounds the day's runs together.
 
 ### 4.4 Locks — the whipsaw / compliance clock  (`lib/trade/locks.ts`)
 
