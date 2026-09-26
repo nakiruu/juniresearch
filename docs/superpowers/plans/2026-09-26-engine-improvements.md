@@ -68,21 +68,23 @@ paper, Schwab live and Fake implementations.
 
 ## Phase 1 — Compliance clock
 
+> **Status: implemented 2026-09-26** (`37df4b8`, `0ee0ad6`, `6fd0950`, `5a7c7fa`; fixtures `46f5d35`). Task 1.1 confirmed F1: `isOpen` is a trading-day flag. The paper/Schwab exit checks below remain to be run on the server.
+
 ### Task 1.1: Confirm the Schwab `/markets` semantics (spike, no code merged)
 
 **Files:**
 - Create `lib/broker/__fixtures__/schwab-markets-open.json`
 - Create `lib/broker/__fixtures__/schwab-markets-afterhours.json`
 
-- [ ] **Step 1:** With live Schwab creds, run
+- [x] **Step 1:** With live Schwab creds, run
   `GET /marketdata/v1/markets?markets=equity` at about 10:00 ET and again at about 20:00 ET on a trading
   day. Use a throwaway `tsx` snippet that reuses `SchwabAdapter.get`. Save both responses as fixtures,
   scrubbed of account data.
-- [ ] **Step 2:** Record the finding in the PR description. The question is whether `isOpen` stays
+- [x] **Step 2:** Record the finding in the PR description. The question is whether `isOpen` stays
   `true` after hours.
   - **Yes:** F1 is confirmed and Task 1.3 is mandatory.
   - **No:** keep Task 1.3 anyway, as defence in depth.
-- [ ] **Step 3:** Commit the fixtures: `test(schwab): capture /markets fixtures for clock semantics`.
+- [x] **Step 3:** Commit the fixtures: `test(schwab): capture /markets fixtures for clock semantics`.
 
 ### Task 1.2: `lib/trade/clock.ts` — the one ET clock
 
@@ -100,15 +102,15 @@ export function etMinutesOfDay(nowMs: number): number;   // 0..1439 ET wall-cloc
 export function etWallToUtc(day: TradingDay, hhmm: string): number; // moved, unchanged
 ```
 
-- [ ] **Step 1:** Write tests.
+- [x] **Step 1:** Write tests.
   - `todayET(Date.parse("2026-03-09T03:30:00Z")) === "2026-03-08"` (EDT evening).
   - `todayET(Date.parse("2026-01-15T04:59:00Z")) === "2026-01-14"` (EST 23:59).
   - `todayET(Date.parse("2026-01-15T05:01:00Z")) === "2026-01-15"`.
   - `etMinutesOfDay` at 09:45 ET in both EDT and EST returns `585`.
   - The existing `scheduler.test.ts` stays green unmodified.
-- [ ] **Step 2:** Run the tests and confirm they fail. Then implement by moving the helpers and adding
+- [x] **Step 2:** Run the tests and confirm they fail. Then implement by moving the helpers and adding
   the two new functions. Run again and confirm green.
-- [ ] **Step 3:** Commit: `refactor(trade): extract ET clock helpers to clock.ts`.
+- [x] **Step 3:** Commit: `refactor(trade): extract ET clock helpers to clock.ts`.
 
 ### Task 1.3: Schwab `getClock` checks session hours (F1)
 
@@ -123,14 +125,14 @@ export function etWallToUtc(day: TradingDay, hhmm: string): number; // moved, un
   `nyseTradingDays(todayET(now), todayET(now)).length === 1 && 570 ≤ etMinutesOfDay(now) < 960`.
 - `nextOpen` and `nextClose` are populated from `start`/`end` when present.
 
-- [ ] **Step 1:** Write tests, using the Task 1.1 fixtures and an injected `now`.
+- [x] **Step 1:** Write tests, using the Task 1.1 fixtures and an injected `now`.
   - 10:00 ET → open.
   - 20:00 ET with `isOpen:true` → **closed**.
   - `isOpen:false` → closed.
   - Missing `sessionHours` at 10:00 on a trading day → open.
   - Missing `sessionHours` on a holiday → closed.
-- [ ] **Step 2:** Implement and go green.
-- [ ] **Step 3:** Commit: `fix(schwab): market clock requires regular-session hours, not just a trading date`.
+- [x] **Step 2:** Implement and go green.
+- [x] **Step 3:** Commit: `fix(schwab): market clock requires regular-session hours, not just a trading date`.
 
 ### Task 1.4: Replace every UTC `today` on the trade path (#13)
 
@@ -145,18 +147,18 @@ export function etWallToUtc(day: TradingDay, hhmm: string): number; // moved, un
 
 **Steps**
 
-- [ ] **Step 1:** Write tests.
+- [x] **Step 1:** Write tests.
   - `pipeline.test.ts`: a FakeBroker fill with `filledAt: "2026-03-10T00:30:00Z"` gets
     `tradingDate === "2026-03-09"`.
   - `scheduler-wiring` (or `cron.test.ts`) test: a run constructed at `nowMs = 2026-03-10T01:00Z` passes
     `today === "2026-03-09"`.
-- [ ] **Step 2:** Replace each call site with `todayET()` or `todayET(nowMs)`. For fills use
+- [x] **Step 2:** Replace each call site with `todayET()` or `todayET(nowMs)`. For fills use
   `todayET(Date.parse(order.filledAt))`. Where the value feeds `runCron`, derive `today` from the same
   injected `nowMs` so both come from one clock read.
-- [ ] **Step 3:** Run `grep -rn "toISOString().slice(0, *10)" lib/trade lib/broker scripts/trade-*`. The
+- [x] **Step 3:** Run `grep -rn "toISOString().slice(0, *10)" lib/trade lib/broker scripts/trade-*`. The
   only remaining hits should be pure date-arithmetic helpers (`shiftDays`, `shift`, calendar loops),
   each with a comment saying why UTC is correct there.
-- [ ] **Step 4:** Commit: `fix(trade): derive today and fill tradingDate from ET, not UTC`.
+- [x] **Step 4:** Commit: `fix(trade): derive today and fill tradingDate from ET, not UTC`.
 
 ### Task 1.5: Fire-window guard + scheduler script fixes (F7)
 
@@ -169,18 +171,18 @@ export function etWallToUtc(day: TradingDay, hhmm: string): number; // moved, un
 
 **Steps**
 
-- [ ] **Step 1:** Add `cron.test.ts` cases.
+- [x] **Step 1:** Add `cron.test.ts` cases.
   - `nowMs` at 09:50 ET → proceeds.
   - 10:06 ET → `{status:"late"}`, nothing submitted, a log line written, no halt bump.
   - 10:06 ET with `ignoreWindow` → proceeds.
-- [ ] **Step 2:** Implement. The check goes after the kill switch and before the clock:
+- [x] **Step 2:** Implement. The check goes after the kill switch and before the clock:
   `etMinutesOfDay(nowMs) > hhmm(cfg.cronTimeET) + cfg.maxLateMin` → `"late"`.
-- [ ] **Step 3:** Update the scripts.
+- [x] **Step 3:** Update the scripts.
   - `.ps1`: remove `-StartWhenAvailable`.
   - Both scripts: read `cronTimeET` from `lib/trade/config.ts` (grep the literal) or accept `-At` and
     assert it equals the config.
   - `.sh`: fix the comment at line 78.
-- [ ] **Step 4:** Commit: `feat(trade): fire-window guard; scheduler scripts no longer fire missed runs late`.
+- [x] **Step 4:** Commit: `feat(trade): fire-window guard; scheduler scripts no longer fire missed runs late`.
 
 **Phase 1 exit:**
 - On paper: a manual `trade:cron` at 21:00 ET returns `late`/`closed`.
