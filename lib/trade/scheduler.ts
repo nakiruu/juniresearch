@@ -117,14 +117,18 @@ export interface SchedulerDeps {
 export function startScheduler(deps: SchedulerDeps): { stop: () => void } {
   const dir = deps.stateDir ?? TRADE_DIR;
   let handle: { clear: () => void } | null = null;
+  let stopped = false;
 
   const fire = async () => {
+    if (stopped) return; // stop() requested before we got here — do not trade after shutdown
     const result = await deps.runOnce();
+    if (stopped) return; // stop() requested while runOnce() was in flight — do not stamp/re-arm
     _lastFire = { at: new Date(deps.now()).toISOString(), status: result.status, orders: result.orders, fills: result.fills };
     writeSchedulerState({ lastFiredDay: etDateString(deps.now()) }, dir);
     arm(); // re-arm for the next day
   };
   const arm = () => {
+    if (stopped) return;
     const at = nextRunAtET(deps.now(), deps.cfg.cronTimeET);
     _nextRunISO = new Date(at).toISOString();
     handle = deps.setTimer(() => { void fire(); }, Math.max(0, at - deps.now()));
@@ -134,12 +138,19 @@ export function startScheduler(deps: SchedulerDeps): { stop: () => void } {
   void (async () => {
     const st = readSchedulerState(dir);
     const todayET = etDateString(deps.now());
-    if (shouldCatchUp({ lastFiredDay: st.lastFiredDay, todayET, marketOpen: await deps.marketOpenNow() })) {
-      await fire();          // fire() re-arms
+    const open = await deps.marketOpenNow();
+    if (stopped) return; // stop() requested while marketOpenNow() was in flight — abandon the boot
+    if (shouldCatchUp({ lastFiredDay: st.lastFiredDay, todayET, marketOpen: open })) {
+      await fire();          // fire() re-arms (and self-guards against a stop() during runOnce())
     } else {
       arm();
     }
   })();
 
-  return { stop: () => { handle?.clear(); handle = null; _armed = false; _nextRunISO = null; } };
+  return {
+    stop: () => {
+      stopped = true;
+      handle?.clear(); handle = null; _armed = false; _nextRunISO = null;
+    },
+  };
 }

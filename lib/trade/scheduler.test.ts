@@ -85,7 +85,7 @@ describe("startScheduler", () => {
     writeSchedulerState({ lastFiredDay: "2026-07-01" }, dir);
     const timer = fakeTimer();
     const runOnce = vi.fn(async (): Promise<CronResult> => ({ status: "noop" }));
-    startScheduler({
+    const s = startScheduler({
       runOnce, marketOpenNow: async () => true,
       cfg: { cronTimeET: "09:45" } as any, broker: "alpaca-paper", env: {} as unknown as NodeJS.ProcessEnv,
       now: () => Date.parse("2026-07-01T14:00:00Z"),
@@ -94,6 +94,28 @@ describe("startScheduler", () => {
     await Promise.resolve(); await Promise.resolve();
     expect(runOnce).not.toHaveBeenCalled();
     expect(timer.pending()).toBe(true);
+    s.stop();
+  });
+
+  it("stop() during an in-flight boot (marketOpenNow still pending) is not undone when it resolves", async () => {
+    const dir = mkdtempSync(join(tmpdir(), "sched-"));
+    const timer = fakeTimer();
+    const runOnce = vi.fn(async (): Promise<CronResult> => ({ status: "executed", orders: 1, fills: 1 }));
+    let resolveMarketOpen: (open: boolean) => void;
+    const marketOpenNow = () => new Promise<boolean>((resolve) => { resolveMarketOpen = resolve; });
+    const s = startScheduler({
+      runOnce, marketOpenNow,
+      cfg: { cronTimeET: "09:45" } as any, broker: "alpaca-paper", env: {} as unknown as NodeJS.ProcessEnv,
+      now: () => Date.parse("2026-07-01T14:00:00Z"),
+      setTimer: timer.setTimer, stateDir: dir,
+    });
+    await Promise.resolve(); // let the boot IIFE reach and start awaiting marketOpenNow()
+    s.stop(); // shutdown requested while marketOpenNow() is still in flight
+    resolveMarketOpen!(true); // now let it resolve — the boot must abandon rather than resurrect
+    await Promise.resolve(); await Promise.resolve(); await Promise.resolve();
+    expect(runOnce).not.toHaveBeenCalled();
+    expect(timer.pending()).toBe(false);
+    expect(getSchedulerStatus().armed).toBe(false);
   });
 });
 
