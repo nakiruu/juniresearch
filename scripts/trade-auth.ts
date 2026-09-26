@@ -13,7 +13,9 @@ import { SCHWAB_TOKEN_PATH } from "./_trade-common";
 const { clientId, clientSecret, redirectUri } = requireSchwab();
 console.log("\n1) Open this URL, log in to Schwab, and approve access:\n");
 console.log("   " + buildAuthorizeUrl(clientId, redirectUri) + "\n");
-console.log(`2) You'll be redirected to ${redirectUri}?code=...  — copy the FULL address bar URL.\n`);
+console.log(redirectUri.replace(/\/$/, "").endsWith("/schwab/callback")
+  ? `2) You'll land on ${redirectUri} — click "Copy URL".\n`
+  : `2) You'll be redirected to ${redirectUri}?code=...  — copy the FULL address bar URL.\n`);
 const rl = createInterface({ input: process.stdin, output: process.stdout });
 const redirect = (await rl.question("3) Paste the redirect URL here: ")).trim();
 rl.close();
