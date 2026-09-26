@@ -14,8 +14,10 @@ const runId = flag(args, "--run");
 const rec = runId ? readRunRecord(runId) : latestRunRecord();
 if (!rec) { console.error("No run record found under data/trade/runs — nothing to audit."); process.exit(2); }
 
-const orders = rec.orders as { clientOrderId: string; ticker: string; side: "buy" | "sell" }[];
-const expected = orders.map((o) => ({ clientOrderId: o.clientOrderId, ticker: o.ticker, side: o.side }));
+// brokerId (written by mergeExecution) lets the audit find orders whose clientOrderId the broker doesn't
+// echo — Schwab, audited from a fresh process.
+const orders = rec.orders as { clientOrderId: string; ticker: string; side: "buy" | "sell"; brokerId?: string }[];
+const expected = orders.map((o) => ({ clientOrderId: o.clientOrderId, ticker: o.ticker, side: o.side, brokerId: o.brokerId }));
 const fills = readFills(FILLS_PATH).filter((f) => f.runId === rec.runId);
 const brokerOrders = await makeBroker().getOrders("all", `${rec.today}T00:00:00Z`);
 

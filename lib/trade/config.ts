@@ -3,6 +3,7 @@
  * Spec §12. `rMin`/`muMin` stay for the analytical snapshot; trading uses the band pair.
  */
 import { DEFAULT_CONFIG, type PortfolioConfig } from "../portfolio/config";
+import { hhmmToMinutes } from "./clock";
 
 export type LiquidityBucket = "large" | "mid" | "small";
 
@@ -19,7 +20,8 @@ export interface TradeConfig extends PortfolioConfig {
   maxNotionalFrac: number;  // run-level cap on total submitted notional as a fraction of NAV
   useQualityTilt: boolean;  // spec §5.4 — multiply scoreWeight by Signal.quality
   // Phase 2 (spec §7) — slippage-capped limit pricing, gap-halt, freshness, and run breakers.
-  cronTimeET: string;                            // scheduled trigger, ET wall-clock ("09:45")
+  cronTimeET: string;                            // scheduled trigger, ET wall-clock ("09:45") — always cronTimesET[0]
+  cronTimesET: string[];                         // every daily fire slot, ascending (["09:45"]; e.g. ["09:45", "10:40"] for a top-up run)
   limitTol: Record<LiquidityBucket, number>;     // entry τ floor, by bucket
   limitTolMax: Record<LiquidityBucket, number>;  // per-bucket hard cap on τ
   limitTolBeta: number;                          // spread-widening coefficient on τ
@@ -29,7 +31,15 @@ export interface TradeConfig extends PortfolioConfig {
   maxStaleMin: Record<LiquidityBucket, number>;  // per-bucket freshness window, minutes
   closeAnchorSizeMult: number;                   // size multiplier when anchored to the prior close (tier 3)
   maxRunTurnoverFrac: number;                    // turnover breaker — fraction of NAV per run
+  maxDayTurnoverFrac: number;                    // …and across all of a day's runs (only binds with several cronTimesET slots)
   consecutiveHaltLimit: number;                  // consecutive halted runs before blocking further runs
+  schwabRefreshLifetimeDays: number;             // Schwab refresh-token lifetime after trade:auth (7)
+  schwabAuthWarnHours: number;                   // warn when fewer hours than this remain (72 covers a weekend)
+  topUpRecentBuys: boolean;                      // HOLD adds on a name bought inside the lock window use residualBand, not tradeBand
+  residualBand: number;                          // the smaller band for those top-ups (0.005)
+  turnoverClipEnterOnly: boolean;                // an ENTER-only plan over the turnover cap is clipped to the cap (not halted)
+  reconcileOrders: boolean;                      // reconcile also requires every broker order in the lock window to be recorded in fills.jsonl
+  maxLateMin: number;                            // fire window: a cron run starting later than cronTimeET + this (ET) is refused as "late"
 }
 
 export const DEFAULT_TRADE_CONFIG: TradeConfig = {
@@ -38,13 +48,15 @@ export const DEFAULT_TRADE_CONFIG: TradeConfig = {
   tradeBand: 0.025, lockBusinessDays: 5, markMode: "settled",
   minOrderUsd: 25, maxOrdersPerRun: 40, maxNotionalFrac: 1.0,
   useQualityTilt: true,
-  cronTimeET: "09:45",
+  cronTimeET: "09:45", cronTimesET: ["09:45"],
   limitTol: { large: 0.0015, mid: 0.0035, small: 0.0080 },
   limitTolMax: { large: 0.0040, mid: 0.0100, small: 0.0150 },
   limitTolBeta: 0.5, limitTolMin: 0.0005, exitTolMult: 1.5,
   gapHalt: { large: 0.10, mid: 0.15, small: 0.25 },
   maxStaleMin: { large: 5, mid: 15, small: 60 },
-  closeAnchorSizeMult: 0.5, maxRunTurnoverFrac: 0.15, consecutiveHaltLimit: 3,
+  closeAnchorSizeMult: 0.5, maxRunTurnoverFrac: 0.15, maxDayTurnoverFrac: 0.25, consecutiveHaltLimit: 3,
+  maxLateMin: 20, reconcileOrders: true, turnoverClipEnterOnly: false, topUpRecentBuys: false, residualBand: 0.005,
+  schwabRefreshLifetimeDays: 7, schwabAuthWarnHours: 72,
 };
 
 /**
@@ -63,6 +75,15 @@ const BUCKETS: LiquidityBucket[] = ["large", "mid", "small"];
 
 export function resolveTradeConfig(overrides: Partial<TradeConfig> = {}): TradeConfig {
   const cfg = { ...DEFAULT_TRADE_CONFIG, ...overrides };
+  // One source of truth for the fire times: cronTimeET is the first slot. A cronTimeET-only override
+  // (older callers) means a single slot.
+  cfg.cronTimesET = overrides.cronTimesET ?? (overrides.cronTimeET ? [overrides.cronTimeET] : DEFAULT_TRADE_CONFIG.cronTimesET);
+  if (!cfg.cronTimesET.length || cfg.cronTimesET.length > 4) throw new Error(`cronTimesET must hold 1–4 slots, got ${cfg.cronTimesET.length}`);
+  cfg.cronTimesET.forEach((s, i) => {
+    hhmmToMinutes(s);
+    if (i > 0 && !(hhmmToMinutes(s) > hhmmToMinutes(cfg.cronTimesET[i - 1]))) throw new Error(`cronTimesET must be strictly ascending: ${cfg.cronTimesET.join(", ")}`);
+  });
+  cfg.cronTimeET = cfg.cronTimesET[0];
   if (!(cfg.rExit < cfg.rEnter)) throw new Error(`rExit (${cfg.rExit}) must be below rEnter (${cfg.rEnter})`);
   if (!(cfg.muExit < cfg.muEnter)) throw new Error(`muExit (${cfg.muExit}) must be below muEnter (${cfg.muEnter})`);
   if (!Number.isInteger(cfg.lockBusinessDays) || cfg.lockBusinessDays < 1) throw new Error("lockBusinessDays must be a positive integer");
@@ -78,6 +99,10 @@ export function resolveTradeConfig(overrides: Partial<TradeConfig> = {}): TradeC
   if (!(cfg.limitTolMin > 0 && cfg.limitTolMin <= minLimitTol)) throw new Error(`limitTolMin (${cfg.limitTolMin}) must be in (0, ${minLimitTol}]`);
   if (!(cfg.closeAnchorSizeMult > 0 && cfg.closeAnchorSizeMult <= 1)) throw new Error(`closeAnchorSizeMult (${cfg.closeAnchorSizeMult}) must be in (0, 1]`);
   if (!(cfg.maxRunTurnoverFrac > 0 && cfg.maxRunTurnoverFrac <= 1)) throw new Error(`maxRunTurnoverFrac (${cfg.maxRunTurnoverFrac}) must be in (0, 1]`);
+  hhmmToMinutes(cfg.cronTimeET); // throws on a malformed "HH:MM"
+  if (!(cfg.residualBand > 0 && cfg.residualBand <= cfg.tradeBand)) throw new Error(`residualBand (${cfg.residualBand}) must be in (0, tradeBand ${cfg.tradeBand}]`);
+  if (!(Number.isInteger(cfg.maxLateMin) && cfg.maxLateMin > 0 && cfg.maxLateMin <= 390)) throw new Error(`maxLateMin (${cfg.maxLateMin}) must be an integer in (0, 390]`);
+  if (!(cfg.maxDayTurnoverFrac >= cfg.maxRunTurnoverFrac && cfg.maxDayTurnoverFrac <= 1)) throw new Error(`maxDayTurnoverFrac (${cfg.maxDayTurnoverFrac}) must be in [maxRunTurnoverFrac ${cfg.maxRunTurnoverFrac}, 1]`);
   if (!(cfg.consecutiveHaltLimit >= 1)) throw new Error(`consecutiveHaltLimit (${cfg.consecutiveHaltLimit}) must be >= 1`);
 
   return cfg;

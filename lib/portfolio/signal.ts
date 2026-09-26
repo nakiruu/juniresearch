@@ -1,5 +1,6 @@
 import type { Report } from "@/lib/report.schema";
 import type { PortfolioConfig } from "./config";
+import { realizedVol, touchProbability } from "./touch";
 
 export interface Signal {
   ticker: string; company: string; sector: string;
@@ -7,6 +8,12 @@ export interface Signal {
   price: number; mu: number; sigma: number; sigmaDown: number;
   D: number; R: number | null; kappa: number; quality: number;
   ageDays: number; staleness: number;
+  /**
+   * DISPLAY ONLY: model probability the price touches probability-weighted fair value within
+   * touchHorizonYears (lib/portfolio/touch.ts), from the report's recent closes; null without ≥21
+   * closes. Never read by scoring, eligibility or the trade layer — it rewards volatility.
+   */
+  touch?: number | null;
 }
 
 const clamp = (x: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, x));
@@ -49,12 +56,18 @@ export function buildSignal(report: Report, livePrice: number, sic: number | nul
 
   const reportDate = parseReportDateUTC(report.meta.reportDate);
   const ageDays = Math.max(0, Math.round((today.getTime() - reportDate.getTime()) / 86_400_000));
-  const staleness = Math.exp(-ageDays / config.stalenessHalfLifeDays);
+  // A true half-life: a report stalenessHalfLifeDays old counts half (exp(-age/h) was an e-folding time — ~62-day half-life at h=90).
+  const staleness = Math.pow(0.5, ageDays / config.stalenessHalfLifeDays);
+
+  const closes = report.quote?.history?.map((h) => h.close) ?? []; // fixtures may omit the quote
+  const vol = realizedVol(closes);
+  const fairValue = scen.reduce((a, s) => a + s.p * (1 + s.ret) * livePrice, 0);
+  const touch = vol != null && livePrice > 0 ? touchProbability(livePrice, fairValue, vol, config.touchDrift, config.touchHorizonYears) : null;
 
   return {
     ticker: report.meta.ticker, company: report.meta.company,
     sector: sic != null && Number.isFinite(sic) ? String(Math.floor(sic / 100)).padStart(2, "0") : "??",
     label: r.label, gatedLabel: r.gate?.gatedLabel ?? null,
-    price: livePrice, mu, sigma, sigmaDown, D, R, kappa, quality, ageDays, staleness,
+    price: livePrice, mu, sigma, sigmaDown, D, R, kappa, quality, ageDays, staleness, touch,
   };
 }

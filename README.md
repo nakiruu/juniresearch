@@ -224,9 +224,12 @@ runs a Phase-0 dry loop against an in-memory book.
 |---|---|---|
 | `TRADE_DISABLED=1` | env kill switch | refuses every submission, both brokers |
 | confirm prompt | `trade:execute` | requires `y` (or `--yes`) before any order |
-| market-clock check | `trade:execute` / `trade:cron` | exits cleanly when the market is closed |
+| market-clock check | `trade:execute` / `trade:cron` | exits cleanly outside the regular session (09:30–16:00 ET on trading days) |
+| fire window | `trade:cron` | a run starting > 20 min after `cronTimeET` exits as `late` (`trade:cron -- --now` for a deliberate manual run) |
 | turnover breaker | `trade:cron` | halts a run whose turnover > 15% of NAV (so the initial deploy must go via `trade:execute`) |
 | consecutive-halt breaker | `trade:cron` | blocks further runs after 3 halts in a row |
+| orders reconcile | `trade:cron` / `trade:execute` / `trade:reconcile` | halts while any executed broker order in the lock window is missing from `fills.jsonl` (`trade:reconcile -- --record-missing` records them from broker truth) |
+| unknown-submit halt | `trade:cron` / `trade:execute` | a submit that times out is looked up, never resent; if it can't be found the run stops sending and halts |
 | notional / order-count guards | every submit | refuse if a run exceeds NAV or 40 orders |
 | reconcile halt | every run | an unexplained broker position stops the run |
 | broker-truth audit | after every execute | a CRITICAL mismatch (unrecorded/orphan fill, qty) fails the run |

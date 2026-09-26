@@ -6,7 +6,7 @@ import { readLedger } from "../lib/trade/ledger";
 import { requireAlpaca } from "./_env";
 export {
   TRADE_DIR, FILLS_PATH, LEDGER_PATH, RUNS_DIR, CRON_LOCK_PATH, CRON_LOG_PATH,
-  HALT_STATE_PATH, SCHWAB_TOKEN_PATH, brokerBaseUrl, loadReportsAndMeta,
+  HALT_STATE_PATH, SCHWAB_TOKEN_PATH, AUTH_WARN_PATH, schwabRefreshObtainedAt, brokerBaseUrl, loadReportsAndMeta,
   readRunRecord, latestRunRecord, readFills,
 } from "../lib/trade/runtime";
 import * as runtime from "../lib/trade/runtime";

@@ -17,10 +17,16 @@ import { flag, readFills, CRON_LOG_PATH, FILLS_PATH, RUNS_DIR } from "./_trade-c
 // Loose/optional on purpose: a real RunRecord (lib/trade/run-record.ts, read back as JSON) satisfies
 // these structurally, and so does a minimal test fixture — buildReview only reads the fields a given
 // part of the digest actually needs, and tolerates every other field being absent.
-export interface ReviewOrder { ticker: string; side: "buy" | "sell"; capBound?: boolean; tier?: number }
+export interface ReviewOrder {
+  ticker: string; side: "buy" | "sell"; capBound?: boolean; tier?: number;
+  // Execution diagnostics (Phase 4) — absent on older run records, which executionStats simply skips.
+  qty?: number; filledQty?: number | null; bucket?: string; diag?: { tauWanted?: number };
+  anchorAtMs?: number; submitStartAt?: string | null; submitAckAt?: string | null; terminalAt?: string | null;
+}
 export interface ReviewSkip { ticker: string; code: string; unlockOn?: string }
 export interface ReviewRun {
   runId?: string;
+  broker?: string;
   today?: string; // real RunRecord field name
   date?: string;  // accepted alias (a review fixture, or any other date-bearing summary row)
   plan?: { plannedCash?: number; trades?: { deltaWeight: number }[]; skipped?: ReviewSkip[] };
@@ -152,6 +158,62 @@ export function buildReview(
   return { turnoverByRun, cashRange, deferralsWithUnlock, reconciledEveryRun, lockViolations, capBindByTicker };
 }
 
+// ---- execution quality (spec #9/#10) ---------------------------------------------------------
+
+export interface FillRatio { orders: number; filledFrac: number | null } // Σ filledQty / Σ qty
+export interface Pctl { n: number; p50: number | null; p90: number | null; p95: number | null }
+export interface BrokerExecStats {
+  capBound: FillRatio; notCapBound: FillRatio;
+  /** tauWanted / τ_max per liquidity bucket: > 1 means the spread wanted more slippage than the cap allowed. */
+  tauPressure: Record<string, Pctl>;
+  /** Milliseconds. */
+  latency: { anchorToSubmit: Pctl; submitToAck: Pctl; submitToTerminal: Pctl };
+}
+
+function pctl(xs: number[]): Pctl {
+  const s = xs.filter(Number.isFinite).sort((a, b) => a - b);
+  const at = (q: number) => (s.length ? s[Math.min(s.length - 1, Math.floor(q * s.length))] : null);
+  return { n: s.length, p50: at(0.5), p90: at(0.9), p95: at(0.95) };
+}
+function ratio(os: ReviewOrder[]): FillRatio {
+  const withQty = os.filter((o) => typeof o.qty === "number" && o.qty > 0 && typeof o.filledQty === "number");
+  const q = withQty.reduce((a, o) => a + o.qty!, 0);
+  return { orders: withQty.length, filledFrac: q > 0 ? withQty.reduce((a, o) => a + (o.filledQty as number), 0) / q : null };
+}
+const ms = (iso?: string | null) => (iso ? Date.parse(iso) : NaN);
+
+/**
+ * Per broker (paper and live are NEVER mixed — IEX-paper fills say nothing about Schwab), how orders
+ * filled when the τ cap bound vs when it didn't, how hard spreads pushed against τ_max per bucket, and
+ * decision→fill latency. This is the evidence the "raise τ_max?" decision waits on (plan L.1).
+ */
+export function executionStats(runs: ReviewRun[], cfg: Pick<TradeConfig, "limitTolMax">): Record<string, BrokerExecStats> {
+  const byBroker = new Map<string, ReviewOrder[]>();
+  for (const r of runs) {
+    const k = r.broker ?? "unknown";
+    byBroker.set(k, [...(byBroker.get(k) ?? []), ...(r.orders ?? [])]);
+  }
+  const out: Record<string, BrokerExecStats> = {};
+  for (const [broker, os] of byBroker) {
+    const tauPressure: Record<string, Pctl> = {};
+    for (const b of Object.keys(cfg.limitTolMax)) {
+      const cap = cfg.limitTolMax[b as keyof typeof cfg.limitTolMax];
+      tauPressure[b] = pctl(os.filter((o) => o.bucket === b && typeof o.diag?.tauWanted === "number").map((o) => o.diag!.tauWanted! / cap));
+    }
+    out[broker] = {
+      capBound: ratio(os.filter((o) => o.capBound === true)),
+      notCapBound: ratio(os.filter((o) => o.capBound === false)),
+      tauPressure,
+      latency: {
+        anchorToSubmit: pctl(os.map((o) => ms(o.submitStartAt) - (o.anchorAtMs ?? NaN))),
+        submitToAck: pctl(os.map((o) => ms(o.submitAckAt) - ms(o.submitStartAt))),
+        submitToTerminal: pctl(os.map((o) => ms(o.terminalAt) - ms(o.submitStartAt))),
+      },
+    };
+  }
+  return out;
+}
+
 export async function printReview(since: string): Promise<void> {
   const runs: ReviewRun[] = existsSync(RUNS_DIR)
     ? readdirSync(RUNS_DIR)
@@ -184,6 +246,15 @@ export async function printReview(since: string): Promise<void> {
   for (const v of d.lockViolations) console.log(`  ${v.date} ${v.side.toUpperCase()} ${v.ticker} — locked until ${v.lockedUntil}`);
   console.log("Cap-bind by ticker:");
   for (const [ticker, row] of Object.entries(d.capBindByTicker)) console.log(`  ${ticker}: ${row.bound}/${row.total} run(s) cap-bound (${row.total ? ((row.bound / row.total) * 100).toFixed(0) : "0"}%)`);
+  const pct = (x: number | null) => (x == null ? "n/a" : `${(x * 100).toFixed(0)}%`);
+  const p = (x: Pctl, unit: (v: number) => string) => (x.n ? `p50 ${unit(x.p50!)} · p90 ${unit(x.p90!)} · p95 ${unit(x.p95!)} (n=${x.n})` : "n/a");
+  for (const [broker, s] of Object.entries(executionStats(runs, cfg))) {
+    console.log(`Execution quality — ${broker}:`);
+    console.log(`  fill ratio: cap-bound ${pct(s.capBound.filledFrac)} (${s.capBound.orders} orders) vs not ${pct(s.notCapBound.filledFrac)} (${s.notCapBound.orders})`);
+    for (const [b, x] of Object.entries(s.tauPressure)) if (x.n) console.log(`  τ wanted / τ_max, ${b}: ${p(x, (v) => v.toFixed(2))}`);
+    const sec = (v: number) => `${(v / 1000).toFixed(1)}s`;
+    console.log(`  latency anchor→submit: ${p(s.latency.anchorToSubmit, sec)}; submit→ack: ${p(s.latency.submitToAck, sec)}; submit→terminal: ${p(s.latency.submitToTerminal, sec)}`);
+  }
   const haltLines = logLines.filter((l) => /halted|reason=/.test(l));
   if (haltLines.length) {
     console.log(`Halt/breaker lines in cron.log since ${since}:`);

@@ -25,6 +25,25 @@ describe("crossCheckBroker", () => {
     expect(r.checked).toEqual({ expected: 2, brokerMatched: 2, fills: 2 });
   });
 
+  it("Schwab out-of-process: broker echoes no clientOrderId, the run record's brokerId still joins → clean", () => {
+    const r = crossCheckBroker({
+      expected: [{ ...exp("c1", "AAA"), brokerId: "S-1" }, { ...exp("c2", "BBB"), brokerId: "S-2" }],
+      brokerOrders: [ord({ id: "S-1", clientOrderId: "", symbol: "AAA" }), ord({ id: "S-2", clientOrderId: "", symbol: "BBB" }), ord({ id: "S-9", clientOrderId: "", symbol: "ZZZ" })],
+      fills: [fill({ ticker: "AAA", orderId: "S-1" }), fill({ ticker: "BBB", orderId: "S-2" })],
+    });
+    expect(r.discrepancies).toEqual([]); // S-9 (another run / manual) stays out of scope
+    expect(r.checked.brokerMatched).toBe(2);
+  });
+
+  it("Schwab out-of-process: an unrecorded fill joined by brokerId is still critical", () => {
+    const r = crossCheckBroker({
+      expected: [{ ...exp("c1", "AAA"), brokerId: "S-1" }],
+      brokerOrders: [ord({ id: "S-1", clientOrderId: "", symbol: "AAA" })],
+      fills: [],
+    });
+    expect(r.discrepancies.map((d) => d.code)).toEqual(["UNRECORDED_FILL"]);
+  });
+
   it("zero-fill (canceled IOC) with no recorded fill → clean", () => {
     const r = crossCheckBroker({
       expected: [exp("c1", "AAA")],

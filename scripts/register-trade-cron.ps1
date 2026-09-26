@@ -17,13 +17,21 @@
 $ErrorActionPreference = "Stop"
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
+# The fire times are cronTimesET from lib/trade/config.ts — one source of truth, never a second literal here.
+$cfgMatch = Select-String -Path (Join-Path $repoRoot "lib\trade\config.ts") -Pattern 'cronTimesET: \[([^\]]*)\]' | Select-Object -First 1
+if (-not $cfgMatch) { throw "could not read cronTimesET from lib/trade/config.ts" }
+$cronTimesET = [regex]::Matches($cfgMatch.Matches[0].Groups[1].Value, '\d{2}:\d{2}') | ForEach-Object { $_.Value }
+if (-not $cronTimesET) { throw "cronTimesET in lib/trade/config.ts holds no HH:MM slots" }
 $npmCommand = Get-Command npm.cmd -ErrorAction SilentlyContinue
 if (-not $npmCommand) { $npmCommand = Get-Command npm -ErrorAction Stop }
 $npmCmd = $npmCommand.Source
 
 $action  = New-ScheduledTaskAction -Execute $npmCmd -Argument "run trade:cron" -WorkingDirectory $repoRoot
-$trigger = New-ScheduledTaskTrigger -Daily -At 9:45AM   # ET; set the box/task timezone to America/New_York
-$settings = New-ScheduledTaskSettingsSet -StartWhenAvailable -DontStopOnIdleEnd -ExecutionTimeLimit (New-TimeSpan -Minutes 30)
+# One daily trigger per slot (ET; set the box/task timezone to America/New_York).
+$trigger = @($cronTimesET | ForEach-Object { New-ScheduledTaskTrigger -Daily -At ([datetime]::ParseExact($_, "HH:mm", $null)) })
+# No -StartWhenAvailable: a missed trigger is SKIPPED, never fired late at a worse time of day (trade:cron
+# also refuses a run that starts after cronTimeET + maxLateMin as "late").
+$settings = New-ScheduledTaskSettingsSet -DontStopOnIdleEnd -ExecutionTimeLimit (New-TimeSpan -Minutes 30)
 
 Register-ScheduledTask `
   -TaskName "juni-trade-cron" `
@@ -33,5 +41,5 @@ Register-ScheduledTask `
   -Description "Phase-2 event-driven paper rebalance (reconcile -> plan -> execute), spec 2026-09-25-trade-layer-phase2-design.md §2-3. Self-guards: exits 0 immediately when the Alpaca clock says the market is closed." `
   -Force
 
-Write-Host "Registered/updated scheduled task 'juni-trade-cron' -> npm run trade:cron (daily 09:45, working dir $repoRoot)."
+Write-Host "Registered/updated scheduled task 'juni-trade-cron' -> npm run trade:cron (daily $($cronTimesET -join ', '), working dir $repoRoot)."
 Write-Host "Verify with: Get-ScheduledTask -TaskName juni-trade-cron | Get-ScheduledTaskInfo"

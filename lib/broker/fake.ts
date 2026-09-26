@@ -1,5 +1,6 @@
 /** fake.ts — in-memory broker for tests and Phase 0 dry runs. Fills instantly at today's close. */
 import type { BrokerAdapter, BrokerAccount, BrokerCalendarDay, BrokerClock, BrokerOrder, BrokerPosition, SubmitOrderRequest } from "./adapter";
+import { SubmitOutcomeUnknownError } from "./http";
 
 export class FakeBroker implements BrokerAdapter {
   readonly kind = "fake" as const;
@@ -14,6 +15,14 @@ export class FakeBroker implements BrokerAdapter {
     calendar: BrokerCalendarDay[]; closes: Record<string, Record<string, number>>; equity: number; cash: number;
     isOpen: boolean; today: string; fractionable?: Record<string, boolean>;
   }) { this.cash = opts.cash; this.today = opts.today; this.isOpen = opts.isOpen; }
+
+  private submitFault: "placed" | "not-placed" | null = null;
+  /**
+   * Test hook: the NEXT submit loses its response. "placed" = the order reaches the book (and fills as
+   * usual) but the caller sees SubmitOutcomeUnknownError; "not-placed" = nothing reaches the book.
+   */
+  loseNextSubmitResponse(mode: "placed" | "not-placed"): void { this.submitFault = mode; }
+  submitCount = 0;
 
   setToday(d: string): void { this.today = d; }
   setClock(isOpen: boolean): void { this.isOpen = isOpen; }
@@ -35,7 +44,10 @@ export class FakeBroker implements BrokerAdapter {
     const mv = (await this.getPositions()).reduce((a, p) => a + p.marketValue, 0);
     return { equity: this.cash + mv, cash: this.cash, buyingPower: this.cash };
   }
-  async getOrders(status: "open" | "closed" | "all"): Promise<BrokerOrder[]> { return status === "open" ? [] : [...this.orders]; }
+  // `after` is accepted for signature parity but not applied: the fake's fixed submittedAt stamps would
+  // make a time filter test the fake, not the code under test.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async getOrders(status: "open" | "closed" | "all", _after?: string): Promise<BrokerOrder[]> { return status === "open" ? [] : [...this.orders]; }
   async getLastClose(symbols: string[], tradingDate: string): Promise<Record<string, number>> {
     return Object.fromEntries(symbols.map((s) => [s, this.price(s, tradingDate)]));
   }
@@ -43,6 +55,18 @@ export class FakeBroker implements BrokerAdapter {
     return Object.fromEntries(symbols.map((s) => [s, this.opts.fractionable?.[s] ?? true]));
   }
   async submitOrder(req: SubmitOrderRequest): Promise<BrokerOrder> {
+    this.submitCount++;
+    const fault = this.submitFault;
+    this.submitFault = null;
+    if (fault === "not-placed") throw new SubmitOutcomeUnknownError(req.clientOrderId, req.symbol, `${this.today}T15:30:00Z`, "fake: response lost, order never reached the book");
+    const placed = this.place(req);
+    if (fault === "placed") throw new SubmitOutcomeUnknownError(req.clientOrderId, req.symbol, `${this.today}T15:30:00Z`, "fake: response lost after the order was placed");
+    return placed;
+  }
+  async findSubmitted(req: SubmitOrderRequest): Promise<BrokerOrder | null> {
+    return this.orders.find((o) => o.clientOrderId === req.clientOrderId) ?? null;
+  }
+  private place(req: SubmitOrderRequest): BrokerOrder {
     const price = this.price(req.symbol);
     if (req.limitPrice != null) {
       const marketable = req.side === "buy" ? req.limitPrice >= price : req.limitPrice <= price;

@@ -2,51 +2,11 @@
  * scheduler.ts — pure section: ET time math + arm/catch-up decisions.
  * No I/O, no clock reads inside these functions; callers pass `nowMs`/env explicitly.
  */
-import { nyseTradingDays, COVERAGE_START, COVERAGE_END } from "./nyse-calendar";
-import { isTradingDay } from "./calendar";
 
-const TZ = "America/New_York";
-const FMT = new Intl.DateTimeFormat("en-US", {
-  timeZone: TZ, hourCycle: "h23",
-  year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit",
-});
-function partsInTZ(ms: number) {
-  const p = Object.fromEntries(FMT.formatToParts(ms).filter((x) => x.type !== "literal").map((x) => [x.type, x.value]));
-  return { y: +p.year, mo: +p.month, d: +p.day, h: +p.hour, mi: +p.minute, s: +p.second };
-}
-/** offset (ms) such that etWallClockAsUTC - actualUTC. */
-function tzOffsetMs(ms: number): number {
-  const p = partsInTZ(ms);
-  return Date.UTC(p.y, p.mo - 1, p.d, p.h, p.mi, p.s) - ms;
-}
-/** The UTC instant whose America/New_York wall clock is exactly Y-M-D h:mi (DST-correct). */
-function etWallToUtc(y: number, mo: number, d: number, h: number, mi: number): number {
-  const naive = Date.UTC(y, mo - 1, d, h, mi);
-  let utc = naive - tzOffsetMs(naive);      // first correction
-  utc = naive - tzOffsetMs(utc);            // refine at the candidate instant (handles DST edges)
-  return utc;
-}
+import { currentSlot, etDateString, nextSlotRunAtET } from "./clock";
 
-export function etDateString(ms: number): string {
-  const p = partsInTZ(ms);
-  return `${p.y}-${String(p.mo).padStart(2, "0")}-${String(p.d).padStart(2, "0")}`;
-}
-
-const TRADING_DAYS = nyseTradingDays(COVERAGE_START, COVERAGE_END).map((d) => d.date);
-
-export function nextRunAtET(nowMs: number, hhmm: string): number {
-  const [h, mi] = hhmm.split(":").map(Number);
-  // Start from today's ET date, walk forward day by day until the fire instant is strictly future AND a trading day.
-  let cursor = etDateString(nowMs);
-  for (let i = 0; i < 400; i++) {
-    const [y, mo, d] = cursor.split("-").map(Number);
-    const fire = etWallToUtc(y, mo, d, h, mi);
-    if (fire > nowMs && isTradingDay(TRADING_DAYS, cursor)) return fire;
-    // advance one calendar day (ET) — build the next date from a noon-UTC step to avoid DST edges
-    cursor = etDateString(Date.parse(`${cursor}T12:00:00Z`) + 86_400_000);
-  }
-  throw new Error(`nextRunAtET: no trading day found within 400 days of ${cursor}`);
-}
+// Re-exported: the ET helpers moved to clock.ts (the one ET clock); scheduler callers keep working.
+export { etDateString, etWallToUtc, todayET, etMinutesOfDay, nextRunAtET } from "./clock";
 
 export function shouldCatchUp(a: { lastFiredDay: string | null; todayET: string; marketOpen: boolean }): boolean {
   return a.marketOpen && a.lastFiredDay !== a.todayET;
@@ -63,18 +23,33 @@ export function shouldArm(env: NodeJS.ProcessEnv): boolean {
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import type { TradeConfig } from "./config";
-import { TRADE_DIR, latestRunRecord } from "./runtime";
+import { TRADE_DIR, latestRunRecord, schwabRefreshObtainedAt } from "./runtime";
+import { resolveTradeConfig } from "./config";
 import type { CronResult } from "./cron";
 
 const STATE_FILE = (dir: string) => join(dir, "scheduler-state.json");
 
-export function readSchedulerState(dir: string = TRADE_DIR): { lastFiredDay: string | null } {
+/**
+ * lastFiredSlot ("HH:MM") is absent in state written before multiple daily slots existed; it then
+ * means the first slot — the only one there was.
+ */
+export interface SchedulerFileState { lastFiredDay: string | null; lastFiredSlot?: string }
+
+export function readSchedulerState(dir: string = TRADE_DIR): SchedulerFileState {
   const p = STATE_FILE(dir);
   if (!existsSync(p)) return { lastFiredDay: null };
-  try { return { lastFiredDay: JSON.parse(readFileSync(p, "utf8")).lastFiredDay ?? null }; }
-  catch { return { lastFiredDay: null }; }
+  try {
+    const j = JSON.parse(readFileSync(p, "utf8"));
+    return { lastFiredDay: j.lastFiredDay ?? null, ...(typeof j.lastFiredSlot === "string" ? { lastFiredSlot: j.lastFiredSlot } : {}) };
+  } catch { return { lastFiredDay: null }; }
 }
-export function writeSchedulerState(s: { lastFiredDay: string | null }, dir: string = TRADE_DIR): void {
+
+/** Has the slot in force at `nowMs` (the first slot, before it starts) already fired today? */
+export function slotAlreadyFired(st: SchedulerFileState, nowMs: number, slots: readonly string[]): boolean {
+  const slot = currentSlot(nowMs, slots) ?? slots[0];
+  return st.lastFiredDay === etDateString(nowMs) && (st.lastFiredSlot ?? slots[0]) === slot;
+}
+export function writeSchedulerState(s: SchedulerFileState, dir: string = TRADE_DIR): void {
   const p = STATE_FILE(dir);
   mkdirSync(dirname(p), { recursive: true });
   writeFileSync(p, JSON.stringify(s, null, 2) + "\n");
@@ -83,6 +58,8 @@ export function writeSchedulerState(s: { lastFiredDay: string | null }, dir: str
 export interface SchedulerStatus {
   armed: boolean; broker: string; tradeDisabled: boolean; nextRunISO: string | null;
   lastRun: { id: string | null; day: string | null; at: string | null; status: string; orders?: number; fills?: number } | null;
+  /** Schwab only: when the refresh token expires (ISO), null if unknown/not Schwab. Renew with `npm run trade:auth` before then. */
+  schwabRefreshExpiresAt: string | null;
 }
 // Mutable scheduler status lives on a globalThis-keyed singleton, NOT bare module-level `let`s.
 // Why: Next may compile instrumentation.ts (which arms the scheduler, via scheduler-wiring) into a
@@ -94,6 +71,13 @@ interface SchedulerState { armed: boolean; nextRunISO: string | null; lastFire: 
 const g = globalThis as unknown as { __tradeScheduler?: SchedulerState };
 g.__tradeScheduler ??= { armed: false, nextRunISO: null, lastFire: null };
 const state: SchedulerState = g.__tradeScheduler;
+
+function schwabExpiry(env: NodeJS.ProcessEnv): string | null {
+  try {
+    const at = schwabRefreshObtainedAt(env)?.();
+    return at != null && Number.isFinite(at) ? new Date(at + resolveTradeConfig().schwabRefreshLifetimeDays * 86_400_000).toISOString() : null;
+  } catch { return null; } // the status route must never throw
+}
 
 export function getSchedulerStatus(env: NodeJS.ProcessEnv = process.env): SchedulerStatus {
   // A corrupt/mid-write run record must never throw out of the status route — treat it as null.
@@ -108,14 +92,15 @@ export function getSchedulerStatus(env: NodeJS.ProcessEnv = process.env): Schedu
     : null;
   return {
     armed: state.armed, broker: env.BROKER ?? "alpaca-paper", tradeDisabled: env.TRADE_DISABLED === "1",
-    nextRunISO: state.nextRunISO, lastRun,
+    nextRunISO: state.nextRunISO, lastRun, schwabRefreshExpiresAt: schwabExpiry(env),
   };
 }
 
 export interface SchedulerDeps {
   runOnce: () => Promise<CronResult>;
   marketOpenNow: () => Promise<boolean>;
-  cfg: Pick<TradeConfig, "cronTimeET">;
+  /** cronTimesET (all daily slots) wins; a bare cronTimeET means one slot. */
+  cfg: Pick<TradeConfig, "cronTimeET"> & Partial<Pick<TradeConfig, "cronTimesET">>;
   broker: string;
   env: NodeJS.ProcessEnv;
   now: () => number;
@@ -125,6 +110,7 @@ export interface SchedulerDeps {
 
 export function startScheduler(deps: SchedulerDeps): { stop: () => void } {
   const dir = deps.stateDir ?? TRADE_DIR;
+  const slots = deps.cfg.cronTimesET?.length ? deps.cfg.cronTimesET : [deps.cfg.cronTimeET];
   let handle: { clear: () => void } | null = null;
   let stopped = false;
 
@@ -136,18 +122,21 @@ export function startScheduler(deps: SchedulerDeps): { stop: () => void } {
   const fire = async () => {
     if (stopped) return; // stop() requested before we got here — do not trade after shutdown
     try {
-      // Same-day double-fire guard: a boot in the 09:30–09:45 ET window catch-up-fires, then arm()
+      // Same-slot double-fire guard: a boot in the 09:30–09:45 ET window catch-up-fires, then arm()
       // re-arms for the SAME day's (still strictly-future) fire instant. Consult persisted state and
-      // skip runOnce when we've already fired today; the finally below still re-arms.
-      const today = etDateString(deps.now());
-      if (readSchedulerState(dir).lastFiredDay === today) {
-        console.log(`[scheduler] already fired ${today}, skipping`);
+      // skip runOnce when this day's slot already fired; the finally below still re-arms. The slot is
+      // fixed at the START of the fire, so a long run can't stamp the next slot.
+      const startMs = deps.now();
+      const today = etDateString(startMs);
+      const slot = currentSlot(startMs, slots) ?? slots[0];
+      if (slotAlreadyFired(readSchedulerState(dir), startMs, slots)) {
+        console.log(`[scheduler] already fired ${today} ${slot}, skipping`);
         return;
       }
       const result = await deps.runOnce();
       if (stopped) return; // stop() requested while runOnce() was in flight — do not stamp/re-arm
       state.lastFire = { at: new Date(deps.now()).toISOString(), status: result.status, orders: result.orders, fills: result.fills };
-      writeSchedulerState({ lastFiredDay: etDateString(deps.now()) }, dir);
+      writeSchedulerState({ lastFiredDay: today, lastFiredSlot: slot }, dir);
     } catch (e) {
       if (stopped) return; // shutdown during runOnce() — do not stamp after shutdown
       state.lastFire = { at: new Date(deps.now()).toISOString(), status: "error" };
@@ -158,7 +147,7 @@ export function startScheduler(deps: SchedulerDeps): { stop: () => void } {
   };
   const arm = () => {
     if (stopped) return;
-    const at = nextRunAtET(deps.now(), deps.cfg.cronTimeET);
+    const at = nextSlotRunAtET(deps.now(), slots);
     state.nextRunISO = new Date(at).toISOString();
     handle = deps.setTimer(() => { void fire(); }, Math.max(0, at - deps.now()));
   };
@@ -166,10 +155,10 @@ export function startScheduler(deps: SchedulerDeps): { stop: () => void } {
   state.armed = true;
   void (async () => {
     const st = readSchedulerState(dir);
-    const todayET = etDateString(deps.now());
     const open = await deps.marketOpenNow();
     if (stopped) return; // stop() requested while marketOpenNow() was in flight — abandon the boot
-    if (shouldCatchUp({ lastFiredDay: st.lastFiredDay, todayET, marketOpen: open })) {
+    // Catch up the slot in force if it hasn't fired (runCron itself refuses a run past its fire window).
+    if (open && !slotAlreadyFired(st, deps.now(), slots)) {
       await fire();          // fire() re-arms (and self-guards against a stop() during runOnce())
     } else {
       arm();

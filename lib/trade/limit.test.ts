@@ -76,3 +76,24 @@ describe("computeLimit", () => {
     expect(computeLimit({ side: "buy", marketCapUsd: 50e9, nowMs: now, mkt: blind, cfg: C }).action).toBe("halt");
   });
 });
+
+describe("computeLimit diagnostics (spec #9)", () => {
+  it("records spread, quote/trade ages, and the τ the spread wanted before the cap", () => {
+    const r = computeLimit({ side: "buy", marketCapUsd: 50e9, nowMs: now, mkt: mkt(), cfg: C });
+    expect(r.diag).toMatchObject({ bid: 80.13, ask: 80.15, quoteAgeMs: 30_000, tradeAgeMs: 30_000 });
+    expect(r.diag!.relSpread).toBeCloseTo(0.02 / 80.14, 9);
+    expect(r.diag!.tauWanted).toBe(C.limitTol.large); // a tight spread wants only the bucket floor
+  });
+  it("a wide early-session spread wants more τ than the cap allows — that is exactly when capBound fires", () => {
+    const wide = mkt({ lastTrade: null, quote: { bid: 79.6, ask: 80.4, tsMs: now - 1_000 } }); // 1% spread
+    const r = computeLimit({ side: "buy", marketCapUsd: 50e9, nowMs: now, mkt: wide, cfg: C });
+    expect(r.diag!.tauWanted).toBeCloseTo(C.limitTolBeta * 0.01, 9);
+    expect(r.diag!.tauWanted).toBeGreaterThan(C.limitTolMax.large);
+    expect(r.tau).toBe(C.limitTolMax.large);
+    expect(r.capBound).toBe(true);
+  });
+  it("has null quote fields without a quote", () => {
+    const r = computeLimit({ side: "buy", marketCapUsd: 50e9, nowMs: now, mkt: mkt({ quote: null }), cfg: C });
+    expect(r.diag).toMatchObject({ relSpread: null, bid: null, ask: null, quoteAgeMs: null });
+  });
+});

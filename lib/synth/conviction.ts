@@ -27,6 +27,17 @@ export function computeConviction(scenarios: ScenarioIn[], price: number): Convi
   return { expectedUpside, bearDownside, rewardRisk };
 }
 
+/**
+ * How much the author's own scenarios disagree: the probability-weighted standard deviation of the
+ * scenario returns vs `price`. 0 when there are no scenarios or no price.
+ */
+export function scenarioDispersion(scenarios: Pick<ScenarioIn, "impliedPrice" | "probability">[], price: number): number {
+  if (!(price > 0) || !scenarios.length) return 0;
+  const rets = scenarios.map((s) => ({ p: s.probability, r: s.impliedPrice / price - 1 }));
+  const mu = rets.reduce((a, x) => a + x.p * x.r, 0);
+  return Math.sqrt(Math.max(0, rets.reduce((a, x) => a + x.p * (x.r - mu) ** 2, 0)));
+}
+
 /** Evaluated top to bottom; the first band that matches wins. A null R never satisfies a ≥ test. */
 export function deriveLabel(c: Conviction, cfg: DeskRating): RatingLabel {
   const r = c.rewardRisk;

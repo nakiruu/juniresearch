@@ -34,6 +34,8 @@ describe("tradesToOrders", () => {
       limitPrice: 50.08, timeInForce: "ioc", tier: 1, capBound: false, anchorReason: "ok",
       bucket: "large", estCostUsd: 8, reason: "ENTER",
     })]);
+    // spec #9: every order carries the anchor, the τ used, and the market diagnostics behind it.
+    expect(orders[0]).toMatchObject({ pRef: 50, tau: 0.0015, diag: expect.objectContaining({ tauWanted: 0.0015 }) });
   });
   it("applies sizeMult to a tier-3 (close-anchored) BUY, halving the qty", () => {
     const closeOnly: Mkt = { lastTrade: null, quote: null, close: 200 };

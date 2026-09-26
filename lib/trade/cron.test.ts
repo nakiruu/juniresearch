@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { mkdtempSync, existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { mkdtempSync, mkdirSync, existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { runCron, type CronDeps } from "./cron";
@@ -33,7 +33,7 @@ function mkDeps(overrides: Partial<CronDeps> & { paths: CronDeps["paths"] }): Cr
     adapter: mkBroker(),
     cfg: resolveTradeConfig(), // default wMax=0.10 keeps a single ENTER well under the 15% turnover cap
     today: TODAY,
-    nowMs: Date.parse(`${TODAY}T20:00:00.000Z`),
+    nowMs: Date.parse(`${TODAY}T13:50:00.000Z`), // 09:50 EDT — inside the fire window
     runId: "r-cron-1",
     configuredBaseUrl: "memory://",
     loadInputs: async () => ({ reports: [], sics: {}, marketCapUsd: {}, fills: [] }),
@@ -53,6 +53,57 @@ describe("runCron", () => {
     expect(await adapter.getOrders("all")).toEqual([]);
     expect(existsSync(paths.lock)).toBe(false); // never acquired
     expect(readFileSync(paths.log, "utf8")).toMatch(/closed/);
+  });
+
+  it("fire window: a run starting after cronTimeET + maxLateMin (ET) is 'late' — no broker call, no lock, no halt bump", async () => {
+    const paths = mkPaths();
+    const adapter = mkBroker();
+    let clockCalls = 0;
+    const getClock = adapter.getClock.bind(adapter);
+    adapter.getClock = async () => { clockCalls++; return getClock(); };
+    const r = await runCron(mkDeps({ paths, adapter, nowMs: Date.parse(`${TODAY}T14:06:00.000Z`) })); // 10:06 EDT > 09:45 + 20m
+    expect(r).toEqual({ status: "late" });
+    expect(clockCalls).toBe(0);
+    expect(existsSync(paths.lock)).toBe(false);
+    expect(readHaltState(paths.haltState)).toEqual({ consecutive: 0 });
+    expect(readFileSync(paths.log, "utf8")).toMatch(/late reason=after 09:45 ET \+ 20m/);
+  });
+
+  it("fire window: 10:05 ET (exactly cronTimeET + 20m) still runs; the window is DST-correct (EST)", async () => {
+    expect((await runCron(mkDeps({ paths: mkPaths(), nowMs: Date.parse(`${TODAY}T14:05:00.000Z`) }))).status).not.toBe("late");
+    const est = await runCron(mkDeps({ paths: mkPaths(), nowMs: Date.parse("2026-12-01T14:50:00.000Z") })); // 09:50 EST
+    expect(est.status).not.toBe("late");
+  });
+
+  it("fire window: ignoreWindow (trade:cron --now) skips it; the market clock still applies", async () => {
+    const late = Date.parse(`${TODAY}T18:00:00.000Z`); // 14:00 EDT
+    expect((await runCron(mkDeps({ paths: mkPaths(), nowMs: late, ignoreWindow: true }))).status).not.toBe("late");
+    expect(await runCron(mkDeps({ paths: mkPaths(), nowMs: late, ignoreWindow: true, adapter: mkBroker({ isOpen: false }) }))).toEqual({ status: "closed" });
+  });
+
+  it("Schwab re-auth notice: warns before the refresh token dies, once per day, without affecting the run", async () => {
+    const paths = { ...mkPaths(), authWarn: join(mkdtempSync(join(tmpdir(), "aw-")), "auth-warn.json") };
+    const notified: string[] = [];
+    const nowMs = Date.parse(`${TODAY}T13:50:00.000Z`); // Fri 09:50 ET; next run Mon 09:45
+    const obtained = nowMs + 30 * 3_600_000 - 7 * 86_400_000; // expires Sat — before Monday's run
+    const d = mkDeps({ paths, nowMs, refreshObtainedAt: () => obtained, notify: (m) => notified.push(m) });
+    const r = await runCron(d);
+    expect(r.status).toBe("noop"); // the run itself proceeds normally
+    expect(notified.filter((m) => /refresh token expires .*BEFORE the next run/.test(m))).toHaveLength(1);
+    await runCron({ ...d, runId: "r-cron-2" });
+    expect(notified.filter((m) => /refresh token/.test(m))).toHaveLength(1); // deduplicated for the day
+  });
+
+  it("fire window follows each daily slot (cronTimesET)", async () => {
+    const cfg = resolveTradeConfig({ cronTimesET: ["09:45", "10:40"] });
+    const at = (hhmm: string) => Date.parse(`${TODAY}T${hhmm}:00-04:00`);
+    expect((await runCron(mkDeps({ paths: mkPaths(), cfg, nowMs: at("10:10") }))).status).toBe("late");     // 09:45 + 25m
+    expect((await runCron(mkDeps({ paths: mkPaths(), cfg, nowMs: at("10:45") }))).status).not.toBe("late"); // inside the 10:40 slot
+    expect((await runCron(mkDeps({ paths: mkPaths(), cfg, nowMs: at("11:05") }))).status).toBe("late");
+  });
+
+  it("kill switch still wins over the fire window", async () => {
+    expect(await runCron(mkDeps({ paths: mkPaths(), nowMs: Date.parse(`${TODAY}T23:00:00.000Z`), disabled: true }))).toEqual({ status: "disabled" });
   });
 
   it("kill switch: disabled short-circuits before even checking the clock", async () => {
@@ -203,6 +254,102 @@ describe("runCron", () => {
     expect(notified.some((m) => /broker-truth|discrepanc/i.test(m))).toBe(true);
     expect(readdirSync(paths.runs)).toHaveLength(1); // record written before the check
     expect(existsSync(paths.lock)).toBe(false);       // released
+  });
+
+  it("an order submit with an unknown outcome halts (submit-unknown), sends nothing more, and notifies", async () => {
+    const paths = mkPaths();
+    const adapter = mkBroker();
+    adapter.loseNextSubmitResponse("not-placed");
+    const notified: string[] = [];
+    const r = await runCron(mkDeps({ paths, adapter, notify: (m) => notified.push(m), resolveDelaysMs: [0],
+      loadInputs: async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] }) }));
+    expect(r).toEqual({ status: "halted", reason: "submit-unknown" });
+    expect(adapter.submitCount).toBe(1);
+    expect(readHaltState(paths.haltState)).toEqual({ consecutive: 1 });
+    expect(notified.some((m) => /UNKNOWN outcome.*record-missing/.test(m))).toBe(true);
+    const [rec] = readdirSync(paths.runs);
+    expect(readFileSync(join(paths.runs, rec), "utf8")).toMatch(/"status": "unknown"/);
+  });
+
+  it("an unknown submit that did execute is caught by the next run's reconcile until it is recorded", async () => {
+    const paths = mkPaths();
+    const adapter = mkBroker();
+    adapter.loseNextSubmitResponse("placed");
+    adapter.findSubmitted = async () => null; // e.g. the listing hadn't caught up within the lookup window
+    const inputs = async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: readFills(paths.fills) });
+    expect(await runCron(mkDeps({ paths, adapter, resolveDelaysMs: [0], loadInputs: inputs }))).toEqual({ status: "halted", reason: "submit-unknown" });
+    expect(await runCron(mkDeps({ paths, adapter, runId: "r-cron-2", loadInputs: inputs }))).toEqual({ status: "halted", reason: "reconcile" });
+  });
+
+  describe("turnover clip for ENTER-only plans (turnoverClipEnterOnly)", () => {
+    const names = ["AAA", "BBB", "CCC"];
+    const reports = names.map((ticker) => fixtureReport({ ticker, label: "BUY", conviction: 70, scenarios: [[150, 0.3], [120, 0.5], [80, 0.2]] }));
+    const flat = () => new FakeBroker({ calendar: CAL, closes: Object.fromEntries(names.map((n) => [n, closes(100)])), equity: 100_000, cash: 100_000, isOpen: true, today: TODAY });
+    const deps = (paths: CronDeps["paths"], adapter: FakeBroker, clip: boolean, notified: string[]) => mkDeps({
+      paths, adapter, notify: (m) => notified.push(m), cfg: resolveTradeConfig({ turnoverClipEnterOnly: clip, maxRunTurnoverFrac: 0.08 }), // tier-3 (close-anchored) buys are half-size: 3 × ~5% ≈ 15% planned
+      loadInputs: async () => ({ reports, sics: {}, marketCapUsd: {}, fills: [] }),
+    });
+
+    it("off (default): a from-cash build over the turnover cap halts exactly as before", async () => {
+      const paths = mkPaths(); const notified: string[] = [];
+      expect(await runCron(deps(paths, flat(), false, notified))).toEqual({ status: "halted", reason: "turnover" });
+    });
+    it("on: sends whole orders up to the cap, defers the rest, does not bump the halt counter, and says so", async () => {
+      const paths = mkPaths(); const notified: string[] = []; const adapter = flat();
+      const r = await runCron(deps(paths, adapter, true, notified));
+      expect(r.status).toBe("executed");
+      const sent = await adapter.getOrders("all");
+      expect(sent.length).toBeGreaterThan(0);
+      expect(sent.length).toBeLessThan(names.length);
+      expect(sent.reduce((a, o) => a + (o.filledQty * (o.filledAvgPrice ?? 0)), 0)).toBeLessThanOrEqual(0.08 * 100_000);
+      expect(readHaltState(paths.haltState)).toEqual({ consecutive: 0 });
+      expect(notified.some((m) => /clipped: sending \d+, deferring \d+/.test(m))).toBe(true);
+      const [rec] = readdirSync(paths.runs);
+      const record = JSON.parse(readFileSync(join(paths.runs, rec), "utf8"));
+      expect(record.plan.skipped.filter((x: { code: string }) => x.code === "TURNOVER_CLIP")).toHaveLength(names.length - sent.length);
+      expect(record.orders).toHaveLength(sent.length);
+    });
+  });
+
+  describe("daily turnover cap across runs (maxDayTurnoverFrac)", () => {
+    const seedEarlierRun = (paths: CronDeps["paths"], usd: number, day = TODAY) => {
+      mkdirSync(paths.runs, { recursive: true });
+      writeFileSync(join(paths.runs, `${day}-earlier.json`), JSON.stringify({ today: day, orders: [{ filledQty: usd / 100, filledAvgPrice: 100 }] }));
+    };
+    const withNvt = { loadInputs: async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] as Fill[] }) };
+    it("halts a later run that would push the day over the cap (reason day-turnover)", async () => {
+      const paths = mkPaths();
+      seedEarlierRun(paths, 2_200); // NAV $10k, daily cap 25% = $2,500 → $300 left, the NVT entry needs more
+      const notified: string[] = [];
+      const r = await runCron(mkDeps({ paths, notify: (m) => notified.push(m), ...withNvt }));
+      expect(r).toEqual({ status: "halted", reason: "day-turnover" });
+      expect(notified.some((m) => /daily cap 25\.0% of NAV \(22\.0% already traded today\)/.test(m))).toBe(true);
+    });
+    it("ignores other days' runs", async () => {
+      const paths = mkPaths();
+      seedEarlierRun(paths, 2_200, "2026-09-24");
+      expect((await runCron(mkDeps({ paths, ...withNvt }))).status).toBe("executed");
+    });
+  });
+
+  it("a broker-truth CRITICAL is sticky: every later run halts at reconcile until the fill is recorded", async () => {
+    const paths = mkPaths();
+    const adapter = mkBroker();
+    const orig = adapter.getOrders.bind(adapter);
+    // The order the run submits comes back canceled (no fill recorded), but the broker later reports it filled.
+    adapter.getOrders = (async (status: "open" | "closed" | "all") =>
+      (await orig(status)).map((o) => (o.status === "canceled" ? { ...o, status: "filled" as const, filledQty: o.qty ?? 1, filledAvgPrice: 100, filledAt: `${TODAY}T13:55:00Z` } : o))) as typeof adapter.getOrders;
+    const submit = adapter.submitOrder.bind(adapter);
+    adapter.submitOrder = async (req) => ({ ...(await submit(req)), status: "canceled", filledQty: 0, filledAvgPrice: null, filledAt: null });
+    const inputs = { reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] as Fill[] };
+    const run = (runId: string) => runCron(mkDeps({ paths, adapter, runId, loadInputs: async () => ({ ...inputs, fills: readFills(paths.fills) }) }));
+
+    expect(await run("r1")).toEqual({ status: "halted", reason: "broker-mismatch" });
+    // Before: the next run re-planned and could trade against the under-set lock. Now it halts, and keeps halting.
+    expect(await run("r2")).toEqual({ status: "halted", reason: "reconcile" });
+    expect(await run("r3")).toEqual({ status: "halted", reason: "reconcile" });
+    expect(await run("r4")).toEqual({ status: "halted", reason: "consecutive" }); // counter reached the limit (3)
+    expect(readFileSync(paths.log, "utf8")).toMatch(/r2 halted reason=reconcile/);
   });
 
   it("Schwab re-auth needed: a SchwabAuthError from the first authed call halts (auth) and alerts, no lock left", async () => {

@@ -6,7 +6,7 @@ import type { Report } from "../report.schema";
 import type { BrokerAdapter } from "../broker/adapter";
 import { AlpacaPaperBroker } from "../broker/alpaca";
 import { SchwabBroker } from "../broker/schwab";
-import { SchwabTokenStore } from "../broker/schwab-auth";
+import { SchwabTokenStore, currentRefreshObtainedAt, refreshSeedFromEnv } from "../broker/schwab-auth";
 import { SCHWAB_HOST } from "../broker/guards";
 import { readFills } from "./fills";
 import { RunRecord } from "./run-record";
@@ -19,6 +19,13 @@ export const CRON_LOCK_PATH = join(TRADE_DIR, "cron.lock");
 export const CRON_LOG_PATH = join(TRADE_DIR, "cron.log");
 export const HALT_STATE_PATH = join(TRADE_DIR, "halt-state.json");
 export const SCHWAB_TOKEN_PATH = join(TRADE_DIR, "schwab-token.json");
+export const AUTH_WARN_PATH = join(TRADE_DIR, "auth-warn.json");
+
+/** Schwab only: the issue time of the refresh token in use, for the proactive re-auth notice. undefined otherwise. */
+export function schwabRefreshObtainedAt(env: NodeJS.ProcessEnv = process.env): (() => number | undefined) | undefined {
+  if ((env.BROKER ?? "alpaca-paper") !== "schwab") return undefined;
+  return () => currentRefreshObtainedAt(new SchwabTokenStore(SCHWAB_TOKEN_PATH, refreshSeedFromEnv(env)));
+}
 
 export function makeAlpaca(env: NodeJS.ProcessEnv = process.env): BrokerAdapter {
   const keyId = env.APCA_API_KEY_ID, secretKey = env.APCA_API_SECRET_KEY;
@@ -33,10 +40,13 @@ export function makeBroker(env: NodeJS.ProcessEnv = process.env): BrokerAdapter 
   if (broker === "schwab") {
     const clientId = env.SCHWAB_CLIENT_ID, clientSecret = env.SCHWAB_CLIENT_SECRET;
     if (!clientId || !clientSecret) throw new Error("SCHWAB_CLIENT_ID / SCHWAB_CLIENT_SECRET are not set. Add them to .env.local (see .env.example).");
-    const tokenStore = new SchwabTokenStore(SCHWAB_TOKEN_PATH);
-    const tokens = tokenStore.read();
-    if (!tokens?.accountHash) throw new Error("Schwab account not linked. Run: npm run trade:auth");
-    return new SchwabBroker({ tokenStore, clientId, clientSecret, accountHash: tokens.accountHash });
+    // SCHWAB_REFRESH_TOKEN / SCHWAB_ACCOUNT_HASH let a host with no interactive login (e.g. a cloud
+    // container) run without the token file; when both exist, env is tried first and the file is the fallback.
+    const tokenStore = new SchwabTokenStore(SCHWAB_TOKEN_PATH, refreshSeedFromEnv(env));
+    const accountHash = env.SCHWAB_ACCOUNT_HASH?.trim() || tokenStore.read()?.accountHash;
+    if (!accountHash) throw new Error("Schwab account not linked. Run: npm run trade:auth (or set SCHWAB_ACCOUNT_HASH)");
+    if (!tokenStore.envSeed && !tokenStore.read()) throw new Error("No Schwab tokens. Run: npm run trade:auth (or set SCHWAB_REFRESH_TOKEN)");
+    return new SchwabBroker({ tokenStore, clientId, clientSecret, accountHash });
   }
   throw new Error(`BROKER=${broker} is not a known broker (expected "alpaca-paper" or "schwab")`);
 }
