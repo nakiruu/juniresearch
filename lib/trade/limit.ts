@@ -27,9 +27,14 @@ export function quoteMetrics(q: { bid: number; ask: number } | null): { valid: b
   return { valid: true, mid, relSpread: Math.min((q.ask - q.bid) / mid, 0.10) };
 }
 
-export function tolerance(bucket: LiquidityBucket, relSpread: number, side: "buy" | "sell", cfg: TradeConfig): number {
+/** The τ the spread asks for, before the per-bucket clamp — recorded so τ_max can be judged from data. */
+export function toleranceWanted(bucket: LiquidityBucket, relSpread: number, side: "buy" | "sell", cfg: TradeConfig): number {
   const base = side === "buy" ? cfg.limitTol[bucket] : cfg.exitTolMult * cfg.limitTol[bucket];
-  return clamp(Math.max(base, cfg.limitTolBeta * relSpread), cfg.limitTolMin, cfg.limitTolMax[bucket]);
+  return Math.max(base, cfg.limitTolBeta * relSpread);
+}
+
+export function tolerance(bucket: LiquidityBucket, relSpread: number, side: "buy" | "sell", cfg: TradeConfig): number {
+  return clamp(toleranceWanted(bucket, relSpread, side, cfg), cfg.limitTolMin, cfg.limitTolMax[bucket]);
 }
 
 export function limitPrice(pRef: number, tau: number, tauMax: number, side: "buy" | "sell"): { L: number; capPx: number; capBound: boolean } {
@@ -54,6 +59,14 @@ export interface LimitInput { side: "buy" | "sell"; marketCapUsd: number | null;
 export interface LimitResult {
   action: "submit" | "halt"; reason: string; side: "buy" | "sell"; bucket: LiquidityBucket;
   pRef?: number; tier?: 1 | 2 | 3; tau?: number; L?: number; capPx?: number; capBound?: boolean; sizeMult?: number;
+  /** Diagnostics (spec #9) — what the market looked like when the limit was set. */
+  diag?: LimitDiagnostics;
+}
+export interface LimitDiagnostics {
+  relSpread: number | null;   // (ask − bid) / mid, clamped ≤ 10%; null without a valid quote
+  tauWanted: number;          // the τ the spread asked for, before the τ_max clamp
+  bid: number | null; ask: number | null;
+  quoteAgeMs: number | null; tradeAgeMs: number | null;
 }
 
 const lastFresh = (m: Mkt, nowMs: number, staleMs: number) =>
@@ -82,8 +95,14 @@ export function computeLimit(inp: LimitInput): LimitResult {
   const gref = gapReference(m, nowMs, staleMs);
   if (m.close > 0 && Math.abs(gref - m.close) / m.close > cfg.gapHalt[bucket])
     return { action: "halt", reason: "gap", side, bucket, pRef: a.pRef, tier: a.tier };
-  const tau = tolerance(bucket, quoteMetrics(m.quote).relSpread, side, cfg);
+  const qm = quoteMetrics(m.quote);
+  const tau = tolerance(bucket, qm.relSpread, side, cfg);
   const { L, capPx, capBound } = limitPrice(a.pRef, tau, cfg.limitTolMax[bucket], side);
   const sizeMult = a.tier === 3 && side === "buy" ? cfg.closeAnchorSizeMult : 1;
-  return { action: "submit", reason: a.tier === 3 ? "close_anchored" : "ok", side, bucket, pRef: a.pRef, tier: a.tier, tau, L, capPx, capBound, sizeMult };
+  const diag: LimitDiagnostics = {
+    relSpread: qm.valid ? qm.relSpread : null, tauWanted: toleranceWanted(bucket, qm.relSpread, side, cfg),
+    bid: m.quote?.bid ?? null, ask: m.quote?.ask ?? null,
+    quoteAgeMs: m.quote ? nowMs - m.quote.tsMs : null, tradeAgeMs: m.lastTrade ? nowMs - m.lastTrade.tsMs : null,
+  };
+  return { action: "submit", reason: a.tier === 3 ? "close_anchored" : "ok", side, bucket, pRef: a.pRef, tier: a.tier, tau, L, capPx, capBound, sizeMult, diag };
 }

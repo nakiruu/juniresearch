@@ -14,9 +14,10 @@ import { makeNotifier } from "./notify";
 import type { BrokerAdapter } from "../broker/adapter";
 import {
   makeBroker, brokerBaseUrl, loadReportsAndMeta, readFills,
-  CRON_LOCK_PATH, CRON_LOG_PATH, FILLS_PATH, HALT_STATE_PATH, RUNS_DIR,
+  CRON_LOCK_PATH, CRON_LOG_PATH, FILLS_PATH, HALT_STATE_PATH, RUNS_DIR, AUTH_WARN_PATH, schwabRefreshObtainedAt,
 } from "./runtime";
 import { startScheduler, getSchedulerStatus, type SchedulerDeps } from "./scheduler";
+import { todayET } from "./clock";
 export { startScheduler, getSchedulerStatus };
 
 /**
@@ -30,7 +31,7 @@ function unreachableAdapter(): BrokerAdapter {
     kind: "fake",
     getClock: fail, getCalendar: fail, getAccount: fail, getPositions: fail, getOrders: fail,
     getLastClose: fail, getLatestTrade: fail, getLatestQuote: fail, isFractionable: fail,
-    submitOrder: fail, cancelOrder: fail,
+    submitOrder: fail, findSubmitted: fail, cancelOrder: fail,
   } as unknown as BrokerAdapter;
 }
 
@@ -52,10 +53,13 @@ export function buildSchedulerDeps(env: NodeJS.ProcessEnv = process.env): Schedu
   const runOnce = async (): Promise<CronResult> => {
     const adapter = disabled ? unreachableAdapter() : makeBroker(env);
     const configuredBaseUrl = disabled ? "" : brokerBaseUrl(adapter);
-    const today = new Date().toISOString().slice(0, 10);
+    const nowMs = Date.now();
+    const today = todayET(nowMs); // one clock read for both, and the ET trading date (not UTC)
     const result = await runCron({
-      adapter, cfg, today, nowMs: Date.now(), runId: newRunId(today), configuredBaseUrl,
-      paths: { lock: CRON_LOCK_PATH, haltState: HALT_STATE_PATH, log: CRON_LOG_PATH, fills: FILLS_PATH, runs: RUNS_DIR },
+      adapter, cfg, today, nowMs, runId: newRunId(today), configuredBaseUrl,
+      paths: { lock: CRON_LOCK_PATH, haltState: HALT_STATE_PATH, log: CRON_LOG_PATH, fills: FILLS_PATH, runs: RUNS_DIR, authWarn: AUTH_WARN_PATH },
+      refreshObtainedAt: disabled ? undefined : schwabRefreshObtainedAt(env),
+      clock: Date.now,
       loadInputs: async () => { const m = await loadReportsAndMeta(); return { ...m, fills: readFills(FILLS_PATH) }; },
       notify: notifier.message, notifySummary: notifier.runSummary, disabled, env,
     });

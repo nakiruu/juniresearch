@@ -10,7 +10,13 @@ export const RunRecord = z.object({
   runId: z.string().min(1), today: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   markMode: z.enum(["settled", "live"]), broker: z.string().min(1),
   marks: z.record(z.string(), z.number()),
-  signals: z.array(z.object({ ticker: z.string(), label: z.string(), gatedLabel: z.string().nullable(), mu: z.number(), R: z.number().nullable(), kappa: z.number(), quality: z.number(), ageDays: z.number() })),
+  signals: z.array(z.object({
+    ticker: z.string(), label: z.string(), gatedLabel: z.string().nullable(), mu: z.number(), R: z.number().nullable(), kappa: z.number(), quality: z.number(), ageDays: z.number(),
+    // Scenario-risk fields (optional: older records lack them) so a future backtest can replay σ-based
+    // sizers (kellyTilt invSigma, a σ blend) point-in-time instead of only the score sizer (plan #6).
+    price: z.number().optional(), sigma: z.number().optional(), sigmaDown: z.number().optional(), D: z.number().optional(), staleness: z.number().optional(),
+    scenarios: z.array(z.object({ name: z.string(), impliedPrice: z.number(), probability: z.number() })).optional(),
+  })),
   classifications: z.array(z.object({ ticker: z.string(), classification: z.string(), reasons: z.array(z.string()), unlockOn: z.string().optional() })),
   locks: z.object({ buyLockUntil: z.record(z.string(), z.string()), sellLockUntil: z.record(z.string(), z.string()) }),
   plan: loose, orders: z.array(loose), fills: z.array(loose), notes: z.array(z.string()),

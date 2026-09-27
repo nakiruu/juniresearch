@@ -6,14 +6,32 @@
  */
 import { createInterface } from "node:readline/promises";
 import { z } from "zod";
-import { buildAuthorizeUrl, exchangeCode, parseAuthCode, SchwabTokenStore } from "../lib/broker/schwab-auth";
+import { buildAuthorizeUrl, exchangeCode, parseAuthCode, SchwabTokenStore, refreshTokenHealth, currentRefreshObtainedAt, refreshSeedFromEnv } from "../lib/broker/schwab-auth";
 import { requireSchwab } from "./_env";
 import { SCHWAB_TOKEN_PATH } from "./_trade-common";
+import { resolveTradeConfig } from "../lib/trade/config";
+import { nextRunAtET } from "../lib/trade/clock";
+import { authHealthMessage } from "../lib/trade/auth-health";
+
+// `trade:auth -- --status`: when does the current refresh token expire? Reads only; no login.
+if (process.argv.slice(2).includes("--status")) {
+  const cfg = resolveTradeConfig();
+  const now = Date.now();
+  const next = nextRunAtET(now, cfg.cronTimeET);
+  const h = refreshTokenHealth(currentRefreshObtainedAt(new SchwabTokenStore(SCHWAB_TOKEN_PATH, refreshSeedFromEnv(process.env))), now, next,
+    { lifetimeMs: cfg.schwabRefreshLifetimeDays * 86_400_000, warnHours: cfg.schwabAuthWarnHours });
+  console.log(h.level === "ok"
+    ? `Schwab refresh token OK — expires ${new Date(h.expiresAt!).toISOString()} (${Math.floor(h.remainingMs! / 3_600_000)}h left).`
+    : `[${h.level.toUpperCase()}] ${authHealthMessage(h, next)}`);
+  process.exit(h.level === "ok" ? 0 : 1);
+}
 
 const { clientId, clientSecret, redirectUri } = requireSchwab();
 console.log("\n1) Open this URL, log in to Schwab, and approve access:\n");
 console.log("   " + buildAuthorizeUrl(clientId, redirectUri) + "\n");
-console.log(`2) You'll be redirected to ${redirectUri}?code=...  — copy the FULL address bar URL.\n`);
+console.log(redirectUri.replace(/\/$/, "").endsWith("/schwab/callback")
+  ? `2) You'll land on ${redirectUri} — click "Copy URL".\n`
+  : `2) You'll be redirected to ${redirectUri}?code=...  — copy the FULL address bar URL.\n`);
 const rl = createInterface({ input: process.stdin, output: process.stdout });
 const redirect = (await rl.question("3) Paste the redirect URL here: ")).trim();
 rl.close();
@@ -29,3 +47,8 @@ if (accounts.length > 1) console.log(`\nMultiple accounts found; using the first
 new SchwabTokenStore(SCHWAB_TOKEN_PATH).write({ ...tokens, accountHash: chosen.hashValue });
 console.log(`\nLinked Schwab account ${chosen.accountNumber}. Tokens stored at ${SCHWAB_TOKEN_PATH}.`);
 console.log("Set BROKER=schwab in .env.local to trade LIVE. Re-run `npm run trade:auth` when the weekly refresh token expires.");
+console.log(`\nFor a host without this token file (e.g. a cloud environment), set these as secret env vars:
+  SCHWAB_ACCOUNT_HASH=${chosen.hashValue}
+  SCHWAB_REFRESH_OBTAINED_AT=${new Date(tokens.refreshObtainedAt ?? Date.now()).toISOString()}
+  SCHWAB_REFRESH_TOKEN=<the "refreshToken" value in ${SCHWAB_TOKEN_PATH} — not printed here>
+If both exist, the env token is tried first and the token file is the fallback.`);

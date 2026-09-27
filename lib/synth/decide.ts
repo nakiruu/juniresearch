@@ -26,9 +26,23 @@ export interface DecisionPolicy {
   requireCorroboration: boolean; // an extreme (STRONG BUY/SELL) needs the layers to agree
   applyMoatFloor: boolean; // the moat's minimum bear depth deepens D before deriveLabel (3.md Lever 1)
   applyUncertaintyBands: boolean; // the uncertainty tier widens the bullish minimum-upside band (11.md §3)
+  /**
+   * The author's own scenario dispersion widens the bullish minimum-upside band too: multiplier
+   * clamp(σ / dispersionRef, 1, dispersionMaxMult) (spec #2). Opt-in; combined with the tier multiplier
+   * by max, so it can only ever raise the bar.
+   */
+  applyDispersionBands: boolean;
+  dispersionRef?: number;     // σ at which widening starts (default 0.25 ≈ the reports' median σ)
+  dispersionMaxMult?: number; // cap on the multiplier (default 2.5, matching the veryHigh tier)
   maxNotches: 1 | 2; // most notches disagreement may pull toward HOLD
 }
-export const SAFE_DEFAULTS: DecisionPolicy = { enforceGate: false, requireCorroboration: false, applyMoatFloor: false, applyUncertaintyBands: false, maxNotches: 1 };
+export const SAFE_DEFAULTS: DecisionPolicy = { enforceGate: false, requireCorroboration: false, applyMoatFloor: false, applyUncertaintyBands: false, applyDispersionBands: false, maxNotches: 1 };
+export const DISPERSION_BAND_DEFAULTS = { ref: 0.25, maxMult: 2.5 } as const;
+
+/** The bullish-band multiplier from scenario dispersion σ: 1 up to `ref`, then σ/ref, capped at `maxMult`. */
+export function dispersionMultiplier(sigma: number, ref: number = DISPERSION_BAND_DEFAULTS.ref, maxMult: number = DISPERSION_BAND_DEFAULTS.maxMult): number {
+  return Number.isFinite(sigma) && ref > 0 ? Math.min(maxMult, Math.max(1, sigma / ref)) : 1;
+}
 
 // Narrow structural shapes — the full GateResult / MoatResult / IntrinsicResult / CompositeResult satisfy them.
 export interface DecisionInputs {
@@ -38,7 +52,7 @@ export interface DecisionInputs {
   intrinsic: { marginOfSafety: number } | null;
   composite?: { percentile: number | null; confidence: "high" | "medium" | "low" } | null;
   market?: { targetDispersion: number | null; divergence?: number | null } | null; // dispersion; |E_mech − E_Street|
-  uncertainty?: { tier: UncertaintyTier } | null;
+  uncertainty?: { tier: UncertaintyTier; scenarioDispersion?: number | null } | null;
   published?: RatingLabel; // the author's label, if a report is being scored
 }
 
@@ -66,14 +80,23 @@ export function decide(inputs: DecisionInputs, cfg: DeskRating, policy: Decision
   // thresholds (`eff`) are then used for every label derivation below so the whole decision is
   // consistent. One-way: a higher bar can only lower the label.
   const uTier = inputs.uncertainty?.tier ?? null;
-  const mult = policy.applyUncertaintyBands && uTier ? uncertaintyMultiplier(uTier) : 1;
+  const tierMult = policy.applyUncertaintyBands && uTier ? uncertaintyMultiplier(uTier) : 1;
+  const sigma = inputs.uncertainty?.scenarioDispersion ?? null;
+  const dispMult = policy.applyDispersionBands && sigma != null
+    ? dispersionMultiplier(sigma, policy.dispersionRef ?? DISPERSION_BAND_DEFAULTS.ref, policy.dispersionMaxMult ?? DISPERSION_BAND_DEFAULTS.maxMult)
+    : 1;
+  const mult = Math.max(tierMult, dispMult);
   const eff: DeskRating =
     mult === 1 ? cfg : { ...cfg, buy: { ...cfg.buy, minUpside: cfg.buy.minUpside * mult }, strongBuy: { ...cfg.strongBuy, minUpside: cfg.strongBuy.minUpside * mult } };
 
   const proposed = deriveLabel(c, eff);
   let label = proposed;
   const reasons: string[] = [`E/R proposed ${proposed}`];
-  if (mult !== 1 && proposed !== deriveLabel(c, cfg)) reasons.push(`uncertainty ${uTier} widened the band → ${proposed}`);
+  if (mult !== 1 && proposed !== deriveLabel(c, cfg)) {
+    reasons.push(dispMult > tierMult
+      ? `scenario dispersion σ ${(sigma! * 100).toFixed(0)}% widened the band ×${dispMult.toFixed(2)} → ${proposed}`
+      : `uncertainty ${uTier} widened the band → ${proposed}`);
+  }
   const advisories: string[] = [];
 
   // --- Gate (L0): a fundamental ceiling. Hard cap only under policy AND only at HIGH gate

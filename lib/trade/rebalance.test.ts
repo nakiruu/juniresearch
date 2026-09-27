@@ -94,3 +94,35 @@ describe("emitTrades", () => {
     expect(w(flat, "A")).toBeCloseTo(w(flat, "B"), 9);
   });
 });
+
+describe("residual top-up of recent buys (topUpRecentBuys, spec #8)", () => {
+  const on = resolveTradeConfig({ wMax: 1, sectorMax: 1, topUpRecentBuys: true });
+  const recentBuy: Locks = { buyLockUntil: {}, sellLockUntil: { A: "2026-09-29" } }; // bought inside the lock window
+  // One name → target 0.99; held 0.98 is a 1pp gap: inside tradeBand (2.5pp), outside residualBand (0.5pp).
+  it("tops up a sell-locked (recently bought) name through the smaller band", () => {
+    const p = run([sig()], { A: 0.98 }, recentBuy, on);
+    expect(p.trades).toEqual([expect.objectContaining({ ticker: "A", side: "buy", reason: "ADD", note: "residual" })]);
+    expect(p.trades[0].deltaWeight).toBeCloseTo(0.01, 9);
+  });
+  it("leaves an unlocked name to the normal band", () => {
+    expect(run([sig()], { A: 0.98 }, NONE, on).skipped).toContainEqual(expect.objectContaining({ ticker: "A", code: "BELOW_BAND" }));
+  });
+  it("never applies to the sell side", () => {
+    const p = run([sig()], { A: 1.0 }, recentBuy, on);
+    expect(p.trades).toEqual([]);
+  });
+  it("ignores a gap inside the residual band", () => {
+    expect(run([sig()], { A: 0.987 }, recentBuy, on).trades).toEqual([]);
+  });
+  it("never buys a buy-locked name", () => {
+    const both: Locks = { buyLockUntil: { A: "2026-09-29" }, sellLockUntil: { A: "2026-09-29" } };
+    expect(run([sig()], { A: 0.98 }, both, on).trades).toEqual([]);
+  });
+  it("is off by default — exactly today's behaviour", () => {
+    expect(run([sig()], { A: 0.98 }, recentBuy).skipped).toContainEqual(expect.objectContaining({ ticker: "A", code: "BELOW_BAND" }));
+  });
+  it("resolveTradeConfig keeps residualBand within tradeBand", () => {
+    expect(() => resolveTradeConfig({ residualBand: 0.03 })).toThrow(/residualBand/);
+    expect(() => resolveTradeConfig({ residualBand: 0 })).toThrow(/residualBand/);
+  });
+});

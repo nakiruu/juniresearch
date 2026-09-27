@@ -18,6 +18,30 @@ const mk = (routes: Record<string, unknown>) => {
 };
 
 describe("AlpacaPaperBroker", () => {
+  it("lists orders newest-first and forwards the after bound", async () => {
+    const { b, calls } = mk({ "/v2/orders": [] });
+    await b.getOrders("all", "2026-09-28T13:44:00.000Z");
+    const q = new URL(calls[0].url).searchParams;
+    expect(q.get("direction")).toBe("desc");
+    expect(q.get("after")).toBe("2026-09-28T13:44:00.000Z");
+  });
+  it("an order submit that dies on the network or gets a 5xx is SubmitOutcomeUnknown and is POSTed once", async () => {
+    for (const post of [async () => { throw new TypeError("fetch failed"); }, async () => new Response("x", { status: 503 })]) {
+      let posts = 0;
+      const impl = (async (_url: string, init: RequestInit = {}) => { if (init.method === "POST") { posts++; return post(); } return new Response("{}", { status: 404 }); }) as unknown as typeof fetch;
+      const b = new AlpacaPaperBroker({ keyId: "k", secretKey: "s", baseUrl: "https://paper-api.alpaca.markets", fetchImpl: impl });
+      await expect(b.submitOrder({ symbol: "NVT", side: "buy", qty: 1, clientOrderId: "c9", estNotionalUsd: 100, limitPrice: 100, timeInForce: "ioc" })).rejects.toMatchObject({ name: "SubmitOutcomeUnknownError", clientOrderId: "c9" });
+      expect(posts).toBe(1);
+    }
+  });
+  it("findSubmitted looks the order up by client_order_id (404 → null)", async () => {
+    const order = { id: "o1", client_order_id: "c9", symbol: "NVT", side: "buy", status: "filled", qty: "1", notional: null, filled_qty: "1", filled_avg_price: "100", filled_at: "2026-09-25T13:36:00Z", submitted_at: "2026-09-25T13:35:59Z" };
+    const { b, calls } = mk({ "orders:by_client_order_id": order });
+    const req = { symbol: "NVT", side: "buy" as const, qty: 1, clientOrderId: "c9", estNotionalUsd: 100 };
+    expect(await b.findSubmitted(req)).toMatchObject({ id: "o1", clientOrderId: "c9", filledQty: 1 });
+    expect(new URL(calls[0].url).searchParams.get("client_order_id")).toBe("c9");
+    expect(await mk({}).b.findSubmitted(req)).toBeNull();
+  });
   it("refuses a non-paper base URL at construction", () => {
     expect(() => new AlpacaPaperBroker({ keyId: "k", secretKey: "s", baseUrl: "https://api.alpaca.markets" })).toThrow(/paper/);
   });

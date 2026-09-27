@@ -4,8 +4,8 @@
  * fs-state style matches fills.ts/ledger.ts: reads try/catch to a safe default for an absent
  * file, writes mkdir the parent first (state dirs are created on demand, same as ledger.ts).
  */
-import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { dirname } from "node:path";
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { dirname, join } from "node:path";
 import type { TradeConfig } from "./config";
 
 /**
@@ -18,6 +18,44 @@ export function turnoverBreaker(orders: { qty: number; limitPrice: number }[], n
   const notional = orders.reduce((a, o) => a + Math.abs(o.qty * o.limitPrice), 0);
   const frac = nav > 0 ? notional / nav : 0;
   return { tripped: frac > cfg.maxRunTurnoverFrac, frac };
+}
+
+/**
+ * Clip-instead-of-halt for a plan that only OPENS positions (every order an ENTER buy): keep whole
+ * orders, largest target first, while the run's notional stays within maxRunTurnoverFrac × NAV; the
+ * rest wait for later runs. Any sell, ADD or TRIM makes the plan unclippable (null → halt as before),
+ * so a runaway rebalance or a wrongly-flat book with trims still trips the breaker. It never raises
+ * the cap: every run stays within it, whatever reconcile believed. Orders are never resized.
+ */
+export function clipToTurnover<T extends { qty: number; limitPrice: number; reason: string; side: "buy" | "sell"; deltaUsd: number }>(
+  orders: T[], nav: number, cfg: TradeConfig, capUsd: number = cfg.maxRunTurnoverFrac * nav,
+): { kept: T[]; clipped: T[] } | null {
+  if (!orders.length || orders.some((o) => o.reason !== "ENTER" || o.side !== "buy")) return null;
+  const cap = capUsd;
+  const kept: T[] = [], clipped: T[] = [];
+  let used = 0;
+  // deltaUsd of an ENTER is target weight × NAV, so this is "largest target first".
+  for (const o of [...orders].sort((a, b) => b.deltaUsd - a.deltaUsd)) {
+    const n = Math.abs(o.qty * o.limitPrice);
+    if (used + n <= cap + 1e-9) { kept.push(o); used += n; } else clipped.push(o);
+  }
+  return { kept, clipped };
+}
+
+/**
+ * Notional already traded today across earlier runs (Σ filledQty × filledAvgPrice over today's run
+ * records) — the daily turnover cap's running total. Run records without fill fields count as 0;
+ * an unreadable record throws (a cap that silently under-counts would fail open).
+ */
+export function dayTurnoverUsd(runsDir: string, today: string): number {
+  if (!existsSync(runsDir)) return 0;
+  let total = 0;
+  for (const f of readdirSync(runsDir).filter((x) => x.endsWith(".json"))) {
+    const rec = JSON.parse(readFileSync(join(runsDir, f), "utf8")) as { today?: string; orders?: { filledQty?: number; filledAvgPrice?: number | null }[] };
+    if (rec.today !== today) continue;
+    for (const o of rec.orders ?? []) total += Math.abs((o.filledQty ?? 0) * (o.filledAvgPrice ?? 0));
+  }
+  return total;
 }
 
 export interface HaltState { consecutive: number }

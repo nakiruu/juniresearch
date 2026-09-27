@@ -5,7 +5,7 @@ import { deriveLabel, type Conviction } from "./conviction";
 import { evaluateGates } from "./gates";
 import { moatRead } from "./moat";
 import { intrinsicRead } from "./intrinsic";
-import { decide, SAFE_DEFAULTS } from "./decide";
+import { decide, dispersionMultiplier, SAFE_DEFAULTS } from "./decide";
 
 const desk = Desk.parse(JSON.parse(readFileSync("data/desk/desk.json", "utf8")));
 const cfg = desk.rating;
@@ -69,6 +69,46 @@ describe("uncertainty bands (11.md §3)", () => {
   });
   it("leaves the label unchanged at a Low tier even with the knob on", () => {
     expect(decide({ conviction: MARGINAL_BUY, gate: cleanGate, moat: null, intrinsic: null, uncertainty: { tier: "low" } }, cfg, { ...SAFE_DEFAULTS, applyUncertaintyBands: true }).label).toBe("BUY");
+  });
+});
+
+describe("scenario-dispersion bands (spec #2)", () => {
+  // E 0.12, R 0.60 → BUY at the base bar (0.10).
+  const MARGINAL_BUY: Conviction = { expectedUpside: 0.12, bearDownside: 0.2, rewardRisk: 0.6 };
+  const on = { ...SAFE_DEFAULTS, applyDispersionBands: true };
+  const d = (sigma: number, policy = on, tier: "low" | "high" = "low") =>
+    decide({ conviction: MARGINAL_BUY, gate: cleanGate, moat: null, intrinsic: null, uncertainty: { tier, scenarioDispersion: sigma } }, cfg, policy);
+
+  it("multiplier: 1 up to the reference σ, then σ/ref, capped", () => {
+    expect(dispersionMultiplier(0.1)).toBe(1);
+    expect(dispersionMultiplier(0.25)).toBe(1);
+    expect(dispersionMultiplier(0.35)).toBeCloseTo(1.4, 9);
+    expect(dispersionMultiplier(0.9)).toBe(2.5);
+    expect(dispersionMultiplier(NaN)).toBe(1);
+  });
+  it("is off under SAFE_DEFAULTS", () => {
+    expect(d(0.6, SAFE_DEFAULTS).label).toBe("BUY");
+  });
+  it("wide scenarios raise the BUY bar: σ 0.35 → ×1.4 → bar 0.14 > E 0.12 → HOLD, with the reason", () => {
+    const r = d(0.35);
+    expect(r.label).toBe("HOLD");
+    expect(r.reasons.some((x) => /scenario dispersion σ 35% widened the band ×1\.40/.test(x))).toBe(true);
+  });
+  it("tight scenarios change nothing", () => {
+    expect(d(0.2).label).toBe("BUY");
+  });
+  it("combines with the uncertainty tier by max, never compounding", () => {
+    const both = { ...on, applyUncertaintyBands: true };
+    expect(d(0.26, both, "high").reasons.some((x) => /uncertainty high/.test(x))).toBe(true); // ×1.8 tier beats ×1.04
+  });
+  it("never makes a label more bullish (grid over E, R and σ)", () => {
+    const order = ["STRONG SELL", "SELL", "HOLD", "BUY", "STRONG BUY"];
+    for (const e of [-0.3, -0.05, 0.05, 0.12, 0.2, 0.35, 0.6]) for (const rr of [0.2, 0.6, 1.2, 3]) for (const sigma of [0, 0.2, 0.4, 0.8, 1.5]) {
+      const conviction: Conviction = { expectedUpside: e, bearDownside: e > 0 ? e / rr : 0.2, rewardRisk: e > 0 ? rr : null };
+      const base = decide({ conviction, gate: cleanGate, moat: null, intrinsic: null }, cfg).label;
+      const wid = decide({ conviction, gate: cleanGate, moat: null, intrinsic: null, uncertainty: { tier: "low", scenarioDispersion: sigma } }, cfg, on).label;
+      expect(order.indexOf(wid)).toBeLessThanOrEqual(order.indexOf(base));
+    }
   });
 });
 

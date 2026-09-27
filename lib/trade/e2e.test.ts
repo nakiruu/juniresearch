@@ -27,7 +27,7 @@ describe("e2e: a whipsaw cannot happen inside the lock window; the deferred exit
     const b = new FakeBroker({ calendar: CAL, closes, equity: 10_000, cash: 10_000, isOpen: true, today: "2026-09-22" });
     const fillsPath = join(mkdtempSync(join(tmpdir(), "e2e-")), "fills.jsonl");
     const ctx = (today: string, locks: GuardContext["locks"], nav: number): GuardContext =>
-      ({ brokerKind: "fake", configuredBaseUrl: "memory://", locks, today, nav, cfg, env: {} as NodeJS.ProcessEnv, counters: { orders: 0, notionalUsd: 0 } });
+      ({ brokerKind: "fake", configuredBaseUrl: "memory://", locks, today, nav, cashUsd: nav, cfg, env: {} as NodeJS.ProcessEnv, counters: { orders: 0, notionalUsd: 0, buyNotionalUsd: 0, sellProceedsUsd: 0 } });
     const run = async (today: string) => {
       b.setToday(today);
       // A fresh live last trade at today's real price, so a same-day BUY/SELL anchors tier 1 (full

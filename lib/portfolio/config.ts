@@ -20,7 +20,9 @@ export interface PortfolioConfig {
   qPenaltyEroding: number;  // quality-tilt penalty for an eroding moat (e.g. 0.10)
   qLo: number;              // quality-tilt clamp low (e.g. 0.8)
   qHi: number;              // quality-tilt clamp high (e.g. 1.2)
-  stalenessHalfLifeDays: number; // soft decay half-life (e.g. 90)
+  touchHorizonYears: number;  // horizon for the display-only P(touch fair value) (1)
+  touchDrift: number;         // arithmetic drift assumed for it, annual (0 = none)
+  stalenessHalfLifeDays: number; // soft recency decay half-life in days: staleness = 0.5^(age/h) (e.g. 90)
   // Constraints (§7)
   wMax: number;             // hard per-name cap — THE knob (default 0.10)
   sectorMax: number;        // max weight per SIC-2-digit sector (e.g. 0.30)
@@ -35,7 +37,7 @@ export const DEFAULT_CONFIG: PortfolioConfig = {
   muExp: 1, convExp: 1, rExp: 1,
   alpha: 0.4, sigmaMin: 0.05,
   qGainComposite: 0.10, qGainMoat: 0.20, qPenaltyEroding: 0.10, qLo: 0.8, qHi: 1.2,
-  stalenessHalfLifeDays: 90,
+  stalenessHalfLifeDays: 90, touchHorizonYears: 1, touchDrift: 0,
   wMax: 0.10, sectorMax: 0.30, wMin: 0,
   cashFloor: 0.01, cashCeiling: 0.35, minNamesForCeiling: 4,
 };

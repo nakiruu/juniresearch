@@ -38,6 +38,35 @@ describe("resolveTradeConfig", () => {
   });
 });
 
+describe("daily turnover cap config", () => {
+  it("defaults to 25% and must sit between the per-run cap and 100%", () => {
+    expect(resolveTradeConfig().maxDayTurnoverFrac).toBe(0.25);
+    expect(() => resolveTradeConfig({ maxDayTurnoverFrac: 0.1 })).toThrow(/maxDayTurnoverFrac/);
+    expect(() => resolveTradeConfig({ maxDayTurnoverFrac: 1.5 })).toThrow(/maxDayTurnoverFrac/);
+  });
+});
+
+describe("daily slots config", () => {
+  it("defaults to one slot and keeps cronTimeET as the first slot", () => {
+    expect(resolveTradeConfig()).toMatchObject({ cronTimeET: "09:45", cronTimesET: ["09:45"] });
+    expect(resolveTradeConfig({ cronTimeET: "09:50" }).cronTimesET).toEqual(["09:50"]);
+    expect(resolveTradeConfig({ cronTimesET: ["09:45", "10:40"] }).cronTimeET).toBe("09:45");
+  });
+  it("rejects unsorted, duplicate, malformed, empty or too many slots", () => {
+    for (const cronTimesET of [["10:40", "09:45"], ["09:45", "09:45"], ["9:45"], [], ["09:40", "10:00", "11:00", "12:00", "13:00"]]) {
+      expect(() => resolveTradeConfig({ cronTimesET })).toThrow();
+    }
+  });
+});
+
+describe("fire-window config", () => {
+  it("defaults maxLateMin to 20 and validates it and cronTimeET", () => {
+    expect(resolveTradeConfig().maxLateMin).toBe(20);
+    for (const maxLateMin of [0, -5, 2.5, 391]) expect(() => resolveTradeConfig({ maxLateMin })).toThrow(/maxLateMin/);
+    expect(() => resolveTradeConfig({ cronTimeET: "9:45" })).toThrow(/HH:MM/);
+  });
+});
+
 describe("phase-2 config", () => {
   it("ships the phase-2 defaults", () => {
     const c = resolveTradeConfig();

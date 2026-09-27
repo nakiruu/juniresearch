@@ -8,6 +8,8 @@
  * Join keys: clientOrderId is deterministic per (run, ticker, side, day) and encodes the
  * runId, so it scopes broker orders to exactly this run. fills.jsonl stores the broker
  * orderId. Chain: expected.clientOrderId → brokerOrder(clientOrderId, id) → fill.orderId.
+ * Schwab has no client order id: its cid lives only in the submitting process's memory, so an
+ * out-of-process audit (trade:audit) also joins on the broker id the run record stored per order.
  */
 import type { BrokerOrder } from "../broker/adapter";
 import type { Fill } from "./fills";
@@ -33,7 +35,7 @@ export interface AuditResult {
 const QTY_EPS = 1e-6;
 
 export function crossCheckBroker(input: {
-  expected: { clientOrderId: string; ticker: string; side: "buy" | "sell" }[];
+  expected: { clientOrderId: string; ticker: string; side: "buy" | "sell"; brokerId?: string }[];
   brokerOrders: BrokerOrder[];
   fills: Fill[]; // caller pre-filters to this run's runId
   priceEps?: number;
@@ -44,9 +46,11 @@ export function crossCheckBroker(input: {
   const expectedByCid = new Map(expected.map((e) => [e.clientOrderId, e]));
   // Scope broker orders to THIS run — a foreign clientOrderId (another run, a manual order)
   // is not this run's business and would be a false positive.
-  const scoped = brokerOrders.filter((o) => expectedByCid.has(o.clientOrderId));
+  const expectedBrokerIds = new Set(expected.flatMap((e) => (e.brokerId ? [e.brokerId] : [])));
+  const scoped = brokerOrders.filter((o) => expectedByCid.has(o.clientOrderId) || expectedBrokerIds.has(o.id));
   const scopedIds = new Set(scoped.map((o) => o.id));
-  const brokerByCid = new Map(scoped.map((o) => [o.clientOrderId, o]));
+  const brokerByCid = new Map(scoped.filter((o) => o.clientOrderId).map((o) => [o.clientOrderId, o]));
+  const brokerById = new Map(scoped.map((o) => [o.id, o]));
 
   const fillsByOrderId = new Map<string, Fill[]>();
   for (const f of fills) {
@@ -56,7 +60,7 @@ export function crossCheckBroker(input: {
 
   let brokerMatched = 0;
   for (const e of expected) {
-    const o = brokerByCid.get(e.clientOrderId);
+    const o = brokerByCid.get(e.clientOrderId) ?? (e.brokerId ? brokerById.get(e.brokerId) : undefined);
     if (!o) {
       d.push({ code: "MISSING_SUBMISSION", severity: "warn", ticker: e.ticker, clientOrderId: e.clientOrderId, detail: "expected order not found at the broker" });
       continue;

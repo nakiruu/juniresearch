@@ -15,12 +15,16 @@ import type { Fill } from "./fills";
 import { planRun, executeOrders, mergeExecution, type PlanRunOutput } from "./pipeline";
 import { ReconcileError } from "./ledger";
 import { SchwabAuthError } from "../broker/schwab-auth";
-import { turnoverBreaker, readHaltState, bumpHalt, clearHalt, haltBlocked, acquireLock, releaseLock, DEFAULT_LOCK_STALE_MS } from "./breakers";
+import { turnoverBreaker, clipToTurnover, dayTurnoverUsd, readHaltState, bumpHalt, clearHalt, haltBlocked, acquireLock, releaseLock, DEFAULT_LOCK_STALE_MS } from "./breakers";
 import { crossCheckBroker } from "./audit";
 import { summaryFromRun, type RunSummaryInput } from "./notify";
 import { writeRunRecord } from "./run-record";
+import { currentSlot, etMinutesOfDay, hhmmToMinutes } from "./clock";
+import { refreshTokenHealth } from "../broker/schwab-auth";
+import { maybeWarnAuth } from "./auth-health";
+import { nextSlotRunAtET } from "./clock";
 
-export type CronStatus = "disabled" | "closed" | "locked" | "halted" | "noop" | "executed";
+export type CronStatus = "disabled" | "late" | "closed" | "locked" | "halted" | "noop" | "executed";
 
 export interface CronDeps {
   adapter: BrokerAdapter;
@@ -31,7 +35,9 @@ export interface CronDeps {
   runId: string;
   /** Forwarded into the GuardContext built after planRun, for the paper-endpoint guard (mirrors trade-execute.ts). Irrelevant for a "fake" adapter. */
   configuredBaseUrl: string;
-  paths: { lock: string; haltState: string; log: string; fills: string; runs: string };
+  paths: { lock: string; haltState: string; log: string; fills: string; runs: string; authWarn?: string };
+  /** Schwab only: the refresh token's issue time (epoch ms, undefined if unknown) for the proactive re-auth notice. */
+  refreshObtainedAt?: () => number | undefined;
   loadInputs: () => Promise<{ reports: Report[]; sics: Record<string, number | null>; marketCapUsd: Record<string, number | null>; fills: Fill[] }>;
   notify: (msg: string) => void;
   /** Optional rich run summary sink (orders/fills/goal book/audit) — called on executed and noop runs. Injected like notify so cron stays pure and testable; absent → nothing extra happens. */
@@ -45,6 +51,12 @@ export interface CronDeps {
    * step-1 `disabled` read, so it must carry the real environment, not an empty stand-in.
    */
   env: NodeJS.ProcessEnv;
+  /** Wall clock for per-ticker market-data capture times (latency/freshness); default: frozen at nowMs. */
+  clock?: () => number;
+  /** Lookup schedule for an order submit with an unknown outcome (tests pass zeros). */
+  resolveDelaysMs?: readonly number[];
+  /** Manual run (`trade:cron --now`): skip the fire-window check. The market-clock check still applies. */
+  ignoreWindow?: boolean;
 }
 
 export interface CronResult { status: CronStatus; reason?: string; orders?: number; fills?: number }
@@ -82,6 +94,25 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
   if (disabled) {
     appendLog(paths.log, logLine(today, runId, "disabled"));
     return { status: "disabled" };
+  }
+
+  // 1a. Proactive re-auth notice (Schwab): warn BEFORE the weekly refresh token dies instead of only
+  // after a run fails. Deduplicated per ET day; never blocks or fails the run.
+  if (deps.refreshObtainedAt && paths.authWarn) {
+    try {
+      const nextRunMs = nextSlotRunAtET(nowMs, cfg.cronTimesET);
+      const health = refreshTokenHealth(deps.refreshObtainedAt(), nowMs, nextRunMs, { lifetimeMs: cfg.schwabRefreshLifetimeDays * 86_400_000, warnHours: cfg.schwabAuthWarnHours });
+      maybeWarnAuth(health, nowMs, nextRunMs, paths.authWarn, notify);
+    } catch { /* a notice must never fail a run */ }
+  }
+
+  // 1b. Fire window. A scheduled run that starts more than maxLateMin after cronTimeET (a missed
+  // trigger fired late, a catch-up after a mid-day restart) trades at a worse, unplanned time of day —
+  // skip it; the next scheduled morning runs normally. Checked before any broker call.
+  const slot = currentSlot(nowMs, cfg.cronTimesET);
+  if (!deps.ignoreWindow && slot && etMinutesOfDay(nowMs) > hhmmToMinutes(slot) + cfg.maxLateMin) {
+    appendLog(paths.log, logLine(today, runId, "late", { reason: `after ${slot} ET + ${cfg.maxLateMin}m` }));
+    return { status: "late" };
   }
 
   // 2. Clock check. For a live broker (Schwab) this is also the first authenticated request, so a
@@ -138,7 +169,7 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
     let out: PlanRunOutput;
     try {
       const inputs = await loadInputs();
-      out = await planRun({ ...inputs, today, cfg, runId, nowMs, adapter });
+      out = await planRun({ ...inputs, today, cfg, runId, nowMs, clock: deps.clock, adapter });
     } catch (e) {
       if (e instanceof ReconcileError) {
         bumpHalt(paths.haltState);
@@ -154,14 +185,44 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
       throw e;
     }
 
-    // 6. Turnover breaker.
+    // 6. Turnover breaker. An ENTER-only plan (opening positions, e.g. building the book from cash) may
+    // be clipped to the cap instead of halting — opt-in; every run still stays within the cap.
+    // The budget is the smaller of the per-run cap and what's left of the daily cap after today's
+    // earlier runs (the daily cap only binds with several cronTimesET slots).
     const tb = turnoverBreaker(out.sized.orders, out.ledger.nav, cfg);
-    if (tb.tripped) {
+    const nav = out.ledger.nav;
+    const doneTodayUsd = dayTurnoverUsd(paths.runs, today);
+    const dayLeftUsd = Math.max(0, cfg.maxDayTurnoverFrac * nav - doneTodayUsd);
+    const plannedUsd = tb.frac * nav;
+    const byDay = dayLeftUsd < cfg.maxRunTurnoverFrac * nav;
+    const budgetUsd = Math.min(cfg.maxRunTurnoverFrac * nav, dayLeftUsd);
+    const over = plannedUsd > budgetUsd + 1e-9;
+    const capText = byDay
+      ? `daily cap ${(cfg.maxDayTurnoverFrac * 100).toFixed(1)}% of NAV (${((doneTodayUsd / nav) * 100).toFixed(1)}% already traded today)`
+      : `${(cfg.maxRunTurnoverFrac * 100).toFixed(1)}% per-run cap`;
+    const clip = over && cfg.turnoverClipEnterOnly ? clipToTurnover(out.sized.orders, nav, cfg, budgetUsd) : null;
+    if (clip) {
+      const clippedCids = new Set(clip.clipped.map((o) => o.clientOrderId));
+      const deferred = clip.clipped.map((o) => ({ ticker: o.ticker, code: "TURNOVER_CLIP" as const, reasons: [`deferred: turnover capped by the ${capText}`], currentWeight: 0, targetWeight: nav > 0 ? o.deltaUsd / nav : null }));
+      out = {
+        ...out,
+        sized: { ...out.sized, orders: clip.kept },
+        plan: { ...out.plan, skipped: [...out.plan.skipped, ...deferred] },
+        record: {
+          ...out.record,
+          orders: out.record.orders.filter((o) => !clippedCids.has(o.clientOrderId as string)),
+          plan: { ...out.record.plan, skipped: [...(out.record.plan.skipped as unknown[]), ...deferred] },
+          notes: [...out.record.notes, `turnover clip: ${(tb.frac * 100).toFixed(1)}% of NAV planned vs the ${capText}; kept ${clip.kept.length}, deferred ${clip.clipped.length} (${clip.clipped.map((o) => o.ticker).join(", ")})`],
+        },
+      };
+      notify(`cron: ENTER-only plan was ${(tb.frac * 100).toFixed(1)}% of NAV, over the ${capText} — clipped: sending ${clip.kept.length}, deferring ${clip.clipped.length} to later runs`);
+    } else if (over) {
+      const reason = byDay ? "day-turnover" : "turnover";
       bumpHalt(paths.haltState);
-      notify(`cron halted: turnover breaker tripped — ${(tb.frac * 100).toFixed(1)}% of NAV > ${(cfg.maxRunTurnoverFrac * 100).toFixed(1)}% cap`);
+      notify(`cron halted: turnover breaker tripped — ${(tb.frac * 100).toFixed(1)}% of NAV planned, over the ${capText}`);
       writeRunRecord(paths.runs, out.record);
-      appendLog(paths.log, logLine(today, runId, "halted", { ...summaryFields(out), reason: "turnover" }));
-      return { status: "halted", reason: "turnover" };
+      appendLog(paths.log, logLine(today, runId, "halted", { ...summaryFields(out), reason }));
+      return { status: "halted", reason };
     }
 
     // 7. Nothing to trade — a clean run, so it clears any prior halt.
@@ -180,21 +241,36 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
     // every submit, and that per-submit backstop must stay live on the unattended path.
     const ctx: GuardContext = {
       brokerKind: adapter.kind, configuredBaseUrl, locks: out.locks, today, nav: out.ledger.nav, cfg,
-      env, counters: { orders: 0, notionalUsd: 0 },
+      env, cashUsd: out.ledger.cash, counters: { orders: 0, notionalUsd: 0, buyNotionalUsd: 0, sellProceedsUsd: 0 },
     };
-    const { fills, executed } = await executeOrders({ adapter, sized: out.sized, ctx, runId, fillsPath: paths.fills });
-    const rec = { ...out.record, fills: fills as unknown as Record<string, unknown>[], orders: mergeExecution(out.record.orders, executed) };
+    const { fills, executed, aborted, skippedCash } = await executeOrders({ adapter, sized: out.sized, ctx, runId, fillsPath: paths.fills, resolveDelaysMs: deps.resolveDelaysMs, now: deps.clock });
+    const rec = {
+      ...out.record, fills: fills as unknown as Record<string, unknown>[], orders: mergeExecution(out.record.orders, executed),
+      notes: [...out.record.notes, ...skippedCash.map((s) => `cash skipped: ${s.ticker} — ${s.detail}`)],
+    };
+    if (skippedCash.length) notify(`cron: ${skippedCash.length} buy(s) skipped by the cash backstop — ${skippedCash.map((s) => s.ticker).join(", ")} (broker cash couldn't cover them; usually a funding sell that didn't fill)`);
     writeRunRecord(paths.runs, rec);
 
     // 9. Broker-truth cross-check (spec §4). The recorded fills must match what the broker actually
     // did; a critical discrepancy (an unrecorded or mismatched fill under-sets the lock clock and the
     // ledger) is a halt — bump the counter, notify, exit non-zero. Warnings pass. Only a clean audit
     // clears the consecutive-halt counter.
+    // Audit only what was actually sent (a cash-skipped buy never reached the broker).
+    const brokerIdByCid = new Map(executed.map((e) => [e.clientOrderId, e.brokerId || undefined]));
     const audit = crossCheckBroker({
-      expected: out.sized.orders.map((o) => ({ clientOrderId: o.clientOrderId, ticker: o.ticker, side: o.side })),
+      expected: out.sized.orders.filter((o) => brokerIdByCid.has(o.clientOrderId)).map((o) => ({ clientOrderId: o.clientOrderId, ticker: o.ticker, side: o.side, brokerId: brokerIdByCid.get(o.clientOrderId) })),
       brokerOrders: await adapter.getOrders("all", `${today}T00:00:00Z`),
       fills,
     });
+    // 9b. A submit whose outcome is unknown stopped the run. The order may exist (and may have filled);
+    // halt so a human checks the broker. The next run's reconcile orders-check also refuses to proceed
+    // while any executed order is unrecorded, so this can't be silently traded past.
+    if (aborted) {
+      bumpHalt(paths.haltState);
+      notify(`cron halted: order submit for ${aborted.ticker} has an UNKNOWN outcome (${aborted.detail}). Check the broker's order history; if it executed, run \`npm run trade:reconcile -- --record-missing\`, then clear the halt state to resume.`);
+      appendLog(paths.log, logLine(today, runId, "halted", { ...summaryFields(out), reason: "submit-unknown" }));
+      return { status: "halted", reason: "submit-unknown" };
+    }
     if (!audit.ok) {
       bumpHalt(paths.haltState);
       notify(`cron halted: broker-truth check found ${audit.critical} critical discrepancy(ies) — ${audit.discrepancies.filter((d) => d.severity === "critical").map((d) => `${d.code} ${d.ticker}`).join(", ")}`);

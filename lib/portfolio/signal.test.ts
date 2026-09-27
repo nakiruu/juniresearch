@@ -19,6 +19,15 @@ const base = {
   ] } },
 } as unknown as Report;
 
+describe("buildSignal staleness — a true half-life", () => {
+  const at = (days: number) => buildSignal(base, 100, 3674, new Date(Date.UTC(2026, 8, 1) + days * 86_400_000), DEFAULT_CONFIG).staleness;
+  it("is 1 when fresh, 0.5 at one half-life (90d), 0.25 at two", () => {
+    expect(at(0)).toBe(1);
+    expect(at(90)).toBeCloseTo(0.5, 9);
+    expect(at(180)).toBeCloseTo(0.25, 9);
+  });
+});
+
 describe("buildSignal", () => {
   it("re-marks mu and sigma to the live price, not the report's price", () => {
     const s = buildSignal(base, 100, 3674, new Date("2026-09-01T00:00:00Z"), DEFAULT_CONFIG);

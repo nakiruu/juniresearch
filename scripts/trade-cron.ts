@@ -13,7 +13,8 @@ import { resolveTradeConfig } from "../lib/trade/config";
 import { newRunId } from "../lib/trade/run-record";
 import { makeNotifier } from "../lib/trade/notify";
 import type { BrokerAdapter } from "../lib/broker/adapter";
-import { loadReportsAndMeta, makeBroker, brokerBaseUrl, readFills, CRON_LOCK_PATH, CRON_LOG_PATH, FILLS_PATH, HALT_STATE_PATH, RUNS_DIR } from "./_trade-common";
+import { loadReportsAndMeta, makeBroker, brokerBaseUrl, readFills, schwabRefreshObtainedAt, AUTH_WARN_PATH, CRON_LOCK_PATH, CRON_LOG_PATH, FILLS_PATH, HALT_STATE_PATH, RUNS_DIR } from "./_trade-common";
+import { todayET } from "../lib/trade/clock";
 
 /**
  * Every alert/summary line lands in cron.log and on stderr (which Windows Task Scheduler captures);
@@ -40,7 +41,7 @@ function unreachableAdapter(): BrokerAdapter {
     kind: "fake",
     getClock: fail, getCalendar: fail, getAccount: fail, getPositions: fail, getOrders: fail,
     getLastClose: fail, getLatestTrade: fail, getLatestQuote: fail, isFractionable: fail,
-    submitOrder: fail, cancelOrder: fail,
+    submitOrder: fail, findSubmitted: fail, cancelOrder: fail,
   } as unknown as BrokerAdapter;
 }
 
@@ -58,12 +59,14 @@ async function main(): Promise<CronResult> {
   }
 
   const cfg = resolveTradeConfig();
-  const today = new Date().toISOString().slice(0, 10);
+  const nowMs = Date.now();
+  const today = todayET(nowMs); // ET trading date — the UTC date is tomorrow from 20:00 EDT
   const runId = newRunId(today);
 
   return runCron({
-    adapter, cfg, today, nowMs: Date.now(), runId, configuredBaseUrl,
-    paths: { lock: CRON_LOCK_PATH, haltState: HALT_STATE_PATH, log: CRON_LOG_PATH, fills: FILLS_PATH, runs: RUNS_DIR },
+    adapter, cfg, today, nowMs, runId, configuredBaseUrl,
+    paths: { lock: CRON_LOCK_PATH, haltState: HALT_STATE_PATH, log: CRON_LOG_PATH, fills: FILLS_PATH, runs: RUNS_DIR, authWarn: AUTH_WARN_PATH },
+    refreshObtainedAt: disabled ? undefined : schwabRefreshObtainedAt(),
     loadInputs: async () => {
       const { reports, sics, marketCapUsd } = await loadReportsAndMeta();
       return { reports, sics, marketCapUsd, fills: readFills(FILLS_PATH) };
@@ -72,6 +75,9 @@ async function main(): Promise<CronResult> {
     notifySummary: notifier.runSummary,
     disabled,
     env: process.env, // guard-level TRADE_DISABLED backstop (Task 6) — must be the real environment.
+    // `--now`: a deliberate manual run outside the scheduled fire window (the market clock still applies).
+    ignoreWindow: process.argv.slice(2).includes("--now"),
+    clock: Date.now, // real per-ticker capture times for freshness + latency
   });
 }
 
@@ -83,7 +89,7 @@ try {
   // exits non-zero so Windows Task Scheduler's Last-Run-Result surfaces it independently of
   // notify()/cron.log. Every other resolved status is benign/expected: "locked" is an overlapping
   // run declining to double-submit (self-protection, not a failure); disabled/closed/noop/executed
-  // are ordinary outcomes. An unexpected throw (caught below) is the only other non-zero case.
+  // are ordinary outcomes, as is "late" (a scheduled run that started after the fire window). An unexpected throw (caught below) is the only other non-zero case.
   process.exit(result.status === "halted" ? 1 : 0);
 } catch (err) {
   notifier.message(`trade:cron: unexpected error — ${err instanceof Error ? err.message : String(err)}`);

@@ -4,12 +4,16 @@
 > live orders: how a *buy* is derived, how the engine interprets it, how buys and sells are
 > sized and placed, and every piece of math and statistics in between.
 >
-> **Status:** the research → rating → portfolio path is on `main`; the trade layer + multi-broker
-> (Alpaca paper / Schwab live) + Discord notifier + Linux scheduler live on branch `trade-layer`
-> (unmerged, gated). Defaults quoted here are the code defaults as of 2026-09-25.
+> **Status:** the research → rating → portfolio path and the trade layer (Alpaca paper / Schwab live,
+> Discord notifier, schedulers) are on `main`. The 2026-09-26 engine review
+> (`docs/superpowers/specs/2026-09-26-engine-improvements-design.md`) and its six-phase plan are
+> implemented; defaults quoted here are the code defaults after it. Opt-in behaviour is marked
+> "default off".
 >
-> **How to read the "💡 Better idea" callouts:** they mark points where a defensible alternative
-> exists. They are design notes, not TODOs — none is wired in.
+> **How to read the callouts:** "💡" marks a defensible alternative that is still *not* built (deferred,
+> usually waiting on data). "🚫 Not an option" marks an alternative that was ruled out — by the owner's
+> trading rules, the live broker, or because it didn't survive quantification — don't propose it again.
+> Adopted ideas are described in place as normal text.
 
 ---
 
@@ -79,16 +83,20 @@ A separate scoring layer produces:
 - **`rating.decision.conviction`** — a **0–100** score from a penalty model over the gate + intrinsic
   reverse-DCF + moat (ROIC−WACC) + a cross-sectional composite percentile. This becomes **κ** downstream.
 
-> 💡 **Better idea — a probability-of-reaching-target metric.** Conviction today is a static penalty
-> score. A GBM first-passage ("touch") probability, `P_touch = Φ(d₊) + (H/S₀)^(2ν/σ²)·Φ(d₋)`, would add a
-> *time-and-volatility-aware* estimate of actually reaching fair value. It was prototyped and deliberately
-> **not** adopted as a conviction substitute (touch probability rewards volatility and is drift-sensitive),
-> but it is a strong candidate as an *additional* data point rather than a replacement.
+**P(touch fair value) — display only (`lib/portfolio/touch.ts`).** A GBM first-passage probability,
+`P = Φ((νT−b)/σ√T) + e^{2νb/σ²}·Φ((−b−νT)/σ√T)` with `b = ln(FV/S₀)`, σ from the report's ~30 recent
+closes, T = `touchHorizonYears` (1) and drift `touchDrift` (0). Signals carry it as `touch`; the snapshot
+shows it (`pTouchFV` in the CSV). It is **never** a sizing, eligibility or tie-break input: on the
+published reports it tracks realized volatility (Spearman +0.73) and runs against R (−0.58), so ranking on
+it would tilt the book toward volatile names. Read it as "is this target plausible within a year?"
 
-> 💡 **Better idea — widen bands under uncertainty.** Morningstar-style, the buy/sell thresholds could
-> scale with the dispersion of the scenarios (a 3-point spread with 50% mass on one leg is far less certain
-> than a tight one). Today the bands are fixed; uncertainty only enters later via σ, which the score sizer
-> ignores.
+**Wider bullish bands under uncertainty (`decide()` policy, both off by default).**
+`applyUncertaintyBands` scales the BUY / STRONG BUY minimum upside by the uncertainty tier (×1 / 1.2 /
+1.8 / 2.5, driven by analyst-target dispersion and other risk points); `applyDispersionBands` scales it by
+the author's own scenario dispersion, `clamp(σ / 0.25, 1, 2.5)`. They combine by max and can only lower a
+label. Both live in the advisory `decide()` layer: the published label is still validated against the
+fixed `deriveLabel` bands, so turning either on never invalidates a published report. On the current 68
+reports, dispersion bands would change one label (EVLV STRONG BUY → BUY, already published as BUY).
 
 ---
 
@@ -105,7 +113,7 @@ D              = max(0, −min rᵢ)                   worst-scenario loss magni
 R              = μ / D    (null if D ≤ 0)          reward / risk
 κ  (kappa)     = decision.conviction / 100         0..1
 Q  (quality)   = clamp( 1 + 0.10·(pctile−50)/50 + 0.20·(moat−0.5) − 0.10·[eroding], 0.8, 1.2 )
-staleness      = exp( −ageDays / 90 )              soft recency decay (half-life 90d)
+staleness      = 0.5 ^ ( ageDays / 90 )             soft recency decay (true half-life 90d)
 sector         = ⌊SIC / 100⌋   (2-digit group)
 ```
 
@@ -118,15 +126,16 @@ Notes that matter downstream:
 - **R here uses the empirically worst scenario** as the bear, which equals the report's named bear when
   that is the lowest leg (the usual case).
 
-> 💡 **Better idea — the scenario σ is fragile.** σ and σ↓ come from a **3-point** distribution; a
-> point-mass estimator of variance is noisy and error is amplified in any σ-based optimizer (Michaud). A
-> blend with **trailing realized volatility** (already fetched for the touch-probability work) would give a
-> more stable risk number. Note the production score sizer sidesteps this by not using σ at all (§3.2);
-> only the experimental kellyTilt `invSigma` core would benefit directly.
+> 💡 **Deferred — the scenario σ is fragile.** σ and σ↓ come from a **3-point** distribution; a
+> point-mass estimator of variance is noisy. A blend with trailing realized volatility would steady it —
+> but σ feeds production nowhere (the score sizer ignores it; only the unexposed kellyTilt `invSigma` core
+> reads it), so this waits until invSigma is actually A/B'd, and then on ≥252 closes rather than the ~30
+> the reports carry (`realizedVol` now exists in `lib/portfolio/touch.ts`).
 
-> 💡 **Better idea — σ↓ is computed but unused.** A downside-only risk unit (Sortino-style `μ/σ↓`, or
-> `R` blended with σ↓) is arguably a better "risk" than either the single bear leg or full σ. It is already
-> in the Signal; nothing consumes it.
+> 🚫 **Not an option — σ↓ as the risk unit.** With 3 scenarios and one leg below price (66 of 68
+> reports), σ↓ = √p_bear · D exactly, so μ/σ↓ = R/√p_bear: Spearman(R, μ/σ↓) = 0.996, and swapping it into
+> the score moves 1.8% of the book. It adds no information over R. Revisit only if reports move to 5+
+> scenarios.
 
 ---
 
@@ -161,10 +170,11 @@ score = μ^muExp · κ^convExp · R^rExp · staleness · (Q if useQualityTilt el
 Weight is then allocated *in proportion to score*, so the best names on (expected return × conviction ×
 reward/risk) become the largest holdings. Exponents are tunable knobs (`--muExp/--convExp/--rExp`).
 
-> 💡 **Better idea — the score is a heuristic, not a utility maximization.** `μ·κ·R` is a defensible
-> ranking but not derived from an objective (Kelly, mean-variance, or mean-CVaR). A **mean-CVaR** allocation
-> using σ↓ / the bear leg would optimize the thing the desk actually cares about (downside) rather than a
-> product of factors. The tradeoff is transparency: the current score is trivially explainable per name.
+> 🚫 **Not an option — mean-CVaR allocation.** Single-name CVaR at α ≤ p_bear *is* the bear-leg loss D
+> (already in R), and a portfolio CVaR needs a joint scenario distribution the reports don't have. Assuming
+> comonotonic bears makes it an LP whose solution is bang-bang — 10 names at the cap, or 5 names and ~50%
+> cash at λ = 1 (N_eff ≤ 10 vs 26 today) — a cruder, more concentrated μ − λD that drops κ and per-name
+> explainability. The `μ·κ·R` score stays.
 
 ### 3.3 Water-fill allocation with caps  (`allocateCapped`)
 
@@ -234,10 +244,15 @@ The book is **derived from the broker**, not stored: `reconcile()` reads `getAcc
 throws `ReconcileError` and halts the run. `fills.jsonl` (append-only) is the one record the compliance
 locks derive from.
 
-> 💡 **Better idea — reconcile is buy-side only.** It halts on an unexplained *position* but does not
-> cross-check the day's *orders*; a missed sell fill could under-set a lock. The **broker-truth audit**
-> (§6.2) now covers this at the order level, but folding a `getOrders` check into reconcile itself would
-> make the halt-on-discrepancy guarantee unconditional.
+**Orders check (`reconcileOrders`, default on).** `planRun` also fetches the broker's orders over the
+lock window (`lockBusinessDays + 1` trading days back) and requires every executed order to be recorded in
+`fills.jsonl` for its full quantity, joined on the **broker order id**. That catches what the position
+check can't: a missed *sell* (which would leave `buyLockUntil` unset), an extra buy of a name already held,
+a crash between submit and fill recording, a fill after the poll window, and manual trades in the account.
+Any working (non-terminal) order also halts — this engine only sends IOC. The halt repeats on every run
+until the fills are recorded, so a broker-truth CRITICAL (§6.2) can no longer be followed by a trade
+against an under-set lock. To record real executions from broker truth:
+`npm run trade:reconcile -- --record-missing` (appends them with `runId: "manual"`, printing each).
 
 ### 4.2 Two-sided hysteresis  (`lib/trade/hysteresis.ts`)
 
@@ -272,11 +287,15 @@ misconfigured into an overlap.
 4. **Never leverage:** if frozen + wanted buys would exceed `1 − cashFloor`, buys are scaled down
    (`buyScale`), never cash borrowed; a `plannedCash < 0` assertion is the backstop.
 
-> 💡 **Better idea — the no-trade band abandons the residual.** The 2.5pp band suppresses small top-ups,
-> so after a partial-fill morning the book converges to ~75–80% deployed, not 100% — sub-band gaps sit in
-> cash until price drift crosses the band. A **same-session top-up loop** (reconcile → plan → execute until
-> the gap < band or N passes) would complete the book at one decision timestamp without lowering the band
-> (which would reintroduce churn). This is the cleanest version of "run it twice."
+**Residual top-up (`topUpRecentBuys`, default off).** The 2.5pp band would leave the unfilled rest of a
+partial IOC entry in cash until drift crosses it. With the knob on, a HOLD name that is **sell-locked** —
+bought inside the lock window, so it can't be sold and can't churn — may ADD toward target through the
+smaller `residualBand` (0.5pp). Buys only; `minOrderUsd` still applies.
+
+**Extra daily runs (`cronTimesET`, default `["09:45"]`).** Add a later slot (e.g. `"10:40"`) to give
+partial fills a second, spaced-out chance; an immediate re-run seconds later mostly meets the same book.
+Each slot fires once per day with its own fire window, run id, reconcile, breakers and audit. A daily cap
+`maxDayTurnoverFrac` (25% of NAV) bounds the day's runs together.
 
 ### 4.4 Locks — the whipsaw / compliance clock  (`lib/trade/locks.ts`)
 
@@ -286,10 +305,9 @@ fill populates `buyLockUntil`. **Same-side adds are not locked** (topping up a p
 ICE ban is re-enforced here and at the broker guard (buys refused; a disposing *sell* of a banned name is
 allowed).
 
-> 💡 **Better idea — whole-ticker vs per-lot.** The lock is whole-ticker (conservative: one fill freezes
-> the whole name). Per-lot locking would allow trimming an old lot while a fresh lot is locked, at the cost
-> of more state. Whole-ticker was chosen deliberately for auditability; per-lot is the natural extension if
-> tax-lot management is ever added.
+> 🚫 **Not an option — per-lot locking.** The lock is whole-ticker by rule: the owner's trading
+> restrictions apply to the whole name, so one fill freezes the ticker. Per-lot locking (trimming an old lot
+> while a fresh lot is locked) would break those rules and must not be added.
 
 ---
 
@@ -311,11 +329,10 @@ skip (skippedHalt)  if  computeLimit returns halt (no price / gap)
 only the *fill* uses the live price — so the plan is backtest-reproducible while execution still crosses at
 a real quote.
 
-> 💡 **Better idea — whole-share only is a forced choice, not always ideal.** Fractional would size high-
-> priced names exactly, but Alpaca allows fractional **only** with `time_in_force:"day"` (not IOC), and
-> Schwab's API has no fractional at all — so IOC ⇒ whole-share. A high-priced name whose target is < 1
-> share rounds to 0 and is dropped (material only at small NAV). A fractional **DAY-limit + cancel-at-close**
-> path for the high-priced tail would recover exact sizing at the cost of intraday resting risk.
+> 🚫 **Not an option — fractional shares.** Orders are whole-share by requirement: Schwab is the live
+> broker and its API has no fractional shares (Alpaca allows fractional only with `time_in_force:"day"`,
+> not IOC, and is paper-only). A high-priced name whose target is < 1 share rounds to 0 and is dropped
+> (material only at small NAV); that is accepted, not a gap to close.
 
 ### 5.2 Liquidity buckets  (`bucketFor`)
 
@@ -356,16 +373,27 @@ sell:  L = max( floor_tick(pRef·(1−τ)), ceil_tick(pRef·(1−τ_max)) )
 IOC means an unmarketable order (or partial) **cancels the remainder** — a **non-fill is a feature**, the
 slippage cap refusing to chase.
 
-> 💡 **Better idea — τ_max clamps inside the early-session spread.** On the first live run, ~66% of orders
-> were `capBound`: `β·relSpread` wanted a wider limit than τ_max at 09:36, so the limit sat inside the
-> spread and only caught thin liquidity → heavy partials. Two fixes, both cheap: **fire at 09:45** (already
-> the configured `cronTimeET`; deeper/tighter spreads) and, only after ≥3–5 runs of data, consider raising
-> τ_max. Do **not** tune τ on one run.
+> 💡 **Deferred — τ_max vs the early-session spread.** On the first (paper) run ~66% of orders were
+> `capBound`: the spread wanted a wider limit than τ_max. Paper quotes are IEX (thin, wide), so that figure
+> may be a data artifact, not the time of day. Runs fire at 09:45 ET. Raise `limitTolMax[bucket]` only after
+> ≥5 **Schwab** runs, and only if `trade:review` shows cap-bound orders filling below ~50% while
+> τ-wanted/τ_max sits just above 1. Never tune τ on paper.
 
-> 💡 **Better idea — decision→submit latency isn't measured.** There is no per-request broker timeout, and
-> the run record doesn't persist per-fetch timestamps, so anchor-capture→fill staleness can't be audited
-> after the fact. A timeout (a hung run is *recovered* by stale-lock reclaim, not *prevented*) and a
-> submit-timestamp field would close both gaps.
+**Timeouts and unknown submits (`lib/broker/http.ts`).** Every broker/OAuth request has a deadline over
+headers and body (read 10s, submit 15s, token 10s); only idempotent reads are retried (1s, 3s). An order
+submit is **never** retried: a timeout, network failure, 5xx, or a Schwab 2xx with no order id raises
+`SubmitOutcomeUnknownError`, and `executeOrders` looks the order up with `findSubmitted` (Alpaca by
+`client_order_id`; Schwab by exact symbol/side/qty/price/type/duration since the submit, refusing to guess
+between two matches) at 2s/5s/10s. Found → polled and recorded as usual. Not found → the order is recorded
+as `unknown`, **no further orders are sent**, and cron halts (`submit-unknown`). If the lost order did
+execute, the next run's reconcile orders-check halts until it is recorded.
+
+**Execution telemetry.** Every run-record order carries the anchor (`pRef`, `anchorAtMs`), the τ used and
+the τ the spread *wanted* before the cap (`diag.tauWanted`, `relSpread`, bid/ask, quote/trade ages), plus
+`filledQty`, `filledAvgPrice` and local `submitStartAt` / `submitAckAt` / `terminalAt`. Freshness is judged
+when each ticker's quote was fetched, not at run start. `npm run trade:review` reports, **per broker**
+(paper never mixed with live), the fill ratio of cap-bound vs other orders, τ-wanted/τ_max percentiles per
+bucket, and latency percentiles — the evidence a τ_max change must wait for (≥5 Schwab runs).
 
 ---
 
@@ -376,18 +404,24 @@ slippage cap refusing to chase.
 ```
 turnover breaker      Σ|qty·limitPrice| > maxRunTurnoverFrac (0.15) · NAV     → halt, submit nothing   [cron only]
 consecutive-halt      ≥ consecutiveHaltLimit (3) halted runs in a row         → block further runs
-reconcile-halt        unexplained broker position                            → halt
+reconcile-halt        unexplained broker position, or an executed order in    → halt (repeats until recorded)
+                      the lock window missing from fills.jsonl
+submit-unknown        an order submit whose outcome couldn't be established → stop sending, halt
 notional guard        Σ|estNotionalUsd| > maxNotionalFrac (1.0) · NAV         → refuse (per-submit)     [guards]
 order-count guard     > maxOrdersPerRun (40)                                  → refuse
 kill switch           TRADE_DISABLED=1                                        → refuse everything
 endpoint guard        broker-aware: alpaca-paper ⇒ paper host, schwab ⇒ schwab host
 ```
 
-> 💡 **Better idea — the turnover breaker can't bootstrap a book.** Building an empty book from cash is
-> ~100% turnover, which trips the 15% breaker — so the initial deploy (and any large top-up) must go through
-> `trade:execute`, not `trade:cron`. That's the breaker doing its job, but an **ENTER-aware exemption**
-> (first-fill / from-flat turnover excluded) would let cron bootstrap safely. Also note the two per-run
-> notional measures differ (guard uses `deltaUsd`; turnover uses `qty·limitPrice`) — align or comment.
+**Turnover clip (`turnoverClipEnterOnly`, default off).** When the breaker trips on a plan that only
+*opens* positions (every order an ENTER buy — e.g. building the book from cash), cron sends whole orders,
+largest target first, up to the cap and defers the rest (`TURNOVER_CLIP`) instead of halting; the book
+fills in over several runs. Any sell/ADD/TRIM still halts, and the cap itself is never raised — so a
+wrongly-read book can't turn into a full re-buy. A one-shot manual build still goes through `trade:execute`.
+
+**Cash backstop (guards).** A buy is refused once committed buys would exceed the broker's cash + *filled*
+sell proceeds − the cash floor; `executeOrders` sends sells first and skips (never sends) a buy the
+backstop refuses. Both caps now measure an order as `qty × limitPrice` — what an IOC limit can spend.
 
 ### 6.2 Broker-truth audit  (`lib/trade/audit.ts` → `crossCheckBroker`)
 
@@ -425,20 +459,33 @@ audit) plus halt/auth alerts; best-effort, never fails a run.
   test rig) or `schwab` (LIVE). Both implement one 11-method `BrokerAdapter`; the pure core never names a
   broker. `schwab` is live-by-selection (no paper exists); the guard requires the Schwab host, breakers
   become the only guardrails, and the 7-day OAuth refresh surfaces as `halted(auth)` + alert (`trade:auth`
-  to renew). Marks come from the broker (settled close for decisions, live trade/quote for fill anchors).
+  to renew). Schwab credentials can also come from env (`SCHWAB_REFRESH_TOKEN`, optional
+  `SCHWAB_REFRESH_OBTAINED_AT`, `SCHWAB_ACCOUNT_HASH`) for hosts with no interactive login: the env
+  refresh token is tried first and `data/trade/schwab-token.json` is the fallback when it is out of date
+  (a stale or rotated-away env token is remembered by fingerprint and never retried). Marks come from the broker (settled close for decisions, live trade/quote for fill anchors).
 - **Scheduler:** `register-trade-cron.ps1` (Windows Task Scheduler) / `register-trade-cron.sh` (systemd
-  `--user` timer or cron) — both run `npm run trade:cron` at 09:45 ET; broker from `.env.local`.
+  `--user` timer or cron) — both read `cronTimeET` from `lib/trade/config.ts` (09:45 ET) and never fire a
+  missed trigger late; broker from `.env.local`.
 - **Rollout gate:** Phase 0 (fake dry-run) → Phase 1 (paper smoke: ≥10 runs, exact reconciliation, zero
   lock/ban violations) → Phase 2 (paper event-driven, 4 weeks clean + weekly review). Merge to `main` only
   after that.
 
-> 💡 **Better idea — a proactive re-auth warning.** Schwab's refresh token dies weekly; today the system
-> only alerts on the *failed* run. A "token expires in N days" notice would move the ~2-minute `trade:auth`
-> onto a schedule instead of after a missed morning.
+**Re-auth warning (`lib/trade/auth-health.ts`).** On Schwab, each cron run first checks whether the
+refresh token will still be alive at the next scheduled run: **critical** if it dies before then (renew
+today), **warn** under `schwabAuthWarnHours` (72h, covers a weekend), **unknown** if its issue time isn't
+known (env token without `SCHWAB_REFRESH_OBTAINED_AT`). Each level notifies at most once per ET day and
+immediately on escalation; it never affects the run. `npm run trade:auth -- --status` prints the expiry,
+and `GET /api/trade/status` reports `schwabRefreshExpiresAt`.
 
-> 💡 **Better idea — `today` is UTC-derived.** `new Date().toISOString().slice(0,10)` is fine at 09:45 ET
-> (same calendar day) but drifts near ET-midnight. Not a scheduled-run problem, but a manual late-night run
-> could mislabel the trading day; a TZ-aware `today` would remove the footgun.
+- **ET clock (`lib/trade/clock.ts`).** `today`, a fill's `tradingDate`, the fire window and the market-hours
+  check all read America/New_York through one helper (`todayET`, `etMinutesOfDay`) — a UTC date is already
+  tomorrow from 20:00 EDT, which would have run lock checks against the wrong day.
+- **Market clock.** Schwab's `/markets` `isOpen` is a *trading-day* flag (true all day and night on a
+  weekday — verified against live responses). `SchwabBroker.getClock` is open only inside
+  `sessionHours.regularMarket`, falling back to the NYSE calendar + 09:30–16:00 ET.
+- **Fire window.** `trade:cron` refuses a run that starts after `cronTimeET + maxLateMin` (20 min) as
+  `late` — a missed trigger or a mid-day catch-up is skipped, never traded at an unplanned time. A
+  deliberate manual run passes `trade:cron -- --now` (the market clock still applies).
 
 ---
 

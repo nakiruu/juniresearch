@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { computeConviction, deriveLabel, conservativeNotch, type Conviction } from "@/lib/synth/conviction";
+import { computeConviction, scenarioDispersion, deriveLabel, conservativeNotch, type Conviction } from "@/lib/synth/conviction";
 import { DESK_RATING_DEFAULTS } from "@/lib/synth/desk.schema";
 
 const cfg = DESK_RATING_DEFAULTS;
@@ -54,4 +54,13 @@ describe("conservativeNotch", () => {
     ["STRONG BUY", "BUY"], ["BUY", "HOLD"], ["SELL", "HOLD"], ["STRONG SELL", "SELL"],
   ] as const)("%s → %s", (from, to) => expect(conservativeNotch(from)).toBe(to));
   it("has no alternative for HOLD", () => expect(conservativeNotch("HOLD")).toBeNull());
+});
+
+describe("scenarioDispersion", () => {
+  it("is the probability-weighted σ of scenario returns vs price", () => {
+    const sc = [{ name: "Bull", impliedPrice: 150, probability: 0.3 }, { name: "Base", impliedPrice: 120, probability: 0.5 }, { name: "Bear", impliedPrice: 80, probability: 0.2 }];
+    expect(scenarioDispersion(sc, 100)).toBeCloseTo(Math.sqrt(0.0589), 9);
+    expect(scenarioDispersion([], 100)).toBe(0);
+    expect(scenarioDispersion(sc, 0)).toBe(0);
+  });
 });
