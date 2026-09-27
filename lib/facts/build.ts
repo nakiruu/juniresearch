@@ -1,6 +1,7 @@
 /** build.ts — raw directory in, FactPack out. Refuses to write on any failure. */
 import { basename } from "node:path";
-import { readRawJson } from "./raw";
+import { readRawJson, readRawText } from "./raw";
+import { htmlToText } from "../edgar/filing-text";
 import { FactPack, FACTPACK_SCHEMA_VERSION } from "./schema";
 import { assertValidFactPack } from "./validate";
 import { RAW_CAPTURE_META } from "./manifest";
@@ -13,7 +14,8 @@ import * as context from "./map/context";
 import * as cover from "./map/cover";
 
 const EDGAR_FILING_FILE = "edgar-filing.json";
-export const READS = [RAW_CAPTURE_META, EDGAR_FILING_FILE] as const;
+const EDGAR_PRIMARY_FILE = "edgar-primary.html";
+export const READS = [RAW_CAPTURE_META, EDGAR_FILING_FILE, EDGAR_PRIMARY_FILE] as const;
 
 export function buildFactPack(dir: string): FactPack {
   const meta = readRawJson(dir, RAW_CAPTURE_META) as { capturedAt: string };
@@ -31,8 +33,11 @@ export function buildFactPack(dir: string): FactPack {
   const g = segments.mapSegments(dir);
   const a = analysts.mapAnalysts(dir, latestFY);
   const h = history.mapHistory(dir, meta.capturedAt);
-  const c = context.mapContext(dir, filing, meta.capturedAt, q.description);
-  const cov = cover.mapCover(dir);
+  // edgar-primary.html (often several MB) feeds both the excerpts and the cover-page share count:
+  // convert it to text once.
+  const primaryText = htmlToText(readRawText(dir, EDGAR_PRIMARY_FILE));
+  const c = context.mapContext(dir, filing, meta.capturedAt, q.description, primaryText);
+  const cov = cover.mapCover(dir, primaryText);
 
   const usesCover = cov.sharesOutstanding != null;
   const quoteFacts: FactPack["quote"] = {

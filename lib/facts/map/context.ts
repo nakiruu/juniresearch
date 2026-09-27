@@ -72,8 +72,9 @@ export function mapContext(
   },
   capturedAt: string,
   description: Excerpt,
+  primaryText: string = htmlToText(readRawText(dir, EDGAR_PRIMARY_FILE)), // build.ts passes it: shared with mapCover
 ): FactPack["context"] {
-  const own = extractRawSections(htmlToText(readRawText(dir, EDGAR_PRIMARY_FILE)), filing.form);
+  const own = extractRawSections(primaryText, filing.form);
   const mdaExcerpt: Excerpt | null = own.mda
     ? toExcerpt(capAtSentence(own.mda, MDA_CAP), `edgar:${filing.form}`, filing.url, filing.filedDate)
     : null;

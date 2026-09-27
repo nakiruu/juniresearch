@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync, existsSync } from "node:fs";
-import { htmlToText, capAtSentence, extractSections, extractCoverShares, extractProxySections, proxyExcerpt, EXCERPT_CAP, MDA_CAP, PROXY_CAPS } from "@/lib/edgar/filing-text";
+import { htmlToText, capAtSentence, extractSections, extractCoverShares, extractProxySections, proxyExcerpt, lineMatchesFrom, type HeadingScanCache, EXCERPT_CAP, MDA_CAP, PROXY_CAPS } from "@/lib/edgar/filing-text";
 
 const html = readFileSync("data/raw/AVGO/0001730168-26-000080/edgar-primary.html", "utf8");
 const text = htmlToText(html);
@@ -354,5 +354,26 @@ describe("extractProxySections with Bank of America's heading vocabulary", () =>
     expect(s.ownership).toMatch(/^Stock ownership of directors/);
     expect(s.ownership).toContain("beneficially owned by each director sentence 8.");
     expect(s.ownership).not.toContain("Other matters");
+  });
+});
+
+describe("lineMatchesFrom (cached heading scans)", () => {
+  // Reference: what extractProxySection used to do — matchAll over the text sliced after `from`.
+  const sliced = (text: string, heading: RegExp, from: number) =>
+    [...text.slice(from + 1).matchAll(new RegExp(`(^|\\n)[ \\t]*(?:${heading.source})`, "gi"))]
+      .map((m) => ({ at: from + 1 + m.index! + m[1].length, last: from + 1 + m.index! + m[0].length - 1 }));
+  const cached = (text: string, heading: RegExp, from: number, cache: HeadingScanCache) =>
+    [...lineMatchesFrom(text, heading, from, cache)].map((m) => ({ at: m.index + m.lead, last: m.index + m.length - 1 }));
+
+  it("matches a fresh slice-and-scan from every newline, including matches that straddle it", () => {
+    // "delinquent\nsection" spans a line break, so a scan resumed at that newline must not reuse the cached match.
+    const text = "intro\nDelinquent\nSection 16 reports\nbody\n  delinquent section\nx\nDELINQUENT\n\nSECTION\nend";
+    const heading = /delinquent\s+section/;
+    const cache: HeadingScanCache = new Map();
+    for (let i = 0; i < text.length; i++) {
+      if (text[i] !== "\n") continue;
+      expect(cached(text, heading, i, cache)).toEqual(sliced(text, heading, i));
+    }
+    expect(cache.get(heading)).toHaveLength(3);
   });
 });

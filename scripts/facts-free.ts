@@ -25,6 +25,12 @@ const contact = requireContact();
 const watch = (JSON.parse(readFileSync("data/edgar/watchlist.json", "utf8")) as { ticker: string; cik: number }[]).find((w) => w.ticker === ticker);
 const cik = watch?.cik ?? (await resolveCik(ticker, contact)).cik;
 
+// Yahoo's quoteSummary needs nothing from SEC: start its (three-request crumb) flow now so it overlaps
+// the companyfacts download and parsing below. A failure is surfaced by the await further down,
+// exactly where it used to be thrown; if the SEC step fails first, the Yahoo result is unused.
+const yrawPending = fetchQuoteSummary(ticker);
+yrawPending.catch(() => {}); // no unhandled rejection while SEC work is in progress
+
 let sec: ReturnType<typeof parseCompanyFacts>;
 try {
   const facts = (await fetchCompanyFacts(cik, contact)) as CompanyFactsLike;
@@ -69,7 +75,7 @@ try {
 if (sec.annual.length < 3) { console.error(`Only ${sec.annual.length} annual periods from SEC for ${ticker}; need ≥3.`); process.exit(1); }
 const latestFY = sec.annual.at(-1)!.fiscal_year;
 
-const yraw = await fetchQuoteSummary(ticker);          // throws loudly on crumb/HTTP failure
+const yraw = await yrawPending;                        // throws loudly on crumb/HTTP failure
 const yahoo = parseQuoteSummary(yraw, { latestFY });
 const ttm = computeTtm(sec.quarter, { price: yahoo.price, marketCap: yahoo.marketCap, dividendYield: yahoo.dividendYield, trailingPe: yahoo.trailingPe });
 
