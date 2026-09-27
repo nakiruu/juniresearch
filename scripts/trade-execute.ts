@@ -10,11 +10,12 @@ import { allocationFromRun, allocationLines, makeNotifier, summaryFromRun } from
 import { newRunId, writeRunRecord } from "../lib/trade/run-record";
 import { writeLedger, ReconcileError } from "../lib/trade/ledger";
 import { SchwabAuthError } from "../lib/broker/schwab-auth";
-import { has, loadReportsAndMeta, makeBroker, brokerBaseUrl, readFills, FILLS_PATH, LEDGER_PATH, RUNS_DIR } from "./_trade-common";
+import { has, isPreviewOnly, loadReportsAndMeta, makeBroker, brokerBaseUrl, readFills, FILLS_PATH, LEDGER_PATH, RUNS_DIR } from "./_trade-common";
 import { todayET } from "../lib/trade/clock";
 
 const args = process.argv.slice(2);
-const preview = has(args, "--preview");
+// --preview, or PREVIEW_ONLY=true in the environment: plan + post the allocation, never submit.
+const preview = has(args, "--preview") || isPreviewOnly();
 if (process.env.TRADE_DISABLED === "1" && !preview) { console.error("TRADE_DISABLED=1 — refusing to submit (use --preview to plan only)."); process.exit(2); }
 const cfg = resolveTradeConfig();
 const today = todayET();
@@ -55,7 +56,7 @@ const sendAllocation = async (status: string) => {
 
 for (const o of out.sized.orders) console.log(`  ${o.side} ${o.ticker} ${o.qty} sh @ limit $${o.limitPrice} ioc (${o.reason})`);
 if (!marketOpen) { await sendAllocation("market closed — nothing submitted"); console.log("Market is closed — nothing submitted (spec §9.5)."); process.exit(0); }
-if (preview) { await sendAllocation("preview — nothing submitted"); process.exit(0); }
+if (preview) { await sendAllocation(has(args, "--preview") ? "preview — nothing submitted" : "preview (PREVIEW_ONLY) — nothing submitted"); process.exit(0); }
 if (out.sized.orders.length === 0) { writeRunRecord(RUNS_DIR, out.record); await sendAllocation("nothing to trade"); console.log("Nothing to trade."); process.exit(0); }
 if (!has(args, "--yes")) {
   const rl = createInterface({ input: process.stdin, output: process.stdout });

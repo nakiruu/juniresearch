@@ -17,14 +17,14 @@ import { ReconcileError } from "./ledger";
 import { SchwabAuthError } from "../broker/schwab-auth";
 import { turnoverBreaker, clipToTurnover, dayTurnoverUsd, readHaltState, bumpHalt, clearHalt, haltBlocked, acquireLock, releaseLock, DEFAULT_LOCK_STALE_MS } from "./breakers";
 import { crossCheckBroker } from "./audit";
-import { summaryFromRun, type RunSummaryInput } from "./notify";
+import { allocationFromRun, summaryFromRun, type AllocationInput, type RunSummaryInput } from "./notify";
 import { writeRunRecord } from "./run-record";
 import { currentSlot, etMinutesOfDay, hhmmToMinutes } from "./clock";
 import { refreshTokenHealth } from "../broker/schwab-auth";
 import { maybeWarnAuth } from "./auth-health";
 import { nextSlotRunAtET } from "./clock";
 
-export type CronStatus = "disabled" | "late" | "closed" | "locked" | "halted" | "noop" | "executed";
+export type CronStatus = "disabled" | "late" | "closed" | "locked" | "halted" | "preview" | "noop" | "executed";
 
 export interface CronDeps {
   adapter: BrokerAdapter;
@@ -55,6 +55,14 @@ export interface CronDeps {
   clock?: () => number;
   /** Lookup schedule for an order submit with an unknown outcome (tests pass zeros). */
   resolveDelaysMs?: readonly number[];
+  /**
+   * PREVIEW_ONLY: plan, post the allocation, and stop — no breakers, no submit, no run record, halt
+   * counter untouched. Every read-side check before planning (kill switch, window, clock, lock,
+   * consecutive halts, reconcile) still runs.
+   */
+  previewOnly?: boolean;
+  /** Sink for the allocation post (Discord); absent → log only. */
+  notifyAllocation?: (a: AllocationInput) => void;
   /** Manual run (`trade:cron --now`): skip the fire-window check. The market-clock check still applies. */
   ignoreWindow?: boolean;
 }
@@ -183,6 +191,14 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
         return { status: "halted", reason: "auth" };
       }
       throw e;
+    }
+
+    // 5b. Preview only: report the plan and stop before anything that could submit or change state.
+    if (deps.previewOnly) {
+      const a = allocationFromRun(out, `preview — auto-trade off (PREVIEW_ONLY) · ${out.sized.orders.length} order(s) not sent`);
+      deps.notifyAllocation?.(a);
+      appendLog(paths.log, logLine(today, runId, "preview", summaryFields(out)));
+      return { status: "preview", orders: out.sized.orders.length };
     }
 
     // 6. Turnover breaker. An ENTER-only plan (opening positions, e.g. building the book from cash) may

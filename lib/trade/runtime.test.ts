@@ -30,3 +30,11 @@ describe("lib/trade/runtime", () => {
       .toThrowError(/not a known broker/);
   });
 });
+
+describe("isPreviewOnly", () => {
+  it("is true only for an explicit truthy PREVIEW_ONLY", () => {
+    const e = (v?: string) => ({ PREVIEW_ONLY: v }) as unknown as NodeJS.ProcessEnv;
+    for (const v of ["true", "TRUE", "1", "yes", "on", " true "]) expect(runtime.isPreviewOnly(e(v))).toBe(true);
+    for (const v of [undefined, "", "false", "0", "no", "off", "maybe"]) expect(runtime.isPreviewOnly(e(v))).toBe(false);
+  });
+});

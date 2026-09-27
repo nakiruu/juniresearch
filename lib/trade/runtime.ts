@@ -21,6 +21,15 @@ export const HALT_STATE_PATH = join(TRADE_DIR, "halt-state.json");
 export const SCHWAB_TOKEN_PATH = join(TRADE_DIR, "schwab-token.json");
 export const AUTH_WARN_PATH = join(TRADE_DIR, "auth-warn.json");
 
+/**
+ * PREVIEW_ONLY=true (also 1/yes/on): automated runs plan and post the allocation but never submit an
+ * order — for an account too small to trade, or a dry period. Unlike TRADE_DISABLED (the kill switch,
+ * which stops before any broker call), preview still reads the broker to build the plan.
+ */
+export function isPreviewOnly(env: NodeJS.ProcessEnv = process.env): boolean {
+  return /^(1|true|yes|on)$/i.test((env.PREVIEW_ONLY ?? "").trim());
+}
+
 /** Schwab only: the issue time of the refresh token in use, for the proactive re-auth notice. undefined otherwise. */
 export function schwabRefreshObtainedAt(env: NodeJS.ProcessEnv = process.env): (() => number | undefined) | undefined {
   if ((env.BROKER ?? "alpaca-paper") !== "schwab") return undefined;

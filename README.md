@@ -225,6 +225,7 @@ runs a Phase-0 dry loop against an in-memory book.
 |---|---|---|
 | `TRADE_DISABLED=1` | env kill switch | refuses every submission, both brokers |
 | confirm prompt | `trade:execute` | requires `y` (or `--yes`) before any order |
+| preview-only mode | `trade:cron` / scheduler / `trade:execute` | `PREVIEW_ONLY=true`: plan + post the allocation every run, never submit (no breakers, no run record, halt counter untouched) |
 | allocation post | `trade:execute` | every run prints the target book and posts it to Discord — preview, declined, market-closed and executed runs alike |
 | market-clock check | `trade:execute` / `trade:cron` | exits cleanly outside the regular session (09:30–16:00 ET on trading days) |
 | fire window | `trade:cron` | a run starting > 20 min after `cronTimeET` exits as `late` (`trade:cron -- --now` for a deliberate manual run) |
