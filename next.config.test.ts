@@ -9,3 +9,10 @@ describe("next.config redirects", () => {
     }
   });
 });
+
+describe("next.config response settings", () => {
+  it("omits X-Powered-By and keeps standalone output", () => {
+    expect(nextConfig.poweredByHeader).toBe(false);
+    expect(nextConfig.output).toBe("standalone");
+  });
+});

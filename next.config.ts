@@ -4,6 +4,9 @@ const nextConfig: NextConfig = {
   // Emit a self-contained production server at .next/standalone/server.js with only the
   // traced node_modules, so the Docker runtime image stays small. See Dockerfile.
   output: "standalone",
+  // Drop the `X-Powered-By: Next.js` header: a few bytes on every response and needless
+  // framework fingerprinting. (gzip `compress` stays at its default, on.)
+  poweredByHeader: false,
   // A Schwab OAuth redirect to the bare site root (a callback registered as https://<site>) would
   // otherwise hit "/" → "/research" and lose its one-time ?code=. Send it to the copy page instead;
   // Next passes the query string through unchanged. 307, never cached.
