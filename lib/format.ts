@@ -9,8 +9,21 @@
  *   40.8% -> 0.408      -3.3% -> -0.033      +221% -> 2.21      30% -> 0.30
  */
 
-export const num = (x: number, dp = 1): string =>
-  x.toLocaleString("en-US", { minimumFractionDigits: dp, maximumFractionDigits: dp });
+/**
+ * One Intl.NumberFormat per decimal count, built on first use. `toLocaleString`
+ * with options constructs (and discards) a formatter on every call, and a report
+ * page formats hundreds of numbers; the output is identical by spec.
+ */
+const formatters = new Map<number, Intl.NumberFormat>();
+
+export const num = (x: number, dp = 1): string => {
+  let f = formatters.get(dp);
+  if (!f) {
+    f = new Intl.NumberFormat("en-US", { minimumFractionDigits: dp, maximumFractionDigits: dp });
+    formatters.set(dp, f);
+  }
+  return f.format(x);
+};
 
 /** Trim a trailing ".0" / redundant zeros from a fixed-decimal string. */
 const trimZeros = (s: string): string =>
