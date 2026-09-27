@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { splitSentences, normalizeSentence, wordTrigrams, jaccard } from "@/lib/synth/lint/sentences";
+import { splitSentences, normalizeSentence, wordTrigrams, normalizedTrigrams, jaccard } from "@/lib/synth/lint/sentences";
 
 describe("splitSentences", () => {
   it("splits on sentence-final punctuation", () => {
@@ -73,5 +73,13 @@ describe("wordTrigrams and jaccard", () => {
     const p = wordTrigrams("management raised the full-year outlook today");
     const q = wordTrigrams("management raised the full-year outlook today again");
     expect(jaccard(p, q)).toBe(0.8);
+  });
+});
+
+describe("normalizedTrigrams", () => {
+  it("equals wordTrigrams of the raw sentence when given its normalised form", () => {
+    const s = "Revenue grew **12.4%** to $5.2B as {+ cloud demand +} held up in the U.S. market.";
+    expect(normalizedTrigrams(normalizeSentence(s))).toEqual(wordTrigrams(s));
+    expect(normalizedTrigrams("")).toEqual(new Set());
   });
 });

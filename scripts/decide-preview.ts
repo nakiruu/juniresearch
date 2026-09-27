@@ -7,8 +7,9 @@
  *
  *   node --import tsx scripts/decide-preview.ts
  */
-import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
+import { latestFactPack } from "../lib/synth/latest-factpack";
 import { Desk } from "../lib/synth/desk.schema";
 import type { Conviction } from "../lib/synth/conviction";
 import { evaluateGates, classifySector } from "../lib/synth/gates";
@@ -22,20 +23,12 @@ import { uncertaintyTier, segmentHHI } from "../lib/synth/uncertainty";
 const DATA = "data";
 const cfg = Desk.parse(JSON.parse(readFileSync("data/desk/desk.json", "utf8"))).rating;
 
-function latestFactPack(ticker: string): string | null {
-  const dir = join(DATA, "facts", ticker);
-  if (!existsSync(dir)) return null;
-  const files = readdirSync(dir).filter((f) => f.endsWith(".json"));
-  if (!files.length) return null;
-  return join(dir, files.map((f) => ({ f, m: statSync(join(dir, f)).mtimeMs })).sort((a, b) => b.m - a.m)[0].f);
-}
-
 const rows: string[][] = [];
 let enforceChanges = 0;
 
 for (const file of readdirSync(DATA).filter((f) => f.endsWith(".json")).sort()) {
   const ticker = file.replace(/\.json$/, "").toUpperCase();
-  const fp = latestFactPack(ticker);
+  const fp = latestFactPack(DATA, ticker)?.path;
   if (!fp) continue;
   const report = JSON.parse(readFileSync(join(DATA, file), "utf8")) as {
     rating?: { label?: string; conviction?: Conviction };

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { numericTokens, buildAllowedIndex, checkGrounding } from "@/lib/synth/grounding";
+import { numericTokens, buildAllowedIndex, checkGrounding, AllowedIndex } from "@/lib/synth/grounding";
 import { stringLeaves } from "@/lib/synth/walk";
 import { FactPack } from "@/lib/facts/schema";
 import { readFileSync } from "node:fs";
@@ -116,5 +116,25 @@ describe("the proxy statement is indexed for grounding", () => {
   it("rejects it when the pack carries no proxy", () => {
     const index = buildAllowedIndex({ ...orclPack, context: { ...orclPack.context, proxyStatement: null } }, []);
     expect(checkGrounding({ p: "total compensation of $138,713,110" }, index)).toHaveLength(1);
+  });
+});
+
+describe("AllowedIndex lookup cache", () => {
+  it("matches at the figure's own precision and sees values added after a lookup", () => {
+    const index = new AllowedIndex();
+    const [twoDp] = numericTokens("margin of 12.35%");
+    const [oneDp] = numericTokens("margin of 7.1%");
+    expect(index.has(twoDp)).toBe(false);          // empty index
+    index.add(12.3449);
+    expect(index.has(twoDp)).toBe(false);          // 12.3449 rounds to 12.34 at 2dp
+    index.add(12.3456);                            // added after the 2dp lookup was cached
+    expect(index.has(twoDp)).toBe(true);
+    expect(index.has(oneDp)).toBe(false);
+    index.add(Number.NaN);                         // non-finite values are ignored
+    expect(index.has(oneDp)).toBe(false);
+    index.add(7.08);                               // rounds to 7.1 at the token's 1dp
+    expect(index.has(oneDp)).toBe(true);
+    const [negative] = numericTokens("fell -7.1%"); // a signed token also matches on its absolute value
+    expect(index.has(negative)).toBe(true);
   });
 });
