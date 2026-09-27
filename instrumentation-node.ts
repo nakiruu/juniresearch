@@ -1,0 +1,26 @@
+/**
+ * instrumentation-node.ts — Node.js-only half of the boot hook. Loaded by `instrumentation.ts`
+ * only behind a literal `process.env.NEXT_RUNTIME === "nodejs"` check, so the bundler can drop this
+ * module (and the trade scheduler + node:fs graph behind it) from the Edge instrumentation bundle.
+ * Arms the in-process trade scheduler once on server start, only when `shouldArm(env)`.
+ * A wiring failure (e.g. missing broker keys) is logged and swallowed — it must never
+ * throw out of `register()`, since that would take the web server down with it.
+ */
+import { shouldArm } from "./lib/trade/scheduler";
+
+export async function registerNode(): Promise<void> {
+  if (!shouldArm(process.env)) {
+    if (process.env.NEXT_RUNTIME === "nodejs") console.log("[scheduler] disabled (set TRADE_SCHEDULER_ENABLED=1 to arm)");
+    return;
+  }
+  try {
+    const { buildSchedulerDeps, startScheduler, getSchedulerStatus } = await import("./lib/trade/scheduler-wiring");
+    const { stop } = startScheduler(buildSchedulerDeps(process.env));
+    for (const sig of ["SIGTERM", "SIGINT"] as const) process.on(sig, stop);
+    const s = getSchedulerStatus();
+    console.log(`[scheduler] armed, broker=${s.broker}, next=${s.nextRunISO}`);
+  } catch (e) {
+    // Never take the web server down because the trader couldn't arm (e.g. missing broker keys).
+    console.error(`[scheduler] failed to arm — serving pages without it: ${e instanceof Error ? e.message : String(e)}`);
+  }
+}

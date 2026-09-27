@@ -206,3 +206,36 @@ describe("SchwabBroker submit / cancel", () => {
     expect(calls.some((c) => c.method === "DELETE" && c.url.endsWith("/orders/1001"))).toBe(true);
   });
 });
+
+describe("SchwabBroker — concurrent reads (latency)", () => {
+  it("getLastClose fetches symbols concurrently, keeps symbol order in the result, and refreshes an expired token ONCE", async () => {
+    const store = seededStore();
+    store.write({ ...store.read()!, accessExpiresAt: NOW - 1 }); // expired: the first read must refresh
+    let tokenPosts = 0, inFlight = 0, peak = 0;
+    const fetchImpl = (async (url: string, init: RequestInit = {}) => {
+      if (url.includes("/oauth/token")) { tokenPosts++; await new Promise((r) => setTimeout(r, 5)); return json({ access_token: `A${tokenPosts}`, refresh_token: `R${tokenPosts}`, expires_in: 1800 }); }
+      expect((init.headers as Record<string, string>).Authorization).toBe("Bearer A1");
+      inFlight++; peak = Math.max(peak, inFlight);
+      const sym = new URL(url).searchParams.get("symbol")!;
+      await new Promise((r) => setTimeout(r, sym === "AAA" ? 15 : 2)); // first symbol lands last
+      inFlight--;
+      return json({ candles: [{ close: sym.charCodeAt(0), datetime: Date.parse("2026-09-25T20:00:00Z") }] });
+    }) as unknown as typeof fetch;
+    const b = new SchwabBroker({ tokenStore: store, clientId: "cid", clientSecret: "s", accountHash: HASH, fetchImpl, nowMs: () => NOW });
+    const out = await b.getLastClose(["AAA", "BBB", "CCC", "DDD", "EEE", "FFF"], "2026-09-25");
+    expect(Object.keys(out)).toEqual(["AAA", "BBB", "CCC", "DDD", "EEE", "FFF"]);
+    expect(out.AAA).toBe(65);
+    expect(tokenPosts).toBe(1); // single-flight: no racing refreshes with the same refresh token
+    expect(peak).toBeGreaterThan(1);
+    expect(peak).toBeLessThanOrEqual(4);
+    expect(store.read()).toMatchObject({ accessToken: "A1", refreshToken: "R1" });
+  });
+  it("getLastClose surfaces the first missing symbol's error, like the sequential loop", async () => {
+    const fetchImpl = (async (url: string) => {
+      const sym = new URL(url).searchParams.get("symbol")!;
+      await new Promise((r) => setTimeout(r, sym === "BBB" ? 10 : 1));
+      return json({ candles: sym === "AAA" ? [{ close: 1, datetime: Date.parse("2026-09-25T20:00:00Z") }] : [] });
+    }) as unknown as typeof fetch;
+    await expect(mk(fetchImpl).getLastClose(["AAA", "BBB", "CCC"], "2026-09-25")).rejects.toThrow(/no daily candle for BBB/);
+  });
+});

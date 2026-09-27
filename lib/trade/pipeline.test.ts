@@ -255,3 +255,21 @@ describe("run record signals keep scenario risk (plan #6 prerequisite)", () => {
     expect(sig.scenarios?.map((x) => x.impliedPrice)).toEqual([150, 120, 80]);
   });
 });
+
+describe("planRun — concurrent reads keep the book-read order (latency)", () => {
+  it("reads positions, then orders, then account strictly in sequence; fetches trade+quote per traded ticker", async () => {
+    const b = new FakeBroker({ calendar: CAL, closes: { NVT: closes(100) }, equity: 10_000, cash: 10_000, isOpen: true, today: "2026-09-25" });
+    const log: string[] = [];
+    const wrap = <K extends "getPositions" | "getOrders" | "getAccount" | "getLatestTrade" | "getLatestQuote">(k: K) => {
+      const orig = (b[k] as (...a: unknown[]) => Promise<unknown>).bind(b);
+      (b as unknown as Record<string, unknown>)[k] = async (...a: unknown[]) => { log.push(`${k}:start`); await new Promise((r) => setTimeout(r, 2)); const v = await orig(...a); log.push(`${k}:end`); return v; };
+    };
+    (["getPositions", "getOrders", "getAccount", "getLatestTrade", "getLatestQuote"] as const).forEach(wrap);
+    await planRun({ adapter: b, reports: [nvt], sics: {}, marketCapUsd: {}, fills: [], today: "2026-09-25", cfg: { ...cfg, reconcileOrders: true }, runId: "r" });
+    const at = (e: string) => log.indexOf(e);
+    expect(at("getPositions:end")).toBeLessThan(at("getOrders:start"));
+    expect(at("getOrders:end")).toBeLessThan(at("getAccount:start"));
+    expect(log.filter((e) => e === "getLatestTrade:start")).toHaveLength(1);
+    expect(log.filter((e) => e === "getLatestQuote:start")).toHaveLength(1);
+  });
+});
