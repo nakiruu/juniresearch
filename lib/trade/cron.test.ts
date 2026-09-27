@@ -102,6 +102,33 @@ describe("runCron", () => {
     expect((await runCron(mkDeps({ paths: mkPaths(), cfg, nowMs: at("11:05") }))).status).toBe("late");
   });
 
+  describe("PREVIEW_ONLY", () => {
+    const withNvt = { loadInputs: async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] as Fill[] }) };
+    it("plans and posts the allocation, but submits nothing, writes no run record and leaves the halt counter alone", async () => {
+      const paths = mkPaths();
+      bumpHalt(paths.haltState); // a prior halt must be neither cleared nor bumped by a preview
+      const adapter = mkBroker();
+      const posted: { status: string; rows: { ticker: string }[] }[] = [];
+      const r = await runCron(mkDeps({ paths, adapter, previewOnly: true, notifyAllocation: (a) => posted.push(a), ...withNvt }));
+      expect(r).toEqual({ status: "preview", orders: 1 });
+      expect(await adapter.getOrders("all")).toEqual([]);
+      expect(existsSync(paths.runs)).toBe(false);
+      expect(readHaltState(paths.haltState)).toEqual({ consecutive: 1 });
+      expect(posted).toHaveLength(1);
+      expect(posted[0].status).toMatch(/^preview — auto-trade off \(PREVIEW_ONLY\) · 1 order\(s\) not sent$/);
+      expect(posted[0].rows.map((x) => x.ticker)).toContain("NVT");
+      expect(readFileSync(paths.log, "utf8")).toMatch(/ preview orders=1/);
+      expect(existsSync(paths.lock)).toBe(false);
+    });
+    it("still honours the kill switch, the market clock and reconcile first", async () => {
+      expect(await runCron(mkDeps({ paths: mkPaths(), previewOnly: true, disabled: true }))).toEqual({ status: "disabled" });
+      expect(await runCron(mkDeps({ paths: mkPaths(), previewOnly: true, adapter: mkBroker({ isOpen: false }) }))).toEqual({ status: "closed" });
+      const adapter = mkBroker();
+      await adapter.submitOrder({ symbol: "NVT", side: "buy", notional: 1_000, clientOrderId: "manual", estNotionalUsd: 1_000 }); // unexplained
+      expect(await runCron(mkDeps({ paths: mkPaths(), adapter, previewOnly: true, ...withNvt }))).toEqual({ status: "halted", reason: "reconcile" });
+    });
+  });
+
   it("kill switch still wins over the fire window", async () => {
     expect(await runCron(mkDeps({ paths: mkPaths(), nowMs: Date.parse(`${TODAY}T23:00:00.000Z`), disabled: true }))).toEqual({ status: "disabled" });
   });
