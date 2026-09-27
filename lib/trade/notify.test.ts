@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { goalBook, runEmbed, alertEmbed, postDiscord, makeNotifier, summaryFromRun, type RunSummaryInput } from "./notify";
+import { goalBook, runEmbed, alertEmbed, postDiscord, makeNotifier, summaryFromRun, allocationRows, allocationEmbed, allocationFromRun, type RunSummaryInput } from "./notify";
 
 const baseSummary = (over: Partial<RunSummaryInput> = {}): RunSummaryInput => ({
   today: "2026-09-25", runId: "r1", broker: "schwab", status: "executed", nav: 100_000, cash: 41_487,
@@ -105,5 +105,60 @@ describe("summaryFromRun", () => {
     expect(s.goal).toContainEqual({ ticker: "BBB", weight: 0.1 });
     expect(s.skipped).toEqual([{ ticker: "CCC", reason: "gap" }]);
     expect(s.audit).toEqual({ ok: true, critical: 0, warn: 0 });
+  });
+});
+
+describe("allocation (every trade:execute)", () => {
+  // NAV $1,000: AAA held 50% (a DEFER_TRIM under a sell lock), BBB held 20% inside the band, CCC a new
+  // ENTER that was sized, DDD an ENTER too small for one share, ZZZ held with no report, XXX ineligible and not held.
+  const out = {
+    record: { today: "2026-09-28", runId: "r1", broker: "schwab" },
+    ledger: { nav: 1_000, cash: 300, positions: [
+      { ticker: "AAA", qty: 5, marketValue: 500, avgCost: 100 }, { ticker: "BBB", qty: 2, marketValue: 200, avgCost: 100 }, { ticker: "ZZZ", qty: 1, marketValue: 0.001, avgCost: 1 },
+    ] },
+    plan: {
+      plannedCash: 0.2,
+      trades: [{ ticker: "CCC", reason: "ENTER", targetWeight: 0.1, currentWeight: 0 }, { ticker: "DDD", reason: "ENTER", targetWeight: 0.03, currentWeight: 0 }],
+      skipped: [
+        { ticker: "AAA", code: "DEFER_TRIM", reasons: ["sell-locked"], unlockOn: "2026-10-02", currentWeight: 0.5, targetWeight: 0.1 },
+        { ticker: "BBB", code: "BELOW_BAND", reasons: [], currentWeight: 0.2, targetWeight: 0.21 },
+        { ticker: "ZZZ", code: "NO_SIGNAL", reasons: [], currentWeight: 0.000001, targetWeight: null },
+        { ticker: "XXX", code: "INELIGIBLE", reasons: [], currentWeight: 0, targetWeight: null },
+      ],
+    },
+    sized: { orders: [{ ticker: "CCC", side: "buy", qty: 4, limitPrice: 24.5, reason: "ENTER" }], skippedHalt: [], skippedDust: [{ ticker: "DDD", deltaUsd: 30 }] },
+  } as unknown as Parameters<typeof allocationRows>[0];
+
+  it("lists every name in the book with current → target, $ target, action and order", () => {
+    const rows = allocationRows(out);
+    expect(rows.map((r) => r.ticker)).toEqual(["BBB", "AAA", "CCC", "DDD", "ZZZ"]); // by target; XXX (not held, not sized) left out
+    expect(rows.find((r) => r.ticker === "AAA")).toMatchObject({ currentWeight: 0.5, targetWeight: 0.1, targetUsd: 100, action: "trim deferred (sell-locked) until 2026-10-02" });
+    expect(rows.find((r) => r.ticker === "CCC")).toMatchObject({ action: "ENTER", order: "buy 4 @ $24.5", targetUsd: 100 });
+    expect(rows.find((r) => r.ticker === "DDD")?.order).toMatch(/under the \$ minimum or < 1 share/);
+    expect(rows.find((r) => r.ticker === "BBB")?.action).toBe("hold (within band)");
+    expect(rows.find((r) => r.ticker === "ZZZ")).toMatchObject({ targetWeight: null, action: "held, no report — frozen" });
+  });
+  it("renders a Discord embed titled with the status, within Discord's limits", () => {
+    const e = allocationEmbed(allocationFromRun(out, "preview — nothing submitted")).embeds![0] as { title: string; description: string; fields: { value: string }[] };
+    expect(e.title).toBe("ALLOCATION · preview — nothing submitted · schwab · 2026-09-28");
+    expect(e.description).toBe("NAV $1000 · cash now 30.0% · target cash 20.0%");
+    expect(e.fields.every((f) => f.value.length <= 1024)).toBe(true);
+    expect(e.fields[0].value).toMatch(/AAA\s+50\.0% →\s+10\.0%\s+\$\s+100/);
+  });
+  it("splits a large book across fields and caps the total size", () => {
+    const many = { ...out, plan: { ...(out as unknown as { plan: object }).plan, trades: Array.from({ length: 200 }, (_, i) => ({ ticker: `T${i}`, reason: "ENTER", targetWeight: 0.005, currentWeight: 0 })) } } as unknown as Parameters<typeof allocationRows>[0];
+    const e = allocationEmbed(allocationFromRun(many, "preview")).embeds![0] as { fields: { value: string }[] };
+    expect(e.fields.length).toBeGreaterThan(1);
+    expect(e.fields.every((f) => f.value.length <= 1024)).toBe(true);
+    expect(e.fields.reduce((a, f) => a + f.value.length, 0)).toBeLessThan(6000);
+    expect(e.fields.at(-1)!.value).toMatch(/\+\d+ more/);
+  });
+  it("makeNotifier.allocation posts it", async () => {
+    const calls: string[] = [];
+    const n = makeNotifier({ webhookUrl: "https://discord/x", onLog: () => {}, fetchImpl: (async (_u: string, init: RequestInit) => { calls.push(String(init.body)); return jsonRes(204); }) as unknown as typeof fetch });
+    n.allocation(allocationFromRun(out, "declined — nothing submitted"));
+    await n.flush();
+    expect(calls).toHaveLength(1);
+    expect(calls[0]).toContain("ALLOCATION · declined");
   });
 });

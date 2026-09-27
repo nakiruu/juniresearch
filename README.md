@@ -192,6 +192,7 @@ npm run trade:reconcile                   # broker → data/trade/ledger.json. R
 npm run trade:plan                        # compute + record the plan. NEVER submits. --broker fake (default) | alpaca (read-only)
 npm run trade:execute                     # plan → confirm → submit through the guards → record fills → broker-truth audit
 npm run trade:execute -- --yes            # same, non-interactive (skips the confirm prompt)
+npm run trade:execute -- --preview        # plan only, never submits (works with the market closed / TRADE_DISABLED=1)
 npm run trade:cron                        # the scheduler entrypoint: clock → breakers → execute-if-any → audit → notify
 npm run trade:audit                       # read-only broker-truth cross-check of the latest run.  -- --run <id> | --date <YYYY-MM-DD>
 npm run trade:review -- --since 2026-09-01 # weekly digest: turnover, cash band, deferrals, reconciled-every-run, lock violations, cap-binds
@@ -224,6 +225,7 @@ runs a Phase-0 dry loop against an in-memory book.
 |---|---|---|
 | `TRADE_DISABLED=1` | env kill switch | refuses every submission, both brokers |
 | confirm prompt | `trade:execute` | requires `y` (or `--yes`) before any order |
+| allocation post | `trade:execute` | every run prints the target book and posts it to Discord — preview, declined, market-closed and executed runs alike |
 | market-clock check | `trade:execute` / `trade:cron` | exits cleanly outside the regular session (09:30–16:00 ET on trading days) |
 | fire window | `trade:cron` | a run starting > 20 min after `cronTimeET` exits as `late` (`trade:cron -- --now` for a deliberate manual run) |
 | turnover breaker | `trade:cron` | halts a run whose turnover > 15% of NAV (so the initial deploy must go via `trade:execute`) |
