@@ -94,6 +94,17 @@ describe("SchwabBroker reads", () => {
     expect(await b.getLatestTrade("NEE")).toEqual({ price: 75.5, tsMs: NOW });
     expect(await b.getLatestQuote("NEE")).toEqual({ bid: 75.4, ask: 75.6, tsMs: NOW });
   });
+  it("concurrent getLatestTrade + getLatestQuote for one symbol share ONE /quotes request; later calls re-fetch", async () => {
+    const { fetchImpl, calls } = mockFetch({});
+    const b = mk(fetchImpl);
+    const quoteCalls = () => calls.filter((c) => c.url.includes("/quotes")).length;
+    const [trade, quote] = await Promise.all([b.getLatestTrade("NEE"), b.getLatestQuote("NEE")]);
+    expect(trade).toEqual({ price: 75.5, tsMs: NOW });
+    expect(quote).toEqual({ bid: 75.4, ask: 75.6, tsMs: NOW });
+    expect(quoteCalls()).toBe(1);
+    await b.getLatestQuote("NEE"); // nothing cached past settlement: fresh read
+    expect(quoteCalls()).toBe(2);
+  });
   it("isFractionable is always false", async () => {
     expect(await mk(mockFetch({}).fetchImpl).isFractionable(["NEE", "AMZN"])).toEqual({ NEE: false, AMZN: false });
   });

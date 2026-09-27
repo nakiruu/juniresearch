@@ -19,15 +19,13 @@
  * landmark holding plain links with `aria-current="location"` on the active
  * one.
  *
- * Markup: this renders exactly the DOM the ReUI stepper primitives
- * (components/reui/stepper.tsx) produced — same data-slot/data-state hooks and
- * the same merged class lists — but without importing them. Those primitives
- * pull the `cn` class-merging engine, @base-ui helpers and lucide-react into
- * this client island (~30 KB of JS per report page) only to merge a handful of
- * static class strings. The merged strings are precomputed below, and
- * ReportStepper.parity.test.tsx renders the original primitive-based stepper
- * beside this one and requires identical markup, so the two cannot drift.
- * The check glyph is lucide's `Check`, inlined as the SVG it renders.
+ * Markup: this renders the DOM the former ReUI stepper primitives produced —
+ * same data-slot/data-state hooks and the same merged class lists — without a
+ * primitive library. Those primitives pulled the `cn` class-merging engine,
+ * @base-ui helpers and lucide-react into this client island (~30 KB of JS per
+ * report page) only to merge a handful of static class strings, so the merged
+ * strings are written out below. The check glyph is lucide's `Check`, inlined
+ * as the SVG it renders.
  *
  * Every Tailwind class is written out in full: the scanner only generates
  * utilities it can read verbatim from the source.

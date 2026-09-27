@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { fetchSubmissions, type Filing } from "../lib/edgar/submissions";
 import { detectNew, markSeen, flattenFilings, type SeenState, type WatchEntry } from "../lib/edgar/detect";
 import { EDGAR_MIN_INTERVAL_MS } from "../lib/edgar/client";
-import { createRateLimiter, mapConcurrent } from "../lib/edgar/throttle";
+import { createRateLimiter, mapWithConcurrency } from "../lib/concurrency";
 import { requireContact } from "./_env";
 
 const contact = requireContact();
@@ -12,7 +12,7 @@ const seen = JSON.parse(readFileSync("data/edgar/seen.json", "utf8")) as SeenSta
 // Overlap the per-ticker submissions fetches: request starts stay ≥ EDGAR_MIN_INTERVAL_MS apart
 // (SEC fair access), but one slow response no longer holds up the rest of the watchlist.
 const limit = createRateLimiter(EDGAR_MIN_INTERVAL_MS);
-const fetched = await mapConcurrent(watchlist, 4, (w) => limit(() => fetchSubmissions(w.cik, contact)));
+const fetched = await mapWithConcurrency(watchlist, 4, (w) => limit(() => fetchSubmissions(w.cik, contact)), { onError: "fail-fast" });
 const byTicker: Record<string, Filing[]> = {};
 watchlist.forEach((w, i) => { byTicker[w.ticker] = fetched[i]; }); // watchlist order, as before
 const fresh = detectNew(byTicker, seen);

@@ -10,7 +10,7 @@ import { makeV2Scorer, DEFAULT_SIZING_V2 } from "../lib/portfolio/sizing-v2";
 import { activeWeights } from "../lib/portfolio/benchmark";
 import { assembleSnapshot, toCSV } from "../lib/portfolio/snapshot";
 import type { Report } from "../lib/report.schema";
-import { mapWithConcurrency } from "../lib/broker/http";
+import { mapWithConcurrency } from "../lib/concurrency";
 
 /** Yahoo chart fetches in flight at once — the same politeness bound lib/trade/pipeline.ts uses. */
 const PRICE_CONCURRENCY = 4;

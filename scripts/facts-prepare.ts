@@ -6,7 +6,7 @@ import {
 } from "../lib/edgar/submissions";
 import { fetchPrimaryDocument } from "../lib/edgar/filing-text";
 import { edgarJson, EDGAR_MIN_INTERVAL_MS } from "../lib/edgar/client";
-import { createRateLimiter } from "../lib/edgar/throttle";
+import { createRateLimiter } from "../lib/concurrency";
 import type { WatchEntry } from "../lib/edgar/detect";
 import { fetchDailyCloses } from "../lib/prices/yahoo";
 import { isoMinusDays, PRESS_RELEASE_FILE, PRESS_RELEASE_MISSING_FILE, ANNUAL_PRIMARY_FILE, PROXY_FILE } from "../lib/facts/manifest";

@@ -16,7 +16,8 @@ import { SCHWAB_HOST } from "./guards";
 import { nyseTradingDays } from "../trade/nyse-calendar";
 import { etMinutesOfDay, etWallToUtc, hhmmToMinutes, todayET } from "../trade/clock";
 import { ensureAccessToken, type SchwabTokenStore } from "./schwab-auth";
-import { AmbiguousOrderError, BrokerTimeoutError, DEFAULT_TIMEOUTS, SubmitOutcomeUnknownError, fetchWithTimeout, mapWithConcurrency, withReadRetry } from "./http";
+import { AmbiguousOrderError, BrokerTimeoutError, DEFAULT_TIMEOUTS, SubmitOutcomeUnknownError, fetchWithTimeout, withReadRetry } from "./http";
+import { mapWithConcurrency } from "../concurrency";
 
 /** Max concurrent per-symbol price-history reads (well inside Schwab's ~120 req/min market-data limit). */
 const PRICE_HISTORY_CONCURRENCY = 4;
@@ -175,12 +176,26 @@ export class SchwabBroker implements BrokerAdapter {
     symbols.forEach((s, i) => { out[s] = closes[i]; });
     return out;
   }
+  /**
+   * getLatestTrade and getLatestQuote read the same /quotes payload, and planRun asks for both at once,
+   * so concurrent calls for one symbol share ONE request. Nothing is kept past settlement: a later call
+   * always fetches fresh, so staleness is still judged on data read at call time.
+   */
+  private quoteInFlight = new Map<string, Promise<z.infer<typeof QuotesResp>>>();
+  private fetchQuote(symbol: string) {
+    let p = this.quoteInFlight.get(symbol);
+    if (!p) {
+      p = this.get(QuotesResp, `${this.data}/quotes?symbols=${encodeURIComponent(symbol)}`).finally(() => { this.quoteInFlight.delete(symbol); });
+      this.quoteInFlight.set(symbol, p);
+    }
+    return p;
+  }
   async getLatestTrade(symbol: string): Promise<{ price: number; tsMs: number } | null> {
-    const q = (await this.get(QuotesResp, `${this.data}/quotes?symbols=${encodeURIComponent(symbol)}`))[symbol]?.quote;
+    const q = (await this.fetchQuote(symbol))[symbol]?.quote;
     return q?.lastPrice != null ? { price: q.lastPrice, tsMs: q.tradeTime ?? this.now() } : null;
   }
   async getLatestQuote(symbol: string): Promise<{ bid: number; ask: number; tsMs: number } | null> {
-    const q = (await this.get(QuotesResp, `${this.data}/quotes?symbols=${encodeURIComponent(symbol)}`))[symbol]?.quote;
+    const q = (await this.fetchQuote(symbol))[symbol]?.quote;
     return q?.bidPrice != null && q?.askPrice != null ? { bid: q.bidPrice, ask: q.askPrice, tsMs: q.quoteTime ?? this.now() } : null;
   }
   async isFractionable(symbols: string[]): Promise<Record<string, boolean>> {
