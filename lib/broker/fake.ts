@@ -105,5 +105,6 @@ export class FakeBroker implements BrokerAdapter {
     this.orders.push(o);
     return o;
   }
-  async cancelOrder(): Promise<void> { /* nothing is ever open in the fake */ }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async cancelOrder(_id: string): Promise<void> { /* nothing is ever open in the fake */ }
 }

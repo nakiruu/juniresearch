@@ -259,11 +259,13 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
       brokerKind: adapter.kind, configuredBaseUrl, locks: out.locks, today, nav: out.ledger.nav, cfg,
       env, cashUsd: out.ledger.cash, counters: { orders: 0, notionalUsd: 0, buyNotionalUsd: 0, sellProceedsUsd: 0 },
     };
-    const { fills, executed, aborted, skippedCash } = await executeOrders({ adapter, sized: out.sized, ctx, runId, fillsPath: paths.fills, resolveDelaysMs: deps.resolveDelaysMs, now: deps.clock });
+    const { fills, executed, aborted, skippedCash, rejected, skippedLegs } = await executeOrders({ adapter, sized: out.sized, ctx, runId, fillsPath: paths.fills, resolveDelaysMs: deps.resolveDelaysMs, now: deps.clock });
     const rec = {
       ...out.record, fills: fills as unknown as Record<string, unknown>[], orders: mergeExecution(out.record.orders, executed),
-      notes: [...out.record.notes, ...skippedCash.map((s) => `cash skipped: ${s.ticker} — ${s.detail}`)],
+      notes: [...out.record.notes, ...skippedCash.map((s) => `cash skipped: ${s.ticker} — ${s.detail}`),
+        ...rejected.map((r) => `rejected: ${r.ticker} — ${r.detail}`), ...skippedLegs.map((l) => `leg skipped: ${l.ticker} — ${l.detail}`)],
     };
+    if (rejected.length) notify(`cron: ${rejected.length} order(s) rejected by the broker (nothing placed for them) — ${rejected.map((r) => `${r.ticker}: ${r.detail}`).join("; ")}`);
     if (skippedCash.length) notify(`cron: ${skippedCash.length} buy(s) skipped by the cash backstop — ${skippedCash.map((s) => s.ticker).join(", ")} (broker cash couldn't cover them; usually a funding sell that didn't fill)`);
     writeRunRecord(paths.runs, rec);
 
@@ -272,7 +274,7 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
     // ledger) is a halt — bump the counter, notify, exit non-zero. Warnings pass. Only a clean audit
     // clears the consecutive-halt counter.
     // Audit only what was actually sent (a cash-skipped buy never reached the broker).
-    const brokerIdByCid = new Map(executed.map((e) => [e.clientOrderId, e.brokerId || undefined]));
+    const brokerIdByCid = new Map(executed.filter((e) => e.status !== "rejected").map((e) => [e.clientOrderId, e.brokerId || undefined])); // a rejected order never reached the book
     const audit = crossCheckBroker({
       expected: out.sized.orders.filter((o) => brokerIdByCid.has(o.clientOrderId)).map((o) => ({ clientOrderId: o.clientOrderId, ticker: o.ticker, side: o.side, brokerId: brokerIdByCid.get(o.clientOrderId) })),
       brokerOrders: await adapter.getOrders("all", `${today}T00:00:00Z`),

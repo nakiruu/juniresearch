@@ -6,7 +6,7 @@
 import { z } from "zod";
 import type { BrokerAdapter, BrokerAccount, BrokerCalendarDay, BrokerClock, BrokerOrder, BrokerOrderStatus, BrokerPosition, SubmitOrderRequest } from "./adapter";
 import { PAPER_HOST } from "./guards";
-import { DEFAULT_TIMEOUTS, BrokerTimeoutError, SubmitOutcomeUnknownError, fetchWithTimeout, withReadRetry } from "./http";
+import { DEFAULT_TIMEOUTS, BrokerTimeoutError, OrderRejectedError, SubmitOutcomeUnknownError, fetchWithTimeout, withReadRetry } from "./http";
 
 export interface AlpacaOptions {
   keyId: string; secretKey: string; baseUrl: string; dataBaseUrl?: string; feed?: "iex" | "sip"; fetchImpl?: typeof fetch;
@@ -126,7 +126,7 @@ export class AlpacaPaperBroker implements BrokerAdapter {
       throw e;
     }
     if (res.status >= 500) throw new SubmitOutcomeUnknownError(req.clientOrderId, req.symbol, startAt, `Alpaca POST → ${res.status}`);
-    if (!res.ok) throw new Error(`Alpaca POST ${url} → ${res.status}: ${res.text.slice(0, 300)}`); // 4xx: definitively not accepted
+    if (!res.ok) throw new OrderRejectedError(req.symbol, `Alpaca POST ${url} → ${res.status}: ${res.text.slice(0, 300)}`); // 4xx: definitively not accepted
     return this.toOrder(Order.parse(JSON.parse(res.text)));
   }
   /** Alpaca keeps our client_order_id, so a timed-out submit is found by exact id. */

@@ -24,6 +24,17 @@ export class SubmitOutcomeUnknownError extends Error {
   }
 }
 
+/**
+ * The broker DEFINITIVELY refused an order (a 4xx), or the adapter refused to send it (e.g. a sub-share
+ * LIMIT on Schwab). Nothing was placed, so the run records it as rejected and carries on with the next order.
+ */
+export class OrderRejectedError extends Error {
+  constructor(readonly symbol: string, readonly detail: string) {
+    super(`order for ${symbol} rejected — ${detail}`);
+    this.name = "OrderRejectedError";
+  }
+}
+
 /** More than one broker order matches a timed-out submit, so it can't be attributed safely. */
 export class AmbiguousOrderError extends Error {
   constructor(msg: string) { super(msg); this.name = "AmbiguousOrderError"; }

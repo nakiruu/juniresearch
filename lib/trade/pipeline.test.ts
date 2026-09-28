@@ -8,6 +8,8 @@ import { resolveTradeConfig } from "./config";
 import { readFills } from "./fills";
 import { fixtureReport } from "../portfolio/__fixtures__/reports";
 import type { GuardContext } from "../broker/guards";
+import type { BrokerOrder, SubmitOrderRequest } from "../broker/adapter";
+import { OrderRejectedError } from "../broker/http";
 import type { OrderRequest, SizedOrders } from "./orders";
 
 const CAL = ["2026-09-21", "2026-09-22", "2026-09-23", "2026-09-24", "2026-09-25"].map((date) => ({ date, open: "09:30", close: "16:00" }));
@@ -183,7 +185,7 @@ describe("fillTradingDate — the lock clock starts on the fill's ET date", () =
 describe("executeOrders — cash backstop (spec F5)", () => {
   const D = "2026-09-25";
   const mkOrder = (o: Pick<OrderRequest, "ticker" | "side" | "qty" | "limitPrice">): OrderRequest => ({
-    ...o, sector: "0", kind: "qty", timeInForce: "ioc", tier: 1, capBound: false, anchorReason: "fresh_trade",
+    ...o, sector: "0", kind: "qty", type: "limit", timeInForce: "ioc", tier: 1, capBound: false, anchorReason: "fresh_trade",
     clientOrderId: `c-${o.ticker}-${o.side}`, reason: o.side === "buy" ? "ENTER" : "EXIT", deltaUsd: o.qty * o.limitPrice, estCostUsd: 0, bucket: "large",
   });
   /** Account holding 10 AAA @ $100 with $1,000 cash; ctx NAV $5,000 (so the notional cap never binds) → cash floor $50. */
@@ -214,6 +216,66 @@ describe("executeOrders — cash backstop (spec F5)", () => {
     const r = await executeOrders({ adapter: b, sized: sized([mkOrder({ ticker: "AAA", side: "buy", qty: 9, limitPrice: 99 }), mkOrder({ ticker: "BBB", side: "buy", qty: 9, limitPrice: 100 })]), ctx, runId: "r", fillsPath, pollMs: 0 });
     expect(r.skippedCash).toEqual([]); // the first IOC didn't fill (99 < 100), so its $891 came back
     expect(ctx.counters.buyNotionalUsd).toBe(900);
+  });
+});
+
+describe("executeOrders — emulated IOC, definitive rejects, hybrid legs (audit 2026-09-28)", () => {
+  const D = "2026-09-25";
+  const mk = (o: Partial<OrderRequest> & Pick<OrderRequest, "ticker" | "side" | "qty" | "limitPrice">): OrderRequest => ({
+    sector: "0", kind: "qty", type: "limit", timeInForce: "ioc", tier: 1, capBound: false, anchorReason: "ok",
+    clientOrderId: `c-${o.ticker}-${o.side}-${o.leg ?? "x"}`, reason: "ENTER", deltaUsd: o.qty * o.limitPrice, estCostUsd: 0, bucket: "large", ...o,
+  });
+  const ctxFor = (): GuardContext => ({ brokerKind: "fake", configuredBaseUrl: "memory://", locks: { buyLockUntil: {}, sellLockUntil: {} }, today: D, nav: 100_000, cashUsd: 50_000, cfg, env: {} as NodeJS.ProcessEnv, counters: { orders: 0, notionalUsd: 0, buyNotionalUsd: 0, sellProceedsUsd: 0 } });
+  const fillsPath = () => join(mkdtempSync(join(tmpdir(), "ioc-")), "fills.jsonl");
+  const sized = (orders: OrderRequest[]): SizedOrders => ({ orders, skippedDust: [], skippedHalt: [] });
+
+  /** A Schwab-like broker: an order rests (working) until cancelled, then settles as canceled with a partial fill of 3. */
+  class RestingBroker extends FakeBroker {
+    cancels: string[] = [];
+    private resting = new Map<string, BrokerOrder>();
+    async submitOrder(req: SubmitOrderRequest): Promise<BrokerOrder> {
+      const o: BrokerOrder = { id: `r-${this.resting.size + 1}`, clientOrderId: req.clientOrderId, symbol: req.symbol, side: req.side, status: "new", qty: req.qty ?? null, notional: null, filledQty: 0, filledAvgPrice: null, filledAt: null, submittedAt: `${D}T14:00:00Z` };
+      this.resting.set(o.id, o);
+      return o;
+    }
+    async getOrders(): Promise<BrokerOrder[]> { return [...this.resting.values()]; }
+    async cancelOrder(id: string): Promise<void> {
+      this.cancels.push(id);
+      const o = this.resting.get(id)!;
+      this.resting.set(id, { ...o, status: "canceled", filledQty: 3, filledAvgPrice: 100, filledAt: `${D}T14:00:05Z` });
+    }
+  }
+  const broker = () => new FakeBroker({ calendar: CAL, closes: { AAA: { [D]: 100 }, BBB: { [D]: 100 } }, equity: 50_000, cash: 50_000, isOpen: true, today: D });
+
+  it("an IOC limit still working after iocPolls is cancelled; the partial fill before the cancel is recorded", async () => {
+    const b = new RestingBroker({ calendar: CAL, closes: { AAA: { [D]: 100 } }, equity: 50_000, cash: 50_000, isOpen: true, today: D });
+    const r = await executeOrders({ adapter: b, sized: sized([mk({ ticker: "AAA", side: "buy", qty: 10, limitPrice: 100.5 })]), ctx: ctxFor(), runId: "r", fillsPath: fillsPath(), pollMs: 0, iocPolls: 2 });
+    expect(b.cancels).toEqual(["r-1"]);
+    expect(r.executed[0]).toMatchObject({ status: "canceled", filledQty: 3 });
+    expect(r.fills).toEqual([expect.objectContaining({ ticker: "AAA", qty: 3, orderId: "r-1" })]);
+  });
+  it("a definitively rejected order is recorded and the run carries on to the next order", async () => {
+    const b = broker();
+    const real = b.submitOrder.bind(b);
+    b.submitOrder = async (req) => { if (req.symbol === "AAA") throw new OrderRejectedError("AAA", "Schwab POST order → 400: nope"); return real(req); };
+    const r = await executeOrders({ adapter: b, sized: sized([mk({ ticker: "AAA", side: "buy", qty: 1, limitPrice: 101 }), mk({ ticker: "BBB", side: "buy", qty: 1, limitPrice: 101 })]), ctx: ctxFor(), runId: "r", fillsPath: fillsPath(), pollMs: 0 });
+    expect(r.rejected).toEqual([{ ticker: "AAA", clientOrderId: "c-AAA-buy-x", detail: "Schwab POST order → 400: nope" }]);
+    expect(r.executed.map((e) => [e.clientOrderId, e.status])).toEqual([["c-AAA-buy-x", "rejected"], ["c-BBB-buy-x", "filled"]]);
+  });
+  it("a market order goes without a price; its remainder leg is sent only when the whole-share limit leg filled", async () => {
+    const b = broker();
+    const sent: SubmitOrderRequest[] = [];
+    const real = b.submitOrder.bind(b);
+    b.submitOrder = async (req) => { sent.push(req); return real(req); };
+    const r = await executeOrders({ adapter: b, ctx: ctxFor(), runId: "r", fillsPath: fillsPath(), pollMs: 0, sized: sized([
+      mk({ ticker: "AAA", side: "buy", qty: 2, limitPrice: 101, leg: "whole" }),                                          // fills (101 ≥ 100)
+      mk({ ticker: "AAA", side: "buy", qty: 0.5, limitPrice: 101, leg: "frac", type: "market", timeInForce: "day" }),     // → sent
+      mk({ ticker: "BBB", side: "buy", qty: 2, limitPrice: 99, leg: "whole" }),                                           // no fill (99 < 100)
+      mk({ ticker: "BBB", side: "buy", qty: 0.5, limitPrice: 99, leg: "frac", type: "market", timeInForce: "day" }),      // → skipped
+    ]) });
+    expect(sent.map((q) => [q.symbol, q.qty, q.limitPrice])).toEqual([["AAA", 2, 101], ["AAA", 0.5, undefined], ["BBB", 2, 99]]);
+    expect(r.fills.filter((f) => f.ticker === "AAA").reduce((a, f) => a + f.qty, 0)).toBe(2.5);
+    expect(r.skippedLegs).toEqual([expect.objectContaining({ ticker: "BBB", clientOrderId: "c-BBB-buy-frac" })]);
   });
 });
 

@@ -15,7 +15,7 @@ export interface RunSummaryInput {
   today: string; runId: string; broker: string; status: string; // executed | noop | plan
   nav: number; cash: number;
   goal: { ticker: string; weight: number }[];
-  orders: { ticker: string; side: string; qty: number; limitPrice: number; reason: string }[];
+  orders: { ticker: string; side: string; qty: number; limitPrice: number; type?: "limit" | "market"; reason: string }[];
   fills: { ticker: string; qty: number; price: number }[];
   skipped: { ticker: string; reason: string }[];
   audit?: { ok: boolean; critical: number; warn: number };
@@ -49,7 +49,7 @@ export function summaryFromRun(out: PlanRunOutput, status: string, fills: Fill[]
     today: out.record.today, runId: out.record.runId, broker: out.record.broker, status,
     nav: out.ledger.nav, cash: out.ledger.cash,
     goal: goalBook(weightsOf(out.ledger), out.plan.trades),
-    orders: out.sized.orders.map((o) => ({ ticker: o.ticker, side: o.side, qty: o.qty, limitPrice: o.limitPrice, reason: o.reason })),
+    orders: out.sized.orders.map((o) => ({ ticker: o.ticker, side: o.side, qty: o.qty, limitPrice: o.limitPrice, type: o.type, reason: o.reason })),
     fills: fills.map((f) => ({ ticker: f.ticker, qty: f.qty, price: f.price })),
     skipped: [...out.sized.skippedHalt.map((h) => ({ ticker: h.ticker, reason: h.reason })), ...out.sized.skippedDust.map((d) => ({ ticker: d.ticker, reason: "dust" }))],
     audit: audit ? { ok: audit.ok, critical: audit.critical, warn: audit.warn } : undefined,
@@ -72,11 +72,15 @@ export function allocationRows(out: PlanRunOutput): AllocationRow[] {
   const nav = out.ledger.nav;
   const cur = weightsOf(out.ledger);
   const rows = new Map<string, AllocationRow>();
-  const orderFor = new Map(out.sized.orders.map((o) => [o.ticker, `${o.side} ${o.qty} @ $${o.limitPrice}`]));
+  const orderFor = new Map<string, string>();
+  for (const o of out.sized.orders) {
+    const leg = `${o.side} ${o.qty} ${o.type === "market" ? "mkt" : `@ $${o.limitPrice}`}`;
+    orderFor.set(o.ticker, orderFor.has(o.ticker) ? `${orderFor.get(o.ticker)} + ${leg}` : leg);
+  }
   const dust = new Set(out.sized.skippedDust.map((d) => d.ticker));
   const halt = new Map(out.sized.skippedHalt.map((h) => [h.ticker, h.reason]));
   for (const t of out.plan.trades) {
-    const note = orderFor.get(t.ticker) ?? (dust.has(t.ticker) ? "not sent: under the $ minimum or < 1 share" : halt.has(t.ticker) ? `not sent: halted (${halt.get(t.ticker)})` : undefined);
+    const note = orderFor.get(t.ticker) ?? (dust.has(t.ticker) ? "not sent: under the $ minimum" : halt.has(t.ticker) ? `not sent: halted (${halt.get(t.ticker)})` : undefined);
     rows.set(t.ticker, { ticker: t.ticker, currentWeight: cur[t.ticker] ?? 0, targetWeight: t.targetWeight, targetUsd: t.targetWeight * nav, action: t.reason + (t.note ? ` (${t.note})` : ""), order: note });
   }
   for (const k of out.plan.skipped) {
@@ -147,7 +151,7 @@ export function runEmbed(s: RunSummaryInput): DiscordPayload {
   const cashPct = s.nav > 0 ? (s.cash / s.nav) * 100 : 0;
   const fields: { name: string; value: string; inline?: boolean }[] = [
     { name: "Account", value: `NAV $${s.nav.toFixed(0)} · cash $${s.cash.toFixed(0)} (${cashPct.toFixed(1)}%)` },
-    { name: `Orders (${s.orders.length})`, value: block(s.orders.map((o) => `${o.side} ${o.ticker} ${o.qty} @ $${o.limitPrice} (${o.reason})`), 15) },
+    { name: `Orders (${s.orders.length})`, value: block(s.orders.map((o) => `${o.side} ${o.ticker} ${o.qty} ${o.type === "market" ? "@ mkt" : `@ $${o.limitPrice}`} (${o.reason})`), 15) },
     { name: `Fills (${s.fills.length})`, value: block(s.fills.map((f) => `${f.ticker} ${f.qty} @ $${f.price}`), 15) },
     { name: `Goal book (${s.goal.length})`, value: block(s.goal.map((g) => `${g.ticker} ${(g.weight * 100).toFixed(1)}%`), 15) },
   ];

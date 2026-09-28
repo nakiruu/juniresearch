@@ -134,7 +134,7 @@ describe("allocation (every trade:execute)", () => {
     expect(rows.map((r) => r.ticker)).toEqual(["BBB", "AAA", "CCC", "DDD", "ZZZ"]); // by target; XXX (not held, not sized) left out
     expect(rows.find((r) => r.ticker === "AAA")).toMatchObject({ currentWeight: 0.5, targetWeight: 0.1, targetUsd: 100, action: "trim deferred (sell-locked) until 2026-10-02" });
     expect(rows.find((r) => r.ticker === "CCC")).toMatchObject({ action: "ENTER", order: "buy 4 @ $24.5", targetUsd: 100 });
-    expect(rows.find((r) => r.ticker === "DDD")?.order).toMatch(/under the \$ minimum or < 1 share/);
+    expect(rows.find((r) => r.ticker === "DDD")?.order).toMatch(/under the \$ minimum/);
     expect(rows.find((r) => r.ticker === "BBB")?.action).toBe("hold (within band)");
     expect(rows.find((r) => r.ticker === "ZZZ")).toMatchObject({ targetWeight: null, action: "held, no report — frozen" });
   });

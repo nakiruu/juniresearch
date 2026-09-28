@@ -4,7 +4,8 @@
 
 ## Owner constraints — never weaken
 - Trade locks are whole-ticker, symmetric (buys and sells), 5 business days. This is a compliance / trading-restriction rule. No per-lot locks.
-- Whole shares only. Schwab is the live-money broker and its Trader API takes no fractional orders; don't build fractional-share features.
+- Execution is **hybrid** (owner-approved 2026-09-28): whole-share part as a τ-capped limit, fractional remainder at MARKET. Schwab's API takes fractional qty only on MARKET orders (≥ $1 buy, ≤ 4 dp), has **no IOC** (IOC is emulated: DAY limit + cancel), and refuses sub-share LIMITs. Verify new order shapes with Schwab's `previewOrder` endpoint (places nothing), never by submitting.
+- ADD/TRIM minimum is `max($5, 1% NAV)` (owner's choice) because every fill starts a lock; ENTER $1, EXIT none. Changing it changes how often locks fire — ask first.
 - ICE is hard-banned.
 - Report staleness is a true 90-day half-life: `0.5^(age/90)`.
 - `trade:reconcile -- --record-missing` writes fills, which set compliance locks. It stays a deliberate manual step; preview/cron/scheduler only *check* reconcile and halt on a mismatch.
@@ -24,8 +25,9 @@
 - Env vars set in the cloud environment settings only reach *new* sessions.
 - The cloud env has Schwab credentials, so read-only probes of the live account are possible (construct the broker with `BROKER: "schwab"`; never submit). It does not have the server's `fills.jsonl`, so reconcile/preview results here are meaningless.
 
-## Known open issue
-- Schwab positions bought manually are fractional. A TRIM rounds to 0 shares (dust, harmless), but an EXIT sells `pos.qty` exactly, so `SchwabBroker.submitOrder`'s whole-share guard throws and aborts the run (nothing is sent). Proposed, not yet approved: sell `floor(qty)`, skip a <1-share remainder with a "sell manually in the Schwab app" note.
+## Open follow-ups (from docs/superpowers/specs/2026-09-28-pipeline-audit.md)
+- Not yet done: relative trade band (S2), μ-vs-realized tracking in `trade:review` (S3).
+- The hybrid/emulated-IOC path is unit-tested and its order bodies previewed on Schwab, but not yet proven by a live fill.
 
 ## Dev workflow
 - Checks: `npx vitest run`, `npx tsc --noEmit -p .`, `npx eslint <files>`. `lib/trade/scheduler.test.ts` has pre-existing `no-explicit-any` lint errors.

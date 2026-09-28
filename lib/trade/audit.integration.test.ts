@@ -14,7 +14,7 @@ const TODAY = "2026-09-25";
 const cfg = resolveTradeConfig();
 
 const order = (o: Partial<OrderRequest> & { ticker: string; clientOrderId: string; limitPrice: number }): OrderRequest => ({
-  sector: "35", side: "buy", kind: "qty", qty: 1, timeInForce: "ioc", tier: 1, capBound: false,
+  sector: "35", side: "buy", kind: "qty", qty: 1, type: "limit", timeInForce: "ioc", tier: 1, capBound: false,
   anchorReason: "ok", reason: "ENTER", deltaUsd: 100, estCostUsd: 0.1, bucket: "large", ...o,
 });
 

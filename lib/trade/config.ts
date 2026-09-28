@@ -15,7 +15,16 @@ export interface TradeConfig extends PortfolioConfig {
   tradeBand: number;        // no-trade band on held names, absolute weight (0.025)
   lockBusinessDays: number; // trading days from a fill to the first legal opposite-side trade (5 = ICE rule: 5 business days counting the transaction day → first legal on the 6th trading day; symmetric, whole-ticker)
   markMode: "settled" | "live";
-  minOrderUsd: number;      // skip dust trades below this notional
+  minOrderUsd: number;      // whole-share mode only (fractionalShares off): skip dust trades below this notional
+  // Hybrid execution (audit 2026-09-28): the whole-share part of an order goes as a τ-capped limit, the
+  // fractional remainder as a MARKET order (Schwab only takes sub-share quantities at market, ≥ $1, ≤ 4 dp).
+  fractionalShares: boolean;                     // false → legacy whole-share limit orders only
+  minEnterUsd: number;                           // ENTER floor in fractional mode (the broker's $1 fractional minimum)
+  minTradeUsd: number;                           // ADD/TRIM floor, $ …
+  minTradeNavFrac: number;                       // …or this fraction of NAV, whichever is larger. Every fill starts a
+                                                 // 5-day both-sides lock, so trivial rebalances must not trade. EXIT has no floor.
+  marketOnlyBelowUsd: number;                    // an order this small goes entirely at market (not split into two orders)
+  marketMaxSpread: Record<LiquidityBucket, number>; // a market leg needs a fresh quote with (ask−bid)/mid ≤ this
   maxOrdersPerRun: number;  // run-level sanity cap on order count
   maxNotionalFrac: number;  // run-level cap on total submitted notional as a fraction of NAV
   useQualityTilt: boolean;  // spec §5.4 — multiply scoreWeight by Signal.quality
@@ -47,6 +56,8 @@ export const DEFAULT_TRADE_CONFIG: TradeConfig = {
   muEnter: 0.08, muExit: 0.03, rEnter: 0.6, rExit: 0.35,
   tradeBand: 0.025, lockBusinessDays: 5, markMode: "settled",
   minOrderUsd: 25, maxOrdersPerRun: 40, maxNotionalFrac: 1.0,
+  fractionalShares: true, minEnterUsd: 1, minTradeUsd: 5, minTradeNavFrac: 0.01, marketOnlyBelowUsd: 200,
+  marketMaxSpread: { large: 0.01, mid: 0.01, small: 0.025 },
   useQualityTilt: true,
   cronTimeET: "09:45", cronTimesET: ["09:45"],
   limitTol: { large: 0.0015, mid: 0.0035, small: 0.0080 },
@@ -95,6 +106,10 @@ export function resolveTradeConfig(overrides: Partial<TradeConfig> = {}): TradeC
     if (!(cfg.gapHalt[b] > 0 && cfg.gapHalt[b] < 1)) throw new Error(`gapHalt.${b} (${cfg.gapHalt[b]}) must be in (0, 1)`);
     if (!(cfg.maxStaleMin[b] > 0)) throw new Error(`maxStaleMin.${b} (${cfg.maxStaleMin[b]}) must be positive`);
   }
+  for (const b of BUCKETS) if (!(cfg.marketMaxSpread[b] > 0 && cfg.marketMaxSpread[b] < 0.1)) throw new Error(`marketMaxSpread.${b} (${cfg.marketMaxSpread[b]}) must be in (0, 0.1)`);
+  if (!(cfg.minEnterUsd >= 1)) throw new Error(`minEnterUsd (${cfg.minEnterUsd}) must be >= 1 (the broker's fractional minimum)`);
+  if (!(cfg.minTradeUsd >= 0 && cfg.minTradeNavFrac >= 0 && cfg.minTradeNavFrac < 0.5)) throw new Error("minTradeUsd must be >= 0 and minTradeNavFrac in [0, 0.5)");
+  if (!(cfg.marketOnlyBelowUsd >= 0)) throw new Error(`marketOnlyBelowUsd (${cfg.marketOnlyBelowUsd}) must be >= 0`);
   const minLimitTol = Math.min(cfg.limitTol.large, cfg.limitTol.mid, cfg.limitTol.small);
   if (!(cfg.limitTolMin > 0 && cfg.limitTolMin <= minLimitTol)) throw new Error(`limitTolMin (${cfg.limitTolMin}) must be in (0, ${minLimitTol}]`);
   if (!(cfg.closeAnchorSizeMult > 0 && cfg.closeAnchorSizeMult <= 1)) throw new Error(`closeAnchorSizeMult (${cfg.closeAnchorSizeMult}) must be in (0, 1]`);

@@ -54,7 +54,7 @@ const sendAllocation = async (status: string) => {
   await notifier.flush();
 };
 
-for (const o of out.sized.orders) console.log(`  ${o.side} ${o.ticker} ${o.qty} sh @ limit $${o.limitPrice} ioc (${o.reason})`);
+for (const o of out.sized.orders) console.log(`  ${o.side} ${o.ticker} ${o.qty} sh ${o.type === "market" ? `@ market (~$${o.limitPrice})` : `@ limit $${o.limitPrice} ioc`} (${o.reason}${o.leg ? `, ${o.leg} leg` : ""})`);
 if (!marketOpen) { await sendAllocation("market closed — nothing submitted"); console.log("Market is closed — nothing submitted (spec §9.5)."); process.exit(0); }
 if (preview) { await sendAllocation(has(args, "--preview") ? "preview — nothing submitted" : "preview (PREVIEW_ONLY) — nothing submitted"); process.exit(0); }
 if (out.sized.orders.length === 0) { writeRunRecord(RUNS_DIR, out.record); await sendAllocation("nothing to trade"); console.log("Nothing to trade."); process.exit(0); }
@@ -64,18 +64,22 @@ if (!has(args, "--yes")) {
   if (a !== "y") { await sendAllocation("declined — nothing submitted"); console.log("Aborted; nothing submitted."); process.exit(0); }
 }
 await sendAllocation(`submitting ${out.sized.orders.length} order(s)`);
-const { fills, executed, aborted, skippedCash } = await executeOrders({ adapter, sized: out.sized, ctx: { brokerKind: adapter.kind, configuredBaseUrl: baseUrl, locks: out.locks, today, nav: out.ledger.nav, cashUsd: out.ledger.cash, cfg, env: process.env, counters: { orders: 0, notionalUsd: 0, buyNotionalUsd: 0, sellProceedsUsd: 0 } }, runId, fillsPath: FILLS_PATH });
+const { fills, executed, aborted, skippedCash, rejected, skippedLegs } = await executeOrders({ adapter, sized: out.sized, ctx: { brokerKind: adapter.kind, configuredBaseUrl: baseUrl, locks: out.locks, today, nav: out.ledger.nav, cashUsd: out.ledger.cash, cfg, env: process.env, counters: { orders: 0, notionalUsd: 0, buyNotionalUsd: 0, sellProceedsUsd: 0 } }, runId, fillsPath: FILLS_PATH });
 out.record.fills = fills as unknown as Record<string, unknown>[];
 out.record.orders = mergeExecution(out.record.orders, executed);
-out.record.notes.push(...skippedCash.map((s) => `cash skipped: ${s.ticker} — ${s.detail}`));
+out.record.notes.push(...skippedCash.map((s) => `cash skipped: ${s.ticker} — ${s.detail}`), ...rejected.map((r) => `rejected: ${r.ticker} — ${r.detail}`), ...skippedLegs.map((l) => `leg skipped: ${l.ticker} — ${l.detail}`));
 for (const s of skippedCash) console.warn(`  skipped (cash backstop): ${s.ticker} — ${s.detail}`);
+for (const r of rejected) console.warn(`  REJECTED: ${r.ticker} — ${r.detail}`);
+for (const l of skippedLegs) console.warn(`  market remainder skipped: ${l.ticker} — ${l.detail}`);
+if (rejected.length) notifier.message(`trade:execute: ${rejected.length} order(s) rejected (nothing placed for them) — ${rejected.map((r) => `${r.ticker}: ${r.detail}`).join("; ")}`);
 const path = writeRunRecord(RUNS_DIR, out.record);
 console.log(`Submitted ${executed.length} of ${out.sized.orders.length} order(s); ${fills.length} fill(s) recorded to ${FILLS_PATH}. Run record ${path}. Run trade:reconcile before the next plan.`);
 
 // Broker-truth cross-check (spec §4): the recorded fills must match what the broker actually did.
 // Fills are already written, so this is a fail-loud alert, not a rollback — a critical discrepancy
 // exits non-zero so the operator investigates before the next run.
-const brokerIdByCid = new Map(executed.map((e) => [e.clientOrderId, e.brokerId || undefined]));
+// A rejected order never reached the broker's book — nothing to cross-check.
+const brokerIdByCid = new Map(executed.filter((e) => e.status !== "rejected").map((e) => [e.clientOrderId, e.brokerId || undefined]));
 const audit = crossCheckBroker({
   expected: out.sized.orders.filter((o) => brokerIdByCid.has(o.clientOrderId)).map((o) => ({ clientOrderId: o.clientOrderId, ticker: o.ticker, side: o.side, brokerId: brokerIdByCid.get(o.clientOrderId) })),
   brokerOrders: await adapter.getOrders("all", `${today}T00:00:00Z`),
