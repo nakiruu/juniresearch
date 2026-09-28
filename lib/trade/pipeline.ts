@@ -7,7 +7,7 @@ import { buildSignal, type Signal } from "../portfolio/signal";
 import type { BrokerAdapter, BrokerOrderStatus } from "../broker/adapter";
 import { TERMINAL_STATUSES } from "../broker/adapter";
 import { CashBackstopError, guardedSubmit, type GuardContext } from "../broker/guards";
-import { SubmitOutcomeUnknownError } from "../broker/http";
+import { OrderRejectedError, SubmitOutcomeUnknownError } from "../broker/http";
 import { allInOrder, mapWithConcurrency } from "../concurrency";
 import type { BrokerOrder, SubmitOrderRequest } from "../broker/adapter";
 import type { TradeConfig } from "./config";
@@ -123,6 +123,11 @@ export interface ExecutedOrder {
 /** A buy the broker's cash could not cover at submit time — never sent. */
 export interface SkippedCash { ticker: string; clientOrderId: string; detail: string }
 
+/** An order the broker (or the adapter, before sending) definitively refused — nothing was placed. */
+export interface RejectedOrder { ticker: string; clientOrderId: string; detail: string }
+/** A hybrid market remainder not sent because its whole-share limit leg filled nothing (the price ran past the cap). */
+export interface SkippedLeg { ticker: string; clientOrderId: string; detail: string }
+
 /** Why a run stopped submitting: a submit whose outcome could not be established. */
 export interface SubmitAbort { ticker: string; clientOrderId: string; detail: string }
 
@@ -149,21 +154,36 @@ export async function executeOrders(input: {
   adapter: BrokerAdapter; sized: SizedOrders; ctx: GuardContext; runId: string; fillsPath: string; pollMs?: number; now?: () => number;
   /** Lookup schedule for a submit with an unknown outcome (default 2s, 5s, 10s). */
   resolveDelaysMs?: readonly number[];
-}): Promise<{ fills: Fill[]; executed: ExecutedOrder[]; aborted?: SubmitAbort; skippedCash: SkippedCash[] }> {
-  const { adapter, sized, ctx, runId, fillsPath, pollMs = 1000, now = Date.now, resolveDelaysMs = [2_000, 5_000, 10_000] } = input;
+  /**
+   * Emulated IOC: polls (× pollMs) an IOC order may stay working before it is cancelled. Schwab has no
+   * IOC duration, so its "IOC" limits go in as DAY orders and are cancelled here; a native IOC (Alpaca)
+   * is terminal on the first poll. A market order gets marketPolls before the same cancel.
+   */
+  iocPolls?: number; marketPolls?: number;
+}): Promise<{ fills: Fill[]; executed: ExecutedOrder[]; aborted?: SubmitAbort; skippedCash: SkippedCash[]; rejected: RejectedOrder[]; skippedLegs: SkippedLeg[] }> {
+  const { adapter, sized, ctx, runId, fillsPath, pollMs = 1000, now = Date.now, resolveDelaysMs = [2_000, 5_000, 10_000], iocPolls = 8, marketPolls = 30 } = input;
   const fills: Fill[] = [];
   const executed: ExecutedOrder[] = [];
   const skippedCash: SkippedCash[] = [];
+  const rejected: RejectedOrder[] = [];
+  const skippedLegs: SkippedLeg[] = [];
+  /** Filled qty of each ticker's whole-share limit leg this run, by side — gates its market remainder. */
+  const wholeFilled = new Map<string, number>();
   // Sells first: buys may be funded by sell proceeds, and the cash backstop only credits proceeds that
   // actually filled. Order within each side is the plan's.
   const ordered = [...sized.orders.filter((o) => o.side === "sell"), ...sized.orders.filter((o) => o.side === "buy")];
   for (const o of ordered) {
+    if (o.leg === "frac" && (wholeFilled.get(`${o.side}|${o.ticker}`) ?? 0) <= 0) {
+      skippedLegs.push({ ticker: o.ticker, clientOrderId: o.clientOrderId, detail: "whole-share limit leg filled nothing — not chasing the remainder at market" });
+      continue;
+    }
     // Poll window: bounded to just before this submit (60s slack for clock skew) so the broker listing
     // always contains the new order, however long the account's order history grows.
     const pollAfter = new Date(now() - 60_000).toISOString();
-    const req: SubmitOrderRequest = { symbol: o.ticker, side: o.side, qty: o.qty, limitPrice: o.limitPrice, timeInForce: o.timeInForce, clientOrderId: o.clientOrderId,
-      // The most an IOC limit order can spend or raise — the same measure as the turnover breaker. deltaUsd
-      // is the pre-sizing weight delta (about 2x a tier-3 order after closeAnchorSizeMult).
+    const req: SubmitOrderRequest = { symbol: o.ticker, side: o.side, qty: o.qty, ...(o.type === "limit" ? { limitPrice: o.limitPrice } : {}), timeInForce: o.timeInForce, clientOrderId: o.clientOrderId,
+      // The most an IOC limit order can spend or raise — the same measure as the turnover breaker (a market
+      // leg is measured at the same τ-capped price). deltaUsd is the pre-sizing weight delta (about 2x a
+      // tier-3 order after closeAnchorSizeMult).
       estNotionalUsd: o.qty * o.limitPrice };
     let order: BrokerOrder;
     const submitStartAt = new Date(now()).toISOString();
@@ -171,13 +191,18 @@ export async function executeOrders(input: {
       order = await guardedSubmit(adapter, req, ctx);
     } catch (e) {
       if (e instanceof CashBackstopError) { skippedCash.push({ ticker: o.ticker, clientOrderId: o.clientOrderId, detail: e.message }); continue; } // never sent
+      if (e instanceof OrderRejectedError) { // definitively refused — nothing placed; record it and carry on
+        rejected.push({ ticker: o.ticker, clientOrderId: o.clientOrderId, detail: e.detail });
+        executed.push({ clientOrderId: o.clientOrderId, brokerId: "", status: "rejected", filledQty: 0, filledAvgPrice: null, submittedAt: null, submitStartAt });
+        continue;
+      }
       if (!(e instanceof SubmitOutcomeUnknownError)) throw e;
       // The order may exist. Find it; NEVER resend it (a double fill, or a fill we can't record, is worse than a miss).
       const found = await resolveUnknownSubmit(adapter, req, e.submitStartAt, resolveDelaysMs);
       if (!found.order) {
         executed.push({ clientOrderId: o.clientOrderId, brokerId: "", status: "unknown", filledQty: 0, filledAvgPrice: null, submittedAt: e.submitStartAt, submitStartAt });
         // Stop the run: every later order would be planned against a book we can't vouch for.
-        return { fills, executed, skippedCash, aborted: { ticker: o.ticker, clientOrderId: o.clientOrderId, detail: `${e.message}; lookup: ${found.detail}` } };
+        return { fills, executed, skippedCash, rejected, skippedLegs, aborted: { ticker: o.ticker, clientOrderId: o.clientOrderId, detail: `${e.message}; lookup: ${found.detail}` } };
       }
       order = found.order;
       ctx.counters.orders += 1; // it did go out — count it against the run caps as guardedSubmit would have
@@ -185,10 +210,19 @@ export async function executeOrders(input: {
       if (o.side === "buy") ctx.counters.buyNotionalUsd += Math.abs(req.estNotionalUsd);
     }
     const submitAckAt = new Date(now()).toISOString();
-    for (let i = 0; i < 60 && !TERMINAL_STATUSES.has(order.status); i++) {
+    const poll = async () => {
       await sleep(pollMs);
       const id = order.id;
       order = (await adapter.getOrders("all", pollAfter)).find((x) => x.id === id || x.clientOrderId === o.clientOrderId) ?? order;
+    };
+    const window = o.type === "limit" && o.timeInForce === "ioc" ? iocPolls : marketPolls;
+    for (let i = 0; i < window && !TERMINAL_STATUSES.has(order.status); i++) await poll();
+    if (!TERMINAL_STATUSES.has(order.status)) {
+      // Emulated IOC / stuck market order: cancel whatever is still working, then wait for the broker to
+      // settle it (a partial fill before the cancel is kept and recorded). A cancel that fails is not fatal:
+      // an order still working at the next run makes reconcile halt, so it cannot be traded past silently.
+      try { await adapter.cancelOrder(order.id); } catch { /* reported via the non-terminal status below */ }
+      for (let i = 0; i < 30 && !TERMINAL_STATUSES.has(order.status); i++) await poll();
     }
     const terminalAt = TERMINAL_STATUSES.has(order.status) ? new Date(now()).toISOString() : null;
     executed.push({ clientOrderId: o.clientOrderId, brokerId: order.id, status: order.status, filledQty: order.filledQty, filledAvgPrice: order.filledAvgPrice, submittedAt: order.submittedAt, submitStartAt, submitAckAt, terminalAt });
@@ -203,8 +237,9 @@ export async function executeOrders(input: {
       appendFill(fillsPath, fill);
       fills.push(fill);
     }
+    if (o.leg === "whole") wholeFilled.set(`${o.side}|${o.ticker}`, order.filledQty);
   }
-  return { fills, executed, skippedCash };
+  return { fills, executed, skippedCash, rejected, skippedLegs };
 }
 
 /** Merge each order's terminal broker status/id/submittedAt onto the loose run-record orders, by clientOrderId (spec §2). */

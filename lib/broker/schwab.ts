@@ -16,7 +16,7 @@ import { SCHWAB_HOST } from "./guards";
 import { nyseTradingDays } from "../trade/nyse-calendar";
 import { etMinutesOfDay, etWallToUtc, hhmmToMinutes, todayET } from "../trade/clock";
 import { ensureAccessToken, type SchwabTokenStore } from "./schwab-auth";
-import { AmbiguousOrderError, BrokerTimeoutError, DEFAULT_TIMEOUTS, SubmitOutcomeUnknownError, fetchWithTimeout, withReadRetry } from "./http";
+import { AmbiguousOrderError, BrokerTimeoutError, OrderRejectedError, DEFAULT_TIMEOUTS, SubmitOutcomeUnknownError, fetchWithTimeout, withReadRetry } from "./http";
 import { mapWithConcurrency } from "../concurrency";
 
 /** Max concurrent per-symbol price-history reads (well inside Schwab's ~120 req/min market-data limit). */
@@ -63,6 +63,26 @@ const STATUS: Record<string, BrokerOrderStatus> = {
   PENDING_CANCEL: "pending_cancel", PENDING_REPLACE: "pending_replace", ACCEPTED: "accepted", PENDING_ACTIVATION: "pending_new",
 };
 const mapStatus = (s: string): BrokerOrderStatus => STATUS[s.toUpperCase()] ?? "new";
+
+/**
+ * The Schwab order JSON for a request — or OrderRejectedError when Schwab would refuse it, so nothing is
+ * sent. Exported so the exact body can be checked against Schwab's previewOrder (places nothing).
+ */
+export function schwabOrderBody(req: SubmitOrderRequest) {
+  // Schwab's rules (verified with previewOrder, 2026-09-27): a sub-share quantity only at MARKET (≥ $1
+  // for a buy, ≤ 4 dp); a LIMIT needs whole shares here. Refused locally — nothing is sent.
+  if (req.notional != null) throw new OrderRejectedError(req.symbol, "SchwabBroker: notional orders are not supported — send a qty");
+  if (req.qty == null || !(req.qty > 0) || Math.abs(req.qty * 1e4 - Math.round(req.qty * 1e4)) > 1e-6) throw new OrderRejectedError(req.symbol, `SchwabBroker: qty must be > 0 with at most 4 decimals; got ${req.qty}`);
+  if (req.limitPrice != null && !Number.isInteger(req.qty)) throw new OrderRejectedError(req.symbol, `SchwabBroker: a LIMIT order needs whole shares (fractional quantities go at MARKET); got ${req.qty}`);
+  return {
+    // Schwab has no IMMEDIATE_OR_CANCEL (400 "Invalid value"), so every order goes in as DAY and an
+    // "ioc" limit is emulated by executeOrders: poll briefly, then cancel the unfilled rest.
+    orderType: req.limitPrice != null ? "LIMIT" : "MARKET", session: "NORMAL",
+    duration: "DAY", orderStrategyType: "SINGLE",
+    ...(req.limitPrice != null ? { price: req.limitPrice } : {}),
+    orderLegCollection: [{ instruction: req.side === "buy" ? "BUY" : "SELL", quantity: req.qty, instrument: { symbol: req.symbol, assetType: "EQUITY" } }],
+  };
+}
 
 export class SchwabBroker implements BrokerAdapter {
   readonly kind = "schwab" as const;
@@ -199,18 +219,11 @@ export class SchwabBroker implements BrokerAdapter {
     return q?.bidPrice != null && q?.askPrice != null ? { bid: q.bidPrice, ask: q.askPrice, tsMs: q.quoteTime ?? this.now() } : null;
   }
   async isFractionable(symbols: string[]): Promise<Record<string, boolean>> {
-    return Object.fromEntries(symbols.map((s) => [s, false])); // Schwab Trader API has no fractional orders
+    return Object.fromEntries(symbols.map((s) => [s, true])); // Schwab takes fractional quantities, but only on MARKET orders (see submitOrder)
   }
 
   async submitOrder(req: SubmitOrderRequest): Promise<BrokerOrder> {
-    if (req.notional != null) throw new Error(`SchwabBroker: notional/fractional orders are not supported (whole-share only); got notional for ${req.symbol}`);
-    if (req.qty == null || !Number.isInteger(req.qty) || req.qty <= 0) throw new Error(`SchwabBroker: whole-share qty required for ${req.symbol}; got ${req.qty}`);
-    const body = {
-      orderType: req.limitPrice != null ? "LIMIT" : "MARKET", session: "NORMAL",
-      duration: req.timeInForce === "ioc" ? "IMMEDIATE_OR_CANCEL" : "DAY", orderStrategyType: "SINGLE",
-      ...(req.limitPrice != null ? { price: req.limitPrice } : {}),
-      orderLegCollection: [{ instruction: req.side === "buy" ? "BUY" : "SELL", quantity: req.qty, instrument: { symbol: req.symbol, assetType: "EQUITY" } }],
-    };
+    const body = schwabOrderBody(req);
     const authorization = await this.authHeader(); // a SchwabAuthError here is definitive: nothing was sent
     const startAt = new Date(this.now()).toISOString();
     let res;
@@ -224,14 +237,14 @@ export class SchwabBroker implements BrokerAdapter {
       throw e;
     }
     if (res.status >= 500) throw new SubmitOutcomeUnknownError(req.clientOrderId, req.symbol, startAt, `Schwab POST order → ${res.status}`);
-    if (!res.ok) throw new Error(`Schwab POST order ${req.symbol} → ${res.status}: ${res.text.slice(0, 300)}`); // 4xx: definitively not accepted
+    if (!res.ok) throw new OrderRejectedError(req.symbol, `Schwab POST order → ${res.status}: ${res.text.slice(0, 300)}`); // 4xx: definitively not accepted
     const loc = res.headers.get("location");
     const orderId = loc?.split("/").filter(Boolean).at(-1);
     // Accepted but unidentifiable: the order exists, we just don't know its id — resolve by lookup.
     if (!orderId) throw new SubmitOutcomeUnknownError(req.clientOrderId, req.symbol, startAt, `Schwab POST order accepted (${res.status}) with no order id in Location (${loc})`);
     this.cidByBrokerId.set(orderId, req.clientOrderId);
     // Return a non-terminal order; executeOrders polls getOrders (which stamps clientOrderId) for the fill.
-    return { id: orderId, clientOrderId: req.clientOrderId, symbol: req.symbol, side: req.side, status: "new", qty: req.qty, notional: null, filledQty: 0, filledAvgPrice: null, filledAt: null, submittedAt: new Date(this.now()).toISOString() };
+    return { id: orderId, clientOrderId: req.clientOrderId, symbol: req.symbol, side: req.side, status: "new", qty: req.qty ?? null, notional: null, filledQty: 0, filledAvgPrice: null, filledAt: null, submittedAt: new Date(this.now()).toISOString() };
   }
   /**
    * Schwab has no client order id, so a timed-out submit is matched on everything we sent: symbol,
@@ -244,12 +257,12 @@ export class SchwabBroker implements BrokerAdapter {
     const q = new URLSearchParams({ fromEnteredTime: new Date(sinceMs).toISOString(), toEnteredTime: new Date(this.now() + 86_400_000).toISOString(), maxResults: "500" });
     const raw = await this.get(z.array(OrderResp), `${this.trader}/accounts/${this.opts.accountHash}/orders?${q}`);
     const wantType = req.limitPrice != null ? "LIMIT" : "MARKET";
-    const wantDuration = req.timeInForce === "ioc" ? "IMMEDIATE_OR_CANCEL" : "DAY";
+    const wantDuration = "DAY"; // every order is submitted as DAY (see submitOrder)
     const matches = raw.filter((o) => {
       const leg = o.orderLegCollection[0];
       return leg?.instrument.symbol === req.symbol
         && leg.instruction.toUpperCase() === (req.side === "buy" ? "BUY" : "SELL")
-        && (o.quantity ?? leg.quantity) === req.qty
+        && Math.abs((o.quantity ?? leg.quantity ?? NaN) - (req.qty ?? NaN)) < 1e-6
         && (req.limitPrice == null || (o.price != null && Math.abs(o.price - req.limitPrice) < 1e-6))
         && (o.orderType ?? wantType).toUpperCase() === wantType
         && (o.duration ?? wantDuration).toUpperCase() === wantDuration

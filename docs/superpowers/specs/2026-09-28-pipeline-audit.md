@@ -1,5 +1,8 @@
 # Trading pipeline audit — strategy, execution, function (2026-09-28)
 
+> **Status:** owner approved 1 = hybrid, 2 = emulated IOC, 3 = ADD/TRIM floor `max($5, 1% NAV)`.
+> Implemented: C1, C2, C3, S1 (§5 items 1–3). Not yet done: S2 relative band, S3 μ-vs-realized tracking.
+
 Scope: `lib/portfolio/*` (signals, eligibility, sizing), `lib/trade/*` (hysteresis, rebalance, orders, limit,
 pipeline, cron, scheduler, ledger, locks), `lib/broker/*` (Schwab, Alpaca, guards, http). Evidence was
 gathered read-only against the live Schwab account. Every order check used Schwab's `previewOrder`

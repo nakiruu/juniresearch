@@ -313,26 +313,39 @@ allowed).
 
 ## 5. Pricing & placing orders — execution  (`lib/trade/orders.ts`, `limit.ts`)
 
-### 5.1 Weights → whole-share quantities  (`tradesToOrders`)
+### 5.1 Weights → quantities: hybrid limit + market  (`tradesToOrders`)
 
-Every order is a **whole-share, slippage-capped IOC limit** order:
+*Changed 2026-09-28 (owner-approved, see `docs/superpowers/specs/2026-09-28-pipeline-audit.md`).* Schwab's
+API **does** take fractional quantities, but only on MARKET orders (≥ $1 for a buy, ≤ 4 dp; verified with
+`previewOrder`). So each trade becomes:
 
 ```
-buy  qty = floor( deltaUsd · sizeMult / L )                       (sizeMult from tier-3, §5.3)
-EXIT sell qty = full broker position qty                          (no dust left behind)
-TRIM sell qty = min( position qty, round( −deltaUsd / mark ) )
-skip (skippedDust) if  deltaUsd < minOrderUsd ($25)  or  qty ≤ 0
-skip (skippedHalt)  if  computeLimit returns halt (no price / gap)
+qty       = floor4( deltaUsd · sizeMult / L )     buys  (sizeMult from tier-3, §5.3)
+          = full broker position qty                EXIT (no dust left behind)
+          = min( position qty, floor4( −deltaUsd / mark ) )   TRIM
+order     = one MARKET order of qty                 if qty·L < marketOnlyBelowUsd ($200)
+          = LIMIT floor(qty) (IOC, τ-capped) + MARKET remainder     otherwise
+market leg needs a fresh quote (bucket maxStaleMin) with spread ≤ marketMaxSpread (1% / 1% / 2.5%);
+           otherwise only the whole-share limit is sent (a held sell remainder is reported)
+market BUY leg < $1 is dropped (broker minimum); a market remainder is sent only if its limit leg filled
+skip (skippedDust) if  |deltaUsd| < floor:  ENTER $1 · ADD/TRIM max($5, 1% NAV) · EXIT none
+skip (skippedHalt)  if  computeLimit returns halt (no price / gap), or nothing sendable without a market leg
 ```
+
+The market share of notional falls as NAV grows (≈ 90% at $100, 20% at $10k, 2% at $100k), so small accounts
+run almost entirely on market orders and larger ones mostly on τ-capped limits. The ADD/TRIM floor exists
+because **every fill starts the 5-business-day, both-sides lock**: a trivial rebalance must not freeze a
+ticker. `fractionalShares: false` restores the old whole-share-limit behaviour (`minOrderUsd` $25).
+
+**IOC on Schwab is emulated.** Schwab has no `IMMEDIATE_OR_CANCEL` duration (400 "Invalid value"; only
+DAY / GOOD_TILL_CANCEL / FILL_OR_KILL). An "ioc" limit goes in as DAY; `executeOrders` polls `iocPolls`
+(8 × 1 s), cancels the unfilled rest, and waits for the broker to settle it (a partial fill is kept). A
+market order gets `marketPolls` (30) before the same cancel. A definitive reject (4xx, or an order the
+adapter refuses to send) is recorded as `rejected` and the run continues.
 
 `deltaUsd = round2(deltaWeight · NAV)`. Decisions use the **settled prior-day close** (`markMode:"settled"`);
 only the *fill* uses the live price — so the plan is backtest-reproducible while execution still crosses at
 a real quote.
-
-> 🚫 **Not an option — fractional shares.** Orders are whole-share by requirement: Schwab is the live
-> broker and its API has no fractional shares (Alpaca allows fractional only with `time_in_force:"day"`,
-> not IOC, and is paper-only). A high-priced name whose target is < 1 share rounds to 0 and is dropped
-> (material only at small NAV); that is accepted, not a gap to close.
 
 ### 5.2 Liquidity buckets  (`bucketFor`)
 

@@ -105,8 +105,8 @@ describe("SchwabBroker reads", () => {
     await b.getLatestQuote("NEE"); // nothing cached past settlement: fresh read
     expect(quoteCalls()).toBe(2);
   });
-  it("isFractionable is always false", async () => {
-    expect(await mk(mockFetch({}).fetchImpl).isFractionable(["NEE", "AMZN"])).toEqual({ NEE: false, AMZN: false });
+  it("isFractionable is true (fractional quantities are taken at MARKET)", async () => {
+    expect(await mk(mockFetch({}).fetchImpl).isFractionable(["NEE", "AMZN"])).toEqual({ NEE: true, AMZN: true });
   });
   it("getCalendar delegates to the local NYSE calendar", async () => {
     const days = (await mk(mockFetch({}).fetchImpl).getCalendar("2026-09-21", "2026-09-25")).map((d) => d.date);
@@ -139,7 +139,8 @@ describe("SchwabBroker submit / cancel", () => {
     const submitted = await b.submitOrder({ symbol: "NEE", side: "buy", qty: 5, clientOrderId: "cid-xyz", estNotionalUsd: 400, limitPrice: 75.68, timeInForce: "ioc" });
     expect(submitted).toMatchObject({ id: "1001", clientOrderId: "cid-xyz", status: "new" });
     const postBody = JSON.parse(calls.find((c) => c.method === "POST")!.body!);
-    expect(postBody).toMatchObject({ orderType: "LIMIT", duration: "IMMEDIATE_OR_CANCEL", session: "NORMAL", price: 75.68 });
+    // Schwab has no IMMEDIATE_OR_CANCEL (400 "Invalid value", verified live) — an "ioc" limit goes in as DAY and executeOrders cancels the rest.
+    expect(postBody).toMatchObject({ orderType: "LIMIT", duration: "DAY", session: "NORMAL", price: 75.68 });
     expect(postBody.orderLegCollection[0]).toMatchObject({ instruction: "BUY", quantity: 5, instrument: { symbol: "NEE", assetType: "EQUITY" } });
     const [o] = await b.getOrders("all"); // stamped from the map set at submit
     expect(o.clientOrderId).toBe("cid-xyz");
@@ -181,7 +182,7 @@ describe("SchwabBroker submit / cancel", () => {
 
     const raw = (o: { orderId: number; symbol?: string; instruction?: string; quantity?: number; price?: number; enteredTime?: string; duration?: string }) => ({
       orderId: o.orderId, status: "FILLED", quantity: o.quantity ?? 5, filledQuantity: o.quantity ?? 5, price: o.price ?? 75.68,
-      orderType: "LIMIT", duration: o.duration ?? "IMMEDIATE_OR_CANCEL", enteredTime: o.enteredTime ?? "2026-09-25T13:36:01+0000",
+      orderType: "LIMIT", duration: o.duration ?? "DAY", enteredTime: o.enteredTime ?? "2026-09-25T13:36:01+0000",
       orderLegCollection: [{ instruction: o.instruction ?? "BUY", instrument: { symbol: o.symbol ?? "NEE" } }],
       orderActivityCollection: [{ executionLegs: [{ quantity: o.quantity ?? 5, price: 75.6, time: "2026-09-25T13:36:02+0000" }] }],
     });
@@ -206,10 +207,25 @@ describe("SchwabBroker submit / cancel", () => {
     });
   });
 
-  it("rejects a notional (fractional) order and a non-integer qty", async () => {
-    const b = mk(mockFetch({}).fetchImpl);
-    await expect(b.submitOrder({ symbol: "NEE", side: "buy", notional: 100, clientOrderId: "c", estNotionalUsd: 100 })).rejects.toThrow(/notional\/fractional/);
-    await expect(b.submitOrder({ symbol: "NEE", side: "buy", qty: 1.5, clientOrderId: "c", estNotionalUsd: 100 })).rejects.toThrow(/whole-share/);
+  it("refuses locally (OrderRejectedError, nothing sent): notional, a fractional LIMIT, more than 4 decimals", async () => {
+    const { fetchImpl, calls } = mockFetch({});
+    const b = mk(fetchImpl);
+    await expect(b.submitOrder({ symbol: "NEE", side: "buy", notional: 100, clientOrderId: "c", estNotionalUsd: 100 })).rejects.toMatchObject({ name: "OrderRejectedError" });
+    await expect(b.submitOrder({ symbol: "NEE", side: "buy", qty: 1.5, limitPrice: 75, timeInForce: "ioc", clientOrderId: "c", estNotionalUsd: 100 })).rejects.toThrow(/whole shares/);
+    await expect(b.submitOrder({ symbol: "NEE", side: "buy", qty: 0.12345, clientOrderId: "c", estNotionalUsd: 10 })).rejects.toThrow(/4 decimals/);
+    expect(calls.some((c) => c.method === "POST")).toBe(false);
+  });
+  it("sends a fractional quantity as a MARKET DAY order with no price", async () => {
+    const { fetchImpl, calls } = mockFetch({});
+    await mk(fetchImpl).submitOrder({ symbol: "EVLV", side: "sell", qty: 0.0896, timeInForce: "day", clientOrderId: "c", estNotionalUsd: 0.5 });
+    const body = JSON.parse(calls.find((c) => c.method === "POST")!.body!);
+    expect(body).toMatchObject({ orderType: "MARKET", duration: "DAY" });
+    expect(body.price).toBeUndefined();
+    expect(body.orderLegCollection[0]).toMatchObject({ instruction: "SELL", quantity: 0.0896 });
+  });
+  it("a 4xx is an OrderRejectedError", async () => {
+    const f = (async (url: string, init: RequestInit = {}) => init.method === "POST" ? new Response("bad", { status: 400 }) : mockFetch({}).fetchImpl(url, init)) as unknown as typeof fetch;
+    await expect(mk(f).submitOrder({ symbol: "NEE", side: "buy", qty: 1, limitPrice: 75, timeInForce: "ioc", clientOrderId: "c", estNotionalUsd: 75 })).rejects.toMatchObject({ name: "OrderRejectedError" });
   });
   it("cancelOrder issues a DELETE", async () => {
     const { fetchImpl, calls } = mockFetch({});

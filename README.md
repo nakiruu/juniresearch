@@ -180,8 +180,8 @@ snapshot and republishing to the same URL.
 
 ## §5 — The trade layer *(branch `trade-layer`, gated — real money when `BROKER=schwab`)*
 
-`portfolio:build` stops at target weights. The trade layer turns *target vs current* into whole-share,
-slippage-capped **IOC limit** orders, with the **broker as the source of truth**. The core (`lib/trade/`)
+`portfolio:build` stops at target weights. The trade layer turns *target vs current* into **hybrid** orders —
+the whole-share part as a slippage-capped IOC limit, the fractional remainder at market (docs/engine.md §5.1) — with the **broker as the source of truth**. The core (`lib/trade/`)
 never names a broker; `lib/broker/` supplies swappable adapters. `docs/engine.md` §4–§7 is the full spec.
 
 ### Commands for the trader
