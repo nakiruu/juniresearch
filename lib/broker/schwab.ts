@@ -90,7 +90,7 @@ export class SchwabBroker implements BrokerAdapter {
   private tokenInFlight: Promise<string> | null = null;
   private async authHeader(): Promise<string> {
     if (!this.tokenInFlight) {
-      this.tokenInFlight = ensureAccessToken(this.opts.tokenStore, { clientId: this.opts.clientId, clientSecret: this.opts.clientSecret }, this.fetchImpl, this.now())
+      this.tokenInFlight = ensureAccessToken(this.opts.tokenStore, { clientId: this.opts.clientId, clientSecret: this.opts.clientSecret }, this.fetchImpl, this.now(), this.opts.retryDelaysMs)
         .finally(() => { this.tokenInFlight = null; });
     }
     return `Bearer ${await this.tokenInFlight}`;

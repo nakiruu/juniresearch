@@ -52,13 +52,21 @@ export function isTransientRead(e: unknown): boolean {
   return (e instanceof BrokerTimeoutError && e.phase === "read") || e instanceof TypeError;
 }
 
-/** Retry an idempotent read on transient failure only. Never wrap a submit in this. */
-export async function withReadRetry<T>(fn: () => Promise<T>, delaysMs: readonly number[] = [1_000, 3_000], sleep: (ms: number) => Promise<void> = (ms) => new Promise((r) => setTimeout(r, ms))): Promise<T> {
+/**
+ * Transient token-refresh failures: our token deadline, or a network-level fetch failure. A refresh-token
+ * grant places no order and can be repeated safely; an HTTP answer (400/401 = dead token, 5xx) is not retried.
+ */
+export function isTransientToken(e: unknown): boolean {
+  return (e instanceof BrokerTimeoutError && e.phase === "token") || e instanceof TypeError;
+}
+
+/** Retry an idempotent read (or, with isTransientToken, a token refresh) on transient failure only. Never wrap a submit in this. */
+export async function withReadRetry<T>(fn: () => Promise<T>, delaysMs: readonly number[] = [1_000, 3_000], sleep: (ms: number) => Promise<void> = (ms) => new Promise((r) => setTimeout(r, ms)), isTransient: (e: unknown) => boolean = isTransientRead): Promise<T> {
   for (let attempt = 0; ; attempt++) {
     try {
       return await fn();
     } catch (e) {
-      if (attempt >= delaysMs.length || !isTransientRead(e)) throw e;
+      if (attempt >= delaysMs.length || !isTransient(e)) throw e;
       await sleep(delaysMs[attempt]);
     }
   }

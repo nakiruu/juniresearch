@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { BrokerTimeoutError } from "./http";
 import { refreshTokenHealth, currentRefreshObtainedAt, SchwabTokenStore, ensureAccessToken, exchangeCode, parseAuthCode, buildAuthorizeUrl, SchwabAuthError, TOKEN_ENDPOINT, refreshFingerprint, refreshSeedFromEnv, type SchwabTokens, type RefreshSeed } from "./schwab-auth";
 
 const creds = { clientId: "cid", clientSecret: "secret" };
@@ -41,6 +42,34 @@ describe("ensureAccessToken", () => {
     const fetchImpl = (async () => jsonRes(401, { error: "unsupported_token_type" })) as unknown as typeof fetch;
     await expect(ensureAccessToken(store, creds, fetchImpl, NOW)).rejects.toThrow(SchwabAuthError);
     await expect(ensureAccessToken(store, creds, fetchImpl, NOW)).rejects.toThrow(/npm run trade:auth/);
+  });
+
+  it("retries a timed-out refresh on the same token, then succeeds", async () => {
+    const store = tmpStore(); store.write(seed({ accessExpiresAt: NOW - 1 }));
+    let calls = 0;
+    const fetchImpl = (async () => {
+      if (calls++ === 0) throw new BrokerTimeoutError("token", TOKEN_ENDPOINT, 10_000);
+      return jsonRes(200, { access_token: "A2", expires_in: 1800 });
+    }) as unknown as typeof fetch;
+    expect(await ensureAccessToken(store, creds, fetchImpl, NOW, [0, 0])).toBe("A2");
+    expect(calls).toBe(2);
+  });
+
+  it("gives up after the retries with the network error — not an auth error, and the env token is not marked stale", async () => {
+    const store = tmpStore({ refreshToken: "ENV" }); store.write(seed({ accessExpiresAt: NOW - 1 }));
+    let calls = 0;
+    const fetchImpl = (async () => { calls++; throw new TypeError("fetch failed"); }) as unknown as typeof fetch;
+    await expect(ensureAccessToken(store, creds, fetchImpl, NOW, [0, 0])).rejects.toBeInstanceOf(TypeError);
+    expect(calls).toBe(3); // env token only: a network failure must not fall through to (and burn) the file token
+    expect(store.read()!.staleEnvRefreshFp).toBeUndefined();
+  });
+
+  it("never retries a rejected (401) refresh token", async () => {
+    const store = tmpStore(); store.write(seed({ accessExpiresAt: NOW - 1 }));
+    let calls = 0;
+    const fetchImpl = (async () => { calls++; return jsonRes(401, { error: "invalid_grant" }); }) as unknown as typeof fetch;
+    await expect(ensureAccessToken(store, creds, fetchImpl, NOW, [0, 0])).rejects.toThrow(SchwabAuthError);
+    expect(calls).toBe(1);
   });
 
   it("throws SchwabAuthError when no tokens are stored", async () => {

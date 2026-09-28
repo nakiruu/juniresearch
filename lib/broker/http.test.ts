@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { fetchWithTimeout, withReadRetry, BrokerTimeoutError } from "./http";
+import { fetchWithTimeout, withReadRetry, isTransientToken, BrokerTimeoutError } from "./http";
 
 /** Honors the abort signal like real fetch does. */
 const hangUntilAborted = ((_url: string, init: RequestInit) => new Promise<Response>((_, reject) => {
@@ -47,5 +47,13 @@ describe("withReadRetry", () => {
     await expect(withReadRetry(async () => { n++; throw new Error("Alpaca GET → 400"); }, [1, 1], noSleep)).rejects.toThrow(/400/);
     await expect(withReadRetry(async () => { n++; throw new BrokerTimeoutError("submit", "u", 1); }, [1, 1], noSleep)).rejects.toBeInstanceOf(BrokerTimeoutError);
     expect(n).toBe(2);
+  });
+  it("retries a token timeout only when given isTransientToken", async () => {
+    let n = 0;
+    const tokenTimeout = async () => { if (n++ < 1) throw new BrokerTimeoutError("token", "u", 1); return "tok"; };
+    await expect(withReadRetry(tokenTimeout, [1, 1], noSleep)).rejects.toBeInstanceOf(BrokerTimeoutError); // default: reads only
+    n = 0;
+    expect(await withReadRetry(tokenTimeout, [1, 1], noSleep, isTransientToken)).toBe("tok");
+    expect(isTransientToken(new BrokerTimeoutError("submit", "u", 1))).toBe(false);
   });
 });
