@@ -1,0 +1,59 @@
+{
+  "judgmentSha256": "c725780d57682d2d1f949db916231ffbe490918cb11180d4bb8cea0e87dfd15d",
+  "reviewedAt": "2026-09-28T20:15:00Z",
+  "reviewer": "Claude Opus 4.8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.growth.points",
+      "quote": "Healthcare and hospitality volumes grew 3.5% and 4.4% in Q2'26, broadening growth beyond restaurants.",
+      "issue": "The executive-summary catalysts/risks are supposed to point while the later sections argue; instead several body-section lines restate the exact same claims in barely-changed words. Catalyst 5 ('Healthcare and hospitality volumes grew 3.5% and 4.4% in Q2'26, diversifying growth beyond restaurants.') is reproduced almost verbatim by growth.points[3] ('...broadening growth beyond restaurants.'). Catalyst 1 (independent channel grew ahead of total 1.9%) is re-told by growth.points[0] ('Independent-restaurant case volume grew 5.1% in Q2'26, the priority channel...'). Executive-summary risks[1]/[2]/[3] (net margins near 2%; low switching costs; net debt $5.2B leverage) are each re-stated by risks.idiosyncratic[1]/[2]/[3] with the same figures and no added mechanism.",
+      "fix": "Keep the figure in one place. Let the executive-summary catalysts/risks be one-line pointers and make growth.points and risks.idiosyncratic argue the mechanism and what-to-watch without repeating the same number and framing. Cut the near-duplicate healthcare/hospitality line from growth.points and differentiate the independent-channel and margin/leverage lines so each section adds something new.",
+      "status": "addressed",
+      "note": "Fixed. growth.points[0] and [3] no longer repeat the 5.1% or 3.5%/4.4% figures (now forward-looking mix points), and executive-summary risks[0]-[3] are rewritten as short figure-free pointers while risks.idiosyncratic keeps the figures and mechanism. No section now restates the same figure and framing."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.management.capitalAllocation",
+      "quote": "It repurchased $926 million of stock in FY25 and about $500 million in the first half of FY26, with $640 million of authorization remaining, while investing $410 million of capital expenditure in FY25",
+      "issue": "The buyback/capex story is told nearly verbatim in two sections. financials.cashflowCommentary reads 'it bought back $926 million of stock in FY25 and approximately $500 million in the first half of FY26, with $640 million of authorization remaining' and management.capitalAllocation repeats the same $926M / ~$500M / $640M / $410M cluster in the same shape. This is the cross-section paraphrase repetition the rubric flags — one figure's story retold in two places.",
+      "fix": "Introduce the FY25 $926M buyback, ~$500M H1'26, $640M remaining and $410M capex once (cashflowCommentary is the natural home) and, in capitalAllocation, refer back in words and focus on the allocation judgment (dividend-free, buyback-over-debt, funded from FCF/EBITDA) rather than restating the same dollar figures.",
+      "status": "addressed",
+      "note": "Fixed. cashflowCommentary now says the company 'directs its free cash flow to buybacks, detailed in capital allocation below' and drops the buyback cluster; the $926M/~$500M/$640M figures now appear once (capitalAllocation) and the $410M capex once (cashflowCommentary)."
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "The FY26E and FY27E consensus EPS estimates of $4.78 and $5.55 are struck on that adjusted basis, which is why they sit well above the trailing GAAP figure.",
+      "issue": "The claim that the $4.78 and $5.55 consensus EPS estimates are 'struck on that adjusted basis' is not on the grounding surface. The Estimates block gives the two EPS figures only as 'consensus means' with no statement of whether they are GAAP or adjusted; the report asserts the adjusted basis as fact and then makes a causal claim ('which is why they sit well above the trailing GAAP figure'). This is an inference the surface invites but does not make, and the same characterization carries into valuation.multiplesCommentary ('on adjusted consensus earnings').",
+      "fix": "State it without asserting the unproven basis — e.g. note that consensus FY26E/FY27E EPS of $4.78/$5.55 sit well above trailing GAAP diluted EPS of $2.94, consistent with the company's guidance for 18-24% Adjusted Diluted EPS growth, without declaring that the consensus figures are computed on an adjusted basis. Soften multiplesCommentary similarly.",
+      "status": "addressed",
+      "note": "Fixed. incomeCommentary now states the estimates 'are not directly comparable to trailing GAAP diluted EPS' without asserting they are struck on an adjusted basis, and multiplesCommentary changed from 'on adjusted consensus earnings' to 'on consensus earnings estimates,' attributing the adjusted emphasis to the company."
+    },
+    {
+      "id": "F-4",
+      "severity": "Minor",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "The Facts block does not populate a total-debt line, but the Q2'26 press release reports net debt of $5.2 billion",
+      "issue": "'The Facts block' is internal pipeline machinery, not something a reader of the published report should see. The prose exposes the desk's data-plumbing rather than making the point in reader-facing terms.",
+      "fix": "Reframe without naming the internal source, e.g. 'A gross total-debt figure is not disclosed in the available data, but the Q2'26 press release reports net debt of $5.2 billion...'.",
+      "status": "addressed",
+      "note": "Fixed. Reworded to 'The summary financials do not break out a total-debt line, but the Q2'26 press release reports net debt of $5.2 billion' — no internal-machinery reference."
+    },
+    {
+      "id": "F-5",
+      "severity": "Minor",
+      "field": "sections.management.governance",
+      "quote": "the Say-on-Pay vote received 96% support",
+      "issue": "The 2026 proxy states the 96% approval was received 'last year' (i.e., the 2025 Say-on-Pay vote), but the report presents it undated, reading as a current-year result. A governance vote carries its period; here the age is not shown.",
+      "fix": "Date the figure — e.g. 'the most recent Say-on-Pay vote (2025, per the 2026 proxy) received 96% support' — so the reader knows it is a prior-year result.",
+      "status": "addressed",
+      "note": "Fixed. Now reads 'the Say-on-Pay vote received 96% support at the prior year's annual meeting,' dating the result."
+    }
+  ]
+}

@@ -1,0 +1,583 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "USFD",
+  "cik": 1665918,
+  "company": "US Foods Holding Corp.",
+  "exchange": "NYSE",
+  "sic": 5140,
+  "sicDescription": "Wholesale-Groceries & Related Products",
+  "filing": {
+    "form": "10-Q",
+    "accession": "0001665918-26-000045",
+    "filedDate": "2026-08-06",
+    "periodEnd": "2026-06-27",
+    "url": "https://www.sec.gov/Archives/edgar/data/1665918/000166591826000045/usfd-20260627.htm"
+  },
+  "capturedAt": "2026-09-28T22:17:42.248Z",
+  "quote": {
+    "price": 93.72,
+    "marketCap": 20274515968,
+    "sharesOutstanding": 216330723,
+    "sharesSource": "cover",
+    "week52Low": 69.875,
+    "week52High": 111.42,
+    "dividendYield": 0,
+    "asOf": "2026-09-28"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          22885000000,
+          34057000000,
+          35597000000,
+          37877000000,
+          39424000000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          3719000000,
+          5492000000,
+          6148000000,
+          6534000000,
+          6864000000
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          -77000000,
+          594000000,
+          1017000000,
+          1099000000,
+          1199000000
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          345000000,
+          966000000,
+          1412000000,
+          1537000000,
+          1661000000
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          -226000000,
+          265000000,
+          506000000,
+          494000000,
+          676000000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          -1.15,
+          1.01,
+          2.02,
+          2.02,
+          2.94
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          828000000,
+          211000000,
+          269000000,
+          59000000,
+          41000000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          3530000000,
+          3961000000,
+          4749000000,
+          4528000000,
+          4307000000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          1.748234106962664,
+          1.3662374821173104,
+          1.2953084832904884,
+          1.2057038834951457,
+          1.1595655806182121
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          413000000,
+          765000000,
+          1140000000,
+          1174000000,
+          1369000000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -189000000,
+          -265000000,
+          -309000000,
+          -341000000,
+          -410000000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          0,
+          -14000000,
+          -294000000,
+          -948000000,
+          -926000000
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          224000000,
+          500000000,
+          831000000,
+          833000000,
+          959000000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q2'26",
+    "periodEnd": "2026-06-27",
+    "revenue": 10532000000,
+    "operatingMargin": 0.0420622863653627,
+    "revenueYoY": 0.04463400119023997
+  },
+  "ttm": {
+    "pe": 28.836923076923078,
+    "ps": 0.5051831651757905,
+    "evToEbitda": null,
+    "grossMargin": 0.17554132509406226,
+    "operatingMargin": 0.031445443899035704,
+    "netMargin": 0.01813968554556101,
+    "netDebtToEbitda": null,
+    "interestCoverage": 4.124183006535947,
+    "currentRatio": 1.1370493479928407,
+    "fcfYield": null
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 41507009570,
+      "eps": 4.77991
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 43206752390,
+      "eps": 5.54729
+    }
+  },
+  "analysts": {
+    "count": 15,
+    "buy": 12,
+    "hold": 2,
+    "sell": 1,
+    "consensusRating": "Buy",
+    "consensusTarget": 116.66667,
+    "medianTarget": 120,
+    "highTarget": 130,
+    "lowTarget": 65,
+    "asOf": "2026-09-28"
+  },
+  "segments": {
+    "basis": "FY25 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 39424000000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "BG",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "CELH",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "CLX",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "FMX",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-17",
+      "close": 108.61000061035156
+    },
+    {
+      "date": "2026-08-18",
+      "close": 106.91000366210938
+    },
+    {
+      "date": "2026-08-19",
+      "close": 107.5199966430664
+    },
+    {
+      "date": "2026-08-20",
+      "close": 108.45999908447266
+    },
+    {
+      "date": "2026-08-21",
+      "close": 109.62000274658203
+    },
+    {
+      "date": "2026-08-24",
+      "close": 109.37000274658203
+    },
+    {
+      "date": "2026-08-25",
+      "close": 108.88999938964844
+    },
+    {
+      "date": "2026-08-26",
+      "close": 108.45999908447266
+    },
+    {
+      "date": "2026-08-27",
+      "close": 107.77999877929688
+    },
+    {
+      "date": "2026-08-28",
+      "close": 107.2699966430664
+    },
+    {
+      "date": "2026-08-31",
+      "close": 104.83999633789062
+    },
+    {
+      "date": "2026-09-01",
+      "close": 106.66000366210938
+    },
+    {
+      "date": "2026-09-02",
+      "close": 104.79000091552734
+    },
+    {
+      "date": "2026-09-03",
+      "close": 104.41000366210938
+    },
+    {
+      "date": "2026-09-04",
+      "close": 104.04000091552734
+    },
+    {
+      "date": "2026-09-08",
+      "close": 103.08999633789062
+    },
+    {
+      "date": "2026-09-09",
+      "close": 97.44999694824219
+    },
+    {
+      "date": "2026-09-10",
+      "close": 96.05999755859375
+    },
+    {
+      "date": "2026-09-11",
+      "close": 95.33999633789062
+    },
+    {
+      "date": "2026-09-14",
+      "close": 94.80000305175781
+    },
+    {
+      "date": "2026-09-15",
+      "close": 92.01000213623047
+    },
+    {
+      "date": "2026-09-16",
+      "close": 92.51000213623047
+    },
+    {
+      "date": "2026-09-17",
+      "close": 92.16000366210938
+    },
+    {
+      "date": "2026-09-18",
+      "close": 93.41999816894531
+    },
+    {
+      "date": "2026-09-21",
+      "close": 94.22000122070312
+    },
+    {
+      "date": "2026-09-22",
+      "close": 94.19999694824219
+    },
+    {
+      "date": "2026-09-23",
+      "close": 93.93000030517578
+    },
+    {
+      "date": "2026-09-24",
+      "close": 93.81999969482422
+    },
+    {
+      "date": "2026-09-25",
+      "close": 93.33000183105469
+    },
+    {
+      "date": "2026-09-28",
+      "close": 93.72000122070312
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "US Foods Holding Corp., together with its subsidiaries, markets, sells, and distributes fresh, frozen, and dry food and non-food products to foodservice customers in the United States. The company also provides MOXe, an all-in-one foodservice business application. Its customers include independently owned single and multi-unit restaurants, regional concepts, national restaurant chains, hospitals, nursing homes, hotels and motels, country clubs, government and military organizations, colleges and universities, and retail locations. The company was formerly known as USF Holding Corp. and changed its name to US Foods Holding Corp. in February 2016. US Foods Holding Corp. was incorporated in 2007 and is headquartered in Rosemont, Illinois.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-28"
+    },
+    "mdaExcerpt": {
+      "text": "Item 2. Management's Discussion and Analysis of Financial Condition and Results of Operations\n(Dollar amounts in tables presented in millions, unless otherwise noted)\nThe following discussion and analysis should be read together with the accompanying unaudited consolidated financial statements and the notes thereto included in this Quarterly Report and the audited consolidated financial statements and the notes thereto in the 2025 Annual Report. The following discussion and analysis contain certain financial measures that are not required by or presented in accordance with GAAP. We believe these non-GAAP measures provide meaningful supplemental information about our operating performance and liquidity. Information regarding reconciliations of and the rationale for these measures is discussed under \"Non-GAAP Reconciliations\" below. Results of operations for the 13 weeks and 26 weeks ended June 27, 2026 are compared to the 13 weeks and 26 weeks ended June 28, 2025, unless specifically noted otherwise.\nOverview\nAt US Foods, we strive to inspire and empower chefs and foodservice operators to bring great food experiences to consumers. This mission is supported by our strategy of WE HELP YOU MAKE IT . Our Promise brings three key elements to the forefront for our customers: (1) more quality products, like our large and diverse portfolio of Exclusive Brands that is based on consistency, freshness and innovation; (2) more tools, centering on our MOX business platform, and lastly; (3) more deliveries, with options for on-time deliveries enabled by our traditional broadline services and our flexible and convenient Pronto program. We operate as one business with standardized business processes, shared systems infrastructure, and an organizational model that optimizes national scale with local execution, allowing us to manage our business as a single operating segment. We have centralized activities where scale matters and our local field structure focuses on customer-facing activities.\nWe supply approximately 250,000 customer locations nationwide. These customer locations include independent restaurants, chain restaurants, healthcare, hospitality, government and education customers. We provide fresh, frozen, and dry food products, as well as non-food items, sourced from thousands of suppliers. Over 4,000 sales associates manage customer relationships at local, regional, and national levels. Our sales associates are supported by sophisticated marketing and category management capabilities, as well as world-class chefs, business development managers and others that help us to provide more comprehensive service to our customers. Our relationship with our customers is further strengthened by our industry-leading MOX digital platform that makes it easy for our customers to manage their orders and inventories, while also providing valuable support for their business. Our extensive network of over 70 distribution facilities and fleet of over 6,500 trucks, along with over 90 cash and carry locations, allow us to operate efficiently and provide high levels of customer service. This operating model allows us to leverage our nationwide scale and footprint while executing locally.\nOperating Metrics\nCase volume Case volume, by customer type (e.g., independent restaurants) is reported as of a point in time. Customers periodically are reclassified, based on changes in size or other characteristics, and when those changes occur, the respective customer's historical volume is included within the new classification.\nOrganic volume Organic volume includes volume from operating businesses that have been reflected in our results of operations for at least 12 months.\nHighlights\nFor the 13 weeks ended June 27, 2026, compared to the same period a year ago, total case volume increased 1.9%, driven by a 5.1% increase in independent restaurant case volume, a 3.5% increase in healthcare volume and a 4.4% increase in hospitality volume, partially offset by a 1.5% decrease in chain volume.\nFor the 26 weeks ended June 27, 2026, compared to the same period a year ago, total case volume increased 1.6%, driven by a 4.8% increase in independent restaurant case volume, a 3.6% increase in healthcare volume and a 4.8% increase in hospitality volume, partially offset by a 1.9% decrease in chain volume.\nFor the 13 weeks and 26 weeks ended June 27, 2026, compared to the same period a year ago, total organic case volume increased 1.7% and 1.4%, respectively, which includes 5.0% and 4.7% organic independent restaurant case volume growth for the 13 weeks and 26 weeks ended June 27, 2026, respectively.\nNet sales increased $450 million, or 4.5%, and $709 million, or 3.6%, for the 13 weeks and 26 weeks ended June 27, 2026, respectively, driven by case volume growth and food cost inflation of 2.3% and 1.7% for the 13 weeks and 26 weeks ended June 27, 2026, respectively.\n15\nGross profit increased $142 million, or 8.0%, to $1,919 million for the 13 weeks ended June 27, 2026, and increased $181 million or 5.3%, to $3,572 million for the 26 weeks ended June 27, 2026. For the 13 weeks ended June 27, 2026, the increase was primarily a result of an increase in total case volume, improved cost of goods sold and a favorable year-over-year LIFO adjustment. For the 26 weeks ended June 27, 2026, the increase was primarily a result of an increase in total case volume and improved cost of goods sold, partially offset by an unfavorable year-over-year LIFO adjustment. Gross profit was positively impacted by a decrease to LIFO reserve of $5 million for the 13 weeks ended June 27, 2026 and negatively impacted by LIFO expense of $33 million for the 26 weeks ended June 27, 2026. Gross profit was negatively impacted by LIFO expense of $14 million and $19 million for the 13 weeks and 26 weeks ended June 28, 2025, respectively. As a percentage of net sales, gross profit was 18.2% and 17.6% for the 13 weeks ended June 27, 2026, and June 28, 2025, respectively, and 17.7% and 17.4% for the 26 weeks ended June 27, 2026 and June 28, 2025, respectively.\nTotal operating expenses increased $71 million, or 5.1%, to $1,476 million for the 13 weeks ended June 27, 2026, and increased $118 million, or 4.2%, to $2,913 million for the 26 weeks ended June 27, 2026. For the 13 weeks and 26 weeks ended June 27, 2026, the increase was primarily a result of an increase in total case volume and higher distribution, selling and administrative costs, partially offset by actions to streamline administrative processes and costs. As a percentage of net sales, operating expenses were 14.0% and 13.9% for the 13 weeks ended June 27, 2026 and June 28, 2025, respectively, and 14.5% and 14.4% for the 26 weeks ended June 27, 2026 and June 28, 2025, respectively.\n16\nResults of Operations\nThe following table presents selected historical results of operations for the periods indicated:\n13 weeks ended\n26 weeks ended\nJune 27, 2026\nJune 28, 2025\nJune 27, 2026\nJune 28, 2025\nConsolidated Statements of Operations:\nNet sales\n$\n10,532\n$\n10,082\n$\n20,142\n$\n19,433\nCost of goods sold\n8,613\n8,305\n16,570\n16,042\nGross profit\n1,919\n1,777\n3,572\n3,391\nOperating expenses:\nDistribution, selling and administrative costs\n1,477\n1,403\n2,906\n2,788\nRestructuring activity and asset impairment charges\n(1)\n2\n7\n7\nTotal operating expenses\n1,476\n1,405\n2,913\n2,795\nOperating income\n443\n372\n659\n596\nOther income net\n(3)\n(2)\n(4)\n(3)\nInterest expense net\n77\n74\n152\n151\nIncome before income taxes\n369\n300\n511\n448\nIncome tax provision\n94\n76\n120\n109\nNet income\n275\n224\n391\n339\nPercentage of Net Sales:\nGross profit\n18.2\n%\n17.6\n%\n17.7\n%\n17.4\n%\nOperating expenses\n14.0\n%\n13.9\n%\n14.5\n%\n14.4\n%\nOperating income\n4.2\n%\n3.7\n%\n3.3\n%\n3.1\n%\nNet income\n2.6\n%\n2.2\n%\n1.9\n%\n1.7\n%\nAdjusted EBITDA (1)\n5.7\n%\n5.4\n%\n5.0\n%\n4.8\n%\nOther Data:\nCash flows operating activities\n$\n431\n$\n334\n$\n725\n$\n725\nCash flows investing activities\n(78)\n(75)\n(175)\n(205)\nCash flows financing activities\n(346)\n(299)\n(535)\n(518)\nCapital expenditures\n76\n77\n174\n161\nEBITDA (1)\n564\n489\n900\n826\nAdjusted EBITDA (1)\n604\n548\n1,017\n937\nAdjusted Net Income (1)\n317\n277\n491\n436\nFree Cash Flow (2)\n355\n261\n552\n569\n(1) EBITDA is defined as net income, plus interest expense net, income tax provision, and depreciation and amortization. Adjusted EBITDA is defined as EBITDA adjusted for: (1) restructuring activity and asset impairment charges; (2) share-based compensation expense; (3) the impact of LIFO reserve adjustments; (4) loss on extinguishment of debt; (5) business transformation costs; and (6) other gains, losses, or costs as specified in the agreements governing our indebtedness. Adjusted EBITDA Margin is Adjusted EBITDA divided by total net sales. Adjusted Net Income is defined as net income excluding the items used to calculate Adjusted EBITDA listed above and further adjusted for the tax effect of the exclusions and discrete tax items. EBITDA, Adjusted EBITDA, and Adjusted Net Income as presented are supplemental measures of our performance that are not required by, or presented in accordance with, GAAP. They are not measurements of our performance under GAAP and should not be considered as alternatives to net income or any other performance measures derived in accordance with GAAP. For additional information, see the discussion under the caption \"Non-GAAP Reconciliations\" below.\n(2) Free Cash Flow is defined as cash flows provided by operating activities and proceeds from sales of property and equipment less cash capital expenditures. Free Cash Flow as presented is a supplemental measure of our liquidity that is not required by, or presented in accordance with, GAAP. It is not a measure of our liquidity under GAAP and should not be considered as an alternative to cash flows provided by operating activities or any other liquidity measures derived in accordance with GAAP. For additional information, see the discussion under the caption \"Non-GAAP Reconciliations\" below.\n17\nNon-GAAP Reconciliations\nWe provide EBITDA, Adjusted EBITDA, Adjusted EBITDA Margin, Adjusted Net Income and Free Cash Flow as supplemental measures to GAAP financial measures regarding our operating performance and liquidity. These non-GAAP financial measures, as defined above, exclude the impact of certain items and, therefore, have not been calculated in accordance with GAAP.\nWe believe EBITDA, Adjusted EBITDA and Adjusted EBITDA Margin provide meaningful supplemental information about our operating performance because they exclude amounts that we do not consider part of our core operating results when assessing our performance.\nWe believe that Adjusted Net Income is a useful measure of operating performance for both management and investors because it excludes items that are not reflective of our core operating performance and provides an additional view of our operating performance including depreciation, interest expense and income taxes on a consistent basis from period to period. We believe that Adjusted Net Income may be used by investors, analysts and other interested parties to facilitate period-over-period comparisons and provides additional clarity as to how factors and trends impact our operating performance.\nManagement uses these non-GAAP financial measures (1) to evaluate our historical and prospective financial performance as well as our performance relative to our competitors as they assist in highlighting trends, (2) to set internal sales targets and spending budgets, (3) to measure operational profitability and the accuracy of forecasting, (4) to assess financial discipline over operational expenditures, and (5) as an important factor in determining variable compensation for management and employees. EBITDA and Adjusted EBITDA are also used in connection with certain covenants and activity restrictions under the agreements governing our indebtedness. We also believe these and similar non-GAAP financial measures are frequently used by securities analysts, investors, and other interested parties to evaluate companies in our industry. EBITDA, Adjusted EBITDA, Adjusted EBITDA Margin and Adjusted Net Income are not measurements of our performance under GAAP and should not be considered as alternatives to net income or any other performance measures derived in accordance with GAAP.\nWe use Free Cash Flow as a supplemental measure to GAAP financial measures regarding the liquidity of our operations. We measure Free Cash Flow as cash flows provided by operating activities and proceeds from sales of property and equipment less cash capital expenditures. We believe that Free Cash Flow is a useful financial metric to assess our ability to pursue business opportunities and investments. Free Cash Flow is not a measure of our liquidity under GAAP and should not be considered as an alternative to cash flows provided by operating activities or any other liquidity measures derived in accordance with GAAP.\nWe caution readers that amounts presented in accordance with our definitions of EBITDA, Adjusted EBITDA, Adjusted EBITDA Margin, Adjusted Net Income, and Free Cash Flow may not be the same as similar measures used by other companies. Not all companies and analysts calculate EBITDA, Adjusted EBITDA, Adjusted EBITDA Margin, Adjusted Net Income or Free Cash Flow in the same manner. We compensate for these limitations by using these non-GAAP financial measures as supplements to GAAP financial measures and by presenting the reconciliations of the non-GAAP financial measures to their most comparable GAAP financial measures.\n18\nThe following table reconciles EBITDA, Adjusted EBITDA, Adjusted EBITDA Margin, Adjusted Net Income and Free Cash Flow to the most directly comparable GAAP financial performance and liquidity measures for the periods indicated:\n13 weeks ended\n26 weeks ended\nJune 27, 2026\nJune 28, 2025\nJune 27, 2026\nJune 28, 2025\nNet income and Net income margin\n$\n275\n2.6%\n$\n224\n2.2%\n391\n1.9%\n339\n1.7%\nInterest expense net\n77\n74\n152\n151\nIncome tax provision\n94\n76\n120\n109\nDepreciation expense\n104\n102\n209\n200\nAmortization expense\n14\n13\n28\n27\nEBITDA and EBITDA margin\n564\n5.4%\n489\n4.9%\n900\n4.5%\n826\n4.3%\nAdjustments:\nRestructuring activity and asset impairment charges (1)\n2\n8\n7\nShare-based compensation expense (2)\n32\n23\n54\n45\nLIFO reserve adjustments (3)\n(5)\n14\n33\n19\nBusiness transformation costs (4)\n10\n13\n17\n20\nBusiness acquisition, integration related costs, divestitures and other (5)\n3\n7\n5\n20\nAdjusted EBITDA and Adjusted EBITDA margin\n604\n5.7%\n548\n5.4%\n1,017\n5.0%\n937\n4.8%\nDepreciation expense\n(104)\n(102)\n(209)\n(200)\nInterest expense net\n(77)\n(74)\n(152)\n(151)\nIncome tax provision, as adjusted (6)\n(106)\n(95)\n(165)\n(150)\nAdjusted Net Income\n$\n317\n$\n277\n$\n491\n$\n436\nCash flow\nCash flows from operating activities\n$\n431\n$\n334\n$\n725\n$\n725\nProceeds from sales of property and equipment\n4\n1\n5\nCapital expenditures\n(76)\n(77)\n(174)\n(161)\nFree Cash Flow\n$\n355\n$\n261\n$\n552\n$\n569\n(1) Consists primarily of severance and related costs, organizational realignment costs and asset impairment charges.\n(2) Share-based compensation expense for expected vesting of stock awards and employee stock purchase plan.\n(3) Represents the impact of LIFO reserve adjustments.\n(4) Transformational costs represent non-recurring expenses prior to formal launch of strategic projects with anticipated long-term benefits to the Company. These costs generally relate to third party consulting and non-capitalizable technology. For both the 13 weeks and 26 weeks ended June 27, 2026 and June 28, 2025, business transformation costs related to projects associated with information technology infrastructure initiatives and workforce efficiencies.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/1665918/000166591826000045/usfd-20260627.htm",
+      "asOf": "2026-08-06",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "Item 1A. Risk Factors\nWe are subject to many risks and uncertainties. Some of these risks and uncertainties, including those described below, may cause our business, financial condition and results of operations to vary, and they may materially or adversely affect our financial performance. The risks and uncertainties described below are not the only ones we face. Other risks and uncertainties, which are not currently known to us or which we currently believe are immaterial, may also materially or adversely affect our business, financial condition and results of operations.\nRisks Relating to Our Business and Industry\nAn economic downturn, public health crisis, and/or other factors affecting consumer spending and confidence, may reduce the amount of food prepared away from home, which may adversely affect our business, financial condition and results of operations.\nThe U.S. foodservice distribution industry is sensitive to national, regional and local economic conditions. An uneven level of general U.S. economic activity, uncertainty in the financial markets, inflation, and supply chain disruptions could have an adverse impact on consumer confidence and discretionary spending. A decline in economic activity or the frequency and amount spent by consumers for food prepared away from home, as well as other macroenvironmental factors that could decrease general consumer confidence (including deteriorating economic conditions, heightened volatility in the financial markets, tariffs, inflationary pressure, an uncertain geopolitical environment, trade policies and supply chain disruptions, such as those the global economy is currently facing), may negatively impact our business, financial condition and results of operations. The extent of any such effects on our business, financial condition and results of operations depends in part on the magnitude and duration of such conditions, which cannot be predicted at this time.\nOur business is a low-margin business, and our profitability and results of operations are directly affected by cost deflation or inflation, volatile food costs and other factors.\nThe U.S. foodservice distribution industry is characterized by relatively high inventory turnover with relatively low profit margins. Volatile food costs have a direct impact on our industry. Our inability to quickly respond to inflationary and deflationary cost pressures could have a material adverse impact on our business, financial condition, or results of operations. We make a significant portion of our sales at prices that are based on the cost of products we sell, plus a margin percentage or markup. As a result, our profit levels may be negatively affected during periods of product cost deflation, even though our gross profit percentage may remain relatively constant. Prolonged periods of product cost inflation, or periods of rapid inflation, may negatively impact our results of operations as a result of decreased discretionary consumer spending. Such inflation may also reduce our profit margins and earnings if there is a lag between when costs increase and when we are able to pass on all or a portion of such product cost increases along to customers.\nCompetition in our industry is intense, and we may not be able to compete successfully, which may have an adverse impact on our business, financial condition and results of operations.\nThe U.S. foodservice distribution industry is highly competitive, with national, multi-regional, regional and local distributors and specialty competitors. Certain of our competitors may have greater scale, financial and other resources than we do in certain markets. In addition, regional and local companies may align themselves with other smaller distributors through purchasing cooperatives and marketing groups, with the goal of enhancing their geographic reach, private label offerings, overall purchasing power, cost efficiencies, and ability to meet customer distribution requirements. Such changes may occur particularly during periods of economic uncertainty or significant inflation. These distributors may also rely on local presence as a source of competitive advantage, and they may have a lower cost to serve and other competitive advantages due to geographic proximity. Additionally, we experience competition from cash-and-carry operations, commercial wholesale outlets, warehouse clubs and grocery stores that serve the commercial foodservice marketplace. We also experience competition from online direct food wholesalers and other retailers, and competitors that are utilizing technology, including artificial intelligence and machine learning technologies, which further increase pressure on the industry's profit margins. We generally do not have exclusive distribution agreements with our customers, and they may switch to other distributors that offer lower prices or differentiated products or customer service. The cost of switching distributors is very low, as are the barriers to entry into the U.S. foodservice distribution industry. We believe most purchasing decisions in the U.S. foodservice distribution industry are based on the type, quality and price of the product and a distributor's ability to completely and accurately fill orders and provide timely deliveries. Disruptions caused by macroeconomic conditions, inflationary pressure, trade policies, supply chain disruptions, geopolitical events and labor shortages that impact our ability to completely and accurately fill orders and provide timely deliveries of quality products at competitive prices may have an adverse impact on our business, financial condition and results of operations.\nWe rely on third party suppliers, and our business may be affected by interruption of supplies or increases in product costs.\nWe obtain most of our foodservice and related products from third party suppliers. We typically do not have long-term contracts with suppliers. Although our purchasing volume can provide an advantage when dealing with suppliers, suppliers may not provide the\n10\nfoodservice products and supplies we need in the quantities and at the time and prices requested. Our suppliers may also be affected by higher costs to source or produce and transport products, as well as by other related expenses that they pass through to their customers, which could result in higher costs for the products they supply to us. We do not control the actual production of most of the products we sell. This means we are also subject to delays caused by interruption in production and increases in product costs based on actions and conditions outside our control. These actions and conditions include changes in supplier pricing practices (including promotional allowances); labor shortages, work slowdowns, work interruptions, strikes or other job actions by employees of suppliers or carriers; government shutdowns; severe weather and climate conditions; rising sea levels or flooding; crop conditions; product or raw material scarcity; water shortages; outbreak of food-borne illnesses; product recalls; transportation interruptions; unavailability of fuel or increases in fuel costs; competitive demands; impact of climate change; and natural disasters, pandemics, terrorist attacks, international hostilities, civil insurrection or social unrest or any other catastrophic events. Moreover, commodity prices continue to be volatile and generally increased due to supply chain disruptions and labor and transportation shortages. Our inability to obtain adequate supplies of foodservice and related products because of any of these or other factors could mean that we could not fulfill our obligations to our customers and, as a result, our customers may turn to other distributors. Furthermore, any changes to the pricing practices of our suppliers, including the reduction or elimination of promotional allowances, could result in a material adverse effect on our business, financial condition and results of operations.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/1665918/000166591826000008/usfd-20251227.htm",
+      "asOf": "2026-02-12",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-K",
+    "pressRelease": {
+      "text": "EX-99.1\n2\nusfd06272026ex991.htm\nEX-99.1\nDocument\nExhibit 99.1\nINVESTOR CONTACT\nMEDIA CONTACT\nMike Neese\nSara Matheu\n(847) 232-5894\n(773) 580-3775\nMichael.Neese usfoods.com\nSara.Matheu usfoods.com\nUS Foods Reports Second Quarter Fiscal Year 2026 Earnings\nGrew Net Sales 4.5% to $10.5 Billion, Net Income 22.8% to $275 Million and Diluted EPS 29.2% to $1.24\nGrew Adjusted EBITDA 10.2% to a Record $604 Million and Adjusted Diluted EPS 21.0% to $1.44\nAccelerated Independent Restaurant Case Growth to 5.1%\nRepurchased $374 Million of Shares\nROSEMONT, Ill. (BUSINESS WIRE) Aug. 6, 2026 US Foods Holding Corp. (NYSE USFD), one of the largest foodservice distributors in the United States, today announced results for the second quarter of fiscal year 2026.\nSecond Quarter Fiscal 2026 Highlights\nTotal case volume increased 1.9% independent restaurant case volume increased 5.1%\nNet sales increased 4.5% to $10.5 billion\nGross profit increased 8.0% to $1.9 billion\nNet income increased 22.8% to $275 million\nNet income margin increased 39 basis points to 2.6%\nAdjusted EBITDA 1 increased 10.2% to $604 million\nAdjusted EBITDA margin 1 increased 29 basis points to 5.7%\nDiluted EPS increased 29.2% to $1.24 Adjusted Diluted EPS 1 increased 21.0% to $1.44\n\"Our team delivered another strong quarter, highlighted by accelerating volume growth, record Adjusted EBITDA and Adjusted EBITDA margin and strong Adjusted EPS growth in what remains a challenging but stable industry environment,\" said Dave Flitman, Chair of the Board and CEO. \"Importantly, our results are in line with our long-range plan, including 10% Adjusted EBITDA growth and 21% Adjusted Diluted EPS growth driven by 29 basis points of margin expansion and 5% independent restaurant case growth. By leveraging our continuous improvement and self-help culture, we are enhancing service, improving productivity and delivering sustainable, profitable growth. I remain confident in our ability to continue to gain share with our target customer types, further improve customer service levels, deploy our strong and accelerating cash flow with discipline and compound earnings growth over time. I thank our 30,000 associates for their hard work and commitment to delivering excellence in serving our customers and pursuing our ambition to become the undisputed best in our industry.\"\n1 This earnings release includes several metrics, including Adjusted EBITDA, Adjusted Diluted EPS and Adjusted EBITDA margin, that are not calculated in accordance with U.S. generally accepted accounting principles ( \" GAAP \" ). Please refer to the \" Non-GAAP Financial Measures \" and \" Non-GAAP Reconciliation \" sections of this press release for the definitions and reconciliation of any non-GAAP financial measures to their respective most comparable financial measure calculated in accordance with GAAP.\n1\n\"Our second quarter results reflect consistent execution of our key initiatives, supported by strong operating performance,\" added Dirk Locascio, CFO. \"We expanded margins again this quarter through a combination of volume growth, gross profit gains and cost productivity improvements. Year-to-date, we invested $174 million in capital expenditures and repurchased approximately $500 million of shares, while maintaining our net leverage at 2.6 times. We remain confident in our ability to deliver sustained earnings growth and create long-term shareholder value.\"\nSecond Quarter Fiscal Year 2026 Results\nTotal case volume increased 1.9% from the prior year driven by a 5.1% increase in independent restaurant case volume, a 3.5% increase in healthcare volume and a 4.4% increase in hospitality volume, partially offset by a 1.5% decrease in chain volume. Total organic case volume increased 1.7%, which includes 5.0% organic independent restaurant case volume growth. Net sales of $10.5 billion for the quarter increased 4.5% from the prior year, driven by case volume growth and food cost inflation of 2.3%.\nGross profit of $1.9 billion increased by $142 million, or 8.0%, from the prior year, primarily as a result of an increase in total case volume, improved cost of goods sold, and a $19 million favorable year-over-year LIFO adjustment. Gross profit as a percentage of Net sales was 18.2%. Adjusted Gross profit was $1.9 billion, an increase of $123 million, or 6.9% from the prior year. Adjusted Gross profit as a percentage of Net sales was 18.2%.\nOperating expenses of $1.5 billion increased by $71 million, or 5.1%, from the prior year, primarily as a result of an increase in total case volume and higher distribution, selling and administrative costs, partially offset by actions to streamline administrative processes and costs. Operating expenses as a percentage of Net sales were 14.0%. Adjusted Operating expenses were $1.3 billion, an increase of $68 million, or 5.5% from the prior year. Adjusted Operating expenses as a percentage of Net sales were 12.5%.\nNet income of $275 million, increased by $51 million, or 22.8%, from the prior year. Net income margin was 2.6%, an increase of 39 basis points compared to the prior year. Adjusted EBITDA of $604 million, increased by $56 million, or 10.2%, from the prior year. Adjusted EBITDA margin was 5.7%, an increase of 29 basis points compared to the prior year. Diluted EPS was $1.24 Adjusted Diluted EPS was $1.44.\nCash Flow and Debt\nCash flow provided by operating activities for the first six months of fiscal year 2026 and 2025 was $725 million. Higher net income in the current period was offset by favorable changes in operating assets and liabilities in the prior comparative period. Cash capital expenditures for the first six months of fiscal year 2026 totaled $174 million, an increase of $13 million from the prior year, related to investments in information technology, property and equipment and construction of and improvements to distribution facilities.\nNet Debt at the end of the second quarter of fiscal year 2026 was $5.2 billion. The ratio of Net Debt to Adjusted EBITDA was 2.6x at the end of the second quarter of fiscal year 2026, compared to 2.7x at the end of fiscal year 2025.\nDuring the second quarter of fiscal year 2026, the Company repurchased 4.4 million shares of common stock for $374 million and for the first six months of fiscal year 2026 repurchased 5.8 million shares of common stock for approximately $500 million, inclusive of fees, commissions, and any related excise tax . The Company had $640 million in remaining funds authorized under the November 2025 share repurchase program.\n2\nOutlook for Fiscal Year 2026 2\nThe Company is reaffirming its Fiscal Year 2026 guidance provided on February 12, 2026 of\nNet Sales growth of 4% to 6%\nAdjusted EBITDA growth of 9% to 13%\nAdjusted Diluted EPS growth of 18% to 24%\nThe guidance provided above includes the impact of a 53rd week in fiscal year 2026, which is expected to add approximately 1% to total case growth and Adjusted EBITDA growth.\nConference Call and Webcast Information\nUS Foods will host a live webcast to discuss the second quarter of fiscal year 2026 results on Thursday, August 6, 2026, at 8 a.m. CDT. The call can also be accessed live over the phone by dialing (888) 660-6196 the conference ID number is USFDQ226. Presentation slides will be available shortly before the webcast begins. The webcast, slides, and a copy of this press release can be found in the Investor Relations section of our website at https ir.usfoods.com .\nAbout US Foods\nWith a promise to help its customers Make It , US Foods is one of America's great food companies and a leading foodservice distributor, partnering with approximately 250,000 customer locations to help their businesses succeed. With more than 70 broadline locations and more than 90 cash and carry stores, US Foods and its 30,000 associates provides its customers with a broad and innovative food offering and a comprehensive suite of e-commerce, technology and business solutions. US Foods is headquartered in Rosemont, Ill. Visit www.usfoods.com to learn more.\n2 The Company is not providing a reconciliation of certain forward-looking non-GAAP financial measures, including Adjusted EBITDA and Adjusted Diluted EPS, because the Company is unable to predict with reasonable certainty the financial impact of certain significant items, including restructuring activity and asset impairment charges, share-based compensation expenses, non-cash impacts of LIFO reserve adjustments, losses on extinguishments of debt, business transformation costs, other gains and losses, business acquisition and integration related costs and divestiture costs and diluted earnings per share. These items are uncertain, depend on various factors, and could have a material impact on GAAP reported results for the guidance periods. For the same reasons, the Company is unable to address the significance of the unavailable information, which could be material to future results.\n3\nForward-Looking Statements\nThis press release contains forward-looking statements within the meaning of the Private Securities Litigation Reform Act of 1995. These forward-looking statements include, without limitation, forecasted financial performance, statements about future results of operations and other statements which are not purely historical facts or that necessarily depend upon future events, including those under the heading \"Outlook for Fiscal Year 2026.\" These statements often include words such as \"believe,\" \"expect,\" \"project,\" \"anticipate,\" \"intend,\" \"plan,\" \"outlook,\" \"estimate,\" \"target,\" \"seek,\" \"will,\" \"may,\" \"would,\" \"should,\" \"could,\" \"forecast,\" \"mission,\" \"strive,\" \"more,\" \"goal,\" or similar expressions (although not all forward-looking statements may contain such words). These statements are not guarantees of future performance or results and are subject to risks, uncertainties and other important factors, many of which are beyond our control, that could cause actual results to differ materially from those expressed in the forward-looking statements, including, among others changes in consumer eating habits, including economic factors affecting consumer confidence and discretionary spending and the impact of advancements in pharmaceutical therapies, which may reduce the consumption of food prepared away from home cost inflation deflation and commodity volatility, including increases in fuel costs geopolitical developments and supply chain disruptions competition reliance on third party suppliers and interruption of product supply or increases in product costs changes in our relationships with customers and group purchasing organizations our ability to increase or maintain the highest margin portions of our business and achieve the expected benefits from cost savings initiatives the impact of climate change or related regulatory or market measures the impact of governmental regulations related to our operations, including product safety product recalls and product liability claims our reputation in the industry labor relations, increased labor costs and continued access to qualified labor the level of interest rates and availability of indebtedness and restrictions under agreements governing our indebtedness disruption of existing technologies and implementation of new technologies, including artificial intelligence cybersecurity incidents and other technology disruptions effective execution of the Company's growth strategy, including our ability to identify suitable acquisition targets, consummate on favorable terms and successfully integrate acquired businesses risks to the health and safety of our associates and others adverse judgments or settlements resulting from litigation extreme weather conditions, natural disasters and other catastrophic events and the timing and scope of future repurchases by US Foods of its common stock.\nMore information on these risks and other potential factors that could affect the Company's business, reputation, results of operations, financial condition, and stock price is included in the sections entitled \"Risk Factors\" and \"Management's Discussion and Analysis of Financial Condition and Results of Operations\" in the Company's most recently filed periodic reports on Form 10-K and Form 10-Q and subsequent filings with the Securities and Exchange Commission. All forward-looking statements included in this press release are based on information available to us on the date hereof. For these statements, the Company claims the protection of the safe harbor for forward-looking statements in the Private Securities Litigation Reform Act. Accordingly, you are cautioned not to place undue reliance on these forward-looking statements. Except to the extent required by law, the Company does not undertake, and expressly disclaims, any duty or obligation to update publicly any forward-looking statement.\nNon-GAAP Financial Measures\nWe report our financial results in accordance with U.S. generally accepted accounting principles (\"GAAP\"). However, Adjusted Gross profit, Adjusted Operating expenses, EBITDA, Adjusted EBITDA, Adjusted EBITDA margin, Net Debt, Adjusted Net income and Adjusted Diluted EPS are non-GAAP financial measures regarding our operational performance and liquidity. These non-GAAP financial measures exclude the impact of certain items and, therefore, have not been calculated in accordance with GAAP.\nWe use Adjusted Gross profit and Adjusted Operating expenses as supplemental measures to GAAP measures to focus on period-over-period changes in our business and believe this information is helpful to investors. Adjusted Gross profit is Gross profit adjusted to remove the impact of the LIFO inventory reserve adjustments. Adjusted Operating expenses are Operating expenses adjusted to exclude amounts that we do not consider part of our core operating results when assessing our performance.\nWe believe EBITDA, Adjusted EBITDA and Adjusted EBITDA margin provide meaningful supplemental information about our operating performance because they exclude amounts that we do not consider part of our core operating results when assessing our performance. EBITDA is Net income (loss), plus Interest expense-net, Income tax provision (benefit), and Depreciation and amortization. Adjusted EBITDA is EBITDA adjusted for (1) Restructuring activity and asset impairment charges (2) Share-based compensation expense (3) the non-cash impact of LIFO reserve adjustments (4) loss on extinguishment of debt (5) Business transformation costs and (6) other gains, losses or costs as specified in the agreements governing our indebtedness. Adjusted EBITDA margin is Adjusted EBITDA divided by total Net sales.\nWe use Net Debt as a supplemental measure to GAAP measures to review the liquidity of our operations. Net Debt is defined as total debt net of total Cash, cash equivalents and restricted cash remaining on the balance sheet as of the end of the most recent fiscal quarter. We believe that Net Debt is a useful financial metric to assess our ability to pursue business opportunities and investments. Net Debt is not a measure of our liquidity under GAAP and should not be considered as an alternative to Cash Flows Provided by Operations or Cash Flows Used in Financing Activities.\nWe believe that Adjusted Net income is a useful measure of operating performance for both management and investors because it excludes items that are not reflective of our core operating performance and provides an additional view of our operating\n4\nperformance including depreciation, interest expense, and Income taxes on a consistent basis from period to period. Adjusted Net income is Net income (loss) excluding such items as restructuring activity and asset impairment charges, Share-based compensation expense, the non-cash impacts of LIFO reserve adjustments, amortization expense, loss on extinguishment of debt, Business transformation costs and other items, and adjusted for the tax effect of the exclusions and discrete tax items.",
+      "source": "edgar:8-K ex-99.1",
+      "url": "https://www.sec.gov/Archives/edgar/data/1665918/000166591826000043/usfd06272026ex991.htm",
+      "asOf": "2026-08-06",
+      "truncated": true
+    },
+    "proxyStatement": {
+      "text": "Compensation discussion and analysis:\nCOMPENSATION DISCUSSION AND ANALYSIS\nNAMED EXECUTIVE OFFICERS (\"NEOs\")\nThe Compensation and Human Capital Committee determines and approves the compensation of our NEOs. Our NEOs for fiscal year 2025 and their positions were as follows:\nDavid E. Flitman\nChief Executive Officer\nDirk J. Locascio\nExecutive Vice President, Chief Financial Officer\nSteven M. Guberman\nExecutive Vice President, Chief Transformation Officer and Nationally Managed Business\nRandy J. Taylor\nExecutive Vice President, Field Operations and Local Sales\nJohn A. Tonnison\nExecutive Vice President, Chief Information and Digital Officer\nEXECUTIVE SUMMARY\nCOMPENSATION PHILOSOPHY\nOur overall executive compensation philosophy remained unchanged in fiscal year 2025. Our executive compensation program is designed to attract, motivate, develop, and retain the right talent, in the right places, at the right time. The following guiding principles form the basis of our executive compensation philosophy:\nAppropriately balance annual and long-term incentive compensation opportunities to align with our goals, priorities, and stockholder value creation\nBalance risk and reward to encourage sustainable financial performance\nOffer fiscally responsible programs that ensure accountability in meeting our performance goals\nFISCAL YEAR 2025 HIGHLIGHTS\n2025 was a strong start to our three-year long-range plan. We grew Adjusted EBITDA (1) 11% to a record $1.932 billion, expanded Adjusted EBITDA margin by 30 basis points to 4.9%, and increased Adjusted Diluted EPS (1) 26% to a record $3.98.\nWe delivered these strong results despite a softer economic environment by capturing incremental market share across our target customer types and executing our operational excellence and productivity initiatives. Significant achievements against our strategy in 2025 include:\n(1) For more information, including reconciliations of our non-GAAP measures to the comparable GAAP measures, see Appendix A to this Proxy Statement. All percentages noted above are increases over fiscal year 2024.\n34\nUS FOODS HOLDING CORP. | 2026 PROXY STATEMENT\nCOMPENSATION DISCUSSION AND ANALYSIS\n2025 COMPENSATION DESIGN\nAfter reviewing market trends, evaluating our Say-on-Pay vote results (which received 96% approval last year) and receiving feedback from stockholders, the Compensation and Human Capital Committee determined that our fiscal year 2025 annual and long-term incentive plans should follow a similar structure to our fiscal year 2024 compensation design. The Compensation and Human Capital Committee believes that the fiscal year 2025 compensation plans emphasize our strategic and operational priorities, and that the criteria contained therein focus on the critical drivers of the Company's future success .\n2025 Base Salary (page 43 )\nAt its Q4 2024 meeting, the Compensation and Human Capital Committee increased Mr. Flitman's base salary by 7.7% to $1,400,000 effective as of January 1, 2025. In increasing Mr. Flitman's base salary, the Compensation and Human Capital Committee considered his tenure and strong performance in his role, company performance, and overall competitiveness with other similarly situated chief executive officers.\nAt its Q1 2025 meeting, the Compensation and Human Capital conducted a comprehensive review of the base salaries of our executive leadership team, consisting of competitive market data derived from our compensation peer group, as well as the individual performance and experience. Based on this comprehensive review, the Compensation and Human Capital Committee determined that in order to retain key talent and remain competitive, each of Mr. Guberman's and Mr. Taylor's base salary should increase by 8.8% to $620,000, effective as of March 23, 2025, positioning each of them closer to the median when compared to other similarly situated executive officers in our peer group.\n2025 Annual Incentive Plan (also referred to herein as \"AIP\") Awards (page 44 )\nIn 2025, our AIP performance goals were designed to highlight the Company's need for continued top line growth and cost control, while also emphasizing operational improvements and share growth that would be critical to the achievement of our long-range plan. The structure of our fiscal year 2025 AIP utilized the following performance metrics - Adjusted EBITDA (70%), Distribution Cost Per Case (15%) and IND Market Share (15%) and includes a +/- 10% modifier based on the Company's safety improvement.\nIn 2025, the AIP target and maximum bonus percentages for the NEOs remained the same as fiscal year 2024. However, the Compensation and Human Capital Committee has discretion to reduce or eliminate AIP bonus payments if, regardless of achievement against the performance metrics, the Company's financial performance did not warrant such payments.\n\nSecurity ownership:\nSECURITY OWNERSHIP OF CERTAIN BENEFICIAL OWNERS, DIRECTORS, AND EXECUTIVE OFFICERS\nThe following table sets forth information as of March 18, 2026, the Record Date, unless otherwise indicated in the footnotes below, with respect to the beneficial ownership of our Common Stock by: (i) each individual or entity known to us to own beneficially more than 5% of our capital stock, (ii) each of our directors, (iii) each of our named executive officers, and (iv) all of our directors and executive officers as a group. For each applicable beneficial owner, percent ownership has been computed based on a total of 220,242,295 shares of our Common Stock outstanding as of March 18, 2026.\nThe amounts and percentages of shares of our Common Stock beneficially owned are reported on the basis of SEC rules governing the determination of beneficial ownership of securities. Under SEC rules, a person is deemed a \"beneficial owner\" of a security if that person has or shares voting power or investment power, which includes the power to dispose of or to direct the disposition of the security. A person is also deemed a beneficial owner of any securities of which that person has a right to acquire beneficial ownership within 60 days. Securities that can be acquired this way are deemed to be outstanding for purposes of computing a person's ownership percentage, but not for purposes of computing any other person's ownership percentage. Under these rules, more than one person may be deemed a beneficial owner of the same securities, and a person may be deemed a beneficial owner of securities to which that person has no economic interest.\nExcept as otherwise indicated in the footnotes to the following table, each of the beneficial owners listed below has, to our knowledge, sole voting and investment power for the indicated shares of our capital stock. Unless otherwise noted, the address of each beneficial owner listed below is c/o US Foods Holding Corp., 9399 W. Higgins Road, Suite 100, Rosemont, IL 60018.\nShares Of Common Stock Beneficially Owned\nName and Address of Beneficial Owner\nNumber\n(#)\nPercent\n(%)\nThe Vanguard Group, Inc. (1)\n100 Vanguard Boulevard, Malvern, PA 19355\n24,301,555\n11.0\nBlackrock, Inc. (2)\n50 Hudson Yards, New York, NY\n19,418,472\n8.8\nBoston Partners (3)\nOne Beacon Street, 30th FL, Boston, MA 02108\n15,457,447\n7.0\nFMR LLC (4)\n245 Summer Street, Boston, MA 02210\n15,288,433\n6.9\nWellington Management Group LLP (5)\n280 Congress Street, Boston MA 02210\n12,875,970\n5.8\nCapital World Investors (6)\n333 South Hope Street, 55th Floor, Los Angeles, CA 90071\n11,695,346\n5.3\nDirectors and Named Executive Officers (8)(9)\nCheryl A. Bachelder\n39,145\n*\nDavid W. Bullock\n6,806\n*\nDavid E. Flitman\n319,221\n*\nMarla C. Gottschalk\n14,278\n*\nSteven M. Guberman\n271,279\n*\n74\nUS FOODS HOLDING CORP. | 2026 PROXY STATEMENT\nSECURITY OWNERSHIP OF CERTAIN BENEFICIAL OWNERS, DIRECTORS, AND EXECUTIVE OFFICERS\nShares Of Common Stock Beneficially Owned\nName and Address of Beneficial Owner\nNumber\n(#)\nPercent\n(%)\nDirk J. Locascio\n293,089 (7)\n*\nCarl Andrew Pforzheimer\n41,219\n*\nQuentin Roach\n14,278\n*\nRandy J. Taylor\n82,649\n*\nDavid M. Tehle\n39,453\n*\nJohn A. Tonnison\n129,515\n*\nAnn E. Ziegler\n32,928\n*\nAll directors and executive officers as a group (17 people) (8)\n1,627,541\n*\n* Less than 1%.\n(1) Based solely on information as of November 29, 2024, in Amendment No. 7 to Schedule 13G, filed with the SEC by The Vanguard Group, Inc. (\"Vanguard\") on December 6, 2024. As of November 29, 2024, Vanguard reported having sole voting power over no shares of our Common Stock, shared voting power over 88,108 shares of our Common Stock, sole dispositive power over 23,939,282 shares of our Common Stock, and shared dispositive power over 362,273 shares of our Common Stock.\n(2) Based solely on information as of December 31, 2023, in Schedule 13G, filed with the SEC by Blackrock, Inc. (\"Blackrock\") on January 26, 2024.\n\nRelated-person transactions:\nRELATED PARTY TRANSACTIONS\nThe Audit Committee has adopted a written policy related to the review and approval of related party transactions. Under the policy, the Audit Committee evaluates, and if appropriate, approves any proposed transactions involving the Company and in which any of our directors, nominees for director, executive officers, or significant stockholders (or persons related to any of them) has a direct or indirect interest. Under the policy, certain related party transactions are deemed to be pre-approved, for example, where the rates or charges involved are determined by competitive bids. In determining whether to approve a proposed related party transaction, the Audit Committee considers, among other things, whether: the terms of the transaction are fair to the Company and would apply if the transaction did not involve a related party; there are compelling business reasons for the Company to enter into the related party transaction and the nature of any available alternative transactions; the transaction would impair the independence of an otherwise independent director; or the transaction would create an improper conflict of interest for any director or executive officer of the Company, taking into account the size of the transaction, the overall financial position of the related party, the direct or indirect nature of the related party's interest in the transaction and the ongoing nature of any proposed relationship.",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/1665918/000166591826000022/usfd-20260402.htm",
+      "asOf": "2026-04-02",
+      "truncated": true
+    },
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T22:17:42.248Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T22:17:42.248Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T22:17:42.248Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T22:17:42.248Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "edgar primary document (cover page)",
+      "source": "edgar",
+      "capturedAt": "2026-09-28T22:17:42.248Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T22:17:42.248Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T22:17:42.248Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T22:17:42.248Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T22:17:42.248Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T22:17:42.248Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T22:17:42.248Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T22:17:42.248Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-28T22:17:42.248Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-28T22:17:42.248Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-28T22:17:42.248Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-09-28T22:17:42.248Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-09-28T22:17:42.248Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-09-28T22:17:42.248Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T22:17:42.248Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T22:17:42.248Z"
+    }
+  ]
+}

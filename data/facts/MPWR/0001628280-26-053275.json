@@ -1,0 +1,577 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "MPWR",
+  "cik": 1280452,
+  "company": "Monolithic Power Systems, Inc.",
+  "exchange": "NASDAQGS",
+  "sic": 3674,
+  "sicDescription": "Semiconductors & Related Devices",
+  "filing": {
+    "form": "10-Q",
+    "accession": "0001628280-26-053275",
+    "filedDate": "2026-08-05",
+    "periodEnd": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1280452/000162828026053275/mpwr-20260630.htm"
+  },
+  "capturedAt": "2026-09-28T22:17:28.607Z",
+  "quote": {
+    "price": 1351.2,
+    "marketCap": 66402017280,
+    "sharesOutstanding": 49142996.80284192,
+    "sharesSource": "derived",
+    "week52Low": 833.18,
+    "week52High": 1714.09,
+    "dividendYield": 0.0058999998,
+    "asOf": "2026-09-28"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          1207798000,
+          1794148000,
+          1821072000,
+          2207100000,
+          2790459000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          685459000,
+          1048552000,
+          1021119000,
+          1220870000,
+          1539741000
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          262417000,
+          526785000,
+          481736000,
+          539358000,
+          728636000
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          291116000,
+          563899000,
+          521904000,
+          575788000,
+          781149000
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          242023000,
+          437672000,
+          427374000,
+          1592058000,
+          621483000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          5.05,
+          9.05,
+          8.76,
+          32.6,
+          12.86
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          725082000,
+          737873000,
+          1108476000,
+          862946000,
+          1026664000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          1243985000,
+          1668602000,
+          2049939000,
+          2951125000,
+          3073629000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          4.95651790750141,
+          5.355425208807897,
+          7.7413959623034865,
+          5.313062902497564,
+          4.921246776976398
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          320010000,
+          246674000,
+          638213000,
+          788410000,
+          838202000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -94420000,
+          -58843000,
+          -57578000,
+          -146118000,
+          -172013000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          0,
+          0,
+          -3700000,
+          -636200000,
+          -6600000
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          -109364000,
+          -137965000,
+          -185844000,
+          -240623000,
+          -284797000
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          225590000,
+          187831000,
+          580635000,
+          642292000,
+          666189000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q2'26",
+    "periodEnd": "2026-06-30",
+    "revenue": 980642000,
+    "operatingMargin": 0.30989290689160776,
+    "revenueYoY": 0.4755948923671405
+  },
+  "ttm": {
+    "pe": 82.4908424908425,
+    "ps": 20.286835307064308,
+    "evToEbitda": null,
+    "grossMargin": 0.551953190160695,
+    "operatingMargin": 0.28723483559302665,
+    "netMargin": 0.24500680993706994,
+    "netDebtToEbitda": null,
+    "interestCoverage": null,
+    "currentRatio": 4.975330063823719,
+    "fcfYield": 0.008818060414203127
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 4124687530,
+      "eps": 27.43092
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 5285620650,
+      "eps": 34.8707
+    }
+  },
+  "analysts": {
+    "count": 17,
+    "buy": 16,
+    "hold": 1,
+    "sell": 0,
+    "consensusRating": "None",
+    "consensusTarget": 1839.8,
+    "medianTarget": 1820,
+    "highTarget": 2100,
+    "lowTarget": 1575,
+    "asOf": "2026-09-28"
+  },
+  "segments": {
+    "basis": "FY25 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 2790459000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "ASX",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "EA",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "GRMN",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "NXPI",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-17",
+      "close": 1415.989990234375
+    },
+    {
+      "date": "2026-08-18",
+      "close": 1333.1800537109375
+    },
+    {
+      "date": "2026-08-19",
+      "close": 1300.1400146484375
+    },
+    {
+      "date": "2026-08-20",
+      "close": 1310.5999755859375
+    },
+    {
+      "date": "2026-08-21",
+      "close": 1316.280029296875
+    },
+    {
+      "date": "2026-08-24",
+      "close": 1285.030029296875
+    },
+    {
+      "date": "2026-08-25",
+      "close": 1304.1500244140625
+    },
+    {
+      "date": "2026-08-26",
+      "close": 1303.8800048828125
+    },
+    {
+      "date": "2026-08-27",
+      "close": 1311.0799560546875
+    },
+    {
+      "date": "2026-08-28",
+      "close": 1256.260009765625
+    },
+    {
+      "date": "2026-08-31",
+      "close": 1267.77001953125
+    },
+    {
+      "date": "2026-09-01",
+      "close": 1225.9599609375
+    },
+    {
+      "date": "2026-09-02",
+      "close": 1219.3599853515625
+    },
+    {
+      "date": "2026-09-03",
+      "close": 1213.6500244140625
+    },
+    {
+      "date": "2026-09-04",
+      "close": 1223.8599853515625
+    },
+    {
+      "date": "2026-09-08",
+      "close": 1218.5
+    },
+    {
+      "date": "2026-09-09",
+      "close": 1203.75
+    },
+    {
+      "date": "2026-09-10",
+      "close": 1186.0799560546875
+    },
+    {
+      "date": "2026-09-11",
+      "close": 1234.4599609375
+    },
+    {
+      "date": "2026-09-14",
+      "close": 1143.239990234375
+    },
+    {
+      "date": "2026-09-15",
+      "close": 1142.4599609375
+    },
+    {
+      "date": "2026-09-16",
+      "close": 1147.6099853515625
+    },
+    {
+      "date": "2026-09-17",
+      "close": 1169.5799560546875
+    },
+    {
+      "date": "2026-09-18",
+      "close": 1217.800048828125
+    },
+    {
+      "date": "2026-09-21",
+      "close": 1277.6800537109375
+    },
+    {
+      "date": "2026-09-22",
+      "close": 1380.6199951171875
+    },
+    {
+      "date": "2026-09-23",
+      "close": 1355.469970703125
+    },
+    {
+      "date": "2026-09-24",
+      "close": 1335.550048828125
+    },
+    {
+      "date": "2026-09-25",
+      "close": 1367.4300537109375
+    },
+    {
+      "date": "2026-09-28",
+      "close": 1351.199951171875
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "Monolithic Power Systems, Inc. provides semiconductor-based power electronics solutions in China, Taiwan, South Korea, Southeast Asia, Europe, the United States, Japan, and internationally. The company offers direct current (DC) to DC solutions to convert and control voltages within a range of electronic systems, such as cloud-based and on-premises CPU servers and workstations, AI systems, memory, storage solutions, notebooks, infotainment, power sources, home appliances, network infrastructure, and satellite communications. It also provides alternating current (AC) to DC; driver metal-oxide-semiconductor field-effect transistors; power management integrated circuits (ICs); and current limit switch and lighting control products. The company serves storage and computing, enterprise data, automotive, communications, consumer, and industrial end markets through third-party distributors and value-added resellers. Monolithic Power Systems, Inc. was incorporated in 1997 and is based in West Palm Beach, Florida.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-28"
+    },
+    "mdaExcerpt": {
+      "text": "Item 2. Management's Discussion and Analysis of Financial Condition and Results of Operations\nThis Quarterly Report on Form 10-Q contains forward-looking statements within the meaning of Section 27A of the Securities Act of 1933, as amended, and Section 21E of the Securities Exchange Act of 1934, as amended, that have been made pursuant to and in reliance on the provisions of the Private Securities Litigation Reform Act of 1995. These statements include, among others, statements concerning:\nthe above-average industry growth of product and market areas that we have targeted;\nour plans to increase revenue and our manufacturing capacity in a diversified way across regions and through the introduction of new products within our existing product families as well as in new product categories and families;\nour mission statement to reduce energy and material consumption to improve all aspects of quality of life and create a sustainable future;\nthe effects of macroeconomic factors, global economic uncertainties, current and potential global conflicts and global tariffs, export controls and retaliatory measures on the semiconductor industry and our business;\nthe effect of changes in laws or economic policies in China or the U.S.;\nthe effect that liquidity of our investments has on our capital resources;\nthe continuing application of our products in the storage and computing, enterprise data, automotive, industrial, communications and consumer end markets;\nestimates of our future liquidity requirements and the sufficiency of our cash, cash equivalents and short-term investments to operate our business;\nthe cyclical nature of the semiconductor industry;\nour belief that we may incur significant legal expenses that vary with the level of activity in each of our current or future legal proceedings;\nexpectations regarding protection of our proprietary technology;\nour business outlook for the remainder of 2026 and beyond;\nthe factors that we believe will impact our business, operations and financial condition, as well as our ability to achieve revenue growth;\nthe expected percentage of our total revenue from various end markets;\nour ability to identify, acquire and integrate companies, businesses and products, and achieve the anticipated benefits from such acquisitions and integrations;\nthe expected impact of various U.S. and international tax laws and regulations on our income tax provision, financial position and cash flows;\nour plan to repatriate cash from our foreign subsidiaries;\nour ability to fulfill our customers' evolving needs, enter new market segments and obtain design wins;\nour ability to forecast demand accurately and align inventory levels accordingly;\nour ability to develop and leverage process technologies as key strategic components of our future growth;\nour expectation to capitalize on the length of product life cycles to reduce manufacturing intensity and related emissions;\nour ability to recruit and retain application and design engineering personnel;\n20\nTable of Contents\nour expectation to continue devoting significant resources to research and development including related increased expenses;\nour ability to engage additional supply chain partners to support future growth and to leverage a diversified and resilient supply chain to reduce exposure to trade- and tariff-related risks;\nour intention and ability to execute our stock repurchase program and pay cash dividends and dividend equivalents;\nthe factors that differentiate us from our competitors; and\nour ability to timely and adequately remediate our material weakness.\nThese forward-looking statements generally are identified by the words \"would,\" \"could,\" \"may,\" \"should,\" \"predict,\" \"potential,\" \"targets,\" \"continue,\" \"anticipate,\" \"expect,\" \"intend,\" \"plan,\" \"believe,\" \"seek,\" \"estimate,\" \"project,\" \"forecast,\" \"will,\" and similar expressions. All forward-looking statements are based on our current outlook, expectations, estimates, projections, beliefs and plans or objectives about our business, our industry and the global economy, including our expectations regarding the potential impacts of macroeconomic factors, global economic uncertainties, including tariffs, export controls and retaliatory measures, and geopolitical tensions on the semiconductor industry and our business. These statements are not guarantees of future performance and are subject to significant risks and uncertainties. Actual events or results could differ materially and adversely from those expressed in any such forward-looking statements. Risks and uncertainties that could cause actual results to differ materially include those set forth throughout this Quarterly Report on Form 10-Q and in our Annual Report on Form 10-K including, in particular, in the sections entitled \"Risk Factors.\" Except as required by law, we disclaim any duty, and undertake no obligation, to update any forward-looking statements, whether as a result of new information relating to existing conditions, future events or otherwise or to release publicly the results of any future revisions we may make to forward-looking statements to reflect events or circumstances after the date hereof or to reflect the occurrence of unanticipated events. Readers are cautioned not to place undue reliance on such statements, which speak only as of the date of this Quarterly Report on Form 10-Q and entail significant risks. Readers should carefully review future reports and documents that we file from time to time with the SEC, such as our Annual Reports on Form 10-K, Quarterly Reports on Form 10-Q and any Current Reports on Form 8-K.\nUnless stated otherwise or the context otherwise requires, references to the terms \"Monolithic Power Systems,\" \"MPS,\" \"Registrant,\" the \"Company,\" \"we,\" \"our,\" and \"us\" as used herein are references to Monolithic Power Systems, Inc. and its consolidated subsidiaries.\nOverview\nWe are a fabless global company that provides high-performance, semiconductor-based power electronics solutions. Our mission is to reduce energy and material consumption to improve all aspects of quality of life and create a sustainable future. Founded in 1997 by our CEO Michael Hsing, we have three core strengths: deep system-level knowledge, strong semiconductor design expertise, and innovative proprietary technologies in the areas of semiconductor processes, system integration, and packaging. These combined advantages enable us to deliver reliable, compact, and monolithic solutions that are highly energy-efficient, cost-effective, and environmentally responsible while providing a consistent return on investment to our stockholders.\nWe operate in the cyclical semiconductor industry. We are subject to industry downturns, but we have targeted product and market areas that we believe allow us to operate at above average industry performance levels over the long term.\nWe work with third parties to manufacture, assemble and test our ICs. This has enabled us to limit our capital expenditures and fixed costs, while focusing our engineering and design resources on our core strengths.\nFollowing the introduction of a product, our sales cycle generally takes a number of quarters after we receive an initial customer order for a new product to ramp up. Typical supply chain lead times for orders are generally 16 to 26 weeks. These factors, combined with the fact that our customers can cancel or reschedule orders without incurring a significant penalty, make the forecasting of our orders, revenue and expenses difficult.\nWe derive most of our revenue from sales through distribution arrangements and direct sales to customers in Asia, where our products are incorporated into end-user products. Our revenue from sales to direct customers in Asia was 94% and 93% of our total revenue for the three months ended June 30, 2026 and 2025, respectively. Our revenue from sales to direct customers in Asia was 93% of our total revenue for each of the six months ended June 30, 2026 and 2025. We believe our ability to achieve revenue growth will depend, in part, on our ability to develop new products, enter new markets, gain market share, manage litigation risk, diversify our customer base and continue to secure manufacturing capacity.\n21\nTable of Contents\nMacroeconomic Conditions and Regulations\nThe semiconductor industry is impacted by various macroeconomic challenges including fluctuations in consumer spending, fluctuations in demand for semiconductors, rising inflation, global tariffs and retaliatory measures and announcements regarding the same, increased interest rates, and fluctuations in currency rates. We remain cautious in light of continued challenging global macroeconomic conditions and will continue to monitor the potential impact on our operations. The extent and duration of the direct and indirect impact of macroeconomic events on our business, results of operations and overall financial position remain uncertain and depend on future developments.\nWe closely monitor changes to export control laws, tariffs, trade regulations and other trade requirements. For the three months ended June 30, 2026 and through the date we filed this Quarterly Report on Form 10-Q, no restrictions or requirements have had a material impact on our revenue and operations. We believe that our diverse, agile and resilient supply chain is structured in a way to minimize the impact of tariffs; however, such restrictions or requirements can be enacted quickly and unexpectedly and could impact our business in the future. To the extent tariffs, trade regulations or retaliatory measures or announcements regarding the same that affect us are implemented, we will seek to take mitigating actions in the near- and medium-term, as necessary, but there can be no assurance we will be successful. We are committed to complying with all applicable trade laws, regulations and other requirements.\nCritical Accounting Estimates\nIn preparing our condensed consolidated financial statements in accordance with U.S. GAAP, we are required to make estimates, assumptions and judgments that affect the amounts reported in our financial statements and the accompanying disclosures.\nEstimates and judgments used in the preparation of our financial statements are, by their nature, uncertain and unpredictable, and depend upon, among other things, many factors outside of our control. These factors include demand for our products, economic conditions and other current and future events, such as macroeconomic factors, global economic uncertainties, current and potential global conflicts and global tariffs, export controls and retaliatory measures and announcements regarding the same. Actual results could differ from these estimates and assumptions, and any such differences may be material to our condensed consolidated financial statements.\nThere have been no material changes during the six months ended June 30, 2026 to our critical accounting estimates from the information provided in the \"Critical Accounting Estimates\" section of Part II, Item 7, \"Management's Discussion and Analysis of Financial Condition and Results of Operations\" included in our Annual Report on Form 10-K for the year ended December 31, 2025.\nResults of Operations\nThe table below sets forth the data on the Condensed Consolidated Statements of Operations as a percentage of revenue for the periods presented:\nThree Months Ended June 30,\nSix Months Ended June 30,\n2026\n2025\n2026\n2025\n(In thousands, except percentages)\nRevenue\n$\n980,642\n100.0\n%\n$\n664,574\n100.0\n%\n$\n1,784,827\n100.0\n%\n$\n1,302,128\n100.0\n%\nCost of revenue\n439,572\n44.8\n298,558\n44.9\n798,692\n44.7\n582,882\n44.8\nGross profit\n541,070\n55.2\n366,016\n55.1\n986,135\n55.3\n719,246\n55.2\nOperating expenses:\nResearch and development\n118,618\n12.1\n96,266\n14.5\n219,184\n12.4\n188,493\n14.5\nSelling, general and administrative\n118,558\n12.1\n104,992\n15.8\n221,905\n12.4\n197,236\n15.1\nTotal operating expenses\n237,176\n24.2\n201,258\n30.3\n441,089\n24.8\n385,729\n29.6\nOperating income\n303,894\n31.0\n164,758\n24.8\n545,046\n30.5\n333,517\n25.6\nOther income, net\n17,835\n1.8\n12,220\n1.8\n23,865\n1.4\n17,351\n1.3\nIncome before income taxes\n321,729\n32.8\n176,978\n26.6\n568,911\n31.9\n350,868\n26.9\nIncome tax expense\n64,431\n6.6\n41,969\n6.3\n118,387\n6.7\n80,807\n6.2\nNet income\n$\n257,298\n26.2\n%\n$\n135,009\n20.3\n%\n$\n450,524\n25.2\n%\n$\n270,061\n20.7\n%\n22\nTable of Contents\nRevenue\nThe following table summarizes our revenue by end market for the periods presented:\nThree Months Ended June 30,\nSix Months Ended June 30,\nEnd Market\n2026\n% of Revenue\n2025\n% of Revenue\n2026\n% of Revenue\n2025\n% of Revenue\n(In thousands, except percentages)\nEnterprise Data\n$\n380,561\n38.8\n%\n$\n143,964\n21.7\n%\n$\n643,384\n36.0\n%\n$\n276,888\n21.3\n%\nStorage and Computing\n199,830\n20.4\n195,320\n29.4\n374,224\n21.0\n383,831\n29.5\nAutomotive\n157,068\n16.0\n145,132\n21.8\n309,414\n17.3\n290,036\n22.3\nCommunications\n131,571\n13.4\n73,783\n11.1\n243,028\n13.6\n145,454\n11.2\nConsumer\n56,805\n5.8\n59,663\n9.0\n111,345\n6.2\n116,610\n8.9\nIndustrial\n54,807\n5.6\n46,712\n7.0\n103,432\n5.8\n89,309\n6.8\nTotal\n$\n980,642\n100.0\n%\n$\n664,574\n100.0\n%\n$\n1,784,827\n100.0\n%\n$\n1,302,128\n100.0\n%\nRevenue for the three months ended June 30, 2026 was $980.6 million, an increase of $316.1 million, or 47.6%, from $664.6 million for the three months ended June 30, 2025. The increase in revenue was primarily due to increased demand for products serving our enterprise data and communications end markets. In addition, a higher product mix of power solutions, which generally carry higher average selling prices than discrete ICs, also contributed to the increase in year over year revenue.\nBy end market, second quarter 2026 revenue for the enterprise data end market increased $236.6 million, or 164.3%, from the same period in 2025. This increase was primarily due to higher sales of power management solutions for artificial intelligence (\"AI\") and server applications. Revenue from the storage and computing end market of $199.8 million increased $4.5 million, or 2.3%, from the same period in 2025. Second quarter 2026 automotive end market revenue of $157.1 million increased $11.9 million, or 8.2%, from the same period in 2025 due to higher sales of applications supporting infotainment and lighting systems. Communications end market revenue of $131.6 million increased $57.8 million, or 78.3%, from the same period in 2025 due to higher sales of power solutions for optical modules and switches. Second quarter 2026 consumer end market revenue decreased $2.9 million, or 4.8%, from the same period in 2025. Revenue of $54.8 million from the industrial end market increased $8.1 million, or 17.3%, from the same period in 2025.\nRevenue for the six months ended June 30, 2026 was $1,784.8 million, an increase of $482.7 million, or 37.1%, from $1,302.1 million for the six months ended June 30, 2025. The increase in revenue was primarily due to increased demand for products serving our enterprise data and communications end markets. In addition, a higher product mix of power solutions, which generally carry higher average selling prices than discrete ICs, also contributed to the increase in year over year revenue.\nFor the six months ended June 30, 2026, revenue for enterprise data end market increased $366.5 million, or 132.4%, from the same period in 2025. This increase was primarily due to higher sales of power management solutions for artificial intelligence (\"AI\") and server applications. Revenue from the storage and computing end market of $374.2 million decreased $9.6 million, or 2.5%, from the same period in 2025. For the six months ended June 30, 2026, automotive revenue of $309.4 million increased $19.4 million, or 6.7%, from the same period in 2025 due to higher sales of applications supporting infotainment and lighting systems. Communications end market revenue of $243.0 million increased $97.6 million, or 67.1%, from the same period in 2025 due to higher sales of power solutions for optical modules and switches.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/1280452/000162828026053275/mpwr-20260630.htm",
+      "asOf": "2026-08-05",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "Item 1A.\nRisk Factors\nOur business involves numerous risks and uncertainties, including but not limited to the material risks described below. This section should be read in conjunction with all the other information in this Annual Report on Form 10-K and our other filings with the SEC. If any of these risks materialize from time to time, then our business, reputation, financial condition, operating results, and growth prospects could be materially and adversely affected. In such an event, the trading price of our common stock could decline, and you could lose all or part of your investment in our common stock. Additional risks, trends and uncertainties may arise that could also harm our business, reputation, financial condition, operating results, and growth prospects.\nOur past financial performance should not be considered to be a reliable indicator of future performance, and investors should not use historical trends to anticipate results or trends in future periods. These risks include those related to forward-looking statements and our actual results may differ substantially from those discussed in these forward-looking statements.\nRisk Factors Summary\nThe following summary description sets forth an overview of the material risks we are exposed to in the normal course of our business activities. The summary does not purport to be complete and is qualified in its entirety by reference to the full risk factor discussion immediately following this summary description. We encourage you to read the full risk factor discussion carefully.\nOur revenue and expenses are difficult to predict, have varied significantly in the past, and could fluctuate significantly in the future due to numerous risks and uncertainties, many of which are beyond our control. As a result, we may not be profitable on a quarterly or annual basis. Our business, results of operations and financial condition, as well as your investment in our common stock, could be materially and adversely affected by any of the following material risks:\nour dependence on the markets in Asia for our customer base, which may expose us to political, cultural, regulatory, economic, foreign currency and operational risks;\ninherent risks associated with the operation in China, which could increase product costs or cause a delay in product shipments;\nchanges in general economic conditions in the countries where our products are sold or used, particularly those in China;\nthe impact of extensive Chinese government regulations, reduction or elimination of incentives, and uncertainties with respect to China's legal system, on us and our manufacturing partners and suppliers;\nchanges in international trade policy, such as tariffs on imports of foreign goods and regulations restricting the export of goods and services, between the U.S. and China or other countries;\npolitical and other risks in Taiwan and Hong Kong due to their tense relationships with China;\nfluctuations in the value of the U.S. Dollar relative to other currencies, including the Renminbi;\nour reliance on key suppliers in China, which may expose us to political, cultural, regulatory, economic, foreign exchange, operational and capacity shortage risks;\nour ability to achieve growth rates or financial performance comparable to past years;\nchanges in general demand for electronic products in the end markets that we serve;\nour ability to accurately forecast sales and expenses due to the nature of our business as a component supplier;\nour ability to timely develop and introduce new products, and the acceptance of our new products in the marketplace;\nour dependency on a limited number of customers for a significant portion of our revenue;\npotential product liability risks due to defects or failures to meet specifications;\nlengthy sales cycles for our products balanced against the fixed nature of a substantial portion of our expenses;\navailability of adequate manufacturing capacity from our suppliers, and our ability to increase product sales in spite of capacity challenges;\n12\nTable of Contents\nincreases in unanticipated costs as a result of increasing manufacturing capacity;\nour dependency on third-party suppliers for wafer purchases and other key components, and potential increases in prices for such materials due to general capacity shortages;\nour ability to deliver products on a timely basis despite disruptions in our relationships with assembly and test subcontractors;\nour ability to manage our inventory levels, including the levels of inventory held by our distributors;\nincreases in manufacturing costs due to commodity price increases;\nthe highly cyclical nature of the semiconductor industry, and increased competition due to industry consolidation;\ncompetition from companies with greater financial and technological resources, and customers developing products internally;\nthe impact of system upgrades, cyberattacks or other system security, data protection and privacy breaches on our business operations;\nour significant investment of resources in research and development that may not result in increased future sales;\nour ability to realize the anticipated benefits of any business acquisitions and other strategic investments;\nthe impact of new tax laws and interpretations of those laws on our tax provision and tax planning;\nexamination of our income tax returns, which could result in changes in effective tax rates or other adverse outcomes;\nthe complexity of certain accounting areas;\nrisks in connection with our internal control over financial reporting, the identified material weakness and the restatement of our prior financial statements;\nour failure to comply with various governmental laws and regulations, including anti-corruption laws, export control laws, environmental laws, regulation and reporting standards related to environmental, social and governance (\"ESG\");\nour ability to successfully defend ourselves in legal proceedings and protect our intellectual property, and the significant increase in legal expenses as a result of such proceedings;\nrisks in connection with the use of open source code software;\nthe loss of key personnel and our ability to retain key employees to maintain or upgrade our business systems and maintain internal controls;\nrisks associated with owning our stock, including volatility in our trading price due to our business and financial performance, analyst downgrades, failure to meet our own or analyst expectations, short positions in our common stock, changes to our stock repurchase or dividend program, and dilution from issuance of additional shares; and\neconomy and geopolitical uncertainties and risks associated with business continuity in the event of natural or other disasters including pandemics, war, climate crises and other natural disasters.\n13\nTable of Contents\nRisks Associated with Our Significant Operations in Asia, Particularly in China\nWe derive most of our revenue from direct or indirect sales to customers in Asia and have significant operations in Asia, which may expose us to political, cultural, regulatory, economic, foreign exchange, and operational risks.\nWe derive most of our revenue from customers located in Asia through direct sales or indirect sales under distribution arrangements and value-added reseller agreements with parties located in Asia. As a result, we are subject to significant risks due to this geographic concentration of business and operations. For the year ended December 31, 2025, 92% of our total revenue was from customers in Asia.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/1280452/000143774926006113/mpwr20251231_10k.htm",
+      "asOf": "2026-02-27",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-K",
+    "pressRelease": null,
+    "proxyStatement": {
+      "text": "Board and director independence:\nDirector Independence\nAt least annually, the NCG Committee reviews the independence of each non-employee director and makes recommendations to the Board, and the Board affirmatively determines whether each director qualifies as independent. Each director must keep the NCG Committee fully and promptly informed as to any development that may affect the director's independence. The Board has determined that Herbert Chang, Eugen Elmiger, Victor K. Lee, Carintia Martinez, Eileen Wynne and Jeff Zhou are \"independent\" under the applicable listing standards of the NASDAQ Stock Market.\n11\nTable of Contents\nDirector Skills and Qualifications\nOur Board includes seven members who are well-qualified to serve on the Board and represent our stockholders' best interests. Our Board consists of directors who have the following characteristics:\nAre seasoned executive leaders with strong corporate governance experience;\nPossess a professional background that would enable the development of a deep understanding of our global business and operations;\nHave strong interests in innovation and emerging technologies;\nHave skills or experience in risk management and cybersecurity;\nHave the ability to embrace our values and culture;\nAre independent thinkers and work well together;\nHave high ethical standards;\nPossess sound business judgment and acumen; and\nAre willing to commit their time and resources necessary for the Board to effectively fulfill its responsibilities.\nWe believe that each of the directors possesses these attributes. In addition, the directors bring to the Board a breadth of experience, including extensive financial and accounting expertise, public company board experience, knowledge of the semiconductor business and related technologies, broad global business experience, extensive operational and strategic planning experience, and the ability to assess and manage business risks, including risks related to cybersecurity, information technology and artificial intelligence (\"AI\"), in complex, high-growth global companies. The Board and the NCG Committee believe the skills, qualities, attributes, experience and a mix of backgrounds of our directors provide us with a broad range of perspectives to effectively address our evolving needs and represent the best interests of our stockholders.\nThe following table highlights the specific key qualifications, business skills, experience and attributes that each of the directors brings to the Board:\nMichael\nHsing\nHerbert\nChang\nEugen\nElmiger\nVictor K.\nLee\nCarintia\nMartinez\nEileen\nWynne\nJeff\nZhou\nExecutive leadership\nCorporate governance\nGlobal business and operations\nInnovation and technologies\nRisk management\nCybersecurity\nFinance and accounting expertise\nHuman capital management\nMichael Hsing\nMr. Hsing, founder of MPS, is a visionary in power management technology as well as a strong leader, motivator and successful entrepreneur. Mr.\n\nCompensation discussion and analysis:\nCompensation Discussion and Analysis\nThis Compensation Discussion and Analysis describes our compensation philosophy and programs, compensation decisions made under those programs, and factors considered in making these decisions for our \"named executive officers\" (\"NEOs\") who, for 2025, were:\nMichael Hsing, Chairman of the Board, President and Chief Executive Officer;\nBernie Blegen, Executive Vice President, Chief Financial Officer;\nDeming Xiao, Executive Vice President, Global Operations;\nMaurice Sciammas, Executive Vice President, Worldwide Sales and Marketing; and\nSaria Tseng, Executive Vice President, Strategic Corporate Development, General Counsel and Corporate Secretary.\nFor further information regarding each NEO's professional background, see \" Information About Executive Officers \" under Item 1 of our 2025 Annual Report.\nExecutive Summary\nFinancial and Business Performance Highlights:\nThe Compensation Committee has focused our executives on accountability in revenue, operating income and earnings, as well as maximizing stockholder return through the structure of our executive compensation program. In 2025, we achieved record revenue of $2.8 billion, which represents a 26.4% year-over-year increase, compared with the analog industry's 8.7% increase reported by the Semiconductor Industry Association (\"SIA\"). This was our 14th consecutive year of revenue growth as we continued to demonstrate strong diversification in our product offerings and our ability to swiftly adapt to all aspects of our business in the uncertain geopolitical and macroeconomic environment. Our financial results are summarized as follows (in millions, except per-share amounts and percentages):\nGAAP\nNon-GAAP (1)\nFY 2025 ($)\nFY 2024 ($)\nChange\nFY 2025 ($)\nFY 2024 ($)\nChange\nRevenue\n2,790.5\n2,207.1\n26.4\n%\n2,790.5\n2,207.1\n26.4\n%\nOperating income\n728.6\n539.4\n35.1\n%\n982.4\n764.1\n28.6\n%\nNet income (2)(3)\n621.5\n1,592.1\n(61.0\n)%\n858.4\n689.8\n24.4\n%\nNet income per share - diluted (2)(3)\n12.86\n32.60\n(60.6\n)%\n17.77\n14.12\n25.8\n%\n(1)\nThe reconciliation of the GAAP financial measures to the non-GAAP financial measures and related disclosures are provided in Annexure A.\n(2)\nThe significant decrease in our 2025 GAAP net income and GAAP diluted net income per share compared to 2024 was primarily attributable to a ten-year tax incentive granted to one of our foreign subsidiaries in 2024. A deferred tax benefit of approximately $1.1 billion, net of $0.2 billion of deferred tax liability and $0.1 billion of valuation allowance, was recorded in 2024 to reflect the estimated future reductions in cash tax paid in that jurisdiction associated with the incentive. This deferred tax benefit favorably impacted our 2024 GAAP net income and GAAP diluted net income per share, but not 2025 amounts.\n(3)\nIn February 2026, we restated our 2024 GAAP net income and GAAP diluted net income per share in our 2025 Annual Report. The restatement did not affect any other financial measures presented in the table above. For further information regarding the restatement, see Note 2 to the financial statements included in our 2025 Annual Report.\n29\nTable of Contents\nIn 2025, we continued to execute our long-term strategy by bringing innovative new products to market and expanding design wins across our broad base of customers, some of which are highlighted below:\nOur non-Enterprise Data end markets grew by over 40% year-over-year, showcasing the strength of our diversified business model.\nWe achieved our milestones of securing more than $4 billion of geographically balanced capacity and continue to add additional supply chain partners to support future growth.\nWe had record module revenue and are positioned for a further shift to solutions by sampling our 800V power solution for data center.\nIn the automotive market, we launched solutions for 48V and zonal architectures including the first fully integrated 48V e-fuse and a kilowatt level zonal controller that will support growth in 2026 and beyond.\nWe expanded our customer base in data center for power solutions across AI, server, memory, optical modules, and switch applications with leading edge current density, power efficiency, and packaging.\nCash Dividends and Stock Repurchases:\nDue to our continued strong performance, we have increased the amount of our dividends over the last few years. The following table summarizes the cash dividends declared by our Board in the past three years (in thousands, except per-share amounts):\nFY 2025 ($)\nFY 2024 ($)\nFY 2023 ($)\nDividend declared per share\n6.24\n5.00\n4.00\nTotal amount\n300,117\n242,459\n190,642\nOverall, we have returned 72% of free cash flows to our stockholders through our cash dividend and stock repurchase programs in the past three years.\nIn February 2026, the Board approved a 28% increase in our quarterly cash dividends to $2.00 per share (or $8.00 per share annually).\n\nSecurity ownership:\nSECURITY OWNERSHIP OF CERTAIN BENEFICIAL OWNERS AND MANAGEMENT\nThe following table sets forth, as of the Record Date, information relating to the beneficial ownership of our Common Stock or securities exercisable for, or exchangeable into, our Common Stock by:\nEach of the named executive officers in the 2025 Summary Compensation Table;\nEach director;\nAll current executive officers and directors as a group; and\nEach person known by us to be the beneficial owner of more than five percent (5%) of the outstanding shares of our Common Stock.\nUnless otherwise indicated, the address of each beneficial owner listed below is Monolithic Power Systems, Inc. at 1555 Palm Beach Lakes Blvd., West Palm Beach, Florida 33401.\nName of Beneficial Owner\nNumber of\nShares\nBeneficially\nOwned (#)\nPercent of\nShares\nBeneficially\nOwned (1)\nNamed executive officers and directors:\nMichael Hsing (2)\n1,034,099\n2.1\n%\nBernie Blegen (3)\n87,015\n*\nDeming Xiao (4)\n260,723\n*\nMaurice Sciammas (5)\n274,414\n*\nSaria Tseng (6)\n157,983\n*\nHerbert Chang (7)\n426\n*\nEugen Elmiger (8)\n17,213\n*\nVictor K. Lee (9)\n27,567\n*\nCarintia Martinez (10)\n878\n*\nEileen Wynne (11)\n1,153\n*\nJeff Zhou (12)\n5,611\n*\nAll current executive officers and directors as a group\n1,786,772\n3.6\n%\n5% stockholders:\nThe Vanguard Group (13)\n5,939,946\n12.1\n%\nBlackRock, Inc. (14)\n4,899,383\n10.0\n%\nFMR LLC (15)\n3,977,008\n8.1\n%\n*\nRepresents beneficial ownership of less than 1%.\n(1)\nBased on 49,129,267 shares of our Common Stock outstanding as of the Record Date. Beneficial ownership is determined in accordance with SEC rules. In computing the number of shares beneficially owned by a person and the percentage of ownership of that person, RSUs held by that person that are subject to release within 60 days of the Record Date, if any, are considered to be outstanding and beneficially owned by such person. Those shares, however, are not deemed outstanding for the purpose of computing the percentage ownership of any other person.\n(2)\nIncludes (i) 888,234 shares held of record by Michael Hsing, (ii) 133,040 shares held of record by Michael Hsing, trustee of the Michael Hsing 2004 Trust, and (iii) 12,825 shares held of record by Michael Hsing, trustee of the ZH Family Trust.\n(3)\nIncludes (i) 76,353 shares held of record by Bernie Blegen, (ii) 5,331 shares held of record by Bernie Blegen and Judy Blegen, trustees of the Trust FBO Sarah Blegen, and (iii) 5,331 shares held of record by Bernie Blegen and Judy Blegen, trustees of the Trust FBO Theodore Blegen.\n(4)\nIncludes (i) 235,932 shares held of record by Deming Xiao, (ii) 20,455 shares owned by Julia Chu, Mr. Xiao's wife, and (iii) 4,336 shares held in the Christopher Xiao Trust.\n27\nTable of Contents\n(5)\nIncludes (i) 178,644 shares held of record by Maurice Sciammas, (ii) 49,460 shares held of record by Maurice Sciammas and Christina Sciammas, trustees of the Sciammas Family Living Trust, (iii) 26,660 shares held of record by Maurice Sciammas and/or Christina Scimmas, trustees of various Grantor Retained Annuity Trusts, and (iv) 19,650 shares held of record by Maurice Sciammas and/or Christina Sciammas, trustees of various trusts, none of which held more than 5,000 shares individually.\n(6)\nIncludes (i) 156,983 shares held of record by Saria Tseng, and (ii) 1,000 shares held of record by Saria Tseng, trustee of the C&T Discovery Foundation,\n(7)\nIncludes 426 shares held of record by Herbert Chang.\n(8)\nIncludes 17,213 shares held of record by Eugen Elmiger.\n(9)\nIncludes 27,567 shares held of record by Victor K. Lee.\n(10)\nIncludes 878 shares held of record by Carintia Martinez.\n(11)\nIncludes 1,153 shares held of record by Eileen Wynne.\n(12)\nIncludes 5,611 shares held of record by Jeff Zhou.",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/1280452/000143774926014084/mpwr20260403_def14a.htm",
+      "asOf": "2026-04-30",
+      "truncated": true
+    },
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T22:17:28.607Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T22:17:28.607Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T22:17:28.607Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T22:17:28.607Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T22:17:28.607Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T22:17:28.607Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T22:17:28.607Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T22:17:28.607Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T22:17:28.607Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T22:17:28.607Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T22:17:28.607Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T22:17:28.607Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-28T22:17:28.607Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-28T22:17:28.607Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-28T22:17:28.607Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-09-28T22:17:28.607Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-09-28T22:17:28.607Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-09-28T22:17:28.607Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T22:17:28.607Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T22:17:28.607Z"
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "judgmentSha256": "1f1efa29538a249a157bf973cf283f6e758137980939bacd5aab5bde0d2bf4dd",
+  "reviewedAt": "2026-09-28T14:15:00Z",
+  "reviewer": "Claude Opus 4.8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.management.insiderOwnership",
+      "quote": "The captured proxy excerpt does not itemize the individual holdings of directors and executive officers, so we do not quantify management ownership here.",
+      "issue": "The statement is contradicted by the grounding surface. The proxy excerpt in Context does itemize the individual holdings of every director and named executive officer (e.g., Kyle W. Gano 635,601; Matthew C. Abernethy 397,068; Eric Benevich 320,717; Kevin C. Gorman 1,572,104 or 1.5%) and gives the group figure 'All current executive officers and directors as a group (20 persons) 4,768,380 4.6%'. The report tells the reader the ownership is unavailable when the proxy on the surface carries it, and so also fails rubric item 4 (reads no judgment from a control/ownership figure that is present).",
+      "fix": "Quote the captured figures: insiders and directors own 4.6% as a group as of March 31, 2026 (per the 2026 proxy), with the CEO and former CEO the largest individual holders (Gano 635,601; Gorman 1,572,104 / 1.5%). Then read them for control — a low aggregate insider stake against 12%/10% institutional holders — rather than stating the proxy does not itemize them.",
+      "status": "addressed",
+      "note": "Rewrite now states the 4.6% group stake (20 persons, 4,768,380 shares), names Gorman (1,572,104 / 1.5%) and Gano (635,601), and reads them for control ('outside institutions, not management, carry the register'). All figures grounded in the proxy excerpt."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.management.insiderOwnership",
+      "quote": "lists BlackRock as a holder of 12,052,271 shares, or 12.0%.",
+      "issue": "The BlackRock stake is presented as a current holding sourced to the 2026 proxy, but the proxy footnote states it is 'Based on Amendment No. 13 to Schedule 13G filed by BlackRock, Inc. on April 28, 2025, reporting ownership as of March 31, 2025' — over a year before this 10-Q (period ended June 30, 2026). Undated, it reads as current ownership. This is the recurring stale-13G-as-current defect the desk has hit before.",
+      "fix": "Date the figure: note the 12,052,271-share (12.0%) BlackRock stake is from a Schedule 13G/A reporting ownership as of March 31, 2025, so it predates the filing and may have changed.",
+      "status": "addressed",
+      "note": "Rewrite now dates it (with Vanguard) as resting on Schedule 13G/A filings reporting ownership in early 2025 that predate this filing and may have changed."
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.executiveSummary.risks[0]",
+      "quote": "Product concentration: INGREZZA contributed $716.5 million of the $954.3 million of Q2'26 net product sales, so a competitive or pricing setback there would dominate results.",
+      "issue": "Cross-section repetition. This executive-summary risk restates, near-verbatim, risks.idiosyncratic[0] ('Product concentration: INGREZZA generated $716.5 million of the $954.3 million of Q2'26 net product sales, so any competitive entry, safety signal or reimbursement change affecting it would have an outsized impact.'). The same $716.5M-of-$954.3M concentration figure and framing is told a third time in businessMoat.segments[0]. Per house style and rubric item 7, the executive-summary risk should be a short pointer while the risks section carries the argument; here both lead with the identical figure and the same 'so ... would dominate/outsized impact' construction.",
+      "fix": "Make the executive-summary risk a one-line pointer without the full figure (e.g., 'Product concentration: INGREZZA still drives the large majority of net product sales'), and let risks.idiosyncratic[0] carry the $716.5M-of-$954.3M figure and the mechanism once. Introduce the dollar split once (the moat segment breakdown is the natural home) and refer back in words elsewhere.",
+      "status": "addressed",
+      "note": "Exec-summary risk is now a figure-free pointer; idiosyncratic[0] refers back in words ('as the segment breakdown shows'); the $716.5M/$954.3M split now appears once, in businessMoat.segments[0]."
+    },
+    {
+      "id": "F-4",
+      "severity": "Minor",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "the Facts block reports no term debt.",
+      "issue": "Voice/fit: reader-facing prose references the internal authoring scaffold ('the Facts block'), which the reader never sees. The balance-sheet table already shows Total Debt as '—'.",
+      "fix": "State it in reader terms, e.g. 'the company carries no term debt' or 'the balance sheet shows no term debt', without naming the Facts block.",
+      "status": "addressed",
+      "note": "Rewrite now reads 'the balance sheet shows no term debt.'"
+    },
+    {
+      "id": "F-5",
+      "severity": "Minor",
+      "field": "sections.management.insiderOwnership",
+      "quote": "Vanguard at 10.1%, Dodge & Cox at 5.5% and JPMorgan Chase at 5.2%. The BlackRock figure comes from a Schedule 13G/A reporting ownership as of March 31, 2025, so it predates this filing and may have changed.",
+      "issue": "Introduced by the rewrite. The vintage caveat is scoped to BlackRock only, but the Vanguard 10.1% stake carries the same staleness: per proxy footnote (2) it is 'Based on Amendment No. 9 to Schedule 13G filed by The Vanguard Group... reporting ownership as of February 28, 2025' — also predating the June 30, 2026 filing. Vanguard's 10.1% is therefore presented as current and undated, the same stale-13G-as-current class the desk flags. Mitigated because the adjacent BlackRock caveat puts the reader on notice that the 5%-holder register is of 2025 vintage.",
+      "fix": "Extend the vintage caveat to the register as a whole rather than only BlackRock — e.g., note the 5%-holder stakes are drawn from Schedule 13G/A filings reporting ownership in early 2025 (Vanguard as of February 28, 2025) and so predate this filing. Do not date Dodge & Cox or JPMorgan to a specific period, as their footnote vintages are not on the captured surface.",
+      "status": "addressed",
+      "note": "Rewrite now dates both: 'The BlackRock and Vanguard figures rest on Schedule 13G/A filings reporting ownership in early 2025, so both predate this filing and may have changed.' Dodge & Cox and JPMorgan correctly left undated (their footnote vintages are not on the captured surface)."
+    }
+  ]
+}
