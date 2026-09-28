@@ -42,12 +42,16 @@ const excludedRecord = (sentence: string, index: number, end: number): boolean =
 export function words(units: SectionUnit[], desk: Desk): LintIssue[] {
   const issues: LintIssue[] = [];
   const ticCounts = new Map<string, { count: number; field: string }>();
+  // Compiled once per call, not per sentence. Every use below either runs exec() until it returns
+  // null or calls String#match, both of which leave a global regex's lastIndex at 0 for the next use.
+  const hypeRes = desk.lint.hypeWords.map(whole);
+  const superlativeRes = desk.lint.superlatives.map(whole);
+  const ticRes = desk.lint.tics.map((phrase) => [phrase, whole(phrase)] as const);
 
   for (const unit of units)
     for (const leaf of unit.leaves) {
       for (const sentence of splitSentences(leaf.text)) {
-        for (const word of desk.lint.hypeWords) {
-          const re = whole(word);
+        for (const re of hypeRes) {
           let match: RegExpExecArray | null;
           while ((match = re.exec(sentence)))
             issues.push({
@@ -63,13 +67,11 @@ export function words(units: SectionUnit[], desk: Desk): LintIssue[] {
         const superlativeMatches: Array<{
           index: number;
           match: RegExpExecArray;
-          word: string;
         }> = [];
-        for (const word of desk.lint.superlatives) {
-          const re = whole(word);
+        for (const re of superlativeRes) {
           let match: RegExpExecArray | null;
           while ((match = re.exec(sentence))) {
-            superlativeMatches.push({ index: match.index, match, word });
+            superlativeMatches.push({ index: match.index, match });
           }
         }
         // Sort by position in sentence to maintain order
@@ -105,8 +107,8 @@ export function words(units: SectionUnit[], desk: Desk): LintIssue[] {
           });
         }
       }
-      for (const phrase of desk.lint.tics) {
-        const hits = (leaf.text.match(whole(phrase)) ?? []).length;
+      for (const [phrase, re] of ticRes) {
+        const hits = (leaf.text.match(re) ?? []).length;
         if (hits === 0) continue;
         const seen = ticCounts.get(phrase);
         if (seen) seen.count += hits;

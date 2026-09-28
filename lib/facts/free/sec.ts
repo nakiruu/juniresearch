@@ -10,6 +10,7 @@
  * for the concept map and period-selection rules this file implements.
  */
 import { edgarJson, type FetchLike } from "../../edgar/client";
+import { padCik } from "../../edgar/submissions";
 
 export interface SecPeriod {
   fiscal_period: string; // "FY" | "Q1" | "Q2" | "Q3" | "Q4"
@@ -593,6 +594,6 @@ export function parseCompanyFacts(facts: unknown): { annual: SecPeriod[]; quarte
 }
 
 export async function fetchCompanyFacts(cik: number, contact: string, fetchImpl: FetchLike = fetch): Promise<unknown> {
-  const url = `https://data.sec.gov/api/xbrl/companyfacts/CIK${String(cik).padStart(10, "0")}.json`;
+  const url = `https://data.sec.gov/api/xbrl/companyfacts/CIK${padCik(cik)}.json`;
   return edgarJson(url, contact, fetchImpl);
 }

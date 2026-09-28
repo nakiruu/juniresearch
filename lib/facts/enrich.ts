@@ -7,12 +7,12 @@
  * Contact discipline: the SEC contact (EDGAR_CONTACT) is used ONLY for the SEC
  * request; Yahoo gets a generic browser UA, never the SEC contact.
  */
-type FetchLike = typeof fetch;
+import { sleep, type FetchLike } from "../edgar/client";
+import { padCik } from "../edgar/submissions";
 
 const YAHOO_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) juniper-research";
 const num = (x: unknown): x is number => typeof x === "number" && Number.isFinite(x);
 const rawVal = (x: { raw?: unknown } | undefined): number | null => (x && num(x.raw) ? x.raw : null);
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 export interface PeerMultiples {
   pe: number | null;
@@ -54,7 +54,7 @@ export function parsePeerMultiples(result: QuoteSummaryResult | undefined): Peer
 
 /** SEC companyconcept for a us-gaap concept → a per-fiscal-year annual series aligned to `fiscalYears`. */
 async function fetchConceptSeries(cik: number, concept: string, fiscalYears: string[], contact: string, fetchImpl: FetchLike): Promise<(number | null)[]> {
-  const url = `https://data.sec.gov/api/xbrl/companyconcept/CIK${String(cik).padStart(10, "0")}/us-gaap/${concept}.json`;
+  const url = `https://data.sec.gov/api/xbrl/companyconcept/CIK${padCik(cik)}/us-gaap/${concept}.json`;
   const res = await fetchImpl(url, { headers: { "User-Agent": contact } });
   if (!res.ok) return fiscalYears.map(() => null);
   const body = (await res.json()) as { units?: Record<string, GoodwillEntry[]> };
@@ -108,14 +108,18 @@ interface EnrichablePack {
 
 /** Stamp goodwill, SBC + peer multiples onto a freshly-built pack (mutates and returns it). */
 export async function enrichPack<T extends EnrichablePack>(pack: T, contact: string, fetchImpl: FetchLike = fetch): Promise<T> {
-  const goodwill = await fetchGoodwillSeries(pack.cik, pack.statements.fiscalYears, contact, fetchImpl);
+  // The three fetches are independent (two SEC requests — well under its 10 req/s — and Yahoo's
+  // peer loop), so they run concurrently; results are applied in the original order, keeping the
+  // pack's key order (goodwill before sbc) and therefore the written JSON unchanged.
+  const [goodwill, sbc, multiples] = await Promise.all([
+    fetchGoodwillSeries(pack.cik, pack.statements.fiscalYears, contact, fetchImpl),
+    fetchSbcSeries(pack.cik, pack.statements.fiscalYears, contact, fetchImpl),
+    pack.peers?.length ? fetchPeerMultiples(pack.peers.map((p) => p.ticker), fetchImpl) : null,
+  ]);
   if (goodwill.some((g) => g != null)) pack.goodwill = goodwill;
-
-  const sbc = await fetchSbcSeries(pack.cik, pack.statements.fiscalYears, contact, fetchImpl);
   if (sbc.some((s) => s != null)) pack.sbc = sbc;
 
-  if (pack.peers?.length) {
-    const multiples = await fetchPeerMultiples(pack.peers.map((p) => p.ticker), fetchImpl);
+  if (pack.peers?.length && multiples) {
     for (const p of pack.peers) {
       const m = multiples[p.ticker];
       if (m) Object.assign(p, m);

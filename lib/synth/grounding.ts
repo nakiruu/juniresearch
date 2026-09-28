@@ -66,15 +66,29 @@ const roundTo = (x: number, dp: number) => Number(x.toFixed(dp));
 
 export class AllowedIndex {
   private values: number[] = [];
-  add(v: number): void { if (Number.isFinite(v)) this.values.push(v); }
+  /** precision → every indexed value rounded to it; built on first lookup at that precision, kept current by add(). */
+  private rounded = new Map<number, Set<number>>();
+  add(v: number): void {
+    if (!Number.isFinite(v)) return;
+    this.values.push(v);
+    for (const [dp, set] of this.rounded) set.add(roundTo(v, dp));
+  }
   addToken(t: NumberToken): void { this.add(t.value); this.add(t.magnitude); this.add(Math.abs(t.value)); this.add(Math.abs(t.magnitude)); }
   /**
    * A prose figure is grounded if some indexed value rounds to it at the figure's own precision.
    * No relative tolerance: a 0.5% band let unrelated numbers vouch for each other (EPS 1.23 ×100 for "123.4x").
+   * Rounded values are finite, so Set membership is exactly the `===` comparison it replaces.
    */
   has(t: NumberToken): boolean {
+    if (!this.values.length) return false;
+    const dp = t.precision;
+    let set = this.rounded.get(dp);
+    if (!set) {
+      set = new Set(this.values.map((v) => roundTo(v, dp)));
+      this.rounded.set(dp, set);
+    }
     const targets = [t.value, t.magnitude, Math.abs(t.value), Math.abs(t.magnitude)];
-    return this.values.some((v) => targets.some((x) => roundTo(v, t.precision) === roundTo(x, t.precision)));
+    return targets.some((x) => set.has(roundTo(x, dp)));
   }
 }
 

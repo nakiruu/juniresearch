@@ -253,26 +253,55 @@ function headingFollowedByBody(text: string, headingAt: number): boolean {
   return false;
 }
 
-function extractProxySection(text: string, spec: ProxySpec): string | null {
-  const enders = ALL_PROXY_HEADINGS.filter((h) => !spec.start.includes(h) && !spec.keep.includes(h)).map(lineStart);
+/** One line-start heading match, in absolute text offsets: `index` of the match, `lead` = length of
+ *  its leading newline (0 or 1), `length` of the whole match. */
+export interface LineMatch { index: number; lead: number; length: number }
+/** Per-document cache of each heading's full-text line-start matches (see lineMatchesFrom). */
+export type HeadingScanCache = Map<RegExp, LineMatch[]>;
+
+function* scanLineStarts(text: string, heading: RegExp, from: number): Generator<LineMatch> {
+  const re = lineStart(heading);
+  re.lastIndex = from;
+  for (let m = re.exec(text); m; m = re.exec(text)) yield { index: m.index, lead: m[1].length, length: m[0].length };
+}
+
+/**
+ * The matches a global line-start scan of `heading` makes when started at `from`, served from one
+ * cached whole-document scan per heading instead of rescanning the document for every candidate
+ * section. A global scan from `from` yields exactly the cached matches at index ≥ `from` unless a
+ * cached match straddles `from` (starts before it, ends after it) — then it rescans from `from`.
+ */
+export function lineMatchesFrom(text: string, heading: RegExp, from: number, cache: HeadingScanCache): Iterable<LineMatch> {
+  let all = cache.get(heading);
+  if (!all) cache.set(heading, (all = [...scanLineStarts(text, heading, 0)]));
+  let lo = 0, hi = all.length;
+  while (lo < hi) { const mid = (lo + hi) >> 1; if (all[mid].index < from) lo = mid + 1; else hi = mid; }
+  if (lo > 0 && all[lo - 1].index + all[lo - 1].length > from) return scanLineStarts(text, heading, from);
+  return lo === 0 ? all : all.slice(lo);
+}
+
+function extractProxySection(text: string, spec: ProxySpec, cache: HeadingScanCache = new Map()): string | null {
+  const enders = ALL_PROXY_HEADINGS.filter((h) => !spec.start.includes(h) && !spec.keep.includes(h));
   let best: string | null = null;
   for (const startRe of spec.start) {
-    for (const m of text.matchAll(lineStart(startRe))) {
-      const start = m.index! + (m[1]?.length ?? 0);
+    for (const m of lineMatchesFrom(text, startRe, 0, cache)) {
+      const start = m.index + m.lead;
       // A contents entry (page numbers, short lines) is not where the section starts.
-      if (!headingFollowedByBody(text, m.index! + m[0].length - 1)) continue;
+      if (!headingFollowedByBody(text, m.index + m.length - 1)) continue;
       // Scan for the section's end from the line after its heading, so a long
       // title's own words never count as the ending heading.
       const headingEnd = text.indexOf("\n", start);
-      const restAt = headingEnd < 0 ? text.length : headingEnd + 1;
-      const rest = text.slice(restAt);
       let end = text.length;
-      for (const e of enders) {
-        e.lastIndex = 0;
-        for (const em of rest.matchAll(e)) {
-          const at = restAt + em.index! + (em[1]?.length ?? 0);
-          if (at >= end) break;
-          if (headingFollowedByBody(text, restAt + em.index! + em[0].length - 1)) { end = at; break; }
+      // Matching the rest of the text (from the line after the heading) is the same as a full-text
+      // scan from that heading's own newline: the slice's `^` alternative there is the full text's
+      // `\n` alternative, with identical absolute offsets. No newline → nothing follows → no ender.
+      if (headingEnd >= 0) {
+        for (const e of enders) {
+          for (const em of lineMatchesFrom(text, e, headingEnd, cache)) {
+            const at = em.index + em.lead;
+            if (at >= end) break;
+            if (headingFollowedByBody(text, em.index + em.length - 1)) { end = at; break; }
+          }
         }
       }
       const body = text.slice(start, end).trim();
@@ -284,11 +313,12 @@ function extractProxySection(text: string, spec: ProxySpec): string | null {
 
 /** Uncapped bodies of the four governance sections a report needs, or null where the proxy lacks one. */
 export function extractProxySections(text: string): ProxySections {
+  const cache: HeadingScanCache = new Map(); // the four sections share heading regexes
   return {
-    compensation: extractProxySection(text, PROXY_SPECS.compensation),
-    board: extractProxySection(text, PROXY_SPECS.board),
-    ownership: extractProxySection(text, PROXY_SPECS.ownership),
-    related: extractProxySection(text, PROXY_SPECS.related),
+    compensation: extractProxySection(text, PROXY_SPECS.compensation, cache),
+    board: extractProxySection(text, PROXY_SPECS.board, cache),
+    ownership: extractProxySection(text, PROXY_SPECS.ownership, cache),
+    related: extractProxySection(text, PROXY_SPECS.related, cache),
   };
 }
 

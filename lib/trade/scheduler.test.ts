@@ -55,7 +55,7 @@ describe("shouldCatchUp", () => {
 function fakeTimer() {
   let fn: (() => void) | null = null;
   return {
-    setTimer: (f: () => void, _ms: number) => { fn = f; return { clear: () => { fn = null; } }; },
+    setTimer: (f: () => void) => { fn = f; return { clear: () => { fn = null; } }; },
     fire: () => { const f = fn; fn = null; f?.(); },
     pending: () => fn !== null,
   };
@@ -68,7 +68,7 @@ describe("startScheduler", () => {
     const runOnce = vi.fn(async (): Promise<CronResult> => ({ status: "executed", orders: 2, fills: 2 }));
     const s = startScheduler({
       runOnce, marketOpenNow: async () => true,
-      cfg: { cronTimeET: "09:45" } as any, broker: "alpaca-paper", env: {} as unknown as NodeJS.ProcessEnv,
+      cfg: { cronTimeET: "09:45" }, broker: "alpaca-paper", env: {} as unknown as NodeJS.ProcessEnv,
       now: () => Date.parse("2026-07-01T14:00:00Z"), // 10:00 ET, market open, past 09:45
       setTimer: timer.setTimer, stateDir: dir,
     });
@@ -87,7 +87,7 @@ describe("startScheduler", () => {
     const runOnce = vi.fn(async (): Promise<CronResult> => ({ status: "noop" }));
     const s = startScheduler({
       runOnce, marketOpenNow: async () => true,
-      cfg: { cronTimeET: "09:45" } as any, broker: "alpaca-paper", env: {} as unknown as NodeJS.ProcessEnv,
+      cfg: { cronTimeET: "09:45" }, broker: "alpaca-paper", env: {} as unknown as NodeJS.ProcessEnv,
       now: () => Date.parse("2026-07-01T14:00:00Z"),
       setTimer: timer.setTimer, stateDir: dir,
     });
@@ -103,7 +103,7 @@ describe("startScheduler", () => {
     const runOnce = vi.fn(async (): Promise<CronResult> => { throw new Error("boom"); });
     const s = startScheduler({
       runOnce, marketOpenNow: async () => true,
-      cfg: { cronTimeET: "09:45" } as any, broker: "alpaca-paper", env: {} as unknown as NodeJS.ProcessEnv,
+      cfg: { cronTimeET: "09:45" }, broker: "alpaca-paper", env: {} as unknown as NodeJS.ProcessEnv,
       now: () => Date.parse("2026-07-01T14:00:00Z"), // 10:00 ET, past 09:45 → arms for next day
       setTimer: timer.setTimer, stateDir: dir,
     });
@@ -123,7 +123,7 @@ describe("startScheduler", () => {
     const runOnce = vi.fn((): Promise<CronResult> => new Promise((_res, reject) => { rejectRun = reject; }));
     const s = startScheduler({
       runOnce, marketOpenNow: async () => true,
-      cfg: { cronTimeET: "09:45" } as any, broker: "alpaca-paper", env: {} as unknown as NodeJS.ProcessEnv,
+      cfg: { cronTimeET: "09:45" }, broker: "alpaca-paper", env: {} as unknown as NodeJS.ProcessEnv,
       now: () => Date.parse("2026-07-01T14:00:00Z"),
       setTimer: timer.setTimer, stateDir: dir,
     });
@@ -142,7 +142,7 @@ describe("startScheduler", () => {
     const runOnce = vi.fn(async (): Promise<CronResult> => ({ status: "executed", orders: 1, fills: 1 }));
     const s = startScheduler({
       runOnce, marketOpenNow: async () => true,
-      cfg: { cronTimeET: "09:45" } as any, broker: "alpaca-paper", env: {} as unknown as NodeJS.ProcessEnv,
+      cfg: { cronTimeET: "09:45" }, broker: "alpaca-paper", env: {} as unknown as NodeJS.ProcessEnv,
       now: () => Date.parse("2026-07-01T13:35:00Z"), // 09:35 ET, market open, before today's 09:45
       setTimer: timer.setTimer, stateDir: dir,
     });
@@ -165,7 +165,7 @@ describe("startScheduler", () => {
     const marketOpenNow = () => new Promise<boolean>((resolve) => { resolveMarketOpen = resolve; });
     const s = startScheduler({
       runOnce, marketOpenNow,
-      cfg: { cronTimeET: "09:45" } as any, broker: "alpaca-paper", env: {} as unknown as NodeJS.ProcessEnv,
+      cfg: { cronTimeET: "09:45" }, broker: "alpaca-paper", env: {} as unknown as NodeJS.ProcessEnv,
       now: () => Date.parse("2026-07-01T14:00:00Z"),
       setTimer: timer.setTimer, stateDir: dir,
     });
@@ -204,7 +204,7 @@ describe("multiple daily slots (cronTimesET)", () => {
     const runOnce = vi.fn(async (): Promise<CronResult> => ({ status: "noop" }));
     const s = startScheduler({
       runOnce, marketOpenNow: async () => true, cfg: SLOTS, broker: "alpaca-paper", env: {} as unknown as NodeJS.ProcessEnv,
-      now: () => now, setTimer: (f, ms) => { armedFor = now + ms; return timer.setTimer(f, ms); }, stateDir: dir,
+      now: () => now, setTimer: (f, ms) => { armedFor = now + ms; return timer.setTimer(f); }, stateDir: dir,
     });
     return { s, runOnce, timer, armedFor: () => armedFor };
   };

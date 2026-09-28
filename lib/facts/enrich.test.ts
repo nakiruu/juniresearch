@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { alignGoodwill, parsePeerMultiples } from "./enrich";
+import { alignGoodwill, parsePeerMultiples, enrichPack } from "./enrich";
 
 describe("alignGoodwill", () => {
   const usd = [
@@ -27,5 +27,22 @@ describe("parsePeerMultiples", () => {
   it("returns nulls for missing or non-numeric fields", () => {
     expect(parsePeerMultiples({})).toEqual({ pe: null, ps: null, evToEbitda: null });
     expect(parsePeerMultiples({ summaryDetail: { trailingPE: {} } })).toEqual({ pe: null, ps: null, evToEbitda: null });
+  });
+});
+
+describe("enrichPack", () => {
+  it("stamps goodwill, then sbc, then peer multiples (key order is what facts:enrich writes)", async () => {
+    const annual = (val: number) => ({ units: { USD: [{ fy: 2025, val, form: "10-K", fp: "FY" }] } });
+    const fetchImpl = (async (url: string) => {
+      if (url.includes("/Goodwill.json")) return Response.json(annual(7));
+      if (url.includes("/ShareBasedCompensation.json")) return Response.json(annual(3));
+      if (url === "https://fc.yahoo.com") return new Response("", { headers: { "set-cookie": "A=1; path=/" } });
+      if (url.includes("getcrumb")) return new Response("crumb");
+      return Response.json({ quoteSummary: { result: [{ summaryDetail: { trailingPE: { raw: 20 } } }] } });
+    }) as typeof fetch;
+    const pack = { cik: 1, statements: { fiscalYears: ["FY25"] }, peers: [{ ticker: "PEER", pe: null, ps: null, evToEbitda: null }] };
+    const out = await enrichPack(pack, "test@example.com", fetchImpl);
+    expect(Object.keys(out)).toEqual(["cik", "statements", "peers", "goodwill", "sbc"]);
+    expect(out).toMatchObject({ goodwill: [7], sbc: [3], peers: [{ ticker: "PEER", pe: 20, ps: null, evToEbitda: null }] });
   });
 });

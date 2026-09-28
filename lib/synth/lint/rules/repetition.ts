@@ -12,7 +12,7 @@
 import type { Desk } from "../../desk.schema";
 import type { LintIssue } from "../index";
 import type { SectionUnit, UnitName } from "../units";
-import { jaccard, normalizeSentence, splitSentences, wordTrigrams } from "../sentences";
+import { normalizeSentence, normalizedTrigrams, splitSentences } from "../sentences";
 
 export const MIN_SENTENCE_WORDS = 8;
 
@@ -30,13 +30,20 @@ function collect(units: SectionUnit[]): Sentence[] {
     for (const leaf of unit.leaves)
       for (const text of splitSentences(leaf.text)) {
         const norm = normalizeSentence(text);
-        if (norm.split(" ").filter(Boolean).length < MIN_SENTENCE_WORDS) continue;
-        out.push({ unit: unit.name, path: leaf.path, text, norm, grams: wordTrigrams(text) });
+        const words = norm.split(" ").filter(Boolean);
+        if (words.length < MIN_SENTENCE_WORDS) continue;
+        out.push({ unit: unit.name, path: leaf.path, text, norm, grams: normalizedTrigrams(norm) });
       }
   return out;
 }
 
-const score = (a: Sentence, b: Sentence) => (a.norm === b.norm ? 1 : jaccard(a.grams, b.grams));
+/**
+ * 1 for a verbatim repeat after normalisation, else trigram Jaccard given the shared-trigram count —
+ * the same division `jaccard` (sentences.ts) performs, so scores are bit-identical to intersecting
+ * every pair. `shared` comes from an inverted index, so only overlapping pairs cost anything.
+ */
+const score = (a: Sentence, b: Sentence, shared: number) =>
+  a.norm === b.norm ? 1 : a.grams.size === 0 || b.grams.size === 0 ? 0 : shared / (a.grams.size + b.grams.size - shared);
 const where = (a: Sentence, b: Sentence) => (a.unit === b.unit ? `${a.path} (same section)` : `${a.path} (${a.unit} → ${b.unit})`);
 
 export function repetition(units: SectionUnit[], desk: Desk): LintIssue[] {
@@ -44,15 +51,30 @@ export function repetition(units: SectionUnit[], desk: Desk): LintIssue[] {
   const sentences = collect(units);
   const issues: LintIssue[] = [];
 
+  // trigram → indices of the sentences (in order) that contain it; filled as each sentence becomes "earlier".
+  const postings = new Map<string, number[]>();
+  const shared = new Int32Array(sentences.length);
+  const index = (i: number) => {
+    for (const g of sentences[i].grams) {
+      const list = postings.get(g);
+      if (list) list.push(i);
+      else postings.set(g, [i]);
+    }
+  };
+  if (sentences.length) index(0);
+
   for (let i = 1; i < sentences.length; i++) {
     const later = sentences[i];
+    shared.fill(0, 0, i);
+    for (const g of later.grams) for (const k of postings.get(g) ?? []) shared[k] += 1;
+    index(i);
     let best: Sentence | null = null;
     let bestScore = 0;
     let bestOther: Sentence | null = null;
     let bestOtherScore = 0;
     for (let k = 0; k < i; k++) {
       const earlier = sentences[k];
-      const s = score(earlier, later);
+      const s = score(earlier, later, shared[k]);
       if (s > bestScore) { best = earlier; bestScore = s; }
       if (earlier.unit !== later.unit && s > bestOtherScore) { bestOther = earlier; bestOtherScore = s; }
     }

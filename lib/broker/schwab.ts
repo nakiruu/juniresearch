@@ -17,6 +17,10 @@ import { nyseTradingDays } from "../trade/nyse-calendar";
 import { etMinutesOfDay, etWallToUtc, hhmmToMinutes, todayET } from "../trade/clock";
 import { ensureAccessToken, type SchwabTokenStore } from "./schwab-auth";
 import { AmbiguousOrderError, BrokerTimeoutError, DEFAULT_TIMEOUTS, SubmitOutcomeUnknownError, fetchWithTimeout, withReadRetry } from "./http";
+import { mapWithConcurrency } from "../concurrency";
+
+/** Max concurrent per-symbol price-history reads (well inside Schwab's ~120 req/min market-data limit). */
+const PRICE_HISTORY_CONCURRENCY = 4;
 
 export interface SchwabOptions {
   tokenStore: SchwabTokenStore; clientId: string; clientSecret: string; accountHash: string;
@@ -76,8 +80,20 @@ export class SchwabBroker implements BrokerAdapter {
   /** The live base the guard checks against — always the Schwab host. */
   get baseUrl(): string { return this.trader; }
 
+  /**
+   * Single-flight token lookup: concurrent callers (parallel reads) share ONE ensureAccessToken call,
+   * so an expired access token triggers exactly one refresh — never two racing POSTs with the same
+   * refresh token (Schwab may rotate it, which would make the loser look like a dead token). Nothing
+   * is cached past settlement: the next call re-reads the token file exactly as before, so a token
+   * refreshed by another process (trade:auth, a script) is still picked up.
+   */
+  private tokenInFlight: Promise<string> | null = null;
   private async authHeader(): Promise<string> {
-    return `Bearer ${await ensureAccessToken(this.opts.tokenStore, { clientId: this.opts.clientId, clientSecret: this.opts.clientSecret }, this.fetchImpl, this.now())}`;
+    if (!this.tokenInFlight) {
+      this.tokenInFlight = ensureAccessToken(this.opts.tokenStore, { clientId: this.opts.clientId, clientSecret: this.opts.clientSecret }, this.fetchImpl, this.now(), this.opts.retryDelaysMs)
+        .finally(() => { this.tokenInFlight = null; });
+    }
+    return `Bearer ${await this.tokenInFlight}`;
   }
   /** An idempotent GET: bounded, retried on transient failure. */
   private async get<T>(schema: z.ZodType<T>, url: string): Promise<T> {
@@ -147,22 +163,39 @@ export class SchwabBroker implements BrokerAdapter {
   }
   async getLastClose(symbols: string[], tradingDate: string): Promise<Record<string, number>> {
     const end = Date.parse(tradingDate + "T23:59:59Z"); const start = end - 10 * 86_400_000;
-    const out: Record<string, number> = {};
-    for (const s of symbols) {
+    // One pricehistory call per symbol (the endpoint is single-symbol); independent reads, so a few run
+    // at once. Result order and the first-failing-symbol error match the old sequential loop.
+    const closes = await mapWithConcurrency(symbols, PRICE_HISTORY_CONCURRENCY, async (s) => {
       const q = new URLSearchParams({ symbol: s, periodType: "month", frequencyType: "daily", frequency: "1", startDate: String(start), endDate: String(end), needExtendedHoursData: "false" });
       const h = await this.get(PriceHistory, `${this.data}/pricehistory?${q}`);
       const candle = h.candles.filter((c) => c.datetime <= end).at(-1);
       if (!candle) throw new Error(`Schwab: no daily candle for ${s} on/before ${tradingDate}`);
-      out[s] = candle.close;
-    }
+      return candle.close;
+    });
+    const out: Record<string, number> = {};
+    symbols.forEach((s, i) => { out[s] = closes[i]; });
     return out;
   }
+  /**
+   * getLatestTrade and getLatestQuote read the same /quotes payload, and planRun asks for both at once,
+   * so concurrent calls for one symbol share ONE request. Nothing is kept past settlement: a later call
+   * always fetches fresh, so staleness is still judged on data read at call time.
+   */
+  private quoteInFlight = new Map<string, Promise<z.infer<typeof QuotesResp>>>();
+  private fetchQuote(symbol: string) {
+    let p = this.quoteInFlight.get(symbol);
+    if (!p) {
+      p = this.get(QuotesResp, `${this.data}/quotes?symbols=${encodeURIComponent(symbol)}`).finally(() => { this.quoteInFlight.delete(symbol); });
+      this.quoteInFlight.set(symbol, p);
+    }
+    return p;
+  }
   async getLatestTrade(symbol: string): Promise<{ price: number; tsMs: number } | null> {
-    const q = (await this.get(QuotesResp, `${this.data}/quotes?symbols=${encodeURIComponent(symbol)}`))[symbol]?.quote;
+    const q = (await this.fetchQuote(symbol))[symbol]?.quote;
     return q?.lastPrice != null ? { price: q.lastPrice, tsMs: q.tradeTime ?? this.now() } : null;
   }
   async getLatestQuote(symbol: string): Promise<{ bid: number; ask: number; tsMs: number } | null> {
-    const q = (await this.get(QuotesResp, `${this.data}/quotes?symbols=${encodeURIComponent(symbol)}`))[symbol]?.quote;
+    const q = (await this.fetchQuote(symbol))[symbol]?.quote;
     return q?.bidPrice != null && q?.askPrice != null ? { bid: q.bidPrice, ask: q.askPrice, tsMs: q.quoteTime ?? this.now() } : null;
   }
   async isFractionable(symbols: string[]): Promise<Record<string, boolean>> {

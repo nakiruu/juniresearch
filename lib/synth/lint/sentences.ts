@@ -66,7 +66,12 @@ export function normalizeSentence(s: string): string {
 }
 
 export function wordTrigrams(s: string): Set<string> {
-  const words = normalizeSentence(s).split(" ").filter(Boolean);
+  return normalizedTrigrams(normalizeSentence(s));
+}
+
+/** wordTrigrams for a sentence already passed through normalizeSentence — saves normalising twice. */
+export function normalizedTrigrams(norm: string): Set<string> {
+  const words = norm.split(" ").filter(Boolean);
   const grams = new Set<string>();
   for (let i = 0; i + 2 < words.length; i++) grams.add(words.slice(i, i + 3).join(" "));
   return grams;

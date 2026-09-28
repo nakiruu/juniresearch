@@ -15,7 +15,7 @@ import { z } from "zod";
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname } from "node:path";
-import { DEFAULT_TIMEOUTS, fetchWithTimeout } from "./http";
+import { DEFAULT_TIMEOUTS, fetchWithTimeout, isTransientToken, withReadRetry } from "./http";
 
 export const TOKEN_ENDPOINT = "https://api.schwabapi.com/v1/oauth/token";
 export const AUTHORIZE_ENDPOINT = "https://api.schwabapi.com/v1/oauth/authorize";
@@ -78,10 +78,11 @@ async function postToken(body: Record<string, string>, creds: Creds, fetchImpl: 
  * A valid access token, refreshing (and persisting) it within the skew window. Throws SchwabAuthError
  * if re-auth is required. Refresh candidates, in order: the env seed (unless it is the file's token
  * or known stale), then the file's refresh token. A candidate rejected by Schwab (400/401) falls
- * through to the next; any other failure (5xx, network) throws immediately — it says nothing about
- * which token is current, so it must not burn the fallback.
+ * through to the next; any other failure (5xx, network) throws — it says nothing about which token is
+ * current, so it must not burn the fallback. A timeout or network failure is first retried on the SAME
+ * token (retryDelaysMs), so one slow token call doesn't cost a whole run.
  */
-export async function ensureAccessToken(store: SchwabTokenStore, creds: Creds, fetchImpl: typeof fetch = fetch, nowMs: number = Date.now()): Promise<string> {
+export async function ensureAccessToken(store: SchwabTokenStore, creds: Creds, fetchImpl: typeof fetch = fetch, nowMs: number = Date.now(), retryDelaysMs: readonly number[] = [1_000, 3_000]): Promise<string> {
   const file = store.read();
   const env = store.envSeed?.refreshToken ? store.envSeed : null;
   if (!file && !env) throw new SchwabAuthError("No Schwab tokens found — run: npm run trade:auth (or set SCHWAB_REFRESH_TOKEN)");
@@ -103,7 +104,7 @@ export async function ensureAccessToken(store: SchwabTokenStore, creds: Creds, f
   for (const c of candidates) {
     let r: z.infer<typeof TokenResponse>;
     try {
-      r = await postToken({ grant_type: "refresh_token", refresh_token: c.refreshToken }, creds, fetchImpl);
+      r = await withReadRetry(() => postToken({ grant_type: "refresh_token", refresh_token: c.refreshToken }, creds, fetchImpl), retryDelaysMs, undefined, isTransientToken);
     } catch (e) {
       if (!(e instanceof SchwabAuthError)) throw e;
       failures.push(`${c.source}: ${e.message}`);

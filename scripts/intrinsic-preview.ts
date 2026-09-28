@@ -6,21 +6,14 @@
  *
  *   node --import tsx scripts/intrinsic-preview.ts
  */
-import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
+import { latestFactPack } from "../lib/synth/latest-factpack";
 import { intrinsicRead, dcfApplicable, type IntrinsicFacts } from "../lib/synth/intrinsic";
 import { costOfEquity } from "../lib/synth/moat";
 import { MACRO } from "../lib/synth/macro";
 
 const DATA = "data";
-
-function latestFactPack(ticker: string): string | null {
-  const dir = join(DATA, "facts", ticker);
-  if (!existsSync(dir)) return null;
-  const files = readdirSync(dir).filter((f) => f.endsWith(".json"));
-  if (!files.length) return null;
-  return join(dir, files.map((f) => ({ f, m: statSync(join(dir, f)).mtimeMs })).sort((a, b) => b.m - a.m)[0].f);
-}
 
 const g = (x: number) => `${x * 100 >= 0 ? "+" : ""}${(x * 100).toFixed(0)}%`;
 const usd = (x: number) => `$${x.toFixed(0)}`;
@@ -28,7 +21,7 @@ const rows: string[][] = [];
 
 for (const file of readdirSync(DATA).filter((f) => f.endsWith(".json")).sort()) {
   const ticker = file.replace(/\.json$/, "").toUpperCase();
-  const fp = latestFactPack(ticker);
+  const fp = latestFactPack(DATA, ticker)?.path;
   if (!fp) continue;
   const report = JSON.parse(readFileSync(join(DATA, file), "utf8")) as { rating?: { label?: string } };
   if (!report.rating?.label) continue;

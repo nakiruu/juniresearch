@@ -6,29 +6,17 @@
  *
  *   node --import tsx scripts/gates-preview.ts
  */
-import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
+import { latestFactPack } from "../lib/synth/latest-factpack";
 import { evaluateGates, applyGateCeiling, type GateFacts } from "../lib/synth/gates";
 import type { RatingLabel } from "../lib/synth/judgment.schema";
 
 const DATA = "data";
-const FACTS = join(DATA, "facts");
 
 interface ReportRating {
   label: RatingLabel;
   conviction?: { expectedUpside: number; rewardRisk: number | null; derivedLabel: RatingLabel };
-}
-
-/** Newest FactPack json for a ticker (some tickers carry more than one accession). */
-function latestFactPack(ticker: string): { path: string; multi: boolean } | null {
-  const dir = join(FACTS, ticker);
-  if (!existsSync(dir)) return null;
-  const files = readdirSync(dir).filter((f) => f.endsWith(".json"));
-  if (!files.length) return null;
-  const newest = files
-    .map((f) => ({ f, m: statSync(join(dir, f)).mtimeMs }))
-    .sort((a, b) => b.m - a.m)[0].f;
-  return { path: join(dir, newest), multi: files.length > 1 };
 }
 
 const pct = (x: number | null | undefined) => (x == null ? "  —  " : `${(x * 100 >= 0 ? "+" : "")}${(x * 100).toFixed(0)}%`);
@@ -43,7 +31,7 @@ const reportFiles = readdirSync(DATA)
 
 for (const file of reportFiles) {
   const ticker = file.replace(/\.json$/, "").toUpperCase();
-  const fp = latestFactPack(ticker);
+  const fp = latestFactPack(DATA, ticker);
   if (!fp) continue; // not a report file (no matching FactPack)
 
   const report = JSON.parse(readFileSync(join(DATA, file), "utf8")) as { rating?: ReportRating };

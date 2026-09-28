@@ -17,22 +17,23 @@
  *
  * Semantics: this is in-page navigation, not a wizard, so it is a `navigation`
  * landmark holding plain links with `aria-current="location"` on the active
- * one — the ReUI primitives supply the step state, indicator and separator
- * styling; their tab-role trigger is not used.
+ * one.
+ *
+ * Markup: this renders the DOM the former ReUI stepper primitives produced —
+ * same data-slot/data-state hooks and the same merged class lists — without a
+ * primitive library. Those primitives pulled the `cn` class-merging engine,
+ * @base-ui helpers and lucide-react into this client island (~30 KB of JS per
+ * report page) only to merge a handful of static class strings, so the merged
+ * strings are written out below. The check glyph is lucide's `Check`, inlined
+ * as the SVG it renders.
  *
  * Every Tailwind class is written out in full: the scanner only generates
  * utilities it can read verbatim from the source.
  */
 import { useEffect, useRef, useState, type MouseEvent, type ReactNode } from "react";
-import { Check } from "lucide-react";
-import {
-  Stepper,
-  StepperIndicator,
-  StepperItem,
-  StepperSeparator,
-  useStepItem,
-} from "@/components/reui/stepper";
 import type { ReportStep } from "./report-steps";
+
+type StepState = "active" | "completed" | "inactive";
 
 /** The viewport band (24%–34% from the top) that decides the active section. */
 const BAND = "-24% 0px -66% 0px";
@@ -143,19 +144,52 @@ const SEPARATOR =
 
 const CAPTION = "mt-1.5 truncate text-center font-sans text-[11px] text-muted min-[1280px]:hidden";
 
-const INDICATORS = { completed: <Check className="size-3.5" strokeWidth={3} aria-hidden /> };
+/** StepperItem's default classes merged with ITEM by `cn`, precomputed. */
+const MERGED_ITEM =
+  "group/step flex justify-center group-data-[orientation=horizontal]/stepper-nav:flex-row " +
+  "group-data-[orientation=vertical]/stepper-nav:flex-col " + ITEM;
+/** StepperIndicator's default classes merged with INDICATOR by `cn`, precomputed. */
+const MERGED_INDICATOR =
+  "border-background relative flex shrink-0 items-center justify-center overflow-hidden " + INDICATOR;
+/** StepperSeparator's default classes merged with SEPARATOR by `cn`, precomputed. */
+const MERGED_SEPARATOR =
+  "m-0.5 group-data-[orientation=horizontal]/stepper-nav:h-0.5 group-data-[orientation=horizontal]/stepper-nav:flex-1 " +
+  "group-data-[orientation=vertical]/stepper-nav:h-12 group-data-[orientation=vertical]/stepper-nav:w-0.5 " + SEPARATOR;
 
-/** A step's link; reads its state from the enclosing StepperItem. */
+/** lucide-react's `Check` at strokeWidth 3, as the markup it renders. */
+const CHECK = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={3}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="lucide lucide-check size-3.5"
+    aria-hidden="true"
+  >
+    <path d="M20 6 9 17l-5-5" />
+  </svg>
+);
+
+const stateOf = (n: number, active: number): StepState =>
+  n < active ? "completed" : n === active ? "active" : "inactive";
+
+/** A step's link. */
 function StepLink({
   step,
+  state,
   onJump,
   children,
 }: {
   step: ReportStep;
+  state: StepState;
   onJump: (n: number) => void;
   children: ReactNode;
 }) {
-  const { state } = useStepItem();
   const onClick = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     onJump(step.n);
@@ -187,27 +221,26 @@ export function ReportStepper({ steps }: { steps: readonly ReportStep[] }) {
 
   return (
     <div data-testid="report-stepper" className={SHELL}>
-      <Stepper
-        value={active}
-        onValueChange={jump}
-        orientation="vertical"
-        indicators={INDICATORS}
-        role="navigation"
-        aria-orientation={undefined}
-        aria-label="Report sections"
-      >
+      <div role="navigation" data-slot="stepper" className="w-full" data-orientation="vertical" aria-label="Report sections">
         <div className={LIST}>
-          {steps.map((s, i) => (
-            <StepperItem key={s.id} step={s.n} className={ITEM}>
-              <StepLink step={s} onJump={jump}>
-                <StepperIndicator className={INDICATOR}>{s.n}</StepperIndicator>
-                <span className={LABEL}>{s.label}</span>
-              </StepLink>
-              {i < steps.length - 1 && <StepperSeparator className={SEPARATOR} />}
-            </StepperItem>
-          ))}
+          {steps.map((s, i) => {
+            const state = stateOf(s.n, active);
+            return (
+              <div key={s.id} data-slot="stepper-item" className={MERGED_ITEM} data-state={state}>
+                <StepLink step={s} state={state} onJump={jump}>
+                  <div data-slot="stepper-indicator" data-state={state} className={MERGED_INDICATOR}>
+                    <div className="absolute">{state === "completed" ? CHECK : s.n}</div>
+                  </div>
+                  <span className={LABEL}>{s.label}</span>
+                </StepLink>
+                {i < steps.length - 1 && (
+                  <div data-slot="stepper-separator" data-state={state} className={MERGED_SEPARATOR} />
+                )}
+              </div>
+            );
+          })}
         </div>
-      </Stepper>
+      </div>
       <div data-testid="stepper-caption" className={CAPTION}>
         {current.title}
       </div>

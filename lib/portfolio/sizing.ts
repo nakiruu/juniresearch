@@ -142,7 +142,8 @@ export function sizePortfolio(
     holdings = allocateCapped(scored, target, config);
     const survivors = holdings.filter((w) => w.weight >= config.wMin);
     if (survivors.length === scored.length) break;
-    scored = scored.filter((i) => survivors.some((w) => w.ticker === i.ticker));
+    const kept = new Set(survivors.map((w) => w.ticker));
+    scored = scored.filter((i) => kept.has(i.ticker));
     if (scored.length === 0) break;
   }
 

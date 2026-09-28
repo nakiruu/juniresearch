@@ -10,6 +10,10 @@ import { makeV2Scorer, DEFAULT_SIZING_V2 } from "../lib/portfolio/sizing-v2";
 import { activeWeights } from "../lib/portfolio/benchmark";
 import { assembleSnapshot, toCSV } from "../lib/portfolio/snapshot";
 import type { Report } from "../lib/report.schema";
+import { mapWithConcurrency } from "../lib/concurrency";
+
+/** Yahoo chart fetches in flight at once — the same politeness bound lib/trade/pipeline.ts uses. */
+const PRICE_CONCURRENCY = 4;
 
 const args = process.argv.slice(2);
 const flag = (name: string) => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : undefined; };
@@ -55,21 +59,33 @@ const signals: Signal[] = [];
 const reports: Report[] = [];                       // kept for the quality composite (kellyTilt model)
 const marketCap = new Map<string, number | null>(); // kept for the liquidity factor (kellyTilt model)
 const failed: { ticker: string; error: string }[] = [];
-for (const t of tickers) {
+// Each ticker's report read + Yahoo mark is independent, so they run a few at a time (the network
+// round-trip dominates the run); results are then consumed in ticker order, so the signals, the
+// "Skipping" lines and the snapshot are exactly what the one-at-a-time loop produced.
+type Loaded = { ok: true; report: Report | null; signal?: Signal } | { ok: false; error: string };
+const loaded = await mapWithConcurrency(tickers, PRICE_CONCURRENCY, async (t): Promise<Loaded> => {
   try {
     const report = await loadReport(t);
-    if (!report) continue;
+    if (!report) return { ok: true, report: null };
     const price = await livePrice(report.meta.ticker);
     const sic = sicFor(report.meta.ticker, report.meta.filing.accession);
-    signals.push(buildSignal(report, price, sic, today, config));
-    reports.push(report);
-    marketCap.set(report.meta.ticker, report.quote?.marketCap ?? null);
+    return { ok: true, report, signal: buildSignal(report, price, sic, today, config) };
   } catch (err) {
-    const message = err instanceof Error ? err.message : String(err);
-    failed.push({ ticker: t, error: message });
-    console.warn(`Skipping ${t}: ${message}`);
+    return { ok: false, error: err instanceof Error ? err.message : String(err) };
   }
-}
+});
+tickers.forEach((t, i) => {
+  const r = loaded[i];
+  if (!r.ok) {
+    failed.push({ ticker: t, error: r.error });
+    console.warn(`Skipping ${t}: ${r.error}`);
+    return;
+  }
+  if (!r.report || !r.signal) return;
+  signals.push(r.signal);
+  reports.push(r.report);
+  marketCap.set(r.report.meta.ticker, r.report.quote?.marketCap ?? null);
+});
 if (failed.length) {
   console.warn(`Skipped ${failed.length} ticker(s): ${failed.map((f) => f.ticker).join(", ")}`);
 }

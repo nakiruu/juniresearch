@@ -8,6 +8,7 @@ import type { BrokerAdapter, BrokerOrderStatus } from "../broker/adapter";
 import { TERMINAL_STATUSES } from "../broker/adapter";
 import { CashBackstopError, guardedSubmit, type GuardContext } from "../broker/guards";
 import { SubmitOutcomeUnknownError } from "../broker/http";
+import { allInOrder, mapWithConcurrency } from "../concurrency";
 import type { BrokerOrder, SubmitOrderRequest } from "../broker/adapter";
 import type { TradeConfig } from "./config";
 import { assertCalendar, prevTradingDay, isTradingDay, indexOnOrBefore, type TradingDay } from "./calendar";
@@ -27,7 +28,8 @@ export interface PlanRunInput {
   nowMs?: number;
   /**
    * Wall clock read per ticker as its market data is captured, so freshness is judged when the quote was
-   * fetched, not at run start (fetches are sequential). Default: a clock frozen at nowMs.
+   * fetched, not at run start (it is read right after THAT ticker's trade+quote land; tickers are
+   * fetched a few at a time). Default: a clock frozen at nowMs.
    */
   clock?: () => number;
 }
@@ -45,32 +47,48 @@ export function fillTradingDate(filledAt: string): TradingDay {
 // Pure date arithmetic on YYYY-MM-DD labels — UTC is correct here (no wall clock involved).
 const shiftDays = (d: string, n: number) => new Date(new Date(d + "T00:00:00Z").getTime() + n * 86_400_000).toISOString().slice(0, 10);
 
+/** Max tickers whose execution market data is fetched at once (each is 2 reads) — bounded for broker rate limits. */
+const MARKET_DATA_CONCURRENCY = 4;
+
 export async function planRun(input: PlanRunInput): Promise<PlanRunOutput> {
   const { adapter, reports, sics, marketCapUsd, fills, today, cfg, runId, nowMs = Date.now() } = input;
   const clock = input.clock ?? (() => nowMs);
-  const calendar = (await adapter.getCalendar(shiftDays(today, -90), shiftDays(today, 45))).map((d) => d.date);
+  // Independent reads run concurrently, but the BOOK reads keep their order: positions → orders →
+  // account, each strictly after the previous returns. Reading orders after positions guarantees any
+  // fill already reflected in the positions snapshot is visible to the orders check in reconcile.
+  // The calendar (static) and the marks (prior closes) carry no book state, so they overlap freely.
+  const [calendarDays, positions] = await allInOrder([adapter.getCalendar(shiftDays(today, -90), shiftDays(today, 45)), adapter.getPositions()]);
+  const calendar = calendarDays.map((d) => d.date);
   assertCalendar(calendar);
   const markDate = cfg.markMode === "settled" || !isTradingDay(calendar, today) ? prevTradingDay(calendar, today) : today;
   const tickers = reports.map((r) => r.meta.ticker);
-  const positions = await adapter.getPositions();
   const held = positions.map((p) => p.symbol);
-  const marks = await adapter.getLastClose([...new Set([...tickers, ...held])], markDate);
   // Orders check (spec #7): look back over the lock window (+1 trading day of slack) — an older
   // execution cannot set a lock that is still active today.
   const lockWindowStart = calendar[Math.max(0, indexOnOrBefore(calendar, today) - (cfg.lockBusinessDays + 1))];
-  const brokerOrders = cfg.reconcileOrders ? await adapter.getOrders("all", `${lockWindowStart}T00:00:00Z`) : undefined;
-  const ledger = reconcile({ asOf: today, account: await adapter.getAccount(), positions, fills, brokerOrders, lockWindowStart });
+  const [marks, { brokerOrders, account }] = await allInOrder([
+    adapter.getLastClose([...new Set([...tickers, ...held])], markDate),
+    (async () => {
+      const brokerOrders = cfg.reconcileOrders ? await adapter.getOrders("all", `${lockWindowStart}T00:00:00Z`) : undefined;
+      return { brokerOrders, account: await adapter.getAccount() };
+    })(),
+  ]);
+  const ledger = reconcile({ asOf: today, account, positions, fills, brokerOrders, lockWindowStart });
   const todayDate = new Date(today + "T00:00:00Z");
   const signals = reports.map((r) => buildSignal(r, marks[r.meta.ticker], sics[r.meta.ticker] ?? null, todayDate, cfg));
   const locks = locksFor(fills, calendar, cfg.lockBusinessDays);
   const plan = emitTrades({ signals, currentWeights: weightsOf(ledger), locks, today, cfg });
   const mkts: Record<string, Mkt> = {};
   const anchorAtMs: Record<string, number> = {};
-  for (const t of plan.trades) {
-    if (mkts[t.ticker]) continue;
-    mkts[t.ticker] = { lastTrade: await adapter.getLatestTrade(t.ticker), quote: await adapter.getLatestQuote(t.ticker), close: marks[t.ticker] };
-    anchorAtMs[t.ticker] = clock();
-  }
+  // Execution market data: one trade + one quote read per traded ticker, independent reads, so a few
+  // tickers are fetched at once (and each ticker's trade and quote together). anchorAtMs is read the
+  // moment THAT ticker's data lands, so freshness is still judged at capture time.
+  const mktTickers = [...new Set(plan.trades.map((t) => t.ticker))];
+  const captured = await mapWithConcurrency(mktTickers, MARKET_DATA_CONCURRENCY, async (ticker) => {
+    const [lastTrade, quote] = await allInOrder([adapter.getLatestTrade(ticker), adapter.getLatestQuote(ticker)]);
+    return { mkt: { lastTrade, quote, close: marks[ticker] } as Mkt, at: clock() };
+  });
+  mktTickers.forEach((ticker, i) => { mkts[ticker] = captured[i].mkt; anchorAtMs[ticker] = captured[i].at; });
   const sized = tradesToOrders({ plan, nav: ledger.nav, marks, positions: positionsOf(ledger), marketCapUsd, mkts, nowMs, runId, cfg, anchorAtMs });
   const scenariosByTicker = new Map(reports.map((r) => [r.meta.ticker, r.sections.valuation.scenarios.map((x) => ({ name: x.name, impliedPrice: x.impliedPrice, probability: x.probability }))]));
   const record: RunRecord = {
