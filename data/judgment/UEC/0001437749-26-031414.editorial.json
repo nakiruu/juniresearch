@@ -1,0 +1,49 @@
+{
+  "judgmentSha256": "e471d3f84878dac96bf8f083c6ca94aa2a8200e6db7bc6925ba5f532356b1120",
+  "reviewedAt": "2026-09-29T19:10:00Z",
+  "reviewer": "Claude Opus 4.8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.finalRecommendation.body[0]",
+      "quote": "output at Christensen Ranch more than doubled to 211,942 pounds in fiscal 2026",
+      "issue": "The magnitude claim is contradicted by the grounding surface. Christensen Ranch produced 129,966 pounds in fiscal 2025 (MD&A) and 211,942 pounds in fiscal 2026 (MD&A / catalysts / growth) — a rise of about 63%, not a doubling (a doubling would require ~259,932 pounds). Elsewhere the report states the figures correctly (catalysts[0] 'rose to 211,942'; growth[0] '211,942 ... against 129,966 ... a year earlier'), so only this restatement overstates the growth.",
+      "fix": "Replace 'more than doubled' with the supported characterisation, e.g. 'output at Christensen Ranch rose to 211,942 pounds in fiscal 2026 from 129,966 a year earlier' — a ~63% increase, stated without the doubling claim.",
+      "status": "addressed",
+      "note": "Rewrite reads 'Christensen Ranch output grew year over year in fiscal 2026' — the 'more than doubled' overstatement is gone; the accurate 211,942-vs-129,966 comparison remains in growth[0]."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "and $1.4 billion of total equity, with the Facts block showing no debt.",
+      "issue": "'No debt' / 'debt-free' is asserted as fact in four places (analystCommentary 'no debt'; thesis 'debt-free balance sheet'; catalysts[3] 'no debt'; balanceCommentary here). The Facts balance sheet shows FY26 Total Debt as '—' (undisclosed / null), not zero — a blank is not a stated zero — and the risk-factor and MD&A excerpts note the company has 'relied primarily on equity and debt financings.' The phrase 'the Facts block showing no debt' over-attributes a positive 'no debt' reading to a source that carries a blank.",
+      "fix": "Reframe to what the surface supports — a net cash position and a 17.26x current ratio (FY26 net debt is not disclosed) — rather than asserting 'no debt' / 'debt-free'. If debt is genuinely nil, ground it; otherwise say debt is not disclosed and lean on the negative net-cash / liquidity figures.",
+      "status": "addressed",
+      "note": "All four sites fixed: analystCommentary 'a cash-rich position', thesis 'strongly capitalized, cash-rich', catalysts[3] cites cash and current ratio, and balanceCommentary now states 'The pack does not disclose a debt balance ... so it is not necessarily debt-free.'"
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[4]",
+      "quote": "as the drop from $66.84 million in fiscal 2025 to $37.25 million in fiscal 2026 shows.",
+      "issue": "Cross-section repetition: the same figures' stories are argued in full in multiple sections rather than pointed-to-then-argued once. The 'revenue is discretionary purchased-inventory sales / lumpy' claim recurs in incomeCommentary, cashflowCommentary, valuation.multiplesCommentary, executiveSummary.risks[4], risks.idiosyncratic[4] and finalRecommendation[1]; the FY25→FY26 revenue drop ($66.84M→$37.25M) is stated in both incomeCommentary and risks.idiosyncratic[4]; the $137.31M net loss appears in analystCommentary, executiveSummary.risks[0], incomeCommentary, risks.idiosyncratic[1] and finalRecommendation[1]; the 211,942-lb figure in analystCommentary, catalysts[0], growth[0] and finalRecommendation[0]; the 32.6%/7.6% stakes in both balanceCommentary and capitalAllocation.",
+      "fix": "Introduce each figure once in its home section and refer back in words elsewhere; make the exec-summary bullets and final recommendation point to the argument rather than re-stating the numbers and the revenue-quality claim in full.",
+      "status": "addressed",
+      "note": "Duplicated figures removed and replaced with pointers: risks.idiosyncratic[4] now 'the year-over-year decline', idiosyncratic[1] 'as detailed in the financials', exec risks[0] 'widened again', finalRecommendation drops the 211,942 and $137.31M restatements. Only the 32.6%/7.6% stakes still appear twice, each serving a distinct purpose (carrying value vs capital deployment) — de minimis."
+    },
+    {
+      "id": "F-4",
+      "severity": "Minor",
+      "field": "sections.management.leadership",
+      "quote": "Amir Adnani, who is also a director and a significant individual insider holder",
+      "issue": "'Significant individual insider holder' sits in tension with the insiderOwnership section, which frames the insider stake as 'modest' / 'low' and says alignment comes 'more through incentive equity than through a large founder holding.' Adnani holds 6,293,955 shares, or 1.3% (proxy) — the largest individual insider, but not a large stake in absolute terms.",
+      "fix": "Either drop 'significant' or qualify it (e.g. 'the largest individual insider holder, at 1.3%') so the leadership and ownership sections read consistently.",
+      "status": "addressed",
+      "note": "Leadership now reads 'Amir Adnani, who is also a director' — the 'significant individual insider holder' phrasing is removed, resolving the tension with the insiderOwnership section."
+    }
+  ]
+}
