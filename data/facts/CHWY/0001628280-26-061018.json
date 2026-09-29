@@ -1,0 +1,583 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "CHWY",
+  "cik": 1766502,
+  "company": "Chewy, Inc.",
+  "exchange": "NYSE",
+  "sic": 5961,
+  "sicDescription": "Retail-Catalog & Mail-Order Houses",
+  "filing": {
+    "form": "10-Q",
+    "accession": "0001628280-26-061018",
+    "filedDate": "2026-09-09",
+    "periodEnd": "2026-08-02",
+    "url": "https://www.sec.gov/Archives/edgar/data/1766502/000162828026061018/chwy-20260802.htm"
+  },
+  "capturedAt": "2026-09-28T23:13:34.772Z",
+  "quote": {
+    "price": 18.61,
+    "marketCap": 7479866880,
+    "sharesOutstanding": 401927290.7039226,
+    "sharesSource": "derived",
+    "week52Low": 17.4,
+    "week52High": 40.55,
+    "dividendYield": 0,
+    "asOf": "2026-09-28"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25",
+      "FY26"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          8967407000,
+          10119000000,
+          11147700000,
+          11861300000,
+          12601500000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          2385471000,
+          2834495000,
+          3161500000,
+          3467700000,
+          3753900000
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          -73566000,
+          56421000,
+          -23600000,
+          112600000,
+          254300000
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          -18247000,
+          139861000,
+          86100000,
+          227200000,
+          383600000
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          -75207000,
+          49899000,
+          39600000,
+          392700000,
+          222800000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          -0.18,
+          0.12,
+          0.09,
+          0.91,
+          0.52
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          603079000,
+          678585000,
+          1134017000,
+          596700000,
+          878800000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          -39620000,
+          160300000,
+          510300000,
+          261500000,
+          497900000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          0.804637909536203,
+          0.834253424215333,
+          0.9969069727890351,
+          0.7533420945302941,
+          0.8845151199165797
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          191743000,
+          349777000,
+          486200000,
+          596300000,
+          691600000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -183186000,
+          -230310000,
+          -143300000,
+          -143800000,
+          -129200000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          null,
+          0,
+          0,
+          -942800000,
+          -262500000
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          8557000,
+          119467000,
+          342900000,
+          452500000,
+          562400000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q3'26",
+    "periodEnd": "2026-08-02",
+    "revenue": 3330200000,
+    "operatingMargin": 0.027625968410305686,
+    "revenueYoY": 0.07280458733329032
+  },
+  "ttm": {
+    "pe": 28.1969696969697,
+    "ps": 0.5723497272108167,
+    "evToEbitda": null,
+    "grossMargin": 0.2992263958924759,
+    "operatingMargin": 0.0251134389801587,
+    "netMargin": 0.020943169557798402,
+    "netDebtToEbitda": null,
+    "interestCoverage": 28.789473684210527,
+    "currentRatio": 0.8378586996004359,
+    "fcfYield": null
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY27E",
+      "revenue": 13521089390,
+      "eps": 1.54007
+    },
+    "followingFY": {
+      "label": "FY28E",
+      "revenue": 14432490560,
+      "eps": 1.86843
+    }
+  },
+  "analysts": {
+    "count": 26,
+    "buy": 18,
+    "hold": 8,
+    "sell": 0,
+    "consensusRating": "None",
+    "consensusTarget": 28.81818,
+    "medianTarget": 29,
+    "highTarget": 36,
+    "lowTarget": 21,
+    "asOf": "2026-09-28"
+  },
+  "segments": {
+    "basis": "FY26 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 12601500000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY26",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "BBY",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "CART",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "DPZ",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "GME",
+      "pe": null,
+      "ps": null,
+      "evToEbitda": null
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-17",
+      "close": 22.1299991607666
+    },
+    {
+      "date": "2026-08-18",
+      "close": 23.040000915527344
+    },
+    {
+      "date": "2026-08-19",
+      "close": 23.989999771118164
+    },
+    {
+      "date": "2026-08-20",
+      "close": 23.8799991607666
+    },
+    {
+      "date": "2026-08-21",
+      "close": 24.020000457763672
+    },
+    {
+      "date": "2026-08-24",
+      "close": 24.5
+    },
+    {
+      "date": "2026-08-25",
+      "close": 24.690000534057617
+    },
+    {
+      "date": "2026-08-26",
+      "close": 22.969999313354492
+    },
+    {
+      "date": "2026-08-27",
+      "close": 22.799999237060547
+    },
+    {
+      "date": "2026-08-28",
+      "close": 23.260000228881836
+    },
+    {
+      "date": "2026-08-31",
+      "close": 23.799999237060547
+    },
+    {
+      "date": "2026-09-01",
+      "close": 23.719999313354492
+    },
+    {
+      "date": "2026-09-02",
+      "close": 24.170000076293945
+    },
+    {
+      "date": "2026-09-03",
+      "close": 23.959999084472656
+    },
+    {
+      "date": "2026-09-04",
+      "close": 23.65999984741211
+    },
+    {
+      "date": "2026-09-08",
+      "close": 23.270000457763672
+    },
+    {
+      "date": "2026-09-09",
+      "close": 20.75
+    },
+    {
+      "date": "2026-09-10",
+      "close": 21.079999923706055
+    },
+    {
+      "date": "2026-09-11",
+      "close": 20.440000534057617
+    },
+    {
+      "date": "2026-09-14",
+      "close": 21.350000381469727
+    },
+    {
+      "date": "2026-09-15",
+      "close": 21.190000534057617
+    },
+    {
+      "date": "2026-09-16",
+      "close": 20.90999984741211
+    },
+    {
+      "date": "2026-09-17",
+      "close": 20.899999618530273
+    },
+    {
+      "date": "2026-09-18",
+      "close": 20.6200008392334
+    },
+    {
+      "date": "2026-09-21",
+      "close": 20.510000228881836
+    },
+    {
+      "date": "2026-09-22",
+      "close": 19.65999984741211
+    },
+    {
+      "date": "2026-09-23",
+      "close": 18.549999237060547
+    },
+    {
+      "date": "2026-09-24",
+      "close": 18.31999969482422
+    },
+    {
+      "date": "2026-09-25",
+      "close": 18.270000457763672
+    },
+    {
+      "date": "2026-09-28",
+      "close": 18.610000610351562
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "Chewy, Inc., together with its subsidiaries, engages in the e-commerce business in the United States. It offers pet food and treats, pet supplies and pet medications, and other pet-health products, as well as pet services. The company serves its customer through its retail websites and mobile applications, including Autoship subscription program. Chewy, Inc. was founded in 2010 and is based in Plantation, Florida.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-09-28"
+    },
+    "mdaExcerpt": {
+      "text": "Item 2. MANAGEMENT'S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS\nThe following discussion and analysis of our financial condition and results of operations should be read in conjunction with the Unaudited Condensed Consolidated Financial Statements and related notes thereto included in this Quarterly Report on Form 10-Q for the quarterly period ended August 2, 2026 (\"10-Q Report\") and our audited consolidated financial statements and related notes thereto included in our Annual Report on Form 10-K for the fiscal year ended February 1, 2026 (\"10-K Report\"). This discussion contains forward-looking statements that involve risks and uncertainties. As a result of many factors, such as those set forth under the \"Risk Factors\" and \"Cautionary Note Regarding Forward-Looking Statements\" sections herein and in our 10-K Report, our actual results may differ materially from those anticipated in these forward-looking statements. Unless the context requires otherwise, references in this 10-Q Report to \"Chewy,\" the \"Company,\" \"we,\" \"our,\" or \"us\" refer to Chewy, Inc. and its consolidated subsidiaries.\nInvestors and others should note that we may announce material information to our investors using our investor relations website (https://investor.chewy.com/), filings with the SEC, press releases, public conference calls and webcasts. We use these channels, as well as social media, to communicate with our investors and the public about our company, our business and other issues. It is possible that the information that we post on these channels could be deemed to be material information. We therefore encourage investors to visit these websites from time to time. The information contained on such websites and social media posts is not incorporated by reference into this filing. Further, our references to website URLs in this filing are intended to be inactive textual references only.\nOverview\nWe are the largest pet e-tailer in the United States, offering virtually every product a pet needs. We launched Chewy in 2011 to bring the best of the neighborhood pet store shopping experience to a larger audience, enhanced by the depth and wide selection of products and services, as well as the around-the-clock convenience, that only e-commerce can offer. We believe that we are the preeminent destination for pet parents as a result of our broad selection of high-quality products and expanded menu of service offerings, which we offer at great prices and deliver with an exceptional level of care and a personal touch. We are the trusted source for pet parents and partners and continually develop innovative ways for our customers to engage with us. We partner with approximately 4,000 of the best and most trusted brands in the pet industry, and we create and offer our own outstanding private brands. Through our websites and mobile applications, we offer our customers approximately 190,000 products, compelling merchandising, an easy and enjoyable shopping experience, and exceptional customer service.\nMacroeconomic Considerations\nMacroeconomic conditions, including inflationary pressures, elevated interest rates, and broader economic uncertainty, have influenced consumer spending patterns and may continue to affect demand across our categories. We monitor these conditions closely and adjust elements of our logistics, transportation, supply chain, and merchandising strategies as appropriate. Changes in consumer behavior may impact product mix, purchasing frequency, and promotional intensity, and we manage our operations with a focus on maintaining value, service levels, and operational discipline in varying economic environments.\nWe are unable to predict the duration and ultimate impact of evolving macroeconomic conditions on the broader economy or our operations and liquidity. As such, macroeconomic risks and uncertainties remain. Refer to the section titled \"Cautionary Note Regarding Forward-Looking Statements\" in this 10-Q Report and the section titled \"Risk Factors\" in Item 1A of our 10-K Report for the fiscal year ended February 1, 2026.\nFiscal Year End\nWe have a 52- or 53-week fiscal year ending each year on the Sunday that is closest to January 31 of that year. Our 2026 fiscal year ends on January 31, 2027 and is a 52-week year. Our 2025 fiscal year ended February 1, 2026 and was a 52-week year.\nKey Operating Metrics\nActive Customers\nAs of the last date of each reporting period, we determine our number of active customers by counting the total number of individual customers who have ordered a product or service, and for whom a product has shipped or for whom a service has been provided, at least once during the preceding 364-day period. The change in active customers in a reporting period captures both the inflow of new customers and the outflow of customers who have not made a purchase in the last 364 days. We view the\n22\nnumber of active customers as a key indicator of our growth, ability to acquire and retain customers as a result of our marketing efforts, and the value we provide to our customers. The number of active customers has grown over time as we acquired new customers and retained previously acquired customers.\nNet Sales Per Active Customer\nWe define net sales per active customer as the aggregate net sales for the preceding four fiscal quarters, divided by the total number of active customers at the end of that period. We view net sales per active customer as a key indicator of our customers' purchasing patterns, including their initial and repeat purchase behavior.\nAutoship and Autoship Customer Sales\nWe define Autoship customers as customers in a given fiscal quarter that had an order shipped through our Autoship subscription program during the preceding 364-day period. We define Autoship as our subscription program, which provides automatic ordering, payment, and delivery of products to our customers. We view our Autoship subscription program as a key driver of recurring net sales and customer retention. For a given fiscal quarter, Autoship customer sales consist of sales and shipping revenues from all Autoship subscription program purchases and purchases outside of the Autoship subscription program by Autoship customers, excluding taxes collected from customers, excluding any refunds, and net of any promotional offers (such as percentage discounts off current purchases and other similar offers) for that quarter. For a given fiscal year, Autoship customer sales equal the sum of the Autoship customer sales for each of the fiscal quarters in that fiscal year.\nAutoship Customer Sales as a Percentage of Net Sales\nWe define Autoship customer sales as a percentage of net sales as the Autoship customer sales in a given reporting period divided by the net sales from all orders in that period. We view Autoship customer sales as a percentage of net sales as a key indicator of our recurring sales and customer retention.\nComponents of Results of Consolidated Operations\nNet Sales\nWe derive net sales primarily from sales of both third-party brand and private brand pet food, pet products, pet health and specialty products, and related shipping fees. Consumable products include retail pet food and veterinary diet products. Hard goods products include non-perishable pet supplies. Pet health and specialty products include prescription medications, non-prescription pet health care products and certain specialty animal products for categories such as equine, birds, fish, and other non-traditional pets. Other net sales include private brand sales and certain pet-related services including telehealth services, pet insurance-related offerings, loyalty program memberships, and veterinary clinic services. Revenues from these service-based offerings are not a significant component of net sales and are managed as part of the Company's integrated platform rather than as standalone service offerings.\nSales of third-party brand and private brand pet food, pet products, pet health and specialty products, and shipping revenues are recorded when products are shipped, net of promotional discounts and refunds and allowances. Taxes collected from customers are excluded from net sales. Net sales is primarily driven by growth of new customers and active customers, and the frequency with which customers purchase and subscribe to our Autoship subscription program.\nWe also periodically provide promotional offers, including discount offers, such as percentage discounts off current purchases and other similar offers. These offers are treated as a reduction to the purchase price of the related transaction and are reflected as a net amount in net sales.\nCost of Goods Sold\nCost of goods sold consists of the cost of third-party brand and private brand products sold to customers, inventory freight, shipping supply costs, inventory shrinkage costs, and inventory valuation adjustments, offset by reductions for promotions and percentage or volume rebates offered by our vendors, which may depend on reaching minimum purchase thresholds. Generally, amounts received from vendors are considered a reduction of the carrying value of inventory and are ultimately reflected as a reduction of cost of goods sold.\n23\nSelling, General and Administrative\nSelling, general and administrative expenses consist of fulfillment costs incurred in operating and staffing fulfillment centers, customer service centers, and veterinary clinics; payroll and related expenses for employees involved in general corporate functions, including accounting, finance, tax, legal and human resources; costs associated with the use of facilities and equipment, such as depreciation expense and rent; share-based compensation, professional fees and other general corporate costs.\nFulfillment costs include costs attributable to buying, receiving, inspecting and warehousing inventories, picking, packaging and preparing customer orders for shipment, payment processing, providing pet health services, and responding to inquiries from customers. Included within fulfillment costs are merchant processing fees charged by third parties that provide merchant processing services for credit cards.\nAdvertising and Marketing\nAdvertising and marketing expenses consist of advertising and payroll related expenses for personnel engaged in marketing, business development and selling activities.\nInterest and Other Income (Expense), net\nWe generate interest income from our cash and cash equivalents and marketable securities. We incur interest expense primarily in connection with our borrowing facilities, including our term loan and asset-based revolving credit facilities, as well as finance leases and unrecognized tax benefits.\nOur other income (expense), net consists of changes in the fair value of equity warrants, equity investments, tax indemnification receivables, foreign currency transaction gains and losses, and allowances for credit losses on marketable securities.\nIncome Tax Provision (Benefit)\nIncome tax provision (benefit) consists of an estimate of federal and state income taxes based on enacted federal and state tax rates, as adjusted for allowable credits, deductions, and the valuation allowance against deferred tax assets, as applicable.\nNon-GAAP Financial Measures\nTo supplement our GAAP results, we present certain non-GAAP financial measures that management uses to evaluate operating performance, assess liquidity, and inform capital allocation decisions. These measures include Adjusted EBITDA and Adjusted EBITDA margin, Adjusted net income and Adjusted earnings per share, and Free cash flow.\nAdjusted EBITDA excludes depreciation and amortization, share-based compensation and related taxes, income tax provision (benefit), interest income (expense), transaction-related costs, net legal settlement proceeds, changes in the fair value of equity warrants, severance and exit costs, and other items not considered indicative of our core operations. Adjusted EBITDA margin represents Adjusted EBITDA as a percentage of net sales.\nAdjusted net income and Adjusted earnings per share exclude certain non-cash and non-recurring items, including share-based compensation and related taxes, releases of valuation allowances associated with deferred tax assets, transaction-related costs, net legal settlement proceeds, changes in the fair value of equity warrants, and severance and exit costs. Beginning in the first quarter of 2026, Adjusted net income excludes transaction-related costs prospectively.\nFree cash flow represents net cash provided by operating activities less capital expenditures.\nWe believe these measures provide additional insight into the underlying trends in our business and facilitate comparisons across reporting periods. Reconciliations to the most directly comparable GAAP measures are provided below.\nThese non-GAAP measures have limitations and should not be considered in isolation or as a substitute for GAAP results. For example, Adjusted EBITDA does not reflect capital expenditures, working capital requirements, interest income (expense), income taxes, or share-based compensation, which remains a recurring component of our compensation structure. In addition, other companies may calculate non-GAAP measures differently, which may limit their comparability. Accordingly, these measures should be considered together with our GAAP financial statements and related disclosures.\n24\nKey Financial and Operating Data\nWe measure our business using both financial and operating data and use the following metrics and measures to assess the near-term and long-term performance of our overall business, including identifying trends, formulating financial projections, making strategic decisions, assessing operational efficiencies, and monitoring our business.\n13 Weeks Ended\n26 Weeks Ended\n(in millions, except net sales per active customer, per share data, and percentages)\nAugust 2,\n2026\nAugust 3,\n2025\n% Change\nAugust 2,\n2026\nAugust 3,\n2025\n% Change\nFinancial and Operating Data\nNet sales\n$\n3,330.2\n$\n3,104.2\n7.3\n%\n$\n6,687.4\n$\n6,220.2\n7.5\n%\nNet income (1)\n$\n80.5\n$\n62.0\n29.8\n%\n$\n175.3\n$\n124.4\n40.9\n%\nNet margin\n2.4\n%\n2.0\n%\n2.6\n%\n2.0\n%\nAdjusted EBITDA (2)\n$\n226.7\n$\n183.3\n23.7\n%\n$\n479.8\n$\n376.0\n27.6\n%\nAdjusted EBITDA margin (2)\n6.8\n%\n5.9\n%\n7.2\n%\n6.0\n%\nAdjusted net income (2)\n$\n148.8\n$\n141.1\n5.5\n%\n$\n328.7\n$\n290.0\n13.3\n%\nEarnings per share, basic (1)\n$\n0.20\n$\n0.15\n33.3\n%\n$\n0.43\n$\n0.30\n43.3\n%\nEarnings per share, diluted (1)\n$\n0.20\n$\n0.14\n42.9\n%\n$\n0.42\n$\n0.29\n44.8\n%\nAdjusted earnings per share, basic (2)\n$\n0.37\n$\n0.34\n8.8\n%\n$\n0.80\n$\n0.70\n14.3\n%\nAdjusted earnings per share, diluted (2)\n$\n0.36\n$\n0.33\n9.1\n%\n$\n0.79\n$\n0.68\n16.2\n%\nNet cash provided by operating activities\n$\n137.4\n$\n133.9\n2.6\n%\n$\n245.9\n$\n220.3\n11.6\n%\nFree cash flow (2)\n$\n89.5\n$\n105.9\n(15.5)\n%\n$\n160.3\n$\n154.6\n3.7\n%\nActive customers (3) (4)\n21.705\n20.906\n3.8\n%\n21.705\n20.906\n3.8\n%\nNet sales per active customer\n$\n602\n$\n591\n1.9\n%\n$\n602\n$\n591\n1.9\n%\nAutoship customer sales\n$\n2,817.2\n$\n2,576.9\n9.3\n%\n$\n5,649.8\n$\n5,139.6\n9.9\n%\nAutoship customer sales as a percentage of net sales\n84.6\n%\n83.0\n%\n84.5\n%\n82.6\n%\n(1) Includes share-based compensation expense and related taxes of $85.9 million and $159.3 million for the thirteen and twenty-six weeks ended August 2, 2026, compared to $79.1 million and $157.1 million for the thirteen and twenty-six weeks ended August 3, 2025.\n(2) Adjusted EBITDA, adjusted EBITDA margin, adjusted net income, adjusted basic and diluted earnings per share, and free cash flow are non-GAAP financial measures. See \"Non-GAAP Financial Measures\" above.\n(3) Includes approximately 43 thousand active customers attributable to SmartPak for the thirteen and twenty-six weeks ended August 2, 2026.\n(4) Excludes customer additions related to the Modern Animal acquisition.\nWe define net margin as net income divided by net sales and adjusted EBITDA margin as adjusted EBITDA divided by net sales.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/1766502/000162828026061018/chwy-20260802.htm",
+      "asOf": "2026-09-09",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "Item 1A. Risk Factors\nThe following are important factors that could affect our business, financial condition or results of operations and could cause actual results for future periods to differ materially from our anticipated results or other expectations, including those expressed in any forward-looking statements made in this Annual Report on Form 10-K, our other filings with the SEC or in presentations such as telephone conferences and webcasts open to the public. You should carefully consider the following factors in conjunction with this Annual Report on Form 10-K, including \"Management's Discussion and Analysis of Financial Condition and Results of Operations\" in Item 7 and our consolidated financial statements and related notes in Item 8. The risks and uncertainties described below are not the only ones we face. Additional risks and uncertainties that we are unaware of, or that we currently believe are not material, may also become important factors that adversely affect our business, financial condition or results of operations. If any of the following risks actually occur, or other risks that we are not aware of become material, our business, financial condition, results of operations and future prospects could be materially and adversely affected.\nSummary Risk Factors\nOur business faces significant risks. The risk factors described below are only a summary of the principal risk factors associated with an investment in us. These risks are more fully described in this \"Risk Factors\" section, including the following:\nRisks Related to Our Business and Operations\nOur recent growth rates may not be sustainable or indicative of our future growth and we may not be able to successfully manage challenges to our future growth.\nBusiness disruptions and responsive actions may adversely affect our business operations, financial performance, liquidity and cash flow for an unknown period of time.\nIf we fail to acquire and retain new customers, or fail to do so in a cost-effective manner, we may be unable to increase net sales, improve margins, and maintain profitability.\nIf we fail to manage our growth effectively, our business, financial condition and results of operations could be materially and adversely affected.\nOur continued success is in part dependent on positive perceptions of the Company.\nOur operating expenses may increase over the next few years, and we may generate operating losses as we continue to expand our business.\nWe may be unable to accurately forecast net sales and appropriately plan our expenses in the future.\nOur estimate of the size of our addressable markets may prove to be inaccurate.\nWe may be unable to source additional suppliers or strengthen our existing relationships with suppliers. In addition, the loss of any of our key suppliers would negatively impact our business.\nShipping is a critical part of our business and any changes in, or disruptions to, our shipping arrangements could adversely affect our business, financial condition and results of operations.\nIf we do not successfully optimize, operate, and manage the expansion of the capacity of our fulfillment centers, our business, financial condition and results of operations could be harmed.\nOur business may be adversely affected if we are unable to provide our customers with a cost-effective platform that is able to respond and adapt to rapid changes in technology.\nWe are subject to risks related to online payment methods.\nOur business depends on network and mobile infrastructure, our third-party data center hosting facilities (including cloud-service providers), other third-party providers, and our ability to maintain and scale our technology. Any significant interruptions or delays in service on our websites or mobile applications or any undetected errors or design faults could result in limited capacity, reduced demand, processing delays, and loss of customers or suppliers.\n8\nDisruptions to software-as-a-service (\"SaaS\") technologies from third parties may adversely affect our business, financial condition and results of operations.\nOur failure or the failure of third-party service providers to protect our websites, networks, and systems against cybersecurity incidents, or to otherwise protect our confidential information, could damage our reputation and brand and harm our business, financial condition and results of operations.\nSafety, quality, and health concerns regarding our products could affect our business, financial condition and results of operations.\nRisks associated with our suppliers and our outsourcing partners, some of which are located outside of the United States (\"U.S.\"), could materially and adversely affect our business, financial condition and results of operations.\nWe are subject to extensive laws and regulations and we may incur material liabilities or costs related to complying with existing or future laws and regulations, and our failure to comply may result in enforcements, penalties, recalls, and other adverse actions.\nWe may inadvertently not comply with various laws and regulations covering our pet health business, which may subject us to reprimands, sanctions, probations, fines, suspensions, or the loss of one or more of our licenses.\nResistance from veterinarians to authorize prescriptions, or their efforts to discourage pet owners from purchasing from us, could cause our sales to decrease and could adversely affect our business, financial condition and results of operations.\nFailure to comply with laws and regulations relating to privacy, data protection, cybersecurity, marketing and advertising and consumer protection, could adversely affect our business, financial condition and results of operations.\nOur ability to utilize net operating loss and tax credit carryforwards, and other tax attributes may be subject to certain limitations.\nWe may be unable to adequately protect our intellectual property rights. Additionally, we may be subject to intellectual property infringement claims or other allegations, which could result in substantial damages and diversion of management's efforts and attention.\nWe may be subject to personal injury, workers' compensation, product liability, labor and employment, and other claims in the ordinary course of business.\nWe rely on the performance of members of management and highly-skilled personnel, and our business could be harmed if we are unable to attract, develop, motivate, and retain highly-qualified and skilled employees.\nUncertainties in economic conditions, industry trends, and market conditions, and their impact on the pet market, could adversely impact our business, financial condition and results of operations.\nSignificant merchandise returns or refunds could harm our business.\nWe may seek to grow our business through acquisitions or investments in new or complementary businesses, technologies, or offerings, or through other strategic transactions, and the failure to manage these acquisitions, investments, or strategic transactions, or to integrate them with our existing business, could have a material adverse effect on us.\nOur business results could be adversely affected if our new offerings are unsuccessful.\nRegulation of the sale of insurance for pets is subject to change, and future regulations could adversely affect our business, financial condition and results of operations.\nIf we cannot successfully manage the unique challenges presented by international markets, we may not be successful in expanding our operations outside the U.S. and Canada.\nRisks Related to Our Industry\nCompetition in the pet products and services health and retail industries, especially Internet-based competition, is strong and presents an ongoing threat to the success of our business.\nGovernment regulation of the Internet and e-commerce is evolving, and unfavorable changes or failure by us to comply with these regulations could harm our business, financial condition and results of operations.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/1766502/000176650226000034/chwy-20260201.htm",
+      "asOf": "2026-03-25",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-K",
+    "pressRelease": {
+      "text": "EX-99.1\n2\nchwyq22026exhibit991.htm\nEX-99.1\nDocument\nChewy Announces Second Quarter 2026 Financial Results\nPLANTATION, Fla., September 9, 2026 (BUSINESS WIRE) Chewy, Inc. (NYSE CHWY) (\"Chewy\"), a trusted destination for pet parents and partners everywhere, has released its financial results for the second quarter of fiscal year 2026 ended August 2, 2026.\nFiscal Q2 2026 Highlights\nNet sales of $3.33 billion increased 7.3 percent year over year or 5.7 percent excluding SmartPak and Modern Animal contributions\nGross margin of 30.4 percent stayed consistent year over year\nNet income of $80.5 million, including share-based compensation expense and related taxes of $85.9 million\nNet margin of 2.4 percent increased 40 basis points year over year\nBasic earnings per share of $0.20, an increase of $0.05 year over year\nDiluted earnings per share of $0.20, an increase of $0.06 year over year\nAdjusted EBITDA (1) of $226.7 million, an increase of $43.4 million year over year\nAdjusted EBITDA margin (1) of 6.8 percent increased 90 basis points year over year\nAdjusted net income (1) of $148.8 million, an increase of $7.7 million year over year\nAdjusted basic earnings per share (1) of $0.37, an increase of $0.03 year over year\nAdjusted diluted earnings per share (1) of $0.36, an increase of $0.03 year over year\n\"Chewy delivered a strong second quarter, with growth of 7.3% to $3.33 billion of net sales at the high end of our guidance, and a 6.8% Adj. EBITDA margin, exceeding our expectations,\" said Sumit Singh, Chief Executive Officer of Chewy. \"The durability of our recurring revenue base, continued customer growth, and disciplined execution give us confidence to raise our full-year revenue and profitability outlook, while continuing to invest in compelling opportunities that deepen customer engagement and create long-term shareholder value.\"\nManagement will host a conference call and webcast to discuss Chewy's financial results today at 8 00 am ET.\nChewy Fiscal Second Quarter 2026 Financial Results Conference Call\nWhen Wednesday, September 9, 2026\nTime 8 00 am ET\nLive webcast and replay https investor.chewy.com\nConference call registration https events.q4inc.com attendee 640129598\n(1) Adjusted EBITDA, adjusted EBITDA margin, adjusted net income, and adjusted basic and diluted earnings per share are non-GAAP financial measures. See \"Non-GAAP Financial Measures\" for additional information on non-GAAP financial measures and a reconciliation to the most comparable GAAP measures.\nAbout Chewy\nOur mission is to be the most trusted and convenient destination for pet parents and partners everywhere. We believe that we are the preeminent online source for pet products, supplies, and prescriptions as a result of our broad selection of high-quality products and services, which we offer at competitive prices and deliver with an exceptional level of care and a personal touch to build brand loyalty and drive repeat purchasing. We seek to continually develop innovative ways for our customers to engage with us, as our websites and mobile applications allow our pet parents to manage their pets' health, wellness, and merchandise needs, while enabling them to conveniently shop for our products. We partner with approximately 4,000 of the best and most trusted brands in the pet industry, and we create and offer our own private brands. Through our websites and mobile applications, we offer our customers approximately 190,000 products and services offerings, to bring what we believe is a high-bar, customer-centric experience to our customers.\nForward-Looking Statements\nThis communication contains forward-looking statements about us and our industry that involve substantial risks and uncertainties. All statements other than statements of historical facts contained in this communication, including statements regarding our share repurchase program, our future results of operations or financial condition, business strategy and plans and objectives of management for future operations, are forward-looking statements. In some cases, you can identify forward-looking statements because they contain words such as \"anticipate,\" \"believe,\" \"contemplate,\" \"continue,\" \"could,\" \"estimate,\" \"expect,\" \"forecast,\" \"intend,\" \"may,\" \"plan,\" \"potential,\" \"predict,\" \"project,\" \"seek,\" \"should,\" \"target,\" \"will\" or \"would\" or the negative of these words or other similar terms or expressions, although not all forward-looking statements contain these identifying words.\nAlthough we believe that these forward-looking statements are based on reasonable assumptions, you should be aware that many factors could cause actual results to differ materially from those in such forward-looking statements, including but not limited to, our ability to sustain our recent growth rates and successfully manage challenges to our future growth, including introducing new products or services, improving existing products and services, and expanding into new jurisdictions and offerings successfully respond to business disruptions successfully manage risks related to the macroeconomic environment, including any adverse impacts on our business operations, financial performance, supply chain, workforce, facilities, customer services and operations acquire and retain new customers in a cost-effective manner and increase our net sales, improve margins and maintain profitability manage our growth effectively maintain positive perceptions of the Company and preserve, grow, and leverage the value of our reputation and our brand limit operating losses as we continue to expand our business forecast net sales and appropriately plan our expenses in the future estimate our market share strengthen our current supplier relationships, retain key suppliers, and source additional suppliers negotiate acceptable pricing and other terms with third-party service providers, suppliers and outsourcing partners and maintain our relationships with such parties mitigate changes in, or disruptions to, our shipping arrangements and operations optimize, operate and manage the expansion of the capacity of our fulfillment centers provide our customers with a cost-effective platform that is able to respond and adapt to rapid changes in technology limit our losses related to online payment methods maintain and scale our technology, the reliability of our websites, mobile applications, and network infrastructure, including through the use of artificial intelligence maintain adequate cybersecurity with respect to our systems and retain third-party service providers that do the same with respect to their systems maintain consumer confidence in the safety, quality and health of our products limit risks associated with our suppliers and our outsourcing partners comply with existing or future laws and regulations in a cost-efficient manner utilize net operating loss and tax credit carryforwards, and other tax attributes adequately protect our intellectual property rights successfully defend ourselves against any allegations or claims that we may be subject to attract, develop, motivate and retain highly-qualified and skilled employees respond to economic conditions, industry trends, and market conditions, and their impact on the pet products market reduce merchandise returns or refunds respond to severe weather and limit disruption to normal business operations manage new acquisitions, investments or alliances, and integrate them into our existing business successfully compete in new offerings manage challenges presented by international markets successfully compete in the pet products and services health and retail industry, especially in the e-commerce sector comply with the terms of our credit facility raise capital as needed and maintain effective internal control over financial reporting.\nYou should not rely on forward-looking statements as predictions of future events, and you should understand that these statements are not guarantees of performance or results, and our actual results could differ materially from those expressed in the forward-looking statements due to a variety of factors. We have based the forward-looking statements contained in this communication primarily on our current assumptions, expectations, and projections about future events and trends that we believe may affect our business, financial condition, and results of operations. The outcome of the events described in these forward-looking statements is subject to risks, uncertainties and other factors described in the section titled \"Risk Factors\" included under Part 1, Item 1A in our Annual Report on Form 10-K for the fiscal year ended February 1, 2026, in our other filings with the Securities and Exchange Commission, our subsequent quarterly reports, and elsewhere in this communication. Moreover, we operate in a very competitive and rapidly changing environment. New risks and uncertainties emerge from time to time, and it is not possible for us to predict all risks and uncertainties that could have an impact on the forward-looking statements contained in this communication. The results, events and circumstances reflected in the forward-looking statements may not be achieved or occur, and actual results, events or circumstances could differ materially from those described in the forward-looking statements. In addition, statements that \"we believe\" and similar statements reflect our beliefs and opinions on the relevant subject. These statements are based on information available to us as of the date of this communication. While we believe that such information provides a reasonable basis for these statements, this information may be limited or incomplete. Our statements should not be read to indicate that we have conducted an exhaustive inquiry into, or review of, all relevant information. These statements are inherently uncertain, and investors are cautioned not to unduly rely on these statements. The forward-looking statements made in this communication relate only to events as of the date on which the statements are made. We undertake no obligation to update any forward-looking statements made in this communication to reflect events or circumstances after the date of this communication or to reflect new information or the occurrence of unanticipated events, except as required by law. We may not actually achieve the plans, intentions or expectations disclosed in our forward-looking statements, and you should not place undue reliance on our forward-looking statements. Our forward-looking statements do not reflect the potential impact of any future acquisitions, mergers, dispositions, joint ventures or investments.\nCHEWY, INC.\nCONDENSED CONSOLIDATED BALANCE SHEETS\n(in millions, except share and per share data)\nAs of\nAugust 2,\n2026\nFebruary 1,\n2026\nAssets\n(Unaudited)\nCurrent assets\nCash and cash equivalents\n$\n611.0\n$\n860.1\nMarketable securities\n1.2\n18.7\nAccounts receivable\n232.1\n222.2\nInventories\n924.7\n864.8\nPrepaid expenses and other current assets\n76.3\n70.0\nTotal current assets\n1,845.3\n2,035.8\nProperty and equipment, net\n624.8\n552.3\nIntangible assets, net\n149.7\n0.3\nOperating lease right-of-use assets\n482.1\n467.9\nGoodwill\n334.1\n39.4\nDeferred tax assets\n264.7\n232.2\nOther non-current assets\n39.9\n38.5\nTotal assets\n$\n3,740.6\n$\n3,366.4\nLiabilities and stockholders' equity\nCurrent liabilities\nTrade accounts payable\n$\n1,166.0\n$\n1,221.4\nAccrued expenses and other current liabilities\n1,033.4\n1,080.2\nCurrent portion of long-term debt\n3.0\nTotal current liabilities\n2,202.4\n2,301.6\nOperating lease liabilities\n527.2\n518.7\nLong-term debt, net\n588.7\nOther long-term liabilities\n51.8\n48.2\nTotal liabilities\n3,370.1\n2,868.5\nStockholders' equity\nPreferred stock, $0.01 par value per share, 5,000,000 shares authorized, no shares issued and outstanding as of August 2, 2026 and February 1, 2026\nClass A common stock, $0.01 par value per share, 1,500,000,000 shares authorized, 224,993,295 and 238,647,144 shares issued and outstanding as of August 2, 2026 and February 1, 2026, respectively\n2.2\n2.4\nClass B common stock, $0.01 par value per share, 395,000,000 shares authorized, 176,478,229 and 176,478,229 shares issued and outstanding as of August 2, 2026 and February 1, 2026, respectively\n1.8\n1.8\nAdditional paid-in capital\n1,550.7\n1,852.9\nAccumulated deficit\n(1,184.8)\n(1,360.1)\nAccumulated other comprehensive income\n0.6\n0.9\nTotal stockholders' equity\n370.5\n497.9\nTotal liabilities and stockholders' equity\n$\n3,740.6\n$\n3,366.4\nCHEWY, INC.\nCONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS AND COMPREHENSIVE INCOME\n(in millions, except per share data)\n(Unaudited)\n13 Weeks Ended\n26 Weeks Ended\nAugust 2,\n2026\nAugust 3,\n2025\nAugust 2,\n2026\nAugust 3,\n2025\nNet sales\n$\n3,330.2\n$\n3,104.2\n$\n6,687.4\n$\n6,220.2\nCost of goods sold\n2,319.0\n2,162.0\n4,664.8\n4,354.2\nGross profit\n1,011.2\n942.2\n2,022.6\n1,866.0\nOperating expenses\nSelling, general and administrative\n704.4\n671.9\n1,381.2\n1,325.0\nAdvertising and marketing\n214.8\n200.6\n420.9\n394.4\nTotal operating expenses\n919.2\n872.5\n1,802.1\n1,719.4\nIncome from operations\n92.0\n69.7\n220.5\n146.6\nInterest and other income, net\n19.9\n4.3\n22.7\n5.3\nIncome before income tax provision\n111.9\n74.0\n243.2\n151.9\nIncome tax provision\n31.4\n12.0\n67.9\n27.5\nNet income\n$\n80.5\n$\n62.0\n$\n175.3\n$\n124.4\nComprehensive income\nNet income\n$\n80.5\n$\n62.0\n$\n175.3\n$\n124.4\nForeign currency translation adjustments\n(0.3)\n0.2\n(0.3)\n0.6\nComprehensive income\n$\n80.2\n$\n62.2\n$\n175.0\n$\n125.0\nEarnings per share attributable to common Class A and Class B stockholders\nBasic\n$\n0.20\n$\n0.15\n$\n0.43\n$\n0.30\nDiluted\n$\n0.20\n$\n0.14\n$\n0.42\n$\n0.29\nWeighted-average common shares used in computing earnings per share\nBasic\n406.4\n414.2\n410.1\n413.9\nDiluted\n410.1\n428.4\n414.6\n426.8\nCHEWY, INC.\nCONDENSED CONSOLIDATED STATEMENTS OF CASH FLOWS\n(in millions)\n(Unaudited)\n26 Weeks Ended\nAugust 2,\n2026\nAugust 3,\n2025\nCash flows from operating activities\nNet income\n$\n175.3\n$\n124.4\nAdjustments to reconcile net income to net cash provided by operating activities\nDepreciation and amortization\n76.7\n62.1\nShare-based compensation expense\n150.4\n150.4\nNon-cash lease expense\n19.6\n17.4\nUnrealized foreign currency (gains) losses, net\n(0.2)\nOther adjustments\n6.8\n5.8\nNet change in operating assets and liabilities\nAccounts receivable\n(8.2)\n(52.1)\nInventories\n(44.9)\n(37.5)\nPrepaid expenses and other current assets\n(2.7)\n(32.2)\nOther non-current assets\n(0.4)\nTrade accounts payable\n(65.3)\n50.0\nAccrued expenses and other current liabilities\n(49.3)\n(49.8)\nOperating lease liabilities\n(18.5)\n(16.9)\nOther long-term liabilities\n6.4\n(1.1)\nNet cash provided by operating activities\n245.9\n220.3\nCash flows from investing activities\nCapital expenditures\n(85.6)\n(65.7)\nPurchases of marketable securities\n(21.4)\nProceeds from maturities of marketable securities\n39.2\nCash paid for acquisition of businesses, net of cash acquired\n(552.8)\nOther investing activities\n(5.2)\nNet cash (used in) investing activities\n(620.6)\n(70.9)\nCash flows from financing activities\nRepurchases of common stock\n(400.0)\n(152.6)\nProceeds from, net of income taxes paid for, parent reorganization transaction\n4.3\n2.3\nRepayment of borrowings and related financing costs\n(0.8)\nProceeds from debt\n811.7\nPrincipal repayments of debt\n(220.0)\nPayments for tax withholdings related to vesting of share-based compensation awards\n(68.7)\nOther\n(1.4)\n(2.9)\nNet cash provided by (used in) financing activities\n125.9\n(154.0)\nEffect of exchange rate changes on cash and cash equivalents\n(0.3)\n0.6\nNet (decrease) in cash and cash equivalents\n(249.1)\n(4.0)\nCash and cash equivalents, as of beginning of period\n860.1\n595.8\nCash and cash equivalents, as of end of period\n$\n611.0\n$\n591.8\nNon-GAAP Financial Measures\nTo supplement our GAAP results, we present certain non-GAAP financial measures that management uses to evaluate operating performance, assess liquidity, and inform capital allocation decisions.",
+      "source": "edgar:8-K ex-99.1",
+      "url": "https://www.sec.gov/Archives/edgar/data/1766502/000162828026061011/chwyq22026exhibit991.htm",
+      "asOf": "2026-09-09",
+      "truncated": true
+    },
+    "proxyStatement": {
+      "text": "Board and director independence:\nDirector Independence\nWe are a \"controlled company\" within the meaning of the corporate governance standards of the NYSE. Under these rules, a listed company for which more than 50% of the voting power is held by an individual, group or another company is a \"controlled company.\" As a result, we qualify for exemption from certain independence requirements, including the requirements that within one year of completion of our initial public offering (\"IPO\") at least a majority of our Board is composed of independent directors, and each of our Compensation and Nominating and Corporate Governance Committees are composed entirely of independent directors. Even though we are a controlled company, we are required to comply with the SEC and the NYSE rules relating to the membership, qualifications and operations of our Audit Committee.\nBased on information provided by each director or director nominee concerning their background, employment and affiliations, our Board has affirmatively determined that each of Ms. Dickson, Ms. Ellinger, Dr. Goldhaber, Mr. Nelson, Mr. Nesbitt and Mr. Star satisfy the independence requirements under the applicable NYSE and SEC rules and regulations, and none of them have a relationship that would interfere with the exercise of their independent judgment in carrying out the responsibilities of a director. In determining the independence of Mr. Star, our Board considered Longview's minority, non-controlling interest in Argos Holdings L.P. (\"Argos Holdings\").\nBoard Leadership Structure\nMr. Svider serves as Chairperson of our Board and Mr. Singh serves as Chief Executive Officer of our Company. The Chief Executive Officer is responsible for setting the Company's strategic direction and managing the Company's operations and performance, while the Chairperson provides guidance to the Chief Executive Officer, sets the agenda for Board meetings and presides over meetings of the Board. We believe that the separation of these positions supports the independence of our Board in its oversight of the Company's business and affairs. In addition, we believe the separation of the two positions creates an environment that is more conducive to objective evaluation and oversight of management's performance, increasing management accountability and improving the ability of our Board to monitor whether management's actions are in the best interests of our Company and stockholders. As a result, we believe that such separation can enhance the effectiveness of our Board as a whole. We believe that the leadership structure of our Board is appropriate and enhances its ability to effectively carry out its roles and responsibilities on behalf of our stockholders.\nBoard Evaluation Process\nThe Nominating and Corporate Governance Committee leads the Board and each committee through an annual self-evaluation to assess whether the Board and its committees are functioning effectively.\n\nCompensation discussion and analysis:\nCompensation Discussion and Analysis\nThis Compensation Discussion and Analysis (\"CD&A\") describes the material elements of our executive compensation program for Fiscal Year 2025 and provides an overview of our compensation philosophy and objectives for our named executive officers (\"NEOs\").\nOur executive compensation program is designed to align total compensation with Company performance, while enabling us to attract, retain and motivate individuals who can achieve sustained long-term growth and strong financial performance for our stockholders. Our executive compensation program (i) provides our NEOs with total compensation to avoid the disruption and expense associated with unintended departures, (ii) motivates and rewards our NEOs for our success in dynamic and competitive markets and (iii) aligns the interests of our NEOs with those of our stockholders. Our pay-for-performance compensation philosophy and practices are intended to increase stockholder value. As a result, NEO compensation is heavily weighted towards providing equity awards that incentivize long-term stock price appreciation. Our long-term incentive (\"LTI\") plan provides equity awards that may be subject to a service-based vesting condition (the \"Service Condition\"), a performance-based vesting condition (the \"Performance Condition\") or both a Performance Condition and Service Condition to promote long-term stockholder value creation (equity awards subject to a Service Condition, \"Service RSUs\" and equity awards subject to a Performance Condition and Service Condition, \"PRSUs\"). Our STI program focuses on annual strategic metrics to grow sales and improve profitability. The connection between pay and performance is evidenced by our financial performance during Fiscal Year 2025. Highlights of our Fiscal Year 2025 financial performance include:\nNet sales of $12.60 billion improved 6.2 percent year over year or 8.3 percent (1) on a normalized 52-week basis\nGross margin of 29.8 percent expanded 60 basis points year over year\nNet income of $222.8 million, including share-based compensation expense and related taxes of $311.2 million\nNet margin of 1.8 percent contracted 150 basis points year over year (2)\nBasic earnings per share of $0.54, a decrease of $0.39 year over year (2)\nDiluted earnings per share of $0.52, a decrease of $0.39 year over year (2)\nAdjusted EBITDA (3) of $719.2 million, an increase of $148.7 million year over year\nAdjusted EBITDA margin (3) of 5.7 percent expanded 90 basis points year over year\nAdjusted net income (3) of $540.5 million, an increase of $93.7 million year over year\nAdjusted basic earnings per share (3) of $1.31, an increase of $0.25 year over year\nAdjusted diluted earnings per share (3) of $1.27, an increase of $0.23 year over year\nNet cash provided by operating activities of $691.6 million, an increase of $95.3 million year over year\nFree cash flow (3) of $562.4 million, an increase of $109.9 million year over year\n(1)\nExcludes the impact of net sales during the 53rd week in Fiscal Year 2024.\n(2)\nYear over year decrease primarily related to the release of the valuation allowance on the Company's U.S. federal and certain state deferred tax assets during Fiscal Year 2024, resulting in a $275.7 million tax benefit.\n(3)\nAdjusted EBITDA, adjusted EBITDA margin, adjusted net income, adjusted basic and diluted earnings per share and free cash flow are non-GAAP financial measures. For a reconciliation of non-GAAP to GAAP financial measures refer to Reconciliation of Non-GAAP Financial Measures in Appendix A.\n32\nTABLE OF CONTENTS\nOur executive compensation for Fiscal Year 2025 was determined in the first quarter of 2025.\nOur NEOs for Fiscal Year 2025 were the following:\nName\nAge (4)\nTitle\nSumit Singh\n46\nChief Executive Officer\nDavid Reeder (1)\n51\nFormer Chief Financial Officer\nSatish Mehta (2)\n61\nFormer Chief Technology Officer\nWilliam Billings (3)\n50\nChief Accounting Officer and Former interim Principal Financial Officer\n(1)\nMr. Reeder resigned as Chewy's Chief Financial Officer and principal financial officer, effective as of July 3, 2025.\n(2)\nMr. Mehta resigned as Chewy's Chief Technology Officer, effective as of February 6, 2026.\n(3)\nMr. Billings was appointed as the interim principal financial officer effective July 3, 2025, and was removed as the principal financial officer effective February 23, 2026, following the appointment of Chris Deppe as the Chief Financial Officer. Mr. Billings continues to serve as Chief Accounting Officer.\n(4)\nAs of the Record Date.\nOversight of Executive Compensation\nOur Compensation Committee is responsible for oversight of our executive compensation policies, plans and programs, which are regularly reviewed and discussed with management to ensure alignment with our short-term and long-term goals given the dynamic nature of our business and the market in which we compete for talent.\n\nSecurity ownership:\nSecurity Ownership of Certain Beneficial Owners and Management\nThe following table sets forth the beneficial ownership of our Class A common stock and Class B common stock as of May 13, 2026 by (i) each director, director nominee and named executive officer, (ii) all current executive officers and directors of Chewy as a group and (iii) all those known by Chewy to beneficially own more than 5% of our Class A common stock or Class B common stock.\nThis table is based upon information supplied by our executive officers, directors, director nominees and principal stockholders and Schedules 13D, 13F and 13G filed with the SEC. Under SEC rules, a person is deemed to be a \"beneficial owner\" of a security if that person has or shares voting power or investment power, which includes the power to dispose of or to direct the disposition of such security.\nUnless otherwise indicated in the footnotes to this table and subject to community property laws where applicable, we believe each of the stockholders named in this table has sole voting and investment power with respect to the shares indicated as beneficially owned. Applicable percentages are based on 232,505,429 shares of Class A common stock and 176,478,229 shares of Class B common stock outstanding on May 13, 2026. We have deemed shares of our common stock issuable pursuant to equity awards, which are subject to vesting and settlement conditions expected to occur within 60 days of May 13, 2026, to be outstanding and beneficially owned by the person holding the equity awards for the purpose of computing the percentage ownership of that person. Such equity awards are not deemed outstanding for the purposes of computing the percentage ownership of any other person, except with respect to the percentage ownership of all of our current named executive officers and directors as a group.\nUnless otherwise indicated, the address for each beneficial owner listed below is c/o Chewy, Inc., 7700 West Sunrise Boulevard, Plantation, FL 33322.\nVoting Shares Beneficially Owned\n% Total\nVoting\nPower (1)\nClass A\nCommon Stock\nClass B\nCommon Stock\nName of Beneficial Owner\nShares\n%\nShares\n%\nNamed Executive Officers\nSumit Singh (2)\n1,020,477\n*\n*\nDavid Reeder (3)\nSatish Mehta (4)\n273,835\n*\n*\nWilliam Billings (5)\n39,562\n*\n*\nCurrent Directors\nRaymond Svider (6)\n60,000\n*\n*\nFahim Ahmed (7)\n10,000\n*\n*\nMathieu Bigand\nMarco Castelli\nMichael Chang (8)\n10,000\n*\n*\nKristine Dickson (9)\n24,703\n*\n*\nDeborah Ellinger (10)\n7,010\n*\n*\nNat Goldhaber (11)\n6,225\n*\n*\nDavid Leland\nJames Nelson (12)\n24,686\n*\n*\nMartin H. Nesbitt (13)\n26,520\n*\n*\nLisa Sibenac (14)\n1,000\n*\n*\nJames A. Star (15)\n163,247\n*\n*\nCurrent directors and executive officers as a group (16)\n1,404,507\n*\nMore Than 5% Security Holders\nBC Partners Holdings Limited/Argos Holdings GP LLC (17)\n176,478,229\n100.0%\n88.4%\nVanguard Capital Management (18)\n12,189,628\n5.2%\n*\nAQR Capital Management, LLC (19)\n16,342,838\n7.0%\n*\nBlackRock, Inc. (20)\n19,401,973\n8.3%\n*\n*\nRepresents less than one percent (1%).\n26\nTABLE OF CONTENTS\n(1)\nPercentage total voting power represents voting power with respect to all shares of our Class A common stock and Class B common stock, voting together as a single class. Each holder of Class B common stock is entitled to ten (10) votes per share of Class B common stock, and each holder of Class A common stock is entitled to one (1) vote per share of Class A common stock on all matters submitted to our stockholders for a vote. The Class A common stock and Class B common stock vote together as a single class on all matters submitted to a vote of our stockholders, except as may otherwise be required by law. The Class B common stock is convertible at any time by the holder into shares of Class A common stock on a share-for-share basis upon written notice to the transfer agent.\n(2)\nConsists of (i) 874,061 shares of Class A common stock held by Mr. Singh, (ii) 123,955 shares of Class A common stock held by Mr.\n\nRelated-person transactions:\nCertain Relationships and Related Party Transactions\nRelated Party Transactions Policy\nWe have a written related party transactions policy (the \"Related Party Policy\"), which is administered by our Audit Committee and includes procedures for the review, approval, ratification, modification or termination of related party transactions. Pursuant to the Related Party Policy, a related party transaction includes transactions in which Chewy is a participant, the aggregate amount involved will or may be expected to exceed $120,000, and a \"related party\" has or will have a direct or an indirect material interest. Related parties of Chewy include directors (including nominees for election as director), executive officers, stockholders that are known to beneficially own more than 5% of Chewy's voting securities, any immediate family members of the foregoing and any entity with which such related party is employed, is a general partner, principal or in a similar position, or in which such person has a 10% or greater beneficial interest.\nExcept for transactions that have been pre-approved in accordance with the Related Party Policy, once a related party transaction has been identified, our Audit Committee will review the relevant facts and circumstances and approve or disapprove entry into the transaction.",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/1766502/000114036126022529/ny20064174x1_def14a.htm",
+      "asOf": "2026-05-22",
+      "truncated": true
+    },
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T23:13:34.772Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T23:13:34.772Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T23:13:34.772Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T23:13:34.772Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T23:13:34.772Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T23:13:34.772Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T23:13:34.772Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T23:13:34.772Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T23:13:34.772Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T23:13:34.772Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T23:13:34.772Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T23:13:34.772Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-09-28T23:13:34.772Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-09-28T23:13:34.772Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-09-28T23:13:34.772Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-09-28T23:13:34.772Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-09-28T23:13:34.772Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-09-28T23:13:34.772Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T23:13:34.772Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-09-28T23:13:34.772Z"
+    }
+  ]
+}

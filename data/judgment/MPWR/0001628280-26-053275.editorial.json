@@ -1,0 +1,39 @@
+{
+  "judgmentSha256": "4a97e0eb1467b0c7150c4d52183cbe2a12b754052c19a48503a8c2ffb6de258a",
+  "reviewedAt": "2026-09-28T22:57:47Z",
+  "reviewer": "Claude Opus 4.8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.finalRecommendation.body",
+      "quote": "Q2'26 revenue rose 47.6% to $980.6 million, operating margin expanded to 31.0%, and the enterprise-data end market grew 164.3% on AI and server demand",
+      "issue": "Cross-section repetition (rubric item 7). The same Q2'26 growth figures are retold with full numbers in three or more places rather than pointed to once. Q2'26 revenue $980.6M / +47.6% and operating margin 31.0% vs 24.8% appear in analystCommentary, executiveSummary.thesis, financials.incomeCommentary AND here in finalRecommendation. Enterprise data +164.3% Q2'26 appears in executiveSummary.catalysts[0], risks.idiosyncratic[2] AND here. The valuation multiples 82.5x / 49.3x likewise recur in analystCommentary, thesis, valuation.multiplesCommentary and finalRecommendation. A figure should be introduced once in the section that argues it and referred back in words elsewhere; the final recommendation should conclude, not re-state the figures a fourth time.",
+      "fix": "Keep each figure in the one section that argues it (revenue/margin in incomeCommentary; 164.3% in the idiosyncratic-risk argument or a catalyst pointer, not both plus the summary; multiples in multiplesCommentary). In finalRecommendation and analystCommentary, refer back in words (\"the Q2 acceleration\", \"the premium multiple\") instead of repeating the quantities.",
+      "status": "addressed",
+      "note": "finalRecommendation now refers back in words (\"rapid Q2'26 revenue growth\", \"the premium trailing and forward multiples noted earlier\") with no restated figures; 164.3% now appears only in catalysts[0] (pointer) and idiosyncratic[2] (argues)."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.management.capitalAllocation",
+      "quote": "The Board raised the quarterly dividend 28% to $2.00 per share, or $8.00 annually, in February 2026, after declaring $6.24 per share in FY25.",
+      "issue": "Cross-section repetition (rubric item 7) of capital-return and capacity figures. The February 2026 dividend raise (28% to $2.00 quarterly / $8.00 annually) is told in full three times: executiveSummary.catalysts[2], financials.cashflowCommentary and here in management.capitalAllocation. The \"returned 72% of free cash flow over the past three years\" claim appears in both catalysts[3] and capitalAllocation. FY25 capex of $172 million appears in cashflowCommentary, businessMoat.moatFactors (Fabless capital efficiency) and capitalAllocation. Consensus revenue of ~$4.1B FY26E and $5.3B FY27E appears in catalysts[1], valuation.multiplesCommentary, growth.points[0] and the scenarios. Each is the same claim made in two or three argument sections in different words.",
+      "fix": "Assign each figure a single home: the dividend raise and the 72% return to capitalAllocation, capex to cashflowCommentary, consensus revenue to multiplesCommentary or growth (not both). Make the catalyst a one-line pointer without the full figure, and have the other sections refer back in words.",
+      "status": "addressed",
+      "note": "Each figure now has a single home: dividend-raise figures only in capitalAllocation (catalyst is a pointer, cashflowCommentary dropped it); 72% return only in catalysts[3]; capex $172M only in cashflowCommentary; consensus $4.1B/$5.3B only in growth.points (multiplesCommentary now refers to \"the consensus revenue path\")."
+    },
+    {
+      "id": "F-3",
+      "severity": "Minor",
+      "field": "sections.businessMoat.moatFactors[1].body",
+      "quote": "supports a gross margin near 55% and free-cash-flow margins in the 20%-to-30% range.",
+      "issue": "The \"20%-to-30% range\" characterization is not supported by the FCF-margin series on the grounding surface. The cash-flow table shows FCF margins of 18.7% (FY21), 10.5% (FY22), 31.9% (FY23), 29.1% (FY24) and 23.9% (FY25) — three of the five years fall outside the stated 20%-to-30% band, and FY22 (10.5%) is well below it. cashflowCommentary correctly says FY25's 23.9% is \"within the range of FY21 through FY25\", so this tighter range claim is the imprecise one.",
+      "fix": "Drop the specific band or widen it to match the series (e.g. \"free-cash-flow margins that have run from the low-double-digits to the low-thirties\"), or simply state FY25's 23.9% FCF margin without implying a stable 20-30% range.",
+      "status": "addressed",
+      "note": "The unsupported band is removed; the factor now reads \"supports a gross margin near 55% and strong free-cash-flow generation.\""
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "judgmentSha256": "eefbd3c883517c399e58a4db155fcd9767b35f71c8c027bd0cf305d61ccd2f41",
+  "reviewedAt": "2026-09-28T23:00:41Z",
+  "reviewer": "Claude Opus 4.8",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.management.leadership",
+      "quote": "Former chief executive Jeffrey W. Eckel remains among the larger individual holders.",
+      "issue": "Recalled-executive trap. The only place Jeffrey W. Eckel appears on the grounding surface is the proxy's Security Ownership table (1,011,994 shares); nothing in the Facts or Context blocks describes him as a chief executive, former or current. The 2026 proxy's named executive officers are Lipson, Melko, Pangburn, Chuslo, Gopalakrishnan and Nickey — Eckel is not among them and carries no title on the surface. The 'Former chief executive' characterization is recalled from outside the pack.",
+      "fix": "Drop the title. State only what the proxy table supports, e.g. 'Jeffrey W. Eckel is the largest individual holder among the named executives and directors, with 1,011,994 shares.' Do not assign Eckel any officer role unless the captured proxy carries it.",
+      "status": "addressed",
+      "note": "Rewrite removed the sentence from leadership; insiderOwnership now cites Eckel only by his 1,011,994-share holding with no title. Grounded."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "analystCommentary",
+      "quote": "results are sensitive to interest rates and to clean-energy policy, both of which the 10-K flags as able to reduce demand for the projects the company finances",
+      "issue": "Over-attribution. The captured 10-K risk-factor excerpt flags commodity/natural-gas prices, net metering and FERC market structures as able to reduce demand for the projects financed — it does not mention interest rates at all, and does not tie interest rates to reduced demand. Interest-rate sensitivity is grounded only in the 10-Q MD&A ('changes in market interest rates' among Factors Impacting our Operating Results), not the 10-K, and not as a demand driver. The same over-attribution recurs in finalRecommendation.body[1]: 'the 10-K flags both as able to reduce returns.'",
+      "fix": "Attribute each source to what it actually carries: clean-energy policy to the 10-K risk factors, interest-rate/cost-of-capital sensitivity to the 10-Q MD&A's Factors Impacting our Operating Results. Do not bundle interest rates under 'the 10-K flags.'",
+      "status": "addressed",
+      "note": "analystCommentary now attributes interest rates to 'the 10-Q's discussion of factors affecting operating results' and clean-energy policy to the 10-K; finalRecommendation.body[1] split the same way. Correctly sourced."
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.growth.points",
+      "quote": "Transaction volume of approximately $1.1 billion in Q2'26 and $1.7 billion in the first six months of 2026, well above the $189 million and $894 million of the prior-year periods.",
+      "issue": "Cross-section repetition. The origination figures ($1.1B Q2'26 vs $189M; $1.7B six-months vs $894M) and the >$6.5B pipeline are the same claim retold across four places: analystCommentary, executiveSummary.thesis.body, executiveSummary.catalysts[0], and finalRecommendation.body[0], and again here in growth.points[0-1]. The exec-summary catalysts already point at these; the growth section restates them verbatim rather than arguing the mechanism, and the final recommendation restates them a third time.",
+      "fix": "Make the origination-inflection figure once as the exec-summary catalyst/thesis pointer, then in the growth section refer back in words and add what the pointer did not carry (conversion mechanics, mix, what to watch). Keep the finalRecommendation to a reference rather than a re-quote of the same numbers.",
+      "status": "addressed",
+      "note": "growth.points[0-1] now refer back in words with no re-quoted figures and add mechanism/mix; finalRecommendation.body[0] dropped the $1.1B/$189M re-quote for a worded reference. Figures now sit once in the exec-summary bookend."
+    },
+    {
+      "id": "F-4",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "The FY26E consensus revenue estimate of $108.5 million is measured on a narrower basis than the FY25 reported figure and should not be read as a 73% decline in the business",
+      "issue": "Unsupported claim. Nothing on the grounding surface establishes that consensus FY26E revenue is 'measured on a narrower basis' than the reported FY25 figure — the Facts block gives FY26E ~$108.5M (-73%) and FY27E $139.1M without any note on how the estimate is constructed. The reason offered is an inference the pack invites but does not make; asserting it as fact states a methodology the surface does not carry.",
+      "fix": "Hedge to what the surface supports: flag the discontinuity between the reported revenue line and the consensus estimate as a reason to judge the company on EPS, origination and the dividend, without asserting a specific 'narrower basis' the pack does not establish.",
+      "status": "addressed",
+      "note": "Replaced with 'sits far below the FY25 reported figure; we flag that discontinuity rather than explain it' — the ungrounded methodology assertion is gone."
+    },
+    {
+      "id": "F-5",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.risks",
+      "quote": "the 10-K warns that reductions to net-metering rules, tax incentives or FERC-regulated market structures could cut demand for the projects the company finances",
+      "issue": "Mild over-attribution. The captured 10-K risk-factor excerpt names net metering and FERC explicitly, but for incentives it says 'the extent of government subsidies and regulatory developments,' not 'tax incentives.' Attributing the specific term 'tax incentives' to the 10-K is a paraphrase the excerpt does not carry verbatim. The same term recurs in businessMoat.moatFactors[3].body, risks.idiosyncratic[0], and valuation.scenarios[2].driver.",
+      "fix": "Use the 10-K's own wording ('government subsidies') or keep 'tax incentives' only where the surface supports the specific term; otherwise align the phrasing with the captured excerpt across all four locations.",
+      "status": "addressed",
+      "note": "All four locations (exec-summary risk, moatFactors[3], idiosyncratic[0], Bear scenario) now read 'government subsidies,' matching the 10-K excerpt's wording."
+    },
+    {
+      "id": "F-6",
+      "severity": "Minor",
+      "field": "sections.growth.points",
+      "quote": "The pipeline skews toward Grid-Connected utility-scale projects, which are larger and longer-dated than Behind-the-Meter deals and shape the mix of future Portfolio additions.",
+      "issue": "New unsupported comparison introduced by the rewrite. The surface supports the pipeline skew (51% GC vs 35% BTM) and, via the MD&A's 'utility-scale' vs 'distributed' contrast, that GC deals are larger. But nothing on the grounding surface gives per-market durations — the pack carries only a portfolio-wide weighted-average remaining life of ~16 years — so 'longer-dated than Behind-the-Meter deals' is an inference the surface does not establish.",
+      "fix": "Drop 'longer-dated,' or hedge it, keeping the comparison to what the MD&A supports (utility-scale GC projects are larger than distributed BTM deals). Do not assert a per-market duration ranking the pack does not carry.",
+      "status": "addressed",
+      "note": "'longer-dated' removed; growth.points[1] now reads 'larger than distributed Behind-the-Meter deals,' a comparison the MD&A's utility-scale-vs-distributed contrast supports. No new defect introduced by the edit."
+    }
+  ]
+}
