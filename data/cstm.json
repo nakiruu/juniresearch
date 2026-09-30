@@ -1,0 +1,710 @@
+{
+  "schemaVersion": "1.1.0",
+  "meta": {
+    "company": "Constellium SE",
+    "ticker": "CSTM",
+    "exchange": "NYSE",
+    "subtitle": "Cheap, levered aluminum-products cyclical riding an aerospace recovery and a tariff-driven premium spike",
+    "reportDate": "September 29, 2026",
+    "asOf": "Sep 29, 2026",
+    "analyst": "Juniper Finance Research Desk",
+    "analystName": "Nico — Senior Analyst",
+    "fiscalYearEnd": "December 31",
+    "currency": "USD",
+    "filing": {
+      "form": "10-Q",
+      "fiscalPeriod": "fiscal Q2 2026",
+      "filedDate": "Jul 29, 2026",
+      "accession": "0001563411-26-000192"
+    }
+  },
+  "quote": {
+    "currentPrice": 24.59,
+    "marketCap": 3332626944,
+    "sharesOutstanding": 135527732.57421717,
+    "week52Low": 14.39,
+    "week52High": 36.99,
+    "dividendYield": 0,
+    "history": [
+      {
+        "date": "2026-08-18",
+        "close": 27.989999771118164
+      },
+      {
+        "date": "2026-08-19",
+        "close": 26.540000915527344
+      },
+      {
+        "date": "2026-08-20",
+        "close": 26.530000686645508
+      },
+      {
+        "date": "2026-08-21",
+        "close": 27.040000915527344
+      },
+      {
+        "date": "2026-08-24",
+        "close": 26.6299991607666
+      },
+      {
+        "date": "2026-08-25",
+        "close": 27.079999923706055
+      },
+      {
+        "date": "2026-08-26",
+        "close": 27.18000030517578
+      },
+      {
+        "date": "2026-08-27",
+        "close": 27.40999984741211
+      },
+      {
+        "date": "2026-08-28",
+        "close": 26.979999542236328
+      },
+      {
+        "date": "2026-08-31",
+        "close": 26.43000030517578
+      },
+      {
+        "date": "2026-09-01",
+        "close": 26.90999984741211
+      },
+      {
+        "date": "2026-09-02",
+        "close": 26.600000381469727
+      },
+      {
+        "date": "2026-09-03",
+        "close": 26.479999542236328
+      },
+      {
+        "date": "2026-09-04",
+        "close": 27.139999389648438
+      },
+      {
+        "date": "2026-09-08",
+        "close": 27.479999542236328
+      },
+      {
+        "date": "2026-09-09",
+        "close": 27.200000762939453
+      },
+      {
+        "date": "2026-09-10",
+        "close": 25.989999771118164
+      },
+      {
+        "date": "2026-09-11",
+        "close": 26.170000076293945
+      },
+      {
+        "date": "2026-09-14",
+        "close": 25.290000915527344
+      },
+      {
+        "date": "2026-09-15",
+        "close": 25.56999969482422
+      },
+      {
+        "date": "2026-09-16",
+        "close": 25.93000030517578
+      },
+      {
+        "date": "2026-09-17",
+        "close": 26.190000534057617
+      },
+      {
+        "date": "2026-09-18",
+        "close": 25.549999237060547
+      },
+      {
+        "date": "2026-09-21",
+        "close": 25.5
+      },
+      {
+        "date": "2026-09-22",
+        "close": 25.329999923706055
+      },
+      {
+        "date": "2026-09-23",
+        "close": 24.959999084472656
+      },
+      {
+        "date": "2026-09-24",
+        "close": 24.6299991607666
+      },
+      {
+        "date": "2026-09-25",
+        "close": 24.889999389648438
+      },
+      {
+        "date": "2026-09-28",
+        "close": 24.6299991607666
+      },
+      {
+        "date": "2026-09-29",
+        "close": 24.59000015258789
+      }
+    ]
+  },
+  "rating": {
+    "label": "BUY",
+    "tone": "bull",
+    "targetLow": 26,
+    "targetHigh": 37,
+    "conviction": {
+      "expectedUpside": 0.14680764538430258,
+      "bearDownside": 0.26799511996746644,
+      "rewardRisk": 0.5477996965098635,
+      "derivedLabel": "BUY"
+    },
+    "gate": {
+      "sector": "industrial",
+      "ceiling": "STRONG BUY",
+      "gatedLabel": "BUY",
+      "distress": "SAFE",
+      "piotroski": 7,
+      "accruals": "LOW",
+      "confidence": "medium",
+      "flags": []
+    },
+    "decision": {
+      "conviction": 88,
+      "tier": "high",
+      "proposed": "BUY",
+      "reasons": [
+        "E/R proposed BUY"
+      ],
+      "advisories": [],
+      "moat": {
+        "width": "NONE",
+        "trend": "STABLE",
+        "contingent": false,
+        "bearFloor": 0.3
+      },
+      "intrinsic": {
+        "marginOfSafety": 2.8920088426714003,
+        "impliedGrowth": 0.02004299329848236,
+        "achievableGrowth": 0.2
+      },
+      "composite": {
+        "percentile": 71.22385335926825,
+        "confidence": "low"
+      },
+      "uncertainty": {
+        "tier": "low",
+        "points": 1,
+        "drivers": [
+          "short history (4 FY) (+1)"
+        ]
+      }
+    }
+  },
+  "snapshot": [
+    {
+      "label": "Current Price",
+      "value": 24.59,
+      "unit": "usd"
+    },
+    {
+      "label": "Market Cap",
+      "value": 3332626944,
+      "unit": "usdLarge",
+      "approx": true
+    },
+    {
+      "label": "52-Week Range",
+      "raw": "$14.39 – $36.99"
+    },
+    {
+      "label": "Shares Outstanding",
+      "value": 135527732.57421717,
+      "unit": "shares",
+      "approx": true
+    },
+    {
+      "label": "P/E (TTM)",
+      "value": 6.354005167958656,
+      "unit": "mult"
+    },
+    {
+      "label": "Consensus Target",
+      "value": 35.780197,
+      "unit": "usd",
+      "change": 0.45507104514030106
+    },
+    {
+      "label": "EV/EBITDA (TTM)",
+      "unit": "mult"
+    },
+    {
+      "label": "Analyst Consensus",
+      "raw": "Strong Buy (4 B / 1 H / 0 S)"
+    },
+    {
+      "label": "FY25 Revenue",
+      "value": 8449000000,
+      "unit": "usdLarge",
+      "change": 0.15187457396046344
+    },
+    {
+      "label": "FY25 Net Income",
+      "value": 273000000,
+      "unit": "usdLarge"
+    },
+    {
+      "label": "FY25 Diluted EPS",
+      "value": 1.92,
+      "unit": "usd"
+    },
+    {
+      "label": "FY26E Revenue",
+      "value": 8995265600,
+      "unit": "usdLarge",
+      "approx": true,
+      "change": 0.0646544679843768,
+      "changeDp": 0
+    },
+    {
+      "label": "Q2'26 Revenue",
+      "value": 2748000000,
+      "unit": "usdLarge",
+      "change": 0.30670470756062773,
+      "changeDp": 0
+    },
+    {
+      "label": "Q2'26 Operating Margin",
+      "note": "no operating-income line",
+      "raw": "n/m"
+    },
+    {
+      "label": "Fwd P/E (FY27E)",
+      "value": 10.220282626766418,
+      "unit": "mult",
+      "approx": true
+    },
+    {
+      "label": "Dividend Yield",
+      "value": 0,
+      "unit": "pct",
+      "dp": 2
+    },
+    {
+      "label": "FY25 Free Cash Flow",
+      "value": 159000000,
+      "unit": "usdLarge"
+    },
+    {
+      "label": "FY25 Capital Expenditure",
+      "value": -330000000,
+      "unit": "usdLarge"
+    },
+    {
+      "label": "FY25 Share Repurchases",
+      "value": -115000000,
+      "unit": "usdLarge"
+    },
+    {
+      "label": "FCF Yield (TTM)",
+      "value": 0.06541386229637348,
+      "unit": "pct",
+      "dp": 1
+    }
+  ],
+  "analystSentiment": {
+    "numAnalysts": 5,
+    "buy": 4,
+    "hold": 1,
+    "sell": 0,
+    "consensusRating": "Strong Buy",
+    "consensusTarget": 35.780197,
+    "medianTarget": 35.910175,
+    "highTarget": 38.866966,
+    "lowTarget": 33.047523,
+    "commentary": "We rate Constellium a BUY with a target range of $26 to $37 against a current price of $24.59. Our probability-weighted fair value is about $28, an expected upside near 15%, with a bear-case downside around 27% and a reward/risk of roughly 0.55x. The shares are inexpensive at 6.7x next-twelve-months earnings, the aerospace and defense recovery is lifting margins in its recovering aerospace segment, and management cut leverage to 2.5x at the end of 2025. The offsets keep this a moderate-conviction call: this is a cyclical aluminum-products maker whose Q2'26 revenue rose 31% almost entirely on higher metal prices while shipment volumes fell 1%, its earnings look near a tariff-driven peak (consensus EPS falls from $3.66 in FY26E to $2.41 in FY27E), and it carries real leverage that a downturn would expose. Consensus is a Strong Buy with a $35.78 target."
+  },
+  "sections": {
+    "executiveSummary": {
+      "companyOverview": "Constellium is a global maker of specialty rolled and extruded aluminum products for the aerospace, packaging, automotive, commercial transportation, defense and general industrial end-markets, incorporated in 2010 and based in Paris. It runs three operating segments — Aerospace & Transportation, Packaging & Automotive Rolled Products, and Automotive Structures & Industry — across 23 manufacturing facilities and about 11,500 employees, selling in the United States, Europe, Mexico, Canada and Asia. FY25 revenue was $8.4 billion, up 15.2%, with net income of $273 million and diluted EPS of $1.92, and the company reports as a single segment for the vendor's purposes. It pays no dividend and returns cash through buybacks.",
+      "thesis": {
+        "label": "BUY",
+        "body": "The case is a cheap, deleveraging cyclical with a genuine aerospace tailwind. The shares trade at 6.7x next-twelve-months earnings, aerospace volumes are recovering strongly, and management has been cutting leverage. The counter-case is what a cyclical always faces near the top: Q2'26 revenue rose 31% almost entirely on higher aluminum prices, not volume — shipments actually fell — and consensus EPS is modeled to fall from FY26E to FY27E as the tariff-driven US metal premium normalizes. On top of that the business is capital-intensive and levered. Our BUY reflects an expected upside near 15% against a reward/risk of about 0.55x: real value and a structural aerospace lift, tempered by cyclicality and leverage."
+      },
+      "catalysts": [
+        "Aerospace recovery: Aerospace & Transportation shipment volumes rose 21% in Q2'26 as supply-chain destocking eases, and it earns above-portfolio margins.",
+        "Tariff-driven US premium: the Midwest aluminum premium rose 154% year over year in Q2'26 following Section 232 tariffs, lifting the profitability of US operations.",
+        "Deleveraging: management reduced net leverage further through 2025 on improved cash generation.",
+        "Capital return: the company repurchased $115 million of stock in FY25 and continued buying back shares in Q2'26.",
+        "Consensus is a Strong Buy at a $35.78 target, about 45% above the current price, with a tight analyst target range of $33.05 to $38.87."
+      ],
+      "risks": [
+        "Cyclicality: aluminum end-markets are cyclical, and the current earnings level leans on elevated metal prices and premiums that consensus expects to fade.",
+        "Volume softness: shipment volumes fell in Q2'26, with packaging and automotive down while aerospace grew — the top-line growth is price, not units.",
+        "Leverage: the business is capital-intensive and carries meaningful net debt, so a downturn in volumes or margins would hit equity harder.",
+        "Tariff and trade dependence: the US premium tailwind rests on import tariff policy, which could change.",
+        "Input and energy costs: results depend on the scrap spread, energy prices and currency, all of which are volatile."
+      ]
+    },
+    "financials": {
+      "income": {
+        "columns": [
+          "Metric",
+          "FY22",
+          "FY23",
+          "FY24",
+          "FY25"
+        ],
+        "rows": [
+          {
+            "label": "Revenue ($B)",
+            "values": [
+              8532000000,
+              7826000000,
+              7335000000,
+              8449000000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "YoY Growth",
+            "values": [
+              null,
+              -0.08274730426629162,
+              -0.06273958599539997,
+              0.15187457396046344
+            ],
+            "format": "pctSigned"
+          },
+          {
+            "label": "Gross Margin",
+            "values": [
+              null,
+              null,
+              null,
+              null
+            ],
+            "format": "pct"
+          },
+          {
+            "label": "Operating Income ($B)",
+            "values": [
+              null,
+              null,
+              null,
+              null
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Operating Margin",
+            "values": [
+              null,
+              null,
+              null,
+              null
+            ],
+            "format": "pct"
+          },
+          {
+            "label": "EBITDA ($B)",
+            "values": [
+              null,
+              null,
+              null,
+              null
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Net Income ($B)",
+            "values": [
+              308000000,
+              152000000,
+              56000000,
+              273000000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Diluted EPS ($)*",
+            "values": [
+              2.1,
+              1.03,
+              0.38,
+              1.92
+            ],
+            "format": "eps"
+          }
+        ],
+        "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
+      },
+      "incomeCommentary": "The vendor pack does not break out an operating-income line, so we work from the 10-Q's own statement. Q2'26 revenue rose 31% to $2,748 million from $2,103 million, but the increase was almost entirely price: shipment volumes fell 1% to 381 thousand tons, with a 21% rise in Aerospace & Transportation offset by a 4% volume decline in Packaging & Automotive Rolled Products and stable Automotive Structures & Industry. Cost of sales ran at 83% of revenue against 87% a year earlier as higher metal prices passed through, and net income rose to $148 million, a 5% margin, from $36 million, with income before tax of $214 million. First-half net income was $344 million on $5,209 million of revenue. FY25 net income was $273 million and diluted EPS $1.92, and the proxy reports FY25 Adjusted EBITDA of $846 million. The earnings trajectory is the key tell: consensus EPS is $3.66 for FY26E but $2.41 for FY27E, so analysts expect the metal-price and premium tailwind to recede.",
+      "balance": {
+        "columns": [
+          "Metric ($B)",
+          "FY22",
+          "FY23",
+          "FY24",
+          "FY25"
+        ],
+        "rows": [
+          {
+            "label": "Cash & ST Investments",
+            "values": [
+              null,
+              223000000,
+              141000000,
+              120000000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Total Debt",
+            "values": [
+              null,
+              41000000,
+              39000000,
+              39000000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Net Debt",
+            "values": [
+              null,
+              -182000000,
+              -102000000,
+              -81000000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Total Equity",
+            "values": [
+              603000000,
+              742000000,
+              727000000,
+              971000000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Current Ratio",
+            "values": [
+              null,
+              1.2802056555269923,
+              1.268326417704011,
+              1.2914349276974415
+            ],
+            "format": "num2"
+          }
+        ],
+        "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
+      },
+      "balanceCommentary": "This is a capital-intensive, levered business, and the pack understates that. The Facts block shows only $39 million of total debt and a small net-cash position, but that is a mapping gap: the 10-Q carries about $28 million of quarterly finance costs, and the proxy states management reduced net leverage to 2.5x at the end of 2025 against the Adjusted EBITDA noted above, which implies substantial net debt, not the net-cash position the pack shows. Total equity was $1.0 billion at FY25. So the correct read is a manufacturer running at moderate leverage on a deleveraging path, which is manageable in an up-cycle but is the main balance-sheet risk if volumes or margins turn. The current ratio of 1.43 indicates adequate near-term liquidity.",
+      "cashflow": {
+        "columns": [
+          "Metric ($B)",
+          "FY22",
+          "FY23",
+          "FY24",
+          "FY25"
+        ],
+        "rows": [
+          {
+            "label": "Operating Cash Flow",
+            "values": [
+              365000000,
+              432000000,
+              301000000,
+              489000000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Capital Expenditure",
+            "values": [
+              -289000000,
+              -366000000,
+              -413000000,
+              -330000000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Share Repurchases",
+            "values": [
+              0,
+              0,
+              -79000000,
+              -115000000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Dividends Paid",
+            "values": [
+              null,
+              null,
+              null,
+              null
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Free Cash Flow",
+            "values": [
+              76000000,
+              66000000,
+              -112000000,
+              159000000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "FCF Margin",
+            "values": [
+              0.008907641819034223,
+              0.0084334270380782,
+              -0.015269256987048398,
+              0.018818795123683275
+            ],
+            "format": "pct"
+          }
+        ],
+        "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
+      },
+      "cashflowCommentary": "Cash generation is solid but capital-hungry. FY25 operating cash flow was about $0.5 billion against capital expenditure of $330 million, leaving free cash flow of $159 million on the vendor's figures — the proxy reports $178 million on its own definition — a 6.5% free-cash-flow yield. The company pays no dividend and directs cash to buybacks and debt reduction: it repurchased $115 million of stock in FY25. Free cash flow is positive but thin relative to revenue, a reminder that an aluminum roller must keep reinvesting in its plants; a volume downturn would compress it quickly given the fixed-cost base."
+    },
+    "valuation": {
+      "multiples": {
+        "columns": [
+          "Multiple (TTM)",
+          "CSTM"
+        ],
+        "rows": [
+          {
+            "label": "P/E",
+            "values": [
+              6.354005167958656
+            ],
+            "format": "mult"
+          },
+          {
+            "label": "P/S",
+            "values": [
+              0.348018686716792
+            ],
+            "format": "mult"
+          },
+          {
+            "label": "EV/EBITDA",
+            "values": [
+              null
+            ],
+            "format": "mult"
+          },
+          {
+            "label": "Fwd P/E (NTM)",
+            "values": [
+              6.719497199070911
+            ],
+            "format": "mult"
+          }
+        ],
+        "note": "Peer multiples pending a peer data source."
+      },
+      "multiplesCommentary": "The shares trade at 6.4x trailing earnings, 0.3x sales and 6.7x next-twelve-months earnings, rising to 10.2x on the lower FY27E consensus EPS. That spread is itself the story: the near-term multiple is low because it is measured on peak, premium-inflated earnings, while the forward FY27E figure reflects the normalization analysts expect. No peer multiple set was available in this pack, so we value the company on its own normalized earnings power and cash generation rather than named competitors. The scenarios turn on how durable the aerospace recovery and the elevated metal premiums prove.",
+      "scenarios": [
+        {
+          "name": "Bull",
+          "driver": "The aerospace recovery broadens, packaging stays resilient, metal premiums hold near current levels, and continued deleveraging supports a cyclical re-rating toward the Strong Buy consensus. Implied price near $37, at the top of the $33.05-$38.87 analyst range.",
+          "impliedPrice": 37,
+          "probability": 0.3
+        },
+        {
+          "name": "Base",
+          "driver": "Aerospace keeps growing but the metal-price and premium tailwind fades toward the FY27E consensus, earnings normalize, and the multiple stays modest for a cyclical. Implied price about $28, below the $35.78 consensus target.",
+          "impliedPrice": 28,
+          "probability": 0.45
+        },
+        {
+          "name": "Bear",
+          "driver": "Aluminum premiums normalize as tariffs ease, packaging and automotive volumes weaken further, and margins compress against the fixed-cost base and leverage, sending the shares back toward the lower half of their 52-week range. Implied price near $18, roughly 27% below the current $24.59.",
+          "impliedPrice": 18,
+          "probability": 0.25
+        }
+      ],
+      "scenarioCommentary": "Weighting the Bull at 30%, the Base at 45% and the Bear at 25% gives a fair value of about $28, an expected upside near 15% and a bear-case downside of roughly 27%, for a reward/risk of about 0.55x. The reward/risk is modest because the downside for a levered cyclical near peak earnings is real: the same operating leverage and metal-price sensitivity that lift results in the up-cycle work in reverse. The Base sits below the Street target because we discount the durability of the tariff-driven premium more than consensus does."
+    },
+    "businessMoat": {
+      "segments": [
+        {
+          "name": "Consolidated",
+          "sharePct": 1,
+          "revenue": 8449000000,
+          "body": "Constellium reports here as a single group but runs three operating segments. In Q2'26, Packaging & Automotive Rolled Products was 61% of revenue and 53% of segment Adjusted EBITDA — the volume base, supplying canstock and automotive body sheet. Aerospace & Transportation was 25% of revenue but 44% of segment Adjusted EBITDA, the margin engine, supplying plate, sheet and extrusions to aerospace, defense and space. Automotive Structures & Industry was 17% of revenue and 8% of Adjusted EBITDA, offering crash-management and battery-enclosure structures, with corporate a small drag. The mix matters: the recovering, high-margin aerospace segment is punching above its revenue weight."
+        }
+      ],
+      "segmentsBasis": "FY25 (single reportable segment) mix",
+      "geographyBasis": "FY25",
+      "geoMix": [],
+      "moatRating": "NARROW",
+      "moatFactors": [
+        {
+          "name": "Aerospace and defense qualification",
+          "strength": "Moderate",
+          "body": "Aerospace and defense plate and extrusions are mission-critical, qualified products with long approval cycles and blue-chip customers, which are costly and slow for a new supplier to displace and give the A&T segment durable, above-average margins."
+        },
+        {
+          "name": "Scale, recycling and metal pass-through",
+          "strength": "Moderate",
+          "body": "A network of 23 plants, a large recycling operation that captures the scrap spread, and a pricing model that passes primary-aluminum cost through to customers insulate the conversion margin from metal-price swings better than a sub-scale roller could manage."
+        },
+        {
+          "name": "Lightweighting and packaging demand",
+          "strength": "Moderate",
+          "body": "Secular trends — vehicle lightweighting for efficiency and emissions, and consumer preference for recyclable aluminum beverage cans — support long-run demand across the packaging and automotive franchises."
+        },
+        {
+          "name": "Commodity cyclicality and price-taking",
+          "strength": "Weak",
+          "body": "The business is a cyclical converter with no control over aluminum prices or premiums, thin conversion margins and a fixed-cost base, so pricing power is limited and results swing with the cycle — which caps the moat."
+        }
+      ],
+      "durability": "The moat is narrow. The aerospace and defense qualification advantage and the recycling scale are genuine and durable, and the secular lightweighting and canstock trends support demand. But the core business is a cyclical aluminum converter exposed to metal prices, premiums, energy costs and end-market cycles it cannot control, and it carries leverage. Durability rests on the high-margin aerospace franchise growing enough to steady results through the packaging and automotive cycles."
+    },
+    "growth": {
+      "points": [
+        "Aerospace & Transportation is the growth engine, with volumes rising in Q2'26 as passenger air traffic, fleet replacement and defense programs support demand.",
+        "Management points to an easing of aerospace supply-chain destocking and improving transportation, industry and defense conditions.",
+        "The vehicle-lightweighting trend continues to raise aluminum content per car, supporting the automotive franchises over time.",
+        "Recycling capacity lets the company capture the scrap spread and support sustainability-driven demand from customers.",
+        "Consensus revenue of about $9 billion for FY26E and FY27E reflects steady top-line volume with the metal-price component normalizing."
+      ]
+    },
+    "management": {
+      "leadership": "Per the 2026 proxy, Ingrid Joerg became Chief Executive Officer effective January 1, 2026, succeeding Jean-Marc Germain, who is the former CEO; Joerg previously served as Executive Vice President and Chief Operating Officer and head of the packaging and automotive rolled products business. Jack Guo is Executive Vice President and Chief Financial Officer, Philippe Hoffmann is President of the Aerospace & Transportation business, and Ryan Jurkovic is Chief Human Resources Officer. Management frames its strategy around operational performance, cost and capital discipline, free-cash-flow generation and shareholder returns.",
+      "capitalAllocation": "Capital allocation balances reinvestment, deleveraging and buybacks, with no dividend. The company spent $330 million on capital expenditure in FY25 to maintain and upgrade its plants, repurchased $115 million of stock, and reduced net leverage to 2.5x by year-end. In Q2'26 it returned $20 million through the repurchase of 623 thousand shares. The priorities are appropriate for a capital-intensive cyclical: keep leverage falling and the plants competitive, and return surplus cash when the cycle allows.",
+      "governance": "Governance is set up as a majority-independent NYSE-listed board despite the company's French domicile. The 2026 proxy determined nine directors independent under NYSE standards and the Board Charter — Messrs. Blot, Brandjes, Deslarzes, Ormerod, Puig and Soultz and Mmes. Boccon-Gibod, Brooks and Walker. CEO Ingrid Joerg is not independent, and directors Verdier and Weiler are not independent as employees of the company's subsidiaries. With a majority-independent board and no controlling shareholder disclosed, governance is not a specific concern here; the main context is the recent CEO transition."
+    },
+    "risks": {
+      "idiosyncratic": [
+        "Peak-earnings risk: the current earnings level leans on elevated metal prices rather than volume growth, and consensus EPS is modeled to fall into FY27E, so it may not persist.",
+        "Leverage: the company runs about 2.5x net leverage on a fixed-cost base, so a downturn in volumes or conversion margins would magnify the hit to equity.",
+        "End-market cyclicality: packaging and automotive volumes already softened in Q2'26, and a broader slowdown would pressure the two segments that make up most of the revenue.",
+        "Tariff and premium dependence: the profitable US Midwest premium reflects Section 232 tariffs, and a policy reversal would remove a meaningful earnings tailwind.",
+        "Input, energy and currency volatility: the scrap spread, electricity and natural-gas costs, and foreign-exchange moves across the company's global footprint can each swing results."
+      ],
+      "systemic": "As a global cyclical manufacturer, Constellium is exposed to the world economy: industrial production, consumer spending, auto sales and air travel all drive its volumes, and a recession would cut demand across its end-markets at once. It is also exposed to commodity and energy markets through aluminum prices, regional premiums and power costs, and to trade policy through tariffs and the metal premiums they create. Rising interest rates raise the cost of its debt and refinancing. These forces tend to move together in a downturn, which is why a levered aluminum converter is more volatile than its diversified end-markets alone would suggest."
+    },
+    "finalRecommendation": {
+      "body": [
+        "We rate Constellium a BUY with a $26 to $37 target range around a probability-weighted fair value of about $28, an expected upside near 15% and a reward/risk of roughly 0.55x. The shares are genuinely cheap at 6.7x forward earnings, the high-margin aerospace segment is recovering with volumes up 21%, and management has the balance sheet moving the right way, cutting leverage to 2.5x while buying back stock.",
+        "We keep it a moderate BUY, not a stronger call, because this is a levered cyclical trading on what looks like peak earnings. The 31% revenue jump was metal price, not volume; consensus itself models EPS falling into FY27E as the tariff-driven premium fades; and the leverage that helps in the up-cycle would hurt in a downturn. The Bear, about 27% below the current price, is the case where premiums normalize and volumes weaken together. We would accumulate in the lower half of our range and treat it as a cyclical position sized for that volatility."
+      ]
+    }
+  },
+  "disclaimer": "DISCLAIMER: This report is for informational/educational purposes only and does not constitute investment advice. All equity securities carry risk and can be volatile, and past performance is not indicative of future results. Conduct your own due diligence. The author may hold positions in securities discussed."
+}
