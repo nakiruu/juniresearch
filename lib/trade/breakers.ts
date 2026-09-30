@@ -21,16 +21,19 @@ export function turnoverBreaker(orders: { qty: number; limitPrice: number }[], n
 }
 
 /**
- * Clip-instead-of-halt for a plan that only OPENS positions (every order an ENTER buy): keep whole
+ * Clip-instead-of-halt for a BUY-ONLY plan (every order a buy — ENTER or ADD, no sells): keep whole
  * orders, largest target first, while the run's notional stays within maxRunTurnoverFrac × NAV; the
- * rest wait for later runs. Any sell, ADD or TRIM makes the plan unclippable (null → halt as before),
- * so a runaway rebalance or a wrongly-flat book with trims still trips the breaker. It never raises
- * the cap: every run stays within it, whatever reconcile believed. Orders are never resized.
+ * rest wait for later runs. This is what lets a first rebalance bring an existing book to target
+ * gradually — deploying idle cash into new names AND topping up underweights — a few percent of NAV
+ * per run rather than halting on the whole gap. Any SELL (TRIM or EXIT) makes the plan unclippable
+ * (null → halt as before): a sell-side rebalance is exactly the churn the breaker exists to gate, and
+ * a wrongly-flat book that would re-buy the whole target is capped at the cap here regardless. It
+ * never raises the cap: every run stays within it, whatever reconcile believed. Orders are never resized.
  */
 export function clipToTurnover<T extends { qty: number; limitPrice: number; reason: string; side: "buy" | "sell"; deltaUsd: number }>(
   orders: T[], nav: number, cfg: TradeConfig, capUsd: number = cfg.maxRunTurnoverFrac * nav,
 ): { kept: T[]; clipped: T[] } | null {
-  if (!orders.length || orders.some((o) => o.reason !== "ENTER" || o.side !== "buy")) return null;
+  if (!orders.length || orders.some((o) => o.side !== "buy")) return null;
   const cap = capUsd;
   const kept: T[] = [], clipped: T[] = [];
   let used = 0;

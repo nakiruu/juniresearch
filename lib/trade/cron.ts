@@ -216,7 +216,7 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
     const capText = byDay
       ? `daily cap ${(cfg.maxDayTurnoverFrac * 100).toFixed(1)}% of NAV (${((doneTodayUsd / nav) * 100).toFixed(1)}% already traded today)`
       : `${(cfg.maxRunTurnoverFrac * 100).toFixed(1)}% per-run cap`;
-    const clip = over && cfg.turnoverClipEnterOnly ? clipToTurnover(out.sized.orders, nav, cfg, budgetUsd) : null;
+    const clip = over && cfg.turnoverClipBuyOnly ? clipToTurnover(out.sized.orders, nav, cfg, budgetUsd) : null;
     if (clip) {
       const clippedCids = new Set(clip.clipped.map((o) => o.clientOrderId));
       const deferred = clip.clipped.map((o) => ({ ticker: o.ticker, code: "TURNOVER_CLIP" as const, reasons: [`deferred: turnover capped by the ${capText}`], currentWeight: 0, targetWeight: nav > 0 ? o.deltaUsd / nav : null }));
@@ -231,7 +231,7 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
           notes: [...out.record.notes, `turnover clip: ${(tb.frac * 100).toFixed(1)}% of NAV planned vs the ${capText}; kept ${clip.kept.length}, deferred ${clip.clipped.length} (${clip.clipped.map((o) => o.ticker).join(", ")})`],
         },
       };
-      notify(`cron: ENTER-only plan was ${(tb.frac * 100).toFixed(1)}% of NAV, over the ${capText} — clipped: sending ${clip.kept.length}, deferring ${clip.clipped.length} to later runs`);
+      notify(`cron: buy-only plan was ${(tb.frac * 100).toFixed(1)}% of NAV, over the ${capText} — clipped: sending ${clip.kept.length}, deferring ${clip.clipped.length} to later runs`);
     } else if (over) {
       const reason = byDay ? "day-turnover" : "turnover";
       bumpHalt(paths.haltState);

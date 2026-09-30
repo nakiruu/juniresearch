@@ -46,7 +46,7 @@ export interface TradeConfig extends PortfolioConfig {
   schwabAuthWarnHours: number;                   // warn when fewer hours than this remain (72 covers a weekend)
   topUpRecentBuys: boolean;                      // HOLD adds on a name bought inside the lock window use residualBand, not tradeBand
   residualBand: number;                          // the smaller band for those top-ups (0.005)
-  turnoverClipEnterOnly: boolean;                // an ENTER-only plan over the turnover cap is clipped to the cap (not halted)
+  turnoverClipBuyOnly: boolean;                  // a BUY-ONLY plan (ENTER/ADD, no sells) over the turnover cap is clipped to the cap and the rest deferred (not halted), so a first rebalance converges over several runs
   reconcileOrders: boolean;                      // reconcile also requires every broker order in the lock window to be recorded in fills.jsonl
   maxLateMin: number;                            // fire window: a cron run starting later than cronTimeET + this (ET) is refused as "late"
 }
@@ -66,7 +66,7 @@ export const DEFAULT_TRADE_CONFIG: TradeConfig = {
   gapHalt: { large: 0.10, mid: 0.15, small: 0.25 },
   maxStaleMin: { large: 5, mid: 15, small: 60 },
   closeAnchorSizeMult: 0.5, maxRunTurnoverFrac: 0.15, maxDayTurnoverFrac: 0.25, consecutiveHaltLimit: 3,
-  maxLateMin: 20, reconcileOrders: true, turnoverClipEnterOnly: false, topUpRecentBuys: false, residualBand: 0.005,
+  maxLateMin: 20, reconcileOrders: true, turnoverClipBuyOnly: true, topUpRecentBuys: false, residualBand: 0.005,
   schwabRefreshLifetimeDays: 7, schwabAuthWarnHours: 72,
 };
 

@@ -55,10 +55,10 @@ function mkPaths() {
   return { lock: join(dir, "run.lock"), haltState: join(dir, "halt.json"), log: join(dir, "cron.log"), fills: join(dir, "fills.jsonl"), runs: join(dir, "runs") };
 }
 
-async function runDay(broker: FakeBroker, paths: CronDeps["paths"], day: string, reports: Report[]) {
+async function runDay(broker: FakeBroker, paths: CronDeps["paths"], day: string, reports: Report[], cfgOverride = cfg) {
   const notified: string[] = [];
   const deps: CronDeps = {
-    adapter: broker, cfg, today: day, nowMs: nowMsFor(day), runId: `r-${day}`,
+    adapter: broker, cfg: cfgOverride, today: day, nowMs: nowMsFor(day), runId: `r-${day}`,
     configuredBaseUrl: "memory://", paths,
     loadInputs: async () => ({ reports, sics: SICS, marketCapUsd: {}, fills: readFills(paths.fills) }),
     notify: (m: string) => notified.push(m),
@@ -142,14 +142,16 @@ describe("phase-2 end to end", () => {
     expect(fills[2]).toEqual(expect.objectContaining({ ticker: "STAL", side: "buy", qty }));
     expect(day4.notified).toEqual([]);
 
-    // --- Day 5: two new ENTERs whose combined notional exceeds the 15%-of-NAV turnover cap -> halted. ---
+    // --- Day 5: two new ENTERs whose combined notional exceeds the 15%-of-NAV turnover cap -> halted.
+    // Clip off (turnoverClipBuyOnly:false) so this exercises the raw halt path; the default-on clip
+    // behaviour for a buy-only over-cap plan has its own coverage in cron.test.ts. ---
     broker.setToday(D5);
     broker.setTrade("TOVA", 100, nowMsFor(D5) - 60_000);
     broker.setTrade("TOVB", 100, nowMsFor(D5) - 60_000);
     const tova = mkReport("TOVA");
     const tovb = mkReport("TOVB");
     const fillsBefore = readFills(paths.fills).length;
-    const day5 = await runDay(broker, paths, D5, [tova, tovb]);
+    const day5 = await runDay(broker, paths, D5, [tova, tovb], resolveTradeConfig({ turnoverClipBuyOnly: false }));
     expect(day5.result).toEqual({ status: "halted", reason: "turnover" });
     expect(readHaltState(paths.haltState)).toEqual({ consecutive: 1 });
     expect(day5.notified).toEqual([expect.stringMatching(/turnover/i)]);

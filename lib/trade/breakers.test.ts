@@ -31,17 +31,23 @@ describe("turnover breaker", () => {
   });
 });
 
-describe("clipToTurnover (ENTER-only plans)", () => {
+describe("clipToTurnover (buy-only plans)", () => {
   const enter = (ticker: string, qty: number, limitPrice: number) => ({ ticker, qty, limitPrice, side: "buy" as const, reason: "ENTER", deltaUsd: qty * limitPrice });
+  const add = (ticker: string, qty: number, limitPrice: number) => ({ ...enter(ticker, qty, limitPrice), reason: "ADD" });
   // NAV 100k, cap 15% = $15,000.
   it("keeps whole orders, largest target first, up to the cap; defers the rest", () => {
     const r = clipToTurnover([enter("S", 50, 100), enter("L", 90, 100), enter("M", 60, 100)], 100_000, C)!;
     expect(r.kept.map((o) => o.ticker)).toEqual(["L", "M"]); // $9k + $6k = exactly the $15k cap
     expect(r.clipped.map((o) => o.ticker)).toEqual(["S"]);   // $5k more would exceed it
   });
-  it("returns null (halt as before) when any order is not an ENTER buy", () => {
-    expect(clipToTurnover([enter("A", 100, 100), { ...enter("B", 10, 100), reason: "ADD" }], 100_000, C)).toBeNull();
+  it("clips a buy-only plan that mixes ENTER and ADD (a first rebalance deploying cash + topping up)", () => {
+    const r = clipToTurnover([enter("E", 80, 100), add("A", 100, 100)], 100_000, C)!; // $8k ENTER + $10k ADD, both buys
+    expect(r.kept.map((o) => o.ticker)).toEqual(["A"]);      // largest target first ($10k ≤ $15k cap)
+    expect(r.clipped.map((o) => o.ticker)).toEqual(["E"]);   // $8k more would exceed the cap → deferred
+  });
+  it("returns null (halt) when any order is a sell, or the plan is empty", () => {
     expect(clipToTurnover([enter("A", 100, 100), { ...enter("B", 10, 100), side: "sell" as const, reason: "TRIM" }], 100_000, C)).toBeNull();
+    expect(clipToTurnover([enter("A", 100, 100), { ...enter("B", 10, 100), side: "sell" as const, reason: "EXIT" }], 100_000, C)).toBeNull();
     expect(clipToTurnover([], 100_000, C)).toBeNull();
   });
   it("never resizes an order, even when it alone exceeds the cap", () => {

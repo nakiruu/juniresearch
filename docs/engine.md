@@ -426,10 +426,11 @@ kill switch           TRADE_DISABLED=1                                        �
 endpoint guard        broker-aware: alpaca-paper ⇒ paper host, schwab ⇒ schwab host
 ```
 
-**Turnover clip (`turnoverClipEnterOnly`, default off).** When the breaker trips on a plan that only
-*opens* positions (every order an ENTER buy — e.g. building the book from cash), cron sends whole orders,
-largest target first, up to the cap and defers the rest (`TURNOVER_CLIP`) instead of halting; the book
-fills in over several runs. Any sell/ADD/TRIM still halts, and the cap itself is never raised — so a
+**Turnover clip (`turnoverClipBuyOnly`, default on).** When the breaker trips on a **buy-only** plan
+(every order a buy — ENTER *or* ADD, no sells — e.g. building the book from cash and topping up
+underweights on a first rebalance), cron sends whole orders, largest target first, up to the cap and
+defers the rest (`TURNOVER_CLIP`) instead of halting; the book converges to target over several runs.
+Any SELL (TRIM or EXIT) still halts the whole plan, and the cap itself is never raised — so a
 wrongly-read book can't turn into a full re-buy. A one-shot manual build still goes through `trade:execute`.
 
 **Cash backstop (guards).** A buy is refused once committed buys would exceed the broker's cash + *filled*

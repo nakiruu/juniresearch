@@ -156,7 +156,7 @@ describe("runCron", () => {
   it("turnover breaker: an order over 15% NAV halts, bumps the counter, notifies, submits nothing", async () => {
     const paths = mkPaths();
     const notified: string[] = [];
-    const cfg = resolveTradeConfig({ wMax: 1, sectorMax: 1 }); // uncapped — the fixture ENTER is ~49% of NAV
+    const cfg = resolveTradeConfig({ wMax: 1, sectorMax: 1, turnoverClipBuyOnly: false }); // uncapped — the fixture ENTER is ~49% of NAV; clip off to exercise the raw halt path
     const adapter = mkBroker();
     const r = await runCron(mkDeps({
       paths, cfg, adapter, notify: (m) => notified.push(m),
@@ -308,12 +308,12 @@ describe("runCron", () => {
     expect(await runCron(mkDeps({ paths, adapter, runId: "r-cron-2", loadInputs: inputs }))).toEqual({ status: "halted", reason: "reconcile" });
   });
 
-  describe("turnover clip for ENTER-only plans (turnoverClipEnterOnly)", () => {
+  describe("turnover clip for buy-only plans (turnoverClipBuyOnly)", () => {
     const names = ["AAA", "BBB", "CCC"];
     const reports = names.map((ticker) => fixtureReport({ ticker, label: "BUY", conviction: 70, scenarios: [[150, 0.3], [120, 0.5], [80, 0.2]] }));
     const flat = () => new FakeBroker({ calendar: CAL, closes: Object.fromEntries(names.map((n) => [n, closes(100)])), equity: 100_000, cash: 100_000, isOpen: true, today: TODAY });
     const deps = (paths: CronDeps["paths"], adapter: FakeBroker, clip: boolean, notified: string[]) => mkDeps({
-      paths, adapter, notify: (m) => notified.push(m), cfg: resolveTradeConfig({ turnoverClipEnterOnly: clip, maxRunTurnoverFrac: 0.08 }), // tier-3 (close-anchored) buys are half-size: 3 × ~5% ≈ 15% planned
+      paths, adapter, notify: (m) => notified.push(m), cfg: resolveTradeConfig({ turnoverClipBuyOnly: clip, maxRunTurnoverFrac: 0.08 }), // tier-3 (close-anchored) buys are half-size: 3 × ~5% ≈ 15% planned
       loadInputs: async () => ({ reports, sics: {}, marketCapUsd: {}, fills: [] }),
     });
 
@@ -348,7 +348,8 @@ describe("runCron", () => {
       const paths = mkPaths();
       seedEarlierRun(paths, 2_200); // NAV $10k, daily cap 25% = $2,500 → $300 left, the NVT entry needs more
       const notified: string[] = [];
-      const r = await runCron(mkDeps({ paths, notify: (m) => notified.push(m), ...withNvt }));
+      // clip off so the day-cap breach exercises the raw halt path (a buy-only plan would otherwise clip to the day budget)
+      const r = await runCron(mkDeps({ paths, notify: (m) => notified.push(m), cfg: resolveTradeConfig({ turnoverClipBuyOnly: false }), ...withNvt }));
       expect(r).toEqual({ status: "halted", reason: "day-turnover" });
       expect(notified.some((m) => /daily cap 25\.0% of NAV \(22\.0% already traded today\)/.test(m))).toBe(true);
     });
