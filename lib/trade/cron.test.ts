@@ -171,6 +171,23 @@ describe("runCron", () => {
     expect(readFileSync(paths.log, "utf8")).toMatch(/halted.*turnover|turnover.*halted/i);
   });
 
+  it("turnover breaker OFF (TURNOVER_BREAKER unset in production): the same over-cap plan is sent, and the record notes it", async () => {
+    const paths = mkPaths();
+    const notified: string[] = [];
+    const cfg = resolveTradeConfig({ wMax: 1, sectorMax: 1, turnoverClipBuyOnly: false });
+    const adapter = mkBroker();
+    const r = await runCron(mkDeps({
+      paths, cfg, adapter, notify: (m) => notified.push(m), turnoverBreaker: false,
+      loadInputs: async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] }),
+    }));
+    expect(r.status).toBe("executed");
+    expect(readHaltState(paths.haltState)).toEqual({ consecutive: 0 });
+    expect(notified.some((m) => /turnover breaker tripped/i.test(m))).toBe(false);
+    expect((await adapter.getOrders("all")).length).toBeGreaterThan(0);
+    const [rec] = readdirSync(paths.runs).map((f) => JSON.parse(readFileSync(join(paths.runs, f), "utf8")));
+    expect(rec.notes.some((n: string) => /turnover breaker OFF/.test(n))).toBe(true);
+  });
+
   it("run-lock: a pre-existing (fresh) lock file returns \"locked\" immediately, without loading inputs, and logs it", async () => {
     const paths = mkPaths();
     const freshLock = `12345 ${new Date().toISOString()}`; // just written — not stale, must not be reclaimed

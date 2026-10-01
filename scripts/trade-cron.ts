@@ -13,7 +13,7 @@ import { resolveTradeConfig } from "../lib/trade/config";
 import { newRunId } from "../lib/trade/run-record";
 import { makeNotifier } from "../lib/trade/notify";
 import type { BrokerAdapter } from "../lib/broker/adapter";
-import { loadReportsAndMeta, makeBroker, brokerBaseUrl, readFills, schwabRefreshObtainedAt, isPreviewOnly, AUTH_WARN_PATH, CRON_LOCK_PATH, CRON_LOG_PATH, FILLS_PATH, HALT_STATE_PATH, RUNS_DIR } from "./_trade-common";
+import { loadReportsAndMeta, makeBroker, brokerBaseUrl, readFills, schwabRefreshObtainedAt, isPreviewOnly, isTurnoverBreakerOn, AUTH_WARN_PATH, CRON_LOCK_PATH, CRON_LOG_PATH, FILLS_PATH, HALT_STATE_PATH, RUNS_DIR } from "./_trade-common";
 import { todayET } from "../lib/trade/clock";
 
 /**
@@ -78,6 +78,7 @@ async function main(): Promise<CronResult> {
     // `--now`: a deliberate manual run outside the scheduled fire window (the market clock still applies).
     ignoreWindow: process.argv.slice(2).includes("--now"),
     previewOnly: isPreviewOnly(),
+    turnoverBreaker: isTurnoverBreakerOn(),
     notifyAllocation: notifier.allocation,
     clock: Date.now, // real per-ticker capture times for freshness + latency
   });

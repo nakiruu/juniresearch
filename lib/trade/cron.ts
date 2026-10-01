@@ -61,6 +61,11 @@ export interface CronDeps {
    * consecutive halts, reconcile) still runs.
    */
   previewOnly?: boolean;
+  /**
+   * Step 6's turnover breaker (per-run / daily caps). Production callers pass isTurnoverBreakerOn(env),
+   * which is OFF unless TURNOVER_BREAKER is set; left undefined (tests, direct callers) it stays ON.
+   */
+  turnoverBreaker?: boolean;
   /** Sink for the allocation post (Discord); absent → log only. */
   notifyAllocation?: (a: AllocationInput) => void;
   /** Manual run (`trade:cron --now`): skip the fire-window check. The market-clock check still applies. */
@@ -205,6 +210,7 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
     // be clipped to the cap instead of halting — opt-in; every run still stays within the cap.
     // The budget is the smaller of the per-run cap and what's left of the daily cap after today's
     // earlier runs (the daily cap only binds with several cronTimesET slots).
+    const breakerOn = deps.turnoverBreaker ?? true;
     const tb = turnoverBreaker(out.sized.orders, out.ledger.nav, cfg);
     const nav = out.ledger.nav;
     const doneTodayUsd = dayTurnoverUsd(paths.runs, today);
@@ -212,7 +218,8 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
     const plannedUsd = tb.frac * nav;
     const byDay = dayLeftUsd < cfg.maxRunTurnoverFrac * nav;
     const budgetUsd = Math.min(cfg.maxRunTurnoverFrac * nav, dayLeftUsd);
-    const over = plannedUsd > budgetUsd + 1e-9;
+    const over = breakerOn && plannedUsd > budgetUsd + 1e-9;
+    if (!breakerOn && plannedUsd > budgetUsd + 1e-9) out = { ...out, record: { ...out.record, notes: [...out.record.notes, `turnover breaker OFF (TURNOVER_BREAKER unset): ${(tb.frac * 100).toFixed(1)}% of NAV sent, over the ${(cfg.maxRunTurnoverFrac * 100).toFixed(1)}% cap it would have applied`] } };
     const capText = byDay
       ? `daily cap ${(cfg.maxDayTurnoverFrac * 100).toFixed(1)}% of NAV (${((doneTodayUsd / nav) * 100).toFixed(1)}% already traded today)`
       : `${(cfg.maxRunTurnoverFrac * 100).toFixed(1)}% per-run cap`;
