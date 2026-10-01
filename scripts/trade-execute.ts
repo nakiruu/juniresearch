@@ -3,7 +3,7 @@
  *  Every run prints the target allocation and posts it to Discord (when DISCORD_WEBHOOK_URL is set) —
  *  including a market-closed run, a declined prompt, and `--preview`, which plans and never submits. */
 import { createInterface } from "node:readline/promises";
-import { resolveTradeConfig } from "../lib/trade/config";
+import { resolveTradeConfig, tradeConfigFromEnv } from "../lib/trade/config";
 import { planRun, executeOrders, mergeExecution } from "../lib/trade/pipeline";
 import { crossCheckBroker } from "../lib/trade/audit";
 import { allocationFromRun, allocationLines, makeNotifier, summaryFromRun } from "../lib/trade/notify";
@@ -17,7 +17,7 @@ const args = process.argv.slice(2);
 // --preview, or PREVIEW_ONLY=true in the environment: plan + post the allocation, never submit.
 const preview = has(args, "--preview") || isPreviewOnly();
 if (process.env.TRADE_DISABLED === "1" && !preview) { console.error("TRADE_DISABLED=1 — refusing to submit (use --preview to plan only)."); process.exit(2); }
-const cfg = resolveTradeConfig();
+const cfg = resolveTradeConfig(tradeConfigFromEnv());
 const today = todayET();
 const adapter = makeBroker();
 const baseUrl = brokerBaseUrl(adapter);

@@ -145,15 +145,18 @@ describe("tradesToOrders — hybrid (whole-share limit + fractional market remai
     expect(orders).toEqual([]);
     expect(skippedHalt).toEqual([{ ticker: "A", reason: "market_stale_quote" }]);
   });
-  it("minimums: ENTER ≥ $1; ADD/TRIM ≥ max($5, 1% NAV) (each fill starts a lock); EXIT none", () => {
+  it("minimums: ENTER ≥ $1; ADD/TRIM ≥ max($1, 0.5% NAV) by default (each fill starts a lock); EXIT none", () => {
     const at = (nav: number, t: Partial<Trade>, positions = {}) => tradesToOrders({ ...hb, nav, positions, plan: plan([trade(t)]) });
-    expect(at(100, { reason: "ENTER", deltaWeight: 0.02 }).orders).toHaveLength(1);                     // $2 entry
-    expect(at(100, { reason: "ENTER", deltaWeight: 0.005 }).skippedDust).toHaveLength(1);              // $0.50 < $1
-    expect(at(100, { reason: "ADD", currentWeight: 0.05, deltaWeight: 0.04 }).skippedDust).toHaveLength(1);   // $4 < $5
-    expect(at(100, { reason: "ADD", currentWeight: 0.05, deltaWeight: 0.06 }).orders).toHaveLength(1);        // $6 ≥ $5
-    expect(at(10_000, { reason: "ADD", currentWeight: 0.05, deltaWeight: 0.009 }).skippedDust).toHaveLength(1); // $90 < 1% of $10k
-    expect(at(10_000, { reason: "TRIM", side: "sell", currentWeight: 0.05, deltaWeight: -0.009 }, { A: { qty: 10, marketValue: 500 } }).skippedDust).toHaveLength(1);
+    expect(at(100, { reason: "ENTER", deltaWeight: 0.02 }).orders).toHaveLength(1);                         // $2 entry
+    expect(at(100, { reason: "ENTER", deltaWeight: 0.005 }).skippedDust).toHaveLength(1);                  // $0.50 < $1
+    expect(at(100, { reason: "ADD", currentWeight: 0.05, deltaWeight: 0.005 }).skippedDust).toHaveLength(1);    // $0.50 < $1
+    expect(at(100, { reason: "ADD", currentWeight: 0.05, deltaWeight: 0.02 }).orders).toHaveLength(1);          // $2 ≥ $1
+    expect(at(10_000, { reason: "ADD", currentWeight: 0.05, deltaWeight: 0.004 }).skippedDust).toHaveLength(1); // $40 < 0.5% of $10k
+    expect(at(10_000, { reason: "ADD", currentWeight: 0.05, deltaWeight: 0.006 }).orders.length).toBeGreaterThan(0); // $60 ≥ $50
+    expect(at(10_000, { reason: "TRIM", side: "sell", currentWeight: 0.05, deltaWeight: -0.004 }, { A: { qty: 10, marketValue: 500 } }).skippedDust).toHaveLength(1);
     expect(at(10_000, { reason: "EXIT", side: "sell", currentWeight: 0.0001, targetWeight: 0, deltaWeight: -0.0001 }, { A: { qty: 0.02, marketValue: 1 } }).orders).toHaveLength(1);
+    // the owner's env knobs (TRADE_MIN_USD / TRADE_MIN_NAV_PCT) flow through cfg
+    expect(tradesToOrders({ ...hb, nav: 100, cfg: { ...cfg, minTradeUsd: 5 }, plan: plan([trade({ reason: "ADD", currentWeight: 0.05, deltaWeight: 0.02 })]) }).skippedDust).toHaveLength(1);
   });
   it("a market BUY remainder under the $1 fractional minimum is dropped (the limit leg goes alone)", () => {
     // B: small bucket, τ = 0.8% → L = 201.60. $1,008.50 / 201.60 = 5.0024 sh → remainder 0.0024 × 201.60 ≈ $0.48 < $1.

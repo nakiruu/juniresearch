@@ -10,7 +10,7 @@
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { resolveTradeConfig, type TradeConfig } from "../lib/trade/config";
+import { resolveTradeConfig, tradeConfigFromEnv, type TradeConfig } from "../lib/trade/config";
 import { flag, readFills, CRON_LOG_PATH, FILLS_PATH, RUNS_DIR } from "./_trade-common";
 
 // ---- input shapes --------------------------------------------------------------------------
@@ -226,7 +226,7 @@ export async function printReview(since: string): Promise<void> {
   const logLines = existsSync(CRON_LOG_PATH)
     ? readFileSync(CRON_LOG_PATH, "utf8").split("\n").map((l) => l.trim()).filter((l) => l.length > 0 && l.slice(0, 10) >= since)
     : [];
-  const cfg = resolveTradeConfig();
+  const cfg = resolveTradeConfig(tradeConfigFromEnv());
   // The --since filter applies to what's displayed/aggregated (runs, log lines, the fill count
   // above) — NOT to the fills buildReview uses to reconstruct lock state, which need the wider
   // fillsNeededForLockState window so a still-active lock from just before `since` isn't invisible.

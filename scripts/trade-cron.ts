@@ -9,7 +9,7 @@
 import { appendFileSync, mkdirSync } from "node:fs";
 import { dirname } from "node:path";
 import { runCron, type CronResult } from "../lib/trade/cron";
-import { resolveTradeConfig } from "../lib/trade/config";
+import { resolveTradeConfig, tradeConfigFromEnv } from "../lib/trade/config";
 import { newRunId } from "../lib/trade/run-record";
 import { makeNotifier } from "../lib/trade/notify";
 import type { BrokerAdapter } from "../lib/broker/adapter";
@@ -58,7 +58,7 @@ async function main(): Promise<CronResult> {
     configuredBaseUrl = brokerBaseUrl(adapter);
   }
 
-  const cfg = resolveTradeConfig();
+  const cfg = resolveTradeConfig(tradeConfigFromEnv());
   const nowMs = Date.now();
   const today = todayET(nowMs); // ET trading date — the UTC date is tomorrow from 20:00 EDT
   const runId = newRunId(today);

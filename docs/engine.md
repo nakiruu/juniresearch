@@ -328,7 +328,8 @@ order     = one MARKET order of qty                 if qty·L < marketOnlyBelowU
 market leg needs a fresh quote (bucket maxStaleMin) with spread ≤ marketMaxSpread (1% / 1% / 2.5%);
            otherwise only the whole-share limit is sent (a held sell remainder is reported)
 market BUY leg < $1 is dropped (broker minimum); a market remainder is sent only if its limit leg filled
-skip (skippedDust) if  |deltaUsd| < floor:  ENTER $1 · ADD/TRIM max($5, 1% NAV) · EXIT none
+skip (skippedDust) if  |deltaUsd| < floor:  ENTER $1 · ADD/TRIM max($1, 0.5% NAV) · EXIT none
+                       (ADD/TRIM floor from env: TRADE_MIN_USD, TRADE_MIN_NAV_PCT)
 skip (skippedHalt)  if  computeLimit returns halt (no price / gap), or nothing sendable without a market leg
 ```
 

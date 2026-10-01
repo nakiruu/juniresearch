@@ -1,5 +1,5 @@
 /** trade:plan — compute and record the plan. NEVER submits. `--broker fake` (default) | `alpaca` (read-only). */
-import { resolveTradeConfig } from "../lib/trade/config";
+import { resolveTradeConfig, tradeConfigFromEnv } from "../lib/trade/config";
 import { planRun } from "../lib/trade/pipeline";
 import { newRunId, writeRunRecord } from "../lib/trade/run-record";
 import { writeLedger } from "../lib/trade/ledger";
@@ -9,7 +9,7 @@ import { todayET } from "../lib/trade/clock";
 const args = process.argv.slice(2);
 const today = flag(args, "--date") ?? todayET();
 const broker = flag(args, "--broker") ?? "fake";
-const cfg = resolveTradeConfig();
+const cfg = resolveTradeConfig(tradeConfigFromEnv());
 const { reports, sics, marketCapUsd } = await loadReportsAndMeta();
 const tickers = reports.map((r) => r.meta.ticker);
 const fills = readFills(FILLS_PATH);

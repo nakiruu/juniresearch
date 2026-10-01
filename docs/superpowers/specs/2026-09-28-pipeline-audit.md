@@ -1,6 +1,7 @@
 # Trading pipeline audit — strategy, execution, function (2026-09-28)
 
 > **Status:** owner approved 1 = hybrid, 2 = emulated IOC, 3 = ADD/TRIM floor `max($5, 1% NAV)`.
+> **2026-10-01:** owner lowered the ADD/TRIM floor to `max($1, 0.5% NAV)`, tunable via `TRADE_MIN_USD` / `TRADE_MIN_NAV_PCT`; the turnover breaker is off unless `TURNOVER_BREAKER=true`.
 > Implemented: C1, C2, C3, S1 (§5 items 1–3). Not yet done: S2 relative band, S3 μ-vs-realized tracking.
 
 Scope: `lib/portfolio/*` (signals, eligibility, sizing), `lib/trade/*` (hysteresis, rebalance, orders, limit,

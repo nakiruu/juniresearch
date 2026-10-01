@@ -8,7 +8,7 @@
 import { appendFileSync, mkdirSync } from "node:fs";
 import { dirname } from "node:path";
 import { runCron, type CronResult } from "./cron";
-import { resolveTradeConfig } from "./config";
+import { resolveTradeConfig, tradeConfigFromEnv } from "./config";
 import { newRunId } from "./run-record";
 import { makeNotifier } from "./notify";
 import type { BrokerAdapter } from "../broker/adapter";
@@ -36,7 +36,7 @@ function unreachableAdapter(): BrokerAdapter {
 }
 
 export function buildSchedulerDeps(env: NodeJS.ProcessEnv = process.env): SchedulerDeps {
-  const cfg = resolveTradeConfig();
+  const cfg = resolveTradeConfig(tradeConfigFromEnv(env));
   const broker = env.BROKER ?? "alpaca-paper";
   const disabled = env.TRADE_DISABLED === "1";
   const notifier = makeNotifier({
