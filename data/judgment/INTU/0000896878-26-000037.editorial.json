@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "84a6c9f94b519e579691e5dc3d8edcc24b1a13ab4a2e26967e214c78a8896a9e",
-  "reviewedAt": "2026-10-01T21:37:03Z",
+  "judgmentSha256": "1efd52d96a48e7a498efe23092492dee9d78584d5dbacd994f1b4c4f3fca0c8f",
+  "reviewedAt": "2026-10-01T21:51:08Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved",
   "findings": [
     {
       "id": "F-1",
@@ -48,8 +48,7 @@
       "quote": "Buying back stock near the 52-week low is accretive if the business holds up.",
       "issue": "Period mismatch: the -$5.4B of FY26 repurchases was spent in the year ended July 31, 2026, and the price history on the page shows the shares at about $362 on August 20, 2026, after year-end, falling to $282.78 by October 1, 2026. Nothing on the surface shows FY26 buybacks were made near the 52-week low. The same framing recurs in executiveSummary.catalysts[3] ('Continued share repurchases at a depressed price'), which implies repurchases are continuing at today's price without a source.",
       "fix": "Separate the two: FY26 repurchases were made before the decline (price paid not on the surface); any buyback at today's price is a forward possibility, not a reported fact. Reword the catalyst to 'any repurchases at the current price' or drop it.",
-      "status": "open",
-      "note": "Still open, in a new form. capitalAllocation now says 'Those FY26 repurchases were made before the share-price decline'. The surface does not support that timing. The page's price history starts on August 20, 2026 at about $362, already far below the 52-week high of $689.17, so most of the decline happened before that series begins and may overlap fiscal 2026. My round-1 issue overstated what the history shows. Fix: say only that the price paid for FY26 repurchases, and their timing relative to the decline, are not in our data."
+      "status": "addressed"
     },
     {
       "id": "F-6",
@@ -211,8 +210,7 @@
       "quote": "Yet at $282.78 the stock sits far below its 52-week high of $689.17 and close to the low of $252.84.",
       "issue": "The price and range are undated in prose; the quote is as of October 1, 2026, three weeks after the September 9, 2026 filing and during a sharp move shown in the price history. Its age changes what it means.",
       "fix": "Date the price once in prose form (as of October 1, 2026).",
-      "status": "open",
-      "note": "Now dated, but in ISO form: '(as of 2026-10-01)'. Rubric item 9 asks for dates in prose form. Write 'as of October 1, 2026'."
+      "status": "addressed"
     },
     {
       "id": "F-24",
@@ -221,7 +219,7 @@
       "quote": "The page's quantitative screen reads it as wide, on the strength of margins and cash generation, and the reported numbers support that reading today.",
       "issue": "Over-attribution. The rewrite gives the screen a basis it does not use and that is not on the grounding surface. The page's moat screen (Width 'Wide', Trend 'Widening' in rating.decision.moat) is computed from returns-on-capital spread against cost of capital and related tests, not from 'margins and cash generation'. None of those inputs appear in Facts or Context, so the sentence assigns the screen a reason it does not carry.",
       "fix": "Report only the screen's verdict, e.g. 'the page's quantitative screen reads the moat as wide', without giving its basis. Then argue the desk's narrower rating from the Risks threats, as the rest of the paragraph already does.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-25",
@@ -230,7 +228,7 @@
       "quote": "In our view the test is simple: whether tax customers keep returning each season.",
       "issue": "Cross-section paraphrase. The same claim closes businessMoat.durability: 'The moat holds if Intuit's own AI investment keeps customers returning each year.' Both sentences make returning tax customers the deciding test for the AI question, in two sections.",
       "fix": "Make the claim once, in durability, which argues the mechanism. In growth, point back to it in words or give the AI point a growth-specific view, such as what monetization would show up as.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-26",
@@ -239,7 +237,7 @@
       "quote": "The downside exceeds the expected upside, but the reward/risk still clears our BUY threshold.",
       "issue": "Cross-section paraphrase. executiveSummary.thesis.body opens with the same claim: 'Our expected upside is smaller than the bear-case downside, so this is not a lopsided bet. We still rate BUY because the expected return clears our threshold'. The thesis should point to this argument, and Valuation should carry it once.",
       "fix": "Keep the arithmetic and the threshold argument in scenarioCommentary. In the thesis, state the view (a BUY that is not lopsided) and point to Valuation without restating the comparison.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-27",
@@ -248,7 +246,7 @@
       "quote": "so we judge the multiple against the company's own history: the forward multiple is low for a business with the growth history described in Financials.",
       "issue": "'Against the company's own history' reads as a comparison with historical multiples, which are not on the surface. The sentence actually compares the multiple with growth history.",
       "fix": "Say 'against the company's own growth record' so the reader does not infer a historical-multiple comparison the pack cannot support.",
-      "status": "open"
+      "status": "addressed"
     }
   ]
 }
