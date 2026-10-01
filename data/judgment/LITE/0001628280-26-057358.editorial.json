@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "5545489a143616f07d83f2fd8818834e70b6618ea034e4f86d3a8eb3f872d38e",
-  "reviewedAt": "2026-10-01T21:02:16Z",
+  "judgmentSha256": "047cf07bcf6d5ec1d8412ceb611d7262a61a5c27f9a3f9b6909a484f0a08a78b",
+  "reviewedAt": "2026-10-01T21:28:42Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved",
   "findings": [
     {
       "id": "F-1",
@@ -177,7 +177,8 @@
       "quote": "Base carries half the weight because the near-term guide and supply allocation make the next few quarters unusually visible; a miss on FY27E would need a demand break, not just execution slippage.",
       "issue": "Introduced by the rewrite. The new probability argument rests on two unsupported claims (rubric items 2 and 6). (1) The guide covers one quarter, the first quarter of fiscal 2027, so it does not make \"the next few quarters\" visible. (2) \"a miss on FY27E would need a demand break, not just execution slippage\" contradicts the report's own risks.idiosyncratic[2]: \"meeting guidance depends on the company and its contract manufacturers adding output on time while supply is being allocated\". The forward-looking statements in the press release also list capacity and contract-manufacturer delivery among the factors that could cause a miss. The 50% Base weight therefore rests on an argument the page itself undercuts.",
       "fix": "Argue the Base weight from what the surface supports: one quarter of guidance, plus consensus FY27E and FY28E paths that assume delivery. Then name execution on capacity as a way Base could miss, consistent with risks.idiosyncratic[2]. Drop \"next few quarters\" and the demand-break-only claim.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed: Base weight now rests on the one-quarter guide and the consensus FY27E/FY28E paths, and the paragraph names execution on capacity as a way Base can miss, consistent with risks.idiosyncratic[2]."
     },
     {
       "id": "F-20",
@@ -186,7 +187,8 @@
       "quote": "Those percentages were computed on 70,843,924 shares outstanding, before equitization lifted common shares to 88.6 million, so current stakes are lower.",
       "issue": "\"so current stakes are lower\" assumes each holder's share count is unchanged since August 29, 2025 (Vanguard's since February 2024), and the surface does not show that. What the surface supports is narrower: the same holdings would be a smaller percentage of today's larger share count.",
       "fix": "Write \"so the same holdings would now be a smaller percentage\" instead of asserting that current stakes are lower.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed: now reads \"so the same holdings would now be a smaller percentage\"."
     }
   ]
 }
