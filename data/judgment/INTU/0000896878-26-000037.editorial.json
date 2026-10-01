@@ -1,0 +1,216 @@
+{
+  "judgmentSha256": "b1446706f21307583bfce60b0d0c1e86b9500b9e2f1b5dcef5865bd056977af1",
+  "reviewedAt": "2026-10-01T21:33:09Z",
+  "reviewer": "claude-opus-5-5",
+  "round": 1,
+  "verdict": "needs-fix-round",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.risks.systemic",
+      "quote": "The share price has shown it is exposed to a sector-wide de-rating of software companies seen as vulnerable to AI, independent of reported results.",
+      "issue": "No headline, peer price, sector index or press coverage is on the surface (Headlines: none captured; multiples are company-only, peers pending). The report itself says elsewhere it cannot see what drove the decline (analystCommentary, thesis, scenarioCommentary, finalRecommendation.body[1]), so this sentence both asserts an unsupported cause and contradicts the report's own stated position.",
+      "fix": "Delete the sector-wide de-rating claim. If a systemic market risk is wanted, frame it from the surface: the shares fell from a 52-week high of $689.17 to $282.78 while FY26 operating margin widened, so the price is moving on something other than reported results that the pack does not identify.",
+      "status": "open"
+    },
+    {
+      "id": "F-2",
+      "severity": "Critical",
+      "field": "meta.subtitle",
+      "quote": "at a multiple the market reserves for a business in decline",
+      "issue": "No peer or market multiples are on the surface ('peers pending a peer data source'); multiplesCommentary concedes 'We have no peer multiples to benchmark against'. The subtitle asserts a market-wide multiple norm the pack cannot support.",
+      "fix": "Rewrite the subtitle without the comparative claim, e.g. anchor to on-surface figures: double-digit growth and an 11.8x NTM multiple with the shares near the 52-week low.",
+      "status": "open"
+    },
+    {
+      "id": "F-3",
+      "severity": "Critical",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "with a bear case that is painful but smaller than the upside",
+      "issue": "The page's own calls contradict this: bear-case downside is -25.0% while expected upside is +17.4% (reward/risk 0.70x). The bear case is larger than the expected upside; it is only smaller than the Bull scenario's move, which the thesis does not say.",
+      "fix": "State the calls as rendered: expected upside +17.4% against bear-case downside of -25.0%, reward/risk below 1x but above the BUY bar of 0.50x. Argue why that asymmetry is still acceptable rather than describe it as favourable.",
+      "status": "open"
+    },
+    {
+      "id": "F-4",
+      "severity": "Critical",
+      "field": "sections.management.capitalAllocation",
+      "quote": "Total debt also rose over the year, so part of the return was funded alongside new borrowing.",
+      "issue": "Unsupported causal link that also contradicts the preceding sentence ('Together they stayed within free cash flow'): FY26 buybacks ($5.4B) plus dividends ($1.3B) are below FCF of $8.7B, and the pack does not tie the $1.7B debt increase to shareholder returns. Cash and short-term investments also rose to $4.7B, so the borrowing went at least partly to the balance sheet.",
+      "fix": "Drop the funding claim. If the debt increase matters, say total debt rose to $7.7B from $6.0B while cash rose to $4.7B, leaving net debt roughly flat, and point to the balance-sheet commentary rather than repeating it.",
+      "status": "open"
+    },
+    {
+      "id": "F-5",
+      "severity": "Critical",
+      "field": "sections.management.capitalAllocation",
+      "quote": "Buying back stock near the 52-week low is accretive if the business holds up.",
+      "issue": "Period mismatch: the -$5.4B of FY26 repurchases was spent in the year ended July 31, 2026, and the price history on the page shows the shares at about $362 on August 20, 2026, after year-end, falling to $282.78 by October 1, 2026. Nothing on the surface shows FY26 buybacks were made near the 52-week low. The same framing recurs in executiveSummary.catalysts[3] ('Continued share repurchases at a depressed price'), which implies repurchases are continuing at today's price without a source.",
+      "fix": "Separate the two: FY26 repurchases were made before the decline (price paid not on the surface); any buyback at today's price is a forward possibility, not a reported fact. Reword the catalyst to 'any repurchases at the current price' or drop it.",
+      "status": "open"
+    },
+    {
+      "id": "F-6",
+      "severity": "Critical",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "so the Q4'26 operating margin of 10.9% on revenue of $4.4B reflects the off-season quarter rather than a deterioration.",
+      "issue": "The MD&A establishes the seasonal pattern but the pack carries no Q4'25 operating margin, so 'rather than a deterioration' is an inference the source does not make. The surface also shows Q4'26 revenue up 12.1% YoY, slower than the full-year 13.9%, which the sentence does not acknowledge.",
+      "fix": "Keep the seasonality point but drop the conclusion, or say only that the quarter's margin cannot be compared with the full year because tax revenue concentrates in the second and third quarters; note Q4 revenue growth of 12.1% as below the full-year rate.",
+      "status": "open"
+    },
+    {
+      "id": "F-7",
+      "severity": "Critical",
+      "field": "sections.management.leadership",
+      "quote": "In our view that is a reasonable response to slower growth, but it carries execution and talent-retention risk the company's own MD&A acknowledges.",
+      "issue": "Over-attribution and an unsupported motive. The MD&A states the 2026 Plan's purpose as simplifying the structure to become 'a faster, leaner, more focused company'; it does not present it as a response to slower growth (FY26 revenue still grew 13.9%). The MD&A's talent sentence is a general Key Challenges statement about attracting and retaining employees, not an acknowledgment of risk from the 2026 Plan.",
+      "fix": "Quote the company's stated purpose instead of attributing a motive. Present the execution and talent-retention risk as the desk's own view, linking it to the MD&A's general statement that success depends on retaining technical talent without saying the MD&A ties it to the Plan.",
+      "status": "open"
+    },
+    {
+      "id": "F-8",
+      "severity": "Critical",
+      "field": "sections.growth.points[1]",
+      "quote": "Services are the growth engine: management expects service revenue to keep rising as a share of total revenue.",
+      "issue": "The MD&A says only that service revenue was $18.9 billion, or 88% of total, and that management expects that share to grow 'over the long term'. It does not say services drove FY26 growth, and the pack has no service vs product growth split. 'Growth engine' is an inference the source does not make; the point also drops the 'long term' qualifier. It also repeats segments[0].body ('management expects that share to grow') (see repetition finding).",
+      "fix": "Drop 'growth engine' or support it with a figure on the surface. Keep the management expectation once, with its 'over the long term' qualifier, in one section only.",
+      "status": "open"
+    },
+    {
+      "id": "F-9",
+      "severity": "Critical",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "Total equity slipped to $19.0B from $19.7B as capital returned to shareholders exceeded retained earnings.",
+      "issue": "Causal claim the pack does not establish, and the wrong quantity: 'retained earnings' is a balance-sheet account not on the surface; the comparison the figures allow is FY26 buybacks plus dividends ($6.7B) against net income ($4.6B). Equity also moves on stock-based compensation and other items the pack does not carry.",
+      "fix": "Say equity fell to $19.0B from $19.7B in a year when buybacks and dividends exceeded net income of $4.6B, without asserting it as the sole cause, or drop the sentence.",
+      "status": "open"
+    },
+    {
+      "id": "F-10",
+      "severity": "Important",
+      "field": "analystCommentary",
+      "quote": "On consensus estimates the stock trades on a low-teens forward multiple while returning substantial cash through buybacks and dividends.",
+      "issue": "Mischaracterises the figures on the surface: forward P/E is 11.8x NTM and 10.4x FY28E, i.e. below ten-to-twelve, not 'low-teens'. The same phrase recurs in valuation.multiplesCommentary ('a low-teens forward multiple is low for a business...'). The valuation case rests on this multiple, so the label matters.",
+      "fix": "Use the figures: '11.8x NTM earnings' (or 'about 12x'). Fix both places; state the multiple in valuation and refer back to it in words in analystCommentary.",
+      "status": "open"
+    },
+    {
+      "id": "F-11",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[1].driver",
+      "quote": "the multiple recovers only part of the way toward the consensus target, holding below the Street median",
+      "issue": "Base implied price of $340 is not anchored to anything stated: no multiple, EPS year or method is given, and scenarioCommentary only argues the weight, not the price. The reader cannot see how $340 follows from FY28E EPS of $27.08 or from the Street targets. The same applies to Bull ($420, 'around the level implied by the consensus target', which is $405.60) and Bear ($212).",
+      "fix": "State the anchor for each implied price in words or by an on-surface multiple, e.g. which EPS year and what multiple of it the Base price represents relative to today's 11.8x NTM, so the band and fair value can be checked against the prose.",
+      "status": "open"
+    },
+    {
+      "id": "F-12",
+      "severity": "Important",
+      "field": "sections.businessMoat.durability",
+      "quote": "We rate the moat NARROW.",
+      "issue": "The built page's Fundamental Scorecard renders the desk's computed moat as 'Wide \u00b7 Widening' (rating.decision.moat in data/intu.json), while the judgment rates it NARROW. The reader sees two moat verdicts on one page and the prose never says which to trust or why the desk disagrees with the computed width.",
+      "fix": "Either align the rating, or say once in durability that the quantitative screen reads the moat as wide on margins and cash generation and explain why the desk marks it NARROW (competition, free offerings, government tax software).",
+      "status": "open"
+    },
+    {
+      "id": "F-13",
+      "severity": "Important",
+      "field": "sections.businessMoat.segments[0].body",
+      "quote": "The FY26 MD&A reports Global Business Solutions revenue of $12.9B, up 16%, and Consumer revenue of $8.6B, up 11%.",
+      "issue": "Silent source disagreement. The Facts block treats INTU as a single reportable segment and says 'Do not quote a segment or regional split'; the company tearsheet (dated October 1, 2026) describes four segments (Global Business Solutions, Consumer, Credit Karma, ProTax); the MD&A describes two segments effective August 1, 2025. The report uses the MD&A (also in executiveSummary.companyOverview) under a segment card named 'Consolidated' without saying the sources differ or which it used.",
+      "fix": "Say once that the vendor data carries a single consolidated segment and the tearsheet a superseded four-segment structure, and that the report uses the 10-K MD&A's two-segment figures. Keep the segment card name consistent with its content.",
+      "status": "open"
+    },
+    {
+      "id": "F-14",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "The business is growing double digits with expanding margins and very high free cash flow, while the shares trade near their 52-week low.",
+      "issue": "Cross-section repetition of the core story: the same growth/margin/cash-versus-depressed-price claim is told in analystCommentary ('FY26 delivered steady growth, a wider operating margin and a step-up in cash generation. Yet at $282.78 the stock sits far below its 52-week high...'), here, and finalRecommendation.body[0] ('Intuit is still growing, widening margins and generating cash well ahead of its dividend, while the shares trade near their 52-week low'). The 'double digits for four straight years' point is also made in both financials.incomeCommentary and valuation.multiplesCommentary.",
+      "fix": "Make the claim once (analystCommentary or thesis); have the final recommendation point to it and add only what changes the view. Keep the four-year growth series in financials and refer to it in words in valuation.",
+      "status": "open"
+    },
+    {
+      "id": "F-15",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "with the clear caveat that we cannot see the specific news behind the de-rating",
+      "issue": "The 'we cannot explain the de-rating' claim is restated in five places: analystCommentary ('The filing does not explain the decline, and we have no news coverage in our data to explain it either'), here, executiveSummary.risks[3] ('An unknown driver behind the share-price decline that the filing does not address'), valuation.scenarioCommentary ('we cannot see what triggered the de-rating'), and finalRecommendation.body[1] ('The main uncertainty is what drove the de-rating, which the filing does not explain').",
+      "fix": "State it once with its consequence (analystCommentary), keep the exec-summary risk as a pointer, and in scenarioCommentary and finalRecommendation refer back to it in words or cut it.",
+      "status": "open"
+    },
+    {
+      "id": "F-16",
+      "severity": "Important",
+      "field": "sections.businessMoat.durability",
+      "quote": "the company itself names AI-enabled competitors, free offerings and government tax software as threats",
+      "issue": "The same trio of threats is listed in analystCommentary ('AI-driven competition, free and low-cost offerings, and government tax software'), here, executiveSummary.risks[0] and [1], and argued in risks.idiosyncratic[0] and [1]. The durability paragraph retells the risk section instead of reading what those threats do to the moat.",
+      "fix": "Keep the mechanism in risks.idiosyncratic; in durability refer back ('the competitive threats in Risks') and argue which moat factor each threat attacks.",
+      "status": "open"
+    },
+    {
+      "id": "F-17",
+      "severity": "Important",
+      "field": "sections.management.leadership",
+      "quote": "to reduce the full-time workforce and close certain sites while growing technology teams in strategic locations",
+      "issue": "The 2026 Plan is retold in five places: financials.incomeCommentary ($293 million charge, ~$315 million total), executiveSummary.catalysts[1], growth.points[2] (purpose and Q1 FY27 completion), management.leadership (May 2026 approval, workforce, sites, talent risk), and risks.idiosyncratic[3] ('workforce reductions and site closures under the 2026 Plan could disrupt product delivery or the retention of the technical talent'). Leadership and risks[3] make the same talent-retention argument in different words.",
+      "fix": "Give the Plan's facts once (financials for the cost, leadership for the decision), argue the execution and talent risk once in risks.idiosyncratic[3], and have growth and leadership point to it.",
+      "status": "open"
+    },
+    {
+      "id": "F-18",
+      "severity": "Important",
+      "field": "sections.growth.points[3]",
+      "quote": "Mailchimp becomes a separate reportable segment in fiscal 2027, which will show its growth and profitability on their own for the first time in the new structure.",
+      "issue": "The Mailchimp segment change is stated in executiveSummary.companyOverview, executiveSummary.catalysts[2], businessMoat.segments[0].body ('until fiscal 2027, Mailchimp') and here. The growth point restates the MD&A rather than saying what the disclosure might reveal or why it matters for the thesis. 'For the first time' is also flagged by the lint; the source supports only 'beginning in fiscal 2027'.",
+      "fix": "Keep the fact once (companyOverview) and the catalyst pointer; in growth, say what the reader should watch in the first Mailchimp segment disclosure and why. Replace 'for the first time' with 'beginning in fiscal 2027'.",
+      "status": "open"
+    },
+    {
+      "id": "F-19",
+      "severity": "Important",
+      "field": "sections.businessMoat.moatFactors[2].body",
+      "quote": "The company funds product development and AI investment from very high cash flow. The risk factors are explicit that competitors range from startups to large platforms, and that free and low-cost offerings are increasing.",
+      "issue": "The factor is titled 'Scale in a competitive field' but the body never argues what scale lets Intuit do that a smaller rival cannot; it restates risk-factor text already given in risks.idiosyncratic[1]. The same restatement pattern applies to growth.points[2] and growth.points[4], which repeat MD&A and risk-factor language without a view.",
+      "fix": "Read the figure for the holder: e.g. what FY26 FCF of $8.7B funds relative to a startup competitor, and whether that advantage holds against large platforms. Give growth.points[2] and [4] a stated view or fold them into other points.",
+      "status": "open"
+    },
+    {
+      "id": "F-20",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "FY26 revenue was $21.4B, up {+13.9%+} from $18.8B in FY25, the fourth straight year of growth between 12.9% and 15.6%.",
+      "issue": "No counter-case in the income section: it does not note that growth slowed from 15.6% in FY25 to 13.9% in FY26, that Q4'26 revenue grew 12.1%, or that consensus has FY27E at about 9%. The reading that cuts the other way is on the page but absent from this section.",
+      "fix": "Add one sentence naming the deceleration with the on-surface figures (15.6% to 13.9%, Q4 at 12.1%) and what it means for the thesis; point to valuation for the FY27E figure rather than repeating it.",
+      "status": "open"
+    },
+    {
+      "id": "F-21",
+      "severity": "Important",
+      "field": "sections.management.governance",
+      "quote": "In our view this is a sound structure.",
+      "issue": "Judgment, not restatement: the paragraph lists the proxy's independence list and committee process, then gives a one-line verdict without reading it for the holder. It does not say the proxy excerpt carries no executive pay, insider ownership or related-person transaction amounts, which is what a holder would need. 'Deliberately retains longer-tenured directors' also slightly overstates the proxy, which says the Board 'believes that a balanced mix of board tenure is effective'.",
+      "fix": "Say what the structure means for a holder (e.g. independent-majority oversight and annual related-person pre-approval), state that pay, ownership and related-party amounts were not captured in the excerpt, and use the proxy's own wording on tenure.",
+      "status": "open"
+    },
+    {
+      "id": "F-22",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "very high free cash flow",
+      "issue": "Unquantified intensifier repeated: 'very high free cash flow' (thesis) and 'very high cash flow' (businessMoat.moatFactors[2].body). The figure ($8.7B, 40.4% FCF margin) is on the page and carries the point without the adjective.",
+      "fix": "Replace with the figure in one place and refer back in words elsewhere.",
+      "status": "open"
+    },
+    {
+      "id": "F-23",
+      "severity": "Minor",
+      "field": "analystCommentary",
+      "quote": "Yet at $282.78 the stock sits far below its 52-week high of $689.17 and close to the low of $252.84.",
+      "issue": "The price and range are undated in prose; the quote is as of October 1, 2026, three weeks after the September 9, 2026 filing and during a sharp move shown in the price history. Its age changes what it means.",
+      "fix": "Date the price once in prose form (as of October 1, 2026).",
+      "status": "open"
+    }
+  ]
+}
