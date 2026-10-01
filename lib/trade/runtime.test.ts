@@ -31,6 +31,14 @@ describe("lib/trade/runtime", () => {
   });
 });
 
+describe("isTurnoverBreakerOn", () => {
+  it("is OFF unless TURNOVER_BREAKER is explicitly truthy", () => {
+    const e = (v?: string) => ({ TURNOVER_BREAKER: v }) as unknown as NodeJS.ProcessEnv;
+    for (const v of ["true", "TRUE", "1", "yes", "on", " on "]) expect(runtime.isTurnoverBreakerOn(e(v))).toBe(true);
+    for (const v of [undefined, "", "false", "0", "no", "off"]) expect(runtime.isTurnoverBreakerOn(e(v))).toBe(false);
+  });
+});
+
 describe("isPreviewOnly", () => {
   it("is true only for an explicit truthy PREVIEW_ONLY", () => {
     const e = (v?: string) => ({ PREVIEW_ONLY: v }) as unknown as NodeJS.ProcessEnv;

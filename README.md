@@ -229,7 +229,7 @@ runs a Phase-0 dry loop against an in-memory book.
 | allocation post | `trade:execute` | every run prints the target book and posts it to Discord — preview, declined, market-closed and executed runs alike |
 | market-clock check | `trade:execute` / `trade:cron` | exits cleanly outside the regular session (09:30–16:00 ET on trading days) |
 | fire window | `trade:cron` | a run starting > 20 min after `cronTimeET` exits as `late` (`trade:cron -- --now` for a deliberate manual run) |
-| turnover breaker | `trade:cron` | halts a run whose turnover > 15% of NAV (so the initial deploy must go via `trade:execute`) |
+| turnover breaker | `trade:cron` / scheduler | **off unless `TURNOVER_BREAKER=true`**; when on, a run over 15% of NAV (25%/day) is clipped (buy-only) or halted (any sell) |
 | consecutive-halt breaker | `trade:cron` | blocks further runs after 3 halts in a row |
 | orders reconcile | `trade:cron` / `trade:execute` / `trade:reconcile` | halts while any executed broker order in the lock window is missing from `fills.jsonl` (`trade:reconcile -- --record-missing` records them from broker truth) |
 | unknown-submit halt | `trade:cron` / `trade:execute` | a submit that times out is looked up, never resent; if it can't be found the run stops sending and halts |

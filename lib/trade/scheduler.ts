@@ -23,7 +23,7 @@ export function shouldArm(env: NodeJS.ProcessEnv): boolean {
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import type { TradeConfig } from "./config";
-import { TRADE_DIR, latestRunRecord, schwabRefreshObtainedAt, isPreviewOnly } from "./runtime";
+import { TRADE_DIR, latestRunRecord, schwabRefreshObtainedAt, isPreviewOnly, isTurnoverBreakerOn } from "./runtime";
 import { resolveTradeConfig } from "./config";
 import type { CronResult } from "./cron";
 
@@ -56,7 +56,7 @@ export function writeSchedulerState(s: SchedulerFileState, dir: string = TRADE_D
 }
 
 export interface SchedulerStatus {
-  armed: boolean; broker: string; tradeDisabled: boolean; previewOnly: boolean; nextRunISO: string | null;
+  armed: boolean; broker: string; tradeDisabled: boolean; previewOnly: boolean; turnoverBreaker: boolean; nextRunISO: string | null;
   lastRun: { id: string | null; day: string | null; at: string | null; status: string; orders?: number; fills?: number } | null;
   /** Schwab only: when the refresh token expires (ISO), null if unknown/not Schwab. Renew with `npm run trade:auth` before then. */
   schwabRefreshExpiresAt: string | null;
@@ -91,7 +91,7 @@ export function getSchedulerStatus(env: NodeJS.ProcessEnv = process.env): Schedu
       }
     : null;
   return {
-    armed: state.armed, broker: env.BROKER ?? "alpaca-paper", tradeDisabled: env.TRADE_DISABLED === "1", previewOnly: isPreviewOnly(env),
+    armed: state.armed, broker: env.BROKER ?? "alpaca-paper", tradeDisabled: env.TRADE_DISABLED === "1", previewOnly: isPreviewOnly(env), turnoverBreaker: isTurnoverBreakerOn(env),
     nextRunISO: state.nextRunISO, lastRun, schwabRefreshExpiresAt: schwabExpiry(env),
   };
 }

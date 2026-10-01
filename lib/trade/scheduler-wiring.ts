@@ -14,7 +14,7 @@ import { makeNotifier } from "./notify";
 import type { BrokerAdapter } from "../broker/adapter";
 import {
   makeBroker, brokerBaseUrl, loadReportsAndMeta, readFills,
-  CRON_LOCK_PATH, CRON_LOG_PATH, FILLS_PATH, HALT_STATE_PATH, RUNS_DIR, AUTH_WARN_PATH, schwabRefreshObtainedAt, isPreviewOnly,
+  CRON_LOCK_PATH, CRON_LOG_PATH, FILLS_PATH, HALT_STATE_PATH, RUNS_DIR, AUTH_WARN_PATH, schwabRefreshObtainedAt, isPreviewOnly, isTurnoverBreakerOn,
 } from "./runtime";
 import { startScheduler, getSchedulerStatus, type SchedulerDeps } from "./scheduler";
 import { todayET } from "./clock";
@@ -62,7 +62,7 @@ export function buildSchedulerDeps(env: NodeJS.ProcessEnv = process.env): Schedu
       clock: Date.now,
       loadInputs: async () => { const m = await loadReportsAndMeta(); return { ...m, fills: readFills(FILLS_PATH) }; },
       notify: notifier.message, notifySummary: notifier.runSummary, disabled, env,
-      previewOnly: isPreviewOnly(env), notifyAllocation: notifier.allocation,
+      previewOnly: isPreviewOnly(env), turnoverBreaker: isTurnoverBreakerOn(env), notifyAllocation: notifier.allocation,
     });
     await notifier.flush();
     return result;

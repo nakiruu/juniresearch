@@ -30,6 +30,15 @@ export function isPreviewOnly(env: NodeJS.ProcessEnv = process.env): boolean {
   return /^(1|true|yes|on)$/i.test((env.PREVIEW_ONLY ?? "").trim());
 }
 
+/**
+ * TURNOVER_BREAKER=true (also 1/yes/on) turns the scheduled-run turnover breaker on (per-run 15% /
+ * daily 25% of NAV caps, clip or halt). Unset → OFF (owner's choice, 2026-10-01): scheduled runs trade
+ * the whole plan. Every per-order guard (locks, ban, cash backstop, order-count and notional caps) still applies.
+ */
+export function isTurnoverBreakerOn(env: NodeJS.ProcessEnv = process.env): boolean {
+  return /^(1|true|yes|on)$/i.test((env.TURNOVER_BREAKER ?? "").trim());
+}
+
 /** Schwab only: the issue time of the refresh token in use, for the proactive re-auth notice. undefined otherwise. */
 export function schwabRefreshObtainedAt(env: NodeJS.ProcessEnv = process.env): (() => number | undefined) | undefined {
   if ((env.BROKER ?? "alpaca-paper") !== "schwab") return undefined;
