@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { DEFAULT_TRADE_CONFIG, resolveTradeConfig, bucketFor } from "./config";
+import { DEFAULT_TRADE_CONFIG, resolveTradeConfig, bucketFor, tradeConfigFromEnv } from "./config";
 
 describe("resolveTradeConfig", () => {
   it("returns the spec §12 defaults when given no overrides", () => {
@@ -87,5 +87,21 @@ describe("phase-2 config", () => {
   });
   it("rejects an inverted per-bucket cap", () => {
     expect(() => resolveTradeConfig({ limitTolMax: { large: 0.0005, mid: 0.01, small: 0.015 } })).toThrow();
+  });
+});
+
+describe("tradeConfigFromEnv (TRADE_MIN_USD / TRADE_MIN_NAV_PCT)", () => {
+  const e = (o: Record<string, string | undefined>) => o as unknown as NodeJS.ProcessEnv;
+  it("defaults to the ADD/TRIM floor max($1, 0.5% NAV) when unset", () => {
+    expect(tradeConfigFromEnv(e({}))).toEqual({});
+    expect(resolveTradeConfig(tradeConfigFromEnv(e({})))).toMatchObject({ minTradeUsd: 1, minTradeNavFrac: 0.005 });
+  });
+  it("reads dollars and a PERCENT of NAV", () => {
+    expect(resolveTradeConfig(tradeConfigFromEnv(e({ TRADE_MIN_USD: "5", TRADE_MIN_NAV_PCT: "1" })))).toMatchObject({ minTradeUsd: 5, minTradeNavFrac: 0.01 });
+    expect(tradeConfigFromEnv(e({ TRADE_MIN_NAV_PCT: " 0.25 " }))).toEqual({ minTradeNavFrac: 0.0025 });
+  });
+  it("throws on a malformed or negative value rather than silently falling back", () => {
+    expect(() => tradeConfigFromEnv(e({ TRADE_MIN_USD: "five" }))).toThrow(/TRADE_MIN_USD/);
+    expect(() => tradeConfigFromEnv(e({ TRADE_MIN_NAV_PCT: "-1" }))).toThrow(/TRADE_MIN_NAV_PCT/);
   });
 });

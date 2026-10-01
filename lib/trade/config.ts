@@ -56,7 +56,7 @@ export const DEFAULT_TRADE_CONFIG: TradeConfig = {
   muEnter: 0.08, muExit: 0.03, rEnter: 0.6, rExit: 0.35,
   tradeBand: 0.025, lockBusinessDays: 5, markMode: "settled",
   minOrderUsd: 25, maxOrdersPerRun: 40, maxNotionalFrac: 1.0,
-  fractionalShares: true, minEnterUsd: 1, minTradeUsd: 5, minTradeNavFrac: 0.01, marketOnlyBelowUsd: 200,
+  fractionalShares: true, minEnterUsd: 1, minTradeUsd: 1, minTradeNavFrac: 0.005, marketOnlyBelowUsd: 200,
   marketMaxSpread: { large: 0.01, mid: 0.01, small: 0.025 },
   useQualityTilt: true,
   cronTimeET: "09:45", cronTimesET: ["09:45"],
@@ -83,6 +83,30 @@ export function bucketFor(marketCapUsd: number | null): LiquidityBucket {
 }
 
 const BUCKETS: LiquidityBucket[] = ["large", "mid", "small"];
+
+/**
+ * Env overrides for the knobs the owner tunes on the server (applied by the production entry points:
+ * trade:cron, the scheduler, trade:execute, trade:plan, trade:review). Unset → the defaults above.
+ *   TRADE_MIN_USD       ADD/TRIM floor in dollars (default 1)
+ *   TRADE_MIN_NAV_PCT   ADD/TRIM floor as a PERCENT of NAV (default 0.5 = 0.5%); the larger of the two applies
+ * Every fill starts a 5-business-day lock, so a lower floor means more tickers locked by small rebalances.
+ * A malformed value throws — a floor that silently fell back would trade on a setting the owner didn't choose.
+ */
+export function tradeConfigFromEnv(env: NodeJS.ProcessEnv = process.env): Partial<TradeConfig> {
+  const num = (name: string): number | undefined => {
+    const raw = env[name]?.trim();
+    if (raw == null || raw === "") return undefined;
+    const v = Number(raw);
+    if (!Number.isFinite(v) || v < 0) throw new Error(`${name}=${JSON.stringify(env[name])} must be a number >= 0`);
+    return v;
+  };
+  const out: Partial<TradeConfig> = {};
+  const usd = num("TRADE_MIN_USD");
+  const pct = num("TRADE_MIN_NAV_PCT");
+  if (usd != null) out.minTradeUsd = usd;
+  if (pct != null) out.minTradeNavFrac = pct / 100;
+  return out;
+}
 
 export function resolveTradeConfig(overrides: Partial<TradeConfig> = {}): TradeConfig {
   const cfg = { ...DEFAULT_TRADE_CONFIG, ...overrides };
