@@ -1,6 +1,6 @@
 {
-  "judgmentSha256": "d678ba20deba58bf4fa0209376d204b3c65cf861b95d64c55a9e48071c88b4da",
-  "reviewedAt": "2026-10-02T21:32:01Z",
+  "judgmentSha256": "10e201afb088322be76ba617eacf0b8f9716f05e5b019d45886ffe9ae812703f",
+  "reviewedAt": "2026-10-02T21:33:16Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
   "verdict": "needs-fix-round",
@@ -302,8 +302,8 @@
       "quote": "Our BUY rests on a raised 2026 outlook backed by preseason orders",
       "issue": "Paraphrase repetition introduced or left by the rewrite. (1) The outlook backed by preseason orders is stated four times: analystCommentary 'lifted Attachments preseason orders, and management raised its 2026 outlook again', thesis 'The raised outlook rests on preseason orders already in hand', scenarioCommentary 'the raised outlook is backed by preseason orders', and finalRecommendation.body[0] (quoted). (2) The weather-as-Bear point is made three times: analystCommentary 'Weather is the variable the company does not control, and our Bear case is built on a weak winter', scenarioCommentary 'depend on a winter nobody can forecast', and finalRecommendation.body[1] 'The Bear case is the cost of being wrong on weather'.",
       "fix": "State that the raised outlook rests on preseason orders once in the summary layer (the thesis) and refer to it in words elsewhere. Drop it from scenarioCommentary's weighting sentence and from the opening of finalRecommendation.body[0]. Make the weather-as-Bear point once, in scenarioCommentary next to the weights. Cut the closing sentence of analystCommentary and the 'cost of being wrong on weather' clause in finalRecommendation.body[1].",
-      "status": "open",
-      "note": "Part (1) is fixed: the outlook-backed-by-preseason point is gone from scenarioCommentary and finalRecommendation.body[0]; analystCommentary keeps only the event as its one-line rationale. Part (2) is still open: analystCommentary still closes 'Weather is the variable the company does not control, and our Bear case is built on a weak winter', and finalRecommendation.body[1] still says 'The Bear case is the cost of being wrong on weather', alongside scenarioCommentary's 'depend on a winter nobody can forecast'. Cut those two sentences as the fix said."
+      "status": "addressed",
+      "note": "'The Bear case is the cost of being wrong on weather' is gone from finalRecommendation.body[1]. The weather-as-Bear point now appears once as a summary pointer in analystCommentary and is argued once in scenarioCommentary, which is the pointer-and-argument pattern the rubric allows."
     },
     {
       "id": "F-31",
@@ -312,7 +312,8 @@
       "quote": "The Bear price of $32 assumes earnings stall near FY26E consensus of $3.12 instead of growing, and the forward multiple contracts well below today's 13.0x as the market prices in another low-snow year",
       "issue": "The Bear's earnings leg contradicts its own driver, so the downside rests almost entirely on an unstated multiple. The driver has below-average snowfall in the fourth quarter and the next season cutting parts sales and preseason orders, deeper Solutions softness and costs outrunning pricing. risks.idiosyncratic[0] says a dry early winter hits parts sales 'this year and preseason orders next year at once', so FY26 itself would miss consensus. Yet the Bear holds earnings at the full FY26E consensus of $3.12, only about 3% below FY27E's $3.23. The FY23 precedent cited in the same sentence shows diluted EPS falling from $1.63 to $0.98, about 40%. The $32 therefore needs about 10.3x, a multiple the prose never states or argues ('well below today's'). This makes the Bear's earnings case a formality (rubric 5). Separately, the sentence reintroduces $3.12 and 13.0x, which multiplesCommentary already introduced in the same section (the lint flags both).",
       "fix": "Give the Bear an earnings level that follows from its driver, such as FY26 adjusted EPS below the raised range and a lower FY27, argued in words, and state the multiple it is priced at. Then check that the pair still reaches $32, or reset the price and recheck the derived label and reward/risk. Refer back to the consensus EPS and today's forward multiple in words instead of restating $3.12 and 13.0x.",
-      "status": "open"
+      "status": "open",
+      "note": "Partly fixed: the Bear now cuts forward earnings below consensus, which matches its driver, and the restated $3.12 and 13.0x are gone. Still open: neither the earnings level nor the multiple is given, so the $32 cannot be checked, and 'Neither move needs to be extreme to reach that level' asserts something the reader cannot verify. State one grounded pair, for example the $2.90 bottom of the guided adjusted EPS range at about 11x, which reaches $32."
     }
   ]
 }
