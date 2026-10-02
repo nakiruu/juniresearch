@@ -1,0 +1,135 @@
+{
+  "judgmentSha256": "f58bf9e5b457fe60fb1bbd4b340c97fc305f246860804790946e203de932a96f",
+  "reviewedAt": "2026-10-02T21:23:01Z",
+  "reviewer": "claude-opus-5-5",
+  "round": 1,
+  "verdict": "needs-fix-round",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.management.governance",
+      "quote": "the company uses exemptions from Nasdaq rules requiring a majority-independent board and fully independent compensation and nominating committees",
+      "issue": "Over-attribution. The proxy lists three Nasdaq requirements the company is exempt from, then says only \"We use some of these exemptions.\" It does not say which ones. The prose says the company uses all three, which attaches to the proxy a claim it does not make.",
+      "fix": "Follow the proxy: Viant qualifies for all three exemptions and says it uses \"some of these exemptions\", without naming which. If you want a view, base it on the board facts that are captured (three directors named as independent) and say plainly that the proxy excerpt does not say which exemptions are in use.",
+      "status": "open"
+    },
+    {
+      "id": "F-2",
+      "severity": "Critical",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "That balance sheet lets the company keep investing in growth and fund acquisitions such as TVision without borrowing, which lowers the risk of the GAAP losses.",
+      "issue": "Unsupported claim. Nothing on the surface says how TVision was paid for, what it cost, or what cash Viant holds: Cash & ST Investments and Net Debt both show '—', and only the TTM net debt/EBITDA of -6.4x is given. The same unsupported premise appears again in sections.management.capitalAllocation: \"funding growth from internal cash rather than debt is the right approach\". It also puts \"this revenue volatility\" on a series that, as written, only grows.",
+      "fix": "Drop the statement that TVision was funded without borrowing. Argue the cushion from what is on the surface: total debt of $0.00, net debt/EBITDA of -6.4x and FY25 FCF of $51.7M. Say that the TVision consideration and how it was funded are not in the pack. Write the capital-allocation view without assuming a funding route.",
+      "status": "open"
+    },
+    {
+      "id": "F-3",
+      "severity": "Critical",
+      "field": "sections.financials.cashflowCommentary",
+      "quote": "Cash generation is stronger than GAAP earnings because the business is light on capital and the losses include non-cash charges.",
+      "issue": "Unsupported causal claim. No figure for non-cash charges (stock-based compensation, D&A, amortization of acquired intangibles) is on the surface, and the MD&A excerpt has no cash-flow bridge. The 'because' sets out a mechanism the pack does not establish. The section also has no counter-case: it never says that the FY25 FCF of $51.7M sits against FY25 net income of $8.4M and a Q2'26 GAAP net loss, a gap that may not persist.",
+      "fix": "Remove the 'because' clause, or make it an explicit hypothesis with what to watch (for example, a reconciliation in the next 10-Q). Add a counter-case sentence built from figures on the surface: FY25 FCF of $51.7M against FY25 net income of $8.4M, and the Q2'26 net loss of $(1.8) million.",
+      "status": "open"
+    },
+    {
+      "id": "F-4",
+      "severity": "Critical",
+      "field": "sections.management.leadership",
+      "quote": "Their long tenure gives continuity, and the recent acceleration in revenue growth reflects well on execution.",
+      "issue": "Recalled or unsupported executive claim. The surface gives no tenure for any officer. The proxy calls the brothers 'founders', and the tearsheet says the company was founded in 1999, but nothing links the two or gives role tenure. 'Reflects well on execution' is a causal credit the pack does not establish, since the MD&A credits customer adoption of newer products. The paragraph otherwise restates titles, offers no counter-case and reaches no view a reader can act on.",
+      "fix": "Drop 'long tenure', or limit it to what the proxy says: Tim, Chris and Russ Vanderhook are described as founders. Replace the execution credit with a view that rests on the surface. One example is a CEO who is also Chairman of a controlled company, where the same founders hold the votes. Add the counter-case that leadership and control sit in the same hands.",
+      "status": "open"
+    },
+    {
+      "id": "F-5",
+      "severity": "Important",
+      "field": "sections.management.governance",
+      "quote": "at $14,500 per flight hour during its initial term, renewing annually",
+      "issue": "Stale fact presented without its date. The lease was signed on April 19, 2022, and $14,500 per flight hour was the rate for the initial one-year term (2022 to 2023). The proxy says the rate is adjusted by mutual agreement at each renewal, so the current rate is not on the surface. As written, a reader will take $14,500 as today's rate. No amount paid under the lease is captured either.",
+      "fix": "Date the lease: entered on April 19, 2022, at $14,500 per flight hour for its initial one-year term. Say the rate is renegotiated each year and the current rate and total amounts paid are not in the excerpt.",
+      "status": "open"
+    },
+    {
+      "id": "F-6",
+      "severity": "Important",
+      "field": "sections.management.insiderOwnership",
+      "quote": "Capital V LLC held 42.86% of total voting power, Tim Vanderhook 13.63% and Chris Vanderhook 13.77%, with overlapping holdings among them. All executive officers and directors as a group held 29.43% of total voting power.",
+      "issue": "Restatement, not judgment, and one unsupported qualifier. (a) 'with overlapping holdings among them' is not shown in the excerpt, because the proxy footnotes were not captured. (b) The paragraph lists percentages without reading them for the holder. It does not say that the Capital V stake of 42.86%, which sits outside the 29.43% group figure, is what puts the Vanderhook Parties over the 50% threshold behind controlled-company status. It does not say what that lets them do: elect the whole board and keep the exemptions. A reader comparing 29.43% here with the 'more than 50%' in governance will see a contradiction that the prose does not resolve.",
+      "fix": "Remove 'overlapping holdings', or say the footnotes that would show any overlap are not captured. Explain that the 29.43% group figure leaves out Capital V's 42.86%, and that the proxy puts the Vanderhook Parties' combined voting power above 50%. Then say what that control means for outside holders: board elections, the committee exemptions, and the Class B exchange right. Name each figure once.",
+      "status": "open"
+    },
+    {
+      "id": "F-7",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[1].driver",
+      "quote": "The shares settle near the top of the 52-week range, still below the lowest Street target of $17.00.",
+      "issue": "The Base case is not anchored to a valuation. Its $14.50 implied price, which carries 45% of the weight, is pinned to a trading-range level rather than to a multiple, a guided figure or an argument about earnings. multiplesCommentary lists five multiples (35.0x, 20.3x, ~15.6x, 2.1x, 20.7x) and never says which one supports Base or the $13–$16 band. That paragraph is a list of Facts-block figures with no view, a rubric item 4 failure. It also sets the adjusted-basis ~15.6x FY27E multiple beside the GAAP trailing 35.0x without saying the two are not comparable, after itself suggesting consensus is on an adjusted basis.",
+      "fix": "Anchor Base in words to a multiple on the surface. One option is to say what forward P/E the market would have to pay on consensus FY27E EPS of $0.79 for the band to hold, without computing a new figure. Alternatively, argue Base from consensus revenue and the margin path. In multiplesCommentary, say which multiple drives the band and how the possible GAAP-versus-adjusted mismatch affects that reading.",
+      "status": "open"
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "sections.businessMoat.durability",
+      "quote": "which is why we keep our target below the Street's despite the growth",
+      "issue": "Cross-section repetition with inconsistent reasoning. The 'target below the Street' claim appears three times with three different rationales. The thesis cites \"GAAP losses and the risks of a controlled company\". scenarioCommentary cites \"the GAAP losses and governance risk\". durability cites the absence of a moat. The thesis should point, valuation should argue, and the moat section should not restate the target.",
+      "fix": "Argue the discount to the Street once, in scenarioCommentary, and include the moat if it is part of the reason. Keep the thesis as a one-line pointer and delete the target clause from durability.",
+      "status": "open"
+    },
+    {
+      "id": "F-9",
+      "severity": "Important",
+      "field": "sections.businessMoat.moatRating",
+      "quote": "NONE",
+      "issue": "Rating and factors are inconsistent. moatRating is NONE, but the first factor (\"Proprietary data and identity\") is rated \"Moderate\" and the third \"Weak-moderate\". A moat of NONE with a Moderate factor needs an explanation, and the durability paragraph does not give one. The report's own decision block computes the moat width as NARROW, so the rendered page carries two different moat readings.",
+      "fix": "Either rate the moat NARROW and argue that the data assets are the narrow source, or keep NONE and explain why a Moderate data factor does not amount to a moat. The 10-Q warns that the platform depends on data access and that switching costs are low; the explanation can rest on that. Use a standard strength scale (Weak, Moderate or Strong) rather than 'Weak-moderate'.",
+      "status": "open"
+    },
+    {
+      "id": "F-10",
+      "severity": "Important",
+      "field": "sections.businessMoat.segments[0].body",
+      "quote": "Revenue comes from platform fees under master service agreements and insertion orders, plus separate service fees for data management, media execution and advanced reporting.",
+      "issue": "Cross-section paraphrase. The revenue model is already told in executiveSummary.companyOverview (\"Viant earns platform fees, charged primarily as a percentage of spend or as a fixed price per thousand impressions, plus fees for its proprietary data, measurement and technology services\"). Likewise, the CTV-shift claim (\"CTV represents a growing portion of activity\") is made here and again in growth.points[1].",
+      "fix": "Keep the revenue model in companyOverview only. Use the segment body for something the reader does not already have, such as why a single segment and the absence of any channel mix limit the read on CTV. Leave the CTV shift to growth.points[1].",
+      "status": "open"
+    },
+    {
+      "id": "F-11",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[0]",
+      "quote": "Customer concentration: the 10-Q says Viant receives a significant amount of revenue from a select number of advertising agency holding companies, and that losing advertising agencies as customers could harm the business.",
+      "issue": "Restatement, not judgment. idiosyncratic[0], [1] and [2] each paraphrase a line from the 10-Q risk-factor summary. None gives a view on likelihood, the mechanism, the size of the hit relative to the figures on the page, or what to watch. Agency concentration is also restated in scenarioCommentary (\"because revenue depends on a small number of agency holding companies\") and in finalRecommendation.body[1]. That makes the risks section the third telling of the claim, not the place where it is argued.",
+      "fix": "Make each item argue. Say how the risk would show up in the reported figures, for example contribution ex-TAC growth already trailing revenue (24% against 34%). Tie it to the Bear scenario's -30.6% and name what to watch. Then cut the agency-concentration restatement from scenarioCommentary down to a pointer.",
+      "status": "open"
+    },
+    {
+      "id": "F-12",
+      "severity": "Minor",
+      "field": "meta.subtitle",
+      "quote": "Revenue grew 34% with net cash and positive free cash flow",
+      "issue": "The figure has no period. The 34% is the Q2'26 year-on-year growth, and the subtitle sits next to FY25 figures on the page. In incomeCommentary, \"Gross profit rose 27% to $45.5 million\" follows a sentence that mixes Q2 and first-half figures, which leaves its period ambiguous too.",
+      "fix": "Write 'Second-quarter revenue grew 34%' in the subtitle, and add 'in the quarter' to the gross-profit sentence.",
+      "status": "open"
+    },
+    {
+      "id": "F-13",
+      "severity": "Minor",
+      "field": "sections.risks.idiosyncratic[3]",
+      "quote": "Integration: TVision adds measurement-specific risks, set out in Management.",
+      "issue": "Structure. The TVision risk is argued in management.capitalAllocation and only pointed to from the risks section, which is the reverse of the intended flow. The capital-allocation paragraph spends most of its space restating risk-factor text.",
+      "fix": "Move the TVision risk detail into risks.idiosyncratic[3], and leave capitalAllocation with the allocation judgment and a pointer.",
+      "status": "open"
+    },
+    {
+      "id": "F-14",
+      "severity": "Minor",
+      "field": "sections.risks.idiosyncratic[1]",
+      "quote": "could reduce the availability of data and the effectiveness of the platform",
+      "issue": "Attribution is blended. The privacy risk factor lists reduced data availability as a consequence of actual or perceived failure to comply. It does not say legal obligations themselves reduce it. The cookie and opt-out factor says these 'could cause instability in the advertising technology industry'. 'Effectiveness of the platform' comes from a third factor, about data access.",
+      "fix": "Attribute each consequence to the risk factor that states it, or paraphrase more loosely without merging them into a single 'the 10-Q warns' sentence.",
+      "status": "open"
+    }
+  ]
+}
