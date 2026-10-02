@@ -1,0 +1,180 @@
+{
+  "judgmentSha256": "5c0c549324d9cc104032373d1bdd78908b38c1c4c4e43e0a71172360461e312c",
+  "reviewedAt": "2026-10-02T18:53:56Z",
+  "reviewer": "claude-opus-5-5",
+  "round": 1,
+  "verdict": "needs-fix-round",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "analystCommentary",
+      "quote": "revenue, gross margin, net income and operating cash flow all rose faster than in the year-ago quarter",
+      "issue": "Unsupported claim. The MD&A compares Q2 2026 levels with Q2 2025 levels (revenue +23%, net income +85%, operating cash +42%, gross margin 76% vs 72%); it gives no Q2 2025 growth rates, so nothing on the surface shows these lines 'rose faster than in the year-ago quarter' (an acceleration claim). Gross margin is a level, not a growth rate, so the sentence also mixes quantities.",
+      "fix": "Say what the MD&A says: each line rose against the year-ago quarter (revenue up 23%, net income up 85%, gross margin to 76% from 72%). Drop the acceleration framing.",
+      "status": "open"
+    },
+    {
+      "id": "F-2",
+      "severity": "Critical",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "no debt",
+      "issue": "Unsupported inference, made in three places. The Facts block shows Total Debt as 0.0 ($B, rounded) for FY21 and '—' (not reported) for FY22–FY25; Net debt/EBITDA and interest coverage are also '—'. A dash is missing data, not zero, and 0.0 in $B is a rounding. Same claim in sections.financials.balanceCommentary ('Red Violet carries no debt in any year from FY22 to FY25 in our data') and sections.finalRecommendation.body[0] ('free of debt'). No surface source states the company has no debt.",
+      "fix": "Do not assert zero debt. Lean on what is on the surface: $50.0 million of cash at June 30, 2026, the 10.88 current ratio and the ~$109.0 million August 2026 offering. If a debt statement is wanted, say the data shows no reported debt for FY22–FY25 and that the gap is a data gap, once, in balanceCommentary only.",
+      "status": "open"
+    },
+    {
+      "id": "F-3",
+      "severity": "Critical",
+      "field": "sections.management.capitalAllocation",
+      "quote": "Buying stock at the lower prices earlier in 2026 and issuing it after the share price rose is sound sequencing.",
+      "issue": "Unsupported claim. The surface gives the buyback average price ($41.87) but no offering price and no price series around August 2026, so 'issuing it after the share price rose' is not shown, and backing it out of $109.0 million / 1,916,667 shares would be a computed figure the contract forbids. The judgment also ignores scale: 74,500 shares repurchased against 1,916,667 issued is net issuance, so praising the 'sequencing' misreads the holder's position.",
+      "fix": "Drop the sequencing verdict or restate it without an offering price: the company repurchased 74,500 shares year to date at $41.87 and then issued 1,916,667 new shares in August 2026, so the share count rose on net. Read that for the holder (net dilution in exchange for ~$109.0 million of cash).",
+      "status": "open"
+    },
+    {
+      "id": "F-4",
+      "severity": "Critical",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "Consensus also expects EPS to grow much more slowly than revenue: $1.66 for FY26E and $1.76 for FY27E, against revenue of $106.7M and $120.8M. The data we hold does not explain that gap",
+      "issue": "Wrong period and basis. From FY25 diluted EPS of $0.91 to FY26E $1.66, consensus EPS grows far faster than revenue ($90.3M to $106.7M); only FY26E to FY27E is slower. The jump from $0.91 to $1.66 also points to a basis difference: the Q2 2026 MD&A shows GAAP diluted EPS of $0.34 against adjusted diluted EPS of $0.50, so the consensus may be on an adjusted basis while the 70.4x trailing P/E is GAAP. That is a source disagreement (rubric 8) the report passes over. The August 2026 issue of 1,916,667 shares is also on the surface and bears on per-share growth, so 'the data we hold does not explain that gap' is not accurate either.",
+      "fix": "Name the period (FY26E to FY27E) for the slowdown. State once that consensus EPS may not be on the same GAAP basis as the trailing EPS behind 70.4x (citing the $0.34 GAAP vs $0.50 adjusted Q2 split), and say which basis the valuation uses. Mention the new shares as one factor that bears on per-share growth, without computing a figure.",
+      "status": "open"
+    },
+    {
+      "id": "F-5",
+      "severity": "Critical",
+      "field": "sections.financials.cashflowCommentary",
+      "quote": "Capital expenditure was only -$563,000 in FY25, so almost all operating cash flow becomes free cash flow.",
+      "issue": "Unsupported inference. The MD&A defines FCF as operating cash flow less purchases of property and equipment and less capitalized costs included in intangible assets. Only the first item (-$563,000) is on the surface; capitalized intangible costs and FY25 operating cash flow are not shown (OCF is 0.0 in $B), so the surface does not establish that FCF is close to OCF.",
+      "fix": "Make the claim with figures on the surface: FY25 FCF of $28.8M is a 31.9% FCF margin, up from 19.7% in FY21. Drop the 'almost all operating cash flow' inference, or note that FCF also deducts capitalized intangible costs that the data does not break out.",
+      "status": "open"
+    },
+    {
+      "id": "F-6",
+      "severity": "Critical",
+      "field": "sections.businessMoat.segments[0].body",
+      "quote": "Pricing contracts are generally annual or longer with auto renewal, which makes most revenue recurring.",
+      "issue": "Unsupported inference. The MD&A says 77% of revenue was 'attributable to customers with pricing contracts' and that pricing contracts can carry a monthly fee, transactional usage, or 'a combination of both'. Revenue from contract customers therefore includes usage-based revenue, so the source does not establish that 77% (or 'most') of revenue is recurring. The moatFactors[1] retention argument rests on this reading.",
+      "fix": "Quote the MD&A's own phrasing: 77% of Q2 2026 revenue was attributable to customers with pricing contracts, which are generally annual or longer with auto renewal. Then say that this gives visibility, while noting that contract customers can still pay partly on usage.",
+      "status": "open"
+    },
+    {
+      "id": "F-7",
+      "severity": "Critical",
+      "field": "sections.growth.points[1]",
+      "quote": "Customer additions remain steady: IDI added 447 customers and FOREWARN added 25,493 users in the second quarter.",
+      "issue": "Unsupported characterization. 'Remain steady' describes a series, but the surface gives additions for one quarter only (Q2 2026) plus year-ago end-of-period counts. No prior-quarter additions are on the page to show steadiness.",
+      "fix": "Drop 'remain steady'. Give the Q2 2026 additions, set the period-end counts against the year-ago counts (10,869 vs 9,549; 443,173 vs 346,671) if growth needs a comparison, and do not repeat the figures already given in the Segments body.",
+      "status": "open"
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "a weighted fair value of $78",
+      "issue": "The page renders the probability-weighted fair value as $78.40 (0.25×$100 + 0.45×$82 + 0.30×$55). The contract requires calls figures to be quoted with the page's rounding, so '$78' does not match the rendered figure.",
+      "fix": "Write '$78.40', matching the scenario table.",
+      "status": "open"
+    },
+    {
+      "id": "F-9",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "Bear carries more weight than Bull because the starting multiple is high: a modest disappointment would cost more than a modest beat would add.",
+      "issue": "Calls coherence. The argument is about payoff size (asymmetry), which is already captured in the gap between the implied prices ($100 Bull vs $55 Bear). It is not a reason the Bear outcome is more likely. The 30% vs 25% probability split is therefore not argued. The Bear driver also lists three alternative triggers joined by 'or' and anchors to 'the levels the stock traded at earlier in its 52-week range' (price levels, not multiples; no multiple history is on the surface), so $55 is not tied to anything stated.",
+      "fix": "Argue the Bear probability with evidence that makes it likely (for example, the consensus EPS slowdown from FY26E to FY27E, or deployment risk on ~$109.0 million). Keep the asymmetry point for the implied-price gap. Anchor $55 in words (for example, the multiple at which it sits) and make the Bear driver one coherent path, not a list of alternatives.",
+      "status": "open"
+    },
+    {
+      "id": "F-10",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "Investors paying for the adjusted figures should keep the GAAP margin in view, since that is what the trailing P/E is built on.",
+      "issue": "The counter-case is a formality and attaches a figure to the wrong period. The 19% GAAP margin quoted is for the quarter and is itself up from 12%, so it does not cut against the bull reading. The trailing P/E rests on TTM earnings, where the Facts block gives a 16.5% net margin, not on the Q2 19%.",
+      "fix": "Make a real counter-case: for example, set the 42% adjusted EBITDA margin against the 16.5% TTM net margin and the 17.9% TTM operating margin, and say what the gap (share-based pay, amortization) means for the multiple. Tie the P/E to the TTM figure, not the quarter.",
+      "status": "open"
+    },
+    {
+      "id": "F-11",
+      "severity": "Important",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "The August 2026 offering of 1,916,667 shares brought net proceeds of approximately $109.0 million",
+      "issue": "Judgment, not restatement (rubric 4). The offering is the largest change to the holder's position in the period, but the report never reads the share issue against the ~16.05M shares outstanding, and never says whether the ~16.05M (derived from the October 2, 2026 market cap) already includes the new shares. 'Dilution' appears only as an abstract risk (executiveSummary.risks[3], risks.idiosyncratic[3]).",
+      "fix": "Once, in balanceCommentary or capitalAllocation, set 1,916,667 new shares against ~16.05M shares outstanding in words (for example, 'more than a tenth of the share count'), without computing a new percentage. State that the per-share story now has to absorb that issuance.",
+      "status": "open"
+    },
+    {
+      "id": "F-12",
+      "severity": "Important",
+      "field": "sections.risks.systemic",
+      "quote": "IDI serves collections, financial services and insurance customers whose demand moves with the credit cycle.",
+      "issue": "Unsupported causal claim. Nothing on the surface links IDI demand to the credit cycle, and insurance demand is not credit-driven. 'a slowdown in housing activity would affect user growth' is likewise an inference the pack does not make (FOREWARN users grew to 443,173 with no housing data on the page).",
+      "fix": "Frame these as the analyst's view ('in our view, ... could be exposed to ...') and name the customer groups the MD&A lists, without asserting a cyclical link the source does not make.",
+      "status": "open"
+    },
+    {
+      "id": "F-13",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[1]",
+      "quote": "the 10-K warns that concerns about the collection, use and sharing of personal information, and compliance with state and federal data privacy laws, could raise costs or restrict the business.",
+      "issue": "Over-attribution. The 10-K excerpt says privacy concerns could harm reputation, impair customer attraction and retention, or bring claims, and that complying with state and federal privacy and breach-notification laws could carry significant costs. It does not say they could 'restrict the business', and it does not frame this as regulatory change. The 'Privacy regulation' label and risks.systemic ('Changes to federal or state privacy law could affect the whole identity-data industry') attach a regulatory-change risk to the 10-K that it does not carry.",
+      "fix": "Paraphrase the 10-K accurately (reputation, customer loss, claims or litigation, and compliance costs under state and federal privacy and breach-notification laws). Present any regulatory-change risk as the analyst's own view, once.",
+      "status": "open"
+    },
+    {
+      "id": "F-14",
+      "severity": "Important",
+      "field": "sections.businessMoat.moatFactors[0].body",
+      "quote": "Assembling and maintaining such datasets takes time and money, which deters small entrants.",
+      "issue": "Unsupported causal claims in the moat argument. Nothing on the surface establishes entry costs or deterrence. The same is true of moatFactors[2] ('a distribution channel into the real estate industry that a new entrant would need years to build'). These are the load-bearing reasons for NARROW, and neither rests on a figure.",
+      "fix": "Mark them as the analyst's view, or ground them in figures on the page: the 660 REALTOR Associations contracted, the 77% pricing-contract share, and IDI's growth from 9,549 to 10,869 billable customers. Drop 'years to build'.",
+      "status": "open"
+    },
+    {
+      "id": "F-15",
+      "severity": "Important",
+      "field": "sections.executiveSummary.risks[0]",
+      "quote": "A high multiple that leaves little room for any slowdown in growth.",
+      "issue": "Cross-section repetition (paraphrase). The claim that a high multiple makes a modest slowdown costly is argued in full in four places: here; risks.idiosyncratic[4] ('a modest slowdown in growth could cause a sharp fall in the share price'); valuation.scenarioCommentary ('a modest disappointment would cost more than a modest beat would add'); and risks.systemic ('As a high-multiple small-cap stock'). The 70.4x figure also recurs in meta.subtitle, analystCommentary and multiplesCommentary.",
+      "fix": "Argue the multiple-compression mechanism once, in Valuation. Keep the executive-summary risk as a pointer, and have risks.idiosyncratic[4] and risks.systemic refer back in words rather than restating it.",
+      "status": "open"
+    },
+    {
+      "id": "F-16",
+      "severity": "Important",
+      "field": "sections.management.capitalAllocation",
+      "quote": "The larger test is still ahead: the company now has to earn an adequate return on the new cash",
+      "issue": "Cross-section repetition (paraphrase). The 'return on the offering cash' claim is made in substance five times: analystCommentary ('How well that cash is deployed matters more to the next year than the core business does'); financials.balanceCommentary ('the return on equity depends on how the proceeds are used'); growth.points[2] ('an expensive one would dilute returns on a much larger equity base'); here; and risks.idiosyncratic[3] ('new shares dilute existing holders if the cash earns a low return'). Separately, the 'cash beyond operating needs' claim appears in analystCommentary ('holds far more cash than its operations need') and balanceCommentary ('far larger than the business needs to run').",
+      "fix": "Argue deployment risk once (capitalAllocation is the natural home), with the mechanism and what to watch. Leave analystCommentary and the executive-summary items as pointers, and cut the restatements in balanceCommentary, growth.points[2] and risks.idiosyncratic[3] to a back-reference.",
+      "status": "open"
+    },
+    {
+      "id": "F-17",
+      "severity": "Important",
+      "field": "sections.finalRecommendation.body[0]",
+      "quote": "The business is growing, profitable and free of debt, but the price already reflects most of that.",
+      "issue": "Cross-section repetition (paraphrase). The 'good business, full price' verdict is restated in meta.subtitle, analystCommentary ('We like the business; we do not find the price attractive enough to buy'), executiveSummary.thesis.body ('The business case is good... The valuation case is weaker... already discount most of the outcome') and here. The upgrade conditions are also given twice: thesis.body ('We would need either a lower entry price or evidence that the offering proceeds are being deployed into value-creating acquisitions to move to BUY') and finalRecommendation.body[1] ('We would move to BUY on a meaningfully lower share price, or on evidence that the offering proceeds are being invested at attractive returns').",
+      "fix": "Keep the verdict in the thesis and state the upgrade and downgrade conditions once, in finalRecommendation. Rewrite analystCommentary's closing line and finalRecommendation.body[0] so they add something (for example, the specific price or evidence that would change the call) rather than repeat the thesis.",
+      "status": "open"
+    },
+    {
+      "id": "F-18",
+      "severity": "Minor",
+      "field": "sections.growth.points[3]",
+      "quote": "the MD&A describes it as currently tailored for that industry",
+      "issue": "Repetition. FOREWARN's real-estate concentration is stated in executiveSummary.companyOverview, businessMoat.moatFactors[2] ('ties FOREWARN's growth to a single industry'), here, and risks.systemic ('FOREWARN is tailored for the real estate industry'). The technology-obsolescence risk is likewise quoted from the 10-K in both moatFactors[0] and risks.idiosyncratic[2].",
+      "fix": "State the single-industry concentration once (risks.systemic or moatFactors[2]) and refer back in words elsewhere. Quote the 10-K obsolescence language once.",
+      "status": "open"
+    },
+    {
+      "id": "F-19",
+      "severity": "Minor",
+      "field": "analystCommentary",
+      "quote": "the company now holds far more cash than its operations need",
+      "issue": "Voice tic. 'far' is used as an intensifier four times: analystCommentary ('far above the low of $33.40', 'far more cash'), balanceCommentary ('far larger than the business needs to run') and scenarioCommentary ('the downside is far larger than the expected return'). 'was strong on every line' (analystCommentary) is also an unearned characterization.",
+      "fix": "Let the figures carry the comparison and vary or drop the intensifier.",
+      "status": "open"
+    }
+  ]
+}
