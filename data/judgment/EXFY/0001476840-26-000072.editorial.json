@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "46075be5b746f76a6f9833fff0f3b2d058d4e3edd88793036cfdb70416cb6d96",
-  "reviewedAt": "2026-10-02T21:47:18Z",
+  "judgmentSha256": "b01573d8696b6b583b742f88a28a62ac9a1bf035475675b9dda8fd78f6b728b2",
+  "reviewedAt": "2026-10-02T21:48:43Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved",
   "findings": [
     {
       "id": "F-1",
@@ -242,7 +242,8 @@
       "quote": "Free cash flow has been positive in every year of the FY21–FY25 series, so cash generation is not new",
       "issue": "Repetition introduced by the rewrite. The positive-FCF-every-year claim is stated in analystCommentary, then restated in cashflowCommentary ('The vendor's FCF margin has been positive in each year from FY21 to FY25, ranging from 1.9% to 19.1%'). Likewise, the flat-consensus point is made in growth.points[1] ('imply a lower year than FY25 followed by a flat one'), again in scenarioCommentary ('consensus revenue is roughly flat between FY26E and FY27E') and in the thesis ('the Street expects little change through FY27E').",
       "fix": "Argue the FCF series once, in Cash flow, and have analystCommentary point to it in words. Introduce the consensus revenue path once, in Growth, and have scenarioCommentary refer back to it ('the flat consensus path in Growth').",
-      "status": "open"
+      "status": "addressed",
+      "note": "FCF series now argued only in Cash flow (analystCommentary points to it); consensus path stated only in Growth, with thesis and scenarioCommentary referring back."
     },
     {
       "id": "F-25",
@@ -251,7 +252,8 @@
       "quote": "so compensation decisions are not checked by an independent majority of votes",
       "issue": "Unsupported inference introduced by the rewrite. The proxy excerpt says nothing about how executive compensation is set or approved: no compensation committee, no say-on-pay vote, no description of who approves these employment arrangements. Stockholder votes do not ordinarily decide individual pay, so the claim does not follow even from the voting figures.",
       "fix": "Drop the sentence, or limit it to what the surface supports: the related-party employees are also LT holders whose shares sit in the Voting Trust, so they are inside the bloc that controls the vote.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Compensation claim removed; governance now says only that the related-party employees hold LT shares in the Voting Trust and sit inside the controlling bloc."
     },
     {
       "id": "F-26",
@@ -260,7 +262,8 @@
       "quote": "Barrett's stake alone gives him over a third of the vote, and the group sits close to a majority, so outside Class A holders cannot change the board or block strategy.",
       "issue": "Faulty reasoning in the rewritten read. A group at 48.9% does not by itself stop outside holders; the operative fact is the Voting Trust's 83.6% of voting power, which Governance gives. As written, the conclusion is drawn from the wrong figure, and the reader is not told what Barrett's 36.7% lets him do (for example, block matters that need a supermajority), which the surface cannot support either.",
       "fix": "Tie the 'cannot change the board' conclusion to the Voting Trust's 83.6% (pointing back to Governance). Describe Barrett's and the group's stakes as shares of that bloc, without claiming powers the excerpt does not describe.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Control conclusion now tied to the Voting Trust's control of the vote, pointing back to Governance's 83.6%; no unsupported powers claimed for Barrett or the group."
     }
   ]
 }
