@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "89166074fe6cd35d36fad3d245c3ec983c9e01674fa762021ac3a2de19d04b36",
-  "reviewedAt": "2026-10-02T17:00:01Z",
+  "judgmentSha256": "c9d6ee2c454f1cb4ad83c18cb140b5f769e4636890f6cb621e605b08a30ba193",
+  "reviewedAt": "2026-10-02T17:53:07Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved-with-minors",
   "findings": [
     {
       "id": "F-1",
@@ -133,7 +133,7 @@
       "issue": "ISO dates remain in prose: governance opens 'Under the 2026-03-12 proxy statement' and leadership says 'dated 2026-03-12'. The rubric asks for dates in prose form.",
       "fix": "Write 'March 12, 2026'.",
       "status": "open",
-      "note": "Still open in round 2 re-check: leadership 'dated 2026-03-12' and governance 'Under the 2026-03-12 proxy statement' are unchanged. The author's Editorial findings block again lists only F-15 to F-18, so F-13 has still not reached the author."
+      "note": "Still open in the owner-authorized extra round 2 re-check: leadership 'dated 2026-03-12' and governance 'Under the 2026-03-12 proxy statement' are unchanged. The author's Editorial findings block still lists only F-15 to F-18, so this finding has not reached the author."
     },
     {
       "id": "F-14",
@@ -143,7 +143,7 @@
       "issue": "Spans wrap levels, not signed changes: balanceCommentary 'it stands at {- 0.98 -} on a trailing basis' and, new in this rewrite, cashflowCommentary 'and then {+ 15.8% +}'. Spans are reserved for signed changes or explicit positives and negatives.",
       "fix": "Remove both spans, or wrap the explicit judgment instead, for example '{- below one -}'.",
       "status": "open",
-      "note": "Still open in round 2 re-check: balanceCommentary '{- 0.98 -}' and cashflowCommentary '{+ 15.8% +}' both still wrap levels. As with F-13, this finding has still not reached the author's brief."
+      "note": "Still open in the extra round 2 re-check: balanceCommentary '{- 0.98 -}' and cashflowCommentary '{+ 15.8% +}' still wrap levels. This finding has not reached the author's brief either."
     },
     {
       "id": "F-15",
@@ -192,7 +192,8 @@
       "quote": "which ties revenue to the fleet already in service rather than to new deliveries alone",
       "issue": "The rewrite of moatFactors[0] adds a claim that two other places already make. Aftermarket revenue tracks the engines in service, said three times in different words: moatFactors[0] ('ties revenue to the fleet already in service rather than to new deliveries alone'), growth.points[3] ('aftermarket revenue tracks the engines already flying, so a larger fleet could lift it') and durability ('aftermarket demand follows flight activity'). The rubric treats a paraphrase in two places as repetition. systemic already points back correctly ('named under the moat').",
       "fix": "Make the fleet-in-service claim once, in moatFactors[0], where the moat argument sits. Have growth.points[3] point back in words, for example 'the aftermarket tie noted under the moat could lift revenue as the fleet grows; the pack carries no installed-base data', and have durability use the cycle point without restating the mechanism.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed: growth.points[3] now points back ('the aftermarket tie noted under the moat') and adds only the missing-data caveat. durability names the aviation and defense-budget cycle without restating the fleet mechanism. The claim is made once, in moatFactors[0]. See F-22 for a pointer the edit left stale."
     },
     {
       "id": "F-20",
@@ -201,7 +202,8 @@
       "quote": "Our Bull and Base cases rest on FY27E EPS of $9.82, and our Bear case on FY26E-level earnings.",
       "issue": "The Bull driver rests on FY27E EPS 'comfortably above the $9.82 consensus'. $430 at about 39.5x implies roughly $10.90. So the Bull does not rest on $9.82. The F-15 fix text suggested this wording and caused the slip.",
       "fix": "Say the Base rests on FY27E EPS of $9.82, the Bull on FY27E earnings above it, and the Bear on FY26E-level earnings.",
-      "status": "open"
+      "status": "open",
+      "note": "Still open: multiplesCommentary is unchanged and still says the Bull rests on $9.82, while the Bull driver needs FY27E EPS 'comfortably above' it. Not in the author's brief."
     },
     {
       "id": "F-21",
@@ -210,6 +212,16 @@
       "quote": "the FY27E recovery slips",
       "issue": "Calling FY27E a 'recovery' assumes FY26E earnings fall below FY25. multiplesCommentary qualifies that comparison as possibly not like for like (consensus mean against reported diluted EPS, see F-10). The Bear driver ('the FY27E recovery slips') and scenarioCommentary ('needs the FY27E recovery to slip; neither step requires a collapse') treat the dip as established. In scenarioCommentary, 'neither step' also has only one step to refer to.",
       "fix": "Use 'the FY27E earnings step', as growth.points[2] does, in place of 'recovery'. Rewrite the scenarioCommentary clause so 'neither step' has two antecedents, or drop it.",
+      "status": "open",
+      "note": "Still open: the Bear driver and scenarioCommentary still say 'the FY27E recovery slips', and 'neither step' still has one antecedent. Not in the author's brief."
+    },
+    {
+      "id": "F-22",
+      "severity": "Minor",
+      "field": "sections.risks.systemic; sections.businessMoat.durability",
+      "quote": "The cyclical exposures named under the moat, air travel for the aftermarket and government budgets for defense, are the main macro risks here.",
+      "issue": "The F-19 edit removed the aftermarket-to-flight-activity link from durability, which now reads only 'the cycle in commercial aviation and in government defense budgets'. systemic still points back to the moat for 'air travel for the aftermarket', a pairing the moat no longer states in those terms. The parenthetical now restates the exposures instead of pointing to them, and the pointer is slightly stale.",
+      "fix": "Shorten systemic's opening to a plain pointer, for example 'The aviation and defense-budget cycles named under the moat are the main macro risks here', and drop the parenthetical pairing.",
       "status": "open"
     }
   ]
