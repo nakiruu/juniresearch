@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "d5018fd0f45c13cadc7ebd7bb46523b696329c73cdade248fafb52e0eee0dc0f",
-  "reviewedAt": "2026-10-02T20:05:47Z",
+  "judgmentSha256": "7db40664f82a8d990acb2b69123ebf92a63beb4f7470d571566ab40675171c84",
+  "reviewedAt": "2026-10-02T20:06:41Z",
   "reviewer": "Claude Opus 5.5 (claude-opus-5-5)",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved",
   "findings": [
     {
       "id": "F-1",
@@ -21,8 +21,8 @@
       "quote": "Volume grew by $11 billion in the second quarter, which supports organic growth beyond the acquisitions.",
       "issue": "This is an inference the source does not make. The MD&A gives the $11 billion (22%) volume increase as a year-over-year comparison with the second quarter of 2025, not growth within the quarter. It lists 'our recent acquisitions' as a separate driver, but it never says the volume increase is organic. The volume definition in the Q2 2026 shareholder letter includes the international payments platform, so acquired volume may be in it. The same defect appears in sections.businessMoat.durability: 'steady growth in volume suggests merchants value the platform'. The surface carries one volume data point, so 'steady' is not shown.",
       "fix": "State it as 'Volume rose $11 billion, or 22%, from the second quarter of 2025'. Do not call it organic unless a source splits it. In durability, drop 'steady' and the inference that merchants value the platform, or frame that as a view resting on one quarter.",
-      "status": "open",
-      "note": "Partly fixed. The 'organic' inference and 'steady' are gone. The point still reads 'Volume grew by $11 billion in the second quarter', with no comparison base, so it can be read as growth within the quarter. The MD&A figure is $11 billion, or 22%, against the second quarter of 2025."
+      "status": "addressed",
+      "note": "Fixed. growth.points[1] now gives $11 billion, or 22%, against the second quarter of 2025. The lint's '22%' repeat warning is a false positive: in growth.points[0] the 22% is FY26E revenue growth, a different quantity."
     },
     {
       "id": "F-3",
@@ -132,8 +132,8 @@
       "quote": "In our view, management's next priority should be deleveraging; further acquisitions or buybacks before interest coverage improves would raise our concern.",
       "issue": "Paraphrase repetition. sections.financials.cashflowCommentary makes the same argument: 'with leverage at current levels, cash flow is better directed to debt reduction until interest coverage improves'. sections.growth.points[2] ('more acquisition spending while leverage is high') and sections.finalRecommendation.body[1] ('if management prioritizes acquisitions over deleveraging') repeat it again. capitalAllocation also restates the buybacks and the debt rise.",
       "fix": "Argue the deleveraging priority once, in capitalAllocation. Cut the opinion sentence from cashflowCommentary and the leverage clause from growth.points[2]. finalRecommendation can keep the trigger as a short pointer.",
-      "status": "open",
-      "note": "Partly fixed. cashflowCommentary no longer argues the priority. growth.points[2] still repeats the capitalAllocation opinion: 'at a time when we would prefer cash to go to debt reduction'. Cut that clause and leave the argument in capitalAllocation."
+      "status": "addressed",
+      "note": "Fixed. growth.points[2] now points to Management, and cashflowCommentary points there too. The opinion is argued once, in capitalAllocation."
     },
     {
       "id": "F-15",
@@ -250,7 +250,8 @@
       "quote": "The company targets restaurants, hotels, stadiums, theme parks and luxury retailers, which the MD&A describes as the experience economy, and says it serves merchants from small local businesses to multinational enterprises.",
       "issue": "The rewrite removed the unsupported claim but left a restatement that makes no moat argument (rubric 4). It lists the verticals the MD&A names without saying why focusing on them protects Shift4, yet the factor is rated 'Moderate'. Durability (sections.businessMoat.durability) now uses 'revenue has grown at double-digit rates every year in the series' as moat evidence. The report's own income section attributes much of that growth to acquisitions, including Global Blue in FY25, so the growth does not show a merchant-level advantage.",
       "fix": "Either give a reason in words, framed as the analyst's view, for why the vertical focus is a source of advantage, or lower the factor's strength. In durability, say that revenue growth includes acquisitions and is therefore weak evidence of switching costs.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Fixed. The vertical-focus factor now gives a reason, framed as a view, and notes that the filing does not quantify retention. Durability now concedes that much of the revenue growth was acquired."
     },
     {
       "id": "F-28",
@@ -259,7 +260,8 @@
       "quote": "Even so, the business generates enough cash to make a meaningful dent in debt each year if management chooses to.",
       "issue": "Cross-section paraphrase introduced by the rewrite. The same claim, that free cash flow can pay down debt, appears in three places. analystCommentary has 'We think the cash the business generates gives it a credible path to reduce debt'. sections.executiveSummary.thesis.body has 'If Shift4 directs that cash to debt reduction, the equity should re-rate'. The cash-flow paragraph is the third. The surface also cuts against an unqualified version: in FY25, free cash flow of $624M came alongside -$453M of share repurchases, while total debt rose to $4.5B from $2.8B.",
       "fix": "Argue the deleveraging capacity once, in cashflowCommentary, and set it against the FY25 record of buybacks while debt rose. Keep the thesis as the pointer and drop the sentence from analystCommentary.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Fixed. The thesis sentence is gone. cashflowCommentary now weighs the FY25 buybacks against the rise in debt, and analystCommentary is left as the single statement of the view."
     }
   ]
 }
