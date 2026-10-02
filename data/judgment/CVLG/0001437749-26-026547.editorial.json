@@ -1,8 +1,8 @@
 {
-  "judgmentSha256": "ca2c21edfca706ce46d359af1e3eea23c7be05e63e4066d0cbf2853cc3c69d68",
-  "reviewedAt": "2026-10-02T21:43:36Z",
+  "judgmentSha256": "daa5283465ccf2c61bb0137f113204cf4306505fc76adb20edcf62ac507867be",
+  "reviewedAt": "2026-10-02T21:47:14Z",
   "reviewer": "claude-opus-5-5",
-  "round": 1,
+  "round": 2,
   "verdict": "needs-fix-round",
   "findings": [
     {
@@ -12,7 +12,7 @@
       "quote": "Contract repricing is lifting revenue per mile",
       "issue": "The July 29, 2026 release says over half of the 15.1% rise in Combined Truckload freight revenue per total mile came from mix shift among business units, with only the balance from rate increases. Both the subtitle and the thesis (\"a carrier that is repricing its book ... lifted Combined Truckload freight revenue per total mile by {+ 15.1% +}\") credit the gain to repricing, a causal reading the source contradicts. The thesis also leaves out that freight revenue per tractor per week rose only 5.9% because miles per unit fell 8.0%.",
       "fix": "Credit the per-mile gain to mix shift and rate increases, with mix shift as the larger part, as the release does. Say that the 15.1% per-mile gain became a 5.9% per-tractor gain because miles fell. Rewrite the subtitle without the claim that repricing is doing the work.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-2",
@@ -21,7 +21,7 @@
       "quote": "Insurance and claims volatility, which the 10-Q MD&A ties to high retention levels and the Supreme Court's Montgomery decision.",
       "issue": "This is over-attribution. The 10-Q MD&A excerpt refers only to \"a recent Supreme Court decision\". The name Montgomery comes from the July 29, 2026 earnings release. risks.idiosyncratic[0] attributes it correctly, so the two sections also disagree.",
       "fix": "Attribute the decision name to the earnings release, or say \"a recent Supreme Court decision\" in the pointer and leave the attribution to risks.idiosyncratic[0].",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-3",
@@ -30,7 +30,7 @@
       "quote": "Founder control through Class B shares, which carry two votes each.",
       "issue": "Nothing in the Facts or Context names David R. Parker or the Parkers as founders. The company description says only that the company was founded in 1986. The label is recalled, not grounded, and governance repeats it as \"the founding family\". \"Control\" also overstates the excerpt, which gives the Parkers 30.3% of Total shares and does not give their share of voting power (governance itself says so).",
       "fix": "Replace \"founder\" and \"founding family\" with what the proxy supports: \"the Parkers, who hold all Class B shares (two votes each) and 30.3% of Total as of the March 26, 2026 record date\". Use \"significant voting influence\" rather than \"control\" unless a voting-power figure is captured.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-4",
@@ -39,7 +39,7 @@
       "quote": "Our view is that the Class B votes give the founding family decisive influence, so outside holders should expect the long-term contract strategy to proceed on management's timetable regardless of near-term pressure.",
       "issue": "The sentence just before says the excerpt does not give the Parkers' share of total voting power, and this sentence then asserts \"decisive influence\". The excerpt shows 30.3% of Total plus all two-vote Class B shares. That lifts voting weight above the economic share, but nothing on the page shows a majority, and outside 5% holders (8.0%, 6.3% and 5.0% of Total) are not negligible. The judgment goes further than the evidence.",
       "fix": "Read the stake for what it can do on the surface. Two-vote Class B plus 30.3% of Total gives the Parkers a voting weight above their economic share and makes them the largest bloc. The excerpt does not show it is a majority, so say \"strong blocking influence\" and not \"decisive\".",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-5",
@@ -48,7 +48,7 @@
       "quote": "The range sits below the Street consensus target of $51.75 because the Street's view depends on cost normalization that the second quarter did not deliver",
       "issue": "The surface carries only the Street's target numbers and estimates, not its reasoning. Saying what the Street's view \"depends on\" characterizes a source the pack does not carry.",
       "fix": "Ground the gap in the report's own argument, for example: the range sits below the $51.75 consensus target because we do not underwrite the cost normalization that consensus EPS needs until the second half shows it. Leave the Street's reasoning unstated.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-6",
@@ -57,7 +57,7 @@
       "quote": "so the acquired growth is not yet adding profit",
       "issue": "The release ties the Managed Freight margin decline to capacity costs rising faster than contractual rates and to the lapsed 2025 surge contract, not to the acquired assets. The surface cannot isolate the acquired business's profit, so the claim is an inference the source does not make. capitalAllocation repeats it: \"The Q4 2025 Managed Freight acquisition has grown revenue but, so far, not segment profit.\"",
       "fix": "Say that segment operating ratio worsened to 98.3% from 94.2% and give the release's two stated causes (capacity costs and the discontinued surge contract). Make the claim once, in growth, and remove the paraphrase from capitalAllocation.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-7",
@@ -66,7 +66,8 @@
       "quote": "Repurchasing stock in FY25 while free cash flow was negative added to the debt that the plan now aims to reduce.",
       "issue": "This is a causal claim the pack does not establish. Nothing on the surface ties FY25 buybacks to borrowing, and the table shows total debt at $0.3B in both FY24 and FY25. Item 7 also applies: cashflowCommentary already argues the buyback-versus-FCF point (\"we would treat further buybacks as a negative signal on capital discipline\"), and this section's closing sentence restates it.",
       "fix": "Drop the causal link and state the sequencing fact: FY25 buybacks of $36.6M came in a year of negative free cash flow. Argue the capital-discipline point once, in capitalAllocation, and cut the closing buyback sentence from cashflowCommentary.",
-      "status": "open"
+      "status": "addressed",
+      "note": "The causal claim is gone. The rewrite added a new paraphrase of the buyback-funding point to cashflowCommentary, which is filed separately as F-25."
     },
     {
       "id": "F-8",
@@ -75,7 +76,7 @@
       "quote": "diluted EPS dropped from $3.57 in FY21 to $0.27 in FY25, even as revenue held near $1.2B",
       "issue": "This attaches the wrong figure to the period. Revenue in the table is $1.0B (FY21), $1.2B, $1.1B, $1.1B and $1.2B (FY25). It did not hold near $1.2B across the span quoted, and it rose from FY21 to FY25. The durability line \"five years of operating margin falling to 0.3% in FY25\" has the same problem, because operating margin rose from 6.4% in FY21 to 9.9% in FY22 before falling.",
       "fix": "Write \"even as revenue rose from $1.0B in FY21 to $1.2B in FY25\" (both figures are on the surface), and in durability say operating margin fell from 9.9% in FY22 to 0.3% in FY25.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-9",
@@ -84,7 +85,7 @@
       "quote": "the least profitable contracts come up for renewal over the next 12 months",
       "issue": "The 10-Q outlook says \"many of these contracts\" renewing over the next 12 months are \"our least profitable\". The sentence turns \"many\" into all of them. risks.idiosyncratic[1] quotes it correctly, so the two sections disagree.",
       "fix": "Write \"many of the contracts renewing over the next 12 months are, per the 10-Q, among the least profitable\".",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-10",
@@ -93,7 +94,7 @@
       "quote": "the shares return toward the lower half of the $18.00–$49.88 52-week range",
       "issue": "The anchor does not hold. At $33.76 the shares already sit in the lower half of that range, so \"return toward the lower half\" describes no move at all and does not support the $25 implied price. The Bear price has no multiple or earnings anchor on the surface.",
       "fix": "Anchor $25 to something on the page: a multiple on a cut FY26E or FY27E estimate, stated in words without a new computed figure, or a position in the range described correctly, such as \"most of the way back toward the $18.00 52-week low\".",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-11",
@@ -102,7 +103,7 @@
       "quote": "cost volatility keeps the market from paying for FY27E consensus in full; the shares settle at the low end of the Street target range, $43.00.",
       "issue": "The Base anchor is borrowed from the lowest Street target and has no stated multiple. Its rationale also conflicts with the page. At $33.76 the stock already trades at ~12.4x FY27E consensus, so $43 values FY27E EPS at a higher multiple than today, not at a discount for not \"paying in full\". multiplesCommentary meanwhile says the FY26E estimate \"looks exposed\", while the Base adopts a Street target built on those estimates.",
       "fix": "State the multiple on FY27E (or FY26E) that the Base implies and argue it in words. Alternatively, recast the driver as \"the market pays a fuller multiple on FY27E once the third quarter confirms the cost relief\", consistent with multiplesCommentary.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-12",
@@ -111,7 +112,7 @@
       "quote": "We treat this as the dominant systemic risk and the main reason the bear case carries a 30% weight.",
       "issue": "The Bear probability is argued in two places, with different reasons. scenarioCommentary gives 30% because the Bear \"has two independent routes and needs only one of them\". systemic calls the fading upcycle \"the main reason\".",
       "fix": "Argue the 30% once, in scenarioCommentary. In systemic, drop the probability reference and keep the mechanism.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-13",
@@ -120,7 +121,7 @@
       "quote": "Credibility now rests on the third-quarter print matching the modest sequential EPS increase guided in the 10-Q.",
       "issue": "The same claim (wait for the third quarter to confirm the guided modest sequential EPS increase) is argued in three sections beyond the catalyst pointer. The other two are multiplesCommentary (\"We would not pay for FY27E in full until the third quarter shows the sequential improvement management guided to\") and finalRecommendation.body[1] (\"the third-quarter 2026 results against management's guidance of a modest sequential EPS increase\").",
       "fix": "Keep it in finalRecommendation as the signal to watch, keep the pointer in catalysts[0], and refer back in words elsewhere. In leadership, judge credibility on something not said elsewhere, such as the release's 8-cent quantification.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-14",
@@ -129,7 +130,7 @@
       "quote": "The risk to that path is that renewing the least profitable contracts at higher rates may cost volume rather than add margin.",
       "issue": "The renewal volume-versus-margin trade-off is made three times in different words. risks.idiosyncratic[1] has \"If customers refuse higher rates, the company faces a choice between lower volume and continued thin margins\", and finalRecommendation.body[1] has \"renewals that cost volume without lifting margin\".",
       "fix": "Argue the trade-off once, in risks.idiosyncratic[1]. Cut it from growth.points[4] and refer to it in a few words in finalRecommendation.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-15",
@@ -138,7 +139,8 @@
       "quote": "TEL's contribution depends on equipment sale gains, and management already expects their absence to offset part of the third-quarter improvement.",
       "issue": "The point that TEL's earnings rest on equipment sale gains, which management expects to be absent in the third quarter, is made in three sections. incomeCommentary has \"Management's own third-quarter outlook flags the absence of those higher TEL equipment sales\", and moatFactors[2] has \"ties its recent contribution to equipment sale gains, which are transactional\".",
       "fix": "Make the earnings-quality argument once, in incomeCommentary. Keep moatFactors[2] to the durability judgment without retelling the release, and either drop risks.idiosyncratic[4] or replace it with a risk the page does not already carry.",
-      "status": "open"
+      "status": "addressed",
+      "note": "TEL repetition fixed. The replacement risks.idiosyncratic[4] introduced a new repetition, filed as F-24."
     },
     {
       "id": "F-16",
@@ -147,7 +149,7 @@
       "quote": "The 10-Q describes four reportable segments: Expedited (team-driven truckload with tight service standards), Dedicated (committed truckload capacity under contracts targeted at three to five years), Managed Freight (brokerage and transport management services) and Warehousing. The company also holds a 49% equity method investment in Transport Enterprise Leasing (TEL).",
       "issue": "The four-segment description and the TEL investment are told in full in the overview and again in businessMoat.segments[0] (\"The 10-Q, however, reports four reportable segments: Expedited, Dedicated, Managed Freight and Warehousing, plus the equity investment in TEL\"). moatFactors[2] restates the 49% stake a third time.",
       "fix": "Keep the segment list in companyOverview. In businessMoat.segments[0], state the vendor-versus-10-Q disagreement once and refer back to the segments in words. Drop the restated 49%.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-17",
@@ -156,7 +158,7 @@
       "quote": "The cost is that, combined with the two-vote Class B shares, outside holders have limited ability to change strategy or leadership if the margin plan stalls.",
       "issue": "This repeats governance's closing claim (\"outside holders should expect the long-term contract strategy to proceed on management's timetable regardless of near-term pressure\") in different words. One claim appears twice in adjacent subsections.",
       "fix": "Make the outside-holder consequence once, in insiderOwnership where the stake is quantified. End governance on the board and pay judgment.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-18",
@@ -165,7 +167,7 @@
       "quote": "Free cash flow was negative in FY25, net debt sits at 3.1x EBITDA",
       "issue": "The analyst commentary's counter-case and the executive-summary risk pointer make the same two-part claim in near-identical words (\"net debt is 3.1x EBITDA on a trailing basis and FY25 free cash flow was negative\"). The analyst commentary also restates the maintenance and insurance normalization caveat that leadership argues (\"expects those costs not to continue at the elevated level, while Mr. Bunn acknowledges that insurance and claims expense may vary\").",
       "fix": "In analystCommentary, refer to the leverage and cash risk in words (\"a stretched balance sheet\") and leave the figures to risks[1] and the financials sections. Keep the normalization caveat in one place.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-19",
@@ -174,7 +176,7 @@
       "quote": "Gregory Willet, as Trust Protector and Investment Manager, at 8.0% of Total",
       "issue": "The two sources disagree on the spelling. The proxy table spells the name \"Willet\" and the proxy's address footnote spells it \"Willett\". The report picks one without comment.",
       "fix": "Note the inconsistency once (\"the proxy spells the name both Willet and Willett; we use the table's spelling\") or describe the holder by role without the surname.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-20",
@@ -183,7 +185,7 @@
       "quote": "Our view is that",
       "issue": "The phrase opens the concluding sentence in five sections, which is a tic repeated past the point of notice.",
       "fix": "Vary the phrasing or state the view directly.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-21",
@@ -192,7 +194,7 @@
       "quote": "Total revenue rose {+ 9.9% +} to $332.9M while operating income fell to $8.8 million from $11.6 million",
       "issue": "The sentence mixes \"$332.9M\" and \"$8.8 million\", and the mix recurs across sections (for example, balanceCommentary uses \"million\" and companyOverview uses \"M\").",
       "fix": "Pick one unit style within each paragraph, keeping each figure's rounding as it appears on the surface.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-22",
@@ -201,7 +203,7 @@
       "quote": "the market capitalization is ~$856.8M at $33.76",
       "issue": "The price and market capitalization carry no date. The quote is as of October 2, 2026, almost two months after the filing.",
       "fix": "Write \"at $33.76 on October 2, 2026\".",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-23",
@@ -210,6 +212,60 @@
       "quote": "the MD&A summary of the quarter lists no buyback",
       "issue": "The MD&A excerpt is truncated, and its absence of a buyback mention is offered as if it settled whether any repurchase occurred. The literal statement is accurate, but the implication is not established.",
       "fix": "Either drop the clause or say only what was distributed: \"$1.8 million through cash dividends\".",
+      "status": "addressed"
+    },
+    {
+      "id": "F-24",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[4]; sections.businessMoat.moatFactors[1].body",
+      "quote": "Government business: the 10-K risk factors say the business with the Department of War is not subject to a contract, requires significant compliance work and could be terminated at any time.",
+      "issue": "The new risk item repeats a claim that moatFactors[1] already makes from the same 10-K sentence (\"the 10-K says the Department of War business is not subject to a contract and could be terminated at any time\"). The rewrite moved the TEL repetition (F-15) onto a different fact.",
+      "fix": "Make the Department of War point once. Either keep it as the risk and refer to it in a few words in moatFactors[1], or replace risks.idiosyncratic[4] with a risk the page does not already carry.",
+      "status": "open"
+    },
+    {
+      "id": "F-25",
+      "severity": "Important",
+      "field": "sections.financials.cashflowCommentary; sections.management.capitalAllocation",
+      "quote": "Until operating cash flow clearly exceeds capex, the dividend and any buybacks rest on the balance sheet rather than on surplus cash.",
+      "issue": "This new closing sentence paraphrases capitalAllocation's \"FY25 share repurchases of $36.6M came in a year of negative free cash flow, so they were not funded from surplus cash generation\" and its closing condition (\"until free cash flow turns positive\"). The same claim now appears in two sections in different words.",
+      "fix": "End cashflowCommentary on the FCF-yield and capex reading. Leave the shareholder-returns funding judgment to capitalAllocation.",
+      "status": "open"
+    },
+    {
+      "id": "F-26",
+      "severity": "Important",
+      "field": "analystCommentary; sections.executiveSummary.thesis.body",
+      "quote": "the quarter's cost overrun shows how quickly operating expenses can absorb pricing gains",
+      "issue": "The new counter-case sentence restates the thesis (\"Those gains did not reach the bottom line because operating costs rose alongside them\" and \"The thesis fails if insurance and maintenance costs keep absorbing the revenue gains\"). The claim appears twice at the top of the report.",
+      "fix": "In analystCommentary, give a counter-case the thesis does not already make, such as the balance-sheet constraint in words, or point to the thesis instead of restating it.",
+      "status": "open"
+    },
+    {
+      "id": "F-27",
+      "severity": "Important",
+      "field": "sections.management.leadership; sections.financials.incomeCommentary",
+      "quote": "a one-off benefit from a lower tax rate and interest income at approximately 3 cents",
+      "issue": "The rewrite added the tax-rate and interest-income tailwind to leadership, but incomeCommentary already makes the point (\"Management's own third-quarter outlook flags the absence of those higher TEL equipment sales, a lower tax rate and interest income that helped the second quarter\"). \"One-off\" also goes further than the release, which says only that neither benefit is expected in the third quarter.",
+      "fix": "Keep the tailwind in incomeCommentary, where the 3-cent figure can sit if wanted. In leadership, credit the candor through the 8-cent cost quantification alone. If the item stays, write \"not expected to recur in the third quarter\" in place of \"one-off\".",
+      "status": "open"
+    },
+    {
+      "id": "F-28",
+      "severity": "Minor",
+      "field": "analystCommentary; sections.risks.idiosyncratic[0]",
+      "quote": "A BUY here is a bet that cost discipline catches up with pricing within the renewal window",
+      "issue": "After the F-1 fix, the thesis says over half of the per-mile gain came from mix shift. analystCommentary (\"catches up with pricing\", \"absorb pricing gains\") and idiosyncratic[0] (\"erase a quarter's pricing gains\") still call the gains pricing.",
+      "fix": "Use \"revenue gains\" or \"revenue per mile\" so the wording matches the thesis.",
+      "status": "open"
+    },
+    {
+      "id": "F-29",
+      "severity": "Minor",
+      "field": "meta.subtitle",
+      "quote": "Mix shift and rate increases are lifting revenue per mile; maintenance, insurance and a thin balance-sheet cushion still decide whether margins follow",
+      "issue": "At 150 of 160 characters, the rewritten subtitle leaves little room for the next round.",
+      "fix": "Tighten it, for example: \"Mix and rates lift revenue per mile; costs and a thin balance sheet decide whether margins follow\".",
       "status": "open"
     }
   ]
