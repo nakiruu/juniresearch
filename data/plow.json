@@ -1,18 +1,332 @@
 {
+  "schemaVersion": "1.1.0",
   "meta": {
+    "company": "Douglas Dynamics, Inc.",
+    "ticker": "PLOW",
+    "exchange": "NYSE",
     "subtitle": "A snowy winter lifts Attachments preseason orders and the 2026 outlook; soft commercial Solutions demand and weather dependence cap the upside",
-    "fiscalYearEnd": "December 31"
+    "reportDate": "October 2, 2026",
+    "asOf": "Oct 2, 2026",
+    "analyst": "Juniper Finance Research Desk",
+    "analystName": "Nico — Senior Analyst",
+    "fiscalYearEnd": "December 31",
+    "currency": "USD",
+    "filing": {
+      "form": "10-Q",
+      "fiscalPeriod": "fiscal Q2 2026",
+      "filedDate": "Aug 3, 2026",
+      "accession": "0001437749-26-025435"
+    }
+  },
+  "quote": {
+    "currentPrice": 40.54,
+    "marketCap": 935543488,
+    "sharesOutstanding": 23077047.06462753,
+    "week52Low": 28.52,
+    "week52High": 55,
+    "dividendYield": 0.0297,
+    "history": [
+      {
+        "date": "2026-08-21",
+        "close": 42.18000030517578
+      },
+      {
+        "date": "2026-08-24",
+        "close": 41.63999938964844
+      },
+      {
+        "date": "2026-08-25",
+        "close": 41.68000030517578
+      },
+      {
+        "date": "2026-08-26",
+        "close": 41.66999816894531
+      },
+      {
+        "date": "2026-08-27",
+        "close": 42.15999984741211
+      },
+      {
+        "date": "2026-08-28",
+        "close": 41.81999969482422
+      },
+      {
+        "date": "2026-08-31",
+        "close": 41.06999969482422
+      },
+      {
+        "date": "2026-09-01",
+        "close": 40.70000076293945
+      },
+      {
+        "date": "2026-09-02",
+        "close": 41.630001068115234
+      },
+      {
+        "date": "2026-09-03",
+        "close": 41.29999923706055
+      },
+      {
+        "date": "2026-09-04",
+        "close": 42.29999923706055
+      },
+      {
+        "date": "2026-09-08",
+        "close": 41.59000015258789
+      },
+      {
+        "date": "2026-09-09",
+        "close": 41.029998779296875
+      },
+      {
+        "date": "2026-09-10",
+        "close": 40.52000045776367
+      },
+      {
+        "date": "2026-09-11",
+        "close": 40.2400016784668
+      },
+      {
+        "date": "2026-09-14",
+        "close": 40.11000061035156
+      },
+      {
+        "date": "2026-09-15",
+        "close": 39.349998474121094
+      },
+      {
+        "date": "2026-09-16",
+        "close": 39.36000061035156
+      },
+      {
+        "date": "2026-09-17",
+        "close": 39.86000061035156
+      },
+      {
+        "date": "2026-09-18",
+        "close": 39.88999938964844
+      },
+      {
+        "date": "2026-09-21",
+        "close": 39.88999938964844
+      },
+      {
+        "date": "2026-09-22",
+        "close": 39.88999938964844
+      },
+      {
+        "date": "2026-09-23",
+        "close": 39.45000076293945
+      },
+      {
+        "date": "2026-09-24",
+        "close": 39.72999954223633
+      },
+      {
+        "date": "2026-09-25",
+        "close": 39.7400016784668
+      },
+      {
+        "date": "2026-09-28",
+        "close": 39.540000915527344
+      },
+      {
+        "date": "2026-09-29",
+        "close": 39.849998474121094
+      },
+      {
+        "date": "2026-09-30",
+        "close": 39.25
+      },
+      {
+        "date": "2026-10-01",
+        "close": 39.70000076293945
+      },
+      {
+        "date": "2026-10-02",
+        "close": 40.540000915527344
+      }
+    ]
   },
   "rating": {
     "label": "BUY",
+    "tone": "bull",
     "targetLow": 44,
-    "targetHigh": 50
+    "targetHigh": 50,
+    "conviction": {
+      "expectedUpside": 0.11618154908732126,
+      "bearDownside": 0.2106561420818944,
+      "rewardRisk": 0.5515222482435602,
+      "derivedLabel": "BUY"
+    },
+    "gate": {
+      "sector": "industrial",
+      "ceiling": "STRONG BUY",
+      "gatedLabel": "BUY",
+      "distress": "SAFE",
+      "piotroski": 7,
+      "accruals": "LOW",
+      "confidence": "medium",
+      "flags": []
+    },
+    "decision": {
+      "conviction": 88,
+      "tier": "high",
+      "proposed": "BUY",
+      "reasons": [
+        "E/R proposed BUY"
+      ],
+      "advisories": [],
+      "moat": {
+        "width": "NARROW",
+        "trend": "WIDENING",
+        "contingent": false,
+        "bearFloor": 0.2
+      },
+      "intrinsic": {
+        "marginOfSafety": 0.016461689880254315,
+        "impliedGrowth": 0.06821374893286325,
+        "achievableGrowth": 0.07036276104314076
+      },
+      "composite": {
+        "percentile": 43.05957106802588,
+        "confidence": "high"
+      },
+      "uncertainty": {
+        "tier": "low",
+        "points": 0,
+        "drivers": []
+      }
+    }
   },
-  "analystCommentary": "We rate Douglas Dynamics a BUY with a $44–$50 target range. The snow season that ended March 2026 lifted Attachments preseason orders, and management raised its 2026 outlook again in the August 3, 2026 release. Weather is the variable the company does not control, and our Bear case is built on a weak winter.",
+  "snapshot": [
+    {
+      "label": "Current Price",
+      "value": 40.54,
+      "unit": "usd"
+    },
+    {
+      "label": "Market Cap",
+      "value": 935543488,
+      "unit": "usdLarge",
+      "approx": true
+    },
+    {
+      "label": "52-Week Range",
+      "raw": "$28.52 – $55.00"
+    },
+    {
+      "label": "Shares Outstanding",
+      "value": 23077047.06462753,
+      "unit": "shares",
+      "approx": true
+    },
+    {
+      "label": "P/E (TTM)",
+      "value": 18.427272727272726,
+      "unit": "mult"
+    },
+    {
+      "label": "Consensus Target",
+      "value": 54,
+      "unit": "usd",
+      "change": 0.3320177602368033
+    },
+    {
+      "label": "EV/EBITDA (TTM)",
+      "value": 12.779,
+      "unit": "mult"
+    },
+    {
+      "label": "Analyst Consensus",
+      "raw": "None (2 B / 1 H / 0 S)"
+    },
+    {
+      "label": "FY25 Revenue",
+      "value": 656053000,
+      "unit": "usdLarge",
+      "change": 0.15399891645441377
+    },
+    {
+      "label": "FY25 Net Income",
+      "value": 46897000,
+      "unit": "usdLarge"
+    },
+    {
+      "label": "FY25 Diluted EPS",
+      "value": 1.96,
+      "unit": "usd"
+    },
+    {
+      "label": "FY26E Revenue",
+      "value": 775625000,
+      "unit": "usdLarge",
+      "approx": true,
+      "change": 0.18225966499657797,
+      "changeDp": 0
+    },
+    {
+      "label": "Q2'26 Revenue",
+      "value": 214648000,
+      "unit": "usdLarge",
+      "change": 0.10457116098123276,
+      "changeDp": 0
+    },
+    {
+      "label": "Q2'26 Operating Margin",
+      "value": 0.16514013640937722,
+      "unit": "pct",
+      "dp": 0
+    },
+    {
+      "label": "Fwd P/E (FY27E)",
+      "value": 12.560805577072037,
+      "unit": "mult",
+      "approx": true
+    },
+    {
+      "label": "Dividend Yield",
+      "value": 0.0297,
+      "unit": "pct",
+      "dp": 2
+    },
+    {
+      "label": "FY25 Free Cash Flow",
+      "value": 63862000,
+      "unit": "usdLarge"
+    },
+    {
+      "label": "FY25 Dividends Paid",
+      "value": -27936000,
+      "unit": "usdLarge"
+    },
+    {
+      "label": "FY25 Total Debt",
+      "value": 156434000,
+      "unit": "usdLarge"
+    },
+    {
+      "label": "Current Ratio (TTM)",
+      "raw": "2.16"
+    }
+  ],
+  "analystSentiment": {
+    "numAnalysts": 3,
+    "buy": 2,
+    "hold": 1,
+    "sell": 0,
+    "consensusRating": "None",
+    "consensusTarget": 54,
+    "medianTarget": 54.5,
+    "highTarget": 57,
+    "lowTarget": 50,
+    "commentary": "We rate Douglas Dynamics a BUY with a $44–$50 target range. The snow season that ended March 2026 lifted Attachments preseason orders, and management raised its 2026 outlook again in the August 3, 2026 release. Weather is the variable the company does not control, and our Bear case is built on a weak winter."
+  },
   "sections": {
     "executiveSummary": {
       "companyOverview": "Douglas Dynamics, Inc., founded in 1946 and headquartered in Milwaukee, Wisconsin, manufactures and upfits commercial work truck attachments and equipment in North America. Work Truck Attachments sells snow and ice control equipment under the FISHER, WESTERN and SNOWEX brands, plus truck-mounted service cranes and dump hoists under the VENCO and VENTURO brands. Work Truck Solutions makes HENDERSON municipal snow and ice control products and upfits attachments and storage under the HENDERSON and DEJANA brands. Products reach professional snowplowers through a distributor network, and the company also sells turnkey solutions to departments of transportation and municipalities. FY25 revenue was $656.1M, up {+ 15.4% +}, and the company is valued at about $935.5M at $40.54 a share.",
       "thesis": {
+        "label": "BUY",
         "body": "The raised outlook rests on preseason orders already in hand, so the earnings case depends on two things: a heavier third-quarter shipment load landing as scheduled, and municipal demand keeping Solutions near its 2025 level while commercial lines stay soft. Cost is the open question. In Q2'26 SG&A rose faster than sales and operating income fell, and the 10-Q excerpt we hold does not give the reason. The price upside depends on a modest re-rating (see Valuation)."
       },
       "catalysts": [
@@ -28,11 +342,296 @@
       ]
     },
     "financials": {
+      "income": {
+        "columns": [
+          "Metric",
+          "FY21",
+          "FY22",
+          "FY23",
+          "FY24",
+          "FY25"
+        ],
+        "rows": [
+          {
+            "label": "Revenue ($B)",
+            "values": [
+              541453000,
+              616068000,
+              568178000,
+              568504000,
+              656053000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "YoY Growth",
+            "values": [
+              null,
+              0.13780512805358924,
+              -0.07773492536538174,
+              0.0005737638556930769,
+              0.15399891645441377
+            ],
+            "format": "pctSigned"
+          },
+          {
+            "label": "Gross Margin",
+            "values": [
+              0.2620208956271366,
+              0.24584299135809684,
+              0.2363167880488157,
+              0.2582866611316719,
+              0.2662589760278514
+            ],
+            "format": "pct"
+          },
+          {
+            "label": "Operating Income ($B)",
+            "values": [
+              51135000,
+              58753000,
+              44909000,
+              88709000,
+              73608000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Operating Margin",
+            "values": [
+              0.09444033000094192,
+              0.09536771914788628,
+              0.07904037115129414,
+              0.15603935944162223,
+              0.1121982522753497
+            ],
+            "format": "pct"
+          },
+          {
+            "label": "EBITDA ($B)",
+            "values": [
+              71451000,
+              79691000,
+              66571000,
+              106599000,
+              88967000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Net Income ($B)",
+            "values": [
+              30691000,
+              38609000,
+              23723000,
+              56151000,
+              46897000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Diluted EPS ($)*",
+            "values": [
+              1.29,
+              1.63,
+              0.98,
+              2.36,
+              1.96
+            ],
+            "format": "eps"
+          }
+        ],
+        "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
+      },
       "incomeCommentary": "Q2'26 net sales were $214.6 million, up {+ 10.4% +} per the 10-Q; the data snapshot rounds the gain to 10% and the trailing-twelve-month line shows 10.5%, and we use the filing's 10.4%. Higher Attachments volumes on improved snowfall drove the gain. Gross margin edged up to 31.1% from 31.0%, while SG&A rose to 13.9% of sales from 11.2%, so income from operations fell to $35.4 million from $37.0 million and operating margin narrowed to 16.5% from 19.0%. Net income was $25.4 million against $26.0 million, and diluted EPS was $1.07 against $1.09. On the company's adjusted measures, Adjusted EBITDA rose {+ 5% +} to $44.6 million and adjusted diluted EPS rose {+ 7% +} to $1.22, though the Adjusted EBITDA margin slipped to 20.8% from 21.9%. The split between falling GAAP EPS and rising adjusted EPS comes from the items the company adjusts out, which we discuss under Risks. The six months ended June 30, 2026 tell the same story: net sales of $352.4 million rose by $43.0 million and gross margin improved to 29.7% from 28.6% on segment mix, but SG&A rose to 15.9% of sales from 14.6%, leaving operating margin at 12.9% against 13.0%. We read 2026 so far as a revenue gain that has not yet carried through to GAAP operating margin.",
+      "balance": {
+        "columns": [
+          "Metric ($B)",
+          "FY21",
+          "FY22",
+          "FY23",
+          "FY24",
+          "FY25"
+        ],
+        "rows": [
+          {
+            "label": "Cash & ST Investments",
+            "values": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Total Debt",
+            "values": [
+              11137000,
+              218874000,
+              243175000,
+              147526000,
+              156434000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Net Debt",
+            "values": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Total Equity",
+            "values": [
+              214610000,
+              237102000,
+              231565000,
+              264215000,
+              281446000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Current Ratio",
+            "values": [
+              2.6909394989989748,
+              2.5183558861307764,
+              2.2126614747251447,
+              3.393905288351949,
+              2.775600696944088
+            ],
+            "format": "num2"
+          }
+        ],
+        "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
+      },
       "balanceCommentary": "Total debt stood at $156.4M at the end of FY25; a net debt figure is not available in our data, so we do not quote leverage on a net basis. The current ratio is 2.16 in our trailing-twelve-month data, whose latest quarter is Q2'26, against 2.78 at FY25 year-end; it is lower, but current assets still cover current liabilities with room to spare. Net interest expense fell to 1.1% of Q2'26 sales from 1.5% a year earlier, so debt service is a small claim on revenue. The 10-Q flags possible short-term liquidity challenges in funding working capital, and the working-capital build described under cash flow is where that pressure shows; management expects cash on hand, operating cash flow and its senior credit facilities to provide adequate funds for the foreseeable future. Our reading is that the balance sheet supports the thesis in a normal year, since FY25 free cash flow was large relative to total debt, but a weak winter would arrive just as the preseason receivables need collecting, which is when the liquidity caveat would bite. The IEEPA tariff refunds are small: approximately $0.9 million received by June 30, 2026 and a receivable of approximately $2.8 million, booked against cost of sales or inventories depending on whether the related goods had been sold.",
+      "cashflow": {
+        "columns": [
+          "Metric ($B)",
+          "FY21",
+          "FY22",
+          "FY23",
+          "FY24",
+          "FY25"
+        ],
+        "rows": [
+          {
+            "label": "Operating Cash Flow",
+            "values": [
+              60535000,
+              40030000,
+              12469000,
+              41131000,
+              74690000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Capital Expenditure",
+            "values": [
+              -11881000,
+              -12402000,
+              -9766000,
+              -7764000,
+              -10828000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Share Repurchases",
+            "values": [
+              0,
+              -6001000,
+              0,
+              0,
+              -6000000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Dividends Paid",
+            "values": [
+              -26522000,
+              -27026000,
+              -27441000,
+              -27477000,
+              -27936000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Free Cash Flow",
+            "values": [
+              48654000,
+              27628000,
+              2703000,
+              33367000,
+              63862000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "FCF Margin",
+            "values": [
+              0.0898582148404386,
+              0.04484569885142549,
+              0.004757311969136433,
+              0.05869263892602339,
+              0.09734274517455145
+            ],
+            "format": "pct"
+          }
+        ],
+        "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
+      },
       "cashflowCommentary": "FY25 free cash flow was $63.9M, a 9.7% FCF margin, and the trailing FCF yield is 5.3%. The five-year FCF margin series swings with snowfall, so we do not treat FY25 as a run rate. Operations consumed cash in the six months ended June 30, 2026: net cash used in operating activities rose $12.5 million to $25.2 million as inventory rose to meet demand in both segments and receivables grew with sales. That fits the seasonal pattern the risk factors describe, with distributors buying in the second and third quarters, so the rest of the year has to turn those receivables into cash. Capital expenditures rose $2.2 million to $7.3 million over those six months as planned, and management expects full-year spending toward the higher end of its traditional range of 2% to 3% of net sales."
     },
     "valuation": {
+      "multiples": {
+        "columns": [
+          "Multiple (TTM)",
+          "PLOW"
+        ],
+        "rows": [
+          {
+            "label": "P/E",
+            "values": [
+              18.427272727272726
+            ],
+            "format": "mult"
+          },
+          {
+            "label": "P/S",
+            "values": [
+              1.3382035977479745
+            ],
+            "format": "mult"
+          },
+          {
+            "label": "EV/EBITDA",
+            "values": [
+              12.779
+            ],
+            "format": "mult"
+          },
+          {
+            "label": "Fwd P/E (NTM)",
+            "values": [
+              12.993589743589743
+            ],
+            "format": "mult"
+          }
+        ],
+        "note": "Peer multiples pending a peer data source."
+      },
       "multiplesCommentary": "At $40.54 the shares trade at 18.4x trailing earnings, 13.0x forward (NTM) earnings, about 12.6x FY27E earnings, 12.8x EV/EBITDA and 1.3x sales, with a 2.97% dividend yield. Peer multiples are not available in our data, so we judge the multiple against the company's own earnings path rather than a comparison set. The gap between the trailing and forward multiples reflects the step from trailing earnings to the FY26E consensus EPS of $3.12. That consensus sits inside management's raised range for adjusted diluted EPS, so we compare the two on an adjusted basis; trailing GAAP earnings are not directly comparable, which is why we value the shares on forward multiples only. FY27E consensus EPS of $3.23 implies only modest growth after this year, which we read as the Street assuming snowfall normalizes. Three analysts cover the stock, two at Buy and one at Hold, with targets from $50.00 to $57.00 and a median of $54.50. The shares trade within a 52-week range of $28.52 to $55.00.",
       "scenarios": [
         {
@@ -60,9 +659,14 @@
       "segments": [
         {
           "name": "Consolidated",
+          "sharePct": 1,
+          "revenue": 656053000,
           "body": "Our data feed carries the company as a single reportable segment, while the 10-Q reports two, Work Truck Attachments and Work Truck Solutions; we use the 10-Q for the segment discussion. Attachments Q2'26 net sales rose {+ 20% +} to $129.3 million from $108.1 million on higher equipment volumes, parts and accessories demand and the addition of Venco Venturo, acquired on November 3, 2025. The snow season that ended March 2026 ran about 26.0% above the 10-year average, after a prior season 12.0% below it. Attachments Adjusted EBITDA rose {+ 13% +} to $35.8 million, though its margin eased to 27.7% from 29.2%. Solutions net sales slipped to $85.3 million from $86.2 million, and its Adjusted EBITDA fell to $8.8 million, a 10.3% margin from 12.8%, which the release attributes to lower commercial demand; we discuss the municipal offset under Growth."
         }
       ],
+      "segmentsBasis": "FY25 (single reportable segment) mix",
+      "geographyBasis": "FY25",
+      "geoMix": [],
       "moatRating": "NARROW",
       "moatFactors": [
         {
@@ -113,10 +717,5 @@
       ]
     }
   },
-  "highlights": [
-    "fcfLatestFY",
-    "dividendsLatestFY",
-    "totalDebtLatestFY",
-    "currentRatioTTM"
-  ]
+  "disclaimer": "DISCLAIMER: This report is for informational/educational purposes only and does not constitute investment advice. All equity securities carry risk and can be volatile, and past performance is not indicative of future results. Conduct your own due diligence. The author may hold positions in securities discussed."
 }
