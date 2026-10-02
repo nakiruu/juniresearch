@@ -1,0 +1,591 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "RDVT",
+  "cik": 1720116,
+  "company": "Red Violet, Inc.",
+  "exchange": "NASDAQCM",
+  "sic": 7372,
+  "sicDescription": "Services-Prepackaged Software",
+  "goodwill": [
+    5227000,
+    5227000,
+    5227000,
+    5227000,
+    5227000
+  ],
+  "filing": {
+    "form": "10-Q",
+    "accession": "0001193125-26-342598",
+    "filedDate": "2026-08-10",
+    "periodEnd": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1720116/000119312526342598/rdvt-20260630.htm"
+  },
+  "capturedAt": "2026-10-02T18:50:01.514Z",
+  "quote": {
+    "price": 79.545,
+    "marketCap": 1276456576,
+    "sharesOutstanding": 16046974.366710667,
+    "sharesSource": "derived",
+    "week52Low": 33.4,
+    "week52High": 81.795,
+    "dividendYield": 0,
+    "asOf": "2026-10-02"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          44022000,
+          53318000,
+          60204000,
+          75189000,
+          90252000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          -1315000,
+          361000,
+          2504000,
+          7920000,
+          13138000
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          4084000,
+          7036000,
+          10856000,
+          17482000,
+          23810000
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          655000,
+          616000,
+          13529000,
+          7003000,
+          13154000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          0.05,
+          0.04,
+          0.96,
+          0.5,
+          0.91
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          34258000,
+          31810000,
+          32032000,
+          36504000,
+          43557000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          0,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          -34258000,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          69429000,
+          71093000,
+          86112000,
+          86632000,
+          100926000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          11.160497397339503,
+          7.01177336276674,
+          8.25579012092642,
+          4.48161443679053,
+          7.183608640406607
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          8948000,
+          12459000,
+          15071000,
+          23960000,
+          29349000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -280000,
+          -373000,
+          -122000,
+          -169000,
+          -563000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          null,
+          -878000,
+          -3711000,
+          -5853000,
+          -915000
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          8668000,
+          12086000,
+          14949000,
+          23791000,
+          28786000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q2'26",
+    "periodEnd": "2026-06-30",
+    "revenue": 26718000,
+    "operatingMargin": 0.22812336252713528,
+    "revenueYoY": 0.22705979608707638
+  },
+  "ttm": {
+    "pe": 70.3938053097345,
+    "ps": 12.890506003655716,
+    "evToEbitda": 66.013,
+    "grossMargin": null,
+    "operatingMargin": 0.17889783181685062,
+    "netMargin": 0.1653757207921392,
+    "netDebtToEbitda": null,
+    "interestCoverage": null,
+    "currentRatio": 10.883383383383384,
+    "fcfYield": 0.02632600327486581
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 106666250,
+      "eps": 1.66
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 120773750,
+      "eps": 1.76
+    }
+  },
+  "analysts": {
+    "count": 4,
+    "buy": 4,
+    "hold": 0,
+    "sell": 0,
+    "consensusRating": "None",
+    "consensusTarget": 84.5,
+    "medianTarget": 87.5,
+    "highTarget": 90,
+    "lowTarget": 73,
+    "asOf": "2026-10-02"
+  },
+  "segments": {
+    "basis": "FY25 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 90252000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "APPS",
+      "pe": null,
+      "ps": 2.3072007,
+      "evToEbitda": 13.44
+    },
+    {
+      "ticker": "BLND",
+      "pe": null,
+      "ps": 1.8678194,
+      "evToEbitda": -25.868
+    },
+    {
+      "ticker": "DCBO",
+      "pe": 20.647827,
+      "ps": 2.2878113,
+      "evToEbitda": 17.102
+    },
+    {
+      "ticker": "GDYN",
+      "pe": 269.22668,
+      "ps": 1.55058,
+      "evToEbitda": 15.106
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-21",
+      "close": 71.16999816894531
+    },
+    {
+      "date": "2026-08-24",
+      "close": 70.16999816894531
+    },
+    {
+      "date": "2026-08-25",
+      "close": 69.38500213623047
+    },
+    {
+      "date": "2026-08-26",
+      "close": 69.5
+    },
+    {
+      "date": "2026-08-27",
+      "close": 72
+    },
+    {
+      "date": "2026-08-28",
+      "close": 73.30000305175781
+    },
+    {
+      "date": "2026-08-31",
+      "close": 73.16000366210938
+    },
+    {
+      "date": "2026-09-01",
+      "close": 75.55999755859375
+    },
+    {
+      "date": "2026-09-02",
+      "close": 71.47000122070312
+    },
+    {
+      "date": "2026-09-03",
+      "close": 76.43000030517578
+    },
+    {
+      "date": "2026-09-04",
+      "close": 76.13999938964844
+    },
+    {
+      "date": "2026-09-08",
+      "close": 74.72000122070312
+    },
+    {
+      "date": "2026-09-09",
+      "close": 74.4000015258789
+    },
+    {
+      "date": "2026-09-10",
+      "close": 73.05000305175781
+    },
+    {
+      "date": "2026-09-11",
+      "close": 75.0199966430664
+    },
+    {
+      "date": "2026-09-14",
+      "close": 76.29000091552734
+    },
+    {
+      "date": "2026-09-15",
+      "close": 76.20999908447266
+    },
+    {
+      "date": "2026-09-16",
+      "close": 77.5199966430664
+    },
+    {
+      "date": "2026-09-17",
+      "close": 77.12000274658203
+    },
+    {
+      "date": "2026-09-18",
+      "close": 75.94000244140625
+    },
+    {
+      "date": "2026-09-21",
+      "close": 75.5
+    },
+    {
+      "date": "2026-09-22",
+      "close": 73.41000366210938
+    },
+    {
+      "date": "2026-09-23",
+      "close": 76.19999694824219
+    },
+    {
+      "date": "2026-09-24",
+      "close": 79.05999755859375
+    },
+    {
+      "date": "2026-09-25",
+      "close": 78.55000305175781
+    },
+    {
+      "date": "2026-09-28",
+      "close": 78.61000061035156
+    },
+    {
+      "date": "2026-09-29",
+      "close": 79.31999969482422
+    },
+    {
+      "date": "2026-09-30",
+      "close": 79.01000213623047
+    },
+    {
+      "date": "2026-10-01",
+      "close": 80.25
+    },
+    {
+      "date": "2026-10-02",
+      "close": 79.54499816894531
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "Red Violet, Inc., an analytics and information solutions company, specializes in proprietary technologies and applying analytical capabilities to deliver identity intelligence in the United States. It offers idiCORE, an investigative solution used to address various organizational challenges, which include due diligence, risk mitigation, identity authentication, fraud detection and prevention, customer acquisition, and regulatory compliance; and FOREWARN, an app-based solution that provides instant knowledge before face-to-face engagement with a consumer, as well as helps professionals to identify and mitigate risk. The company serves financial services, insurance, healthcare, retail, telecommunication companies, law enforcement and government agencies, collections, law, corporate security, and investigative firms. It markets its products and services through value-added distributors, resellers, and strategic partners; and trade shows and seminars, advertising, public relations, distribution of sales literature, and product specifications and ongoing communication with prospective customers, distributors, resellers, strategic partners, and installed base of current customers, as well as through direct sales. Red Violet, Inc. was incorporated in 2017 and is headquartered in Boca Raton, Florida.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-10-02"
+    },
+    "mdaExcerpt": {
+      "text": "Item 2. Management's Discussion and Analysis of Financial Condition and Results of Operations.\nYou should read the following discussion and analysis in conjunction with our condensed consolidated financial statements and related notes included elsewhere in this Quarterly Report on Form 10-Q (\"Form 10-Q\"). This Form 10-Q contains certain forward-looking statements within the meaning of the Private Securities Litigation Reform Act of 1995 (\"PSLRA\"), Section 27A of the Securities Act of 1933, as amended (the \"Securities Act\"), and Section 21E of the Securities Exchange Act of 1934, as amended (the \"Exchange Act\"), about our expectations, beliefs, or intentions regarding our business, financial condition, results of operations, strategies, or prospects. You can identify forward-looking statements by the fact that these statements do not relate strictly to historical or current matters. Rather, forward-looking statements relate to anticipated or expected events, activities, trends, or results as of the date they are made. Because forward-looking statements relate to matters that have not yet occurred, these statements are inherently subject to risks and uncertainties that could cause our actual results to differ materially from any future results expressed or implied by the forward-looking statements. Many factors could cause our actual activities or results to differ materially from the activities and results anticipated in forward-looking statements. These factors include those contained in this Form 10-Q, as well as the disclosures made in the Company's Annual Report on Form 10-K for the year ended December 31, 2025 filed on March 4, 2026 (the \"2025 Form 10-K\"), and other filings we make with the Securities and Exchange Commission (the \"SEC\"). We do not undertake any obligation to update forward-looking statements, except as required by law. We intend that all forward-looking statements be subject to the safe harbor provisions of PSLRA. These forward-looking statements are only predictions and reflect our views as of the date they are made with respect to future events and financial performance.\nReferences in this discussion and analysis to \"we,\" \"us,\" \"our,\" \"red violet,\" or the \"Company,\" refer to Red Violet, Inc. and its consolidated subsidiaries.\nOverview\nRed Violet, Inc., a Delaware corporation, is dedicated to making the world a safer place and reducing the cost of doing business. We build proprietary technologies and apply analytical capabilities to deliver identity intelligence. Our technology powers critical solutions, which empower organizations to operate with confidence. Our solutions enable the real-time identification and location of people, businesses, assets, and their interrelationships. These solutions are used for purposes including identity verification, risk mitigation, due diligence, fraud detection and prevention, regulatory compliance, and customer acquisition. Our cloud-native, AI-embedded identity intelligence platform, CORE TM , is purpose-built for the enterprise, yet flexible enough for organizations of all sizes, bringing clarity to massive datasets by transforming data into intelligence. We drive workflow efficiency and enable organizations to make better data-driven decisions.\nWith artificial intelligence and machine learning embedded directly into CORE's architecture from inception, and integrated with extensive proprietary data assets and regulated workflows, the platform enables customers to uncover actionable insights, accelerate decision-making, and operate at enterprise scale with materially reduced manual effort and operating costs. These AI-driven capabilities support the streamlining of labor-intensive workflows through automated, intelligence-driven processes that materially enhance efficiency and outcomes across risk management, compliance, and investigative functions.\nOrganizations are challenged by the structure, volume, velocity, and disparity of data. Our platform and applications provide real-time analytics, transforming the way our customers interact with information by presenting connections and relevance of information otherwise unattainable, which drives actionable insights and better outcomes. Leveraging cloud-native proprietary technology and applying machine learning and advanced analytical capabilities, CORE provides essential solutions to public and private sector organizations through intuitive, easy-to-use analytical interfaces. With extensive data assets consisting of public record, proprietary, and publicly-available data, our differentiated information and innovative platform and solutions deliver identity intelligence entities, relationships, affiliations, interactions, and events. Our solutions are used today to enable frictionless commerce, enhance safety, and mitigate fraud and the related financial losses across the markets we serve.\n14\nWhile our platform powers a vast array of solutions for our customers, we presently market our solutions primarily through two brands, IDI and FOREWARN . IDI is a leading-edge, analytics and information solutions provider delivering actionable intelligence to an expansive and diverse set of industries in support of use cases such as the verification and authentication of consumer identities, due diligence, prevention of fraud and abuse, legislative compliance, and debt recovery. idiCORE is IDI's flagship product. idiCORE is a next-generation, investigative solution used to address a variety of organizational challenges, including, but not limited to, due diligence, risk mitigation, identity authentication, and regulatory compliance, by financial services companies, insurance companies, healthcare companies, law enforcement and government, identity verification platforms, collections, law firms, retail, telecommunication companies, corporate security, and investigative firms. FOREWARN is an app-based solution currently tailored for the real estate industry, providing instant knowledge prior to face-to-face engagement with a consumer, helping professionals identify and mitigate risk. As of June 30, 2026 and 2025, IDI had 10,869 and 9,549 billable customers, respectively, and FOREWARN had 443,173 and 346,671 users, respectively. We define a billable customer of IDI as a single entity that generated revenue during the last three months of the period. Billable customers are typically corporate organizations. In most cases, corporate organizations will have multiple users and/or departments purchasing our solutions; however, we count the entire organization as a discrete customer. We define a user of FOREWARN as a unique person that has a subscription to use the FOREWARN service as of the last day of the period. A unique person can only have one user account.\nWe generate substantially all of our revenue from licensing our solutions. Customers access our solutions through a hosted environment using an online interface, batch processing, API, and custom integrations. We recognize revenue from licensing fees (a) on a transactional basis determined by the customer's usage, (b) via a monthly fee or (c) from a combination of both. Revenue pursuant to pricing contracts containing a monthly fee is recognized ratably over the contract period. Pricing contracts are generally annual contracts or longer, with auto renewal. For each of the three months ended June 30, 2026 and 2025, 77% of total revenue was attributable to customers with pricing contracts, versus 23% attributable to transactional customers. For each of the six months ended June 30, 2026 and 2025, 76% of total revenue was attributable to customers with pricing contracts, versus 24% attributable to transactional customers.\nWe endeavor to understand our customers' needs at the moment of first engagement. We continuously engage with our customers and evaluate their usage of our solutions throughout their life cycle, to maximize utilization of our solutions and, hence, their productivity. Our go-to-market strategy leverages (a) an inside sales team that cultivates relationships, and ultimately closes business, with their end-user markets, (b) a strategic sales team that provides a more personal, face-to-face approach for major accounts within certain industries, and (c) distributors, resellers, and strategic partners that have a significant foothold in many of the industries that we have not historically served, as well as to further penetrate those industries that we do serve. We employ a \"land and expand\" approach. Our sales model generally begins with a trial followed by an initial purchase on a transactional basis or minimum-committed monthly spend. As organizations derive benefits from our solutions, we are able to expand within organizations as additional use cases are presented across departments, divisions, and geographic locations, and customers become increasingly reliant on our solutions in their daily workflow.\nIn order for us to continue to develop new products, grow our existing business and expand into additional markets, we must generate and sustain sufficient operating profits and cash flow in future periods. This will require us to generate additional sales from current products and new products currently under development. We continue to build out our sales organization to drive current products and to introduce new products into the marketplace.\nCritical Accounting Policies and Estimates\nManagement's discussion and analysis of financial condition and results of operations are based upon our condensed consolidated financial statements, which have been prepared in accordance with accounting principles generally accepted in the United States (\"US GAAP\"). The preparation of these financial statements requires us to make estimates and judgments that affect the reported amounts of assets, liabilities, revenue and expenses, and related disclosure of contingent assets and liabilities. On an ongoing basis, we evaluate our estimates, including those related to revenue recognition, allowance for doubtful accounts, useful lives of intangible assets, recoverability of the carrying amounts of goodwill and intangible assets, share-based compensation, and income tax provision. We base our estimates on historical experience and on various other assumptions that are believed to be reasonable under the circumstances, the results of which form the basis for making judgments about the carrying values of assets and liabilities that are not readily apparent from other sources. Actual results may differ from these estimates under different assumptions or conditions.\nFor additional information, please refer to our 2025 Form 10-K. There have been no material changes to Critical Accounting Policies and Estimates disclosed in our 2025 Form 10-K.\nRecently issued accounting standards\nSee Note 1(b), \" Recently issued accounting standards,\" in \"Notes to Condensed Consolidated Financial Statements.\"\n15\nSecond Quarter Financial Results\nFor the three months ended June 30, 2026 as compared to the three months ended June 30, 2025:\nTotal revenue increased 23% to $26.7 million.\nGross profit increased 29% to $20.2 million. Gross margin increased to 76% from 72%.\nAdjusted gross profit increased 25% to $22.9 million. Adjusted gross margin increased to 86% from 84%.\nNet income increased 85% to $5.0 million, which resulted in earnings of $0.35 and $0.34 per basic and diluted share, respectively. Net income margin increased to 19% from 12%.\nAdjusted EBITDA increased 48% to $11.2 million. Adjusted EBITDA margin increased to 42% from 35%.\nAdjusted net income increased 58% to $7.2 million, which resulted in adjusted earnings of $0.51 and $0.50 per basic and diluted share, respectively.\nNet cash provided by operating activities increased 42% to $10.6 million.\nCash and cash equivalents were $50.0 million as of June 30, 2026.\nSecond Quarter and Recent Business Highlights\nAnnounced the August 2026 closing of an underwritten public offering of 1,916,667 shares of common stock, including 250,000 shares of common stock sold pursuant to the full exercise of the underwriters' option, providing net proceeds of approximately $109.0 million, after deducting underwriting discounts and commissions and estimated offering expenses. The Company intends to use the net proceeds from the offering for working capital and general corporate purposes, including potential strategic acquisitions.\nAdded 447 customers to IDI during the second quarter, ending the quarter with 10,869 customers.\nAdded 25,493 users to FOREWARN during the second quarter, ending the quarter with 443,173 users. 660 REALTOR Associations throughout the U.S. are now contracted to use FOREWARN.\nPurchased 74,500 shares of the Company's common stock year to date through June 30, 2026, at an average price of $41.87 per share pursuant to the Company's Stock Repurchase Program. As of June 30, 2026, the Company had $15.5 million remaining under the Stock Repurchase Program.\nUse and Reconciliation of Non-GAAP Financial Measures\nManagement evaluates the financial performance of our business on a variety of key indicators, including non-GAAP metrics of adjusted EBITDA, adjusted EBITDA margin, adjusted net income, adjusted earnings per share, adjusted gross profit, adjusted gross margin, and free cash flow (\"FCF\"). Adjusted EBITDA is a non-GAAP financial measure equal to net income, the most directly comparable financial measure based on US GAAP, excluding interest income, income tax expense, depreciation and amortization, share-based compensation expense, acquisition-related costs, litigation costs, and write-off of long-lived assets. We define adjusted EBITDA margin as adjusted EBITDA as a percentage of revenue. Adjusted net income is a non-GAAP financial measure equal to net income, the most directly comparable financial measure based on US GAAP, adjusted to exclude share-based compensation expense, amortization of share-based compensation capitalized in intangible assets, acquisition-related costs, litigation costs, and write-off of long-lived assets, and to include the tax effect of adjustments. We define adjusted earnings per share as adjusted net income divided by the weighted average shares outstanding. We define adjusted gross profit as gross profit plus depreciation and amortization of certain intangible assets, and adjusted gross margin as adjusted gross profit as a percentage of revenue. We define FCF as net cash provided by operating activities reduced by purchase of property and equipment and capitalized costs included in intangible assets.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/1720116/000119312526342598/rdvt-20260630.htm",
+      "asOf": "2026-08-10",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "Item 1A. Risk Factors .\nOur business, financial condition, operating results, and cash flows may be impacted by a number of factors, many of which are beyond our control, including those set forth below and elsewhere in this 2025 Form 10-K, the occurrence of any one of which could have a material adverse effect on our actual results.\nCybersecurity and Technology Risks\nOur products and services are highly technical and if they contain undetected errors, our business could be adversely affected and we may have to defend lawsuits or pay damages in connection with any alleged or actual failure of our products and services.\nOur products and services are highly technical and complex. Our products and services have contained and may contain one or more undetected errors, defects, or security vulnerabilities. Some errors in our products and services may only be discovered after a product or service has been used by end customers. Any errors or security vulnerabilities discovered in our products after commercial release could result in loss of revenue or delay in revenue recognition, or loss of customers, any of which could adversely affect our business and results of operations. In addition, we could face claims for product liability or breach of personal information. Defending a lawsuit, regardless of its merit, is costly and may divert management's attention. In addition, if our business liability insurance coverage is inadequate or future coverage is unavailable on acceptable terms or at all, our financial condition could be harmed.\nIf we fail to respond to rapid technological changes in the data and analytics sector, we may lose customers and/or our products and/or services may become obsolete.\nThe data and analytics sector is characterized by rapidly changing technology, frequent product introductions, and continued evolution of new industry standards. As a result, our success depends upon our ability to develop and introduce in a timely manner new products and services and enhancements to existing products and services that meet changing customer requirements and evolving industry standards. The development of technologically advanced product solutions is a complex and uncertain process requiring high levels of innovation, rapid response and accurate anticipation of technological and market trends. We cannot assure you that we will be able to identify, develop, manufacture, market, or support new or enhanced products and services successfully in a timely manner. Further, we or our competitors may introduce new products or services or product enhancements that shorten the life cycle of existing products or services or cause existing products or services to become obsolete.\nBecause our networks and information technology systems are critical to our success, if unauthorized persons access our systems or our systems otherwise cease to function properly, our operations could be adversely affected and we could lose revenue or proprietary information, all of which could materially adversely affect our business .\nAs our business is conducted largely online, it is dependent on our networks being accessible and secure. If an actual or perceived breach of network security occurs, regardless of whether the breach is attributable to our network security controls, the market perception of the effectiveness of our network security could be harmed resulting in loss of current and potential end user customers, data suppliers, or cause us to lose potential value-added resellers, distributors, or strategic partners. Our business is largely dependent on our customer-facing websites and our websites may be inaccessible because of service interruptions or subject to hacking or computer attacks. Because the techniques used by computer hackers to access or sabotage networks change frequently and generally are not recognized until launched against a target, we may be unable to anticipate these techniques. If an actual or perceived breach were to occur, we cannot assure you that we would not lose revenue or not sustain operating losses as a result.\nWe also rely heavily on large information technology databases and the ability to provide services using that information from those databases. A party who is able to breach the security measures on our networks or who otherwise is able to access our system through unauthorized means could misappropriate either our proprietary information or the personal information of consumers that we collect, or otherwise cause interruptions or malfunctions to our operations. Hacking of computer data systems is a growing problem. Hackers may especially target concerns that are known to maintain large repositories of proprietary information or personal information, which can then be exploited for the hacker's personal gain. If we grow and obtain more visibility, we may be more vulnerable to hacking or other attempts to gain unauthorized access to our system. Moreover, the increased use of mobile devices also increases the risk of theft or the intentional and unintentional disclosure of data including proprietary information or personal information. We may be unable to anticipate all of these vulnerabilities and implement adequate preventative measures and, in some cases, we may not be able to immediately detect a security incident. Any security incident could result in legal, regulatory, and financial liability, as well as harm to our reputation.\n9\nWe may be required to expend significant capital and other resources to protect against such threats or to alleviate problems caused by breaches in security. Additionally, any server interruptions, break-downs or system failures, including failures which may be attributable to events within or outside our control, could increase our future operating costs and cause us to lose business. We maintain insurance policies covering losses relating to our network systems or other assets. However, these policies may not cover the entire cost of a claim. Any future disruptions in our information technology systems, whether caused by hacking or otherwise, may have a material adverse effect on our future results.\nPrivacy concerns relating to the collection, use, accuracy, correction and sharing of personal information and any perceived or actual unauthorized disclosure of personal information, whether through breach of our network by an unauthorized party, employee theft, misuse, or error could harm our reputation, impair our ability to attract website visitors and to attract and retain customers, result in a loss of confidence in the security of our products and services, or subject us to claims or litigation arising from damages suffered by consumers, and thereby harm our business and results of operations. In addition, we could incur significant costs which our insurance policies may not adequately cover, and we may need to expend significant resources to protect against security breaches, comply with any data breach notification provisions contained in our customer contracts, and comply with the multitude of state and federal laws regarding data privacy and data breach notification obligations.\nData security and integrity are critically important to our business, and breaches of security, unauthorized access to or disclosure of confidential information, disruption, including distributed denial of service (\"DDoS\") attacks or the perception that confidential information is not secure, could result in a material loss of business, substantial legal liability or significant harm to our reputation.\nAs a nationwide provider of risk and information solutions, we aggregate, store, and process a large amount of sensitive and confidential consumer information including financial information and personal information. This data is often accessed through secure transmissions over public and private networks, including the internet.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/1720116/000119312526091708/rdvt-20251231.htm",
+      "asOf": "2026-03-04",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-K",
+    "pressRelease": null,
+    "proxyStatement": null,
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T18:50:01.514Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T18:50:01.514Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T18:50:01.514Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T18:50:01.514Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T18:50:01.514Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T18:50:01.514Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T18:50:01.514Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T18:50:01.514Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T18:50:01.514Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T18:50:01.514Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T18:50:01.514Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T18:50:01.514Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-10-02T18:50:01.514Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-10-02T18:50:01.514Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-10-02T18:50:01.514Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-10-02T18:50:01.514Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-10-02T18:50:01.514Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-10-02T18:50:01.514Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T18:50:01.514Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T18:50:01.514Z"
+    },
+    {
+      "field": "ttm.evToEbitda",
+      "source": "yahoo",
+      "endpoint": "quoteSummary.defaultKeyStatistics.enterpriseToEbitda",
+      "capturedAt": "2026-10-02T18:50:23.818Z"
+    }
+  ],
+  "sbc": [
+    6615000,
+    5505000,
+    5386000,
+    5948000,
+    6500000
+  ]
+}
