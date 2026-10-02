@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "f2963775f9d1e713b9a6c52c3b26aeb22c4affea7b78be27a4f0b494593b2d62",
-  "reviewedAt": "2026-10-02T19:17:55Z",
+  "judgmentSha256": "bb58991f486cd407b4c7b73e269240aa8e9093d7a1afcbef80de2625a7982697",
+  "reviewedAt": "2026-10-02T19:18:51Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved-with-minors",
   "findings": [
     {
       "id": "F-1",
@@ -42,8 +42,8 @@
       "quote": "The excerpt we hold does not break out the uses, though the quarter included the Ekumen acquisition and a lower share count.",
       "issue": "Unsupported inference (rubric 2). The press release says only 'the addition of Ekumen' — it does not call it an acquisition, give a price, or date it to the quarter. The lower diluted share count (83.0 million against 86.4 million) is a weighted average and is not a disclosed cash use. Having said the uses are not broken out, the sentence then implies them. The same 'acquisition' characterisation recurs in executiveSummary.catalysts[3] ('Integration of the Ekumen acquisition') and management.capitalAllocation ('Management also continues to buy capabilities: it added Ekumen').",
       "fix": "Stop at 'does not break out the uses.' Describe Ekumen in the release's own words ('the addition of Ekumen') in all three places, or flag that the terms are not in the pack.",
-      "status": "open",
-      "note": "balanceCommentary and catalysts[3] are fixed, but management.capitalAllocation still reads 'Management also continues to buy capabilities: it added Ekumen to strengthen its Physical AI offering', followed directly by the 10-K acquisitions warning. That still presents Ekumen as a purchase; the release says only 'the addition of Ekumen'."
+      "status": "addressed",
+      "note": "Fixed. capitalAllocation now reads 'The CEO also cited the addition of Ekumen ... the release does not give the terms', and ties the 10-K warning to the acquisition strategy the 10-K lists, without calling Ekumen a purchase."
     },
     {
       "id": "F-5",
@@ -102,8 +102,8 @@
       "quote": "The balance sheet gives the equity a floor: cash and cash equivalents were $298.4 million at June 30, 2026, a large share of the market value.",
       "issue": "Cross-section repetition (rubric 7). The cash-as-downside-support claim is made four times: analystCommentary ('gives the equity a floor'), thesis ('the cash balance limits the downside'), balanceCommentary ('The cash balance is the main support for the shares... it cushions a holder if growth disappoints') and the Bear driver ('with the cash balance limiting how far they drop'). 'Floor' also overstates it on the surface's own numbers: cash is under half the ~$655.9M market cap and fell from $342.1 million in six months.",
       "fix": "Argue the cash point once, in balanceCommentary, with the decline since December 31, 2025 as the counter. Let the thesis point to it in a clause and drop it from analystCommentary and the Bear driver, or replace 'floor' with a qualified phrase.",
-      "status": "open",
-      "note": "Thesis and the Bear driver no longer repeat it, and capitalAllocation refers back. But analystCommentary still argues it in full: 'The balance sheet gives the equity a floor: cash and cash equivalents were $298.4 million at June 30, 2026, a large share of the market value', while balanceCommentary says 'The cash balance is the main support for the shares'. 'Floor' is still unqualified despite cash under half the market cap and down from $342.1 million."
+      "status": "addressed",
+      "note": "Fixed. analystCommentary now points ('The balance sheet offers some support (see Financials)'), and balanceCommentary argues it once and qualifies it: 'not a hard floor: it is less than half the market value and fell in the six months to June 30, 2026.'"
     },
     {
       "id": "F-11",
@@ -122,8 +122,8 @@
       "quote": "The 269.5x trailing P/E shows how thin GAAP earnings are.",
       "issue": "Cross-section repetition (rubric 7). The thin-GAAP-earnings point is made in incomeCommentary (quoted, and 'the adjusted view is much stronger than the GAAP one') and twice more in multiplesCommentary ('The trailing P/E is not meaningful given how thin GAAP earnings are' and 'On GAAP earnings the stock is much more expensive than the forward P/E suggests'), besides the analystCommentary, thesis and executive-summary risk pointers. The two sections also disagree on whether the 269.5x is meaningful.",
       "fix": "Make the GAAP-versus-adjusted point once in incomeCommentary. In multiplesCommentary keep only the consensus-basis argument (that FY26E EPS of $0.47 reads as adjusted) and drop the two restatements.",
-      "status": "open",
-      "note": "The P/E sentence moved out of incomeCommentary, but multiplesCommentary still makes the point twice ('The 269.5x trailing P/E is not meaningful because GAAP earnings are so thin' and 'On GAAP earnings the stock is much more expensive than the forward P/E suggests'), incomeCommentary keeps 'the adjusted view is much stronger than the GAAP one', and management.leadership adds a fourth instance ('GAAP operating margin remains thin')."
+      "status": "addressed",
+      "note": "Fixed. multiplesCommentary now points back ('not a useful measure given GAAP earnings (see Financials)') and drops the second restatement; the leadership instance is removed. The argument sits once in incomeCommentary. See F-14 for the leftover fragment in leadership."
     },
     {
       "id": "F-13",
@@ -134,6 +134,15 @@
       "fix": "Use one unit style per paragraph: either drop the dollar figure ('Income from operations turned positive in the second quarter, a 1.2% margin') or keep the M/million style consistent. In capitalAllocation, explain the sign or describe the repurchases in words rather than writing a negative buyback.",
       "status": "addressed",
       "note": "Fixed. Now reads 'Income from operations turned positive, a 1.2% margin' and 'Share repurchases were small in FY25.'"
+    },
+    {
+      "id": "F-14",
+      "severity": "Minor",
+      "field": "sections.management.leadership",
+      "quote": "The second-quarter gross margin gain is the evidence so far;",
+      "issue": "Introduced by the rewrite (rubric 9). Removing 'GAAP operating margin remains thin' left the paragraph ending mid-sentence on a semicolon, and the fragment renders as-is in data/gdyn.json. The reader sees a broken sentence at the end of the leadership section.",
+      "fix": "End the sentence: 'The second-quarter gross margin gain is the evidence so far.' Do not restore the GAAP-thin clause (F-12).",
+      "status": "open"
     }
   ]
 }
