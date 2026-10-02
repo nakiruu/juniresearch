@@ -232,7 +232,7 @@
   "ttm": {
     "pe": 158.11111111111114,
     "ps": 72.21345954290335,
-    "evToEbitda": null,
+    "evToEbitda": 168.101,
     "grossMargin": 0.8479613433592037,
     "operatingMargin": 0.4279852584682017,
     "netMargin": 0.49004563234118065,
@@ -585,6 +585,12 @@
       "endpoint": "bigdata_search",
       "source": "bigdata",
       "capturedAt": "2026-09-22T22:08:58.250Z"
+    },
+    {
+      "field": "ttm.evToEbitda",
+      "source": "yahoo",
+      "endpoint": "quoteSummary.defaultKeyStatistics.enterpriseToEbitda",
+      "capturedAt": "2026-10-02T00:13:36.980Z"
     }
   ],
   "sbc": [

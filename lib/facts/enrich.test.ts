@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { alignGoodwill, parsePeerMultiples, enrichPack } from "./enrich";
+import { alignGoodwill, parsePeerMultiples, enrichPack, secEvToEbitda, evToEbitdaNotMeaningful } from "./enrich";
 
 describe("alignGoodwill", () => {
   const usd = [
@@ -44,5 +44,27 @@ describe("enrichPack", () => {
     const out = await enrichPack(pack, "test@example.com", fetchImpl);
     expect(Object.keys(out)).toEqual(["cik", "statements", "peers", "goodwill", "sbc"]);
     expect(out).toMatchObject({ goodwill: [7], sbc: [3], peers: [{ ticker: "PEER", pe: 20, ps: null, evToEbitda: null }] });
+  });
+});
+
+describe("secEvToEbitda", () => {
+  const q = (report_date: string, ebitda: number | null, net_debt: number | null = null) => ({ report_date, ebitda, net_debt });
+  const quarters = [q("2025-09-30", 50), q("2025-12-31", 60), q("2026-03-31", 70), q("2026-06-30", 80, 300), q("2026-09-30", 999, 999)];
+  it("is (capture market cap + latest net debt) / sum of the four quarters ending at the pack's latest quarter", () => {
+    expect(secEvToEbitda(quarters, "2026-06-30", 2_300)).toBeCloseTo((2_300 + 300) / (50 + 60 + 70 + 80));
+  });
+  it("is null when the latest quarter is missing, a quarter's EBITDA or the net debt is missing, or TTM EBITDA is not positive", () => {
+    expect(secEvToEbitda(quarters, "2026-05-31", 2_300)).toBeNull();
+    expect(secEvToEbitda([q("2025-09-30", 50), q("2025-12-31", null), q("2026-03-31", 70), q("2026-06-30", 80, 300)], "2026-06-30", 2_300)).toBeNull();
+    expect(secEvToEbitda([q("2025-09-30", 50), q("2025-12-31", 60), q("2026-03-31", 70), q("2026-06-30", 80)], "2026-06-30", 2_300)).toBeNull();
+    expect(secEvToEbitda([q("2025-09-30", -50), q("2025-12-31", -60), q("2026-03-31", 70), q("2026-06-30", 10, 0)], "2026-06-30", 2_300)).toBeNull();
+    expect(secEvToEbitda(quarters, "2026-06-30", null)).toBeNull();
+  });
+});
+
+describe("evToEbitdaNotMeaningful", () => {
+  it("is true for banks, lenders and insurers, false for exchanges, asset managers and non-financials", () => {
+    for (const sic of [6021, 6022, 6035, 6141, 6199, 6311, 6331, 6411]) expect(evToEbitdaNotMeaningful(sic)).toBe(true);
+    for (const sic of [6200, 6211, 6282, 6798, 3674, 7372, null, undefined]) expect(evToEbitdaNotMeaningful(sic)).toBe(false);
   });
 });

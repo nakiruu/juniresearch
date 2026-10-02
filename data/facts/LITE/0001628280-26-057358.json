@@ -232,7 +232,7 @@
   "ttm": {
     "pe": -11.249784853700517,
     "ps": 31.123579668214997,
-    "evToEbitda": null,
+    "evToEbitda": 120.35635261624223,
     "grossMargin": 0.4166887856668879,
     "operatingMargin": 0.1741207697412077,
     "netMargin": -2.3009621765096218,
@@ -585,6 +585,12 @@
       "endpoint": "bigdata_search",
       "source": "bigdata",
       "capturedAt": "2026-10-01T20:53:52.397Z"
+    },
+    {
+      "field": "ttm.evToEbitda",
+      "source": "edgar",
+      "endpoint": "derived: (market cap + net debt) / TTM EBITDA (operating income + D&A), SEC companyfacts",
+      "capturedAt": "2026-10-02T00:13:31.913Z"
     }
   ],
   "sbc": [

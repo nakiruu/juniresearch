@@ -9,6 +9,7 @@
  */
 import { sleep, type FetchLike } from "../edgar/client";
 import { padCik } from "../edgar/submissions";
+import { fetchCompanyFacts, parseCompanyFacts, type SecPeriod } from "./free/sec";
 
 const YAHOO_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) juniper-research";
 const num = (x: unknown): x is number => typeof x === "number" && Number.isFinite(x);
@@ -96,6 +97,64 @@ export async function fetchPeerMultiples(tickers: string[], fetchImpl: FetchLike
     await sleep(300);
   }
   return out;
+}
+
+/**
+ * TTM EV/EBITDA from SEC companyfacts, as of a pack's latest quarter: (the pack's capture-time market cap +
+ * that quarter's net debt) ÷ the sum of the four discrete quarters' EBITDA ending at it. null when the latest
+ * quarter isn't in the SEC series, any of the four EBITDA values or the net debt is missing, or TTM EBITDA is
+ * not positive (a multiple on negative EBITDA means nothing). Pure.
+ */
+export function secEvToEbitda(quarters: Pick<SecPeriod, "report_date" | "ebitda" | "net_debt">[], periodEnd: string, marketCap: number | null): number | null {
+  if (!(marketCap != null && marketCap > 0)) return null;
+  const last4 = quarters.filter((q) => q.report_date <= periodEnd).sort((a, b) => (a.report_date < b.report_date ? -1 : 1)).slice(-4);
+  if (last4.length < 4 || last4[3].report_date !== periodEnd) return null;
+  if (last4.some((q) => q.ebitda == null) || last4[3].net_debt == null) return null;
+  const ebitda = last4.reduce((a, q) => a + (q.ebitda as number), 0);
+  if (!(ebitda > 0)) return null;
+  return (marketCap + (last4[3].net_debt as number)) / ebitda;
+}
+
+/** SIC 6000–6199 (banks, savings institutions, credit and lending) and 6300–6411 (insurance): EV/EBITDA is left blank. */
+export function evToEbitdaNotMeaningful(sic: number | null | undefined): boolean {
+  return sic != null && ((sic >= 6000 && sic <= 6199) || (sic >= 6300 && sic <= 6411));
+}
+
+type Provenance = { field: string; source: "fmp" | "bigdata" | "edgar" | "yahoo"; endpoint: string; capturedAt: string };
+
+/**
+ * Fill a pack's missing TTM EV/EBITDA. First choice: calculated from SEC data (secEvToEbitda). Fallback:
+ * Yahoo's enterpriseToEbitda for the subject, fetched now — so it is only as current as this run. Leaves
+ * the field null when neither source has a positive value. Records the source in provenance.
+ */
+export async function fillEvToEbitda(
+  pack: { ticker: string; cik: number; sic?: number | null; quote?: { marketCap: number | null }; latestQuarter?: { periodEnd: string } | null; ttm?: { evToEbitda: number | null }; provenance?: Provenance[] },
+  contact: string, fetchImpl: FetchLike = fetch, now: () => Date = () => new Date(),
+): Promise<"sec" | "yahoo" | null> {
+  if (!pack.ttm || pack.ttm.evToEbitda != null) return null;
+  if (evToEbitdaNotMeaningful(pack.sic)) return null; // banks, lenders, insurers: debt is operating inventory, so EV/EBITDA is not a valid multiple
+  const stamp = (source: Provenance["source"], endpoint: string) => {
+    pack.provenance?.push({ field: "ttm.evToEbitda", source, endpoint, capturedAt: now().toISOString() });
+  };
+  try {
+    const periodEnd = pack.latestQuarter?.periodEnd;
+    if (periodEnd) {
+      const { quarter } = parseCompanyFacts(await fetchCompanyFacts(pack.cik, contact, fetchImpl));
+      const v = secEvToEbitda(quarter, periodEnd, pack.quote?.marketCap ?? null);
+      if (v != null) {
+        pack.ttm.evToEbitda = v;
+        stamp("edgar", "derived: (market cap + net debt) / TTM EBITDA (operating income + D&A), SEC companyfacts");
+        return "sec";
+      }
+    }
+  } catch { /* fall through to Yahoo */ }
+  const y = (await fetchPeerMultiples([pack.ticker], fetchImpl))[pack.ticker]?.evToEbitda ?? null;
+  if (y != null && y > 0) {
+    pack.ttm.evToEbitda = y;
+    stamp("yahoo", "quoteSummary.defaultKeyStatistics.enterpriseToEbitda");
+    return "yahoo";
+  }
+  return null;
 }
 
 interface EnrichablePack {

@@ -107,6 +107,10 @@ const PROFIT_LOSS = ["ProfitLoss"]; // net income INCLUDING noncontrolling inter
 const NCI = ["NetIncomeLossAttributableToNoncontrollingInterest"];
 const EPS_DILUTED = ["EarningsPerShareDiluted"];
 const DA = ["DepreciationDepletionAndAmortization", "DepreciationAmortizationAndAccretionNet", "DepreciationAndAmortization"];
+// Component fallback for filers that tag no combined D&A (e.g. INTU, LITE, ORCL tag Depreciation and
+// AmortizationOfIntangibleAssets separately): D&A = depreciation + amortization of intangibles, see combineDa.
+const DEPRECIATION = ["Depreciation"];
+const AMORTIZATION_INTANGIBLES = ["AmortizationOfIntangibleAssets", "AmortizationOfAcquiredIntangibleAssets"];
 const INTEREST_EXPENSE = ["InterestExpense", "InterestExpenseNonoperating"];
 const CASH_AND_ST_INVESTMENTS = ["CashCashEquivalentsAndShortTermInvestments"]; // else derived: cash + ST investments
 const CASH = ["CashAndCashEquivalentsAtCarryingValue"];
@@ -330,6 +334,24 @@ function combineRevenue<K>(primary: Map<K, UnitEntry>, nii: Map<K, UnitEntry>, n
 }
 
 /**
+ * Effective D&A series. Keeps every period a combined D&A concept covers; for periods it misses,
+ * synthesizes depreciation + amortization of intangibles from the filer's own component tags (a sum of
+ * reported figures, not an estimate). Amortization is required for that period whenever the filer tags it
+ * anywhere — a period with depreciation but no amortization is left empty rather than understated. Only a
+ * filer that never tags intangible amortization (no intangibles) gets depreciation alone.
+ */
+function combineDa<K>(primary: Map<K, UnitEntry>, depreciation: Map<K, UnitEntry>, amortization: Map<K, UnitEntry>, filerTagsAmortization: boolean): Map<K, UnitEntry> {
+  const out = new Map(primary);
+  for (const [key, dep] of depreciation) {
+    if (out.has(key)) continue;
+    const amort = amortization.get(key);
+    if (!amort && filerTagsAmortization) continue;
+    out.set(key, { ...dep, val: dep.val + (amort?.val ?? 0) });
+  }
+  return out;
+}
+
+/**
  * Fill net-income gaps with parent-attributable net income derived from ProfitLoss.
  *
  * Some filers (e.g. Bloom Energy) tag consolidated net income only as us-gaap:ProfitLoss
@@ -477,7 +499,14 @@ export function parseCompanyFacts(facts: unknown): { annual: SecPeriod[]; quarte
   // flowSeriesYtd / quarterFlowWithYtdFallback above); the rest of the flow concepts above are
   // income-statement items filers already tag discretely and must NOT go through YTD
   // differencing.
-  const da = flowSeriesYtd(facts, DA);
+  const daPrimary = flowSeriesYtd(facts, DA);
+  const depreciation = flowSeriesYtd(facts, DEPRECIATION);
+  const amortization = flowSeriesYtd(facts, AMORTIZATION_INTANGIBLES);
+  const tagsAmortization = amortization.annual.size > 0 || amortization.quarter.size > 0;
+  const da = {
+    annual: combineDa(daPrimary.annual, depreciation.annual, amortization.annual, tagsAmortization),
+    quarter: combineDa(daPrimary.quarter, depreciation.quarter, amortization.quarter, tagsAmortization),
+  };
   const interestExpense = flowSeriesYtd(facts, INTEREST_EXPENSE);
   const ocf = flowSeriesYtd(facts, OCF);
   const capexRaw = flowSeriesYtd(facts, CAPEX_RAW);
