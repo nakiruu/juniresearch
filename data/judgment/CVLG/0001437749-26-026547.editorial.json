@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "daa5283465ccf2c61bb0137f113204cf4306505fc76adb20edcf62ac507867be",
-  "reviewedAt": "2026-10-02T21:47:14Z",
+  "judgmentSha256": "03341ca749c731f3be0186a32bb66275ab05510d73f708f1b5081b2b16dcb9ac",
+  "reviewedAt": "2026-10-02T21:48:18Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved",
   "findings": [
     {
       "id": "F-1",
@@ -221,7 +221,7 @@
       "quote": "Government business: the 10-K risk factors say the business with the Department of War is not subject to a contract, requires significant compliance work and could be terminated at any time.",
       "issue": "The new risk item repeats a claim that moatFactors[1] already makes from the same 10-K sentence (\"the 10-K says the Department of War business is not subject to a contract and could be terminated at any time\"). The rewrite moved the TEL repetition (F-15) onto a different fact.",
       "fix": "Make the Department of War point once. Either keep it as the risk and refer to it in a few words in moatFactors[1], or replace risks.idiosyncratic[4] with a risk the page does not already carry.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-25",
@@ -230,7 +230,7 @@
       "quote": "Until operating cash flow clearly exceeds capex, the dividend and any buybacks rest on the balance sheet rather than on surplus cash.",
       "issue": "This new closing sentence paraphrases capitalAllocation's \"FY25 share repurchases of $36.6M came in a year of negative free cash flow, so they were not funded from surplus cash generation\" and its closing condition (\"until free cash flow turns positive\"). The same claim now appears in two sections in different words.",
       "fix": "End cashflowCommentary on the FCF-yield and capex reading. Leave the shareholder-returns funding judgment to capitalAllocation.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-26",
@@ -239,7 +239,7 @@
       "quote": "the quarter's cost overrun shows how quickly operating expenses can absorb pricing gains",
       "issue": "The new counter-case sentence restates the thesis (\"Those gains did not reach the bottom line because operating costs rose alongside them\" and \"The thesis fails if insurance and maintenance costs keep absorbing the revenue gains\"). The claim appears twice at the top of the report.",
       "fix": "In analystCommentary, give a counter-case the thesis does not already make, such as the balance-sheet constraint in words, or point to the thesis instead of restating it.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-27",
@@ -248,7 +248,7 @@
       "quote": "a one-off benefit from a lower tax rate and interest income at approximately 3 cents",
       "issue": "The rewrite added the tax-rate and interest-income tailwind to leadership, but incomeCommentary already makes the point (\"Management's own third-quarter outlook flags the absence of those higher TEL equipment sales, a lower tax rate and interest income that helped the second quarter\"). \"One-off\" also goes further than the release, which says only that neither benefit is expected in the third quarter.",
       "fix": "Keep the tailwind in incomeCommentary, where the 3-cent figure can sit if wanted. In leadership, credit the candor through the 8-cent cost quantification alone. If the item stays, write \"not expected to recur in the third quarter\" in place of \"one-off\".",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-28",
@@ -257,7 +257,7 @@
       "quote": "A BUY here is a bet that cost discipline catches up with pricing within the renewal window",
       "issue": "After the F-1 fix, the thesis says over half of the per-mile gain came from mix shift. analystCommentary (\"catches up with pricing\", \"absorb pricing gains\") and idiosyncratic[0] (\"erase a quarter's pricing gains\") still call the gains pricing.",
       "fix": "Use \"revenue gains\" or \"revenue per mile\" so the wording matches the thesis.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-29",
@@ -266,7 +266,7 @@
       "quote": "Mix shift and rate increases are lifting revenue per mile; maintenance, insurance and a thin balance-sheet cushion still decide whether margins follow",
       "issue": "At 150 of 160 characters, the rewritten subtitle leaves little room for the next round.",
       "fix": "Tighten it, for example: \"Mix and rates lift revenue per mile; costs and a thin balance sheet decide whether margins follow\".",
-      "status": "open"
+      "status": "addressed"
     }
   ]
 }
