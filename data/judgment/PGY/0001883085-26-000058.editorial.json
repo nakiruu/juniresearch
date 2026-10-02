@@ -1,8 +1,8 @@
 {
-  "judgmentSha256": "015d72debbb9cd4e9ab907921e775007819a7e4af53ce5c7a8dc74980e210709",
-  "reviewedAt": "2026-10-02T20:01:16Z",
+  "judgmentSha256": "f714518a7097a2df9d9bae38150685fe21081bca1259dd45bb9409e3b15ea9a0",
+  "reviewedAt": "2026-10-02T20:04:13Z",
   "reviewer": "claude-opus-5-5",
-  "round": 1,
+  "round": 2,
   "verdict": "needs-fix-round",
   "findings": [
     {
@@ -12,7 +12,7 @@
       "quote": "Co-founders Yahav Yulzari and Avital Pardo also serve on the Board and are employed by the company.",
       "issue": "Recalled executive. The proxy excerpt never calls anyone a founder or co-founder. It says only that Mr. Krubiner, Mr. Pardo, Mr. Yulzari and Ms. Rosen 'are not independent director nominees as they are directly employed by the Company'. The same recalled label appears in four other places: meta.subtitle ('founder control'), executiveSummary.risks[3] ('Concentrated founder voting control.'), management.governance ('the founders' voting control'), management.insiderOwnership ('the founders control shareholder votes') and risks.idiosyncratic[3] ('the founders' voting power').",
       "fix": "Drop 'co-founders' and 'founders' everywhere. Describe the three as the proxy does: employee directors who, per the beneficial-ownership table as of June 15, 2026, hold most of the Class B Ordinary Shares. For example, 'the employee directors' voting control' or 'Class B holders' voting control'.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-2",
@@ -21,7 +21,7 @@
       "quote": "It is incorporated in Israel and governed by the Israel Companies Law.",
       "issue": "Unsupported inference. Nothing on the surface states where Pagaya is incorporated. The proxy excerpt says only that directors and officers are 'office holders' under the Israel Companies Law for purposes of the Related Person Transactions Policy. The company description lists operations in the United States, Israel and the Cayman Islands and gives the headquarters as New York. management.governance repeats the inference ('As an Israeli company, Pagaya applies the Israel Companies Law...'). The same sentence also overstates the committee's role. The proxy says the Audit and Finance Committee 'shall determine whether' a Covered Person transaction is an 'extraordinary transaction', not that it reviews extraordinary transactions.",
       "fix": "Remove the incorporation claim. In governance, say that the proxy (July 2026) applies the Israel Companies Law's office-holder disclosure rules through its Related Person Transactions Policy, and that the Audit and Finance Committee determines whether a covered transaction is 'extraordinary'.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-3",
@@ -30,7 +30,7 @@
       "quote": "A low multiple is common for businesses with that exposure.",
       "issue": "Unsupported claim about other companies. The Facts block says the multiples are 'company column; peers pending a peer data source', and valuation.multiplesCommentary itself says 'We have no peer multiples to compare against.' The commentary therefore asserts a cross-company pattern that the report admits it cannot show, and the two fields contradict each other.",
       "fix": "Cut the sentence, or recast it as the desk's own reading of PGY alone. For example: 'In our view the 4.9x NTM multiple prices in that funding and credit exposure.' Make that point in one place only (see F-10).",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-4",
@@ -39,7 +39,7 @@
       "quote": "Network Volume growth in the second quarter outpaced revenue growth, which suggests continued demand from Partners.",
       "issue": "Unsupported inference, and it misses the bearish reading. The source does not link volume outrunning revenue to Partner demand. Network Volume rising faster ($3,535 million vs $2,648 million) than revenue (+15.1%) means Pagaya earned less revenue per dollar of volume in Q2'26 than a year earlier. The MD&A gives the likely reason in the same pack: the higher cost of capital is 'necessitating adjustments in conversion ratios to meet investor return expectations'. The report presents a compression signal as a bullish one.",
       "fix": "State the fact without the Partner-demand inference: volume grew faster than revenue, so revenue per dollar of Network Volume fell, which matches the MD&A's conversion-ratio adjustments. Do not compute a take-rate figure. Make this the counter-case to volume growth and place it in one section only (see F-9).",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-5",
@@ -48,7 +48,7 @@
       "quote": "Their economic alignment is strong, but outside shareholders have little say over strategy or governance.",
       "issue": "Unsupported claim. The proxy table supports voting control, not a large economic stake. The group holds only 3.5% of Class A Ordinary Shares. The surface gives no economic-ownership percentage for the Class B holders, and their voting power comes from the share class's votes, not from the size of their equity stake. The surface therefore cannot support the claim that economic alignment is strong. If anything, the gap between voting power and economic stake is the governance point.",
       "fix": "Remove 'economic alignment is strong'. Say that control rests on Class B voting power, and that the surface does not show how large the economic stake behind it is. Then read what that means for a Class A holder.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-6",
@@ -57,7 +57,7 @@
       "quote": "As of June 15, 2026 Gal Krubiner held 43.3% of total voting power, Avital Pardo 42.5% and Yahav Yulzari 40.1%, mostly through Class B Ordinary Shares, and all directors and executive officers as a group held 81.8%.",
       "issue": "Restatement without reading. The three individual percentages add up to well over 100%, and the three individual Class B counts exceed the 11,288,577 Class B shares outstanding. The holdings must therefore overlap (shared beneficial ownership), and a reader adding them up will be misled. The paragraph also never says what 81.8% lets the group do that 43.3% alone would not. Examples: carry any ordinary resolution, block any outside proposal, and elect the board.",
       "fix": "Say once that the individual figures overlap and should not be summed, and make the 81.8% group figure the control number. Then read it for the holder: with 81.8% of the vote the insider group decides any shareholder vote, and Class A holders cannot change the board or block a transaction.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-7",
@@ -66,7 +66,8 @@
       "quote": "Pagaya delivers close to consensus, funding remains available at today's costs, and the multiple recovers modestly. The shares settle below the low end of the Street target range.",
       "issue": "The Base case has no anchor. 'The multiple recovers modestly' names no multiple, and $22 is placed only relative to the Street range. If Pagaya 'delivers close to consensus' ($3.70 FY26E EPS), the reader cannot see what multiple the $22 assumes or why it is right. valuation.scenarioCommentary does not supply the anchor either. The $26 top of the target band is not argued anywhere.",
       "fix": "Anchor Base in words to a multiple on consensus EPS that is on the surface. For example: 'a modest move from the 4.9x NTM multiple on consensus FY26E EPS of $3.70, discounted because that consensus may be on an adjusted basis.' In scenarioCommentary, say in one sentence what sets the $26 top of the band. Do not compute a new figure.",
-      "status": "open"
+      "status": "open",
+      "note": "Still open. The Base driver is unchanged: 'the multiple recovers modestly' still names no multiple, and $22 is placed only against the lowest Street target. multiplesCommentary now calls the trailing P/E 'the more conservative anchor', but Base is not tied to it or to any other multiple. The $26 top of the band is now argued, so that part of the finding is fixed. What remains is to state in words what multiple on which EPS basis puts Base at $22."
     },
     {
       "id": "F-8",
@@ -75,7 +76,7 @@
       "quote": "Profitable and generating cash, at under 5x forward earnings, but credit risk, funding costs and founder control justify caution",
       "issue": "Calls coherence. The subtitle, and the thesis ('the forward multiple is low'), present the sub-5x forward P/E without qualification. valuation.multiplesCommentary says the $3.70/$4.13 consensus is 'far above' GAAP EPS of $0.93 and 'may be on an adjusted basis'. The headline therefore relies on a multiple the report itself doubts. The subtitle also carries the recalled 'founder' label (F-1).",
       "fix": "Either qualify the forward multiple wherever it is used as a selling point (for example, 'under 5x consensus forward earnings, whose basis is unstated'), or lead with a figure the report stands behind: the 12.9x trailing P/E or the 16.8% FCF yield.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-9",
@@ -84,7 +85,7 @@
       "quote": "The main operating measure is Network Volume, which was $6,159 million in the six months ended June 30, 2026 against $5,048 million a year earlier.",
       "issue": "Cross-section repetition of the Network Volume growth story in five places. analystCommentary: 'Network Volume kept growing in the second quarter of 2026'. financials.incomeCommentary: 'Network Volume, the main revenue driver, rose to $3,535 million from $2,648 million.' businessMoat.segments[0].body: the six-month $6,159/$5,048 million. growth.points[1]: 'Network Volume growth in the second quarter outpaced revenue growth'. executiveSummary.catalysts[0] points to it, which is correct. The other places retell the same claim in different words.",
       "fix": "Argue Network Volume once, in growth or income, with one pair of figures and the take-rate counter-case from F-4. Keep the catalyst as a pointer. In segments, describe the two sides of the business without reusing the volume figures, and cut the analystCommentary sentence or turn it into a pointer.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-10",
@@ -93,7 +94,7 @@
       "quote": "The Street is uniformly positive: 11 Buy ratings, with a consensus target of $28.91, a median of $27.00 and a range of $23.00–$36.00.",
       "issue": "Paraphrase repetition across sections. analystCommentary already says 'All 11 covering analysts rate Buy, and the shares trade at 4.9x NTM earnings', and multiplesCommentary repeats the 11 Buys and the 4.9x NTM multiple. The rating line repeats too: 'We rate PGY HOLD with an $18–$26 target range' (analystCommentary), 'Our $18–$26 target range brackets Base' (scenarioCommentary) and 'HOLD, target range $18–$26' (finalRecommendation.body[0]). The 'low multiple reflects credit/funding risk' claim appears in both analystCommentary and multiplesCommentary.",
       "fix": "Introduce the Street view and the NTM multiple once, in multiplesCommentary. In analystCommentary, say in words that the desk is below a unanimous Street. State the target band once with its argument (scenarioCommentary), and have the other mentions point to it without repeating the figures.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-11",
@@ -102,7 +103,8 @@
       "quote": "Those holdings mean Pagaya is not a pure fee business. If the loans in its securitizations perform poorly, it bears part of the loss directly.",
       "issue": "Cross-section repetition of the risk-retention claim. It also appears in analystCommentary ('holds risk retention positions that expose it directly to credit losses'), management.capitalAllocation ('exposes the balance sheet to credit losses'), valuation.scenarioCommentary ('the 10-K reports larger risk retention exposure') and risks.idiosyncratic[1] ('increase Pagaya's direct exposure to loan losses'). Five places make the same claim in different words. Separately, the rising cost of capital is retold in analystCommentary, catalysts[3], growth.points[3], risks.idiosyncratic[2] and scenarioCommentary.",
       "fix": "Argue risk retention once, in balanceCommentary, and have the others point to it in words ('see Financials'). Do the same for cost of capital: argue it in risks.idiosyncratic[2] or growth.points[3] and point to it elsewhere.",
-      "status": "open"
+      "status": "open",
+      "note": "Partly fixed. risks.idiosyncratic[1] now points to Financials. Still open: management.capitalAllocation keeps 'exposes the balance sheet to credit losses' unchanged, scenarioCommentary still restates 'larger risk retention exposure', and analystCommentary restates the direct credit-loss exposure while pointing to '(see Risks)', although the argument is in Financials. Cost of capital is still retold in growth.points[3] ('The MD&A says the cost of capital has risen'), risks.idiosyncratic[2] and scenarioCommentary ('the MD&A already reports a higher cost of capital')."
     },
     {
       "id": "F-12",
@@ -111,7 +113,7 @@
       "quote": "Our data does not report total debt or a current ratio for FY25, so we cannot assess leverage from the summary figures.",
       "issue": "No counter-case and no figures. The section is entirely bearish and uses none of the balance-sheet figures on the surface. Total equity rose from $0.4B in FY24 to $0.6B in FY25, cash and short-term investments held at $0.2B, and FY24 total debt was $0.3B with net debt of $0.1B. The reader gets no view of whether the rebuilt equity cushions the risk-retention exposure.",
       "fix": "Use the equity rebuild ($0.4B to $0.6B) and the $0.2B cash line as the counter-case. Note the last reported debt figure (FY24, $0.3B) with its date, and reach a view on whether equity covers the retention exposure.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-13",
@@ -120,7 +122,7 @@
       "quote": "That data asset is difficult for a new entrant to replicate quickly.",
       "issue": "Missing counter-case, and the sentence is an assertion without support. The same MD&A has a footnote that cuts against the flywheel: 'The machine learning models are static and do not have the ability to self-correct, self-improve, and/or learn over time. Any change to the models requires human intervention...'. The factor uses only the bullish half of the source.",
       "fix": "Keep the $4.2 trillion point. Add the footnote as the counter-case: the data advantage reaches pricing only through human-governed model changes, not automatically. Present 'difficult to replicate' as the desk's view, not as fact.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-14",
@@ -129,7 +131,7 @@
       "quote": "FY25 revenue was $1.3B, up {+25.6%+}, after growth of 30.0% in FY24.",
       "issue": "Undeclared source disagreement. The Facts block gives FY25 revenue of $1.3B, up 25.6%. The 10-K excerpt in Context gives 'revenue and other income' of $1,301.4 million vs $1,032.2 million, 'representing a 26% growth rate'. The two are different top-line measures with different growth rates. The same paragraph then quotes the 10-K's Adjusted EBITDA, which sets the two sources side by side without telling the reader which top line is used.",
       "fix": "Say once that the 10-K's 'revenue and other income' ($1,301.4 million, +26%) differs from the vendor revenue line ($1.3B, +25.6%), and that the report uses the vendor figure. Do not repeat the note elsewhere.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-15",
@@ -138,7 +140,8 @@
       "quote": "Bear carries more weight than Bull because the MD&A already reports a higher cost of capital and the 10-K reports larger risk retention exposure.",
       "issue": "Stale fact presented as current. The risk-retention increase comes from the 10-K filed March 2, 2026 and describes holdings 'during 2025'. It is cited as a present condition, with no date, to justify a probability set in October 2026. risks.idiosyncratic[1] ('the larger risk retention holdings') has the same problem. The surface does not show whether retention kept rising in the first half of 2026.",
       "fix": "Date it: 'risk retention holdings rose during 2025 (per the FY25 10-K)'. Acknowledge that the pack does not show their 2026 trend.",
-      "status": "open"
+      "status": "open",
+      "note": "Still open. balanceCommentary now dates the fact (10-K filed in March 2026, holdings that rose 'during 2025'). scenarioCommentary still cites 'the 10-K reports larger risk retention exposure' as a present condition with no date, to justify an October 2026 probability."
     },
     {
       "id": "F-16",
@@ -147,7 +150,7 @@
       "quote": "Consensus expects FY26E revenue of ~$1.5B, up 16%, and FY27E revenue of $1.7B.",
       "issue": "Restatement, not judgment. The point repeats the Estimates block and gives no view. It does not say whether +16% is consistent with the Q2'26 +15.1% pace, or whether the desk believes the estimate given the conversion-ratio pressure. growth.points[2] is similar: it paraphrases the MD&A on new asset types with no view or figure.",
       "fix": "Turn each point into a view the reader can act on. For example: the FY26E +16% needs the second half to hold roughly the Q2'26 +15.1% pace, and the risk to that is the conversion-ratio pressure. Merge or cut points[2] unless it carries a judgment.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-17",
@@ -156,7 +159,8 @@
       "quote": "up {+25.6%+}",
       "issue": "Malformed span. The contract form is '{+ text +}' with spaces inside the markers, as in the house fixtures ('{+ +29% YoY +}'). '{+25.6%+}' may render as an unmarked '25.6%' with the plus sign swallowed, or as literal braces.",
       "fix": "Write '{+ +25.6% +}'.",
-      "status": "open"
+      "status": "addressed",
+      "note": "The coordinator removed the marker rather than reformatting it, and no span remains in the field, so the defect is gone."
     },
     {
       "id": "F-18",
@@ -165,6 +169,24 @@
       "quote": "The swing to strong cash generation is the most important change in the business.",
       "issue": "Unearned superlative. 'Most important' is not argued against the other changes the report describes: the operating margin moving from -3.2% to 20.9%, and the net income turnaround.",
       "fix": "Drop the superlative and state the point directly. For example: 'FCF turned decisively positive in FY25; we want to see it hold through credit stress.'",
+      "status": "addressed"
+    },
+    {
+      "id": "F-19",
+      "severity": "Critical",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "Total equity recovered to $0.6B at the end of FY25 from $0.4B a year earlier, as the company returned to profit, which strengthens its capacity to absorb losses.",
+      "issue": "New causal claim the pack does not establish. 'As the company returned to profit' attributes the equity increase to earnings. FY25 net income was $81.4 million, which cannot explain an increase from $0.4B to $0.6B on the surface's own figures, and the surface shows no equity bridge (share issuance, other comprehensive income or other movements) to account for the rest.",
+      "fix": "State the equity recovery without a cause, for example 'Total equity rose to $0.6B at the end of FY25 from $0.4B a year earlier'. Either drop the profit link or say that FY25 net income of $81.4 million accounts for only part of the increase. Do not compute the remainder.",
+      "status": "open"
+    },
+    {
+      "id": "F-20",
+      "severity": "Important",
+      "field": "sections.growth.points[3]",
+      "quote": "Until that reverses, we expect growth to come at lower margins per unit of volume.",
+      "issue": "New repetition within one section. growth.points[1] already argues that revenue per dollar of volume is falling because conversion ratios were adjusted to meet investor return expectations. growth.points[3] restates the same claim in different words, and the MD&A gives the same cause for both (a higher cost of capital 'necessitating adjustments in conversion ratios'). analystCommentary makes the claim a third time ('revenue is growing more slowly than volume').",
+      "fix": "Merge points[1] and points[3] into one point that runs from cost of capital to conversion ratios to revenue per unit of volume. Use the freed slot for a different growth view, or drop it. Make the analystCommentary clause a pointer to Growth.",
       "status": "open"
     }
   ]

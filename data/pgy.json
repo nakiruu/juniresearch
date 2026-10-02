@@ -314,7 +314,7 @@
     "medianTarget": 27,
     "highTarget": 36,
     "lowTarget": 23,
-    "commentary": "Pagaya turned profitable in FY25, with net income attributable to shareholders of $81.4 million against a loss of $(401.4) million in FY24, and it now generates substantial free cash flow.\n\nAt $18.01 on October 2, 2026 the shares sit between the 52-week low of $10.40 and the high of $32.04. The Street is uniformly positive (see Valuation).\n\nWe are more cautious. Pagaya's revenue depends on investors continuing to fund the loans its Partners originate, revenue is growing more slowly than volume, and the company holds risk retention positions that expose it directly to credit losses (see Risks).\n\nWe rate PGY HOLD."
+    "commentary": "Pagaya turned profitable in FY25, with net income attributable to shareholders of $81.4 million against a loss of $(401.4) million in FY24, and it now generates substantial free cash flow.\n\nAt $18.01 on October 2, 2026 the shares sit between the 52-week low of $10.40 and the high of $32.04. The Street is uniformly positive (see Valuation).\n\nWe are more cautious. Pagaya's revenue depends on investors continuing to fund the loans its Partners originate, and its risk retention positions expose it directly to credit losses (see Financials).\n\nWe rate PGY HOLD."
   },
   "sections": {
     "executiveSummary": {
@@ -507,7 +507,7 @@
         ],
         "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
       },
-      "balanceCommentary": "Our data does not report total debt or a current ratio for FY25, so we cannot assess leverage from the summary figures. Total equity recovered to $0.6B at the end of FY25 from $0.4B a year earlier, as the company returned to profit, which strengthens its capacity to absorb losses.\n\nThe offsetting exposure is risk retention. The 10-K filed in March 2026 says these holdings increased during 2025 as a result of ABS issuances, and that the magnitude of potential losses increased with them. That means Pagaya is not a pure fee business: if loans in its securitizations perform poorly, it bears part of the loss directly.",
+      "balanceCommentary": "Our data does not report total debt or a current ratio for FY25, so we cannot assess leverage from the summary figures. Total equity recovered to $0.6B at the end of FY25 from $0.4B a year earlier; the data does not show what drove the whole increase, but a larger equity base strengthens the company's capacity to absorb losses.\n\nThe offsetting exposure is risk retention. The 10-K filed in March 2026 says these holdings increased during 2025 as a result of ABS issuances, and that the magnitude of potential losses increased with them. That means Pagaya is not a pure fee business: if loans in its securitizations perform poorly, it bears part of the loss directly.",
       "cashflow": {
         "columns": [
           "Metric ($B)",
@@ -627,7 +627,7 @@
         ],
         "note": "Peer multiples pending a peer data source."
       },
-      "multiplesCommentary": "At $18.01 PGY trades at 12.9x trailing earnings, 4.9x NTM earnings, ~4.4x FY27E earnings and 1.1x trailing sales.\n\nConsensus EPS of $3.70 for FY26E and $4.13 for FY27E is far above FY25 diluted EPS of $0.93. The consensus basis is not stated; the company reports Adjusted EBITDA and other non-GAAP measures, so the estimates may be on an adjusted basis, and the forward multiples may flatter the stock on a GAAP view. The trailing P/E is the more conservative anchor.\n\nAll 11 covering analysts rate Buy, with a consensus target of $28.91, a median of $27.00 and a range of $23.00–$36.00.\n\nWe have no peer multiples to compare against. In our view, the low multiple reflects credit and funding risk as well as growth expectations.",
+      "multiplesCommentary": "At $18.01 PGY trades at 12.9x trailing earnings, 4.9x NTM earnings, ~4.4x FY27E earnings and 1.1x trailing sales.\n\nConsensus EPS of $3.70 for FY26E and $4.13 for FY27E is far above FY25 diluted EPS of $0.93. The consensus basis is not stated; the company reports Adjusted EBITDA and other non-GAAP measures, so the estimates may be on an adjusted basis, and the forward multiples may flatter the stock on a GAAP view. We therefore anchor our scenarios on the trailing P/E.\n\nAll 11 covering analysts rate Buy, with a consensus target of $28.91, a median of $27.00 and a range of $23.00–$36.00.\n\nWe have no peer multiples to compare against. In our view, the low multiple reflects credit and funding risk as well as growth expectations.",
       "scenarios": [
         {
           "name": "Bull",
@@ -637,7 +637,7 @@
         },
         {
           "name": "Base",
-          "driver": "Pagaya delivers close to consensus, funding remains available at today's costs, and the multiple recovers modestly. The shares settle just below the lowest Street target of $23.00.",
+          "driver": "Pagaya delivers close to consensus, funding remains available at today's costs, and the trailing P/E moves up modestly from today's 12.9x as earnings grow. The shares settle just below the lowest Street target of $23.00.",
           "impliedPrice": 22,
           "probability": 0.45
         },
@@ -648,7 +648,7 @@
           "probability": 0.3
         }
       ],
-      "scenarioCommentary": "Base carries the most weight because it assumes only that today's conditions persist. Bear carries more weight than Bull because the MD&A already reports a higher cost of capital and the 10-K reports larger risk retention exposure. Bull needs easier funding as well as continued growth.\n\nThe result is a weighted fair value of $20.70, an expected upside of +14.9% and a bear-case downside of -38.9%. The expected upside is meaningful, but the bear-case downside is too large relative to it for a BUY.\n\nOur $18–$26 target range brackets Base. Its low end is today's price; its high end, just below the Street median target, is where we think the shares could trade if the Bull conditions begin to appear."
+      "scenarioCommentary": "Base carries the most weight because it assumes only that today's conditions persist. Bear carries more weight than Bull because the funding and credit pressures described in Risks and Financials are already present, not hypothetical. Bull needs easier funding as well as continued growth.\n\nThe result is a weighted fair value of $20.70, an expected upside of +14.9% and a bear-case downside of -38.9%. The expected upside is meaningful, but the bear-case downside is too large relative to it for a BUY.\n\nOur $18–$26 target range brackets Base. Its low end is today's price; its high end, just below the Street median target, is where we think the shares could trade if the Bull conditions begin to appear."
     },
     "businessMoat": {
       "segments": [
@@ -687,12 +687,12 @@
         "Consensus expects FY26E revenue of ~$1.5B, up 16%, and FY27E revenue of $1.7B. That is a slower pace than FY25 and, in our view, a realistic one given the trend below.",
         "Network Volume rose to $3,535 million in the second quarter from $2,648 million, faster than revenue. Less revenue per dollar of volume is consistent with the MD&A's statement that conversion ratios have been adjusted to meet investor return expectations; in our view, volume growth alone overstates the earnings momentum.",
         "Pagaya continues to introduce new asset types, products and services. In our view, these matter most if they bring in new funding sources, since funding, not Partner demand, is the binding constraint.",
-        "The MD&A says the cost of capital has risen. Until that reverses, we expect growth to come at lower margins per unit of volume."
+        "Pagaya's Partners include auto finance providers and residential real estate service providers as well as financial technology companies and banks. In our view, broadening across asset types is a credible route to growth that depends less on any single credit market."
       ]
     },
     "management": {
       "leadership": "Gal Krubiner is Chief Executive Officer, and the Board is led by an independent Chairman, Avi Zeevi, per the proxy statement dated July 2026. Mr. Yulzari, Mr. Pardo and Ms. Rosen also serve on the Board and are employed by the company. Management has delivered the shift to profitability and positive cash flow shown in Financials.",
-      "capitalAllocation": "Pagaya pays no dividend, and our data shows no repurchase amounts for FY21 to FY25. Its main capital decision is how much risk retention it holds in its securitizations, which supports funding but exposes the balance sheet to credit losses. In our view, holders should watch whether risk retention keeps rising relative to the business.",
+      "capitalAllocation": "Pagaya pays no dividend, and our data shows no repurchase amounts for FY21 to FY25. Its main capital decision is how much risk retention it holds (see Financials); in our view, holders should watch whether those holdings keep rising relative to the business.",
       "governance": "Per the proxy statement dated July 2026, the Board determined that Avi Zeevi, Alison Davis, Jason Gardner, Harvey Golub, Asheet Mehta and Dan Petrozzo are independent director nominees, while Mr. Krubiner, Mr. Pardo, Mr. Yulzari and Ms. Rosen are not because they are employed by the company. The Board held six meetings during fiscal year 2025. Under the Israel Companies Law and its own policy, Pagaya's Audit and Finance Committee determines whether a transaction with a covered person is an extraordinary transaction. The independent Chairman is a positive, but the voting control set out in Insider ownership limits what independent directors can do.",
       "insiderOwnership": "Pagaya has a dual-class structure. As of June 15, 2026 Gal Krubiner held 43.3% of total voting power, Avital Pardo 42.5% and Yahav Yulzari 40.1%, mostly through Class B Ordinary Shares. The individual figures overlap, which the excerpt does not explain. All directors and executive officers as a group held 81.8% of total voting power but only 3.5% of the Class A Ordinary Shares. Oak HC/FT Partners II, L.P. held 5.7% of the Class A Ordinary Shares.\n\nFor public holders, this means insiders can decide shareholder votes, while the excerpt does not show how large their economic stake is relative to that control. Outside shareholders have little say over strategy or governance."
     },
