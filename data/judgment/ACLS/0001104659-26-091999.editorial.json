@@ -1,8 +1,8 @@
 {
-  "judgmentSha256": "31b65fe72566c6a50f61f01bf5cc1334125f57912caaba84400c5a5e502dbeda",
-  "reviewedAt": "2026-10-02T19:34:41Z",
+  "judgmentSha256": "0753ad05ba7bd8a15cd23c33f2f461115923889890e756a943ec33ff2c125f56",
+  "reviewedAt": "2026-10-02T19:37:34Z",
   "reviewer": "claude-opus-5-5",
-  "round": 1,
+  "round": 2,
   "verdict": "needs-fix-round",
   "findings": [
     {
@@ -12,7 +12,7 @@
       "quote": "The shares end slightly above the consensus target.",
       "issue": "Wrong against the report's own figures. The Base implied price is $155, and the consensus target on the surface (Street view, Snapshot) is $161.00. So Base ends below the consensus target, not above it. Only the median target ($145.00) sits below $155.",
       "fix": "Either say Base ends between the median ($145.00) and consensus ($161.00) Street targets, or drop the comparison and anchor Base on its own (see the Base-anchor finding).",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-2",
@@ -21,7 +21,7 @@
       "quote": "which would continue the year-over-year growth that resumed in the second quarter.",
       "issue": "Two unsupported claims. (1) 'Would continue the year-over-year growth': third-quarter 2025 revenue is not on the surface, so nothing shows that the ~$230 million guide is above the prior-year quarter. (2) 'Resumed in the second quarter' is a 'first' that the page contradicts. Six-month revenue rose 7.0% to $414.1 million while Q2 rose 10.6%, so Q1 2026 revenue also grew year over year. The same 'growth came back in Q2' framing appears in sections.financials.incomeCommentary ('The second quarter of 2026 brought revenue growth back') and in meta.subtitle ('Revenue is growing again').",
       "fix": "State the guide without a YoY claim: 'approximately $230 million for the third quarter of 2026, above the $215.2 million just reported.' Rephrase incomeCommentary to say revenue growth continued and accelerated in Q2 (first-half revenue was up 7.0%), not that it returned in Q2.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-3",
@@ -30,7 +30,7 @@
       "quote": "The balance sheet is strong enough that the merger, which is a share issuance rather than a cash deal, does not strain it.",
       "issue": "Unsupported inference. The surface says only that stockholders approved 'the issuance of Company common stock to the Veeco stockholders in the Merger'. It does not give the consideration mix, any cash component, or Veeco's liabilities, so 'rather than a cash deal' and 'does not strain it' are not established. The same inference appears in sections.management.capitalAllocation: 'the pending merger, which is being paid for in stock.'",
       "fix": "Say what the pack carries: the merger includes an issuance of Axcelis shares to Veeco stockholders, which the stockholders approved on February 6, 2026. Drop 'rather than a cash deal' and 'being paid for in stock'. Say that the combined balance sheet cannot be assessed from our data.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-4",
@@ -39,7 +39,7 @@
       "quote": "The merger with Veeco could broaden the product range, but it does not change the competitive position in implant.",
       "issue": "Nothing on the surface describes Veeco's products or markets. Saying the deal 'does not change the competitive position in implant' (and growth.points[3]: 'would add a second product portfolio') relies on recalled knowledge of Veeco's business, not on the pack.",
       "fix": "Limit the claim to what the pack supports: the merger makes Veeco a wholly-owned subsidiary, and our data does not describe Veeco's business, so its effect on the implant franchise cannot be judged here. Apply the same to growth.points[3].",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-5",
@@ -48,7 +48,8 @@
       "quote": "Gross margin fell to 42.4% from the year-ago level, which the MD&A attributes to a less favorable mix of system shipments and negative services margins.",
       "issue": "Over-attribution. The MD&A attributes the decline in product gross margin (46.6% from 47.9%) to 'a less favorable mix of system shipments'. It attributes the services margin decline ((15.7)% from (5.4)%) to 'changes in the mix of service contracts and fluctuations of service expenses'. It does not attribute the consolidated gross-margin decline to 'negative services margins'. The year-ago figure (44.9%) is also left unstated.",
       "fix": "Split the attribution: product margin fell to 46.6% from 47.9% on system mix (per the MD&A), and services margin fell to (15.7)% from (5.4)% on service-contract mix. Give the year-ago 44.9% instead of 'the year-ago level'.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Attribution now split correctly per the MD&A. Residual nit: 'from the year-ago level' still omits the 44.9% comparator."
     },
     {
       "id": "F-6",
@@ -57,7 +58,7 @@
       "quote": "against $79,522 thousand a year earlier, as working capital absorbed cash.",
       "issue": "The cause is incomplete. Net income for the six months also fell, to $32,505 thousand from $59,955 thousand, which accounts for about as much of the operating-cash decline as the working-capital swing. Crediting the decline to working capital alone overstates what the pack shows.",
       "fix": "Name both drivers in words: lower net income and a working-capital outflow, against an inflow a year earlier. Avoid computing a new figure.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-7",
@@ -66,7 +67,7 @@
       "quote": "Revenue grows in line with consensus, margins recover gradually, and the merger closes with some integration cost.",
       "issue": "The Base implied price of $155 has no anchor. No multiple, guided figure or worked argument connects it to consensus FY26E/FY27E EPS ($4.11/$5.27) or to the 36.0x NTM / ~28.0x FY27E multiples. scenarioCommentary explains Base's probability but not its price. Bull ($185) and Bear ($115) are pinned only loosely to Street target endpoints.",
       "fix": "Anchor Base in words to a figure on the page. For example, say that $155 holds roughly today's forward multiple on consensus FY27E EPS of $5.27, or that it sits between the Street median and consensus targets. Do the same for Bull and Bear.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-8",
@@ -75,7 +76,7 @@
       "quote": "Tariffs add uncertainty: the 10-K describes a 10% global tariff and an indicated increase to 15% following court rulings against earlier tariffs.",
       "issue": "Stale fact presented as current. This comes from the 10-K dated February 26, 2026, more than seven months before the report. The same 10-K says such tariffs 'can remain in effect for up to 150 days' unless extended, so their status by October 2026 is unknown from the pack.",
       "fix": "Date it ('As of the February 2026 10-K, …'). Say that the 150-day limit means the current tariff status is not confirmed by our sources.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-9",
@@ -84,7 +85,7 @@
       "quote": "The aftermarket business grew in the second quarter while systems revenue was flat, which shows the value of that installed base when new equipment spending is soft.",
       "issue": "Bullish moat factor with no counter-case, although the counter is on the page. Services gross margin was (15.7)% in Q2 against (5.4)% a year earlier, so the labor side of the aftermarket is losing money. The section never weighs this. Similarly, balanceCommentary calls the deferred-revenue rise 'a modest positive sign for future shipments' without noting that long-term deferred revenue fell to $36,863 thousand from $43,445 thousand.",
       "fix": "Add one sentence to the moat factor naming the negative services margin as what cuts the other way. In balanceCommentary, note that the deferred-revenue increase is all in the current portion.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-10",
@@ -93,7 +94,7 @@
       "quote": "It came from the aftermarket business rather than new systems, and gross and operating margins were both lower than a year earlier.",
       "issue": "Cross-section repetition of two stories. (a) Aftermarket-up/systems-flat is told in analystCommentary, again with figures in financials.incomeCommentary ('Aftermarket revenue rose to $82.8 million from $61.3 million, while systems revenue was roughly flat'), again in businessMoat.moatFactors[0].body ('The aftermarket business grew in the second quarter while systems revenue was flat'), and in meta.subtitle. (b) The Q2 margin decline is told in analystCommentary, in incomeCommentary, and in risks.idiosyncratic[2] ('services gross margin was (15.7)% … sales and marketing and general and administrative expenses grew faster than revenue'), which repeats the incomeCommentary opex/margin argument.",
       "fix": "Argue each story once, in incomeCommentary. In the moat factor and risks.idiosyncratic[2], refer back in words ('the aftermarket-led growth discussed in Financials') and add only what is new to that section, such as the mechanism or what to watch.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-11",
@@ -102,7 +103,7 @@
       "quote": "Merger completion: the MD&A says the Veeco merger still requires final regulatory approval from China's State Administration for Market Regulation.",
       "issue": "The pending SAMR approval and the expected second-half-2026 close are restated as argument in several places: analystCommentary ('Completion still awaits approval from China's State Administration for Market Regulation, and the companies expect to close in the second half of 2026'), risks.idiosyncratic[0], valuation.scenarioCommentary ('the merger still needs Chinese approval'), and the Bear driver. These come on top of the executive-summary pointers catalysts[0] and risks[0].",
       "fix": "Make the SAMR argument once, in risks.idiosyncratic[0], with the mechanism and what to watch. Elsewhere use a short pointer only, and cut the restatement from analystCommentary.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-12",
@@ -111,7 +112,8 @@
       "quote": "Deep relationships with those customers are an advantage, but losing one would hurt.",
       "issue": "Paraphrase repetition. The point that losing a large customer would hurt is made here and again in risks.idiosyncratic[3] ('the 10-K warns that the loss of a significant customer … will adversely affect the company'). Neither instance reads the 68.5% top-ten share for the holder.",
       "fix": "Keep the concentration argument in one place, and read the 68.5% for the holder there. For example, ten customers decide most of a year's revenue, so order timing from a few fabs can move a quarter. Point back in words from the other place.",
-      "status": "open"
+      "status": "open",
+      "note": "The repetition is fixed: the moat factor now points to Risks. But risks.idiosyncratic[3] still states the 68.5% top-ten share and the 10-K's generic warning without reading it for the holder (what a delay at one or two of these customers does to a quarter, or what to watch)."
     },
     {
       "id": "F-13",
@@ -120,7 +122,7 @@
       "quote": "Our $135–$170 target range brackets Base.",
       "issue": "The target range is stated three times: in analystCommentary ('We rate ACLS HOLD with a $135–$170 target range'), here, and in finalRecommendation.body[0] ('HOLD, target range $135–$170'). Nowhere is it argued why $135 and $170 are the endpoints, and they are not tied to Bull or Bear or to the Street range.",
       "fix": "State the range once, where it is argued (scenarioCommentary), with the reason for each endpoint. Refer to it in words elsewhere.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-14",
@@ -129,7 +131,7 @@
       "quote": "Consensus FY26E revenue of ~$883.5M implies a modest recovery from FY25; FY27E revenue of $988.8M would still be below the FY23 peak in the income table.",
       "issue": "valuation.multiplesCommentary already cites the same consensus revenue figures and draws the same 'recovery' reading ('Those multiples price in a recovery … on revenue of $883.5M and $988.8M'). The same claim is made twice in two sections.",
       "fix": "Keep the revenue path in Growth, and in Valuation refer to it in words ('the recovery in consensus revenue described in Growth'). Or the reverse.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-15",
@@ -138,7 +140,7 @@
       "quote": "At June 30, 2026 Axcelis held cash and cash equivalents of $154,996 thousand, short-term investments of $247,220 thousand and long-term investments of $174,829 thousand. The only borrowing-type obligation on the balance sheet is a finance lease, and trailing interest coverage is 17.2x. The trailing current ratio is 4.90.",
       "issue": "Restatement, not judgment. The paragraph lists balance-sheet lines and ratios without saying what they let a holder expect, such as capacity to resume buybacks, cushion through the merger, or downside protection in the Bear case. businessMoat.segments[0].body and risks.systemic have the same problem: they mostly restate the MD&A and 10-K without reaching a view.",
       "fix": "Close each paragraph with the reading. For example, say what the liquidity means for the catalyst of restarting buybacks or for the Bear case. In risks.systemic, say which of the 10-K risks is live for ACLS now and what would signal it.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-16",
@@ -147,7 +149,7 @@
       "quote": "Second-quarter 2026 revenue rose 10.6%, the company beat its own forecast",
       "issue": "Silent pick between sources. The CEO says results exceeded forecasts 'driven by stronger system shipments and higher CS&I volume', and the CFO cites 'improving systems demand'. The MD&A says the product revenue increase was 'primarily driven by an increase in Aftermarket sales', with systems revenue of $132.4 million against $133.2 million. The report adopts the MD&A reading ('rather than new systems') and quotes the CEO's beat in management.leadership without noting the tension.",
       "fix": "Note once that management credits stronger system shipments against its own forecast, while year-over-year systems revenue was flat per the MD&A. Say which reading the report uses.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-17",
@@ -156,7 +158,7 @@
       "quote": "In the release, Mr. Low said the company executed well and that results exceeded its forecasts.",
       "issue": "The proxy in Context refers to him as 'Dr. Low', and governance uses 'Dr. Low'. The report is inconsistent and the honorific here is wrong.",
       "fix": "Use 'Dr. Low' throughout.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-18",
@@ -165,7 +167,8 @@
       "quote": "It repurchased -$121.1M of stock in FY25",
       "issue": "A signed cash-flow figure is used as a prose amount ('repurchased -$121.1M'), and financials.cashflowCommentary does the same ('Capital expenditure is small at -$11.3M'). Units also switch between $M and raw thousands within one paragraph ('$244 thousand against $63,515 thousand', '$154,996 thousand', '$36,512 thousand'), which makes the comparisons hard to read.",
       "fix": "Write 'repurchased $121.1M' and 'capital expenditure of $11.3M'. Where Context gives a rounded $ million form (for example the MD&A's $118.5 million), prefer it, or keep one unit per paragraph.",
-      "status": "open"
+      "status": "open",
+      "note": "Fixed in capitalAllocation ('repurchased stock heavily in FY25'). Still present in financials.cashflowCommentary: 'Capital expenditure is small at -$11.3M for FY25.'"
     },
     {
       "id": "F-19",
@@ -174,6 +177,24 @@
       "quote": "ion implantation is a specialized step with few suppliers",
       "issue": "'Few suppliers' is a characterization the pack does not quantify. The 10-K names three non-U.S. vendors plus two Chinese entities developing implanters, and this is presented as a moat while the next sentence treats the same list as a threat. The competitor list is also already given in moatFactors[1].body.",
       "fix": "Drop 'few suppliers', or tie it to the named vendors once. Refer back to moatFactors[1] rather than re-listing the China switch risk.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-20",
+      "severity": "Critical",
+      "field": "sections.risks.idiosyncratic[2]",
+      "quote": "which limits operating leverage until merger costs fall away.",
+      "issue": "New in this round: an unsupported causal inference. The sentence implies the faster growth in sales and marketing (+30.3%) and G&A (+37.2%) comes from merger costs that will fall away. The pack does not say which opex lines carry the $4,827 thousand of Q2 transaction and integration costs. The MD&A attributes higher personnel costs to salary, benefits, commissions and stock-based compensation. Sales and marketing growth in particular is not tied to the merger anywhere on the surface.",
+      "fix": "Drop 'until merger costs fall away', or limit it to what the pack shows. Transaction and integration costs are among the non-GAAP adjustments, and non-GAAP operating margin still fell to 14.7% from 17.7%, so the pressure is not only merger-related.",
+      "status": "open"
+    },
+    {
+      "id": "F-21",
+      "severity": "Minor",
+      "field": "sections.businessMoat.moatFactors[1].body",
+      "quote": "The 10-K names several established non-U.S. competitors",
+      "issue": "New in this round: 'established' is a characterization the 10-K excerpt does not make. The excerpt names them only as non-U.S. vendors that Chinese customers might switch to.",
+      "fix": "Write 'The 10-K names non-U.S. implant vendors that Chinese customers could switch to (see durability)', without 'established'.",
       "status": "open"
     }
   ]
