@@ -1,8 +1,8 @@
 {
-  "judgmentSha256": "63fd13865380b603ace1ada8cbf144bc756430ebf0cbfa523d28e4f4013177d6",
-  "reviewedAt": "2026-10-02T20:02:06Z",
+  "judgmentSha256": "d5018fd0f45c13cadc7ebd7bb46523b696329c73cdade248fafb52e0eee0dc0f",
+  "reviewedAt": "2026-10-02T20:05:47Z",
   "reviewer": "Claude Opus 5.5 (claude-opus-5-5)",
-  "round": 1,
+  "round": 2,
   "verdict": "needs-fix-round",
   "findings": [
     {
@@ -12,7 +12,7 @@
       "quote": "Revenue is up a third on the Global Blue deal",
       "issue": "Over-attribution and missing period. The 34% is second-quarter 2026 gross revenue against the second quarter of 2025. The MD&A does not credit the whole increase to Global Blue. TFS revenue of $117 million is only part of the $329 million increase. Payments-based revenue rose $205 million, which the MD&A attributes to the $11 billion (22%) volume increase and to 'our recent acquisitions'.",
       "fix": "Name the period and keep the attribution the MD&A makes, e.g. 'Second-quarter revenue rose 34%, helped by Global Blue and 22% volume growth...'. Alternatively, drop the causal 'on'.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-2",
@@ -21,7 +21,8 @@
       "quote": "Volume grew by $11 billion in the second quarter, which supports organic growth beyond the acquisitions.",
       "issue": "This is an inference the source does not make. The MD&A gives the $11 billion (22%) volume increase as a year-over-year comparison with the second quarter of 2025, not growth within the quarter. It lists 'our recent acquisitions' as a separate driver, but it never says the volume increase is organic. The volume definition in the Q2 2026 shareholder letter includes the international payments platform, so acquired volume may be in it. The same defect appears in sections.businessMoat.durability: 'steady growth in volume suggests merchants value the platform'. The surface carries one volume data point, so 'steady' is not shown.",
       "fix": "State it as 'Volume rose $11 billion, or 22%, from the second quarter of 2025'. Do not call it organic unless a source splits it. In durability, drop 'steady' and the inference that merchants value the platform, or frame that as a view resting on one quarter.",
-      "status": "open"
+      "status": "open",
+      "note": "Partly fixed. The 'organic' inference and 'steady' are gone. The point still reads 'Volume grew by $11 billion in the second quarter', with no comparison base, so it can be read as growth within the quarter. The MD&A figure is $11 billion, or 22%, against the second quarter of 2025."
     },
     {
       "id": "F-3",
@@ -30,7 +31,7 @@
       "quote": "Gross revenue less network fees, the measure management uses to track the value of its merchant mix, rose 51%.",
       "issue": "Counter-case omitted. The MD&A says the $211 million (51%) increase was 'primarily due to the impact of recent acquisitions', with volume and subscription revenue behind that. The report presents the 51% without that attribution. The thesis (sections.executiveSummary.thesis.body) then uses 'rising gross revenue less network fees' as evidence that the business is not in trouble.",
       "fix": "Add the MD&A's attribution: mainly acquisitions. In the thesis, either drop gross revenue less network fees as evidence of underlying health or qualify it as largely acquired.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-4",
@@ -39,7 +40,7 @@
       "quote": "Operating margin has improved steadily, from -3.6% in FY21 to 8.4% in FY25.",
       "issue": "The series on the page does not show 'steadily'. Operating margin fell from 4.8% in FY22 to 4.5% in FY23. The latest data also cuts the other way: Q2'26 operating margin is 7.3% and the TTM figure is 8.1%, both below the FY25 8.4%.",
       "fix": "Drop 'steadily'. Say the margin rose from -3.6% in FY21 to 8.4% in FY25 with a dip in FY23. Then note that the Q2'26 margin of 7.3% sits below FY25.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-5",
@@ -48,7 +49,7 @@
       "quote": "The counter-case is below the operating line.",
       "issue": "The counter-case is misplaced and incomplete. The operating line weakened too. In the second quarter of 2026, gross revenue rose $329 million but income from operations rose only $12 million, to $95 million from $83 million. Over the same period G&A rose to $231 million from $131 million, other costs of sales rose $57 million and D&A rose $37 million. The report also never addresses FY25 diluted EPS of $1.08 against $3.03 in FY24, while revenue grew 25.5%.",
       "fix": "Make operating-cost growth part of the counter-case: the G&A increase and the Q2'26 operating margin of 7.3%. Address the FY25 EPS decline once in this section.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-6",
@@ -57,7 +58,7 @@
       "quote": "The 10-K also refers to outstanding Preferred Stock, which ranks ahead of the Class A common shares.",
       "issue": "Over-attribution. The 10-K risk-factor excerpt mentions 'our Class A common stock or our Preferred Stock' only as investments that carry risk. It says nothing about how much is outstanding or about ranking ahead of the common. The 10-K is also dated February 27, 2026, so it predates this filing.",
       "fix": "Drop the sentence. If the point matters, write only what the source carries, e.g. 'The February 2026 10-K's risk factors refer to a Preferred Stock alongside the Class A common stock; the pack carries no terms.'",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-7",
@@ -66,7 +67,7 @@
       "quote": "The trailing current ratio is 1.21.",
       "issue": "Restatement with no reading. The Facts show the current ratio was 1.66 at FY25 and is 1.21 on a trailing basis. The MD&A says interest income fell because of 'a decrease in our average interest-earning cash balance'. Together these point to tightening liquidity, but the paragraph does not say so. The section also has no sentence that cuts the other way, such as FY25 free cash flow.",
       "fix": "Read the move from 1.66 to 1.21 alongside the lower cash balance the MD&A cites, and say what it means for headroom. Add one counter sentence, such as cash generation, by pointing to the cash-flow paragraph.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-8",
@@ -75,7 +76,7 @@
       "quote": "The trailing FCF yield is 20.0%.",
       "issue": "Counter-case missing on the key bull figure. The 20.0% trailing yield and $624M FY25 free cash flow carry the thesis. In the second quarter of 2026, however, interest expense was $65 million against $39 million and interest income was $3 million against $19 million. The pending acquisition also needs an initial payment of approximately $143 million in cash. None of this is weighed against the trailing yield here or in sections.executiveSummary.thesis.body.",
       "fix": "Add one sentence noting that the Q2'26 interest expense and interest income run-rate, plus the $143 million cash payment, mean forward free cash flow available to equity may be lower than the trailing 20.0% suggests.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-9",
@@ -84,7 +85,7 @@
       "quote": "Shift4 spent -$453M on share repurchases in FY25",
       "issue": "Voice: 'spent' with a negative figure reads as a double negative.",
       "fix": "Write 'FY25 share repurchases were -$453M' or 'Shift4 repurchased stock (a -$453M cash outflow) in FY25'.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-10",
@@ -93,7 +94,8 @@
       "quote": "Even allowing for that, the forward multiple is low.",
       "issue": "No reference point on the surface. The same section says 'We have no peer multiples to compare against', and the surface has no historical multiple, so 'low' has nothing to measure against. The thesis (sections.executiveSummary.thesis.body) builds on the same figure: 'The shares trade at 7.0x NTM earnings ... a price that implies the business is in serious trouble'. It does so without the caveat, made in this section, that consensus EPS is probably on a non-GAAP basis set against GAAP EPS of $1.08.",
       "fix": "Argue 'low' against something on the page, such as the 20.0% FCF yield or the 56.7x trailing P/E, or drop the word. In the thesis, state that the 7.0x rests on consensus earnings that probably exclude acquired-intangible amortization.",
-      "status": "open"
+      "status": "addressed",
+      "note": "The multiples section now argues the forward multiple in words. The thesis still cites 7.0x without the basis caveat; that is acceptable for an executive-summary pointer."
     },
     {
       "id": "F-11",
@@ -102,7 +104,8 @@
       "quote": "The forward multiple recovers part of its decline",
       "issue": "Calls coherence: the base case is not anchored. The surface carries no forward-multiple history, so 'its decline' is not shown. Base ($44) and Bear ($27) name no multiple, guided figure or Street figure that produces those prices. The bear driver says only that 'the shares break below the 52-week low'. That describes the outcome, not how $27 is reached.",
       "fix": "Anchor each price to something on the surface. Base could be placed within the Street target range ($40.00 low, $51.00 median) with a reason in words. Bear could be argued from estimates falling, using surface figures. Remove 'part of its decline'.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Base is now anchored to the Street target range. The Bear price still has no derivation, which is acceptable under rubric 6, but it remains thin."
     },
     {
       "id": "F-12",
@@ -111,7 +114,7 @@
       "quote": "Base carries the most weight because it requires only partial delivery against consensus.",
       "issue": "Contradicts the base driver, which says 'Shift4 delivers close to consensus'. The two sections argue the 40% weight on different premises.",
       "fix": "Pick one premise, close to consensus or partial delivery, and use it in both the driver and the commentary.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-13",
@@ -120,7 +123,7 @@
       "quote": "The leverage is real, which is why our target sits below the Street's.",
       "issue": "Cross-section repetition. sections.valuation.scenarioCommentary makes the same claim: 'sits below the Street consensus target, reflecting the balance-sheet risk'. Similarly, analystCommentary retells the second-quarter net income story ('higher interest expense cut second-quarter net income even as revenue grew') even while pointing to Financials, where sections.financials.incomeCommentary tells it in full.",
       "fix": "Keep the target-versus-Street reasoning in scenarioCommentary only. In analystCommentary, keep the pointer to Financials and drop the retelling.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-14",
@@ -129,7 +132,8 @@
       "quote": "In our view, management's next priority should be deleveraging; further acquisitions or buybacks before interest coverage improves would raise our concern.",
       "issue": "Paraphrase repetition. sections.financials.cashflowCommentary makes the same argument: 'with leverage at current levels, cash flow is better directed to debt reduction until interest coverage improves'. sections.growth.points[2] ('more acquisition spending while leverage is high') and sections.finalRecommendation.body[1] ('if management prioritizes acquisitions over deleveraging') repeat it again. capitalAllocation also restates the buybacks and the debt rise.",
       "fix": "Argue the deleveraging priority once, in capitalAllocation. Cut the opinion sentence from cashflowCommentary and the leverage clause from growth.points[2]. finalRecommendation can keep the trigger as a short pointer.",
-      "status": "open"
+      "status": "open",
+      "note": "Partly fixed. cashflowCommentary no longer argues the priority. growth.points[2] still repeats the capitalAllocation opinion: 'at a time when we would prefer cash to go to debt reduction'. Cut that clause and leave the argument in capitalAllocation."
     },
     {
       "id": "F-15",
@@ -138,7 +142,7 @@
       "quote": "The 10-K describes intense competition in payments and an increasing number of TFS competitors, including app-based start-ups",
       "issue": "The same 10-K competition risk factor is retold three times. It appears here, in sections.businessMoat.moatFactors[0].body ('The 10-K warns that competitors include larger companies with greater financial resources, and new entrants with alternative payment systems') and in sections.risks.idiosyncratic[3] ('the 10-K says some competitors are larger and may offer services at lower rates, and that TFS competitors are increasing in number').",
       "fix": "Argue competition once, in risks.idiosyncratic[3]. Have the moat factor and durability refer back in words.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-16",
@@ -147,7 +151,7 @@
       "quote": "Closing of the pending account-to-account payments acquisition.",
       "issue": "Incoherent with the body. sections.growth.points[2] treats the deal as 'more acquisition spending while leverage is high'. sections.management.capitalAllocation says further acquisitions 'would raise our concern'. The final recommendation would cut to HOLD if 'management prioritizes acquisitions over deleveraging'. A deal the body treats as a concern is listed as a catalyst.",
       "fix": "Either remove it from catalysts, or keep it and argue in growth or capital allocation why closing is positive despite the leverage.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-17",
@@ -156,7 +160,7 @@
       "quote": "Founder Jared Isaacman resigned as CEO in June 2025 and as Executive Chairman after being sworn in as the 15th Administrator of NASA on December 18, 2025.",
       "issue": "Wrong sequence attributed to the proxy. The proxy says he resigned as Executive Chairman 'upon the ratification and confirmation of his nomination by the U.S. Senate'. It also says the Board appointed Mr. Lauber Chairman on December 17, 2025, the day before the December 18 swearing-in. The resignation did not come after the swearing-in.",
       "fix": "Write that he resigned as CEO on June 4, 2025 and as Executive Chairman on his Senate confirmation. Then say he was sworn in as the 15th Administrator of NASA on December 18, 2025, all per the April 2026 proxy statement.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-18",
@@ -165,7 +169,7 @@
       "quote": "so it may not have a majority of independent directors or fully independent committees until then. For holders, that means fewer formal protections during the transition.",
       "issue": "Restates the proxy's boilerplate and ignores the proxy's own facts. The same excerpt names five independent directors (Bakhshandehpour, Dallaire, Roter Davis, Halkyard, Grover) and two who are not (Lauber, Disman), so on that list the board already has an independent majority. The exemption also ends on December 17, 2026, less than three months after this report's date. The reading for holders should be time-bound.",
       "fix": "Say that five of the seven directors named are independent per the April 2026 proxy. Then say the transition exemption ends December 17, 2026, so the remaining risk is limited to committee composition until then.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-19",
@@ -174,7 +178,7 @@
       "quote": "BlackRock, Inc. held 8.79%, Durable Capital Partners LP 8.33%, Darlington Partners Capital Management, LP 7.02% and Wasatch Advisors LP 5.30%.",
       "issue": "Stale and mis-dated. The sentence carries forward 'As of April 13, 2026' from the Isaacman sentence. The proxy says these holdings are 'based solely on' Schedule 13G/A filings dated February 13, 2026 (Darlington), February 17, 2026 (Durable) and April 27, 2026 (BlackRock). These positions are five to eight months old at the report date and are presented without that age.",
       "fix": "Date the institutional holdings to their 13G/A filings (February to April 2026, per the April 2026 proxy). Note that they may have changed since.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-20",
@@ -183,7 +187,7 @@
       "quote": "The Founder's stake is large relative to current management's. The forward-looking statements also mention future negotiations with the Founder. In our view, any sale of his stake while he serves in government could weigh on the shares.",
       "issue": "The control figure is not read for the holder (rubric 4). The section does not say what 28.66% lets the Founder do: he is the largest holder, the company ceased to be a controlled company on December 17, 2025, and he left the board. The sale speculation rests on a premise not on the surface. No source says government service requires or prompts a sale. The phrase 'future negotiations with our Founder' appears only in the Q2 2026 shareholder letter's list of forward-looking topics, which does not say what the negotiations concern, so it should not be placed next to the sale speculation.",
       "fix": "Read the 28.66% for the holder: the voting influence it gives a non-director founder now that the company is no longer controlled. Attribute 'future negotiations with our Founder' to the August 2026 shareholder letter and say its subject is not disclosed in the pack. Drop the sale premise or tie it to something on the surface.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-21",
@@ -192,7 +196,7 @@
       "quote": "The forward-looking statements refer to expansion of Shift4One in 15 countries by year end",
       "issue": "Unnamed source. 'The forward-looking statements' does not identify the document or its date. The item comes from the Q2 2026 shareholder letter (8-K exhibit 99.1, August 6, 2026), where it is one of a list of topics, not a stated plan. insiderOwnership has the same issue ('The forward-looking statements also mention...').",
       "fix": "Write 'The Q2 2026 shareholder letter lists expansion of Shift4One in 15 countries by year end among its forward-looking statements'.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-22",
@@ -201,7 +205,7 @@
       "quote": "Higher interest rates raise the cost of carrying its debt.",
       "issue": "Unsupported causal claim. The surface does not say whether the debt is floating or fixed rate. The MD&A attributes the higher interest expense to 'new debt issuances in 2025 related to the acquisition of Global Blue', not to rates. sections.risks.idiosyncratic[0] repeats the premise ('if volume weakens or rates stay high').",
       "fix": "Tie interest cost to the amount of debt, which the MD&A supports. Alternatively, limit the rate point to refinancing risk, framed as a view, and drop 'or rates stay high' from idiosyncratic[0].",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-23",
@@ -210,7 +214,7 @@
       "quote": "Easing of travel disruption affecting the TFS business.",
       "issue": "Inference stated as fact. The MD&A says geopolitical and trade tensions and military conflicts 'have resulted in travel disruptions and have impacted economic conditions and resulting consumer spending trends'. It does not say the TFS business was affected. The surface has no prior-period TFS figure that would show an effect. risks.idiosyncratic[2] correctly frames the TFS link as the analyst's inference; the catalyst does not.",
       "fix": "Write 'Easing of the travel disruptions the MD&A says have affected consumer spending', or frame the TFS link as a view.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-24",
@@ -219,7 +223,7 @@
       "quote": "Serving those merchants requires specialized integrations that generic processors may not offer.",
       "issue": "Unsupported moat assertion. Nothing on the surface establishes that these verticals need specialized integrations. moatFactors[0].body has the same problem: 'which ties merchants into its platform' is asserted with no retention, churn or switching evidence. Both factors are rated 'Moderate' without a figure behind them.",
       "fix": "Frame both as the analyst's view and say the pack carries no retention data. Alternatively, ground them in what the company description carries, such as software integrations offered as partner services and the Marketplace integrations.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-25",
@@ -228,7 +232,7 @@
       "quote": "Consensus expects FY26E revenue of ~$5.1B, up 22%, and FY27E revenue of $5.8B.",
       "issue": "Restates the Facts block without a reading. FY26E growth of 22% sits below the Q2'26 34%. The MD&A dates the Global Blue acquisition to the third quarter of 2025, so reported growth faces an acquisition anniversary from the third quarter of 2026. That is the actionable point, and the point does not make it.",
       "fix": "Read the consensus path: say the gap between 34% in Q2'26 and 22% for FY26E reflects Global Blue lapping in the second half. Name what would show organic growth holding.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-26",
@@ -237,6 +241,24 @@
       "quote": "BUY, target range $40–$50, based on the scenarios in Valuation.",
       "issue": "Repeats the closing line of analystCommentary ('We rate FOUR BUY with a $40–$50 target range.').",
       "fix": "Keep the rating statement in one place. Use the final recommendation for what changes the call.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-27",
+      "severity": "Important",
+      "field": "sections.businessMoat.moatFactors[1].body",
+      "quote": "The company targets restaurants, hotels, stadiums, theme parks and luxury retailers, which the MD&A describes as the experience economy, and says it serves merchants from small local businesses to multinational enterprises.",
+      "issue": "The rewrite removed the unsupported claim but left a restatement that makes no moat argument (rubric 4). It lists the verticals the MD&A names without saying why focusing on them protects Shift4, yet the factor is rated 'Moderate'. Durability (sections.businessMoat.durability) now uses 'revenue has grown at double-digit rates every year in the series' as moat evidence. The report's own income section attributes much of that growth to acquisitions, including Global Blue in FY25, so the growth does not show a merchant-level advantage.",
+      "fix": "Either give a reason in words, framed as the analyst's view, for why the vertical focus is a source of advantage, or lower the factor's strength. In durability, say that revenue growth includes acquisitions and is therefore weak evidence of switching costs.",
+      "status": "open"
+    },
+    {
+      "id": "F-28",
+      "severity": "Important",
+      "field": "sections.financials.cashflowCommentary",
+      "quote": "Even so, the business generates enough cash to make a meaningful dent in debt each year if management chooses to.",
+      "issue": "Cross-section paraphrase introduced by the rewrite. The same claim, that free cash flow can pay down debt, appears in three places. analystCommentary has 'We think the cash the business generates gives it a credible path to reduce debt'. sections.executiveSummary.thesis.body has 'If Shift4 directs that cash to debt reduction, the equity should re-rate'. The cash-flow paragraph is the third. The surface also cuts against an unqualified version: in FY25, free cash flow of $624M came alongside -$453M of share repurchases, while total debt rose to $4.5B from $2.8B.",
+      "fix": "Argue the deleveraging capacity once, in cashflowCommentary, and set it against the FY25 record of buybacks while debt rose. Keep the thesis as the pointer and drop the sentence from analystCommentary.",
       "status": "open"
     }
   ]
