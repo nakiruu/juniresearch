@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "92bd490bef6b1e988f9d9f0bf2dedfb2e3c65a770af12f6b5c744c915ce71abf",
-  "reviewedAt": "2026-10-02T17:02:58Z",
+  "judgmentSha256": "b3a28740759299ecc20a23d5365c4561b030f17453b5ebc832119338443c1666",
+  "reviewedAt": "2026-10-02T17:53:35Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved-with-minors",
   "findings": [
     {
       "id": "F-1",
@@ -133,7 +133,7 @@
       "issue": "The page header and snapshot label the period Q2'26 / fiscal Q2 2026 (vendor naming), while the commentary opens with 'fiscal third quarter'. The reconciliation is stated only later, in financials.incomeCommentary, so the reader meets the mismatch first.",
       "fix": "Move the one-line reconciliation (the vendor series labels this quarter Q2'26; we use the company's naming) to the first mention in analystCommentary and drop it from incomeCommentary, so it is said once.",
       "status": "open",
-      "note": "Still open: analystCommentary opens with 'fiscal third quarter' while the page header reads fiscal Q2 2026, and the vendor-label reconciliation still sits only in financials.incomeCommentary, so the reader meets the mismatch first."
+      "note": "Still open after the F-18 edit: analystCommentary still opens with 'fiscal third quarter' while the page header reads fiscal Q2 2026, and the vendor-label reconciliation sits only in financials.incomeCommentary, so the reader meets the mismatch before the explanation."
     },
     {
       "id": "F-14",
@@ -182,7 +182,8 @@
       "quote": "The legislative benefit booked in operating expenses is larger than the segment's $13,615 thousand operating-income increase, so in our reading the legislation explains much of the rise.",
       "issue": "Introduced by the F-12 rewrite. The sentence compares a quarterly level (the $17.8 million of the $26.7 million legislative benefit booked in operating expenses in the quarter ended June 30, 2026) with a year-over-year change (the $13,615 thousand operating-income increase), mixing units as it does so (rubric 1, wrong quantity). The 10-Q says the legislation 'became effective during the third quarter of fiscal 2025', which is the prior-year comparison quarter, so part of the benefit sits on both sides of the comparison. growth.points[4] makes the same point about future comparisons. The counter-case that follows ('part of the rise may still be underlying') does not mention this. The conclusion may still hold, but this comparison does not support it.",
       "fix": "Argue from the figures on the surface without comparing a level to a change. The listed operating drivers (+$21.0 million, +$3.9 million, -$20.0 million, -$9.4 million) net to less than nothing, yet operating income rose 14.3 percent, so most of the rise sits outside the listed drivers, and the legislation is the one other item the MD&A names. Say that the legislation took effect during the prior-year quarter, so the 10-Q does not show how much of the $17.8 million is incremental. Do not write the computed net figure, and keep one unit (millions) within the sentence.",
-      "status": "open"
+      "status": "addressed",
+      "note": "The level-versus-change comparison and the $13,615 thousand figure are gone. The paragraph now argues from the listed drivers (rate adjustments largely absorbed by depreciation and property taxes, customer growth short of employee costs), says in the desk's own voice that most of the rise sits outside them with the legislation as the one other item the MD&A names, and the counter-case states that the legislation took effect in the prior-year comparison quarter, so the 10-Q does not show how much of the operating-expense benefit is incremental. No computed net figure and no mixed units."
     }
   ]
 }
