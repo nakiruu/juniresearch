@@ -372,3 +372,36 @@ describe("net income from ProfitLoss (incl. NCI) fallback when NetIncomeLoss is 
     expect(fy(2025).net_income).toBe(-87 - -1);   // -86
   });
 });
+
+describe("D&A from Depreciation + AmortizationOfIntangibleAssets when no combined D&A is tagged", () => {
+  const y = (concept: string, rows: [string, number][]) => ({ [concept]: { units: { USD: rows.map(([yr, val]) => ({ start: `${yr}-01-01`, end: `${yr}-12-31`, val, form: "10-K", filed: `${Number(yr) + 1}-02-20` })) } } });
+  const base = {
+    ...y("Revenues", [["2024", 1000], ["2025", 1200]]),
+    ...y("OperatingIncomeLoss", [["2024", 200], ["2025", 260]]),
+    ...y("NetIncomeLoss", [["2024", 150], ["2025", 190]]),
+  };
+  it("sums the components, and prefers a combined D&A where one exists for the period", () => {
+    const { annual } = parseCompanyFacts({ facts: { "us-gaap": {
+      ...base,
+      ...y("DepreciationDepletionAndAmortization", [["2024", 90]]),          // combined only for 2024
+      ...y("Depreciation", [["2024", 999], ["2025", 40]]),
+      ...y("AmortizationOfIntangibleAssets", [["2024", 999], ["2025", 25]]),
+    } } });
+    const fy = (yr: number) => annual.find((p) => p.fiscal_year === yr)!;
+    expect(fy(2024).ebitda).toBe(200 + 90);        // combined concept wins where present
+    expect(fy(2025).ebitda).toBe(260 + 40 + 25);   // depreciation + amortization of intangibles
+  });
+  it("leaves EBITDA empty for a period with depreciation but no amortization, when the filer tags amortization elsewhere", () => {
+    const { annual } = parseCompanyFacts({ facts: { "us-gaap": {
+      ...base,
+      ...y("Depreciation", [["2024", 30], ["2025", 40]]),
+      ...y("AmortizationOfIntangibleAssets", [["2024", 10]]),
+    } } });
+    expect(annual.find((p) => p.fiscal_year === 2024)!.ebitda).toBe(200 + 30 + 10);
+    expect(annual.find((p) => p.fiscal_year === 2025)!.ebitda).toBeNull(); // not understated
+  });
+  it("uses depreciation alone for a filer that never tags intangible amortization", () => {
+    const { annual } = parseCompanyFacts({ facts: { "us-gaap": { ...base, ...y("Depreciation", [["2025", 40]]) } } });
+    expect(annual.find((p) => p.fiscal_year === 2025)!.ebitda).toBe(260 + 40);
+  });
+});
