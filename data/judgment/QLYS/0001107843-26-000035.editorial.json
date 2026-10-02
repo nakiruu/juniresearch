@@ -1,0 +1,171 @@
+{
+  "judgmentSha256": "5ef7f0f87fbadb590858f32c35f8596f4e1a36424daf1ea00692445c7db4d769",
+  "reviewedAt": "2026-10-02T23:59:00Z",
+  "reviewer": "claude-opus-5-5",
+  "round": 1,
+  "verdict": "needs-fix-round",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "meta.subtitle",
+      "quote": "A clean beat-and-raise quarter",
+      "issue": "\"Beat\" claims Q2'26 results exceeded an expectation, but the grounding surface carries no quarterly consensus or prior Q2 guidance to beat. Only the raise (full-year guide from $721.0–$727.0 million to $732.0–$738.0 million) is supported. This is an unsupported claim in the most visible line of the report.",
+      "fix": "Drop \"beat\": e.g. \"A clean quarter and a raised guide, but at $193.00 the shares already sit above the Street's $179.36 consensus target\".",
+      "status": "open"
+    },
+    {
+      "id": "F-2",
+      "severity": "Critical",
+      "field": "sections.executiveSummary.catalysts[1]",
+      "quote": "Federal traction after TotalCloud's FedRAMP High Authorization, which management ties to a growing federal pipeline.",
+      "issue": "Over-attribution. The press release reports the FedRAMP High Authorization as a business highlight. Separately, the CEO quote mentions \"a growing federal pipeline of new business opportunity\". Management never links the two. Growth point 3 keeps them apart correctly (\"...makes the cloud suite available to federal agencies, and the CEO cites a growing federal pipeline\"), but the catalyst assigns management a causal link it did not draw.",
+      "fix": "State the two facts side by side without the link: \"TotalCloud's FedRAMP High Authorization and the growing federal pipeline the CEO cites.\"",
+      "status": "open"
+    },
+    {
+      "id": "F-3",
+      "severity": "Critical",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "The MD&A explains why that number says less here than usual: Qualys bills the full subscription upfront and holds it as deferred revenue until earned, so a large part of current liabilities is service owed to customers rather than cash owed to lenders.",
+      "issue": "Two problems. (1) The MD&A describes upfront invoicing and deferred revenue, but it says nothing about the current ratio. Reading the 1.38 ratio through deferred revenue is the author's inference, presented as the MD&A's explanation. (2) \"A large part of current liabilities\" is a quantity claim, and no deferred-revenue or current-liabilities figure is on the surface to support it.",
+      "fix": "Make it the desk's own reading and drop the unquantified share: \"Because Qualys invoices subscriptions upfront and carries them as deferred revenue (per the MD&A), we read the 1.38 current ratio as reflecting service owed to customers rather than debt; the pack carries no deferred-revenue figure to size this.\"",
+      "status": "open"
+    },
+    {
+      "id": "F-4",
+      "severity": "Critical",
+      "field": "sections.growth.points[0]",
+      "quote": "Against that, the Q3 guide carries the same range, below Q2's 11%, so the second half is guided slower.",
+      "issue": "Only Q3 is guided. The pack carries no Q1'26 revenue and no implied Q4, so it cannot show that the second half as a whole is guided slower. This is an inference the source does not make.",
+      "fix": "Limit the claim to what is guided: \"the Q3 guide of 9% to 10% sits below Q2's 11%.\"",
+      "status": "open"
+    },
+    {
+      "id": "F-5",
+      "severity": "Critical",
+      "field": "sections.risks.systemic",
+      "quote": "Security spending has defensive qualities, but a stock trading at a premium forward multiple is exposed to a broader de-rating of software valuations regardless of company execution.",
+      "issue": "(1) Nothing on the surface supports \"security spending has defensive qualities\". The MD&A excerpt says the opposite: customers \"may reduce or eliminate their overall spending on IT security\". (2) \"Premium forward multiple\" contradicts multiplesCommentary, which says \"No peer multiples are available, so we cannot say whether the stock is cheap or expensive relative to the group.\"",
+      "fix": "Delete the defensive-qualities clause, or set it against the MD&A's warning. Describe the multiple in absolute terms (e.g. \"24.7x NTM earnings on an apparently non-GAAP basis\") rather than as a premium.",
+      "status": "open"
+    },
+    {
+      "id": "F-6",
+      "severity": "Important",
+      "field": "sections.management.insiderOwnership",
+      "quote": "The two holders above 5% are BlackRock, Inc. at 14.4% and The Vanguard Group at 11.8%; neither stake amounts to control.",
+      "issue": "Stale/undated source. The proxy's footnote (10) shows that the 5% holdings come \"According to the information reported by BlackRock, Inc.\", i.e. from the holders' own Schedule 13G filings, whose dates are not given. The paragraph opens \"As of April 14, 2026, per the proxy\", which implies these stakes are current as of that date. The proxy itself predates the August 4, 2026 filing.",
+      "fix": "Attribute and date the holdings: \"The April 22, 2026 proxy, relying on the holders' own filings, lists BlackRock, Inc. at 14.4% and The Vanguard Group at 11.8%.\" Note that these stakes may have changed since.",
+      "status": "open"
+    },
+    {
+      "id": "F-7",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[1].driver",
+      "quote": "The current ~22.8x multiple on FY27E consensus EPS of $8.45 holds, which is today's price.",
+      "issue": "Calls coherence. The Base case is today's price by construction, which makes it circular. It is also anchored to a forward multiple that the report calls non-GAAP-flattered: multiplesCommentary says the forward multiples \"appear to be non-GAAP-based and flatter the stock\", and incomeCommentary says \"readers should value the business on GAAP earnings\". The Base anchor contradicts the report's own valuation stance. capitalAllocation repeats the inconsistency (\"Buybacks at a forward multiple in the low twenties are a reasonable use of surplus cash\") against a 33.4x GAAP trailing P/E. The $180–$205 band is never argued either. scenarioCommentary only says it \"spans a narrow band either side of today's price\", without saying what sets $180 or $205.",
+      "fix": "Anchor Base to something on the surface beyond the current price, and reconcile it with the GAAP stance: either argue why a non-GAAP forward multiple is the right anchor, or present the GAAP guide ($5.76–$5.90) alongside it. State in one sentence what sets each end of the $180–$205 band. Bring the capital-allocation sentence into line with whichever basis is chosen.",
+      "status": "open"
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "Bull at 25% is slightly heavier than Bear at 20%: management has just raised guidance and margins are still widening, while the Bear path requires several things together, a revenue miss and a de-rating, rather than any one of them.",
+      "issue": "The argument for weighting Bear below Bull contradicts the report elsewhere. risks.idiosyncratic[0] says a revenue miss \"would likely compress the multiple as well as estimates\", so on the report's own reading the miss and the de-rating arrive together and are not independent conditions. The Bull driver also needs several things together (Q3 above range, federal wins, QFlex/ETM conversion), so the asymmetry is not argued.",
+      "fix": "Argue the 25/20 split from something that actually distinguishes the two paths, such as the raised guide against the Q3 deceleration. Alternatively, reweight and say why.",
+      "status": "open"
+    },
+    {
+      "id": "F-9",
+      "severity": "Important",
+      "field": "analystCommentary",
+      "quote": "We would revisit on a Q3 print above the guided range or on a pullback toward the lower half of the Street's target range.",
+      "issue": "This conflicts with finalRecommendation.body[1] (\"a share price closer to the low end of our target range without a change in fundamentals\"). The Street's range is $130.00–$220.00, so its lower half is below $175, while the low end of the desk's range is $180. The re-entry trigger is stated twice with two different levels.",
+      "fix": "State the trigger once, in finalRecommendation, with a single level. Have analystCommentary point to it.",
+      "status": "open"
+    },
+    {
+      "id": "F-10",
+      "severity": "Important",
+      "field": "analystCommentary; sections.executiveSummary.thesis.body; sections.growth.points[0]; sections.management.leadership; sections.valuation.scenarios[1].driver; sections.risks.idiosyncratic[0]",
+      "quote": "The raised guide still implies 9% to 10% growth for 2026, and the Q3 revenue guide carries the same 9% to 10% range, below the Q2 growth rate.",
+      "issue": "Cross-section repetition. The claim that guidance still implies 9% to 10% growth and that Q3 is guided below Q2 is retold in at least six places. analystCommentary has the quoted sentence. thesis has \"the raised 2026 guide still implies 9% to 10%\". growth.points[0] has \"implies 9% to 10% growth over 2025 ... the Q3 guide carries the same range, below Q2's 11%\". leadership has \"the guidance, which still implies 9% to 10% growth\". The Base driver has \"growth stays in the guided 9% to 10% band\". risks.idiosyncratic[0] has \"the Q3 guide already steps down from Q2's pace\". The same goes for \"above the Street's consensus target\" (subtitle, analystCommentary, thesis, multiplesCommentary, risks.idiosyncratic[0], finalRecommendation.body[0] \"above the Street's central view\").",
+      "fix": "Argue the guidance slope once, in Growth. Let analystCommentary and thesis point to it, and refer back in words elsewhere (\"the guided pace\"). Make the price-vs-consensus point once, in Valuation, and keep only the subtitle's pointer.",
+      "status": "open"
+    },
+    {
+      "id": "F-11",
+      "severity": "Important",
+      "field": "sections.executiveSummary.risks[1]; sections.businessMoat.moatFactors[0].body; sections.businessMoat.durability; sections.risks.idiosyncratic[1]",
+      "quote": "The limit is the market structure the 10-K describes: rapid technological advances, customer price sensitivity and intense competition, any of which could pressure pricing, gross margins and renewal rates.",
+      "issue": "Paraphrase repetition. The same 10-K market-structure passage is retold in four places. ES risk 2 has \"a market the 10-K calls intense and price-sensitive pressures renewals and gross margin\". moatFactors[0] has \"short product life cycles and frequent new product introductions\". durability has the quoted sentence. risks.idiosyncratic[1] has \"customer price sensitivity and intense competition that could create downward pressure on pricing and gross margins and hurt renewal rates\". The ES pointer also turns the 10-K's \"could\" into a present-tense fact (\"pressures renewals and gross margin\").",
+      "fix": "Keep the full argument in risks.idiosyncratic[1]. Make the durability sentence a back-reference (\"the competitive pressure discussed under Risks\"). Rewrite the ES pointer conditionally (\"could pressure\").",
+      "status": "open"
+    },
+    {
+      "id": "F-12",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary; sections.valuation.multiplesCommentary; sections.management.governance; sections.risks.idiosyncratic[3]",
+      "quote": "The use of non-GAAP metrics means stock-based compensation does not count against the pay targets, which is worth watching given the GAAP gap discussed under Financials.",
+      "issue": "Paraphrase repetition of the GAAP vs non-GAAP story. It is argued in incomeCommentary (\"The GAAP and non-GAAP pictures diverge materially...\"), again in multiplesCommentary (\"flatter the stock against the GAAP trailing P/E\"), again in governance (quoted), and a fourth time in risks.idiosyncratic[3] (\"Pay targets and the apparent basis of consensus EPS are non-GAAP...\"). risks.idiosyncratic[3] also overstates the case: two of the three cash-incentive metrics (bookings, revenue growth) and one PRSU metric (revenue growth) are not non-GAAP profit measures, so \"Pay targets ... are non-GAAP\" is too broad.",
+      "fix": "Make the gap argument once in Financials and the pay angle once in Governance, naming the specific non-GAAP metrics (non-GAAP EPS, adjusted EBITDA margin). In Risks, keep only the what-to-watch.",
+      "status": "open"
+    },
+    {
+      "id": "F-13",
+      "severity": "Important",
+      "field": "sections.financials.cashflowCommentary; sections.management.capitalAllocation",
+      "quote": "Share repurchases absorb a large part of free cash flow every year in the table and there is no dividend; how well that cash is deployed is discussed under Management.",
+      "issue": "The pointer is right, but capitalAllocation then restates the same facts: \"Qualys pays no dividend and returns cash through repurchases\" and \"repurchases appear as a cash outflow in each year of the five-year table\". The same claim appears twice in different words.",
+      "fix": "Keep the repurchase/no-dividend facts in one place (capitalAllocation). Leave the cash-flow paragraph with only the pointer.",
+      "status": "open"
+    },
+    {
+      "id": "F-14",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "Revenue reached $669.1M in FY25, up {+ 10.1% +}. The growth rate decelerated from +19.1% in FY22 to +13.2% in FY23 and +9.6% in FY24 before ticking back up in FY25. Profitability has moved the other way: gross margin rose in each year of the table, from 78.2% in FY21 to 82.8% in FY25, and operating margin widened in each year from 21.3% to 33.2%. Diluted EPS climbed every year, from $1.77 in FY21 to $5.44 in FY25.",
+      "issue": "Judgment, not restatement. The first paragraph walks the Facts table row by row and reaches no view. The reader already has the table. The thesis also carries the same operating-margin series (21.3% to 33.2%).",
+      "fix": "Cut the paragraph to what the series means for the holder, e.g. how much further margin can widen if growth holds near 10% and where the operating leverage comes from. Leave the numbers in the table.",
+      "status": "open"
+    },
+    {
+      "id": "F-15",
+      "severity": "Important",
+      "field": "sections.management.capitalAllocation",
+      "quote": "The MD&A lists the share repurchase program and acquisitions among its anticipated uses of capital, without detail in the excerpt.",
+      "issue": "Mischaracterizes the source. The MD&A excerpt lists \"our expectations regarding our share repurchase program\" and \"our anticipated investments in ... acquisitions\" as subjects of forward-looking statements. It does not present them as anticipated uses of capital.",
+      "fix": "Describe what the excerpt does: \"The MD&A names the share repurchase program and acquisitions among the subjects of its forward-looking statements, without detail.\"",
+      "status": "open"
+    },
+    {
+      "id": "F-16",
+      "severity": "Minor",
+      "field": "sections.businessMoat.durability",
+      "quote": "Margin expansion in each year from FY21 to FY25 points to real customer stickiness and pricing discipline.",
+      "issue": "Stated as a causal reading, but margin expansion is equally consistent with cost discipline or scale. The surface carries no renewal-rate or pricing figure. The thesis and incomeCommentary already make the same margin-series point.",
+      "fix": "Hedge it and name the alternative: \"is consistent with pricing holding, though the pack carries no renewal-rate figure to confirm it.\" Refer back to Financials instead of restating the series.",
+      "status": "open"
+    },
+    {
+      "id": "F-17",
+      "severity": "Minor",
+      "field": "analystCommentary",
+      "quote": "That is a durable, profitable compounder growing at roughly a tenth a year, and the current valuation already pays for it.",
+      "issue": "Voice. \"Durable ... compounder\" is unearned shorthand. Elsewhere the report rates the moat only NARROW and calls renewals annual (\"customers can leave at each renewal\"). The thesis bullet \"Quality is not in question\" is similarly absolute.",
+      "fix": "Say what the figures show: \"a profitable business growing about 10% a year, at a price that already reflects it.\"",
+      "status": "open"
+    },
+    {
+      "id": "F-18",
+      "severity": "Minor",
+      "field": "sections.growth.points[3]",
+      "quote": "the 10-Q lists AI among the technology trends its forward-looking statements depend on.",
+      "issue": "The 10-Q lists \"anticipated technology trends, such as ... use of artificial intelligence\" as a subject of its forward-looking statements. It does not say those statements depend on AI.",
+      "fix": "\"the 10-Q names AI among the technology trends covered by its forward-looking statements.\"",
+      "status": "open"
+    }
+  ]
+}
