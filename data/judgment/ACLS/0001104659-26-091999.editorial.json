@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "0753ad05ba7bd8a15cd23c33f2f461115923889890e756a943ec33ff2c125f56",
-  "reviewedAt": "2026-10-02T19:37:34Z",
+  "judgmentSha256": "ae25ddd081fcb2825f6daf3603b943f68f0abbe1319c20605e4fffbfca3d2cc6",
+  "reviewedAt": "2026-10-02T19:38:15Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved",
   "findings": [
     {
       "id": "F-1",
@@ -49,7 +49,7 @@
       "issue": "Over-attribution. The MD&A attributes the decline in product gross margin (46.6% from 47.9%) to 'a less favorable mix of system shipments'. It attributes the services margin decline ((15.7)% from (5.4)%) to 'changes in the mix of service contracts and fluctuations of service expenses'. It does not attribute the consolidated gross-margin decline to 'negative services margins'. The year-ago figure (44.9%) is also left unstated.",
       "fix": "Split the attribution: product margin fell to 46.6% from 47.9% on system mix (per the MD&A), and services margin fell to (15.7)% from (5.4)% on service-contract mix. Give the year-ago 44.9% instead of 'the year-ago level'.",
       "status": "addressed",
-      "note": "Attribution now split correctly per the MD&A. Residual nit: 'from the year-ago level' still omits the 44.9% comparator."
+      "note": "Gross margin is now placed below the year-ago quarter and the FY25 44.9% given earlier in the paragraph; attribution split per the MD&A."
     },
     {
       "id": "F-6",
@@ -112,8 +112,8 @@
       "quote": "Deep relationships with those customers are an advantage, but losing one would hurt.",
       "issue": "Paraphrase repetition. The point that losing a large customer would hurt is made here and again in risks.idiosyncratic[3] ('the 10-K warns that the loss of a significant customer … will adversely affect the company'). Neither instance reads the 68.5% top-ten share for the holder.",
       "fix": "Keep the concentration argument in one place, and read the 68.5% for the holder there. For example, ten customers decide most of a year's revenue, so order timing from a few fabs can move a quarter. Point back in words from the other place.",
-      "status": "open",
-      "note": "The repetition is fixed: the moat factor now points to Risks. But risks.idiosyncratic[3] still states the 68.5% top-ten share and the 10-K's generic warning without reading it for the holder (what a delay at one or two of these customers does to a quarter, or what to watch)."
+      "status": "addressed",
+      "note": "risks.idiosyncratic[3] now reads the 68.5% for the holder (one customer's capex pause can move a quarter; argues for a wider margin of safety)."
     },
     {
       "id": "F-13",
@@ -167,8 +167,8 @@
       "quote": "It repurchased -$121.1M of stock in FY25",
       "issue": "A signed cash-flow figure is used as a prose amount ('repurchased -$121.1M'), and financials.cashflowCommentary does the same ('Capital expenditure is small at -$11.3M'). Units also switch between $M and raw thousands within one paragraph ('$244 thousand against $63,515 thousand', '$154,996 thousand', '$36,512 thousand'), which makes the comparisons hard to read.",
       "fix": "Write 'repurchased $121.1M' and 'capital expenditure of $11.3M'. Where Context gives a rounded $ million form (for example the MD&A's $118.5 million), prefer it, or keep one unit per paragraph.",
-      "status": "open",
-      "note": "Fixed in capitalAllocation ('repurchased stock heavily in FY25'). Still present in financials.cashflowCommentary: 'Capital expenditure is small at -$11.3M for FY25.'"
+      "status": "addressed",
+      "note": "cashflowCommentary now reads 'FY25 capital expenditure was small relative to revenue'; no signed figures in prose."
     },
     {
       "id": "F-19",
@@ -186,7 +186,8 @@
       "quote": "which limits operating leverage until merger costs fall away.",
       "issue": "New in this round: an unsupported causal inference. The sentence implies the faster growth in sales and marketing (+30.3%) and G&A (+37.2%) comes from merger costs that will fall away. The pack does not say which opex lines carry the $4,827 thousand of Q2 transaction and integration costs. The MD&A attributes higher personnel costs to salary, benefits, commissions and stock-based compensation. Sales and marketing growth in particular is not tied to the merger anywhere on the surface.",
       "fix": "Drop 'until merger costs fall away', or limit it to what the pack shows. Transaction and integration costs are among the non-GAAP adjustments, and non-GAAP operating margin still fell to 14.7% from 17.7%, so the pressure is not only merger-related.",
-      "status": "open"
+      "status": "addressed",
+      "note": "The merger-cost causal clause is removed; the item now cites the MD&A's personnel-cost drivers and the non-GAAP margin decline."
     },
     {
       "id": "F-21",
@@ -195,7 +196,8 @@
       "quote": "The 10-K names several established non-U.S. competitors",
       "issue": "New in this round: 'established' is a characterization the 10-K excerpt does not make. The excerpt names them only as non-U.S. vendors that Chinese customers might switch to.",
       "fix": "Write 'The 10-K names non-U.S. implant vendors that Chinese customers could switch to (see durability)', without 'established'.",
-      "status": "open"
+      "status": "addressed",
+      "note": "'established' removed."
     }
   ]
 }
