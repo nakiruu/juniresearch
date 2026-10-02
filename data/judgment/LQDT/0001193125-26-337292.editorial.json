@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "f7a91f67f97b04587bd18cce0e52a6772aa8f95bcfb8e6d3c81b2f58f317df4e",
-  "reviewedAt": "2026-10-02T21:48:39Z",
+  "judgmentSha256": "a53644b2f593b4d682c7f6f6f8c818969e37e0ab17bf4bca84239cefcb8c9bf2",
+  "reviewedAt": "2026-10-02T21:49:17Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "approved-with-minors",
+  "verdict": "approved",
   "findings": [
     {
       "id": "F-1",
@@ -228,7 +228,7 @@
       "quote": "Operating margin is the better gauge; it was 7.4% in FY25, and its more recent path is discussed under Valuation.",
       "issue": "To clear F-24, the 9.0% TTM and 10.9% latest-quarter operating margins were moved out of Financials. The paragraph now calls operating margin \"the better gauge\" and closes \"Margins are improving\", but the figures that show the improvement sit only in valuation.multiplesCommentary. The Financials argument points away for its own evidence.",
       "fix": "Keep the 9.0% TTM and 10.9% latest-quarter operating margins in incomeCommentary, where they argue margin improvement. In multiplesCommentary, refer back in words (\"earnings lag the current margin run-rate; see Financials\").",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-26",
@@ -237,7 +237,7 @@
       "quote": "Margins widened in the fiscal third quarter on a debt-free balance sheet; we rate the shares HOLD",
       "issue": "\"Widened ... on a debt-free balance sheet\" reads as if the balance sheet caused the margin gain. The release credits transaction margins, mix and operating leverage, not the balance sheet. The subtitle also no longer says why the rating is HOLD rather than BUY.",
       "fix": "Separate the two facts and give the reason for the rating, for example: \"Margins widened in the fiscal third quarter and the balance sheet is debt-free, but valuation leaves limited upside; HOLD\".",
-      "status": "open"
+      "status": "addressed"
     }
   ]
 }
