@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "302416610f8a5356e83e1390fcf885dd8f5e48437c600be485145af1d3d42b09",
-  "reviewedAt": "2026-10-02T19:51:48Z",
+  "judgmentSha256": "f4859c6859f3a32a82dc71e52bbc6bf1c61f6e50bd0cc7f768a4b3f3c721d2f6",
+  "reviewedAt": "2026-10-02T19:52:26Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved",
   "findings": [
     {
       "id": "F-1",
@@ -82,8 +82,8 @@
       "quote": "The data we hold does not say what drove the decline, and we have no news coverage that explains it.",
       "issue": "Cross-section repetition. The 'unexplained sell-off' claim is made in seven places: analystCommentary ('the unexplained decline keep our target well below the Street's'), thesis ('the unknown cause of the sell-off'), executiveSummary.risks[3], multiplesCommentary ('because our data does not explain the sell-off'), scenarioCommentary ('the cause of the decline is unknown'), risks.idiosyncratic[3] and finalRecommendation.body[1]. 'Target well below the Street's' is also nearly the same sentence in analystCommentary and the thesis.",
       "fix": "Argue it once, in risks.idiosyncratic[3], and keep executiveSummary.risks[3] as the pointer. In valuation, refer back in words ('the information gap noted in Risks'). Remove it from the thesis and finalRecommendation, or reduce it to a single clause, and give 'target well below the Street's' to one section only.",
-      "status": "open",
-      "note": "Mostly fixed: the sell-off claim is now argued in risks.idiosyncratic[3], with pointers in executiveSummary.risks[3] and analystCommentary. Still open: 'target well below the Street's' is made in both analystCommentary ('we keep our target well below the Street's') and thesis.body ('Our target sits well below the Street's to reflect the balance sheet')."
+      "status": "addressed",
+      "note": "Addressed: the target-below-Street claim was removed from thesis.body and now appears only in analystCommentary. The sell-off point is argued once, in risks.idiosyncratic[3]."
     },
     {
       "id": "F-9",
@@ -192,7 +192,8 @@
       "quote": "The geographic breadth gives ESAB exposure to Europe and emerging markets as well as North America.",
       "issue": "Left over from F-6. 'Emerging markets' is not the filing's term. The MD&A says the mix is balanced between 'high growth and developed markets' and defines EMEA & APAC as Europe, the Middle East, India, Africa and Asia Pacific.",
       "fix": "Use the MD&A's wording, 'high growth and developed markets', or list the regions as the MD&A defines them.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed: 'emerging markets' was replaced with the MD&A's 'a balance of high growth and developed markets'."
     },
     {
       "id": "F-20",
@@ -201,7 +202,8 @@
       "quote": "and between high-growth and developed markets, which management believes helps mitigate cyclical exposure",
       "issue": "Loose attribution. The MD&A credits its 'geographic and end market diversity' with helping 'mitigate the effects from cyclical industrial market exposures'. It does not credit the equipment/consumables mix, and the sentence as written reads as if it does.",
       "fix": "Attribute the mitigation belief to geographic and end-market diversity, as the MD&A does. Keep the consumables point as the analyst's view.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed: the mitigation belief is now attributed to geographic and end-market diversity, as the MD&A states it."
     },
     {
       "id": "F-21",
@@ -210,7 +212,8 @@
       "quote": "a stadium suite rented from a team whose ownership group includes him",
       "issue": "Over-attribution. The proxy says the company rented a suite at Northwest Stadium for Washington Commanders home games. It does not say the team was the counterparty to the rental.",
       "fix": "Follow the proxy: 'a suite at Northwest Stadium for home games of the Washington Commanders, whose ownership group includes him'.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed: the suite is now described as a company-rented suite at Northwest Stadium for Commanders home games, which follows the proxy."
     }
   ]
 }
