@@ -1,0 +1,718 @@
+{
+  "schemaVersion": "1.1.0",
+  "meta": {
+    "company": "Atmos Energy Corporation",
+    "ticker": "ATO",
+    "exchange": "NYSE",
+    "subtitle": "Rate-base growth is on plan, but thin expected upside against a real Bear case and negative free cash flow keep us neutral",
+    "reportDate": "October 2, 2026",
+    "asOf": "Oct 2, 2026",
+    "analyst": "Juniper Finance Research Desk",
+    "analystName": "Nico — Senior Analyst",
+    "fiscalYearEnd": "September 30",
+    "currency": "USD",
+    "filing": {
+      "form": "10-Q",
+      "fiscalPeriod": "fiscal Q2 2026",
+      "filedDate": "Aug 5, 2026",
+      "accession": "0000731802-26-000102"
+    }
+  },
+  "quote": {
+    "currentPrice": 157.07,
+    "marketCap": 26543034368,
+    "sharesOutstanding": 168988567.9505953,
+    "week52Low": 154.72,
+    "week52High": 192.51,
+    "dividendYield": 0.0256,
+    "history": [
+      {
+        "date": "2026-08-21",
+        "close": 166.85000610351562
+      },
+      {
+        "date": "2026-08-24",
+        "close": 167.82000732421875
+      },
+      {
+        "date": "2026-08-25",
+        "close": 167.55999755859375
+      },
+      {
+        "date": "2026-08-26",
+        "close": 169.4600067138672
+      },
+      {
+        "date": "2026-08-27",
+        "close": 167.22000122070312
+      },
+      {
+        "date": "2026-08-28",
+        "close": 166.64999389648438
+      },
+      {
+        "date": "2026-08-31",
+        "close": 166.1300048828125
+      },
+      {
+        "date": "2026-09-01",
+        "close": 167.6999969482422
+      },
+      {
+        "date": "2026-09-02",
+        "close": 167.67999267578125
+      },
+      {
+        "date": "2026-09-03",
+        "close": 169.1199951171875
+      },
+      {
+        "date": "2026-09-04",
+        "close": 167.55999755859375
+      },
+      {
+        "date": "2026-09-08",
+        "close": 168.07000732421875
+      },
+      {
+        "date": "2026-09-09",
+        "close": 166.58999633789062
+      },
+      {
+        "date": "2026-09-10",
+        "close": 164.80999755859375
+      },
+      {
+        "date": "2026-09-11",
+        "close": 163.19000244140625
+      },
+      {
+        "date": "2026-09-14",
+        "close": 163.83999633789062
+      },
+      {
+        "date": "2026-09-15",
+        "close": 162.0399932861328
+      },
+      {
+        "date": "2026-09-16",
+        "close": 161.9600067138672
+      },
+      {
+        "date": "2026-09-17",
+        "close": 162.02999877929688
+      },
+      {
+        "date": "2026-09-18",
+        "close": 160.3000030517578
+      },
+      {
+        "date": "2026-09-21",
+        "close": 158.27000427246094
+      },
+      {
+        "date": "2026-09-22",
+        "close": 157.33999633789062
+      },
+      {
+        "date": "2026-09-23",
+        "close": 156.24000549316406
+      },
+      {
+        "date": "2026-09-24",
+        "close": 156.4199981689453
+      },
+      {
+        "date": "2026-09-25",
+        "close": 157.2100067138672
+      },
+      {
+        "date": "2026-09-28",
+        "close": 157.0500030517578
+      },
+      {
+        "date": "2026-09-29",
+        "close": 157.60000610351562
+      },
+      {
+        "date": "2026-09-30",
+        "close": 156.44000244140625
+      },
+      {
+        "date": "2026-10-01",
+        "close": 156.3800048828125
+      },
+      {
+        "date": "2026-10-02",
+        "close": 157.07000732421875
+      }
+    ]
+  },
+  "rating": {
+    "label": "HOLD",
+    "tone": "secondary",
+    "targetLow": 150,
+    "targetHigh": 185,
+    "conviction": {
+      "expectedUpside": 0.04412045584771129,
+      "bearDownside": 0.17234354109632644,
+      "rewardRisk": 0.2560029553010718,
+      "derivedLabel": "HOLD"
+    },
+    "gate": {
+      "sector": "utility",
+      "ceiling": "SELL",
+      "gatedLabel": "SELL",
+      "distress": "DISTRESS",
+      "piotroski": 3,
+      "accruals": null,
+      "confidence": "medium",
+      "flags": [
+        "distress"
+      ]
+    },
+    "decision": {
+      "conviction": 52,
+      "tier": "moderate",
+      "proposed": "HOLD",
+      "reasons": [
+        "E/R proposed HOLD"
+      ],
+      "advisories": [
+        "gate ceiling SELL (distress) — advisory, not applied"
+      ],
+      "moat": null,
+      "intrinsic": null,
+      "composite": {
+        "percentile": 52.49115440910852,
+        "confidence": "high"
+      },
+      "uncertainty": {
+        "tier": "low",
+        "points": 0,
+        "drivers": []
+      }
+    }
+  },
+  "snapshot": [
+    {
+      "label": "Current Price",
+      "value": 157.07,
+      "unit": "usd"
+    },
+    {
+      "label": "Market Cap",
+      "value": 26543034368,
+      "unit": "usdLarge",
+      "approx": true
+    },
+    {
+      "label": "52-Week Range",
+      "raw": "$154.72 – $192.51"
+    },
+    {
+      "label": "Shares Outstanding",
+      "value": 168988567.9505953,
+      "unit": "shares",
+      "approx": true
+    },
+    {
+      "label": "P/E (TTM)",
+      "value": 18.74343675417661,
+      "unit": "mult"
+    },
+    {
+      "label": "Consensus Target",
+      "value": 185,
+      "unit": "usd",
+      "change": 0.17781880690138152
+    },
+    {
+      "label": "EV/EBITDA (TTM)",
+      "value": 13.805,
+      "unit": "mult"
+    },
+    {
+      "label": "Analyst Consensus",
+      "raw": "Hold (2 B / 12 H / 0 S)"
+    },
+    {
+      "label": "FY25 Revenue",
+      "value": 4702755000,
+      "unit": "usdLarge",
+      "change": 0.12906215255161424
+    },
+    {
+      "label": "FY25 Net Income",
+      "value": 1198754000,
+      "unit": "usdLarge"
+    },
+    {
+      "label": "FY25 Diluted EPS",
+      "value": 7.46,
+      "unit": "usd"
+    },
+    {
+      "label": "FY26E Revenue",
+      "value": 5121601360,
+      "unit": "usdLarge",
+      "approx": true,
+      "change": 0.08906404012116309,
+      "changeDp": 0
+    },
+    {
+      "label": "Q2'26 Revenue",
+      "value": 879059000,
+      "unit": "usdLarge",
+      "change": 0.0480284319733324,
+      "changeDp": 0
+    },
+    {
+      "label": "Q2'26 Operating Margin",
+      "value": 0.36449658100309534,
+      "unit": "pct",
+      "dp": 0
+    },
+    {
+      "label": "Fwd P/E (FY27E)",
+      "value": 17.415263163730305,
+      "unit": "mult",
+      "approx": true
+    },
+    {
+      "label": "Dividend Yield",
+      "value": 0.0256,
+      "unit": "pct",
+      "dp": 2
+    },
+    {
+      "label": "FY25 Capital Expenditure",
+      "value": -3561399000,
+      "unit": "usdLarge"
+    },
+    {
+      "label": "FY25 Free Cash Flow",
+      "value": -1511943000,
+      "unit": "usdLarge"
+    },
+    {
+      "label": "Interest Coverage (TTM)",
+      "value": 12.769085549863147,
+      "unit": "mult"
+    },
+    {
+      "label": "FY25 Dividends Paid",
+      "value": -553761000,
+      "unit": "usdLarge"
+    }
+  ],
+  "analystSentiment": {
+    "numAnalysts": 14,
+    "buy": 2,
+    "hold": 12,
+    "sell": 0,
+    "consensusRating": "Hold",
+    "consensusTarget": 185,
+    "medianTarget": 183,
+    "highTarget": 206,
+    "lowTarget": 167,
+    "commentary": "Atmos Energy's fiscal third quarter kept the regulated growth model on plan. Nine-month net income was $1,227.6 million, or $7.33 per diluted share, against $1,023.9 million, or $6.40, a year earlier, a {+ 20 percent +} increase. The August 5, 2026 earnings release reaffirmed fiscal 2026 guidance of $8.40 - $8.50 per diluted share.\n\nThe MD&A attributes most of that increase to positive rate outcomes driven by safety and reliability spending. It also credits $132.4 million of the nine-month result to Texas legislation on infrastructure spending; how much that benefit adds to growth from here is a question we take up in the growth section.\n\nAt $157.07 the shares sit just above the 52-week low of $154.72, and 12 of 14 covering analysts rate them Hold. We agree with that stance for the reward/risk reasons set out in the valuation section, and the funding gap we describe in the financials section is what gives our Bear case weight. We rate the shares **HOLD**."
+  },
+  "sections": {
+    "executiveSummary": {
+      "companyOverview": "Atmos Energy Corporation is a natural gas-only distributor headquartered in Dallas. It serves approximately 3.4 million residential, commercial, public authority, and industrial customers through six distribution divisions covering service areas in eight states, and it transports natural gas for others through its distribution and pipeline systems.\n\nThe company manages two reportable segments. Distribution covers regulated natural gas distribution and related sales; pipeline and storage is built mainly around the Atmos Pipeline-Texas division and natural gas transmission operations in Louisiana.\n\nEarnings are set by regulators rather than by commodity prices, because gas costs pass through to customers without markup under purchased gas cost adjustment mechanisms. The investment case therefore turns on how much capital the company deploys and how quickly regulators let it earn a return on that capital.",
+      "thesis": {
+        "label": "HOLD",
+        "body": "Atmos Energy is a rate-base compounder: it spends heavily on safety-driven modernization of its system and recovers much of that spending through mechanisms that shorten regulatory lag. The model is delivering, with diluted EPS higher in every year from FY21 to FY25 and a wider operating margin in FY25 than in FY21.\n\nThe counter-case is that free cash flow is negative, so the plan leans on outside capital, which leaves too little expected upside for the risk; we rate the shares **HOLD**."
+      },
+      "catalysts": [
+        "Decisions on the ratemaking requests still pending at June 30, 2026, which would add to annual operating income if granted.",
+        "Fiscal 2026 results against the EPS guidance, and any fiscal 2027 outlook the company provides.",
+        "Updates to the fiscal 2026 to 2030 capital plan, which sets the pace of rate-base growth."
+      ],
+      "risks": [
+        "Regulators could disallow costs or modify the mechanisms that currently reduce regulatory lag.",
+        "Operations are concentrated in Texas, which also supplied this year's legislative earnings benefit.",
+        "Higher interest rates or tighter capital markets would raise the cost of funding a capital program that exceeds operating cash flow.",
+        "A pipeline accident could bring liability, fines and a loss of customer confidence beyond insurance limits."
+      ]
+    },
+    "financials": {
+      "income": {
+        "columns": [
+          "Metric",
+          "FY21",
+          "FY22",
+          "FY23",
+          "FY24",
+          "FY25"
+        ],
+        "rows": [
+          {
+            "label": "Revenue ($B)",
+            "values": [
+              3407490000,
+              4201662000,
+              4275357000,
+              4165187000,
+              4702755000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "YoY Growth",
+            "values": [
+              null,
+              0.2330665680603612,
+              0.017539487945484433,
+              -0.025768608329082232,
+              0.12906215255161424
+            ],
+            "format": "pctSigned"
+          },
+          {
+            "label": "Gross Margin",
+            "values": [
+              0.696927357086888,
+              0.5995260922939541,
+              0.6603387740485765,
+              null,
+              null
+            ],
+            "format": "pct"
+          },
+          {
+            "label": "Operating Income ($B)",
+            "values": [
+              904998000,
+              920982000,
+              1067147000,
+              1355362000,
+              1559971000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Operating Margin",
+            "values": [
+              0.2655908014403564,
+              0.21919469010120282,
+              0.24960418510079976,
+              0.3254024369133967,
+              0.33171428237277933
+            ],
+            "format": "pct"
+          },
+          {
+            "label": "EBITDA ($B)",
+            "values": [
+              1382975000,
+              1456637000,
+              1671474000,
+              2025334000,
+              2294716000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Net Income ($B)",
+            "values": [
+              665563000,
+              774398000,
+              885862000,
+              1042895000,
+              1198754000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Diluted EPS ($)*",
+            "values": [
+              5.12,
+              5.6,
+              6.1,
+              6.83,
+              7.46
+            ],
+            "format": "eps"
+          }
+        ],
+        "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended September 30."
+      },
+      "incomeCommentary": "Revenue rose from $3.4B in FY21 to $4.7B in FY25, with FY25 up {+ +12.9% +}, but the line moves with gas costs passed through to customers, so operating income is the better gauge. Operating income grew from $0.9B to $1.6B over the same span, operating margin widened from 26.6% to 33.2%, and diluted EPS climbed from $5.12 to $7.46.\n\nThe quarter ended June 30, 2026 is the company's fiscal third quarter; the third-party financial series labels it Q2'26, and we use the company's naming. Revenue was $879.1M, {+ +4.8% +} year over year, at a 36.4% operating margin.\n\nIn the distribution segment, operating income rose {+ 14.3 percent +}. Rate adjustments, primarily in the Mid-Tex Division, added $21.0 million and residential customer growth and increased industrial load added $3.9 million, against a $20.0 million increase in depreciation expense and property taxes and a $9.4 million increase in employee-related costs. Texas infrastructure legislation lifted the segment's income before income taxes by $26.7 million in the quarter, including $17.8 million in operating expenses.\n\nRead together, the listed operating drivers roughly offset each other: higher depreciation and property taxes absorbed most of the rate adjustments, and customer growth did not cover higher employee costs. Yet segment operating income still rose, so in our reading most of the rise sits outside the listed drivers, and the Texas infrastructure legislation is the one other item the MD&A names. The counter-case is that the legislation became effective during the third quarter of fiscal 2025, the prior-year comparison quarter, so the 10-Q does not show how much of the operating-expense benefit is incremental, and part of the rise may still be underlying.\n\nThroughput fell to 73,143 MMcf from 75,354 MMcf. The MD&A says the base customer charge only partially separates recovery from usage, so volume still matters, yet operating income rose despite the lower throughput.\n\nOn a trailing twelve-month basis, operating margin is 37.0% and net margin 28.5%.",
+      "balance": {
+        "columns": [
+          "Metric ($B)",
+          "FY21",
+          "FY22",
+          "FY23",
+          "FY24",
+          "FY25"
+        ],
+        "rows": [
+          {
+            "label": "Cash & ST Investments",
+            "values": [
+              116723000,
+              51554000,
+              15404000,
+              307340000,
+              202687000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Total Debt",
+            "values": [
+              0,
+              184967000,
+              241933000,
+              0,
+              null
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Net Debt",
+            "values": [
+              -116723000,
+              133413000,
+              226529000,
+              -307340000,
+              null
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Total Equity",
+            "values": [
+              7906889000,
+              9419091000,
+              10870064000,
+              12157669000,
+              13558890000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Current Ratio",
+            "values": [
+              0.8086689237983054,
+              0.8459704102592572,
+              0.6548670996131871,
+              0.9389978231574583,
+              0.7725549770111146
+            ],
+            "format": "num2"
+          }
+        ],
+        "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended September 30."
+      },
+      "balanceCommentary": "Total equity grew from $7.9B in FY21 to $13.6B in FY25 as the company funded its capital program with a heavy equity component. The 10-Q puts equity capitalization at 59.8 percent at June 30, 2026; the earnings release rounds this to 60%, and we use the 10-Q figure.\n\nThe third-party debt series is incomplete: it shows no FY25 total debt and near-zero balances in earlier years, which cannot be reconciled with interest coverage of 12.8x and the financing activity the 10-Q describes. We set that series aside and rely on the 10-Q for leverage and liquidity.\n\nDuring the nine months ended June 30, 2026, the company completed approximately $2.2 billion of long-term debt and equity financing. Total liquidity was approximately $4.6 billion at quarter-end, made up of $521.0 million in cash and cash equivalents, $936.8 million available through equity forward sales agreements and $3,094.4 million in undrawn capacity under its credit facilities.\n\nThe current ratio is 0.81 on a trailing basis and was 0.77 at FY25 year-end. With the undrawn facilities above, we do not read it as a liquidity concern.",
+      "cashflow": {
+        "columns": [
+          "Metric ($B)",
+          "FY21",
+          "FY22",
+          "FY23",
+          "FY24",
+          "FY25"
+        ],
+        "rows": [
+          {
+            "label": "Operating Cash Flow",
+            "values": [
+              -1084251000,
+              977584000,
+              3459743000,
+              1733746000,
+              2049456000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Capital Expenditure",
+            "values": [
+              -1969540000,
+              -2444420000,
+              -2805973000,
+              -2937124000,
+              -3561399000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Share Repurchases",
+            "values": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Dividends Paid",
+            "values": [
+              -323904000,
+              -375914000,
+              -430345000,
+              -492950000,
+              -553761000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Free Cash Flow",
+            "values": [
+              -3053791000,
+              -1466836000,
+              653770000,
+              -1203378000,
+              -1511943000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "FCF Margin",
+            "values": [
+              -0.8961995486413753,
+              -0.3491085194382604,
+              0.15291588515298254,
+              -0.28891331889780697,
+              -0.32150154537074543
+            ],
+            "format": "pct"
+          }
+        ],
+        "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended September 30."
+      },
+      "cashflowCommentary": "Operating cash flow was $2.0B in FY25 against capital expenditure of $3.6B, leaving free cash flow of -$1.5B and an FCF margin of -32.2%. Free cash flow was negative in every year from FY21 to FY25 except FY23, when operating cash flow reached $3.5B. Dividends paid of $0.6B in FY25 come on top of that gap.\n\nSpending is accelerating. Capital expenditures were $3,076.3 million in the nine months ended June 30, 2026, and the August 5, 2026 earnings release puts fiscal 2026 capital expenditure at approximately $4.2 billion. The MD&A says a significant portion of this investment is incurred under regulatory mechanisms that reduce lag to six months or less. In our view that shortens the wait before new spending earns a return, but it does not close the cash gap.\n\nWe do not expect free cash flow to turn positive while the fiscal 2026 to 2030 plan runs at its current scale, so debt and equity issuance must keep covering both capital spending and dividends. That makes continued access to debt and equity markets on acceptable terms the binding condition on the growth plan. The liquidity described above covers the near term; it does not fund the full plan."
+    },
+    "valuation": {
+      "multiples": {
+        "columns": [
+          "Multiple (TTM)",
+          "ATO"
+        ],
+        "rows": [
+          {
+            "label": "P/E",
+            "values": [
+              18.74343675417661
+            ],
+            "format": "mult"
+          },
+          {
+            "label": "P/S",
+            "values": [
+              5.393252899202402
+            ],
+            "format": "mult"
+          },
+          {
+            "label": "EV/EBITDA",
+            "values": [
+              13.805
+            ],
+            "format": "mult"
+          },
+          {
+            "label": "Fwd P/E (NTM)",
+            "values": [
+              18.570254724732948
+            ],
+            "format": "mult"
+          }
+        ],
+        "note": "Peer multiples pending a peer data source."
+      },
+      "multiplesCommentary": "Atmos Energy trades at 18.7x trailing earnings and EV/EBITDA of 13.8x. The two forward multiples disagree: the vendor's 18.6x forward (NTM) figure sits well above the ~17.4x the stock trades at on FY27E consensus EPS of $9.02, even though the next twelve months and fiscal 2027 now cover nearly the same window. We read the NTM figure as resting on earnings closer to the FY26E level, and we use the FY27E multiple as the current forward multiple. Price-to-sales of 5.4x says little here, because revenue includes passed-through gas costs. The dividend yield is 2.56%.\n\nPeer multiples are not available on this page, so we judge value against the Street, the stock's own trading range and our scenarios. The consensus target is $185.00 (+17.8%), the median target $183.00 and the range $167.00–$206.00, so the whole Street range sits above the current price; the stock traded as high as $192.51 over the past 52 weeks. Our $150–$185 band reaches lower because we give real weight to a Bear case below the 52-week low. Without peer or historical multiples on the page we do not call the stock cheap or expensive.",
+      "scenarios": [
+        {
+          "name": "Bull",
+          "driver": "Regulators approve most of the ratemaking requests in progress, the capital plan converts into earnings on schedule and fiscal 2027 EPS beats consensus; the multiple re-rates further than in the Base case, taking the shares back toward the $192.51 52-week high.",
+          "impliedPrice": 190,
+          "probability": 0.25
+        },
+        {
+          "name": "Base",
+          "driver": "Fiscal 2026 lands within the $8.40 - $8.50 guidance and FY27E consensus EPS of $9.02 holds. Our Base price applies the 18.6x forward (NTM) multiple to that FY27E figure, which is a modest re-rating from the ~17.4x the shares trade at on FY27E today.",
+          "impliedPrice": 168,
+          "probability": 0.5
+        },
+        {
+          "name": "Bear",
+          "driver": "A regulatory setback in Texas or a jump in interest rates forces more equity issuance at lower prices. Earnings fall short of FY27E consensus and the multiple compresses, taking the shares below the $154.72 52-week low.",
+          "impliedPrice": 130,
+          "probability": 0.25
+        }
+      ],
+      "scenarioCommentary": "We weight the Base case at 50% and the Bull and Bear cases at 25% each, because we see the regulatory upside and the funding downside as similarly likely.\n\nThe cases are not symmetric in what they need. Our Base case already assumes a modest re-rating on top of consensus earnings, so the Bull case needs earnings ahead of consensus as well as a larger re-rating. The Bear case needs only one setback to hit earnings and the multiple together, so we do not tilt the weights toward the Bull case.\n\nThe weighted fair value is $164, an expected upside of +4.4%, against a Bear-case downside of 17.2%. That is a reward/risk of 0.26×, short of both the expected-upside and reward/risk bars for a BUY, and it is the basis of our HOLD."
+    },
+    "businessMoat": {
+      "segments": [
+        {
+          "name": "Consolidated",
+          "sharePct": 1,
+          "revenue": 4702755000,
+          "body": "The third-party revenue series carries Atmos Energy as a single consolidated revenue line, while the 10-Q manages the business as two reportable segments, distribution and pipeline and storage; we use the consolidated line for revenue and the 10-Q for segment commentary. Distribution carries most of the revenue: its operating revenues were $774,658 thousand in the quarter ended June 30, 2026. Approximately 70 percent of distribution revenues are earned in the six months through March, so the June quarter is seasonally light. Pipeline and storage centers on Atmos Pipeline-Texas, which transports natural gas for third parties and manages five underground storage facilities in Texas."
+        }
+      ],
+      "segmentsBasis": "FY25 (single reportable segment) mix",
+      "geographyBasis": "FY25",
+      "geoMix": [],
+      "moatRating": "NARROW",
+      "moatFactors": [
+        {
+          "name": "Regulated distribution franchise",
+          "strength": "Strong",
+          "body": "The company is the regulated gas distributor in over 1,400 communities across its service areas, with a network of more than 81,000 miles of distribution and transmission lines. Duplicating that network is not economic for a new entrant; the competitive threat the company itself lists is competition from energy suppliers and alternative forms of energy."
+        },
+        {
+          "name": "Lag-reducing rate design",
+          "strength": "Strong",
+          "body": "Approximately 50 percent of distribution revenue, excluding gas costs, is recovered through the base customer charge. Weather normalization adjustments cover approximately 97 percent of residential and commercial revenues, and rate design lets the company collect the gas cost portion of bad debt expense on approximately 89 percent of residential and commercial revenues. In our view this design protects margin well against weather swings and gas-price-driven bad debt, which is what makes it strong. Its limit is volume: the rest of non-gas distribution revenue still depends on usage, and most weather normalization windows close in the spring, so the protection is strong rather than complete."
+        },
+        {
+          "name": "Texas pipeline and storage assets",
+          "strength": "Moderate",
+          "body": "The pipeline and storage segment owns 5,700 miles of gas transmission lines and provides ancillary services such as parking arrangements, lending and inventory sales. These assets give the company its own transmission and storage capacity, though their returns are also regulated."
+        }
+      ],
+      "durability": "The franchise itself is durable. Much of the capital program earns recovery through the lag-reducing mechanisms discussed in the financials section, and most of it is safety and reliability work that the company says it is accelerating with the support from each of its regulatory commissions.\n\nWe rate the moat NARROW rather than WIDE for two reasons, both set out in the risks section: returns are set by regulators, and the company itself says full recovery of its planned spending is not assured; and natural gas faces long-run policy risk to its volumes."
+    },
+    "growth": {
+      "points": [
+        "The company anticipates spending approximately $26 billion between fiscal years 2026 and 2030, with more than 80 percent dedicated to safety and reliability. That spending becomes rate base, the main driver of earnings for a regulated utility.",
+        "Ratemaking actions implemented during the nine months ended June 30, 2026 raised annual operating income by $355.0 million, and efforts in progress at that date sought a further $373.4 million.",
+        "Division gains are concentrated in Mid-Tex, where the MD&A places most of the quarter's rate adjustments and customer growth; we read that concentration as a risk in the risks section.",
+        "Consensus FY26E EPS of $8.46 sits inside the reaffirmed $8.40 - $8.50 guidance, so the Street already assumes the guidance is met and fiscal 2026 holds little surprise either way; the FY27E figure of $9.02 depends on the ratemaking requests in progress converting into outcomes.",
+        "The counter-case is a tougher comparison, and this is our inference rather than the company's: the Texas infrastructure legislation took effect during the third quarter of fiscal 2025, so year-over-year comparisons will increasingly include its benefit on both sides. The 10-Q does not say whether that benefit persists, grows or ends, so we expect it to add less to year-over-year growth without assuming it disappears."
+      ]
+    },
+    "management": {
+      "leadership": "J. Kevin Akers is President and Chief Executive Officer, according to the December 2025 proxy statement. The company frames its strategy around a vision to be the safest provider of natural gas services, which ties capital spending to the safety rules regulators reward. The proxy sections reviewed here do not give tenure or biographies, so we judge the team on results: the rate outcomes and capital deployment set out in the growth section read to us as competent execution of a plan regulators have so far supported.",
+      "capitalAllocation": "Capital goes overwhelmingly to the network: over 85 percent of nine-month capital expenditures went to improving the safety and reliability of the distribution and transportation systems. The cash flow series carries no share repurchase data for FY21 to FY25, so the shareholder returns on the surface come through dividends.\n\nThe Board declared a quarterly dividend of $1.00 per share, and the indicated annual dividend for fiscal 2026 is $4.00, a {+ 14.9% +} increase over fiscal 2025. We read a raise of that size, made while the company relies on outside capital, as a signal of management's confidence in the rate-outcome path rather than as evidence of surplus cash. The use of equity forward sales agreements suggests management is pacing dilution deliberately.",
+      "governance": "The December 2025 proxy statement reports that, for fiscal 2025, the Board determined every director other than Mr. Akers to be independent under NYSE and SEC rules; Mr. Akers is not independent because he is the Company's President and Chief Executive Officer. The Board runs an annual self-evaluation through written questionnaires for the Board and each committee, and related party transactions above $100,000 in which a related person has a material interest go to the Governance Committee for review and approval.\n\nFor shareholders, a board that is independent apart from the CEO, with a formal review of related party dealings, is a sound structure, and we see no governance flag in the excerpt. The proxy sections reviewed here do not cover executive compensation, so we make no judgment on pay.",
+      "insiderOwnership": "As of December 12, 2025, Mr. Akers beneficially owned 173,855 shares, per the proxy statement. The excerpt does not give his percent of class, so we do not size the stake against the ~168.99M shares outstanding; we read it as a real personal exposure to the share price, and so a meaningful alignment signal, without treating it as influence over the company.\n\nThe same proxy lists The Vanguard Group, Inc. at 12.0%, BlackRock, Inc. at 7.9%, State Street Corporation at 6.9%, Capital International Investors at 6.5% and Wellington Management Group LLP and certain affiliates at 6.5%. No holder controls the company and every holder listed is an asset manager, so governance outcomes rest on the independent board rather than on any single owner. Several of those positions rest on Schedule 13G filings for the period ending December 31, 2023, so they are dated, and none reflects trading since December 2025."
+    },
+    "risks": {
+      "idiosyncratic": [
+        "**Regulatory recovery.** Regulators monitor returns continuously and can limit or disallow costs or modify or terminate the infrastructure and annual rate mechanisms that cut lag. A change there would hit earnings directly, since the capital plan assumes timely recovery.",
+        "**Texas concentration.** The 10-Q lists the concentration of operations in Texas as a risk, and the quarter shows it: Mid-Tex operating income rose to $74,313 thousand from $48,244 thousand, more than the distribution segment's total increase. Elsewhere, Mississippi operating income fell to $1,803 thousand from $6,967 thousand and Louisiana to $13,760 thousand from $18,747 thousand, so a Texas regulatory or legislative change would move the whole segment.",
+        "**Operational safety.** Leaks, explosions or fire near populated areas could bring liability, fines and repair costs beyond insurance limits and deductibles, and would damage the regulatory goodwill the rate mechanisms depend on.",
+        "**Funding.** If the market access we treat as the binding condition in the financials section tightens, or the share price falls too far to issue equity efficiently, the company would have to slow the plan or accept more dilution."
+      ],
+      "systemic": "Interest rates pressure utility valuations as bond yields compete with the dividend, and they set the cost of the funding gap described in the financials section. Natural gas prices pass through to customers, but higher gas costs can raise bad debt and short-term borrowing and push customers to conserve.\n\nLonger term, the company lists legislation to reduce or eliminate greenhouse gas emissions or fossil fuels and the impact of climate change among its risks; both threaten volumes and political support for gas infrastructure. Adverse weather and economic conditions in the service areas complete the macro exposure, though weather normalization blunts the weather effect."
+    },
+    "finalRecommendation": {
+      "body": [
+        "We rate Atmos Energy **HOLD** with a target range of $150–$185. The regulated growth engine is working: rate outcomes, customer growth and capital deployment are all moving the right way. What holds us back is the thin reward/risk we set out in the valuation section.",
+        "We would turn more positive on approval of the pending ratemaking requests without a material disallowance, or on a price closer to our Bear case with fundamentals intact. We would turn negative if the regulatory-recovery risk materializes in Texas or if funding costs rise enough to slow the capital plan."
+      ]
+    }
+  },
+  "disclaimer": "DISCLAIMER: This report is for informational/educational purposes only and does not constitute investment advice. All equity securities carry risk and can be volatile, and past performance is not indicative of future results. Conduct your own due diligence. The author may hold positions in securities discussed."
+}
