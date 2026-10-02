@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "40d292eb07579d978d731bbddf68358cd4cd02b6234834cf628c9d60785f4374",
-  "reviewedAt": "2026-10-02T21:47:07Z",
+  "judgmentSha256": "52cc6d5dd9797782e1bdef7bd28e2c26ed9ec76a32e04428b4d284a1fffea2af",
+  "reviewedAt": "2026-10-02T21:47:51Z",
   "reviewer": "Claude Opus 5.5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved",
   "findings": [
     {
       "id": "F-1",
@@ -195,7 +195,8 @@
       "quote": "A full GAAP-profitable year, visible as the TTM operating margin of -1.9% turning positive",
       "issue": "Introduced by the rewrite. The catalyst measures GAAP profitability with operating margin, but the two differ on this company: other income (interest on cash and short-term investments, per the MD&A) sits below operating income. On the Facts block the TTM net margin is already +1.5%, while TTM operating margin is -1.9%. On a trailing basis the company is already GAAP net-profitable, so the gauge the catalyst names is not the event it describes. The report never mentions the +1.5% TTM net margin, so a reader cannot reconcile \"a full GAAP-profitable year\" (also in analystCommentary and finalRecommendation.body[1]) with it.",
       "fix": "Pick one quantity and name it precisely. Either make the trigger a GAAP net-profitable fiscal year (FY26), acknowledging that the TTM net margin is already +1.5%, or make it operating profitability, with the TTM operating margin of -1.9% turning positive, and drop \"GAAP-profitable\". Keep analystCommentary and finalRecommendation.body[1] consistent with whichever is chosen.",
-      "status": "open"
+      "status": "addressed",
+      "note": "catalysts[0], analystCommentary and finalRecommendation.body[1] now all name GAAP operating profit for full-year 2026 against the TTM operating margin of -1.9%; the measure and the event match."
     }
   ]
 }
