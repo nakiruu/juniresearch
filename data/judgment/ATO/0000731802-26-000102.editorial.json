@@ -1,0 +1,188 @@
+{
+  "judgmentSha256": "92bd490bef6b1e988f9d9f0bf2dedfb2e3c65a770af12f6b5c744c915ce71abf",
+  "reviewedAt": "2026-10-02T17:02:58Z",
+  "reviewer": "claude-opus-5-5",
+  "round": 2,
+  "verdict": "needs-fix-round",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.growth.points[4]",
+      "quote": "so future growth must come from rate outcomes alone",
+      "issue": "Unsupported inference that also contradicts the report's own surface. The 10-Q names residential customer growth and increased industrial load as a $3.9 million operating-income driver in the quarter (quoted in incomeCommentary), so growth does not come from rate outcomes alone. Nor does the pack say the Texas legislative benefit is one-off or that it ends: the MD&A says only that results were favorably impacted by $132.4 million from legislation effective during the third quarter of fiscal 2025. The same 'fading tailwind' reading is presented as fact in analystCommentary ('so that tailwind fades as comparisons lap it') and in the Base scenario driver ('the fading Texas legislative tailwind').",
+      "fix": "Delete 'future growth must come from rate outcomes alone'. If you keep the lapping argument, frame it once as the desk's inference with its mechanism on the surface (the legislation took effect during the third quarter of fiscal 2025, so year-over-year comparisons will increasingly include it on both sides) and say the pack does not state whether the benefit persists. Keep it in one place (growth) and let the others point to it.",
+      "status": "addressed",
+      "note": "growth.points[4] now frames the lapping argument as the desk inference with its mechanism and says the 10-Q does not state whether the benefit persists; analystCommentary points to it and the Base driver no longer calls the tailwind fading."
+    },
+    {
+      "id": "F-2",
+      "severity": "Critical",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "Throughput fell to 73,143 MMcf from 75,354 MMcf, a drop the rate design largely absorbs.",
+      "issue": "Overstates the source. The MD&A says the base customer charge recovers approximately 50 percent of distribution revenue excluding gas costs and only 'partially separates' recovery from usage; the WNA windows quoted in the 10-Q mostly end in March, April or May, so they cover little of an April-June quarter. 'Largely absorbs' is a characterization the pack does not make.",
+      "fix": "Use the source's own word: the base customer charge 'partially separates' recovery from usage, and operating income still rose 14.3 percent despite lower throughput. Drop 'largely absorbs' unless you can quote a source that says it.",
+      "status": "addressed",
+      "note": "Throughput sentence now uses the source wording (the base customer charge only partially separates recovery from usage); largely absorbs is gone."
+    },
+    {
+      "id": "F-3",
+      "severity": "Critical",
+      "field": "sections.financials.cashflowCommentary",
+      "quote": "A significant portion of this investment is incurred under regulatory mechanisms that reduce lag to six months or less, which is what keeps negative free cash flow from eroding returns.",
+      "issue": "Causal claim the pack does not establish: nothing on the surface links the lag mechanisms to returns being protected from negative free cash flow, and no return figure is on the page. The same mechanism is overgeneralized in businessMoat.durability: 'regulators in the states served have approved infrastructure and annual rate mechanisms that recover spending within months'. The MD&A says only that 'a significant portion' of capital spending is incurred under mechanisms that reduce lag to six months or less, not that the mechanisms as a class recover spending within months.",
+      "fix": "In cashflowCommentary, cut the 'which is what keeps...' clause or rewrite as the desk's view without the causal 'is what'. In durability, restate as 'a significant portion of capital spending is incurred under mechanisms that reduce lag to six months or less' or simply point back to the financials section.",
+      "status": "addressed",
+      "note": "cashflowCommentary now gives the lag point as the desk view without the causal clause; durability points back to the financials section instead of generalizing the mechanisms."
+    },
+    {
+      "id": "F-4",
+      "severity": "Important",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "Even the low end of the Street target range sits above the current price, so analysts see limited downside. We are more cautious",
+      "issue": "Calls and prose disagree. The report's own target band ($165-$190) also sits entirely above the $157.07 price, the Base case at $175 implies upside, and the page shows expected upside of about 7.4%; yet the prose says the desk is 'more cautious' than a Street whose low target is above the price, and repeatedly says the shares 'already price that delivery' (finalRecommendation.body[0]), 'the current multiple already prices steady delivery' (thesis.body), 'the current multiple already credits steady compounding' (analystCommentary) and 'a full multiple' (meta.subtitle). A fully priced stock does not have a whole target band above the current price. No multiple comparison (peer or history) on the page supports 'full'.",
+      "fix": "Make the verdict match the numbers: the HOLD rests on positive but sub-threshold expected upside against a 17.2% Bear-case downside, not on the shares being fully priced. Either drop the 'already priced'/'full multiple' language or lower the band so it is consistent with it, and remove the contrast with the Street's low target unless your own band supports it.",
+      "status": "addressed",
+      "note": "Band lowered to $150-$185 so it brackets the price; the already-priced and full-multiple language is gone and multiplesCommentary says the HOLD rests on modest expected upside against Bear downside."
+    },
+    {
+      "id": "F-5",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[1].driver",
+      "quote": "Fiscal 2026 lands within guidance and consensus estimates hold. Rate-base growth drives earnings, new rate outcomes absorb the fading Texas legislative tailwind, and the multiple stays near current levels.",
+      "issue": "The Base implied price of $175 is not anchored to anything on the surface. The driver says consensus holds and the multiple stays near current levels, but at the current 18.6x NTM or ~17.4x FY27E multiple on the FY27E consensus EPS of $9.02 the price would sit well below $175; reaching $175 needs either a higher multiple or EPS above consensus, which contradicts the driver. scenarioCommentary ('assumes earnings compound with rate base and the multiple stays roughly where it is') repeats the same unanchored description.",
+      "fix": "State the anchor in words: which earnings figure on the surface (FY26E $8.46, FY27E $9.02, or guidance $8.40 - $8.50) and which multiple on the surface produce the Base price, or adjust the Base price so that 'consensus holds, multiple unchanged' actually produces it.",
+      "status": "addressed",
+      "note": "The Base driver now states its anchor (18.6x NTM on FY27E $9.02). The anchor itself introduces a new defect, raised as F-14."
+    },
+    {
+      "id": "F-6",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "so growth depends on continued access to debt and equity markets, and the current multiple already prices steady delivery",
+      "issue": "Cross-section repetition of the report's central bear claim (funding dependence) in paraphrase, at least seven times: analystCommentary ('relies on debt and equity markets to fund the gap'), thesis.body (quoted), financials.cashflowCommentary ('The funding question is whether markets stay open on acceptable terms'), management.capitalAllocation ('That works while debt and equity markets stay receptive'), risks.idiosyncratic[3] ('The capital plan needs continued debt and equity issuance'), valuation.scenarioCommentary ('a utility whose growth depends on external funding') and finalRecommendation.body[0] ('the company needs steady access to capital markets to keep it going'). executiveSummary.risks[2] also points to it, which is fine as a pointer.",
+      "fix": "Argue funding dependence once, in cashflowCommentary or risks.idiosyncratic[3], with the figures. Let the thesis and the executive-summary risk point to it in a clause; remove the retelling from capitalAllocation, scenarioCommentary and finalRecommendation or replace it with a reference in words.",
+      "status": "addressed",
+      "note": "Funding dependence is argued once in cashflowCommentary; thesis, analystCommentary, capitalAllocation, risks.idiosyncratic[3], systemic and the executive-summary risk now point to it."
+    },
+    {
+      "id": "F-7",
+      "severity": "Important",
+      "field": "sections.growth.points[2]",
+      "quote": "Mid-Tex is carrying the growth: its quarterly operating income rose to $74,313 thousand from $48,244 thousand",
+      "issue": "The same Mid-Tex concentration claim is made twice: growth.points[2] says Mid-Tex is carrying the growth, and risks.idiosyncratic[1] says 'Mid-Tex's quarterly gain exceeded the distribution segment's total increase'. Both tell the same story (division gains concentrated in Mid-Tex) from the same table. Similarly, 'reaffirmed fiscal 2026 guidance' appears in analystCommentary, management.leadership ('has reaffirmed fiscal 2026 guidance through the third quarter') and finalRecommendation.body[0] ('management has held its fiscal 2026 guidance'); 'through the third quarter' also implies repeated reaffirmations the pack does not show (only the August 5, 2026 release is captured).",
+      "fix": "Keep the Mid-Tex figures in one section (risks.idiosyncratic[1] reads them as concentration, which is the more useful framing) and let growth refer to it in words. State the guidance reaffirmation once (analystCommentary) and drop 'through the third quarter'.",
+      "status": "addressed",
+      "note": "growth.points[2] points to the risks section for Mid-Tex; the guidance reaffirmation appears once, in analystCommentary, and through the third quarter is gone."
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "sections.management.capitalAllocation",
+      "quote": "Paying a rising dividend while free cash flow is negative means part of each payout is effectively funded externally.",
+      "issue": "Repeats cashflowCommentary's 'Dividends paid of $0.6B in FY25 widen the gap, which debt and equity issuance fill.' Similarly, thesis.body's 'Free cash flow has been negative in every year shown except FY23' is the same sentence as cashflowCommentary's 'Free cash flow was negative in every year from FY21 to FY25 except FY23', and the lag-mechanism/regulators-can-modify claim is made in businessMoat.durability ('regulators, who can modify or terminate those mechanisms'), risks.idiosyncratic[0] and finalRecommendation.body[1].",
+      "fix": "Make each claim once: keep the dividend-funding point in one of cashflowCommentary or capitalAllocation; shorten the thesis to a pointer ('free cash flow is negative') without restating the series; keep the regulators-can-modify argument in risks.idiosyncratic[0] and refer back to it from durability.",
+      "status": "addressed",
+      "note": "Thesis no longer restates the FCF series; the dividend-funding point sits in cashflowCommentary with capitalAllocation reading the raise as a signal; durability points to risks.idiosyncratic[0]."
+    },
+    {
+      "id": "F-9",
+      "severity": "Important",
+      "field": "sections.management.capitalAllocation",
+      "quote": "the financial series shows no share repurchases from FY21 to FY25",
+      "issue": "Inconsistent source handling. The Facts block shows '—' (no data) for every Share Repurchases cell, not zero. balanceCommentary correctly treats the same vendor's dashes and gaps in the debt series as incomplete and sets them aside, but here the dashes are read as a statement that no repurchases occurred.",
+      "fix": "Say the series carries no repurchase data for FY21 to FY25 and that shareholder returns on the surface come through dividends; do not assert that repurchases were zero.",
+      "status": "addressed",
+      "note": "capitalAllocation now says the series carries no repurchase data rather than that there were none."
+    },
+    {
+      "id": "F-10",
+      "severity": "Important",
+      "field": "sections.management.insiderOwnership",
+      "quote": "As of December 12, 2025, Mr. Akers beneficially owned 173,855 shares, per the proxy statement.",
+      "issue": "Restatement without judgment (rubric 4). The insider figure and the five institutional stakes are listed but never read for the holder: what the CEO stake means for alignment, and what a register led by Vanguard at 12.0%, BlackRock at 7.9% and State Street at 6.9% means for control, activism or voting. management.governance is likewise a summary of proxy text (independence, self-evaluation, related-party policy) with no view on what it means for shareholders.",
+      "fix": "Add one sentence of judgment to each: e.g. no holder has a controlling stake, the largest holders are large asset managers, so governance outcomes rest on the independent board rather than on any single owner; and say whether the CEO's stake is a meaningful alignment signal, using only figures on the surface (do not compute a percentage the proxy excerpt does not give).",
+      "status": "addressed",
+      "note": "insiderOwnership and governance each now close with a view for the holder and date the 13G-based stakes."
+    },
+    {
+      "id": "F-11",
+      "severity": "Important",
+      "field": "sections.businessMoat.moatFactors[1].body",
+      "quote": "Approximately 50 percent of distribution revenue, excluding gas costs, is recovered through the base customer charge.",
+      "issue": "The factor lists three MD&A percentages (50, 97, 89) and reaches no view: it does not say what the rate design protects against, how strong that makes the moat, or where its limit is. That is a paragraph of facts the Context already gave (rubric 4). management.leadership has the same shape: it restates the CEO title and the company's stated vision and ends 'we do not assess the wider team'.",
+      "fix": "Close the moat factor with a sentence that reads the figures: e.g. the base charge and WNA protect margin from weather and usage swings but leave half of non-gas revenue exposed to volume. In leadership, either reach a view on execution (guidance held, capital deployed) or shorten the paragraph.",
+      "status": "addressed",
+      "note": "The moat factor now reads the figures (protects against weather and bad debt, limit is volume); leadership reaches a view on execution."
+    },
+    {
+      "id": "F-12",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "Texas infrastructure legislation lifted the segment's income before income taxes by $26.7 million in the quarter, including $17.8 million in operating expenses.",
+      "issue": "The quarterly distribution paragraph lists the MD&A drivers in MD&A order and reaches no view, and it gives no counter-case (rubric 4 and 5). On the page, the legislative benefit reported in operating expenses ($17.8 million) is comparable in size to the segment's operating-income increase, and Mississippi and Louisiana operating income fell; the paragraph presents the 14.3 percent rise as clean without saying how much of it the legislation explains.",
+      "fix": "Add a sentence that reads the drivers: how much of the 14.3 percent rise rests on the legislative benefit versus rate adjustments and customer growth, and note that the source does not say how much of the $17.8 million is incremental to the prior-year quarter. Do not compute a new figure; argue it in words.",
+      "status": "addressed",
+      "note": "incomeCommentary now reads the drivers against each other, argues the legislation explains much of the rise, and gives the counter-case that the 10-Q does not say how much is incremental."
+    },
+    {
+      "id": "F-13",
+      "severity": "Minor",
+      "field": "analystCommentary",
+      "quote": "Atmos Energy's fiscal third quarter kept the regulated growth model on plan.",
+      "issue": "The page header and snapshot label the period Q2'26 / fiscal Q2 2026 (vendor naming), while the commentary opens with 'fiscal third quarter'. The reconciliation is stated only later, in financials.incomeCommentary, so the reader meets the mismatch first.",
+      "fix": "Move the one-line reconciliation (the vendor series labels this quarter Q2'26; we use the company's naming) to the first mention in analystCommentary and drop it from incomeCommentary, so it is said once.",
+      "status": "open",
+      "note": "Still open: analystCommentary opens with 'fiscal third quarter' while the page header reads fiscal Q2 2026, and the vendor-label reconciliation still sits only in financials.incomeCommentary, so the reader meets the mismatch first."
+    },
+    {
+      "id": "F-14",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[1].driver",
+      "quote": "Our Base price applies the current 18.6x forward (NTM) multiple, unchanged, to that consensus figure.",
+      "issue": "Source disagreement handled silently, and the Base anchor is not what it says it is (rubric 6 and 8). multiplesCommentary lists 18.6x forward (NTM) and ~17.4x FY27E side by side without saying they disagree, although at October 2, 2026 the next twelve months and fiscal 2027 cover nearly the same window. At $157.07 the stock already trades at ~17.4x the $9.02 FY27E figure, so putting 18.6x on $9.02 is not an unchanged multiple; it builds in a re-rating from the FY27E multiple to the NTM one. The vendor NTM figure looks as if it rests on earnings nearer FY26E $8.46. That also undercuts scenarioCommentary ('The Bull case needs both rate wins and a re-rating'), because the Base case already contains one.",
+      "fix": "In multiplesCommentary, say once that the two forward multiples disagree and which one the desk uses. Then either describe the Base case honestly, as the NTM multiple applied to FY27E consensus (a modest re-rating against the FY27E multiple), and adjust the Bull/Base asymmetry argument in scenarioCommentary, or anchor the Base case on the ~17.4x FY27E multiple and reset the Base price and band to match. Do not write a new computed multiple or EPS figure.",
+      "status": "addressed",
+      "note": "multiplesCommentary now says once that the NTM and FY27E multiples disagree and which one the desk uses; the Base driver describes 18.6x on FY27E $9.02 as a modest re-rating (Base $168, inside the $150-$185 band), and scenarioCommentary's Bull/Base asymmetry now accounts for the re-rating already in the Base case."
+    },
+    {
+      "id": "F-15",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "The resulting expected upside is positive but well short of the threshold for a BUY, and the Bear-case downside is large against it.",
+      "issue": "The rewrite for F-4 turned the rating rationale into a claim the report now makes in paraphrase in at least five places (rubric 7): analystCommentary ('Our probability-weighted value sits only modestly above the price, while our Bear case sits well below it'), thesis.body ('our Bear case sits well below the current price. Expected upside is positive but too small for that risk'), multiplesCommentary ('the HOLD rests on positive but modest expected upside set against a deep Bear-case downside'), scenarioCommentary (quoted) and finalRecommendation.body[0] ('a probability-weighted value only modestly above the price and a Bear case well below the 52-week low'), plus meta.subtitle. None of them gives the figures the page renders (expected upside, Bear-case downside, reward/risk), so the claim is made in words five times and never with numbers. Within valuation, the Street-range-above-price point also appears twice (multiplesCommentary and scenarioCommentary), and 'a lower entry price' in scenarioCommentary repeats finalRecommendation.body[1] ('a price closer to our Bear case').",
+      "fix": "Argue the verdict once, in scenarioCommentary, with the page's own expected upside, Bear-case downside and reward/risk. Let analystCommentary and finalRecommendation.body[0] point to it in a clause, cut the thesis to one clause, and delete the restatement from multiplesCommentary. Keep the Street-range point in multiplesCommentary only, and the entry-price condition in finalRecommendation only.",
+      "status": "addressed",
+      "note": "The verdict is argued once, in scenarioCommentary, with the page's figures (fair value $164, +4.4% expected upside, 17.2% Bear-case downside, 0.26x reward/risk, which match the rendered conviction). analystCommentary and finalRecommendation.body[0] point to it, the thesis is one clause, the Street range appears only in multiplesCommentary and the entry-price condition only in finalRecommendation."
+    },
+    {
+      "id": "F-16",
+      "severity": "Important",
+      "field": "sections.growth.points[3]",
+      "quote": "Consensus expects EPS of $8.46 in FY26 and $9.02 in FY27, on revenue of $5.1B and $5.7B.",
+      "issue": "Restatement without judgment (rubric 4): the point repeats the Facts block's Estimates lines and reaches no view. It does not say that FY26E sits inside the reaffirmed $8.40 - $8.50 guidance, so the Street already assumes the guidance is met, or what has to happen for the FY27E figure to hold. The section's other points each argue something; this one only lists numbers.",
+      "fix": "Read the estimates in one sentence. For example, FY26E sits inside the guidance range, so fiscal 2026 holds little surprise either way, and FY27E depends on the $373.4 million of ratemaking requests in progress converting to outcomes. Do not compute a growth rate. Otherwise delete the point and let the Base driver carry the FY27E figure.",
+      "status": "addressed",
+      "note": "growth.points[3] now reads the estimates: FY26E sits inside guidance so fiscal 2026 holds little surprise, and FY27E depends on the pending ratemaking requests converting."
+    },
+    {
+      "id": "F-17",
+      "severity": "Important",
+      "field": "sections.businessMoat.durability",
+      "quote": "Long-run policy pressure on natural gas could also erode the volume base the network serves",
+      "issue": "Paraphrase repetition across sections (rubric 7): risks.systemic makes the same claim ('legislation to reduce or eliminate greenhouse gas emissions or fossil fuels and the impact of climate change among its risks; both threaten volumes and political support for gas infrastructure'). Durability already points to the risks section for the regulatory-recovery leg of the NARROW rating but retells this leg instead of pointing.",
+      "fix": "Keep the policy and climate argument in risks.systemic and replace the durability sentence with a pointer in words (for example, 'and the long-run policy risk to gas volumes we set out in the risks section').",
+      "status": "addressed",
+      "note": "durability now points to the risks section for both legs of the NARROW rating; the policy and climate argument sits only in risks.systemic."
+    },
+    {
+      "id": "F-18",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "The legislative benefit booked in operating expenses is larger than the segment's $13,615 thousand operating-income increase, so in our reading the legislation explains much of the rise.",
+      "issue": "Introduced by the F-12 rewrite. The sentence compares a quarterly level (the $17.8 million of the $26.7 million legislative benefit booked in operating expenses in the quarter ended June 30, 2026) with a year-over-year change (the $13,615 thousand operating-income increase), mixing units as it does so (rubric 1, wrong quantity). The 10-Q says the legislation 'became effective during the third quarter of fiscal 2025', which is the prior-year comparison quarter, so part of the benefit sits on both sides of the comparison. growth.points[4] makes the same point about future comparisons. The counter-case that follows ('part of the rise may still be underlying') does not mention this. The conclusion may still hold, but this comparison does not support it.",
+      "fix": "Argue from the figures on the surface without comparing a level to a change. The listed operating drivers (+$21.0 million, +$3.9 million, -$20.0 million, -$9.4 million) net to less than nothing, yet operating income rose 14.3 percent, so most of the rise sits outside the listed drivers, and the legislation is the one other item the MD&A names. Say that the legislation took effect during the prior-year quarter, so the 10-Q does not show how much of the $17.8 million is incremental. Do not write the computed net figure, and keep one unit (millions) within the sentence.",
+      "status": "open"
+    }
+  ]
+}
