@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "bb58991f486cd407b4c7b73e269240aa8e9093d7a1afcbef80de2625a7982697",
-  "reviewedAt": "2026-10-02T19:18:51Z",
+  "judgmentSha256": "f792f1e64901ead15dfafc1e0c22163cd888550667ed0b459ecfb77d647251a8",
+  "reviewedAt": "2026-10-02T19:19:14Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "approved-with-minors",
+  "verdict": "approved",
   "findings": [
     {
       "id": "F-1",
@@ -142,7 +142,8 @@
       "quote": "The second-quarter gross margin gain is the evidence so far;",
       "issue": "Introduced by the rewrite (rubric 9). Removing 'GAAP operating margin remains thin' left the paragraph ending mid-sentence on a semicolon, and the fragment renders as-is in data/gdyn.json. The reader sees a broken sentence at the end of the leadership section.",
       "fix": "End the sentence: 'The second-quarter gross margin gain is the evidence so far.' Do not restore the GAAP-thin clause (F-12).",
-      "status": "open"
+      "status": "addressed",
+      "note": "Fixed. The leadership paragraph now ends 'The second-quarter gross margin gain is the evidence so far.' and the rebuilt report renders the full stop. Reverting that one character reproduces the previous judgment hash, so nothing else changed."
     }
   ]
 }
