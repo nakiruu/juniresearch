@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "d57575aed0baf3bc917f785d41626a90ccb32002b92e5bfe92a9cf6645de2568",
-  "reviewedAt": "2026-10-02T18:56:52Z",
+  "judgmentSha256": "af01d7abcd09abc12739ce081146354e5f5a973c63e47caf72051663a3d36606",
+  "reviewedAt": "2026-10-02T19:04:33Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved",
   "findings": [
     {
       "id": "F-1",
@@ -183,7 +183,7 @@
       "quote": "Our valuation uses the GAAP-based trailing and NTM multiples.",
       "issue": "Unsupported characterization, introduced by the F-4 fix. The paragraph has just said 'the consensus basis is not stated'. The NTM P/E of 47.9x divides price by forward consensus EPS, so its basis is equally unknown and the report cannot call it GAAP-based. Only the 70.4x trailing P/E is known to rest on reported earnings. The same assumption appears in valuation.scenarioCommentary ('the earnings path flattens from FY26E to FY27E on a larger share count'), which asserts that consensus already reflects the August 2026 share count; the surface does not say so.",
       "fix": "Say that the trailing multiple is GAAP-based and that the NTM multiple inherits the consensus basis, which is not stated. In scenarioCommentary, drop 'on a larger share count' or present it as the analyst's view that the new shares may weigh on the per-share path.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-21",
@@ -192,7 +192,7 @@
       "quote": "In August 2026 it then issued 1,916,667 new shares. On net, the share count rose: holders took dilution in exchange for roughly $109.0 million of cash.",
       "issue": "Cross-section repetition, introduced by the F-3/F-11 fixes. The offering's share count and proceeds, and the dilution reading, are now given in financials.balanceCommentary ('The August 2026 offering of 1,916,667 shares brought net proceeds of approximately $109.0 million... The issue is more than a tenth of the ~16.05M shares outstanding... Per-share growth now has to absorb the larger share base'), here, in valuation.multiplesCommentary ('the new shares from the August offering are one factor weighing on that per-share path') and in valuation.scenarioCommentary ('on a larger share count').",
       "fix": "Read the dilution once, in capitalAllocation, where the buyback-versus-issue comparison lives. In balanceCommentary, keep only the cash effect ($109.0 million arriving after June 30, 2026) and point to Management. Valuation should refer back in words without restating the dilution argument.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-22",
@@ -201,7 +201,7 @@
       "quote": "that is our view, not a risk the 10-K excerpt frames as regulatory change",
       "issue": "Voice. The clause speaks to the reviewer rather than the reader; the sentence already opens the paragraph's 'In our view' framing. Separately, growth.points[2] ('growth that the organic numbers do not yet show') and growth.points[3] ('new growth the numbers do not yet show') end on the same phrase.",
       "fix": "Cut the clause. A plain 'A change in federal or state privacy law could also affect the whole identity-data industry' sits inside the paragraph's 'In our view' framing. Rephrase one of the two growth points.",
-      "status": "open"
+      "status": "addressed"
     }
   ]
 }
