@@ -1,0 +1,202 @@
+{
+  "judgmentSha256": "52cc6d5dd9797782e1bdef7bd28e2c26ed9ec76a32e04428b4d284a1fffea2af",
+  "reviewedAt": "2026-10-02T21:47:51Z",
+  "reviewer": "Claude Opus 5.5",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "Q2'26 was the quarter the income statement turned.",
+      "issue": "The 10-Q MD&A in Context gives six-month net income of $15,401 thousand against quarterly net income of $7,567 thousand, so Q1'26 was also GAAP-profitable; Q2'26 is not the turning quarter. The same misreading recurs in this field (\"one profitable quarter does not yet make a profitable year\"), in sections.executiveSummary.catalysts[0] (\"confirm that the Q2 2026 profit is a run-rate rather than a one-off\") and in sections.finalRecommendation.body[1] (\"two more quarters of GAAP profit\"). The catalyst and the revisit trigger are both built on a premise the pack contradicts.",
+      "fix": "Reframe around the six-month figure the MD&A gives ($15,401 thousand of net income for the six months ended June 30, 2026, against a $(8,907) thousand loss a year earlier): profit has held for two quarters, while TTM operating margin (-1.9%) and FY25 net income (-$13.9M) are still negative. Rewrite catalysts[0] and finalRecommendation.body[1] to a trigger consistent with that, e.g. a full GAAP-profitable year or a positive TTM operating margin.",
+      "status": "addressed",
+      "note": "Rewrite frames profit on the six-month figure ($15,401 thousand); catalysts[0] and finalRecommendation.body[1] now use a full GAAP-profitable year. See F-21 for the gauge catalysts[0] uses."
+    },
+    {
+      "id": "F-2",
+      "severity": "Critical",
+      "field": "sections.growth.points[4]",
+      "quote": "FY25's rebound partly laps the presentation change from the August 2023 Block Amendment, which depressed FY24 revenue",
+      "issue": "The 10-K risk factors say the presentation change took effect July 1, 2023. FY24 and FY25 are therefore both reported on the new basis, so FY25's +23.3% does not lap the change; only the FY24-vs-FY23 comparison is distorted. The bear point in this growth section rests on a misreading of the source's own date.",
+      "fix": "Drop the lapping argument, or move it to FY24 vs FY23 where it applies. Use a counter-case already on the surface instead, e.g. consensus FY26E growth of +13% against FY25's +23.3%, or Q2'26 revenue growth of 17% against FY25's pace.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-3",
+      "severity": "Critical",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "That presentation change, not an efficiency gain, explains the FY24 revenue decline of -25.0% and the margin step.",
+      "issue": "Over-attribution in two ways. (1) The 10-K says the FY24 decrease was \"primarily driven by\" the Block Amendment, which \"allowed for reduced pricing\" as well as changing presentation. Assigning the decline to presentation alone drops the pricing cut the report relies on elsewhere (businessMoat.durability: \"the Block Amendment reduced pricing for Cash App\"). (2) The earlier sentence says the 10-K risk factors \"tie\" the gross-margin step from 48.7% to 69.4% to the amendment, but the excerpt ties only the revenue decrease to it. The margin link is the author's inference, not the 10-K's.",
+      "fix": "Say the 10-K attributes the FY24 revenue decrease primarily to the August 2023 Block Amendment, both through reduced pricing and through the change in presentation. Present the gross-margin step as your own inference from the moved costs (\"we read the margin step as largely presentational\"), not as something the 10-K states.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-4",
+      "severity": "Critical",
+      "field": "sections.management.capitalAllocation",
+      "quote": "repurchases have grown each year since FY22 in the cash flow facts",
+      "issue": "The series on the page does not show this. Share repurchases read -0.1, -0.2, -0.2, -0.4 ($B) for FY22 through FY25, so FY23 and FY24 are equal at the precision given. \"Grown each year\" is a claim the series does not support.",
+      "fix": "Say repurchases rose from $0.1B in FY22 to $0.4B in FY25 in the cash flow facts, or simply that FY25 was the largest year in the five-year table. Do not claim year-on-year growth for every year.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-5",
+      "severity": "Critical",
+      "field": "sections.growth.points[1]",
+      "quote": "the 10-Q MD&A explains one reason: Revenue Share rates rise as customer volumes rise",
+      "issue": "The MD&A describes how Revenue Share works in general (\"Generally, as customers' processing volumes increase, the rates at which we share revenue increase\"). It does not connect that to the gap between TPV and revenue growth, or say it explains any part of it. Attaching that explanation to the source is an inference the source invites but does not make. The same attribution appears in analystCommentary (\"the 10-Q MD&A explains part of the mechanism\"), in sections.executiveSummary.thesis.body (\"the 10-Q MD&A gives a structural reason it may not\") and in sections.valuation.scenarioCommentary (\"take-rate erosion, and both are named in the company's own filings\"). The filings describe the Revenue Share mechanism; they do not name take-rate erosion as a risk.",
+      "fix": "Keep the MD&A as the source of the mechanism only, and own the link: \"The MD&A says Revenue Share rates generally rise with customer volume; we think that is one reason revenue lags TPV, though the filing does not say so.\" Apply the same fix in all four places, and in scenarioCommentary say only that the Block concentration risk is named in the 10-K.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-6",
+      "severity": "Critical",
+      "field": "sections.executiveSummary.catalysts[2]",
+      "quote": "A Block renewal on terms that do not reduce pricing would remove the overhang the Risks section describes.",
+      "issue": "Nothing on the surface says a Block renewal is pending or scheduled. The 10-K risk factor speaks generically of \"renewals on less favorable terms\" across significant customers, and the only Block event in the pack is the August 2023 Block Amendment. Treating a specific Block renewal as an upcoming event is an unsupported claim, and it carries the argument: it appears again in analystCommentary (\"on a Block renewal that does not cut pricing\"), in sections.valuation.scenarios[2].driver (\"Either Block renews on less favorable terms\"), in sections.management.capitalAllocation (\"while Block terms remain uncertain\") and in sections.finalRecommendation.body[1] (\"on a Block renewal that preserves pricing\").",
+      "fix": "State that the pack gives no renewal date for Block. Frame the catalyst and the bear route as \"any future renegotiation of Block terms\", without implying a scheduled event, or name a disclosure to watch for instead (e.g. a Block amendment disclosed in a future filing).",
+      "status": "addressed"
+    },
+    {
+      "id": "F-7",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[0].driver",
+      "quote": "still inside the $17.00 to $28.00 target range",
+      "issue": "$17.00 to $28.00 is the Street's analyst target range. The report's own target range is $15 to $21, and the page renders it as \"target range\". Calling the Street range \"the target range\" inside a scenario driver attaches the figure to the wrong quantity, and it reads as if the $23 Bull price sits inside the house band, which it does not.",
+      "fix": "Write \"within the Street's $17.00 to $28.00 range of analyst targets\". Consider saying explicitly that Bull at $23 sits above the house target high of $21.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[2].driver",
+      "quote": "Either route alone pushes the operating margin back below zero and takes the shares below the 52-week low of $14.80.",
+      "issue": "This is an unsupported causal claim: nothing on the surface sizes either route's effect on margin. It is also unclear which margin is meant, since the TTM operating margin is already -1.9% and only Q2'26 (2.1%) is positive. scenarioCommentary then calls the two routes \"two independent events\". They are not independent on the report's own argument, because Block is the large customer whose volume would trigger Revenue Share step-ups. That independence is what justifies weighting Bear (30%) above Bull (25%).",
+      "fix": "Name the margin and the period (e.g. \"returns the quarterly operating margin to a loss, as in FY25's -7.4%\"), and present it as the scenario's assumption, not a consequence. In scenarioCommentary, drop \"independent\" and argue the 30% Bear weight on the either/or structure alone, or say the two routes are linked through Block.",
+      "status": "addressed",
+      "note": "Bear margin is now stated as an assumption, and scenarioCommentary treats the two routes as linked, not independent."
+    },
+    {
+      "id": "F-9",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "upside to the Street consensus target of $20.50 needs revenue to keep pace with volume",
+      "issue": "This is not coherent with the calls. Revenue has not kept pace with volume on any period on the page: FY25 TPV +31% against revenue +23.3%, and Q2'26 revenue +17% against faster TPV growth. Yet the Bull case ($23, above $20.50) only needs \"Revenue growth stays close to the Q2'26 pace\". The thesis sets a bar for upside that the Bull scenario itself does not require. analystCommentary repeats the bar (\"evidence that revenue growth is holding up as volume scales\").",
+      "fix": "Align the thesis with the Bull driver: upside needs revenue growth to hold near the Q2'26 17% pace while costs stay contained, and the TPV-revenue gap is the risk to that, not a condition for it.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-10",
+      "severity": "Important",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "we have used the vendor market cap and multiples as given",
+      "issue": "Calls coherence. The report flags that the ~104.1M vendor share count does not reconcile with the 392,067,528 Class A and 32,808,210 Class B shares in the proxy. It then leans on market-cap-derived figures as the valuation floor: the 11.5% TTM FCF yield (analystCommentary, cashflowCommentary \"supports the valuation floor\", scenarioCommentary \"The FCF yield is the reason we do not set Bear lower\", capitalAllocation) and cash covering \"a large share of the ~$1.7B market cap\" (balanceCommentary). The caveat is applied to \"every per-share multiple\" (risks.idiosyncratic[2]) but not to the FCF yield, P/S or cash coverage, which inherit the same uncertainty, and those are what set the $12 Bear.",
+      "fix": "State once that the FCF yield, P/S and cash-to-market-cap readings depend on the vendor market cap and carry the same caveat. Then either argue the Bear floor on figures that do not depend on the share count (FY25 free cash flow of $160.8M, FCF margin of 25.7%, no reported debt), or say plainly that the floor is weaker if the proxy share count is the right one.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-11",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[2]",
+      "quote": "Share-count uncertainty: the vendor share count of ~104.1M does not reconcile with the Class A and Class B totals in the April 2026 proxy",
+      "issue": "This source disagreement is stated five times: analystCommentary (\"the vendor share count does not reconcile with the class totals in the April 2026 proxy\"), sections.executiveSummary.thesis.body (\"a share-count question open\"), sections.valuation.multiplesCommentary (the full statement with figures), this risk item, and sections.finalRecommendation.body[1] (\"a share-count discrepancy between the vendor and the proxy\"). The rubric asks for the disagreement to be stated once, with the figure used. Every restatement after that is a repetition finding.",
+      "fix": "Keep the full statement, with figures and the choice of the vendor figure, in multiplesCommentary only. Reduce the risk item to a pointer (\"see Valuation\") or drop it, and refer to it in words at most once in the summary.",
+      "status": "addressed",
+      "note": "Full statement now sits only in multiplesCommentary; the other mentions are pointers in words."
+    },
+    {
+      "id": "F-12",
+      "severity": "Important",
+      "field": "sections.businessMoat.moatFactors[2].body",
+      "quote": "The 10-K risk factors state the company generates significant net revenue from a small number of customers, including Block.",
+      "issue": "Paraphrase repetition of the Block concentration claim from the same source: analystCommentary (\"The 10-K risk factors name Block among a small number of customers\"), sections.executiveSummary.risks[0] (\"the 10-K risk factors name Block among a few significant customers\"), this moat factor, and sections.risks.idiosyncratic[0] (\"the 10-K risk factors state that the company generates significant net revenue from a small number of customers, including Block\"). The Block Amendment pricing cut is also retold in moatFactors[0], businessMoat.durability and risks.idiosyncratic[0]. The section that argues it should carry the claim once.",
+      "fix": "Let risks.idiosyncratic[0] carry the sourced statement and the argument. In the moat factor, argue only the moat consequence (pricing power with the largest customer) and point to Risks. Keep the summary items as pointers that do not repeat the 10-K wording.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-13",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[1]",
+      "quote": "the 10-Q MD&A states that Revenue Share is recorded as a reduction to net revenue and that rates rise as customer volumes rise",
+      "issue": "The Revenue Share step-up mechanism is retold with its source in four sections: sections.businessMoat.moatFactors[1].body (\"Revenue Share rates paid to customers also rise with volume\"), sections.growth.points[1] (\"Revenue Share rates rise as customer volumes rise\"), this risk item, and sections.businessMoat.durability (\"Revenue Share terms are built to give customers more as they grow\"). analystCommentary and executiveSummary.risks[1] also state it. It is the same claim made in different words in each place.",
+      "fix": "State and source the mechanism once, in growth.points[1] where the TPV-revenue gap is argued. In the moat factor and the risk item, refer back in words (\"the Revenue Share step-up discussed under Growth\") and add only what is new to that section, such as the watch item in the risk.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-14",
+      "severity": "Important",
+      "field": "sections.financials.cashflowCommentary",
+      "quote": "FY25 share repurchases were well above free cash flow, which is why cash fell even in a strong cash year.",
+      "issue": "The buybacks-over-FCF story is told three times: sections.financials.balanceCommentary (\"The cause of the cash and equity decline is visible in the cash flow statement: repurchases\" and \"further buybacks at the FY25 pace would need to come from free cash flow rather than the cash pile\"), this sentence, and sections.management.capitalAllocation (\"FY25 share repurchases were well above FY25 free cash flow ... the FY25 pace drew down the cash buffer\"). The 'cash supports a floor' claim also recurs in analystCommentary, cashflowCommentary, multiplesCommentary, scenarioCommentary and finalRecommendation.body[0].",
+      "fix": "Make the buyback-versus-FCF point once, in capitalAllocation, which is where it is judged. Have the balance and cash-flow commentaries point to it. Argue the cash-yield floor once, in Valuation, and refer back in words elsewhere.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-15",
+      "severity": "Important",
+      "field": "sections.management.insiderOwnership",
+      "quote": "Insider voting control near half the total means one holder's view effectively decides contested votes, which aligns that holder with the long term but leaves Class A investors with little leverage.",
+      "issue": "This overreads the figure. On the proxy, Jason Gardner holds 46.92% of total voting power and the insider group holds 48.62%. Both are short of a majority, and the same table shows T. Rowe Price Associates at 7.81% and BlackRock at 3.92% of voting power. The report does not say what 46.92% lets him do that a majority would, such as blocking matters that need a supermajority versus deciding ordinary votes, and \"aligns that holder with the long term\" has no support on the surface. sections.management.governance makes a similar overstatement: \"strategic outcomes such as a sale or a change in control are not theirs to decide\".",
+      "fix": "Read the stake precisely: at 46.92%, Mr. Gardner needs only a small share of the remaining votes to carry an ordinary resolution, and outside holders must vote almost as a bloc to defeat him. He cannot decide a vote alone. Drop the long-term alignment claim, or ground it in a figure from the proxy.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-16",
+      "severity": "Important",
+      "field": "sections.management.leadership",
+      "quote": "lists Mike Milotich, Patti Kangwangkij, Todd Pollak and Crystal Sumner among the named executive officers",
+      "issue": "Over-attribution. The proxy excerpt lists these names under one table heading, \"Named Executive Officers, Directors, and Director Nominees\". It does not label which of them are NEOs, and Jason Gardner sits under the same heading. The field also asserts \"A recent change at the top is therefore evident\", but the excerpt gives no separation date for Mr. Khalaf, so \"recent\" is not supported.",
+      "fix": "Say the four appear in the proxy's beneficial-ownership table under named executive officers, directors and director nominees, with no titles given in the excerpt. Drop \"recent\", or say the excerpt does not date Mr. Khalaf's separation.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-17",
+      "severity": "Important",
+      "field": "sections.executiveSummary.catalysts[1]",
+      "quote": "Evidence that revenue growth holds near the TTM pace",
+      "issue": "No TTM revenue growth rate appears on the grounding surface. The Facts give Q2'26 revenue +17.0% YoY, FY25 +23.3% and FY26E +13%, but no trailing-twelve-month growth. The catalyst points to a benchmark the reader cannot find.",
+      "fix": "Name a pace that is on the page, e.g. \"holds near the Q2'26 pace of 17%\" or \"tracks the +13% FY26E consensus\".",
+      "status": "addressed"
+    },
+    {
+      "id": "F-18",
+      "severity": "Important",
+      "field": "sections.executiveSummary.companyOverview",
+      "quote": "Revenue is mostly platform services revenue, net",
+      "issue": "The MD&A names two revenue components but gives no split between them. \"Mostly\" is a quantitative characterization the surface does not support.",
+      "fix": "Say net revenue has two components, platform services revenue, net and other services revenue (mainly card fulfillment), without sizing them. Or flag the weighting as your own read.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-19",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[3]",
+      "quote": "Bank and network dependence: the 10-K risk factors state that the company relies on relationships with Issuing Banks and Card Networks, and that losing them could hurt the business.",
+      "issue": "Judgment, not restatement. The item repeats the 10-K risk-factor summary and an MD&A mechanism, but reaches no view on likelihood or magnitude and gives no watch item. The other three idiosyncratic risks each have one.",
+      "fix": "Add the reader's view and a watch item, e.g. how a missed network-incentive volume threshold would show up in costs of revenue or gross margin (69% in Q2'26), and what disclosure would signal a bank or network change. Otherwise cut the item.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-20",
+      "severity": "Minor",
+      "field": "sections.management.governance",
+      "quote": "Per the proxy statement dated 2026-04-21",
+      "issue": "Dates should be in prose form, not ISO. The same ISO date appears in sections.management.leadership (\"The proxy statement dated 2026-04-21\").",
+      "fix": "Write \"the proxy statement dated April 21, 2026\" in both places, as analystCommentary already does with \"the April 2026 proxy\".",
+      "status": "addressed"
+    },
+    {
+      "id": "F-21",
+      "severity": "Important",
+      "field": "sections.executiveSummary.catalysts[0]",
+      "quote": "A full GAAP-profitable year, visible as the TTM operating margin of -1.9% turning positive",
+      "issue": "Introduced by the rewrite. The catalyst measures GAAP profitability with operating margin, but the two differ on this company: other income (interest on cash and short-term investments, per the MD&A) sits below operating income. On the Facts block the TTM net margin is already +1.5%, while TTM operating margin is -1.9%. On a trailing basis the company is already GAAP net-profitable, so the gauge the catalyst names is not the event it describes. The report never mentions the +1.5% TTM net margin, so a reader cannot reconcile \"a full GAAP-profitable year\" (also in analystCommentary and finalRecommendation.body[1]) with it.",
+      "fix": "Pick one quantity and name it precisely. Either make the trigger a GAAP net-profitable fiscal year (FY26), acknowledging that the TTM net margin is already +1.5%, or make it operating profitability, with the TTM operating margin of -1.9% turning positive, and drop \"GAAP-profitable\". Keep analystCommentary and finalRecommendation.body[1] consistent with whichever is chosen.",
+      "status": "addressed",
+      "note": "catalysts[0], analystCommentary and finalRecommendation.body[1] now all name GAAP operating profit for full-year 2026 against the TTM operating margin of -1.9%; the measure and the event match."
+    }
+  ]
+}

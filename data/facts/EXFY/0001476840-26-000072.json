@@ -1,0 +1,590 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "EXFY",
+  "cik": 1476840,
+  "company": "Expensify, Inc.",
+  "exchange": "NASDAQGS",
+  "sic": 7372,
+  "sicDescription": "Services-Prepackaged Software",
+  "filing": {
+    "form": "10-Q",
+    "accession": "0001476840-26-000072",
+    "filedDate": "2026-08-06",
+    "periodEnd": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1476840/000147684026000072/exfy-20260630.htm"
+  },
+  "capturedAt": "2026-10-02T21:37:08.616Z",
+  "quote": {
+    "price": 2.25,
+    "marketCap": 205170000,
+    "sharesOutstanding": 91186666.66666667,
+    "sharesSource": "derived",
+    "week52Low": 0.691,
+    "week52High": 2.81,
+    "dividendYield": 0,
+    "asOf": "2026-10-02"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          142835000,
+          169495000,
+          150687000,
+          139236000,
+          142101000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          89142000,
+          106826000,
+          83799000,
+          74997000,
+          71527000
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          -10252000,
+          -15232000,
+          -33149000,
+          -820000,
+          -18019000
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          -5055000,
+          -9844000,
+          -27985000,
+          5994000,
+          -9559000
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          -13558000,
+          -27009000,
+          -41456000,
+          -10055000,
+          -21389000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          -0.36,
+          -0.33,
+          -0.5,
+          -0.12,
+          -0.23
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          98398000,
+          103787000,
+          47510000,
+          48772000,
+          63080000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          52616000,
+          51985000,
+          7655000,
+          0,
+          null
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          -45782000,
+          -51802000,
+          -39855000,
+          -48772000,
+          null
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          76615000,
+          97241000,
+          100744000,
+          128243000,
+          132745000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          2.9423995819023445,
+          3.099880719658063,
+          2.0213279915159372,
+          3.6010523546435147,
+          3.2972093524404698
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          5486000,
+          32876000,
+          1559000,
+          23877000,
+          20089000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -2706000,
+          -585000,
+          -1384000,
+          0,
+          -17000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          0,
+          -6000000,
+          -3000000,
+          -1510000,
+          -9095000
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          2780000,
+          32291000,
+          175000,
+          23877000,
+          20072000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q2'26",
+    "periodEnd": "2026-06-30",
+    "revenue": 33866000,
+    "operatingMargin": -0.08625169786806827,
+    "revenueYoY": -0.05307012638407338
+  },
+  "ttm": {
+    "pe": -14.0625,
+    "ps": 1.4856840794218598,
+    "evToEbitda": null,
+    "grossMargin": 0.4866761285463946,
+    "operatingMargin": -0.08028356674245825,
+    "netMargin": -0.11310808266593289,
+    "netDebtToEbitda": null,
+    "interestCoverage": null,
+    "currentRatio": 3.4967117198838897,
+    "fcfYield": null
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 135878670,
+      "eps": 0.12
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 136084670,
+      "eps": 0.1
+    }
+  },
+  "analysts": {
+    "count": 3,
+    "buy": 1,
+    "hold": 2,
+    "sell": 0,
+    "consensusRating": "None",
+    "consensusTarget": 2.83333,
+    "medianTarget": 3,
+    "highTarget": 3,
+    "lowTarget": 2.5,
+    "asOf": "2026-10-02"
+  },
+  "segments": {
+    "basis": "FY25 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 142101000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "AISP",
+      "pe": 3.1641788,
+      "ps": 4.0230217,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "DSP",
+      "pe": 33.999996,
+      "ps": 2.0958965,
+      "evToEbitda": 10.123
+    },
+    {
+      "ticker": "HIT",
+      "pe": null,
+      "ps": 1.5608044,
+      "evToEbitda": null
+    },
+    {
+      "ticker": "KULR",
+      "pe": null,
+      "ps": 7.619493,
+      "evToEbitda": -3.036
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-21",
+      "close": 2.640000104904175
+    },
+    {
+      "date": "2026-08-24",
+      "close": 2.7200000286102295
+    },
+    {
+      "date": "2026-08-25",
+      "close": 2.619999885559082
+    },
+    {
+      "date": "2026-08-26",
+      "close": 2.549999952316284
+    },
+    {
+      "date": "2026-08-27",
+      "close": 2.559999942779541
+    },
+    {
+      "date": "2026-08-28",
+      "close": 2.5799999237060547
+    },
+    {
+      "date": "2026-08-31",
+      "close": 2.5199999809265137
+    },
+    {
+      "date": "2026-09-01",
+      "close": 2.490000009536743
+    },
+    {
+      "date": "2026-09-02",
+      "close": 2.4600000381469727
+    },
+    {
+      "date": "2026-09-03",
+      "close": 2.430000066757202
+    },
+    {
+      "date": "2026-09-04",
+      "close": 2.380000114440918
+    },
+    {
+      "date": "2026-09-08",
+      "close": 2.369999885559082
+    },
+    {
+      "date": "2026-09-09",
+      "close": 2.2899999618530273
+    },
+    {
+      "date": "2026-09-10",
+      "close": 2.2200000286102295
+    },
+    {
+      "date": "2026-09-11",
+      "close": 2.1600000858306885
+    },
+    {
+      "date": "2026-09-14",
+      "close": 2.2799999713897705
+    },
+    {
+      "date": "2026-09-15",
+      "close": 2.309999942779541
+    },
+    {
+      "date": "2026-09-16",
+      "close": 2.299999952316284
+    },
+    {
+      "date": "2026-09-17",
+      "close": 2.3399999141693115
+    },
+    {
+      "date": "2026-09-18",
+      "close": 2.240000009536743
+    },
+    {
+      "date": "2026-09-21",
+      "close": 2.319999933242798
+    },
+    {
+      "date": "2026-09-22",
+      "close": 2.3499999046325684
+    },
+    {
+      "date": "2026-09-23",
+      "close": 2.3499999046325684
+    },
+    {
+      "date": "2026-09-24",
+      "close": 2.259999990463257
+    },
+    {
+      "date": "2026-09-25",
+      "close": 2.2100000381469727
+    },
+    {
+      "date": "2026-09-28",
+      "close": 2.1500000953674316
+    },
+    {
+      "date": "2026-09-29",
+      "close": 2.240000009536743
+    },
+    {
+      "date": "2026-09-30",
+      "close": 2.25
+    },
+    {
+      "date": "2026-10-01",
+      "close": 2.369999885559082
+    },
+    {
+      "date": "2026-10-02",
+      "close": 2.25
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "Expensify, Inc. provides a cloud-based expense management software platform in the United States and internationally. The company offers Expensify, a platform that engages in managing corporate cards, paying bills, generating invoices, collecting payments, and booking travel, as well as track and submit plans for individuals. It serves individuals and corporations, small and midsized businesses, and enterprises. The company was founded in 2008 and is based in San Francisco, California.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-10-02"
+    },
+    "mdaExcerpt": {
+      "text": "Item 2. Management's Discussion and Analysis of Financial Condition and Results of Operations\nThe following discussion and analysis of our financial condition and results of operations should be read in conjunction with our condensed consolidated financial statements and related notes included elsewhere in this Quarterly Report on Form 10-Q and with our audited consolidated financial statements included in our Annual Report on Form 10-K for the year ended December 31, 2025 (\"2025 Annual Report\"). This discussion contains forward-looking statements based upon current plans, expectations and beliefs involving risks and uncertainties. Our actual results could differ materially from those anticipated in these forward-looking statements as a result of various factors, including those set forth under Part I, Item 1A. \"Risk Factors\" in our 2025 Annual Report and included elsewhere in this Quarterly Report on Form 10-Q. See \"Special Note Regarding Forward-Looking Statements.\"\nOVERVIEW\nExpensify is a leading cloud-based expense management software platform that helps the smallest to the largest businesses simplify the way they manage money. Every day, people from all walks of life in organizations around the world use Expensify to scan and reimburse receipts from flights, hotels, coffee shops, office supplies and ride shares. Since our founding in 2008, we have added over 15 million members to our community and processed and automated 1.9 billion expense transactions on our platform as of June 30, 2026, freeing people to spend less time managing expenses and more time doing the things they love. For the quarter ended June 30, 2026, an average of 640,000 paid members across an average of 45,700 companies and over 200 countries and territories used Expensify to make money easy.\nMACROECONOMIC TRENDS\nOur business and the operations of our customers, the majority of which are small and medium-sized businesses, depend on the overall state of the economy, and we and they could be negatively impacted by slower economic growth and a potential for a recession. The economy continues to be impacted by elevated inflation rates and faces further inflation risk. Tariff and trade issues, as well as geopolitical uncertainty and instability, including the conflict in the Middle East, also continue to cause overall uncertainty with respect to the economy. See Part I, Item 1A. \"Risk Factors\" in our 2025 Annual Report and our subsequent filings for further discussion of the possible impact of such macroeconomic trends on our business. Additionally, other potential challenging macroeconomic conditions, and the resulting impact on business continuity and travel, could negatively impact our business.\n29\nTable of Contents\nComponents of Results of Operations\nRevenue, Net\nWe generate revenue from subscription fees based on the usage of our cloud-based expense management software platform under arrangements paid monthly in arrears that are either (i) month-to-month and can be terminated by either party without penalty at any time or (ii) annual arrangements based on a minimum number of monthly members. Annual subscription customers who wish to terminate their contracts before the end of the term are required to pay the remaining obligation in full plus any fees or penalties set forth in the agreement. We charge our customers subscription fees for access to our platform based on the number of monthly active members and level of service. The contractual price is based on either negotiated fees or rates published on our website. We generate most of our revenue from customers who have a credit card or debit card on file with us that is automatically charged each month. Virtually all of our customers have a standard terms of service contract, with the few exceptions for customers on bespoke service contracts.\nOur contracts with our customers include two performance obligations: access to the hosted software service, inclusive of all features available within the platform, and the related customer support. We account for the platform access and the support as a combined performance obligation because they have the same pattern of transfer over the same period and are therefore delivered concurrently. We satisfy our performance obligation over time each month as we provide platform access and support services to customers and as such recognize revenue over time. We recognize revenue net of applicable taxes imposed on the related transaction. Revenue earned from subscription fees was $30.8 million and $32.9 million for the three months ended June 30, 2026 and 2025, respectively. Revenue earned from subscription fees was $61.7 million and $66.1 million for the six months ended June 30, 2026 and 2025, respectively.\nWe also offer an Expensify charge card (the \"Expensify Card\"), which operates under an agreement with the issuing bank, The Bancorp Bank, N.A. (\"Bancorp\"), to issue Expensify Cards to customers and authorize and settle transactions on the Visa card network.\nUnder the Expensify Card program, we generate revenue from the authorization and settlement of Expensify Card transactions and are contractually entitled to all interchange generated on Expensify Card transactions based on our agreement with Bancorp. We are the principal in the transaction and recognize interchange as revenue on a gross basis within Revenue, net on the Condensed Consolidated Statements of Operations. Interchange revenue was $5.9 million and $5.3 million for the three months ended June 30, 2026 and 2025, respectively. Interchange revenue was $11.5 million and $10.3 million for the six months ended June 30, 2026 and 2025, respectively.\nWe offer a cashback rewards program to all customers under the Expensify Card program based on volume of Expensify Card transactions. Cashback rewards are earned on a monthly basis and are applied against outstanding customer receivables or are paid out in the following month. We consider our cashback rewards as consideration payable to a customer, and they are recorded as contra revenue within Revenue, net on the Condensed Consolidated Statements of Operations. Cashback rewards applied against outstanding customer receivables are reflected as a reduction to Accounts receivable, net on the Condensed Consolidated Balance Sheets. Cashback rewards liability is recorded within Accrued expenses and other liabilities on the Condensed Consolidated Balance Sheets. The cashback rewards fluctuate over time as customers meet eligibility requirements and based on the timing of payments made to customers. The cost of cashback rewards was $3.0 million and $2.5 million for the three months ended June 30, 2026 and 2025, respectively. The cost of cashback rewards was $5.6 million and $4.8 million for the six months ended June 30, 2026 and 2025, respectively.\n30\nTable of Contents\nCost of Revenue, Net\nCost of revenue, net primarily consists of personnel-related expenses, including stock-based compensation, attributable to supporting our customers and maintenance of our platform, amortization expense on capitalized software development costs, expenses related to hosting our service, including the costs of data center capacity, credit card processing fees, third-party software license fees, amortization of finance lease right-of-use assets, outsourcing engineering costs to maintain our platform, and outsourcing costs to support customer service, net of consideration from a vendor under the Expensify Card program for certain volume-based incentives from Visa.\nUnder the Expensify Card program, we receive consideration from a vendor for certain volume-based incentives from Visa, which are included as a reduction to Cost of revenue, net on the Condensed Consolidated Statements of Operations as they are earned. Amounts earned under these volume-based incentives were $0.2 million and $0.8 million for the three months ended June 30, 2026 and 2025, respectively. Amounts earned under these volume-based incentives were $0.5 million and $1.0 million for the six months ended June 30, 2026 and 2025, respectively.\nOPERATING EXPENSES\nResearch and Development\nResearch and development expenses consist primarily of personnel-related expenses, including stock-based compensation, and external contributor costs incurred related to the planning and preliminary project stage of new products or enhancing existing products or services. We capitalize certain software development costs that are attributable to developing or adding significant functionality to our internal-use software during the application development stage of the projects. All research and development expenses, excluding capitalized software development costs, are expensed as incurred.\nWe believe delivering new functionality is critical to attract new customers and expand our relationships with existing customers. We expect to continue to make investments in and expand our product and service offerings to enhance our customers' experience and satisfaction and to attract new customers.\nGeneral and Administrative\nGeneral and administrative expenses primarily consist of personnel-related expenses, including stock-based compensation, for any employee time allocated to administrative functions, including finance and accounting, legal and compliance, and human resources. In addition to personnel-related expenses, general and administrative expenses consist of business insurance, rent, utilities, depreciation on property and equipment, amortization of operating lease right-of-use assets, information technology, external professional services, including finance and accounting, audit, tax, legal and compliance, and human resources, third-party software license fees, and settlement losses, net of recoveries.\nSales and Marketing\nSales and marketing expenses primarily consist of personnel-related expenses, including stock-based compensation, advertising expenses, depreciation on property and equipment, outsourcing costs for sales and product demos, branding and public relations expenses, referral fees for strategic partners and other benefits that we provide to our referral and affiliate partners.\nOther Income, Net\nOther income, net, consists primarily of interest income. It also includes the results of operations of our Fifth & Harvey, LLC subsidiary, which holds title to and manages operations of the operating lease for lots in Portland, Oregon that are currently used to host multiple portable food vendors open to the general public, as well as realized gains and losses on foreign currency transactions and foreign currency remeasurement.\n31\nTable of Contents\n(Provision for) Benefit from Income Taxes\nIncome taxes primarily consist of income taxes in the United States, United Kingdom, Australia, Netherlands and Canada, as well as states within the United States in which we do business.\nOn July 4, 2025, H.R.1 was enacted into law, which introduced provisions that modified the Internal Revenue Code (\"IRC\"), including the immediate expensing of domestic research and development expenditures for tax purposes. As previously required under the Tax Cuts and Jobs Act, we capitalized and amortized research and experimental (\"R&D\") expenditures under IRC Section 174 for tax years beginning after December 31, 2021. With the enactment of H.R.1 in 2025, we began deducting domestic Section 174 costs in the year they were incurred. We will continue to capitalize and amortize R&D costs over 15 years for R&D performed outside of the U.S.\n32\nTable of Contents\nResults of Operations\nThe results of operations presented below should be reviewed in conjunction with the condensed consolidated financial statements and notes included elsewhere in this Quarterly Report on Form 10-Q.\nThe following table sets forth our results of operations for each of the periods presented (in thousands, except percentages, share and per share data):\nThree Months Ended June 30,\nSix Months Ended June 30,\n2026\n2025\n2026\n2025\nRevenue, net\n$\n33,866\n$\n35,764\n$\n67,835\n$\n71,838\nCost of revenue, net (1)\n17,536\n17,187\n35,333\n35,019\nGross margin\n16,330\n18,577\n32,502\n36,819\nOperating expenses:\nResearch and development (1)\n4,983\n5,158\n10,248\n10,516\nGeneral and administrative (1)\n9,591\n9,411\n18,709\n20,240\nSales and marketing (1)\n4,677\n14,346\n8,438\n17,888\nTotal operating expenses\n19,251\n28,915\n37,395\n48,644\nLoss from operations\n(2,921)\n(10,338)\n(4,893)\n(11,825)\nOther income, net\n202\n889\n373\n1,213\nLoss before income taxes\n(2,719)\n(9,449)\n(4,520)\n(10,612)\n(Provision for) benefit from income taxes\n(1,132)\n661\n(1,668)\n(1,345)\nNet loss\n$\n(3,851)\n$\n(8,788)\n$\n(6,188)\n$\n(11,957)\nNet loss per share:\nBasic and diluted\n$\n(0.04)\n$\n(0.10)\n$\n(0.07)\n$\n(0.13)\nWeighted average shares of common stock used to compute net loss per share:\nBasic and diluted\n95,441,380\n92,271,924\n94,585,048\n91,888,633\nNet loss margin\n(11)\n%\n(25)\n%\n(9)\n%\n(17)\n%\n(1) Includes stock-based compensation expense as follows (in thousands):\nThree Months Ended June 30,\nSix Months Ended June 30,\n2026\n2025\n2026\n2025\nCost of revenue, net\n$\n2,420\n$\n2,770\n$\n4,731\n$\n5,809\nResearch and development\n2,058\n2,018\n3,920\n4,421\nGeneral and administrative\n1,391\n1,178\n2,427\n2,749\nSales and marketing\n1,342\n961\n2,110\n1,938\nTotal stock-based compensation expense\n$\n7,211\n$\n6,927\n$\n13,188\n$\n14,917\n33\nTable of Contents\nCOMPARISON OF THE THREE MONTHS ENDED JUNE 30, 2026 AND 2025\nRevenue, Net\nThree Months Ended June 30,\nChange\n2026\n2025\nAmount\n%\n(in thousands, except percentages)\nRevenue, net\n$\n33,866\n$\n35,764\n$\n(1,898)\n(5)\n%\nRevenue, net decreased $1.9 million, or 5%, for the three months ended June 30, 2026 compared to the same period in 2025, primarily due to (i) a decrease in billable activity across our user base, and (ii) an increase in contra revenue related to cashback payments driven by the increased adoption and spend captured from members using the Expensify Card. This decrease was partially offset by an increase in interchange revenue driven by the adoption of the Expensify Card program.\nCost of Revenue, Net and Gross Margin\nThree Months Ended June 30,\nChange\n2026\n2025\nAmount\n%\n(in thousands, except percentages)\nCost of revenue, net\n$\n17,536\n$\n17,187\n$\n349\n2\n%\nGross margin\n$\n16,330\n$\n18,577\n$\n(2,247)\n(12)\n%\nGross margin %\n48\n%\n52\n%\nCost of revenue, net increased $0.3 million or 2% for the three months ended June 30, 2026 compared to the same period in 2025, primarily due to an increase in amortization expense related to capitalized software. The increase was partially offset by savings generated from the increased use of artificial intelligence (\"AI\") in place of human agents.\nGross margin decreased to 48% for the three months ended June 30, 2026 compared to 52% in the same period in 2025 due to the factors described in the preceding paragraphs for Revenue, Net and Cost of revenue, net.\nResearch and Development\nThree Months Ended June 30,\nChange\n2026\n2025\nAmount\n%\n(in thousands, except percentages)\nResearch and development\n$\n4,983\n$\n5,158\n$\n(175)\n(3)\n%\nResearch and development expenses decreased by $0.2 million, or 3%, for the three months ended June 30, 2026 compared to the same period in 2025, primarily due to a decrease in internal employee time spent on project initiatives and new product features.\n34\nTable of Contents\nGeneral and Administrative\nThree Months Ended June 30,\nChange\n2026\n2025\nAmount\n%\n(in thousands, except percentages)\nGeneral and administrative\n$\n9,591\n$\n9,411\n$\n180\n2\n%\nGeneral and administrative expenses increased $0.2 million, or 2%, for the three months ended June 30, 2026 compared to the same period in 2025, primarily due to an increase in employee time spent on general and administrative activities.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/1476840/000147684026000072/exfy-20260630.htm",
+      "asOf": "2026-08-06",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "Item 1A. Risk Factors\nOur business involves a high degree of risk. You should carefully consider the risks described below, as well as the other information contained or incorporated by reference in this Annual Report on Form 10-K, including our consolidated financial statements and related notes, as well as our other filings with the SEC. The occurrence of any of the events or developments described below could materially and adversely affect our business, financial condition, results of operations and growth prospects. In such an event, the market price of our Class A common stock could decline, and you may lose all or part of your investment. Additional risks and uncertainties not presently known to us or that we currently believe are not material may also impair our business, financial condition, results of operations and growth prospects.\nRisks Related to Our Business\nOur quarterly and annual results of operations have fluctuated in the past and may fluctuate significantly in the future and may not meet our expectations or those of investors or securities analysts.\nOur quarterly and annual results of operations, including the levels of our revenue, working capital and cash flows, have varied significantly in the past and may vary significantly in the future, such that period-to-period comparisons of our results of operations may not be meaningful. Our quarterly and annual financial results may fluctuate due to a variety of factors, many of which are outside of our control and may be difficult to predict, including, but not limited to:\nthe level of demand across our platform and for individual features within our platform;\nour ability to grow or maintain our gross logo retention rate and net seat retention rate (each as described in Part II, Item 7 \"Management's Discussion and Analysis of Financial Condition and Results of Operations\"), expand usage within organizations, retain and increase sales to existing customers and attract new members and customers;\nour ability to convert individuals and organizations using our free features or trial subscriptions into paying customers;\nour ability to predictably generate revenue through marketing and sales efforts;\nthe timing and success of new features, integrations, capabilities and enhancements by us to our platform, or by our competitors to their products, or any other changes in the competitive landscape of our market;\nour ability to grow and maintain our relationships and/or integrations with our network of third-party partners, including integration partners, channel partners and professional service partners;\nour ability to regulate members and member interactions on an increasingly collaborative platform;\nour ability to grow revenue share and customer referrals from our partner ecosystem;\nour ability to attract new customers and retain existing customers;\nthe success of our customers' businesses;\nour ability to achieve widespread acceptance and use of our platform and features, including the Expensify Card and any new features we may introduce;\nour ability to retain customers on annual subscriptions;\nour ability to maintain and improve employee efficiency, and our ability to manage third party, outsourced or open source workers to provide value-added services like receipt processing, customer support and engineering;\n21\nTable of Contents\nerrors in our forecasting of the demand for our platform and features, which would lead to lower revenue, increased costs, or both;\nthe amount and timing of operating expenses and capital expenditures, as well as entry into operating leases, that we may incur to maintain and expand our business and operations and to remain competitive;\nthe timing of expenses and recognition of revenue;\nactual or perceived security breaches, technical difficulties, or interruptions to our platform and features;\npricing pressure as a result of competition or otherwise;\nineffective pricing strategies that could limit customer base expansion, revenue growth and subscription renewals;\nadverse litigation judgments, other dispute-related settlement payments, or other litigation-related costs;\nthe number of new employees hired;\nthe timing of the grant or vesting of equity awards to employees, directors, or consultants;\ndeclines in the values of foreign currencies relative to the U.S. dollar;\nchanges in, and continuing uncertainty in relation to, the legislative or regulatory environment;\nlegal and regulatory compliance costs in new and existing markets;\ncosts and timing of expenses related to the potential acquisition of talent, technologies, businesses or intellectual property, and their integration, including potentially significant amortization costs and possible write-downs;\nhealth crises or other conditions that impact travel and business spending; and\ngeneral economic and market conditions in either domestic or international markets, including geopolitical uncertainty and instability and their effects on software spending.\nAny one or more of the factors above may result in significant fluctuations in our quarterly and annual results of operations, which may negatively impact the trading price of our Class A common stock. You should not rely on our past results as an indicator of our future performance.\nThe variability and unpredictability of our quarterly and annual results of operations or other operating metrics could result in our failure to meet our expectations or those of investors or analysts with respect to revenue or other metrics for a particular period. If we fail to meet or exceed such expectations for these or any other reasons, the trading price of our Class A common stock could fall, and we would face litigation, including securities class action lawsuits, which could subject us to substantial costs, divert resources and the attention of management from our business and adversely affect our business, results of operations, and financial condition.\n22\nTable of Contents\nWe may not be able to successfully implement our growth strategies on a timely basis or at all. Even if we are successful, if we fail to effectively manage our growth, our business and results of operations could be harmed.\nWe operate in a relatively new and rapidly changing category of preaccounting software, and widespread acceptance and use of our platform and features, particularly our expense management feature, is critical to our future growth and success.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/1476840/000147684026000009/exfy-20251231.htm",
+      "asOf": "2026-02-26",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-K",
+    "pressRelease": {
+      "text": "EX-99.1\n2\nexhibit991-8xkq226earnings.htm\nEX-99.1\nDocument\nExhibit 99.1\nEXPENSIFY ANNOUNCES Q2 2026 RESULTS\nInterchange revenue derived from the Expensify Card grew to $5.9 million, an increase of 12% as compared to the same period last year.\nSAN FRANCISCO, CAL.--(BUSINESS WIRE)--August 6, 2026-- Expensify, Inc. (Nasdaq EXFY), the easiest way to manage expenses, corporate cards, and travel, today released a letter to shareholders from Founder and CEO David Barrett alongside results for its quarter ended June 30, 2026.\nA Message From Our Founder\nThis is the most exciting quarter in years, as we are finally able to pull back the curtain on New Expensify's growth. To set the stage, recall that Expensify is not just one product, but two\nExpensify Classic is what established us in the market, and I think is fair to say established the standard by which everyone else in the industry is currently being measured credit card import into a mobile app that scans, categorizes, and reconciles receipts, powered by a robust workflow engine that automatically submits, approves, reimburses, and exports to third party systems. Even though we were the first, everyone else in the industry has largely copied this design. This defined the first twelve or so years of Expensify's life, up to IPO.\nNew Expensify is a complete redesign (and major rewrite) based on the sobering realization that no matter how good we made Expensify Classic, it would never appeal to more than a tiny fraction of the global market. Of the 300 million businesses in the world all of which manage expenses (because you get expenses long before you get revenue) less than 1% (and closer to 0.1%) has ever paid us or any of our competition. To break out of this tiny corner of a vast market, we needed to radically rethink our product.\nThese are essentially two different businesses intertwined into one they share the same servers, the same data, and a lot of the same code. They are both built and maintained by the same team, and to a very large degree, are used by the same customers most can switch back and forth freely between them, and many do. However, users behave very, very differently on each and each provides a completely different benefit to our business.\nExpensify Classic is a reliable, profitable workhorse with minimal investment, it has generated steady for us from a stable but slowly shrinking customer base. Expensify Classic is a fixed pool of customers you can't sign up for Expensify Classic today, so it's a pool that will naturally drain. Every business has some nonzero amount of churn, and that churn will gradually reduce our Classic customer base over time.\nThis has allowed us to pour our efforts into building and growing New Expensify, which is growing very quickly. We'll talk about this more on the earnings call, but revenue from net new customers meaning, customers who have signed up on New Expensify and have never seen or used Classic has grown by over 250% year-over-year , to over $10 million ARR across over 10,000 new customers . This is exclusive of Classic customers who have switched to New (which at this point, is most of them).\nIn my opinion, the conclusion to draw from this is that Expensify isn't a sleepy, low-growth company. Rather, it is the combination of\nA large, robust, traditional Expensify Classic product that requires minimal maintenance but generates stable cashflow, most of which is being invested into building\nA small, innovative, and quickly growing New Expensify product that aims to capture a market 10-100x larger than our traditional product ever could.\nWe feel either of these alone should be reasonably valued higher than the current business is being today and the sum of the two should be valued even higher still.\nExhibit 99.1\nBased on that conviction, we attempted to repurchase $25 million of Class A common stock using a modified Dutch auction tender offer, and successfully repurchased 6.1 million shares of Class A common stock at $1.20 per share. (The tender was substantially undersubscribed despite the premium offered on the share price.) We then purchased approximately 712,000 additional shares, for $1.2 million, bringing the total Q2 repurchase to 6.8 million shares of Class A common stock, representing a 7% reduction in shares outstanding.\nWe still have a long road ahead of us, and our path back to sustained growth depends on how effectively we\nRetain and expand our Classic customers by migrating the last of them onto New Expensify, where they can benefit from a dramatically improved experience for both traditional and modern agentic workflows, and\nContinue accelerating new customer acquisition by scaling both lead generation and high-velocity self-service sales in this large, untapped market.\nThis isn't a new story. It's the same story we told at IPO, and on every earnings call since. This isn't a new market it's the same market that's been there all along.\nAll that's new is (I feel) we have increasingly solid evidence the plan is going to work and though I never doubted it, it's extremely exciting to see it play out in practice.\n-david\nFounder and CEO of Expensify\nExhibit 99.1\nFinancial\nSecond Quarter 2026 Highlights\nRevenue, net was $33.9 million, a decrease of 5% as compared to the same period last year.\nGenerated $8.4 million of cash from operating activities.\nFree cash flow was $6.4 million.\nNet loss was $3.9 million, compared to $8.8 million for the same period last year.\nNon-GAAP net income was $3.4 million.\nAdjusted EBITDA was $6.6 million.\nInterchange revenue derived from the Expensify Card grew to $5.9 million, an increase of 12% as compared to the same period last year.\nSee Financial Outlook section for Free Cash Flow guidance for fiscal year ending December 31, 2026.\nBusiness\nSecond Quarter 2026 Highlights\nPaid members - Paid members were 640,000, a decrease of 2% as compared to the same period last year.\nAI expands across the platform - Customers can now set up Expensify, automate expenses, and analyze spend using natural language via email, text, or in-app, with AI-powered workflow agents entering beta.\nExpanded commercial ecosystem - Launched the Expensify MCP, connecting Expensify to AI assistants like ChatGPT, Claude, and Cursor for natural-language access to expense data.\nProduct velocity remained strong - Shipped 30+ product improvements in Q2 across cards, mileage tracking, policy controls, bulk editing, and AI-powered spend controls, and was named Expense Management Platform of the Year in the TravelTech Breakthrough Awards.\nCapital return to shareholders - Repurchased approximately 6.1 million shares of Class A common stock at $1.20 per share through a modified Dutch auction tender offer, as well as approximately 0.7 million additional shares repurchased at an average price of $1.63 per share. Total repurchases of approximately 6.8 million shares of Class A common stock represent an approximately 7% reduction in shares outstanding.\nExhibit 99.1\nFinancial Outlook\nExpensify's outlook statements are based on current estimates, expectations and assumptions and are not a guarantee of future performance. The following statements are forward-looking and actual results could differ materially depending on market conditions and the factors set forth under \"Forward-Looking Statements\" below. There can be no assurance that the Company will achieve the results expressed by this guidance.\nFree Cash Flow\nExpensify estimates free cash flow of $12.0 million - $14.0 million for the fiscal year ending December 31, 2026.\nThe Company does not provide a reconciliation for free cash flow estimates on a forward-looking basis because it is unable, without making unreasonable efforts, to provide a meaningful or reasonably accurate calculation or estimation of net cash provided by operating activities and certain reconciling items on a forward-looking basis, which could be significant to the Company's results.\nStock Based Compensation\nAn estimate of expected stock-based compensation for the next four fiscal quarters is as follows, which is driven primarily by the pre-IPO grant of RSUs issued to all employees (which vest quarterly over eight years with approximately three years remaining).\nEst. stock-based compensation (millions)\nQ3 2026\nQ4 2026\nQ1 2027\nQ2 2027\nLow\nHigh\nLow\nHigh\nLow\nHigh\nLow\nHigh\nCost of revenue, net\n$\n1.9\n$\n2.5\n$\n1.7\n$\n2.3\n$\n1.7\n$\n2.3\n$\n1.7\n$\n2.3\nResearch and development\n1.5\n2.1\n1.5\n2.1\n1.4\n2.0\n1.4\n2.0\nGeneral and administrative\n1.0\n1.4\n1.0\n1.4\n1.0\n1.4\n0.9\n1.3\nSales and marketing\n1.0\n1.4\n1.0\n1.4\n0.9\n1.3\n0.9\n1.3\nTotal\n$\n5.4\n$\n7.4\n$\n5.2\n$\n7.2\n$\n5.0\n$\n7.0\n$\n4.9\n$\n6.9\nAvailability of Information on Expensify's Website\nInvestors and others should note that Expensify routinely announces material information to investors and the marketplace using SEC filings, press releases, public conference calls, webcasts and the Expensify Investor Relations website at https ir.expensify.com. While not all of the information that the Company posts to its Investor Relations website is of a material nature, some information could be deemed to be material. Accordingly, the Company encourages investors, the media and others interested in Expensify to review the information that it shares on its Investor Relations website.\nConference Call\nExpensify will host a video call to discuss the financial results and business highlights at 2 00 p.m. Pacific Time today. An investor presentation and the video call information is available on Expensify's Investor Relations website at https ir.expensify.com. A replay of the call will be available on the site for three months.\nExhibit 99.1\nNon-GAAP Financial Measures\nIn addition to financial measures prepared in accordance with U.S. generally accepted accounting principles (\"GAAP\"), we provide certain non-GAAP financial measures, including adjusted EBITDA, non-GAAP net (loss) income, and free cash flow.\nWe believe our non-GAAP financial measures are useful in evaluating our business, measuring our performance, identifying trends affecting our business, formulating business plans and making strategic decisions. Accordingly, we believe that these non-GAAP financial measures provide useful information to investors and others in understanding and evaluating our results of operations in the same manner as our management team. These non-GAAP financial measures are presented for supplemental informational purposes only, should not be considered a substitute for financial information presented in accordance with GAAP, and may be different from similarly titled metrics or measures presented by other companies. Non-GAAP financial measures have limitations as analytical tools and should not be considered in isolation or as substitutes for financial information presented under GAAP. There are a number of limitations related to the use of non-GAAP financial measures versus comparable financial measures determined under GAAP. For example, other companies in our industry may calculate these non-GAAP financial measures differently or may use other measures to evaluate their performance. All of these limitations could reduce the usefulness of these non-GAAP financial measures as analytical tools. Investors are encouraged to review the related GAAP financial measures and the reconciliations of these non-GAAP financial measures to their most directly comparable GAAP financial measures and to not rely on any single financial measure to evaluate our business. A reconciliation of each non-GAAP financial measure to the most directly comparable financial measure stated in accordance with GAAP is at the end of this press release.\nAdjusted EBITDA. We define adjusted EBITDA as net loss excluding provision for (benefit from) income taxes, other income, net, depreciation and amortization, and stock-based compensation expense.\nNon-GAAP net income (loss) . We define non-GAAP net income (loss) as net loss excluding stock-based compensation expense.\nFree cash flow. We define free cash flow as net cash provided by operating activities excluding changes in settlement assets, net and settlement liabilities, reduced by the purchases of property and equipment and software development costs.\nThe tables at the end of the Condensed Consolidated Financial Statements provide reconciliations to the most directly comparable GAAP financial measure to each of these non-GAAP financial measures.\nForward-Looking Statements\nForward-looking statements in this press release, or made during the earnings call, which are not historical facts, are forward-looking statements within the meaning of the Private Securities Litigation Reform Act of 1995. These statements include statements regarding our strategy, future financial condition, future operations, future cash flow, projected costs, prospects, plans, objectives of management and expected market growth, product developments and their potential impact and our stock-based compensation estimates and involve known and unknown risks that are difficult to predict. As a result, our actual results, performance or achievements may differ materially from those expressed or implied by these forward-looking statements. In some cases, you can identify forward-looking statements because they contain words such as \"may,\" \"will,\" \"shall,\" \"should,\" \"expects,\" \"plans,\" \"anticipates,\" \"could,\" \"intends,\" \"target,\" \"projects,\" \"contemplates,\" \"believes,\" \"estimates,\" \"predicts,\" \"potential,\" \"goal,\" \"ambition,\" \"objective,\" \"seeks,\" \"outlook,\" or \"continue\" or the negative of these words or other similar terms or expressions that concern our expectations, strategy, plans, or intentions. Such forward-looking statements are necessarily based upon estimates and assumptions that, while considered reasonable by us and our management, are inherently uncertain.",
+      "source": "edgar:8-K ex-99.1",
+      "url": "https://www.sec.gov/Archives/edgar/data/1476840/000147684026000073/exhibit991-8xkq226earnings.htm",
+      "asOf": "2026-08-06",
+      "truncated": true
+    },
+    "proxyStatement": {
+      "text": "Board and director independence:\nDIRECTOR INDEPENDENCE\nOur Executive Committee on behalf of our Board of Directors undertook a review of the Board of\nDirectors' composition, the composition of its committees and the independence of our directors and\nconsidered whether any director has a material relationship with us that could compromise that director's\nability to exercise independent judgment in carrying out that director's responsibilities. Based upon\ninformation requested from and provided by each director, our Executive Committee on behalf of our\nBoard of Directors has affirmatively determined that Mr. Christen , Ms. Liu and Ms. Pao are each an\n\"independent director,\" as defined under the Securities Exchange Act of 1934, as amended (the\n\"Exchange Act\"), and the rules of Nasdaq.\nDIRECTOR NOMINATION PROCESS\nThe Executive Committee on behalf of the Board of Directors is responsible for identifying, evaluating and\nnominating candidates to serve on the Board of Directors and its committees. In evaluating director\ncandidates, the Executive Committee considers the criteria set forth in our Corporate Governance\nGuidelines, as well as any other factors that they deem to be relevant, including:\nthe candidate's executive and directorial experience;\nthe candidate's professional and academic experience relevant to the Company's industry;\nthe strength of the candidate's leadership skills;\nthe candidate's experience in finance and accounting and/or executive compensation practices;\nwhether the candidate has the time required for preparation, participation, and attendance at\nmeetings of the Board of Directors and committee meetings, if applicable;\nwhether the candidate contributes to the mix of experience, backgrounds, qualifications and skills\nof the Board of Directors; and\nExpensify, Inc.\n2026 Proxy Statement\n11\nTable of Contents\nthe candidate's experience at the Company, in the case of director candidates intended to sit on\nthe Executive Committee.\nGenerally, the Executive Committee will consider candidates who have a high level of personal and\nprofessional integrity, strong ethics and the ability to make mature business judgments. The Executive\nCommittee and the Board monitor the mix of specific experience, qualifications and skills of its directors in\norder to assure that the Board, as a whole, has the necessary tools to perform its oversight function\neffectively in light of the Company's business and structure. Although the Executive Committee may\nconsider whether nominees assist in achieving a mix of board members that represents a variety of\nbackground and experience, which is not only limited to race, gender or national origin, we have no formal\npolicy regarding board diversity.\nThe Executive Committee will consider a candidate recommended by a stockholder in a manner\nconsistent with its evaluation of potential nominees.\n\nSecurity ownership:\nSecurity Ownership of Certain Beneficial Owners\nand Management\nThe following table sets forth information with respect to beneficial ownership of our common stock as of\nMarch 27, 2026 for (i) each of our directors, (ii) each person known to us to be the beneficial owner of\nmore than five percent of any class of our voting securities, (iii) each of our named executive officers, and\n(iv) all of our current executive officers and directors as a group.\nWe have determined beneficial ownership in accordance with the rules of the SEC, and thus it represents\nsole or shared voting or investment power with respect to our securities. Unless otherwise indicated\nbelow, to our knowledge, the persons and entities named in the table have sole voting and sole\ninvestment power with respect to all shares that they beneficially owned as of March 27, 2026 , subject to\ncommunity property laws where applicable. We have deemed shares of our common stock subject to\nstock options that are currently exercisable or will be exercisable within 60 days of March 27, 2026 or net\nissuable pursuant to RSUs which are subject to vesting and settlement conditions expected to occur\nwithin 60 days of March 27, 2026 to be outstanding and to be beneficially owned by the person holding\nthe stock option or RSU for the purpose of computing the percentage ownership of that person. However,\nother than the shares of our Class A, LT10 or LT50 common stock net issued upon the vesting and\nsettlement of RSUs as described below, we did not deem these shares subject to stock options or RSUs\noutstanding for the purpose of computing the percentage ownership of any other person or entity. The\npercentage of shares beneficially owned is based on 88,637,254 shares of Class A common stock,\n4,209,827 shares of LT10 common stock and 8,175,283 shares of LT50 common stock outstanding as of\nMarch 27, 2026 .\nUnless otherwise indicated, the address of each beneficial owner listed in the table below is c/o\nExpensify, Inc., 88 Kearny St, Ste 1600, San Francisco, CA 94108.\n42\nExpensify, Inc.\n2026 Proxy Statement\nTable of Contents\nEach of the stockholders listed has sole voting and investment power with respect to the shares\nbeneficially owned by the stockholder unless noted otherwise, subject to community property laws where\napplicable.\nClass A\nLT10\nLT50\nName of Beneficial Owner\nShares\n%\nShares\n%\nShares\n%\n% of\nvoting\npower\nNamed Executive Officers, Directors\nand Director Nominees:\nDavid Barrett (1) ................................................\n2,819,666\n3.1%\n375,356\n8.9%\n3,843,585\n47.0%\n36.7%\nRyan Schaffer (2) ..............................................\n489,661\n*\n498,090\n11.8%\n70,675\n*\n1.7%\nAnu Muralidharan (3) ........................................\n375,091\n*\n*\n*\nJason Mills (4) ....................................................\n499,128\n*\n585,322\n13.9%\n588,423\n7.2%\n6.6%\nDaniel Vidal (5) ..................................................\n518,645\n*\n112,650\n2.7%\n163,586\n2.0%\n1.8%\nTimothy L. Christen ........................................\n198,524\n*\n*\n*\nYing (Vivian) Liu ..............................................\n114,849\n*\n*\n*\nEllen Pao .........................................................\n117,778\n*\n*\n*\nCarlos Alvarez Divo (6) ....................................\n384,495\n*\n218,571\n5.2%\n166,567\n2.0%\n2.0%\nAll current executive officers, directors\nand director nominees as a group\n(8 persons) (7) ...................................................\n5,142,746\n5.7%\n1,789,989\n42.5%\n4,832,836\n59.1%\n48.9%\n5%\nStockholders:\nExpensify Voting Trust (8) ................................\n4,209,827\n100.0%\n8,175,283\n100.0%\n83.6%\nOctopus Head Inc. (9) ......................................\n6,456,400\n7.3%\n%\nSteve McLaughlin (10) ......................................\n9,892,832\n11.2%\n%\nThe Vanguard Group, Inc. (11) ........................\n4,345,937\n4.9%\n%\n* Represents less than 1%.\n\nRelated-person transactions:\nCertain Relationships and Related Party\nTransactions\nEMPLOYMENT ARRANGEMENTS\nFrom January 1, 2025 through March 31, 2026 , Mr. Alvarez Divo received an aggregate of $1,220,163.12\ncash compensation and $252,159.02 stock based compensation in connection with his employment with\nus as Director of Engineering.\nFrom January 1, 2025 through March 31, 2026 , Mr. Mills received an aggregate of $1,650,985.94 cash\ncompensation and $245,358.94 stock based compensation in connection with his employment with us as\nChief Product Officer.\nFrom January 1, 2025 through March 31, 2026 , Mr. Vidal received an aggregate of $1,239,140.91 cash\ncompensation and $187,082.41 stock based compensation in connection with his employment with us as\na Chief Strategy Officer.\nTHE VOTING TRUST AND VOTING TRUST AGREEMENT\nIn connection with the exchange offer, we entered into the Voting Trust Agreement, dated as of November\n9, 2021, with all LT Holders and the Trustees. The Voting Trust Agreement is intended to maintain a\ncentralized decision-making process centered around our employees, encourage our employees to hold\nour common stock for the long-term and provide an orderly process for the conversion and transfer of our\nLT10 and LT50 common stock pursuant to our amended and restated certificate of incorporation. All of the\noutstanding shares of our LT10 and LT50 common stock are held by the Voting Trust, and will be for the\nforeseeable future pursuant to the terms of the Voting Trust Agreement and our amended and restated\ncertificate of incorporation. From time to time, employees and other service providers may deposit\nadditional voting securities of the company in the Voting Trust, including Class A common stock, and will\nenter into a joinder agreement to become a party to the Voting Trust Agreement if such employee is not\nthen a party. Shares of Class A common stock held by the Voting Trust may be withdrawn by their\nbeneficial holder in certain circumstances.",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/1476840/000147684026000020/exfy-20260410.htm",
+      "asOf": "2026-04-10",
+      "truncated": true
+    },
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T21:37:08.616Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T21:37:08.616Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T21:37:08.616Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T21:37:08.616Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T21:37:08.616Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T21:37:08.616Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T21:37:08.616Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T21:37:08.616Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T21:37:08.616Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T21:37:08.616Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T21:37:08.616Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T21:37:08.616Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-10-02T21:37:08.616Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-10-02T21:37:08.616Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-10-02T21:37:08.616Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-10-02T21:37:08.616Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-10-02T21:37:08.616Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-10-02T21:37:08.616Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T21:37:08.616Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T21:37:08.616Z"
+    }
+  ],
+  "sbc": [
+    14574000,
+    52332000,
+    41212000,
+    33537000,
+    26578000
+  ]
+}
