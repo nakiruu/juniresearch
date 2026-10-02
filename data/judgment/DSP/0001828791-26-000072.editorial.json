@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "76feef39c975ed5c7be51ad22fd995a9e3636cc06db3e38a6ec92a595ad7338b",
-  "reviewedAt": "2026-10-02T21:25:45Z",
+  "judgmentSha256": "7d4ea5a79edfc96cbc727c9058f59774b8de0b4ae52425053506a36092a579e9",
+  "reviewedAt": "2026-10-02T21:26:32Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved",
   "findings": [
     {
       "id": "F-1",
@@ -112,8 +112,8 @@
       "quote": "Customer concentration: the 10-Q says Viant receives a significant amount of revenue from a select number of advertising agency holding companies, and that losing advertising agencies as customers could harm the business.",
       "issue": "Restatement, not judgment. idiosyncratic[0], [1] and [2] each paraphrase a line from the 10-Q risk-factor summary. None gives a view on likelihood, the mechanism, the size of the hit relative to the figures on the page, or what to watch. Agency concentration is also restated in scenarioCommentary (\"because revenue depends on a small number of agency holding companies\") and in finalRecommendation.body[1]. That makes the risks section the third telling of the claim, not the place where it is argued.",
       "fix": "Make each item argue. Say how the risk would show up in the reported figures, for example contribution ex-TAC growth already trailing revenue (24% against 34%). Tie it to the Bear scenario's -30.6% and name what to watch. Then cut the agency-concentration restatement from scenarioCommentary down to a pointer.",
-      "status": "open",
-      "note": "Partly fixed. Each item now has an 'In our view' sentence, but none ties the risk to a figure on the page (for example contribution ex-TAC growth of 24% against revenue growth of 34%, or the Bear case's -30.6%) or says what to watch. scenarioCommentary still restates 'because revenue depends on a small number of agency holding companies' word for word instead of pointing to Risks."
+      "status": "addressed",
+      "note": "Each risk item now gives a what-to-watch tied to a figure on the page: the 34% second-quarter growth pace, the trailing 44.5% gross margin, and CTV activity. scenarioCommentary now points to Risks instead of restating agency concentration."
     },
     {
       "id": "F-12",
@@ -152,7 +152,8 @@
       "quote": "Base carries the most weight because it requires only that Viant meets consensus revenue without a step-up in margins.",
       "issue": "This contradicts the rewritten Base driver. The driver now requires Viant to deliver 'close to consensus revenue and earnings' with the 20.3x NTM multiple held as estimates roll toward FY27E. Consensus EPS moves from FY25 diluted EPS of $0.36 to $0.60 for FY26E and $0.79 for FY27E, while consensus revenue moves from $344.2M to $533M. Earnings growing much faster than revenue is a step-up in margins, even on an adjusted basis. The case for Base carrying 45% of the weight therefore rests on a premise the Base driver no longer holds.",
       "fix": "Make the two agree. Either argue Base's weight on its real requirement, which is that consensus earnings arrive and the multiple holds (with margin improvement), or reword the driver so it does not depend on consensus earnings.",
-      "status": "open"
+      "status": "addressed",
+      "note": "scenarioCommentary now says Base needs the consensus path, including the margin improvement implied by EPS rising faster than revenue, at an unchanged forward multiple. That matches the Base driver."
     },
     {
       "id": "F-16",
@@ -161,7 +162,8 @@
       "quote": "Capital V, which the brothers jointly own, and the group figure together account for the majority control described in Governance.",
       "issue": "This misstates who holds control. The proxy says the majority sits with the 'Vanderhook Parties', which are Tim Vanderhook, Chris Vanderhook and Capital V LLC. The 29.43% group figure covers all six executive officers and directors, including Larry Madden and the three independent directors, so adding it to Capital V's stake counts non-family holders in the controlling bloc.",
       "fix": "Describe the majority as the proxy does: Capital V's 42.86% together with Tim Vanderhook's 13.63% and Chris Vanderhook's 13.77%, which the proxy puts above 50% of voting power. Report the 29.43% group figure separately or drop it.",
-      "status": "open"
+      "status": "addressed",
+      "note": "insiderOwnership now names Capital V, Tim Vanderhook and Chris Vanderhook as the Vanderhook Parties with majority control, as the proxy does, and reports the 29.43% group figure separately."
     },
     {
       "id": "F-17",
@@ -170,7 +172,8 @@
       "quote": "the net cash position gives management room for further tuck-in acquisitions",
       "issue": "This is an unsupported characterization. 'Further tuck-in' calls TVision a tuck-in, but the surface gives no TVision price, size or funding. The excerpt also gives no cash figure, only the TTM net debt/EBITDA of -6.4x. The rest of the paragraph is sound.",
       "fix": "Drop 'tuck-in', for example 'room for further acquisitions', or say that TVision's size is not disclosed in the excerpt.",
-      "status": "open"
+      "status": "addressed",
+      "note": "'Tuck-in' is removed; the text now reads 'room for further acquisitions'."
     },
     {
       "id": "F-18",
@@ -179,7 +182,8 @@
       "quote": "Weak-moderate",
       "issue": "This is left over from F-9. The strength label is still off the scale used by the other factors, which are Moderate and Weak.",
       "fix": "Choose Weak or Moderate. The body already argues that the positioning 'is not a barrier competitors cannot also offer', which points to Weak.",
-      "status": "open"
+      "status": "addressed",
+      "note": "The Independence factor strength is now 'Weak'."
     },
     {
       "id": "F-19",
@@ -188,7 +192,8 @@
       "quote": "Data privacy rules and the loss of tracking signals.",
       "issue": "The pointer is orphaned. The F-14 fix removed data privacy rules from risks.idiosyncratic[1], which now covers cookie restriction, opt-out signals and data access. No section now argues the privacy-rules risk this pointer names.",
       "fix": "Either point to what the section now argues ('Loss of tracking signals and data access'), or restore a correctly attributed privacy sentence in idiosyncratic[1]. The 10-Q lists reduced data availability as a consequence of failing to comply with privacy obligations.",
-      "status": "open"
+      "status": "addressed",
+      "note": "executiveSummary.risks[2] now reads 'Reduced access to data and advertising inventory', which points to idiosyncratic[1] and [2]."
     }
   ]
 }
