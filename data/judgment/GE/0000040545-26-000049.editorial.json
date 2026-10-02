@@ -1,0 +1,185 @@
+{
+  "judgmentSha256": "7cdfd99cf1cc8a195d00d00c98542053c92fe63cf9149954d2a70d94b6cc6cc6",
+  "reviewedAt": "2026-10-02T16:34:50Z",
+  "reviewer": "claude-opus-5-5",
+  "round": 2,
+  "verdict": "needs-fix-round",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "FY23 net income of $9.5B exceeded that year's operating income, which points to non-operating items in that year, and FY25 net income of $8.7B and diluted EPS of $8.14 are a cleaner read of recurring earnings.",
+      "issue": "The income table shows net income above operating income in FY24 ($6.6B vs $5.4B) and FY25 ($8.7B vs $8.5B) as well as FY23, so by the paragraph's own test FY25 also carries non-operating items. Singling out FY23 and calling FY25 'a cleaner read of recurring earnings' is a claim the surface contradicts.",
+      "fix": "Say that net income exceeded operating income in each of FY23, FY24 and FY25, so non-operating items lift every year's bottom line, and that the pack does not let us size them. Drop 'cleaner read of recurring earnings', or anchor recurring earnings to operating income instead.",
+      "status": "addressed",
+      "note": "Addressed: incomeCommentary now says net income exceeded operating income in each of FY23-FY25, that the items cannot be sized, and anchors recurring earnings to operating income."
+    },
+    {
+      "id": "F-2",
+      "severity": "Critical",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "The decline coincides with heavy share repurchases rather than losses, since the company was profitable in each of those years.",
+      "issue": "This is a causal reading the pack does not establish, and the table argues against it. In FY24 equity fell from $28.6B to $19.6B while net income was $6.6B and repurchases were $5.8B. Earnings alone more than offset the buyback, so repurchases cannot account for the drop. Some other equity movement, not on the surface, drove most of it. 'Rather than losses' therefore points the reader to the wrong cause.",
+      "fix": "State the equity decline and the repurchase figures side by side. Say the repurchases explain only part of the FY24 drop and that the pack does not show the remainder. Do not assign a cause.",
+      "status": "addressed",
+      "note": "Addressed: balanceCommentary sets the equity decline beside the repurchases, says buybacks explain only part of the FY24 drop, and assigns no cause."
+    },
+    {
+      "id": "F-3",
+      "severity": "Critical",
+      "field": "sections.businessMoat.moatFactors[2].body",
+      "quote": "A 15.8% FCF margin in FY25 funds both reinvestment and repurchases. Cash generation at that level is evidence of pricing power, but a single strong year does not yet establish durability.",
+      "issue": "Two claims are contradicted elsewhere in the report. First, FY25 repurchases of $7.6B exceeded FCF of $7.3B, which cashflowCommentary itself says, so FCF did not fund both reinvestment and repurchases. Second, incomeCommentary says gross margin is unavailable and 'we cannot separate pricing from mix', so FCF margin is not evidence of pricing power. The same over-reach shows in executiveSummary.thesis.body ('turned a recovering engine franchise into a cash compounder'), which rests on the single year this factor says does not establish durability.",
+      "fix": "Say that FY25 FCF covered capital expenditure but not the full repurchase program. Remove the pricing-power inference. In the thesis, replace 'cash compounder' with a claim the FY24 to FY25 FCF figures support.",
+      "status": "addressed",
+      "note": "Addressed: the factor now says FY25 FCF covered capex but not the full program, the pricing-power inference is gone, and the thesis no longer says 'cash compounder'."
+    },
+    {
+      "id": "F-4",
+      "severity": "Critical",
+      "field": "sections.growth.points[3]",
+      "quote": "Services leverage: growth in the installed fleet feeds MRO and spare-parts demand, which should keep the mix moving toward higher-margin revenue.",
+      "issue": "The pack has no installed-fleet data, no services or equipment mix, and no service margin. durability concedes this ('comes without the installed-base, backlog or segment data'). The point asserts both an unseen mechanism and an unseen mix shift. Similarly, sections.businessMoat.durability asserts that flight activity and defense budgets 'Both have supported results recently', a causal claim with no MD&A, transcript or press release behind it.",
+      "fix": "Restate the point as a hypothesis the pack cannot confirm, or drop it. In durability, keep the cyclical dependence (aftermarket on flight activity, defense on budgets) but delete 'Both have supported results recently'.",
+      "status": "addressed",
+      "note": "Addressed: growth.points[3] is now an explicit hypothesis not built into the numbers, and durability no longer says 'Both have supported results recently'."
+    },
+    {
+      "id": "F-5",
+      "severity": "Critical",
+      "field": "sections.management.leadership",
+      "quote": "We judge management by results instead: the operating margin and free cash flow trends in FY24 and FY25 show a team executing on both growth and conversion.",
+      "issue": "FY24 free cash flow fell to $3.7B from $4.3B in FY23 and FCF margin fell from 12.2% to 9.5%. The FY24 cash-flow trend therefore does not show execution on conversion. The sentence also attributes company results to management, a causal link the pack does not establish.",
+      "fix": "Limit the claim to what the table shows: operating margin rose in FY24 and FY25 and FCF conversion improved in FY25 after weakening in FY24. Say that without a proxy excerpt naming officers or MD&A we do not attribute these results to individuals.",
+      "status": "addressed",
+      "note": "Addressed: leadership now limits itself to what the table shows and declines to attribute results to individuals."
+    },
+    {
+      "id": "F-6",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "The Bull case at $430 needs no heroics on earnings; it needs the market to keep paying today's forward multiple for FY27E.",
+      "issue": "The stated mechanisms do not produce the scenario prices. Today's forward multiple on FY27E is ~31.8x, and at $9.82 that is the current $312.04, not $430. The Bull needs a much higher multiple on FY27E than today's. The Base driver says 'The multiple drifts down modestly', but $355 on FY27E EPS of $9.82 is above today's ~31.8x FY27E multiple, so it is not a contraction on that basis. The Bear's 'both of which have precedent for richly valued industrials' rests on no precedent in the pack, and 'de-rates toward the market' names a market multiple the pack does not carry.",
+      "fix": "Anchor each scenario in words to a multiple on the surface (36.8x trailing, 39.5x NTM, ~31.8x FY27E) and state which earnings base and direction apply, so the implied prices follow from the drivers. Remove the 'precedent' and 'toward the market' claims or ground them.",
+      "status": "addressed",
+      "note": "Addressed: each driver now names a multiple on the surface and an earnings base, and the implied prices follow (Bull near 39.5x on above-consensus FY27E, Base a little below 36.8x on $9.82, Bear about 31.8x on $7.91). 'Precedent' and 'toward the market' are gone. See F-15 for the thesis framing."
+    },
+    {
+      "id": "F-7",
+      "severity": "Important",
+      "field": "sections.finalRecommendation.body[2]",
+      "quote": "What would change our view: growth falling toward the consensus FY26E rate earlier than expected, or repurchases continuing beyond free cash flow while the current ratio weakens further, would move us to HOLD.",
+      "issue": "The Base case, weighted 50%, is 'growth slows to the +10% consensus rate'. Growth falling to the consensus FY26E rate is therefore the central expectation behind the BUY, not a downgrade trigger. Repurchases already exceed free cash flow in FY24 and FY25 and the current ratio has already slipped below one, so the second trigger is the status quo.",
+      "fix": "Name downgrade triggers outside the Base case, for example growth below the consensus FY26E rate, or FY27E EPS consensus falling away from $9.82. Frame the buyback trigger as a change from the current pattern.",
+      "status": "addressed",
+      "note": "Addressed: triggers are now growth below the +10% consensus rate, FY27E EPS falling away from $9.82, and a debt-funded step-up in repurchases. All three are changes from the Base case."
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "analystCommentary; sections.valuation.multiplesCommentary; sections.valuation.scenarioCommentary; sections.finalRecommendation.body[1]",
+      "quote": "We set a $330–$390 target range, below the $396.81 consensus target, because the bear case is real",
+      "issue": "The same claim, that our range sits below consensus because we weight the bear case, appears in four places. analystCommentary has the quoted text. multiplesCommentary has 'Our range sits below the consensus target because we weight the bear case more heavily than the street'. scenarioCommentary has 'we hold our target range below the consensus target'. finalRecommendation.body[1] has 'We sit below the consensus target because the bear case at $255 is a plausible outcome'. The 'bear case is real / a real scenario' phrasing is also a tic, and it echoes the house brief's wording.",
+      "fix": "Argue the gap to consensus once, in scenarioCommentary. In the other places, point to it in a few words or drop it.",
+      "status": "addressed",
+      "note": "Addressed: the gap to consensus is argued once in scenarioCommentary. analystCommentary points to Valuation, and the 'bear case is real' tic is gone."
+    },
+    {
+      "id": "F-9",
+      "severity": "Important",
+      "field": "sections.financials.cashflowCommentary; sections.management.capitalAllocation; sections.risks.idiosyncratic[3]; analystCommentary",
+      "quote": "Share repurchases were $5.8B in FY24 and $7.6B in FY25, above free cash flow in both years.",
+      "issue": "Three sections tell the 'repurchases ran ahead of free cash flow' story, and two of them restate the figures. cashflowCommentary has the quoted text. capitalAllocation has 'The company bought back $7.6B of stock in FY25, more than its free cash flow'. risks.idiosyncratic[3] has 'repurchases of $7.6B in FY25 exceeded free cash flow of $7.3B'. analystCommentary and finalRecommendation.body[1] and [2] retell it again. The small dividend is also made twice: cashflowCommentary 'the payout is a small claim on cash beside the buyback' and capitalAllocation 'Dividends are a small use of cash at a 0.60% yield'.",
+      "fix": "Make the buyback-versus-FCF argument once, in capitalAllocation, where the judgment belongs. Have cashflowCommentary state the figures without the verdict, and have the risk item point back in words. Keep the dividend remark in one section.",
+      "status": "addressed",
+      "note": "Addressed: the argument sits in capitalAllocation, cashflowCommentary states figures without a verdict, the risk item and the exec risk point back, and the dividend remark appears once."
+    },
+    {
+      "id": "F-10",
+      "severity": "Important",
+      "field": "analystCommentary; sections.valuation.multiplesCommentary; sections.growth.points[2]; sections.risks.idiosyncratic[1]",
+      "quote": "Consensus FY26E EPS of $7.91 sits below FY25 diluted EPS of $8.14 on the figures as presented",
+      "issue": "The FY26E EPS 'dip' is told four times. It is in analystCommentary, in multiplesCommentary ('that dip in FY26E consensus EPS'), in growth.points[2] ('a rebound from the FY26E EPS dip') and in risks.idiosyncratic[1] ('consensus EPS of $7.91 sits below the FY25 level'). Only the first carries the 'on the figures as presented' hedge. That hedge is warranted: the comparison sets reported diluted EPS against a consensus mean, and incomeCommentary already notes non-operating items in reported net income. The later three treat the dip as an established earnings decline.",
+      "fix": "State the comparison once and carry the basis caveat with it: reported diluted EPS against a consensus mean, possibly not like for like. Elsewhere, refer back in words, and do not build a risk item on a dip the report itself qualifies.",
+      "status": "addressed",
+      "note": "Addressed: the FY26E-vs-FY25 EPS comparison appears once, in multiplesCommentary, with the basis caveat. growth.points[2] points back, and the risk item no longer builds on the dip."
+    },
+    {
+      "id": "F-11",
+      "severity": "Important",
+      "field": "sections.growth.points",
+      "quote": "Second-quarter momentum: Q2'26 revenue of $13.3B grew faster than FY25's full-year rate, so the business entered the second half with growth accelerating rather than slowing.",
+      "issue": "No growth point names the reading that cuts the other way. Points [0]-[4] are all bullish, and [1] frames the consensus deceleration only as a route to upside. Point [0] also draws 'accelerating' from one quarter set against a full-year average, with no Q1'26 or prior-quarter series on the page.",
+      "fix": "Add a counter-case sentence built on figures already on the page, for example that consensus FY26E growth of +10% sits well below the Q2'26 pace. Soften 'accelerating rather than slowing' to the comparison the page supports: Q2'26 growth of +21.1% against FY25's +18.5%.",
+      "status": "addressed",
+      "note": "Addressed: points[0] now reads 'one quarter set against a full-year rate, not yet a trend', and points[1] is an explicit counter-case built on the +10% consensus rate."
+    },
+    {
+      "id": "F-12",
+      "severity": "Important",
+      "field": "sections.management.governance",
+      "quote": "We see nothing in that disclosure that raises a governance concern.",
+      "issue": "The section restates the proxy's related-person review process almost line by line and then gives a one-line all-clear. It does not read the Fidelity relationship for the holder, for example what a five-percent holder also acting as plan recordkeeper means for independence. It also does not say that the truncated excerpt carries no board composition, independence or executive pay, which the brief requires when governance material is not captured. The 'all-clear' could be read as covering governance generally.",
+      "fix": "Cut the process restatement to one clause and say what the Fidelity arrangement means, or does not mean, for a holder. Add that the excerpt does not cover board independence or executive pay, so we make no claim about either.",
+      "status": "addressed",
+      "note": "Addressed: the process is cut to one clause, the Fidelity tie is read for the holder, and the section states the excerpt does not cover board composition, independence or pay."
+    },
+    {
+      "id": "F-13",
+      "severity": "Minor",
+      "field": "sections.management.leadership; sections.management.governance",
+      "quote": "Under the 2026-03-12 proxy statement",
+      "issue": "ISO dates remain in prose: governance opens 'Under the 2026-03-12 proxy statement' and leadership says 'dated 2026-03-12'. The rubric asks for dates in prose form.",
+      "fix": "Write 'March 12, 2026'.",
+      "status": "open",
+      "note": "Still open: both ISO dates survive the rewrite (governance wording changed from 'Per' to 'Under'). This finding was not carried into the author's brief, whose Editorial findings block stops at F-12, so the author never saw it."
+    },
+    {
+      "id": "F-14",
+      "severity": "Minor",
+      "field": "sections.financials.balanceCommentary; sections.financials.cashflowCommentary",
+      "quote": "it stands at {- 0.98 -} on a trailing basis",
+      "issue": "Spans wrap levels, not signed changes: balanceCommentary 'it stands at {- 0.98 -} on a trailing basis' and, new in this rewrite, cashflowCommentary 'and then {+ 15.8% +}'. Spans are reserved for signed changes or explicit positives and negatives.",
+      "fix": "Remove both spans, or wrap the explicit judgment instead, for example '{- below one -}'.",
+      "status": "open",
+      "note": "Still open: '{- 0.98 -}' is unchanged, and the rewrite added '{+ 15.8% +}' around a level. Like F-13, this finding was missing from the author's brief."
+    },
+    {
+      "id": "F-15",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body; analystCommentary; sections.valuation.multiplesCommentary",
+      "quote": "The thesis is that FY27E consensus is achievable and the market will keep paying for it.",
+      "issue": "The headline thesis does not match the mechanism behind the BUY. Today the market pays ~31.8x on FY27E EPS of $9.82, which is the current $312.04. If consensus arrives and the market 'keeps paying' that multiple, the shares do not move. The Base price of $355 needs a higher multiple on FY27E, which scenarioCommentary concedes: 'still above the multiple the market pays on FY27E now'. analystCommentary makes the same slip: 'That multiple holds only if the street's FY27E numbers arrive' implies holding the multiple is the upside. The upside in Base and Bull therefore comes from a re-rating on FY27E, and neither summary field says so. Separately, multiplesCommentary says '$9.82 is the earnings base our scenarios rest on', but the Bear rests on $7.91.",
+      "fix": "In the thesis and analystCommentary, say the BUY needs both FY27E delivery and the market paying more for FY27E earnings than it does today, settling near the trailing multiple as FY27E becomes the near-term base, which is what the Base driver argues. In multiplesCommentary, say the Bull and Base rest on $9.82 and the Bear on FY26E-level earnings.",
+      "status": "open"
+    },
+    {
+      "id": "F-16",
+      "severity": "Important",
+      "field": "analystCommentary; sections.executiveSummary.risks[0]; sections.executiveSummary.risks[1]; sections.finalRecommendation.body[1]",
+      "quote": "The risks we weigh most are thin liquidity, with a trailing current ratio of 0.98, and a multiple that leaves little room for a growth miss.",
+      "issue": "The summary fields say the same thing twice. analystCommentary's closing sentence repeats executiveSummary.risks[0] ('a 36.8x trailing P/E leaves little room for a growth miss', with the same phrase) and risks[1] ('the trailing current ratio is below one'). The thesis counter-case makes the liquidity point a third time ('the balance sheet carries less liquidity than the earnings suggest'), before balanceCommentary and risks.idiosyncratic[0] and [2] argue both. finalRecommendation.body[1] ('our Bear price of $255 sits below the 52-week low') also retells the Bear driver ('the price breaks the $268.91 52-week low').",
+      "fix": "Cut the risk sentence from analystCommentary, or make it a few-word pointer to Risks, and leave the exec-summary risk list as the only summary statement. In finalRecommendation.body[1], use a figure the page renders, such as the reward/risk or the bear-case downside, rather than repeating the Bear-versus-low comparison.",
+      "status": "open"
+    },
+    {
+      "id": "F-17",
+      "severity": "Important",
+      "field": "sections.businessMoat.moatFactors[0]",
+      "quote": "The operating margin gains from FY23 to FY25 are consistent with a growing high-margin service stream, though we lack the split to prove it.",
+      "issue": "The pack carries no service mix, service growth or service margin, and growth.points[3] concedes there is 'no installed-base, mix or service-margin data'. The words 'growing' and 'high-margin' therefore describe the service stream from outside the surface, even inside a hedge. This is the only factor rated 'Strong', yet it is the only one with no figure behind it. 'Cash generation', which the table does support, is rated Moderate, and durability says the available evidence does not show how long the advantage lasts. The strength grades run the opposite way to the evidence.",
+      "fix": "Drop 'growing' and 'high-margin'. Say the pack does not let us attribute the margin gains to services. Either rate the factor Moderate, or ground the Strong rating in something on the surface, for example the company description's pairing of engine sales with MRO and spare parts, and say what would confirm it.",
+      "status": "open"
+    },
+    {
+      "id": "F-18",
+      "severity": "Important",
+      "field": "sections.executiveSummary.companyOverview; sections.businessMoat.segments[0].body; sections.businessMoat.moatFactors[1].body",
+      "quote": "Defense & Propulsion Technologies spans engines, avionics, power systems and named component brands such as Avio Aero, Unison, Dowty Propellers and Colibrium Additive.",
+      "issue": "The company description is told three times. companyOverview describes both segments and lists the brands 'Avio Aero, Unison, Dowty Propellers and Colibrium Additive'. segments[0].body re-describes both segments in its 'Qualitatively, ...' paragraph ('turboprop engines, transmissions, propeller systems and sensors'). moatFactors[1] lists the same brands again. The moat factor's only judgment is 'That breadth ... diversifies the customer base', which no figure supports and which names no counter-case.",
+      "fix": "Keep the description in companyOverview. Limit segments[0].body to the source disagreement and the choice of the consolidated figure. Have moatFactors[1] say what breadth does for the moat without listing the brands again, and add the counter-case: with no segment revenue, the defense share cannot be sized, so the diversification cannot be either.",
+      "status": "open"
+    }
+  ]
+}

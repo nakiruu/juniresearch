@@ -1,0 +1,284 @@
+{
+  "judgmentSha256": "84c633281ee833ef9f5e452551052ecaf69a223f9f6471579e965d250568a5c4",
+  "reviewedAt": "2026-10-02T16:39:30Z",
+  "reviewer": "claude-opus-5-5",
+  "round": 2,
+  "verdict": "needs-fix-round",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "The gap between trailing and forward multiples reflects the step from FY25 diluted EPS to the FY26E consensus of $3.12, which sits inside management's raised adjusted EPS range.",
+      "issue": "Wrong period and wrong basis. The 18.4x trailing P/E is a TTM multiple ($40.54 / 18.4x is about $2.20 of trailing EPS), not FY25's $1.96, so the gap does not reflect a step from FY25 EPS. The sentence also bridges GAAP diluted EPS ($1.96) to a consensus figure it then places inside management's adjusted EPS range, mixing GAAP and adjusted bases and overstating the earnings step.",
+      "fix": "Describe the gap as trailing (TTM) earnings versus the FY26E consensus of $3.12, without naming FY25 EPS as the starting point. If the consensus is compared with the $2.90–$3.40 adjusted range, say the comparison is on an adjusted basis and do not pair it with a GAAP figure.",
+      "status": "addressed",
+      "note": "Rewrite describes the gap as trailing earnings to the $3.12 FY26E consensus, drops FY25 EPS as the starting point, and labels the range comparison as adjusted-basis."
+    },
+    {
+      "id": "F-2",
+      "severity": "Critical",
+      "field": "analystCommentary",
+      "quote": "management raised its 2026 outlook for a second time in the August 3, 2026 release",
+      "issue": "Unsupported count. The release says only that the company is 'raising our 2026 guidance once again'. Nothing on the surface establishes that this was the second raise and not the third. The thesis correctly says 'once more'.",
+      "fix": "Write 'raised its 2026 outlook again' or quote 'once again', as the thesis does.",
+      "status": "addressed",
+      "note": "Now reads 'raised its 2026 outlook again'."
+    },
+    {
+      "id": "F-3",
+      "severity": "Critical",
+      "field": "analystCommentary",
+      "quote": "The cost was margin: SG&A grew faster than sales in Q2'26, so operating income slipped even as gross margin held.",
+      "issue": "Unsupported causal framing. Coming straight after the preseason sentence, 'The cost was margin' presents the SG&A increase as the price of the stronger preseason and raised outlook. The captured MD&A is cut off before any SG&A explanation, and no source on the surface says why SG&A rose from 11.2% to 13.9% of sales.",
+      "fix": "Drop 'The cost was margin' and state the arithmetic only: SG&A rose faster than sales in Q2'26 and operating income fell. Note that the cause is not given in the excerpt held.",
+      "status": "addressed",
+      "note": "'The cost was margin' is gone; analystCommentary states the arithmetic and says the excerpt held does not give the reason."
+    },
+    {
+      "id": "F-4",
+      "severity": "Critical",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "The current ratio of 2.16 on a trailing basis compares with 2.78 at FY25 year-end, consistent with the seasonal build in inventory and receivables ahead of winter.",
+      "issue": "The inference runs the wrong way and no source makes it. A build in inventory and receivables raises current assets, which lifts the current ratio unless current liabilities grow faster. Nothing on the surface shows current liabilities or short-term borrowing rising. The period behind the 2.16 'trailing' figure is also left unstated.",
+      "fix": "State the two ratios and their periods without a mechanism. If a mechanism is wanted, tie it to a sourced figure, for example the $25.2 million of first-half operating cash use, and say what the decline means for liquidity.",
+      "status": "addressed",
+      "note": "The seasonal-build mechanism is gone; both ratios are dated (TTM through Q2'26 vs FY25 year-end) and read for liquidity."
+    },
+    {
+      "id": "F-5",
+      "severity": "Critical",
+      "field": "sections.businessMoat.durability",
+      "quote": "Input costs have become less of a drag: raw steel purchases equaled about 6.1% of revenue in 2025, against 10.0% in 2023",
+      "issue": "Over-generalized inference. The risk factor reports steel purchases as a share of revenue, one input that also moves with revenue, and 2023 was a low-revenue year. It does not say input costs became less of a drag. The 10-Q Business Update in Context warns the other way, about tariffs, materials, and freight tied to the war in Iran.",
+      "fix": "Limit the claim to what the source gives: raw steel purchases fell from about 10.0% of revenue in 2023 to about 6.1% in 2025. Put it next to the 10-Q's warning on tariff and freight costs rather than presenting it as an easing of input costs overall.",
+      "status": "addressed",
+      "note": "durability now limits the claim to raw steel purchases as a share of revenue, notes the ratio moves with revenue, and sets it against the 10-Q Business Update warning."
+    },
+    {
+      "id": "F-6",
+      "severity": "Critical",
+      "field": "sections.growth.points[2]",
+      "quote": "though the filing does not separate its sales",
+      "issue": "Describes a document the pack carries only in part. The MD&A excerpt is marked truncated, so the surface cannot establish that the 10-Q nowhere breaks out Venco Venturo's sales.",
+      "fix": "Write 'the excerpt we hold does not separate its sales', the same scoping used in the governance and insider-ownership fields.",
+      "status": "addressed",
+      "note": "Now reads 'the excerpt we hold does not separate its sales'."
+    },
+    {
+      "id": "F-7",
+      "severity": "Critical",
+      "field": "sections.management.leadership",
+      "quote": "The August 3, 2026 earnings release quotes Van Genderen and Lauber in those roles, so the team was unchanged as of the quarter's report.",
+      "issue": "The inference goes beyond the source. The release names only Van Genderen and Lauber. It does not mention Christopher E. Bernauer, so it cannot confirm that the whole team named in the March 20, 2026 proxy was unchanged.",
+      "fix": "Say the release confirms Van Genderen and Lauber in their roles as of August 3, 2026. Either drop 'the team was unchanged' or limit it to those two officers.",
+      "status": "addressed",
+      "note": "Now says the release confirms Van Genderen and Lauber in their roles as of August 3, 2026; 'the team was unchanged' is gone."
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[1].driver",
+      "quote": "consensus FY26E EPS holds, Solutions stays near its 2025 level, and the forward multiple holds at about its current level.",
+      "issue": "The Base anchor does not reach the Base price. The 13.0x forward (NTM) multiple on the $3.12 FY26E consensus returns roughly the current $40.54 price, and the midpoint of the adjusted EPS range gives a similar figure. That is not $47, so the +16% Base upside behind the BUY has no stated source. Two other passages compound this. scenarioCommentary says the range sits below the Street 'because we give the bear case a full quarter of the probability', although Bull carries the same 25%, so the weighting is symmetric and cannot explain the shortfall. finalRecommendation.body[0] says 'the forward multiple prices in much of the consensus earnings step-up', which argues that little upside remains and contradicts a Base above the current price.",
+      "fix": "Anchor the $47 to something on the surface, such as a named multiple applied to a named EPS figure (for example a re-rating toward a stated level, argued in words), or reset the Base price to what the stated anchor gives and recheck the derived label. Rewrite the 'below the Street' reason in scenarioCommentary and the 'prices in' sentence in finalRecommendation.body[0] so they agree with the anchor.",
+      "status": "addressed",
+      "note": "Base is now anchored in words to FY27E consensus EPS at a multiple partway between today's FY27E multiple and the trailing multiple ($47 is about 14.5x $3.23); scenarioCommentary and finalRecommendation.body[0] now agree that the upside comes from re-rating. The basis problem in that anchor is raised separately as F-27."
+    },
+    {
+      "id": "F-9",
+      "severity": "Important",
+      "field": "analystCommentary; sections.executiveSummary.thesis.body; sections.valuation.scenarioCommentary; sections.finalRecommendation.body[0]",
+      "quote": "We rate the shares a BUY with a $44–$50 target range.",
+      "issue": "The rating sentence is repeated with small wording changes in analystCommentary ('We rate the shares a BUY with a $44–$50 target range.'), the thesis ('We rate PLOW a BUY with a $44–$50 target range.') and finalRecommendation.body[0] ('We rate Douglas Dynamics a BUY with a $44–$50 target range'). The reason the range sits below the Street is also given three times, and the reasons differ: the thesis ('because the raised outlook still assumes average fourth-quarter snowfall'), scenarioCommentary ('because we give the bear case a full quarter of the probability') and finalRecommendation.body[0] ('because the outlook rests on average fourth-quarter snowfall').",
+      "fix": "State the rating and range once at the top. Give one reason for the below-Street range, in the valuation section, consistent with the Base anchor, and have the other places refer to it in words.",
+      "status": "addressed",
+      "note": "The rating and range are stated once (analystCommentary); the below-Street reason is given once in scenarioCommentary and the thesis points to it. Repetition of the re-rating argument is raised separately as F-24."
+    },
+    {
+      "id": "F-10",
+      "severity": "Important",
+      "field": "sections.executiveSummary.risks[0]; analystCommentary; thesis.body; catalysts[3]; risks.idiosyncratic[0]; finalRecommendation.body[0]",
+      "quote": "The 2026 outlook assumes average fourth-quarter snowfall in core markets",
+      "issue": "The claim that the outlook assumes average fourth-quarter snowfall appears in six places: analystCommentary ('The outlook assumes average snowfall in the fourth quarter of 2026'), the thesis ('the raised outlook still assumes average fourth-quarter snowfall'), catalysts[3] ('the outlook's average-snowfall assumption'), executiveSummary.risks[0], risks.idiosyncratic[0] ('the 2026 outlook explicitly assumes average snowfall in the fourth quarter') and finalRecommendation.body[0] ('the outlook rests on average fourth-quarter snowfall').",
+      "fix": "Argue it once, in risks.idiosyncratic[0] with its mechanism. Keep a one-line pointer in executiveSummary.risks[0] and remove the restatements from analystCommentary, the thesis, catalysts[3] and finalRecommendation.",
+      "status": "addressed",
+      "note": "The outlook's average-snowfall assumption now appears only as the pointer in executiveSummary.risks[0] and the argument in risks.idiosyncratic[0]. Residual mechanism and what-to-watch repetition is raised as F-26."
+    },
+    {
+      "id": "F-11",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary; sections.financials.cashflowCommentary; sections.valuation.scenarioCommentary; sections.businessMoat.durability",
+      "quote": "FY23's revenue decline of 7.8% shows how far a poor snow year can pull the top line.",
+      "issue": "The FY23 low-snow story is told in four sections: incomeCommentary (quoted), cashflowCommentary ('FCF margin was 0.5% in FY23, a low-snow year, which is the cash-flow version of the weather risk'), scenarioCommentary ('the FY23 revenue decline shows the company has been there before') and durability ('the season ended March 31, 2023, when major I-95 corridor cities saw no measurable snowfall').",
+      "fix": "Make the FY23 precedent once, most naturally in scenarioCommentary as support for the Bear price. Elsewhere refer to 'the FY23 precedent' in words or drop it.",
+      "status": "addressed",
+      "note": "The FY23 precedent is made once, in scenarioCommentary; capitalAllocation refers back to 'the FY23 precedent' in words, and the income, cash-flow and durability retellings are gone."
+    },
+    {
+      "id": "F-12",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[1]; sections.growth.points[3]",
+      "quote": "Management is cutting costs and refocusing sales efforts, but if municipal demand also cools the segment loses its offset.",
+      "issue": "The Solutions argument, with commercial softness offset by municipal strength and management's sales, marketing and cost actions, is argued in both growth.points[3] ('Solutions growth rests on municipal demand, where the company is adding capacity, while it takes targeted actions on sales, marketing and costs in the softer commercial lines') and risks.idiosyncratic[1]. The executive-summary pointers catalysts[2] and risks[1] also cover it.",
+      "fix": "Argue the cost actions and municipal offset in one section. Let the other section make only its distinct point, for example the downside if municipal demand cools, without retelling the actions.",
+      "status": "addressed",
+      "note": "risks.idiosyncratic[1] now makes only the downside if municipal demand cools; the actions and offset are argued in growth.points[3]."
+    },
+    {
+      "id": "F-13",
+      "severity": "Important",
+      "field": "sections.management.capitalAllocation; sections.financials.cashflowCommentary",
+      "quote": "The dividend is the main channel, with buybacks a smaller supplement.",
+      "issue": "Paraphrase repetition: cashflowCommentary already makes this claim ('Shareholder returns lean on the dividend: FY25 dividends paid were $27.9M, against share repurchases of $6M.').",
+      "fix": "Make the dividend-versus-buyback point once. In capitalAllocation, use it to reach a view, for example whether the dividend is covered through a weak-snow year, rather than restating it.",
+      "status": "addressed",
+      "note": "cashflowCommentary no longer carries the mix point; capitalAllocation uses it to reach a view on dividend coverage through a weak winter."
+    },
+    {
+      "id": "F-14",
+      "severity": "Important",
+      "field": "sections.growth.points[4]; sections.valuation.multiplesCommentary",
+      "quote": "which leaves room for upside if snowfall stays favorable but also assumes no further boost from weather.",
+      "issue": "The same reading appears in two sections. multiplesCommentary says 'FY27E consensus EPS of $3.23 implies only modest growth after this year, which we read as the Street assuming snowfall normalizes'. growth.points[4] repeats it for FY27E revenue, and there it is stated as fact ('assumes') rather than as the desk's reading, though nothing on the surface says what consensus assumes.",
+      "fix": "Keep the reading in one section, framed as the desk's reading, and drop or repurpose the other.",
+      "status": "addressed",
+      "note": "The FY27E revenue point is gone; the reading stays only in multiplesCommentary, framed as the desk's reading."
+    },
+    {
+      "id": "F-15",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body; sections.financials.incomeCommentary",
+      "quote": "Q2'26 net sales grew {+ 10.4% +} on the 10-Q's figure",
+      "issue": "The source disagreement on Q2'26 growth (10% snapshot, 10.5% TTM line, 10.4% 10-Q) is resolved in incomeCommentary ('we use the filing's 10.4%'). The thesis flags the source choice a second time. Rubric item 8 treats saying it twice as a repetition finding.",
+      "fix": "Note the disagreement and the choice once, in incomeCommentary. In the thesis, write the growth without the source tag or describe it in words.",
+      "status": "addressed",
+      "note": "The thesis no longer tags the source; the disagreement is resolved once, in incomeCommentary."
+    },
+    {
+      "id": "F-16",
+      "severity": "Important",
+      "field": "sections.management.governance; sections.financials.balanceCommentary; sections.management.leadership; sections.management.capitalAllocation",
+      "quote": "Governance facts come from the proxy statement filed March 20, 2026, which covers 2025.",
+      "issue": "Restatement without judgment. balanceCommentary lists total debt, the current ratio, the interest-expense ratio, the liquidity caveat and the IEEPA refunds without saying whether the balance sheet supports or constrains the thesis. leadership lists names, titles and dates. capitalAllocation lists the Q2'26 return, the dividend-led mix, the acquisition and spending deferrals. governance lists pay targets, the April 2025 say-on-pay vote and the related-party statement. None reaches a view a holder can act on. For example, nothing says what the 160% LTI target or the first full year under a new CEO implies, or whether $156.4M of debt is a concern given the 10-Q's short-term liquidity caveat.",
+      "fix": "Give each field a judgment sentence grounded in its figures, with the counter-reading, and cut the facts that do not support it.",
+      "status": "addressed",
+      "note": "Each field now reaches a view with a counter-reading: balance sheet supports the thesis in a normal year, leadership's first full-year test, dividend coverage, pay structure. The new governance judgment sentence has its own grounding problem, raised as F-28."
+    },
+    {
+      "id": "F-17",
+      "severity": "Important",
+      "field": "sections.management.insiderOwnership",
+      "quote": "Institutions dominate the register as reported in the March 2026 proxy",
+      "issue": "Two problems. First, the holdings are listed but not read for the holder: the field never says what five institutions each holding 5.86%–10.27% mean for control, liquidity or activism risk, and 'dominate' is asserted without a combined figure on the surface. Second, only Conestoga's source date is captured (13G/A as of December 31, 2023). Footnotes (2)–(5) are not in the excerpt, and the proxy says holdings are 'as of the Record Date (or such other date as is indicated)', so the other four stakes may also be 13G-dated. Attributing them all to 'the March 2026 proxy' presents them as current without support.",
+      "fix": "Replace 'dominate' with what the excerpt shows, and add a sentence on what the concentrated institutional register means for a holder. Say that the as-of dates for the other four holders are not in the excerpt held.",
+      "status": "addressed",
+      "note": "'dominate' is gone, the four undated holdings are flagged as undated in the excerpt held, and a holder reading on concentration is added."
+    },
+    {
+      "id": "F-18",
+      "severity": "Important",
+      "field": "sections.executiveSummary.catalysts[1]",
+      "quote": "Collection of the remaining IEEPA tariff refunds the company has recorded as a receivable would add cash and has already lowered cost of sales.",
+      "issue": "Two problems. The receivable is approximately $2.8 million against a ~$935.5M market cap, which is too small to be a catalyst a holder can act on. And per the 10-Q, refunds reduced cost of sales only for goods already sold; the rest reduced Inventories. The sentence attributes the whole receivable to cost of sales.",
+      "fix": "Replace it with a catalyst of thesis-relevant size, or keep the refund as a sentence in balanceCommentary. If kept, say the refunds reduced cost of sales or inventories, as the 10-Q does.",
+      "status": "addressed",
+      "note": "The IEEPA item is out of the catalysts and now sits in balanceCommentary with the cost-of-sales or inventories split as the 10-Q gives it."
+    },
+    {
+      "id": "F-19",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "For context, FY25 diluted EPS of $1.96 and operating margin were both below FY24's $2.36 and 15.6%",
+      "issue": "Restatement of Facts-block figures with no reading. The risk factors say FY24 results were hurt by low snowfall, yet FY24 shows the higher EPS and margin. The comparison raises that question and leaves it unanswered, so the sentence does no analytical work.",
+      "fix": "Either explain what the FY24-versus-FY25 comparison says about the earnings base, with sourced support, or cut the sentence.",
+      "status": "addressed",
+      "note": "The FY24-versus-FY25 sentence is cut."
+    },
+    {
+      "id": "F-20",
+      "severity": "Minor",
+      "field": "sections.financials.incomeCommentary; sections.businessMoat.segments[0].body",
+      "quote": "operating margin narrowed to {- 16.5% -} from 19.0%",
+      "issue": "Spans wrap levels, not signed changes: '{- 16.5% -}' here and 'a {- 10.3% -} margin' in businessMoat.segments[0].body.",
+      "fix": "Remove the spans, or wrap only a signed change.",
+      "status": "open",
+      "note": "Unchanged: incomeCommentary still has 'operating margin narrowed to {- 16.5% -} from 19.0%' and segments[0].body still has 'a {- 10.3% -} margin'. Neither was declined with a note."
+    },
+    {
+      "id": "F-21",
+      "severity": "Minor",
+      "field": "sections.businessMoat.moatFactors[1].body",
+      "quote": "A snowy year therefore lifts consolidated margins through mix as well as volume, and a dry year works in reverse.",
+      "issue": "'Attachments margin structure' describes a cyclical mix effect that works both ways with the weather. It is not a durable competitive advantage, so it weakens the NARROW moat case rather than supporting it.",
+      "fix": "Recast the factor as the source of the advantage behind Attachments' higher margins, such as the brands or the distributor network, or move the mix point to the financials or risks.",
+      "status": "open",
+      "note": "Unchanged: moatFactors[1] is still 'Attachments margin structure' with the same weather-mix body, and it was not declined with a note."
+    },
+    {
+      "id": "F-22",
+      "severity": "Minor",
+      "field": "sections.businessMoat.moatFactors[2].strength; sections.businessMoat.segments[0].name",
+      "quote": "Narrow",
+      "issue": "The strength label 'Narrow' reuses the moat-rating vocabulary, while the other factors use 'Moderate'. Separately, the only segment entry is named 'Consolidated', but its body discusses Work Truck Attachments and Work Truck Solutions.",
+      "fix": "Use a consistent strength scale such as Weak, Moderate or Strong. Name the segment entry for what it covers, or split it into the two 10-Q segments.",
+      "status": "open",
+      "note": "Unchanged: moatFactors[2].strength is still 'Narrow' and segments[0].name is still 'Consolidated', though the body now explains the feed-versus-10-Q segment difference."
+    },
+    {
+      "id": "F-23",
+      "severity": "Minor",
+      "field": "sections.risks.idiosyncratic[3]",
+      "quote": "integration of Venco Venturo",
+      "issue": "The forward-looking statements name 'our inability to achieve the projected financial performance with the assets of Venco Venturo ... and unexpected costs or liabilities related to such acquisition', not integration. growth.points[2] gets this right.",
+      "fix": "Use the company's phrasing, or 'Venco Venturo's projected performance'.",
+      "status": "open",
+      "note": "Unchanged: risks.idiosyncratic[3] still reads 'integration of Venco Venturo'."
+    },
+    {
+      "id": "F-24",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body; sections.finalRecommendation.body[0]; sections.valuation.scenarioCommentary; analystCommentary; sections.executiveSummary.catalysts[1]",
+      "quote": "Our BUY assumes the market pays a modestly higher multiple for next year's earnings once the preseason is delivered",
+      "issue": "The rewrite fixed the rating-sentence repetition but now repeats the re-rating argument. The thesis clause (quoted) reappears almost word for word in finalRecommendation.body[0]: 'on the market paying a modestly higher multiple for next year's earnings once the preseason is delivered'. scenarioCommentary says the Base 'rests on a partial re-rating rather than on earnings above consensus', and finalRecommendation.body[0] repeats it: 'the upside in our Base case comes from the re-rating rather than from earnings above consensus'. analystCommentary ('a partial re-rating as the market looks to next year's earnings') and catalysts[1] ('the re-rating in our Base case') make the same point a fifth time.",
+      "fix": "Argue the re-rating once, in scenarioCommentary next to the Base anchor. Let the thesis carry a one-line pointer. Have finalRecommendation.body[0] say what the re-rating dependence means for the decision, for example what would make the desk drop to HOLD, rather than restating it. Trim the analystCommentary and catalysts[1] mentions to a word reference.",
+      "status": "open"
+    },
+    {
+      "id": "F-25",
+      "severity": "Important",
+      "field": "analystCommentary; sections.executiveSummary.thesis.body",
+      "quote": "Q2'26 also left a cost line to watch: SG&A rose faster than sales and operating income fell, and the 10-Q excerpt we hold does not give the reason.",
+      "issue": "analystCommentary and the thesis tell the same story in different words. (1) Snow to preseason to raised outlook: analystCommentary 'turned the snow season that ended March 2026 into a stronger Attachments preseason, and management raised its 2026 outlook again', and the thesis 'Strong snowfall last winter pushed Attachments preseason results above management's initial expectations, and the raised outlook rests on the strength of preseason orders'. (2) SG&A: the quoted sentence, and the thesis 'operating margin narrowed as SG&A outgrew sales'. incomeCommentary then makes the same point a third time with the figures. (3) What the case depends on: analystCommentary 'third-quarter preseason shipments landing as scheduled, on municipal demand in Solutions offsetting commercial softness', and the thesis 'depends on a heavier third-quarter shipment load and on Solutions holding near its 2025 level'.",
+      "fix": "Give the two summary fields different jobs. For example, analystCommentary carries the call and its one-line rationale, and the thesis carries the dependencies. Make the SG&A point once in the summary layer (with the 'reason not given' caveat) and leave the figures to incomeCommentary.",
+      "status": "open"
+    },
+    {
+      "id": "F-26",
+      "severity": "Important",
+      "field": "sections.executiveSummary.risks[0]; sections.executiveSummary.catalysts[3]; sections.risks.idiosyncratic[0]; sections.finalRecommendation.body[1]",
+      "quote": "a weak start to winter would hit parts sales and next year's preseason orders",
+      "issue": "The fourth-quarter snowfall mechanism and what to watch for it are still made several times. executiveSummary.risks[0] (quoted) carries the full mechanism, not just a pointer. catalysts[3] states the same claim in reverse: 'Early snowfall in core markets during the fourth quarter would support parts and accessories demand and next year's preseason orders'. risks.idiosyncratic[0] argues it: 'a dry early winter would hit parts and accessories sales this year and preseason orders next year at once. Fourth-quarter parts demand will give early evidence'. finalRecommendation.body[1] repeats the watch item: 'fourth-quarter parts and accessories demand would give early signs'. It also repeats catalysts[0]'s Q3'26 shipment test ('the Q3'26 report').",
+      "fix": "Keep the mechanism and the watch item in risks.idiosyncratic[0]. Cut executiveSummary.risks[0] to a pointer (for example 'Fourth-quarter snowfall: the outlook assumes an average start to winter'). Drop catalysts[3] or give it a distinct point. In finalRecommendation.body[1], list only the revisit triggers and refer to the watch items in words.",
+      "status": "open"
+    },
+    {
+      "id": "F-27",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[1].driver; sections.valuation.scenarios[0].driver; sections.valuation.multiplesCommentary",
+      "quote": "pays a multiple partway between today's FY27E multiple and the trailing multiple",
+      "issue": "The Base and Bull anchors re-rate FY27E consensus EPS toward the 18.4x trailing multiple. multiplesCommentary says in the same section that trailing GAAP earnings 'are not directly comparable' with the consensus. The anchor therefore uses as its re-rating ceiling a multiple the report itself says is on a different basis. Part of the 18.4x versus 12.6x gap is earnings basis and level, not market pessimism to be recovered. The Bull driver also says the multiple 'moves most of the way back toward the trailing multiple'. 'Back' implies the shares once traded at about 18x forward earnings, and no series on the surface shows that.",
+      "fix": "Anchor the re-rating to a multiple on the same basis as the EPS it is applied to, for example a stated forward multiple argued in words, or explain why the trailing multiple is a fair ceiling despite the basis caveat. Drop 'back' from the Bull driver unless the surface shows a past forward multiple.",
+      "status": "open"
+    },
+    {
+      "id": "F-28",
+      "severity": "Critical",
+      "field": "sections.management.governance",
+      "quote": "A long-term target above the annual one ties more of the CEO's variable pay to multi-year results than to a single winter, which suits a weather-driven business.",
+      "issue": "The proxy excerpt does not support this inference. The long-term awards are a mix of performance share units and time-vesting restricted stock units, and the excerpt gives neither their weighting nor the performance measures. Time-vesting RSUs pay out without any result being met. The excerpt therefore cannot establish how much of the 160% long-term target depends on multi-year results. The field's own counter-reading admits the performance measures are missing, which undercuts the claim before it.",
+      "fix": "Limit the reading to what the excerpt shows: the long-term target is larger than the annual one and is paid partly in performance share units and partly in time-vesting units, and the excerpt gives neither the split nor the measures. Then give the holder implication as a question the next proxy would answer, not as a conclusion.",
+      "status": "open"
+    }
+  ]
+}

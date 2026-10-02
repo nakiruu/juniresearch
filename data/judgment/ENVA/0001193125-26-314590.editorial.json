@@ -1,0 +1,173 @@
+{
+  "judgmentSha256": "bd3e935c0f1092515dd47803d914831831addffc3be6b9c3a7e465582924718e",
+  "reviewedAt": "2026-10-02T16:41:01Z",
+  "reviewer": "Claude Opus 5.5",
+  "round": 2,
+  "verdict": "needs-fix-round",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "analystCommentary / sections.finalRecommendation.body[0]",
+      "quote": "At $173.65 the shares trade on 10.1x NTM earnings and ~8.3x FY27E consensus EPS, a multiple that already prices in a credit downturn the reported results do not yet show.",
+      "issue": "The thesis rests on a causal reading of the price that nothing on the surface supports, and the page's own price history contradicts it. The rendered quote history shows the stock at $226.72 on September 14, 2026 and $173.61 on September 15, 2026, a one-day fall of about 23%, nearly eight weeks after the July 23 filing. No headline, transcript or risk-factor text was captured to explain it (headlines failed at capture). So the low multiple may reflect an unknown post-filing event, such as a deal, regulatory or credit development, rather than a generic credit downturn. The report never mentions the drop. finalRecommendation.body[0] repeats the same unsupported reading: 'The shares price in more credit stress than the Q2'26 results show.' The Street targets ($241.00 consensus, $205.00 low) may also predate the drop.",
+      "fix": "Drop the claim that the multiple 'prices in a credit downturn' in both places. State that the shares fell sharply in mid-September 2026, after the filing, and that the pack carries no explanation. Say the Q2'26 data and the Street targets may predate whatever caused it. Either re-capture headlines before publishing, or argue the BUY explicitly as conditional on that event not affecting the credit or Grasshopper thesis.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-2",
+      "severity": "Critical",
+      "field": "sections.businessMoat.moatFactors[3].body / sections.valuation.scenarios[0].driver / sections.management.capitalAllocation / sections.businessMoat.durability / sections.risks.idiosyncratic[2]",
+      "quote": "Until it closes, cost of funds remains a disadvantage against lenders that own a bank.",
+      "issue": "The surface never says Enova pays more for funding than bank-owning lenders, and it never says the Grasshopper deal is meant to lower funding costs. The only deal benefit on the page is the CEO's 'significant transaction synergies' (July 23, 2026 release), and they are not specified. The report states the funding advantage as fact here. It also builds on it in four other places, so a premise the source does not make carries the deal argument: Bull driver 'bank ownership trimming funding costs'; capitalAllocation 'the deal has to deliver funding benefits to earn its dilution'; durability 'adding a funding source and a charter'; and risks.idiosyncratic[2] 'the funding benefit the Bull case assumes'.",
+      "fix": "Remove the comparative cost-of-funds sentence. Present a lower funding cost as the desk's hypothesis ('we expect', 'if the bank lets Enova fund loans more cheaply'). Say once that management has not specified the synergies in the captured material. Keep the Bull and capital-allocation logic, worded as the desk's expectation.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-3",
+      "severity": "Critical",
+      "field": "sections.management.capitalAllocation",
+      "quote": "Issuing shares at the current multiple is an expensive currency, so the deal has to deliver funding benefits to earn its dilution.",
+      "issue": "The pack says only that the purchase price was 'valued at approximately $369 million at signing' (December 10, 2025) and paid in 'a combination of cash and newly issued shares'. It does not give the exchange ratio, the share count, the cash/stock split or whether the stock component floats with the price. If the ratio was fixed at signing, the current multiple does not set the dilution. The sentence asserts a deal mechanic the surface does not carry.",
+      "fix": "Say the deal is part-paid in newly issued shares, and that the pack does not give the share count or exchange terms, so dilution cannot be sized here. Drop 'at the current multiple'. If the point is kept, frame it as a conditional view ('to the extent the share component is priced near today's multiple...').",
+      "status": "addressed"
+    },
+    {
+      "id": "F-4",
+      "severity": "Critical",
+      "field": "sections.executiveSummary.risks[0] / sections.risks.idiosyncratic[0] / sections.risks.systemic",
+      "quote": "A turn in the credit cycle that lifts charge-offs among non-prime consumers and small businesses.",
+      "issue": "'Non-prime' is not on the surface. The only credit-tier label in the pack is the MD&A's 'near-prime unsecured installment loans' for the Bank Programs, which points the other way. risks.idiosyncratic[0] adds an unsupported causal claim: 'Enova's products carry high annualized yields because its borrowers carry high default risk'. The pack gives the yields (147%, 90%, 48%, 49%) but not their cause, and Risk factors were not captured. risks.systemic states 'are sensitive to rising unemployment' as a fact about Enova's customers. The pack says only that they have 'limited access to more traditional credit from banks, credit card companies and other lenders'.",
+      "fix": "Use the pack's own descriptions: customers with limited access to traditional credit, and near-prime loans in the Bank Programs. Drop 'non-prime' and the 'because its borrowers carry high default risk' clause. Keep unemployment sensitivity, but mark it as the desk's view ('we expect', 'in our view') rather than a sourced fact.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-5",
+      "severity": "Important",
+      "field": "sections.management.leadership",
+      "quote": "Under the new team, credit has stayed stable while originations grew, and the July 23, 2026 release cites an eighth consecutive quarter of year-over-year adjusted EPS growth of 30% or more.",
+      "issue": "Cunningham and Cornelis took their current roles on January 1, 2026, so the new team has run only two of the eight quarters in the streak. The other six fall under Fisher as CEO and Cunningham as CFO. Putting the streak right after 'Under the new team' credits the new team with a record that is mostly its predecessor's. The paragraph also ends without a view on what the handover means for the thesis.",
+      "fix": "Separate the two facts. Credit the streak to the company. Say what two quarters under the new CEO/CFO pairing do and do not show. One possible view: the operating leadership is largely continuous, with the former CFO now CEO and the former CEO now Executive Chairman, so execution risk sits mainly in the bank integration rather than the handover.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-6",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[1].driver",
+      "quote": "Enova delivers FY26E consensus EPS of $17.27, credit stays stable, the bank deal closes with only a modest early benefit, and the shares hold a multiple close to today's NTM level.",
+      "issue": "The Base anchor does not produce the Base price. Today's NTM multiple is 10.1x. Applied to FY26E EPS of $17.27, it gives roughly today's $173.65, not $205. The $205 Base needs about 11.9x FY26E EPS, which is a re-rating, not 'holding' the multiple. As written, the driver describes a flat-price outcome while the call carries about 18% upside, and the $185–$225 band is built around that call.",
+      "fix": "Anchor the Base to an argument that reaches $205. Two options: roll the multiple forward to FY27E consensus EPS of $20.96 and say so, or state the modest re-rating the Base assumes and why. Do not compute a new figure in the prose. Name the anchor in words.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-7",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[2].driver",
+      "quote": "The deal slips or closes on tougher terms, and the shares de-rate toward the lower half of their 52-week range.",
+      "issue": "At $173.65 the shares are already in the lower half of the $103.02–$267.45 range (the midpoint is about $185). 'De-rate toward the lower half' does not describe a move to $135. The Bear driver therefore gives no anchor for its implied price.",
+      "fix": "Describe the Bear move in terms that reach $135, such as a de-rating toward the low end of the 52-week range or a multiple on a reduced earnings base, using figures already on the page.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "analystCommentary / sections.executiveSummary.catalysts[0]",
+      "quote": "The Grasshopper bank acquisition still awaits regulatory approval.",
+      "issue": "The approval status comes from the July 23, 2026 release ('regulators as they continue their application review process'). The report is dated October 2, 2026, and the text presents that status as current. catalysts[0] does the same: 'subject to the regulatory review still under way'. With an unexplained 23% one-day fall in mid-September (see F-1), the deal's status as of the report date is unknown. risks.idiosyncratic[2] dates it correctly ('described in July 2026 as an ongoing review').",
+      "fix": "Date the status wherever it appears, for example 'as of July 23, 2026, the acquisition was still awaiting regulatory approval', and say the pack carries nothing later.",
+      "status": "open",
+      "note": "analystCommentary, catalysts[0], scenarioCommentary and risks.idiosyncratic[2] now date the approval status to July 2026. Two places still present the deal as pending today: thesis 'The pending Grasshopper purchase would give Enova a bank subsidiary of its own' and meta.subtitle 'the pending Grasshopper bank deal'. Its status on October 2, 2026 is unknown, and the September fall may bear on it. Date both, e.g. 'pending as of July 2026'."
+    },
+    {
+      "id": "F-9",
+      "severity": "Important",
+      "field": "analystCommentary / sections.valuation.scenarioCommentary / sections.finalRecommendation.body[0]",
+      "quote": "We sit below the $241.00 consensus target for three reasons. Net debt runs at 5.6x EBITDA. The Grasshopper bank acquisition still awaits regulatory approval. The borrower base is sensitive to a weaker economy. The Bear case at $135 is a credit-cycle scenario rather than a formality, and it carries a 25% weight.",
+      "issue": "The 'why we are below consensus' argument and the Bear-weight argument each appear in three places. scenarioCommentary has 'sits below the consensus target, reflecting the bank-deal and funding uncertainty that we think the Street targets underweight' and 'The Bear weighting is deliberately heavy'. finalRecommendation.body[0] has 'We stay below the consensus target because the bank deal, the debt-funded balance sheet and a new leadership team all add execution risk'. Rubric 6 asks that each scenario probability be argued once, and rubric 7 bars the same claim in several sections.",
+      "fix": "Argue the below-consensus position and the 25% Bear weight once, in scenarioCommentary. In analystCommentary and finalRecommendation, point back to it in words, for example 'for the balance-sheet and deal reasons set out under Valuation'.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-10",
+      "severity": "Important",
+      "field": "sections.financials.cashflowCommentary / sections.management.capitalAllocation",
+      "quote": "Share repurchases were -$214.6M in FY25 and $19 million in Q2'26, and the company pays no dividend. With the Grasshopper purchase partly in cash and the loan book still growing, we expect repurchases to stay modest relative to the headline free cash flow.",
+      "issue": "capitalAllocation tells the same story again: 'Enova pays no dividend. The company repurchased $214.6M of shares in FY25 and $19 million in Q2'26, a slower pace ahead of the Grasshopper purchase', and later 'whether buybacks resume after closing'. Both figures, the no-dividend fact and the Grasshopper-constrains-buybacks argument appear in both sections.",
+      "fix": "Keep the buyback figures and the outlook in capitalAllocation. End cashflowCommentary at the point that FCF is not distributable, with a pointer such as 'what Enova actually returns is covered under capital allocation'.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-11",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[3] / sections.management.leadership / sections.finalRecommendation.body[0] / sections.businessMoat.durability / sections.risks.idiosyncratic[2] / sections.risks.systemic",
+      "quote": "Leadership transition: the Chief Executive Officer and Chief Financial Officer both took their roles on January 1, 2026, so the team is integrating a bank in its opening year in these roles.",
+      "issue": "Several claims are made more than once in different words. (1) The January 1, 2026 leadership change appears in leadership, in risks.idiosyncratic[3] and again in finalRecommendation.body[0] ('a new leadership team'). (2) The point that a bank brings new supervision appears in durability ('bring bank-level supervision to a business that has run on state licensing') and in risks.idiosyncratic[2] ('capital and supervisory requirements Enova has not carried before'). (3) Customer sensitivity to unemployment appears in five places: thesis, analystCommentary, executiveSummary.risks[0], scenarioCommentary and risks.systemic.",
+      "fix": "Give each claim one home: the leadership date in leadership, bank supervision in risks.idiosyncratic[2] and unemployment sensitivity in risks.systemic. Elsewhere, refer back in words without restating the claim.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-12",
+      "severity": "Important",
+      "field": "sections.executiveSummary.risks[2] / sections.financials.balanceCommentary / sections.risks.systemic / analystCommentary / sections.executiveSummary.catalysts[2] / sections.valuation.scenarios",
+      "quote": "Leverage: net debt stands at 5.6x EBITDA, so funding costs and access to debt markets drive returns.",
+      "issue": "Argument-bearing figures are re-quoted section after section instead of introduced once and referred back to:\n- Net debt/EBITDA 5.6x appears in analystCommentary, executiveSummary.risks[2] and balanceCommentary.\n- Interest coverage 2.3x appears in balanceCommentary and risks.systemic.\n- The 7.3% charge-off ratio appears in analystCommentary, catalysts[2] and the Bear driver.\n- FY25 revenue $3.2B appears in companyOverview, incomeCommentary and segments[0].\n- Consensus EPS $17.27/$20.96 appears in the thesis and both the Bull and Base drivers.\n- The July 23 raised outlook appears in analystCommentary, growth.points[2] and catalysts[1]/[3].\nThe executive-summary risk also carries mechanism ('so funding costs and access to debt markets drive returns') that belongs in the section behind it.",
+      "fix": "Keep each figure in its home section, for example leverage ratios in balanceCommentary, and refer to it in words elsewhere ('the leverage set out above'). Cut executive-summary risks and catalysts back to numberless one-line pointers.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-13",
+      "severity": "Important",
+      "field": "sections.growth.points",
+      "quote": "Originations of $2.3 billion in Q2'26 rose {+ 27% +} year on year; because revenue follows the receivable balance, that origination pace supports growth into FY27E.",
+      "issue": "No growth point names the reading that cuts the other way. The section treats originations up 27% and the Base consensus path as tailwinds, with the only caution being 'delivery depends on originations holding up'. The page already holds the counter-case. The receivable book grew 28% while debt rose from $1.4B (FY21) to $4.5B (FY25) and interest coverage is 2.3x. Fast origination growth adds new, unseasoned loans whose losses arrive later, so today's 7.3% charge-off ratio may understate the cost of this growth.",
+      "fix": "Add one counter-case point built from figures already on the page: debt-funded book growth, thin coverage, and charge-offs on new loans that show up later. State what the reader should watch to tell which reading is right.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-14",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "Revenue grew from $1.2B in FY21 to $3.2B in FY25, with growth slowing from +43.7% in FY22 to +18.6% in FY25 as the base enlarged.",
+      "issue": "The first two paragraphs mostly restate the Facts table (revenue path, operating margin path, gross margin path, EPS path) and reach no view the reader can act on. 'As the base enlarged' adds a causal gloss the series does not support: growth went +43.7%, +22.0%, +25.5%, +18.6%, so it reaccelerated in FY24. The section never links the margin trajectory to the FY26E EPS of $17.27 that the Base case depends on.",
+      "fix": "Drop 'as the base enlarged'. Replace the restated table with a judgment, for example what the FY23→FY25 operating-margin recovery and the Q2'26 25.5% margin imply for whether FY26E consensus is achievable, and name the reading that cuts the other way.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-15",
+      "severity": "Minor",
+      "field": "sections.financials.cashflowCommentary / analystCommentary",
+      "quote": "Share repurchases were -$214.6M in FY25",
+      "issue": "The prose carries the vendor's cash-flow sign. 'Repurchases were -$214.6M' reads as negative buybacks, and capitalAllocation writes the same figure as '$214.6M'. Separately, analystCommentary's '{+ +14.9% +}' doubles the positive marker.",
+      "fix": "Write 'repurchased $214.6M of shares in FY25' (one home only, per F-10). Use either the span or the sign, for example '{+ 14.9% +}'.",
+      "status": "open",
+      "note": "The buyback sign is fixed ('repurchased $214.6M of shares'). Two parts remain: cashflowCommentary still carries the vendor sign in 'capital expenditure of -$47.1M left free cash flow almost the same', and the doubled marker moved to scenarioCommentary as 'an expected upside of {+ +14.9% +}'. Write 'capital expenditure of $47.1M' and '{+ 14.9% +}'."
+    },
+    {
+      "id": "F-16",
+      "severity": "Critical",
+      "field": "sections.management.leadership / sections.financials.incomeCommentary",
+      "quote": "Those two quarters show the handover has not disrupted origination growth or credit, but they do not show how the new team would handle a credit downturn or a bank integration.",
+      "issue": "The rewrite adds two inferences the surface does not make. (1) leadership: the only quarter with origination and credit figures on the page is Q2'26 (originations up 27%, net charge-off ratio down to 7.3%). For Q1'26 the surface carries only the adjusted-EPS streak from the July 23, 2026 release. It shows no Q1'26 origination growth or credit metric, so 'those two quarters show' claims evidence for Q1'26 that is not there. (2) incomeCommentary: 'the vendor's gross margin, which for a lender largely reflects credit losses' describes how the vendor builds its gross margin. The surface does not say this. The release links the net revenue margin, not the vendor gross margin, to credit performance. The FY22 counter-case rests on this description.",
+      "fix": "In leadership, base the claim on Q2'26 only, e.g. 'Q2'26, the quarter with credit and origination data on the page, shows no disruption'. Note that the adjusted-EPS streak runs through both quarters. In incomeCommentary, present the gross-margin reading as the desk's view ('which we read as tracking credit costs'), or make the FY22 counter-case on operating margin alone.",
+      "status": "open"
+    },
+    {
+      "id": "F-17",
+      "severity": "Important",
+      "field": "analystCommentary / sections.valuation.scenarios[2].driver / sections.valuation.scenarioCommentary / sections.risks.idiosyncratic[3] / sections.finalRecommendation.body",
+      "quote": "We rate ENVA a BUY with a $185–$225 target range and a $205 Base case, conditional on the cause of that fall not touching the credit trend or the Grasshopper deal.",
+      "issue": "The mid-September fall was added as the round-1 fix asked, but the same claim is now made in about six places. The claim is that the fall is unexplained and might reflect a credit or deal setback. The unexplained part appears in analystCommentary ('the pack carries no headline, transcript or risk-factor text that explains why'), thesis ('a post-filing fall in the shares that the pack cannot explain'), scenarioCommentary ('could reflect a credit or deal development the pack does not show') and risks.idiosyncratic[3] ('we cannot tell whether the mid-September fall reflects a credit, regulatory or deal development'). The conditional appears in analystCommentary, in the Bear driver ('the September decline proves to reflect a credit or deal setback'), in finalRecommendation.body[0] ('conditional on the September decline not reflecting a credit or Grasshopper setback') and again in body[1] ('if the cause of the September decline proves to be a credit, regulatory or deal setback'). The executive summary also points to the fall three times: thesis, catalysts[3] and risks[3].",
+      "fix": "Give the argument one home, risks.idiosyncratic[3]: what is unknown and what it could be. Keep analystCommentary's statement of the fall and of the conditional BUY. Then refer back to it in words: the Bear driver can say 'or the September fall proves adverse', and finalRecommendation can keep only the HOLD trigger in body[1]. Drop the conditional sentence from body[0]. In the executive summary, keep the fall in risks[3] or catalysts[3], not both, and cut the clause from the thesis.",
+      "status": "open"
+    },
+    {
+      "id": "F-18",
+      "severity": "Minor",
+      "field": "analystCommentary / sections.executiveSummary.{thesis.body, catalysts[0], risks[3]} / sections.management.capitalAllocation / sections.valuation.scenarioCommentary",
+      "quote": "The shares fell sharply in mid-September 2026, well after the July 23, 2026 filing, and the pack carries no headline, transcript or risk-factor text that explains why.",
+      "issue": "The desk's internal term 'the pack' now appears in reader-facing prose six times, and the reader does not know what it means. The six are: analystCommentary ('the pack carries no headline'), thesis ('the pack cannot explain'), catalysts[0] ('the pack carries no later status'), risks[3] ('the pack does not capture'), capitalAllocation ('The pack does not give the share count') and scenarioCommentary ('the pack does not show'). The round-1 fix wording partly prompted it, but it is still a voice defect.",
+      "fix": "Use reader-facing wording, such as 'the sources available to us' or 'the filing and release we reviewed'. Once the repetition in F-17 is cut, it should need saying only once or twice.",
+      "status": "open"
+    }
+  ]
+}
