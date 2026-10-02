@@ -1,6 +1,6 @@
 {
-  "judgmentSha256": "84c633281ee833ef9f5e452551052ecaf69a223f9f6471579e965d250568a5c4",
-  "reviewedAt": "2026-10-02T16:39:30Z",
+  "judgmentSha256": "c2c6c9ada7350bd91dc9b785aec4852ca3b1cca308f0b9c244dcfe152beaeb76",
+  "reviewedAt": "2026-10-02T17:01:02Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
   "verdict": "needs-fix-round",
@@ -203,7 +203,7 @@
       "issue": "Spans wrap levels, not signed changes: '{- 16.5% -}' here and 'a {- 10.3% -} margin' in businessMoat.segments[0].body.",
       "fix": "Remove the spans, or wrap only a signed change.",
       "status": "open",
-      "note": "Unchanged: incomeCommentary still has 'operating margin narrowed to {- 16.5% -} from 19.0%' and segments[0].body still has 'a {- 10.3% -} margin'. Neither was declined with a note."
+      "note": "Still open: incomeCommentary keeps 'operating margin narrowed to {- 16.5% -} from 19.0%' and segments[0].body keeps 'a {- 10.3% -} margin'; not declined with a note. These Minors were not carried into the author's delta brief (prompt.delta.md lists only F-24 to F-28), so the next delta should include them."
     },
     {
       "id": "F-21",
@@ -213,7 +213,7 @@
       "issue": "'Attachments margin structure' describes a cyclical mix effect that works both ways with the weather. It is not a durable competitive advantage, so it weakens the NARROW moat case rather than supporting it.",
       "fix": "Recast the factor as the source of the advantage behind Attachments' higher margins, such as the brands or the distributor network, or move the mix point to the financials or risks.",
       "status": "open",
-      "note": "Unchanged: moatFactors[1] is still 'Attachments margin structure' with the same weather-mix body, and it was not declined with a note."
+      "note": "Still open: moatFactors[1] is still 'Attachments margin structure' with the weather-mix body; not declined with a note. These Minors were not carried into the author's delta brief (prompt.delta.md lists only F-24 to F-28), so the next delta should include them."
     },
     {
       "id": "F-22",
@@ -223,7 +223,7 @@
       "issue": "The strength label 'Narrow' reuses the moat-rating vocabulary, while the other factors use 'Moderate'. Separately, the only segment entry is named 'Consolidated', but its body discusses Work Truck Attachments and Work Truck Solutions.",
       "fix": "Use a consistent strength scale such as Weak, Moderate or Strong. Name the segment entry for what it covers, or split it into the two 10-Q segments.",
       "status": "open",
-      "note": "Unchanged: moatFactors[2].strength is still 'Narrow' and segments[0].name is still 'Consolidated', though the body now explains the feed-versus-10-Q segment difference."
+      "note": "Still open: moatFactors[2].strength is still 'Narrow' and segments[0].name is still 'Consolidated'; not declined with a note. These Minors were not carried into the author's delta brief (prompt.delta.md lists only F-24 to F-28), so the next delta should include them."
     },
     {
       "id": "F-23",
@@ -233,7 +233,7 @@
       "issue": "The forward-looking statements name 'our inability to achieve the projected financial performance with the assets of Venco Venturo ... and unexpected costs or liabilities related to such acquisition', not integration. growth.points[2] gets this right.",
       "fix": "Use the company's phrasing, or 'Venco Venturo's projected performance'.",
       "status": "open",
-      "note": "Unchanged: risks.idiosyncratic[3] still reads 'integration of Venco Venturo'."
+      "note": "Still open: risks.idiosyncratic[3] still reads 'integration of Venco Venturo'; not declined with a note. These Minors were not carried into the author's delta brief (prompt.delta.md lists only F-24 to F-28), so the next delta should include them."
     },
     {
       "id": "F-24",
@@ -242,7 +242,8 @@
       "quote": "Our BUY assumes the market pays a modestly higher multiple for next year's earnings once the preseason is delivered",
       "issue": "The rewrite fixed the rating-sentence repetition but now repeats the re-rating argument. The thesis clause (quoted) reappears almost word for word in finalRecommendation.body[0]: 'on the market paying a modestly higher multiple for next year's earnings once the preseason is delivered'. scenarioCommentary says the Base 'rests on a partial re-rating rather than on earnings above consensus', and finalRecommendation.body[0] repeats it: 'the upside in our Base case comes from the re-rating rather than from earnings above consensus'. analystCommentary ('a partial re-rating as the market looks to next year's earnings') and catalysts[1] ('the re-rating in our Base case') make the same point a fifth time.",
       "fix": "Argue the re-rating once, in scenarioCommentary next to the Base anchor. Let the thesis carry a one-line pointer. Have finalRecommendation.body[0] say what the re-rating dependence means for the decision, for example what would make the desk drop to HOLD, rather than restating it. Trim the analystCommentary and catalysts[1] mentions to a word reference.",
-      "status": "open"
+      "status": "open",
+      "note": "Mostly fixed: the thesis is now a pointer, catalysts[1] no longer mentions it, and finalRecommendation.body[0] now draws the HOLD trigger. Still open: analystCommentary restates the mechanism ('we expect the shares to earn a higher forward multiple once that preseason has shipped'), and body[0] opens by restating scenarioCommentary's 'rather than on earnings above consensus' as 'rather than on beating consensus'."
     },
     {
       "id": "F-25",
@@ -251,7 +252,8 @@
       "quote": "Q2'26 also left a cost line to watch: SG&A rose faster than sales and operating income fell, and the 10-Q excerpt we hold does not give the reason.",
       "issue": "analystCommentary and the thesis tell the same story in different words. (1) Snow to preseason to raised outlook: analystCommentary 'turned the snow season that ended March 2026 into a stronger Attachments preseason, and management raised its 2026 outlook again', and the thesis 'Strong snowfall last winter pushed Attachments preseason results above management's initial expectations, and the raised outlook rests on the strength of preseason orders'. (2) SG&A: the quoted sentence, and the thesis 'operating margin narrowed as SG&A outgrew sales'. incomeCommentary then makes the same point a third time with the figures. (3) What the case depends on: analystCommentary 'third-quarter preseason shipments landing as scheduled, on municipal demand in Solutions offsetting commercial softness', and the thesis 'depends on a heavier third-quarter shipment load and on Solutions holding near its 2025 level'.",
       "fix": "Give the two summary fields different jobs. For example, analystCommentary carries the call and its one-line rationale, and the thesis carries the dependencies. Make the SG&A point once in the summary layer (with the 'reason not given' caveat) and leave the figures to incomeCommentary.",
-      "status": "open"
+      "status": "addressed",
+      "note": "analystCommentary now carries the call and rationale, the thesis carries the dependencies, and the SG&A point appears once in the summary layer (thesis) with the 'reason not given' caveat. The remaining outlook-backed-by-preseason repetition is raised as F-30."
     },
     {
       "id": "F-26",
@@ -260,7 +262,8 @@
       "quote": "a weak start to winter would hit parts sales and next year's preseason orders",
       "issue": "The fourth-quarter snowfall mechanism and what to watch for it are still made several times. executiveSummary.risks[0] (quoted) carries the full mechanism, not just a pointer. catalysts[3] states the same claim in reverse: 'Early snowfall in core markets during the fourth quarter would support parts and accessories demand and next year's preseason orders'. risks.idiosyncratic[0] argues it: 'a dry early winter would hit parts and accessories sales this year and preseason orders next year at once. Fourth-quarter parts demand will give early evidence'. finalRecommendation.body[1] repeats the watch item: 'fourth-quarter parts and accessories demand would give early signs'. It also repeats catalysts[0]'s Q3'26 shipment test ('the Q3'26 report').",
       "fix": "Keep the mechanism and the watch item in risks.idiosyncratic[0]. Cut executiveSummary.risks[0] to a pointer (for example 'Fourth-quarter snowfall: the outlook assumes an average start to winter'). Drop catalysts[3] or give it a distinct point. In finalRecommendation.body[1], list only the revisit triggers and refer to the watch items in words.",
-      "status": "open"
+      "status": "addressed",
+      "note": "executiveSummary.risks[0] is now a pointer, the reverse-snowfall catalyst is dropped, the mechanism and watch item sit only in risks.idiosyncratic[0], and finalRecommendation.body[1] lists triggers and refers to the watch items in words."
     },
     {
       "id": "F-27",
@@ -269,7 +272,8 @@
       "quote": "pays a multiple partway between today's FY27E multiple and the trailing multiple",
       "issue": "The Base and Bull anchors re-rate FY27E consensus EPS toward the 18.4x trailing multiple. multiplesCommentary says in the same section that trailing GAAP earnings 'are not directly comparable' with the consensus. The anchor therefore uses as its re-rating ceiling a multiple the report itself says is on a different basis. Part of the 18.4x versus 12.6x gap is earnings basis and level, not market pessimism to be recovered. The Bull driver also says the multiple 'moves most of the way back toward the trailing multiple'. 'Back' implies the shares once traded at about 18x forward earnings, and no series on the surface shows that.",
       "fix": "Anchor the re-rating to a multiple on the same basis as the EPS it is applied to, for example a stated forward multiple argued in words, or explain why the trailing multiple is a fair ceiling despite the basis caveat. Drop 'back' from the Bull driver unless the surface shows a past forward multiple.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Base and Bull now re-rate against today's forward (NTM) multiple, scenarioCommentary states the same-basis choice, and 'back' is gone. The rewrite broke the Bear anchor instead; see F-29."
     },
     {
       "id": "F-28",
@@ -278,6 +282,25 @@
       "quote": "A long-term target above the annual one ties more of the CEO's variable pay to multi-year results than to a single winter, which suits a weather-driven business.",
       "issue": "The proxy excerpt does not support this inference. The long-term awards are a mix of performance share units and time-vesting restricted stock units, and the excerpt gives neither their weighting nor the performance measures. Time-vesting RSUs pay out without any result being met. The excerpt therefore cannot establish how much of the 160% long-term target depends on multi-year results. The field's own counter-reading admits the performance measures are missing, which undercuts the claim before it.",
       "fix": "Limit the reading to what the excerpt shows: the long-term target is larger than the annual one and is paid partly in performance share units and partly in time-vesting units, and the excerpt gives neither the split nor the measures. Then give the holder implication as a question the next proxy would answer, not as a conclusion.",
+      "status": "addressed",
+      "note": "governance now limits itself to what the proxy excerpt shows (PSU/RSU mix, same weighting as 2024, split and measures not held) and turns the holder implication into a question for the next proxy."
+    },
+    {
+      "id": "F-29",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[2].driver; sections.valuation.scenarioCommentary",
+      "quote": "earnings fall back toward the FY25 level and the forward multiple on that lower base slips below today's.",
+      "issue": "The rewrite made the Bear driver inconsistent with its $32 price. The only FY25 earnings figure on the surface is diluted EPS of $1.96. Below today's 13.0x forward (NTM) multiple, that gives under about $25.5, not $32, which needs about 16.3x FY25 EPS, above today's forward multiple. The previous driver compressed toward the 18.4x trailing multiple, which did reach $32; switching to 'forward' for F-27 broke the arithmetic. The FY25 adjusted EPS that would make the sentence work is not on the surface. scenarioCommentary's FY23 precedent (diluted EPS $0.98) points to a lower price, not to $32.",
+      "fix": "Anchor the Bear price to a multiple and an EPS figure that are both on the surface and on the same basis, and that together reach $32. For example, use a forward multiple below 13.0x on an earnings level argued in words, such as a cut to FY26E consensus. Otherwise reset the Bear price to what the stated anchor gives and recheck the derived label, the 15% bear-floor and reward/risk. Keep the FY23 precedent as a weather analogue, not as a support for the price.",
+      "status": "open"
+    },
+    {
+      "id": "F-30",
+      "severity": "Important",
+      "field": "analystCommentary; sections.executiveSummary.thesis.body; sections.valuation.scenarioCommentary; sections.finalRecommendation.body[0]; sections.finalRecommendation.body[1]",
+      "quote": "Our BUY rests on a raised 2026 outlook backed by preseason orders",
+      "issue": "Paraphrase repetition introduced or left by the rewrite. (1) The outlook backed by preseason orders is stated four times: analystCommentary 'lifted Attachments preseason orders, and management raised its 2026 outlook again', thesis 'The raised outlook rests on preseason orders already in hand', scenarioCommentary 'the raised outlook is backed by preseason orders', and finalRecommendation.body[0] (quoted). (2) The weather-as-Bear point is made three times: analystCommentary 'Weather is the variable the company does not control, and our Bear case is built on a weak winter', scenarioCommentary 'depend on a winter nobody can forecast', and finalRecommendation.body[1] 'The Bear case is the cost of being wrong on weather'.",
+      "fix": "State that the raised outlook rests on preseason orders once in the summary layer (the thesis) and refer to it in words elsewhere. Drop it from scenarioCommentary's weighting sentence and from the opening of finalRecommendation.body[0]. Make the weather-as-Bear point once, in scenarioCommentary next to the weights. Cut the closing sentence of analystCommentary and the 'cost of being wrong on weather' clause in finalRecommendation.body[1].",
       "status": "open"
     }
   ]

@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "bd3e935c0f1092515dd47803d914831831addffc3be6b9c3a7e465582924718e",
-  "reviewedAt": "2026-10-02T16:41:01Z",
+  "judgmentSha256": "8f1affc278ef2e775b64ed474479445b491e21944ef623dc1ca41a08e8abde27",
+  "reviewedAt": "2026-10-02T17:02:07Z",
   "reviewer": "Claude Opus 5.5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved-with-minors",
   "findings": [
     {
       "id": "F-1",
@@ -75,8 +75,8 @@
       "quote": "The Grasshopper bank acquisition still awaits regulatory approval.",
       "issue": "The approval status comes from the July 23, 2026 release ('regulators as they continue their application review process'). The report is dated October 2, 2026, and the text presents that status as current. catalysts[0] does the same: 'subject to the regulatory review still under way'. With an unexplained 23% one-day fall in mid-September (see F-1), the deal's status as of the report date is unknown. risks.idiosyncratic[2] dates it correctly ('described in July 2026 as an ongoing review').",
       "fix": "Date the status wherever it appears, for example 'as of July 23, 2026, the acquisition was still awaiting regulatory approval', and say the pack carries nothing later.",
-      "status": "open",
-      "note": "analystCommentary, catalysts[0], scenarioCommentary and risks.idiosyncratic[2] now date the approval status to July 2026. Two places still present the deal as pending today: thesis 'The pending Grasshopper purchase would give Enova a bank subsidiary of its own' and meta.subtitle 'the pending Grasshopper bank deal'. Its status on October 2, 2026 is unknown, and the September fall may bear on it. Date both, e.g. 'pending as of July 2026'."
+      "status": "addressed",
+      "note": "Both remaining places are now dated: thesis 'still pending as of July 23, 2026' and meta.subtitle 'pending as of July 2026'. No undated approval status remains."
     },
     {
       "id": "F-9",
@@ -135,12 +135,12 @@
     {
       "id": "F-15",
       "severity": "Minor",
-      "field": "sections.financials.cashflowCommentary / analystCommentary",
-      "quote": "Share repurchases were -$214.6M in FY25",
+      "field": "sections.financials.cashflowCommentary / sections.valuation.scenarioCommentary",
+      "quote": "capital expenditure of -$47.1M left free cash flow almost the same",
       "issue": "The prose carries the vendor's cash-flow sign. 'Repurchases were -$214.6M' reads as negative buybacks, and capitalAllocation writes the same figure as '$214.6M'. Separately, analystCommentary's '{+ +14.9% +}' doubles the positive marker.",
       "fix": "Write 'repurchased $214.6M of shares in FY25' (one home only, per F-10). Use either the span or the sign, for example '{+ 14.9% +}'.",
       "status": "open",
-      "note": "The buyback sign is fixed ('repurchased $214.6M of shares'). Two parts remain: cashflowCommentary still carries the vendor sign in 'capital expenditure of -$47.1M left free cash flow almost the same', and the doubled marker moved to scenarioCommentary as 'an expected upside of {+ +14.9% +}'. Write 'capital expenditure of $47.1M' and '{+ 14.9% +}'."
+      "note": "Unchanged this round. cashflowCommentary still carries the vendor sign in 'capital expenditure of -$47.1M left free cash flow almost the same', and scenarioCommentary still doubles the marker in 'an expected upside of {+ +14.9% +}'. Write 'capital expenditure of $47.1M' and '{+ 14.9% +}'."
     },
     {
       "id": "F-16",
@@ -149,7 +149,8 @@
       "quote": "Those two quarters show the handover has not disrupted origination growth or credit, but they do not show how the new team would handle a credit downturn or a bank integration.",
       "issue": "The rewrite adds two inferences the surface does not make. (1) leadership: the only quarter with origination and credit figures on the page is Q2'26 (originations up 27%, net charge-off ratio down to 7.3%). For Q1'26 the surface carries only the adjusted-EPS streak from the July 23, 2026 release. It shows no Q1'26 origination growth or credit metric, so 'those two quarters show' claims evidence for Q1'26 that is not there. (2) incomeCommentary: 'the vendor's gross margin, which for a lender largely reflects credit losses' describes how the vendor builds its gross margin. The surface does not say this. The release links the net revenue margin, not the vendor gross margin, to credit performance. The FY22 counter-case rests on this description.",
       "fix": "In leadership, base the claim on Q2'26 only, e.g. 'Q2'26, the quarter with credit and origination data on the page, shows no disruption'. Note that the adjusted-EPS streak runs through both quarters. In incomeCommentary, present the gross-margin reading as the desk's view ('which we read as tracking credit costs'), or make the FY22 counter-case on operating margin alone.",
-      "status": "open"
+      "status": "addressed",
+      "note": "leadership now rests the no-disruption claim on Q2'26 only ('Q2'26, which is where our origination and credit data sit') and credits the EPS streak to the company. incomeCommentary marks the gross-margin reading as the desk's ('which we read as tracking credit costs')."
     },
     {
       "id": "F-17",
@@ -158,7 +159,8 @@
       "quote": "We rate ENVA a BUY with a $185–$225 target range and a $205 Base case, conditional on the cause of that fall not touching the credit trend or the Grasshopper deal.",
       "issue": "The mid-September fall was added as the round-1 fix asked, but the same claim is now made in about six places. The claim is that the fall is unexplained and might reflect a credit or deal setback. The unexplained part appears in analystCommentary ('the pack carries no headline, transcript or risk-factor text that explains why'), thesis ('a post-filing fall in the shares that the pack cannot explain'), scenarioCommentary ('could reflect a credit or deal development the pack does not show') and risks.idiosyncratic[3] ('we cannot tell whether the mid-September fall reflects a credit, regulatory or deal development'). The conditional appears in analystCommentary, in the Bear driver ('the September decline proves to reflect a credit or deal setback'), in finalRecommendation.body[0] ('conditional on the September decline not reflecting a credit or Grasshopper setback') and again in body[1] ('if the cause of the September decline proves to be a credit, regulatory or deal setback'). The executive summary also points to the fall three times: thesis, catalysts[3] and risks[3].",
       "fix": "Give the argument one home, risks.idiosyncratic[3]: what is unknown and what it could be. Keep analystCommentary's statement of the fall and of the conditional BUY. Then refer back to it in words: the Bear driver can say 'or the September fall proves adverse', and finalRecommendation can keep only the HOLD trigger in body[1]. Drop the conditional sentence from body[0]. In the executive summary, keep the fall in risks[3] or catalysts[3], not both, and cut the clause from the thesis.",
-      "status": "open"
+      "status": "addressed",
+      "note": "The fall is gone from thesis and catalysts. finalRecommendation.body[0] no longer carries the conditional. The Bear driver ('or the September fall proves adverse') and scenarioCommentary ('discussed under Risks, is unknown') point back in words. analystCommentary states the fall and the conditional BUY, and risks.idiosyncratic[3] is the home. That is the structure the fix asked for."
     },
     {
       "id": "F-18",
@@ -167,6 +169,25 @@
       "quote": "The shares fell sharply in mid-September 2026, well after the July 23, 2026 filing, and the pack carries no headline, transcript or risk-factor text that explains why.",
       "issue": "The desk's internal term 'the pack' now appears in reader-facing prose six times, and the reader does not know what it means. The six are: analystCommentary ('the pack carries no headline'), thesis ('the pack cannot explain'), catalysts[0] ('the pack carries no later status'), risks[3] ('the pack does not capture'), capitalAllocation ('The pack does not give the share count') and scenarioCommentary ('the pack does not show'). The round-1 fix wording partly prompted it, but it is still a voice defect.",
       "fix": "Use reader-facing wording, such as 'the sources available to us' or 'the filing and release we reviewed'. Once the repetition in F-17 is cut, it should need saying only once or twice.",
+      "status": "open",
+      "note": "Down from six to four now that the thesis clause is cut. 'The pack' still appears in analystCommentary ('the pack carries no headline'), catalysts[0] ('the pack carries no later status'), executiveSummary.risks[3] ('whose cause the pack does not capture') and capitalAllocation ('The pack does not give the share count'). Use reader-facing wording, e.g. 'the sources we reviewed'."
+    },
+    {
+      "id": "F-19",
+      "severity": "Minor",
+      "field": "sections.management.capitalAllocation",
+      "quote": "We would judge allocation discipline by whether buybacks resume after closing and whether the bank lowers the cost of funding the receivables.",
+      "issue": "'Resume' implies that buybacks have stopped. The same paragraph says the company repurchased '$19 million in Q2'26', and the July 23, 2026 release confirms the Q2'26 repurchase. The round-1 wording that framed Q2'26 as 'a slower pace' was removed, and that left 'resume' with nothing to refer to. finalRecommendation.body[1] ('if repurchases stop') reads the situation correctly, so the two sections now disagree.",
+      "fix": "Replace 'resume' with wording that matches the data, for example 'whether buybacks pick up after closing' or 'whether the buyback pace rises after closing'.",
+      "status": "open"
+    },
+    {
+      "id": "F-20",
+      "severity": "Minor",
+      "field": "meta.subtitle",
+      "quote": "Q2'26 beat with improving credit",
+      "issue": "On a sell-side page, 'beat' reads as a beat against Street estimates, but there is no Q2'26 consensus on the surface. What the surface does carry is the CFO's statement in the July 23, 2026 release that results 'exceeded our expectations on both the top and bottom line', which is management's own benchmark. Rubric 9 asks for the company's phrasing where the phrasing is the point. This field was not changed this round, but earlier rounds did not flag it.",
+      "fix": "Say what the source says, e.g. 'Q2'26 ahead of management's expectations, with improving credit', or drop 'beat' and lead with the 27% origination growth and the lower charge-off ratio.",
       "status": "open"
     }
   ]

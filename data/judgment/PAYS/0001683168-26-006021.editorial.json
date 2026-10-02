@@ -1,6 +1,6 @@
 {
-  "judgmentSha256": "9b8f891403ca330f32aee448c13225912b21c69e95b467ce78ba6667cb1cae24",
-  "reviewedAt": "2026-10-02T16:31:32Z",
+  "judgmentSha256": "20cc33ce34ee14322c2a7a1c69615c3bd22cf6891a3639cbb315c2feaddef411",
+  "reviewedAt": "2026-10-02T16:58:51Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
   "verdict": "needs-fix-round",
@@ -152,8 +152,8 @@
       "quote": "Pharma now exceeds plasma within the mix, and the release credits that mix for the gross margin gain.",
       "issue": "Cross-section repetition. The claim that pharma has overtaken plasma and the mix is lifting margins appears in five places: analystCommentary ('that shift is lifting gross and operating margins'), executiveSummary.thesis.body ('the mix shift toward it is lifting margins'), financials.incomeCommentary ('the company attributes the gain to a greater mix of pharma revenue'), this segment body, and finalRecommendation.body[0] ('margins are expanding on mix').",
       "fix": "Argue the mix-margin link once, in incomeCommentary. Let the thesis point to it in a clause, and cut it from the segment body and the final recommendation.",
-      "status": "open",
-      "note": "Margin half fixed: the mix-margin link is now argued only in incomeCommentary. Still repeated: segment body 'Pharma revenue now exceeds plasma revenue.' retells analystCommentary's 'patient affordability revenue from pharma clients now exceeds plasma donor compensation revenue', and its 'depends on a center base that is shrinking' retells moatFactors[1]'s center-count decline in the same section. Make each claim once."
+      "status": "addressed",
+      "note": "Segment body now gives only the release's Q2'26 pharma and plasma figures; the 'exceeds plasma' claim lives only in analystCommentary and the shrinking-center-base retelling is gone."
     },
     {
       "id": "F-16",
@@ -253,7 +253,7 @@
       "issue": "Voice. Prose carries the cash-flow sign convention and cents. financials.cashflowCommentary does the same: 'Capital expenditure was -$1.2M in FY25'.",
       "fix": "Write the amounts as spent ('the company repurchased $375,786.00 of stock in FY25', 'capital expenditure was $1.2M'), keeping the figures as quoted.",
       "status": "open",
-      "note": "Unchanged: management.capitalAllocation still reads 'Share repurchases were -$375,786.00 in FY25' and financials.cashflowCommentary 'Capital expenditure was -$1.2M in FY25'."
+      "note": "Still unchanged: management.capitalAllocation reads 'Share repurchases were -$375,786.00 in FY25' and financials.cashflowCommentary 'Capital expenditure was -$1.2M in FY25'."
     },
     {
       "id": "F-26",
@@ -263,7 +263,7 @@
       "issue": "The disagreement is flagged, but the explanation is incomplete. The vendor's $8M is as of FY25 year-end and the release's zero bank debt is as of June 30, 2026, so the two also differ in date. 'Differ in scope' is asserted without the surface saying what the $8M contains.",
       "fix": "Date both figures, say they differ in date and possibly in scope, and keep the choice of the release figure.",
       "status": "open",
-      "note": "Unchanged: 'the two measures differ in scope' is still asserted without support, and the sentence does not say the $8M (FY25 year-end) and zero bank debt (June 30, 2026) also differ in date."
+      "note": "Still unchanged: balanceCommentary asserts 'the two measures differ in scope' without support and does not say the $8M (FY25 year-end) and zero bank debt (June 30, 2026) differ in date."
     },
     {
       "id": "F-27",
@@ -272,7 +272,8 @@
       "quote": "Paysign's 10-Q for the quarter ended June 30, 2026 shows a business in the middle of a mix transition: patient affordability revenue from pharma clients now exceeds plasma donor compensation revenue.",
       "issue": "Over-attribution. The pharma/plasma revenue split ($14.65 million pharma, $13.04 million plasma) comes from the August 5, 2026 earnings release (8-K ex-99.1). The 10-Q MD&A excerpt in Context does not carry it, so the sentence attaches the fact to a source that did not carry it on the grounding surface.",
       "fix": "Attribute the mix point to the August 5, 2026 earnings release, or open with the 10-Q but take the mix fact from the release by name.",
-      "status": "open"
+      "status": "addressed",
+      "note": "analystCommentary now attributes the Q2'26 pharma/plasma comparison to the August 5, 2026 earnings release."
     },
     {
       "id": "F-28",
@@ -281,7 +282,8 @@
       "quote": "The counterpoint is that the profit beat leaned on the one-time items discussed under Financials",
       "issue": "Unsupported causal claim. The pack carries no Q2'26 guidance figures, so it cannot show whether operating margin or net income would still have cleared the high end of guidance without the $990,000 earn-out benefit and the 14.5% tax rate. 'Leaned on' says the beat depended on those items; the surface only shows that Q2'26 profit included them. The revenue beat is unaffected by either item.",
       "fix": "Say the Q2'26 profit beat included the one-time $990,000 benefit and the low tax rate, and that the pack does not show the beat without them. Keep the 'one quarter deep' point.",
-      "status": "open"
+      "status": "addressed",
+      "note": "leadership now says Q2'26 profit included the one-time items and that the materials do not show whether the beat would have held without them."
     },
     {
       "id": "F-29",
@@ -290,7 +292,8 @@
       "quote": "Mark R. Newcomer held 9,025,728 shares, or 16.3%, including options in a family member's name.",
       "issue": "Recalled or inferred fact. Proxy footnote (4) says only 'Includes 75,000 options in the name of Erin Newcomer.' It does not state the relationship; 'family member' is inferred from the surname.",
       "fix": "Write 'including 75,000 options in the name of Erin Newcomer, per the proxy', or drop the clause.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Now reads 'including 75,000 options in the name of Erin Newcomer, per the proxy'."
     },
     {
       "id": "F-30",
@@ -299,7 +302,8 @@
       "quote": "The Bear requires no break in the business, only slower growth and a lower multiple.",
       "issue": "Cross-section repetition introduced by the rewrite. analystCommentary makes the same claim in near-identical words: 'against a Bear case that needs only slower growth and a lower multiple rather than any break in the business.' The 'almost no expected upside' point is also told in both places ('Our scenarios leave almost no expected upside from here' / 'the scenario set offers almost no expected return').",
       "fix": "Argue the Bear and the expected-return pairing once, in scenarioCommentary. Let analystCommentary point to the HOLD in a clause without retelling the Bear mechanism.",
-      "status": "open"
+      "status": "addressed",
+      "note": "The Bear mechanism and the expected-return pairing are now argued only in scenarioCommentary; analystCommentary points to Valuation."
     },
     {
       "id": "F-31",
@@ -308,7 +312,8 @@
       "quote": "The 10-K frames the industry as one where competitors may match the offering and push pricing down",
       "issue": "Repetition within the section. moatFactors[0].body already makes the same point from the same source: 'the 10-K warns competitors may offer similar products and force price competition.'",
       "fix": "Keep the 10-K competition warning in one place (the moat factor, where it is the counter-case) and have durability refer to it in words or drop it.",
-      "status": "open"
+      "status": "addressed",
+      "note": "durability now refers to the pricing pressure 'noted in that factor' instead of restating the 10-K warning."
     },
     {
       "id": "F-32",
@@ -317,7 +322,8 @@
       "quote": "Paysign's cards are sponsored by issuing bank partners, and the 10-Q notes that if a financial institution holding its deposits were placed into receivership",
       "issue": "Cross-section repetition. The issuing-bank sponsorship fact is stated three times: executiveSummary.companyOverview ('Its cards are sponsored by its issuing bank partners.'), businessMoat.moatFactors[2].body ('It still relies on issuing bank partners to sponsor its cards.') and here. In this risk item it is also not the risk: the receivership point concerns where the company's cash is deposited, not card sponsorship.",
       "fix": "Keep the sponsorship fact in companyOverview and the moat counter-case. Open this risk item with the deposit-access point directly.",
-      "status": "open"
+      "status": "addressed",
+      "note": "risks.idiosyncratic[2] now opens with the deposit-access point; sponsorship stays in companyOverview and the moat counter-case only."
     },
     {
       "id": "F-33",
@@ -326,6 +332,34 @@
       "quote": "**Gamma integration.** The release cites integration risk from the Gamma acquisition, and Gamma already moves reported results",
       "issue": "Fit. The item is 554 characters against a 600 cap, leaving little room for the next round.",
       "fix": "Tighten it, for example by dropping the internal-control clause or moving it to a separate item.",
+      "status": "addressed",
+      "note": "The idiosyncratic-item cap is 800 characters, not 600 as the finding said; at 554 the item leaves room for the next round."
+    },
+    {
+      "id": "F-34",
+      "severity": "Critical",
+      "field": "sections.management.insiderOwnership",
+      "quote": "Daniel R. Henry's 2.6% is mostly exercisable options",
+      "issue": "Unsupported characterization. The proxy column is 'Options Exercisable/Shares Issuable within 60 days', and footnote (3) says the figure covers either shares issuable on exercise of stock options or shares issuable under stock grants vesting within 60 days. The proxy does not split Henry's 1,350,000 between the two, so 'exercisable options' says more than the source does.",
+      "fix": "Say Henry's 2.6% is mostly options exercisable or shares issuable within 60 days of March 19, 2026, per the proxy, matching the wording the paragraph already uses for the group's 2,175,001.",
+      "status": "open"
+    },
+    {
+      "id": "F-35",
+      "severity": "Critical",
+      "field": "sections.management.insiderOwnership",
+      "quote": "Topline Capital Partners, LP reported 9.7% based on a Schedule 13G filed February 10, 2025",
+      "issue": "Attribution. The 9.7% is the proxy's percent of class, computed on 55,185,394 shares outstanding as of March 19, 2026 (footnote (1)). Per footnote (7), the February 10, 2025 Schedule 13G is the source of the 5,336,146-share holding, not of the 9.7%. The sentence attaches the proxy's figure to Topline's filing.",
+      "fix": "Write that the proxy lists Topline Capital Partners, LP at 9.7% as of March 19, 2026, based on 5,336,146 shares reported in a Schedule 13G filed February 10, 2025. Keep the note that the holding is dated.",
+      "status": "open"
+    },
+    {
+      "id": "F-36",
+      "severity": "Critical",
+      "field": "sections.management.insiderOwnership",
+      "quote": "a plan whose awards go in part to the same officers and directors",
+      "issue": "An inference the source invites but does not make. The 10-Q says only that the company intends to seek approval for more shares under the 2023 Equity Incentive Plan. The proxy excerpt does not say which plan the officers' and directors' options and grants were made under, and it carries no executive-pay section (governance itself says so). Nothing on the surface ties 2023 Plan awards to these holders, yet the paragraph's main judgment, that a passing vote is not an independent endorsement, rests on that link.",
+      "fix": "Drop the clause, or say that the excerpt does not show who receives awards under the 2023 plan. Rest the voting-weight point on the 24.5% bloc alone: insiders who vote their shares carry real weight in any vote on the plan.",
       "status": "open"
     }
   ]

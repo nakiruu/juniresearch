@@ -1,6 +1,6 @@
 {
-  "judgmentSha256": "7cdfd99cf1cc8a195d00d00c98542053c92fe63cf9149954d2a70d94b6cc6cc6",
-  "reviewedAt": "2026-10-02T16:34:50Z",
+  "judgmentSha256": "89166074fe6cd35d36fad3d245c3ec983c9e01674fa762021ac3a2de19d04b36",
+  "reviewedAt": "2026-10-02T17:00:01Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
   "verdict": "needs-fix-round",
@@ -133,7 +133,7 @@
       "issue": "ISO dates remain in prose: governance opens 'Under the 2026-03-12 proxy statement' and leadership says 'dated 2026-03-12'. The rubric asks for dates in prose form.",
       "fix": "Write 'March 12, 2026'.",
       "status": "open",
-      "note": "Still open: both ISO dates survive the rewrite (governance wording changed from 'Per' to 'Under'). This finding was not carried into the author's brief, whose Editorial findings block stops at F-12, so the author never saw it."
+      "note": "Still open in round 2 re-check: leadership 'dated 2026-03-12' and governance 'Under the 2026-03-12 proxy statement' are unchanged. The author's Editorial findings block again lists only F-15 to F-18, so F-13 has still not reached the author."
     },
     {
       "id": "F-14",
@@ -143,7 +143,7 @@
       "issue": "Spans wrap levels, not signed changes: balanceCommentary 'it stands at {- 0.98 -} on a trailing basis' and, new in this rewrite, cashflowCommentary 'and then {+ 15.8% +}'. Spans are reserved for signed changes or explicit positives and negatives.",
       "fix": "Remove both spans, or wrap the explicit judgment instead, for example '{- below one -}'.",
       "status": "open",
-      "note": "Still open: '{- 0.98 -}' is unchanged, and the rewrite added '{+ 15.8% +}' around a level. Like F-13, this finding was missing from the author's brief."
+      "note": "Still open in round 2 re-check: balanceCommentary '{- 0.98 -}' and cashflowCommentary '{+ 15.8% +}' both still wrap levels. As with F-13, this finding has still not reached the author's brief."
     },
     {
       "id": "F-15",
@@ -152,7 +152,8 @@
       "quote": "The thesis is that FY27E consensus is achievable and the market will keep paying for it.",
       "issue": "The headline thesis does not match the mechanism behind the BUY. Today the market pays ~31.8x on FY27E EPS of $9.82, which is the current $312.04. If consensus arrives and the market 'keeps paying' that multiple, the shares do not move. The Base price of $355 needs a higher multiple on FY27E, which scenarioCommentary concedes: 'still above the multiple the market pays on FY27E now'. analystCommentary makes the same slip: 'That multiple holds only if the street's FY27E numbers arrive' implies holding the multiple is the upside. The upside in Base and Bull therefore comes from a re-rating on FY27E, and neither summary field says so. Separately, multiplesCommentary says '$9.82 is the earnings base our scenarios rest on', but the Bear rests on $7.91.",
       "fix": "In the thesis and analystCommentary, say the BUY needs both FY27E delivery and the market paying more for FY27E earnings than it does today, settling near the trailing multiple as FY27E becomes the near-term base, which is what the Base driver argues. In multiplesCommentary, say the Bull and Base rest on $9.82 and the Bear on FY26E-level earnings.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed: the thesis now says the multiple on FY27E earnings rises toward the trailing level, analystCommentary says the BUY needs FY27E delivery and a higher multiple on those earnings, and multiplesCommentary splits the earnings base by scenario. See F-20 for a small slip in that split."
     },
     {
       "id": "F-16",
@@ -161,7 +162,8 @@
       "quote": "The risks we weigh most are thin liquidity, with a trailing current ratio of 0.98, and a multiple that leaves little room for a growth miss.",
       "issue": "The summary fields say the same thing twice. analystCommentary's closing sentence repeats executiveSummary.risks[0] ('a 36.8x trailing P/E leaves little room for a growth miss', with the same phrase) and risks[1] ('the trailing current ratio is below one'). The thesis counter-case makes the liquidity point a third time ('the balance sheet carries less liquidity than the earnings suggest'), before balanceCommentary and risks.idiosyncratic[0] and [2] argue both. finalRecommendation.body[1] ('our Bear price of $255 sits below the 52-week low') also retells the Bear driver ('the price breaks the $268.91 52-week low').",
       "fix": "Cut the risk sentence from analystCommentary, or make it a few-word pointer to Risks, and leave the exec-summary risk list as the only summary statement. In finalRecommendation.body[1], use a figure the page renders, such as the reward/risk or the bear-case downside, rather than repeating the Bear-versus-low comparison.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed: analystCommentary now points to the risk list instead of restating it, the thesis counter-case is now valuation and not liquidity, and finalRecommendation.body[1] uses the rendered 0.64x reward/risk in place of the Bear-versus-low comparison."
     },
     {
       "id": "F-17",
@@ -170,7 +172,8 @@
       "quote": "The operating margin gains from FY23 to FY25 are consistent with a growing high-margin service stream, though we lack the split to prove it.",
       "issue": "The pack carries no service mix, service growth or service margin, and growth.points[3] concedes there is 'no installed-base, mix or service-margin data'. The words 'growing' and 'high-margin' therefore describe the service stream from outside the surface, even inside a hedge. This is the only factor rated 'Strong', yet it is the only one with no figure behind it. 'Cash generation', which the table does support, is rated Moderate, and durability says the available evidence does not show how long the advantage lasts. The strength grades run the opposite way to the evidence.",
       "fix": "Drop 'growing' and 'high-margin'. Say the pack does not let us attribute the margin gains to services. Either rate the factor Moderate, or ground the Strong rating in something on the surface, for example the company description's pairing of engine sales with MRO and spare parts, and say what would confirm it.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed: 'growing' and 'high-margin' are gone, the factor is rated Moderate and grounded in the company description's MRO and spare-parts pairing, and it says what would support Strong. See F-19 for a repetition the new wording introduces."
     },
     {
       "id": "F-18",
@@ -179,6 +182,34 @@
       "quote": "Defense & Propulsion Technologies spans engines, avionics, power systems and named component brands such as Avio Aero, Unison, Dowty Propellers and Colibrium Additive.",
       "issue": "The company description is told three times. companyOverview describes both segments and lists the brands 'Avio Aero, Unison, Dowty Propellers and Colibrium Additive'. segments[0].body re-describes both segments in its 'Qualitatively, ...' paragraph ('turboprop engines, transmissions, propeller systems and sensors'). moatFactors[1] lists the same brands again. The moat factor's only judgment is 'That breadth ... diversifies the customer base', which no figure supports and which names no counter-case.",
       "fix": "Keep the description in companyOverview. Limit segments[0].body to the source disagreement and the choice of the consolidated figure. Have moatFactors[1] say what breadth does for the moat without listing the brands again, and add the counter-case: with no segment revenue, the defense share cannot be sized, so the diversification cannot be either.",
+      "status": "addressed",
+      "note": "Addressed: the description and brands now sit only in companyOverview, segments[0].body is limited to the source disagreement, and moatFactors[1] drops the brands and adds the sizing counter-case."
+    },
+    {
+      "id": "F-19",
+      "severity": "Important",
+      "field": "sections.businessMoat.moatFactors[0].body; sections.growth.points[3]; sections.businessMoat.durability",
+      "quote": "which ties revenue to the fleet already in service rather than to new deliveries alone",
+      "issue": "The rewrite of moatFactors[0] adds a claim that two other places already make. Aftermarket revenue tracks the engines in service, said three times in different words: moatFactors[0] ('ties revenue to the fleet already in service rather than to new deliveries alone'), growth.points[3] ('aftermarket revenue tracks the engines already flying, so a larger fleet could lift it') and durability ('aftermarket demand follows flight activity'). The rubric treats a paraphrase in two places as repetition. systemic already points back correctly ('named under the moat').",
+      "fix": "Make the fleet-in-service claim once, in moatFactors[0], where the moat argument sits. Have growth.points[3] point back in words, for example 'the aftermarket tie noted under the moat could lift revenue as the fleet grows; the pack carries no installed-base data', and have durability use the cycle point without restating the mechanism.",
+      "status": "open"
+    },
+    {
+      "id": "F-20",
+      "severity": "Minor",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "Our Bull and Base cases rest on FY27E EPS of $9.82, and our Bear case on FY26E-level earnings.",
+      "issue": "The Bull driver rests on FY27E EPS 'comfortably above the $9.82 consensus'. $430 at about 39.5x implies roughly $10.90. So the Bull does not rest on $9.82. The F-15 fix text suggested this wording and caused the slip.",
+      "fix": "Say the Base rests on FY27E EPS of $9.82, the Bull on FY27E earnings above it, and the Bear on FY26E-level earnings.",
+      "status": "open"
+    },
+    {
+      "id": "F-21",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarios[2].driver; sections.valuation.scenarioCommentary",
+      "quote": "the FY27E recovery slips",
+      "issue": "Calling FY27E a 'recovery' assumes FY26E earnings fall below FY25. multiplesCommentary qualifies that comparison as possibly not like for like (consensus mean against reported diluted EPS, see F-10). The Bear driver ('the FY27E recovery slips') and scenarioCommentary ('needs the FY27E recovery to slip; neither step requires a collapse') treat the dip as established. In scenarioCommentary, 'neither step' also has only one step to refer to.",
+      "fix": "Use 'the FY27E earnings step', as growth.points[2] does, in place of 'recovery'. Rewrite the scenarioCommentary clause so 'neither step' has two antecedents, or drop it.",
       "status": "open"
     }
   ]

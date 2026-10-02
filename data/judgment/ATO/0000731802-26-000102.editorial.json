@@ -1,6 +1,6 @@
 {
-  "judgmentSha256": "fc0070cda9a921086f515fa4b89d05985a8b0b831ce189da320a95c494cff3f8",
-  "reviewedAt": "2026-10-02T16:38:30Z",
+  "judgmentSha256": "92bd490bef6b1e988f9d9f0bf2dedfb2e3c65a770af12f6b5c744c915ce71abf",
+  "reviewedAt": "2026-10-02T17:02:58Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
   "verdict": "needs-fix-round",
@@ -90,7 +90,7 @@
       "severity": "Important",
       "field": "sections.management.capitalAllocation",
       "quote": "the financial series shows no share repurchases from FY21 to FY25",
-      "issue": "Inconsistent source handling. The Facts block shows '\u2014' (no data) for every Share Repurchases cell, not zero. balanceCommentary correctly treats the same vendor's dashes and gaps in the debt series as incomplete and sets them aside, but here the dashes are read as a statement that no repurchases occurred.",
+      "issue": "Inconsistent source handling. The Facts block shows '—' (no data) for every Share Repurchases cell, not zero. balanceCommentary correctly treats the same vendor's dashes and gaps in the debt series as incomplete and sets them aside, but here the dashes are read as a statement that no repurchases occurred.",
       "fix": "Say the series carries no repurchase data for FY21 to FY25 and that shareholder returns on the surface come through dividends; do not assert that repurchases were zero.",
       "status": "addressed",
       "note": "capitalAllocation now says the series carries no repurchase data rather than that there were none."
@@ -133,7 +133,7 @@
       "issue": "The page header and snapshot label the period Q2'26 / fiscal Q2 2026 (vendor naming), while the commentary opens with 'fiscal third quarter'. The reconciliation is stated only later, in financials.incomeCommentary, so the reader meets the mismatch first.",
       "fix": "Move the one-line reconciliation (the vendor series labels this quarter Q2'26; we use the company's naming) to the first mention in analystCommentary and drop it from incomeCommentary, so it is said once.",
       "status": "open",
-      "note": "Not changed: analystCommentary still opens with fiscal third quarter while the page header reads fiscal Q2 2026, and the reconciliation still sits only in financials.incomeCommentary."
+      "note": "Still open: analystCommentary opens with 'fiscal third quarter' while the page header reads fiscal Q2 2026, and the vendor-label reconciliation still sits only in financials.incomeCommentary, so the reader meets the mismatch first."
     },
     {
       "id": "F-14",
@@ -142,7 +142,8 @@
       "quote": "Our Base price applies the current 18.6x forward (NTM) multiple, unchanged, to that consensus figure.",
       "issue": "Source disagreement handled silently, and the Base anchor is not what it says it is (rubric 6 and 8). multiplesCommentary lists 18.6x forward (NTM) and ~17.4x FY27E side by side without saying they disagree, although at October 2, 2026 the next twelve months and fiscal 2027 cover nearly the same window. At $157.07 the stock already trades at ~17.4x the $9.02 FY27E figure, so putting 18.6x on $9.02 is not an unchanged multiple; it builds in a re-rating from the FY27E multiple to the NTM one. The vendor NTM figure looks as if it rests on earnings nearer FY26E $8.46. That also undercuts scenarioCommentary ('The Bull case needs both rate wins and a re-rating'), because the Base case already contains one.",
       "fix": "In multiplesCommentary, say once that the two forward multiples disagree and which one the desk uses. Then either describe the Base case honestly, as the NTM multiple applied to FY27E consensus (a modest re-rating against the FY27E multiple), and adjust the Bull/Base asymmetry argument in scenarioCommentary, or anchor the Base case on the ~17.4x FY27E multiple and reset the Base price and band to match. Do not write a new computed multiple or EPS figure.",
-      "status": "open"
+      "status": "addressed",
+      "note": "multiplesCommentary now says once that the NTM and FY27E multiples disagree and which one the desk uses; the Base driver describes 18.6x on FY27E $9.02 as a modest re-rating (Base $168, inside the $150-$185 band), and scenarioCommentary's Bull/Base asymmetry now accounts for the re-rating already in the Base case."
     },
     {
       "id": "F-15",
@@ -151,7 +152,8 @@
       "quote": "The resulting expected upside is positive but well short of the threshold for a BUY, and the Bear-case downside is large against it.",
       "issue": "The rewrite for F-4 turned the rating rationale into a claim the report now makes in paraphrase in at least five places (rubric 7): analystCommentary ('Our probability-weighted value sits only modestly above the price, while our Bear case sits well below it'), thesis.body ('our Bear case sits well below the current price. Expected upside is positive but too small for that risk'), multiplesCommentary ('the HOLD rests on positive but modest expected upside set against a deep Bear-case downside'), scenarioCommentary (quoted) and finalRecommendation.body[0] ('a probability-weighted value only modestly above the price and a Bear case well below the 52-week low'), plus meta.subtitle. None of them gives the figures the page renders (expected upside, Bear-case downside, reward/risk), so the claim is made in words five times and never with numbers. Within valuation, the Street-range-above-price point also appears twice (multiplesCommentary and scenarioCommentary), and 'a lower entry price' in scenarioCommentary repeats finalRecommendation.body[1] ('a price closer to our Bear case').",
       "fix": "Argue the verdict once, in scenarioCommentary, with the page's own expected upside, Bear-case downside and reward/risk. Let analystCommentary and finalRecommendation.body[0] point to it in a clause, cut the thesis to one clause, and delete the restatement from multiplesCommentary. Keep the Street-range point in multiplesCommentary only, and the entry-price condition in finalRecommendation only.",
-      "status": "open"
+      "status": "addressed",
+      "note": "The verdict is argued once, in scenarioCommentary, with the page's figures (fair value $164, +4.4% expected upside, 17.2% Bear-case downside, 0.26x reward/risk, which match the rendered conviction). analystCommentary and finalRecommendation.body[0] point to it, the thesis is one clause, the Street range appears only in multiplesCommentary and the entry-price condition only in finalRecommendation."
     },
     {
       "id": "F-16",
@@ -160,7 +162,8 @@
       "quote": "Consensus expects EPS of $8.46 in FY26 and $9.02 in FY27, on revenue of $5.1B and $5.7B.",
       "issue": "Restatement without judgment (rubric 4): the point repeats the Facts block's Estimates lines and reaches no view. It does not say that FY26E sits inside the reaffirmed $8.40 - $8.50 guidance, so the Street already assumes the guidance is met, or what has to happen for the FY27E figure to hold. The section's other points each argue something; this one only lists numbers.",
       "fix": "Read the estimates in one sentence. For example, FY26E sits inside the guidance range, so fiscal 2026 holds little surprise either way, and FY27E depends on the $373.4 million of ratemaking requests in progress converting to outcomes. Do not compute a growth rate. Otherwise delete the point and let the Base driver carry the FY27E figure.",
-      "status": "open"
+      "status": "addressed",
+      "note": "growth.points[3] now reads the estimates: FY26E sits inside guidance so fiscal 2026 holds little surprise, and FY27E depends on the pending ratemaking requests converting."
     },
     {
       "id": "F-17",
@@ -169,6 +172,16 @@
       "quote": "Long-run policy pressure on natural gas could also erode the volume base the network serves",
       "issue": "Paraphrase repetition across sections (rubric 7): risks.systemic makes the same claim ('legislation to reduce or eliminate greenhouse gas emissions or fossil fuels and the impact of climate change among its risks; both threaten volumes and political support for gas infrastructure'). Durability already points to the risks section for the regulatory-recovery leg of the NARROW rating but retells this leg instead of pointing.",
       "fix": "Keep the policy and climate argument in risks.systemic and replace the durability sentence with a pointer in words (for example, 'and the long-run policy risk to gas volumes we set out in the risks section').",
+      "status": "addressed",
+      "note": "durability now points to the risks section for both legs of the NARROW rating; the policy and climate argument sits only in risks.systemic."
+    },
+    {
+      "id": "F-18",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "The legislative benefit booked in operating expenses is larger than the segment's $13,615 thousand operating-income increase, so in our reading the legislation explains much of the rise.",
+      "issue": "Introduced by the F-12 rewrite. The sentence compares a quarterly level (the $17.8 million of the $26.7 million legislative benefit booked in operating expenses in the quarter ended June 30, 2026) with a year-over-year change (the $13,615 thousand operating-income increase), mixing units as it does so (rubric 1, wrong quantity). The 10-Q says the legislation 'became effective during the third quarter of fiscal 2025', which is the prior-year comparison quarter, so part of the benefit sits on both sides of the comparison. growth.points[4] makes the same point about future comparisons. The counter-case that follows ('part of the rise may still be underlying') does not mention this. The conclusion may still hold, but this comparison does not support it.",
+      "fix": "Argue from the figures on the surface without comparing a level to a change. The listed operating drivers (+$21.0 million, +$3.9 million, -$20.0 million, -$9.4 million) net to less than nothing, yet operating income rose 14.3 percent, so most of the rise sits outside the listed drivers, and the legislation is the one other item the MD&A names. Say that the legislation took effect during the prior-year quarter, so the 10-Q does not show how much of the $17.8 million is incremental. Do not write the computed net figure, and keep one unit (millions) within the sentence.",
       "status": "open"
     }
   ]
