@@ -1,0 +1,596 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "ACLS",
+  "cik": 1113232,
+  "company": "Axcelis Technologies, Inc.",
+  "exchange": "NASDAQGS",
+  "sic": 3559,
+  "sicDescription": "Special Industry Machinery, NEC",
+  "filing": {
+    "form": "10-Q",
+    "accession": "0001104659-26-091999",
+    "filedDate": "2026-08-06",
+    "periodEnd": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1113232/000110465926091999/acls-20260630x10q.htm"
+  },
+  "capturedAt": "2026-10-02T19:31:08.415Z",
+  "quote": {
+    "price": 147.69,
+    "marketCap": 4560886784,
+    "sharesOutstanding": 30881486.78989776,
+    "sharesSource": "derived",
+    "week52Low": 73.6,
+    "week52High": 193.78,
+    "dividendYield": 0,
+    "asOf": "2026-10-02"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          662428000,
+          919998000,
+          1130604000,
+          1017865000,
+          839048000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          286445000,
+          401790000,
+          491301000,
+          454654000,
+          376848000
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          127325000,
+          212361000,
+          265795000,
+          210794000,
+          119315000
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          138143000,
+          223968000,
+          278864000,
+          226603000,
+          136928000
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          98650000,
+          183079000,
+          246263000,
+          200992000,
+          120238000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          2.88,
+          5.46,
+          7.43,
+          6.15,
+          3.8
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          294923000,
+          432166000,
+          506148000,
+          571343000,
+          374253000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          538959000,
+          667256000,
+          864882000,
+          1012790000,
+          1034677000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          4.124457173304916,
+          3.5370085277191174,
+          3.787727660111739,
+          5.41440425593431,
+          4.7718405342507335
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          150190000,
+          215607000,
+          156869000,
+          140818000,
+          118305000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -8718000,
+          -10683000,
+          -20656000,
+          -12181000,
+          -11295000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          -49992000,
+          -57495000,
+          -52499000,
+          -60489000,
+          -121081000
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          141472000,
+          204924000,
+          136213000,
+          128637000,
+          107010000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q2'26",
+    "periodEnd": "2026-06-30",
+    "revenue": 215175000,
+    "operatingMargin": 0.09425351458115487,
+    "revenueYoY": 0.10604798914384417
+  },
+  "ttm": {
+    "pe": 49.39464882943144,
+    "ps": 5.266175080131906,
+    "evToEbitda": 39.134,
+    "grossMargin": 0.43011089147322623,
+    "operatingMargin": 0.10325007620613529,
+    "netMargin": 0.10713658910575564,
+    "netDebtToEbitda": null,
+    "interestCoverage": 17.20646526842409,
+    "currentRatio": 4.896382326924903,
+    "fcfYield": 0.014372643545979325
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 883522640,
+      "eps": 4.106
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 988774340,
+      "eps": 5.268
+    }
+  },
+  "analysts": {
+    "count": 5,
+    "buy": 1,
+    "hold": 3,
+    "sell": 1,
+    "consensusRating": "Hold",
+    "consensusTarget": 161,
+    "medianTarget": 145,
+    "highTarget": 198,
+    "lowTarget": 140,
+    "asOf": "2026-10-02"
+  },
+  "segments": {
+    "basis": "FY25 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 839048000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "ACMR",
+      "pe": 36.810574,
+      "ps": 5.6080594,
+      "evToEbitda": 33.056
+    },
+    {
+      "ticker": "ALRM",
+      "pe": 24.382744,
+      "ps": 2.5496302,
+      "evToEbitda": 16.845
+    },
+    {
+      "ticker": "CNXC",
+      "pe": null,
+      "ps": 0.151186,
+      "evToEbitda": 5.063
+    },
+    {
+      "ticker": "DIOD",
+      "pe": 56.29032,
+      "ps": 2.9494605,
+      "evToEbitda": 19.019
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-21",
+      "close": 127.06999969482422
+    },
+    {
+      "date": "2026-08-24",
+      "close": 123.48999786376953
+    },
+    {
+      "date": "2026-08-25",
+      "close": 125.4000015258789
+    },
+    {
+      "date": "2026-08-26",
+      "close": 120.36000061035156
+    },
+    {
+      "date": "2026-08-27",
+      "close": 122.4000015258789
+    },
+    {
+      "date": "2026-08-28",
+      "close": 115.56999969482422
+    },
+    {
+      "date": "2026-08-31",
+      "close": 115.33000183105469
+    },
+    {
+      "date": "2026-09-01",
+      "close": 110.08999633789062
+    },
+    {
+      "date": "2026-09-02",
+      "close": 110.7699966430664
+    },
+    {
+      "date": "2026-09-03",
+      "close": 110.37000274658203
+    },
+    {
+      "date": "2026-09-04",
+      "close": 115.08000183105469
+    },
+    {
+      "date": "2026-09-08",
+      "close": 119.16999816894531
+    },
+    {
+      "date": "2026-09-09",
+      "close": 115.55999755859375
+    },
+    {
+      "date": "2026-09-10",
+      "close": 113.30000305175781
+    },
+    {
+      "date": "2026-09-11",
+      "close": 113.43000030517578
+    },
+    {
+      "date": "2026-09-14",
+      "close": 105.30999755859375
+    },
+    {
+      "date": "2026-09-15",
+      "close": 105.04000091552734
+    },
+    {
+      "date": "2026-09-16",
+      "close": 103.75
+    },
+    {
+      "date": "2026-09-17",
+      "close": 104.5999984741211
+    },
+    {
+      "date": "2026-09-18",
+      "close": 109.31999969482422
+    },
+    {
+      "date": "2026-09-21",
+      "close": 113.1500015258789
+    },
+    {
+      "date": "2026-09-22",
+      "close": 115.73999786376953
+    },
+    {
+      "date": "2026-09-23",
+      "close": 118.43000030517578
+    },
+    {
+      "date": "2026-09-24",
+      "close": 116.13999938964844
+    },
+    {
+      "date": "2026-09-25",
+      "close": 123.11000061035156
+    },
+    {
+      "date": "2026-09-28",
+      "close": 124.01000213623047
+    },
+    {
+      "date": "2026-09-29",
+      "close": 128.69000244140625
+    },
+    {
+      "date": "2026-09-30",
+      "close": 131.17999267578125
+    },
+    {
+      "date": "2026-10-01",
+      "close": 136.7100067138672
+    },
+    {
+      "date": "2026-10-02",
+      "close": 147.69000244140625
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "Axcelis Technologies, Inc. designs, manufactures, and services ion implantation and other processing equipment used in the fabrication of semiconductor chips in the United States, Europe, and the Asia Pacific. The company provides high energy, high current, and medium current implanters for various application requirements. It also offers aftermarket lifecycle products and services, including used tools, spare parts, equipment upgrades, maintenance services, and customer training. The company sells its equipment and services to semiconductor chip manufacturers through its direct sales force. Axcelis Technologies, Inc. was founded in 1978 and is headquartered in Beverly, Massachusetts.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-10-02"
+    },
+    "mdaExcerpt": {
+      "text": "Item 2. Management's Discussion and Analysis of Financial Condition and Results of Operations.\nCertain statements in \"Management's Discussion and Analysis of Financial Condition and Results of Operations\" are forward-looking statements that involve risks and uncertainties. Words such as may, will, should, would, anticipates, expects, intends, plans, believes, seeks, estimates and similar expressions identify such forward-looking statements. The forward-looking statements contained herein are based on current expectations and entail various risks and uncertainties that could cause actual results to differ materially from those expressed in such forward-looking statements. Factors that might cause such a difference include, among other things, those set forth under \"Liquidity and Capital Resources\" and \"Risk Factors\" and others discussed elsewhere in this Quarterly Report on Form 10-Q. Readers are cautioned not to place undue reliance on these forward-looking statements, which reflect management's analysis only as of the date hereof. We assume no obligation to update these forward-looking statements to reflect actual results or changes in factors or assumptions affecting forward-looking statements, except as may be required by law.\nOverview\nWe are primarily a producer of ion implantation equipment used in the fabrication of semiconductor chips in the United States, Europe, and Asia. In addition, we provide extensive worldwide aftermarket service and support, including spare parts, equipment upgrades and maintenance services to the semiconductor industry. Our product development and manufacturing activities currently occur primarily in the United States and South Korea. Our equipment and service products are highly technical and are sold through a direct sales force in the United States, Europe, and Asia. Consolidation and partnering within the semiconductor manufacturing industry has resulted in a small number of customers representing a substantial portion of our business. Our ten largest customers accounted for 68.5% of total revenue for the six months ended June 30, 2026.\nSales of our systems in the first half of 2026 were down slightly compared to the same period in the prior year. During the six months ended June 30, 2026 , the overall mature process segment represented 77% of our shipped systems revenue, with the remainder represented by 22% of shipments to dynamic random-access memory (\"DRAM\") applications and 1% of shipments to advanced logic. Of the mature process segment, power device shipments comprised 38% of total systems revenue with the general mature segment representing 39%, which includes image sensor applications.\nOn September 30, 2025, the Company, Victory Merger Sub, Inc., a Delaware corporation and a wholly-owned subsidiary of the Company (\"Merger Sub\"), and Veeco Instruments Inc., a Delaware corporation (\"Veeco\"), entered into an Agreement and Plan of Merger (the \"Merger Agreement\"). Pursuant to the Merger Agreement, and subject to the satisfaction or waiver of the conditions specified therein, Merger Sub shall be merged with and into Veeco (the \"Merger\"), with Veeco surviving as a wholly-owned subsidiary of the Company. For further information regarding the Merger, see Note 19 to the consolidated financial statements included in this report. On February 6, 2026, Axcelis held a special meeting of stockholders at which the issuance of Company common stock to the Veeco stockholders in the Merger was approved. The completion of the Merger remains subject to other customary closing conditions, including the final pending regulatory approval from the State Administration for Market Regulation of the People's Republic of China. Axcelis and Veeco continue to expect that the Merger will be completed in the second half of 2026.\nCritical Accounting Estimates\nManagement's discussion and analysis of our financial condition and results of operations included herein and in our 2025 Form 10-K are based upon our consolidated financial statements, which have been prepared in accordance with accounting principles generally accepted in the United States. The preparation of these financial statements requires management to make estimates and judgments that affect the reported amounts of assets, liabilities, revenues and expenses and related disclosure of contingent assets and liabilities. On an ongoing basis, we evaluate our estimates and assumptions. Management's estimates are based on historical experience and on various other assumptions that are believed to be reasonable under the circumstances, the results of which form the basis for making judgments about the carrying values of assets and liabilities that are not readily apparent from other sources. Actual results may differ from these estimates under different assumptions or conditions.\n22\nTable of Contents\nManagement has not identified any need to make any material change in, and has not changed, any of our critical accounting estimates and judgments as described in \"Management's Discussion and Analysis of Financial Condition and Results of Operations\" included in our 2025 Form 10-K.\nResults of Operations\nThe following table sets forth our results of operations as a percentage of total revenue:\nThree months ended\nSix months ended\nJune 30,\nJune 30,\n2026\n2025\n2026\n2025\nRevenue:\nProduct\n93.2\n%\n94.3\n%\n93.8\n%\n94.6\n%\nServices\n6.8\n5.7\n6.2\n5.4\nTotal revenue\n100.0\n100.0\n100.0\n100.0\nCost of revenue:\nProduct\n49.7\n49.1\n51.4\n49.1\nServices\n7.9\n6.0\n7.2\n5.4\nTotal cost of revenue\n57.6\n55.1\n58.6\n54.5\nGross profit\n42.4\n44.9\n41.4\n45.5\nOperating expenses:\nResearch and development\n13.5\n13.9\n13.9\n14.0\nSales and marketing\n9.1\n7.7\n8.9\n7.8\nGeneral and administrative\n10.4\n8.4\n11.9\n8.7\nTotal operating expenses\n33.0\n30.0\n34.7\n30.5\nIncome from operations\n9.4\n14.9\n6.7\n15.0\nOther income (expense):\nInterest income\n2.1\n2.8\n2.2\n2.9\nInterest expense\n(0.6)\n(0.7)\n(0.6)\n(0.7)\nOther, net\n0.8\n1.0\n0.3\n0.4\nTotal other income\n2.3\n3.1\n1.9\n2.6\nIncome before income taxes\n11.7\n18.0\n8.6\n17.6\nIncome tax provision\n1.0\n1.9\n0.8\n2.1\nNet income\n10.7\n%\n16.1\n%\n7.8\n%\n15.5\n%\nRevenue\nThe following table sets forth our product and services revenue:\nThree months ended\nPeriod-to-Period\nSix months ended\nPeriod-to-Period\nJune 30,\nChange\nJune 30,\nChange\n2026\n2025\n$\n%\n2026\n2025\n$\n%\n(dollars in thousands)\nRevenue:\nProduct\n$\n200,488\n$\n183,402\n$\n17,086\n9.3\n%\n$\n388,497\n$\n366,226\n$\n22,271\n6.1\n%\nPercentage of revenue\n93.2\n%\n94.3\n%\n93.8\n%\n94.6\n%\nServices\n14,687\n11,142\n3,545\n31.8\n%\n25,634\n20,881\n4,753\n22.8\n%\nPercentage of revenue\n6.8\n%\n5.7\n%\n6.2\n%\n5.4\n%\nTotal revenue\n$\n215,175\n$\n194,544\n$\n20,631\n10.6\n%\n$\n414,131\n$\n387,107\n$\n27,024\n7.0\n%\n23\nTable of Contents\nThree months ended June 30, 2026 Compared with Three months ended June 30, 2025\nProduct\nProduct revenue, which includes systems sales, sales of spare parts, product upgrades and used systems, was $200.5 million, or 93.2% of revenue, during the three months ended June 30, 2026, compared with $183.4 million, or 94.3% of revenue, for the three months ended June 30, 2025. The $17.1 million increase in product revenue for the three-month period ended June 30, 2026, in comparison to the same period in 2025, was primarily driven by an increase in Aftermarket sales.\nDeferred revenue includes payments received in advance of system sales as well as deferral of revenue from systems sales for installation and other future performance obligations. The total amount of deferred revenue at June 30, 2026 and December 31, 2025 was $118.5 million and $108.9 million, respectively.\nServices\nServices revenue, which includes the labor component of maintenance and service contracts and fees for service hours provided by on-site service personnel, was $14.7 million, or 6.8% of revenue, for the three months ended June 30, 2026, compared with $11.1 million, or 5.7% of revenue, for the three months ended June 30, 2025. Although services revenue typically increases with the expansion of the installed base of systems, it can fluctuate from period to period based on capacity utilization at customers' manufacturing facilities, which affects the need for equipment service.\nSix months ended June 30, 2026 Compared with Six months ended June 30, 2025\nProduct\nProduct revenue was $388.5 million, or 93.8% of revenue, during the six months ended June 30, 2026, compared with $366.2 million, or 94.6% of revenue, for the six months ended June 30, 2025. The $22.3 million increase in product revenue for the six-month period ended June 30, 2026, in comparison to the same period in 2025, was primarily driven by an increase in Aftermarket sales, partially offset by a customer settlement of $4.9 million.\nServices\nServices revenue was $25.6 million, or 6.2% of revenue, for the six months ended June 30, 2026, compared with $20.9 million, or 5.4% of revenue, for the six months ended June 30, 2025.\nRevenue Categories used by Management\nIn addition to the line item revenue categories discussed above, management also regularly disaggregates revenue in the following categories, which it finds relevant and useful:\nSystems and Aftermarket revenues, in which \"Aftermarket\" is:\nA.\nThe portion of Product revenue relating to spare parts, product upgrades and used equipment, combined with\nB.\nServices revenue, which is the labor component of Aftermarket revenues;\n(Aftermarket purchases reflect current fab utilization as opposed to Systems purchases which reflect capital investment decisions by our customers, which have differing economic drivers);\nRevenue by geographic regions, since economic factors impacting customer purchasing decisions may vary by geographic region; and\n24\nTable of Contents\nRevenue by our customer market segments, since they can be subject to different economic drivers at different periods of time, impacting a customer's likelihood of purchasing capital equipment during any particular period. Currently, management references three customer market segments: memory, mature process technology and advanced logic.\nAftermarket and Systems Revenue\nThree months ended June 30, 2026 Compared with Three months ended June 30, 2025\nIncluded in total revenue of $215.2 million during the three months ended June 30, 2026 is revenue from our Aftermarket business of $82.8 million, compared with $61.3 million of Aftermarket revenue for the three months ended June 30, 2025. Aftermarket revenue fluctuates from period to period primarily based on capacity utilization at customers' manufacturing facilities, which affects the sale of spare parts and demand for equipment service. Aftermarket revenue can also fluctuate from period to period based on the demand for system upgrades or used equipment. The remaining $132.4 million of revenue for the three months ended June 30, 2026 was systems revenue, compared with $133.2 million of systems revenue for the three months ended June 30, 2025. Systems revenue fluctuates from period to period based on our customers' capital spending.\nSix months ended June 30, 2026 Compared with Six months ended June 30, 2025\nIncluded in total revenue of $414.1 million during the six months ended June 30, 2026 is revenue from our Aftermarket business of $155.4 million, compared with $116.2 million of Aftermarket revenue for the six months ended June 30, 2025. The remaining $258.7 million of revenue for the six months ended June 30, 2026 was systems revenue, compared with $270.9 million of systems revenue for the six months ended June 30, 2025.\nGross Profit / Gross Margin\nThe following table sets forth our gross profit / gross margin:\nThree months ended\nPeriod-to-Period\nSix months ended\nPeriod-to-Period\nJune 30,\nChange\nJune 30,\nChange\n2026\n2025\n$\n%\n2026\n2025\n$\n%\n(dollars in thousands)\nGross Profit:\nProduct\n$\n93,490\n$\n87,940\n$\n5,550\n6.3\n%\n$\n175,763\n$\n176,264\n$\n(501)\n(0.3)\n%\nProduct gross margin\n46.6\n%\n47.9\n%\n45.2\n%\n48.1\n%\nServices\n(2,301)\n(597)\n(1,704)\n285.4\n%\n(3,993)\n(153)\n(3,840)\n2,509.8\n%\nServices gross margin\n(15.7)\n%\n(5.4)\n%\n(15.6)\n%\n(0.7)\n%\nTotal gross profit\n$\n91,189\n$\n87,343\n$\n3,846\n4.4\n%\n$\n171,770\n$\n176,111\n$\n(4,341)\n(2.5)\n%\nGross margin\n42.4\n%\n44.9\n%\n41.4\n%\n45.5\n%\nThree months ended June 30, 2026 Compared with Three months ended June 30, 2025\nProduct\nGross margin from product revenue was 46.6% for the three months ended June 30, 2026, compared to 47.9% for the three months ended June 30, 2025. The decrease in gross margin resulted from a less favorable mix of system shipments.\n25\nTable of Contents\nServices\nGross margin from services revenue was (15.7)% for the three months ended June 30, 2026, compared to (5.4)% for the three months ended June 30, 2025. The decrease in gross margin is primarily attributable to changes in the mix of service contracts and fluctuations of service expenses . Occasionally, we experience negative gross margin on service revenue as contract costs can vary significantly from one period to another based on customer demand.\nSix months ended June 30, 2026 Compared with Six months ended June 30, 2025\nProduct\nGross margin from product revenue was 45.2% for the six months ended June 30, 2026, compared to 48.1% for the six months ended June 30, 2025. The decrease in gross margin primarily resulted from a less favorable mix of system shipments.\nServices\nGross margin from services revenue was (15.6)% for the six months ended June 30, 2026, compared to (0.7)% for the six months ended June 30, 2025. The decrease in gross margin is primarily attributable to changes in the mix of service contracts and fluctuations of service expenses .\nOperating Expenses\nThe following table sets forth our operating expenses:\nThree months ended\nPeriod-to-Period\nSix months ended\nPeriod-to-Period\nJune 30,\nChange\nJune 30,\nChange\n2026\n2025\n$\n%\n2026\n2025\n$\n%\n(dollars in thousands)\nResearch and development\n$\n28,977\n$\n27,064\n$\n1,913\n7.1\n%\n$\n57,493\n$\n54,192\n$\n3,301\n6.1\n%\nPercentage of revenue\n13.5\n%\n13.9\n%\n13.9\n%\n14.0\n%\nSales and marketing\n19,554\n15,003\n4,551\n30.3\n%\n36,908\n30,127\n6,781\n22.5\n%\nPercentage of revenue\n9.1\n%\n7.7\n%\n8.9\n%\n7.8\n%\nGeneral and administrative\n22,377\n16,311\n6,066\n37.2\n%\n49,138\n33,668\n15,470\n45.9\n%\nPercentage of revenue\n10.4\n%\n8.4\n%\n11.9\n%\n8.7\n%\nTotal operating expenses\n$\n70,908\n$\n58,378\n$\n12,530\n21.5\n%\n$\n143,539\n$\n117,987\n$\n25,552\n21.7\n%\nPercentage of revenue\n33.0\n%\n30.0\n%\n34.7\n%\n30.5\n%\nOur operating expenses consist primarily of personnel costs, including wages, commissions, incentive-based compensation, stock-based compensation and related benefits and taxes; project material costs related to the design and development of new products and enhancement of existing products; and professional fees, travel and depreciation expenses.\nPersonnel costs are our largest expense, representing $39.2 million, or 55.3%, of our total operating expenses for the three months ended June 30, 2026, compared to $35.9 million, or 61.5%, of our total operating expenses for the three months ended June 30, 2025. Personnel costs were $74.9 million, or 52.2%, of our total operating expenses for the six months ended June 30, 2026, compared to $71.3 million, or 60.4%, of our total operating expenses for the six months ended June 30, 2025. The higher personnel costs for the three months ended June 30, 2026 are primarily due to increases in salary, benefits, commissions, and stock-based compensation expenses. The higher personnel costs for the six months ended June 30, 2026 are primarily due to increases in salary, benefits, commissions, and stock-based compensation expenses, slightly offset by a decrease in separation program expenses.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/1113232/000110465926091999/acls-20260630x10q.htm",
+      "asOf": "2026-08-06",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "Item 1A. Risk Factors.\nRisks Related to Our Business and Industry\nSet forth below and elsewhere in this Annual Report on Form 10-K and in other documents we file with the SEC are risks and uncertainties that could cause actual results to differ materially from the results contemplated by the forward-looking statements contained in this Annual Report on Form 10-K. It is not possible to predict or identify all such risk factors. Consequently, the following is not a complete discussion of all potential risks or uncertainties.\nIf semiconductor chip manufacturers do not make sufficient capital expenditures, our sales and profitability will be harmed.\nNew systems orders and used tool sales depend upon demand from semiconductor chip manufacturers who build or expand fabrication facilities. When the rate of construction or expansion of fabrication facilities declines, demand for our systems will decline, reducing our revenue. In addition, all or a portion of the demand for increased capacity may be satisfied by a semiconductor chip manufacturer's ability to reconfigure and re-use equipment they already own. Revenue decline also hurts our profitability because our established cost structure and our continued investments in engineering, research and development, and marketing necessary to develop new products and to maintain extensive customer service and support capabilities, limit our ability to reduce expenses in proportion to declining sales.\nIf we fail to develop and introduce reliable new or enhanced products and services that meet the needs of semiconductor chip manufacturers, our results will suffer.\nRapid technological changes in semiconductor chip manufacturing processes require us to respond quickly to changing customer requirements. Our future success will depend in part upon our ability to develop, manufacture and successfully introduce new systems and product lines with improved capabilities. This will depend upon a variety of factors, including new product selection, timely and efficient completion of product design and development as well as manufacturing and assembly processes, product performance in the field and effective sales and marketing. In particular:\nWe must continue to develop competitive technical specifications for new systems, or enhancements to our existing systems, and manufacture and ship these systems or enhancements in volume in a timely manner.\nWe will need to accurately predict the schedule on which our customers will be ready to transition to new products, in order to accurately forecast demand for new products while managing the transition from older products.\nWe will need to effectively manage product reliability or quality problems that often exist with new systems, in order to avoid higher manufacturing costs, delays in acceptance and payment and additional service and warranty expenses, and ultimately, a lack of repeat orders.\nOur new products must be accepted in the marketplace.\nOur failure to meet any of these requirements will have a material adverse effect on our operating results and profitability.\nAxcelis is subject to the risks of operating internationally: we derive a substantial portion of our revenue from outside the United States, especially from Asia.\nWe are substantially dependent on sales of our products and services to customers outside the United States. International sales, including export sales from our U.S. manufacturing facilities to non-U.S. customers and sales by our non-U.S. subsidiaries, accounted for 83.7% of total revenue in 2025. Customers based in Asia dominate our international sales. Ion implanter system shipments to customers in Asia represented 76.0% of total system revenue in 2025. We anticipate that international sales will continue to account for a significant portion of our revenue. In particular, we expect\n12\nTable of Contents\nthat sales to Chinese customers (both global and domestic Chinese chip manufacturers) will continue to represent a significant portion of our total sales, creating both risk and opportunity.\nU.S. export controls on shipments to Chinese customers have been notably increasing since 2020. Since the placement of SMIC on the U.S. Entity List in 2020, we are required to obtain export control licenses to ship to mature process SMIC fabs, which to date, we have been able to obtain. Other chipmakers have been placed on the Entity List, some with, and some without, a similar policy allowing licensed shipments on specified conditions. An export controls regulatory framework issued by the U.S. in October 2022 and supplemented in 2023, prohibits all semiconductor equipment shipments to Chinese customers (other than certain multi-nationals) who are producing or developing logic, DRAM and NAND chips meeting specific advanced parameters. While these regulations have further excluded exports to certain Chinese customers, we currently are able to continue to ship to the majority of our Chinese customers. In general, however, continuing revenue from Chinese customers is at higher risk than continuing revenue from customers in other international locations because of trade tensions between the United States government and the Chinese government, and other challenges reflecting China's stage of development and rapid growth.\nIncreased U.S. export controls and other political and trade tensions exacerbate the risk that Chinese customers will change suppliers to non-U.S. vendors, such as Advanced Ion Beam Technology, Inc., Nissin Ion Equipment Co., Ltd. and Sumitomo Heavy Industries Ion Technology Co., Ltd. In addition, two Chinese entities, known as Kingstone Semiconductor and CETC Electronics Equipment Group Co., Ltd., continue to develop ion implanters for the Chinese domestic market. The loss of a significant customer or any reduction or delays in our ability to ship to any significant customer will adversely affect us.\nWe source a substantial portion of our materials from outside of the United States. Because of our dependence upon international sales and our global supply chain, our results and prospects may be adversely affected by a number of factors, including:\nchanges in laws or regulations resulting in more burdensome governmental controls, tariffs, restrictions, embargoes or export license requirements;\nvolatility in currency exchange rates;\npolitical and economic instability;\nglobal health emergencies, such as pandemics have the potential to disrupt our manufacturing operations and those of our supply chain, as well as cause our customers to delay or cancel shipments;\ndifficulties in accounts receivable collections;\nextended payment terms beyond those customarily offered in the United States;\ndifficulties in managing suppliers, service providers or representatives outside of the United States;\ndifficulties in staffing and managing foreign subsidiary operations; and\npotential adverse tax consequences.\nThe impact of tariffs on our business is difficult to predict, and may change substantially and without notice .\nThe U.S. government has proposed or enacted tariffs and substantial changes to trade policies, which could adversely affect our business. In August 2025, the U.S. Court of Appeals for the Federal Circuit ruled that the tariffs imposed by the current Federal administration exceed presidential authority and therefore are invalid, and in February 2026, the U.S. Supreme Court affirmed such decision. Following the ruling, the current Federal administration signed an executive order imposing a 10% \"global tariff\" and later indicated an intention to increase such \"global tariff\" to 15%, effective immediately, using presidential powers under certain U.S. trade laws. If implemented, such tariffs can remain in effect for up to 150 days, which may be extended by the U.S. Congress. The current Federal administration may continue to impose additional tariffs under other U.S. trade laws.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/1113232/000110465926020461/acls-20251231x10k.htm",
+      "asOf": "2026-02-26",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-K",
+    "pressRelease": {
+      "text": "EX-99.1\n2\ntm2622315d1_ex99-1.htm\nEXHIBIT 99.1\nExhibit 99.1\nNews Release\nAxcelis Announces Financial Results for Second Quarter 2026\nQ2 2026 Highlights:\nRevenue\nof $215.2 million\nGAAP\nGross Margin of 42.4%, and Non-GAAP Gross Margin of 42.7%\nGAAP\nOperating Margin of 9.4% and Non-GAAP Operating Margin of 14.7%\nGAAP\nDiluted Earnings Per Share of $0.75, and Non-GAAP Diluted Earnings Per Share of $1.06\nBEVERLY, Mass., Aug. 6, 2026 Axcelis Technologies , Inc.\n(Nasdaq: ACLS) today announced financial results for the second quarter ended June 30, 2026.\nPresident and CEO Russell Low commented, \"We executed well in\nthe second quarter, delivering results that exceeded our forecasts driven by stronger system shipments and higher CS&I volume.\"\nLow continued, \"Demand in the Memory market remains robust, and we are also benefitting from positive momentum in our Power market.\nIn General Mature, we are encouraged by improving engagement and utilization trends as customers respond to growing end-demand in data\ncenter, industrial and automotive segments. As a result, we now expect to deliver year-over-year revenue growth in 2026, with momentum\ncarrying through to 2027. We are focused on satisfying the remaining conditions to complete our pending merger with Veeco and look forward\nto closing the transaction in the second half of 2026.\"\nSenior Vice President and Interim CFO David Ryzhik stated, \"Axcelis\ndelivered better than expected revenue and operating income in our second quarter, reflecting the attractive operating leverage in our\nbusiness.\" Ryzhik concluded, \"With improving systems demand in our markets and continued strength in our CS&I aftermarket\nbusiness, we anticipate that Axcelis' financial performance will continue to improve over the balance of 2026.\"\nResults Summary\n(In thousands, except per share amounts and percentages)\nThree months ended June 30,\n2026\n2025\nRevenue\n$\n215,175\n$\n194,544\nGross margin\n42.4\n%\n44.9\n%\nOperating margin\n9.4\n%\n14.9\n%\nNet income\n$\n23,291\n$\n31,376\nDiluted earnings per share\n$\n0.75\n$\n0.98\nNon-GAAP Results\nThree months ended June 30,\n2026\n2025\nNon-GAAP gross margin\n42.7\n%\n45.2\n%\nNon-GAAP operating margin\n14.7\n%\n17.7\n%\nAdjusted EBITDA\n$\n35,972\n$\n38,872\nNon-GAAP net income\n$\n32,968\n$\n36,013\nNon-GAAP diluted earnings per share\n$\n1.06\n$\n1.13\nBusiness Outlook\nFor the third quarter ending September 30, 2026, Axcelis expects revenues of approximately $230 million, GAAP earnings per diluted\nshare of approximately $0.76, and non-GAAP earnings per share of approximately $1.11.\nPlease refer to Third Quarter 2026 Outlook under the \"Notes on\nour Non-GAAP Financial Information\" section of this document for detail relating to the computation of non-GAAP earnings per diluted\nshare as well as the Safe Harbor Statement section of this document.\nSecond Quarter 2026 Conference Call\nThe Company will host a call to discuss the results for the second\nquarter 2026 today at 8:30 a.m. ET. The call will be available via webcast that can be accessed through the Investors page of\nAxcelis' website at www.axcelis.com, or by registering as a participant here:\nhttps://register-conf.media-server.com/register/BIf61211144e3b4baeb4c13ba3b1f529fa\nWebcast\nreplays will be available for 30 days following the call.\nUse of Non-GAAP Financial Results\nThis press release includes financial measures that are not presented\nin accordance with U.S. generally accepted accounting principles (\"non-GAAP financial measures\"). These non-GAAP financial\nmeasures include non-GAAP gross profit, non-GAAP gross margin, non-GAAP operating income, non-GAAP operating margin, non-GAAP income tax\nprovision, Adjusted EBITDA, non-GAAP net income, and non-GAAP diluted earnings per share, and reflect adjustments for the impact of share-based\ncompensation expense, certain items related to restructuring and severance charges and any associated adjustments and transaction and\nintegration costs associated with the merger agreement with Veeco Instruments announced on October 1, 2025.\nReconciliations of these non-GAAP financial measures to the most directly\ncomparable financial measures calculated and presented in accordance with GAAP are provided in the financial tables included in this release.\nFor further information regarding these non-GAAP financial measures,\nplease refer to the tables presenting reconciliations of our non-GAAP results to our GAAP results and the \"Notes on Our Non-GAAP\nFinancial Information\" at the end of this press release.\nNews Release\nSafe Harbor Statement\nThis press release contains, and the conference call will contain,\nforward-looking statements under the Private Securities Litigation Reform Act safe harbor provisions. These statements, which include\nour expectations for spending in our industry and guidance for future financial performance, are based on management's current expectations\nand should be viewed with caution. They are subject to various risks and uncertainties that could cause actual results to differ materially\nfrom those in the forward-looking statements, many of which are outside the control of the Company, including that customer decisions\nto place orders or our product shipments may not occur when we expect, that orders may not be converted to revenue in any particular quarter,\nor at all, whether demand will continue for the semiconductor equipment we produce or, if not, whether we can successfully meet changing\nmarket requirements, and whether we will be able to maintain continuity of business relationships with and purchases by major customers.\nIncreased competitive pressure on sales and pricing, increases in material and other production costs that cannot be recouped in product\npricing and instability caused by changing global economic, political or financial conditions, including with respect to the imposition\nof tariffs on our products or components of our products, could also cause actual results to differ materially from those in our forward-looking\nstatements. These risks and other risk factors relating to Axcelis are described more fully in the most recent Form 10-K filed by\nAxcelis and in other documents filed from time to time with the Securities and Exchange Commission.\nAbout Axcelis\nAxcelis (Nasdaq: ACLS), headquartered in Beverly, Mass., has been providing\ninnovative, high-productivity solutions for the semiconductor industry for over 45 years. Axcelis is dedicated to developing enabling\nprocess applications through the design, manufacture and complete life cycle support of ion implantation systems, one of the most critical\nand enabling steps in the IC manufacturing process. Learn more about Axcelis at www.axcelis.com.\nCONTACTS:\nInvestor Relations Contact:\nDavid Ryzhik\nSenior Vice President and Interim CFO\nTelephone: (978) 787-2352\nEmail: David.Ryzhik@axcelis.com\nPress/Media Relations Contact:\nMaureen Hart\nSenior Director, Corporate & Marketing Communications\nTelephone: (978) 787-4266\nEmail: Maureen.Hart@axcelis.com\nNews Release\nAxcelis Technologies, Inc.\nConsolidated Statements\nof Operations\n(In thousands, except\nper share amounts)\n(Unaudited)\nThree months ended\nSix months ended\nJune 30,\nJune 30,\n2026\n2025\n2026\n2025\nRevenue:\nProduct\n$\n200,488\n$\n183,402\n$\n388,497\n$\n366,226\nServices\n14,687\n11,142\n25,634\n20,881\nTotal revenue\n215,175\n194,544\n414,131\n387,107\nCost of revenue:\nProduct\n106,998\n95,462\n212,734\n189,962\nServices\n16,988\n11,739\n29,627\n21,034\nTotal cost of revenue\n123,986\n107,201\n242,361\n210,996\nGross profit\n91,189\n87,343\n171,770\n176,111\nOperating expenses:\nResearch and development\n28,977\n27,064\n57,493\n54,192\nSales and marketing\n19,554\n15,003\n36,908\n30,127\nGeneral and administrative\n22,377\n16,311\n49,138\n33,668\nTotal operating expenses\n70,908\n58,378\n143,539\n117,987\nIncome from operations\n20,281\n28,965\n28,231\n58,124\nOther income (expense):\nInterest income\n4,575\n5,481\n9,037\n11,082\nInterest expense\n(1,263\n)\n(1,355\n)\n(2,554\n)\n(2,722\n)\nOther, net\n1,755\n1,906\n1,259\n1,597\nTotal other income\n5,067\n6,032\n7,742\n9,957\nIncome before income taxes\n25,348\n34,997\n35,973\n68,081\nIncome tax provision\n2,057\n3,621\n3,468\n8,126\nNet income\n$\n23,291\n$\n31,376\n$\n32,505\n$\n59,955\nNet income per share:\nBasic\n$\n0.76\n$\n0.99\n$\n1.06\n$\n1.87\nDiluted\n$\n0.75\n$\n0.98\n$\n1.05\n$\n1.87\nShares used in computing net income per share:\nBasic weighted average shares of common stock\n30,805\n31,847\n30,764\n32,051\nDiluted weighted average shares of common stock\n31,134\n31,882\n31,084\n32,103\nNews Release\nAxcelis Technologies, Inc.\nConsolidated Balance\nSheets\n(In thousands, except\nper share amounts)\n(Unaudited)\nJune 30,\nDecember 31,\n2026\n2025\nASSETS\nCurrent assets:\nCash and cash equivalents\n$\n154,996\n$\n145,451\nShort-term investments\n247,220\n228,802\nAccounts receivable, net\n154,149\n168,479\nInventories, net\n338,174\n329,010\nPrepaid income taxes\n4,863\n4,658\nPrepaid expenses and other current assets\n80,369\n66,802\nTotal current assets\n979,771\n943,202\nProperty, plant and equipment, net\n58,022\n56,146\nOperating lease assets\n27,568\n28,927\nFinance lease assets, net\n13,516\n14,154\nLong-term restricted cash\n10,633\n10,627\nDeferred income taxes\n78,815\n79,895\nLong-term investments\n174,829\n182,396\nOther assets\n43,684\n46,004\nTotal assets\n$\n1,386,838\n$\n1,361,351\nCurrent liabilities:\nAccounts payable\n$\n58,807\n$\n42,309\nAccrued compensation\n20,010\n34,233\nWarranty\n9,634\n9,516\nIncome Taxes\n2,833\n11,383\nDeferred revenue\n81,679\n65,494\nCurrent portion of finance lease obligation\n1,722\n1,575\nOther current liabilities\n25,416\n33,150\nTotal current liabilities\n200,101\n197,660\nLong-term finance lease obligation\n39,845\n40,754\nLong-term deferred revenue\n36,863\n43,445\nOther long-term liabilities\n44,208\n44,815\nTotal liabilities\n321,017\n326,674\nStockholders' equity:\nCommon stock, $0.001 par value, 75,000 shares authorized; 30,881 shares issued and outstanding at June 30, 2026; 30,717 shares issued and outstanding at December 31, 2025\n31\n31\nAdditional paid-in capital\n536,152\n533,309\nRetained earnings\n536,044\n503,539\nAccumulated other comprehensive loss\n(6,406)\n(2,202)\nTotal stockholders' equity\n1,065,821\n1,034,677\nTotal liabilities and stockholders' equity\n$\n1,386,838\n$\n1,361,351\nNews Release\nAxcelis Technologies, Inc.\nCondensed Consolidated\nStatements of Cash Flows\n(In thousands)\n(Unaudited)\nThree months ended\nSix months ended\nJune 30,\nJune 30,\n2026\n2025\n2026\n2025\nCash flows from operating activities\nNet income\n$\n23,291\n$\n31,376\n$\n32,505\n$\n59,955\nAdjustments to reconcile net income to net cash provided by operating activities:\nDepreciation and amortization\n4,439\n4,515\n8,875\n8,824\nStock-based compensation expense\n6,425\n5,421\n11,324\n10,324\nOther\n(645\n)\n(9,335\n)\n3,160\n(11,017\n)\nChange in other assets and liabilities, net\n(15,137\n)\n7,750\n(19,352\n)\n11,436\nNet cash provided by operating activities\n18,373\n39,727\n36,512\n79,522\nCash flows from investing activities\nExpenditures for property, plant and equipment and capitalized software\n(3,554\n)\n(1,985\n)\n(5,393\n)\n(6,945\n)\nOther changes in investing activities, net\n(2,543\n)\n(2,628\n)\n(11,343\n)\n42,801\nNet cash (used in) provided by investing activities\n(6,097\n)\n(4,613\n)\n(16,736\n)\n35,856\nCash flows from financing activities\nRepurchase of common stock\n(244\n)\n(45,337\n)\n(244\n)\n(63,515\n)\nOther changes from financing activities, net\n(7,608\n)\n(1,650\n)\n(9,005\n)\n(3,582\n)\nNet cash used in financing activities\n(7,852\n)\n(46,987\n)\n(9,249\n)\n(67,097\n)\nEffect of exchange rate changes on cash and cash equivalents\n(252\n)\n1,643\n(976\n)\n1,935\nNet increase (decrease) in cash, cash equivalents and restricted cash\n4,172\n(10,230\n)\n9,551\n50,216\nCash, cash equivalents and restricted cash at beginning of period\n161,457\n191,510\n156,078\n131,064\nCash, cash equivalents and restricted cash at end of period\n$\n165,629\n$\n181,280\n$\n165,629\n$\n181,280\nNews Release\nAxcelis Technologies, Inc.\nSchedule Reconciling\nSelected Non-GAAP Financial Measures\n(In thousands, except\nper share amounts)\nThree months ended June 30,\nSix months ended June 30,\n2026\n2025\n2026\n2025\nGAAP gross Profit\n$\n91,189\n$\n87,343\n$\n171,770\n$\n176,111\nRestructuring 1\n226\nStock-based compensation\n755\n569\n1,197\n922\nNon-GAAP gross profit\n$\n91,944\n$\n87,912\n$\n172,967\n$\n177,259\nNon-GAAP gross margin\n42.7\n%\n45.2\n%\n41.8\n%\n45.8\n%\nGAAP operating expense\n$\n70,908\n$\n58,378\n$\n143,539\n$\n117,987\nTransaction and integration 2\n(4,827\n)\n(15,225\n)\n(481\n)\nBad debt expense\n(65\n)\nRestructuring 1\n29\n(894\n)\nStock-based compensation\n(5,670\n)\n(4,852\n)\n(10,127\n)\n(9,402\n)\nNon-GAAP operating expense\n$\n60,411\n$\n53,555\n$\n118,122\n$\n107,210\nGAAP operating income\n$\n20,281\n$\n28,965\n$\n28,231\n$\n58,124\nTransaction and integration 2\n4,827\n15,225\n481\nBad debt expense\n65\nRestructuring 1\n(29\n)\n1,120\nStock-based compensation\n6,425\n5,421\n11,324\n10,324\nNon-GAAP operating income\n$\n31,533\n$\n34,357\n$\n54,845\n$\n70,049\nNon-GAAP operating margin\n14.7\n%\n17.7\n%\n13.2\n%\n18.1\n%\nGAAP income tax provision\n$\n2,057\n$\n3,621\n$\n3,468\n$\n8,126\nIncome tax effect of non-GAAP adjustments 3\n1,575\n755\n3,726\n1,670\nNon-GAAP income tax provision\n$\n3,632\n$\n4,376\n$\n7,194\n$\n9,796\nGAAP net income\n$\n23,291\n$\n31,376\n$\n32,505\n$\n59,955\nTransaction and integration 2\n4,827\n15,225\n481\nBad debt expense\n65\nRestructuring 1\n(29\n)\n1,120\nStock-based compensation\n6,425\n5,421\n11,324\n10,324\nIncome tax effect of non-GAAP adjustments 3\n(1,575\n)\n(755\n)\n(3,726\n)\n(1,670\n)\nNon-GAAP net income\n$\n32,968\n$\n36,013\n$\n55,393\n$\n70,210\nGAAP diluted EPS\n$\n0.75\n$\n0.98\n$\n1.05\n$\n1.87\nTransaction and integration 2\n0.16\n0.49\n.01\nBad debt expense\nRestructuring 1\n0.03\nStock-based compensation\n0.21\n0.17\n0.36\n0.32\nIncome tax effect of non-GAAP adjustments 3\n(0.05\n)\n(0.02\n)\n(0.12\n)\n(0.05\n)\nNon-GAAP diluted EPS\n$\n1.06\n$\n1.13\n$\n1.78\n$\n2.19\nNews Release\nNote 1:\nRestructuring and other costs primarily related to early\nretirement programs and severance costs, due to global cost-saving initiatives.\nNote 2:\nTransaction and integration costs include expenses associated\nwith the merger agreement with Veeco Instruments, announced on October 1, 2025. Transaction and integration costs for the six months\nended June 30, 2025 include $481,000 of expenses that were not reflected as a GAAP to Non-GAAP reconciliation line item when the\nCompany reported second quarter 2025 results, given that they occurred prior to transaction announcement on October 1, 2025.\nNote 3:\nImpact of taxes from non-GAAP adjustments, uses adjusted\ntax rate of 14%.\nFigures may not sum due to rounding.\nAxcelis Technologies, Inc.\nReconciliation\nof Net Income to Adjusted EBITDA\n(In thousands, except percentages)\nThree months ended June 30,\nSix months ended June 30,\n2026\n2025\n2026\n2025\nNet Income\n$\n23,291\n$\n31,376\n$\n32,505\n$\n59,955\nOther (income)/expense\n(5,067\n)\n(6,032\n)\n(7,742\n)\n(9,957\n)\nIncome tax provision\n2,057\n3,621\n3,468\n8,126\nDepreciation & amortization\n4,439\n4,515\n8,875\n8,824\nSubtotal\n24,720\n33,480\n37,106\n66,948\nTransaction and integration 1\n4,827\n15,225\n481\nBad debt expense\n65\nRestructuring 2\n(29\n)\n1,120\nStock-based compensation\n6,425\n5,421\n11,324\n10,324\nAdjusted EBITDA\n$\n35,972\n$\n38,872\n$\n63,720\n$\n78,873\nAdjusted EBITDA margin\n16.7\n%\n20.0\n%\n15.4\n%\n20.4\n%\nNote 1:\nTransaction and integration costs for the six months ended\nJune 30, 2025 include $481,000 of expenses that were not reflected as a GAAP to Non-GAAP reconciliation line item when the Company\nreported second quarter 2025 results, given that they occurred prior to transaction announcement on October 1, 2025.\nNote 2:\nRestructuring and other costs primarily related to early\nretirement programs and severance costs, due to global cost-saving initiatives.\nAxcelis Technologies, Inc.\nThird Quarter\n2026 Outlook\nGAAP to Non-GAAP Diluted Earnings Per Share\nThree months\nended\nSeptember 30, 2026\nGAAP diluted EPS\n$\n0.76\nTransaction and Integration 1\n0.19\nStock-based compensation\n0.21\nIncome tax effect of non-GAAP adjustments 2\n(0.06\n)\nNon-GAAP diluted EPS\n$\n1.11\nNote 1:\nTransaction and Integration costs include expenses associated\nwith the merger agreement with Veeco Instruments, announced on October 1, 2025.\nNote 2:\nImpact of taxes from non-GAAP adjustments, uses adjusted\ntax rate of 14%.\nFigures may not sum due to rounding.",
+      "source": "edgar:8-K ex-99.1",
+      "url": "https://www.sec.gov/Archives/edgar/data/1113232/000110465926091697/tm2622315d1_ex99-1.htm",
+      "asOf": "2026-08-06",
+      "truncated": false
+    },
+    "proxyStatement": {
+      "text": "Board and director independence:\nBoard Independence and Meetings\nThe Board has determined that the nominees for election in 2026, other than Dr. Low, and our former director, Dipti Vachani, are independent under the criteria established by Nasdaq. None of these non-management directors, to the Company's knowledge, had any business, financial, family, or other type of relationship with the Company or its management (other than as a director and stockholder of the Company), except for relationships that the Board considered to be immaterial under the Nasdaq independence standards.\nIn determining that each such director is independent, the Board considers whether Axcelis purchases and sells products and services from and to companies (or their affiliates) at which directors are or have been employed as officers or serve as directors. Mr. Graves served on the Board of Directors of SkyWater Technology, Inc. until May 2025. Its subsidiary, SkyWater Technology Foundry, Inc., a U.S. semiconductor foundry, is a customer of Axcelis. Axcelis' transactions with SkyWater are carried on in an arms-length commercial relationship, and there is no reason to conclude that the relationship interfered with the exercise of Mr. Graves' independent judgment in carrying out the responsibilities of a director at Axcelis. The amount the Company received from SkyWater in each of the past three fiscal years was below the total revenue threshold in the Nasdaq independence standards (that is, the greater of $200,000 or 5% of Axcelis' consolidated gross annual revenues), which standard would apply if Mr. Graves was an executive of SkyWater, which he is not. Accordingly, this relationship was not determined by the Board to impair the independence of Mr. Graves. See also \" Corporate Governance Certain Relationships and Related Transactions 2025 Related Party Disclosures .\"\nThe Board also determined that the members of the Audit Committee and Compensation Committee meet additional independence requirements under SEC rules, Internal Revenue Code (\"IRC\") rules, and additional Nasdaq rules.\nOur Board held 12 meetings during 2025. Independent directors have regularly scheduled executive sessions at which only independent directors are present. None of our incumbent Board members attended less than 75% of the aggregate of the 2025 Board meetings and those committees of which the director was a member. On average, each of our Board members attended approximately 97% of the 2025 Board meetings and those committees of which the director was a member, excluding those meetings for which the director recused himself or herself due to a conflict of interest. Our Governance Guidelines state that it is expected that all directors will attend the Annual Meeting and all Board meetings and meetings of committees on which the director serves. A majority of the director nominees were in attendance at the 2025 Annual Meeting. Dr. Chiu and Ms. Quirk were unable to attend.\nBoard Leadership Structure\nSince May 2024, Mr.",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/1113232/000110465926037356/tm261420-1_def14a.htm",
+      "asOf": "2026-03-31",
+      "truncated": true
+    },
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T19:31:08.415Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T19:31:08.415Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T19:31:08.415Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T19:31:08.415Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T19:31:08.415Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T19:31:08.415Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T19:31:08.415Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T19:31:08.415Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T19:31:08.415Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T19:31:08.415Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T19:31:08.415Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T19:31:08.415Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-10-02T19:31:08.415Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-10-02T19:31:08.415Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-10-02T19:31:08.415Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-10-02T19:31:08.415Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-10-02T19:31:08.415Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-10-02T19:31:08.415Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T19:31:08.415Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-10-02T19:31:08.415Z"
+    },
+    {
+      "field": "ttm.evToEbitda",
+      "source": "yahoo",
+      "endpoint": "quoteSummary.defaultKeyStatistics.enterpriseToEbitda",
+      "capturedAt": "2026-10-02T19:31:22.879Z"
+    }
+  ],
+  "sbc": [
+    12067000,
+    13444000,
+    18269000,
+    20951000,
+    20773000
+  ]
+}
