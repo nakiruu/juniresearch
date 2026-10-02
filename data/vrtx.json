@@ -1,18 +1,336 @@
 {
+  "schemaVersion": "1.1.0",
   "meta": {
+    "company": "Vertex Pharmaceuticals Incorporated",
+    "ticker": "VRTX",
+    "exchange": "NASDAQGS",
     "subtitle": "CF cash engine meets a pending Crinetics deal and a November povetacicept decision; with the bear case likelier than the bull, we stay at HOLD",
-    "fiscalYearEnd": "December 31"
+    "reportDate": "October 2, 2026",
+    "asOf": "Oct 2, 2026",
+    "analyst": "Juniper Finance Research Desk",
+    "analystName": "Nico — Senior Analyst",
+    "fiscalYearEnd": "December 31",
+    "currency": "USD",
+    "filing": {
+      "form": "10-Q",
+      "fiscalPeriod": "fiscal Q2 2026",
+      "filedDate": "Aug 4, 2026",
+      "accession": "0000875320-26-000259"
+    }
+  },
+  "quote": {
+    "currentPrice": 502.21,
+    "marketCap": 127290613760,
+    "sharesOutstanding": 253460930.20847854,
+    "week52Low": 400.74,
+    "week52High": 560.25,
+    "dividendYield": 0,
+    "history": [
+      {
+        "date": "2026-08-21",
+        "close": 548.0499877929688
+      },
+      {
+        "date": "2026-08-24",
+        "close": 547.5900268554688
+      },
+      {
+        "date": "2026-08-25",
+        "close": 552.8499755859375
+      },
+      {
+        "date": "2026-08-26",
+        "close": 547.2899780273438
+      },
+      {
+        "date": "2026-08-27",
+        "close": 547.5499877929688
+      },
+      {
+        "date": "2026-08-28",
+        "close": 541.6900024414062
+      },
+      {
+        "date": "2026-08-31",
+        "close": 544.52001953125
+      },
+      {
+        "date": "2026-09-01",
+        "close": 547.6500244140625
+      },
+      {
+        "date": "2026-09-02",
+        "close": 556.75
+      },
+      {
+        "date": "2026-09-03",
+        "close": 557.9600219726562
+      },
+      {
+        "date": "2026-09-04",
+        "close": 546.1199951171875
+      },
+      {
+        "date": "2026-09-08",
+        "close": 528.9000244140625
+      },
+      {
+        "date": "2026-09-09",
+        "close": 521.1199951171875
+      },
+      {
+        "date": "2026-09-10",
+        "close": 514.5599975585938
+      },
+      {
+        "date": "2026-09-11",
+        "close": 515.4400024414062
+      },
+      {
+        "date": "2026-09-14",
+        "close": 519.510009765625
+      },
+      {
+        "date": "2026-09-15",
+        "close": 514.6300048828125
+      },
+      {
+        "date": "2026-09-16",
+        "close": 513.260009765625
+      },
+      {
+        "date": "2026-09-17",
+        "close": 516.3400268554688
+      },
+      {
+        "date": "2026-09-18",
+        "close": 508.3399963378906
+      },
+      {
+        "date": "2026-09-21",
+        "close": 510.7200012207031
+      },
+      {
+        "date": "2026-09-22",
+        "close": 514.989990234375
+      },
+      {
+        "date": "2026-09-23",
+        "close": 516.3400268554688
+      },
+      {
+        "date": "2026-09-24",
+        "close": 522.3800048828125
+      },
+      {
+        "date": "2026-09-25",
+        "close": 526.1900024414062
+      },
+      {
+        "date": "2026-09-28",
+        "close": 527.6699829101562
+      },
+      {
+        "date": "2026-09-29",
+        "close": 526.72998046875
+      },
+      {
+        "date": "2026-09-30",
+        "close": 522.8099975585938
+      },
+      {
+        "date": "2026-10-01",
+        "close": 506.739990234375
+      },
+      {
+        "date": "2026-10-02",
+        "close": 502.2099914550781
+      }
+    ]
   },
   "rating": {
     "label": "HOLD",
+    "tone": "secondary",
     "targetLow": 515,
-    "targetHigh": 595
+    "targetHigh": 595,
+    "conviction": {
+      "expectedUpside": 0.04936182075227502,
+      "bearDownside": 0.19356444515242624,
+      "rewardRisk": 0.2550149161608892,
+      "derivedLabel": "HOLD"
+    },
+    "gate": {
+      "sector": "industrial",
+      "ceiling": "STRONG BUY",
+      "gatedLabel": "HOLD",
+      "distress": "SAFE",
+      "piotroski": 5,
+      "accruals": null,
+      "confidence": "medium",
+      "flags": []
+    },
+    "decision": {
+      "conviction": 82,
+      "tier": "high",
+      "proposed": "HOLD",
+      "reasons": [
+        "E/R proposed HOLD"
+      ],
+      "advisories": [],
+      "moat": {
+        "width": "NARROW",
+        "trend": "STABLE",
+        "contingent": false,
+        "bearFloor": 0.2
+      },
+      "intrinsic": {
+        "marginOfSafety": -0.2766832032644303,
+        "impliedGrowth": 0.11409952052700179,
+        "achievableGrowth": 0.073100176936153
+      },
+      "composite": {
+        "percentile": 42.72606864146297,
+        "confidence": "high"
+      },
+      "uncertainty": {
+        "tier": "low",
+        "points": 1,
+        "drivers": [
+          "wide analyst-target dispersion (+1)"
+        ]
+      }
+    }
   },
-  "analystCommentary": "Vertex's August 3 earnings release, issued a day before the 10-Q for the quarter ended June 30, 2026, reported total revenue of $3.33 billion, a {+ 12% +} increase, driven by CF demand including ALYFTREK initiations and by contributions from CASGEVY and JOURNAVX. The same release raised full-year revenue guidance.\n\nAt $502.21 we rate VRTX HOLD with a $515–$595 target range. The franchise is strong, but the scenario skew set out under Valuation does not pay enough for the downside.",
+  "snapshot": [
+    {
+      "label": "Current Price",
+      "value": 502.21,
+      "unit": "usd"
+    },
+    {
+      "label": "Market Cap",
+      "value": 127290613760,
+      "unit": "usdLarge",
+      "approx": true
+    },
+    {
+      "label": "52-Week Range",
+      "raw": "$400.74 – $560.25"
+    },
+    {
+      "label": "Shares Outstanding",
+      "value": 253460930.20847854,
+      "unit": "shares",
+      "approx": true
+    },
+    {
+      "label": "P/E (TTM)",
+      "value": 29.249271986022134,
+      "unit": "mult"
+    },
+    {
+      "label": "Consensus Target",
+      "value": 571.3929,
+      "unit": "usd",
+      "change": 0.1377569144381834
+    },
+    {
+      "label": "EV/EBITDA (TTM)",
+      "value": 24.03,
+      "unit": "mult"
+    },
+    {
+      "label": "Analyst Consensus",
+      "raw": "Buy (26 B / 4 H / 2 S)"
+    },
+    {
+      "label": "FY25 Revenue",
+      "value": 12001300000,
+      "unit": "usdLarge",
+      "change": 0.08903730456166459
+    },
+    {
+      "label": "FY25 Net Income",
+      "value": 3953200000,
+      "unit": "usdLarge"
+    },
+    {
+      "label": "FY25 Diluted EPS",
+      "value": 15.32,
+      "unit": "usd"
+    },
+    {
+      "label": "FY26E Revenue",
+      "value": 13247981150,
+      "unit": "usdLarge",
+      "approx": true,
+      "change": 0.1038788422920851,
+      "changeDp": 0
+    },
+    {
+      "label": "Q2'26 Revenue",
+      "value": 3333900000,
+      "unit": "usdLarge",
+      "change": 0.12453199311903407,
+      "changeDp": 0
+    },
+    {
+      "label": "Q2'26 Operating Margin",
+      "value": 0.3740064189087855,
+      "unit": "pct",
+      "dp": 0
+    },
+    {
+      "label": "Fwd P/E (FY27E)",
+      "value": 24.977942061479727,
+      "unit": "mult",
+      "approx": true
+    },
+    {
+      "label": "Dividend Yield",
+      "value": 0,
+      "unit": "pct",
+      "dp": 2
+    },
+    {
+      "label": "FY25 Free Cash Flow",
+      "value": 3193800000,
+      "unit": "usdLarge"
+    },
+    {
+      "label": "FY25 Share Repurchases",
+      "value": -2017400000,
+      "unit": "usdLarge"
+    },
+    {
+      "label": "FCF Yield (TTM)",
+      "value": 0.029822308871550844,
+      "unit": "pct",
+      "dp": 1
+    },
+    {
+      "label": "FY25 Gross Margin",
+      "value": 0.8624065726212994,
+      "unit": "pct"
+    }
+  ],
+  "analystSentiment": {
+    "numAnalysts": 32,
+    "buy": 26,
+    "hold": 4,
+    "sell": 2,
+    "consensusRating": "Buy",
+    "consensusTarget": 571.3929,
+    "medianTarget": 577.5,
+    "highTarget": 672,
+    "lowTarget": 350,
+    "commentary": "Vertex's August 3 earnings release, issued a day before the 10-Q for the quarter ended June 30, 2026, reported total revenue of $3.33 billion, a {+ 12% +} increase, driven by CF demand including ALYFTREK initiations and by contributions from CASGEVY and JOURNAVX. The same release raised full-year revenue guidance.\n\nAt $502.21 we rate VRTX HOLD with a $515–$595 target range. The franchise is strong, but the scenario skew set out under Valuation does not pay enough for the downside."
+  },
   "sections": {
     "executiveSummary": {
       "companyOverview": "Vertex Pharmaceuticals Incorporated is a Boston-based biotechnology company, founded in 1989, with seven approved medicines: five that treat the underlying cause of cystic fibrosis (CF), CASGEVY for severe sickle cell disease (SCD) and transfusion dependent beta thalassemia (TDT), and JOURNAVX for moderate-to-severe acute pain.\n\nThe company reports a single segment. FY25 revenue was $12B, up +8.9%, with net income of $4B and diluted EPS of $15.32.\n\nThe clinical pipeline spans IgA nephropathy, primary membranous nephropathy, APOL1-mediated kidney disease, type 1 diabetes, peripheral neuropathic pain, autosomal dominant polycystic kidney disease and myotonic dystrophy type 1. The pending Crinetics acquisition would add PALSONIFY (paltusotine), an approved oral therapy for acromegaly, and what the CEO called a fifth pillar in rare endocrine diseases in the August 3 release.",
       "thesis": {
+        "label": "HOLD",
         "body": "VRTX combines an 86.2% FY25 gross margin with revenue that has grown every year since FY21, but its visible upside is largely in the price. The CF business keeps growing on ALYFTREK uptake and approvals in younger patients, and its cash funds a broadening portfolio.\n\nThe next move in the shares depends on two events, a regulatory decision on povetacicept and the pending Crinetics acquisition, more than on the CF engine.\n\nConsensus already expects a sharp step-up in earnings in FY27, and our scenarios give the downside more weight than the upside. That is why we hold rather than buy."
       },
       "catalysts": [
@@ -29,11 +347,296 @@
       ]
     },
     "financials": {
+      "income": {
+        "columns": [
+          "Metric",
+          "FY21",
+          "FY22",
+          "FY23",
+          "FY24",
+          "FY25"
+        ],
+        "rows": [
+          {
+            "label": "Revenue ($B)",
+            "values": [
+              7574400000,
+              8930700000,
+              9869200000,
+              11020100000,
+              12001300000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "YoY Growth",
+            "values": [
+              null,
+              0.17906368821292773,
+              0.10508694727177037,
+              0.11661532849673728,
+              0.08903730456166459
+            ],
+            "format": "pctSigned"
+          },
+          {
+            "label": "Gross Margin",
+            "values": [
+              0.8806242078580482,
+              0.879035237999261,
+              0.8721071616747051,
+              0.8611174127276522,
+              0.8624065726212994
+            ],
+            "format": "pct"
+          },
+          {
+            "label": "Operating Income ($B)",
+            "values": [
+              2782100000,
+              4307400000,
+              3832000000,
+              -232900000,
+              4173300000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Operating Margin",
+            "values": [
+              0.36730302070130966,
+              0.48231381638617354,
+              0.388278685202448,
+              -0.021134109490839464,
+              0.3477373284560839
+            ],
+            "format": "pct"
+          },
+          {
+            "label": "EBITDA ($B)",
+            "values": [
+              2907700000,
+              4455700000,
+              4013300000,
+              -25700000,
+              4383100000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Net Income ($B)",
+            "values": [
+              2342100000,
+              3322000000,
+              3619600000,
+              -535600000,
+              3953200000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Diluted EPS ($)*",
+            "values": [
+              9.01,
+              12.82,
+              13.89,
+              -2.08,
+              15.32
+            ],
+            "format": "eps"
+          }
+        ],
+        "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
+      },
       "incomeCommentary": "Revenue grew from $7.6B in FY21 to $12.0B in FY25, while annual growth slowed from +17.9% in FY22 to +8.9% in FY25. Gross margin drifted from 88.1% to 86.2% over the same span.\n\nThe 10-Q attributes the latest margin move to product mix: cost of sales rose to 14.7% of net product revenues in Q2'26 from 13.8% a year earlier, partially offset by a lower blended royalty rate on the CF medicines.\n\nFY24 is the outlier. The operating margin was {- -2.1% -} and diluted EPS was {- -$2.08 -} because the Alpine acquisition produced $4.4 billion of acquired in-process R&D, per the April 2026 proxy. Outside that year, FY25's 34.8% operating margin is the lowest in the series, against 36.7% in FY21, 38.8% in FY23 and a FY22 peak of 48.2%. The proxy ties the 2025 step-up in total R&D and SG&A expenses, to $5.7 billion from $5.1 billion in 2024, to investment to commercialize new products and advance the pipeline.\n\nFor Q2'26 the release reports revenue of $3.33 billion, up 12%, while the vendor series shows +12.5% YoY; we use the release figure. The operating margin was 37.4% in the quarter. Combined GAAP R&D, AIPR&D and SG&A expenses rose to $1.6 billion from $1.4 billion, which the release attributes mainly to the JOURNAVX launch and the renal build-out. On those rounded figures, expenses grew faster than revenue, and neither the release nor the 10-Q excerpt gives a year-ago quarterly margin, so we cannot claim operating leverage. Full-year guidance holds those combined GAAP expenses at $6.3 to $6.45 billion.",
+      "balance": {
+        "columns": [
+          "Metric ($B)",
+          "FY21",
+          "FY22",
+          "FY23",
+          "FY24",
+          "FY25"
+        ],
+        "rows": [
+          {
+            "label": "Cash & ST Investments",
+            "values": [
+              7524900000,
+              10778500000,
+              11218300000,
+              6115900000,
+              6608100000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Total Debt",
+            "values": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Net Debt",
+            "values": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Total Equity",
+            "values": [
+              10100000000,
+              13912700000,
+              17580400000,
+              16409600000,
+              18665800000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Current Ratio",
+            "values": [
+              4.463398692810458,
+              4.826519820575472,
+              3.987201894345154,
+              2.692139370476351,
+              2.9009116336890086
+            ],
+            "format": "num2"
+          }
+        ],
+        "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
+      },
       "balanceCommentary": "Sources disagree on liquidity. The vendor series shows FY25 cash and short-term investments of $6.6B, while the company reports cash, cash equivalents and marketable securities of $12.3 billion at December 31, 2025. The company figure includes marketable securities the vendor line appears to capture only in part, and we use the company's figure.\n\nOn that basis liquidity rose to $13.6 billion at June 30, 2026, which the 10-Q attributes to operating cash flow, partially offset by share repurchases. The vendor series carries no total debt line, and the trailing current ratio was 3.19.\n\nThe constraint ahead is Crinetics, priced at $85.00 per share in cash for a total equity value of approximately $10.0 billion. Neither the 10-Q nor the release says how the purchase will be funded. If it is paid from cash on hand, it would absorb most of the June balance and leave a cash-rich balance sheet merely adequate. Because the vendor data carry no debt figure, funding with debt would add leverage of a size we cannot measure from the vendor data.",
+      "cashflow": {
+        "columns": [
+          "Metric ($B)",
+          "FY21",
+          "FY22",
+          "FY23",
+          "FY24",
+          "FY25"
+        ],
+        "rows": [
+          {
+            "label": "Operating Cash Flow",
+            "values": [
+              2643500000,
+              4129900000,
+              3537300000,
+              -492600000,
+              3631400000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Capital Expenditure",
+            "values": [
+              -235000000,
+              -204700000,
+              -200400000,
+              -297700000,
+              -437600000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Share Repurchases",
+            "values": [
+              -1425400000,
+              0,
+              -427600000,
+              -1177100000,
+              -2017400000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Dividends Paid",
+            "values": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Free Cash Flow",
+            "values": [
+              2408500000,
+              3925200000,
+              3336900000,
+              -790300000,
+              3193800000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "FCF Margin",
+            "values": [
+              0.31797898183354456,
+              0.4395176189996305,
+              0.33811251165241357,
+              -0.07171441275487518,
+              0.26612117020656095
+            ],
+            "format": "pct"
+          }
+        ],
+        "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
+      },
       "cashflowCommentary": "Operating cash flow recovered to $3.6B in FY25 from -$0.5B in FY24, the year of the Alpine acquisition. Free cash flow reached $3.2B, a 26.6% FCF margin.\n\nOutside FY24, that margin is the lowest in the series, against 31.8% in FY21, 44.0% in FY22 and 33.8% in FY23. Capital expenditure was $437.6M in FY25.\n\nShare repurchases were $2.0B in FY25, up from $1.2B in FY24, returning most of the year's free cash flow.\n\nThe trailing FCF yield of 3.0% pays holders little today, so the return case rests on cash flow growing from here."
     },
     "valuation": {
+      "multiples": {
+        "columns": [
+          "Multiple (TTM)",
+          "VRTX"
+        ],
+        "rows": [
+          {
+            "label": "P/E",
+            "values": [
+              29.249271986022134
+            ],
+            "format": "mult"
+          },
+          {
+            "label": "P/S",
+            "values": [
+              10.112702885470954
+            ],
+            "format": "mult"
+          },
+          {
+            "label": "EV/EBITDA",
+            "values": [
+              24.03
+            ],
+            "format": "mult"
+          },
+          {
+            "label": "Fwd P/E (NTM)",
+            "values": [
+              31.05546276479635
+            ],
+            "format": "mult"
+          }
+        ],
+        "note": "Peer multiples pending a peer data source."
+      },
       "multiplesCommentary": "At $502.21, VRTX trades at 29.2x trailing earnings, 10.1x trailing sales and 24.0x EV/EBITDA.\n\nThe two forward multiples measure different years. The 31.1x NTM P/E lines up with FY26E EPS of $16.17, while the ~25.0x multiple rests on FY27E EPS of $20.11; we use the FY27E basis because it captures the expected step-up in earnings between the two years.\n\nThat step-up is the crux. The trailing multiple rests on a trailing-twelve-month earnings base above FY25's $15.32, which is why the NTM multiple on the FY26E estimate is higher; the stock only looks cheaper on the FY27E estimate, and only if it holds.\n\nThe consensus target of $571.39 sits above the price, so the Street is more constructive than we are. Without peer multiples to anchor on, we judge the multiple on growth and durability: a mid-twenties forward multiple for a protected CF franchise is fair rather than cheap.",
       "scenarios": [
         {
@@ -61,9 +664,14 @@
       "segments": [
         {
           "name": "Consolidated",
+          "sharePct": 1,
+          "revenue": 12001300000,
           "body": "Vertex reports one segment, so the FY25 total of $12B is the whole business, and the vendor data carry no product or regional split.\n\nThe release gives one further cut: FY26 guidance includes $500 million or more from non-CF products, namely CASGEVY and JOURNAVX, within total revenue guidance of $13.1 to $13.2 billion. The rest of the guided total comes from CF, which is the source of the concentration risk discussed below."
         }
       ],
+      "segmentsBasis": "FY25 (single reportable segment) mix",
+      "geographyBasis": "FY25",
+      "geoMix": [],
       "moatRating": "WIDE",
       "moatFactors": [
         {
@@ -122,10 +730,5 @@
       ]
     }
   },
-  "highlights": [
-    "fcfLatestFY",
-    "buybacksLatestFY",
-    "fcfYield",
-    "grossMarginLatestFY"
-  ]
+  "disclaimer": "DISCLAIMER: This report is for informational/educational purposes only and does not constitute investment advice. All equity securities carry risk and can be volatile, and past performance is not indicative of future results. Conduct your own due diligence. The author may hold positions in securities discussed."
 }

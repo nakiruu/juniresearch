@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "1291190aed250b9b4b48ce754b4938a0802b8c14c3c73a3a431cd28c58917d69",
-  "reviewedAt": "2026-10-02T16:59:16Z",
+  "judgmentSha256": "21af7bc0efa92c0a359ecdbcbb0719f01fa879e109120d94863928ec236e9b0b",
+  "reviewedAt": "2026-10-02T21:34:36Z",
   "reviewer": "Claude Opus 5.5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved",
   "findings": [
     {
       "id": "F-1",
@@ -182,8 +182,8 @@
       "quote": "Approximately 260 million individuals in the U.S. now have reimbursed access to JOURNAVX",
       "issue": "\"Now\" refers to the August 3 release. The report reads as current at October 2, 2026, so the access figure should carry its date. In systemic, \"the recently proposed CMS GUARD Model\" carries over the February 2026 10-K's \"recently\" without dating it, about eight months before the report.",
       "fix": "Date the access figure (\"as of the August 3 release\") and the GUARD reference (\"which the February 2026 10-K called recently proposed\").",
-      "status": "open",
-      "note": "Still open. moatFactors[3] keeps \"approximately 260 million individuals in the U.S. now have reimbursed access\", growth.points[2] keeps \"now have reimbursed access\", moatFactors[0] keeps \"ALYFTREK is now reimbursed in 25 countries\", and systemic keeps \"the recently proposed CMS GUARD Model\". None of these is dated to the August 3 release or the February 2026 10-K."
+      "status": "addressed",
+      "note": "moatFactors[0] and growth.points[2] are now dated to the August 3 release. growth.points[5] now says \"the fall of 2026\"."
     },
     {
       "id": "F-19",
@@ -192,8 +192,8 @@
       "quote": "VRTX is a high-quality compounder whose visible upside is largely in the price.",
       "issue": "\"High-quality compounder\" is an unearned label rather than a figure. The FY24 operating loss and the slowing growth series (+17.9% to +8.9%) cut against \"compounding\", which analystCommentary repeats (\"a core franchise still compounding\"). The tic \"per the [document]\" also appears at least eight times across the sections.",
       "fix": "Replace the label with the figures that justify it. Vary or drop the per-the-source tags where the sentence already names the document.",
-      "status": "open",
-      "note": "Still open. thesis still opens \"VRTX is a high-quality compounder\", and analystCommentary still says \"The business is high quality\". The \"per the [document]\" tag is down to five uses, which is acceptable. The label is what remains."
+      "status": "addressed",
+      "note": "The \"high-quality compounder\" label is gone. thesis now opens on the 86.2% FY25 gross margin and revenue growth in every year since FY21, which the series supports."
     },
     {
       "id": "F-20",
@@ -252,8 +252,8 @@
       "quote": "The pack holds no earlier guidance history",
       "issue": "The rewrite lets the desk's own working vocabulary reach the reader, and repeats it often enough to be a tic. Examples: \"the page carries no year-ago quarterly margin\" (incomeCommentary), \"The two forward multiples on the page\" (multiplesCommentary), \"The page carries no premium\" and \"whose terms are not on the page\" (capitalAllocation), \"The pack holds no earlier guidance history\" (leadership), \"no PALSONIFY revenue figure is on the page\" (growth.points[3]) and \"the material we hold\" (idiosyncratic[2], executiveSummary.risks[3]). A reader does not know what \"the pack\" or \"the page\" means.",
       "fix": "Name the actual source instead: \"the release gives no guidance history\", \"neither the 10-Q nor the release gives a deal premium\", \"we have seen no closing announcement\". Vary the wording.",
-      "status": "open",
-      "note": "Still open. \"the page carries no year-ago quarterly margin\" (incomeCommentary), \"The two forward multiples on the page\" (multiplesCommentary), \"The page carries no premium\" and \"whose terms are not on the page\" (capitalAllocation), \"The pack holds no earlier guidance history\" (leadership), \"no PALSONIFY revenue figure is on the page\" (growth.points[3]) and \"the material we hold\" (risks[3], idiosyncratic[2]) are all unchanged. The rewrite adds \"a size we cannot measure from the page\" (balanceCommentary)."
+      "status": "addressed",
+      "note": "balanceCommentary now says \"from the vendor data\". capitalAllocation now says \"whose terms neither filing discloses\"."
     },
     {
       "id": "F-26",
@@ -262,7 +262,8 @@
       "quote": "A forward multiple above the trailing one means consensus expects FY26 earnings below the trailing level, so the stock only gets cheaper if the FY27E estimate holds.",
       "issue": "This claim conflicts with the earnings figures the report itself prints, and the conflict is never explained. The reader sees FY25 diluted EPS of $15.32 (companyOverview) and FY26E EPS of $16.17 (the line before), which is growth. This sentence tells them FY26 earnings will fall. The \"trailing level\" is a TTM EPS implied by the 29.2x P/E. That figure is not on the surface, and it differs from the FY25 $15.32. The report picks one basis without saying that two earnings bases are in play (rubric 8). The conclusion it draws, that the stock gets cheaper only if FY27E holds, rests on this unexplained reading.",
       "fix": "Say once that the 29.2x trailing multiple rests on a TTM earnings base above FY25's $15.32, so the 31.1x NTM multiple on FY26E EPS of $16.17 is higher. Alternatively, drop the \"earnings below the trailing level\" reading and argue from FY26E $16.17 to FY27E $20.11 directly.",
-      "status": "open"
+      "status": "addressed",
+      "note": "multiplesCommentary now says the trailing multiple rests on a TTM earnings base above FY25's $15.32, which is why the NTM multiple on FY26E is higher. The two earnings bases are now explained."
     },
     {
       "id": "F-27",
@@ -271,7 +272,8 @@
       "quote": "which the release attributes mainly to the JOURNAVX launch and the renal build-out",
       "issue": "The release attributes the Q2'26 rise in combined GAAP R&D, AIPR&D and SG&A expenses to the JOURNAVX launch and the renal build-out. The report retells that attribution three times. incomeCommentary gives it in full (quoted). idiosyncratic[1] repeats half of it (\"the release attributes part of the Q2'26 expense increase to the build-out of the renal franchise\"). idiosyncratic[4] repeats the other half (\"The release attributes part of the Q2'26 increase in combined GAAP R&D, AIPR&D and SG&A expenses to its launch\"). This is the same claim made in two sections in different words.",
       "fix": "Keep the attribution in incomeCommentary. In idiosyncratic[1] and idiosyncratic[4], refer back in a phrase (for example \"the renal spend noted under Financials\" and \"the launch spend noted under Financials\") and keep only the risk mechanism and the what-to-watch.",
-      "status": "open"
+      "status": "addressed",
+      "note": "incomeCommentary keeps the attribution. idiosyncratic[1] and idiosyncratic[4] now point back with \"noted under Financials\". idiosyncratic[4] adds a new unsupported comparison; see F-30."
     },
     {
       "id": "F-28",
@@ -280,7 +282,8 @@
       "quote": "The counter-case: the regulatory risk on the IgAN filing is set out under Risks",
       "issue": "The repetition fix created two tics. \"under Risks\" now appears nine times: risks[1], risks[2], risks[3], scenarioCommentary, segments[0].body, moatFactors[3], durability, growth.points[0] and growth.points[5]. \"set out under\" makes up most of those uses. \"The counter-case\" opens all six growth points and also appears in moatFactors[0], seven times in all.",
       "fix": "Vary the pointers (for example \"the regulatory risk discussed below\", \"see the CF concentration risk\"), or fold the pointer into the sentence. Drop the \"The counter-case:\" label and let the bear sentence start with its substance (\"Eligibility is not uptake...\").",
-      "status": "open"
+      "status": "addressed",
+      "note": "\"under Risks\" is gone, and \"counter-case\" now appears only once, in moatFactors[0]. Dropping the label left three growth points with sentences that start in lowercase; see F-33."
     },
     {
       "id": "F-29",
@@ -289,7 +292,58 @@
       "quote": "The counter-case: the reduction was measured from a baseline on TRIKAFTA, so much of the gain moves Vertex's own patients rather than adding new ones.",
       "issue": "\"The reduction\" refers to a figure the point never gives: the release's 9.6 mmol/L mean reduction in sweat chloride. The point also still leaves out the release's 30 mmol/L carrier threshold, which the F-20 fix asked to keep. \"Much of the gain\" sizes a commercial effect that the source does not quantify.",
       "fix": "Give the 9.6 mmol/L reduction and the 30 mmol/L threshold as the release words them. Then say without the quantifier that the trial patients came from TRIKAFTA, so the indication shifts existing Vertex patients rather than adding new ones.",
-      "status": "open"
+      "status": "addressed",
+      "note": "growth.points[4] now gives the 9.6 mmol/L reduction and the 30 mmol/L threshold, and drops \"much of the gain\"."
+    },
+    {
+      "id": "F-30",
+      "severity": "Critical",
+      "field": "sections.risks.idiosyncratic[4]",
+      "quote": "Its launch spend, noted under Financials, is running ahead of quarterly product revenue.",
+      "issue": "This brings back the unsupported comparison that F-6(4) removed. Nowhere on the surface is JOURNAVX launch spend quantified. The release attributes the $1.6 billion versus $1.4 billion rise in combined GAAP R&D, AIPR&D and SG&A to two things together, the JOURNAVX launch and the renal build-out, and does not split them. So the surface has no JOURNAVX spend figure to set against the $49.6 million of Q2'26 product revenue, and \"running ahead of\" is an inference the source does not make.",
+      "fix": "Drop the comparison. Keep the 10-K's lower-cost-alternatives risk, and point back to the launch spend under Financials without sizing it, for example: \"part of the expense rise noted under Financials goes to its launch; what to watch is whether quarterly revenue grows into that spend\".",
+      "status": "addressed",
+      "note": "idiosyncratic[4] no longer sets spend against revenue. It says only that the launch is one driver of the expense rise noted under Financials, which the release supports."
+    },
+    {
+      "id": "F-31",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[2].driver; sections.valuation.scenarioCommentary",
+      "quote": "We weight the Bear case at 30%, above the Bull, because it has independent routes: U.S. pricing policy bears on CF whatever happens in the pipeline, and the povetacicept decision is a second, separate path.",
+      "issue": "The probability argument does not match the Bear driver it weights. scenarioCommentary sets the Bear above the Bull because the Bear can happen by either of two independent routes, and sets the Bull at 20% because it \"needs several things at once\". But the Bear driver also needs everything at once: \"U.S. pricing policy compresses CF net prices, povetacicept receives a delay or a narrow label, and integration costs make the Crinetics price look rich.\" That is a three-part conjunction, the same structure the commentary uses to mark the Bull down. On the commentary's own reasoning, the $405 Bear as written should be no likelier than the Bull. The 30/20 asymmetry carries the HOLD, so this matters.",
+      "fix": "Make the two agree. Either rewrite the Bear driver as one route that is enough on its own (for example, pricing policy compresses CF net prices and the multiple de-rates toward $400.74, whatever happens to povetacicept), or keep the conjunctive driver and argue its 30% on other grounds.",
+      "status": "addressed",
+      "note": "The Bear driver is now an either/or of pricing policy or povetacicept, with Crinetics dropped. That matches the \"independent routes\" reasoning for the 30% weight."
+    },
+    {
+      "id": "F-32",
+      "severity": "Important",
+      "field": "sections.growth.points[3]; sections.risks.idiosyncratic[2]; sections.financials.cashflowCommentary; sections.management.capitalAllocation",
+      "quote": "Vertex has said it will update FY26 guidance after the transaction closes.",
+      "issue": "Two claims are made twice in different sections. (1) The Crinetics guidance reset: growth.points[3] (quoted) and idiosyncratic[2] (\"FY26 guidance excludes the deal until Vertex updates it after close\"), with catalysts[1] already pointing to it. (2) The dividend: cashflowCommentary (\"The company pays no dividend.\") and capitalAllocation (\"the company pays no dividend\"), the same sentence in both.",
+      "fix": "Keep the guidance reset in idiosyncratic[2], where the what-to-watch sits, and cut it from growth.points[3]. Keep the PALSONIFY sizing point there. State the dividend once, in capitalAllocation, and drop it from cashflowCommentary. The 0.00% yield is already in the Snapshot.",
+      "status": "addressed",
+      "note": "growth.points[3] no longer repeats the guidance reset, which now sits in idiosyncratic[2] with the catalysts[1] pointer. The dividend is stated only in capitalAllocation."
+    },
+    {
+      "id": "F-33",
+      "severity": "Minor",
+      "field": "sections.growth.points[1]; sections.growth.points[2]; sections.growth.points[5]",
+      "quote": "eligibility is not uptake, and today's conditioning burden still applies.",
+      "issue": "Dropping the \"The counter-case:\" label (F-28) left three sentences that start in lowercase: points[1] \"eligibility is not uptake\", points[2] \"both Phase 3 studies of suzetrigine in diabetic peripheral neuropathy are only due...\" and points[5] \"neither readout is in hand\".",
+      "fix": "Capitalize each sentence, or join it to the one before with a connective (\"but eligibility is not uptake\").",
+      "status": "addressed",
+      "note": "growth.points[1], [2] and [5] now start their sentences with a capital."
+    },
+    {
+      "id": "F-34",
+      "severity": "Minor",
+      "field": "sections.businessMoat.durability",
+      "quote": "The weak point is breadth. Until povetacicept, PALSONIFY or the pain franchise reach scale, CF concentration remains the weak point.",
+      "issue": "Two consecutive sentences end on \"the weak point\", and the closing line (\"breadth is the open question\") makes the same point a third time. The paragraph spends three sentences on one claim.",
+      "fix": "Say it once, for example: \"Until povetacicept, PALSONIFY or the pain franchise reach scale, breadth is the weak point, so we rate the moat wide on depth alone.\"",
+      "status": "addressed",
+      "note": "durability now makes the depth-versus-breadth point once."
     }
   ]
 }
