@@ -8,10 +8,14 @@
   "sicDescription": "Special Industry Machinery (No Metalworking Machinery)",
   "goodwill": [
     2186700000,
-    2178100000,
-    2571100000,
+    1466400000,
+    1858100000,
     2221800000,
     2678000000
+  ],
+  "goodwillRestated": [
+    "FY22",
+    "FY23"
   ],
   "filing": {
     "form": "10-Q",
@@ -462,26 +466,26 @@
   "provenance": [
     {
       "field": "quote",
-      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
-      "source": "bigdata",
+      "endpoint": "yahoo quoteSummary price.regularMarketPrice + price.marketCap + summaryDetail.fiftyTwoWeekLow/High (facts:free)",
+      "source": "yahoo",
       "capturedAt": "2026-09-24T10:29:31.237Z"
     },
     {
       "field": "quote.dividendYield",
-      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
-      "source": "bigdata",
+      "endpoint": "yahoo quoteSummary summaryDetail.dividendYield (trailingAnnualDividendYield fallback) (facts:free)",
+      "source": "yahoo",
       "capturedAt": "2026-09-24T10:29:31.237Z"
     },
     {
       "field": "company",
-      "endpoint": "bigdata_company_tearsheet.company_overview",
-      "source": "bigdata",
+      "endpoint": "yahoo quoteSummary price.longName (shortName fallback) (facts:free)",
+      "source": "yahoo",
       "capturedAt": "2026-09-24T10:29:31.237Z"
     },
     {
       "field": "context.description",
-      "endpoint": "bigdata_company_tearsheet.company_overview",
-      "source": "bigdata",
+      "endpoint": "yahoo quoteSummary assetProfile.longBusinessSummary (facts:free)",
+      "source": "yahoo",
       "capturedAt": "2026-09-24T10:29:31.237Z"
     },
     {
@@ -492,44 +496,44 @@
     },
     {
       "field": "statements",
-      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
-      "source": "bigdata",
+      "endpoint": "SEC companyfacts XBRL (annual 10-K facts), merged with the filing's and prior 10-K's inline XBRL when captured (facts:free)",
+      "source": "edgar",
       "capturedAt": "2026-09-24T10:29:31.237Z"
     },
     {
       "field": "latestQuarter",
-      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
-      "source": "bigdata",
+      "endpoint": "SEC companyfacts XBRL (discrete quarters), merged with the filing's inline XBRL when captured (facts:free)",
+      "source": "edgar",
       "capturedAt": "2026-09-24T10:29:31.237Z"
     },
     {
       "field": "ttm",
-      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
-      "source": "bigdata",
+      "endpoint": "derived: last four discrete quarters + latest balance sheet from SEC companyfacts XBRL (discrete quarters), merged with the filing's inline XBRL when captured; P/E, P/S, EV/EBITDA and FCF yield priced with yahoo quoteSummary price/market cap (P/E falls back to summaryDetail.trailingPE when quarterly EPS cannot be summed) (facts:free)",
+      "source": "edgar",
       "capturedAt": "2026-09-24T10:29:31.237Z"
     },
     {
       "field": "segments",
-      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
-      "source": "bigdata",
+      "endpoint": "derived: single 'Consolidated' segment from the latest SEC annual revenue (facts:free emits no product segmentation)",
+      "source": "edgar",
       "capturedAt": "2026-09-24T10:29:31.237Z"
     },
     {
       "field": "geoMix",
-      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
-      "source": "bigdata",
+      "endpoint": "none: facts:free emits no geographic segmentation (empty mix)",
+      "source": "edgar",
       "capturedAt": "2026-09-24T10:29:31.237Z"
     },
     {
       "field": "analysts",
-      "endpoint": "bigdata_company_tearsheet.analyst_data",
-      "source": "bigdata",
+      "endpoint": "yahoo quoteSummary financialData target*Price + recommendationKey + recommendationTrend.trend[0] (facts:free)",
+      "source": "yahoo",
       "capturedAt": "2026-09-24T10:29:31.237Z"
     },
     {
       "field": "estimates",
-      "endpoint": "bigdata_company_tearsheet.estimates",
-      "source": "bigdata",
+      "endpoint": "yahoo quoteSummary earningsTrend annual periods (revenueEstimate.avg, earningsEstimate.avg) (facts:free)",
+      "source": "yahoo",
       "capturedAt": "2026-09-24T10:29:31.237Z"
     },
     {
@@ -585,13 +589,31 @@
       "source": "yahoo",
       "endpoint": "quoteSummary.defaultKeyStatistics.enterpriseToEbitda",
       "capturedAt": "2026-10-02T00:13:36.375Z"
+    },
+    {
+      "field": "shibuiCheck",
+      "source": "shibui",
+      "capturedAt": "2026-10-03T04:32:59.534Z",
+      "endpoint": "stock_data_query: close + valuation.market_cap on/before 2026-09-24; fundamentals_quarterly (4 quarters to n/a): shares_outstanding, revenue, Σfree_cash_flow, Σstock_based_compensation"
     }
   ],
   "sbc": [
     16600000,
-    25000000,
-    23500000,
+    23300000,
+    21800000,
     27300000,
     37500000
-  ]
+  ],
+  "shibuiCheck": {
+    "asOf": "2026-09-24",
+    "quarterEnd": null,
+    "price": null,
+    "marketCap": null,
+    "sharesOutstanding": null,
+    "revenueQuarter": null,
+    "fcfTtm": null,
+    "sbcTtm": null,
+    "diffs": [],
+    "source": "shibui"
+  }
 }

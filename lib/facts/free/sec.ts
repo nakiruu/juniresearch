@@ -125,11 +125,20 @@ const SHORT_TERM_BORROWINGS = ["ShortTermBorrowings", "CommercialPaper"];
 const TOTAL_EQUITY = ["StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest", "StockholdersEquity"];
 const CURRENT_ASSETS = ["AssetsCurrent"];
 const CURRENT_LIABILITIES = ["LiabilitiesCurrent"];
-const OCF = ["NetCashProvidedByUsedInOperatingActivities", "NetCashProvidedByUsedInOperatingActivitiesContinuingOperations"];
+export const OCF = ["NetCashProvidedByUsedInOperatingActivities", "NetCashProvidedByUsedInOperatingActivitiesContinuingOperations"];
 // LLY tags neither of the spec's two concepts for its current capex line; it uses "other
 // property, plant and equipment" instead. Appended at lowest priority — per-period merging
 // (see mergeByPriority) means this is only reached for periods neither spec concept covers.
-const CAPEX_RAW = ["PaymentsToAcquirePropertyPlantAndEquipment", "PaymentsToAcquireProductiveAssets", "PaymentsToAcquireOtherPropertyPlantAndEquipment"];
+export const CAPEX_RAW = ["PaymentsToAcquirePropertyPlantAndEquipment", "PaymentsToAcquireProductiveAssets", "PaymentsToAcquireOtherPropertyPlantAndEquipment"];
+/** The all-in concept: PP&E plus intangibles/software. When it is the period's capex base, nothing is added. */
+export const CAPEX_ALL_IN = "PaymentsToAcquireProductiveAssets";
+/**
+ * Capital spending a filer tags apart from PP&E, added to a PP&E-based capex so FCF is owner cash after all
+ * reinvestment: capitalized software (DSP $18M TTM) and equipment bought to lease out (FOUR $140M TTM).
+ * The 2026-10 cross-check review (docs/superpowers/specs/2026-10-03-crosscheck-input-review.md) found
+ * FCF overstated by up to 84% without them. Untagged lines (FOUR's capitalized software) remain invisible.
+ */
+export const CAPEX_EXTRA = ["PaymentsToDevelopSoftware", "PaymentsForSoftware", "PaymentsToAcquireEquipmentOnLease"];
 const BUYBACKS_RAW = ["PaymentsForRepurchaseOfCommonStock"];
 const DIVIDENDS_RAW = ["PaymentsOfDividendsCommonStock", "PaymentsOfDividends"];
 
@@ -281,6 +290,24 @@ function mergeByPriority<K>(periodMaps: Map<K, UnitEntry>[]): Map<K, UnitEntry> 
     for (const [key, entry] of periodMaps[i]) merged.set(key, entry);
   }
   return merged;
+}
+
+/**
+ * Total capex per period: the CAPEX_RAW base by priority, plus every CAPEX_EXTRA concept tagged for that
+ * period — unless the base is the all-in PaymentsToAcquireProductiveAssets, which already includes them.
+ * Extras without any base for the period are not turned into a capex figure. Pure.
+ */
+export function combineCapex<K>(base: Map<K, UnitEntry>[], extras: Map<K, UnitEntry>[]): Map<K, UnitEntry> {
+  const out = new Map<K, UnitEntry>();
+  const allInIdx = CAPEX_RAW.indexOf(CAPEX_ALL_IN);
+  const keys = new Set<K>(base.flatMap((m) => [...m.keys()]));
+  for (const k of keys) {
+    const idx = base.findIndex((m) => m.has(k));
+    const entry = base[idx].get(k)!;
+    const add = idx === allInIdx ? 0 : extras.reduce((a, m) => a + (m.get(k)?.val ?? 0), 0);
+    out.set(k, add ? { ...entry, val: entry.val + add } : entry);
+  }
+  return out;
 }
 
 function flowSeries(facts: unknown, concepts: string[], unit: Unit = "USD") {
@@ -509,7 +536,12 @@ export function parseCompanyFacts(facts: unknown): { annual: SecPeriod[]; quarte
   };
   const interestExpense = flowSeriesYtd(facts, INTEREST_EXPENSE);
   const ocf = flowSeriesYtd(facts, OCF);
-  const capexRaw = flowSeriesYtd(facts, CAPEX_RAW);
+  const capexBase = CAPEX_RAW.map((c) => flowSeriesYtd(facts, [c]));
+  const capexExtra = CAPEX_EXTRA.map((c) => flowSeriesYtd(facts, [c]));
+  const capexRaw = {
+    annual: combineCapex(capexBase.map((x) => x.annual), capexExtra.map((x) => x.annual)),
+    quarter: combineCapex(capexBase.map((x) => x.quarter), capexExtra.map((x) => x.quarter)),
+  };
   const buybacksRaw = flowSeriesYtd(facts, BUYBACKS_RAW);
   const dividendsRaw = flowSeriesYtd(facts, DIVIDENDS_RAW);
 

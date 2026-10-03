@@ -7,17 +7,21 @@
   "sic": 3724,
   "sicDescription": "Aircraft Engines & Engine Parts",
   "goodwill": [
-    null,
+    17756000000,
     17497000000,
-    18049000000,
-    21825000000,
+    17238000000,
+    21019000000,
     21079000000
   ],
+  "goodwillRestated": [
+    "FY23",
+    "FY24"
+  ],
   "sbc": [
-    null,
+    217000000,
     188000000,
-    202000000,
-    194000000,
+    197000000,
+    189000000,
     196000000
   ],
   "filing": {
@@ -687,6 +691,79 @@
       "endpoint": "bigdata_search",
       "source": "bigdata",
       "capturedAt": "2026-09-15T11:51:19.025Z"
+    },
+    {
+      "field": "beta",
+      "source": "shibui",
+      "capturedAt": "2026-10-03T03:46:39.826Z",
+      "endpoint": "stock_data_query: 2y weekly log returns vs SPY (cov/var) → Blume-adjusted, clamped [0.3, 2.5]"
+    },
+    {
+      "field": "shibuiCheck",
+      "source": "shibui",
+      "capturedAt": "2026-10-03T04:32:59.534Z",
+      "endpoint": "stock_data_query: close + valuation.market_cap on/before 2026-09-14; fundamentals_quarterly (4 quarters to 2026-06-30): shares_outstanding, revenue, Σfree_cash_flow, Σstock_based_compensation"
     }
-  ]
+  ],
+  "beta": {
+    "value": 0.831,
+    "raw": 0.747,
+    "standardError": 0.153,
+    "r2": 0.189,
+    "observations": 104,
+    "benchmark": "SPY",
+    "window": {
+      "start": "2024-09-23",
+      "end": "2026-09-14"
+    },
+    "source": "shibui"
+  },
+  "shibuiCheck": {
+    "asOf": "2026-09-14",
+    "quarterEnd": "2026-06-30",
+    "price": 201.38,
+    "marketCap": 63802532652.799995,
+    "sharesOutstanding": 316826560,
+    "revenueQuarter": 9719000000,
+    "fcfTtm": 4156000000,
+    "sbcTtm": 186000000,
+    "diffs": [
+      {
+        "field": "price",
+        "pack": 201.38,
+        "shibui": 201.38,
+        "relDiff": 0,
+        "level": "ok"
+      },
+      {
+        "field": "marketCap",
+        "pack": 63825377200,
+        "shibui": 63802532652.799995,
+        "relDiff": 0.0004,
+        "level": "ok"
+      },
+      {
+        "field": "sharesOutstanding",
+        "pack": 316940000,
+        "shibui": 316826560,
+        "relDiff": 0.0004,
+        "level": "ok"
+      },
+      {
+        "field": "revenueQuarter",
+        "pack": 9719000000,
+        "shibui": 9719000000,
+        "relDiff": 0,
+        "level": "ok"
+      },
+      {
+        "field": "fcfTtm",
+        "pack": 4118999999.9999995,
+        "shibui": 4156000000,
+        "relDiff": 0.0089,
+        "level": "ok"
+      }
+    ],
+    "source": "shibui"
+  }
 }

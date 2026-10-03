@@ -676,6 +676,79 @@
       "endpoint": "bigdata_search",
       "source": "bigdata",
       "capturedAt": "2026-09-13T17:26:01.126Z"
+    },
+    {
+      "field": "beta",
+      "source": "shibui",
+      "capturedAt": "2026-10-03T03:46:39.826Z",
+      "endpoint": "stock_data_query: 2y weekly log returns vs SPY (cov/var) → Blume-adjusted, clamped [0.3, 2.5]"
+    },
+    {
+      "field": "shibuiCheck",
+      "source": "shibui",
+      "capturedAt": "2026-10-03T04:32:59.534Z",
+      "endpoint": "stock_data_query: close + valuation.market_cap on/before 2026-09-11; fundamentals_quarterly (4 quarters to 2026-08-31): shares_outstanding, revenue, Σfree_cash_flow, Σstock_based_compensation"
     }
-  ]
+  ],
+  "beta": {
+    "value": 1.549,
+    "raw": 1.823,
+    "standardError": 0.316,
+    "r2": 0.246,
+    "observations": 104,
+    "benchmark": "SPY",
+    "window": {
+      "start": "2024-09-16",
+      "end": "2026-09-11"
+    },
+    "source": "shibui"
+  },
+  "shibuiCheck": {
+    "asOf": "2026-09-11",
+    "quarterEnd": "2026-08-31",
+    "price": 150.28,
+    "marketCap": 432877181880,
+    "sharesOutstanding": 2880471000,
+    "revenueQuarter": 19345000000,
+    "fcfTtm": -28720000000,
+    "sbcTtm": 4814000000,
+    "diffs": [
+      {
+        "field": "price",
+        "pack": 150.15,
+        "shibui": 150.28,
+        "relDiff": 0.0009,
+        "level": "ok"
+      },
+      {
+        "field": "marketCap",
+        "pack": 432502570500,
+        "shibui": 432877181880,
+        "relDiff": 0.0009,
+        "level": "ok"
+      },
+      {
+        "field": "sharesOutstanding",
+        "pack": 2880471000,
+        "shibui": 2880471000,
+        "relDiff": 0,
+        "level": "ok"
+      },
+      {
+        "field": "revenueQuarter",
+        "pack": 19345000000,
+        "shibui": 19345000000,
+        "relDiff": 0,
+        "level": "ok"
+      },
+      {
+        "field": "fcfTtm",
+        "pack": -28720000000,
+        "shibui": -28720000000,
+        "relDiff": 0,
+        "level": "ok"
+      }
+    ],
+    "source": "shibui"
+  }
 }

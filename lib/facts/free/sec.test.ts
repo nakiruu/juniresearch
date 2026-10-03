@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
-import { parseCompanyFacts, type SecPeriod } from "./sec";
+import { parseCompanyFacts, combineCapex, CAPEX_RAW, type SecPeriod } from "./sec";
 
 const facts = JSON.parse(readFileSync("lib/facts/free/__fixtures__/lly-companyfacts.json", "utf8"));
 
@@ -403,5 +403,24 @@ describe("D&A from Depreciation + AmortizationOfIntangibleAssets when no combine
   it("uses depreciation alone for a filer that never tags intangible amortization", () => {
     const { annual } = parseCompanyFacts({ facts: { "us-gaap": { ...base, ...y("Depreciation", [["2025", 40]]) } } });
     expect(annual.find((p) => p.fiscal_year === 2025)!.ebitda).toBe(260 + 40);
+  });
+});
+
+describe("combineCapex — PP&E capex plus separately tagged reinvestment", () => {
+  const e = (val: number) => ({ end: "2025-12-31", val, form: "10-K", filed: "2026-02-01" });
+  const m = (val?: number) => new Map(val == null ? [] : [[2025, e(val)]]);
+  const base = (ppe?: number, allIn?: number, other?: number) => [m(ppe), m(allIn), m(other)];
+  it("adds capitalized software and lease equipment to a PP&E base (FOUR-shape)", () => {
+    expect(CAPEX_RAW[1]).toBe("PaymentsToAcquireProductiveAssets");
+    expect(combineCapex(base(20), [m(5), m(), m(140)]).get(2025)?.val).toBe(165);
+  });
+  it("adds nothing when the base is the all-in productive-assets concept (V-shape)", () => {
+    expect(combineCapex(base(undefined, 1482), [m(300)]).get(2025)?.val).toBe(1482);
+  });
+  it("still adds to the lowest-priority other-PP&E base (LLY-shape)", () => {
+    expect(combineCapex(base(undefined, undefined, 50), [m(10)]).get(2025)?.val).toBe(60);
+  });
+  it("never turns extras alone into a capex figure", () => {
+    expect(combineCapex(base(), [m(10)]).has(2025)).toBe(false);
   });
 });

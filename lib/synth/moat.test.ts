@@ -4,6 +4,7 @@ import {
   roicSeries,
   sectorHurdle,
   betaFromSic,
+  betaFor,
   buildWacc,
   costOfEquity,
   comparableWindow,
@@ -46,6 +47,20 @@ describe("WACC build-up (replaces the sector-hurdle proxy)", () => {
     expect(m.wacc).toBeCloseTo(0.119, 2);
     expect(m.width).toBe("NARROW");
     expect(m.trend).toBe("WIDENING");
+  });
+});
+
+describe("measured beta (lib/facts/beta.ts) overrides the SIC proxy", () => {
+  const macro = { riskFree: 0.043, erp: 0.045 };
+  it("uses the pack's measured beta when present, the SIC proxy otherwise", () => {
+    expect(betaFor(AMD)).toEqual({ beta: 1.7, source: "sic" });
+    expect(betaFor({ ...AMD, beta: { value: 1.539 } })).toEqual({ beta: 1.539, source: "measured" });
+    expect(betaFor({ ...AMD, beta: { value: 0 } }).source).toBe("sic"); // a non-positive beta is not a measurement
+  });
+  it("feeds the measured beta into the cost of equity and names its source in the WACC flag", () => {
+    expect(costOfEquity({ ...LLY, beta: { value: 0.652 } }, macro)).toBeCloseTo(0.043 + 0.652 * 0.045, 6);
+    expect(moatRead({ ...AMD, beta: { value: 1.539 } }, { taxRate: 0.15 }).flags[0]).toMatch(/β≈1\.539 measured/);
+    expect(moatRead(AMD, { taxRate: 0.15 }).flags[0]).toMatch(/β≈1\.7 sector proxy/);
   });
 });
 
@@ -126,6 +141,13 @@ describe("goodwill-adjusted width (ex-goodwill ROIC for asset-heavy acquirers)",
     expect(withGw.flags.some((f) => /goodwill/i.test(f))).toBe(true);
     expect(withoutGw.width).not.toBe("WIDE");
   });
+  it("flags restated goodwill years inside the comparable window, and only when goodwill is material", () => {
+    const flagOf = (m: ReturnType<typeof moatRead>) => m.flags.find((f) => f.startsWith("goodwill restated"));
+    const restated = { ...acquirer([800, 800, 800, 800, 800]), goodwillRestated: ["FY21", "FY22"] };
+    expect(flagOf(moatRead(restated, { wacc: 0.1 }))).toMatch(/for FY21, FY22 — ex-goodwill ROIC/);
+    expect(moatRead(restated, { wacc: 0.1 }).width).toBe(moatRead(acquirer([800, 800, 800, 800, 800]), { wacc: 0.1 }).width); // a flag, not a verdict change
+    expect(flagOf(moatRead({ ...acquirer([10, 10, 10, 10, 10]), goodwillRestated: ["FY21"] }, { wacc: 0.1 }))).toBeUndefined();
+  });
 });
 
 describe("insufficient comparable history (I1)", () => {
@@ -172,3 +194,27 @@ function investedCapital(f: MoatFacts, i: number): number {
   const g = (k: string) => f.statements.balance.find((r) => r.key === k)?.values[i] ?? 0;
   return (g("totalDebt") as number) + (g("totalEquity") as number) - (g("cashAndInvestments") as number);
 }
+
+describe("structural break — spin-off (revenue drop + restated history) vs cyclical collapse", () => {
+  const rows = (key: string, values: number[]) => ({ key, label: key, values });
+  const shape = (goodwillRestated?: string[]): MoatFacts => ({
+    ticker: "SPN", sic: 3559, goodwillRestated,
+    quote: { marketCap: 20000 }, ttm: { interestCoverage: 20 },
+    statements: {
+      fiscalYears: ["FY21", "FY22", "FY23", "FY24", "FY25"],
+      income: [rows("operatingIncome", [200, 210, 60, 70, 80]), rows("revenue", [1200, 1300, 660, 690, 720]), rows("grossProfit", [500, 540, 270, 285, 300])],
+      balance: [rows("totalEquity", [900, 900, 880, 900, 920]), rows("totalDebt", [100, 100, 100, 100, 100]), rows("cashAndInvestments", [50, 50, 50, 50, 50])],
+      cashflow: [rows("freeCashFlow", [150, 160, 50, 55, 60])],
+    },
+  });
+  it("drops pre-spin years when revenue halves and a later 10-K restated the history (DD-shape)", () => {
+    const m = moatRead(shape(["FY21", "FY23"]), { wacc: 0.08 });
+    expect(m.comparableFrom).toBe(2);
+    expect(m.flags.some((f) => /structural break at FY23 \(spin-off/.test(f))).toBe(true);
+  });
+  it("keeps the downturn years when nothing was restated (a cyclical collapse is evidence)", () => {
+    const m = moatRead(shape(undefined), { wacc: 0.08 });
+    expect(m.comparableFrom).toBe(0);
+    expect(m.flags.some((f) => f.startsWith("structural break"))).toBe(false);
+  });
+});

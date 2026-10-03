@@ -2,7 +2,8 @@
 
 > **Status:** owner approved 1 = hybrid, 2 = emulated IOC, 3 = ADD/TRIM floor `max($5, 1% NAV)`.
 > **2026-10-01:** owner lowered the ADD/TRIM floor to `max($1, 0.5% NAV)`, tunable via `TRADE_MIN_USD` / `TRADE_MIN_NAV_PCT`; the turnover breaker is off unless `TURNOVER_BREAKER=true`.
-> Implemented: C1, C2, C3, S1 (§5 items 1–3). Not yet done: S2 relative band, S3 μ-vs-realized tracking.
+> Implemented: C1, C2, C3, S1 (§5 items 1–3). Not yet done: S2 relative band.
+> **2026-10-03:** S3 started as a standalone evidence log (`npm run calibration:log`, `lib/calibration/realized.ts`) rather than inside `trade:review`; recalibration waits for ≥ 10 names per horizon.
 
 Scope: `lib/portfolio/*` (signals, eligibility, sizing), `lib/trade/*` (hysteresis, rebalance, orders, limit,
 pipeline, cron, scheduler, ledger, locks), `lib/broker/*` (Schwab, Alpaca, guards, http). Evidence was

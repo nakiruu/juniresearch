@@ -43,9 +43,35 @@ export const FactPack = z.object({
   // Goodwill per fiscal year (aligned to statements.fiscalYears) for ex-goodwill ROIC in the
   // moat engine. Optional: FactPacks captured before it was persisted omit it.
   goodwill: z.array(nullableNum).optional(),
+  // Fiscal-year labels whose goodwill a later 10-K restated (e.g. after a spin-off). `goodwill` keeps the
+  // latest-filed value; the moat engine flags ex-goodwill ROIC for these years as mixing bases (deferred
+  // point-in-time follow-up, docs/engine.md). Absent when nothing was restated.
+  goodwillRestated: z.array(z.string()).optional(),
   // Stock-based compensation per fiscal year, for SBC-adjusted owner earnings in the intrinsic
   // engine (Damodaran; 8.md). Optional; omitted for filers that tag none.
   sbc: z.array(nullableNum).optional(),
+  // Measured equity beta (2y weekly vs SPY, Blume-adjusted; lib/facts/beta.ts) for the cost-of-equity
+  // build-up. Optional: absent → moat.ts falls back to the sector proxy betaFromSic.
+  beta: z.object({
+    value: z.number(), raw: z.number(), standardError: z.number(), r2: z.number(),
+    observations: z.number().int(), benchmark: z.string(),
+    window: z.object({ start: z.string().nullable(), end: z.string() }),
+    source: z.literal("shibui"),
+  }).optional(),
+  // Independent cross-check of the vendor inputs against Shibui Finance (lib/facts/shibui-check.ts):
+  // Shibui's point-in-time price / market cap / shares / quarter revenue / TTM FCF, the relative diffs
+  // vs the pack (ok ≤ 10% < warn ≤ 25% < fail), and Shibui's TTM SBC. Optional: absent → never checked.
+  shibuiCheck: z.object({
+    asOf: z.string(),
+    quarterEnd: z.string().nullable(),
+    price: nullableNum, marketCap: nullableNum, sharesOutstanding: nullableNum,
+    revenueQuarter: nullableNum, fcfTtm: nullableNum, sbcTtm: nullableNum,
+    diffs: z.array(z.object({
+      field: z.enum(["price", "marketCap", "sharesOutstanding", "revenueQuarter", "fcfTtm"]),
+      pack: z.number(), shibui: z.number(), relDiff: z.number(), level: z.enum(["ok", "warn", "fail"]),
+    })),
+    source: z.literal("shibui"),
+  }).optional(),
   filing: z.object({
     form: z.enum(["10-Q", "10-K"]),
     accession: z.string(),
@@ -101,7 +127,7 @@ export const FactPack = z.object({
   }),
   provenance: z.array(z.object({
     field: z.string(),
-    source: z.enum(["fmp", "bigdata", "edgar", "yahoo"]),
+    source: z.enum(["fmp", "bigdata", "edgar", "yahoo", "shibui"]),
     endpoint: z.string(),
     capturedAt: z.string(),
   })),

@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "7db40664f82a8d990acb2b69123ebf92a63beb4f7470d571566ab40675171c84",
-  "reviewedAt": "2026-10-02T20:06:41Z",
+  "judgmentSha256": "9a228c4d6b4fd4b3d7a38f797809a86ffeffe84db1c660f2f3f8ecc5503b1452",
+  "reviewedAt": "2026-10-03T05:33:59Z",
   "reviewer": "Claude Opus 5.5 (claude-opus-5-5)",
   "round": 2,
-  "verdict": "approved",
+  "verdict": "approved-with-minors",
   "findings": [
     {
       "id": "F-1",
@@ -22,7 +22,7 @@
       "issue": "This is an inference the source does not make. The MD&A gives the $11 billion (22%) volume increase as a year-over-year comparison with the second quarter of 2025, not growth within the quarter. It lists 'our recent acquisitions' as a separate driver, but it never says the volume increase is organic. The volume definition in the Q2 2026 shareholder letter includes the international payments platform, so acquired volume may be in it. The same defect appears in sections.businessMoat.durability: 'steady growth in volume suggests merchants value the platform'. The surface carries one volume data point, so 'steady' is not shown.",
       "fix": "State it as 'Volume rose $11 billion, or 22%, from the second quarter of 2025'. Do not call it organic unless a source splits it. In durability, drop 'steady' and the inference that merchants value the platform, or frame that as a view resting on one quarter.",
       "status": "addressed",
-      "note": "Fixed. growth.points[1] now gives $11 billion, or 22%, against the second quarter of 2025. The lint's '22%' repeat warning is a false positive: in growth.points[0] the 22% is FY26E revenue growth, a different quantity."
+      "note": "Still fixed. growth.points[1] now gives the $11 billion against the second quarter of 2025 and no longer calls it organic; the rewrite dropped the 22%, which loses nothing material."
     },
     {
       "id": "F-3",
@@ -76,7 +76,8 @@
       "quote": "The trailing FCF yield is 20.0%.",
       "issue": "Counter-case missing on the key bull figure. The 20.0% trailing yield and $624M FY25 free cash flow carry the thesis. In the second quarter of 2026, however, interest expense was $65 million against $39 million and interest income was $3 million against $19 million. The pending acquisition also needs an initial payment of approximately $143 million in cash. None of this is weighed against the trailing yield here or in sections.executiveSummary.thesis.body.",
       "fix": "Add one sentence noting that the Q2'26 interest expense and interest income run-rate, plus the $143 million cash payment, mean forward free cash flow available to equity may be lower than the trailing 20.0% suggests.",
-      "status": "addressed"
+      "status": "addressed",
+      "note": "Fixed on the corrected figures. The trailing yield is now 10.8%, and cashflowCommentary weighs it against interest expense, the $143 million deal payment and the FY25 buybacks."
     },
     {
       "id": "F-9",
@@ -241,7 +242,8 @@
       "quote": "BUY, target range $40–$50, based on the scenarios in Valuation.",
       "issue": "Repeats the closing line of analystCommentary ('We rate FOUR BUY with a $40–$50 target range.').",
       "fix": "Keep the rating statement in one place. Use the final recommendation for what changes the call.",
-      "status": "addressed"
+      "status": "addressed",
+      "note": "Fixed. analystCommentary no longer states the rating; scenarioCommentary derives it ('which is why the rating is HOLD') and finalRecommendation.body[0] states it with the target range."
     },
     {
       "id": "F-27",
@@ -261,7 +263,87 @@
       "issue": "Cross-section paraphrase introduced by the rewrite. The same claim, that free cash flow can pay down debt, appears in three places. analystCommentary has 'We think the cash the business generates gives it a credible path to reduce debt'. sections.executiveSummary.thesis.body has 'If Shift4 directs that cash to debt reduction, the equity should re-rate'. The cash-flow paragraph is the third. The surface also cuts against an unqualified version: in FY25, free cash flow of $624M came alongside -$453M of share repurchases, while total debt rose to $4.5B from $2.8B.",
       "fix": "Argue the deleveraging capacity once, in cashflowCommentary, and set it against the FY25 record of buybacks while debt rose. Keep the thesis as the pointer and drop the sentence from analystCommentary.",
       "status": "addressed",
-      "note": "Fixed. The thesis sentence is gone. cashflowCommentary now weighs the FY25 buybacks against the rise in debt, and analystCommentary is left as the single statement of the view."
+      "note": "The original sentence is gone. The rewrite now argues the opposite claim, that free cash flow deleverages only slowly, in four places; that is logged as F-32."
+    },
+    {
+      "id": "F-29",
+      "severity": "Critical",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "free cash flow of $400M in FY25 reduces that debt only slowly",
+      "issue": "Unsupported claim that the surface contradicts. In FY25 free cash flow did not reduce debt at all. Total debt rose to $4.5B from $2.8B, and share repurchases of $453M were larger than the $400M of free cash flow. The report's own cashflowCommentary says 'free cash flow has not yet been directed at deleveraging'. meta.subtitle makes the same claim: 'free cash flow repays it slowly'. The reader of the subtitle and thesis is told debt is being repaid, which no figure on the page shows.",
+      "fix": "State what happened: in FY25 the $453M of buybacks exceeded the $400M of free cash flow while total debt rose to $4.5B. Then give the view as capacity, e.g. '$400M of FY25 free cash flow is small against $3.6B of net debt, and none of it went to debt in FY25'. In the subtitle, replace 'free cash flow repays it slowly' with wording that does not claim repayment, such as 'and free cash flow is small against the debt'.",
+      "status": "addressed",
+      "note": "Fixed. The thesis now says 'in FY25 free cash flow went to buybacks rather than debt (see Financials)', and the subtitle reads 'free cash flow is small against the debt'. Neither claims repayment."
+    },
+    {
+      "id": "F-30",
+      "severity": "Critical",
+      "field": "sections.financials.cashflowCommentary",
+      "quote": "The MD&A shows why reinvestment is a real call on cash: the company depreciates equipment under lease to merchants and amortizes internally developed capitalized software.",
+      "issue": "Over-attribution. The MD&A excerpt carries these items only as accounting definitions (the components of depreciation and amortization and of other costs of sales) plus the $26 million versus $17 million of equipment-under-lease depreciation. It says nothing about capital expenditure or cash needs. Depreciation and amortization are non-cash charges, so they do not show that reinvestment is a call on cash. The point the author wants, that the cash-flow table counts leased equipment and capitalized software as capex, is the desk's definition, not something the MD&A argues. The Q2 2026 shareholder letter defines the company's own free cash flow differently ('adjusted for certain non-discretionary capital expenditures'), so a reader may take $400M to be the company's figure.",
+      "fix": "Drop 'The MD&A shows why'. Say in the desk's own voice that capital expenditure of $0.2B includes equipment leased to merchants and capitalized software, and cite only what the MD&A carries, such as equipment-under-lease depreciation rising to $26 million from $17 million as evidence of growth in leased equipment. Note once that the $400M is the desk's measure, not the company's reported free cash flow.",
+      "status": "addressed",
+      "note": "Fixed. cashflowCommentary drops 'The MD&A shows why', labels the $400M as the desk's measure distinct from the company's free cash flow definition, and cites only the $26 million versus $17 million equipment-under-lease depreciation from the MD&A."
+    },
+    {
+      "id": "F-31",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "Until deleveraging is visible, we see the risk and the reward as roughly balanced.",
+      "issue": "Calls coherence (rubric 6). The calls do not show a balance. Expected upside is +12.6% against a bear-case downside of -28.4%, a reward/risk of about 0.45x. sections.valuation.scenarioCommentary argues the HOLD on exactly that asymmetry: 'the reward per unit of bear-case risk does not' clear the BUY threshold. 'Roughly balanced' tells the reader something different from what the page renders.",
+      "fix": "Point to the calls in the terms scenarioCommentary uses: a positive weighted fair value, but a bear case deep enough that the reward does not justify the risk until deleveraging is visible. Do not repeat the figures here; leave them in Valuation.",
+      "status": "addressed",
+      "note": "Fixed. The thesis now says the scenarios give a fair value above the price but the bear case is deep enough that the reward does not yet justify the risk, which matches scenarioCommentary."
+    },
+    {
+      "id": "F-32",
+      "severity": "Important",
+      "field": "analystCommentary",
+      "quote": "free cash flow, once reinvestment is counted, is modest against the debt (see Financials)",
+      "issue": "Paraphrase repetition introduced by the rewrite. The claim that free cash flow is small relative to the debt, so deleveraging will be slow, is made in four places. It appears here; in meta.subtitle ('free cash flow repays it slowly'); in sections.executiveSummary.thesis.body ('reduces that debt only slowly'); and in sections.valuation.scenarioCommentary ('a re-rating needs deleveraging that free cash flow can deliver only gradually'). The Financials section that analystCommentary points to never makes the argument: cashflowCommentary does not set the $400M against the $3.6B of net debt. The claim is repeated everywhere except where it should be argued.",
+      "fix": "Argue it once, in cashflowCommentary, by setting FY25 free cash flow against net debt in words and against the FY25 buybacks (see F-29). Keep a single pointer in the thesis. Cut the clause from analystCommentary and the scenarioCommentary sentence's second half, or replace the latter with a pointer to Financials.",
+      "status": "addressed",
+      "note": "Fixed. cashflowCommentary now argues the point against net debt and the FY25 buybacks. analystCommentary drops the clause, the thesis points to Financials, and scenarioCommentary points there ('deleveraging that has not started (see Financials)')."
+    },
+    {
+      "id": "F-33",
+      "severity": "Important",
+      "field": "analystCommentary",
+      "quote": "The valuation is undemanding and the Street's lowest target sits above today's price.",
+      "issue": "Cross-section repetition. sections.valuation.multiplesCommentary makes the same point: 'The low end of the Street range sits above today's price.' The analystCommentary sentence is new in this rewrite.",
+      "fix": "Keep the Street-range point in multiplesCommentary, where the $40.00 low is introduced. In analystCommentary, say the valuation is undemanding without retelling the Street range.",
+      "status": "addressed",
+      "note": "Fixed. analystCommentary now says only that the valuation is undemanding; the Street range stays in multiplesCommentary."
+    },
+    {
+      "id": "F-34",
+      "severity": "Minor",
+      "field": "sections.finalRecommendation.body[1]",
+      "quote": "We would cut further if volume growth slows sharply",
+      "issue": "'Cut further' implies a cut the report never describes and does not name the destination rating. The page carries no earlier rating, so the reader cannot tell what 'further' is measured from.",
+      "fix": "Name the action, e.g. 'We would move to SELL if...'.",
+      "status": "addressed",
+      "note": "Fixed. The trigger now reads 'We would move toward SELL if...'."
+    },
+    {
+      "id": "F-35",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "Base carries the most weight because it requires only most of the consensus path.",
+      "issue": "Voice. The rewrite cut 'not all of it', and 'requires only most of' now reads as a slip.",
+      "fix": "Write 'because it does not require the full consensus path' or 'because it needs only part of the consensus path to be delivered'.",
+      "status": "addressed",
+      "note": "Fixed. It now reads 'it needs Shift4 to deliver most, but not all, of the consensus path'."
+    },
+    {
+      "id": "F-36",
+      "severity": "Minor",
+      "field": "sections.financials.cashflowCommentary",
+      "quote": "Net debt at the end of FY25 (see above) equals several years of free cash flow at the FY25 level",
+      "issue": "Voice and precision. On the page, net debt is $3.6B and FY25 free cash flow is $400M, so the debt equals roughly nine years of that cash flow. 'Several' understates the gap that carries the section's argument.",
+      "fix": "Use wording that matches the scale without computing a new figure, e.g. 'equals many years of free cash flow at the FY25 level'. Alternatively, set the two surface figures side by side: '$3.6B of net debt against $400M of free cash flow'.",
+      "status": "declined",
+      "note": "Agreed on substance; deferred to the next FOUR synthesis because editing the judgment after the final (second) review round would leave it unreviewed."
     }
   ]
 }

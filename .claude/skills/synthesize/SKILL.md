@@ -7,6 +7,16 @@ description: Author the judgment half of an equity report for a captured filing 
 
 You are the `Synthesizer` for this run: the code renders the prompt, you write the judgment, the code validates and merges. Three authoring rounds at most, then two review rounds at most.
 
+## Choosing what to synthesize next
+
+When several detected filings are waiting and the user has not named one, order them with the
+pre-synthesis screen before starting: `npm run screen -- --query <TICKER ...>` (or `--pending` for
+filings already captured under `data/raw/`), run each printed Shibui call and save its response
+verbatim, then `npm run screen -- --rank <saved.json>`. Synthesize the top-ranked first — high Street
+upside is where BUYs come from; `HOLD?` rows go last. The screen only orders the queue: never skip
+or drop a filing because of it, and a filing the user asked for by name is synthesized regardless of
+its rank.
+
 ## Steps
 
 1. `npm run synth:prompt -- <TICKER> <ACCESSION>` — prints the prompt path and the judgment path.

@@ -1,0 +1,2459 @@
+{
+  "generatedAt": "2026-10-03T04:46:23.571Z",
+  "asOf": "2026-10-03",
+  "source": [
+    "data/raw/_shibui/screen-calibration-2026-10-03.json",
+    "data/raw/_shibui/screen-extra-2026-10-03.json"
+  ],
+  "holdThreshold": 0.1,
+  "legend": "Street upside = Shibui consensus target / last close − 1 (target is today's snapshot). likely-HOLD = upside < 10%. The screen ORDERS the synthesis queue; it never skips a filing. The signal is partly circular — the author sees the same consensus — so treat the flag as a queue prior, not a verdict on the company.",
+  "candidates": [
+    {
+      "rank": 1,
+      "ticker": "KTOS",
+      "close": 42.82,
+      "priceDate": "2026-10-01",
+      "streetTarget": 102.7619,
+      "streetUpside": 1.39985754320411,
+      "priority": 1.39985754320411,
+      "likelyHold": false,
+      "reason": "Street upside +140%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 15, 2026",
+        "accession": "0001069258-26-000077"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 52.76648182378312,
+        "forwardPeg": 1.4780807732136694,
+        "marketCap": 8029605714.88,
+        "fcfYield": -0.01605309209157431,
+        "earningsQualityFlags": [
+          "LOW_EARNINGS_QUALITY",
+          "LARGE_NON_OPERATING"
+        ],
+        "piotroski": 4
+      }
+    },
+    {
+      "rank": 2,
+      "ticker": "ESOA",
+      "close": 10.96,
+      "priceDate": "2026-10-01",
+      "streetTarget": 25,
+      "streetUpside": 1.2810218978102186,
+      "priority": 1.2810218978102186,
+      "likelyHold": false,
+      "reason": "Street upside +128%",
+      "report": null,
+      "pendingFiling": {
+        "ticker": "ESOA",
+        "accession": "0001104659-26-093413",
+        "filedDate": "2026-08-10",
+        "form": "10-Q"
+      },
+      "context": {
+        "forwardPe": 18.57627118644068,
+        "forwardPeg": 0.45047266748869697,
+        "marketCap": 204510081.84,
+        "fcfYield": 0.030973587918055667,
+        "earningsQualityFlags": [],
+        "piotroski": 5
+      }
+    },
+    {
+      "rank": 3,
+      "ticker": "LASR",
+      "close": 39.93,
+      "priceDate": "2026-10-01",
+      "streetTarget": 88.8571,
+      "streetUpside": 1.225321813173053,
+      "priority": 1.225321813173053,
+      "likelyHold": false,
+      "reason": "Street upside +123%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 23, 2026",
+        "accession": "0001124796-26-000038"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 80.56900726392251,
+        "forwardPeg": 2.970982142857142,
+        "marketCap": 2252399750.37,
+        "fcfYield": 0.018615256902382606,
+        "earningsQualityFlags": [],
+        "piotroski": 6
+      }
+    },
+    {
+      "rank": 4,
+      "ticker": "EVLV",
+      "close": 4.71,
+      "priceDate": "2026-10-01",
+      "streetTarget": 9.85,
+      "streetUpside": 1.0912951167728235,
+      "priority": 1.0912951167728235,
+      "likelyHold": false,
+      "reason": "Street upside +109%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 23, 2026",
+        "accession": "0001805385-26-000049"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": null,
+        "forwardPeg": null,
+        "marketCap": 847194341.1,
+        "fcfYield": -0.006541592325562808,
+        "earningsQualityFlags": [],
+        "piotroski": 6
+      }
+    },
+    {
+      "rank": 5,
+      "ticker": "ESAB",
+      "close": 67.11,
+      "priceDate": "2026-10-01",
+      "streetTarget": 126.9091,
+      "streetUpside": 0.8910609447176276,
+      "priority": 0.8910609447176276,
+      "likelyHold": false,
+      "reason": "Street upside +89%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "October 2, 2026",
+        "accession": "0001877322-26-000056"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 12.32212694857059,
+        "forwardPeg": 0.6469680902342619,
+        "marketCap": 4085771692.32,
+        "fcfYield": 0.04864907169767338,
+        "earningsQualityFlags": [],
+        "piotroski": 5
+      }
+    },
+    {
+      "rank": 6,
+      "ticker": "UEC",
+      "close": 9.36,
+      "priceDate": "2026-10-01",
+      "streetTarget": 16.83,
+      "streetUpside": 0.7980769230769229,
+      "priority": 0.7980769230769229,
+      "likelyHold": false,
+      "reason": "Street upside +80%",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "September 29, 2026",
+        "accession": "0001437749-26-031414"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": null,
+        "forwardPeg": null,
+        "marketCap": 4632005345.759999,
+        "fcfYield": -0.02317376427431302,
+        "earningsQualityFlags": [],
+        "piotroski": 3
+      }
+    },
+    {
+      "rank": 7,
+      "ticker": "ORCL",
+      "close": 138.07,
+      "priceDate": "2026-10-01",
+      "streetTarget": 237.9742,
+      "streetUpside": 0.7235764467299197,
+      "priority": 0.7235764467299197,
+      "likelyHold": false,
+      "reason": "Street upside +72%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 13, 2026",
+        "accession": "0001193125-26-389274"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 17.145802029133087,
+        "forwardPeg": 0.4816843427295562,
+        "marketCap": 397706630970,
+        "fcfYield": -0.07221403357030379,
+        "earningsQualityFlags": [],
+        "piotroski": 5
+      }
+    },
+    {
+      "rank": 8,
+      "ticker": "CBRS",
+      "close": 169.52,
+      "priceDate": "2026-10-01",
+      "streetTarget": 291.6364,
+      "streetUpside": 0.7203657385559223,
+      "priority": 0.7203657385559223,
+      "likelyHold": false,
+      "reason": "Street upside +72%",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "September 16, 2026",
+        "accession": "0001628280-26-056357"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": null,
+        "forwardPeg": null,
+        "marketCap": 38401800757.840004,
+        "fcfYield": -0.019585461753286397,
+        "earningsQualityFlags": [],
+        "piotroski": 4
+      }
+    },
+    {
+      "rank": 9,
+      "ticker": "AXON",
+      "close": 422.21,
+      "priceDate": "2026-10-01",
+      "streetTarget": 704.1053,
+      "streetUpside": 0.667666090334194,
+      "priority": 0.667666090334194,
+      "likelyHold": false,
+      "reason": "Street upside +67%",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "September 22, 2026",
+        "accession": "0001628280-26-053646"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 55.0498070303536,
+        "forwardPeg": 1.4648371092530268,
+        "marketCap": 34031002930.17,
+        "fcfYield": 0.003913842923563071,
+        "earningsQualityFlags": [
+          "LARGE_NON_OPERATING"
+        ],
+        "piotroski": 6
+      }
+    },
+    {
+      "rank": 10,
+      "ticker": "PGY",
+      "close": 17.44,
+      "priceDate": "2026-10-01",
+      "streetTarget": 28.9091,
+      "streetUpside": 0.6576318807339447,
+      "priority": 0.6576318807339447,
+      "likelyHold": false,
+      "reason": "Street upside +66%",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "October 2, 2026",
+        "accession": "0001883085-26-000058"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 4.668469095484113,
+        "forwardPeg": 0.42505483792347076,
+        "marketCap": 1445267484.48,
+        "fcfYield": 0.17420927454864096,
+        "earningsQualityFlags": [],
+        "piotroski": 6
+      }
+    },
+    {
+      "rank": 11,
+      "ticker": "ASTE",
+      "close": 40.68,
+      "priceDate": "2026-10-01",
+      "streetTarget": 67.25,
+      "streetUpside": 0.6531465093411997,
+      "priority": 0.6531465093411997,
+      "likelyHold": false,
+      "reason": "Street upside +65%",
+      "report": null,
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 12.392993145468392,
+        "forwardPeg": 0.583225806451613,
+        "marketCap": 935340188.4,
+        "fcfYield": 0.035815845844606925,
+        "earningsQualityFlags": [],
+        "piotroski": 4
+      }
+    },
+    {
+      "rank": 12,
+      "ticker": "AIP",
+      "close": 24.01,
+      "priceDate": "2026-10-01",
+      "streetTarget": 39.4286,
+      "streetUpside": 0.642174094127447,
+      "priority": 0.642174094127447,
+      "likelyHold": false,
+      "reason": "Street upside +64%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 23, 2026",
+        "accession": "0001628280-26-054464"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": null,
+        "forwardPeg": null,
+        "marketCap": 1108589287.8200002,
+        "fcfYield": 0.006103252191174505,
+        "earningsQualityFlags": [],
+        "piotroski": 4
+      }
+    },
+    {
+      "rank": 13,
+      "ticker": "CHWY",
+      "close": 17.72,
+      "priceDate": "2026-10-01",
+      "streetTarget": 28.8182,
+      "streetUpside": 0.626309255079007,
+      "priority": 0.626309255079007,
+      "likelyHold": false,
+      "reason": "Street upside +63%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 28, 2026",
+        "accession": "0001628280-26-061018"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 13.867584911566754,
+        "forwardPeg": 0.6259272341928649,
+        "marketCap": 7254996948.04,
+        "fcfYield": 0.07830465044557698,
+        "earningsQualityFlags": [],
+        "piotroski": 6
+      }
+    },
+    {
+      "rank": 14,
+      "ticker": "MP",
+      "close": 46.09,
+      "priceDate": "2026-10-01",
+      "streetTarget": 74.2941,
+      "streetUpside": 0.6119353438923842,
+      "priority": 0.6119353438923842,
+      "likelyHold": false,
+      "reason": "Street upside +61%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 24, 2026",
+        "accession": "0001801368-26-000048"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 1573.0375426621163,
+        "forwardPeg": 0.5457021075065119,
+        "marketCap": 8205043105.820001,
+        "fcfYield": -0.06003332263429622,
+        "earningsQualityFlags": [],
+        "piotroski": 4
+      }
+    },
+    {
+      "rank": 15,
+      "ticker": "CVLG",
+      "close": 33.08,
+      "priceDate": "2026-10-01",
+      "streetTarget": 51.75,
+      "streetUpside": 0.5643893591293834,
+      "priority": 0.5643893591293834,
+      "likelyHold": false,
+      "reason": "Street upside +56%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "October 2, 2026",
+        "accession": "0001437749-26-026547"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 19.435957696827263,
+        "forwardPeg": 0.3217898832684825,
+        "marketCap": 832656316.12,
+        "fcfYield": 0.03073897297659041,
+        "earningsQualityFlags": [],
+        "piotroski": 4
+      }
+    },
+    {
+      "rank": 16,
+      "ticker": "AVGO",
+      "close": 343.64,
+      "priceDate": "2026-10-01",
+      "streetTarget": 531.8468,
+      "streetUpside": 0.5476859504132232,
+      "priority": 0.5476859504132232,
+      "likelyHold": false,
+      "reason": "Street upside +55%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 13, 2026",
+        "accession": "0001730168-26-000080"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 29.475995642589396,
+        "forwardPeg": 0.44495086170061254,
+        "marketCap": 1634894859240.72,
+        "fcfYield": 0.024101244050825137,
+        "earningsQualityFlags": [],
+        "piotroski": 8
+      }
+    },
+    {
+      "rank": 17,
+      "ticker": "FOUR",
+      "close": 35.58,
+      "priceDate": "2026-10-01",
+      "streetTarget": 55.0476,
+      "streetUpside": 0.5471500843170323,
+      "priority": 0.5471500843170323,
+      "likelyHold": false,
+      "reason": "Street upside +55%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "October 2, 2026",
+        "accession": "0001794669-26-000045"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 6.827864133563614,
+        "forwardPeg": 0.35801972227812456,
+        "marketCap": 2822523115.92,
+        "fcfYield": 0.11029139079292603,
+        "earningsQualityFlags": [],
+        "piotroski": 4
+      }
+    },
+    {
+      "rank": 18,
+      "ticker": "DSP",
+      "close": 12.725,
+      "priceDate": "2026-10-01",
+      "streetTarget": 19.5,
+      "streetUpside": 0.5324165029469548,
+      "priority": 0.5324165029469548,
+      "likelyHold": false,
+      "reason": "Street upside +53%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "October 2, 2026",
+        "accession": "0001828791-26-000072"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 21.148412830314108,
+        "forwardPeg": 0.6904503526858382,
+        "marketCap": 833919157.4499999,
+        "fcfYield": 0.05725135293208871,
+        "earningsQualityFlags": [],
+        "piotroski": 5
+      }
+    },
+    {
+      "rank": 19,
+      "ticker": "NBIX",
+      "close": 140.71,
+      "priceDate": "2026-10-01",
+      "streetTarget": 208.3976,
+      "streetUpside": 0.4810432805060052,
+      "priority": 0.4810432805060052,
+      "likelyHold": false,
+      "reason": "Street upside +48%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 28, 2026",
+        "accession": "0000914475-26-000037"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 13.799427271300802,
+        "forwardPeg": 0.7918847430919019,
+        "marketCap": 14148388107.93,
+        "fcfYield": 0.0615193754482994,
+        "earningsQualityFlags": [],
+        "piotroski": 5
+      }
+    },
+    {
+      "rank": 20,
+      "ticker": "EVER",
+      "close": 19.98,
+      "priceDate": "2026-10-01",
+      "streetTarget": 29.5,
+      "streetUpside": 0.4764764764764764,
+      "priority": 0.4764764764764764,
+      "likelyHold": false,
+      "reason": "Street upside +48%",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "October 3, 2026",
+        "accession": "0001193125-26-332775"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 7.684615384615385,
+        "forwardPeg": 0.41913152926368774,
+        "marketCap": 706758094.44,
+        "fcfYield": 0.1346075846154691,
+        "earningsQualityFlags": [],
+        "piotroski": 7
+      }
+    },
+    {
+      "rank": 21,
+      "ticker": "LTRX",
+      "close": 7.06,
+      "priceDate": "2026-10-01",
+      "streetTarget": 10.25,
+      "streetUpside": 0.45184135977337125,
+      "priority": 0.45184135977337125,
+      "likelyHold": false,
+      "reason": "Street upside +45%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 23, 2026",
+        "accession": "0001683168-26-006754"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 46.53922214897824,
+        "forwardPeg": 0.5576619273301737,
+        "marketCap": 281107525.8,
+        "fcfYield": 0.03295891838410539,
+        "earningsQualityFlags": [],
+        "piotroski": 6
+      }
+    },
+    {
+      "rank": 22,
+      "ticker": "CSTM",
+      "close": 24.66,
+      "priceDate": "2026-10-01",
+      "streetTarget": 35.7721,
+      "streetUpside": 0.45061232765612336,
+      "priority": 0.45061232765612336,
+      "likelyHold": false,
+      "reason": "Street upside +45%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 29, 2026",
+        "accession": "0001563411-26-000192"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 6.738625495286241,
+        "forwardPeg": null,
+        "marketCap": 3357470097,
+        "fcfYield": 0.06999317736589211,
+        "earningsQualityFlags": [],
+        "piotroski": 9
+      }
+    },
+    {
+      "rank": 23,
+      "ticker": "INTU",
+      "close": 282.78,
+      "priceDate": "2026-10-01",
+      "streetTarget": 405.6,
+      "streetUpside": 0.4343305750053046,
+      "priority": 0.4343305750053046,
+      "likelyHold": false,
+      "reason": "Street upside +43%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "October 1, 2026",
+        "accession": "0000896878-26-000037"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 11.86605681675129,
+        "forwardPeg": 0.815844897723666,
+        "marketCap": 77350792860,
+        "fcfYield": 0.11140157303359799,
+        "earningsQualityFlags": [],
+        "piotroski": 8
+      }
+    },
+    {
+      "rank": 24,
+      "ticker": "NVDA",
+      "close": 230.86,
+      "priceDate": "2026-10-01",
+      "streetTarget": 327.7,
+      "streetUpside": 0.4194750064974442,
+      "priority": 0.4194750064974442,
+      "likelyHold": false,
+      "reason": "Street upside +42%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 16, 2026",
+        "accession": "0001045810-26-000075"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 49.160988074957416,
+        "forwardPeg": 0.7301998987854252,
+        "marketCap": 5586812000000,
+        "fcfYield": 0.022733179494853237,
+        "earningsQualityFlags": [
+          "LOW_EARNINGS_QUALITY"
+        ],
+        "piotroski": 6
+      }
+    },
+    {
+      "rank": 25,
+      "ticker": "SOLS",
+      "close": 56.98,
+      "priceDate": "2026-10-01",
+      "streetTarget": 80.25,
+      "streetUpside": 0.4083889083889085,
+      "priority": 0.4083889083889085,
+      "likelyHold": false,
+      "reason": "Street upside +41%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 23, 2026",
+        "accession": "0002064953-26-000087"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 19.756596511910125,
+        "forwardPeg": 1.1621456251274729,
+        "marketCap": 9048667475.539999,
+        "fcfYield": 0.021218593844785083,
+        "earningsQualityFlags": [],
+        "piotroski": 7
+      }
+    },
+    {
+      "rank": 26,
+      "ticker": "ENVA",
+      "close": 171.49,
+      "priceDate": "2026-10-01",
+      "streetTarget": 241,
+      "streetUpside": 0.40532975683713324,
+      "priority": 0.40532975683713324,
+      "likelyHold": false,
+      "reason": "Street upside +41%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "October 2, 2026",
+        "accession": "0001193125-26-314590"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 9.929936305732484,
+        "forwardPeg": 0.4653731343283584,
+        "marketCap": 4267510815.0400004,
+        "fcfYield": 0.4575925134431548,
+        "earningsQualityFlags": [],
+        "piotroski": 5
+      }
+    },
+    {
+      "rank": 27,
+      "ticker": "HASI",
+      "close": 36.03,
+      "priceDate": "2026-10-01",
+      "streetTarget": 49.8,
+      "streetUpside": 0.38218151540382994,
+      "priority": 0.38218151540382994,
+      "likelyHold": false,
+      "reason": "Street upside +38%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 28, 2026",
+        "accession": "0001561894-26-000136"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 11.916652885728462,
+        "forwardPeg": null,
+        "marketCap": 4627432450.89,
+        "fcfYield": 0.045063866887974376,
+        "earningsQualityFlags": [
+          "EBITDA_EXCEEDS_REVENUE"
+        ],
+        "piotroski": 2
+      }
+    },
+    {
+      "rank": 28,
+      "ticker": "LPLA",
+      "close": 312.15,
+      "priceDate": "2026-10-01",
+      "streetTarget": 430,
+      "streetUpside": 0.3775428479897487,
+      "priority": 0.3775428479897487,
+      "likelyHold": false,
+      "reason": "Street upside +38%",
+      "report": null,
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 12.99763906412002,
+        "forwardPeg": 0.5371616389323877,
+        "marketCap": 24966650061.149998,
+        "fcfYield": -0.037301399976329204,
+        "earningsQualityFlags": [
+          "LOW_EARNINGS_QUALITY"
+        ],
+        "piotroski": 7
+      }
+    },
+    {
+      "rank": 29,
+      "ticker": "VRT",
+      "close": 246.12,
+      "priceDate": "2026-10-01",
+      "streetTarget": 337.9259,
+      "streetUpside": 0.3730127580042255,
+      "priority": 0.3730127580042255,
+      "likelyHold": false,
+      "reason": "Street upside +37%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 22, 2026",
+        "accession": "0001628280-26-050609"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 36.54125961338599,
+        "forwardPeg": 1.018329264760644,
+        "marketCap": 94536861793.92,
+        "fcfYield": 0.030929734121849736,
+        "earningsQualityFlags": [],
+        "piotroski": 5
+      }
+    },
+    {
+      "rank": 30,
+      "ticker": "PLOW",
+      "close": 39.7,
+      "priceDate": "2026-10-01",
+      "streetTarget": 54,
+      "streetUpside": 0.36020151133501255,
+      "priority": 0.36020151133501255,
+      "likelyHold": false,
+      "reason": "Street upside +36%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "October 2, 2026",
+        "accession": "0001437749-26-025435"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 12.724358974358974,
+        "forwardPeg": 3.693023255813956,
+        "marketCap": 918070122.4000001,
+        "fcfYield": 0.05327261916785366,
+        "earningsQualityFlags": [],
+        "piotroski": 4
+      }
+    },
+    {
+      "rank": 31,
+      "ticker": "MPWR",
+      "close": 1360.97,
+      "priceDate": "2026-10-01",
+      "streetTarget": 1839.8,
+      "streetUpside": 0.35182994481876895,
+      "priority": 0.35182994481876895,
+      "likelyHold": false,
+      "reason": "Street upside +35%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 28, 2026",
+        "accession": "0001628280-26-053275"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 49.61448585354472,
+        "forwardPeg": 1.8293099276862286,
+        "marketCap": 66864456100,
+        "fcfYield": 0.00875707414899618,
+        "earningsQualityFlags": [],
+        "piotroski": 5
+      }
+    },
+    {
+      "rank": 32,
+      "ticker": "CEG",
+      "close": 258.92,
+      "priceDate": "2026-10-01",
+      "streetTarget": 347.282,
+      "streetUpside": 0.34127143519233716,
+      "priority": 0.34127143519233716,
+      "likelyHold": false,
+      "reason": "Street upside +34%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 22, 2026",
+        "accession": "0001868275-26-000104"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 21.320816864295125,
+        "forwardPeg": 2.201326305050162,
+        "marketCap": 52189041243.08,
+        "fcfYield": 0.0028281799489767597,
+        "earningsQualityFlags": [],
+        "piotroski": null
+      }
+    },
+    {
+      "rank": 33,
+      "ticker": "AMZN",
+      "close": 248.23,
+      "priceDate": "2026-10-01",
+      "streetTarget": 329.5393,
+      "streetUpside": 0.3275562985940461,
+      "priority": 0.3275562985940461,
+      "likelyHold": false,
+      "reason": "Street upside +33%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 24, 2026",
+        "accession": "0001018724-26-000026"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 19.275658298325038,
+        "forwardPeg": null,
+        "marketCap": 2670237275298.28,
+        "fcfYield": -0.0028476870090694815,
+        "earningsQualityFlags": [
+          "LARGE_NON_OPERATING"
+        ],
+        "piotroski": 4
+      }
+    },
+    {
+      "rank": 34,
+      "ticker": "UNH",
+      "close": 365.2,
+      "priceDate": "2026-10-01",
+      "streetTarget": 481.72,
+      "streetUpside": 0.3190580503833518,
+      "priority": 0.3190580503833518,
+      "likelyHold": false,
+      "reason": "Street upside +32%",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "September 29, 2026",
+        "accession": "0000731766-26-000197"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 18.382149382647693,
+        "forwardPeg": 1.331340454230616,
+        "marketCap": 331654336340.8,
+        "fcfYield": 0.07120968252841338,
+        "earningsQualityFlags": [],
+        "piotroski": 7
+      }
+    },
+    {
+      "rank": 35,
+      "ticker": "DD",
+      "close": 129.2,
+      "priceDate": "2026-10-01",
+      "streetTarget": 170,
+      "streetUpside": 0.3157894736842106,
+      "priority": 0.3157894736842106,
+      "likelyHold": false,
+      "reason": "Street upside +32%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 24, 2026",
+        "accession": "0001666700-26-000053"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 17.795653012313707,
+        "forwardPeg": 1.8336644904910582,
+        "marketCap": 17653926630.8,
+        "fcfYield": 0.05942020842942995,
+        "earningsQualityFlags": [],
+        "piotroski": 7
+      }
+    },
+    {
+      "rank": 36,
+      "ticker": "IOT",
+      "close": 40.04,
+      "priceDate": "2026-10-01",
+      "streetTarget": 52.1565,
+      "streetUpside": 0.30260989010989015,
+      "priority": 0.30260989010989015,
+      "likelyHold": false,
+      "reason": "Street upside +30%",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "September 24, 2026",
+        "accession": "0001628280-26-060909"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 81.15119578435346,
+        "forwardPeg": 4.549999999999998,
+        "marketCap": 23331711683.28,
+        "fcfYield": 0.010949818147422118,
+        "earningsQualityFlags": [
+          "LARGE_NON_OPERATING"
+        ],
+        "piotroski": 8
+      }
+    },
+    {
+      "rank": 37,
+      "ticker": "NEE",
+      "close": 76.35,
+      "priceDate": "2026-10-01",
+      "streetTarget": 98.7368,
+      "streetUpside": 0.29321283562540934,
+      "priority": 0.29321283562540934,
+      "likelyHold": false,
+      "reason": "Street upside +29%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 16, 2026",
+        "accession": "0000753308-26-000060"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 18.85417952833683,
+        "forwardPeg": 2.2188317349607667,
+        "marketCap": 159215820165.59998,
+        "fcfYield": 0.019143826265692585,
+        "earningsQualityFlags": [],
+        "piotroski": 6
+      }
+    },
+    {
+      "rank": 38,
+      "ticker": "BAM",
+      "close": 44.56,
+      "priceDate": "2026-10-01",
+      "streetTarget": 57.5244,
+      "streetUpside": 0.2909425493716338,
+      "priority": 0.2909425493716338,
+      "likelyHold": false,
+      "reason": "Street upside +29%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 23, 2026",
+        "accession": "0001628280-26-054933"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 24.303245159530952,
+        "forwardPeg": 1.3202962962962965,
+        "marketCap": 71152803543.6,
+        "fcfYield": -0.003260588317617567,
+        "earningsQualityFlags": [
+          "LOW_EARNINGS_QUALITY"
+        ],
+        "piotroski": 4
+      }
+    },
+    {
+      "rank": 39,
+      "ticker": "WM",
+      "close": 201.9,
+      "priceDate": "2026-10-01",
+      "streetTarget": 259.92,
+      "streetUpside": 0.2873699851411591,
+      "priority": 0.2873699851411591,
+      "likelyHold": false,
+      "reason": "Street upside +29%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 23, 2026",
+        "accession": "0001104659-26-088016"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 24.788517968299182,
+        "forwardPeg": 2.0743861091133255,
+        "marketCap": 81078144328.8,
+        "fcfYield": 0.0440685961621204,
+        "earningsQualityFlags": [],
+        "piotroski": 7
+      }
+    },
+    {
+      "rank": 40,
+      "ticker": "GE",
+      "close": 312.39,
+      "priceDate": "2026-10-01",
+      "streetTarget": 400.0476,
+      "streetUpside": 0.28060309228848546,
+      "priority": 0.28060309228848546,
+      "likelyHold": false,
+      "reason": "Street upside +28%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "October 2, 2026",
+        "accession": "0000040545-26-000049"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 39.47059195148145,
+        "forwardPeg": 1.760637998083751,
+        "marketCap": 325928118841.64996,
+        "fcfYield": 0.026238914366743953,
+        "earningsQualityFlags": [],
+        "piotroski": 8
+      }
+    },
+    {
+      "rank": 41,
+      "ticker": "MDU",
+      "close": 18.47,
+      "priceDate": "2026-10-01",
+      "streetTarget": 23.625,
+      "streetUpside": 0.27910124526258806,
+      "priority": 0.27910124526258806,
+      "likelyHold": false,
+      "reason": "Street upside +28%",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "September 23, 2026",
+        "accession": "0000067716-26-000072"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 18.86426309876417,
+        "forwardPeg": 2.2607099143206852,
+        "marketCap": 3860341263.2799997,
+        "fcfYield": -0.10228033561585188,
+        "earningsQualityFlags": [],
+        "piotroski": 5
+      }
+    },
+    {
+      "rank": 42,
+      "ticker": "BAC",
+      "close": 53.73,
+      "priceDate": "2026-10-01",
+      "streetTarget": 68.6191,
+      "streetUpside": 0.2771096221849991,
+      "priority": 0.2771096221849991,
+      "likelyHold": false,
+      "reason": "Street upside +28%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 15, 2026",
+        "accession": "0000070858-26-000394"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 11.593983988951946,
+        "forwardPeg": 0.8460085025980155,
+        "marketCap": 381299815678.23,
+        "fcfYield": 0.24847114030590187,
+        "earningsQualityFlags": [],
+        "piotroski": 5
+      }
+    },
+    {
+      "rank": 43,
+      "ticker": "SCHW",
+      "close": 98.37,
+      "priceDate": "2026-10-01",
+      "streetTarget": 125.45,
+      "streetUpside": 0.2752871810511335,
+      "priority": 0.2752871810511335,
+      "likelyHold": false,
+      "reason": "Street upside +28%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 23, 2026",
+        "accession": "0000316709-26-000031"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 15.163239510435615,
+        "forwardPeg": 0.7324100960464599,
+        "marketCap": 171078759823.59,
+        "fcfYield": 0.06306452075713673,
+        "earningsQualityFlags": [],
+        "piotroski": 6
+      }
+    },
+    {
+      "rank": 44,
+      "ticker": "TJX",
+      "close": 133.59,
+      "priceDate": "2026-10-01",
+      "streetTarget": 169.8,
+      "streetUpside": 0.2710532225465978,
+      "priority": 0.2710532225465978,
+      "likelyHold": false,
+      "reason": "Street upside +27%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 24, 2026",
+        "accession": "0000109198-26-000048"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 28.535116199589883,
+        "forwardPeg": 2.786027111574558,
+        "marketCap": 147577466941.14,
+        "fcfYield": 0.039816376590496645,
+        "earningsQualityFlags": [],
+        "piotroski": 8
+      }
+    },
+    {
+      "rank": 45,
+      "ticker": "GOOGL",
+      "close": 338.24,
+      "priceDate": "2026-10-01",
+      "streetTarget": 429.4556,
+      "streetUpside": 0.2696771523178807,
+      "priority": 0.2696771523178807,
+      "likelyHold": false,
+      "reason": "Street upside +27%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 22, 2026",
+        "accession": "0001652044-26-000071"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 16.399674178658703,
+        "forwardPeg": null,
+        "marketCap": 4098115840000,
+        "fcfYield": 0.012999388518993158,
+        "earningsQualityFlags": [
+          "LOW_EARNINGS_QUALITY",
+          "LARGE_NON_OPERATING"
+        ],
+        "piotroski": 5
+      }
+    },
+    {
+      "rank": 46,
+      "ticker": "RTX",
+      "close": 185.01,
+      "priceDate": "2026-10-01",
+      "streetTarget": 234.8182,
+      "streetUpside": 0.26921896113723576,
+      "priority": 0.26921896113723576,
+      "likelyHold": false,
+      "reason": "Street upside +27%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 23, 2026",
+        "accession": "0000101829-26-000027"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 25.543988512729882,
+        "forwardPeg": 3.039927702924745,
+        "marketCap": 249149901014.28,
+        "fcfYield": 0.04578368264872884,
+        "earningsQualityFlags": [],
+        "piotroski": 7
+      }
+    },
+    {
+      "rank": 47,
+      "ticker": "CFG",
+      "close": 63.7,
+      "priceDate": "2026-10-01",
+      "streetTarget": 80.6471,
+      "streetUpside": 0.2660455259026686,
+      "priority": 0.2660455259026686,
+      "likelyHold": false,
+      "reason": "Street upside +27%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 23, 2026",
+        "accession": "0000759944-26-000148"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 12.037946934764534,
+        "forwardPeg": 0.5145811454883271,
+        "marketCap": 26937579705.4,
+        "fcfYield": 0.08735008956756087,
+        "earningsQualityFlags": [],
+        "piotroski": 6
+      }
+    },
+    {
+      "rank": 48,
+      "ticker": "WFC",
+      "close": 80.25,
+      "priceDate": "2026-10-01",
+      "streetTarget": 100.5435,
+      "streetUpside": 0.2528785046728972,
+      "priority": 0.2528785046728972,
+      "likelyHold": false,
+      "reason": "Street upside +25%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 20, 2026",
+        "accession": "0000072971-26-000302"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 10.959671141581197,
+        "forwardPeg": 1.1772040487017763,
+        "marketCap": 245580206893.5,
+        "fcfYield": 0.07806003685106998,
+        "earningsQualityFlags": [],
+        "piotroski": 4
+      }
+    },
+    {
+      "rank": 49,
+      "ticker": "VICR",
+      "close": 308.59,
+      "priceDate": "2026-10-01",
+      "streetTarget": 386.25,
+      "streetUpside": 0.25166077967529743,
+      "priority": 0.25166077967529743,
+      "likelyHold": false,
+      "reason": "Street upside +25%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 23, 2026",
+        "accession": "0001193125-26-322462"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 79.73901808785529,
+        "forwardPeg": 1.4884001350504028,
+        "marketCap": 14065966386.13,
+        "fcfYield": 0.0036448260000502873,
+        "earningsQualityFlags": [
+          "LOW_EARNINGS_QUALITY"
+        ],
+        "piotroski": 7
+      }
+    },
+    {
+      "rank": 50,
+      "ticker": "AMBQ",
+      "close": 69.15,
+      "priceDate": "2026-10-01",
+      "streetTarget": 85.6667,
+      "streetUpside": 0.23885321764280554,
+      "priority": 0.23885321764280554,
+      "likelyHold": false,
+      "reason": "Street upside +24%",
+      "report": null,
+      "pendingFiling": {
+        "ticker": "AMBQ",
+        "accession": "0001193125-26-344145",
+        "filedDate": "2026-08-11",
+        "form": "10-Q"
+      },
+      "context": {
+        "forwardPe": null,
+        "forwardPeg": null,
+        "marketCap": 1478133389.1000001,
+        "fcfYield": -0.02130389600303495,
+        "earningsQualityFlags": [],
+        "piotroski": 3
+      }
+    },
+    {
+      "rank": 51,
+      "ticker": "ICE",
+      "close": 151.47,
+      "priceDate": "2026-10-01",
+      "streetTarget": 187.2857,
+      "streetUpside": 0.23645408331682827,
+      "priority": 0.23645408331682827,
+      "likelyHold": false,
+      "reason": "Street upside +24%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 20, 2026",
+        "accession": "0001571949-26-000011"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 18.635122167269508,
+        "forwardPeg": 2.2526769779892932,
+        "marketCap": 85658177617.65,
+        "fcfYield": 0.054180466233077026,
+        "earningsQualityFlags": [],
+        "piotroski": 7
+      }
+    },
+    {
+      "rank": 52,
+      "ticker": "USFD",
+      "close": 93.93,
+      "priceDate": "2026-10-01",
+      "streetTarget": 116,
+      "streetUpside": 0.23496220589800898,
+      "priority": 0.23496220589800898,
+      "likelyHold": false,
+      "reason": "Street upside +23%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 28, 2026",
+        "accession": "0001665918-26-000045"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 19.651038724659514,
+        "forwardPeg": 1.2240031274433145,
+        "marketCap": 20685420148.08,
+        "fcfYield": 0.04582938094626965,
+        "earningsQualityFlags": [],
+        "piotroski": 7
+      }
+    },
+    {
+      "rank": 53,
+      "ticker": "RL",
+      "close": 362.66,
+      "priceDate": "2026-10-01",
+      "streetTarget": 446.7059,
+      "streetUpside": 0.23174846964098594,
+      "priority": 0.23174846964098594,
+      "likelyHold": false,
+      "reason": "Street upside +23%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 24, 2026",
+        "accession": "0001628280-26-053992"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 22.21296664931247,
+        "forwardPeg": 2.1017676035931614,
+        "marketCap": 21584198040.36,
+        "fcfYield": 0.04642285055605836,
+        "earningsQualityFlags": [],
+        "piotroski": 6
+      }
+    },
+    {
+      "rank": 54,
+      "ticker": "ALL",
+      "close": 224.41,
+      "priceDate": "2026-10-01",
+      "streetTarget": 276.0909,
+      "streetUpside": 0.2302967782184393,
+      "priority": 0.2302967782184393,
+      "likelyHold": false,
+      "reason": "Street upside +23%",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "September 22, 2026",
+        "accession": "0000899051-26-000118"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 6.364399521273278,
+        "forwardPeg": null,
+        "marketCap": 57767830901.299995,
+        "fcfYield": 0.21203842707766185,
+        "earningsQualityFlags": [],
+        "piotroski": 6
+      }
+    },
+    {
+      "rank": 55,
+      "ticker": "FELE",
+      "close": 96.47,
+      "priceDate": "2026-10-01",
+      "streetTarget": 118.5,
+      "streetUpside": 0.2283611485435888,
+      "priority": 0.2283611485435888,
+      "likelyHold": false,
+      "reason": "Street upside +23%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 23, 2026",
+        "accession": "0000038725-26-000055"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 20.746236559139785,
+        "forwardPeg": 1.882341463414637,
+        "marketCap": 4262259921.04,
+        "fcfYield": 0.05202685995411844,
+        "earningsQualityFlags": [],
+        "piotroski": 8
+      }
+    },
+    {
+      "rank": 56,
+      "ticker": "WTTR",
+      "close": 20.03,
+      "priceDate": "2026-10-01",
+      "streetTarget": 24.5714,
+      "streetUpside": 0.22672990514228664,
+      "priority": 0.22672990514228664,
+      "likelyHold": false,
+      "reason": "Street upside +23%",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "September 23, 2026",
+        "accession": "0001104659-26-091156"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 38.05814174425233,
+        "forwardPeg": 5.722857142857139,
+        "marketCap": 2767040584.36,
+        "fcfYield": -0.026742289368016287,
+        "earningsQualityFlags": [],
+        "piotroski": 8
+      }
+    },
+    {
+      "rank": 57,
+      "ticker": "DOW",
+      "close": 27.59,
+      "priceDate": "2026-10-01",
+      "streetTarget": 33.8125,
+      "streetUpside": 0.22553461399057628,
+      "priority": 0.22553461399057628,
+      "likelyHold": false,
+      "reason": "Street upside +23%",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "September 24, 2026",
+        "accession": "0001751788-26-000147"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 11.423957600099376,
+        "forwardPeg": null,
+        "marketCap": 19885256274.42,
+        "fcfYield": 0.07120853663935499,
+        "earningsQualityFlags": [],
+        "piotroski": 6
+      }
+    },
+    {
+      "rank": 58,
+      "ticker": "HON",
+      "close": 213.8,
+      "priceDate": "2026-10-01",
+      "streetTarget": 261.7391,
+      "streetUpside": 0.22422404115996253,
+      "priority": 0.22422404115996253,
+      "likelyHold": false,
+      "reason": "Street upside +22%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 15, 2026",
+        "accession": "0000773840-26-000124"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 25.754381738240077,
+        "forwardPeg": 1.3455003146633115,
+        "marketCap": 67737518528,
+        "fcfYield": 0.06135447666690173,
+        "earningsQualityFlags": [
+          "LOW_EARNINGS_QUALITY",
+          "LARGE_NON_OPERATING"
+        ],
+        "piotroski": 7
+      }
+    },
+    {
+      "rank": 59,
+      "ticker": "MQ",
+      "close": 17,
+      "priceDate": "2026-10-01",
+      "streetTarget": 20.5,
+      "streetUpside": 0.2058823529411764,
+      "priority": 0.2058823529411764,
+      "likelyHold": false,
+      "reason": "Street upside +21%",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "October 2, 2026",
+        "accession": "0001522540-26-000063"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 62.96296296296296,
+        "forwardPeg": 0.7391304347826088,
+        "marketCap": 1802128826,
+        "fcfYield": 0.09277694113084455,
+        "earningsQualityFlags": [],
+        "piotroski": 7
+      }
+    },
+    {
+      "rank": 60,
+      "ticker": "KRYS",
+      "close": 325.31,
+      "priceDate": "2026-10-01",
+      "streetTarget": 392.1111,
+      "streetUpside": 0.2053459776828257,
+      "priority": 0.2053459776828257,
+      "likelyHold": false,
+      "reason": "Street upside +21%",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "October 3, 2026",
+        "accession": "0001711279-26-000057"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 41.36120329048582,
+        "forwardPeg": 2.2367299229923,
+        "marketCap": 9590059424.36,
+        "fcfYield": 0.026880125408316045,
+        "earningsQualityFlags": [],
+        "piotroski": 6
+      }
+    },
+    {
+      "rank": 61,
+      "ticker": "EWBC",
+      "close": 125.02,
+      "priceDate": "2026-10-01",
+      "streetTarget": 149.625,
+      "streetUpside": 0.19680851063829796,
+      "priority": 0.19680851063829796,
+      "likelyHold": false,
+      "reason": "Street upside +20%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 21, 2026",
+        "accession": "0001069157-26-000044"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 11.724105593848172,
+        "forwardPeg": 1.6368159203980104,
+        "marketCap": 17127272675.24,
+        "fcfYield": 0.10875333366372643,
+        "earningsQualityFlags": [],
+        "piotroski": 5
+      }
+    },
+    {
+      "rank": 62,
+      "ticker": "T",
+      "close": 24.3,
+      "priceDate": "2026-10-01",
+      "streetTarget": 29.0521,
+      "streetUpside": 0.19555967078189296,
+      "priority": 0.19555967078189296,
+      "likelyHold": false,
+      "reason": "Street upside +20%",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "September 15, 2026",
+        "accession": "0000732717-26-000297"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 10.396166680927527,
+        "forwardPeg": 1.031409168081495,
+        "marketCap": 168844633690.5,
+        "fcfYield": 0.10455766117127889,
+        "earningsQualityFlags": [],
+        "piotroski": 6
+      }
+    },
+    {
+      "rank": 63,
+      "ticker": "EXFY",
+      "close": 2.37,
+      "priceDate": "2026-10-01",
+      "streetTarget": 2.8333,
+      "streetUpside": 0.19548523206751045,
+      "priority": 0.19548523206751045,
+      "likelyHold": false,
+      "reason": "Street upside +20%",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "October 2, 2026",
+        "accession": "0001476840-26-000072"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 19.75,
+        "forwardPeg": null,
+        "marketCap": 228558342.03,
+        "fcfYield": 0.046137016511153595,
+        "earningsQualityFlags": [],
+        "piotroski": 5
+      }
+    },
+    {
+      "rank": 64,
+      "ticker": "MNST",
+      "close": 42.14,
+      "priceDate": "2026-10-01",
+      "streetTarget": 50.2391,
+      "streetUpside": 0.19219506407214038,
+      "priority": 0.19219506407214038,
+      "likelyHold": false,
+      "reason": "Street upside +19%",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "October 3, 2026",
+        "accession": "0001104659-26-092193"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 36.61164205039096,
+        "forwardPeg": 2.667088607594938,
+        "marketCap": 82426523510.8,
+        "fcfYield": 0.02531185243699659,
+        "earningsQualityFlags": [],
+        "piotroski": 5
+      }
+    },
+    {
+      "rank": 65,
+      "ticker": "ATO",
+      "close": 156.38,
+      "priceDate": "2026-10-01",
+      "streetTarget": 185.5455,
+      "streetUpside": 0.18650402864816473,
+      "priority": 0.18650402864816473,
+      "likelyHold": false,
+      "reason": "Street upside +19%",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "October 2, 2026",
+        "accession": "0000731802-26-000102"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 18.482667328534788,
+        "forwardPeg": 2.7939967839914264,
+        "marketCap": 26102921764.36,
+        "fcfYield": -0.07739758093894492,
+        "earningsQualityFlags": [],
+        "piotroski": 6
+      }
+    },
+    {
+      "rank": 66,
+      "ticker": "CAT",
+      "close": 826.35,
+      "priceDate": "2026-10-01",
+      "streetTarget": 975.6061,
+      "streetUpside": 0.18062092333756885,
+      "priority": 0.18062092333756885,
+      "likelyHold": false,
+      "reason": "Street upside +18%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 24, 2026",
+        "accession": "0000018230-26-000046"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 30.395488954117106,
+        "forwardPeg": 1.5919818136282198,
+        "marketCap": 380647406435.10004,
+        "fcfYield": 0.025674679072498253,
+        "earningsQualityFlags": [],
+        "piotroski": 7
+      }
+    },
+    {
+      "rank": 67,
+      "ticker": "ACLS",
+      "close": 136.71,
+      "priceDate": "2026-10-01",
+      "streetTarget": 161,
+      "streetUpside": 0.1776753712237582,
+      "priority": 0.1776753712237582,
+      "likelyHold": false,
+      "reason": "Street upside +18%",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "October 2, 2026",
+        "accession": "0001104659-26-091999"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 33.29517778860205,
+        "forwardPeg": 1.1765060240963856,
+        "marketCap": 4201631058.8700004,
+        "fcfYield": 0.01560156022305056,
+        "earningsQualityFlags": [],
+        "piotroski": 5
+      }
+    },
+    {
+      "rank": 68,
+      "ticker": "LQDT",
+      "close": 43.64,
+      "priceDate": "2026-10-01",
+      "streetTarget": 51,
+      "streetUpside": 0.16865261228230977,
+      "priority": 0.16865261228230977,
+      "likelyHold": false,
+      "reason": "Street upside +17%",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "October 2, 2026",
+        "accession": "0001193125-26-337292"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 26.44848484848485,
+        "forwardPeg": 2.296842105263156,
+        "marketCap": 1360748920.84,
+        "fcfYield": 0.0661304952161567,
+        "earningsQualityFlags": [],
+        "piotroski": 8
+      }
+    },
+    {
+      "rank": 69,
+      "ticker": "VSH",
+      "close": 34.27,
+      "priceDate": "2026-10-01",
+      "streetTarget": 40,
+      "streetUpside": 0.1672016340822875,
+      "priority": 0.1672016340822875,
+      "likelyHold": false,
+      "reason": "Street upside +17%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 23, 2026",
+        "accession": "0000103730-26-000065"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 40.749108204518436,
+        "forwardPeg": 0.38043960923623454,
+        "marketCap": 4664346691.29,
+        "fcfYield": -0.0013013612412934178,
+        "earningsQualityFlags": [],
+        "piotroski": 7
+      }
+    },
+    {
+      "rank": 70,
+      "ticker": "V",
+      "close": 359.85,
+      "priceDate": "2026-10-01",
+      "streetTarget": 419.3616,
+      "streetUpside": 0.16537890787828258,
+      "priority": 0.16537890787828258,
+      "likelyHold": false,
+      "reason": "Street upside +17%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 21, 2026",
+        "accession": "0001403161-26-000104"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 27.203247607384228,
+        "forwardPeg": 2.0260683520072056,
+        "marketCap": 655168480527.1725,
+        "fcfYield": 0.032072666229444026,
+        "earningsQualityFlags": [],
+        "piotroski": 6
+      }
+    },
+    {
+      "rank": 71,
+      "ticker": "LLY",
+      "close": 1149.85,
+      "priceDate": "2026-10-01",
+      "streetTarget": 1325.3855,
+      "streetUpside": 0.15265947732312934,
+      "priority": 0.15265947732312934,
+      "likelyHold": false,
+      "reason": "Street upside +15%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 16, 2026",
+        "accession": "0000059478-26-000081"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 31.146222147581923,
+        "forwardPeg": 1.0822423221361548,
+        "marketCap": 1082861355689.0999,
+        "fcfYield": 0.01679818002963489,
+        "earningsQualityFlags": [],
+        "piotroski": 8
+      }
+    },
+    {
+      "rank": 72,
+      "ticker": "MMM",
+      "close": 163.02,
+      "priceDate": "2026-10-01",
+      "streetTarget": 185.7471,
+      "streetUpside": 0.13941295546558696,
+      "priority": 0.13941295546558696,
+      "likelyHold": false,
+      "reason": "Street upside +14%",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "September 24, 2026",
+        "accession": "0000066740-26-000246"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 18.226336620379687,
+        "forwardPeg": 1.9393290506780867,
+        "marketCap": 85025894888.22,
+        "fcfYield": 0.04790305359743174,
+        "earningsQualityFlags": [],
+        "piotroski": 6
+      }
+    },
+    {
+      "rank": 73,
+      "ticker": "LH",
+      "close": 304.6,
+      "priceDate": "2026-10-01",
+      "streetTarget": 344.8125,
+      "streetUpside": 0.13201739986868022,
+      "priority": 0.13201739986868022,
+      "likelyHold": false,
+      "reason": "Street upside +13%",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 24, 2026",
+        "accession": "0000920148-26-000175"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 16.60171685515738,
+        "forwardPeg": 2.0352799679273015,
+        "marketCap": 24977200000,
+        "fcfYield": 0.04625018016430985,
+        "earningsQualityFlags": [],
+        "piotroski": 8
+      }
+    },
+    {
+      "rank": 74,
+      "ticker": "VRTX",
+      "close": 506.74,
+      "priceDate": "2026-10-01",
+      "streetTarget": 571.3929,
+      "streetUpside": 0.12758594150846592,
+      "priority": 0.12758594150846592,
+      "likelyHold": false,
+      "reason": "Street upside +13%",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "October 2, 2026",
+        "accession": "0000875320-26-000259"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 31.33556773068504,
+        "forwardPeg": 1.2878745520624182,
+        "marketCap": 128613357010.58,
+        "fcfYield": 0.02951559688849211,
+        "earningsQualityFlags": [],
+        "piotroski": 6
+      }
+    },
+    {
+      "rank": 75,
+      "ticker": "JPM",
+      "close": 333.18,
+      "priceDate": "2026-10-01",
+      "streetTarget": 375.4286,
+      "streetUpside": 0.12680412989975398,
+      "priority": 0.12680412989975398,
+      "likelyHold": false,
+      "reason": "Street upside +13%",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "September 20, 2026",
+        "accession": "0001628280-26-054343"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 13.771012180554925,
+        "forwardPeg": 3.895930776426567,
+        "marketCap": 892759614249.24,
+        "fcfYield": -0.1820579665632409,
+        "earningsQualityFlags": [
+          "LOW_EARNINGS_QUALITY"
+        ],
+        "piotroski": 4
+      }
+    },
+    {
+      "rank": 76,
+      "ticker": "ALRS",
+      "close": 31.73,
+      "priceDate": "2026-10-01",
+      "streetTarget": 35.4,
+      "streetUpside": 0.11566341002206104,
+      "priority": 0.11566341002206104,
+      "likelyHold": false,
+      "reason": "Street upside +12%",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "September 23, 2026",
+        "accession": "0001437749-26-025463"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 10.520557029177718,
+        "forwardPeg": null,
+        "marketCap": 797331937.58,
+        "fcfYield": 0.11201231982638224,
+        "earningsQualityFlags": [],
+        "piotroski": 5
+      }
+    },
+    {
+      "rank": 77,
+      "ticker": "FTI",
+      "close": 68.85,
+      "priceDate": "2026-10-01",
+      "streetTarget": 76.0476,
+      "streetUpside": 0.10454030501089329,
+      "priority": 0.10454030501089329,
+      "likelyHold": false,
+      "reason": "Street upside +10%",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "October 3, 2026",
+        "accession": "0001681459-26-000045"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 22.013684614400816,
+        "forwardPeg": 1.4658292527144985,
+        "marketCap": 27450625608.449997,
+        "fcfYield": 0.05725552569979283,
+        "earningsQualityFlags": [],
+        "piotroski": 8
+      }
+    },
+    {
+      "rank": 78,
+      "ticker": "LITE",
+      "close": 1045.78,
+      "priceDate": "2026-10-01",
+      "streetTarget": 1149.3787,
+      "streetUpside": 0.09906356977566988,
+      "priority": 0.09906356977566988,
+      "likelyHold": true,
+      "reason": "Street upside +10% < +10% — likely HOLD",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "October 1, 2026",
+        "accession": "0001628280-26-057358"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 48.320442091061146,
+        "forwardPeg": 0.8970030706945946,
+        "marketCap": 81361684000,
+        "fcfYield": 0.0042095982182473015,
+        "earningsQualityFlags": [],
+        "piotroski": 6
+      }
+    },
+    {
+      "rank": 79,
+      "ticker": "LRCX",
+      "close": 340.1,
+      "priceDate": "2026-10-01",
+      "streetTarget": 373.7742,
+      "streetUpside": 0.0990126433401941,
+      "priority": 0.0990126433401941,
+      "likelyHold": true,
+      "reason": "Street upside +10% < +10% — likely HOLD",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 21, 2026",
+        "accession": "0000707549-26-000037"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 59.72324658448355,
+        "forwardPeg": 1.3681712124869256,
+        "marketCap": 425319197100,
+        "fcfYield": 0.011500190993847807,
+        "earningsQualityFlags": [],
+        "piotroski": 8
+      }
+    },
+    {
+      "rank": 80,
+      "ticker": "GDYN",
+      "close": 8.38,
+      "priceDate": "2026-10-01",
+      "streetTarget": 9.2,
+      "streetUpside": 0.09785202863961806,
+      "priority": 0.09785202863961806,
+      "likelyHold": true,
+      "reason": "Street upside +10% < +10% — likely HOLD",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "October 2, 2026",
+        "accession": "0001743725-26-000021"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 18.002148227712137,
+        "forwardPeg": 1.3828382838283833,
+        "marketCap": 700786332.5200001,
+        "fcfYield": 0.022832922472190677,
+        "earningsQualityFlags": [],
+        "piotroski": 6
+      }
+    },
+    {
+      "rank": 81,
+      "ticker": "THG",
+      "close": 216.94,
+      "priceDate": "2026-10-01",
+      "streetTarget": 237.75,
+      "streetUpside": 0.09592514059186863,
+      "priority": 0.09592514059186863,
+      "likelyHold": true,
+      "reason": "Street upside +10% < +10% — likely HOLD",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "October 3, 2026",
+        "accession": "0000944695-26-000014"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 10.640833844267322,
+        "forwardPeg": null,
+        "marketCap": 7590033571.78,
+        "fcfYield": 0.1650980839741036,
+        "earningsQualityFlags": [],
+        "piotroski": 6
+      }
+    },
+    {
+      "rank": 82,
+      "ticker": "ZBRA",
+      "close": 375.45,
+      "priceDate": "2026-10-01",
+      "streetTarget": 411.4527,
+      "streetUpside": 0.09589212944466641,
+      "priority": 0.09589212944466641,
+      "likelyHold": true,
+      "reason": "Street upside +10% < +10% — likely HOLD",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "September 24, 2026",
+        "accession": "0001628280-26-052550"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 17.845175457358373,
+        "forwardPeg": 3.158758202927812,
+        "marketCap": 17883957026.399998,
+        "fcfYield": 0.050548097306738676,
+        "earningsQualityFlags": [],
+        "piotroski": 7
+      }
+    },
+    {
+      "rank": 83,
+      "ticker": "CVX",
+      "close": 207.1,
+      "priceDate": "2026-10-01",
+      "streetTarget": 224.3333,
+      "streetUpside": 0.0832124577498794,
+      "priority": 0.0832124577498794,
+      "likelyHold": true,
+      "reason": "Street upside +8% < +10% — likely HOLD",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "September 23, 2026",
+        "accession": "0000093410-26-000167"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 12.484627812206119,
+        "forwardPeg": null,
+        "marketCap": 412459890297.2,
+        "fcfYield": 0.0683775578267215,
+        "earningsQualityFlags": [],
+        "piotroski": 9
+      }
+    },
+    {
+      "rank": 84,
+      "ticker": "TER",
+      "close": 415.79,
+      "priceDate": "2026-10-01",
+      "streetTarget": 446.4667,
+      "streetUpside": 0.07377931167175733,
+      "priority": 0.07377931167175733,
+      "likelyHold": true,
+      "reason": "Street upside +7% < +10% — likely HOLD",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "September 22, 2026",
+        "accession": "0001193125-26-327715"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 45.73493339786389,
+        "forwardPeg": 1.6234187099796973,
+        "marketCap": 65088665537.98,
+        "fcfYield": 0.012289881708102161,
+        "earningsQualityFlags": [],
+        "piotroski": 7
+      }
+    },
+    {
+      "rank": 85,
+      "ticker": "CME",
+      "close": 265.1,
+      "priceDate": "2026-10-01",
+      "streetTarget": 283.6,
+      "streetUpside": 0.06978498679743494,
+      "priority": 0.06978498679743494,
+      "likelyHold": true,
+      "reason": "Street upside +7% < +10% — likely HOLD",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "September 20, 2026",
+        "accession": "0001156375-26-000047"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 21.63975642009371,
+        "forwardPeg": 3.9227582124889095,
+        "marketCap": 96060972189.6,
+        "fcfYield": 0.04385443852978292,
+        "earningsQualityFlags": [],
+        "piotroski": 2
+      }
+    },
+    {
+      "rank": 86,
+      "ticker": "DELL",
+      "close": 541.74,
+      "priceDate": "2026-10-01",
+      "streetTarget": 579.36,
+      "streetUpside": 0.06944290619116189,
+      "priority": 0.06944290619116189,
+      "likelyHold": true,
+      "reason": "Street upside +7% < +10% — likely HOLD",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "September 25, 2026",
+        "accession": "0001571996-26-000046"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 54.74830976948187,
+        "forwardPeg": 3.5612674204575328,
+        "marketCap": 351106023044.34,
+        "fcfYield": 0.024380100135505182,
+        "earningsQualityFlags": [],
+        "piotroski": 8
+      }
+    },
+    {
+      "rank": 87,
+      "ticker": "XOM",
+      "close": 163.82,
+      "priceDate": "2026-10-01",
+      "streetTarget": 173.0455,
+      "streetUpside": 0.05631485777072398,
+      "priority": 0.05631485777072398,
+      "likelyHold": true,
+      "reason": "Street upside +6% < +10% — likely HOLD",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "September 24, 2026",
+        "accession": "0000034088-26-000093"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 13.318266072648044,
+        "forwardPeg": null,
+        "marketCap": 679025244078.84,
+        "fcfYield": 0.044995381639231904,
+        "earningsQualityFlags": [],
+        "piotroski": 8
+      }
+    },
+    {
+      "rank": 88,
+      "ticker": "RDVT",
+      "close": 80.25,
+      "priceDate": "2026-10-01",
+      "streetTarget": 84.5,
+      "streetUpside": 0.052959501557632294,
+      "priority": 0.052959501557632294,
+      "likelyHold": true,
+      "reason": "Street upside +5% < +10% — likely HOLD",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "October 2, 2026",
+        "accession": "0001193125-26-342598"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 48.3433734939759,
+        "forwardPeg": 8.024999999999993,
+        "marketCap": 1132240910.25,
+        "fcfYield": 0.018716864766280865,
+        "earningsQualityFlags": [],
+        "piotroski": 8
+      }
+    },
+    {
+      "rank": 89,
+      "ticker": "KVHI",
+      "close": 6.8,
+      "priceDate": "2026-10-01",
+      "streetTarget": 7,
+      "streetUpside": 0.02941176470588247,
+      "priority": 0.02941176470588247,
+      "likelyHold": true,
+      "reason": "Street upside +3% < +10% — likely HOLD",
+      "report": null,
+      "pendingFiling": {
+        "ticker": "KVHI",
+        "accession": "0001007587-26-000026",
+        "filedDate": "2026-08-06",
+        "form": "10-Q"
+      },
+      "context": {
+        "forwardPe": 42.5,
+        "forwardPeg": 0.11525423728813561,
+        "marketCap": 132584706.8,
+        "fcfYield": 0.06588240990098868,
+        "earningsQualityFlags": [],
+        "piotroski": null
+      }
+    },
+    {
+      "rank": 90,
+      "ticker": "PLTR",
+      "close": 190.04,
+      "priceDate": "2026-10-01",
+      "streetTarget": 195.5654,
+      "streetUpside": 0.02907493159334895,
+      "priority": 0.02907493159334895,
+      "likelyHold": true,
+      "reason": "Street upside +3% < +10% — likely HOLD",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "September 22, 2026",
+        "accession": "0001321655-26-000041"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 117.92007942417473,
+        "forwardPeg": 2.6575304153265265,
+        "marketCap": 455585168109.07996,
+        "fcfYield": 0.007371337425093555,
+        "earningsQualityFlags": [],
+        "piotroski": 8
+      }
+    },
+    {
+      "rank": 91,
+      "ticker": "BE",
+      "close": 277.58,
+      "priceDate": "2026-10-01",
+      "streetTarget": 281.5846,
+      "streetUpside": 0.014426831904315929,
+      "priority": 0.014426831904315929,
+      "likelyHold": true,
+      "reason": "Street upside +1% < +10% — likely HOLD",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "September 22, 2026",
+        "accession": "0001628280-26-050247"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 102.58703525759479,
+        "forwardPeg": 1.2487291376130278,
+        "marketCap": 78955928879.44,
+        "fcfYield": 0.007914389823139929,
+        "earningsQualityFlags": [],
+        "piotroski": 6
+      }
+    },
+    {
+      "rank": 92,
+      "ticker": "AMD",
+      "close": 615.73,
+      "priceDate": "2026-10-01",
+      "streetTarget": 616.508,
+      "streetUpside": 0.0012635408377048574,
+      "priority": 0.0012635408377048574,
+      "likelyHold": true,
+      "reason": "Street upside +0% < +10% — likely HOLD",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "September 16, 2026",
+        "accession": "0000002488-26-000123"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 81.27590485493282,
+        "forwardPeg": 0.7701534728389349,
+        "marketCap": 1004009731451.47,
+        "fcfYield": 0.008331592551306194,
+        "earningsQualityFlags": [],
+        "piotroski": 5
+      }
+    },
+    {
+      "rank": 93,
+      "ticker": "TMO",
+      "close": 652.51,
+      "priceDate": "2026-10-01",
+      "streetTarget": 653.1111,
+      "streetUpside": 0.0009212119354491399,
+      "priority": 0.0009212119354491399,
+      "likelyHold": true,
+      "reason": "Street upside +0% < +10% — likely HOLD",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "September 23, 2026",
+        "accession": "0000097745-26-000144"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 25.963933565181406,
+        "forwardPeg": 2.705714048764306,
+        "marketCap": 242486722127.15,
+        "fcfYield": 0.03036042524480855,
+        "earningsQualityFlags": [],
+        "piotroski": 4
+      }
+    },
+    {
+      "rank": 94,
+      "ticker": "INTC",
+      "close": 120,
+      "priceDate": "2026-10-01",
+      "streetTarget": 116.3721,
+      "streetUpside": -0.030232499999999995,
+      "priority": -0.030232499999999995,
+      "likelyHold": true,
+      "reason": "Street upside -3% < +10% — likely HOLD",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "September 16, 2026",
+        "accession": "0000050863-26-000157"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 78.93178977833323,
+        "forwardPeg": 2.2148394241417497,
+        "marketCap": 603120000000,
+        "fcfYield": 0.0046939249237299375,
+        "earningsQualityFlags": [],
+        "piotroski": 4
+      }
+    },
+    {
+      "rank": 95,
+      "ticker": "QLYS",
+      "close": 187.43,
+      "priceDate": "2026-10-01",
+      "streetTarget": 179.3628,
+      "streetUpside": -0.04304113535720011,
+      "priority": -0.04304113535720011,
+      "likelyHold": true,
+      "reason": "Street upside -4% < +10% — likely HOLD",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "October 3, 2026",
+        "accession": "0001107843-26-000035"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 23.986127641059113,
+        "forwardPeg": 2.9405396925007867,
+        "marketCap": 6600723622.01,
+        "fcfYield": 0.047564027518606555,
+        "earningsQualityFlags": [],
+        "piotroski": 6
+      }
+    },
+    {
+      "rank": 96,
+      "ticker": "CRWD",
+      "close": 266.09,
+      "priceDate": "2026-10-01",
+      "streetTarget": 235.67,
+      "streetUpside": -0.11432222180465257,
+      "priority": -0.11432222180465257,
+      "likelyHold": true,
+      "reason": "Street upside -11% < +10% — likely HOLD",
+      "report": {
+        "label": "HOLD",
+        "reportDate": "September 23, 2026",
+        "accession": "0001535527-26-000031"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": 71.58730158730158,
+        "forwardPeg": 2.3794151837610658,
+        "marketCap": 270948611815.19998,
+        "fcfYield": 0.005630599063709302,
+        "earningsQualityFlags": [],
+        "piotroski": 5
+      }
+    },
+    {
+      "rank": 97,
+      "ticker": "NVT",
+      "close": null,
+      "priceDate": null,
+      "streetTarget": null,
+      "streetUpside": null,
+      "priority": null,
+      "likelyHold": false,
+      "reason": "not in Shibui",
+      "report": {
+        "label": "BUY",
+        "reportDate": "September 24, 2026",
+        "accession": "0001628280-26-051428"
+      },
+      "pendingFiling": null,
+      "context": {
+        "forwardPe": null,
+        "forwardPeg": null,
+        "marketCap": null,
+        "fcfYield": null,
+        "earningsQualityFlags": null,
+        "piotroski": null
+      }
+    }
+  ]
+}

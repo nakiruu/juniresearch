@@ -82,7 +82,11 @@ npm run detect                                         # poll EDGAR for new 10-Q
 npm run facts:prepare -- AVGO 0001730168-26-000080     # EDGAR record + primary doc + 8-K exhibit 99.1 + prior 10-K + DEF 14A + Yahoo closes → data/raw/…
 /fetch-facts AVGO 0001730168-26-000080                 # (Claude Code) capture vendor responses verbatim to data/raw/…
 npm run facts:build  -- AVGO 0001730168-26-000080      # raw → validated FactPack in data/facts/…
-npm run facts:enrich -- AVGO 0001730168-26-000080      # stamp goodwill (SEC) + peer multiples (Yahoo) onto the pack
+npm run facts:enrich -- AVGO 0001730168-26-000080      # stamp goodwill + SBC (SEC), peer multiples (Yahoo); fill a missing TTM EV/EBITDA or FCF yield from SEC
+npm run facts:beta   -- AVGO 0001730168-26-000080      # print the Shibui beta query; save its response to data/raw/…/shibui-beta.json
+npm run facts:beta   -- AVGO 0001730168-26-000080 --apply  # stamp the measured beta (2y weekly vs SPY, Blume-adjusted) onto the pack
+npm run facts:crosscheck -- AVGO 0001730168-26-000080      # print the Shibui cross-check query; save its response to data/raw/…/shibui-crosscheck.json
+npm run facts:crosscheck -- AVGO 0001730168-26-000080 --apply  # stamp shibuiCheck (diffs vs Shibui + Shibui TTM SBC) onto the pack
 npm run facts:diff   -- AVGO 0001730168-26-000080      # projected facts vs the hand-built golden fixture, formatted
 ```
 
@@ -101,6 +105,23 @@ income, and has sector-aware extensions for banks, utilities and insurers (net-o
 gross-margin/EBITDA where meaningless). Known limitations live in the memory notes (non-December fiscal-year
 quarter **labels**, and an FYE-change annual-splice bug) — both handled by disclose-in-prose + a reviewer note.
 
+**Measured beta (Shibui Finance).** The cost of equity behind the moat WACC and the reverse-DCF discount
+rate uses a per-name beta when the pack carries one (`lib/facts/beta.ts`): two years of weekly log returns
+vs SPY ending at the pack's quote date, Blume-adjusted (⅔·raw + ⅓) and clamped to [0.3, 2.5]. Shibui is a
+Claude connector, not an HTTP API, so `facts:beta` prints the query, the response is saved verbatim, and
+`--apply` does the arithmetic. With no beta (no Shibui coverage, or under a year of history) the SIC sector
+proxy (`betaFromSic`) applies. `scripts/backfill-beta.ts --query | --apply <file>` re-stamps every pack.
+
+**Shibui cross-check.** Bad vendor inputs, not the model, drove the worst reverse-DCF outputs (FOUR's pack
+carried a TTM FCF about double the independent figure). `facts:crosscheck`
+(`lib/facts/shibui-check.ts`) compares the pack's price, market cap, shares, latest-quarter revenue and TTM
+FCF (fcfYield × market cap) with Shibui's point-in-time values — close and market cap on/before the quote
+date, the four fiscal quarters ending at the pack's latest quarter — and stamps `shibuiCheck`: each
+relative diff with a level (ok ≤ 10% < warn ≤ 25% < fail), plus Shibui's TTM stock-based compensation for
+the DCF. Same two-step capture as beta; `scripts/backfill-crosscheck.ts --query | --apply <file>` re-stamps
+every pack (mtimes preserved). The reverse DCF abstains when market cap, shares or TTM FCF *fails* the check
+and flags a *warn*; it also charges Shibui's TTM SBC against TTM FCF (`lib/synth/intrinsic.ts`).
+
 FactPack context also carries the **press release** (`context.pressRelease`, from the 8-K's exhibit 99.1),
 the longer **Risk Factors** excerpt (`context.riskFactorsSource`), and the **DEF 14A proxy**
 (`context.proxyStatement`) — the only surface governance claims may rest on.
@@ -114,6 +135,8 @@ prices + probabilities, and section Markdown. Code derives everything else and r
 ungrounded or inconsistent report.
 
 ```bash
+npm run screen -- --query --pending                               # Shibui call: rank pending filings by Street upside; save the response, then…
+npm run screen -- --rank <saved.json>                              # …ranked queue (likely-HOLD < 10% upside) → data/screen/<date>.json
 npm run synth:prompt -- AVGO 0001730168-26-000080                  # FactPack + desk config → data/judgment/AVGO/<acc>.prompt.md
 /synthesize AVGO 0001730168-26-000080                              # (Claude Code) writes the judgment .json, then builds
 npm run synth:build  -- AVGO 0001730168-26-000080                  # judgment + facts → validated data/avgo.json (or an errors file)
@@ -153,6 +176,20 @@ node --import tsx scripts/decide-preview.ts       # the composed decision + conv
 ```
 
 ---
+
+**Pre-synthesis screen** (`lib/screen/screen.ts`). A report run is the expensive step, and ~45% of reports
+come out HOLD. The screen ranks candidates by Street upside (consensus target / close − 1, from Shibui) and
+flags < 10% as likely-HOLD; calibrated on the 92 published reports it flags ~40% of HOLDs for at most one
+BUY (AUC 0.82). It **orders** the `/synthesize` queue and never skips a filing (the author sees the
+consensus too, so the signal is partly circular). `--calibrate <file>` re-checks it against published ratings.
+
+**Upside vs realized (S3 evidence log)** (`lib/calibration/realized.ts`). `npm run calibration:log -- --query`
+prints the Shibui call; `--apply <saved.json>` writes `data/calibration/<date>.json`: every prediction point
+(current reports plus earlier revisions from git, deleted reports included) with E/D/R/κ/label against the
+realized and SPY-excess return at +21/63/126/252 sessions and to date, plus trailing 252-day realized vol.
+Aggregates (by label, hit rate, Spearman ρ of E vs excess, realized/E) are null below 10 distinct names.
+Price returns only (Shibui closes are split- but not dividend-adjusted). Nothing reads it yet; re-run it
+periodically so the evidence accumulates.
 
 ## §4 — Portfolio
 

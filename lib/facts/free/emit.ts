@@ -14,6 +14,7 @@ import { join } from "node:path";
 import type { SecPeriod } from "./sec";
 import type { YahooData, YahooEstimate } from "./yahoo";
 import type { TtmRows } from "./ttm";
+import { FREE_CAPTURE_MARKER } from "../capture-source";
 
 export interface EmitInput {
   cik: number;
@@ -27,6 +28,8 @@ export interface TearsheetFiles {
   tearsheetAnnual: unknown;
   statementsAnnual: unknown;
   statementsQuarter: unknown;
+  /** Written as FREE_CAPTURE_MARKER so facts:build labels the fields with their true sources (edgar/yahoo). */
+  marker: { producer: "facts:free"; capturedAt: string; sec: string; yahoo: string };
 }
 
 const ANNUAL_FILE = "bigdata-statements-annual.json";
@@ -163,11 +166,18 @@ export function buildTearsheetFiles(input: EmitInput): TearsheetFiles {
     },
   };
 
-  return { tearsheetAnnual, statementsAnnual, statementsQuarter };
+  const marker = {
+    producer: "facts:free" as const,
+    capturedAt,
+    sec: `companyfacts CIK${String(cik).padStart(10, "0")} + filing inline XBRL`,
+    yahoo: "quoteSummary price,summaryDetail,financialData,earningsTrend,recommendationTrend,assetProfile",
+  };
+  return { tearsheetAnnual, statementsAnnual, statementsQuarter, marker };
 }
 
 export function writeTearsheetFiles(dir: string, files: TearsheetFiles): void {
   writeFileSync(join(dir, TEARSHEET_FILE), JSON.stringify(files.tearsheetAnnual));
   writeFileSync(join(dir, ANNUAL_FILE), JSON.stringify(files.statementsAnnual));
   writeFileSync(join(dir, QUARTER_FILE), JSON.stringify(files.statementsQuarter));
+  writeFileSync(join(dir, FREE_CAPTURE_MARKER), JSON.stringify(files.marker));
 }

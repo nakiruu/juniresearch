@@ -82,6 +82,29 @@ A separate scoring layer produces:
   earnings quality). The engine requires **both** labels to be buy-side.
 - **`rating.decision.conviction`** — a **0–100** score from a penalty model over the gate + intrinsic
   reverse-DCF + moat (ROIC−WACC) + a cross-sectional composite percentile. This becomes **κ** downstream.
+  The intrinsic discount rate and the moat WACC share one cost of equity, `rf + β·ERP`, where β is the
+  FactPack's **measured beta** (2y weekly vs SPY, Blume-adjusted, clamped [0.3, 2.5]; `lib/facts/beta.ts`,
+  captured from Shibui Finance) and the SIC sector proxy only when none was captured.
+
+> 💡 **Deferred — point-in-time FactPacks (goodwill basis).** A pack's statement columns mix bases after a
+> spin-off (DD's FY23+ revenue is restated for the Qnity spin, FY21–22 as reported; T's FY21 includes
+> WarnerMedia). Goodwill is stamped on the latest-filed (restated) basis, so for the years in
+> `goodwillRestated` the moat's ex-goodwill ROIC can mix bases; `moatRead` flags them. Rebuilding the
+> statements from SEC would not fully fix it — a 10-K recasts only 3 years of income statement and 2 of
+> balance sheet, so the oldest years of a 5-year history stay pre-spin in any filing — and neither goodwill
+> basis changed a moat verdict (measured 2026-10). Instead both engines drop pre-spin years with one rule,
+> `portfolioBreakIndex` (a > 20% revenue drop in a pack whose history a later 10-K restated): DD, GE, MDU,
+> MMM today. A cyclical collapse with no restatement (ZBRA 2023, MP, UEC) is kept as evidence. Revisit the
+> rebuild only if a moat or DCF verdict is found to hinge on mixed-basis years.
+
+> 💡 **Deferred — re-building published reports.** `rating.decision` (conviction, moat, intrinsic) is
+> persisted in each `data/<ticker>.json` when `synth:build` runs, and the portfolio reads κ from there.
+> The 2026-10 scoring changes (measured beta, the reverse-DCF fixes, robust DCF penalty, SBC/goodwill/TTM
+> FCF capture, the Shibui input check and TTM SBC) therefore reach sizing only when a report is re-built
+> (`synth:build <T> <ACC> --date <original date>`). Measured against the stored decisions, a re-build would
+> move 46 convictions (42 up, 4 down: DSP, GE, RDVT, VRT). FOUR and DSP's published reports were also written
+> on an overstated FCF (docs/superpowers/specs/2026-10-03-crosscheck-input-review.md) and need re-synthesis, not
+> just a re-build. Held back by the owner until a deliberate rollout.
 
 **P(touch fair value) — display only (`lib/portfolio/touch.ts`).** A GBM first-passage probability,
 `P = Φ((νT−b)/σ√T) + e^{2νb/σ²}·Φ((−b−νT)/σ√T)` with `b = ln(FV/S₀)`, σ from the report's ~30 recent

@@ -173,11 +173,11 @@
         "key": "capex",
         "label": "Capital Expenditure",
         "values": [
-          -2706000,
-          -585000,
-          -1384000,
-          0,
-          -17000
+          -7614000,
+          -2204000,
+          -7294000,
+          -7628000,
+          -3555000
         ]
       },
       {
@@ -206,11 +206,11 @@
         "key": "freeCashFlow",
         "label": "Free Cash Flow",
         "values": [
-          2780000,
-          32291000,
-          175000,
-          23877000,
-          20072000
+          -2128000,
+          30672000,
+          -5735000,
+          16249000,
+          16534000
         ]
       }
     ]
@@ -232,7 +232,7 @@
     "netDebtToEbitda": null,
     "interestCoverage": null,
     "currentRatio": 3.4967117198838897,
-    "fcfYield": null
+    "fcfYield": 0.040093580932884926
   },
   "estimates": {
     "nextFY": {
@@ -461,74 +461,74 @@
   "provenance": [
     {
       "field": "quote",
-      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
-      "source": "bigdata",
+      "endpoint": "yahoo quoteSummary price.regularMarketPrice + price.marketCap + summaryDetail.fiftyTwoWeekLow/High (facts:free)",
+      "source": "yahoo",
       "capturedAt": "2026-10-02T21:37:08.616Z"
     },
     {
       "field": "quote.sharesOutstanding",
-      "endpoint": "derived: market_cap / price",
-      "source": "bigdata",
+      "endpoint": "derived: yahoo quoteSummary price.marketCap / price.regularMarketPrice (facts:free)",
+      "source": "yahoo",
       "capturedAt": "2026-10-02T21:37:08.616Z"
     },
     {
       "field": "quote.dividendYield",
-      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
-      "source": "bigdata",
+      "endpoint": "yahoo quoteSummary summaryDetail.dividendYield (trailingAnnualDividendYield fallback) (facts:free)",
+      "source": "yahoo",
       "capturedAt": "2026-10-02T21:37:08.616Z"
     },
     {
       "field": "company",
-      "endpoint": "bigdata_company_tearsheet.company_overview",
-      "source": "bigdata",
+      "endpoint": "yahoo quoteSummary price.longName (shortName fallback) (facts:free)",
+      "source": "yahoo",
       "capturedAt": "2026-10-02T21:37:08.616Z"
     },
     {
       "field": "context.description",
-      "endpoint": "bigdata_company_tearsheet.company_overview",
-      "source": "bigdata",
+      "endpoint": "yahoo quoteSummary assetProfile.longBusinessSummary (facts:free)",
+      "source": "yahoo",
       "capturedAt": "2026-10-02T21:37:08.616Z"
     },
     {
       "field": "statements",
-      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
-      "source": "bigdata",
+      "endpoint": "SEC companyfacts XBRL (annual 10-K facts), merged with the filing's and prior 10-K's inline XBRL when captured (facts:free)",
+      "source": "edgar",
       "capturedAt": "2026-10-02T21:37:08.616Z"
     },
     {
       "field": "latestQuarter",
-      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
-      "source": "bigdata",
+      "endpoint": "SEC companyfacts XBRL (discrete quarters), merged with the filing's inline XBRL when captured (facts:free)",
+      "source": "edgar",
       "capturedAt": "2026-10-02T21:37:08.616Z"
     },
     {
       "field": "ttm",
-      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
-      "source": "bigdata",
+      "endpoint": "derived: last four discrete quarters + latest balance sheet from SEC companyfacts XBRL (discrete quarters), merged with the filing's inline XBRL when captured; P/E, P/S, EV/EBITDA and FCF yield priced with yahoo quoteSummary price/market cap (P/E falls back to summaryDetail.trailingPE when quarterly EPS cannot be summed) (facts:free)",
+      "source": "edgar",
       "capturedAt": "2026-10-02T21:37:08.616Z"
     },
     {
       "field": "segments",
-      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
-      "source": "bigdata",
+      "endpoint": "derived: single 'Consolidated' segment from the latest SEC annual revenue (facts:free emits no product segmentation)",
+      "source": "edgar",
       "capturedAt": "2026-10-02T21:37:08.616Z"
     },
     {
       "field": "geoMix",
-      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
-      "source": "bigdata",
+      "endpoint": "none: facts:free emits no geographic segmentation (empty mix)",
+      "source": "edgar",
       "capturedAt": "2026-10-02T21:37:08.616Z"
     },
     {
       "field": "analysts",
-      "endpoint": "bigdata_company_tearsheet.analyst_data",
-      "source": "bigdata",
+      "endpoint": "yahoo quoteSummary financialData target*Price + recommendationKey + recommendationTrend.trend[0] (facts:free)",
+      "source": "yahoo",
       "capturedAt": "2026-10-02T21:37:08.616Z"
     },
     {
       "field": "estimates",
-      "endpoint": "bigdata_company_tearsheet.estimates",
-      "source": "bigdata",
+      "endpoint": "yahoo quoteSummary earningsTrend annual periods (revenueEstimate.avg, earningsEstimate.avg) (facts:free)",
+      "source": "yahoo",
       "capturedAt": "2026-10-02T21:37:08.616Z"
     },
     {
@@ -578,6 +578,36 @@
       "endpoint": "bigdata_search",
       "source": "bigdata",
       "capturedAt": "2026-10-02T21:37:08.616Z"
+    },
+    {
+      "field": "beta",
+      "source": "shibui",
+      "capturedAt": "2026-10-03T03:46:39.826Z",
+      "endpoint": "stock_data_query: 2y weekly log returns vs SPY (cov/var) → Blume-adjusted, clamped [0.3, 2.5]"
+    },
+    {
+      "field": "ttm.fcfYield",
+      "source": "edgar",
+      "endpoint": "derived: TTM (operating cash flow − capex; last FY + YTD − prior YTD) to 2026-06-30 / market cap, SEC companyfacts",
+      "capturedAt": "2026-10-03T04:35:50.565Z"
+    },
+    {
+      "field": "statements.cashflow.capex",
+      "source": "edgar",
+      "capturedAt": "2026-10-03T05:24:02.422Z",
+      "endpoint": "capex incl. CAPEX_EXTRA: companyfacts PaymentsToDevelopSoftware added to the PP&E capex (and deducted from freeCashFlow) per fiscal year: FY21 4.9M, FY22 1.6M, FY23 5.9M, FY24 7.6M, FY25 3.5M"
+    },
+    {
+      "field": "ttm.fcfYield",
+      "source": "edgar",
+      "capturedAt": "2026-10-03T05:24:02.422Z",
+      "endpoint": "TTM to 2026-06-30 (last FY + YTD − prior YTD): operating cash flow − (PP&E + PaymentsToDevelopSoftware) / quote.marketCap, SEC companyfacts"
+    },
+    {
+      "field": "shibuiCheck",
+      "source": "shibui",
+      "capturedAt": "2026-10-03T04:32:59.534Z",
+      "endpoint": "stock_data_query: close + valuation.market_cap on/before 2026-10-02; fundamentals_quarterly (4 quarters to 2026-06-30): shares_outstanding, revenue, Σfree_cash_flow, Σstock_based_compensation"
     }
   ],
   "sbc": [
@@ -586,5 +616,66 @@
     41212000,
     33537000,
     26578000
-  ]
+  ],
+  "beta": {
+    "value": 1.658,
+    "raw": 1.987,
+    "standardError": 0.443,
+    "r2": 0.165,
+    "observations": 104,
+    "benchmark": "SPY",
+    "window": {
+      "start": "2024-10-07",
+      "end": "2026-10-02"
+    },
+    "source": "shibui"
+  },
+  "shibuiCheck": {
+    "asOf": "2026-10-02",
+    "quarterEnd": "2026-06-30",
+    "price": 2.37,
+    "marketCap": 228558342.03,
+    "sharesOutstanding": 96438119,
+    "revenueQuarter": 33866000,
+    "fcfTtm": 10545000,
+    "sbcTtm": 24849000,
+    "diffs": [
+      {
+        "field": "price",
+        "pack": 2.25,
+        "shibui": 2.37,
+        "relDiff": 0.0506,
+        "level": "ok"
+      },
+      {
+        "field": "marketCap",
+        "pack": 205170000,
+        "shibui": 228558342.03,
+        "relDiff": 0.1023,
+        "level": "warn"
+      },
+      {
+        "field": "sharesOutstanding",
+        "pack": 91186666.66666667,
+        "shibui": 96438119,
+        "relDiff": 0.0545,
+        "level": "ok"
+      },
+      {
+        "field": "revenueQuarter",
+        "pack": 33866000,
+        "shibui": 33866000,
+        "relDiff": 0,
+        "level": "ok"
+      },
+      {
+        "field": "fcfTtm",
+        "pack": 8226000,
+        "shibui": 10545000,
+        "relDiff": 0.2199,
+        "level": "warn"
+      }
+    ],
+    "source": "shibui"
+  }
 }

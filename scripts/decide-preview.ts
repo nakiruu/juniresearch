@@ -15,7 +15,7 @@ import type { Conviction } from "../lib/synth/conviction";
 import { evaluateGates, classifySector } from "../lib/synth/gates";
 import { moatRead, moatApplicable, costOfEquity } from "../lib/synth/moat";
 import { MACRO } from "../lib/synth/macro";
-import { intrinsicRead, dcfApplicable } from "../lib/synth/intrinsic";
+import { intrinsicRead, dcfApplicable, inputCheckStatus } from "../lib/synth/intrinsic";
 import { compositeScore } from "../lib/synth/composite";
 import { decide, SAFE_DEFAULTS } from "../lib/synth/decide";
 import { uncertaintyTier, segmentHHI } from "../lib/synth/uncertainty";
@@ -72,11 +72,12 @@ for (const file of readdirSync(DATA).filter((f) => f.endsWith(".json")).sort()) 
     u.tier,
     moatStr,
     mos,
+    inputCheckStatus(pack),
     comp,
   ]);
 }
 
-const head = ["TICKER", "PUBLISHED", "E/R", "CONVICTION", "IF ENFORCED", "GATE-CEIL", "UNCERT", "MOAT", "MoS", "COMPOSITE"];
+const head = ["TICKER", "PUBLISHED", "E/R", "CONVICTION", "IF ENFORCED", "GATE-CEIL", "UNCERT", "MOAT", "MoS", "CHECK", "COMPOSITE"];
 const widths = head.map((h, i) => Math.max(h.length, ...rows.map((r) => r[i].length)));
 const fmt = (r: string[]) => r.map((c, i) => c.padEnd(widths[i])).join("  ");
 
@@ -88,4 +89,5 @@ console.log(
   `\nUnder SAFE DEFAULTS the label always equals the E/R rule (${rows.length} unchanged).`,
 );
 console.log(`Under FULL enforcement (gates + corroboration + moat floor + uncertainty bands), ${enforceChanges} label(s) would change.`);
-console.log("UNCERT = uncertainty tier (low/medium/high/veryHigh). MOAT: WIDE/NARROW/NONE (*=contingent) + trend initial. MoS from the reverse DCF.\n");
+console.log("UNCERT = uncertainty tier (low/medium/high/veryHigh). MOAT: WIDE/NARROW/NONE (*=contingent) + trend initial. MoS from the reverse DCF.");
+console.log("CHECK = pack inputs vs Shibui (— none, ok, warn ≤25%, FAIL >25%); a FAIL on cap/shares/fcf abstains the DCF (MoS —).\n");
