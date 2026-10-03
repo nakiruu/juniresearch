@@ -1,10 +1,11 @@
 /**
- * trade:cron — the scheduler entrypoint (spec §2, §3). Windows Task Scheduler invokes `npm run
- * trade:cron` at each cronTimesET slot (default 15:10 ET); this script builds the real dependencies and calls
- * `runCron` (lib/trade/cron.ts), which does all the actual reconcile → plan → execute-if-any
- * orchestration, breakers, locking and logging. This file is thin wiring, mirroring
- * scripts/trade-execute.ts: build the real Alpaca PAPER adapter, refuse non-paper, assemble
- * `loadInputs` from `_trade-common`, define `notify`, map the result to a process exit code.
+ * trade:cron — the CLI entrypoint for one scheduled run (spec §2, §3). The deployed app does NOT use it: the
+ * in-app scheduler (instrumentation.ts → lib/trade/scheduler-wiring.ts) calls `runCron` itself at each
+ * cronTimesET slot (default 15:10 ET). This script is for a manual run (`-- --now` skips the fire window) and
+ * for the legacy OS timers (scripts/register-trade-cron.*). It builds the real dependencies and calls `runCron`
+ * (lib/trade/cron.ts), which does the reconcile → plan → execute-if-any orchestration, breakers, locking and
+ * logging. Thin wiring, mirroring scripts/trade-execute.ts: the broker from BROKER (alpaca-paper default |
+ * schwab LIVE), `loadInputs` from `_trade-common`, `notify`, and the result mapped to a process exit code.
  */
 import { appendFileSync, mkdirSync } from "node:fs";
 import { dirname } from "node:path";
@@ -17,7 +18,7 @@ import { loadReportsAndMeta, makeBroker, brokerBaseUrl, readFills, schwabRefresh
 import { todayET } from "../lib/trade/clock";
 
 /**
- * Every alert/summary line lands in cron.log and on stderr (which Windows Task Scheduler captures);
+ * Every alert/summary line lands in cron.log and on stderr (which an OS timer would capture);
  * the notifier ALSO posts it to Discord when DISCORD_WEBHOOK_URL is set (best-effort — a Discord
  * outage never fails the run). Alerts are halt/breaker/refusal conditions; run summaries carry the
  * orders/fills/goal-book/audit for every executed and noop run.
