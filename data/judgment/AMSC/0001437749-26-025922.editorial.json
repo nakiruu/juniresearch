@@ -1,0 +1,259 @@
+{
+  "judgmentSha256": "4c240af4a8bd2e4259060c4df17b38bbc44c5a561a0d554789ec797bf94a85a4",
+  "reviewedAt": "2026-10-03T06:26:43Z",
+  "reviewer": "claude-opus-5-5",
+  "round": 2,
+  "verdict": "approved-with-minors",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "The P/E (TTM) of 9.7x rests on FY26 net income that includes the large below-the-line item discussed in Financials.",
+      "issue": "Wrong period. The 9.7x is a trailing-twelve-month multiple (through the June 30, 2026 quarter), not a fiscal-year one; the page's own snapshot value implies trailing EPS above the FY26 $3.05. Attaching a TTM multiple to FY26 net income is a period mismatch on a figure that carries the valuation argument.",
+      "fix": "Tie the 9.7x to trailing earnings, e.g. 'rests on trailing earnings, whose 42.6% net margin (see Financials) carries the same below-the-line item', and leave FY26 net income to the Financials section.",
+      "status": "addressed",
+      "note": "Now 'rests on trailing earnings, whose net margin carries the below-the-line item'; FY26 net income left to Financials."
+    },
+    {
+      "id": "F-2",
+      "severity": "Critical",
+      "field": "sections.growth.points[4]",
+      "quote": "Wind is a weaker contributor. The 10-Q ties growth of the wind market to \"the availability and size of government subsidies\" and to the manufacturers that license the company's designs, so it cannot be relied on to add to the growth rate.",
+      "issue": "Unsupported, and it cuts against figures already on the page. No source gives a Wind growth rate (the overview itself says 'no Wind figure is quotable'), and the proxy's Grid growth of 34% sits at the consolidated FY26 growth of +34.3%, which means Wind did not lag the company in that year. The 10-Q text quoted is a risk-factor dependency, not evidence that Wind is the weaker contributor; the conclusion is an inference the source does not make.",
+      "fix": "Drop 'weaker contributor' and the claim about the growth rate. If the point stays, frame it as a dependency risk (subsidies, licensee manufacturers) without a growth comparison, or move it into Risks, where the systemic paragraph already covers wind subsidies.",
+      "status": "addressed",
+      "note": "The Wind growth point is gone; the subsidy dependency now sits only in risks.systemic, with no growth comparison."
+    },
+    {
+      "id": "F-3",
+      "severity": "Critical",
+      "field": "sections.businessMoat.segments[0].body",
+      "quote": "Because Wind relies on a small set of licensees, and the 10-Q says a significant portion of its revenue comes from a single customer",
+      "issue": "Unsupported characterisations, in two places. (1) 'a small set of licensees' is not on the surface: the 10-Q says only that success in wind 'is dependent on the manufacturers that license our designs' and that a significant portion of Wind revenue comes from a single customer. (2) sections.risks.idiosyncratic[2]: 'Naval work is a growth source' - no source attributes growth to naval work; the proxy lists military as one of several backlog markets and attributes Grid growth to 'organic growth and the contribution from our acquisition of Comtrafo'.",
+      "fix": "(1) Replace with the 10-Q's own wording: Wind depends on the manufacturers that license its designs. (2) Replace 'Naval work is a growth source' with what the surface supports, e.g. that the proxy lists military among the markets behind fiscal 2025 orders.",
+      "status": "addressed",
+      "note": "Segment body now uses the 10-Q's licensee-manufacturer wording; idiosyncratic[2] now cites the proxy's military backlog market instead of 'growth source'."
+    },
+    {
+      "id": "F-4",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "The market price already discounts a great deal of risk: the shares sit far below every Street target and below a Base case that asks only for today's current-year multiple to hold as consensus earnings roll forward.",
+      "issue": "Incoherent with the rest of the report. The scenario commentary declines to use the Street targets because 'the sources do not show when those targets were set', yet the thesis uses the distance to those same targets as evidence that risk is priced in. The analyst commentary meanwhile says 'The stock already trades on a demanding current-year multiple' (34.0x FY27E). A thesis pillar that the valuation section undercuts is not anchored.",
+      "fix": "Rest the 'risk already priced' pillar on the report's own calls (the $37.65 weighted value and the Base at $46 against $30.01), not on undated Street targets, and reconcile it with the 'demanding current-year multiple' line, e.g. by saying the multiple is high on FY27E but the Base needs only that it hold.",
+      "status": "addressed",
+      "note": "Thesis now rests on the report's own $37.65 and $46, and reconciles the high current-year multiple with the Base."
+    },
+    {
+      "id": "F-5",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "The balance sheet gives room to absorb a slip, with liquidity comfortably above current obligations",
+      "issue": "The thesis overstates what the Balance section concludes. sections.financials.balanceCommentary opens 'Liquidity is adequate rather than abundant', says the tables are 'too coarse to show how the Comtrafo payments changed the cash position', treats FY26 debt as missing, and ends by asking whether the acquisition 'left the balance sheet thinner than the rounded tables suggest'. 'Comfortably' and 'room to absorb a slip' are not the section's view.",
+      "fix": "Bring the thesis into line with the section: say the current ratio of 2.43 covers current liabilities, but FY26 debt is missing from the vendor data and the Comtrafo cash outlay is not visible, so the balance sheet is a supporting point, not a pillar. Or soften the section, if the author believes the thesis.",
+      "status": "addressed",
+      "note": "Thesis now calls the balance sheet a supporting point, with missing FY26 debt and the invisible Comtrafo outlay noted, matching the section."
+    },
+    {
+      "id": "F-6",
+      "severity": "Important",
+      "field": "sections.growth.points[1]",
+      "quote": "Backlog supports near-term revenue. The proxy statement says the twelve-month backlog grew by over 40% to $282.4 million in fiscal 2025 from $200.9 million.",
+      "issue": "Stale fact presented as current. The $282.4 million is the backlog at the end of fiscal 2025 (March 31, 2026), carried in the June 18, 2026 proxy. Both predate the August 5, 2026 10-Q, and by the October 3, 2026 report date half of that twelve-month delivery window has passed. 'Supports near-term revenue' reads it as current. sections.executiveSummary.catalysts[1] ('the proxy statement's twelve-month backlog growth offers revenue visibility') carries no date at all.",
+      "fix": "Date it: 'at March 31, 2026, per the June 18, 2026 proxy statement'. Say that the 10-Q's more recent backlog was not captured and that part of the window has already been delivered. Add the date to the catalyst pointer as well.",
+      "status": "addressed",
+      "note": "Backlog dated to March 31, 2026 via the June 18, 2026 proxy, with the uncaptured 10-Q figure and the elapsed window noted; catalyst pointer dated."
+    },
+    {
+      "id": "F-7",
+      "severity": "Important",
+      "field": "sections.finalRecommendation.body[0]",
+      "quote": "The heavy Bear weight reflects the unexplained sell-off and the earnings step-down, not a view that the operating trend has turned.",
+      "issue": "The Bear probability is argued in three places. analystCommentary: 'The stock already trades on a demanding current-year multiple, which is why the Bear case carries a heavy weight'; sections.valuation.scenarioCommentary: 'Bear gets 40%, a heavy weight, because the shares sit far below their 52-week high ... and because FY27E consensus EPS is a sharp step down'; and here. The rubric asks for each probability to be stated and argued once. The analyst commentary also gives a different reason (the multiple) from the other two (sell-off and step-down).",
+      "fix": "Keep the argument in scenarioCommentary only. In analystCommentary and finalRecommendation, point to Valuation without restating the reasons, and make sure the reason given is the same everywhere it is mentioned.",
+      "status": "addressed",
+      "note": "Bear weight now argued only in scenarioCommentary; analystCommentary and finalRecommendation point to Valuation."
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "sections.executiveSummary.risks[1]",
+      "quote": "Unexplained sell-off: the sources give no reason for the fall from the 52-week high, so sentiment risk stays elevated until one is visible.",
+      "issue": "Cross-section repetition. The same claim (the shares are far below the 52-week high and no source explains why) appears in meta.subtitle, analystCommentary ('none of the captured sources explains the decline'), thesis.body ('the sources do not explain why the stock has fallen so far from its 52-week high'), this risk pointer, scenarios[0].driver ('the unexplained sell-off'), scenarioCommentary ('far below their 52-week high with no explanation in the sources'), finalRecommendation.body[0] and body[1]. The pointer here has no section behind it that argues the risk: sections.risks does not mention it.",
+      "fix": "Argue it once, in sections.risks (or in scenarioCommentary, where it drives the Bear weight), with what to watch. Keep the executive-summary risk as a pointer to that place and cut the restatements in the thesis, the Bull driver and finalRecommendation.body[0].",
+      "status": "addressed",
+      "note": "Argued once in scenarioCommentary; risks[1] points there; restatements cut from subtitle, thesis, Bull driver and finalRecommendation."
+    },
+    {
+      "id": "F-9",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[0]",
+      "quote": "Earnings normalization. FY26 net income sits far above operating income, and the 10-Q lists changes in the deferred-tax valuation allowance as a factor that may affect future results.",
+      "issue": "Paraphrase repetition. The point that FY26 net income runs far above operating income, so trailing EPS overstates earnings power and FY27E consensus steps down, is argued in analystCommentary, thesis.body, sections.financials.incomeCommentary ('Reported earnings overstate the run-rate...'), sections.valuation.multiplesCommentary (which also pairs it with the same deferred-tax valuation-allowance risk factor), scenarioCommentary and here. The executive-summary risks[0] pointer is fine. The three section-level arguments (income, multiples, risks) retell one story.",
+      "fix": "Make the argument once, in incomeCommentary. In multiplesCommentary, refer back to it in words. Use the deferred-tax risk factor in one place only. Keep idiosyncratic[0] to what is new, namely the monitoring signal, and point back to Financials.",
+      "status": "addressed",
+      "note": "Argument and the deferred-tax quote now sit in incomeCommentary only; multiples and idiosyncratic[0] refer back."
+    },
+    {
+      "id": "F-10",
+      "severity": "Important",
+      "field": "sections.management.capitalAllocation",
+      "quote": "Whether the deal earns its price will show in Grid margins over the next several quarters",
+      "issue": "The same 'Comtrafo will be judged on Grid margin' test appears in five places: executiveSummary.catalysts[2] ('tests whether the acquisition adds margin as well as revenue'), growth.points[3] ('Each deal adds revenue but also integration and emerging-market risk'), here, businessMoat.durability ('whether gross margin holds its gains as Comtrafo's transformer volumes become a larger part of Grid') and risks.idiosyncratic[3] ('The check is Grid margin').",
+      "fix": "Pick one home for the Grid-margin test of Comtrafo (risks.idiosyncratic[3] or capitalAllocation) and argue it there. Elsewhere, refer back in words or drop the line. The catalyst pointer can stay as a pointer.",
+      "status": "addressed",
+      "note": "The Grid-margin test now lives in risks.idiosyncratic[3]; catalyst, growth, capitalAllocation point to Risks; durability reframed."
+    },
+    {
+      "id": "F-11",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[2]",
+      "quote": "Government contract terms. The 10-Q says U.S. and Canadian government contracts are subject to audit, modification or termination",
+      "issue": "Paraphrase repetition across Moat and Risks. businessMoat.moatFactors[0] already quotes the same 10-Q factor ('are subject to audit, modification or termination', 'may remain subject to annual legislative appropriation'). The Wind single-customer factor is argued in both businessMoat.segments[0].body and risks.idiosyncratic[1]. The wind-subsidy dependency appears in both growth.points[4] and risks.systemic ('Wind demand also depends on government subsidies').",
+      "fix": "Quote each 10-Q risk factor once. Keep the argument in Risks and, in the moat factor, segment body and growth point, refer back in words (for example 'the contract terms set out in Risks').",
+      "status": "addressed",
+      "note": "Each 10-Q factor is now quoted once, in Risks; moat factor and segment body refer back in words."
+    },
+    {
+      "id": "F-12",
+      "severity": "Important",
+      "field": "sections.businessMoat.segments[0].body",
+      "quote": "It spans transmission planning services, grid interconnection and power quality systems, transformers, and ship protection and power systems for U.S. and allied Navies. Wind supplies electrical control systems and licensed turbine designs of 2 megawatts and higher.",
+      "issue": "Restatement of the company overview. executiveSummary.companyOverview already describes Grid's products and customers (D-VAR systems, transformers, ship protection, Navies) and Wind's licensing and control systems. The segment body retells that description instead of reaching a view on each segment.",
+      "fix": "Cut the product list from the segment body and use the space for a judgment the reader can act on, such as what the 84% Grid share (introduced in the overview) means for where the moat question is decided.",
+      "status": "addressed",
+      "note": "Product list cut; the segment body now reaches a view on where the moat question is decided."
+    },
+    {
+      "id": "F-13",
+      "severity": "Important",
+      "field": "sections.management.capitalAllocation",
+      "quote": "Capital goes to acquisitions rather than shareholder returns.",
+      "issue": "Repeats sections.financials.cashflowCommentary, which already argues 'Capital returns are absent ... free cash flow is retained for working capital and acquisitions' and adds the DoD buyback restriction. The same claim is made twice in two sections.",
+      "fix": "Keep the no-returns and buyback-restriction point in one section (capitalAllocation is the natural home). In cashflowCommentary, refer to it in words or drop it.",
+      "status": "addressed",
+      "note": "cashflowCommentary now points to Management; capital returns argued once in capitalAllocation."
+    },
+    {
+      "id": "F-14",
+      "severity": "Important",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "Total equity stepped up to $0.6B in FY26 from $0.2B in FY25; the sources do not reconcile that change.",
+      "issue": "Restatement where judgment is available. The surface carries the two obvious contributors: FY26 net income of $133.8M and the 2,417,142 shares issued for Comtrafo. 'The sources do not reconcile' leaves the reader with nothing, when the report can say in words that most of the step-up is explained by the year's net income and the acquisition shares, without computing a new figure.",
+      "fix": "Name the two contributors in words, without arithmetic, and say what that means for the holder: equity growth came largely from a non-run-rate earnings line and from issuing stock, not from retained operating profit.",
+      "status": "addressed",
+      "note": "Net income and the Comtrafo shares named as contributors, read for holders, without new arithmetic."
+    },
+    {
+      "id": "F-15",
+      "severity": "Important",
+      "field": "sections.management.insiderOwnership",
+      "quote": "The stock issued to Comtrafo's sellers adds a new holder group whose size relative to the total share count the sources do not state.",
+      "issue": "Ownership is not read for the holder. Both the 2,417,142 shares issued at closing and the ~48.44M shares outstanding are on the surface, so the reader can see the sellers' block is a small fraction of the company. Saying the sources 'do not state' it leaves out a judgment the page supports.",
+      "fix": "Quote both figures and say in words that the sellers' block is a small fraction of the share count, too small to give them control. Note that the ~48.44M is derived from market cap. Do not compute a percentage.",
+      "status": "addressed",
+      "note": "Both share counts quoted, derivation noted, and the block read for control in words."
+    },
+    {
+      "id": "F-16",
+      "severity": "Important",
+      "field": "sections.management.leadership",
+      "quote": "The June 18, 2026 proxy statement names two executive officers for fiscal 2025",
+      "issue": "Mislabel and over-attribution. The proxy lists McGahn and Kosiba as its 'named executive officers', the compensation-disclosure group, not as the company's only executive officers. The next sentence, 'The proxy credits the team with a seventh consecutive quarter of GAAP profitability', attaches the streak to management. The proxy states the streak as a company result; its comment about the executive team is a separate claim about positioning.",
+      "fix": "Write 'names two named executive officers for fiscal 2025'. Say 'the proxy reports a seventh consecutive quarter...' without crediting the team, and keep the existing caveat that this is the company's own assessment.",
+      "status": "addressed",
+      "note": "Now 'named executive officers'; the streak is reported as the company's result, not credited to the team."
+    },
+    {
+      "id": "F-17",
+      "severity": "Important",
+      "field": "sections.growth.points[2]",
+      "quote": "Meeting that path, rather than beating it, is all the Base case needs.",
+      "issue": "The Base case's anchor is stated inconsistently. Here the Base needs revenue to meet the FY28E path. The Base driver says 'Requires revenue to track FY27E consensus with no estimate cuts', while it prices FY28E EPS of $1.36. The Bull driver uses 'revenue tracks toward FY28E consensus of $423.6M' as a Bull condition. A reader cannot tell which revenue path separates Base from Bull.",
+      "fix": "State once, in the Base driver, which consensus path the Base needs (FY27E revenue, then FY28E EPS). Make growth.points[2] point to it. Make sure the Bull driver's condition is something beyond that path, such as estimates rising.",
+      "status": "addressed",
+      "note": "Base driver now states the path (FY27E revenue, FY28E EPS); growth.points[2] points to it; Bull requires upward revisions."
+    },
+    {
+      "id": "F-18",
+      "severity": "Minor",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "the sources do not explain the dip",
+      "issue": "Repeated tic. Some form of 'the sources do not ...' / 'the captured text does not ...' appears about eleven times: incomeCommentary (twice), balanceCommentary, cashflowCommentary, multiplesCommentary, scenarioCommentary, thesis.body, moatFactors[1], analystCommentary, insiderOwnership and governance. The candour is right, but the repetition is now noticeable.",
+      "fix": "State the source gaps once, for example in one sentence in the overview or Financials. Elsewhere, say what is known and leave out the disclaimer, or vary the phrasing where the gap is the point.",
+      "status": "addressed",
+      "note": "Source-gap disclaimers consolidated into one overview paragraph; remaining instances are varied and carry a point."
+    },
+    {
+      "id": "F-19",
+      "severity": "Minor",
+      "field": "sections.growth.points[0]",
+      "quote": "\"organic growth and the contribution from our acquisition of Comtrafo.\"",
+      "issue": "Quotes altered without marking. The proxy reads '...our acquisition of Comtrafo Ind stria de Transformadores El tricos S.A., or Comtrafo, which we completed...'. The quote silently drops the legal name and closes the sentence early. Similarly, sections.financials.balanceCommentary quotes 'may require additional financing in the future, which may not be available.' where the source continues 'to us'.",
+      "fix": "Mark the elisions with an ellipsis, or end the quotation before the altered words and paraphrase the rest.",
+      "status": "addressed",
+      "note": "Both quotes now end where the source wording ends ('our acquisition' of Comtrafo; '...available to us.')."
+    },
+    {
+      "id": "F-20",
+      "severity": "Minor",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "The gap between the two reflects the expected rise in EPS from FY27E to FY28E, not a difference in accounting basis, and the consensus EPS basis is not stated.",
+      "issue": "Self-contradictory hedge. The sentence rules out a basis difference and then says the basis is not stated. Both multiples are built on the same consensus-mean estimates, which is the real reason a basis difference is unlikely.",
+      "fix": "Say that both multiples use the same consensus estimates, so the gap reflects the expected EPS rise. Keep the 'basis not stated' caveat in one place, Financials, where it is already made.",
+      "status": "addressed",
+      "note": "Now 'Both multiples use the same consensus estimates'; the self-contradiction is gone."
+    },
+    {
+      "id": "F-21",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "The risk to that anchor is compression as growth slows, which is what Bear prices.",
+      "issue": "The one-year roll itself holds against the surface. The MD&A says fiscal 2026 began April 1, 2026, so the vendor's FY27E is the year in progress. The 34.0x NTM multiple matches $30.01 on FY27E EPS of $0.88, not a blend with FY28E. A year from now FY28E is the year in progress, so carrying 34.0x onto $1.36 rolls the multiple by one year, and about $46 follows. The counter-case, however, is misdescribed. Bear does not price compression on its own: it combines an earnings stall (FY27E's $0.88) with compression to ~22.1x. The compression-only reading is never named. In that reading FY28E's $1.36 is delivered but the stock keeps the ~22.1x it carries on FY28E today, and the price lands at about today's level. Today's 34.0x rests on the visible step from $0.88 to $1.36. A year on, the surface shows only slowing revenue (FY28E $423.6M after FY27E $367.8M) and no FY29E, so 'no expansion' still assumes the market will pay for another large EPS step the page does not show.",
+      "fix": "Keep the one-year-roll argument. Correct the counter-case sentence: say Bear prices a stall plus compression, then name the compression-only reading in words, without a new figure. In that reading, delivered FY28E EPS on the ~22.1x the stock already carries on it leaves the price near today's level. Then argue why Base still earns 45% over that reading, for example what has to stay true about growth beyond FY28E for 34.0x to hold. Alternatively, move part of the Base weight to that outcome.",
+      "status": "addressed",
+      "note": "Bear is now described correctly as stall plus compression. The flat outcome (FY28E delivered on the lower multiple) is named in words, and the 34x assumption about an unseen further EPS step is stated. How the weight was then moved is a new defect, F-22."
+    },
+    {
+      "id": "F-22",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "Bear gets 50%: it absorbs the weight moved out of Base, which overstates the downside of the flat outcome and makes the weighted value conservative",
+      "issue": "The probabilities no longer state the author's view. By the author's own account, part of Bear's 50% belongs to the flat outcome, which the commentary says leaves the shares 'roughly where they trade now', not at $19.50. The page still shows Bear as a 50% chance of $19.50. The weighted $35.00 is a figure the author calls biased low. The HOLD is then justified as arithmetic ('That upside does not cover the Bear downside by enough for a BUY'; thesis: 'the reward is too thin against the Bear downside for a BUY'). But the label depends on that bias. If the roughly ten points priced at today's price instead of $19.50, E is about +20% and R about 0.57, which derives BUY. The label is honest only as a deliberate notch below BUY, not as a mathematical result. The band also uses the flat outcome to set the $30 low, while the weights treat that outcome as Bear.",
+      "fix": "Make the weights mean what they say. One option: keep Bear at the weight the author actually assigns to the stall-plus-compression case, and move the flat outcome's weight into Base, repricing Base in words as a blend of the 34.0x roll and the lower FY28E multiple. Re-derive the label, and do not quote the reviewer's arithmetic. The other option: keep 15/35/50 but say plainly that Bear's weight includes the flat outcome and that on the author's own view the derived label would be BUY. Then present HOLD as a one-notch conservative call, give its reason, and drop the claim that the arithmetic forces it. Make the thesis pointer and finalRecommendation consistent with whichever option is chosen.",
+      "status": "addressed",
+      "note": "Bear's 40% is again only the stall-plus-compression case. The flat reading now sits inside Base and is priced explicitly (Base $38, the midpoint of about $46 and about $30). The $34.05 weighted value is no longer called biased, the HOLD follows from the stated weights, and the thesis and finalRecommendation match. The basis for the within-Base split is a new item, F-24."
+    },
+    {
+      "id": "F-23",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "The weights reflect it. Base gets 35%.",
+      "issue": "Fit. scenarioCommentary is 2,222 characters against a 2,500 cap, leaving little room for the F-22 rewrite.",
+      "fix": "Tighten while fixing F-22. The Street paragraph can lose its restatement of the 52-week-high fall, which the Bear paragraph above already carries. The one-year-roll paragraph can lean on multiplesCommentary, which already identifies 34.0x as a multiple on the year in progress.",
+      "status": "addressed",
+      "note": "scenarioCommentary is down to 1,662 of 2,500 characters; the 52-week restatement in the Street paragraph is gone."
+    },
+    {
+      "id": "F-24",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "The market could just as easily pay only the lower multiple it already pays on FY28E, which leaves the shares at today's level even with FY28E EPS delivered. We treat the two readings as equally likely and price Base at their midpoint",
+      "issue": "The equal-odds split sets the Base price, and with it the label, but it is asserted rather than argued. The paragraph gives only flat-side evidence: slowing revenue into FY28E and no FY29E estimate. It names nothing on the roll side, then calls the two readings equal ('just as easily'). By its own terms the argument points to the flat reading at least as often as the roll, so the split does not look tuned toward HOLD. If anything, the stated evidence would carry a more pessimistic split. But the label turns on it. With the Bull and Bear weights unchanged, a flat share of Base below roughly one third would derive BUY. The earlier draft's implied split of about 10 of 45 points was on that side. A coin flip that decides the call needs its own reasons. The roll side has evidence on the surface that the commentary does not weigh: June-quarter revenue up 30.0% at a 10.5% operating margin against FY26's 3.8%, and the consensus EPS step from FY27E to FY28E itself.",
+      "fix": "Keep the 50/50 if the author still holds it after weighing both sides, but argue it in one or two sentences. Set the roll-side evidence above against the flat-side evidence already given, and say why they balance. Then add, in words and without a computed threshold, that the label is sensitive to this split: a modestly smaller flat share would derive BUY, so the HOLD reflects a real judgment that the flat reading is as likely as the roll. No reweighting is required.",
+      "status": "addressed",
+      "note": "The roll-side evidence (June-quarter growth and margin against FY26, and the consensus EPS step) is now weighed against the flat-side evidence. It refers back to the figures in words, without restating them. The commentary now says 'the HOLD rests on the even split' and that a smaller flat share would derive BUY."
+    },
+    {
+      "id": "F-25",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "The market could just as easily pay only the lower multiple it already pays on FY28E, which leaves the shares at today's level even with FY28E EPS delivered.",
+      "issue": "Fit and order. The F-24 addition takes scenarioCommentary back to 2,238 of 2,500 characters, close to the cap again (compare F-23). This sentence also announces the equal-odds conclusion ('just as easily') before the new 'The evidence cuts both ways' passage argues it, so the paragraph reaches its verdict twice.",
+      "fix": "Recast the sentence as a statement of the flat reading only, e.g. 'The alternative is that the market pays only the lower multiple it already pays on FY28E, which leaves the shares at today's level even with FY28E EPS delivered.' Let 'Neither outweighs the other' carry the conclusion, and trim elsewhere if more room is needed.",
+      "status": "declined",
+      "note": "Agreed on substance; deferred to the next AMSC synthesis because editing the judgment after the final (second) review round would leave it unreviewed."
+    }
+  ]
+}
