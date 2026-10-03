@@ -71,8 +71,10 @@ describe("mapStatements on the ORCL Q1 FY27 10-Q capture", () => {
   });
 });
 
+// Fixture: the three statement/tearsheet files of the CRWV 0001769628-26-000366 capture, kept verbatim
+// after the CRWV report and its raw directory were removed (commit 6ef1a24).
 describe("mapStatements on the CoreWeave capture (a company public under five years)", () => {
-  const s = mapStatements("data/raw/CRWV/0001769628-26-000366");
+  const s = mapStatements("lib/facts/map/__fixtures__/crwv");
   it("returns the three aligned fiscal years the vendor carries, oldest first", () => {
     expect(s.statements.fiscalYears).toEqual(["FY23", "FY24", "FY25"]);
     for (const t of ["income", "balance", "cashflow"] as const)

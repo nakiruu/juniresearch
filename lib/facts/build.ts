@@ -5,6 +5,7 @@ import { htmlToText } from "../edgar/filing-text";
 import { FactPack, FACTPACK_SCHEMA_VERSION } from "./schema";
 import { assertValidFactPack } from "./validate";
 import { RAW_CAPTURE_META } from "./manifest";
+import { detectCaptureSource, provenanceFor } from "./capture-source";
 import * as quote from "./map/quote";
 import * as statements from "./map/statements";
 import * as segments from "./map/segments";
@@ -46,8 +47,11 @@ export function buildFactPack(dir: string): FactPack {
     sharesSource: usesCover ? "cover" : "derived",
   };
 
+  // The tearsheet-shaped files are written either by the fetch-facts skill (Bigdata.com responses) or by
+  // facts:free (SEC XBRL + Yahoo); the mappers' rows name the Bigdata endpoints, so relabel for the latter.
+  const captureSource = detectCaptureSource(dir);
   const stamp = (rows: { field: string; endpoint: string; source: FactPack["provenance"][number]["source"] }[]) =>
-    rows.map((r) => ({ ...r, capturedAt: meta.capturedAt }));
+    provenanceFor(rows, captureSource).map((r) => ({ ...r, capturedAt: meta.capturedAt }));
 
   const quoteProvenance = usesCover ? quote.PROVENANCE.filter((r) => r.field !== "quote.sharesOutstanding") : quote.PROVENANCE;
   const sharesProvenance = usesCover ? cover.PROVENANCE : [];
