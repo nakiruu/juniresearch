@@ -46,12 +46,13 @@ export function scoreWeight(s: Signal, config: PortfolioConfig, opts: { qualityT
  * So as a name slides toward its bear price D → 0 and R → ∞, and μ·R = μ²/D puts it at the per-name cap a few
  * percent above the bear. One tick below, D = 0, R is null and the trade gates exit (unless the market explains
  * the fall — below). Real returns have a tail beyond the bear case, which the desk acknowledges by refusing to
- * publish a bear less than bearFloor below the price. Flooring D at the same depth keeps the score finite and
- * continuous; a falling name is still bought harder as μ rises. The floor shapes how much is held, never
+ * publish a bear less than 15% below the price (rating.bearFloor). The sizer floors D deeper, at bearFloor (0.25:
+ * realized bear cases run about −25%), which keeps the score finite and continuous and stops a shallow bear from
+ * buying size; a falling name is still bought harder as μ rises. The floor shapes how much is held, never
  * whether: eligibility and the hysteresis gates keep the raw R.
  *
  * Written as R · min(1, D / bearFloor) (= μ / bearFloor when D < bearFloor), so R is untouched whenever
- * D ≥ bearFloor — every name at its publication price, by the desk rule.
+ * D ≥ bearFloor.
  *
  * At or below the bear (D = 0, R null) it is μ / bearFloor — the value it takes just above the bear, so the
  * size is continuous across it. Only the trade layer can reach this case: it HOLDs a market-driven bear

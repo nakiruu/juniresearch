@@ -182,7 +182,7 @@ label ∈ {BUY, STRONG BUY}          AND   gatedLabel ∈ {BUY, STRONG BUY}
 μ ≥ muMin (0.05)
 R ≥ rMin  (0.50)          (null R fails)
 κ·100 ≥ convictionMin (45)
-ageDays ≤ stalenessMaxDays (120)
+ageDays ≤ stalenessMaxDays (150)
 ```
 
 Every ineligible name is retained in the snapshot's `excluded[]` with its reasons, so the screen stays
@@ -191,7 +191,7 @@ auditable (this is what the dashboard's "Considered & excluded" panel renders).
 ### 3.2 The score (production sizer)  (`scoreWeight`)
 
 ```
-R_size = μ / max(D, bearFloor)            = R · min(1, D / bearFloor)      (sizingRewardRisk; bearFloor 0.15)
+R_size = μ / max(D, bearFloor)            = R · min(1, D / bearFloor)      (sizingRewardRisk; bearFloor 0.25)
 score  = μ^muExp · κ^convExp · R_size^rExp · staleness · (Q if useQualityTilt else 1)
        = μ¹ · κ¹ · R_size¹ · staleness     (defaults: all exponents 1, tilt off in the analytical snapshot)
 ```
@@ -199,14 +199,20 @@ score  = μ^muExp · κ^convExp · R_size^rExp · staleness · (Q if useQualityT
 Weight is then allocated *in proportion to score*, so the best names on (expected return × conviction ×
 reward/risk) become the largest holdings. Exponents are tunable knobs (`--muExp/--convExp/--rExp`).
 
-**The bear floor (`bearFloor`, default 0.15 = the desk's `rating.bearFloor`).** Without it, μ·R = μ²/D: as a
+**The bear floor (`bearFloor`, default 0.25; the desk's publication floor `rating.bearFloor` is 0.15).** Without it, μ·R = μ²/D: as a
 name slides toward its bear price the score explodes and the name goes to the cap a few percent above the
 bear, then exits one tick below it (§4.2). Measured 2026-10-03: BAC, 9.7% lower 17 days after publication
 (6.9% above its bear), moved from 0.9% to 7.1% of the book; traced down, it hits the 10% cap 5% above the
 bear. The 3-point scenarios put zero mass below the bear, so "D → 0" is model error, not a riskless bet — the
-desk already refuses to publish a bear less than 15% below the price. Flooring D at the same depth keeps a
-falling name's score rising (μ still grows, BAC 0.9% → 3.5%) but finite and continuous. It changes nothing at
-publication prices (every D ≥ 0.15) and only sizing: eligibility and the hysteresis gates keep the raw R.
+desk already refuses to publish a bear less than 15% below the price. Flooring D keeps a falling name's score
+rising (μ still grows; BAC 0.9% → 3.5% at a 0.15 floor) but finite and continuous. It shapes only sizing:
+eligibility and the hysteresis gates keep the raw R.
+
+The floor was set at the desk's 15% until the 2026-10-03 config audit raised it to 0.25. Realized bear cases run
+about −25% (Morgan Stanley's average −27%), and an R earned by a shallow bear is mostly optimism (Joos & Piotroski
+2017). So the sizer now treats any D under 25% as 25%. That moves weight from shallow-bear, low-volatility names to
+higher-downside names, and it is the weakest of the audit's three changes (+0.34 / +0.15pp/yr on top of the other two).
+At a 0.25 floor it also re-sizes names at publication prices whose D is 15–25%.
 At or below the bear (D = 0, R null) R_size = μ/bearFloor, its value just above — reached only by a
 market-driven breach the trade layer holds (§4.2); a null R fails eligibility, so the analytical book never
 sees it. `--bearFloor 0` restores the raw R (the trade layer then needs `breachPolicy: "exit"`).
@@ -234,7 +240,8 @@ sees it. `--bearFloor 0` restores the raw R (the trade layer then needs `breachP
 > penalty barely moves the book (5% turnover, β 1.14 → 1.11), because the claimed upsides dwarf the variance
 > drag. It matters only if μ's information content b (realized excess ≈ b·μ) is well below 1. The evidence
 > points that way for sell-side targets:
-> - claimed undervaluation is realized at 16–18¢ per $ (Green, Hand & Sikochi 2024);
+> - claimed undervaluation is realized at 16–18¢ per $ (Green, Hand & Sikochi 2024), on upside *above* the analyst's
+>   cost of equity (≈ 11%) and mostly within two quarters;
 > - optimism grows with β, idiosyncratic vol and small size (Brav & Lehavy 2003; Dechow & You 2020).
 >
 > But the right book swings widely across b. The penalty in model-μ units is λ/b, so at b ≈ 0.17 the change
@@ -339,14 +346,14 @@ sold for merely dipping below the entry bar:
 
 ```
 NOT held → ENTER   iff  buy-side label + gatedLabel, μ ≥ muEnter (0.08), R ≥ rEnter (0.60),
-                        κ·100 ≥ convictionMin (45), age ≤ 120d, not banned, not buy-locked
+                        κ·100 ≥ convictionMin (45), age ≤ 150d, not banned, not buy-locked
 HELD     → EXIT    iff  banned, OR label/gate no longer buy-side, OR μ < muExit (0.03, "thesis played out"),
-                        OR R < rExit (0.35), OR stale > 120d
+                        OR R < rExit (0.15), OR stale > 150d
          → HOLD    otherwise  (the whole band muExit..muEnter / rExit..rEnter is a no-churn zone)
          → HOLD / FREEZE / EXIT  when a bear breach (R null, D = 0) is the ONLY exit reason: by its cause (below)
 ```
 
-The gap between `rEnter 0.60` and `rExit 0.35` (and `muEnter 0.08` vs `muExit 0.03`) is the **hysteresis
+The gap between `rEnter 0.60` and `rExit 0.15` (and `muEnter 0.08` vs `muExit 0.03`) is the **hysteresis
 band** — it exists specifically because a single R gate whipsaws (raising it just relocates the knife-edge
 into a denser R region). Locks turn EXIT→`DEFER_EXIT` and ENTER→`BARRED_ENTRY` (§4.4). `FREEZE` keeps a held
 name exactly as it is — no add, no trim — and is never touched by a lock (it never trades).
@@ -382,7 +389,7 @@ breaches; the stock-specific ones keep trending down, so for them the exit stand
 The rule applies only when the breach is the **sole** exit reason — a downgrade, a gate trip, staleness or the
 ban still exits — and only with every input in hand. No SPY close for either date (or a broker error), no beta
 (neither measured nor a SIC), a report priced after the mark, or any non-finite number leaves the plain exit,
-reason `R — < exit 0.35 (price at or below the bear case)`: **missing data never holds a name.** SPY is read only
+reason `R — < exit 0.15 (price at or below the bear case)`: **missing data never holds a name.** SPY is read only
 when a held name is in breach and only under `byCause`: the close on/before the report's price date, and the
 SPY at the decision mark from the same source as the stock marks (`spyDecisionMark` in `planRun`). In a live run
 (§5.1), that is SPY's own live mark: fresh trade → quote mid → settled close, large-cap freshness and gap. So an
@@ -423,6 +430,14 @@ ships with the reports on the next rebuild. Refresh it after each earnings seaso
   at 5% and 12% falls. It was negative in 12 of 16 years but **faded in 2024–25**. Expected book effect is
   small, roughly +0.1 to +0.4pp of NAV a year. Momentum, turnover, lottery and pre-earnings filters were tested
   and rejected (`docs/superpowers/specs/2026-10-03-entry-methodology.md`).
+
+> 🚫 **Not an option — replacing the R gate with Shibui screen presets (or adding one as a hard filter).** Audited
+> 2026-10-03 (`docs/superpowers/specs/2026-10-03-system-audit-rr-gate.md`) on Shibui data, the literature and an engine
+> simulation with point-in-time SEC fundamentals. Every preset gate lost 0.6–4.0pp/yr: value, growth, dividend, quality,
+> momentum + quality, oversold and Piotroski. They are sparse (0–25 of 50 live BUYs pass), and their factors have been
+> ≈ 0 since 2010. Quality consistency is the exception, and oversold names keep falling. As tilts they do nothing. A μ-only
+> gate ties the R gate once `rExit` is 0.15: R ≥ r is the price ceiling P ≤ (FV + r·B)/(1 + r). A quant composite as a
+> bottom-30% veto (+0.10 / +0.49pp, not significant) is logged for calibration, not traded.
 
 ### 4.3 The emitter — target vs current  (`lib/trade/rebalance.ts` → `emitTrades`)
 
@@ -755,14 +770,14 @@ the engine keeps exactly **one** decision a day and makes it at **15:10 ET on li
 | Knob | Default | Stage |
 |---|---|---|
 | `muMin` / `rMin` / `convictionMin` | 0.05 / 0.50 / 45 | eligibility (analytical) |
-| `stalenessMaxDays` / `stalenessHalfLifeDays` | 120 / 90 | eligibility / recency |
+| `stalenessMaxDays` / `stalenessHalfLifeDays` | 150 / 90 | eligibility / recency (150 covers the Q3 10-Q → 10-K gap) |
 | `muExp` / `convExp` / `rExp` | 1 / 1 / 1 | score |
-| `bearFloor` | 0.15 (= desk `rating.bearFloor`) | score (floor on D in R_size) |
+| `bearFloor` | 0.25 (desk publication floor `rating.bearFloor` is 0.15) | score (floor on D in R_size) |
 | `wMax` / `sectorMax` / `wMin` | 0.10 / 0.30 / 0 | caps / dust |
 | `cashFloor` / `cashCeiling` | 0.01 / 0.35 | cash |
 | quality tilt `qGainComposite/qGainMoat/qPenaltyEroding/qLo/qHi` | 0.10 / 0.20 / 0.10 / 0.8 / 1.2 | quality |
 | `muEnter` / `muExit` | 0.08 / 0.03 | hysteresis |
-| `rEnter` / `rExit` | 0.60 / 0.35 | hysteresis |
+| `rEnter` / `rExit` | 0.60 / 0.15 | hysteresis |
 | `breachPolicy` | "byCause" (`"exit"` = sell every bear breach) | hysteresis (bear breach) |
 | `breachMarketShareMax` / `breachStockShareMin` | 0.5 / 0.9 | bear breach: HOLD below / FREEZE between / EXIT at or above |
 | `staleEntryGate` / `staleEntryMinFall` / `staleEntryEarningsMaxDays` | true / 0.05 / 120 | entry: STALE_ENTRY on a ≥ 5% stock-specific fall after an earnings miss ≤ 120 days old |
@@ -781,6 +796,11 @@ the engine keeps exactly **one** decision a day and makes it at **15:10 ET on li
 | `maxLateMin` | 20 (15:10 → 15:30 ET) | fire window |
 | `submitCutoffET` | "15:50" | no submit at or after it |
 | buckets | large ≥ $10B, mid ≥ $2B, else small (null→mid) | liquidity |
+
+> 💡 **Audited 2026-10-03** (`docs/superpowers/specs/2026-10-03-config-audit.md`): literature plus a simulation of this
+> engine over 36 real-price universes. **Applied 2026-10-03:** `stalenessMaxDays` 120 → 150, `rExit` 0.35 → 0.15 and
+> `bearFloor` 0.15 → 0.25 (+0.74pp/yr together). Every other default sits at a flat optimum or waits on μ's measured
+> information content. `muEnter`, `muExit` and `convictionMin` never bind: the R gates fire first.
 
 `resolveTradeConfig` enforces the invariants (`rExit < rEnter`, `muExit < muEnter`, `limitTol ≤ limitTolMax ≤ 0.5`,
 `gapHalt ∈ (0,1)`, positive freshness, `closeAnchorSizeMult ∈ (0,1]`, `0 < breachMarketShareMax < breachStockShareMin ≤ 1.5`,

@@ -19,7 +19,7 @@ describe("classify — not held", () => {
     expect(classify(sig(), false, NONE, TODAY, cfg).classification).toBe("ENTER");
   });
   it("is INELIGIBLE below the entry bar on mu, on R, on conviction, on the gate, on staleness", () => {
-    for (const o of [{ mu: 0.05 }, { R: 0.55 }, { kappa: 0.4 }, { gatedLabel: "HOLD" as const }, { ageDays: 130 }, { label: "HOLD" as const }]) {
+    for (const o of [{ mu: 0.05 }, { R: 0.55 }, { kappa: 0.4 }, { gatedLabel: "HOLD" as const }, { ageDays: 160 }, { label: "HOLD" as const }]) {
       const c = classify(sig(o), false, NONE, TODAY, cfg);
       expect(c.classification).toBe("INELIGIBLE");
       expect(c.reasons.length).toBeGreaterThan(0);
@@ -58,7 +58,7 @@ describe("classify — not held, the stale-on-bad-news gate", () => {
 
 describe("classify — held", () => {
   it("HOLDs a name that dipped below the ENTRY bar but is above the EXIT bar (the whole point)", () => {
-    // mu 0.05 < muEnter 0.08 but >= muExit 0.03; R 0.45 < rEnter 0.6 but >= rExit 0.35
+    // mu 0.05 < muEnter 0.08 but >= muExit 0.03; R 0.45 < rEnter 0.6 but >= rExit 0.15
     expect(classify(sig({ mu: 0.05, R: 0.45, kappa: 0.3 }), true, NONE, TODAY, cfg).classification).toBe("HOLD");
   });
   it("EXITs on mu below the exit floor (rallied to target)", () => {
@@ -67,7 +67,7 @@ describe("classify — held", () => {
     expect(c.reasons[0]).toMatch(/thesis played out/);
   });
   it("EXITs on R below the exit floor, on a downgrade, on a gate trip, on staleness, on ban", () => {
-    for (const o of [{ R: 0.3 }, { label: "HOLD" as const }, { gatedLabel: "SELL" as const }, { ageDays: 121 }, { ticker: "ICE" }]) {
+    for (const o of [{ R: 0.1 }, { label: "HOLD" as const }, { gatedLabel: "SELL" as const }, { ageDays: 151 }, { ticker: "ICE" }]) {
       expect(classify(sig(o), true, NONE, TODAY, cfg).classification).toBe("EXIT");
     }
   });
@@ -79,7 +79,7 @@ describe("classify — held", () => {
   it("names the bear breach when the price has fallen to or below the bear case (D = 0)", () => {
     const c = classify(sig({ R: null, D: 0, mu: 0.4 }), true, NONE, TODAY, cfg);
     expect(c.classification).toBe("EXIT");
-    expect(c.reasons).toContain("R — < exit 0.35 (price at or below the bear case)");
+    expect(c.reasons).toContain(`R — < exit ${cfg.rExit} (price at or below the bear case)`);
   });
   it("DEFERs an exit while sell-locked and reports the unlock date", () => {
     const L: Locks = { buyLockUntil: {}, sellLockUntil: { NVT: "2026-09-29" } };
@@ -98,7 +98,7 @@ describe("classify — a held bear breach, by cause (breachPolicy byCause)", () 
   // At or below the bear: D = 0, R null, every scenario upside (mu large).
   const breached = (o: Partial<Signal> = {}) => sig({ R: null, D: 0, mu: 0.4, ...o });
   const why = (cause: BreachInfo["cause"], share: number): BreachInfo => ({ cause, share, total: -0.2, residual: -0.2 * share, beta: 1.1, spyReturn: -0.1 });
-  const PLAIN = "R — < exit 0.35 (price at or below the bear case)";
+  const PLAIN = `R — < exit ${cfg.rExit} (price at or below the bear case)`;
   const SELL_LOCKED: Locks = { buyLockUntil: {}, sellLockUntil: { NVT: "2026-09-29" } };
 
   it("HOLDs a market-driven breach", () => {
@@ -127,7 +127,7 @@ describe("classify — a held bear breach, by cause (breachPolicy byCause)", () 
     expect(classify(breached(), true, SELL_LOCKED, TODAY, cfg, why("mixed", 0.6)).classification).toBe("FREEZE");
   });
   it("applies only when the bear breach is the SOLE exit reason — a downgrade, gate, staleness or ban still exits", () => {
-    for (const o of [{ label: "HOLD" as const }, { gatedLabel: "SELL" as const }, { ageDays: 121 }, { ticker: "ICE" }]) {
+    for (const o of [{ label: "HOLD" as const }, { gatedLabel: "SELL" as const }, { ageDays: 151 }, { ticker: "ICE" }]) {
       for (const cause of ["market", "mixed"] as const) {
         const c = classify(breached(o), true, NONE, TODAY, cfg, why(cause, 0.2));
         expect(c.classification).toBe("EXIT");
@@ -137,7 +137,7 @@ describe("classify — a held bear breach, by cause (breachPolicy byCause)", () 
     }
   });
   it("leaves every other exit untouched: R < rExit with a downside, a null R with a downside, mu below the floor", () => {
-    expect(classify(sig({ R: 0.3, D: 0.2 }), true, NONE, TODAY, cfg, why("market", 0.1)).classification).toBe("EXIT");
+    expect(classify(sig({ R: 0.1, D: 0.2 }), true, NONE, TODAY, cfg, why("market", 0.1)).classification).toBe("EXIT");
     expect(classify(sig({ R: null, D: 0.2 }), true, NONE, TODAY, cfg, why("market", 0.1)).classification).toBe("EXIT");
     expect(classify(sig({ mu: 0.02 }), true, NONE, TODAY, cfg, why("market", 0.1)).classification).toBe("EXIT");
   });

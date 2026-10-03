@@ -7,7 +7,7 @@ export interface PortfolioConfig {
   muMin: number;            // min re-marked expected upside to hold (e.g. 0.05)
   rMin: number;             // min reward/risk (e.g. 0.5)
   convictionMin: number;    // min decision.conviction 0-100 (e.g. 45)
-  stalenessMaxDays: number; // drop reports older than this (e.g. 120)
+  stalenessMaxDays: number; // drop reports older than this (150: covers the Q3 10-Q → 10-K gap, 112–137 days by SEC deadline, plus desk lag)
   // Sizing (§6) — score = mu^muExp * conviction^convExp * R^rExp * recency.
   // Bigger weight for higher expected return, higher conviction, higher reward/risk.
   muExp: number;            // score emphasis on expected return mu (e.g. 1)
@@ -15,9 +15,10 @@ export interface PortfolioConfig {
   rExp: number;             // score emphasis on reward/risk R (e.g. 1)
   // Floor on the bear-case downside D when it SIZES a name (never in eligibility or the trade gates). R = μ/D is
   // re-marked to the live price, so as a name falls toward its bear price D → 0 and R → ∞: the score would put the
-  // name at the cap just above the bear and the gates exit it just below. The floor is the desk's own rule — a bear
-  // case less than rating.bearFloor (data/desk/desk.json, 15%) below the price is not a real scenario — applied at
-  // the live price. 0 disables it.
+  // name at the cap just above the bear and the gates exit it just below. 0.25 (config audit 2026-10-03): a bear case
+  // shallower than ~25% is not a credible worst case (realized bear cases run about −25%), so R earned by a small D
+  // is not rewarded in size. Deeper than the desk's publication floor (rating.bearFloor 0.15, data/desk/desk.json),
+  // which still governs which bears may be published. 0 disables it.
   bearFloor: number;
   alpha: number;            // legacy Kelly fraction — unused by the score-based sizer, kept for config/CLI back-compat
   sigmaMin: number;         // legacy sigma floor — unused by the score-based sizer
@@ -39,8 +40,8 @@ export interface PortfolioConfig {
 }
 
 export const DEFAULT_CONFIG: PortfolioConfig = {
-  muMin: 0.05, rMin: 0.5, convictionMin: 45, stalenessMaxDays: 120,
-  muExp: 1, convExp: 1, rExp: 1, bearFloor: 0.15,
+  muMin: 0.05, rMin: 0.5, convictionMin: 45, stalenessMaxDays: 150,
+  muExp: 1, convExp: 1, rExp: 1, bearFloor: 0.25,
   alpha: 0.4, sigmaMin: 0.05,
   qGainComposite: 0.10, qGainMoat: 0.20, qPenaltyEroding: 0.10, qLo: 0.8, qHi: 1.2,
   stalenessHalfLifeDays: 90, touchHorizonYears: 1, touchDrift: 0,

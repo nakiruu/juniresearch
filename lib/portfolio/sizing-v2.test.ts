@@ -7,7 +7,8 @@ import { scoreWeightV2, liquidityFactor, makeV2Scorer, DEFAULT_SIZING_V2 } from 
 
 const sig = (o: Partial<Signal>): Signal => ({
   ticker: "X", company: "X", sector: "36", label: "BUY", gatedLabel: "BUY",
-  price: 100, mu: 0.2, sigma: 0.25, sigmaDown: 0.1, D: 0.2, R: 1, kappa: 0.5,
+  price: 100, mu: 0.2, sigma: 0.25, sigmaDown: 0.1, D: 0.3, R: 1, // D above the 0.25 bear floor, so R sizes unfloored
+  kappa: 0.5,
   quality: 1, ageDays: 0, staleness: 1, ...o,
 });
 
@@ -38,8 +39,8 @@ describe("scoreWeightV2", () => {
     expect(scoreWeightV2(sig({ staleness: 0.5 }), 50, 1, c)).toBeCloseTo(0.1, 9);
   });
   it("floors D in the mu*R core like the production sizer (a name near its bear price can't blow up)", () => {
-    // D 0.03 < bearFloor 0.15: R_size = R * 0.03/0.15 = mu/0.15
-    expect(scoreWeightV2(sig({ mu: 0.3, D: 0.03, R: 10 }), 50, 1, c)).toBeCloseTo(0.3 * (0.3 / 0.15), 9);
+    // D 0.03 < bearFloor 0.25: R_size = R * 0.03/0.25 = mu/0.25
+    expect(scoreWeightV2(sig({ mu: 0.3, D: 0.03, R: 10 }), 50, 1, c)).toBeCloseTo(0.3 * (0.3 / 0.25), 9);
     expect(scoreWeightV2(sig({ mu: 0.3, D: 0.03, R: 10 }), 50, 1, { ...c, bearFloor: 0 })).toBeCloseTo(3, 9);
   });
   it("uses the bounded 1/sigma core (never mu/sigma^2) when riskCore is invSigma", () => {

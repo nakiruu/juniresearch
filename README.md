@@ -263,13 +263,13 @@ npm run portfolio:build -- --date 2026-10-01              # mark and date the sn
 npm run portfolio:build -- --model kellyTilt              # experimental sizer (lib/portfolio/sizing-v2.ts) → snapshot-<date>-kellyTilt.*
 npm run portfolio:build -- --wMax 0.08 --sectorMax 0.25   # override caps
 npm run portfolio:build -- --muExp 1 --convExp 1 --rExp 1 # override score exponents
-npm run portfolio:build -- --bearFloor 0                  # sizing floor on the bear downside (default 0.15; 0 = raw R)
+npm run portfolio:build -- --bearFloor 0                  # sizing floor on the bear downside (default 0.25; 0 = raw R)
 ```
 
 A name is eligible only if it's buy-side on **both** the label and the gate ceiling, with μ, R, conviction
 and freshness all above their floors (`lib/portfolio/eligibility.ts`). Eligible names are scored
-`μ · κ · R · staleness` (R with the bear-case downside floored at the desk's 15%, so a name nearing its bear
-price can't blow up to the cap), allocated **proportional to score**, then **water-filled** under a per-name cap
+`μ · κ · R · staleness` (R with the bear-case downside floored at 25%, deeper than the desk's 15% publication
+floor, so a shallow bear can't buy size and a name nearing its bear price can't blow up to the cap), allocated **proportional to score**, then **water-filled** under a per-name cap
 (10%) and a sector cap (30%); shed weight flows to the best remaining names, and any shortfall the caps
 can't absorb becomes cash — **never leverage**. The trade layer sizes with the same code and also
 multiplies each score by the quality tilt Q (moat and composite percentile, clamped to 0.8–1.2;
@@ -336,7 +336,7 @@ than 120 days is ignored, and a missing or unreadable file turns the gate off ra
 ### How the engine decides (short version)
 
 - **Two-sided hysteresis** (`lib/trade/hysteresis.ts`): a *held* name has an easier bar to keep than a *new*
-  name has to enter (`rEnter 0.60` vs `rExit 0.35`, `muEnter 0.08` vs `muExit 0.03`). The gap is a
+  name has to enter (`rEnter 0.60` vs `rExit 0.15`, `muEnter 0.08` vs `muExit 0.03`). The gap is a
   no-churn band, so a winner is never sold for merely dipping below the entry bar.
 - **No-trade band** (`tradeBand 0.025`): a held name trades only when its target differs from its current
   weight by more than 2.5pp.
@@ -435,10 +435,10 @@ minimum-trade floors (`TRADE_MIN_USD`, `TRADE_MIN_NAV_PCT`). `docs/engine.md` §
 
 | Area | Knob | Default |
 |---|---|---|
-| Eligibility (analytical book) | `muMin` / `rMin` / `convictionMin` / `stalenessMaxDays` | 0.05 / 0.50 / 45 / 120 days |
-| Sizing | `muExp` / `convExp` / `rExp`; `bearFloor`; `stalenessHalfLifeDays` | 1 / 1 / 1; 0.15; 90 |
+| Eligibility (analytical book) | `muMin` / `rMin` / `convictionMin` / `stalenessMaxDays` | 0.05 / 0.50 / 45 / 150 days |
+| Sizing | `muExp` / `convExp` / `rExp`; `bearFloor`; `stalenessHalfLifeDays` | 1 / 1 / 1; 0.25; 90 |
 | Caps | `wMax` / `sectorMax` / `wMin`; `cashFloor` / `cashCeiling` | 10% / 30% / 0; 1% / 35% |
-| Entry and exit bands | `muEnter` / `muExit`; `rEnter` / `rExit` | 0.08 / 0.03; 0.60 / 0.35 |
+| Entry and exit bands | `muEnter` / `muExit`; `rEnter` / `rExit` | 0.08 / 0.03; 0.60 / 0.15 |
 | Rebalancing | `tradeBand`; `lockBusinessDays`; `useQualityTilt` | 2.5pp; 5; on |
 | Decision timing | `markMode`; `cronTimesET`; `submitCutoffET`; `maxLateMin` | "live"; ["15:10"]; "15:50"; 20 |
 | Order sizing | `fractionalShares`; `marketOnlyBelowUsd`; `minEnterUsd`; `minTradeUsd` / `minTradeNavFrac` | on; $200; $1; $1 / 0.5% |
