@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "7d4ea5a79edfc96cbc727c9058f59774b8de0b4ae52425053506a36092a579e9",
-  "reviewedAt": "2026-10-02T21:26:32Z",
+  "judgmentSha256": "2a0ead6c049f47a42fcdc6b906f7ee82772257e51acc26440ff99c04f72c3b2c",
+  "reviewedAt": "2026-10-03T05:50:08Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "approved",
+  "verdict": "approved-with-minors",
   "findings": [
     {
       "id": "F-1",
@@ -23,7 +23,7 @@
       "issue": "Unsupported claim. Nothing on the surface says how TVision was paid for, what it cost, or what cash Viant holds: Cash & ST Investments and Net Debt both show '—', and only the TTM net debt/EBITDA of -6.4x is given. The same unsupported premise appears again in sections.management.capitalAllocation: \"funding growth from internal cash rather than debt is the right approach\". It also puts \"this revenue volatility\" on a series that, as written, only grows.",
       "fix": "Drop the statement that TVision was funded without borrowing. Argue the cushion from what is on the surface: total debt of $0.00, net debt/EBITDA of -6.4x and FY25 FCF of $51.7M. Say that the TVision consideration and how it was funded are not in the pack. Write the capital-allocation view without assuming a funding route.",
       "status": "addressed",
-      "note": "The TVision funding claim is gone from balanceCommentary, which now says the excerpt does not show how TVision was paid for. capitalAllocation no longer assumes a funding route. See F-17 for the new 'tuck-in' wording."
+      "note": "The TVision funding claim is gone from balanceCommentary, which now says the excerpt does not show how TVision was paid for. capitalAllocation no longer assumes a funding route. See F-17 for the new 'tuck-in' wording. Re-checked after the FCF correction: the $51.7M cited in this fix is no longer on the surface or in the prose. balanceCommentary argues the cushion from debt, net debt/EBITDA and the current ratio only."
     },
     {
       "id": "F-3",
@@ -33,7 +33,7 @@
       "issue": "Unsupported causal claim. No figure for non-cash charges (stock-based compensation, D&A, amortization of acquired intangibles) is on the surface, and the MD&A excerpt has no cash-flow bridge. The 'because' sets out a mechanism the pack does not establish. The section also has no counter-case: it never says that the FY25 FCF of $51.7M sits against FY25 net income of $8.4M and a Q2'26 GAAP net loss, a gap that may not persist.",
       "fix": "Remove the 'because' clause, or make it an explicit hypothesis with what to watch (for example, a reconciliation in the next 10-Q). Add a counter-case sentence built from figures on the surface: FY25 FCF of $51.7M against FY25 net income of $8.4M, and the Q2'26 net loss of $(1.8) million.",
       "status": "addressed",
-      "note": "The 'because… non-cash charges' clause is gone. There is now a counter-case: FY25 FCF well above FY25 net income of $8.4M, unreconciled in the excerpt."
+      "note": "The 'because… non-cash charges' clause is gone. There is now a counter-case: FY25 FCF well above FY25 net income of $8.4M, unreconciled in the excerpt. Re-checked after the FCF correction: the counter-case still holds at FY25 FCF of $34.3M against net income of $8.4M, and the 'very small' capex line is gone."
     },
     {
       "id": "F-4",
@@ -194,6 +194,16 @@
       "fix": "Either point to what the section now argues ('Loss of tracking signals and data access'), or restore a correctly attributed privacy sentence in idiosyncratic[1]. The 10-Q lists reduced data availability as a consequence of failing to comply with privacy obligations.",
       "status": "addressed",
       "note": "executiveSummary.risks[2] now reads 'Reduced access to data and advertising inventory', which points to idiosyncratic[1] and [2]."
+    },
+    {
+      "id": "F-20",
+      "severity": "Minor",
+      "field": "sections.financials.cashflowCommentary",
+      "quote": "Our free cash flow deducts all capital expenditure, which was $18.3M in FY25, so investment in the platform absorbs a meaningful share of operating cash flow.",
+      "issue": "The figures are right: capex of $18.3M and FCF of $34.3M match the Facts block and the page's cash-flow table. The framing goes beyond the surface in two places. (a) 'Our free cash flow deducts all capital expenditure' presents the FCF as the desk's own definition and implies a contrast with a narrower one. The page sources the cash-flow table to the Bigdata.com tearsheet (FMP), and nothing on the surface says what the capex line includes or describes a competing FCF definition. (b) 'investment in the platform' says what the capex is for, which the surface does not show. The MD&A's platform-investment language is about operating expenses, not capital expenditure. The substantive point, that capex is a meaningful share of operating cash flow, is grounded.",
+      "fix": "Drop 'Our ... deducts all' and 'in the platform'. For example: 'FY25 capital expenditure was $18.3M, so capex absorbs a meaningful share of operating cash flow.' If the desk's FCF definition differs from the vendor's, note it once in the table note rather than in the prose.",
+      "status": "declined",
+      "note": "Agreed on substance; deferred to the next DSP synthesis because editing the judgment after the final (second) review round would leave it unreviewed."
     }
   ]
 }
