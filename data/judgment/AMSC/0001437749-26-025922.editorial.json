@@ -1,6 +1,6 @@
 {
-  "judgmentSha256": "bcbd1214a6a293d08b9fde39a0ddd42bc91bcd924fef0f9b116345e06d8c909e",
-  "reviewedAt": "2026-10-03T06:23:24Z",
+  "judgmentSha256": "67c4a9fa8e0e4bf762e2baab5419a090b778cae8461dfacbfb2765614f406d20",
+  "reviewedAt": "2026-10-03T06:25:37Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
   "verdict": "needs-fix-round",
@@ -222,7 +222,8 @@
       "quote": "Bear gets 50%: it absorbs the weight moved out of Base, which overstates the downside of the flat outcome and makes the weighted value conservative",
       "issue": "The probabilities no longer state the author's view. By the author's own account, part of Bear's 50% belongs to the flat outcome, which the commentary says leaves the shares 'roughly where they trade now', not at $19.50. The page still shows Bear as a 50% chance of $19.50. The weighted $35.00 is a figure the author calls biased low. The HOLD is then justified as arithmetic ('That upside does not cover the Bear downside by enough for a BUY'; thesis: 'the reward is too thin against the Bear downside for a BUY'). But the label depends on that bias. If the roughly ten points priced at today's price instead of $19.50, E is about +20% and R about 0.57, which derives BUY. The label is honest only as a deliberate notch below BUY, not as a mathematical result. The band also uses the flat outcome to set the $30 low, while the weights treat that outcome as Bear.",
       "fix": "Make the weights mean what they say. One option: keep Bear at the weight the author actually assigns to the stall-plus-compression case, and move the flat outcome's weight into Base, repricing Base in words as a blend of the 34.0x roll and the lower FY28E multiple. Re-derive the label, and do not quote the reviewer's arithmetic. The other option: keep 15/35/50 but say plainly that Bear's weight includes the flat outcome and that on the author's own view the derived label would be BUY. Then present HOLD as a one-notch conservative call, give its reason, and drop the claim that the arithmetic forces it. Make the thesis pointer and finalRecommendation consistent with whichever option is chosen.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Bear's 40% is again only the stall-plus-compression case. The flat reading now sits inside Base and is priced explicitly (Base $38, the midpoint of about $46 and about $30). The $34.05 weighted value is no longer called biased, the HOLD follows from the stated weights, and the thesis and finalRecommendation match. The basis for the within-Base split is a new item, F-24."
     },
     {
       "id": "F-23",
@@ -231,6 +232,16 @@
       "quote": "The weights reflect it. Base gets 35%.",
       "issue": "Fit. scenarioCommentary is 2,222 characters against a 2,500 cap, leaving little room for the F-22 rewrite.",
       "fix": "Tighten while fixing F-22. The Street paragraph can lose its restatement of the 52-week-high fall, which the Bear paragraph above already carries. The one-year-roll paragraph can lean on multiplesCommentary, which already identifies 34.0x as a multiple on the year in progress.",
+      "status": "addressed",
+      "note": "scenarioCommentary is down to 1,662 of 2,500 characters; the 52-week restatement in the Street paragraph is gone."
+    },
+    {
+      "id": "F-24",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "The market could just as easily pay only the lower multiple it already pays on FY28E, which leaves the shares at today's level even with FY28E EPS delivered. We treat the two readings as equally likely and price Base at their midpoint",
+      "issue": "The equal-odds split sets the Base price, and with it the label, but it is asserted rather than argued. The paragraph gives only flat-side evidence: slowing revenue into FY28E and no FY29E estimate. It names nothing on the roll side, then calls the two readings equal ('just as easily'). By its own terms the argument points to the flat reading at least as often as the roll, so the split does not look tuned toward HOLD. If anything, the stated evidence would carry a more pessimistic split. But the label turns on it. With the Bull and Bear weights unchanged, a flat share of Base below roughly one third would derive BUY. The earlier draft's implied split of about 10 of 45 points was on that side. A coin flip that decides the call needs its own reasons. The roll side has evidence on the surface that the commentary does not weigh: June-quarter revenue up 30.0% at a 10.5% operating margin against FY26's 3.8%, and the consensus EPS step from FY27E to FY28E itself.",
+      "fix": "Keep the 50/50 if the author still holds it after weighing both sides, but argue it in one or two sentences. Set the roll-side evidence above against the flat-side evidence already given, and say why they balance. Then add, in words and without a computed threshold, that the label is sensitive to this split: a modestly smaller flat share would derive BUY, so the HOLD reflects a real judgment that the flat reading is as likely as the roll. No reweighting is required.",
       "status": "open"
     }
   ]
