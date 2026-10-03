@@ -170,13 +170,15 @@
       "flags": []
     },
     "decision": {
-      "conviction": 84,
+      "conviction": 74,
       "tier": "high",
       "proposed": "BUY",
       "reasons": [
         "E/R proposed BUY"
       ],
-      "advisories": [],
+      "advisories": [
+        "model vs Street expected return diverge by 107pp — informational, not scored"
+      ],
       "moat": {
         "width": "NARROW",
         "trend": "STABLE",
@@ -184,9 +186,9 @@
         "bearFloor": 0.2
       },
       "intrinsic": {
-        "marginOfSafety": 1.2878445270718428,
-        "impliedGrowth": 0.05400917079643153,
-        "achievableGrowth": 0.163263459560135
+        "marginOfSafety": -0.5364190365247448,
+        "impliedGrowth": 0.329244160666898,
+        "achievableGrowth": 0.1267008532516527
       },
       "composite": {
         "percentile": 63.73828104503375,
@@ -294,12 +296,12 @@
     },
     {
       "label": "FY25 Free Cash Flow",
-      "value": 51681000,
+      "value": 34314000,
       "unit": "usdLarge"
     },
     {
       "label": "FCF Yield (TTM)",
-      "value": 0.0810977915030481,
+      "value": 0.05863421661159441,
       "unit": "pct",
       "dp": 1
     },
@@ -542,11 +544,11 @@
           {
             "label": "Capital Expenditure",
             "values": [
-              -441000,
-              -758000,
-              -1195000,
-              -2498000,
-              -926000
+              -7372000,
+              -8826000,
+              -13476000,
+              -17744000,
+              -18293000
             ],
             "format": "usdB"
           },
@@ -575,29 +577,29 @@
           {
             "label": "Free Cash Flow",
             "values": [
-              28224000,
-              -4288000,
-              36557000,
-              49269000,
-              51681000
+              21293000,
+              -12356000,
+              24276000,
+              34023000,
+              34314000
             ],
             "format": "usdB"
           },
           {
             "label": "FCF Margin",
             "values": [
-              0.12592860297956068,
-              -0.02174795098596121,
-              0.1639812679986005,
-              0.1703424550970664,
-              0.15014773344644552
+              0.09500417174191418,
+              -0.06266736995861398,
+              0.1088932150322517,
+              0.1176309920998496,
+              0.09969174987870459
             ],
             "format": "pct"
           }
         ],
         "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
       },
-      "cashflowCommentary": "Free cash flow was $51.7M in FY25, a 15.0% FCF margin, and FCF margins have been positive in four of the last five years. Capital expenditure is very small. The trailing FCF yield is 8.1%.\n\nThe counter-case is the gap to earnings: FY25 free cash flow was well above FY25 net income of $8.4M, and the excerpt does not reconcile the two. Until GAAP profit catches up, we treat the cash flow as supportive but would want to see what drives the gap before relying on it fully."
+      "cashflowCommentary": "Free cash flow was $34.3M in FY25, a 10.0% FCF margin, and FCF margins have been positive in four of the last five years. Our free cash flow deducts all capital expenditure, which was $18.3M in FY25, so investment in the platform absorbs a meaningful share of operating cash flow. The trailing FCF yield is 5.9%: in our view that supports the balance sheet rather than the valuation, which rests on earnings growth (see Valuation).\n\nThe counter-case is the gap to earnings: FY25 free cash flow was well above FY25 net income of $8.4M, and the excerpt does not reconcile the two. Until GAAP profit catches up, we treat the cash flow as supportive but would want to see what drives the gap before relying on it fully."
     },
     "valuation": {
       "multiples": {
