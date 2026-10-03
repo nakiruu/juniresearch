@@ -29,7 +29,7 @@ Night / Linen / PDF and every derived value is internally consistent.
 ```bash
 npm install
 npm run dev          # http://localhost:3000 → redirects to /research
-npm run build        # prerenders /research and /research/<ticker> for all 92 published reports
+npm run build        # prerenders /research and /research/<ticker> for all 94 published reports
 npm start            # serve the production build
 npm test             # Vitest — 1,500+ tests across facts, synth, scoring, portfolio, trade, broker
 npm run test:watch   # Vitest in watch mode
@@ -82,7 +82,7 @@ lib/
                                guards.ts (every submit), http.ts, schwab-auth.ts (OAuth token store)
   prices/yahoo.ts              keyless daily closes (quote summaries live in facts/free/yahoo.ts)
 data/
-  <ticker>.json                92 published reports (avgo.json …; golden fixture in lib/__fixtures__)
+  <ticker>.json                94 published reports (avgo.json …; golden fixture in lib/__fixtures__)
   desk/                        desk identity, house style, rating thresholds, editorial rubric, recurring traps
   edgar/                       watchlist.json, seen.json (what detect has already reported)
   raw/                         verbatim captures per filing; raw/_shibui/ = saved Shibui responses
