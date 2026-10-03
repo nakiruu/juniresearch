@@ -149,20 +149,20 @@
     ]
   },
   "rating": {
-    "label": "BUY",
-    "tone": "bull",
-    "targetLow": 36,
-    "targetHigh": 50,
+    "label": "HOLD",
+    "tone": "secondary",
+    "targetLow": 30,
+    "targetHigh": 48,
     "conviction": {
-      "expectedUpside": 0.2545818060646452,
+      "expectedUpside": 0.16627790736421177,
       "bearDownside": 0.35021659446851056,
-      "rewardRisk": 0.7269267364414844,
-      "derivedLabel": "BUY"
+      "rewardRisk": 0.4747859181731679,
+      "derivedLabel": "HOLD"
     },
     "gate": {
       "sector": "industrial",
       "ceiling": "STRONG BUY",
-      "gatedLabel": "BUY",
+      "gatedLabel": "HOLD",
       "distress": "SAFE",
       "piotroski": 4,
       "accruals": null,
@@ -172,9 +172,9 @@
     "decision": {
       "conviction": 86,
       "tier": "high",
-      "proposed": "BUY",
+      "proposed": "HOLD",
       "reasons": [
-        "E/R proposed BUY"
+        "E/R proposed HOLD"
       ],
       "advisories": [],
       "moat": {
@@ -325,8 +325,8 @@
     "executiveSummary": {
       "companyOverview": "American Superconductor Corporation, incorporated in 1987 and headquartered in Ayer, Massachusetts, sells megawatt-scale power resiliency products through two segments the 10-Q names Grid and Wind. Grid serves utilities, industrial facilities, renewable developers and U.S. and allied Navies with products such as D-VAR systems, transformers and ship protection systems. Wind licenses turbine designs under the Windtec Solutions brand and supplies electrical control systems and support services to turbine manufacturers.\n\nFiscal labels need care. The company's fiscal year ends March 31 and is named for the calendar year in which it begins, so the year ended March 31, 2026 is fiscal 2025 in the proxy statement but FY26 in the vendor tables. This report uses the vendor labels for table figures and period end dates elsewhere. The quarter ended June 30, 2026 opens the company's fiscal 2026, which is the vendor's FY27E.\n\nGrid dominates the business: the June 18, 2026 proxy statement puts Grid at 84% of fiscal 2025 revenue. The vendor tables carry the company as a single consolidated segment, so no Wind figure is quotable here. In December 2025 the company added Comtrafo, a Brazil-based maker of power and distribution transformers, to Grid.\n\nThe evidence base is narrow: an excerpt of the 10-Q MD&A, the 10-K risk factors and the proxy statement's compensation discussion. No earnings release, call transcript or news headlines were captured, so several questions in this report stay open.",
       "thesis": {
-        "label": "BUY",
-        "body": "Three points carry the BUY. The operating business is scaling: gross margin widened in each year from FY23 to FY26, operating margin turned positive in FY26, and the June 2026 quarter ran at a higher operating margin than the full year. The price sits below both the probability-weighted value of $37.65 and the $46 Base. The current-year multiple is high, but the Base needs only that it hold as the fiscal year rolls forward. Free cash flow has been positive in each of the last three fiscal years.\n\nThe balance sheet is a supporting point rather than a pillar: liquidity covers current liabilities, but debt data for FY26 is missing and the Comtrafo cash outlay is not visible in the rounded tables (see Financials). The counter-case is real: reported FY26 earnings are not a run-rate, consensus EPS falls sharply into FY27E, and the Comtrafo deal adds emerging-market and integration risk."
+        "label": "HOLD",
+        "body": "The operating business is scaling: gross margin widened in each year from FY23 to FY26, operating margin turned positive in FY26, and the June 2026 quarter ran at a higher operating margin than the full year. Free cash flow has been positive in each of the last three fiscal years. The price sits below both the probability-weighted value and the $46 Base, but the reward is too thin against the Bear downside for a BUY (see Valuation).\n\nThe balance sheet is a supporting point rather than a pillar: liquidity covers current liabilities, but debt data for FY26 is missing and the Comtrafo cash outlay is not visible in the rounded tables (see Financials). The counter-case is real: reported FY26 earnings are not a run-rate, consensus EPS falls sharply into FY27E, and the Comtrafo deal adds emerging-market and integration risk."
       },
       "catalysts": [
         "Next 10-Q: a September 2026 quarter that holds revenue growth and operating margin near the June-quarter levels would support the Base case (see Financials).",
@@ -644,16 +644,16 @@
           "name": "Base",
           "driver": "12-month horizon. Revenue tracks FY27E consensus of $367.8M and FY28E consensus EPS of $1.36 holds. A year from now FY28E is the fiscal year in progress, and the stock keeps today's 34.0x multiple on the year in progress, giving about $46.",
           "impliedPrice": 46,
-          "probability": 0.45
+          "probability": 0.35
         },
         {
           "name": "Bear",
           "driver": "12-month horizon. Earnings stall at FY27E consensus EPS of $0.88 and the multiple compresses to the ~22.1x the stock now carries on FY28E, giving about $19.50. Consistent with backlog slippage, a loss at the main Wind customer or Comtrafo integration problems.",
           "impliedPrice": 19.5,
-          "probability": 0.4
+          "probability": 0.5
         }
       ],
-      "scenarioCommentary": "The Base anchor is a one-year roll, not two. The quarter ended June 30, 2026 opened the vendor's FY27E, so today's forward multiple is effectively a multiple on the year in progress; twelve months from now the year in progress will be FY28E. Base keeps that multiple and moves it forward one fiscal year, with no expansion. The risk to that anchor is compression as growth slows, which is what Bear prices.\n\nBase gets 45%. Bear gets 40%, a heavy weight, for two reasons. The shares trade far below their 52-week high and no captured source explains the fall, so the market may know something the filings here do not show. FY27E consensus EPS is also a sharp step down from reported FY26 earnings; a market that stops looking through it would price the stock on the lower multiple it already carries on FY28E. Bull gets 15% because it needs estimates to rise, not just hold.\n\nThe Street sits well above this report. All four covering analysts rate the stock Buy, with targets from $54.00 to $71.00 and a consensus of $61.75. The dates of those targets are not visible, and the price has fallen since the 52-week high, so this report does not adopt them; the Street median anchors only the Bull case.\n\nThe weighted fair value of $37.65 gives expected upside of {+ +25.5% +} against bear-case downside of {- -35.0% -}, a reward/risk of 0.73×. The target range brackets the $46 Base: the low end sits just below the weighted value and the high end allows for modest estimate upside on the Base multiple."
+      "scenarioCommentary": "The Base anchor is a one-year roll, not two. The quarter ended June 30, 2026 opened the vendor's FY27E, so today's forward multiple is effectively a multiple on the year in progress; twelve months from now the year in progress will be FY28E. Base keeps that multiple and moves it forward one fiscal year, with no expansion.\n\nTwo counter-cases need separating. Bear combines an earnings stall at the FY27E level with compression to the lower multiple the stock carries on FY28E. A third reading sits between Base and Bear: FY28E EPS is delivered, but the market pays only that lower FY28E multiple, which leaves the shares roughly where they trade now. Today's current-year multiple rests on the visible step up in EPS from FY27E to FY28E. A year from now, consensus shows only slower revenue growth into FY28E and no FY29E estimate, so holding the multiple assumes the market will pay for another large EPS step that is not yet visible. That reading is too likely to leave inside the Base weight.\n\nThe weights reflect it. Base gets 35%. Bear gets 50%: it absorbs the weight moved out of Base, which overstates the downside of the flat outcome and makes the weighted value conservative, and it reflects two further pressures. The shares trade far below their 52-week high and no captured source explains the fall, so the market may know something the filings here do not show. FY27E consensus EPS is also a sharp step down from reported FY26 earnings. Bull gets 15% because it needs estimates to rise, not just hold.\n\nThe Street sits well above this report. All four covering analysts rate the stock Buy, with targets from $54.00 to $71.00 and a consensus of $61.75. The dates of those targets are not visible, and the price has fallen since the 52-week high, so this report does not adopt them; the Street median anchors only the Bull case.\n\nThe weighted fair value of $35.00 gives expected upside of {+ +16.6% +} against bear-case downside of {- -35.0% -}, a reward/risk of 0.47×. That upside does not cover the Bear downside by enough for a BUY. The target range brackets the $46 Base: the low end sits at today's price, matching the flat outcome, and the high end allows for modest estimate upside on the Base multiple."
     },
     "businessMoat": {
       "segments": [
@@ -712,8 +712,8 @@
     },
     "finalRecommendation": {
       "body": [
-        "BUY, target range $36–$50, resting on the Base case and weighting set out in Valuation.",
-        "We would move to STRONG BUY if two further quarters show operating margin above the June-quarter level together with an upward revision to FY28E consensus EPS. We would move to HOLD on a year-over-year decline in quarterly revenue, a cut to FY28E consensus EPS, or a twelve-month backlog in the next 10-K below the March 31, 2026 level."
+        "HOLD, target range $30–$48, resting on the Base case and weighting set out in Valuation.",
+        "We would move to BUY if two further quarters show operating margin above the June-quarter level together with an upward revision to FY28E consensus EPS. We would move to SELL on a year-over-year decline in quarterly revenue, a cut to FY28E consensus EPS, or a twelve-month backlog in the next 10-K below the March 31, 2026 level."
       ]
     }
   },
