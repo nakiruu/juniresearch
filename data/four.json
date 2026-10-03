@@ -4,7 +4,7 @@
     "company": "Shift4 Payments, Inc.",
     "ticker": "FOUR",
     "exchange": "NYSE",
-    "subtitle": "Second-quarter revenue rose 34% on acquisitions and volume, and the stock trades at 7.0x forward earnings, but leverage is high and interest cover thin",
+    "subtitle": "Second-quarter revenue rose 34% and the stock trades at 7.0x forward earnings, but net debt is 4.5x EBITDA and free cash flow repays it slowly",
     "reportDate": "October 2, 2026",
     "asOf": "Oct 2, 2026",
     "analyst": "Juniper Finance Research Desk",
@@ -149,20 +149,20 @@
     ]
   },
   "rating": {
-    "label": "BUY",
-    "tone": "bull",
-    "targetLow": 40,
-    "targetHigh": 50,
+    "label": "HOLD",
+    "tone": "secondary",
+    "targetLow": 38,
+    "targetHigh": 48,
     "conviction": {
-      "expectedUpside": 0.16221426604241262,
-      "bearDownside": 0.2564031947122005,
-      "rewardRisk": 0.6326530612244899,
-      "derivedLabel": "BUY"
+      "expectedUpside": 0.12641145689892586,
+      "bearDownside": 0.2839438171302672,
+      "rewardRisk": 0.44519883608147404,
+      "derivedLabel": "HOLD"
     },
     "gate": {
       "sector": "industrial",
       "ceiling": "STRONG BUY",
-      "gatedLabel": "BUY",
+      "gatedLabel": "HOLD",
       "distress": "SAFE",
       "piotroski": 6,
       "accruals": "LOW",
@@ -170,13 +170,15 @@
       "flags": []
     },
     "decision": {
-      "conviction": 75,
+      "conviction": 85,
       "tier": "high",
-      "proposed": "BUY",
+      "proposed": "HOLD",
       "reasons": [
-        "E/R proposed BUY"
+        "E/R proposed HOLD"
       ],
-      "advisories": [],
+      "advisories": [
+        "model vs Street expected return diverge by 45pp — informational, not scored"
+      ],
       "moat": {
         "width": "NARROW",
         "trend": "STABLE",
@@ -184,9 +186,9 @@
         "bearFloor": 0.2
       },
       "intrinsic": {
-        "marginOfSafety": 9.189466732300405,
-        "impliedGrowth": -0.1,
-        "achievableGrowth": 0.2
+        "marginOfSafety": 1.071107151939458,
+        "impliedGrowth": -0.02647427378629614,
+        "achievableGrowth": 0.15
       },
       "composite": {
         "percentile": 58.76354261123784,
@@ -294,6 +296,17 @@
       "dp": 2
     },
     {
+      "label": "FY25 Free Cash Flow",
+      "value": 400000000,
+      "unit": "usdLarge"
+    },
+    {
+      "label": "FCF Yield (TTM)",
+      "value": 0.10847416772870434,
+      "unit": "pct",
+      "dp": 1
+    },
+    {
       "label": "Net Debt / EBITDA (TTM)",
       "value": 4.511400651465798,
       "unit": "mult"
@@ -302,17 +315,6 @@
       "label": "Interest Coverage (TTM)",
       "value": 1.5396825396825398,
       "unit": "mult"
-    },
-    {
-      "label": "FCF Yield (TTM)",
-      "value": 0.1998575501882559,
-      "unit": "pct",
-      "dp": 1
-    },
-    {
-      "label": "FY25 Share Repurchases",
-      "value": -453000000,
-      "unit": "usdLarge"
     }
   ],
   "analystSentiment": {
@@ -325,14 +327,14 @@
     "medianTarget": 51,
     "highTarget": 96,
     "lowTarget": 40,
-    "commentary": "Shift4's shares have fallen to $36.31 on October 2, 2026, close to the 52-week low of $34.56 and well under half the high of $80.98. Our data does not say what drove the decline, and we have no news coverage that explains it.\n\nThe filing shows a business that is still growing and generating cash, but one that took on substantial debt to buy Global Blue. Higher interest costs are now absorbing much of the growth before it reaches shareholders (see Financials).\n\nAt this price the market is treating that leverage as the dominant risk. We think the cash the business generates gives it a credible path to reduce debt, and that the price already discounts a great deal of the risk."
+    "commentary": "Shift4's shares have fallen to $36.31 on October 2, 2026, close to the 52-week low of $34.56 and well under half the high of $80.98. Our data does not say what drove the decline, and we have no news coverage that explains it.\n\nThe filing shows a business that is still growing, but one that took on substantial debt to buy Global Blue. Higher interest costs are now absorbing much of the growth before it reaches shareholders, and free cash flow, once reinvestment is counted, is modest against the debt (see Financials).\n\nThe valuation is undemanding and the Street's lowest target sits above today's price. Even so, we think the leverage justifies the discount until the company shows it can pay debt down, so we rate the shares HOLD."
   },
   "sections": {
     "executiveSummary": {
       "companyOverview": "Shift4 Payments, Inc. provides software, payment processing, tax-free shopping (TFS) and dynamic currency conversion services. Its technology is used by restaurants, hotels, stadiums, theme parks, luxury retailers and other businesses, from small owner-operated merchants to multinational enterprises. Products include the SkyTab point-of-sale family, the Lighthouse business intelligence suite and an omnichannel payments platform.\n\nThe company added a TFS business through its acquisition of Global Blue in the third quarter of 2025. In February 2026 it collapsed its Up-C structure, converting its Founder's and Rook's shares into Class A common stock.\n\nShift4 was founded in 1999 and is headquartered in Center Valley, Pennsylvania. It distributes through independent software vendors, internal sales and support networks, enterprises and value-added resellers.",
       "thesis": {
-        "label": "BUY",
-        "body": "The shares trade at 7.0x NTM earnings and a 20.0% trailing FCF yield, a price that implies serious trouble. The filing instead shows rising volume and revenue, and a business that converts most of its operating cash flow into free cash flow. The leverage is the reason we are not more bullish."
+        "label": "HOLD",
+        "body": "The shares trade at 7.0x NTM earnings and a 10.8% trailing FCF yield, a price that implies serious trouble. The filing shows rising volume and revenue, which argues against that. The constraint is the balance sheet: net debt is 4.5x EBITDA, interest coverage is 1.5x, and free cash flow of $400M in FY25 reduces that debt only slowly. Until deleveraging is visible, we see the risk and the reward as roughly balanced."
       },
       "catalysts": [
         "Evidence of debt reduction from free cash flow.",
@@ -543,11 +545,11 @@
           {
             "label": "Capital Expenditure",
             "values": [
-              -8200000,
-              -8000000,
-              -14000000,
-              -7000000,
-              -10000000
+              -54500000,
+              -64200000,
+              -136000000,
+              -173000000,
+              -234000000
             ],
             "format": "usdB"
           },
@@ -576,29 +578,29 @@
           {
             "label": "Free Cash Flow",
             "values": [
-              -5200000,
-              267400000,
-              332000000,
-              493000000,
-              624000000
+              -51500000,
+              211200000,
+              210000000,
+              327000000,
+              400000000
             ],
             "format": "usdB"
           },
           {
             "label": "FCF Margin",
             "values": [
-              -0.0038025594149908594,
-              0.13412921348314608,
-              0.12943469785575049,
-              0.14800360252176523,
-              0.1492822966507177
+              -0.0376599634369287,
+              0.10593900481540931,
+              0.08187134502923976,
+              0.09816871810267187,
+              0.09569377990430622
             ],
             "format": "pct"
           }
         ],
         "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
       },
-      "cashflowCommentary": "Free cash flow was $624M in FY25, a 14.9% FCF margin, close to 14.8% in FY24. Capital expenditure is small. The trailing FCF yield is 20.0%.\n\nThat yield overstates what is available to equity holders going forward. Second-quarter interest expense was well above the year-ago level, which will weigh on cash flow, and the pending acquisition requires an initial payment of approximately $143 million of cash. In FY25 the company spent cash on buybacks while total debt rose sharply, so the capacity to deleverage has not yet been used (see Management)."
+      "cashflowCommentary": "Free cash flow was $400M in FY25, a 9.6% FCF margin, after 9.8% in FY24. Capital expenditure was $0.2B against operating cash flow of $0.6B. The MD&A shows why reinvestment is a real call on cash: the company depreciates equipment under lease to merchants and amortizes internally developed capitalized software. The trailing FCF yield is 10.8%.\n\nThat cash has competing claims. The higher interest expense described above is paid from it, and the pending acquisition requires an initial payment of approximately $143 million of cash. In FY25 the company repurchased $453M of stock while total debt rose sharply, so free cash flow has not yet been directed at deleveraging (see Management)."
     },
     "valuation": {
       "multiples": {
@@ -642,24 +644,24 @@
       "scenarios": [
         {
           "name": "Bull",
-          "driver": "Volume growth continues, Global Blue synergies arrive and free cash flow reduces debt. The shares re-rate to around the Street consensus target.",
+          "driver": "Volume growth continues, Global Blue synergies arrive and free cash flow is directed at debt. The shares re-rate to around the Street consensus target.",
           "impliedPrice": 55,
-          "probability": 0.3
+          "probability": 0.25
         },
         {
           "name": "Base",
-          "driver": "Shift4 delivers most of the consensus earnings path and begins reducing leverage. The shares settle between the lowest Street target of $40.00 and the median of $51.00.",
-          "impliedPrice": 44,
-          "probability": 0.4
+          "driver": "Shift4 delivers most of the consensus earnings path and starts to reduce leverage slowly. The shares settle between the lowest Street target of $40.00 and the median of $51.00.",
+          "impliedPrice": 43,
+          "probability": 0.45
         },
         {
           "name": "Bear",
-          "driver": "Consumer spending and travel weaken, volume growth slows and leverage limits the company's flexibility. Estimates fall and the shares break below the 52-week low.",
-          "impliedPrice": 27,
+          "driver": "Consumer spending and travel weaken, volume growth slows and interest costs absorb what free cash flow remains. Estimates fall and the shares break below the 52-week low.",
+          "impliedPrice": 26,
           "probability": 0.3
         }
       ],
-      "scenarioCommentary": "Base carries the most weight because it requires only most of the consensus path, not all of it. Bull and Bear carry equal weight: cash generation supports a recovery, while leverage leaves the equity exposed if conditions weaken.\n\nThe result is a weighted fair value of $42.20, an expected upside of +16.2% and a bear-case downside of -25.6%. That clears our BUY threshold.\n\nOur $40–$50 target range brackets Base. It sits below the Street consensus target because we give more weight to the balance-sheet risk than the Street's average does."
+      "scenarioCommentary": "Base carries the most weight because it requires only most of the consensus path. We weight Bear above Bull: with interest coverage at 1.5x, a slowdown in volume would reach the equity quickly, while a re-rating needs deleveraging that free cash flow can deliver only gradually.\n\nThe result is a weighted fair value of $40.90, an expected upside of +12.6% and a bear-case downside of -28.4%. The upside clears our BUY threshold, but the reward per unit of bear-case risk does not, so we rate the shares HOLD.\n\nOur $38–$48 target range brackets Base. It sits below the Street consensus target because we give more weight to the balance-sheet risk than the Street's average does."
     },
     "businessMoat": {
       "segments": [
@@ -696,14 +698,14 @@
     "growth": {
       "points": [
         "Consensus expects FY26E revenue of ~$5.1B, up 22%, below the second quarter's 34% growth. That slowdown is consistent with Global Blue, acquired in the third quarter of 2025, no longer adding to year-over-year comparisons from the second half of 2026.",
-        "Volume grew by $11 billion, or 22%, in the second quarter of 2026 compared with the second quarter of 2025. In our view, sustained volume growth is the best indicator of the core business, since it drives payments-based revenue.",
+        "Volume grew by $11 billion in the second quarter of 2026 compared with the second quarter of 2025. In our view, sustained volume growth is the best indicator of the core business, since it drives payments-based revenue.",
         "In August 2026 Shift4 agreed to acquire an account-to-account payments company for an initial payment of approximately $143 million of cash, with contingent consideration of up to $173 million. It adds a payment method; our view on acquisitions at current leverage is in Management.",
         "The shareholder letter's forward-looking statements refer to expansion of Shift4One in 15 countries by year end, which would broaden the international business."
       ]
     },
     "management": {
       "leadership": "Per the proxy statement dated April 2026, Taylor Lauber became Chief Executive Officer on June 5, 2025, and Christopher N. Cruz became Chief Financial Officer effective September 1, 2025. Founder Jared Isaacman resigned as CEO in June 2025 on his nomination as NASA Administrator, became Executive Chairman, and resigned that role upon his Senate confirmation; the Board appointed Mr. Lauber Chairman on December 17, 2025, and Mr. Isaacman was sworn in on December 18, 2025. The leadership team is therefore new, and its record on integration and deleveraging is still being established.",
-      "capitalAllocation": "Shift4 has been acquisitive and has also repurchased stock: Global Blue in 2025, a pending account-to-account payments acquisition in 2026, and buybacks in FY25. The cost has been a large rise in debt. In our view, management's priority should now be deleveraging; further acquisitions or buybacks before interest coverage improves would weaken our case.",
+      "capitalAllocation": "Shift4 has been acquisitive and has also repurchased stock: Global Blue in 2025, a pending account-to-account payments acquisition in 2026, and buybacks in FY25. The cost has been a large rise in debt. In our view, management's priority should now be deleveraging; further acquisitions or buybacks before interest coverage improves would keep us at HOLD.",
       "governance": "Per the proxy statement dated April 2026, five of the seven directors named, Sam Bakhshandehpour, Seth Dallaire, Karen Roter Davis, Jonathan Halkyard and Sarah Grover, are independent; Taylor Lauber and Nancy Disman are not. Shift4 ceased to be a controlled company on December 17, 2025, and may rely on exemptions from certain governance requirements until December 17, 2026. With an independent majority already in place, the practical effect of the exemption appears limited, and it ends within a few months. Approximately 91% of the CEO's 2025 total target compensation was in RSUs, which ties pay to the share price.",
       "insiderOwnership": "Per the proxy, as of April 13, 2026 Jared Isaacman beneficially owned 28.66% of the Class A common stock, and all executive officers and directors as a group held 1.54%. Based on Schedule 13G/A filings from February to April 2026, BlackRock, Inc. held 8.79%, Durable Capital Partners LP 8.33%, Darlington Partners Capital Management, LP 7.02% and Wasatch Advisors LP 5.30%.\n\nThe Founder's block is far larger than current management's holdings, and he no longer has a role at the company. That gives one holder outside management significant influence over shareholder votes. The shareholder letter refers to future negotiations with the Founder without saying what they concern."
     },
@@ -718,8 +720,8 @@
     },
     "finalRecommendation": {
       "body": [
-        "BUY, target range $40–$50, based on the scenarios in Valuation.",
-        "We would add conviction on evidence of debt reduction and improving interest coverage. We would cut to HOLD if volume growth slows sharply, if consensus estimates start to fall, or if management prioritizes acquisitions over deleveraging."
+        "HOLD, target range $38–$48, based on the scenarios in Valuation.",
+        "We would move to BUY on evidence that free cash flow is reducing debt and interest coverage is improving. We would cut further if volume growth slows sharply, if consensus estimates start to fall, or if management prioritizes acquisitions over deleveraging."
       ]
     }
   },
