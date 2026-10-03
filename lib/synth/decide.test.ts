@@ -146,10 +146,12 @@ describe("composite (5.md) in the decision", () => {
 
 describe("Street-vs-model divergence and the published label (I12, I5)", () => {
   const base = { conviction: HOLDISH, gate: cleanGate, moat: { width: "WIDE" as const, trend: "STABLE" as const, contingent: false }, intrinsic: { marginOfSafety: 0.05 } };
-  it("penalises a large model-vs-Street divergence (4.md §8)", () => {
+  it("model-vs-Street divergence is informational only: it does not move the score (4.md §8)", () => {
     const aligned = decide({ ...base, market: { targetDispersion: 0.2, divergence: 0.05 } }, cfg);
     const diverged = decide({ ...base, market: { targetDispersion: 0.2, divergence: 0.7 } }, cfg);
-    expect(diverged.conviction).toBeLessThan(aligned.conviction);
+    expect(diverged.conviction).toBe(aligned.conviction);
+    expect(diverged.advisories.some((x) => /Street/.test(x))).toBe(true);
+    expect(aligned.advisories.some((x) => /Street/.test(x))).toBe(false);
   });
   it("notes when the author's published label differs from the composed one (I5)", () => {
     const d = decide({ conviction: HOLDISH, gate: cleanGate, moat: null, intrinsic: null, published: "SELL" }, cfg);
@@ -169,6 +171,35 @@ describe("conviction: analyst-target dispersion and the HOLD synthesis (I13, I4)
     const disagree = decide({ conviction: HOLDISH, gate: cleanGate, moat: null, intrinsic: { marginOfSafety: -0.6 } }, cfg);
     const agree = decide({ conviction: HOLDISH, gate: cleanGate, moat: null, intrinsic: { marginOfSafety: 0.1 } }, cfg);
     expect(disagree.conviction).toBe(agree.conviction);
+  });
+});
+
+describe("conviction: DCF margin-of-safety disagreement must be robust", () => {
+  const BUYISH_E: Conviction = { expectedUpside: 0.2, bearDownside: 0.2, rewardRisk: 1.0 };
+  const moat = { width: "WIDE" as const, trend: "STABLE" as const, contingent: false };
+  const run = (intrinsic: { marginOfSafety: number; mosRange?: { min: number; max: number } }) =>
+    decide({ conviction: BUYISH_E, gate: cleanGate, moat, intrinsic }, cfg);
+  const agree = run({ marginOfSafety: 0.1, mosRange: { min: 0.02, max: 0.2 } });
+  it("is a bullish label in this fixture", () => expect(["BUY", "STRONG BUY"]).toContain(agree.label));
+  it("robust disagreement (whole range < 0 vs E > 0) costs 20", () => {
+    const d = run({ marginOfSafety: -0.3, mosRange: { min: -0.45, max: -0.1 } });
+    expect(d.conviction).toBe(agree.conviction - 20);
+  });
+  it("a range that straddles zero is within model error: no penalty, an advisory instead", () => {
+    const d = run({ marginOfSafety: -0.05, mosRange: { min: -0.2, max: 0.08 } });
+    expect(d.conviction).toBe(agree.conviction);
+    expect(d.advisories.some((x) => /model error/.test(x))).toBe(true);
+  });
+  it("without mosRange the point estimate decides, as before", () => {
+    expect(run({ marginOfSafety: -0.05 }).conviction).toBe(agree.conviction - 20);
+    expect(run({ marginOfSafety: 0.05 }).conviction).toBe(agree.conviction);
+  });
+  it("corroboration of a STRONG BUY is blocked only by a robustly negative DCF", () => {
+    const strong = { conviction: STRONGBUYISH, gate: cleanGate, moat: { width: "WIDE" as const, trend: "WIDENING" as const, contingent: false } };
+    const pol = { ...SAFE_DEFAULTS, requireCorroboration: true };
+    expect(decide({ ...strong, intrinsic: { marginOfSafety: -0.05, mosRange: { min: -0.2, max: 0.08 } } }, cfg, pol).label).toBe("STRONG BUY");
+    expect(decide({ ...strong, intrinsic: { marginOfSafety: -0.3, mosRange: { min: -0.45, max: -0.1 } } }, cfg, pol).label).toBe("BUY");
+    expect(decide({ ...strong, intrinsic: { marginOfSafety: -0.05 } }, cfg, pol).label).toBe("BUY");
   });
 });
 
