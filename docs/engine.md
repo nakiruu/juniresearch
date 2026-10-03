@@ -439,6 +439,15 @@ ships with the reports on the next rebuild. Refresh it after each earnings seaso
 > gate ties the R gate once `rExit` is 0.15: R ≥ r is the price ceiling P ≤ (FV + r·B)/(1 + r). A quant composite as a
 > bottom-30% veto (+0.10 / +0.49pp, not significant) is logged for calibration, not traded.
 
+> 🚫 **Not an option — LightGBM (or another gradient-boosted model) anywhere in the chain.** Audited 2026-10-03
+> (`docs/superpowers/specs/2026-10-03-lightgbm-audit.md`). The desk's μ/R/κ have no realized outcomes to learn from yet:
+> 0 of 100 calibration points, and about 16 quarterly cohorts are needed even for a linear slope. On the screen
+> (94 reports) it beats Street upside by +0.03 AUC under nested CV, which is noise, and a 4-feature logistic matches it.
+> As a market-wide quant composite (point-in-time SEC + Yahoo, ≥ $1B, 2014–2026 out of sample) it ties ridge on the same
+> features (IC +0.003, t 0.2) and loses to the fixed equal-weight composite (IC −0.015, top 30% −1.2pp/yr). It won
+> 2014–19, then lost 3.9pp/yr in 2020–26, and its scores churn more (rank autocorrelation 0.76 vs 0.86). Revisit only
+> once the calibration log has a significant linear b over about 16 cohorts.
+
 ### 4.3 The emitter — target vs current  (`lib/trade/rebalance.ts` → `emitTrades`)
 
 1. **Freeze** held names with no current signal, deferred exits (locked), and `FREEZE` names (a mixed bear

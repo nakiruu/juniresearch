@@ -1,0 +1,87 @@
+
+=== ≥ $300M: 49 dates, ~1683 names/date. Returns = f126 excess vs the slice's equal-weight mean, pp/yr (×2) ===
+model                 IC         top30  top30 stress   top30 wins.  top30 median         bot30  bot30 stress
+ew4        0.054 (t+3.5) +0.58 (t+0.6) +0.80 (t+0.8) +1.21 (t+1.2) +1.56 (t+2.0) -0.91 (t-0.7) -1.40 (t-1.0)
+ridge4     0.033 (t+2.0) +0.62 (t+0.6) +0.79 (t+0.8) +0.89 (t+0.8) +0.94 (t+0.8) -0.24 (t-0.2) -0.58 (t-0.4)
+lgb4       0.032 (t+2.7) -0.44 (t-0.5) -0.24 (t-0.3) +0.06 (t+0.1) +0.91 (t+1.5) +0.86 (t+0.6) +0.42 (t+0.3)
+ridge      0.035 (t+1.8) -1.76 (t-1.1) -1.47 (t-0.9) -1.04 (t-0.7) +0.34 (t+0.3) +1.74 (t+0.9) +1.26 (t+0.7)
+lgb_small  0.036 (t+2.3) -0.81 (t-0.6) -0.54 (t-0.4) -0.26 (t-0.2) +0.55 (t+0.5) +1.28 (t+0.7) +0.82 (t+0.5)
+lgb_mod    0.037 (t+2.8) -0.64 (t-0.5) -0.40 (t-0.3) -0.01 (t-0.0) +0.80 (t+1.0) +1.18 (t+0.8) +0.79 (t+0.6)
+lgb_deep   0.023 (t+2.4) -0.83 (t-1.1) -0.72 (t-0.9) -0.37 (t-0.5) +0.55 (t+1.0) +1.23 (t+1.0) +0.95 (t+0.8)
+lgb_es     0.032 (t+1.9) -1.80 (t-1.3) -1.52 (t-1.0) -1.16 (t-0.8) -0.00 (t-0.0) +1.67 (t+0.9) +1.18 (t+0.7)
+  lgb4     − ew4  : IC -0.022 (t-1.7) | top30 -1.02 (t-1.2), stressed -1.04 (t-1.1), median -0.65 (t-0.8) | bot30 stressed +1.83 (t+2.1)
+  lgb4     − ridge4: IC -0.001 (t-0.1) | top30 -1.06 (t-1.7), stressed -1.03 (t-1.7), median -0.03 (t-0.0) | bot30 stressed +1.01 (t+1.3)
+  lgb_mod  − ridge: IC +0.002 (t+0.2) | top30 +1.12 (t+1.1), stressed +1.07 (t+1.1), median +0.47 (t+0.6) | bot30 stressed -0.47 (t-0.4)
+  lgb_es   − ridge: IC -0.003 (t-0.3) | top30 -0.04 (t-0.0), stressed -0.05 (t-0.0), median -0.34 (t-0.4) | bot30 stressed -0.09 (t-0.1)
+  lgb_mod  − ew4  : IC -0.017 (t-1.2) | top30 -1.23 (t-1.3), stressed -1.20 (t-1.2), median -0.75 (t-0.8) | bot30 stressed +2.19 (t+2.7)
+  ridge    − ew4  : IC -0.019 (t-1.4) | top30 -2.34 (t-2.1), stressed -2.27 (t-2.0), median -1.22 (t-1.3) | bot30 stressed +2.67 (t+2.8)
+
+=== ≥ $1B: 49 dates, ~1315 names/date. Returns = f126 excess vs the slice's equal-weight mean, pp/yr (×2) ===
+model                 IC         top30  top30 stress   top30 wins.  top30 median         bot30  bot30 stress
+ew4        0.044 (t+2.8) +0.89 (t+1.0) +1.00 (t+1.1) +1.24 (t+1.4) +1.39 (t+1.8) -0.96 (t-0.8) -1.22 (t-1.0)
+ridge4     0.026 (t+1.4) +0.53 (t+0.5) +0.62 (t+0.6) +0.70 (t+0.6) +0.81 (t+0.7) -0.02 (t-0.0) -0.22 (t-0.2)
+lgb4       0.026 (t+2.2) +0.14 (t+0.2) +0.28 (t+0.3) +0.51 (t+0.6) +0.74 (t+1.2) +0.64 (t+0.5) +0.38 (t+0.3)
+ridge      0.025 (t+1.3) -1.34 (t-1.0) -1.15 (t-0.8) -0.85 (t-0.6) +0.01 (t+0.0) +1.21 (t+0.7) +0.90 (t+0.5)
+lgb_small  0.026 (t+1.5) -0.60 (t-0.4) -0.41 (t-0.3) -0.25 (t-0.2) +0.33 (t+0.3) +1.40 (t+0.8) +1.10 (t+0.6)
+lgb_mod    0.029 (t+1.9) -0.33 (t-0.3) -0.17 (t-0.1) +0.04 (t+0.0) +0.44 (t+0.5) +0.77 (t+0.5) +0.53 (t+0.4)
+lgb_deep   0.015 (t+1.3) -0.60 (t-0.7) -0.52 (t-0.6) -0.40 (t-0.5) +0.27 (t+0.4) +1.21 (t+1.0) +1.03 (t+0.9)
+lgb_es     0.022 (t+1.2) -1.02 (t-0.7) -0.83 (t-0.6) -0.59 (t-0.4) +0.23 (t+0.2) +1.84 (t+1.0) +1.52 (t+0.8)
+  lgb4     − ew4  : IC -0.018 (t-1.2) | top30 -0.74 (t-0.8), stressed -0.72 (t-0.8), median -0.65 (t-0.8) | bot30 stressed +1.60 (t+1.5)
+  lgb4     − ridge4: IC +0.000 (t+0.0) | top30 -0.39 (t-0.6), stressed -0.34 (t-0.5), median -0.07 (t-0.1) | bot30 stressed +0.60 (t+0.7)
+  lgb_mod  − ridge: IC +0.003 (t+0.2) | top30 +1.01 (t+1.0), stressed +0.98 (t+0.9), median +0.43 (t+0.5) | bot30 stressed -0.37 (t-0.4)
+  lgb_es   − ridge: IC -0.003 (t-0.2) | top30 +0.32 (t+0.3), stressed +0.32 (t+0.3), median +0.22 (t+0.2) | bot30 stressed +0.63 (t+0.8)
+  lgb_mod  − ew4  : IC -0.015 (t-0.8) | top30 -1.22 (t-1.1), stressed -1.16 (t-1.0), median -0.95 (t-0.9) | bot30 stressed +1.75 (t+1.7)
+  ridge    − ew4  : IC -0.018 (t-1.2) | top30 -2.23 (t-1.9), stressed -2.14 (t-1.9), median -1.38 (t-1.4) | bot30 stressed +2.12 (t+2.0)
+
+=== ≥ $10B: 49 dates, ~450 names/date. Returns = f126 excess vs the slice's equal-weight mean, pp/yr (×2) ===
+model                 IC         top30  top30 stress   top30 wins.  top30 median         bot30  bot30 stress
+ew4        0.035 (t+2.0) +0.68 (t+0.8) +0.72 (t+0.8) +0.86 (t+1.0) +1.38 (t+1.8) -0.87 (t-0.9) -0.95 (t-1.0)
+ridge4     0.019 (t+0.9) +0.22 (t+0.2) +0.27 (t+0.2) +0.19 (t+0.2) +0.54 (t+0.5) +0.42 (t+0.4) +0.36 (t+0.3)
+lgb4       0.020 (t+1.3) +0.49 (t+0.5) +0.51 (t+0.5) +0.62 (t+0.7) +1.29 (t+1.4) +0.45 (t+0.4) +0.40 (t+0.3)
+ridge      0.013 (t+0.7) -0.94 (t-0.9) -0.88 (t-0.8) -0.62 (t-0.6) +0.94 (t+1.2) +1.31 (t+1.0) +1.22 (t+0.9)
+lgb_small  0.013 (t+0.6) -0.13 (t-0.1) -0.07 (t-0.1) +0.02 (t+0.0) +0.88 (t+0.8) +1.42 (t+1.1) +1.35 (t+1.0)
+lgb_mod    0.021 (t+1.1) +0.11 (t+0.1) +0.14 (t+0.1) +0.20 (t+0.2) +0.86 (t+0.8) +1.01 (t+0.8) +0.93 (t+0.7)
+lgb_deep   0.004 (t+0.3) -0.35 (t-0.4) -0.33 (t-0.3) -0.32 (t-0.3) +0.26 (t+0.3) +0.98 (t+1.0) +0.93 (t+1.0)
+lgb_es     0.014 (t+0.7) +0.04 (t+0.0) +0.09 (t+0.1) +0.30 (t+0.2) +1.01 (t+0.8) +1.54 (t+1.0) +1.47 (t+1.0)
+  lgb4     − ew4  : IC -0.015 (t-1.0) | top30 -0.19 (t-0.2), stressed -0.21 (t-0.2), median -0.09 (t-0.1) | bot30 stressed +1.34 (t+1.2)
+  lgb4     − ridge4: IC +0.001 (t+0.0) | top30 +0.27 (t+0.3), stressed +0.24 (t+0.3), median +0.75 (t+1.0) | bot30 stressed +0.04 (t+0.0)
+  lgb_mod  − ridge: IC +0.008 (t+0.4) | top30 +1.04 (t+0.9), stressed +1.02 (t+0.9), median -0.08 (t-0.1) | bot30 stressed -0.29 (t-0.2)
+  lgb_es   − ridge: IC +0.001 (t+0.1) | top30 +0.98 (t+0.8), stressed +0.97 (t+0.8), median +0.07 (t+0.1) | bot30 stressed +0.25 (t+0.2)
+  lgb_mod  − ew4  : IC -0.014 (t-0.6) | top30 -0.57 (t-0.5), stressed -0.58 (t-0.5), median -0.52 (t-0.5) | bot30 stressed +1.88 (t+1.5)
+  ridge    − ew4  : IC -0.022 (t-1.2) | top30 -1.62 (t-2.0), stressed -1.60 (t-2.0), median -0.44 (t-0.6) | bot30 stressed +2.17 (t+2.2)
+
+=== ≥ $1B, 2014–19: 24 dates, ~1115 names/date. Returns = f126 excess vs the slice's equal-weight mean, pp/yr (×2) ===
+model                 IC         top30  top30 stress   top30 wins.  top30 median         bot30  bot30 stress
+ew4        0.020 (t+0.9) +0.19 (t+0.2) +0.23 (t+0.2) +0.34 (t+0.3) -0.14 (t-0.1) -1.38 (t-1.4) -1.50 (t-1.6)
+ridge4     0.009 (t+0.3) +0.42 (t+0.4) +0.45 (t+0.4) +0.38 (t+0.3) -0.16 (t-0.1) -0.76 (t-0.6) -0.83 (t-0.7)
+lgb4       0.039 (t+2.5) +2.14 (t+3.5) +2.22 (t+3.5) +2.11 (t+3.6) +1.33 (t+2.0) -2.08 (t-2.4) -2.20 (t-2.5)
+ridge      0.029 (t+1.3) +0.53 (t+0.5) +0.63 (t+0.6) +0.69 (t+0.7) +0.27 (t+0.3) -1.41 (t-1.1) -1.57 (t-1.2)
+lgb_small  0.046 (t+2.6) +2.26 (t+2.4) +2.38 (t+2.5) +2.38 (t+2.6) +2.25 (t+2.6) -1.25 (t-1.4) -1.39 (t-1.5)
+lgb_mod    0.046 (t+2.7) +1.86 (t+2.0) +1.96 (t+2.1) +1.96 (t+2.2) +1.78 (t+2.0) -1.58 (t-2.1) -1.69 (t-2.2)
+lgb_deep   0.026 (t+1.8) +0.97 (t+1.3) +1.00 (t+1.3) +1.01 (t+1.4) +1.47 (t+1.9) -0.64 (t-0.9) -0.69 (t-1.0)
+lgb_es     0.043 (t+2.5) +1.37 (t+1.5) +1.46 (t+1.6) +1.50 (t+1.7) +1.69 (t+2.2) -1.53 (t-1.6) -1.66 (t-1.7)
+  lgb4     − ew4  : IC +0.019 (t+1.3) | top30 +1.95 (t+2.8), stressed +1.99 (t+2.8), median +1.47 (t+1.5) | bot30 stressed -0.70 (t-0.8)
+  lgb4     − ridge4: IC +0.030 (t+1.6) | top30 +1.72 (t+2.1), stressed +1.77 (t+2.2), median +1.49 (t+1.3) | bot30 stressed -1.37 (t-1.7)
+  lgb_mod  − ridge: IC +0.017 (t+0.9) | top30 +1.33 (t+1.3), stressed +1.33 (t+1.3), median +1.51 (t+1.5) | bot30 stressed -0.13 (t-0.1)
+  lgb_es   − ridge: IC +0.014 (t+0.8) | top30 +0.84 (t+0.8), stressed +0.84 (t+0.8), median +1.42 (t+1.6) | bot30 stressed -0.09 (t-0.1)
+  lgb_mod  − ew4  : IC +0.026 (t+1.0) | top30 +1.67 (t+1.4), stressed +1.73 (t+1.4), median +1.92 (t+1.5) | bot30 stressed -0.19 (t-0.2)
+  ridge    − ew4  : IC +0.010 (t+0.5) | top30 +0.34 (t+0.3), stressed +0.40 (t+0.4), median +0.41 (t+0.4) | bot30 stressed -0.07 (t-0.1)
+
+=== ≥ $1B, 2020–26: 25 dates, ~1634 names/date. Returns = f126 excess vs the slice's equal-weight mean, pp/yr (×2) ===
+model                 IC         top30  top30 stress   top30 wins.  top30 median         bot30  bot30 stress
+ew4        0.066 (t+3.1) +1.56 (t+1.0) +1.73 (t+1.1) +2.10 (t+1.5) +2.86 (t+2.8) -0.55 (t-0.2) -0.96 (t-0.4)
+ridge4     0.042 (t+1.9) +0.64 (t+0.4) +0.79 (t+0.4) +0.99 (t+0.6) +1.74 (t+0.9) +0.68 (t+0.3) +0.36 (t+0.2)
+lgb4       0.014 (t+0.8) -1.77 (t-1.3) -1.59 (t-1.1) -1.02 (t-0.8) +0.17 (t+0.2) +3.25 (t+1.5) +2.85 (t+1.3)
+ridge      0.021 (t+0.7) -3.14 (t-1.3) -2.85 (t-1.2) -2.33 (t-1.0) -0.24 (t-0.1) +3.74 (t+1.2) +3.26 (t+1.1)
+lgb_small  0.007 (t+0.2) -3.35 (t-1.5) -3.08 (t-1.3) -2.78 (t-1.2) -1.51 (t-0.8) +3.95 (t+1.3) +3.49 (t+1.1)
+lgb_mod    0.012 (t+0.5) -2.45 (t-1.2) -2.21 (t-1.1) -1.80 (t-0.9) -0.85 (t-0.6) +3.02 (t+1.2) +2.66 (t+1.1)
+lgb_deep   0.005 (t+0.2) -2.10 (t-1.4) -1.97 (t-1.3) -1.75 (t-1.3) -0.88 (t-0.8) +2.99 (t+1.4) +2.68 (t+1.3)
+lgb_es     0.002 (t+0.1) -3.32 (t-1.4) -3.03 (t-1.2) -2.59 (t-1.1) -1.17 (t-0.6) +5.06 (t+1.6) +4.57 (t+1.4)
+  lgb4     − ew4  : IC -0.053 (t-2.7) | top30 -3.33 (t-2.8), stressed -3.32 (t-2.7), median -2.69 (t-2.9) | bot30 stressed +3.81 (t+2.3)
+  lgb4     − ridge4: IC -0.028 (t-2.6) | top30 -2.41 (t-3.7), stressed -2.38 (t-3.7), median -1.57 (t-1.5) | bot30 stressed +2.49 (t+2.1)
+  lgb_mod  − ridge: IC -0.009 (t-0.5) | top30 +0.69 (t+0.4), stressed +0.64 (t+0.4), median -0.61 (t-0.5) | bot30 stressed -0.60 (t-0.4)
+  lgb_es   − ridge: IC -0.019 (t-1.1) | top30 -0.19 (t-0.1), stressed -0.18 (t-0.1), median -0.94 (t-0.7) | bot30 stressed +1.31 (t+1.2)
+  lgb_mod  − ew4  : IC -0.055 (t-2.9) | top30 -4.00 (t-2.7), stressed -3.94 (t-2.6), median -3.71 (t-3.3) | bot30 stressed +3.62 (t+2.4)
+  ridge    − ew4  : IC -0.045 (t-2.1) | top30 -4.69 (t-2.7), stressed -4.58 (t-2.7), median -3.10 (t-2.0) | bot30 stressed +4.22 (t+2.5)
+
+score rank autocorrelation between consecutive rebalances (≥$1B): ew4 0.86, ridge4 0.85, lgb4 0.68, ridge 0.83, lgb_small 0.81, lgb_mod 0.76, lgb_deep 0.66, lgb_es 0.79
