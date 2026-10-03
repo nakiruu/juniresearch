@@ -36,6 +36,14 @@ describe("run record", () => {
     expect(RunRecord.parse(rec()).breaches).toBeUndefined();
     expect(() => RunRecord.parse({ ...withBreach, breaches: { NVT: { ...withBreach.breaches.NVT, cause: "luck" } } })).toThrow();
   });
+  it("accepts old records without refCloses/markSources and round-trips live ones", () => {
+    const old = rec();
+    expect("refCloses" in old || "markSources" in old).toBe(false);
+    expect(RunRecord.parse(old)).toEqual(old);
+    const live = { ...rec(), markMode: "live" as const, marks: { NVT: 104, QQQ: 102, ZZZ: 100 }, refCloses: { NVT: 100, QQQ: 100, ZZZ: 100 }, markSources: { NVT: "trade" as const, QQQ: "quote" as const, ZZZ: "close" as const } };
+    expect(RunRecord.parse(JSON.parse(JSON.stringify(live)))).toEqual(live);
+    expect(() => RunRecord.parse({ ...live, markSources: { NVT: "guess" } })).toThrow();
+  });
   it("rejects a record with a bad markMode", () => {
     expect(() => RunRecord.parse({ ...rec(), markMode: "guess" })).toThrow();
   });

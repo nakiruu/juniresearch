@@ -105,6 +105,10 @@ describe("summaryFromRun", () => {
     expect(s.goal).toContainEqual({ ticker: "BBB", weight: 0.1 });
     expect(s.skipped).toEqual([{ ticker: "CCC", reason: "gap" }]);
     expect(s.audit).toEqual({ ok: true, critical: 0, warn: 0 });
+    // Orders the submit cutoff kept from going out are listed with the other skips (and turn the embed yellow).
+    const cut = summaryFromRun(out, "executed", [], undefined, [{ ticker: "DDD", detail: "submit cutoff 15:50 ET passed — not sent" }]);
+    expect(cut.skipped).toEqual([{ ticker: "CCC", reason: "gap" }, { ticker: "DDD", reason: "submit cutoff 15:50 ET passed — not sent" }]);
+    expect((runEmbed(cut).embeds as { fields: { name: string; value: string }[] }[])[0].fields.find((f) => f.name.startsWith("Skipped"))?.value).toContain("DDD — submit cutoff 15:50 ET passed — not sent");
   });
 });
 

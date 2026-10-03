@@ -122,10 +122,10 @@ export function startScheduler(deps: SchedulerDeps): { stop: () => void } {
   const fire = async () => {
     if (stopped) return; // stop() requested before we got here — do not trade after shutdown
     try {
-      // Same-slot double-fire guard: a boot in the 09:30–09:45 ET window catch-up-fires, then arm()
-      // re-arms for the SAME day's (still strictly-future) fire instant. Consult persisted state and
-      // skip runOnce when this day's slot already fired; the finally below still re-arms. The slot is
-      // fixed at the START of the fire, so a long run can't stamp the next slot.
+      // Same-slot double-fire guard: if this day's slot already fired (a catch-up, then a timer for the
+      // same slot — e.g. after the wall clock stepped), consult persisted state and skip runOnce; the
+      // finally below still re-arms. The slot is fixed at the START of the fire, so a long run can't
+      // stamp the next slot.
       const startMs = deps.now();
       const today = etDateString(startMs);
       const slot = currentSlot(startMs, slots) ?? slots[0];
@@ -158,7 +158,10 @@ export function startScheduler(deps: SchedulerDeps): { stop: () => void } {
     const open = await deps.marketOpenNow();
     if (stopped) return; // stop() requested while marketOpenNow() was in flight — abandon the boot
     // Catch up the slot in force if it hasn't fired (runCron itself refuses a run past its fire window).
-    if (open && !slotAlreadyFired(st, deps.now(), slots)) {
+    // Only a slot already IN FORCE: a boot before the day's first slot just arms for it. Catching up
+    // then would trade at whatever time the process happened to start — with the one late-day slot
+    // (15:10) a 10:00 restart would make the day's only decision at 10:00 and stamp the slot as fired.
+    if (open && currentSlot(deps.now(), slots) !== null && !slotAlreadyFired(st, deps.now(), slots)) {
       await fire();          // fire() re-arms (and self-guards against a stop() during runOnce())
     } else {
       arm();

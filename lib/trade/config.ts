@@ -14,6 +14,12 @@ export interface TradeConfig extends PortfolioConfig {
   rExit: number;            // exit only if reward/risk < this (0.35 — asymmetry genuinely gone)
   tradeBand: number;        // no-trade band on held names, absolute weight (0.025)
   lockBusinessDays: number; // trading days from a fill to the first legal opposite-side trade (5 = ICE rule: 5 business days counting the transaction day → first legal on the 6th trading day; symmetric, whole-ticker)
+  // Decision marks. "live" (default): the run's own live price — fresh last trade → fresh quote mid →
+  // the settled prior close, chosen per ticker and recorded (run record markSources). "settled": the
+  // prior day's settled close (backtest-reproducible; the pre-2026-10 behaviour). Live marks apply only
+  // on today's ET trading day inside the regular session; a past/future `today` (trade:plan --date) or a
+  // pre/post-market run marks settled. Either way execution's reference close (gap-halt, tier-3 anchor)
+  // is the settled prior close.
   markMode: "settled" | "live";
   minOrderUsd: number;      // whole-share mode only (fractionalShares off): skip dust trades below this notional
   // Hybrid execution (audit 2026-09-28): the whole-share part of an order goes as a τ-capped limit, the
@@ -29,8 +35,9 @@ export interface TradeConfig extends PortfolioConfig {
   maxNotionalFrac: number;  // run-level cap on total submitted notional as a fraction of NAV
   useQualityTilt: boolean;  // spec §5.4 — multiply scoreWeight by Signal.quality
   // Phase 2 (spec §7) — slippage-capped limit pricing, gap-halt, freshness, and run breakers.
-  cronTimeET: string;                            // scheduled trigger, ET wall-clock ("09:45") — always cronTimesET[0]
-  cronTimesET: string[];                         // every daily fire slot, ascending (["09:45"]; e.g. ["09:45", "10:40"] for a top-up run)
+  cronTimeET: string;                            // scheduled trigger, ET wall-clock ("15:10") — always cronTimesET[0]
+  cronTimesET: string[];                         // every daily fire slot, ascending (["15:10"]; every slot must sit before submitCutoffET)
+  submitCutoffET: string;                        // no order is submitted at or after this ET wall-clock time ("15:50"); before 16:00 and after every slot
   limitTol: Record<LiquidityBucket, number>;     // entry τ floor, by bucket
   limitTolMax: Record<LiquidityBucket, number>;  // per-bucket hard cap on τ
   limitTolBeta: number;                          // spread-widening coefficient on τ
@@ -58,12 +65,23 @@ export interface TradeConfig extends PortfolioConfig {
 export const DEFAULT_TRADE_CONFIG: TradeConfig = {
   ...DEFAULT_CONFIG,
   muEnter: 0.08, muExit: 0.03, rEnter: 0.6, rExit: 0.35,
-  tradeBand: 0.025, lockBusinessDays: 5, markMode: "settled",
+  tradeBand: 0.025, lockBusinessDays: 5, markMode: "live",
   minOrderUsd: 25, maxOrdersPerRun: 40, maxNotionalFrac: 1.0,
   fractionalShares: true, minEnterUsd: 1, minTradeUsd: 1, minTradeNavFrac: 0.005, marketOnlyBelowUsd: 200,
   marketMaxSpread: { large: 0.01, mid: 0.01, small: 0.025 },
   useQualityTilt: true,
-  cronTimeET: "09:45", cronTimesET: ["09:45"],
+  // ONE decision a day, late: 15:10 ET on live prices. Avoids the open (widest spreads 09:30–10:00,
+  // attention-inflated opening prints), decides on the same information ~18h sooner than the next
+  // morning's settled close, buys down-day names ahead of the last-half-hour reversal, and the fill (so
+  // the 5-day lock, counted from the fill date) lands a session earlier. 15:10 + maxLateMin 20 = 15:30,
+  // and submitCutoffET 15:50 stops any later submit, so a run never trades into the close.
+  // Early-close days (13:00 ET: the day after Thanksgiving, Christmas Eve; ~3 a year): the broker clock
+  // reads closed at 15:10, trade:cron exits "closed", and nothing trades that day — accepted.
+  // Revert to the morning: set the slot list below to "09:45" and markMode to "settled", then re-run
+  // scripts/register-trade-cron.sh/.ps1 — they read the slots by grepping the next line, so keep it one
+  // line in exactly this shape (and never write that key-plus-bracket pattern in a comment above it).
+  cronTimeET: "15:10", cronTimesET: ["15:10"],
+  submitCutoffET: "15:50",
   limitTol: { large: 0.0015, mid: 0.0035, small: 0.0080 },
   limitTolMax: { large: 0.0040, mid: 0.0100, small: 0.0150 },
   limitTolBeta: 0.5, limitTolMin: 0.0005, exitTolMult: 1.5,
@@ -152,6 +170,11 @@ export function resolveTradeConfig(overrides: Partial<TradeConfig> = {}): TradeC
   if (!(cfg.closeAnchorSizeMult > 0 && cfg.closeAnchorSizeMult <= 1)) throw new Error(`closeAnchorSizeMult (${cfg.closeAnchorSizeMult}) must be in (0, 1]`);
   if (!(cfg.maxRunTurnoverFrac > 0 && cfg.maxRunTurnoverFrac <= 1)) throw new Error(`maxRunTurnoverFrac (${cfg.maxRunTurnoverFrac}) must be in (0, 1]`);
   hhmmToMinutes(cfg.cronTimeET); // throws on a malformed "HH:MM"
+  // The cutoff bounds every submit of every slot: it must fall inside the session, after the last slot.
+  const cutoffMin = hhmmToMinutes(cfg.submitCutoffET);
+  const lastSlot = cfg.cronTimesET[cfg.cronTimesET.length - 1];
+  if (!(cutoffMin < 16 * 60)) throw new Error(`submitCutoffET (${cfg.submitCutoffET}) must be before the 16:00 ET close`);
+  if (!(cutoffMin > hhmmToMinutes(lastSlot))) throw new Error(`submitCutoffET (${cfg.submitCutoffET}) must be after every cronTimesET slot (last: ${lastSlot})`);
   if (!(cfg.residualBand > 0 && cfg.residualBand <= cfg.tradeBand)) throw new Error(`residualBand (${cfg.residualBand}) must be in (0, tradeBand ${cfg.tradeBand}]`);
   if (!(Number.isInteger(cfg.maxLateMin) && cfg.maxLateMin > 0 && cfg.maxLateMin <= 390)) throw new Error(`maxLateMin (${cfg.maxLateMin}) must be an integer in (0, 390]`);
   if (!(cfg.maxDayTurnoverFrac >= cfg.maxRunTurnoverFrac && cfg.maxDayTurnoverFrac <= 1)) throw new Error(`maxDayTurnoverFrac (${cfg.maxDayTurnoverFrac}) must be in [maxRunTurnoverFrac ${cfg.maxRunTurnoverFrac}, 1]`);

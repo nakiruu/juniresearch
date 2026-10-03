@@ -48,7 +48,7 @@ const cfg = resolveTradeConfig(); // defaults: wMax 0.10, sectorMax 0.30, maxRun
 const mkReport = (ticker: string): Report =>
   fixtureReport({ ticker, label: "BUY", conviction: 70, scenarios: [[150, 0.3], [120, 0.5], [80, 0.2]] });
 
-const nowMsFor = (day: string) => Date.parse(`${day}T13:50:00.000Z`); // 09:50 EDT — the scheduled morning run, inside the fire window
+const nowMsFor = (day: string) => Date.parse(`${day}T19:15:00.000Z`); // 15:15 EDT — the scheduled 15:10 run, inside its fire window (live marks)
 
 function mkPaths() {
   const dir = mkdtempSync(join(tmpdir(), "phase2-e2e-"));
@@ -104,7 +104,7 @@ describe("phase-2 end to end", () => {
 
     // --- Day 3: one name gaps +30% vs its settled close -> gap-halted; the other name still fills. ---
     broker.setToday(D3);
-    broker.setTrade("GAPD", 130, nowMsFor(D3) - 60_000); // fresh, but +30% vs the $100 settled close -> gap-halt (mid bucket threshold 15%)
+    broker.setTrade("GAPD", 130, nowMsFor(D3) - 60_000); // fresh, but +30% vs the $100 settled close -> set aside as a decision mark (decided at $100) and gap-halted at execution (mid bucket threshold 15%)
     broker.setTrade("OKAY", 100, nowMsFor(D3) - 60_000); // fresh, no gap -> proceeds
     const gapd = mkReport("GAPD");
     const okay = mkReport("OKAY");
@@ -118,6 +118,7 @@ describe("phase-2 end to end", () => {
     expect(fills.some((f) => f.ticker === "GAPD")).toBe(false); // the gapped name did not fill
     const rec3 = readRunRecord(paths, D3);
     expect(rec3.notes as string[]).toEqual(expect.arrayContaining([expect.stringMatching(/GAPD.*gap/)]));
+    expect(rec3).toMatchObject({ markMode: "live", markSources: { GAPD: "close", OKAY: "trade" }, refCloses: { GAPD: 100, OKAY: 100 } });
     expect(day3.notified).toEqual([expect.stringMatching(/GAPD.*\(gap\)/)]);
 
     // --- Day 4: a name with a stale last-trade and no quote -> tier-3 close-anchored buy at 0.5x notional. ---

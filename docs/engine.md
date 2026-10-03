@@ -384,7 +384,9 @@ ban still exits — and only with every input in hand. No SPY close for either d
 (neither measured nor a SIC), a report priced after the mark, or any non-finite number leaves the plain exit,
 reason `R — < exit 0.35 (price at or below the bear case)`: **missing data never holds a name.** SPY is read only
 when a held name is in breach and only under `byCause`: the close on/before the report's price date, and the
-close at the decision-mark date from the same source as the stock marks (`spyDecisionMark` in `planRun`). The
+SPY at the decision mark from the same source as the stock marks (`spyDecisionMark` in `planRun`). In a live run
+(§5.1), that is SPY's own live mark: fresh trade → quote mid → settled close, large-cap freshness and gap. So an
+intraday stock price is never measured against yesterday's SPY. The
 run record keeps each cause (`breaches`), its notes say why a breach had none, and the Discord run summary and
 allocation post list every held breach (`BAC market-driven (32%) — holding`) — each is a report the market has
 passed, so each wants a re-synthesis. The cause is re-measured every run, so a FREEZE lifts by itself when the
@@ -414,10 +416,12 @@ partial IOC entry in cash until drift crosses it. With the knob on, a HOLD name 
 bought inside the lock window, so it can't be sold and can't churn — may ADD toward target through the
 smaller `residualBand` (0.5pp). Buys only; `minOrderUsd` still applies.
 
-**Extra daily runs (`cronTimesET`, default `["09:45"]`).** Add a later slot (e.g. `"10:40"`) to give
-partial fills a second, spaced-out chance; an immediate re-run seconds later mostly meets the same book.
-Each slot fires once per day with its own fire window, run id, reconcile, breakers and audit. A daily cap
-`maxDayTurnoverFrac` (25% of NAV) bounds the day's runs together.
+**Extra daily runs (`cronTimesET`, default `["15:10"]`).** More slots are possible (each must sit before
+`submitCutoffET`, 15:50 ET), e.g. to give partial fills a second, spaced-out chance; an immediate re-run
+seconds later mostly meets the same book. The default deliberately keeps **one** decision a day (§7: extra
+scans add noise trades that the 5-day lock then freezes). Each slot fires once per day with its own fire
+window, run id, reconcile, breakers and audit. A daily cap `maxDayTurnoverFrac` (25% of NAV) bounds the
+day's runs together.
 
 ### 4.4 Locks — the whipsaw / compliance clock  (`lib/trade/locks.ts`)
 
@@ -466,9 +470,12 @@ DAY / GOOD_TILL_CANCEL / FILL_OR_KILL). An "ioc" limit goes in as DAY; `executeO
 market order gets `marketPolls` (30) before the same cancel. A definitive reject (4xx, or an order the
 adapter refuses to send) is recorded as `rejected` and the run continues.
 
-`deltaUsd = round2(deltaWeight · NAV)`. Decisions use the **settled prior-day close** (`markMode:"settled"`);
-only the *fill* uses the live price — so the plan is backtest-reproducible while execution still crosses at
-a real quote.
+`deltaUsd = round2(deltaWeight · NAV)`. **Decisions use the run's live price** (`markMode:"live"`, the
+15:10 ET run — §7): per ticker the fresh last trade, else the fresh quote mid, else the settled prior-day
+close, with the source recorded (run record `markSources`). The `mark` above (TRIM qty) is that decision
+mark. The settled prior close stays the **execution reference** (`Mkt.close`: gap-halt and the tier-3
+anchor, §5.3) and is recorded as `refCloses`, so a replay reads the marks the run actually used.
+`markMode:"settled"` restores prior-close decisions (backtest-reproducible from closes alone).
 
 ### 5.2 Liquidity buckets  (`bucketFor`)
 
@@ -511,7 +518,8 @@ slippage cap refusing to chase.
 
 > 💡 **Deferred — τ_max vs the early-session spread.** On the first (paper) run ~66% of orders were
 > `capBound`: the spread wanted a wider limit than τ_max. Paper quotes are IEX (thin, wide), so that figure
-> may be a data artifact, not the time of day. Runs fire at 09:45 ET. Raise `limitTolMax[bucket]` only after
+> may be a data artifact, not the time of day. That run fired at 09:45 ET; runs now fire at 15:10, when
+> spreads are tighter, so judge only runs at the new time. Raise `limitTolMax[bucket]` only after
 > ≥5 **Schwab** runs, and only if `trade:review` shows cap-bound orders filling below ~50% while
 > τ-wanted/τ_max sits just above 1. Never tune τ on paper.
 
@@ -543,6 +551,7 @@ consecutive-halt      ≥ consecutiveHaltLimit (3) halted runs in a row         
 reconcile-halt        unexplained broker position, or an executed order in    → halt (repeats until recorded)
                       the lock window missing from fills.jsonl
 submit-unknown        an order submit whose outcome couldn't be established → stop sending, halt
+submit cutoff         now ≥ submitCutoffET (15:50 ET) before a submit        → send nothing more, record the rest
 notional guard        Σ|estNotionalUsd| > maxNotionalFrac (1.0) · NAV         → refuse (per-submit)     [guards]
 order-count guard     > maxOrdersPerRun (40)                                  → refuse
 kill switch           TRADE_DISABLED=1                                        → refuse everything
@@ -602,11 +611,13 @@ A CRITICAL fails `trade:execute` (non-zero exit) and, in `trade:cron`, halts wit
 
 ### 6.3 What the run persists / reports
 
-The run record (`data/trade/runs/<id>.json`) stores marks, signals, classifications, locks, bear-breach causes
-(`breaches`, §4.2), the plan, the orders (with sector, broker status, id, submittedAt), and fills. `trade:review`
-produces a weekly digest (turnover, cash, deferrals, reconciled-every-run, lock violations, cap-binds). The
-**Discord notifier** (`lib/trade/notify.ts`) posts a per-run embed (orders, fills, the goal/target book via
-`goalBook`, cash, audit, held bear breaches to re-write) plus halt/auth alerts; best-effort, never fails a run.
+The run record (`data/trade/runs/<id>.json`) stores the decision marks with their sources (`markSources`:
+trade / quote / close) and the settled reference closes (`refCloses`), signals, classifications, locks, bear-breach
+causes (`breaches`, §4.2), the plan, the orders (with sector, broker status, id, submittedAt), fills, and notes
+(live-mark fallbacks, skips — including orders not sent because the submit cutoff passed). `trade:review` produces a
+weekly digest (turnover, cash, deferrals, reconciled-every-run, lock violations, cap-binds). The **Discord notifier**
+(`lib/trade/notify.ts`) posts a per-run embed (orders, fills, the goal/target book via `goalBook`, cash, audit, held
+bear breaches to re-write) plus halt/auth alerts; best-effort, never fails a run.
 
 ---
 
@@ -622,10 +633,13 @@ produces a weekly digest (turnover, cash, deferrals, reconciled-every-run, lock 
   to renew). Schwab credentials can also come from env (`SCHWAB_REFRESH_TOKEN`, optional
   `SCHWAB_REFRESH_OBTAINED_AT`, `SCHWAB_ACCOUNT_HASH`) for hosts with no interactive login: the env
   refresh token is tried first and `data/trade/schwab-token.json` is the fallback when it is out of date
-  (a stale or rotated-away env token is remembered by fingerprint and never retried). Marks come from the broker (settled close for decisions, live trade/quote for fill anchors).
+  (a stale or rotated-away env token is remembered by fingerprint and never retried). Marks come from the broker (live trade / quote mid for the 15:10 decision, with the settled prior close
+  as fallback and as the execution reference; live trade/quote for fill anchors).
 - **Scheduler:** `register-trade-cron.ps1` (Windows Task Scheduler) / `register-trade-cron.sh` (systemd
-  `--user` timer or cron) — both read `cronTimeET` from `lib/trade/config.ts` (09:45 ET) and never fire a
-  missed trigger late; broker from `.env.local`.
+  `--user` timer or cron) — both read `cronTimesET` from `lib/trade/config.ts` (15:10 ET; re-run them after
+  changing it) and never fire a missed trigger late; broker from `.env.local`. The in-app scheduler
+  (`TRADE_SCHEDULER_ENABLED`) catches up a slot only once it is in force: a boot before 15:10 arms for
+  15:10 instead of trading at boot time.
 - **Rollout gate:** Phase 0 (fake dry-run) → Phase 1 (paper smoke: ≥10 runs, exact reconciliation, zero
   lock/ban violations) → Phase 2 (paper event-driven, 4 weeks clean + weekly review). Merge to `main` only
   after that.
@@ -643,9 +657,44 @@ and `GET /api/trade/status` reports `schwabRefreshExpiresAt`.
 - **Market clock.** Schwab's `/markets` `isOpen` is a *trading-day* flag (true all day and night on a
   weekday — verified against live responses). `SchwabBroker.getClock` is open only inside
   `sessionHours.regularMarket`, falling back to the NYSE calendar + 09:30–16:00 ET.
-- **Fire window.** `trade:cron` refuses a run that starts after `cronTimeET + maxLateMin` (20 min) as
-  `late` — a missed trigger or a mid-day catch-up is skipped, never traded at an unplanned time. A
+- **Fire window.** `trade:cron` refuses a run that starts after `cronTimeET + maxLateMin` (15:10 + 20 min =
+  15:30 ET) as `late` — a missed trigger or a catch-up is skipped, never traded at an unplanned time. A
   deliberate manual run passes `trade:cron -- --now` (the market clock still applies).
+- **Submit cutoff (`submitCutoffET`, 15:50 ET).** `executeOrders` checks the clock before every submit; at or
+  after the cutoff it sends nothing more and returns the rest as `skippedCutoff` — run-record notes, an alert,
+  and the run summary's skipped list. A run that starts late with many orders (an emulated IOC polls ~8 s, a
+  market order up to 30 s) therefore never submits into the close. Sells go first, so a cutoff can only leave
+  cash, never leverage. Both `trade:cron` and `trade:execute` apply it.
+- **Early-close days.** On a 13:00 ET close (the day after Thanksgiving, Christmas Eve; ~3 a year) the broker
+  clock reads closed at 15:10, so `trade:cron` exits `closed` and nothing trades that day — accepted, not
+  special-cased.
+
+**The late-day live decision (owner-approved 2026-10).** The book is slow (12-month fundamental targets), so
+the engine keeps exactly **one** decision a day and makes it at **15:10 ET on live prices** instead of at
+09:45 on the prior day's settled close:
+
+- *Why not more scans:* acting a few hours sooner on a 12-month signal is worth < 1 bp a trade (Di Mascio,
+  Lines & Naik on alpha decay), while every extra scan adds noise trades that the 5-day lock then freezes.
+- *Why not the open:* spreads are widest 09:30–10:00 and narrow through the day (Upson & Van Ness 2017;
+  Bogousslavsky & Muravyev 2023), and opening prices of attention-grabbing stocks carry a premium that
+  reverses (Berkman et al. 2012, JFQA; the overnight/intraday split in Lou, Polk & Skouras 2019, JFE).
+- *Why late, live:* the same information is acted on ~18 hours sooner than waiting for tomorrow's settled
+  close; down-day names are bought ahead of the documented last-half-hour reversal (Baltussen, Da &
+  Soebhag); and the fill lands a session earlier, so the lock — counted in trading days from the fill date —
+  clears a session earlier too. The lock itself is unchanged.
+- *Marks and fallback (`planRun`, `liveMark`):* live marks apply only when the run is today's ET session
+  (`today === todayET(nowMs)`, a trading day, 09:30–16:00). Per ticker (report tickers ∪ held): the last
+  trade if fresh, else the quote mid (bid > 0, ask ≥ bid) if fresh — fresh means within the bucket's
+  `maxStaleMin` of capture, the execution path's rule — else the settled prior close. A live price beyond
+  the bucket's `gapHalt` from that close is set aside for the close too (execution would halt that name on
+  the same print, so deciding on it would only re-size the rest of the book). A failed live read never fails
+  the run: that name decides on the close and execution re-reads it. Every fallback is recorded
+  (`markSources`, notes). The settled closes are always fetched first and stay execution's reference; the
+  decision's own trade/quote snapshot is reused as the execution anchor (one read per ticker per run).
+  Outside today's session — `trade:plan --date`, pre/post-market, a holiday — the run marks settled, exactly
+  as before.
+- *Revert:* `cronTimesET: ["09:45"]` and `markMode: "settled"` in `lib/trade/config.ts`, then re-run
+  `scripts/register-trade-cron.sh` / `.ps1` (they read the slot from that file).
 
 ---
 
@@ -674,12 +723,15 @@ and `GET /api/trade/status` reports `schwabRefreshExpiresAt`.
 | `maxStaleMin` large/mid/small | 5 / 15 / 60 | anchor freshness |
 | `closeAnchorSizeMult` | 0.5 | tier-3 buy size |
 | `maxRunTurnoverFrac` / `consecutiveHaltLimit` | 0.15 / 3 | breakers |
-| `cronTimeET` | "09:45" | scheduler |
+| `cronTimeET` / `cronTimesET` | "15:10" / ["15:10"] | scheduler (one late-day decision) |
+| `markMode` | "live" (15:10 live marks; "settled" = prior close) | decision marks |
+| `maxLateMin` | 20 (15:10 → 15:30 ET) | fire window |
+| `submitCutoffET` | "15:50" | no submit at or after it |
 | buckets | large ≥ $10B, mid ≥ $2B, else small (null→mid) | liquidity |
 
 `resolveTradeConfig` enforces the invariants (`rExit < rEnter`, `muExit < muEnter`, `limitTol ≤ limitTolMax ≤ 0.5`,
 `gapHalt ∈ (0,1)`, positive freshness, `closeAnchorSizeMult ∈ (0,1]`, `0 < breachMarketShareMax < breachStockShareMin ≤ 1.5`,
-`byCause` ⇒ `bearFloor > 0`, etc.) at construction.
+`byCause` ⇒ `bearFloor > 0`, `submitCutoffET` before 16:00 and after every slot, etc.) at construction.
 
 ## 9. Symbol glossary
 

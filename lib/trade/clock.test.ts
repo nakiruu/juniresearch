@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { todayET, etMinutesOfDay, etDateString, etWallToUtc, hhmmToMinutes } from "./clock";
+import { todayET, etMinutesOfDay, etDateString, etWallToUtc, hhmmToMinutes, etInstantOn, etHHMM } from "./clock";
 
 describe("todayET", () => {
   it("is the ET date, not the UTC date, in the evening (EDT)", () => {
@@ -30,5 +30,16 @@ describe("hhmmToMinutes", () => {
   it("parses HH:MM and rejects malformed values", () => {
     expect(hhmmToMinutes("09:45")).toBe(585);
     for (const bad of ["9:45", "24:00", "09:60", "0945", ""]) expect(() => hhmmToMinutes(bad)).toThrow();
+  });
+});
+
+describe("etInstantOn (the submit cutoff instant)", () => {
+  it("is HH:MM ET on that ET date, DST-correct", () => {
+    expect(new Date(etInstantOn("2026-09-25", "15:50")).toISOString()).toBe("2026-09-25T19:50:00.000Z"); // EDT
+    expect(new Date(etInstantOn("2026-12-01", "15:50")).toISOString()).toBe("2026-12-01T20:50:00.000Z"); // EST
+    expect(etHHMM(etInstantOn("2026-11-27", "15:50"))).toBe("15:50 ET");
+  });
+  it("throws on a malformed date or time rather than return NaN", () => {
+    for (const [d, t] of [["2026-9-25", "15:50"], ["", "15:50"], ["2026-09-25", "3:50"], ["2026-09-25", "25:00"]]) expect(() => etInstantOn(d, t)).toThrow();
   });
 });

@@ -254,8 +254,10 @@ runs a Phase-0 dry loop against an in-memory book.
 - **Slippage-capped IOC limits** (`lib/trade/limit.ts`): a per-liquidity-bucket anchor waterfall (fresh
   trade → quote touch → prior close) with a spread-aware tolerance τ and a hard cap τ_max. IOC means an
   unmarketable order cancels — **a non-fill is the slippage cap doing its job**, not an error.
-- **Decisions use the settled prior-day close** so the plan is reproducible; only the *fill* crosses at the
-  live quote.
+- **One decision a day, late, on live prices** (`markMode:"live"`, 15:10 ET): each name is marked at its fresh
+  last trade, else its fresh quote mid, else the settled prior-day close — the source is recorded per ticker,
+  and a print that has gapped past the gap-halt is set aside for the close. The settled prior close stays the
+  execution reference (gap-halt, tier-3 anchor). `markMode:"settled"` restores prior-close decisions.
 
 ### Safety rails
 
@@ -266,7 +268,8 @@ runs a Phase-0 dry loop against an in-memory book.
 | preview-only mode | `trade:cron` / scheduler / `trade:execute` | `PREVIEW_ONLY=true`: plan + post the allocation every run, never submit (no breakers, no run record, halt counter untouched) |
 | allocation post | `trade:execute` | every run prints the target book and posts it to Discord — preview, declined, market-closed and executed runs alike |
 | market-clock check | `trade:execute` / `trade:cron` | exits cleanly outside the regular session (09:30–16:00 ET on trading days) |
-| fire window | `trade:cron` | a run starting > 20 min after `cronTimeET` exits as `late` (`trade:cron -- --now` for a deliberate manual run) |
+| fire window | `trade:cron` | a run starting > 20 min after `cronTimeET` (15:10 → 15:30 ET) exits as `late` (`trade:cron -- --now` for a deliberate manual run) |
+| submit cutoff | `trade:cron` / `trade:execute` | nothing is submitted at or after `submitCutoffET` (15:50 ET), however late the run started; the rest are recorded as skipped and notified |
 | turnover breaker | `trade:cron` / scheduler | **off unless `TURNOVER_BREAKER=true`**; when on, a run over 15% of NAV (25%/day) is clipped (buy-only) or halted (any sell) |
 | consecutive-halt breaker | `trade:cron` | blocks further runs after 3 halts in a row |
 | orders reconcile | `trade:cron` / `trade:execute` / `trade:reconcile` | halts while any executed broker order in the lock window is missing from `fills.jsonl` (`trade:reconcile -- --record-missing` records them from broker truth) |
@@ -286,9 +289,11 @@ runs a Phase-0 dry loop against an in-memory book.
 
 The **Discord notifier** (`lib/trade/notify.ts`) posts a per-run embed (orders, fills, the goal book, cash,
 audit) plus halt/auth alerts when `DISCORD_WEBHOOK_URL` is set — best-effort; a Discord outage never fails a
-run. **Schedule** `trade:cron` for 09:45 ET with `scripts/register-trade-cron.ps1` (Windows Task Scheduler)
-or `scripts/register-trade-cron.sh` (systemd `--user` timer / cron); it self-guards on the market clock, so
-triggering it daily is safe.
+run. **Schedule** `trade:cron` for 15:10 ET (`cronTimesET` in `lib/trade/config.ts`) with
+`scripts/register-trade-cron.ps1` (Windows Task Scheduler) or `scripts/register-trade-cron.sh` (systemd
+`--user` timer / cron) — re-run the script after changing the time. It self-guards on the market clock, so
+triggering it daily is safe; on an early-close day (13:00 ET) the market is already shut at 15:10 and nothing
+trades. To go back to the morning: `cronTimesET: ["09:45"]` and `markMode: "settled"`, then re-register.
 
 > **Rollout gate:** Phase 0 (fake dry-run) → Phase 1 (paper smoke, ≥10 clean runs) → Phase 2 (paper
 > event-driven, 4 weeks clean + weekly review) before any merge to `main`.

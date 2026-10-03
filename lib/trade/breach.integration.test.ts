@@ -116,3 +116,30 @@ describe("planRun — a held name below its bear case, by cause", () => {
     expect(out.breaches).toEqual({});
   });
 });
+
+describe("planRun — a bear breach in a live (15:10 ET) run", () => {
+  const NOW = Date.parse("2026-09-25T15:10:00-04:00"); // TODAY, inside the session: markMode "live" (the default)
+  it("measures the market part against SPY's LIVE mark, not yesterday's close", async () => {
+    // Report $100 on 09-22, bear $80. Settled 09-24: NVT $85 (above the bear), SPY $470. Live: NVT $76 (a breach), SPY $440.
+    const { b, fills } = await heldBook({ mark: 85, spy: { "2026-09-22": 500, "2026-09-24": 470 } });
+    b.setTrade("NVT", 76, NOW - 60_000);
+    b.setTrade("SPY", 440, NOW - 60_000);
+    const out = await planRun({ adapter: b, reports: [nvt()], sics: { NVT: 3500 }, marketCapUsd: { NVT: 3e9 }, betas: { NVT: 1.2 }, fills, today: TODAY, cfg, runId: "r1", nowMs: NOW });
+    expect(out.record.markMode).toBe("live");
+    expect(out.record.markSources?.NVT).toBe("trade");
+    expect(out.signals[0]).toMatchObject({ price: 76, R: null, D: 0 });
+    // Live SPY −12% × β 1.2 = −14.4% of NVT's −24% → stock-specific share 0.40 → market-driven → HOLD.
+    // (Settled SPY $470 would read −6% → share 0.70 → a mixed FREEZE.)
+    expect(out.breaches.NVT.spyReturn).toBeCloseTo(440 / 500 - 1, 12);
+    expect(out.breaches.NVT).toMatchObject({ cause: "market" });
+    expect(out.plan.classifications.find((c) => c.ticker === "NVT")!.classification).toBe("HOLD");
+  });
+  it("a stale SPY print falls back to SPY's settled close, exactly like any other decision mark", async () => {
+    const { b, fills } = await heldBook({ mark: 85, spy: { "2026-09-22": 500, "2026-09-24": 470 } });
+    b.setTrade("NVT", 76, NOW - 60_000);
+    b.setTrade("SPY", 440, NOW - 30 * 60_000); // older than the large-cap 5-minute window
+    const out = await planRun({ adapter: b, reports: [nvt()], sics: { NVT: 3500 }, marketCapUsd: { NVT: 3e9 }, betas: { NVT: 1.2 }, fills, today: TODAY, cfg, runId: "r1", nowMs: NOW });
+    expect(out.breaches.NVT.spyReturn).toBeCloseTo(470 / 500 - 1, 12);
+    expect(out.plan.classifications.find((c) => c.ticker === "NVT")!.classification).toBe("FREEZE");
+  });
+});
