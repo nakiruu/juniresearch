@@ -49,9 +49,16 @@ export interface DecisionInputs {
   conviction: Conviction;
   gate: { ceiling: RatingLabel; flags: string[]; confidence: "high" | "medium" | "low" };
   moat: { width: MoatWidth; trend: MoatTrend; contingent: boolean; bearFloor?: number } | null;
-  intrinsic: { marginOfSafety: number } | null;
+  /**
+   * `mosRange` (optional): min/max margin of safety over the centre point and the four corners
+   * {r ± 1pp} × {base growth ± 2pp}. When present, a DCF sign is only trusted if it is robust over
+   * that range; when absent (older callers) the point estimate is used as before.
+   */
+  intrinsic: { marginOfSafety: number; mosRange?: { min: number; max: number } } | null;
   composite?: { percentile: number | null; confidence: "high" | "medium" | "low" } | null;
-  market?: { targetDispersion: number | null; divergence?: number | null } | null; // dispersion; |E_mech − E_Street|
+  // targetDispersion scores; divergence (|E_mech − E_Street|) is informational only — it fired on
+  // ~all valued names, so it carried no signal as a penalty (it now surfaces as an advisory).
+  market?: { targetDispersion: number | null; divergence?: number | null } | null;
   uncertainty?: { tier: UncertaintyTier; scenarioDispersion?: number | null } | null;
   published?: RatingLabel; // the author's label, if a report is being scored
 }
@@ -71,6 +78,23 @@ const towardHold = (l: RatingLabel): RatingLabel =>
   l === "HOLD" ? l : ORDER[rank(l) + (rank(l) > rank("HOLD") ? -1 : 1)];
 const isBullish = (l: RatingLabel) => l === "BUY" || l === "STRONG BUY";
 const sign = (x: number) => (x > 0 ? 1 : x < 0 ? -1 : 0);
+
+/**
+ * Does the DCF disagree with the sign of expected upside E?
+ *   "point"  — the point-estimate margin of safety has the opposite (non-zero) sign to E;
+ *   "robust" — additionally every point of `mosRange` has that opposite sign (E > 0 needs max < 0;
+ *              E < 0 needs min > 0), so the disagreement survives ±1pp on r and ±2pp on growth.
+ * Without `mosRange` a point disagreement is treated as robust (the pre-mosRange behaviour).
+ */
+function dcfDisagreement(intrinsic: DecisionInputs["intrinsic"], e: number): "none" | "point" | "robust" {
+  if (!intrinsic) return "none";
+  const s = sign(intrinsic.marginOfSafety);
+  if (s === 0 || s === sign(e)) return "none";
+  const range = intrinsic.mosRange;
+  if (!range) return "robust";
+  const robust = e > 0 ? range.max < 0 : e < 0 ? range.min > 0 : false;
+  return robust ? "robust" : "point";
+}
 
 export function decide(inputs: DecisionInputs, cfg: DeskRating, policy: DecisionPolicy = SAFE_DEFAULTS): Decision {
   const { conviction: c, gate, moat, intrinsic } = inputs;
@@ -128,12 +152,18 @@ export function decide(inputs: DecisionInputs, cfg: DeskRating, policy: Decision
   }
 
   // --- Corroboration (L3): an extreme must be backed by moat + intrinsic. Opt-in. ---
+  // The intrinsic leg is lenient when `mosRange` is present: it asks only that the DCF does not
+  // ROBUSTLY contradict the extreme (STRONG BUY: some point of the range is > 0, i.e. max > 0;
+  // STRONG SELL: min < 0). A sign that flips within ±1pp r / ±2pp growth is model error and must not
+  // block corroboration. Without `mosRange` the point estimate is used, as before.
   if (policy.requireCorroboration && (label === "STRONG BUY" || label === "STRONG SELL")) {
     const compTail = composite?.percentile;
+    const dcfBull = !intrinsic || (intrinsic.mosRange ? intrinsic.mosRange.max > 0 : intrinsic.marginOfSafety > 0);
+    const dcfBear = !intrinsic || (intrinsic.mosRange ? intrinsic.mosRange.min < 0 : intrinsic.marginOfSafety < 0);
     const agree =
       label === "STRONG BUY"
-        ? moat?.width === "WIDE" && moat.trend !== "ERODING" && (intrinsic ? intrinsic.marginOfSafety > 0 : true) && (compTail == null || compTail >= 50)
-        : gate.flags.includes("distress") && (intrinsic ? intrinsic.marginOfSafety < 0 : true) && (compTail == null || compTail <= 50);
+        ? moat?.width === "WIDE" && moat.trend !== "ERODING" && dcfBull && (compTail == null || compTail >= 50)
+        : gate.flags.includes("distress") && dcfBear && (compTail == null || compTail <= 50);
     if (!agree) {
       label = towardHold(label);
       reasons.push(`extreme not corroborated → ${label}`);
@@ -146,13 +176,22 @@ export function decide(inputs: DecisionInputs, cfg: DeskRating, policy: Decision
   if (moat && moat.trend === "ERODING" && isBullish(label)) score -= 15;
   // A value/expected-return disagreement only counts against a bullish call — a HOLD is often the
   // correct synthesis of exactly that disagreement, so it is not penalised for it (7.md I4).
-  if (isBullish(label) && intrinsic && sign(intrinsic.marginOfSafety) !== 0 && sign(intrinsic.marginOfSafety) !== sign(c.expectedUpside)) score -= 20;
+  // Only a ROBUST disagreement costs conviction (see dcfDisagreement): a sign that flips within the
+  // DCF's ±1pp r / ±2pp growth range is a coin flip, so it is noted but not penalised.
+  if (isBullish(label)) {
+    const dis = dcfDisagreement(intrinsic, c.expectedUpside);
+    if (dis === "robust") score -= 20;
+    else if (dis === "point")
+      advisories.push("DCF margin of safety disagrees with expected upside, but within model error (range straddles 0) — not penalised");
+  }
   // Contested name: a wide analyst-target spread is a market proxy for uncertainty (6.md 4.1).
   const disp = inputs.market?.targetDispersion;
   if (disp != null) score -= Math.round(Math.min(1, Math.max(0, disp)) * 15);
-  // The model and the Street disagree sharply on value — real uncertainty, not an error (4.md §8).
+  // Model-vs-Street divergence (4.md §8) is informational only: >25% fired on ~all valued names, so as
+  // a penalty it was effectively a constant. Surfaced as an advisory; it does not move the score.
   const divergence = inputs.market?.divergence;
-  if (divergence != null && divergence > 0.25) score -= 10;
+  if (divergence != null && divergence > 0.25)
+    advisories.push(`model vs Street expected return diverge by ${(divergence * 100).toFixed(0)}pp — informational, not scored`);
   if (!intrinsic) score -= 10; // could not value intrinsically
   if (!moat) score -= 10;
   if (!composite || composite.percentile == null) score -= 10; // no cross-sectional read
