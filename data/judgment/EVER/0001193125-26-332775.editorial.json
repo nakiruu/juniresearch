@@ -1,8 +1,8 @@
 {
-  "judgmentSha256": "bf9d0871bd4d4ee0c7ebe69a5ef05f1305024cbdc2155a59206f40af1f7a5966",
-  "reviewedAt": "2026-10-03T03:22:01Z",
+  "judgmentSha256": "781a8d805dbe98ecbceb596972a79fc01a85bbb3bb2aae092d4eecc1a5f46ea5",
+  "reviewedAt": "2026-10-03T03:26:51Z",
   "reviewer": "claude-opus-5-5",
-  "round": 1,
+  "round": 2,
   "verdict": "needs-fix-round",
   "findings": [
     {
@@ -12,7 +12,8 @@
       "quote": "We give Base half the weight because the data in hand shows demand intact: second-quarter growth was still strong and the third-quarter outlook sits above the second-quarter result.",
       "issue": "Honest dating / counter-case. The demand evidence is the August 3, 2026 release; the report is dated October 3, 2026, after the third quarter it guides has already closed. The page's own price chart shows the stock falling from the low $20s to the high teens over September 22-23, 2026, and no headline was captured to explain it. The report never acknowledges the move, so two-month-old guidance is presented as current proof of demand and the 0.50 Base weight rests on it. Same reliance in executiveSummary.thesis.body (\"the Q3 2026 outlook from August 3, 2026 does not yet show spending rolling over\").",
       "fix": "Say once (scenarioCommentary or thesis) that the shares fell sharply in late September 2026, that no news was captured to explain it, and that the August 3 outlook predates it. Either argue why the Base weight survives an unexplained break, or move weight toward Bear. Do not invent a cause.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed: scenarioCommentary now dates the August 3 evidence, names the September 22-23, 2026 fall, assumes no cause and moves weight from Bull to Bear. See F-19 for the repetition this introduced."
     },
     {
       "id": "F-2",
@@ -21,7 +22,8 @@
       "quote": "Base is our anchor: no rerating, just the current forward multiple applied one year further out.",
       "issue": "Calls coherence / source disagreement. The report leads with ~6.3x FY27E EPS (meta.subtitle, analystCommentary, multiplesCommentary), yet Base (scenarios[1].driver) applies 7.5x to the same FY27E EPS of $3.08. On the FY27E basis the reader was given, Base is a re-rating, not \"no rerating\". The 7.5x vendor \"Fwd P/E (NTM)\" lines up with FY26E EPS rather than a forward twelve months from October 2026, which is why the two forward multiples differ; multiplesCommentary uses both silently and never says which basis Base uses.",
       "fix": "In multiplesCommentary, say once that the vendor's NTM multiple sits on FY26E (current-year) earnings and that the ~6.3x figure is on FY27E. In scenarioCommentary, state the time-roll argument plainly (current-year multiple held, rolled to the next current year) or call Base a modest re-rating on FY27E and argue for it.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed: multiplesCommentary says the NTM multiple sits on FY26E, and scenarioCommentary states the time roll and concedes it is a modest rerating on FY27E. See F-21 for the leftover mismatch in the thesis."
     },
     {
       "id": "F-3",
@@ -30,7 +32,8 @@
       "quote": "Link Ventures LLLP held 98.7% of the Class B shares and 10.0% of the Class A shares, giving it 57.1% of total voting power; David Blundin is deemed to hold voting and dispositive power over those shares.",
       "issue": "Attribution. Proxy footnote (1) says the 3,157,501 Class A shares behind the 10.0% are Blundin's direct holding plus Recognition Capital, LLC, Cogo Fund 2020, LLC and Link Ventures (which holds 2,598,154 of them). The 10.0% and 57.1% therefore belong to the Blundin-affiliated group, not Link Ventures LLLP alone. The proxy also says Blundin \"may be deemed\" to hold that power, not \"is deemed\". analystCommentary inverts the chain the other way: \"Link Ventures LLLP, through David Blundin, held 57.1% of total voting power\".",
       "fix": "Attribute the 10.0% Class A and 57.1% voting power to David Blundin and his affiliated entities, with Link Ventures LLLP as the Class B holder (98.7%). Use \"may be deemed\". In analystCommentary write e.g. \"David Blundin, through Link Ventures LLLP and affiliated entities, held 57.1%\".",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed: the 10.0% and 57.1% now go to Blundin together with his affiliated entities, the text says \"may be deemed\", and analystCommentary has the chain the right way round."
     },
     {
       "id": "F-4",
@@ -39,7 +42,8 @@
       "quote": "Automotive insurance providers account for a substantial majority of revenue, in the 10-K's words, so the auto insurance cycle drives results.",
       "issue": "Over-attribution. The 10-K's phrase is \"a substantial majority of the referrals made through our marketplace are for automotive insurance\": it describes referrals, not revenue. The 10-K's revenue statement is a figure (91% for 2025), not that phrase. The same phrase reappears as fact in businessMoat.segments[0].body (\"automotive remains the substantial majority\") and growth.points[2] (\"automotive is still the substantial majority\").",
       "fix": "Either quote the 10-K accurately (referrals) or use the grounded revenue share (91% of 2025 revenue per the 10-K, or 89% for the six months ended June 30, 2026 per the 10-Q) once. In the later sections, refer back in words without the quote.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed: the 10-K phrase is quoted accurately (referrals), and the revenue share is the 10-Q's 89% for the six months ended June 30, 2026."
     },
     {
       "id": "F-5",
@@ -48,7 +52,8 @@
       "quote": "Variable Marketing Dollars (revenue less advertising costs) of $56.9 million in the quarter, against $45.5 million a year earlier, is the better gauge of what the marketplace keeps.",
       "issue": "Unsupported characterization. The 10-Q says \"We do not use VMD or VMM as a measure of profitability\" and uses it to manage advertising efficiency. Calling it the gauge of what the marketplace keeps reads it as a profit measure, which the company explicitly disclaims, and ignores the non-advertising costs in sales and marketing, R&D and G&A.",
       "fix": "Present VMD the way the company does: as a measure of advertising efficiency, i.e. revenue left after advertising costs. Quote the 10-Q's caveat that it is not a profitability measure.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed: VMD is framed as an advertising-efficiency measure, with the 10-Q's caveat quoted."
     },
     {
       "id": "F-6",
@@ -57,7 +62,8 @@
       "quote": "The structure aligns the controlling holder with the share price, but outside holders cannot change the board, so alignment rests on that one holder's interests.",
       "issue": "Judgment, not restatement. The ownership paragraphs mostly restate the proxy table. The one judgment sentence misses the point the surface supports: the Blundin group's 10.0% of Class A plus Class B gives it 57.1% of the vote, far above its economic stake, and the same holder's affiliates were paid approximately $40.0 million in 2025 (governance). That income does not depend on the share price, so \"aligns the controlling holder with the share price\" is not established. governance likewise leaves the $40.0 million unscaled (\"The proxy gives no independent benchmark for that claim\"), although FY25 figures on the surface (net income $99.3M, revenue $692.5M, Variable Marketing Dollars $191.9 million per the proxy) let the reader see its size.",
       "fix": "Read the holding for the holder: say that the voting stake far exceeds the economic one and that the controller earns supplier income from the company. Set the $40.0 million against one FY25 figure already on the surface, without computing a new ratio. Then decide whether alignment is weaker than the paragraph claims.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed: governance sets the $40.0 million against FY25 net income of $99.3M, and insiderOwnership reads the holding from the controller's side."
     },
     {
       "id": "F-7",
@@ -66,7 +72,8 @@
       "quote": "At a 13.8% FCF yield, repurchases are a sensible use of cash, and they leave the cash balance growing.",
       "issue": "Counter-case missing. The capital-allocation view names no reading that cuts the other way. Two are on the page: buybacks retire Class A shares and so raise the controlling holder's share of the vote, and the company spent $29.0 million on repurchases in the first half of 2026 at prices well above today's (52-week high $28.73) ahead of whatever caused the September fall.",
       "fix": "Add one or two sentences on the counter-case: buybacks concentrate voting control further, and repurchases at cycle-high prices destroy value if carrier spend turns. Then restate the view.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed: capitalAllocation now has a counter-case. The author was right not to adopt my round-1 premise about prices \"well above today's\": Q2 2026 repurchases ($9.1 million for 578 thousand shares) do not support it. See F-20 for a new unsupported detail in the rewrite."
     },
     {
       "id": "F-8",
@@ -75,7 +82,8 @@
       "quote": "That is the main reason we keep a discount to the Street in the valuation.",
       "issue": "Repetition (paraphrase). The claim that concentration and control justify a standing discount to the Street is made in meta.subtitle (\"a controlling holder cap the multiple\"), analystCommentary (\"The discount is not irrational\"), scenarios[1].driver (\"The discount to the Street for concentration and control persists\"), scenarioCommentary (\"concentration and control deserve a standing discount\"), governance (this sentence) and finalRecommendation.body[0] (\"the discount for concentration and control is real, which is why our range sits below the Street\"). The \"outside holders have no say\" idea is retold in executiveSummary.thesis.body, governance (\"the board answers to one holder\") and insiderOwnership (\"outside holders cannot change the board\").",
       "fix": "Argue the discount once, in scenarioCommentary, and the no-say point once, in governance. Elsewhere point to it in words (\"see valuation\") or drop it.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed: the discount is argued once, in scenarioCommentary, and the other sections point to it."
     },
     {
       "id": "F-9",
@@ -84,7 +92,8 @@
       "quote": "Related-party dependence. Affiliates of the controlling holder are paid marketing suppliers, so part of the cost base is set by a party that also controls the board.",
       "issue": "Repetition (paraphrase). The related-party-supplier claim is argued in businessMoat.moatFactors[3].body (\"ties the cost base to a related party\"), management.governance (\"The main governance issue is related-party spending\"), and here. The \"watch the next proxy\" trigger appears three times: governance (\"Watch the next proxy for the size of related-party payments relative to revenue growth\"), this item (\"Watch the related-party disclosure in the next proxy\") and finalRecommendation.body[1] (\"if the next proxy shows related-party payments to Link Ventures affiliates rising faster than revenue\").",
       "fix": "Keep the argument in governance. Reduce the risk item to the mechanism plus a pointer to governance, cut the moat-factor sentence or make it a pointer, and state the next-proxy trigger once (finalRecommendation).",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed: governance carries the argument, the risk item and moat factor are reduced to pointers, and the next-proxy trigger appears once, in finalRecommendation."
     },
     {
       "id": "F-10",
@@ -93,7 +102,8 @@
       "quote": "Agreements carry no minimum spend, so a cut by the top buyer flows straight to revenue and, through operating leverage, to earnings.",
       "issue": "Repetition (paraphrase). The top-carrier concentration and no-minimum-spend story is retold in analystCommentary (\"The top carrier customer supplied 35% of six-month 2026 revenue with no minimum spend commitment\"), executiveSummary.thesis.body (\"its share of revenue makes that a direct hit\"), scenarioCommentary (\"the top customer's share of revenue moves earnings more than any other input and the company cannot contract around it\"), businessMoat.moatFactors[2].body (\"Agreements carry no minimum spend\"), businessMoat.durability (\"the buyer with that much share sets the terms\") and here. The falling-share trigger repeats in scenarios[0].driver, this item and finalRecommendation.body[1].",
       "fix": "Argue concentration once, here in risks. Make the analystCommentary and thesis mentions single pointers, and cut the scenarioCommentary and durability retellings back to a reference.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed: concentration is argued in risks.idiosyncratic[0] and pointed to elsewhere."
     },
     {
       "id": "F-11",
@@ -102,7 +112,8 @@
       "quote": "A rise in auto claims or inflation that hurts carrier underwriting would reduce marketing budgets across the industry at once.",
       "issue": "Repetition (paraphrase). This retells risks.idiosyncratic[1] (\"The mechanism is carrier profitability: when underwriting turns, marketing budgets go first\"). The 2022-2023 carrier pullback and \"without warning\" line also recur in executiveSummary.risks[1], analystCommentary (\"Carrier spend fell hard in 2022 and 2023\"), scenarioCommentary (\"which the 10-K says can happen without warning\"), and incomeCommentary's closing counter-case.",
       "fix": "Keep the underwriting-to-budget mechanism in one place (idiosyncratic[1] or systemic, not both). Elsewhere refer back in words without restating the 10-K line.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed: the underwriting-to-budget mechanism sits only in idiosyncratic[1], and systemic now argues the economy and regulation channels."
     },
     {
       "id": "F-12",
@@ -111,7 +122,8 @@
       "quote": "Tax normalization. The 10-Q expects a higher 2026 tax rate after the valuation-allowance release, which keeps GAAP EPS growth below operating income growth.",
       "issue": "Repetition (paraphrase). This is close to a restatement of executiveSummary.risks[3] (\"Higher 2026 tax rate after the valuation-allowance release will hold GAAP earnings growth below operating income growth\"). The same valuation-allowance story is argued in financials.incomeCommentary (\"the 10-Q expects a higher 2026 tax rate after it released its valuation allowance in the fourth quarter of 2025\") and again in valuation.multiplesCommentary.",
       "fix": "Argue the tax effect once (incomeCommentary). Keep the executive-summary risk as a pointer. Cut this item or replace it with a distinct risk, and keep only the EPS-basis point the multiples section needs.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed: the tax item was removed from risks; incomeCommentary argues it, and the other sections point back."
     },
     {
       "id": "F-13",
@@ -120,7 +132,8 @@
       "quote": "The second-quarter 2026 press release shows home and renters growing faster than automotive, but automotive remains the substantial majority.",
       "issue": "Repetition (paraphrase). The same claim is made in growth.points[2] (\"Home and renters grew faster than automotive in the second quarter of 2026, per the press release ... automotive is still the substantial majority\"). The \"other verticals insignificant in 2026\" point is also made in both executiveSummary.companyOverview and this body. The undated $1 billion path is noted in both executiveSummary.catalysts[3] (\"which has no date in the release\") and growth.points[3] (\"without a date\").",
       "fix": "Keep the vertical-mix argument in growth (or segments) and refer to it in words elsewhere. Drop the duplicate \"insignificant\" sentence, and make the catalyst a bare pointer.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed: the vertical mix sits in growth, the \"insignificant\" line appears once, and the catalysts are pointers."
     },
     {
       "id": "F-14",
@@ -129,7 +142,8 @@
       "quote": "The team has delivered on the recovery: the operating turnaround since FY23 is set out in the income commentary.",
       "issue": "Unsupported causal claim / restatement. Crediting the FY23-FY25 recovery to the team adopts the Compensation Committee's own view; the surface shows the recovery tracked carrier spend returning (10-K, 10-Q). The rest of the first paragraph lists names, titles and ages from the proxy without a view on what they mean for the holder, for example whether there are tenure or succession questions after the General Counsel's September 12, 2025 resignation.",
       "fix": "Attribute the credit to the proxy (\"the Compensation Committee credits management with...\") and weigh it against the carrier cycle. Cut the roster to what the argument needs and reach a view the reader can act on.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed: the credit is attributed to the Compensation Committee and weighed against the carrier cycle; the roster is trimmed and the section reaches a view."
     },
     {
       "id": "F-15",
@@ -138,7 +152,8 @@
       "quote": "the top carrier's share of six-month revenue falls again in the next 10-Q",
       "issue": "Period mismatch. The next 10-Q (third quarter 2026) will report the concentration figure for the nine months ended September 30, 2026, not six months.",
       "fix": "Write \"the top carrier's share of year-to-date revenue\" or \"nine-month revenue\".",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed: the text now refers to the nine-month figure in the next 10-Q."
     },
     {
       "id": "F-16",
@@ -147,7 +162,8 @@
       "quote": "The company says its proprietary data assets and AI traffic engine set it apart.",
       "issue": "Mild over-attribution. The 10-Q says EverQuote is \"Fueled by our proprietary data assets and our AI traffic engine\" and is \"transforming the way providers attract and engage consumers\". It does not claim the assets set it apart from anyone.",
       "fix": "Quote the company's phrasing (\"Fueled by our proprietary data assets and our AI traffic engine\") rather than paraphrasing it into a differentiation claim.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed: the company's own phrasing is quoted."
     },
     {
       "id": "F-17",
@@ -156,7 +172,8 @@
       "quote": "The balance sheet carries no financial risk.",
       "issue": "Voice: an unearned absolute. The rest of the paragraph makes the narrower and supportable point that cash and no debt rule out a solvency problem. Similarly, executiveSummary.thesis.body says \"outside investors have no voice\", which overstates: outside Class A holders still vote, only as a minority.",
       "fix": "Write e.g. \"The balance sheet carries no solvency risk\" and \"outside investors hold a minority of the vote\".",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed: \"no solvency risk\" and \"hold a minority of the vote\"."
     },
     {
       "id": "F-18",
@@ -165,6 +182,34 @@
       "quote": "Watch the concentration disclosure in each 10-Q and whether the top carrier's share keeps falling.",
       "issue": "Voice tic. \"Watch\" closes eight passages (all five idiosyncratic risks, systemic, governance, and growth.points[1]), and \"per the 10-K\" appears three times in businessMoat. The repetition is now noticeable.",
       "fix": "Vary the construction, or keep what-to-watch lines only where they add a trigger the final recommendation does not already give.",
+      "status": "addressed",
+      "note": "Addressed: \"Watch\" no longer appears, and the per-10-K tags are reduced."
+    },
+    {
+      "id": "F-19",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "the shares fell sharply in late September 2026 without a captured explanation, and the last company outlook predates that fall, so we cannot tell whether carrier demand has turned.",
+      "issue": "Repetition (paraphrase), introduced by the F-1 fix. Round 1 asked for the late-September fall to be said once. The same claim (sharp fall, no explanation, last outlook predates it) is now made in meta.subtitle (\"an unexplained late-September fall postdates the last outlook\"), analystCommentary (\"The shares fell sharply in late September 2026 for a reason we could not find, after the last company outlook was issued, so the newest demand evidence is older than the price move\"), this thesis sentence, scenarioCommentary (\"The demand evidence in hand ... predates that fall\") and finalRecommendation.body[0] (\"an unexplained share-price fall that postdates the last outlook\"). It is also restated in catalysts[0], scenarios[0].driver and capitalAllocation.",
+      "fix": "Argue it once, in scenarioCommentary, where it sets the weights. Make the subtitle, analystCommentary, thesis and finalRecommendation one-clause pointers (e.g. \"the September fall, see valuation\"), and keep the scenario driver and capital-allocation mentions to the consequence only.",
+      "status": "open"
+    },
+    {
+      "id": "F-20",
+      "severity": "Important",
+      "field": "sections.management.capitalAllocation",
+      "quote": "Repurchases retire Class A shares while the Class B shares stay outstanding, so each buyback raises the controlling holder's share of the vote.",
+      "issue": "Unsupported claim, introduced by the F-7 fix. The surface says only that the company \"repurchased 578 thousand shares of its common stock\" (press release) and records \"Repurchase of common stock\" in the cash-flow statement. Nothing captured says the repurchased shares are Class A. The point does not need that detail: any repurchase from holders other than the controller raises the controller's share of the vote.",
+      "fix": "Drop the class detail: e.g. \"Repurchases from other holders shrink the share count while the controlling holder's shares stay outstanding, so each buyback raises its share of the vote.\"",
+      "status": "open"
+    },
+    {
+      "id": "F-21",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "at ~6.3x FY27E EPS with net cash the shares do not need a rerating to work.",
+      "issue": "Calls coherence, minor. scenarioCommentary now concedes that, measured on FY27E, Base \"is a modest rerating, which we accept because the time roll accounts for it\". The thesis states the FY27E multiple and then says no rerating is needed, which reads against the valuation section on that same basis.",
+      "fix": "Align the thesis with the time-roll framing, e.g. \"the shares need only today's current-year multiple held as earnings roll forward\".",
       "status": "open"
     }
   ]
