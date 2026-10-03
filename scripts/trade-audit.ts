@@ -1,5 +1,5 @@
 /**
- * trade:audit -- [--run <runId>] [--date <YYYY-MM-DD>]
+ * trade:audit -- [--run <runId>]   (default: the latest run record by mtime)
  * Broker-truth cross-check for a run (read-only, spec 2026-09-25-trade-broker-truth-audit).
  * Fetches the day's broker orders (per BROKER env) and compares them against fills.jsonl and the run
  * record's expected orders. Exits 1 on any CRITICAL discrepancy, 0 otherwise (warnings print but pass).

@@ -40,8 +40,8 @@ npm run lint         # ESLint
 request. Broker, scheduler and notifier settings also live in `.env.local` — see [Environment](#environment).
 Every `npm run <script>` below loads `.env.local` when it exists. **Any** Next server process (`dev` or
 `start`) arms the trade scheduler when `TRADE_SCHEDULER_ENABLED=1`, so keep that flag out of a local
-`.env.local` while the deployed trader runs, or each slot fires twice. Docker deployment (the `trader` service)
-is covered in `README.Docker.md`.
+`.env.local` while the deployed trader runs, or each slot fires twice. Docker deployment (the compose `web` service,
+built from the `trader` image target) is covered in `README.Docker.md`.
 
 ---
 
@@ -54,7 +54,8 @@ app/
   research/[ticker]/           the report route (static, validated at build)
   schwab/callback/             Schwab OAuth landing page — shows the redirect URL to paste into trade:auth
   api/trade/status/            GET scheduler status (bearer TRADE_STATUS_TOKEN)
-instrumentation.ts             arms the in-app trade scheduler at server start (TRADE_SCHEDULER_ENABLED=1)
+instrumentation.ts             server boot hook → instrumentation-node.ts → lib/trade/scheduler-wiring.ts: arms the
+                               in-app trade scheduler when TRADE_SCHEDULER_ENABLED=1
 components/
   report/                      Markdown subset + report primitives, sections/, EquityReport.tsx
   chart/                       geometry.ts (pure math) + ProjectionChart.tsx (server-rendered SVG)
@@ -79,7 +80,7 @@ lib/
                                clock · calendar + nyse-calendar · notify · auth-health · runtime
   broker/                      adapter.ts (the port) + alpaca.ts (paper) + schwab.ts (live) + fake.ts,
                                guards.ts (every submit), http.ts, schwab-auth.ts (OAuth token store)
-  prices/yahoo.ts              keyless daily closes + quote summaries
+  prices/yahoo.ts              keyless daily closes (quote summaries live in facts/free/yahoo.ts)
 data/
   <ticker>.json                92 published reports (avgo.json …; golden fixture in lib/__fixtures__)
   desk/                        desk identity, house style, rating thresholds, editorial rubric, recurring traps
@@ -89,7 +90,8 @@ data/
   screen/ , calibration/       screen rankings and the calibration log, by date
   earnings/latest.json         latest earnings per covered name (read by the trader's stale-entry gate)
   portfolio/                   the analytical snapshot (gitignored)
-  trade/                       fills.jsonl, ledger.json, runs/<id>.json, cron.log, scheduler-state.json,
+  trade/                       fills.jsonl (the compliance ledger), ledger.json, runs/<id>.json, cron.log,
+                               cron.lock, halt-state.json, scheduler-state.json, auth-warn.json,
                                schwab-token.json (gitignored — never commit)
 docs/engine.md                 the full engine functional reference — research → rating → sizing → trade math
 docs/superpowers/specs/        design notes and research reviews, by date
@@ -109,7 +111,7 @@ npm run facts:prepare -- AVGO 0001730168-26-000080     # EDGAR record + primary 
 npm run facts:manifest -- AVGO 0001730168-26-000080    # print the connector calls the capture needs (JSON); --check = verify every raw file is present
 /fetch-facts AVGO 0001730168-26-000080                 # (Claude Code) capture vendor responses verbatim to data/raw/…
 npm run facts:build  -- AVGO 0001730168-26-000080      # raw → validated FactPack in data/facts/…
-npm run facts:enrich -- AVGO 0001730168-26-000080      # stamp goodwill + SBC (SEC), peer multiples (Yahoo); fill a missing TTM EV/EBITDA or FCF yield from SEC
+npm run facts:enrich -- AVGO 0001730168-26-000080      # stamp goodwill + SBC (SEC), peer multiples (Yahoo); fill a missing TTM EV/EBITDA (SEC, else Yahoo) or FCF yield (SEC)
 npm run facts:beta   -- AVGO 0001730168-26-000080      # print the Shibui beta query; save its response to data/raw/…/shibui-beta.json
 npm run facts:beta   -- AVGO 0001730168-26-000080 --apply  # stamp the measured beta (2y weekly vs SPY, Blume-adjusted) onto the pack
 npm run facts:crosscheck -- AVGO 0001730168-26-000080      # print the Shibui cross-check query; save its response to data/raw/…/shibui-crosscheck.json
@@ -128,13 +130,14 @@ source that assembles the FactPack from **SEC company-facts XBRL** + the filing'
 quote summaries — no API keys, no vendor.
 
 ```bash
-npm run facts:free -- AVGO 0001730168-26-000080        # SEC-XBRL + filing iXBRL + Yahoo → the same FactPack shape, keyless
+npm run facts:free -- AVGO 0001730168-26-000080        # SEC-XBRL + filing iXBRL + Yahoo → tearsheet-shaped raw files in data/raw/…, keyless
+npm run facts:build -- AVGO 0001730168-26-000080       # then build the FactPack from them, as on the vendor path
 ```
 
 `facts:free` does per-period concept selection, reconstructs discrete quarters from YTD, derives operating
 income, and has sector-aware extensions for banks, utilities and insurers (net-of-interest revenue, no
-gross-margin/EBITDA where meaningless). Known limitations live in the memory notes (non-December fiscal-year
-quarter **labels**, and an FYE-change annual-splice bug) — both handled by disclose-in-prose + a reviewer note.
+gross-margin/EBITDA where meaningless). Known limitations: non-December fiscal-year quarter **labels**, and an
+FYE-change annual-splice bug — both handled by disclose-in-prose + a reviewer note.
 
 **Measured beta (Shibui Finance).** The cost of equity behind the moat WACC and the reverse-DCF discount
 rate uses a per-name beta when the pack carries one (`lib/facts/beta.ts`): two years of weekly log returns
@@ -153,8 +156,10 @@ the DCF. Same two-step capture as beta; `scripts/backfill-crosscheck.ts --query 
 every pack (mtimes preserved). The reverse DCF abstains when market cap, shares or TTM FCF *fails* the check
 and flags a *warn*; it also charges Shibui's TTM SBC against TTM FCF (`lib/synth/intrinsic.ts`).
 
-**One-off maintenance scripts** (run with `node --import tsx scripts/<name>.ts`; each preserves file mtimes,
-because a ticker's newest pack is chosen by mtime):
+**One-off maintenance scripts.** Run with `node --import tsx scripts/<name>.ts`. Plain `node` does not load
+`.env.local`, so the SEC scripts need `EDGAR_CONTACT="name email"` on the command line. A ticker's newest pack
+is chosen by file mtime: every script below preserves mtimes except `backfill-peers.ts` and `backfill-sic.ts`
+(and `facts:backfill-ev` above), which rewrite each pack they touch.
 
 | Script | What it does |
 |---|---|
@@ -181,13 +186,14 @@ ungrounded or inconsistent report.
 
 ```bash
 npm run screen -- --query --pending                               # Shibui call: rank pending filings by Street upside; save the response, then…
-npm run screen -- --rank <saved.json>                              # …ranked queue (likely-HOLD < 10% upside) → data/screen/<date>.json
+npm run screen -- --rank <saved.json> [more.json ...]              # …ranked queue (likely-HOLD < 10% upside) → data/screen/<date>.json
 npm run synth:prompt -- AVGO 0001730168-26-000080                  # FactPack + desk config → data/judgment/AVGO/<acc>.prompt.md
 /synthesize AVGO 0001730168-26-000080                              # (Claude Code) writes the judgment .json, then builds
 npm run synth:build  -- AVGO 0001730168-26-000080                  # judgment + facts → validated data/avgo.json (or an errors file)
 npm run synth:review-brief -- AVGO 0001730168-26-000080            # → data/judgment/AVGO/<acc>.review-brief.md
 npm run synth:prompt -- AVGO 0001730168-26-000080 --with-review    # re-prompt the author with the open editorial findings
 npm run synth:prompt -- AVGO 0001730168-26-000080 --with-errors    # re-prompt with the last build's errors (<acc>.errors.txt)
+                                                                   # (either re-prompt flag also writes <acc>.prompt.delta.md)
 npm run synth:build  -- AVGO 0001730168-26-000080 --skip-review    # local experiments only; prints a warning
 ```
 
@@ -214,7 +220,7 @@ unit of bear risk), then:
 
 - **`deriveLabel`** maps (E, R) to STRONG SELL … STRONG BUY; the author may publish **one notch more
   conservative**, never more aggressive.
-- **`rating.gate`** — a sector-aware quality gate (distress, Piotroski, accruals, moat) that produces a
+- **`rating.gate`** — a sector-aware quality gate (distress, Piotroski, accruals) that produces a
   **ceiling**: a headline-BUY can be gate-capped to HOLD on earnings quality.
 - **`rating.decision.conviction`** — a 0–100 penalty score over the gate + a reverse-DCF intrinsic layer +
   moat (ROIC−WACC) + a cross-sectional composite percentile. This becomes **κ**, the sizing input.
@@ -255,7 +261,7 @@ and sizes a long-only book — the *analytical* snapshot. Read-only; no broker.
 npm run portfolio:build                                   # → data/portfolio/snapshot-<date>.json + .csv (gitignored)
 npm run portfolio:build -- --date 2026-10-01              # mark and date the snapshot as of a given day
 npm run portfolio:build -- --model kellyTilt              # experimental sizer (lib/portfolio/sizing-v2.ts) → snapshot-<date>-kellyTilt.*
-npm run portfolio:build -- --wMax 0.08 --sectorMax 0.25   # override caps (also --cashCeiling)
+npm run portfolio:build -- --wMax 0.08 --sectorMax 0.25   # override caps
 npm run portfolio:build -- --muExp 1 --convExp 1 --rExp 1 # override score exponents
 npm run portfolio:build -- --bearFloor 0                  # sizing floor on the bear downside (default 0.15; 0 = raw R)
 ```
@@ -270,8 +276,10 @@ multiplies each score by the quality tilt Q (moat and composite percentile, clam
 `useQualityTilt`). `ICE` is a **hard compliance ban** (the owner is an ICE
 employee) that lives outside the config and can't be switched off. See `docs/engine.md` §3 for the full math.
 
-The reusable HTML dashboard renders a snapshot; refresh it by regenerating its embedded data from the new
-snapshot and republishing to the same URL.
+Cash is whatever the caps can't place; `cashCeiling` (35%) is only a monitoring band that `trade:review`
+reports, and `--cashCeiling` changes nothing but the value recorded in the snapshot. (The HTML dashboard that
+renders a snapshot lives outside this repo: regenerate its embedded data from the new snapshot and republish it
+to the same URL.)
 
 ---
 
@@ -294,22 +302,28 @@ npm run trade:plan                        # compute + record the plan. NEVER sub
 npm run trade:execute                     # plan → confirm → submit through the guards → record fills → broker-truth audit
 npm run trade:execute -- --yes            # same, non-interactive (skips the confirm prompt)
 npm run trade:execute -- --preview        # plan only, never submits (works with the market closed / TRADE_DISABLED=1)
-npm run trade:cron                        # the scheduler entrypoint: clock → breakers → execute-if-any → audit → notify
+npm run trade:cron                        # one guarded run, as each scheduled slot does: clock → breakers → execute-if-any → audit → notify
 npm run trade:cron -- --now               # a deliberate manual run outside the fire window (the market clock still applies)
-npm run trade:audit                       # read-only broker-truth cross-check of the latest run.  -- --run <id> | --date <YYYY-MM-DD>
-npm run trade:review -- --since 2026-09-01 # weekly digest: turnover, cash band, deferrals, reconciled-every-run, lock violations, cap-binds
+npm run trade:audit                       # read-only broker-truth cross-check of the latest run record.  -- --run <id> for another
+npm run trade:review -- --since 2026-09-01 # weekly digest: turnover, cash band, deferrals, reconciled-every-run, lock violations,
+                                          # cap-binds, execution quality (fill ratio, τ pressure, latency), halt lines
 npm run trade:earnings -- --query         # print the Shibui call for every report's latest earnings (stale-entry gate input)…
 npm run trade:earnings -- --apply <saved.json> # …and write data/earnings/latest.json from the saved response
 ```
 
-Typical daily loop: `trade:reconcile` (see the book) → `trade:plan` (preview the orders, nothing submitted)
-→ `trade:execute` (confirm and place) → `trade:audit` (verify the broker matches the local record).
-`trade:cron` does reconcile → plan → execute-if-any in one guarded shot for the scheduler.
+Typical manual loop: `trade:reconcile` (see the book) → `trade:execute -- --preview` (the plan against the
+configured broker, nothing submitted) → `trade:execute` (confirm and place) → `trade:audit` (verify the broker
+matches the local record). `trade:cron` does reconcile → plan → execute-if-any in one guarded shot; the
+deployed app's scheduler runs the same `runCron` (`lib/trade/cron.ts`) in-process at each slot.
 
-`trade:plan` also rewrites `data/trade/ledger.json` and records the run under `data/trade/runs/`.
+`trade:plan` ignores `BROKER`: it plans against the fake broker (default) or, with `--broker alpaca`, Alpaca
+paper read-only.
+
+It also rewrites `data/trade/ledger.json` and records the run under `data/trade/runs/`.
 `--date <YYYY-MM-DD>` overrides the trading day (decisions then use the settled close of the trading day
 before it). The fake broker
-builds its book from the local ledger and marks from Alpaca (read-only) when keys exist, else Yahoo.
+builds its book from the local ledger and marks from Alpaca (read-only) when keys exist, else Yahoo (with a
+weekday calendar that does not skip holidays).
 `trade:plan --broker fake --simulate-fills` runs a Phase-0 dry loop: it **appends the simulated fills to
 `data/trade/fills.jsonl`** and rewrites the ledger, so never run it against the live trader's data.
 
@@ -324,13 +338,14 @@ than 120 days is ignored, and a missing or unreadable file turns the gate off ra
 - **Two-sided hysteresis** (`lib/trade/hysteresis.ts`): a *held* name has an easier bar to keep than a *new*
   name has to enter (`rEnter 0.60` vs `rExit 0.35`, `muEnter 0.08` vs `muExit 0.03`). The gap is a
   no-churn band, so a winner is never sold for merely dipping below the entry bar.
-- **No-trade band** (`tradeBand 0.025`): a held name trades only when its target moves more than 2.5pp.
+- **No-trade band** (`tradeBand 0.025`): a held name trades only when its target differs from its current
+  weight by more than 2.5pp.
   Minimum order sizes: a new entry $1 (the fractional minimum); an add or trim the larger of $1 and 0.5% of
   NAV (`TRADE_MIN_USD` / `TRADE_MIN_NAV_PCT`); a full exit, none.
 - **Bear breach by cause** (`lib/trade/breach.ts`): a held name at or below its report's bear price is split
   into the part SPY explains (β × SPY move) and its own. Market-driven (< 50% its own) → hold; mixed → freeze
   (no add, no trim); stock-specific (≥ 90%) → exit once the sell lock allows. Any missing input → plain exit.
-- **Stale-on-bad-news entry gate** (`lib/trade/stale-entry.ts`): a name that would be bought is skipped
+- **Stale-on-bad-news entry gate** (`lib/trade/stale-entry.ts`): a not-held name that would be entered is skipped
   (`STALE_ENTRY`) when it is ≥ 5% below its report price, the fall is its own (≥ 90%), and its latest earnings
   missed (≤ 120 days ago). The report is likely stale; re-write it. Any missing input lets the buy through.
 - **Compliance locks** (`lib/trade/locks.ts`): symmetric, whole-ticker, **5 business days** — a buy fill
@@ -349,16 +364,20 @@ than 120 days is ignored, and a missing or unreadable file turns the gate off ra
 |---|---|---|
 | `TRADE_DISABLED=1` | env kill switch | refuses every submission, both brokers |
 | confirm prompt | `trade:execute` | requires `y` (or `--yes`) before any order |
-| preview-only mode | `trade:cron` / scheduler / `trade:execute` | `PREVIEW_ONLY=true`: plan + post the allocation every run, never submit (no breakers, no run record, halt counter untouched) |
+| preview-only mode | `trade:cron` / scheduler / `trade:execute` | `PREVIEW_ONLY=true`: plan + post the allocation every run, never submit; no turnover breaker and no run record. The kill switch, fire window, clock, run lock, consecutive-halt check and reconcile still run, and a reconcile halt still counts |
 | allocation post | `trade:execute` | every run prints the target book and posts it to Discord — preview, declined, market-closed and executed runs alike |
 | market-clock check | `trade:execute` / `trade:cron` | submits nothing outside the regular session (09:30–16:00 ET on trading days); `trade:execute` still posts the allocation |
 | fire window | `trade:cron` | a run starting > 20 min after `cronTimeET` (15:10 → 15:30 ET) exits as `late` (`trade:cron -- --now` for a deliberate manual run) |
 | submit cutoff | `trade:cron` / `trade:execute` | nothing is submitted at or after `submitCutoffET` (15:50 ET), however late the run started; the rest are recorded as skipped and notified |
 | turnover breaker | `trade:cron` / scheduler | **off unless `TURNOVER_BREAKER=true`**; when on, a run over 15% of NAV (25%/day) is clipped (buy-only) or halted (any sell) |
-| consecutive-halt breaker | `trade:cron` | blocks further runs after 3 halts in a row |
+| consecutive-halt breaker | `trade:cron` | blocks further runs after 3 halts in a row; only a clean run clears it, or reset `data/trade/halt-state.json` by hand |
+| run lock | `trade:cron` | `data/trade/cron.lock` stops overlapping runs (they exit `locked`); a lock older than 60 min is stale |
 | orders reconcile | `trade:cron` / `trade:execute` / `trade:reconcile` | halts while any executed broker order in the lock window is missing from `fills.jsonl` (`trade:reconcile -- --record-missing` records them from broker truth) |
 | unknown-submit halt | `trade:cron` / `trade:execute` | a submit that times out is looked up, never resent; if it can't be found the run stops sending and halts |
-| notional / order-count guards | every submit | refuse if a run exceeds NAV or 40 orders |
+| per-submit guards | every submit (`lib/broker/guards.ts`) | re-check the kill switch, the broker endpoint (Alpaca paper host / Schwab host), the ban, the buy/sell locks, 40 orders and 1× NAV per run |
+| cash backstop | every buy | refused beyond broker cash + filled sells − committed buys − the cash floor: never leverage, even on a wrong book |
+| price halts | every order | a ticker with no usable price, or whose price gapped past its bucket's gap-halt (10/15/25%) vs the settled close, is skipped |
+| hybrid remainder | split orders | the fractional market remainder is sent only if its whole-share limit leg filled |
 | reconcile halt | every run | an unexplained broker position stops the run |
 | broker-truth audit | after every execute | a CRITICAL mismatch (unrecorded/orphan fill, qty) fails the run |
 | ICE hard-ban | every stage | ICE can never be bought (a disposing sell is allowed) |
@@ -369,16 +388,18 @@ than 120 days is ignored, and a missing or unreadable file turns the gate off ra
 
 - **`alpaca-paper`** (default) — the paper test rig; the adapter refuses any non-paper base URL.
 - **`schwab`** — **LIVE, real money.** No paper exists; `trade:auth` links the account once, and the OAuth
-  refresh token dies every ~7 days → re-run `trade:auth` weekly (the system alerts on the failed run).
+  refresh token dies every ~7 days → re-run `trade:auth` weekly. Runs warn when fewer than 72 hours remain
+  (`schwabAuthWarnHours`, at most once a day per level) and alert on a failed refresh.
 
 The **Discord notifier** (`lib/trade/notify.ts`) posts a per-run embed (orders, fills, the goal book, cash,
 audit, bear breaches, names kept out by the stale-entry gate), the target allocation on `trade:execute` and
 preview runs, and halt/auth alerts, when `DISCORD_WEBHOOK_URL` is set. It is best-effort: a Discord outage
 never fails a run.
 
-**Scheduling.** The deployed app runs `trade:cron` itself.
+**Scheduling.** The deployed app runs its own trade job; it does not shell out to `trade:cron`.
 - With `TRADE_SCHEDULER_ENABLED=1` in `.env.local`, the in-app scheduler (`instrumentation.ts` →
-  `lib/trade/scheduler.ts`) arms at server start. It fires at each `cronTimesET` slot in ET on NYSE trading days:
+  `instrumentation-node.ts` → `lib/trade/scheduler-wiring.ts` → `lib/trade/scheduler.ts`) arms at server start
+  and calls `runCron` (`lib/trade/cron.ts`) in-process. It fires at each `cronTimesET` slot in ET on NYSE trading days:
   **15:10 ET** by default, from `lib/trade/config.ts`.
 - That config is compiled into the server build, so a change to the time takes effect on rebuild and restart
   (`docker compose up -d --build`).
@@ -386,9 +407,11 @@ never fails a run.
   than that waits for the next trading day.
 - Each run self-guards on the market clock. On an early-close day (13:00 ET) the market is already shut at 15:10
   and nothing trades.
-- `GET /api/trade/status` (header `Authorization: Bearer $TRADE_STATUS_TOKEN`; 503 when the token is unset)
-  returns `armed`, `broker`, `tradeDisabled`, `previewOnly`, `turnoverBreaker`, `nextRunISO`, `lastRun` and,
-  for Schwab, `schwabRefreshExpiresAt`.
+- `GET /api/trade/status` (header `Authorization: Bearer $TRADE_STATUS_TOKEN`; 503 when the token is unset,
+  401 on a wrong token) returns `armed`, `broker`, `tradeDisabled`, `previewOnly`, `turnoverBreaker`,
+  `nextRunISO`, `lastRun` and `schwabRefreshExpiresAt` (null unless Schwab).
+- The NYSE holiday table (`lib/trade/nyse-calendar.ts`) is hand-maintained and covers 2025–2028: extend it
+  before 2029 or scheduling stops finding trading days.
 - `data/trade/scheduler-state.json` records the last fired day and slot, so a restart never fires a slot twice.
 - `scripts/register-trade-cron.ps1` / `.sh` (an OS-level Windows Task Scheduler / systemd timer) are **legacy**
   and not used by the Docker deployment. Never run both, or each slot fires twice.
@@ -403,8 +426,10 @@ To go back to the morning: set `cronTimesET: ["09:45"]` and `markMode: "settled"
 ## Configuration
 
 Engine knobs are code, not environment: `lib/portfolio/config.ts` (`DEFAULT_CONFIG`, eligibility and sizing)
-and `lib/trade/config.ts` (`DEFAULT_TRADE_CONFIG`, which extends it). `resolveTradeConfig` validates every
-invariant at start-up and throws on a bad value. Both files are compiled into the server build, so a change
+and `lib/trade/config.ts` (`DEFAULT_TRADE_CONFIG`, which extends it). `resolveTradeConfig` validates the
+trade-layer invariants (not most portfolio knobs) and throws on a bad value; at server start that throw (or a
+malformed `TRADE_MIN_*`) leaves the scheduler unarmed, with a logged error and `armed: false` on the status
+route. Both files are compiled into the server build, so a change
 reaches the deployed trader on rebuild and restart. The only knobs the environment can override are the two
 minimum-trade floors (`TRADE_MIN_USD`, `TRADE_MIN_NAV_PCT`). `docs/engine.md` §8 is the full reference.
 
@@ -422,6 +447,10 @@ minimum-trade floors (`TRADE_MIN_USD`, `TRADE_MIN_NAV_PCT`). `docs/engine.md` §
 | Bear breach | `breachPolicy`; `breachMarketShareMax` / `breachStockShareMin` | "byCause"; 0.5 / 0.9 |
 | Stale-entry gate | `staleEntryGate`; `staleEntryMinFall`; `staleEntryEarningsMaxDays` | on; 5%; 120 days |
 | Run limits | `maxOrdersPerRun`; `maxNotionalFrac`; `maxRunTurnoverFrac` / `maxDayTurnoverFrac`; `consecutiveHaltLimit` | 40; 1.0 × NAV; 15% / 25% (breaker off unless `TURNOVER_BREAKER`); 3 |
+| Order pricing, detail | `limitTolBeta`; `limitTolMin`; `exitTolMult`; `closeAnchorSizeMult` | 0.5 × spread; 0.05%; 1.5× for sells; 0.5 (a buy anchored to the prior close is sized at half) |
+| Whole-share mode | `minOrderUsd` (only when `fractionalShares` is off) | $25 |
+| Quality tilt | `qGainComposite` / `qGainMoat` / `qPenaltyEroding`; `qLo` / `qHi` | 0.10 / 0.20 / 0.10; 0.8 / 1.2 |
+| Run behaviour | `turnoverClipBuyOnly`; `reconcileOrders`; `topUpRecentBuys` / `residualBand` | on; on; off / 0.5pp |
 | Schwab auth | `schwabRefreshLifetimeDays`; `schwabAuthWarnHours` | 7; 72 |
 
 ---
