@@ -8,18 +8,25 @@ import { isBannedTicker } from "../portfolio/eligibility";
 import type { TradeConfig } from "./config";
 import type { TradingDay } from "./calendar";
 import type { BreachInfo } from "./breach";
+import { staleEntryReason, type StaleEntryInfo } from "./stale-entry";
 import { isBuyLocked, isSellLocked, type Locks } from "./locks";
 
 const BUY_SIDE = new Set(["BUY", "STRONG BUY"]);
 const pct = (x: number) => `${(x * 100).toFixed(1)}%`;
 const rStr = (r: number | null) => (r == null ? "—" : r.toFixed(2));
 
-/** FREEZE: a held name kept exactly as is — no add, no trim — until its report is re-written (a mixed bear breach). */
-export type Classification = "ENTER" | "HOLD" | "FREEZE" | "EXIT" | "DEFER_EXIT" | "BARRED_ENTRY" | "INELIGIBLE";
+/**
+ * FREEZE: a held name kept exactly as is — no add, no trim — until its report is re-written (a mixed bear breach).
+ * STALE_ENTRY: a name that would enter, not bought because it fell on its own after an earnings miss (stale-entry.ts).
+ */
+export type Classification = "ENTER" | "HOLD" | "FREEZE" | "EXIT" | "DEFER_EXIT" | "BARRED_ENTRY" | "STALE_ENTRY" | "INELIGIBLE";
 export interface Classified { ticker: string; classification: Classification; reasons: string[]; unlockOn?: TradingDay }
 
-/** `breach`: the cause of a held name's fall through its bear case (breach.ts); null/absent → the plain bear-breach exit. */
-export function classify(s: Signal, held: boolean, locks: Locks, today: TradingDay, cfg: TradeConfig, breach?: BreachInfo | null): Classified {
+/**
+ * `breach`: the cause of a held name's fall through its bear case (breach.ts); null/absent → the plain bear-breach exit.
+ * `staleEntry`: a not-held name the stale-on-bad-news gate bars (stale-entry.ts); null/absent → enter as usual.
+ */
+export function classify(s: Signal, held: boolean, locks: Locks, today: TradingDay, cfg: TradeConfig, breach?: BreachInfo | null, staleEntry?: StaleEntryInfo | null): Classified {
   const t = s.ticker;
   if (held) {
     let exits: string[] = [];
@@ -55,5 +62,6 @@ export function classify(s: Signal, held: boolean, locks: Locks, today: TradingD
   if (s.ageDays > cfg.stalenessMaxDays) fails.push(`stale ${s.ageDays}d > ${cfg.stalenessMaxDays}d`);
   if (fails.length) return { ticker: t, classification: "INELIGIBLE", reasons: fails };
   if (isBuyLocked(locks, t, today)) return { ticker: t, classification: "BARRED_ENTRY", reasons: ["buy-locked"], unlockOn: locks.buyLockUntil[t] };
+  if (staleEntry && cfg.staleEntryGate) return { ticker: t, classification: "STALE_ENTRY", reasons: [staleEntryReason(staleEntry)] };
   return { ticker: t, classification: "ENTER", reasons: [] };
 }

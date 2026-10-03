@@ -398,14 +398,31 @@ every breach (and is required with `bearFloor 0`, since a market-driven hold is 
 > above, not from this book. Once the calibration log (`lib/calibration/realized.ts`) has post-breach d63/d126
 > returns on enough held breaches, check the three buckets' signs before tuning the bands.
 
-> 💡 **Proposed, not built — bar an ENTER that is "stale on bad news."** The breach rule's mirror on the way
-> in. Bar the entry when the price is ≥ 5% below the report price, `classifyBreach` calls that fall `stock`, and
-> the latest earnings surprise is negative. Re-write the report first. Among stock-specific 8% falls after a
-> 10-Q (Shibui, ≥ $2B), a prior miss lagged a prior beat by −3.1 / −3.2 / −3.2pp over 126 days in 2010–15 /
-> 2016–20 / 2021–25. It was negative in 12 of 16 years but faded in 2024–25. Book effect is small, roughly +0.1
-> to +0.4pp of NAV a year. It needs the last surprise stamped on the FactPack from Shibui (the trader cannot
-> query Shibui at 15:10). Evidence and the rejected alternatives (momentum, turnover, lottery and pre-earnings
-> filters) are in `docs/superpowers/specs/2026-10-03-entry-methodology.md`.
+**Stale-on-bad-news entry gate (`staleEntryGate`, default on; `lib/trade/stale-entry.ts`).** This is the breach
+rule's mirror on the way *in*. A not-held name that would ENTER is classified `STALE_ENTRY` instead, and not
+bought, when all three hold:
+
+```
+P / P0 − 1 ≤ −staleEntryMinFall (5%)          fallen since the report price (smaller moves are noise for the split)
+classifyBreach(P, P0, SPY, SPY0, β) = stock    the same cause split as above, share ≥ breachStockShareMin (0.9)
+latest earnings surprise < 0                   from data/earnings/latest.json, ≤ staleEntryEarningsMaxDays (120) old
+```
+
+Its reason reads `stale on bad news: down 9% since the report, stock-specific (share 104%), last earnings missed
+(−12.0% on 2026-08-05) — re-write the report`. The trader cannot query Shibui, so the earnings come from a committed
+capture: `npm run trade:earnings -- --query` prints the call, the saved response goes to `--apply`, and the file
+ships with the reports on the next rebuild. Refresh it after each earnings season.
+- **Fail-open.** No earnings on file, an old result, no report price, no beta, or no SPY close all let the
+  entry through. A gate that could not check is noted in the run record.
+- **SPY reads.** SPY is read only for a not-held name already ≥ 5% down with a recent miss, sharing the breach
+  rule's per-run reads.
+- **Where it shows.** The run record keeps `staleEntries`; Discord lists them under "Not bought, stale on bad
+  news — re-write these reports". A new report resets P0 and lifts the bar.
+- **Evidence.** US stocks ≥ $2B, 8% stock-specific falls after a 10-Q/10-K (Shibui). Over the next 126 sessions
+  vs SPY, a prior miss lagged a prior beat by −3.1 / −3.2 / −3.2pp in 2010–15 / 2016–20 / 2021–25. The same held
+  at 5% and 12% falls. It was negative in 12 of 16 years but **faded in 2024–25**. Expected book effect is
+  small, roughly +0.1 to +0.4pp of NAV a year. Momentum, turnover, lottery and pre-earnings filters were tested
+  and rejected (`docs/superpowers/specs/2026-10-03-entry-methodology.md`).
 
 ### 4.3 The emitter — target vs current  (`lib/trade/rebalance.ts` → `emitTrades`)
 
@@ -748,6 +765,7 @@ the engine keeps exactly **one** decision a day and makes it at **15:10 ET on li
 | `rEnter` / `rExit` | 0.60 / 0.35 | hysteresis |
 | `breachPolicy` | "byCause" (`"exit"` = sell every bear breach) | hysteresis (bear breach) |
 | `breachMarketShareMax` / `breachStockShareMin` | 0.5 / 0.9 | bear breach: HOLD below / FREEZE between / EXIT at or above |
+| `staleEntryGate` / `staleEntryMinFall` / `staleEntryEarningsMaxDays` | true / 0.05 / 120 | entry: STALE_ENTRY on a ≥ 5% stock-specific fall after an earnings miss ≤ 120 days old |
 | `tradeBand` | 0.025 | emitter |
 | `lockBusinessDays` | 5 | locks |
 | `minOrderUsd` / `maxOrdersPerRun` / `maxNotionalFrac` | 25 / 40 / 1.0 | guards |
@@ -766,7 +784,7 @@ the engine keeps exactly **one** decision a day and makes it at **15:10 ET on li
 
 `resolveTradeConfig` enforces the invariants (`rExit < rEnter`, `muExit < muEnter`, `limitTol ≤ limitTolMax ≤ 0.5`,
 `gapHalt ∈ (0,1)`, positive freshness, `closeAnchorSizeMult ∈ (0,1]`, `0 < breachMarketShareMax < breachStockShareMin ≤ 1.5`,
-`byCause` ⇒ `bearFloor > 0`, `submitCutoffET` before 16:00 and after every slot, etc.) at construction.
+`byCause` ⇒ `bearFloor > 0`, `staleEntryMinFall ∈ (0,1)`, `staleEntryEarningsMaxDays` a positive integer, `submitCutoffET` before 16:00 and after every slot, etc.) at construction.
 
 ## 9. Symbol glossary
 

@@ -31,12 +31,12 @@ try {
   if (e instanceof SchwabAuthError) { notifier.message(e.message); await notifier.flush(); console.error(e.message); process.exit(2); }
   throw e;
 }
-const { reports, sics, marketCapUsd, betas } = await loadReportsAndMeta();
+const { reports, sics, marketCapUsd, betas, earnings } = await loadReportsAndMeta();
 const runId = newRunId(today);
 let out: Awaited<ReturnType<typeof planRun>>;
 try {
   // Planning only reads the broker, so it also runs with the market closed (nothing is submitted then).
-  out = await planRun({ adapter, reports, sics, marketCapUsd, betas, fills: readFills(FILLS_PATH), today, cfg, runId, clock: Date.now });
+  out = await planRun({ adapter, reports, sics, marketCapUsd, betas, earnings, fills: readFills(FILLS_PATH), today, cfg, runId, clock: Date.now });
 } catch (e) {
   if (e instanceof ReconcileError) {
     const msg = `trade:execute halted at reconcile — ${e.message}`;

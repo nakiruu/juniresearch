@@ -191,6 +191,13 @@ Aggregates (by label, hit rate, Spearman ρ of E vs excess, realized/E) are null
 Price returns only (Shibui closes are split- but not dividend-adjusted). Nothing reads it yet; re-run it
 periodically so the evidence accumulates.
 
+**Latest earnings (stale-entry gate)** (`lib/trade/earnings.ts`). `npm run trade:earnings -- --query` prints the
+Shibui call for every report ticker; `--apply <saved.json>` writes `data/earnings/latest.json`, the latest
+reported quarter per name. The trader reads it to skip a buy whose report looks stale: down ≥ 5% since the
+report, on its own (not the market), after an earnings miss (`docs/engine.md` §4.2). Commit the file and
+rebuild; refresh it after each earnings season. A result older than 120 days is ignored, and a missing or
+unreadable file disables the gate rather than stopping trading.
+
 ## §4 — Portfolio
 
 `portfolio:build` re-marks every published report against the current Yahoo price, screens for eligibility,

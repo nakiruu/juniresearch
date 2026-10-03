@@ -4,6 +4,7 @@ import { DEFAULT_TRADE_CONFIG as cfg, resolveTradeConfig } from "./config";
 import type { Signal } from "../portfolio/signal";
 import type { Locks } from "./locks";
 import type { BreachInfo } from "./breach";
+import type { StaleEntryInfo } from "./stale-entry";
 
 const sig = (o: Partial<Signal> = {}): Signal => ({
   ticker: "NVT", company: "nVent", sector: "35", label: "BUY", gatedLabel: "BUY",
@@ -37,6 +38,21 @@ describe("classify — not held", () => {
     const c = classify(sig({ R: null }), false, NONE, TODAY, cfg);
     expect(c.classification).toBe("INELIGIBLE");
     expect(c.reasons.some((r) => r.startsWith("R —"))).toBe(true);
+  });
+});
+
+describe("classify — not held, the stale-on-bad-news gate", () => {
+  const stale: StaleEntryInfo = { fall: -0.1, share: 1, beta: 1.2, spyReturn: 0, surprisePct: -12, earningsDate: "2026-08-05" };
+  it("turns a would-be ENTER into STALE_ENTRY, with the reason", () => {
+    const c = classify(sig(), false, NONE, TODAY, cfg, null, stale);
+    expect(c.classification).toBe("STALE_ENTRY");
+    expect(c.reasons).toEqual(["stale on bad news: down 10% since the report, stock-specific (share 100%), last earnings missed (-12.0% on 2026-08-05) — re-write the report"]);
+  });
+  it("never overrides INELIGIBLE or a buy-lock, never touches a held name, and is off with staleEntryGate false", () => {
+    expect(classify(sig({ mu: 0.05 }), false, NONE, TODAY, cfg, null, stale).classification).toBe("INELIGIBLE");
+    expect(classify(sig(), false, { buyLockUntil: { NVT: "2026-09-29" }, sellLockUntil: {} }, TODAY, cfg, null, stale).classification).toBe("BARRED_ENTRY");
+    expect(classify(sig(), true, NONE, TODAY, cfg, null, stale).classification).toBe("HOLD");
+    expect(classify(sig(), false, NONE, TODAY, resolveTradeConfig({ staleEntryGate: false }), null, stale).classification).toBe("ENTER");
   });
 });
 

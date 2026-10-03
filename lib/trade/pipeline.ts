@@ -21,6 +21,8 @@ import type { Mkt } from "./limit";
 import type { RunRecord } from "./run-record";
 import { etHHMM, etMinutesOfDay, todayET } from "./clock";
 import { classifyBreach, type BreachInfo } from "./breach";
+import { classifyStaleEntry, fellEnough, usableMiss, type StaleEntryInfo } from "./stale-entry";
+import type { LastEarnings } from "./earnings";
 import { betaFromSic } from "../synth/moat";
 import { toYmd } from "../calibration/realized";
 
@@ -41,6 +43,8 @@ export interface PlanRunInput {
   clock?: () => number;
   /** Equity beta by ticker (FactPack: measured, else the SIC proxy; null = no pack) — prices a bear breach's market part. */
   betas?: Record<string, number | null>;
+  /** Latest earnings by ticker (data/earnings/latest.json) — the stale-on-bad-news entry gate; absent → the gate bars nothing. */
+  earnings?: Record<string, LastEarnings>;
 }
 export interface PlanRunOutput {
   /** markDate: the settled reference close's date (prevTradingDay(today)); marks: the decision marks (live in a live run). */
@@ -48,6 +52,8 @@ export interface PlanRunOutput {
   locks: Locks; plan: TradePlan; sized: SizedOrders; record: RunRecord;
   /** The cause of each held bear breach that could be priced (breach.ts); a breach missing here took the plain exit. */
   breaches: Record<string, BreachInfo>;
+  /** Not-held names the stale-on-bad-news gate barred (stale-entry.ts). */
+  staleEntries: Record<string, StaleEntryInfo>;
 }
 
 /** The fill's ET trading date — the lock clock starts here. Broker timestamps are UTC ("…Z" or "+0000"). */
@@ -206,8 +212,12 @@ export async function planRun(input: PlanRunInput): Promise<PlanRunOutput> {
     const cap = (await captureLive(adapter, ["SPY"], clock)).get("SPY")!;
     return liveMark(cap.lastTrade, cap.quote, close, cap.at, cfg.maxStaleMin.large, cfg.gapHalt.large).price;
   };
-  const breach = await bearBreaches({ adapter, reports, signals, weights: weightsOf(ledger), markDate, calendar, sics, betas: input.betas ?? {}, cfg, spyDecisionMark });
-  const plan = emitTrades({ signals, currentWeights: weightsOf(ledger), locks, today, cfg, breaches: breach.info });
+  // One SPY read per date across both rules below.
+  const spyOnce = spyReader();
+  const breach = await bearBreaches({ adapter, reports, signals, weights: weightsOf(ledger), markDate, calendar, sics, betas: input.betas ?? {}, cfg, spyDecisionMark, spyOnce });
+  // Stale-on-bad-news entry gate (docs/engine.md §4.2): same fall measurement as the breach rule, on names not held.
+  const stale = await staleEntries({ adapter, reports, signals, weights: weightsOf(ledger), markDate, today, calendar, sics, betas: input.betas ?? {}, earnings: input.earnings ?? {}, cfg, spyDecisionMark, spyOnce });
+  const plan = emitTrades({ signals, currentWeights: weightsOf(ledger), locks, today, cfg, breaches: breach.info, staleEntries: stale.info });
   const mkts: Record<string, Mkt> = {};
   const anchorAtMs: Record<string, number> = {};
   // Execution market data: one trade + one quote per traded ticker. A live run reuses the decision's
@@ -238,7 +248,7 @@ export async function planRun(input: PlanRunInput): Promise<PlanRunOutput> {
       price: s.price, sigma: s.sigma, sigmaDown: s.sigmaDown, D: s.D, staleness: s.staleness,
       scenarios: scenariosByTicker.get(s.ticker),
     })),
-    classifications: plan.classifications, locks, breaches: breach.info,
+    classifications: plan.classifications, locks, breaches: breach.info, staleEntries: stale.info,
     plan: { frozenWeight: plan.frozenWeight, sizingTarget: plan.sizingTarget, plannedInvested: plan.plannedInvested, plannedCash: plan.plannedCash, buyScale: plan.buyScale, trades: plan.trades, skipped: plan.skipped },
     orders: sized.orders as unknown as Record<string, unknown>[], fills: [],
     notes: [
@@ -246,9 +256,57 @@ export async function planRun(input: PlanRunInput): Promise<PlanRunOutput> {
       ...sized.skippedDust.map((d) => `dust skipped: ${d.ticker} $${d.deltaUsd.toFixed(2)}`),
       ...sized.skippedHalt.map((h) => `halt skipped: ${h.ticker} — ${h.reason}`),
       ...breach.unknown.map((u) => `bear breach ${u.ticker}: cause unknown (${u.why}) — plain bear-breach exit`),
+      ...stale.unknown.map((u) => `stale-entry gate ${u.ticker}: not checked (${u.why}) — entry allowed`),
     ],
   };
-  return { ledger, calendar, markDate, marks, signals, locks, plan, sized, record, breaches: breach.info };
+  return { ledger, calendar, markDate, marks, signals, locks, plan, sized, record, breaches: breach.info, staleEntries: stale.info };
+}
+
+/** A per-run SPY close cache: one read per key (a date, or "decision-mark"); a failed read or a non-positive close is null, never a throw. */
+export type SpyReader = (key: string, read: () => Promise<number>) => Promise<number | null>;
+export function spyReader(): SpyReader {
+  const spy = new Map<string, Promise<number | null>>();
+  return (key, read) => {
+    if (!spy.has(key)) spy.set(key, Promise.resolve().then(read).then((x) => (Number.isFinite(x) && x > 0 ? x : null), () => null));
+    return spy.get(key)!;
+  };
+}
+
+interface FallInputs {
+  adapter: BrokerAdapter; markDate: TradingDay; calendar: TradingDay[];
+  sics: Record<string, number | null>; betas: Record<string, number | null>;
+  spyDecisionMark: () => Promise<number>; spyOnce: SpyReader;
+}
+
+/**
+ * What a fall since the report needs (shared by the bear-breach rule and the stale-entry gate): the report price
+ * P0, β (measured, else the SIC proxy), and SPY at the report's price date and at the decision mark. `why` on any
+ * miss. Never throws.
+ */
+async function fallBasis(r: Report | undefined, ticker: string, i: FallInputs): Promise<{ p0: number; beta: number; spyNow: number; spy0: number } | { why: string }> {
+  try {
+    const p0 = r?.quote?.currentPrice;
+    const asOf = toYmd(r?.meta?.asOf); // the report price's date ("Sep 11, 2026")
+    if (!(typeof p0 === "number" && p0 > 0) || !asOf) return { why: "no report price/date" };
+    if (asOf > i.markDate) return { why: `report priced ${asOf}, after the ${i.markDate} mark` };
+    // Measured beta (or the SIC proxy the FactPack implies); with neither a beta nor a SIC there is no beta to use.
+    const measured = i.betas[ticker];
+    const sic = i.sics[ticker];
+    const beta = typeof measured === "number" && Number.isFinite(measured) && measured > 0 ? measured : sic != null ? betaFromSic(sic) : null;
+    if (beta == null) return { why: "no beta" };
+    // SPY on the report's price date — the trading day on/before it when the loaded calendar covers it (a
+    // weekend/holiday asOf), else the broker's own on/before lookup.
+    const k = indexOnOrBefore(i.calendar, asOf);
+    const spyDate = k >= 0 ? i.calendar[k] : asOf;
+    const [spyNow, spy0] = await Promise.all([
+      i.spyOnce("decision-mark", i.spyDecisionMark),
+      i.spyOnce(spyDate, async () => (await i.adapter.getLastClose(["SPY"], spyDate)).SPY),
+    ]);
+    if (spyNow == null || spy0 == null) return { why: `no SPY close for ${spyNow == null ? `the ${i.markDate} mark` : spyDate}` };
+    return { p0, beta, spyNow, spy0 };
+  } catch (e) {
+    return { why: e instanceof Error ? e.message : String(e) };
+  }
 }
 
 /**
@@ -262,45 +320,52 @@ export async function bearBreaches(i: {
   calendar: TradingDay[]; sics: Record<string, number | null>; betas: Record<string, number | null>; cfg: TradeConfig;
   /** SPY at the decision mark — the same source and date as the stock's mark (see planRun). */
   spyDecisionMark: () => Promise<number>;
+  /** Shared SPY cache (planRun passes one so both rules read each date once); default a fresh one. */
+  spyOnce?: SpyReader;
 }): Promise<{ info: Record<string, BreachInfo>; unknown: { ticker: string; why: string }[] }> {
   const info: Record<string, BreachInfo> = {}, unknown: { ticker: string; why: string }[] = [];
   if (i.cfg.breachPolicy !== "byCause") return { info, unknown };
   const breached = i.signals.filter((s) => (i.weights[s.ticker] ?? 0) > 0 && s.R == null && s.D <= 0);
   if (!breached.length) return { info, unknown };
   const reportOf = new Map(i.reports.map((r) => [r.meta.ticker, r]));
-  // One read per distinct SPY date in the run; a failed read (or a non-positive close) is null, never a throw.
-  const spy = new Map<string, Promise<number | null>>();
-  const spyOnce = (key: string, read: () => Promise<number>) => {
-    if (!spy.has(key)) spy.set(key, Promise.resolve().then(read).then((x) => (Number.isFinite(x) && x > 0 ? x : null), () => null));
-    return spy.get(key)!;
-  };
+  const fi: FallInputs = { ...i, spyOnce: i.spyOnce ?? spyReader() };
   for (const s of breached) {
-    try {
-      const r = reportOf.get(s.ticker);
-      const p0 = r?.quote?.currentPrice;
-      const asOf = toYmd(r?.meta?.asOf); // the report price's date ("Sep 11, 2026")
-      if (!(typeof p0 === "number" && p0 > 0) || !asOf) { unknown.push({ ticker: s.ticker, why: "no report price/date" }); continue; }
-      if (asOf > i.markDate) { unknown.push({ ticker: s.ticker, why: `report priced ${asOf}, after the ${i.markDate} mark` }); continue; }
-      // Measured beta (or the SIC proxy the FactPack implies); with neither a beta nor a SIC there is no beta to use.
-      const measured = i.betas[s.ticker];
-      const sic = i.sics[s.ticker];
-      const beta = typeof measured === "number" && Number.isFinite(measured) && measured > 0 ? measured : sic != null ? betaFromSic(sic) : null;
-      if (beta == null) { unknown.push({ ticker: s.ticker, why: "no beta" }); continue; }
-      // SPY on the report's price date — the trading day on/before it when the loaded calendar covers it (a
-      // weekend/holiday asOf), else the broker's own on/before lookup.
-      const k = indexOnOrBefore(i.calendar, asOf);
-      const spyDate = k >= 0 ? i.calendar[k] : asOf;
-      const [spyNow, spy0] = await Promise.all([
-        spyOnce("decision-mark", i.spyDecisionMark),
-        spyOnce(spyDate, async () => (await i.adapter.getLastClose(["SPY"], spyDate)).SPY),
-      ]);
-      if (spyNow == null || spy0 == null) { unknown.push({ ticker: s.ticker, why: `no SPY close for ${spyNow == null ? `the ${i.markDate} mark` : spyDate}` }); continue; }
-      // s.price is the decision mark the signal (and so the breach) was judged on.
-      const b = classifyBreach({ price: s.price, p0, spyNow, spy0, beta }, i.cfg);
-      if (b) info[s.ticker] = b; else unknown.push({ ticker: s.ticker, why: "inputs out of range" });
-    } catch (e) {
-      unknown.push({ ticker: s.ticker, why: e instanceof Error ? e.message : String(e) });
-    }
+    const f = await fallBasis(reportOf.get(s.ticker), s.ticker, fi);
+    if ("why" in f) { unknown.push({ ticker: s.ticker, why: f.why }); continue; }
+    // s.price is the decision mark the signal (and so the breach) was judged on.
+    const b = classifyBreach({ price: s.price, ...f }, i.cfg);
+    if (b) info[s.ticker] = b; else unknown.push({ ticker: s.ticker, why: "inputs out of range" });
+  }
+  return { info, unknown };
+}
+
+/**
+ * The stale-on-bad-news entry gate's inputs (stale-entry.ts), for names NOT held. SPY is read only for a name that
+ * is already ≥ staleEntryMinFall below its report price AND carries a recent earnings miss — otherwise the gate
+ * can't fire and nothing is fetched. Every miss leaves the name out of `info`, and a name left out enters as usual.
+ * The gate is applied in hysteresis.classify, after eligibility and the buy-lock. Never throws.
+ */
+export async function staleEntries(i: {
+  adapter: BrokerAdapter; reports: Report[]; signals: Signal[]; weights: Record<string, number>; markDate: TradingDay; today: TradingDay;
+  calendar: TradingDay[]; sics: Record<string, number | null>; betas: Record<string, number | null>;
+  earnings: Record<string, LastEarnings>; cfg: TradeConfig;
+  spyDecisionMark: () => Promise<number>; spyOnce?: SpyReader;
+}): Promise<{ info: Record<string, StaleEntryInfo>; unknown: { ticker: string; why: string }[] }> {
+  const info: Record<string, StaleEntryInfo> = {}, unknown: { ticker: string; why: string }[] = [];
+  if (!i.cfg.staleEntryGate) return { info, unknown };
+  const reportOf = new Map(i.reports.map((r) => [r.meta.ticker, r]));
+  const candidates = i.signals.filter((s) => {
+    if ((i.weights[s.ticker] ?? 0) > 0) return false;
+    const p0 = reportOf.get(s.ticker)?.quote?.currentPrice;
+    return typeof p0 === "number" && fellEnough(s.price, p0, i.cfg) && usableMiss(i.earnings[s.ticker], i.today, i.cfg) != null;
+  });
+  if (!candidates.length) return { info, unknown };
+  const fi: FallInputs = { ...i, spyOnce: i.spyOnce ?? spyReader() };
+  for (const s of candidates) {
+    const f = await fallBasis(reportOf.get(s.ticker), s.ticker, fi);
+    if ("why" in f) { unknown.push({ ticker: s.ticker, why: f.why }); continue; }
+    const g = classifyStaleEntry({ price: s.price, ...f, earnings: i.earnings[s.ticker], today: i.today }, i.cfg);
+    if (g) info[s.ticker] = g;
   }
   return { info, unknown };
 }

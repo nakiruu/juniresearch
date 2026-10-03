@@ -10,12 +10,12 @@ const args = process.argv.slice(2);
 const today = flag(args, "--date") ?? todayET();
 const broker = flag(args, "--broker") ?? "fake";
 const cfg = resolveTradeConfig(tradeConfigFromEnv());
-const { reports, sics, marketCapUsd, betas } = await loadReportsAndMeta();
+const { reports, sics, marketCapUsd, betas, earnings } = await loadReportsAndMeta();
 const tickers = reports.map((r) => r.meta.ticker);
 const fills = readFills(FILLS_PATH);
 const adapter = broker === "alpaca" ? makeAlpaca() : await makeFakeBroker(tickers, today);
 const runId = newRunId(today);
-const out = await planRun({ adapter, reports, sics, marketCapUsd, betas, fills, today, cfg, runId });
+const out = await planRun({ adapter, reports, sics, marketCapUsd, betas, earnings, fills, today, cfg, runId });
 writeLedger(LEDGER_PATH, out.ledger);
 const path = writeRunRecord(RUNS_DIR, out.record);
 // Decision marks: live prices only when this is today's ET session in markMode "live" (the run record

@@ -22,6 +22,8 @@ export interface RunSummaryInput {
   audit?: { ok: boolean; critical: number; warn: number };
   /** Held names past their bear case, one line each (breachLines) — their reports need re-writing. */
   breaches?: string[];
+  /** Names the stale-on-bad-news gate kept out (staleEntryLines) — their reports need re-writing before a buy. */
+  staleEntries?: string[];
 }
 /** One name in the target book: where it is, where the plan wants it, and what this run does about it. */
 export interface AllocationRow {
@@ -34,6 +36,8 @@ export interface AllocationInput {
   nav: number; cash: number; plannedCash: number; rows: AllocationRow[];
   /** Held names past their bear case, one line each (breachLines) — their reports need re-writing. */
   breaches?: string[];
+  /** Names the stale-on-bad-news gate kept out (staleEntryLines) — their reports need re-writing before a buy. */
+  staleEntries?: string[];
 }
 export interface TradeNotifier {
   message(text: string): void; runSummary(s: RunSummaryInput): void; allocation(a: AllocationInput): void; flush(): Promise<void>;
@@ -75,12 +79,26 @@ export function breachLines(out: PlanRunOutput): string[] {
 }
 
 /**
+ * One line per name the stale-on-bad-news gate kept out of the book (stale-entry.ts) —
+ * "PLOW −9% since report, stock-specific; missed −12.0% (2026-08-05)". Each wants a re-written report before it
+ * can be bought. Pure, tolerant of a partial run output.
+ */
+export function staleEntryLines(out: PlanRunOutput): string[] {
+  const info = out.staleEntries ?? out.record?.staleEntries ?? {};
+  return (out.plan?.classifications ?? []).filter((c) => c.classification === "STALE_ENTRY").map((c) => {
+    const g = info[c.ticker];
+    return g ? `${c.ticker} ${(g.fall * 100).toFixed(0)}% since report, stock-specific; missed ${g.surprisePct.toFixed(1)}% (${g.earningsDate})` : c.ticker;
+  });
+}
+
+/**
  * Pure adapter: a pipeline run → the notification summary (used identically by cron and trade:execute).
  * `skippedCutoff`: orders executeOrders did not send because the submit cutoff passed — listed with the
  * other skips so the embed shows exactly which orders never went out.
  */
 export function summaryFromRun(out: PlanRunOutput, status: string, fills: Fill[], audit?: AuditResult, skippedCutoff: { ticker: string; detail: string }[] = []): RunSummaryInput {
   const breaches = breachLines(out);
+  const staleEntries = staleEntryLines(out);
   return {
     today: out.record.today, runId: out.record.runId, broker: out.record.broker, status,
     nav: out.ledger.nav, cash: out.ledger.cash,
@@ -93,6 +111,7 @@ export function summaryFromRun(out: PlanRunOutput, status: string, fills: Fill[]
     ],
     audit: audit ? { ok: audit.ok, critical: audit.critical, warn: audit.warn } : undefined,
     ...(breaches.length ? { breaches } : {}),
+    ...(staleEntries.length ? { staleEntries } : {}),
   };
 }
 
@@ -101,6 +120,7 @@ const SKIP_ACTION: Record<string, string> = {
   BARRED_ENTRY: "entry barred (buy-locked)", BARRED_ADD: "add barred (buy-locked)", NO_CAPACITY: "no room under caps",
   NO_SIGNAL: "held, no report — frozen", INELIGIBLE: "ineligible", TURNOVER_CLIP: "deferred (turnover cap)",
   FREEZE: "frozen — bear breach (mixed); re-write the report",
+  STALE_ENTRY: "entry barred — stale on bad news; re-write the report",
 };
 
 /**
@@ -147,7 +167,8 @@ export function allocationLines(rows: AllocationRow[]): string[] {
 export function allocationEmbed(a: AllocationInput): DiscordPayload {
   const lines = allocationLines(a.rows);
   // Bear breaches lead the description (the owner's to-do: re-write those reports); the book gives up the room.
-  const breach = a.breaches?.length ? `\nBear breaches: ${a.breaches.join(" · ")}`.slice(0, 600) : "";
+  const breach = (a.breaches?.length ? `\nBear breaches: ${a.breaches.join(" · ")}`.slice(0, 600) : "")
+    + (a.staleEntries?.length ? `\nNot bought, report stale on bad news: ${a.staleEntries.join(" · ")}`.slice(0, 400) : "");
   const fields: { name: string; value: string }[] = [];
   let chunk: string[] = [], used = 0, shown = 0;
   const push = () => { if (chunk.length) fields.push({ name: fields.length ? "\u200b" : `Target book (${a.rows.length})`, value: "```\n" + chunk.join("\n") + "\n```" }); chunk = []; };
@@ -171,7 +192,8 @@ export function allocationEmbed(a: AllocationInput): DiscordPayload {
 /** Pure adapter: a plan → the allocation notification. */
 export function allocationFromRun(out: PlanRunOutput, status: string): AllocationInput {
   const breaches = breachLines(out);
-  return { today: out.record.today, broker: out.record.broker, status, nav: out.ledger.nav, cash: out.ledger.cash, plannedCash: out.plan.plannedCash, rows: allocationRows(out), ...(breaches.length ? { breaches } : {}) };
+  const staleEntries = staleEntryLines(out);
+  return { today: out.record.today, broker: out.record.broker, status, nav: out.ledger.nav, cash: out.ledger.cash, plannedCash: out.plan.plannedCash, rows: allocationRows(out), ...(breaches.length ? { breaches } : {}), ...(staleEntries.length ? { staleEntries } : {}) };
 }
 
 /** A ```-fenced field value from the first `max` lines, with a "+N more" tail, kept under Discord's 1024-char limit. */
@@ -201,6 +223,7 @@ export function runEmbed(s: RunSummaryInput): DiscordPayload {
   ];
   if (s.skipped.length) fields.push({ name: `Skipped (${s.skipped.length})`, value: block(s.skipped.map((k) => `${k.ticker} — ${k.reason}`), 10) });
   if (s.breaches?.length) fields.push({ name: `Bear breaches (${s.breaches.length}) — re-write these reports`, value: block(s.breaches, 10) });
+  if (s.staleEntries?.length) fields.push({ name: `Not bought, stale on bad news (${s.staleEntries.length}) — re-write these reports`, value: block(s.staleEntries, 10) });
   if (s.audit) fields.push({ name: "Broker-truth audit", value: s.audit.ok ? (s.audit.warn ? `OK · ${s.audit.warn} warning(s)` : "OK — matches broker") : `FAIL — ${s.audit.critical} critical` });
   return { embeds: [{ title: `${s.status.toUpperCase()} · ${s.broker} · ${s.today}`, color: statusColor(s), fields }] };
 }
@@ -237,7 +260,7 @@ export function makeNotifier(opts: { webhookUrl?: string; onLog?: (line: string)
       enqueue(runEmbed(s));
     },
     allocation(a: AllocationInput): void {
-      onLog(`allocation ${a.status} ${a.broker} ${a.today} — ${a.rows.length} name(s)${a.breaches?.length ? ` · bear breaches: ${a.breaches.join(" · ")}` : ""}`);
+      onLog(`allocation ${a.status} ${a.broker} ${a.today} — ${a.rows.length} name(s)${a.breaches?.length ? ` · bear breaches: ${a.breaches.join(" · ")}` : ""}${a.staleEntries?.length ? ` · stale entries: ${a.staleEntries.join(" · ")}` : ""}`);
       enqueue(allocationEmbed(a));
     },
     async flush(): Promise<void> { await Promise.allSettled(pending.splice(0)); },

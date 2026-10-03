@@ -69,6 +69,16 @@ describe("bear-breach config", () => {
   });
 });
 
+describe("stale-entry gate config", () => {
+  it("defaults on: 5% fall, 120-day earnings window", () => {
+    expect(resolveTradeConfig()).toMatchObject({ staleEntryGate: true, staleEntryMinFall: 0.05, staleEntryEarningsMaxDays: 120 });
+  });
+  it("rejects a fall outside (0, 1) and a non-integer or non-positive window", () => {
+    for (const v of [0, 1, -0.1]) expect(() => resolveTradeConfig({ staleEntryMinFall: v })).toThrow(/staleEntryMinFall/);
+    for (const v of [0, 1.5, -3]) expect(() => resolveTradeConfig({ staleEntryEarningsMaxDays: v })).toThrow(/staleEntryEarningsMaxDays/);
+  });
+});
+
 describe("daily turnover cap config", () => {
   it("defaults to 25% and must sit between the per-run cap and 100%", () => {
     expect(resolveTradeConfig().maxDayTurnoverFrac).toBe(0.25);

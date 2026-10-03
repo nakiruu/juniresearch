@@ -11,6 +11,7 @@ import { SCHWAB_HOST } from "../broker/guards";
 import { betaFor } from "../synth/moat";
 import { readFills } from "./fills";
 import { RunRecord } from "./run-record";
+import { readEarnings, type LastEarnings } from "./earnings";
 
 export const TRADE_DIR = join("data", "trade");
 export const FILLS_PATH = join(TRADE_DIR, "fills.jsonl");
@@ -79,9 +80,11 @@ export function brokerBaseUrl(adapter: BrokerAdapter): string {
 /**
  * Every published report plus the per-name facts the trade layer reads from its FactPack: SIC (sector), market
  * cap (liquidity bucket) and beta (a bear breach's market part, lib/trade/breach.ts — the pack's measured beta,
- * else the SIC proxy, exactly as the WACC build-up uses it; null only with no FactPack).
+ * else the SIC proxy, exactly as the WACC build-up uses it; null only with no FactPack), plus each name's latest
+ * earnings from data/earnings/latest.json (the stale-on-bad-news entry gate; fail-open — an unreadable file is
+ * warned about and treated as none).
  */
-export async function loadReportsAndMeta(): Promise<{ reports: Report[]; sics: Record<string, number | null>; marketCapUsd: Record<string, number | null>; betas: Record<string, number | null> }> {
+export async function loadReportsAndMeta(): Promise<{ reports: Report[]; sics: Record<string, number | null>; marketCapUsd: Record<string, number | null>; betas: Record<string, number | null>; earnings: Record<string, LastEarnings> }> {
   const reports: Report[] = [], sics: Record<string, number | null> = {}, marketCapUsd: Record<string, number | null> = {}, betas: Record<string, number | null> = {};
   for (const t of await listReportTickers()) {
     const r = await loadReport(t); if (!r) continue;
@@ -93,7 +96,9 @@ export async function loadReportsAndMeta(): Promise<{ reports: Report[]; sics: R
     const cell = (r as unknown as { snapshot?: { label: string; value: unknown }[] }).snapshot?.find((c) => /market cap/i.test(c.label));
     marketCapUsd[r.meta.ticker] = typeof cell?.value === "number" ? cell.value : null;
   }
-  return { reports, sics, marketCapUsd, betas };
+  const e = readEarnings();
+  if (e.warning) console.warn(e.warning);
+  return { reports, sics, marketCapUsd, betas, earnings: e.byTicker };
 }
 
 export function readRunRecord(runId: string): RunRecord {

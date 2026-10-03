@@ -9,7 +9,8 @@ decision after the trigger, as a fractional market order around 15:10 ET. Every 
 (pullback limits, waiting, waiting for an up day, staging, calendar timing) ties or loses. What can still
 earn money is *which* price-triggered entries to take. One filter held across all three eras: **do not buy a
 stock-specific fall after a negative earnings surprise — the report is stale; re-write it first.** It is
-proposed here, not built. Shibui's role is offline: stamp the inputs at capture time, refresh them between
+built (`staleEntryGate`, `lib/trade/stale-entry.ts`, `docs/engine.md` §4.2), fed by a committed Shibui earnings
+capture (`npm run trade:earnings`). Shibui's role is offline: stamp the inputs at capture time, refresh them between
 reports, and run the evidence log. The trader cannot query it at 15:10.
 
 ## How the engine enters today
@@ -105,7 +106,7 @@ the target is stale.
 **It is also the breach rule's mirror.** The engine exits a stock-specific fall through the bear. It should not
 open one on the way down when the latest earnings were a miss.
 
-**Proposed rule (not built).** A not-held name is BARRED ("stale on bad news — needs a fresh report") when all
+**The rule (built 2026-10-03).** A not-held name is BARRED ("stale on bad news — needs a fresh report") when all
 three hold:
 - the decision mark is ≥ 5% below the report price (smaller falls are noise for the cause split);
 - `classifyBreach` on that fall says `stock` (share ≥ 0.9; same inputs as the breach rule);
@@ -192,7 +193,8 @@ Shibui-derived input must be **captured and stamped offline**, the same print �
    gate. No limits, waiting or staging. Strong evidence; the alternatives cost 0–3pp per entry.
 2. **Check Schwab's fee rounding on one live confirmation.** Per-trade rounding to the cent would cost 5 bp on
    a $20 sell. With the 2.5pp band no change is expected, but it is the one cost at this NAV not yet measured.
-3. **Build the stale-on-bad-news gate and the Shibui earnings capture** (§2, §4.1–4.3). About +0.1 to +0.4pp
+3. **Done: the stale-on-bad-news gate and the Shibui earnings capture** (§2, §4.1). Still open: queue gated
+   names for re-synthesis (§4.3). About +0.1 to +0.4pp
    of NAV a year; consistent evidence, fading lately; no trading cost.
 4. **Extend the calibration log** (§4.4–4.5). This is how every deferred item, sector-relative μ above all, gets
    decided on the desk's own data.

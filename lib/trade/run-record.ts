@@ -30,6 +30,10 @@ export const RunRecord = z.object({
   breaches: z.record(z.string(), z.object({
     cause: z.enum(["market", "mixed", "stock"]), share: z.number(), total: z.number(), residual: z.number(), beta: z.number(), spyReturn: z.number(),
   })).optional(),
+  // Not-held names the stale-on-bad-news entry gate barred (lib/trade/stale-entry.ts). Optional: older records lack it.
+  staleEntries: z.record(z.string(), z.object({
+    fall: z.number(), share: z.number(), beta: z.number(), spyReturn: z.number(), surprisePct: z.number(), earningsDate: z.string(),
+  })).optional(),
   plan: loose, orders: z.array(loose), fills: z.array(loose), notes: z.array(z.string()),
 });
 export type RunRecord = z.infer<typeof RunRecord>;

@@ -60,6 +60,12 @@ export interface TradeConfig extends PortfolioConfig {
   breachPolicy: "exit" | "byCause";              // "exit": sell every breach; "byCause": hold / freeze / exit by the stock-specific share of the fall
   breachMarketShareMax: number;                  // share below this → market-driven → HOLD, sized through bearFloor (0.5)
   breachStockShareMin: number;                   // share at/above this → stock-specific → EXIT; between the two → FREEZE (0.9)
+  // Stale-on-bad-news entry gate (docs/engine.md §4.2, stale-entry.ts): a not-held name is not bought while it sits
+  // ≥ staleEntryMinFall below its report price, the fall is stock-specific (share ≥ breachStockShareMin) and its
+  // latest earnings (data/earnings/latest.json, ≤ staleEntryEarningsMaxDays old) missed — the report is stale.
+  staleEntryGate: boolean;                       // false → no gate (entries as before)
+  staleEntryMinFall: number;                     // the fall since the report price that counts (0.05); smaller moves are noise for the cause split
+  staleEntryEarningsMaxDays: number;             // an earnings result older than this (calendar days) is ignored (120 ≈ a quarter + slack)
 }
 
 export const DEFAULT_TRADE_CONFIG: TradeConfig = {
@@ -93,6 +99,7 @@ export const DEFAULT_TRADE_CONFIG: TradeConfig = {
   maxLateMin: 20, reconcileOrders: true, turnoverClipBuyOnly: true, topUpRecentBuys: false, residualBand: 0.005,
   schwabRefreshLifetimeDays: 7, schwabAuthWarnHours: 72,
   breachPolicy: "byCause", breachMarketShareMax: 0.5, breachStockShareMin: 0.9,
+  staleEntryGate: true, staleEntryMinFall: 0.05, staleEntryEarningsMaxDays: 120,
 };
 
 /**
@@ -155,6 +162,9 @@ export function resolveTradeConfig(overrides: Partial<TradeConfig> = {}): TradeC
   // A market-driven breach is held with D = 0 and R null; only the bear floor gives it a finite size
   // (sizingRewardRisk). Without the floor its score is 0 and the "hold" would be sold down to nothing.
   if (cfg.breachPolicy === "byCause" && !(cfg.bearFloor > 0)) throw new Error(`breachPolicy "byCause" needs bearFloor > 0 (got ${cfg.bearFloor}) — a market-driven breach is sized through the floor`);
+
+  if (!(cfg.staleEntryMinFall > 0 && cfg.staleEntryMinFall < 1)) throw new Error(`staleEntryMinFall (${cfg.staleEntryMinFall}) must be in (0, 1)`);
+  if (!(Number.isInteger(cfg.staleEntryEarningsMaxDays) && cfg.staleEntryEarningsMaxDays > 0)) throw new Error(`staleEntryEarningsMaxDays (${cfg.staleEntryEarningsMaxDays}) must be a positive integer`);
 
   for (const b of BUCKETS) {
     if (!(cfg.limitTol[b] > 0)) throw new Error(`limitTol.${b} (${cfg.limitTol[b]}) must be positive`);
