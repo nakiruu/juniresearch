@@ -398,6 +398,15 @@ every breach (and is required with `bearFloor 0`, since a market-driven hold is 
 > above, not from this book. Once the calibration log (`lib/calibration/realized.ts`) has post-breach d63/d126
 > returns on enough held breaches, check the three buckets' signs before tuning the bands.
 
+> 💡 **Proposed, not built — bar an ENTER that is "stale on bad news."** The breach rule's mirror on the way
+> in. Bar the entry when the price is ≥ 5% below the report price, `classifyBreach` calls that fall `stock`, and
+> the latest earnings surprise is negative. Re-write the report first. Among stock-specific 8% falls after a
+> 10-Q (Shibui, ≥ $2B), a prior miss lagged a prior beat by −3.1 / −3.2 / −3.2pp over 126 days in 2010–15 /
+> 2016–20 / 2021–25. It was negative in 12 of 16 years but faded in 2024–25. Book effect is small, roughly +0.1
+> to +0.4pp of NAV a year. It needs the last surprise stamped on the FactPack from Shibui (the trader cannot
+> query Shibui at 15:10). Evidence and the rejected alternatives (momentum, turnover, lottery and pre-earnings
+> filters) are in `docs/superpowers/specs/2026-10-03-entry-methodology.md`.
+
 ### 4.3 The emitter — target vs current  (`lib/trade/rebalance.ts` → `emitTrades`)
 
 1. **Freeze** held names with no current signal, deferred exits (locked), and `FREEZE` names (a mixed bear
@@ -476,6 +485,18 @@ close, with the source recorded (run record `markSources`). The `mark` above (TR
 mark. The settled prior close stays the **execution reference** (`Mkt.close`: gap-halt and the tier-3
 anchor, §5.3) and is recorded as `refCloses`, so a replay reads the marks the run actually used.
 `markMode:"settled"` restores prior-close decisions (backtest-reproducible from closes alone).
+
+> 🚫 **Not an option — entering with a pullback limit, a wait, a confirmation day, or in stages.** Measured on
+> ~12k Shibui price triggers (2021–25, 63-day excess vs SPY):
+> - Buying at the decision: −1.16. A limit 0.5–4% below for 1–5 days, then market if unfilled: −1.15 to −1.48.
+>   The same limit with cash if unfilled: −1.78 to −2.75. Filled names go on to lag (−1.9 to −4.1pp) and
+>   unfilled ones run (+0.2 to +2.8pp): limits fill on bad news (Linnainmaa 2010).
+> - Waiting 5–10 sessions does not buy a lower price on average, and waiting for an up day ties.
+> - With orders ~10⁻⁶ of daily volume, staging only delays the alpha (Gârleanu & Pedersen 2013) and each add
+>   restarts the sell lock.
+>
+> Full size at the first decision, as the fractional market order above, stays. See
+> `docs/superpowers/specs/2026-10-03-entry-methodology.md`.
 
 ### 5.2 Liquidity buckets  (`bucketFor`)
 
