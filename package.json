@@ -20,6 +20,7 @@
     "facts:free": "node --env-file-if-exists=.env.local --import tsx scripts/facts-free.ts",
     "facts:backfill-ev": "node --env-file-if-exists=.env.local --import tsx scripts/facts-backfill-ev-ebitda.ts",
     "facts:backfill-fcf": "node --env-file-if-exists=.env.local --import tsx scripts/facts-backfill-fcf-yield.ts",
+    "screen": "node --env-file-if-exists=.env.local --import tsx scripts/screen.ts",
     "facts:diff": "node --env-file-if-exists=.env.local --import tsx scripts/facts-diff.ts",
     "synth:prompt": "node --env-file-if-exists=.env.local --import tsx scripts/synth-prompt.ts",
     "synth:build": "node --env-file-if-exists=.env.local --import tsx scripts/synth-build.ts",
