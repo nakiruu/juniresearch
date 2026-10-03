@@ -135,6 +135,8 @@ prices + probabilities, and section Markdown. Code derives everything else and r
 ungrounded or inconsistent report.
 
 ```bash
+npm run screen -- --query --pending                               # Shibui call: rank pending filings by Street upside; save the response, then…
+npm run screen -- --rank <saved.json>                              # …ranked queue (likely-HOLD < 10% upside) → data/screen/<date>.json
 npm run synth:prompt -- AVGO 0001730168-26-000080                  # FactPack + desk config → data/judgment/AVGO/<acc>.prompt.md
 /synthesize AVGO 0001730168-26-000080                              # (Claude Code) writes the judgment .json, then builds
 npm run synth:build  -- AVGO 0001730168-26-000080                  # judgment + facts → validated data/avgo.json (or an errors file)
@@ -174,6 +176,20 @@ node --import tsx scripts/decide-preview.ts       # the composed decision + conv
 ```
 
 ---
+
+**Pre-synthesis screen** (`lib/screen/screen.ts`). A report run is the expensive step, and ~45% of reports
+come out HOLD. The screen ranks candidates by Street upside (consensus target / close − 1, from Shibui) and
+flags < 10% as likely-HOLD; calibrated on the 92 published reports it flags ~40% of HOLDs for at most one
+BUY (AUC 0.82). It **orders** the `/synthesize` queue and never skips a filing (the author sees the
+consensus too, so the signal is partly circular). `--calibrate <file>` re-checks it against published ratings.
+
+**Upside vs realized (S3 evidence log)** (`lib/calibration/realized.ts`). `npm run calibration:log -- --query`
+prints the Shibui call; `--apply <saved.json>` writes `data/calibration/<date>.json`: every prediction point
+(current reports plus earlier revisions from git, deleted reports included) with E/D/R/κ/label against the
+realized and SPY-excess return at +21/63/126/252 sessions and to date, plus trailing 252-day realized vol.
+Aggregates (by label, hit rate, Spearman ρ of E vs excess, realized/E) are null below 10 distinct names.
+Price returns only (Shibui closes are split- but not dividend-adjusted). Nothing reads it yet; re-run it
+periodically so the evidence accumulates.
 
 ## §4 — Portfolio
 

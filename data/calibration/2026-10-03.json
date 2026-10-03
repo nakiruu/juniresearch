@@ -1,0 +1,5238 @@
+{
+  "generatedAt": "2026-10-03T04:49:20.034Z",
+  "today": "2026-10-03",
+  "source": {
+    "reports": 99,
+    "revisions": 284,
+    "skippedRevisions": 0,
+    "shibuiResponses": [
+      "data/raw/_shibui/calibration-2026-10-03.json"
+    ]
+  },
+  "summary": {
+    "today": "2026-10-03",
+    "minN": 10,
+    "points": 100,
+    "names": 99,
+    "excluded": [
+      {
+        "ticker": "ACLS",
+        "asOf": "2026-10-02",
+        "reason": "entry-pending"
+      },
+      {
+        "ticker": "ATO",
+        "asOf": "2026-10-02",
+        "reason": "entry-pending"
+      },
+      {
+        "ticker": "CVLG",
+        "asOf": "2026-10-02",
+        "reason": "entry-pending"
+      },
+      {
+        "ticker": "DSP",
+        "asOf": "2026-10-02",
+        "reason": "entry-pending"
+      },
+      {
+        "ticker": "ENVA",
+        "asOf": "2026-10-02",
+        "reason": "entry-pending"
+      },
+      {
+        "ticker": "ESAB",
+        "asOf": "2026-10-02",
+        "reason": "entry-pending"
+      },
+      {
+        "ticker": "EVER",
+        "asOf": "2026-10-03",
+        "reason": "entry-pending"
+      },
+      {
+        "ticker": "EXFY",
+        "asOf": "2026-10-02",
+        "reason": "entry-pending"
+      },
+      {
+        "ticker": "FOUR",
+        "asOf": "2026-10-02",
+        "reason": "entry-pending"
+      },
+      {
+        "ticker": "FTI",
+        "asOf": "2026-10-03",
+        "reason": "entry-pending"
+      },
+      {
+        "ticker": "GDYN",
+        "asOf": "2026-10-02",
+        "reason": "entry-pending"
+      },
+      {
+        "ticker": "GE",
+        "asOf": "2026-10-02",
+        "reason": "entry-pending"
+      },
+      {
+        "ticker": "KRYS",
+        "asOf": "2026-10-03",
+        "reason": "entry-pending"
+      },
+      {
+        "ticker": "LQDT",
+        "asOf": "2026-10-02",
+        "reason": "entry-pending"
+      },
+      {
+        "ticker": "MNST",
+        "asOf": "2026-10-03",
+        "reason": "entry-pending"
+      },
+      {
+        "ticker": "MQ",
+        "asOf": "2026-10-02",
+        "reason": "entry-pending"
+      },
+      {
+        "ticker": "NVT",
+        "asOf": "2026-09-24",
+        "reason": "not-in-shibui"
+      },
+      {
+        "ticker": "PGY",
+        "asOf": "2026-10-02",
+        "reason": "entry-pending"
+      },
+      {
+        "ticker": "PLOW",
+        "asOf": "2026-10-02",
+        "reason": "entry-pending"
+      },
+      {
+        "ticker": "QLYS",
+        "asOf": "2026-10-02",
+        "reason": "entry-pending"
+      },
+      {
+        "ticker": "RDVT",
+        "asOf": "2026-10-02",
+        "reason": "entry-pending"
+      },
+      {
+        "ticker": "THG",
+        "asOf": "2026-10-03",
+        "reason": "entry-pending"
+      },
+      {
+        "ticker": "VRTX",
+        "asOf": "2026-10-02",
+        "reason": "entry-pending"
+      }
+    ],
+    "groups": {
+      "ALL": {
+        "d21": {
+          "meanRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanE": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianDays": null,
+          "hitRate": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "spearmanEvsExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatio": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatioProRata": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          }
+        },
+        "d63": {
+          "meanRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanE": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianDays": null,
+          "hitRate": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "spearmanEvsExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatio": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatioProRata": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          }
+        },
+        "d126": {
+          "meanRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanE": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianDays": null,
+          "hitRate": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "spearmanEvsExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatio": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatioProRata": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          }
+        },
+        "d252": {
+          "meanRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanE": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianDays": null,
+          "hitRate": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "spearmanEvsExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatio": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatioProRata": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          }
+        },
+        "latest": {
+          "meanRet": {
+            "n": 75,
+            "nNames": 74,
+            "value": -0.0045
+          },
+          "medianRet": {
+            "n": 75,
+            "nNames": 74,
+            "value": -0.0114
+          },
+          "meanExcess": {
+            "n": 75,
+            "nNames": 74,
+            "value": -0.0018
+          },
+          "medianExcess": {
+            "n": 75,
+            "nNames": 74,
+            "value": -0.0051
+          },
+          "meanE": {
+            "n": 75,
+            "nNames": 74,
+            "value": 0.1379
+          },
+          "medianDays": 8,
+          "hitRate": {
+            "n": 75,
+            "nNames": 74,
+            "value": 0.4133
+          },
+          "spearmanEvsExcess": {
+            "n": 75,
+            "nNames": 74,
+            "value": -0.098
+          },
+          "calibrationRatio": {
+            "n": 75,
+            "nNames": 74,
+            "value": -0.0327
+          },
+          "calibrationRatioProRata": {
+            "n": 75,
+            "nNames": 74,
+            "value": null,
+            "reason": "no session count for the to-date horizon"
+          }
+        }
+      },
+      "BUY+": {
+        "d21": {
+          "meanRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanE": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianDays": null,
+          "hitRate": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "spearmanEvsExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatio": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatioProRata": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          }
+        },
+        "d63": {
+          "meanRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanE": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianDays": null,
+          "hitRate": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "spearmanEvsExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatio": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatioProRata": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          }
+        },
+        "d126": {
+          "meanRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanE": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianDays": null,
+          "hitRate": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "spearmanEvsExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatio": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatioProRata": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          }
+        },
+        "d252": {
+          "meanRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanE": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianDays": null,
+          "hitRate": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "spearmanEvsExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatio": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatioProRata": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          }
+        },
+        "latest": {
+          "meanRet": {
+            "n": 44,
+            "nNames": 44,
+            "value": -0.0109
+          },
+          "medianRet": {
+            "n": 44,
+            "nNames": 44,
+            "value": -0.0145
+          },
+          "meanExcess": {
+            "n": 44,
+            "nNames": 44,
+            "value": -0.0083
+          },
+          "medianExcess": {
+            "n": 44,
+            "nNames": 44,
+            "value": -0.0095
+          },
+          "meanE": {
+            "n": 44,
+            "nNames": 44,
+            "value": 0.1882
+          },
+          "medianDays": 8,
+          "hitRate": {
+            "n": 44,
+            "nNames": 44,
+            "value": 0.3182
+          },
+          "spearmanEvsExcess": {
+            "n": 44,
+            "nNames": 44,
+            "value": -0.0008
+          },
+          "calibrationRatio": {
+            "n": 44,
+            "nNames": 44,
+            "value": -0.0577
+          },
+          "calibrationRatioProRata": {
+            "n": 44,
+            "nNames": 44,
+            "value": null,
+            "reason": "no session count for the to-date horizon"
+          }
+        }
+      },
+      "HOLD": {
+        "d21": {
+          "meanRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanE": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianDays": null,
+          "hitRate": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "spearmanEvsExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatio": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatioProRata": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          }
+        },
+        "d63": {
+          "meanRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanE": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianDays": null,
+          "hitRate": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "spearmanEvsExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatio": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatioProRata": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          }
+        },
+        "d126": {
+          "meanRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanE": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianDays": null,
+          "hitRate": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "spearmanEvsExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatio": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatioProRata": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          }
+        },
+        "d252": {
+          "meanRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanE": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianDays": null,
+          "hitRate": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "spearmanEvsExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatio": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatioProRata": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          }
+        },
+        "latest": {
+          "meanRet": {
+            "n": 31,
+            "nNames": 30,
+            "value": 0.0045
+          },
+          "medianRet": {
+            "n": 31,
+            "nNames": 30,
+            "value": 0.0044
+          },
+          "meanExcess": {
+            "n": 31,
+            "nNames": 30,
+            "value": 0.0073
+          },
+          "medianExcess": {
+            "n": 31,
+            "nNames": 30,
+            "value": 0.0093
+          },
+          "meanE": {
+            "n": 31,
+            "nNames": 30,
+            "value": 0.0665
+          },
+          "medianDays": 8,
+          "hitRate": {
+            "n": 31,
+            "nNames": 30,
+            "value": 0.5484
+          },
+          "spearmanEvsExcess": {
+            "n": 31,
+            "nNames": 30,
+            "value": -0.0992
+          },
+          "calibrationRatio": {
+            "n": 31,
+            "nNames": 30,
+            "value": 0.0677
+          },
+          "calibrationRatioProRata": {
+            "n": 31,
+            "nNames": 30,
+            "value": null,
+            "reason": "no session count for the to-date horizon"
+          }
+        }
+      },
+      "SELL-side": {
+        "d21": {
+          "meanRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanE": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianDays": null,
+          "hitRate": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "spearmanEvsExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatio": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatioProRata": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          }
+        },
+        "d63": {
+          "meanRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanE": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianDays": null,
+          "hitRate": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "spearmanEvsExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatio": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatioProRata": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          }
+        },
+        "d126": {
+          "meanRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanE": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianDays": null,
+          "hitRate": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "spearmanEvsExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatio": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatioProRata": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          }
+        },
+        "d252": {
+          "meanRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanE": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianDays": null,
+          "hitRate": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "spearmanEvsExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatio": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatioProRata": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          }
+        },
+        "latest": {
+          "meanRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianRet": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "meanE": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "medianDays": null,
+          "hitRate": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "spearmanEvsExcess": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatio": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "insufficient data: 0 name(s) < MIN_N 10"
+          },
+          "calibrationRatioProRata": {
+            "n": 0,
+            "nNames": 0,
+            "value": null,
+            "reason": "no session count for the to-date horizon"
+          }
+        }
+      }
+    },
+    "notes": [
+      "Cells are null below MIN_N = 10 distinct names; n counts points, nNames distinct tickers (overlapping points of one name are not independent).",
+      "Returns are Shibui price returns: split-adjusted, NOT dividend-adjusted (dividend payers and SPY understate total return).",
+      "Entry = Shibui close on/before the report's quote date (asOf); horizons are trading sessions after that close. Points whose quote day Shibui has not loaded yet (entry-pending) wait for the next run.",
+      "price-mismatch (> 5%) is flagged but kept (mostly an intraday report price vs the close); > 25% is excluded.",
+      "The to-date (latest) horizon mixes holding periods (see medianDays); a few weeks of returns is noise, not evidence.",
+      "E is the report's expected upside vs its own price (a ~12-month fair-value gap); only d252 compares like-for-like. calibrationRatioProRata assumes linear accrual.",
+      "hitRate = share of points where sign(excess vs SPY) == sign(E). Survivor-only data: a delisted name would drop out."
+    ]
+  },
+  "points": [
+    {
+      "ticker": "ACLS",
+      "asOf": "2026-10-02",
+      "reportDate": "2026-10-02",
+      "label": "HOLD",
+      "E": 0.019026,
+      "D": 0.221342,
+      "R": 0.085959,
+      "kappa": 0.84,
+      "reportPrice": 147.69,
+      "entry": {
+        "date": "2026-10-01",
+        "close": 136.71,
+        "spyClose": 763.99,
+        "priceGap": 0.080316
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": null
+      },
+      "realizedVol252": 0.6779,
+      "volObservations": 252,
+      "flags": [
+        "entry-pending",
+        "price-mismatch"
+      ],
+      "sha": null,
+      "shas": [
+        null,
+        "2932df284a329a865b90acf75dd19625b80c5258",
+        "5839e7f6a38cfcc2726fc0b1f1f1519debbf215d",
+        "9e1f98c05caa1abe571de3dc246d1049af14f576"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "AIP",
+      "asOf": "2026-09-23",
+      "reportDate": "2026-09-23",
+      "label": "BUY",
+      "E": 0.263115,
+      "D": 0.313963,
+      "R": 0.838046,
+      "kappa": 0.62,
+      "reportPrice": 24.78,
+      "entry": {
+        "date": "2026-09-23",
+        "close": 24.19,
+        "spyClose": 767.81,
+        "priceGap": 0.02439
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 8,
+          "ret": -0.007441,
+          "spyRet": -0.004975,
+          "excess": -0.002466
+        }
+      },
+      "realizedVol252": 0.8254,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "e48da283d2c43591f84a45e13b1f4d01fb09413b"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "ALL",
+      "asOf": "2026-09-22",
+      "reportDate": "2026-09-22",
+      "label": "HOLD",
+      "E": 0.084967,
+      "D": 0.172113,
+      "R": 0.493671,
+      "kappa": 0.62,
+      "reportPrice": 229.5,
+      "entry": {
+        "date": "2026-09-22",
+        "close": 229.5,
+        "spyClose": 773.38,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 9,
+          "ret": -0.022179,
+          "spyRet": -0.012142,
+          "excess": -0.010037
+        }
+      },
+      "realizedVol252": 0.2533,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "0965c7044570252a73133d8b874579caea2a5700"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "ALRS",
+      "asOf": "2026-09-23",
+      "reportDate": "2026-09-23",
+      "label": "HOLD",
+      "E": 0.071429,
+      "D": 0.192547,
+      "R": 0.370968,
+      "kappa": 0.68,
+      "reportPrice": 32.2,
+      "entry": {
+        "date": "2026-09-23",
+        "close": 31.77,
+        "spyClose": 767.81,
+        "priceGap": 0.013535
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 8,
+          "ret": -0.001259,
+          "spyRet": -0.004975,
+          "excess": 0.003716
+        }
+      },
+      "realizedVol252": 0.2337,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "349af8c3c6f06106f7b9f4ec4e47907e450289d3"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "AMD",
+      "asOf": "2026-09-15",
+      "reportDate": "2026-09-16",
+      "label": "HOLD",
+      "E": 0.120587,
+      "D": 0.325664,
+      "R": 0.37028,
+      "kappa": 0.7,
+      "reportPrice": 504.2,
+      "entry": {
+        "date": "2026-09-15",
+        "close": 504.2,
+        "spyClose": 757.39,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 16,
+          "ret": 0.221202,
+          "spyRet": 0.008714,
+          "excess": 0.212488
+        }
+      },
+      "realizedVol252": 0.7063,
+      "volObservations": 252,
+      "flags": [
+        "label-revised"
+      ],
+      "sha": null,
+      "shas": [
+        null,
+        "2ac286651419477efae8ce8e01c778406684c671",
+        "21d4c545f2235fb5d1db44f94c75754c23f02533",
+        "fd74d1389baf21e4d10c1bd8224fbf876a9114aa"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "AMZN",
+      "asOf": "2026-09-24",
+      "reportDate": "2026-09-24",
+      "label": "BUY",
+      "E": 0.175432,
+      "D": 0.177599,
+      "R": 0.987802,
+      "kappa": 0.82,
+      "reportPrice": 249.27,
+      "entry": {
+        "date": "2026-09-24",
+        "close": 249.38,
+        "spyClose": 767.18,
+        "priceGap": -0.000441
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 7,
+          "ret": -0.004611,
+          "spyRet": -0.004158,
+          "excess": -0.000453
+        }
+      },
+      "realizedVol252": 0.3381,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "3f55021d6428007c8fe4ea597ad93b6ebcdaea38"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "ASPN",
+      "asOf": "2026-09-24",
+      "reportDate": "2026-09-24",
+      "label": "HOLD",
+      "E": 0.082746,
+      "D": 0.427817,
+      "R": 0.193416,
+      "kappa": 0.8,
+      "reportPrice": 5.68,
+      "entry": {
+        "date": "2026-09-24",
+        "close": 5.3,
+        "spyClose": 767.18,
+        "priceGap": 0.071698
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 7,
+          "ret": 0.049057,
+          "spyRet": -0.004158,
+          "excess": 0.053215
+        }
+      },
+      "realizedVol252": 1.0555,
+      "volObservations": 252,
+      "flags": [
+        "price-mismatch"
+      ],
+      "sha": "a9351359c8d7181c63acafb65ebefbf694103fcf",
+      "shas": [
+        "a9351359c8d7181c63acafb65ebefbf694103fcf"
+      ],
+      "source": "git"
+    },
+    {
+      "ticker": "ATO",
+      "asOf": "2026-10-02",
+      "reportDate": "2026-10-02",
+      "label": "HOLD",
+      "E": 0.04412,
+      "D": 0.172344,
+      "R": 0.256003,
+      "kappa": 0.52,
+      "reportPrice": 157.07,
+      "entry": {
+        "date": "2026-10-01",
+        "close": 156.38,
+        "spyClose": 763.99,
+        "priceGap": 0.004412
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": null
+      },
+      "realizedVol252": 0.1543,
+      "volObservations": 252,
+      "flags": [
+        "entry-pending"
+      ],
+      "sha": null,
+      "shas": [
+        null,
+        "bfbd4a6bcdce44670fbeb3aaab01870008aeae51"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "AVGO",
+      "asOf": "2026-09-11",
+      "reportDate": "2026-09-13",
+      "label": "BUY",
+      "E": 0.215503,
+      "D": 0.309373,
+      "R": 0.69658,
+      "kappa": 0.63,
+      "reportPrice": 361.99,
+      "entry": {
+        "date": "2026-09-11",
+        "close": 361.99,
+        "spyClose": 764.29,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 20,
+          "ret": -0.050692,
+          "spyRet": -0.000393,
+          "excess": -0.050299
+        }
+      },
+      "realizedVol252": 0.4639,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "d3e48a81ff9551558b0c3d03efd289d5421c8f86",
+        "21d4c545f2235fb5d1db44f94c75754c23f02533",
+        "38a8eb4de511e6eb69eb2ed4e99e21c88fa21d73"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "AXON",
+      "asOf": "2026-09-22",
+      "reportDate": "2026-09-22",
+      "label": "HOLD",
+      "E": 0.07006,
+      "D": 0.259775,
+      "R": 0.269695,
+      "kappa": 0.72,
+      "reportPrice": 459.32,
+      "entry": {
+        "date": "2026-09-22",
+        "close": 459.32,
+        "spyClose": 773.38,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 9,
+          "ret": -0.080793,
+          "spyRet": -0.012142,
+          "excess": -0.068652
+        }
+      },
+      "realizedVol252": 0.6303,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "0965c7044570252a73133d8b874579caea2a5700"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "BAC",
+      "asOf": "2026-09-14",
+      "reportDate": "2026-09-15",
+      "label": "BUY",
+      "E": 0.109803,
+      "D": 0.15924,
+      "R": 0.689546,
+      "kappa": 0.66,
+      "reportPrice": 59.47,
+      "entry": {
+        "date": "2026-09-14",
+        "close": 59.47,
+        "spyClose": 760.88,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 17,
+          "ret": -0.096519,
+          "spyRet": 0.004087,
+          "excess": -0.100607
+        }
+      },
+      "realizedVol252": 0.2192,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "d3e48a81ff9551558b0c3d03efd289d5421c8f86",
+        "21d4c545f2235fb5d1db44f94c75754c23f02533",
+        "38a8eb4de511e6eb69eb2ed4e99e21c88fa21d73"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "BAM",
+      "asOf": "2026-09-23",
+      "reportDate": "2026-09-23",
+      "label": "BUY",
+      "E": 0.129102,
+      "D": 0.174093,
+      "R": 0.741573,
+      "kappa": 0.63,
+      "reportPrice": 46.01,
+      "entry": {
+        "date": "2026-09-23",
+        "close": 45.26,
+        "spyClose": 767.81,
+        "priceGap": 0.016571
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 8,
+          "ret": -0.015466,
+          "spyRet": -0.004975,
+          "excess": -0.010491
+        }
+      },
+      "realizedVol252": 0.3094,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "349af8c3c6f06106f7b9f4ec4e47907e450289d3"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "BE",
+      "asOf": "2026-09-22",
+      "reportDate": "2026-09-22",
+      "label": "HOLD",
+      "E": 0.036958,
+      "D": 0.367157,
+      "R": 0.10066,
+      "kappa": 0.75,
+      "reportPrice": 276.53,
+      "entry": {
+        "date": "2026-09-22",
+        "close": 276.53,
+        "spyClose": 773.38,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 9,
+          "ret": 0.003797,
+          "spyRet": -0.012142,
+          "excess": 0.015939
+        }
+      },
+      "realizedVol252": 1.1261,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "0965c7044570252a73133d8b874579caea2a5700"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "CAT",
+      "asOf": "2026-09-24",
+      "reportDate": "2026-09-24",
+      "label": "BUY",
+      "E": 0.120662,
+      "D": 0.211842,
+      "R": 0.569585,
+      "kappa": 0.45,
+      "reportPrice": 812.02,
+      "entry": {
+        "date": "2026-09-24",
+        "close": 805.25,
+        "spyClose": 767.18,
+        "priceGap": 0.008407
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 7,
+          "ret": 0.026203,
+          "spyRet": -0.004158,
+          "excess": 0.030361
+        }
+      },
+      "realizedVol252": 0.3952,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "3f55021d6428007c8fe4ea597ad93b6ebcdaea38"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "CBRS",
+      "asOf": "2026-09-15",
+      "reportDate": "2026-09-16",
+      "label": "HOLD",
+      "E": 0.074553,
+      "D": 0.402271,
+      "R": 0.18533,
+      "kappa": 0.87,
+      "reportPrice": 184.03,
+      "entry": {
+        "date": "2026-09-15",
+        "close": 184.03,
+        "spyClose": 757.39,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 16,
+          "ret": -0.078846,
+          "spyRet": 0.008714,
+          "excess": -0.08756
+        }
+      },
+      "realizedVol252": null,
+      "volObservations": 84,
+      "flags": [
+        "short-vol-window"
+      ],
+      "sha": null,
+      "shas": [
+        null,
+        "d3e48a81ff9551558b0c3d03efd289d5421c8f86",
+        "21d4c545f2235fb5d1db44f94c75754c23f02533",
+        "38a8eb4de511e6eb69eb2ed4e99e21c88fa21d73"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "CC",
+      "asOf": "2026-09-23",
+      "reportDate": "2026-09-23",
+      "label": "HOLD",
+      "E": 0.122795,
+      "D": 0.287653,
+      "R": 0.426887,
+      "kappa": 0.82,
+      "reportPrice": 14.74,
+      "entry": {
+        "date": "2026-09-23",
+        "close": 14.74,
+        "spyClose": 767.81,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 8,
+          "ret": -0.085482,
+          "spyRet": -0.004975,
+          "excess": -0.080506
+        }
+      },
+      "realizedVol252": 0.6423,
+      "volObservations": 252,
+      "flags": [],
+      "sha": "349af8c3c6f06106f7b9f4ec4e47907e450289d3",
+      "shas": [
+        "349af8c3c6f06106f7b9f4ec4e47907e450289d3"
+      ],
+      "source": "git"
+    },
+    {
+      "ticker": "CEG",
+      "asOf": "2026-09-22",
+      "reportDate": "2026-09-22",
+      "label": "BUY",
+      "E": 0.133948,
+      "D": 0.221893,
+      "R": 0.603661,
+      "kappa": 0.74,
+      "reportPrice": 263.46,
+      "entry": {
+        "date": "2026-09-22",
+        "close": 263.46,
+        "spyClose": 773.38,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 9,
+          "ret": -0.017232,
+          "spyRet": -0.012142,
+          "excess": -0.005091
+        }
+      },
+      "realizedVol252": 0.478,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "0965c7044570252a73133d8b874579caea2a5700"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "CFG",
+      "asOf": "2026-09-23",
+      "reportDate": "2026-09-23",
+      "label": "BUY",
+      "E": 0.170702,
+      "D": 0.203187,
+      "R": 0.840121,
+      "kappa": 0.66,
+      "reportPrice": 65.26,
+      "entry": {
+        "date": "2026-09-23",
+        "close": 64.61,
+        "spyClose": 767.81,
+        "priceGap": 0.01006
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 8,
+          "ret": -0.014085,
+          "spyRet": -0.004975,
+          "excess": -0.009109
+        }
+      },
+      "realizedVol252": 0.2687,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "349af8c3c6f06106f7b9f4ec4e47907e450289d3"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "CHWY",
+      "asOf": "2026-09-28",
+      "reportDate": "2026-09-28",
+      "label": "BUY",
+      "E": 0.316497,
+      "D": 0.247716,
+      "R": 1.277657,
+      "kappa": 0.67,
+      "reportPrice": 18.61,
+      "entry": {
+        "date": "2026-09-28",
+        "close": 18.61,
+        "spyClose": 765.61,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 3,
+          "ret": -0.047824,
+          "spyRet": -0.002116,
+          "excess": -0.045708
+        }
+      },
+      "realizedVol252": 0.4615,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "7a0c475cc5c0d24ecf4a80575ae94ac34a98c790",
+        "555a2fc2873d97536cd43deac8cc8f982a52f963"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "CME",
+      "asOf": "2026-09-20",
+      "reportDate": "2026-09-20",
+      "label": "HOLD",
+      "E": 0.014456,
+      "D": 0.166697,
+      "R": 0.08672,
+      "kappa": 0.85,
+      "reportPrice": 276.01,
+      "entry": {
+        "date": "2026-09-18",
+        "close": 276.01,
+        "spyClose": 761.69,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 13,
+          "ret": -0.039528,
+          "spyRet": 0.00302,
+          "excess": -0.042547
+        }
+      },
+      "realizedVol252": 0.2407,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "d3e48a81ff9551558b0c3d03efd289d5421c8f86",
+        "21d4c545f2235fb5d1db44f94c75754c23f02533",
+        "5232b634fc721f8124b5f3d75c75ab833666d84e"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "CRWD",
+      "asOf": "2026-09-23",
+      "reportDate": "2026-09-23",
+      "label": "HOLD",
+      "E": -0.022103,
+      "D": 0.291934,
+      "R": -0.075713,
+      "kappa": 0.8,
+      "reportPrice": 261.275,
+      "entry": {
+        "date": "2026-09-23",
+        "close": 262.49,
+        "spyClose": 767.81,
+        "priceGap": -0.004629
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 8,
+          "ret": 0.013715,
+          "spyRet": -0.004975,
+          "excess": 0.01869
+        }
+      },
+      "realizedVol252": 0.5389,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "349af8c3c6f06106f7b9f4ec4e47907e450289d3"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "CRWV",
+      "asOf": "2026-09-15",
+      "reportDate": "2026-09-15",
+      "label": "HOLD",
+      "E": 0.124567,
+      "D": 0.505685,
+      "R": 0.246334,
+      "kappa": 0.53,
+      "reportPrice": 80.92,
+      "entry": {
+        "date": "2026-09-15",
+        "close": 80.92,
+        "spyClose": 757.39,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 16,
+          "ret": 0.094538,
+          "spyRet": 0.008714,
+          "excess": 0.085824
+        }
+      },
+      "realizedVol252": 0.9408,
+      "volObservations": 252,
+      "flags": [],
+      "sha": "d3e48a81ff9551558b0c3d03efd289d5421c8f86",
+      "shas": [
+        "d3e48a81ff9551558b0c3d03efd289d5421c8f86",
+        "21d4c545f2235fb5d1db44f94c75754c23f02533",
+        "38a8eb4de511e6eb69eb2ed4e99e21c88fa21d73"
+      ],
+      "source": "git"
+    },
+    {
+      "ticker": "CSTM",
+      "asOf": "2026-09-29",
+      "reportDate": "2026-09-29",
+      "label": "BUY",
+      "E": 0.146808,
+      "D": 0.267995,
+      "R": 0.5478,
+      "kappa": 0.88,
+      "reportPrice": 24.59,
+      "entry": {
+        "date": "2026-09-29",
+        "close": 24.59,
+        "spyClose": 764.2,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 2,
+          "ret": 0.002847,
+          "spyRet": -0.000275,
+          "excess": 0.003121
+        }
+      },
+      "realizedVol252": 0.4495,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "7a0c475cc5c0d24ecf4a80575ae94ac34a98c790",
+        "5b054a10f59638f7960c5a1b0078283ea3dc828c"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "CVLG",
+      "asOf": "2026-10-02",
+      "reportDate": "2026-10-02",
+      "label": "BUY",
+      "E": 0.180391,
+      "D": 0.259479,
+      "R": 0.695205,
+      "kappa": 0.7,
+      "reportPrice": 33.76,
+      "entry": {
+        "date": "2026-10-01",
+        "close": 33.08,
+        "spyClose": 763.99,
+        "priceGap": 0.020556
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": null
+      },
+      "realizedVol252": 0.4132,
+      "volObservations": 252,
+      "flags": [
+        "entry-pending"
+      ],
+      "sha": null,
+      "shas": [
+        null,
+        "2a90051aa48330c67b4b9116afa6be1a5ecfa7a9",
+        "3a245eca026b5e2ee96aa62c54a1a7efc79a9184",
+        "668112f48449fba3cc20f3bd426ebdcfc44233f0"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "CVX",
+      "asOf": "2026-09-23",
+      "reportDate": "2026-09-23",
+      "label": "HOLD",
+      "E": 0.043294,
+      "D": 0.194651,
+      "R": 0.222417,
+      "kappa": 0.85,
+      "reportPrice": 204.88,
+      "entry": {
+        "date": "2026-09-23",
+        "close": 205.51,
+        "spyClose": 767.81,
+        "priceGap": -0.003066
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 8,
+          "ret": 0.007737,
+          "spyRet": -0.004975,
+          "excess": 0.012712
+        }
+      },
+      "realizedVol252": 0.2392,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "349af8c3c6f06106f7b9f4ec4e47907e450289d3"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "DD",
+      "asOf": "2026-09-24",
+      "reportDate": "2026-09-24",
+      "label": "BUY",
+      "E": 0.17474,
+      "D": 0.159535,
+      "R": 1.095307,
+      "kappa": 0.67,
+      "reportPrice": 130.88,
+      "entry": {
+        "date": "2026-09-24",
+        "close": 130.22,
+        "spyClose": 767.18,
+        "priceGap": 0.005068
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 7,
+          "ret": -0.007833,
+          "spyRet": -0.004158,
+          "excess": -0.003675
+        }
+      },
+      "realizedVol252": 0.9107,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "a9351359c8d7181c63acafb65ebefbf694103fcf"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "DDD",
+      "asOf": "2026-09-23",
+      "reportDate": "2026-09-23",
+      "label": "HOLD",
+      "E": 0.004178,
+      "D": 0.415042,
+      "R": 0.010067,
+      "kappa": 0.87,
+      "reportPrice": 3.59,
+      "entry": {
+        "date": "2026-09-23",
+        "close": 3.51,
+        "spyClose": 767.81,
+        "priceGap": 0.022792
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 8,
+          "ret": 0.008547,
+          "spyRet": -0.004975,
+          "excess": 0.013522
+        }
+      },
+      "realizedVol252": 0.8863,
+      "volObservations": 252,
+      "flags": [],
+      "sha": "349af8c3c6f06106f7b9f4ec4e47907e450289d3",
+      "shas": [
+        "349af8c3c6f06106f7b9f4ec4e47907e450289d3"
+      ],
+      "source": "git"
+    },
+    {
+      "ticker": "DELL",
+      "asOf": "2026-09-25",
+      "reportDate": "2026-09-25",
+      "label": "HOLD",
+      "E": 0.071322,
+      "D": 0.235103,
+      "R": 0.303365,
+      "kappa": 0.84,
+      "reportPrice": 536.02,
+      "entry": {
+        "date": "2026-09-25",
+        "close": 562.89,
+        "spyClose": 771.35,
+        "priceGap": -0.047736
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 6,
+          "ret": -0.037574,
+          "spyRet": -0.009542,
+          "excess": -0.028032
+        }
+      },
+      "realizedVol252": 0.7236,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "bbd590c437cad69ab90f3f4c12cfa223a9b2d69c"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "DOW",
+      "asOf": "2026-09-23",
+      "reportDate": "2026-09-24",
+      "label": "HOLD",
+      "E": 0.122164,
+      "D": 0.232112,
+      "R": 0.526316,
+      "kappa": 0.7,
+      "reportPrice": 28.65,
+      "entry": {
+        "date": "2026-09-23",
+        "close": 28.65,
+        "spyClose": 767.81,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 8,
+          "ret": -0.036998,
+          "spyRet": -0.004975,
+          "excess": -0.032023
+        }
+      },
+      "realizedVol252": 0.4409,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "349af8c3c6f06106f7b9f4ec4e47907e450289d3"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "DSP",
+      "asOf": "2026-10-02",
+      "reportDate": "2026-10-02",
+      "label": "BUY",
+      "E": 0.172386,
+      "D": 0.305556,
+      "R": 0.564171,
+      "kappa": 0.84,
+      "reportPrice": 12.24,
+      "entry": {
+        "date": "2026-10-01",
+        "close": 12.725,
+        "spyClose": 763.99,
+        "priceGap": -0.038114
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": null
+      },
+      "realizedVol252": 0.6734,
+      "volObservations": 252,
+      "flags": [
+        "entry-pending"
+      ],
+      "sha": null,
+      "shas": [
+        null,
+        "cd1eee4d98804f68a8d668808c3eccf9b3ed329e",
+        "25fe8ab1cb1b5cc3b5cb67490fa63b8237e74282",
+        "f17cac31b50f97ed5848c0948391c506022d8ef9"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "ENVA",
+      "asOf": "2026-10-02",
+      "reportDate": "2026-10-02",
+      "label": "BUY",
+      "E": 0.148863,
+      "D": 0.222574,
+      "R": 0.668823,
+      "kappa": 0.64,
+      "reportPrice": 173.65,
+      "entry": {
+        "date": "2026-10-01",
+        "close": 171.49,
+        "spyClose": 763.99,
+        "priceGap": 0.012595
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": null
+      },
+      "realizedVol252": 0.4809,
+      "volObservations": 252,
+      "flags": [
+        "entry-pending"
+      ],
+      "sha": null,
+      "shas": [
+        null,
+        "7fd36f30d8927edd7c072c798a2e646c43a543a6"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "ESAB",
+      "asOf": "2026-10-02",
+      "reportDate": "2026-10-02",
+      "label": "BUY",
+      "E": 0.155304,
+      "D": 0.284641,
+      "R": 0.545614,
+      "kappa": 0.5,
+      "reportPrice": 69.895,
+      "entry": {
+        "date": "2026-10-01",
+        "close": 67.11,
+        "spyClose": 763.99,
+        "priceGap": 0.041499
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": null
+      },
+      "realizedVol252": 0.4534,
+      "volObservations": 252,
+      "flags": [
+        "entry-pending"
+      ],
+      "sha": null,
+      "shas": [
+        null,
+        "9c31ea2327a9117d0f33fbc4e56c81a72039b1b1",
+        "b3473727c0b20cebff60dd6da24b5b967692aef1",
+        "563973a80162fa62b81ba1a12cf515003ed8c214"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "EVER",
+      "asOf": "2026-10-03",
+      "reportDate": "2026-10-03",
+      "label": "HOLD",
+      "E": 0.10841,
+      "D": 0.288205,
+      "R": 0.376157,
+      "kappa": 0.87,
+      "reportPrice": 19.5,
+      "entry": {
+        "date": "2026-10-01",
+        "close": 19.98,
+        "spyClose": 763.99,
+        "priceGap": -0.024024
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": null
+      },
+      "realizedVol252": 0.7429,
+      "volObservations": 252,
+      "flags": [
+        "label-revised",
+        "entry-pending"
+      ],
+      "sha": null,
+      "shas": [
+        null,
+        "576faa4fae09a0a51bf42f2648c34c40c4835005",
+        "552a0820e2a190ee90240493ab39d8dd2f611d5a",
+        "a7ce1a689bf403a6bb34cfb6fe3f7e9044ab819c"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "EVLV",
+      "asOf": "2026-09-23",
+      "reportDate": "2026-09-23",
+      "label": "BUY",
+      "E": 0.290733,
+      "D": 0.266802,
+      "R": 1.089695,
+      "kappa": 0.85,
+      "reportPrice": 4.91,
+      "entry": {
+        "date": "2026-09-23",
+        "close": 4.88,
+        "spyClose": 767.81,
+        "priceGap": 0.006148
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 8,
+          "ret": -0.034836,
+          "spyRet": -0.004975,
+          "excess": -0.029861
+        }
+      },
+      "realizedVol252": 0.5119,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "349af8c3c6f06106f7b9f4ec4e47907e450289d3"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "EWBC",
+      "asOf": "2026-09-20",
+      "reportDate": "2026-09-21",
+      "label": "BUY",
+      "E": 0.109754,
+      "D": 0.172707,
+      "R": 0.635493,
+      "kappa": 0.67,
+      "reportPrice": 126.92,
+      "entry": {
+        "date": "2026-09-18",
+        "close": 126.92,
+        "spyClose": 761.69,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 13,
+          "ret": -0.01497,
+          "spyRet": 0.00302,
+          "excess": -0.01799
+        }
+      },
+      "realizedVol252": 0.2485,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "d3e48a81ff9551558b0c3d03efd289d5421c8f86",
+        "21d4c545f2235fb5d1db44f94c75754c23f02533",
+        "c9eca5b42c5340c6d9489876cf546a64438d7b94"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "EXFY",
+      "asOf": "2026-10-02",
+      "reportDate": "2026-10-02",
+      "label": "HOLD",
+      "E": -0.016,
+      "D": 0.275556,
+      "R": -0.058065,
+      "kappa": 0.87,
+      "reportPrice": 2.25,
+      "entry": {
+        "date": "2026-10-01",
+        "close": 2.37,
+        "spyClose": 763.99,
+        "priceGap": -0.050633
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": null
+      },
+      "realizedVol252": 0.7812,
+      "volObservations": 252,
+      "flags": [
+        "entry-pending",
+        "price-mismatch"
+      ],
+      "sha": null,
+      "shas": [
+        null,
+        "915e2b8b1ed341d9c4d368df1baf3d72ba25b4a9",
+        "3a245eca026b5e2ee96aa62c54a1a7efc79a9184",
+        "668112f48449fba3cc20f3bd426ebdcfc44233f0"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "FELE",
+      "asOf": "2026-09-23",
+      "reportDate": "2026-09-23",
+      "label": "BUY",
+      "E": 0.138139,
+      "D": 0.16658,
+      "R": 0.829268,
+      "kappa": 0.88,
+      "reportPrice": 95.99,
+      "entry": {
+        "date": "2026-09-23",
+        "close": 96.3,
+        "spyClose": 767.81,
+        "priceGap": -0.003219
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 8,
+          "ret": 0.001765,
+          "spyRet": -0.004975,
+          "excess": 0.006741
+        }
+      },
+      "realizedVol252": 0.2809,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "349af8c3c6f06106f7b9f4ec4e47907e450289d3"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "FOUR",
+      "asOf": "2026-10-02",
+      "reportDate": "2026-10-02",
+      "label": "BUY",
+      "E": 0.162214,
+      "D": 0.256403,
+      "R": 0.632653,
+      "kappa": 0.75,
+      "reportPrice": 36.31,
+      "entry": {
+        "date": "2026-10-01",
+        "close": 35.58,
+        "spyClose": 763.99,
+        "priceGap": 0.020517
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": null
+      },
+      "realizedVol252": 0.6531,
+      "volObservations": 252,
+      "flags": [
+        "entry-pending"
+      ],
+      "sha": null,
+      "shas": [
+        null,
+        "0e9de8e52d5ca9f309be75fd612f48e8297e40da",
+        "7e03f1fd96e80eedde32cf1d84d337145540a411",
+        "8c23e128ebc8d5dded23a92153a2a79c81b7d8c7"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "FTI",
+      "asOf": "2026-10-03",
+      "reportDate": "2026-10-03",
+      "label": "HOLD",
+      "E": 0.0538,
+      "D": 0.34612,
+      "R": 0.155437,
+      "kappa": 0.82,
+      "reportPrice": 68.82,
+      "entry": {
+        "date": "2026-10-01",
+        "close": 68.85,
+        "spyClose": 763.99,
+        "priceGap": -0.000436
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": null
+      },
+      "realizedVol252": 0.3213,
+      "volObservations": 252,
+      "flags": [
+        "entry-pending"
+      ],
+      "sha": null,
+      "shas": [
+        null,
+        "d64706178ae51472dcc127895cdfda984ae2ccf3",
+        "a3236bc9d0cfd2a932456470b43911dcd39f02a5"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "GDYN",
+      "asOf": "2026-10-02",
+      "reportDate": "2026-10-02",
+      "label": "HOLD",
+      "E": 0.088435,
+      "D": 0.226964,
+      "R": 0.389646,
+      "kappa": 0.82,
+      "reportPrice": 8.085,
+      "entry": {
+        "date": "2026-10-01",
+        "close": 8.38,
+        "spyClose": 763.99,
+        "priceGap": -0.035203
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": null
+      },
+      "realizedVol252": 0.5707,
+      "volObservations": 252,
+      "flags": [
+        "entry-pending"
+      ],
+      "sha": null,
+      "shas": [
+        null,
+        "96c2488278c68eda311bf9d274e2be15a5f062ef",
+        "78e9eda031affab8c8ecd8dba175fadd0a79a873",
+        "9bd024d783f67df7cf5cbaa37d5cdcfb25ae3c2d",
+        "1ab726a360bed42cc285f3836098647a98875746"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "GE",
+      "asOf": "2026-10-02",
+      "reportDate": "2026-10-02",
+      "label": "BUY",
+      "E": 0.117645,
+      "D": 0.182797,
+      "R": 0.643583,
+      "kappa": 0.96,
+      "reportPrice": 312.04,
+      "entry": {
+        "date": "2026-10-01",
+        "close": 312.39,
+        "spyClose": 763.99,
+        "priceGap": -0.00112
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": null
+      },
+      "realizedVol252": 0.3311,
+      "volObservations": 252,
+      "flags": [
+        "entry-pending"
+      ],
+      "sha": null,
+      "shas": [
+        null,
+        "bfbd4a6bcdce44670fbeb3aaab01870008aeae51"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "GOOGL",
+      "asOf": "2026-09-22",
+      "reportDate": "2026-09-22",
+      "label": "BUY",
+      "E": 0.172542,
+      "D": 0.188404,
+      "R": 0.91581,
+      "kappa": 0.49,
+      "reportPrice": 351.16,
+      "entry": {
+        "date": "2026-09-22",
+        "close": 351.16,
+        "spyClose": 773.38,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 9,
+          "ret": -0.036792,
+          "spyRet": -0.012142,
+          "excess": -0.024651
+        }
+      },
+      "realizedVol252": 0.3126,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "0965c7044570252a73133d8b874579caea2a5700"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "HASI",
+      "asOf": "2026-09-28",
+      "reportDate": "2026-09-28",
+      "label": "BUY",
+      "E": 0.137103,
+      "D": 0.255172,
+      "R": 0.537297,
+      "kappa": 0.75,
+      "reportPrice": 36.25,
+      "entry": {
+        "date": "2026-09-28",
+        "close": 36.25,
+        "spyClose": 765.61,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 3,
+          "ret": -0.006069,
+          "spyRet": -0.002116,
+          "excess": -0.003953
+        }
+      },
+      "realizedVol252": 0.3033,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "555a2fc2873d97536cd43deac8cc8f982a52f963"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "HON",
+      "asOf": "2026-09-14",
+      "reportDate": "2026-09-15",
+      "label": "BUY",
+      "E": 0.137154,
+      "D": 0.155825,
+      "R": 0.880178,
+      "kappa": 0.52,
+      "reportPrice": 201.38,
+      "entry": {
+        "date": "2026-09-14",
+        "close": 201.38,
+        "spyClose": 760.88,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 17,
+          "ret": 0.061674,
+          "spyRet": 0.004087,
+          "excess": 0.057587
+        }
+      },
+      "realizedVol252": 0.27,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "d3e48a81ff9551558b0c3d03efd289d5421c8f86",
+        "21d4c545f2235fb5d1db44f94c75754c23f02533",
+        "38a8eb4de511e6eb69eb2ed4e99e21c88fa21d73"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "ICE",
+      "asOf": "2026-09-20",
+      "reportDate": "2026-09-20",
+      "label": "BUY",
+      "E": 0.112755,
+      "D": 0.17669,
+      "R": 0.638151,
+      "kappa": 0.84,
+      "reportPrice": 155.47,
+      "entry": {
+        "date": "2026-09-18",
+        "close": 155.47,
+        "spyClose": 761.69,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 13,
+          "ret": -0.025728,
+          "spyRet": 0.00302,
+          "excess": -0.028748
+        }
+      },
+      "realizedVol252": 0.2523,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "d3e48a81ff9551558b0c3d03efd289d5421c8f86",
+        "21d4c545f2235fb5d1db44f94c75754c23f02533",
+        "73182db7e028f705f50351a14d742186f95b3772"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "INTC",
+      "asOf": "2026-09-15",
+      "reportDate": "2026-09-16",
+      "label": "HOLD",
+      "E": 0.034589,
+      "D": 0.382335,
+      "R": 0.090468,
+      "kappa": 0.65,
+      "reportPrice": 97.14,
+      "entry": {
+        "date": "2026-09-15",
+        "close": 97.14,
+        "spyClose": 757.39,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 16,
+          "ret": 0.23533,
+          "spyRet": 0.008714,
+          "excess": 0.226616
+        }
+      },
+      "realizedVol252": 0.78,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "d3e48a81ff9551558b0c3d03efd289d5421c8f86",
+        "21d4c545f2235fb5d1db44f94c75754c23f02533",
+        "9e5fd21b3387447b3732a550a3cf0dc2075a137d"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "INTU",
+      "asOf": "2026-10-01",
+      "reportDate": "2026-10-01",
+      "label": "BUY",
+      "E": 0.135158,
+      "D": 0.236155,
+      "R": 0.572327,
+      "kappa": 0.75,
+      "reportPrice": 282.78,
+      "entry": {
+        "date": "2026-10-01",
+        "close": 282.78,
+        "spyClose": 763.99,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": null
+      },
+      "realizedVol252": 0.5063,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "7a0c475cc5c0d24ecf4a80575ae94ac34a98c790",
+        "552ec0b136c44c902e56c82d7dd7e5d99edee649",
+        "87b8abda2017566e25b2a5ba6448f7d165f1dc9d",
+        "7949a4365405c54521f83e2904bc0a72e1fb4c4d"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "IOT",
+      "asOf": "2026-09-24",
+      "reportDate": "2026-09-24",
+      "label": "HOLD",
+      "E": 0.092545,
+      "D": 0.280206,
+      "R": 0.330275,
+      "kappa": 0.79,
+      "reportPrice": 38.9,
+      "entry": {
+        "date": "2026-09-24",
+        "close": 39.32,
+        "spyClose": 767.18,
+        "priceGap": -0.010682
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 7,
+          "ret": 0.018311,
+          "spyRet": -0.004158,
+          "excess": 0.022469
+        }
+      },
+      "realizedVol252": 0.5918,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "dc4e2c76e22d5b3c069dc588959c474b82810bfb"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "JPM",
+      "asOf": "2026-09-18",
+      "reportDate": "2026-09-20",
+      "label": "HOLD",
+      "E": 0.058141,
+      "D": 0.170647,
+      "R": 0.340707,
+      "kappa": 0.65,
+      "reportPrice": 349.67,
+      "entry": {
+        "date": "2026-09-18",
+        "close": 349.67,
+        "spyClose": 761.69,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 13,
+          "ret": -0.047159,
+          "spyRet": 0.00302,
+          "excess": -0.050178
+        }
+      },
+      "realizedVol252": 0.221,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "d3e48a81ff9551558b0c3d03efd289d5421c8f86",
+        "21d4c545f2235fb5d1db44f94c75754c23f02533",
+        "804b046e9dcd5a6d470d3662fe79caa1a8e36459"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "KRYS",
+      "asOf": "2026-10-03",
+      "reportDate": "2026-10-03",
+      "label": "HOLD",
+      "E": 0.085702,
+      "D": 0.441479,
+      "R": 0.194124,
+      "kappa": 0.83,
+      "reportPrice": 322.28,
+      "entry": {
+        "date": "2026-10-01",
+        "close": 325.31,
+        "spyClose": 763.99,
+        "priceGap": -0.009314
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": null
+      },
+      "realizedVol252": 0.3775,
+      "volObservations": 252,
+      "flags": [
+        "label-revised",
+        "entry-pending"
+      ],
+      "sha": null,
+      "shas": [
+        null,
+        "ebdd0fc557790def8111b8f466dfc853a9f45019",
+        "7d759260b8402a65ed7740d1ca42daedde59a6b0",
+        "528f834048d172baf9ffd8b0a7ec8721d2969891",
+        "298457a80ce3d23d442f5e0ce03179049b6e40ed"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "KTOS",
+      "asOf": "2026-09-15",
+      "reportDate": "2026-09-15",
+      "label": "BUY",
+      "E": 0.228475,
+      "D": 0.370013,
+      "R": 0.61748,
+      "kappa": 0.66,
+      "reportPrice": 47.62,
+      "entry": {
+        "date": "2026-09-15",
+        "close": 47.62,
+        "spyClose": 757.39,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 16,
+          "ret": -0.100798,
+          "spyRet": 0.008714,
+          "excess": -0.109512
+        }
+      },
+      "realizedVol252": 0.7217,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "d3e48a81ff9551558b0c3d03efd289d5421c8f86",
+        "21d4c545f2235fb5d1db44f94c75754c23f02533",
+        "38a8eb4de511e6eb69eb2ed4e99e21c88fa21d73"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "LASR",
+      "asOf": "2026-09-23",
+      "reportDate": "2026-09-23",
+      "label": "BUY",
+      "E": 0.216019,
+      "D": 0.271845,
+      "R": 0.794643,
+      "kappa": 0.67,
+      "reportPrice": 41.2,
+      "entry": {
+        "date": "2026-09-23",
+        "close": 40.98,
+        "spyClose": 767.81,
+        "priceGap": 0.005368
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 8,
+          "ret": -0.025622,
+          "spyRet": -0.004975,
+          "excess": -0.020647
+        }
+      },
+      "realizedVol252": 0.8798,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "e48da283d2c43591f84a45e13b1f4d01fb09413b"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "LH",
+      "asOf": "2026-09-24",
+      "reportDate": "2026-09-24",
+      "label": "BUY",
+      "E": 0.110764,
+      "D": 0.161129,
+      "R": 0.687423,
+      "kappa": 0.66,
+      "reportPrice": 303.98,
+      "entry": {
+        "date": "2026-09-24",
+        "close": 308.95,
+        "spyClose": 767.18,
+        "priceGap": -0.016087
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 7,
+          "ret": -0.01408,
+          "spyRet": -0.004158,
+          "excess": -0.009922
+        }
+      },
+      "realizedVol252": 0.2416,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "a9351359c8d7181c63acafb65ebefbf694103fcf"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "LITE",
+      "asOf": "2026-10-01",
+      "reportDate": "2026-10-01",
+      "label": "HOLD",
+      "E": 0.008816,
+      "D": 0.407141,
+      "R": 0.021654,
+      "kappa": 0.83,
+      "reportPrice": 1045.78,
+      "entry": {
+        "date": "2026-10-01",
+        "close": 1045.78,
+        "spyClose": 763.99,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": null
+      },
+      "realizedVol252": 0.9683,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "7a0c475cc5c0d24ecf4a80575ae94ac34a98c790",
+        "81bf56bace40b46d8fb1b06a766a45560b47e014",
+        "e172f006294e568cd3acba6866860ba6bdf1c806",
+        "8669a0b7ce99df742373ec251d613e4644a43bd9"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "LLY",
+      "asOf": "2026-09-16",
+      "reportDate": "2026-09-16",
+      "label": "BUY",
+      "E": 0.140127,
+      "D": 0.211439,
+      "R": 0.66273,
+      "kappa": 0.63,
+      "reportPrice": 1141.32,
+      "entry": {
+        "date": "2026-09-16",
+        "close": 1137.82,
+        "spyClose": 754.05,
+        "priceGap": 0.003076
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 15,
+          "ret": 0.010573,
+          "spyRet": 0.013182,
+          "excess": -0.002609
+        }
+      },
+      "realizedVol252": 0.3547,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "d3e48a81ff9551558b0c3d03efd289d5421c8f86",
+        "21d4c545f2235fb5d1db44f94c75754c23f02533",
+        "008cde35b984bce8de0bf22ef4342434d5737809"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "LQDT",
+      "asOf": "2026-10-02",
+      "reportDate": "2026-10-02",
+      "label": "HOLD",
+      "E": 0.081425,
+      "D": 0.213509,
+      "R": 0.381365,
+      "kappa": 0.89,
+      "reportPrice": 43.23,
+      "entry": {
+        "date": "2026-10-01",
+        "close": 43.64,
+        "spyClose": 763.99,
+        "priceGap": -0.009395
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": null
+      },
+      "realizedVol252": 0.3583,
+      "volObservations": 252,
+      "flags": [
+        "entry-pending"
+      ],
+      "sha": null,
+      "shas": [
+        null,
+        "957778c8bcf7e2fd8f5ae17c6ec6b67ca203696e",
+        "2a90051aa48330c67b4b9116afa6be1a5ecfa7a9",
+        "3a245eca026b5e2ee96aa62c54a1a7efc79a9184",
+        "668112f48449fba3cc20f3bd426ebdcfc44233f0"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "LRCX",
+      "asOf": "2026-09-21",
+      "reportDate": "2026-09-21",
+      "label": "BUY",
+      "E": 0.154643,
+      "D": 0.237969,
+      "R": 0.649843,
+      "kappa": 0.62,
+      "reportPrice": 301.825,
+      "entry": {
+        "date": "2026-09-21",
+        "close": 302.28,
+        "spyClose": 773.5,
+        "priceGap": -0.001505
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 10,
+          "ret": 0.125116,
+          "spyRet": -0.012295,
+          "excess": 0.137411
+        }
+      },
+      "realizedVol252": 0.6459,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "d3e48a81ff9551558b0c3d03efd289d5421c8f86",
+        "7f2b70ad83f948d2327cff413806575d40746161"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "LTRX",
+      "asOf": "2026-09-23",
+      "reportDate": "2026-09-23",
+      "label": "BUY",
+      "E": 0.368,
+      "D": 0.2,
+      "R": 1.84,
+      "kappa": 0.49,
+      "reportPrice": 6.25,
+      "entry": {
+        "date": "2026-09-23",
+        "close": 6.4,
+        "spyClose": 767.81,
+        "priceGap": -0.023437
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 8,
+          "ret": 0.103125,
+          "spyRet": -0.004975,
+          "excess": 0.1081
+        }
+      },
+      "realizedVol252": 0.737,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "349af8c3c6f06106f7b9f4ec4e47907e450289d3"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "MDU",
+      "asOf": "2026-09-23",
+      "reportDate": "2026-09-23",
+      "label": "HOLD",
+      "E": 0.094816,
+      "D": 0.167804,
+      "R": 0.565041,
+      "kappa": 0.61,
+      "reportPrice": 18.325,
+      "entry": {
+        "date": "2026-09-23",
+        "close": 18.39,
+        "spyClose": 767.81,
+        "priceGap": -0.003535
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 8,
+          "ret": 0.00435,
+          "spyRet": -0.004975,
+          "excess": 0.009325
+        }
+      },
+      "realizedVol252": 0.2037,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "349af8c3c6f06106f7b9f4ec4e47907e450289d3"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "MMM",
+      "asOf": "2026-09-23",
+      "reportDate": "2026-09-24",
+      "label": "HOLD",
+      "E": 0.042278,
+      "D": 0.207281,
+      "R": 0.203966,
+      "kappa": 0.82,
+      "reportPrice": 170.3,
+      "entry": {
+        "date": "2026-09-23",
+        "close": 170.3,
+        "spyClose": 767.81,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 8,
+          "ret": -0.042748,
+          "spyRet": -0.004975,
+          "excess": -0.037773
+        }
+      },
+      "realizedVol252": 0.2618,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "349af8c3c6f06106f7b9f4ec4e47907e450289d3"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "MNST",
+      "asOf": "2026-10-03",
+      "reportDate": "2026-10-03",
+      "label": "HOLD",
+      "E": 0.080578,
+      "D": 0.184909,
+      "R": 0.435768,
+      "kappa": 0.93,
+      "reportPrice": 42.94,
+      "entry": {
+        "date": "2026-10-01",
+        "close": 42.14,
+        "spyClose": 763.99,
+        "priceGap": 0.018984
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": null
+      },
+      "realizedVol252": 0.2619,
+      "volObservations": 252,
+      "flags": [
+        "entry-pending"
+      ],
+      "sha": null,
+      "shas": [
+        null,
+        "4d6d9bb9712ec7e069d1a79344f6c7cbeb9d05bd",
+        "039197f8dd8a3d69a1cb2abc1d76986b0180cd58",
+        "146e5bda5851a3268a857f65a8291a48c22ce1e2",
+        "dea2a8d3d991517ae2802611809db2b55ec2252b"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "MP",
+      "asOf": "2026-09-24",
+      "reportDate": "2026-09-24",
+      "label": "BUY",
+      "E": 0.190669,
+      "D": 0.350913,
+      "R": 0.543353,
+      "kappa": 0.66,
+      "reportPrice": 49.3,
+      "entry": {
+        "date": "2026-09-24",
+        "close": 49.3,
+        "spyClose": 767.18,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 7,
+          "ret": -0.065112,
+          "spyRet": -0.004158,
+          "excess": -0.060953
+        }
+      },
+      "realizedVol252": 0.7552,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "dc4e2c76e22d5b3c069dc588959c474b82810bfb"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "MPWR",
+      "asOf": "2026-09-28",
+      "reportDate": "2026-09-28",
+      "label": "BUY",
+      "E": 0.179692,
+      "D": 0.259917,
+      "R": 0.691344,
+      "kappa": 0.66,
+      "reportPrice": 1351.2,
+      "entry": {
+        "date": "2026-09-28",
+        "close": 1351.2,
+        "spyClose": 765.61,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 3,
+          "ret": 0.007231,
+          "spyRet": -0.002116,
+          "excess": 0.009347
+        }
+      },
+      "realizedVol252": 0.547,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "7a0c475cc5c0d24ecf4a80575ae94ac34a98c790",
+        "555a2fc2873d97536cd43deac8cc8f982a52f963"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "MQ",
+      "asOf": "2026-10-02",
+      "reportDate": "2026-10-02",
+      "label": "HOLD",
+      "E": 0.054381,
+      "D": 0.274924,
+      "R": 0.197802,
+      "kappa": 0.82,
+      "reportPrice": 16.55,
+      "entry": {
+        "date": "2026-10-01",
+        "close": 17,
+        "spyClose": 763.99,
+        "priceGap": -0.026471
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": null
+      },
+      "realizedVol252": 0.4122,
+      "volObservations": 252,
+      "flags": [
+        "entry-pending"
+      ],
+      "sha": null,
+      "shas": [
+        null,
+        "fdc394576cae701de26f901b260bb62198ff76c6",
+        "3a245eca026b5e2ee96aa62c54a1a7efc79a9184",
+        "668112f48449fba3cc20f3bd426ebdcfc44233f0"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "NBIX",
+      "asOf": "2026-09-28",
+      "reportDate": "2026-09-28",
+      "label": "BUY",
+      "E": 0.306608,
+      "D": 0.216747,
+      "R": 1.414586,
+      "kappa": 0.84,
+      "reportPrice": 140.44,
+      "entry": {
+        "date": "2026-09-28",
+        "close": 140.44,
+        "spyClose": 765.61,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 3,
+          "ret": 0.001923,
+          "spyRet": -0.002116,
+          "excess": 0.004038
+        }
+      },
+      "realizedVol252": 0.3346,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "7a0c475cc5c0d24ecf4a80575ae94ac34a98c790",
+        "555a2fc2873d97536cd43deac8cc8f982a52f963"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "NEE",
+      "asOf": "2026-09-16",
+      "reportDate": "2026-09-16",
+      "label": "BUY",
+      "E": 0.171149,
+      "D": 0.163911,
+      "R": 1.044157,
+      "kappa": 0.71,
+      "reportPrice": 80.135,
+      "entry": {
+        "date": "2026-09-16",
+        "close": 80.37,
+        "spyClose": 754.05,
+        "priceGap": -0.002924
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 15,
+          "ret": -0.050019,
+          "spyRet": 0.013182,
+          "excess": -0.063201
+        }
+      },
+      "realizedVol252": 0.2128,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "d3e48a81ff9551558b0c3d03efd289d5421c8f86",
+        "21d4c545f2235fb5d1db44f94c75754c23f02533",
+        "a6ac10d75a3ff4ad36877c467825a45e2592c9d9"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "NVDA",
+      "asOf": "2026-09-15",
+      "reportDate": "2026-09-16",
+      "label": "BUY",
+      "E": 0.227789,
+      "D": 0.29302,
+      "R": 0.777385,
+      "kappa": 0.59,
+      "reportPrice": 212.17,
+      "entry": {
+        "date": "2026-09-15",
+        "close": 212.17,
+        "spyClose": 757.39,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 16,
+          "ret": 0.08809,
+          "spyRet": 0.008714,
+          "excess": 0.079376
+        }
+      },
+      "realizedVol252": 0.3801,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "d3e48a81ff9551558b0c3d03efd289d5421c8f86",
+        "21d4c545f2235fb5d1db44f94c75754c23f02533",
+        "855803293025bdd95074e7291c0f2b2b6fafc6b5"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "NVT",
+      "asOf": "2026-09-24",
+      "reportDate": "2026-09-24",
+      "label": "BUY",
+      "E": 0.129874,
+      "D": 0.201719,
+      "R": 0.643836,
+      "kappa": 0.48,
+      "reportPrice": 162.85,
+      "entry": null,
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": null
+      },
+      "realizedVol252": null,
+      "volObservations": 0,
+      "flags": [
+        "not-in-shibui"
+      ],
+      "sha": null,
+      "shas": [
+        null,
+        "77248e75ace56a7741a5b8e21f3ca84eb8065ec2"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "ORCL",
+      "asOf": "2026-09-11",
+      "reportDate": "2026-09-13",
+      "label": "BUY",
+      "E": 0.210123,
+      "D": 0.367299,
+      "R": 0.572076,
+      "kappa": 0.61,
+      "reportPrice": 150.15,
+      "entry": {
+        "date": "2026-09-11",
+        "close": 150.28,
+        "spyClose": 764.29,
+        "priceGap": -0.000865
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 20,
+          "ret": -0.081248,
+          "spyRet": -0.000393,
+          "excess": -0.080856
+        }
+      },
+      "realizedVol252": 0.571,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "d3e48a81ff9551558b0c3d03efd289d5421c8f86",
+        "21d4c545f2235fb5d1db44f94c75754c23f02533",
+        "38a8eb4de511e6eb69eb2ed4e99e21c88fa21d73"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "PGY",
+      "asOf": "2026-10-02",
+      "reportDate": "2026-10-02",
+      "label": "HOLD",
+      "E": 0.149361,
+      "D": 0.389228,
+      "R": 0.383738,
+      "kappa": 0.63,
+      "reportPrice": 18.01,
+      "entry": {
+        "date": "2026-10-01",
+        "close": 17.44,
+        "spyClose": 763.99,
+        "priceGap": 0.032683
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": null
+      },
+      "realizedVol252": 0.7559,
+      "volObservations": 252,
+      "flags": [
+        "entry-pending"
+      ],
+      "sha": null,
+      "shas": [
+        null,
+        "294b2fe5327c8285caf0549c40c6ffda31f5d6a9",
+        "7e03f1fd96e80eedde32cf1d84d337145540a411",
+        "ec9110d49341098dc3c5e00f6e24c1ea1b2a2da8",
+        "8c23e128ebc8d5dded23a92153a2a79c81b7d8c7"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "PLOW",
+      "asOf": "2026-10-02",
+      "reportDate": "2026-10-02",
+      "label": "BUY",
+      "E": 0.116182,
+      "D": 0.210656,
+      "R": 0.551522,
+      "kappa": 0.88,
+      "reportPrice": 40.54,
+      "entry": {
+        "date": "2026-10-01",
+        "close": 39.7,
+        "spyClose": 763.99,
+        "priceGap": 0.021159
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": null
+      },
+      "realizedVol252": 0.3488,
+      "volObservations": 252,
+      "flags": [
+        "entry-pending"
+      ],
+      "sha": null,
+      "shas": [
+        null,
+        "2f5d482b8b5ad5de0e5d62331d7311252fb91ccd",
+        "fa8352a5967f09984684095e85d14da3c832ddcb",
+        "42a323b4f0742bf11b74d85af842c73997ced209"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "PLTR",
+      "asOf": "2026-09-22",
+      "reportDate": "2026-09-22",
+      "label": "HOLD",
+      "E": 0.044651,
+      "D": 0.351316,
+      "R": 0.127096,
+      "kappa": 0.77,
+      "reportPrice": 184.99,
+      "entry": {
+        "date": "2026-09-22",
+        "close": 184.99,
+        "spyClose": 773.38,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 9,
+          "ret": 0.027299,
+          "spyRet": -0.012142,
+          "excess": 0.03944
+        }
+      },
+      "realizedVol252": 0.5899,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "0965c7044570252a73133d8b874579caea2a5700"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "QLYS",
+      "asOf": "2026-10-02",
+      "reportDate": "2026-10-03",
+      "label": "HOLD",
+      "E": -0.024611,
+      "D": 0.326425,
+      "R": -0.075397,
+      "kappa": 0.92,
+      "reportPrice": 193,
+      "entry": {
+        "date": "2026-10-01",
+        "close": 187.43,
+        "spyClose": 763.99,
+        "priceGap": 0.029718
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": null
+      },
+      "realizedVol252": 0.5567,
+      "volObservations": 252,
+      "flags": [
+        "entry-pending"
+      ],
+      "sha": null,
+      "shas": [
+        null,
+        "ede8466ebce7a29fd41febf829236859e1fc2b59",
+        "a85444e604bffd0fed420f1af27efd17b4d7a1f7"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "RCAT",
+      "asOf": "2026-09-24",
+      "reportDate": "2026-09-24",
+      "label": "BUY",
+      "E": 0.509863,
+      "D": 0.468892,
+      "R": 1.087379,
+      "kappa": 0.5,
+      "reportPrice": 6.59,
+      "entry": {
+        "date": "2026-09-24",
+        "close": 6.8,
+        "spyClose": 767.18,
+        "priceGap": -0.030882
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 7,
+          "ret": -0.069118,
+          "spyRet": -0.004158,
+          "excess": -0.06496
+        }
+      },
+      "realizedVol252": 1.0889,
+      "volObservations": 252,
+      "flags": [],
+      "sha": "77248e75ace56a7741a5b8e21f3ca84eb8065ec2",
+      "shas": [
+        "77248e75ace56a7741a5b8e21f3ca84eb8065ec2"
+      ],
+      "source": "git"
+    },
+    {
+      "ticker": "RDVT",
+      "asOf": "2026-10-02",
+      "reportDate": "2026-10-02",
+      "label": "HOLD",
+      "E": -0.014394,
+      "D": 0.308567,
+      "R": -0.046649,
+      "kappa": 0.97,
+      "reportPrice": 79.545,
+      "entry": {
+        "date": "2026-10-01",
+        "close": 80.25,
+        "spyClose": 763.99,
+        "priceGap": -0.008785
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": null
+      },
+      "realizedVol252": 0.4848,
+      "volObservations": 252,
+      "flags": [
+        "entry-pending"
+      ],
+      "sha": null,
+      "shas": [
+        null,
+        "062e8f3246d2cf3f430a508455ccff81655591bb",
+        "4f2d31cea241d586ef958dad389c2d5d84286e44",
+        "dafdb12005225ba282253e95935f4f052e95a9ea"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "RL",
+      "asOf": "2026-09-24",
+      "reportDate": "2026-09-24",
+      "label": "BUY",
+      "E": 0.134916,
+      "D": 0.185113,
+      "R": 0.72883,
+      "kappa": 0.81,
+      "reportPrice": 337.47,
+      "entry": {
+        "date": "2026-09-24",
+        "close": 351.86,
+        "spyClose": 767.18,
+        "priceGap": -0.040897
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 7,
+          "ret": 0.030694,
+          "spyRet": -0.004158,
+          "excess": 0.034852
+        }
+      },
+      "realizedVol252": 0.348,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "3f55021d6428007c8fe4ea597ad93b6ebcdaea38"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "RTX",
+      "asOf": "2026-09-23",
+      "reportDate": "2026-09-23",
+      "label": "BUY",
+      "E": 0.120754,
+      "D": 0.1715,
+      "R": 0.704106,
+      "kappa": 0.96,
+      "reportPrice": 193.12,
+      "entry": {
+        "date": "2026-09-23",
+        "close": 192.19,
+        "spyClose": 767.81,
+        "priceGap": 0.004839
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 8,
+          "ret": -0.037359,
+          "spyRet": -0.004975,
+          "excess": -0.032384
+        }
+      },
+      "realizedVol252": 0.2595,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "349af8c3c6f06106f7b9f4ec4e47907e450289d3"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "SCHW",
+      "asOf": "2026-09-23",
+      "reportDate": "2026-09-23",
+      "label": "BUY",
+      "E": 0.202974,
+      "D": 0.151781,
+      "R": 1.337278,
+      "kappa": 0.64,
+      "reportPrice": 100.21,
+      "entry": {
+        "date": "2026-09-23",
+        "close": 99.5,
+        "spyClose": 767.81,
+        "priceGap": 0.007136
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 8,
+          "ret": -0.011357,
+          "spyRet": -0.004975,
+          "excess": -0.006382
+        }
+      },
+      "realizedVol252": 0.2568,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "349af8c3c6f06106f7b9f4ec4e47907e450289d3"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "SMCI",
+      "asOf": "2026-09-24",
+      "reportDate": "2026-09-24",
+      "label": "HOLD",
+      "E": 0.073842,
+      "D": 0.276062,
+      "R": 0.267483,
+      "kappa": 0.5,
+      "reportPrice": 41.44,
+      "entry": {
+        "date": "2026-09-24",
+        "close": 41.51,
+        "spyClose": 767.18,
+        "priceGap": -0.001686
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 7,
+          "ret": 0.009877,
+          "spyRet": -0.004158,
+          "excess": 0.014035
+        }
+      },
+      "realizedVol252": 0.9512,
+      "volObservations": 252,
+      "flags": [],
+      "sha": "77248e75ace56a7741a5b8e21f3ca84eb8065ec2",
+      "shas": [
+        "77248e75ace56a7741a5b8e21f3ca84eb8065ec2"
+      ],
+      "source": "git"
+    },
+    {
+      "ticker": "SOLS",
+      "asOf": "2026-09-23",
+      "reportDate": "2026-09-23",
+      "label": "BUY",
+      "E": 0.208175,
+      "D": 0.22387,
+      "R": 0.929892,
+      "kappa": 0.67,
+      "reportPrice": 57.98,
+      "entry": {
+        "date": "2026-09-23",
+        "close": 57.98,
+        "spyClose": 767.81,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 8,
+          "ret": -0.017247,
+          "spyRet": -0.004975,
+          "excess": -0.012272
+        }
+      },
+      "realizedVol252": 0.558,
+      "volObservations": 225,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "349af8c3c6f06106f7b9f4ec4e47907e450289d3"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "T",
+      "asOf": "2026-09-14",
+      "reportDate": "2026-09-15",
+      "label": "HOLD",
+      "E": 0.055608,
+      "D": 0.208294,
+      "R": 0.266968,
+      "kappa": 0.95,
+      "reportPrice": 26.525,
+      "entry": {
+        "date": "2026-09-14",
+        "close": 26.51,
+        "spyClose": 760.88,
+        "priceGap": 0.000566
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 17,
+          "ret": -0.083365,
+          "spyRet": 0.004087,
+          "excess": -0.087452
+        }
+      },
+      "realizedVol252": 0.2515,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "d3e48a81ff9551558b0c3d03efd289d5421c8f86",
+        "21d4c545f2235fb5d1db44f94c75754c23f02533",
+        "38a8eb4de511e6eb69eb2ed4e99e21c88fa21d73"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "TER",
+      "asOf": "2026-09-22",
+      "reportDate": "2026-09-22",
+      "label": "HOLD",
+      "E": 0.029371,
+      "D": 0.285159,
+      "R": 0.102999,
+      "kappa": 0.83,
+      "reportPrice": 398.69,
+      "entry": {
+        "date": "2026-09-22",
+        "close": 398.69,
+        "spyClose": 773.38,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 9,
+          "ret": 0.04289,
+          "spyRet": -0.012142,
+          "excess": 0.055032
+        }
+      },
+      "realizedVol252": 0.7765,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "0965c7044570252a73133d8b874579caea2a5700"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "THG",
+      "asOf": "2026-10-03",
+      "reportDate": "2026-10-03",
+      "label": "HOLD",
+      "E": 0.029485,
+      "D": 0.238937,
+      "R": 0.123403,
+      "kappa": 0.68,
+      "reportPrice": 219.43,
+      "entry": {
+        "date": "2026-10-01",
+        "close": 216.94,
+        "spyClose": 763.99,
+        "priceGap": 0.011478
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": null
+      },
+      "realizedVol252": 0.2076,
+      "volObservations": 252,
+      "flags": [
+        "entry-pending"
+      ],
+      "sha": null,
+      "shas": [
+        null,
+        "fd9d2922b368943952cbe62dcc8ece6cf3cb4045",
+        "b41ed2d8de0ee1d9960e1a575ec0d9b24702331a",
+        "e16c1bf5447c2102998defc21d8d82afa4c55ae6"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "TJX",
+      "asOf": "2026-09-24",
+      "reportDate": "2026-09-24",
+      "label": "BUY",
+      "E": 0.167262,
+      "D": 0.179269,
+      "R": 0.933022,
+      "kappa": 0.85,
+      "reportPrice": 131.59,
+      "entry": {
+        "date": "2026-09-24",
+        "close": 131.63,
+        "spyClose": 767.18,
+        "priceGap": -0.000304
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 7,
+          "ret": 0.01489,
+          "spyRet": -0.004158,
+          "excess": 0.019048
+        }
+      },
+      "realizedVol252": 0.2089,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "3f55021d6428007c8fe4ea597ad93b6ebcdaea38"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "TMO",
+      "asOf": "2026-09-23",
+      "reportDate": "2026-09-23",
+      "label": "HOLD",
+      "E": 0.010365,
+      "D": 0.172889,
+      "R": 0.059954,
+      "kappa": 0.84,
+      "reportPrice": 658.92,
+      "entry": {
+        "date": "2026-09-23",
+        "close": 665.3,
+        "spyClose": 767.81,
+        "priceGap": -0.00959
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 8,
+          "ret": -0.019224,
+          "spyRet": -0.004975,
+          "excess": -0.014249
+        }
+      },
+      "realizedVol252": 0.3034,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "349af8c3c6f06106f7b9f4ec4e47907e450289d3"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "UEC",
+      "asOf": "2026-09-15",
+      "reportDate": "2026-09-15",
+      "label": "HOLD",
+      "E": 0.060681,
+      "D": 0.309324,
+      "R": 0.196172,
+      "kappa": 0.76,
+      "reportPrice": 10.135,
+      "entry": {
+        "date": "2026-09-15",
+        "close": 10.18,
+        "spyClose": 757.39,
+        "priceGap": -0.00442
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 16,
+          "ret": -0.08055,
+          "spyRet": 0.008714,
+          "excess": -0.089264
+        }
+      },
+      "realizedVol252": 0.7973,
+      "volObservations": 252,
+      "flags": [],
+      "sha": "d3e48a81ff9551558b0c3d03efd289d5421c8f86",
+      "shas": [
+        "d3e48a81ff9551558b0c3d03efd289d5421c8f86",
+        "21d4c545f2235fb5d1db44f94c75754c23f02533",
+        "38a8eb4de511e6eb69eb2ed4e99e21c88fa21d73"
+      ],
+      "source": "git"
+    },
+    {
+      "ticker": "UEC",
+      "asOf": "2026-09-29",
+      "reportDate": "2026-09-29",
+      "label": "HOLD",
+      "E": 0.219053,
+      "D": 0.300323,
+      "R": 0.729391,
+      "kappa": 0.61,
+      "reportPrice": 9.29,
+      "entry": {
+        "date": "2026-09-29",
+        "close": 9.29,
+        "spyClose": 764.2,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 2,
+          "ret": 0.007535,
+          "spyRet": -0.000275,
+          "excess": 0.00781
+        }
+      },
+      "realizedVol252": 0.7862,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "137c1aed891c9f16d7554c11fdcc01bae8bd43fc"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "UMAC",
+      "asOf": "2026-09-24",
+      "reportDate": "2026-09-24",
+      "label": "BUY",
+      "E": 0.260467,
+      "D": 0.42706,
+      "R": 0.609907,
+      "kappa": 0.59,
+      "reportPrice": 22.69,
+      "entry": {
+        "date": "2026-09-24",
+        "close": 23.93,
+        "spyClose": 767.18,
+        "priceGap": -0.051818
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 7,
+          "ret": -0.089845,
+          "spyRet": -0.004158,
+          "excess": -0.085687
+        }
+      },
+      "realizedVol252": 1.2857,
+      "volObservations": 252,
+      "flags": [
+        "price-mismatch"
+      ],
+      "sha": "77248e75ace56a7741a5b8e21f3ca84eb8065ec2",
+      "shas": [
+        "77248e75ace56a7741a5b8e21f3ca84eb8065ec2"
+      ],
+      "source": "git"
+    },
+    {
+      "ticker": "UNH",
+      "asOf": "2026-09-29",
+      "reportDate": "2026-09-29",
+      "label": "HOLD",
+      "E": 0.095775,
+      "D": 0.186537,
+      "R": 0.51344,
+      "kappa": 0.65,
+      "reportPrice": 374.94,
+      "entry": {
+        "date": "2026-09-29",
+        "close": 374.94,
+        "spyClose": 764.2,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 2,
+          "ret": -0.025977,
+          "spyRet": -0.000275,
+          "excess": -0.025703
+        }
+      },
+      "realizedVol252": 0.3545,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "5b054a10f59638f7960c5a1b0078283ea3dc828c"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "USFD",
+      "asOf": "2026-09-28",
+      "reportDate": "2026-09-28",
+      "label": "BUY",
+      "E": 0.131669,
+      "D": 0.189074,
+      "R": 0.696388,
+      "kappa": 0.82,
+      "reportPrice": 93.72,
+      "entry": {
+        "date": "2026-09-28",
+        "close": 93.72,
+        "spyClose": 765.61,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 3,
+          "ret": 0.002241,
+          "spyRet": -0.002116,
+          "excess": 0.004357
+        }
+      },
+      "realizedVol252": 0.2947,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "7a0c475cc5c0d24ecf4a80575ae94ac34a98c790",
+        "555a2fc2873d97536cd43deac8cc8f982a52f963"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "V",
+      "asOf": "2026-09-21",
+      "reportDate": "2026-09-21",
+      "label": "BUY",
+      "E": 0.105107,
+      "D": 0.158272,
+      "R": 0.664093,
+      "kappa": 0.75,
+      "reportPrice": 368.29,
+      "entry": {
+        "date": "2026-09-21",
+        "close": 369.95,
+        "spyClose": 773.5,
+        "priceGap": -0.004487
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 10,
+          "ret": -0.027301,
+          "spyRet": -0.012295,
+          "excess": -0.015006
+        }
+      },
+      "realizedVol252": 0.2181,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "d3e48a81ff9551558b0c3d03efd289d5421c8f86",
+        "21d4c545f2235fb5d1db44f94c75754c23f02533",
+        "4a88e7b3283d56243adee175d2e3142f9c02fa95"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "VICR",
+      "asOf": "2026-09-23",
+      "reportDate": "2026-09-23",
+      "label": "BUY",
+      "E": 0.283819,
+      "D": 0.291943,
+      "R": 0.972173,
+      "kappa": 0.65,
+      "reportPrice": 268.34,
+      "entry": {
+        "date": "2026-09-23",
+        "close": 283.16,
+        "spyClose": 767.81,
+        "priceGap": -0.052338
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 8,
+          "ret": 0.089808,
+          "spyRet": -0.004975,
+          "excess": 0.094783
+        }
+      },
+      "realizedVol252": 0.9518,
+      "volObservations": 252,
+      "flags": [
+        "price-mismatch"
+      ],
+      "sha": null,
+      "shas": [
+        null,
+        "e48da283d2c43591f84a45e13b1f4d01fb09413b"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "VRT",
+      "asOf": "2026-09-22",
+      "reportDate": "2026-09-22",
+      "label": "BUY",
+      "E": 0.16524,
+      "D": 0.270246,
+      "R": 0.611444,
+      "kappa": 0.82,
+      "reportPrice": 253.51,
+      "entry": {
+        "date": "2026-09-22",
+        "close": 253.46,
+        "spyClose": 773.38,
+        "priceGap": 0.000197
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 9,
+          "ret": -0.028959,
+          "spyRet": -0.012142,
+          "excess": -0.016818
+        }
+      },
+      "realizedVol252": 0.661,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "66743e7c60a8f48c9558d892071340651e308ad7"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "VRTX",
+      "asOf": "2026-10-02",
+      "reportDate": "2026-10-02",
+      "label": "HOLD",
+      "E": 0.049362,
+      "D": 0.193564,
+      "R": 0.255015,
+      "kappa": 0.82,
+      "reportPrice": 502.21,
+      "entry": {
+        "date": "2026-10-01",
+        "close": 506.74,
+        "spyClose": 763.99,
+        "priceGap": -0.008939
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": null
+      },
+      "realizedVol252": 0.285,
+      "volObservations": 252,
+      "flags": [
+        "entry-pending"
+      ],
+      "sha": null,
+      "shas": [
+        null,
+        "32e8d3d88a2a9bb13e749eaa8f1e16315809b915",
+        "42a323b4f0742bf11b74d85af842c73997ced209"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "VSH",
+      "asOf": "2026-09-23",
+      "reportDate": "2026-09-23",
+      "label": "BUY",
+      "E": 0.191913,
+      "D": 0.21545,
+      "R": 0.890756,
+      "kappa": 0.68,
+      "reportPrice": 33.14,
+      "entry": {
+        "date": "2026-09-23",
+        "close": 32.6,
+        "spyClose": 767.81,
+        "priceGap": 0.016564
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 8,
+          "ret": 0.051227,
+          "spyRet": -0.004975,
+          "excess": 0.056202
+        }
+      },
+      "realizedVol252": 0.6746,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "e48da283d2c43591f84a45e13b1f4d01fb09413b"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "WFC",
+      "asOf": "2026-09-20",
+      "reportDate": "2026-09-20",
+      "label": "BUY",
+      "E": 0.126335,
+      "D": 0.187181,
+      "R": 0.674938,
+      "kappa": 0.66,
+      "reportPrice": 86.12,
+      "entry": {
+        "date": "2026-09-18",
+        "close": 86.12,
+        "spyClose": 761.69,
+        "priceGap": 0
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 13,
+          "ret": -0.068161,
+          "spyRet": 0.00302,
+          "excess": -0.07118
+        }
+      },
+      "realizedVol252": 0.2653,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "d3e48a81ff9551558b0c3d03efd289d5421c8f86",
+        "21d4c545f2235fb5d1db44f94c75754c23f02533",
+        "c1c1c9e3896c5423797149e891d0aab8f37e8b8a"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "WM",
+      "asOf": "2026-09-23",
+      "reportDate": "2026-09-23",
+      "label": "BUY",
+      "E": 0.113336,
+      "D": 0.1653,
+      "R": 0.685639,
+      "kappa": 0.77,
+      "reportPrice": 207.26,
+      "entry": {
+        "date": "2026-09-23",
+        "close": 207.88,
+        "spyClose": 767.81,
+        "priceGap": -0.002982
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 8,
+          "ret": -0.028767,
+          "spyRet": -0.004975,
+          "excess": -0.023791
+        }
+      },
+      "realizedVol252": 0.2031,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "349af8c3c6f06106f7b9f4ec4e47907e450289d3"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "WTTR",
+      "asOf": "2026-09-23",
+      "reportDate": "2026-09-23",
+      "label": "HOLD",
+      "E": 0.036014,
+      "D": 0.25999,
+      "R": 0.13852,
+      "kappa": 0.87,
+      "reportPrice": 20.27,
+      "entry": {
+        "date": "2026-09-23",
+        "close": 19.29,
+        "spyClose": 767.81,
+        "priceGap": 0.050804
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 8,
+          "ret": 0.038362,
+          "spyRet": -0.004975,
+          "excess": 0.043337
+        }
+      },
+      "realizedVol252": 0.483,
+      "volObservations": 252,
+      "flags": [
+        "price-mismatch"
+      ],
+      "sha": null,
+      "shas": [
+        null,
+        "349af8c3c6f06106f7b9f4ec4e47907e450289d3"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "XOM",
+      "asOf": "2026-09-24",
+      "reportDate": "2026-09-24",
+      "label": "HOLD",
+      "E": 0.028965,
+      "D": 0.193698,
+      "R": 0.149536,
+      "kappa": 0.85,
+      "reportPrice": 161.23,
+      "entry": {
+        "date": "2026-09-24",
+        "close": 162.14,
+        "spyClose": 767.18,
+        "priceGap": -0.005612
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 7,
+          "ret": 0.010361,
+          "spyRet": -0.004158,
+          "excess": 0.01452
+        }
+      },
+      "realizedVol252": 0.2605,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "3f55021d6428007c8fe4ea597ad93b6ebcdaea38"
+      ],
+      "source": "current"
+    },
+    {
+      "ticker": "ZBRA",
+      "asOf": "2026-09-24",
+      "reportDate": "2026-09-24",
+      "label": "HOLD",
+      "E": 0.063164,
+      "D": 0.216401,
+      "R": 0.291884,
+      "kappa": 0.86,
+      "reportPrice": 367.535,
+      "entry": {
+        "date": "2026-09-24",
+        "close": 365.1,
+        "spyClose": 767.18,
+        "priceGap": 0.006669
+      },
+      "horizons": {
+        "d21": null,
+        "d63": null,
+        "d126": null,
+        "d252": null,
+        "latest": {
+          "date": "2026-10-01",
+          "sessions": null,
+          "days": 7,
+          "ret": 0.028348,
+          "spyRet": -0.004158,
+          "excess": 0.032506
+        }
+      },
+      "realizedVol252": 0.4821,
+      "volObservations": 252,
+      "flags": [],
+      "sha": null,
+      "shas": [
+        null,
+        "c971be315f27d37932b6a553f6921d2769759623"
+      ],
+      "source": "current"
+    }
+  ]
+}
