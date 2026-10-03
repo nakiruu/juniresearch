@@ -289,11 +289,23 @@ runs a Phase-0 dry loop against an in-memory book.
 
 The **Discord notifier** (`lib/trade/notify.ts`) posts a per-run embed (orders, fills, the goal book, cash,
 audit) plus halt/auth alerts when `DISCORD_WEBHOOK_URL` is set — best-effort; a Discord outage never fails a
-run. **Schedule** `trade:cron` for 15:10 ET (`cronTimesET` in `lib/trade/config.ts`) with
-`scripts/register-trade-cron.ps1` (Windows Task Scheduler) or `scripts/register-trade-cron.sh` (systemd
-`--user` timer / cron) — re-run the script after changing the time. It self-guards on the market clock, so
-triggering it daily is safe; on an early-close day (13:00 ET) the market is already shut at 15:10 and nothing
-trades. To go back to the morning: `cronTimesET: ["09:45"]` and `markMode: "settled"`, then re-register.
+run.
+
+**Scheduling.** The deployed app runs `trade:cron` itself.
+- With `TRADE_SCHEDULER_ENABLED=1` in `.env.local`, the in-app scheduler (`instrumentation.ts` →
+  `lib/trade/scheduler.ts`) arms at server start. It fires at each `cronTimesET` slot in ET on NYSE trading days:
+  **15:10 ET** by default, from `lib/trade/config.ts`.
+- That config is compiled into the server build, so a change to the time takes effect on rebuild and restart
+  (`docker compose up -d --build`).
+- A boot before the slot waits for it. A boot inside the fire window (15:10–15:30) catches up once. A boot later
+  than that waits for the next trading day.
+- Each run self-guards on the market clock. On an early-close day (13:00 ET) the market is already shut at 15:10
+  and nothing trades.
+- `GET /api/trade/status` reports the next fire (`nextRunISO`).
+- `scripts/register-trade-cron.ps1` / `.sh` (an OS-level Windows Task Scheduler / systemd timer) are **legacy**
+  and not used by the Docker deployment. Never run both, or each slot fires twice.
+
+To go back to the morning: set `cronTimesET: ["09:45"]` and `markMode: "settled"`, then rebuild.
 
 > **Rollout gate:** Phase 0 (fake dry-run) → Phase 1 (paper smoke, ≥10 clean runs) → Phase 2 (paper
 > event-driven, 4 weeks clean + weekly review) before any merge to `main`.

@@ -118,7 +118,9 @@ that losers rebound in panic states (Daniel & Moskowitz 2016, *JFE*) and that no
 - The settled close stays the execution reference for the gap-halt and tier-3 anchor.
 - No new order is submitted after 15:50 ET. Sells go first, so a cutoff can only leave cash.
 - Early-close days (13:00) read closed at 15:10 and are skipped, about 3 a year.
-- **To revert:** set `cronTimesET: ["09:45"]` and `markMode: "settled"`, then re-run the register script.
+- **Where it fires:** the in-app scheduler (`TRADE_SCHEDULER_ENABLED=1`), which reads `cronTimesET` from the
+  server build. A change takes effect on rebuild and restart. The register scripts are legacy.
+- **To revert:** set `cronTimesET: ["09:45"]` and `markMode: "settled"`, then rebuild.
 
 ## Implementation
 

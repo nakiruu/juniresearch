@@ -635,11 +635,18 @@ bear breaches to re-write) plus halt/auth alerts; best-effort, never fails a run
   refresh token is tried first and `data/trade/schwab-token.json` is the fallback when it is out of date
   (a stale or rotated-away env token is remembered by fingerprint and never retried). Marks come from the broker (live trade / quote mid for the 15:10 decision, with the settled prior close
   as fallback and as the execution reference; live trade/quote for fill anchors).
-- **Scheduler:** `register-trade-cron.ps1` (Windows Task Scheduler) / `register-trade-cron.sh` (systemd
-  `--user` timer or cron) — both read `cronTimesET` from `lib/trade/config.ts` (15:10 ET; re-run them after
-  changing it) and never fire a missed trigger late; broker from `.env.local`. The in-app scheduler
-  (`TRADE_SCHEDULER_ENABLED`) catches up a slot only once it is in force: a boot before 15:10 arms for
-  15:10 instead of trading at boot time.
+- **Scheduler:** the in-app scheduler is the automation. `instrumentation.ts` → `lib/trade/scheduler.ts`,
+  armed at server start when `.env.local` sets `TRADE_SCHEDULER_ENABLED=1` (the Docker `trader` service loads it).
+  - It fires `runCron` at each `cronTimesET` slot (15:10 ET), ET-explicit, on NYSE trading days only, and DST-correct
+    (19:10Z in EDT, 20:10Z in EST, verified across the 2026-11-01 change).
+  - `cronTimesET` is compiled into the server build, so a change takes effect on rebuild and restart.
+  - A boot before the slot arms for it. A boot inside the fire window (slot + `maxLateMin`) catches up once; later
+    boots are refused as `late`.
+  - `data/trade/scheduler-state.json` (`lastFiredDay` / `lastFiredSlot`) stops a slot firing twice in a day.
+  - `GET /api/trade/status` reports `nextRunISO`.
+  - Broker from `.env.local`.
+  - `scripts/register-trade-cron.ps1` / `.sh` (OS-level Task Scheduler / systemd timers that read the same
+    `cronTimesET`) are **legacy** and not used by the deployment. Run one scheduler, never both.
 - **Rollout gate:** Phase 0 (fake dry-run) → Phase 1 (paper smoke: ≥10 runs, exact reconciliation, zero
   lock/ban violations) → Phase 2 (paper event-driven, 4 weeks clean + weekly review). Merge to `main` only
   after that.
@@ -697,8 +704,11 @@ the engine keeps exactly **one** decision a day and makes it at **15:10 ET on li
   name decides on its settled close (recorded). The run never falls back to per-ticker reads.
   Outside today's session — `trade:plan --date`, pre/post-market, a holiday — the run marks settled, exactly
   as before.
-- *Revert:* `cronTimesET: ["09:45"]` and `markMode: "settled"` in `lib/trade/config.ts`, then re-run
-  `scripts/register-trade-cron.sh` / `.ps1` (they read the slot from that file).
+- *Revert:* `cronTimesET: ["09:45"]` and `markMode: "settled"` in `lib/trade/config.ts`, then rebuild and restart
+  the app (`docker compose up -d --build`) so the in-app scheduler picks it up.
+- *Deploying the change:* deploy outside market hours. If the old 09:45 slot already fired that day,
+  `lastFiredSlot` is "09:45", so the new 15:10 slot also fires: two decisions that one day. The 5-day locks still
+  apply across them.
 
 ---
 

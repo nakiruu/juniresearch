@@ -4,6 +4,10 @@
 
       powershell -ExecutionPolicy Bypass -File scripts\register-trade-cron.ps1
 
+  LEGACY: the deployed app runs the trade job itself: the in-app scheduler, armed by
+  TRADE_SCHEDULER_ENABLED=1 in .env.local for the Docker `trader` service (see README "Scheduling").
+  Use this only on a box without that scheduler, and never run both: each would place the day's orders.
+
   The job runs `npm run trade:cron` at each cronTimesET slot in lib/trade/config.ts — by default once
   each trading afternoon at 15:10 ET, one late-day decision on live prices (set the task/box timezone
   to America/New_York, or adjust -At below to the equivalent local time). Re-run this script after

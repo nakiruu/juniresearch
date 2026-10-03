@@ -4,6 +4,10 @@
 # `npm run trade:cron` at each cronTimesET slot in lib/trade/config.ts — by default ONE late-day run
 # at 15:10 ET that decides on live prices (markMode "live"). Re-run it after changing cronTimesET.
 #
+# LEGACY: the deployed app runs the trade job itself: the in-app scheduler, armed by
+# TRADE_SCHEDULER_ENABLED=1 in .env.local for the Docker `trader` service (see README "Scheduling").
+# Use this only on a box without that scheduler, and never run both: each would place the day's orders.
+#
 #   ./scripts/register-trade-cron.sh            # install a systemd --user timer (preferred)
 #   ./scripts/register-trade-cron.sh --cron     # install a crontab entry instead
 #   ./scripts/register-trade-cron.sh --remove   # uninstall (systemd + crontab)

@@ -77,9 +77,11 @@ export const DEFAULT_TRADE_CONFIG: TradeConfig = {
   // and submitCutoffET 15:50 stops any later submit, so a run never trades into the close.
   // Early-close days (13:00 ET: the day after Thanksgiving, Christmas Eve; ~3 a year): the broker clock
   // reads closed at 15:10, trade:cron exits "closed", and nothing trades that day — accepted.
-  // Revert to the morning: set the slot list below to "09:45" and markMode to "settled", then re-run
-  // scripts/register-trade-cron.sh/.ps1 — they read the slots by grepping the next line, so keep it one
-  // line in exactly this shape (and never write that key-plus-bracket pattern in a comment above it).
+  // The in-app scheduler (instrumentation.ts → scheduler.ts) fires on these slots; this file is compiled into the
+  // server build, so a change takes effect on rebuild + restart. Revert to the morning: set the slot list below
+  // to "09:45" and markMode to "settled". The legacy scripts/register-trade-cron.sh/.ps1 read the slots by
+  // grepping the next line, so keep it one line in exactly this shape (and never write that key-plus-bracket
+  // pattern in a comment above it).
   cronTimeET: "15:10", cronTimesET: ["15:10"],
   submitCutoffET: "15:50",
   limitTol: { large: 0.0015, mid: 0.0035, small: 0.0080 },
