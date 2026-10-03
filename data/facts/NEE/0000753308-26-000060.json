@@ -13,6 +13,13 @@
     4866000000,
     4849000000
   ],
+  "sbc": [
+    119000000,
+    142000000,
+    139000000,
+    138000000,
+    185000000
+  ],
   "filing": {
     "form": "10-Q",
     "accession": "0000753308-26-000060",
@@ -591,6 +598,12 @@
       "source": "shibui",
       "capturedAt": "2026-10-03T03:46:39.826Z",
       "endpoint": "stock_data_query: 2y weekly log returns vs SPY (cov/var) → Blume-adjusted, clamped [0.3, 2.5]"
+    },
+    {
+      "field": "sbc",
+      "source": "edgar",
+      "capturedAt": "2026-10-03T04:05:08.352Z",
+      "endpoint": "companyconcept us-gaap/AllocatedShareBasedCompensationExpense (FY21, FY22, FY23, FY24, FY25)"
     }
   ],
   "beta": {

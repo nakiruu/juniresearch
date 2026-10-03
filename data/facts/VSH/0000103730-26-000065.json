@@ -6,6 +6,20 @@
   "exchange": "NYSE",
   "sic": 3670,
   "sicDescription": "Electronic Components & Accessories",
+  "goodwill": [
+    165269000,
+    201432000,
+    201416000,
+    179005000,
+    180390000
+  ],
+  "sbc": [
+    6605000,
+    6545000,
+    16532000,
+    20921000,
+    22355000
+  ],
   "filing": {
     "form": "10-Q",
     "accession": "0000103730-26-000065",
@@ -590,6 +604,12 @@
       "source": "shibui",
       "capturedAt": "2026-10-03T03:46:39.826Z",
       "endpoint": "stock_data_query: 2y weekly log returns vs SPY (cov/var) → Blume-adjusted, clamped [0.3, 2.5]"
+    },
+    {
+      "field": "sbc",
+      "source": "edgar",
+      "capturedAt": "2026-10-03T04:05:08.352Z",
+      "endpoint": "companyconcept us-gaap/AllocatedShareBasedCompensationExpense (FY21, FY22, FY23, FY24, FY25)"
     }
   ],
   "beta": {

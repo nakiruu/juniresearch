@@ -7,10 +7,10 @@
   "sic": 2821,
   "sicDescription": "Plastic Materials, Synth Resins & Nonvulcan Elastomers",
   "goodwill": [
-    19578000000,
+    16981000000,
     16663000000,
-    16720000000,
-    16567000000,
+    7657000000,
+    7561000000,
     7915000000
   ],
   "filing": {
@@ -591,13 +591,19 @@
       "source": "shibui",
       "capturedAt": "2026-10-03T03:46:39.826Z",
       "endpoint": "stock_data_query: 2y weekly log returns vs SPY (cov/var) → Blume-adjusted, clamped [0.3, 2.5]"
+    },
+    {
+      "field": "sbc",
+      "source": "edgar",
+      "capturedAt": "2026-10-03T04:05:08.352Z",
+      "endpoint": "companyconcept us-gaap/AllocatedShareBasedCompensationExpense (FY21); us-gaap/ShareBasedCompensation (FY22, FY23, FY24, FY25)"
     }
   ],
   "sbc": [
-    null,
-    null,
-    null,
-    77000000,
+    67000000,
+    75000000,
+    57000000,
+    56000000,
     38000000
   ],
   "beta": {
