@@ -1,34 +1,47 @@
 /**
  * hysteresis.ts — two-sided eligibility (spec §5). Entry and exit have different bars, keyed on
  * whether the name is currently held, so a held name is never sold for merely dipping below the
- * entry bar. Pure: locks and `today` are inputs.
+ * entry bar. Pure: locks, `today` and the bear-breach cause (breach.ts) are inputs.
  */
 import type { Signal } from "../portfolio/signal";
 import { isBannedTicker } from "../portfolio/eligibility";
 import type { TradeConfig } from "./config";
 import type { TradingDay } from "./calendar";
+import type { BreachInfo } from "./breach";
 import { isBuyLocked, isSellLocked, type Locks } from "./locks";
 
 const BUY_SIDE = new Set(["BUY", "STRONG BUY"]);
 const pct = (x: number) => `${(x * 100).toFixed(1)}%`;
 const rStr = (r: number | null) => (r == null ? "—" : r.toFixed(2));
 
-export type Classification = "ENTER" | "HOLD" | "EXIT" | "DEFER_EXIT" | "BARRED_ENTRY" | "INELIGIBLE";
+/** FREEZE: a held name kept exactly as is — no add, no trim — until its report is re-written (a mixed bear breach). */
+export type Classification = "ENTER" | "HOLD" | "FREEZE" | "EXIT" | "DEFER_EXIT" | "BARRED_ENTRY" | "INELIGIBLE";
 export interface Classified { ticker: string; classification: Classification; reasons: string[]; unlockOn?: TradingDay }
 
-export function classify(s: Signal, held: boolean, locks: Locks, today: TradingDay, cfg: TradeConfig): Classified {
+/** `breach`: the cause of a held name's fall through its bear case (breach.ts); null/absent → the plain bear-breach exit. */
+export function classify(s: Signal, held: boolean, locks: Locks, today: TradingDay, cfg: TradeConfig, breach?: BreachInfo | null): Classified {
   const t = s.ticker;
   if (held) {
-    const exits: string[] = [];
+    let exits: string[] = [];
     if (isBannedTicker(t)) exits.push(`banned: ${t} (employer holding restriction)`);
     if (!BUY_SIDE.has(s.label)) exits.push(`label ${s.label} not buy-side`);
     if (s.gatedLabel && !BUY_SIDE.has(s.gatedLabel)) exits.push(`gate ceiling ${s.gatedLabel}`);
     if (s.mu < cfg.muExit) exits.push(`mu ${pct(s.mu)} < exit ${pct(cfg.muExit)} (thesis played out)`);
     // R is null once the price is at or below the bear-case implied price (D = 0): the market has passed the
-    // report's worst scenario, and the name exits. Say so — "R —" alone hides that this is a stop at the bear.
+    // report's worst scenario, and the name exits (unless its cause says otherwise, below). Say so — "R —"
+    // alone hides that this is a stop at the bear.
     if (s.R == null || s.R < cfg.rExit) exits.push(`R ${rStr(s.R)} < exit ${cfg.rExit}${s.R == null && s.D <= 0 ? " (price at or below the bear case)" : ""}`);
     if (s.ageDays > cfg.stalenessMaxDays) exits.push(`stale ${s.ageDays}d > ${cfg.stalenessMaxDays}d`);
     if (exits.length === 0) return { ticker: t, classification: "HOLD", reasons: [] };
+    // By cause (breachPolicy "byCause"): a breach the market explains is held, a mixed one frozen, a stock-specific
+    // one exited. Only when the bear breach is the SOLE exit reason — a downgrade, a stale report or a ban still
+    // exits — and only with a cause in hand: any missing input (no SPY close, no beta) leaves the plain exit.
+    if (exits.length === 1 && s.R == null && s.D <= 0 && cfg.breachPolicy === "byCause" && breach) {
+      const share = `stock-specific share ${(breach.share * 100).toFixed(0)}%`;
+      if (breach.cause === "market") return { ticker: t, classification: "HOLD", reasons: [`bear breach, market-driven (${share}) — holding`] };
+      if (breach.cause === "mixed") return { ticker: t, classification: "FREEZE", reasons: [`bear breach, mixed (${share}) — frozen until the report is re-written`] };
+      exits = [`bear breach, stock-specific (${share}) — exit`]; // still waits out a sell lock below, like every exit
+    }
     if (isSellLocked(locks, t, today)) return { ticker: t, classification: "DEFER_EXIT", reasons: exits, unlockOn: locks.sellLockUntil[t] };
     return { ticker: t, classification: "EXIT", reasons: exits };
   }

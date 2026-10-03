@@ -1,9 +1,9 @@
 /**
  * rebalance.ts — the pure trade emitter (spec §7). ledger + signals + locks → TradePlan.
  * Reuses the portfolio sizer's scoring and water-fill unchanged; hysteresis decides the set,
- * the locks decide what is frozen or barred, the band decides what is worth trading. Never
- * leverages: if locked names hold weight the sizer wanted to move, buys are scaled down, not
- * cash borrowed.
+ * the locks (and a mixed bear breach, FREEZE) decide what is frozen or barred, the band decides
+ * what is worth trading. Never leverages: if locked or frozen names hold weight the sizer wanted
+ * to move, buys are scaled down, not cash borrowed.
  */
 import type { Signal } from "../portfolio/signal";
 import { scoreWeight, allocateCapped } from "../portfolio/sizing";
@@ -12,6 +12,7 @@ import type { TradeConfig } from "./config";
 import type { TradingDay } from "./calendar";
 import { isBuyLocked, isSellLocked, type Locks } from "./locks";
 import { classify, type Classified } from "./hysteresis";
+import type { BreachInfo } from "./breach";
 
 export type TradeReason = "ENTER" | "EXIT" | "ADD" | "TRIM";
 export interface Trade {
@@ -20,7 +21,7 @@ export interface Trade {
   /** "residual": an ADD that went through the smaller residualBand (topUpRecentBuys). */
   note?: "residual";
 }
-export type SkipCode = "BELOW_BAND" | "BARRED_ENTRY" | "BARRED_ADD" | "DEFER_EXIT" | "DEFER_TRIM" | "INELIGIBLE" | "NO_SIGNAL" | "NO_CAPACITY" | "TURNOVER_CLIP";
+export type SkipCode = "BELOW_BAND" | "BARRED_ENTRY" | "BARRED_ADD" | "DEFER_EXIT" | "DEFER_TRIM" | "FREEZE" | "INELIGIBLE" | "NO_SIGNAL" | "NO_CAPACITY" | "TURNOVER_CLIP";
 export interface Skipped {
   ticker: string; code: SkipCode; reasons: string[]; unlockOn?: TradingDay;
   currentWeight: number; targetWeight: number | null;
@@ -34,15 +35,17 @@ const EPS = 1e-12;
 
 export function emitTrades(input: {
   signals: Signal[]; currentWeights: Record<string, number>; locks: Locks; today: TradingDay; cfg: TradeConfig;
+  /** The cause of each held bear breach (breach.ts), by ticker; a name with none takes the plain bear-breach exit. */
+  breaches?: Record<string, BreachInfo>;
 }): TradePlan {
-  const { signals, currentWeights, locks, today, cfg } = input;
+  const { signals, currentWeights, locks, today, cfg, breaches = {} } = input;
   const cur = (t: string) => currentWeights[t] ?? 0;
   const bySignal = new Map(signals.map((s) => [s.ticker, s]));
-  const classifications = signals.map((s) => classify(s, cur(s.ticker) > 0, locks, today, cfg));
+  const classifications = signals.map((s) => classify(s, cur(s.ticker) > 0, locks, today, cfg, breaches[s.ticker] ?? null));
   const trades: Trade[] = [];
   const skipped: Skipped[] = [];
 
-  // 1–2. Freeze set: deferred exits, and held names with no signal at all.
+  // 1–2. Freeze set: deferred exits, frozen bear breaches, and held names with no signal at all.
   let frozenWeight = 0;
   for (const [t, w] of Object.entries(currentWeights)) {
     if (w > 0 && !bySignal.has(t)) {
@@ -50,7 +53,7 @@ export function emitTrades(input: {
       skipped.push({ ticker: t, code: "NO_SIGNAL", reasons: ["held but no current signal — frozen, not traded"], currentWeight: w, targetWeight: null });
     }
   }
-  for (const c of classifications) if (c.classification === "DEFER_EXIT") frozenWeight += cur(c.ticker);
+  for (const c of classifications) if (c.classification === "DEFER_EXIT" || c.classification === "FREEZE") frozenWeight += cur(c.ticker);
 
   // 3. Size HOLD ∪ ENTER into the reduced target with the existing sizer (dust loop as sizePortfolio).
   const sizingTarget = Math.max(0, 1 - cfg.cashFloor - frozenWeight);
@@ -79,8 +82,10 @@ export function emitTrades(input: {
       trades.push({ ticker: c.ticker, sector: s.sector, side: "sell", reason: "EXIT", currentWeight: w, targetWeight: 0, deltaWeight: -w });
       continue;
     }
-    if (k === "DEFER_EXIT" || k === "BARRED_ENTRY" || k === "INELIGIBLE") {
-      skipped.push({ ticker: c.ticker, code: k, reasons: c.reasons, unlockOn: c.unlockOn, currentWeight: w, targetWeight: k === "DEFER_EXIT" ? w : null });
+    if (k === "DEFER_EXIT" || k === "FREEZE" || k === "BARRED_ENTRY" || k === "INELIGIBLE") {
+      // DEFER_EXIT and FREEZE keep the current weight (counted in frozenWeight above), untraded.
+      const kept = k === "DEFER_EXIT" || k === "FREEZE";
+      skipped.push({ ticker: c.ticker, code: k, reasons: c.reasons, unlockOn: c.unlockOn, currentWeight: w, targetWeight: kept ? w : null });
       continue;
     }
     const tw = target.get(c.ticker) ?? 0;

@@ -30,6 +30,12 @@ describe("run record", () => {
       scenarios: [{ name: "bull", impliedPrice: 150, probability: 0.3 }, { name: "base", impliedPrice: 120, probability: 0.5 }, { name: "bear", impliedPrice: 80, probability: 0.2 }] }] };
     expect(RunRecord.parse(JSON.parse(JSON.stringify(withRisk)))).toEqual(withRisk);
   });
+  it("round-trips the bear-breach causes, optional for older records", () => {
+    const withBreach = { ...rec(), breaches: { NVT: { cause: "market" as const, share: 0.1, total: -0.24, residual: -0.024, beta: 1.2, spyReturn: -0.18 } } };
+    expect(RunRecord.parse(JSON.parse(JSON.stringify(withBreach)))).toEqual(withBreach);
+    expect(RunRecord.parse(rec()).breaches).toBeUndefined();
+    expect(() => RunRecord.parse({ ...withBreach, breaches: { NVT: { ...withBreach.breaches.NVT, cause: "luck" } } })).toThrow();
+  });
   it("rejects a record with a bad markMode", () => {
     expect(() => RunRecord.parse({ ...rec(), markMode: "guess" })).toThrow();
   });

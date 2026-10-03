@@ -39,7 +39,30 @@ describe("resolveTradeConfig", () => {
   it("rejects a sizing bear floor outside [0, 1)", () => {
     expect(() => resolveTradeConfig({ bearFloor: -0.01 })).toThrow(/bearFloor/);
     expect(() => resolveTradeConfig({ bearFloor: 1 })).toThrow(/bearFloor/);
-    expect(resolveTradeConfig({ bearFloor: 0 }).bearFloor).toBe(0);
+    // bearFloor 0 (raw R) now needs breachPolicy "exit": the by-cause hold sizes a breached name through the floor.
+    expect(resolveTradeConfig({ bearFloor: 0, breachPolicy: "exit" }).bearFloor).toBe(0);
+  });
+});
+
+describe("bear-breach config", () => {
+  it("defaults to the by-cause rule with thresholds 0.5 / 0.9", () => {
+    expect(resolveTradeConfig()).toMatchObject({ breachPolicy: "byCause", breachMarketShareMax: 0.5, breachStockShareMin: 0.9 });
+    expect(resolveTradeConfig({ breachPolicy: "exit" }).breachPolicy).toBe("exit");
+  });
+  it("rejects an unknown policy", () => {
+    expect(() => resolveTradeConfig({ breachPolicy: "hold" as never })).toThrow(/breachPolicy/);
+  });
+  it("needs 0 < breachMarketShareMax < breachStockShareMin <= 1.5", () => {
+    expect(() => resolveTradeConfig({ breachMarketShareMax: 0 })).toThrow(/breach thresholds/);
+    expect(() => resolveTradeConfig({ breachMarketShareMax: 0.9 })).toThrow(/breach thresholds/);   // equal is not below
+    expect(() => resolveTradeConfig({ breachMarketShareMax: 0.95 })).toThrow(/breach thresholds/);
+    expect(() => resolveTradeConfig({ breachStockShareMin: 1.6 })).toThrow(/breach thresholds/);
+    expect(() => resolveTradeConfig({ breachMarketShareMax: Number.NaN })).toThrow(/breach thresholds/);
+    expect(resolveTradeConfig({ breachMarketShareMax: 0.3, breachStockShareMin: 1.2 })).toMatchObject({ breachMarketShareMax: 0.3, breachStockShareMin: 1.2 });
+  });
+  it("byCause needs a bear floor (a market-driven hold is sized through it); exit does not", () => {
+    expect(() => resolveTradeConfig({ bearFloor: 0 })).toThrow(/byCause.*bearFloor/);
+    expect(() => resolveTradeConfig({ bearFloor: 0, breachPolicy: "exit" })).not.toThrow();
   });
 });
 

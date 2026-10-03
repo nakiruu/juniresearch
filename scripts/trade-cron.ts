@@ -68,8 +68,8 @@ async function main(): Promise<CronResult> {
     paths: { lock: CRON_LOCK_PATH, haltState: HALT_STATE_PATH, log: CRON_LOG_PATH, fills: FILLS_PATH, runs: RUNS_DIR, authWarn: AUTH_WARN_PATH },
     refreshObtainedAt: disabled ? undefined : schwabRefreshObtainedAt(),
     loadInputs: async () => {
-      const { reports, sics, marketCapUsd } = await loadReportsAndMeta();
-      return { reports, sics, marketCapUsd, fills: readFills(FILLS_PATH) };
+      const { reports, sics, marketCapUsd, betas } = await loadReportsAndMeta();
+      return { reports, sics, marketCapUsd, betas, fills: readFills(FILLS_PATH) };
     },
     notify: notifier.message,
     notifySummary: notifier.runSummary,
