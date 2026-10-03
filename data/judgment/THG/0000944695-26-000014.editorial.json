@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "d5978aaf35887ab17bc52c305c448c437d3644d1dede4a113006ec84f7fb090c",
-  "reviewedAt": "2026-10-03T01:32:42Z",
+  "judgmentSha256": "445825697e5aba1b1ffd04e07781eb3429eb724508930ef06c164db5aee86881",
+  "reviewedAt": "2026-10-03T01:34:48Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved-with-minors",
   "findings": [
     {
       "id": "F-1",
@@ -183,7 +183,7 @@
       "quote": "an upgrade needs Core Commercial's current accident year loss ratio in the second half of 2026 back at or below its full-year 2025 level",
       "issue": "The upgrade trigger is already met, so it does not work as a trigger. The release says Core Commercial's Q2 2026 current accident year loss and LAE ratio excluding catastrophes was 58.7%, '0.4 points improved from the full year of 2025', and incomeCommentary repeats this. 'Back at or below' implies the ratio is above the FY25 level, but it is already below. The only part of the trigger that is not yet met is 'no further liability loss-pick increases'.",
       "fix": "Set a threshold the data has not already crossed. For example, the ratio holds at or below the Q2 2026 58.7% for the second half of 2026 with no further liability loss-pick increases, or the year-over-year rise reverses. Alternatively, state the trigger in words without a level.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-21",
@@ -192,7 +192,7 @@
       "quote": "Over the six months ended June 30, 2026, the current accident year combined ratio excluding catastrophes improved to 86.9% from 87.9%, so the underlying book is better, not just the weather.",
       "issue": "The fix for round-1 F-1 introduced a cross-section retelling. analystCommentary paragraph 1 now repeats, with the same figures, both the six-month 86.9%/87.9% comparison and the company's attribution sentence ('lower catastrophe losses, higher net investment income and improvements in current accident year underwriting results, driven by Personal Lines'). financials.incomeCommentary paragraph 2 makes the same argument with the same figures ('The company attributes the quarter's operating income gain to lower catastrophe losses, higher net investment income ... and current accident year improvement driven by Personal Lines. Over the six months, the current accident year combined ratio excluding catastrophes improved to 86.9% from 87.9%').",
       "fix": "Keep the figures and the attribution in incomeCommentary. In analystCommentary, give the conclusion in words (the half-year underlying book improved, not just the weather) and point to Financials.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-22",
@@ -201,7 +201,7 @@
       "quote": "the company attributes Personal Lines premium growth primarily to higher new business. Both point to an agency model still adding accounts.",
       "issue": "Two problems. (1) Paraphrase repetition: growth.points[1] makes the same attribution ('which the company attributes primarily to higher new business'). (2) 'Still adding accounts' is an inference the source does not make, and the field omits its counter-case. The 89% multi-policy share says nothing about adding accounts, and Personal Lines policies in force were essentially flat against Q1 2026 (stated in growth.points[1]). New business may only be replacing lapses.",
       "fix": "Keep the new-business attribution in Growth only. In the moat factor, use the 89% multi-policy share and the missing retention data. If you mention new business, set it against flat policies in force rather than concluding that the agency model is adding accounts.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-23",
@@ -210,7 +210,7 @@
       "quote": "so the cash figures set an upper bound on distributions rather than a forecast of them",
       "issue": "New unsupported claim that contradicts the paragraph before it. The previous paragraph says operating cash flow 'should not be read as payout capacity'. This sentence then treats it as an upper bound on distributions, which is a payout-capacity reading. Nothing on the surface establishes that distributions are capped by vendor operating cash flow, and the sentence's own premise is that the excerpts say nothing about statutory dividend limits.",
       "fix": "Cut the clause, or end on the stated gap: the excerpts do not describe statutory dividend limits, so how much of this cash can reach the holding company cannot be judged from the data.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-24",
@@ -219,7 +219,7 @@
       "quote": "the constraint is a consensus that expects earnings to fall.",
       "issue": "Same claim twice in one field. Paragraph 1 already concludes 'The Street, in other words, expects earnings to come down from the current level, which caps how far the multiple can expand.' The closing sentence of paragraph 3 restates it. The executive-summary thesis bullet ('which limits re-rating at 10.5x trailing') points to it correctly.",
       "fix": "Make the point once in this field, in paragraph 1. End paragraph 3 on the book-value and returns reading instead.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-25",
@@ -228,7 +228,8 @@
       "quote": "Specialty's current accident year loss ratio of 51.6% rose 2.6 points",
       "issue": "The quantity label is shortened. The release's 51.6% is the 'current accident year loss and LAE ratio, excluding catastrophes', and 'loss ratio' without 'excluding catastrophes' names a different quantity. The same shortening appears in risks.idiosyncratic[1] and scenarioCommentary ('current accident year loss ratio'). Separately, this field is now at about 2,320 of 2,500 characters (93% of the cap), which leaves little room for the next round.",
       "fix": "Use the full label at first mention in each section ('current accident year loss and LAE ratio excluding catastrophes') and refer back in words after that. Trimming the duplicated attribution (see the analystCommentary finding) would also restore headroom.",
-      "status": "open"
+      "status": "open",
+      "note": "The labels are fixed: Specialty is now 'equivalent ratio' following the full Personal Lines label, and risks.idiosyncratic[1], scenarioCommentary and finalRecommendation use the full name. The fit half remains: incomeCommentary is 2,307 of 2,500 characters (92% of the cap), and the duplicated attribution was trimmed from analystCommentary, not from this field. Trim about 200 characters if this field needs another edit."
     }
   ]
 }
