@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "55e9b54898adf51b2de74f0dce8be9ee6d45b2e8a94558d02934820b316d9383",
-  "reviewedAt": "2026-10-03T01:10:26Z",
+  "judgmentSha256": "86d56fa77f26f86254ba64febd75ee39632f33947714fb2b3921761446213207",
+  "reviewedAt": "2026-10-03T01:10:54Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved",
   "findings": [
     {
       "id": "F-1",
@@ -162,8 +162,8 @@
       "quote": "The proxy reports five-year TSR of 65.8% for 2021 through 2025.",
       "issue": "Restatement, not judgment (rubric 4). The TSR figure is dropped into the governance paragraph without any reading for the holder: whether it supports the 188% AIA and 200% PSU payouts, or how it compares with the earnings growth the pay metrics reward. risks.systemic is largely a list of 10-K risk-factor headings ('seasonality, adverse economic or political conditions in major markets, global or regional catastrophic events, and default by counterparty financial institutions') with a view only on currency.",
       "fix": "Tie the TSR to the pay argument (pay outcomes against shareholder outcome over the same period) or cut it. In systemic, keep currency and multiple risk, which carry a view, and drop the headings that are only listed.",
-      "status": "open",
-      "note": "Reopened: the F-20 fix removed the reading of the TSR, and governance again ends its pay paragraph with a bare restatement, 'Separately, the proxy reports five-year TSR of 65.8% for 2021 through 2025.', with no view for the holder (rubric 4). The systemic half of this finding remains addressed. Either read the TSR against what the excerpt supports (e.g. the 2023-2025 PSU and 2025 AIA maximum payouts sit inside a five-year window whose TSR was 65.8%, without claiming more than those years show) or cut the sentence."
+      "status": "addressed",
+      "note": "The bare TSR sentence is cut from governance, which now ends its pay paragraph on a view (adjusted metrics, maximum payouts in a year of increased competition). The systemic half was already addressed."
     },
     {
       "id": "F-17",
