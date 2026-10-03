@@ -122,6 +122,22 @@ that losers rebound in panic states (Daniel & Moskowitz 2016, *JFE*) and that no
 
 ## Implementation
 
-`breachPolicy` / `breachMarketShareMax` / `breachStockShareMin` (lib/trade/breach.ts, hysteresis, rebalance,
-pipeline), and `markMode` / `cronTimesET` / `submitCutoffET` (pipeline, cron, config). The full behaviour is
-described in `docs/engine.md` §4.2 and §5.1.
+**Breach rule.** Config: `breachPolicy` / `breachMarketShareMax` / `breachStockShareMin`.
+- Code: `lib/trade/breach.ts` (pure cause split), `hysteresis.ts` (HOLD / FREEZE / EXIT, only when the breach is the
+  sole exit reason), `rebalance.ts` (FREEZE weight frozen) and `pipeline.ts` `bearBreaches`.
+- SPY is read only when a held name is in breach. β comes from the FactPack via `betaFor`.
+- Any missing input means the plain exit.
+
+**Live decision.** Config: `markMode` / `cronTimesET` / `submitCutoffET`.
+- Code: `pipeline.ts` `liveMark` / `captureLive`, plus `cron.ts`, `scheduler.ts` and `clock.ts` (`etInstantOn`).
+- Safeguards added in the build:
+  - A live print further from the settled close than the bucket's `gapHalt` is set aside for the close, so a bad
+    print can't resize or lock the rest of the book.
+  - A live run reuses its decision snapshot as the execution anchor.
+  - The in-app scheduler arms for 15:10 after a morning restart instead of firing at once.
+  - In a live run the breach rule's SPY decision mark is SPY's own live mark.
+- Behaviour is described in `docs/engine.md` §4.2, §5.1 and §7.
+
+**Watch in the first live runs.**
+- Rate-limit fallbacks in the run notes ("read failed (429…)"). A batch-quote adapter method would remove the risk.
+- The Schwab adapter stamps a quote that has no timestamp with now(), so such a quote counts as fresh.
