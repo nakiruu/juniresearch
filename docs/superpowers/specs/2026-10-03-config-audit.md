@@ -3,6 +3,9 @@
 **Question (owner).** Audit every trader config knob against the academic literature, including arXiv, and
 find the best configuration.
 
+**Status: applied 2026-10-03** (`lib/portfolio/config.ts`, `lib/trade/config.ts`; tests and docs updated). It reaches the
+trader on the next rebuild.
+
 **Answer in one paragraph.** Change three values, all config-only:
 
 | Knob | Today | Recommended |

@@ -79,14 +79,14 @@ describe("planRun — a held name below its bear case, by cause", () => {
   });
   it("SPY close missing → no cause → the plain bear-breach EXIT, no throw, and the run record says why", async () => {
     const { out, cls } = await plan({ mark: 76 }); // the fake throws for an unconfigured SPY close
-    expect(cls).toEqual({ ticker: "NVT", classification: "EXIT", reasons: ["R — < exit 0.35 (price at or below the bear case)"] });
+    expect(cls).toEqual({ ticker: "NVT", classification: "EXIT", reasons: [`R — < exit ${resolveTradeConfig().rExit} (price at or below the bear case)`] });
     expect(out.breaches).toEqual({});
     expect(out.record.notes.some((n) => /bear breach NVT: cause unknown \(no SPY close/.test(n))).toBe(true);
   });
   it("only the report-date close missing → still the plain EXIT", async () => {
     const { cls } = await plan({ mark: 76, spy: { "2026-09-24": 400 } });
     expect(cls.classification).toBe("EXIT");
-    expect(cls.reasons).toEqual(["R — < exit 0.35 (price at or below the bear case)"]);
+    expect(cls.reasons).toEqual([`R — < exit ${resolveTradeConfig().rExit} (price at or below the bear case)`]);
   });
   it("no beta and no SIC → the plain EXIT; a SIC alone prices it with the sector proxy", async () => {
     const spy = { "2026-09-22": 500, "2026-09-24": 400 };

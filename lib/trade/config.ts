@@ -11,7 +11,7 @@ export interface TradeConfig extends PortfolioConfig {
   muEnter: number;          // enter only if re-marked expected upside >= this (0.08)
   muExit: number;           // exit a held name only if upside < this (0.03 — rallied to target)
   rEnter: number;           // enter only if reward/risk >= this (0.60)
-  rExit: number;            // exit only if reward/risk < this (0.35 — asymmetry genuinely gone)
+  rExit: number;            // exit only if reward/risk < this (0.15 — upside nearly gone; 0.35 sold the median BUY after a +5% rally)
   tradeBand: number;        // no-trade band on held names, absolute weight (0.025)
   lockBusinessDays: number; // trading days from a fill to the first legal opposite-side trade (5 = ICE rule: 5 business days counting the transaction day → first legal on the 6th trading day; symmetric, whole-ticker)
   // Decision marks. "live" (default): the run's own live price — fresh last trade → fresh quote mid →
@@ -70,7 +70,7 @@ export interface TradeConfig extends PortfolioConfig {
 
 export const DEFAULT_TRADE_CONFIG: TradeConfig = {
   ...DEFAULT_CONFIG,
-  muEnter: 0.08, muExit: 0.03, rEnter: 0.6, rExit: 0.35,
+  muEnter: 0.08, muExit: 0.03, rEnter: 0.6, rExit: 0.15,
   tradeBand: 0.025, lockBusinessDays: 5, markMode: "live",
   minOrderUsd: 25, maxOrdersPerRun: 40, maxNotionalFrac: 1.0,
   fractionalShares: true, minEnterUsd: 1, minTradeUsd: 1, minTradeNavFrac: 0.005, marketOnlyBelowUsd: 200,

@@ -252,7 +252,7 @@ that rule except b already exists. So the work is measurement, not code:
 ## Recommendation
 
 - **No code change.** Keep the R gate.
-- **Apply the config audit's `rExit` 0.15.** It removes the gate's one real defect, the exit after a 5%
+- **Apply the config audit's `rExit` 0.15** (applied 2026-10-03, with `stalenessMaxDays` 150 and `bearFloor` 0.25). It removes the gate's one real defect, the exit after a 5%
   rally.
 - **Do not wire Shibui presets into the trader.**
 - **Extend the calibration log** with the quant composite and the b / D-error tests above. That is how the

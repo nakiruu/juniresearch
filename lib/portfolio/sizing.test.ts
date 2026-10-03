@@ -5,7 +5,8 @@ import type { Signal } from "./signal";
 
 const sig = (o: Partial<Signal>): Signal => ({
   ticker: "X", company: "X", sector: "36", label: "BUY", gatedLabel: "BUY",
-  price: 100, mu: 0.2, sigma: 0.25, sigmaDown: 0.1, D: 0.2, R: 1, kappa: 0.6,
+  price: 100, mu: 0.2, sigma: 0.25, sigmaDown: 0.1, D: 0.3, R: 1, // D above the 0.25 bear floor, so R sizes unfloored
+  kappa: 0.6,
   quality: 1, ageDays: 0, staleness: 1, ...o,
 });
 

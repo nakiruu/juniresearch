@@ -13,8 +13,9 @@ describe("portfolio config", () => {
     expect(c.alpha).toBe(DEFAULT_CONFIG.alpha);
     expect(DEFAULT_CONFIG.wMax).toBe(0.10); // unchanged
   });
-  it("floors the sizing D at the desk's own bear floor (data/desk/desk.json rating.bearFloor)", () => {
+  it("floors the sizing D at 0.25, at least as deep as the desk's publication floor (data/desk/desk.json rating.bearFloor)", () => {
     const desk = JSON.parse(readFileSync(join(process.cwd(), "data", "desk", "desk.json"), "utf8"));
-    expect(DEFAULT_CONFIG.bearFloor).toBe(desk.rating.bearFloor);
+    expect(DEFAULT_CONFIG.bearFloor).toBe(0.25);
+    expect(DEFAULT_CONFIG.bearFloor).toBeGreaterThanOrEqual(desk.rating.bearFloor);
   });
 });

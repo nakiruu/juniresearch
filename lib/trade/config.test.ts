@@ -10,7 +10,7 @@ describe("resolveTradeConfig", () => {
     expect(cfg.muEnter).toBe(0.08);
     expect(cfg.muExit).toBe(0.03);
     expect(cfg.rEnter).toBe(0.6);
-    expect(cfg.rExit).toBe(0.35);
+    expect(cfg.rExit).toBe(0.15);
     expect(cfg.lockBusinessDays).toBe(5);
     expect(cfg.markMode).toBe("live"); // 2026-10: decide at 15:10 on live prices (was "settled")
     // inherits the portfolio config it extends
