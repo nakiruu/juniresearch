@@ -11,6 +11,10 @@ import {
   revenueBreakIndex,
   intrinsicRead,
   dcfApplicable,
+  ownerEarningsDetail,
+  inputCheckFailures,
+  inputCheckStatus,
+  type ShibuiCheck,
   GROWTH_CAP,
   GROWTH_FLOOR,
   MIN_OWNER_EARNINGS_YIELD,
@@ -370,5 +374,87 @@ describe("intrinsicRead — implied growth at the solver edge is flagged", () =>
   it("does not flag an interior solution", () => {
     const read = intrinsicRead(synth([100, 110, 121, 133, 146], [10, 11, 12, 13, 14]), { r: R, terminalGrowth: GT, horizon: N });
     expect(read.flags.some((x) => x.startsWith("market-implied growth is outside"))).toBe(false);
+  });
+});
+
+/** A Shibui cross-check stamp: all inputs agree unless diffs/sbcTtm are overridden. */
+const check = (over: Partial<ShibuiCheck> = {}): ShibuiCheck => ({
+  asOf: "2026-10-01", quarterEnd: "2026-06-30",
+  price: 10, marketCap: 1e9, sharesOutstanding: 1e8, revenueQuarter: 30, fcfTtm: 5e7, sbcTtm: null,
+  diffs: [], source: "shibui", ...over,
+});
+const diff = (field: ShibuiCheck["diffs"][number]["field"], pack: number, shibui: number): ShibuiCheck["diffs"][number] => {
+  const relDiff = Math.abs(pack - shibui) / Math.abs(shibui);
+  return { field, pack, shibui, relDiff, level: relDiff <= 0.1 ? "ok" : relDiff <= 0.25 ? "warn" : "fail" };
+};
+const grower = (over: Partial<IntrinsicFacts> = {}) => synth([100, 110, 121, 133, 146], [10, 11, 12, 13, 14e6], over);
+
+describe("ownerEarningsBase — the SBC charged matches the FCF base's period", () => {
+  it("charges the Shibui TTM SBC on the TTM-FCF path, in place of the fiscal-year SEC SBC", () => {
+    const f = grower({ sbc: [null, null, null, null, 8e6], shibuiCheck: check({ sbcTtm: 1e7 }) });
+    const d = ownerEarningsDetail(f);
+    expect(d).toMatchObject({ fcfBasis: "ttm", sbc: 1e7, sbcSource: "ttmShibui" });
+    expect(ownerEarningsBase(f)).toBeCloseTo(0.05 * 1e9 - 1e7, 0);
+    expect(intrinsicRead(f, { r: R, terminalGrowth: GT, horizon: N }).flags[0]).toBe("TTM SBC (Shibui) charged to owner earnings");
+  });
+  it("keeps the fiscal-year SEC SBC on the fiscal-year FCF fallback path", () => {
+    const f = grower({ ttm: { fcfYield: null }, sbc: [null, null, null, null, 2e6], shibuiCheck: check({ sbcTtm: 3e6 }) });
+    expect(ownerEarningsDetail(f)).toMatchObject({ fcfBasis: "fiscalYear", sbc: 2e6, sbcSource: "fiscalYearSec" });
+    expect(ownerEarningsBase(f)).toBeCloseTo(14e6 - 2e6, 0);
+    expect(intrinsicRead(f, { r: R, terminalGrowth: GT, horizon: N }).flags[0]).toBe("fiscal-year SBC (SEC) charged to owner earnings");
+  });
+  it("uses the Shibui TTM SBC when the SEC SBC is missing entirely (either path)", () => {
+    const ttm = grower({ shibuiCheck: check({ sbcTtm: 4e6 }) });
+    expect(ownerEarningsBase(ttm)).toBeCloseTo(5e7 - 4e6, 0);
+    const fy = grower({ ttm: { fcfYield: null }, sbc: [null, null, null, null, null], shibuiCheck: check({ sbcTtm: 4e6 }) });
+    expect(ownerEarningsDetail(fy)).toMatchObject({ fcfBasis: "fiscalYear", sbc: 4e6, sbcSource: "ttmShibui" });
+  });
+  it("ignores a negative or non-finite sbcTtm and falls back to the SEC SBC", () => {
+    for (const bad of [-1e6, Number.NaN]) {
+      const f = grower({ sbc: [null, null, null, null, 8e6], shibuiCheck: check({ sbcTtm: bad }) });
+      expect(ownerEarningsDetail(f).sbcSource).toBe("fiscalYearSec");
+    }
+  });
+  it("is unchanged without a shibuiCheck (fiscal-year SBC, or none isolated)", () => {
+    const withSbc = grower({ sbc: [null, null, null, null, 8e6] });
+    expect(ownerEarningsBase(withSbc)).toBeCloseTo(5e7 - 8e6, 0);
+    expect(intrinsicRead(withSbc, { r: R, terminalGrowth: GT, horizon: N }).flags[0]).toBe("fiscal-year SBC (SEC) charged to owner earnings");
+    const none = grower();
+    expect(ownerEarningsBase(none)).toBeCloseTo(5e7, 0);
+    expect(intrinsicRead(none, { r: R, terminalGrowth: GT, horizon: N }).flags[0]).toBe("trailing-FCF owner-earnings proxy (SBC not isolated)");
+    expect(inputCheckStatus(none)).toBe("—");
+  });
+});
+
+describe("dcfApplicable / intrinsicRead — input guard against Shibui", () => {
+  it("abstains on a fail (> 25%) on TTM FCF, naming the field and both values", () => {
+    const f = grower({ shibuiCheck: check({ diffs: [diff("fcfTtm", 5e7, 3.2e7), diff("price", 10, 10.1)] }) });
+    expect(inputCheckFailures(f).map((d) => d.field)).toEqual(["fcfTtm"]);
+    const a = dcfApplicable(f);
+    expect(a.ok).toBe(false);
+    expect(a.reason).toBe("inputs disagree with an independent source (Shibui): fcfTtm 50M vs 32M (56%)");
+    expect(inputCheckStatus(f)).toBe("FAIL: fcf");
+  });
+  it("lists every failing guarded input (market cap and shares)", () => {
+    const f = grower({ shibuiCheck: check({ diffs: [diff("marketCap", 1e9, 1.5e9), diff("sharesOutstanding", 1e8, 1.5e8)] }) });
+    expect(dcfApplicable(f).reason).toBe(
+      "inputs disagree with an independent source (Shibui): marketCap 1B vs 1.5B (33%); sharesOutstanding 100M vs 150M (33%)",
+    );
+  });
+  it("a warn on a guarded input does not abstain but is flagged; so is any non-ok price/revenue diff", () => {
+    const f = grower({ shibuiCheck: check({ diffs: [diff("sharesOutstanding", 1e8, 1.2e8), diff("revenueQuarter", 30, 50), diff("marketCap", 1e9, 1.01e9)] }) });
+    expect(dcfApplicable(f).ok).toBe(true);
+    const read = intrinsicRead(f, { r: R, terminalGrowth: GT, horizon: N });
+    expect(read.flags).toContain("input check (Shibui): sharesOutstanding differs by 17%");
+    expect(read.flags).toContain("input check (Shibui): revenueQuarter differs by 40%");
+    expect(read.flags.some((x) => x.includes("marketCap"))).toBe(false); // ok → silent
+    expect(inputCheckStatus(f)).toBe("FAIL: rev; warn: shares");
+  });
+  it("an all-ok check changes nothing", () => {
+    const base = grower();
+    const f = grower({ shibuiCheck: check({ diffs: [diff("marketCap", 1e9, 1.02e9)] }) });
+    expect(dcfApplicable(f)).toEqual(dcfApplicable(base));
+    expect(intrinsicRead(f, { r: R, terminalGrowth: GT, horizon: N })).toEqual(intrinsicRead(base, { r: R, terminalGrowth: GT, horizon: N }));
+    expect(inputCheckStatus(f)).toBe("ok");
   });
 });

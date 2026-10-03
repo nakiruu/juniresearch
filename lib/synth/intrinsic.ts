@@ -11,8 +11,10 @@
  * See docs/scoreconcepts/4.md.
  *
  * Prototype scope: the discount rate is exogenous (a cost of equity from moat.ts).
- * Owner earnings is trailing FCF (fcfYield × marketCap) charged for the latest
- * stock-based compensation when the pack carries it (8.md; a no-op otherwise).
+ * Owner earnings is trailing FCF (fcfYield × marketCap) charged for stock-based compensation: the
+ * TTM SBC from the Shibui cross-check when the base is TTM FCF, else the latest fiscal-year SBC (8.md).
+ * The pack's inputs are guarded against that independent source: a > 25% disagreement on market cap,
+ * shares or TTM FCF abstains (inputCheckFailures); a smaller one is flagged.
  *
  * Growth is a STARTING rate that fades linearly to terminal over the explicit stage (dcfEquityValue),
  * so both the market-implied and the achievable growth mean "year-1 growth", not a decade-flat rate.
@@ -37,6 +39,73 @@ export interface IntrinsicFacts {
   quote: { price: number; marketCap: number; sharesOutstanding: number };
   ttm: { fcfYield: number | null };
   statements: { fiscalYears: string[]; income: Row[]; cashflow: Row[] };
+  /** Independent cross-check of the pack's inputs against Shibui Finance (stamped by lib/facts; optional). */
+  shibuiCheck?: ShibuiCheck;
+}
+
+/** Structural mirror of the FactPack's `shibuiCheck` stamp (not imported from lib/facts on purpose). */
+export interface ShibuiCheck {
+  asOf: string;
+  quarterEnd: string | null;
+  price: number | null;
+  marketCap: number | null;
+  sharesOutstanding: number | null;
+  revenueQuarter: number | null;
+  fcfTtm: number | null;
+  sbcTtm: number | null; // TTM SBC over the 4 Shibui quarters ending at quarterEnd
+  diffs: ShibuiDiff[];
+  source: "shibui";
+}
+export interface ShibuiDiff {
+  field: "price" | "marketCap" | "sharesOutstanding" | "revenueQuarter" | "fcfTtm";
+  pack: number;
+  shibui: number;
+  relDiff: number; // fraction: ok ≤ 0.10, warn ≤ 0.25, fail > 0.25
+  level: "ok" | "warn" | "fail";
+}
+
+/** The inputs the DCF is linear in: a "fail" on any of these abstains (dcfApplicable). */
+export const GUARDED_INPUTS: readonly ShibuiDiff["field"][] = ["marketCap", "sharesOutstanding", "fcfTtm"];
+
+/** Compact number for a one-line message: 1.23B, 845M, 12.5K, 104.2. */
+export const compactNumber = (x: number): string => {
+  const a = Math.abs(x);
+  const [d, u] = a >= 1e12 ? [1e12, "T"] : a >= 1e9 ? [1e9, "B"] : a >= 1e6 ? [1e6, "M"] : a >= 1e3 ? [1e3, "K"] : [1, ""];
+  return `${Number((x / d).toPrecision(3))}${u}`;
+};
+const pct = (relDiff: number) => `${(Math.abs(relDiff) * 100).toFixed(0)}%`;
+
+/**
+ * The Shibui diffs that abstain the DCF: level "fail" (> 25%) on market cap, shares outstanding or TTM
+ * FCF — fair value is linear in each, so a base that an independent source puts > 25% elsewhere is not
+ * a base to value. Empty when the pack carries no check. Pure; scripts print it.
+ */
+export function inputCheckFailures(f: Pick<IntrinsicFacts, "shibuiCheck">): ShibuiDiff[] {
+  return (f.shibuiCheck?.diffs ?? []).filter((d) => d.level === "fail" && GUARDED_INPUTS.includes(d.field));
+}
+
+/** The abstention reason for inputCheckFailures, or null when there are none. */
+export function inputCheckReason(f: Pick<IntrinsicFacts, "shibuiCheck">): string | null {
+  const fails = inputCheckFailures(f);
+  if (!fails.length) return null;
+  const parts = fails.map((d) => `${d.field} ${compactNumber(d.pack)} vs ${compactNumber(d.shibui)} (${pct(d.relDiff)})`);
+  return `inputs disagree with an independent source (Shibui): ${parts.join("; ")}`;
+}
+
+/** Diffs that are flagged but do not abstain: any non-ok level other than a guarded-input fail. */
+export function inputCheckWarnings(f: Pick<IntrinsicFacts, "shibuiCheck">): ShibuiDiff[] {
+  return (f.shibuiCheck?.diffs ?? []).filter((d) => d.level !== "ok" && !(d.level === "fail" && GUARDED_INPUTS.includes(d.field)));
+}
+
+/** A compact status for preview tables: "—" (no check), "ok", "warn: shares", "FAIL: fcf, warn: price". */
+export function inputCheckStatus(f: Pick<IntrinsicFacts, "shibuiCheck">): string {
+  const c = f.shibuiCheck;
+  if (!c) return "—";
+  const short: Record<ShibuiDiff["field"], string> = { price: "price", marketCap: "cap", sharesOutstanding: "shares", revenueQuarter: "rev", fcfTtm: "fcf" };
+  const of = (lvl: ShibuiDiff["level"]) => c.diffs.filter((d) => d.level === lvl).map((d) => short[d.field]);
+  const fails = of("fail"), warns = of("warn");
+  const parts = [...(fails.length ? [`FAIL: ${fails.join(",")}`] : []), ...(warns.length ? [`warn: ${warns.join(",")}`] : [])];
+  return parts.length ? parts.join("; ") : "ok";
 }
 
 /** Achievable growth ceiling: a decade-sustainable STARTING rate (4.md §5; was +20% before the fade). */
@@ -65,11 +134,15 @@ export const IMPLIED_GROWTH_BAND: readonly [number, number] = [-0.5, 2.0];
  * any name with non-positive owner earnings (pre-/negative-FCF), where the model
  * has no meaningful solution, and for owner earnings below 1.5% of market cap:
  * fair value is linear in the base, so a base that is rounding noise (INTC at
- * 0.08% of market cap) would print a −100% margin of safety. See 4.md §11.
+ * 0.08% of market cap) would print a −100% margin of safety. See 4.md §11. It also abstains when an
+ * independent source (Shibui) puts market cap, shares or TTM FCF more than 25% away from the pack's
+ * (inputCheckFailures).
  */
 export function dcfApplicable(f: IntrinsicFacts): { ok: boolean; reason: string | null } {
   const sector = classifySector(f);
   if (sector !== "industrial") return { ok: false, reason: `${sector}: no FCF stream to value by DCF` };
+  const disagree = inputCheckReason(f);
+  if (disagree) return { ok: false, reason: disagree };
   const oe = ownerEarningsBase(f);
   if (oe <= 0) return { ok: false, reason: "non-positive owner earnings (pre-/negative-FCF)" };
   const cap = f.quote.marketCap;
@@ -153,24 +226,55 @@ export function impliedGrowth(oe0: number, equityValue: number, r: number, gt: n
   return (lo + hi) / 2;
 }
 
+export interface OwnerEarningsDetail {
+  oe: number; // owner earnings after SBC
+  fcf: number; // the FCF base before SBC
+  fcfBasis: "ttm" | "fiscalYear" | "none"; // fcfYield × marketCap, the latest FCF row, or neither
+  sbc: number | null; // the SBC charged (null = none isolated)
+  sbcSource: "ttmShibui" | "fiscalYearSec" | null;
+}
+
 /**
  * Trailing owner earnings — fcfYield × marketCap (fallback: the latest FCF row), then charged for
- * the latest stock-based compensation when it is known. GAAP adds SBC back to cash flow because it
- * is non-cash, but it dilutes owners as surely as a buyback, so a true owner-earnings figure expenses
- * it (Damodaran; docs/scoreconcepts/8.md). A no-op when SBC is absent.
+ * stock-based compensation. GAAP adds SBC back to cash flow because it is non-cash, but it dilutes
+ * owners as surely as a buyback, so a true owner-earnings figure expenses it (Damodaran; 8.md).
+ * Which SBC is matched to the period of the FCF base:
+ *  - TTM FCF base: the Shibui TTM SBC (shibuiCheck.sbcTtm, finite ≥ 0) when present, else the latest
+ *    fiscal-year SEC SBC (a timing mismatch, but the best available).
+ *  - Fiscal-year FCF base: the latest fiscal-year SEC SBC (same period).
+ *  - Either base with no SEC SBC at all: the Shibui TTM SBC when present (BE, CVX, XOM, CBRS).
+ * A no-op when neither is known.
  */
-export function ownerEarningsBase(f: IntrinsicFacts): number {
+export function ownerEarningsDetail(f: IntrinsicFacts): OwnerEarningsDetail {
   const y = f.ttm.fcfYield;
-  let oe: number;
-  if (num(y) && num(f.quote.marketCap)) oe = y * f.quote.marketCap;
-  else {
-    const fcf = series(f.statements.cashflow, "freeCashFlow");
-    const latest = fcf?.[fcf.length - 1];
-    oe = num(latest) ? latest : 0;
+  let fcf: number;
+  let fcfBasis: OwnerEarningsDetail["fcfBasis"];
+  if (num(y) && num(f.quote.marketCap)) {
+    fcf = y * f.quote.marketCap;
+    fcfBasis = "ttm";
+  } else {
+    const row = series(f.statements.cashflow, "freeCashFlow");
+    const latest = row?.[row.length - 1];
+    fcf = num(latest) ? latest : 0;
+    fcfBasis = num(latest) ? "fiscalYear" : "none";
   }
-  const sbcLatest = f.sbc?.[f.sbc.length - 1];
-  return num(sbcLatest) ? oe - sbcLatest : oe;
+  const sbcFy = f.sbc?.[f.sbc.length - 1];
+  const ttmRaw = f.shibuiCheck?.sbcTtm;
+  const sbcTtm = num(ttmRaw) && ttmRaw >= 0 ? ttmRaw : null;
+  let sbc: number | null = null;
+  let sbcSource: OwnerEarningsDetail["sbcSource"] = null;
+  if (sbcTtm != null && (fcfBasis === "ttm" || !num(sbcFy))) {
+    sbc = sbcTtm;
+    sbcSource = "ttmShibui";
+  } else if (num(sbcFy)) {
+    sbc = sbcFy;
+    sbcSource = "fiscalYearSec";
+  }
+  return { oe: sbc != null ? fcf - sbc : fcf, fcf, fcfBasis, sbc, sbcSource };
 }
+
+/** Trailing owner earnings after SBC — see ownerEarningsDetail for which FCF and SBC are used. */
+export const ownerEarningsBase = (f: IntrinsicFacts): number => ownerEarningsDetail(f).oe;
 
 /**
  * Index of the year a portfolio change starts (spin-off / divestiture): the LAST year whose revenue
@@ -269,12 +373,17 @@ export function intrinsicRead(f: IntrinsicFacts, cfg: IntrinsicConfig): Intrinsi
   const { terminalGrowth: gt, horizon: N } = cfg;
   const r = Math.max(cfg.r, gt + MIN_DISCOUNT_SPREAD);
   const rNear = (x: number) => Math.max(x, gt + MIN_DISCOUNT_SPREAD - 0.01); // corners / band
-  const oe0 = ownerEarningsBase(f);
+  const oed = ownerEarningsDetail(f);
+  const oe0 = oed.oe;
   const equity = f.quote.marketCap;
   const shares = f.quote.sharesOutstanding;
   const price = f.quote.price;
-  const sbcLatest = f.sbc?.[f.sbc.length - 1];
-  const flags: string[] = [num(sbcLatest) ? "SBC charged to owner earnings" : "trailing-FCF owner-earnings proxy (SBC not isolated)", "exogenous discount rate"];
+  const sbcFlag =
+    oed.sbcSource === "ttmShibui" ? "TTM SBC (Shibui) charged to owner earnings"
+    : oed.sbcSource === "fiscalYearSec" ? "fiscal-year SBC (SEC) charged to owner earnings"
+    : "trailing-FCF owner-earnings proxy (SBC not isolated)";
+  const flags: string[] = [sbcFlag, "exogenous discount rate"];
+  for (const d of inputCheckWarnings(f)) flags.push(`input check (Shibui): ${d.field} differs by ${pct(d.relDiff)}`);
 
   if (r > cfg.r) flags.push(`discount rate floored at ${(r * 100).toFixed(1)}% (cost of equity ${(cfg.r * 100).toFixed(1)}%)`);
   const gImpl = impliedGrowth(oe0, equity, r, gt, N);

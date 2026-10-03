@@ -9,7 +9,7 @@
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { latestFactPack } from "../lib/synth/latest-factpack";
-import { intrinsicRead, dcfApplicable, type IntrinsicFacts } from "../lib/synth/intrinsic";
+import { intrinsicRead, dcfApplicable, inputCheckStatus, type IntrinsicFacts } from "../lib/synth/intrinsic";
 import { costOfEquity } from "../lib/synth/moat";
 import { MACRO } from "../lib/synth/macro";
 
@@ -29,7 +29,7 @@ for (const file of readdirSync(DATA).filter((f) => f.endsWith(".json")).sort()) 
   const facts = JSON.parse(readFileSync(fp, "utf8")) as IntrinsicFacts;
   const applicable = dcfApplicable(facts);
   if (!applicable.ok) {
-    rows.push([ticker, usd(facts.quote.price), "—", "—", "—", "—", "—", "—", "—", "—", "—", report.rating.label, `abstained: ${applicable.reason}`]);
+    rows.push([ticker, usd(facts.quote.price), "—", "—", "—", "—", "—", "—", "—", "—", "—", inputCheckStatus(facts), report.rating.label, `abstained: ${applicable.reason}`]);
     continue;
   }
   const r = intrinsicRead(facts, { r: costOfEquity(facts, MACRO), terminalGrowth: 0.03, horizon: 10 });
@@ -48,12 +48,13 @@ for (const file of readdirSync(DATA).filter((f) => f.endsWith(".json")).sort()) 
     `${g(r.mosRange.min)}..${g(r.mosRange.max)}`,
     `${(r.discountRate * 100).toFixed(1)}%`,
     g(mechE),
+    inputCheckStatus(facts),
     report.rating.label,
-    "",
+    r.flags.filter((x) => x.startsWith("input check")).join("; "),
   ]);
 }
 
-const head = ["TICKER", "PRICE", "OWN-ERN", "IMPL g", "ACH g", "GAP", "BASE FV", "MoS", "MoS RANGE", "r", "MECH E", "PUBLISHED", "NOTE"];
+const head = ["TICKER", "PRICE", "OWN-ERN", "IMPL g", "ACH g", "GAP", "BASE FV", "MoS", "MoS RANGE", "r", "MECH E", "CHECK", "PUBLISHED", "NOTE"];
 const widths = head.map((h, i) => Math.max(h.length, ...rows.map((r) => r[i].length)));
 const fmt = (r: string[]) => r.map((c, i) => c.padEnd(widths[i])).join("  ");
 
@@ -63,4 +64,5 @@ console.log(widths.map((w) => "-".repeat(w)).join("  "));
 for (const r of rows) console.log(fmt(r));
 console.log("\nGAP = market-implied minus achievable owner-earnings growth (large + = priced for a lot).");
 console.log("MoS = base-case fair value vs price. MoS RANGE = min..max over r ± 1pt × base growth ± 2pt.");
+console.log("CHECK = pack inputs vs Shibui (— none, ok ≤10%, warn ≤25%, FAIL >25%; a FAIL on cap/shares/fcf abstains).");
 console.log("IMPL g / ACH g are STARTING growth rates, faded linearly to gt by year 10. MECH E = prob-weighted mechanical fair value vs price.\n");

@@ -7,7 +7,7 @@ import { Judgment } from "../lib/synth/judgment.schema";
 import { mergeReport } from "../lib/synth/merge";
 import { evaluateGates, gateAdvisory } from "../lib/synth/gates";
 import { moatRead, moatApplicable, costOfEquity } from "../lib/synth/moat";
-import { intrinsicRead, dcfApplicable } from "../lib/synth/intrinsic";
+import { intrinsicRead, dcfApplicable, inputCheckReason, compactNumber, type IntrinsicFacts } from "../lib/synth/intrinsic";
 import { compositeScore } from "../lib/synth/composite";
 import { decide, SAFE_DEFAULTS } from "../lib/synth/decide";
 import { computeConviction, scenarioDispersion } from "../lib/synth/conviction";
@@ -83,8 +83,19 @@ const uncertainty = uncertaintyTier({
 const sigmaScen = scenarioDispersion(judgment.sections.valuation.scenarios, pack.quote.price);
 const dec = decide({ conviction, gate, moat, intrinsic, composite, market: { targetDispersion, divergence }, uncertainty: { tier: uncertainty.tier, scenarioDispersion: sigmaScen }, published: judgment.rating.label }, desk.rating, SAFE_DEFAULTS);
 const gateWarning = gateAdvisory(judgment.rating.label, gate);
+// Independent input check (Shibui): any warn/fail diff is surfaced so the author/reviewer see it; a
+// fail on market cap, shares or TTM FCF also abstains the reverse DCF (lib/synth/intrinsic.ts).
+const packFacts: IntrinsicFacts = pack;
+const sc = packFacts.shibuiCheck;
+const scOff = sc?.diffs.filter((d) => d.level !== "ok") ?? [];
+const shibuiWarning = scOff.length
+  ? `input check (Shibui, ${sc!.asOf}): ` +
+    scOff.map((d) => `${d.level === "fail" ? "FAIL" : "warn"} ${d.field} ${compactNumber(d.pack)} vs ${compactNumber(d.shibui)} (${(Math.abs(d.relDiff) * 100).toFixed(0)}%)`).join("; ") +
+    (inputCheckReason(packFacts) ? " — reverse DCF abstained" : "")
+  : null;
 extraWarnings = [
   ...(gateWarning ? [gateWarning] : []),
+  ...(shibuiWarning ? [shibuiWarning] : []),
   `decision: composed ${dec.label} · conviction ${dec.conviction} ${dec.tier} · uncertainty ${uncertainty.tier}`,
   ...dec.advisories.map((s) => `  ${s}`),
 ];
