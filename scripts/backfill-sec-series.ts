@@ -13,7 +13,7 @@
 import { readFileSync, readdirSync, statSync, utimesSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { requireContact } from "./_env";
-import { alignAnnualSeries, fetchConceptEntries, mergeConceptSeries, stampSbcProvenance, SBC_CONCEPT, SBC_FALLBACK_CONCEPT, type ConceptEntry } from "../lib/facts/enrich";
+import { alignAnnualSeries, restatedYears, fetchConceptEntries, mergeConceptSeries, stampSbcProvenance, SBC_CONCEPT, SBC_FALLBACK_CONCEPT, type ConceptEntry } from "../lib/facts/enrich";
 
 const FACTS = "data/facts";
 const dry = process.argv.includes("--dry");
@@ -36,10 +36,10 @@ const entries = (cik: number, concept: string) => {
 };
 
 type Series = (number | null)[];
-type Pack = Record<string, unknown> & { ticker: string; cik: number; filing: { periodEnd: string }; statements: { fiscalYears: string[] }; goodwill?: Series; sbc?: Series; provenance?: { field: string; source: "edgar"; endpoint: string; capturedAt: string }[] };
+type Pack = Record<string, unknown> & { ticker: string; cik: number; filing: { periodEnd: string }; statements: { fiscalYears: string[] }; goodwill?: Series; goodwillRestated?: string[]; sbc?: Series; provenance?: { field: string; source: "edgar"; endpoint: string; capturedAt: string }[] };
 
 /** Set (or delete, when null) `key`, keeping its position if present, else inserting it after the first present `after` key. */
-function place(pack: Pack, key: string, value: Series | null, after: string[]): Pack {
+function place(pack: Pack, key: string, value: Series | string[] | null, after: string[]): Pack {
   if (value == null) { delete pack[key]; return pack; }
   if (key in pack) { pack[key] = value; return pack; }
   const anchorKey = after.find((k) => k in pack);
@@ -66,9 +66,10 @@ for (const path of packs) {
   let pack = JSON.parse(readFileSync(path, "utf8")) as Pack;
   const { fiscalYears } = pack.statements;
   const anchor = pack.filing.periodEnd;
-  let goodwill: Series, sbc: Series, concepts: (string | null)[];
+  let goodwill: Series, restated: string[], sbc: Series, concepts: (string | null)[];
   try {
     goodwill = alignAnnualSeries(await entries(pack.cik, "Goodwill"), fiscalYears, anchor);
+    restated = restatedYears(await entries(pack.cik, "Goodwill"), fiscalYears, anchor);
     const primary = alignAnnualSeries(await entries(pack.cik, SBC_CONCEPT), fiscalYears, anchor);
     const fallback = primary.some((v) => v == null) ? alignAnnualSeries(await entries(pack.cik, SBC_FALLBACK_CONCEPT), fiscalYears, anchor) : primary.map(() => null);
     ({ values: sbc, concepts } = mergeConceptSeries({ concept: SBC_CONCEPT, values: primary }, { concept: SBC_FALLBACK_CONCEPT, values: fallback }));
@@ -82,15 +83,19 @@ for (const path of packs) {
   const fallbackYears = fiscalYears.filter((_, i) => concepts[i] === SBC_FALLBACK_CONCEPT);
   const provBefore = JSON.stringify(pack.provenance?.filter((p) => p.field === "sbc").map((p) => p.endpoint) ?? []);
 
-  const oldGw = pack.goodwill, oldSbc = pack.sbc;
+  const oldGw = pack.goodwill, oldSbc = pack.sbc, oldRestated = pack.goodwillRestated;
   pack = place(pack, "goodwill", newGw, ["sicDescription", "sic", "exchange"]);
+  const newRestated = newGw && restated.length ? restated : null;
+  pack = place(pack, "goodwillRestated", newRestated, ["goodwill"]);
   pack = place(pack, "sbc", newSbc, ["goodwill", "sicDescription", "sic", "exchange"]);
   stampSbcProvenance(pack, newSbc ? concepts : fiscalYears.map(() => null), capturedAt);
   const provAfter = JSON.stringify(pack.provenance?.filter((p) => p.field === "sbc").map((p) => p.endpoint) ?? []);
 
-  const diff = !same(oldGw, newGw) || !same(oldSbc, newSbc) || provBefore !== provAfter;
+  const restatedChanged = JSON.stringify(oldRestated ?? null) !== JSON.stringify(newRestated);
+  const diff = !same(oldGw, newGw) || !same(oldSbc, newSbc) || provBefore !== provAfter || restatedChanged;
   console.log(`${path}  [${fiscalYears.join(" ")}] anchor ${anchor}`);
   if (!same(oldGw, newGw)) console.log(`    goodwill  ${fmt(oldGw)}  →  ${fmt(newGw)}`);
+  if (restatedChanged) console.log(`    goodwillRestated  ${oldRestated?.join(" ") ?? "absent"}  →  ${newRestated?.join(" ") ?? "absent"}`);
   if (!same(oldSbc, newSbc)) console.log(`    sbc       ${fmt(oldSbc)}  →  ${fmt(newSbc)}${fallbackYears.length ? `  (Allocated… for ${fallbackYears.join(", ")})` : ""}`);
   if (!diff) continue;
   changed++;

@@ -86,6 +86,22 @@ A separate scoring layer produces:
   FactPack's **measured beta** (2y weekly vs SPY, Blume-adjusted, clamped [0.3, 2.5]; `lib/facts/beta.ts`,
   captured from Shibui Finance) and the SIC sector proxy only when none was captured.
 
+> 💡 **Deferred — point-in-time FactPacks (goodwill basis).** A pack's statement columns come from the
+> vendor year by year and mix bases after a spin-off (DD's FY23+ revenue is restated for the Qnity spin,
+> FY21–22 as reported; T's FY21 includes WarnerMedia). Goodwill is stamped on the latest-filed
+> (restated) basis, so for the years in `goodwillRestated` the moat's ex-goodwill ROIC can mix restated
+> goodwill with as-reported statements; `moatRead` flags those years instead of guessing. Measured
+> 2026-10: neither basis changes any moat verdict on the affected names (DD, GE, HON, LH, LRCX, MMM, NVT,
+> T). The fix is to rebuild every year's statements from SEC on one rule (latest filed), which would also
+> steady the reverse DCF's spin-off handling.
+
+> 💡 **Deferred — re-building published reports.** `rating.decision` (conviction, moat, intrinsic) is
+> persisted in each `data/<ticker>.json` when `synth:build` runs, and the portfolio reads κ from there.
+> The 2026-10 scoring changes (measured beta, the reverse-DCF fixes, robust DCF penalty, SBC/goodwill/TTM
+> FCF capture) therefore reach sizing only when a report is re-built (`synth:build <T> <ACC> --date
+> <original date>`). Measured against the stored decisions, a re-build would move 45 convictions (42 up,
+> 3 down: GE, VRT, RL). Held back by the owner until a deliberate rollout.
+
 **P(touch fair value) — display only (`lib/portfolio/touch.ts`).** A GBM first-passage probability,
 `P = Φ((νT−b)/σ√T) + e^{2νb/σ²}·Φ((−b−νT)/σ√T)` with `b = ln(FV/S₀)`, σ from the report's ~30 recent
 closes, T = `touchHorizonYears` (1) and drift `touchDrift` (0). Signals carry it as `touch`; the snapshot

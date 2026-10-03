@@ -30,6 +30,7 @@ export interface MoatFacts {
   sector?: string;
   sic?: number | null;
   goodwill?: (number | null)[]; // per fiscal year, aligned to statements.fiscalYears
+  goodwillRestated?: string[]; // fiscal years whose goodwill a later 10-K restated (lib/facts/enrich.ts restatedYears)
   beta?: { value: number } | null; // measured beta (lib/facts/beta.ts); else the SIC proxy
   quote: { marketCap: number };
   ttm: { interestCoverage: number | null };
@@ -222,6 +223,11 @@ export function moatRead(f: MoatFacts, cfg: MoatConfig = {}): MoatResult {
   const cmpRoicLevel = roicForLevel.slice(from);
   const cmpSpreadLevel = spreadForLevel.slice(from);
   if (goodwillMaterial) flags.push("width goodwill-adjusted (ex-goodwill ROIC)");
+  // Deferred (docs/engine.md): goodwill is on the latest-filed (restated) basis, the statement columns may
+  // be on the original one; flag the years where that can mix bases instead of guessing which to use.
+  const restatedCmp = (f.goodwillRestated ?? []).filter((fy) => f.statements.fiscalYears.indexOf(fy) >= from);
+  if (goodwillMaterial && restatedCmp.length)
+    flags.push(`goodwill restated by a later filing for ${restatedCmp.join(", ")} — ex-goodwill ROIC for those years may mix restated goodwill with as-reported statements`);
 
   // Gross-margin level and slope (pricing power).
   const gm = f.statements.fiscalYears.map((_, i) => {

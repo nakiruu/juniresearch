@@ -43,6 +43,10 @@ export const FactPack = z.object({
   // Goodwill per fiscal year (aligned to statements.fiscalYears) for ex-goodwill ROIC in the
   // moat engine. Optional: FactPacks captured before it was persisted omit it.
   goodwill: z.array(nullableNum).optional(),
+  // Fiscal-year labels whose goodwill a later 10-K restated (e.g. after a spin-off). `goodwill` keeps the
+  // latest-filed value; the moat engine flags ex-goodwill ROIC for these years as mixing bases (deferred
+  // point-in-time follow-up, docs/engine.md). Absent when nothing was restated.
+  goodwillRestated: z.array(z.string()).optional(),
   // Stock-based compensation per fiscal year, for SBC-adjusted owner earnings in the intrinsic
   // engine (Damodaran; 8.md). Optional; omitted for filers that tag none.
   sbc: z.array(nullableNum).optional(),

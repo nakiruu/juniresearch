@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { alignAnnualSeries, mergeConceptSeries, fetchSbcSeries, stampSbcProvenance, parsePeerMultiples, enrichPack, secEvToEbitda, evToEbitdaNotMeaningful, ttmFromYtd, secTtmFcf } from "./enrich";
+import { alignAnnualSeries, restatedYears, mergeConceptSeries, fetchSbcSeries, stampSbcProvenance, parsePeerMultiples, enrichPack, secEvToEbitda, evToEbitdaNotMeaningful, ttmFromYtd, secTtmFcf } from "./enrich";
 
 // Hand-built companyconcept facts. A 10-K reports the current year plus comparatives, all under the
 // filing's own `fy` — which is why alignment must key on the period end, not `fy`.
@@ -233,5 +233,28 @@ describe("ttmFromYtd / secTtmFcf — TTM cash flow from year-to-date tags", () =
     // The pack's latest quarter (Jun 30) is not in SEC's data yet → the Mar 31 TTM is used and dated.
     expect(secTtmFcf(facts(ocf, capex), "2026-06-30")?.asOf).toBe("2026-03-31");
     expect(secTtmFcf(facts(ocf, []), "2026-03-31")).toBeNull();
+  });
+});
+
+describe("restatedYears — goodwill a later 10-K recast", () => {
+  const fy = ["FY23", "FY24", "FY25"];
+  it("names the years whose latest-filed value differs from the original 10-K by more than 1%", () => {
+    const e = [
+      inst("2023-12-31", 300, "k23", 2023, "2024-02-10"),
+      inst("2023-12-31", 150, "k25", 2025, "2026-02-10"), // spin-off recast in a later 10-K
+      inst("2024-12-31", 310, "k24", 2024, "2025-02-10"),
+      inst("2024-12-31", 311, "k25", 2025, "2026-02-10"), // < 1%: rounding, not a restatement
+      inst("2025-12-31", 160, "k25", 2025, "2026-02-10"),
+    ];
+    expect(alignAnnualSeries(e, fy, "2026-06-30")).toEqual([150, 311, 160]); // latest-filed basis stays
+    expect(restatedYears(e, fy, "2026-06-30")).toEqual(["FY23"]);
+  });
+  it("ignores 10-Q comparatives when finding the original value", () => {
+    const e = [
+      inst("2024-12-31", 310, "k24", 2024, "2025-02-10"),
+      inst("2024-12-31", 100, "q1", 2025, "2025-01-15", "10-Q", "Q1"), // earlier-filed but not a 10-K
+      inst("2025-12-31", 160, "k25", 2025, "2026-02-10"),
+    ];
+    expect(restatedYears(e, ["FY24", "FY25"], "2026-06-30")).toEqual([]);
   });
 });

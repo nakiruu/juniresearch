@@ -153,7 +153,36 @@ export async function fetchConceptEntries(cik: number, concept: string, contact:
 
 /** SEC companyconcept us-gaap/Goodwill → a per-fiscal-year series aligned to `fiscalYears` (see alignAnnualSeries). */
 export async function fetchGoodwillSeries(cik: number, fiscalYears: string[], anchor: string, contact: string, fetchImpl: FetchLike = fetch) {
-  return alignAnnualSeries(await fetchConceptEntries(cik, "Goodwill", contact, fetchImpl), fiscalYears, anchor);
+  return (await fetchGoodwill(cik, fiscalYears, anchor, contact, fetchImpl)).values;
+}
+
+/** Goodwill aligned to `fiscalYears` (latest-filed basis) plus the labels a later filing restated (restatedYears). */
+export async function fetchGoodwill(cik: number, fiscalYears: string[], anchor: string, contact: string, fetchImpl: FetchLike = fetch) {
+  const entries = await fetchConceptEntries(cik, "Goodwill", contact, fetchImpl);
+  return { values: alignAnnualSeries(entries, fiscalYears, anchor), restated: restatedYears(entries, fiscalYears, anchor) };
+}
+
+/**
+ * Fiscal-year labels whose value a later 10-K restated: the latest-filed value (what alignAnnualSeries
+ * stores) differs from the year's original 10-K by more than `tol` (relative). After a spin-off the later
+ * filings recast earlier years onto the continuing business, while the pack's statement columns may still
+ * be on the original basis — so these years' ex-goodwill ROIC mixes bases (docs/engine.md, deferred
+ * point-in-time follow-up). Pure.
+ */
+export function restatedYears(entries: ConceptEntry[], fiscalYears: string[], anchor: string, tol = 0.01): string[] {
+  const latest = alignAnnualSeries(entries, fiscalYears, anchor);
+  const earliestByEnd = new Map<string, ConceptEntry>();
+  for (const e of entries) {
+    if (typeof e.end !== "string" || !(e.form === "10-K" || e.form === "10-K/A") || e.fp !== "FY") continue;
+    const prev = earliestByEnd.get(e.end);
+    if (!prev || (e.filed ?? "") < (prev.filed ?? "")) earliestByEnd.set(e.end, e);
+  }
+  // Keep only each end's earliest 10-K filing; alignAnnualSeries then dedupes nothing.
+  const original = alignAnnualSeries(entries.filter((e) => typeof e.end === "string" && earliestByEnd.get(e.end) === e), fiscalYears, anchor);
+  return fiscalYears.filter((_, i) => {
+    const a = latest[i], b = original[i];
+    return a != null && b != null && Math.abs(a - b) > tol * Math.max(Math.abs(b), 1);
+  });
 }
 
 export const SBC_CONCEPT = "ShareBasedCompensation";
@@ -368,6 +397,7 @@ interface EnrichablePack {
   statements: { fiscalYears: string[] };
   peers?: { ticker: string; pe: number | null; ps: number | null; evToEbitda: number | null }[];
   goodwill?: (number | null)[];
+  goodwillRestated?: string[];
   sbc?: (number | null)[];
   provenance?: Provenance[];
 }
@@ -382,11 +412,13 @@ export async function enrichPack<T extends EnrichablePack>(pack: T, contact: str
   const anchor = pack.filing.periodEnd;
   const none = () => fiscalYears.map(() => null);
   const [goodwill, sbc, multiples] = await Promise.all([
-    fetchGoodwillSeries(pack.cik, fiscalYears, anchor, contact, fetchImpl).catch(none),
+    fetchGoodwill(pack.cik, fiscalYears, anchor, contact, fetchImpl).catch(() => ({ values: none(), restated: [] as string[] })),
     fetchSbcSeries(pack.cik, fiscalYears, anchor, contact, fetchImpl).catch(() => ({ values: none(), concepts: none() })),
     pack.peers?.length ? fetchPeerMultiples(pack.peers.map((p) => p.ticker), fetchImpl) : null,
   ]);
-  if (goodwill.some((g) => g != null)) pack.goodwill = goodwill;
+  if (goodwill.values.some((g) => g != null)) pack.goodwill = goodwill.values;
+  if (goodwill.restated.length) pack.goodwillRestated = goodwill.restated;
+  else delete pack.goodwillRestated;
   if (sbc.values.some((s) => s != null)) {
     pack.sbc = sbc.values;
     stampSbcProvenance(pack, sbc.concepts, now().toISOString());

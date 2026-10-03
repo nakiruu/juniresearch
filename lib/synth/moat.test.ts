@@ -141,6 +141,13 @@ describe("goodwill-adjusted width (ex-goodwill ROIC for asset-heavy acquirers)",
     expect(withGw.flags.some((f) => /goodwill/i.test(f))).toBe(true);
     expect(withoutGw.width).not.toBe("WIDE");
   });
+  it("flags restated goodwill years inside the comparable window, and only when goodwill is material", () => {
+    const flagOf = (m: ReturnType<typeof moatRead>) => m.flags.find((f) => f.startsWith("goodwill restated"));
+    const restated = { ...acquirer([800, 800, 800, 800, 800]), goodwillRestated: ["FY21", "FY22"] };
+    expect(flagOf(moatRead(restated, { wacc: 0.1 }))).toMatch(/for FY21, FY22 — ex-goodwill ROIC/);
+    expect(moatRead(restated, { wacc: 0.1 }).width).toBe(moatRead(acquirer([800, 800, 800, 800, 800]), { wacc: 0.1 }).width); // a flag, not a verdict change
+    expect(flagOf(moatRead({ ...acquirer([10, 10, 10, 10, 10]), goodwillRestated: ["FY21"] }, { wacc: 0.1 }))).toBeUndefined();
+  });
 });
 
 describe("insufficient comparable history (I1)", () => {
