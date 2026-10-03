@@ -425,6 +425,14 @@ ships with the reports on the next rebuild. Refresh it after each earnings seaso
   small, roughly +0.1 to +0.4pp of NAV a year. Momentum, turnover, lottery and pre-earnings filters were tested
   and rejected (`docs/superpowers/specs/2026-10-03-entry-methodology.md`).
 
+> 🚫 **Not an option — replacing the R gate with Shibui screen presets (or adding one as a hard filter).** Audited
+> 2026-10-03 (`docs/superpowers/specs/2026-10-03-system-audit-rr-gate.md`) on Shibui data, the literature and an engine
+> simulation with point-in-time SEC fundamentals. Every preset gate lost 0.6–4.0pp/yr: value, growth, dividend, quality,
+> momentum + quality, oversold and Piotroski. They are sparse (0–25 of 50 live BUYs pass), and their factors have been
+> ≈ 0 since 2010. Quality consistency is the exception, and oversold names keep falling. As tilts they do nothing. A μ-only
+> gate ties the R gate once `rExit` is 0.15: R ≥ r is the price ceiling P ≤ (FV + r·B)/(1 + r). A quant composite as a
+> bottom-30% veto (+0.10 / +0.49pp, not significant) is logged for calibration, not traded.
+
 ### 4.3 The emitter — target vs current  (`lib/trade/rebalance.ts` → `emitTrades`)
 
 1. **Freeze** held names with no current signal, deferred exits (locked), and `FREEZE` names (a mixed bear
