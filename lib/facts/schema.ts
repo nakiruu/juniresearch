@@ -46,6 +46,14 @@ export const FactPack = z.object({
   // Stock-based compensation per fiscal year, for SBC-adjusted owner earnings in the intrinsic
   // engine (Damodaran; 8.md). Optional; omitted for filers that tag none.
   sbc: z.array(nullableNum).optional(),
+  // Measured equity beta (2y weekly vs SPY, Blume-adjusted; lib/facts/beta.ts) for the cost-of-equity
+  // build-up. Optional: absent → moat.ts falls back to the sector proxy betaFromSic.
+  beta: z.object({
+    value: z.number(), raw: z.number(), standardError: z.number(), r2: z.number(),
+    observations: z.number().int(), benchmark: z.string(),
+    window: z.object({ start: z.string().nullable(), end: z.string() }),
+    source: z.literal("shibui"),
+  }).optional(),
   filing: z.object({
     form: z.enum(["10-Q", "10-K"]),
     accession: z.string(),
@@ -101,7 +109,7 @@ export const FactPack = z.object({
   }),
   provenance: z.array(z.object({
     field: z.string(),
-    source: z.enum(["fmp", "bigdata", "edgar", "yahoo"]),
+    source: z.enum(["fmp", "bigdata", "edgar", "yahoo", "shibui"]),
     endpoint: z.string(),
     capturedAt: z.string(),
   })),

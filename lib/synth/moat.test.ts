@@ -4,6 +4,7 @@ import {
   roicSeries,
   sectorHurdle,
   betaFromSic,
+  betaFor,
   buildWacc,
   costOfEquity,
   comparableWindow,
@@ -46,6 +47,20 @@ describe("WACC build-up (replaces the sector-hurdle proxy)", () => {
     expect(m.wacc).toBeCloseTo(0.119, 2);
     expect(m.width).toBe("NARROW");
     expect(m.trend).toBe("WIDENING");
+  });
+});
+
+describe("measured beta (lib/facts/beta.ts) overrides the SIC proxy", () => {
+  const macro = { riskFree: 0.043, erp: 0.045 };
+  it("uses the pack's measured beta when present, the SIC proxy otherwise", () => {
+    expect(betaFor(AMD)).toEqual({ beta: 1.7, source: "sic" });
+    expect(betaFor({ ...AMD, beta: { value: 1.539 } })).toEqual({ beta: 1.539, source: "measured" });
+    expect(betaFor({ ...AMD, beta: { value: 0 } }).source).toBe("sic"); // a non-positive beta is not a measurement
+  });
+  it("feeds the measured beta into the cost of equity and names its source in the WACC flag", () => {
+    expect(costOfEquity({ ...LLY, beta: { value: 0.652 } }, macro)).toBeCloseTo(0.043 + 0.652 * 0.045, 6);
+    expect(moatRead({ ...AMD, beta: { value: 1.539 } }, { taxRate: 0.15 }).flags[0]).toMatch(/β≈1\.539 measured/);
+    expect(moatRead(AMD, { taxRate: 0.15 }).flags[0]).toMatch(/β≈1\.7 sector proxy/);
   });
 });
 

@@ -82,6 +82,9 @@ A separate scoring layer produces:
   earnings quality). The engine requires **both** labels to be buy-side.
 - **`rating.decision.conviction`** — a **0–100** score from a penalty model over the gate + intrinsic
   reverse-DCF + moat (ROIC−WACC) + a cross-sectional composite percentile. This becomes **κ** downstream.
+  The intrinsic discount rate and the moat WACC share one cost of equity, `rf + β·ERP`, where β is the
+  FactPack's **measured beta** (2y weekly vs SPY, Blume-adjusted, clamped [0.3, 2.5]; `lib/facts/beta.ts`,
+  captured from Shibui Finance) and the SIC sector proxy only when none was captured.
 
 **P(touch fair value) — display only (`lib/portfolio/touch.ts`).** A GBM first-passage probability,
 `P = Φ((νT−b)/σ√T) + e^{2νb/σ²}·Φ((−b−νT)/σ√T)` with `b = ln(FV/S₀)`, σ from the report's ~30 recent

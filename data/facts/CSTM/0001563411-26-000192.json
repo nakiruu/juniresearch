@@ -561,6 +561,25 @@
       "source": "yahoo",
       "endpoint": "quoteSummary.defaultKeyStatistics.enterpriseToEbitda",
       "capturedAt": "2026-10-02T00:13:22.539Z"
+    },
+    {
+      "field": "beta",
+      "source": "shibui",
+      "capturedAt": "2026-10-03T03:46:39.826Z",
+      "endpoint": "stock_data_query: 2y weekly log returns vs SPY (cov/var) → Blume-adjusted, clamped [0.3, 2.5]"
     }
-  ]
+  ],
+  "beta": {
+    "value": 1.264,
+    "raw": 1.396,
+    "standardError": 0.269,
+    "r2": 0.208,
+    "observations": 104,
+    "benchmark": "SPY",
+    "window": {
+      "start": "2024-10-07",
+      "end": "2026-09-29"
+    },
+    "source": "shibui"
+  }
 }

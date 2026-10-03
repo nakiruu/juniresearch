@@ -9,8 +9,8 @@
  * minimum bear depth a moat of that quality justifies (which moves R through D
  * in conviction.ts). See docs/scoreconcepts/3.md.
  *
- * Prototype scope: WACC is a flagged proxy — a documented sector-hurdle by SIC
- * (3.md §1.2's fallback) unless an explicit rate is supplied — and the effective
+ * Prototype scope: WACC is a build-up whose beta is measured when the pack carries
+ * one (lib/facts/beta.ts) and a flagged sector proxy by SIC otherwise — and the effective
  * tax rate is assumed. A large stock-funded acquisition distorts invested
  * capital, so a structural-break test drops pre-break years and leans on
  * incremental ROIC, resolving to a "contingent" Narrow when the average spread
@@ -30,6 +30,7 @@ export interface MoatFacts {
   sector?: string;
   sic?: number | null;
   goodwill?: (number | null)[]; // per fiscal year, aligned to statements.fiscalYears
+  beta?: { value: number } | null; // measured beta (lib/facts/beta.ts); else the SIC proxy
   quote: { marketCap: number };
   ttm: { interestCoverage: number | null };
   statements: { fiscalYears: string[]; income: Row[]; balance: Row[]; cashflow: Row[] };
@@ -80,7 +81,7 @@ function investedCapitalSeries(f: MoatFacts): number[] {
   );
 }
 
-/** Sector beta by SIC for the cost-of-equity build-up. A proxy until a per-name beta is captured. */
+/** Sector beta by SIC — the fallback when a pack carries no measured beta (see betaFor). */
 export function betaFromSic(sic: number | null | undefined): number {
   if (num(sic)) {
     if (sic >= 4900 && sic <= 4999) return 0.5; // utilities
@@ -100,9 +101,15 @@ export function betaFromSic(sic: number | null | undefined): number {
 const creditSpread = (interestCoverage: number | null): number =>
   !num(interestCoverage) ? 0.025 : interestCoverage > 15 ? 0.01 : interestCoverage >= 8 ? 0.015 : interestCoverage >= 4 ? 0.025 : 0.04;
 
+/** The beta the build-up uses: the pack's measured beta when captured, else the SIC proxy. */
+export function betaFor(f: { sic?: number | null; beta?: { value: number } | null }): { beta: number; source: "measured" | "sic" } {
+  const b = f.beta?.value;
+  return num(b) && b > 0 ? { beta: b, source: "measured" } : { beta: betaFromSic(f.sic), source: "sic" };
+}
+
 /** Cost of equity: rf + β·ERP. The right discount rate for an equity/FCFE model (feeds 4.md too). */
-export function costOfEquity(f: { sic?: number | null }, macro: { riskFree: number; erp: number }): number {
-  return macro.riskFree + betaFromSic(f.sic) * macro.erp;
+export function costOfEquity(f: { sic?: number | null; beta?: { value: number } | null }, macro: { riskFree: number; erp: number }): number {
+  return macro.riskFree + betaFor(f).beta * macro.erp;
 }
 
 /** WACC build-up (3.md §1.2): equity-weighted cost of equity + debt-weighted after-tax cost of debt. */
@@ -185,7 +192,8 @@ export function moatRead(f: MoatFacts, cfg: MoatConfig = {}): MoatResult {
   const taxRate = cfg.taxRate ?? 0.21;
   const macro = { riskFree: cfg.riskFree ?? MACRO.riskFree, erp: cfg.erp ?? MACRO.erp, taxRate };
   const wacc = cfg.wacc ?? buildWacc(f, macro);
-  const flags: string[] = [`WACC ${(wacc * 100).toFixed(1)}% (build-up, β≈${betaFromSic(f.sic)})`, `tax rate assumed ${(taxRate * 100).toFixed(0)}%`];
+  const b = betaFor(f);
+  const flags: string[] = [`WACC ${(wacc * 100).toFixed(1)}% (build-up, β≈${b.beta}${b.source === "sic" ? " sector proxy" : " measured"})`, `tax rate assumed ${(taxRate * 100).toFixed(0)}%`];
 
   const roic = roicSeries(f, taxRate);
   const spread = roic.map((r) => r - wacc);

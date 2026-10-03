@@ -83,6 +83,8 @@ npm run facts:prepare -- AVGO 0001730168-26-000080     # EDGAR record + primary 
 /fetch-facts AVGO 0001730168-26-000080                 # (Claude Code) capture vendor responses verbatim to data/raw/…
 npm run facts:build  -- AVGO 0001730168-26-000080      # raw → validated FactPack in data/facts/…
 npm run facts:enrich -- AVGO 0001730168-26-000080      # stamp goodwill (SEC) + peer multiples (Yahoo) onto the pack
+npm run facts:beta   -- AVGO 0001730168-26-000080      # print the Shibui beta query; save its response to data/raw/…/shibui-beta.json
+npm run facts:beta   -- AVGO 0001730168-26-000080 --apply  # stamp the measured beta (2y weekly vs SPY, Blume-adjusted) onto the pack
 npm run facts:diff   -- AVGO 0001730168-26-000080      # projected facts vs the hand-built golden fixture, formatted
 ```
 
@@ -100,6 +102,13 @@ npm run facts:free -- AVGO 0001730168-26-000080        # SEC-XBRL + filing iXBRL
 income, and has sector-aware extensions for banks, utilities and insurers (net-of-interest revenue, no
 gross-margin/EBITDA where meaningless). Known limitations live in the memory notes (non-December fiscal-year
 quarter **labels**, and an FYE-change annual-splice bug) — both handled by disclose-in-prose + a reviewer note.
+
+**Measured beta (Shibui Finance).** The cost of equity behind the moat WACC and the reverse-DCF discount
+rate uses a per-name beta when the pack carries one (`lib/facts/beta.ts`): two years of weekly log returns
+vs SPY ending at the pack's quote date, Blume-adjusted (⅔·raw + ⅓) and clamped to [0.3, 2.5]. Shibui is a
+Claude connector, not an HTTP API, so `facts:beta` prints the query, the response is saved verbatim, and
+`--apply` does the arithmetic. With no beta (no Shibui coverage, or under a year of history) the SIC sector
+proxy (`betaFromSic`) applies. `scripts/backfill-beta.ts --query | --apply <file>` re-stamps every pack.
 
 FactPack context also carries the **press release** (`context.pressRelease`, from the 8-K's exhibit 99.1),
 the longer **Risk Factors** excerpt (`context.riskFactorsSource`), and the **DEF 14A proxy**

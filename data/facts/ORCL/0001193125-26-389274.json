@@ -682,6 +682,25 @@
       "endpoint": "bigdata_search",
       "source": "bigdata",
       "capturedAt": "2026-09-13T18:48:51.667Z"
+    },
+    {
+      "field": "beta",
+      "source": "shibui",
+      "capturedAt": "2026-10-03T03:46:39.826Z",
+      "endpoint": "stock_data_query: 2y weekly log returns vs SPY (cov/var) → Blume-adjusted, clamped [0.3, 2.5]"
     }
-  ]
+  ],
+  "beta": {
+    "value": 1.549,
+    "raw": 1.823,
+    "standardError": 0.316,
+    "r2": 0.246,
+    "observations": 104,
+    "benchmark": "SPY",
+    "window": {
+      "start": "2024-09-16",
+      "end": "2026-09-11"
+    },
+    "source": "shibui"
+  }
 }

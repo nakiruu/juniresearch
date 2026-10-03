@@ -15,6 +15,7 @@
     "facts:prepare": "node --env-file-if-exists=.env.local --import tsx scripts/facts-prepare.ts",
     "facts:build": "node --env-file-if-exists=.env.local --import tsx scripts/facts-build.ts",
     "facts:enrich": "node --env-file-if-exists=.env.local --import tsx scripts/facts-enrich.ts",
+    "facts:beta": "node --env-file-if-exists=.env.local --import tsx scripts/facts-beta.ts",
     "facts:free": "node --env-file-if-exists=.env.local --import tsx scripts/facts-free.ts",
     "facts:backfill-ev": "node --env-file-if-exists=.env.local --import tsx scripts/facts-backfill-ev-ebitda.ts",
     "facts:diff": "node --env-file-if-exists=.env.local --import tsx scripts/facts-diff.ts",
