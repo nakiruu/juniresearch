@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "db6394d4083cd7dc1f7aae4954da28e8ae3b08b4b05294701e71f1f8e394009d",
-  "reviewedAt": "2026-10-03T01:02:27Z",
+  "judgmentSha256": "cf9f20cec8318eb4726dcc5202b25662b8b4604d60ce56c21f896dea6cb78ec0",
+  "reviewedAt": "2026-10-03T01:05:39Z",
   "reviewer": "claude-opus-5-5",
-  "round": 1,
-  "verdict": "needs-fix-round",
+  "round": 2,
+  "verdict": "approved-with-minors",
   "findings": [
     {
       "id": "F-1",
@@ -12,7 +12,8 @@
       "quote": "The probability-weighted fair value lands above Base because the Bull upside is wider than the Bear downside",
       "issue": "False on the report's own calls. Weighted fair value = 0.25×474 + 0.50×376 + 0.25×272 = $374.50, which is BELOW the $376 Base, not above it (the page's expected upside of +16.2% on $322.28 confirms ~$374.5). The stated reason is also wrong: Bull sits $98 above Base while Bear sits $104 below it, so the Bear tail is the wider one. The sentence before it ('The weighting is symmetric because the two tails turn on the same events... which tend to push in one direction or the other rather than both at once') does not argue for equal tail probabilities either; it describes correlation, not likelihood.",
       "fix": "State that the weighted fair value sits just below Base because the Bear tail is slightly wider than the Bull tail, and argue the 25/25 tail split on its merits (e.g. why an IOLITE miss plus weak European pricing is as likely as a positive readout plus on-schedule launches).",
-      "status": "open"
+      "status": "addressed",
+      "note": "Rewritten: weights 20/55/25 argued on merits; weighted value ~$349.9 correctly described as well below the $382 Base, Bear tail correctly called wider."
     },
     {
       "id": "F-2",
@@ -21,7 +22,8 @@
       "quote": "pricing and reimbursement policy, FDA policy on biologics and gene therapies, and changes to biosimilar exclusivity, all of which the 2025 10-K names",
       "issue": "Over-attribution. The 2025 10-K risk-factor excerpt in Context covers VYJUVEK dependence, pipeline execution and BPCIA/biosimilar exclusivity (including FDA draft guidance on biosimilars). It does not name pricing and reimbursement policy or FDA policy on gene therapies as risks; 'all of which the 2025 10-K names' attaches risks to a document that does not carry them on the surface.",
       "fix": "Attribute only the biosimilar-exclusivity risk to the 2025 10-K; present pricing/reimbursement and gene-therapy regulatory policy as the desk's own view without a source claim.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Systemic risks now framed as the desk's view; no 10-K attribution."
     },
     {
       "id": "F-3",
@@ -30,7 +32,8 @@
       "quote": "Cash and short-term investments rose in each year from FY22 to FY25, reaching $0.8B at FY25, and the Q2'26 press release reports $1.1 billion in cash and investments at June 30, 2026.",
       "issue": "Quantity mismatch / silent source disagreement. The vendor table's $0.8B is 'Cash & ST Investments'; the press release's $1.1 billion is 'cash, cash equivalents and investments', a broader measure that can include long-term investments. Placing them in one sentence as a continuing series implies ~$0.3B of cash build in six months, which the surface does not show (H1'26 net income was $110.7M). The report never flags that the two figures measure different things.",
       "fix": "Say once that the two figures are on different bases (vendor: cash and short-term investments at FY25; company: cash, cash equivalents and investments at June 30, 2026), state which one the report leans on, and do not read the gap as a six-month cash build.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Different bases stated once and the company figure chosen for the current position."
     },
     {
       "id": "F-4",
@@ -39,7 +42,8 @@
       "quote": "the TTM current ratio is 8.32, down from levels above 13 in FY21–FY23 as the business scaled, but still high",
       "issue": "Unsupported causal claim and inconsistent treatment of missing data, recurring in four places. (1) 'as the business scaled' explains the current-ratio decline with a cause the pack does not establish. (2) balanceCommentary says the '—' debt cells are 'missing data rather than as zero', yet risks.systemic concludes 'With no debt shown in the vendor data... rate and credit conditions matter mainly through the multiple... not through funding', treating the same blank as zero. (3) cashflowCommentary 'the vendor shows no repurchases' and (4) management.capitalAllocation 'the vendor shows no buybacks' read the identical '—' in the Share Repurchases row as an affirmative zero. (Dividends are supported by the 0.00% yield; buybacks and debt are not.)",
       "fix": "Drop 'as the business scaled' or tie it to a figure. Treat '—' consistently: say the vendor reports no debt or repurchase figures, and either make the funding-exposure point without relying on zero debt or state it as conditional on the absence of borrowing in the excerpts.",
-      "status": "open"
+      "status": "addressed",
+      "note": "'as the business scaled' removed; debt and repurchase blanks now treated consistently as missing in balance, cash flow, capital allocation and systemic."
     },
     {
       "id": "F-5",
@@ -48,7 +52,8 @@
       "quote": "earnings stall near FY26E EPS of $7.87 instead of compounding into FY27, and the stock is valued at the current ~34.6x forward multiple on that lower base",
       "issue": "The Bear case is close to a formality. It assumes an IOLITE miss, weak European pricing and stalled earnings for a single-product company, yet keeps the market's full current forward multiple; the resulting $272 sits only 15.6% below the price, barely clearing the 15% floor. scenarioCommentary concedes 'if the market instead re-rated a single-product company with slowing growth well below that, the downside would be wider than modeled', i.e. the authors themselves think the modeled Bear is not the bear. A stall scenario with no de-rating is internally inconsistent.",
       "fix": "Build the Bear with a de-rating that matches the narrative (e.g. a multiple anchored to something on the surface below 34.6x, or the Street low of $284.00 adjusted by an argued discount), then re-check the weighting, fair value and rating; or argue explicitly why the multiple would hold if earnings stall.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Bear re-anchored to the 52-week low ($180, -44% vs price) with a de-rating argued in scenarioCommentary."
     },
     {
       "id": "F-6",
@@ -57,7 +62,8 @@
       "quote": "the market keeps paying today's 40.4x trailing P/E once those earnings become the trailing figure",
       "issue": "Horizon mismatch in the Base anchor. FY27E EPS becomes the trailing figure only after FY27 closes (early 2028), so $376 is a price roughly 15+ months out, while the target band and expected upside are read against today's $322.28 with no horizon stated. Applying a trailing multiple to a two-years-forward EPS also double-counts growth relative to the 34.6x forward multiple the Bear uses. The anchoring logic is restated in analystCommentary ('assumes the Street's FY27E numbers arrive and the market keeps paying today's trailing multiple on them') and scenarioCommentary.",
       "fix": "State the target horizon and either anchor Base to a forward multiple on the appropriate year's EPS or acknowledge that $376 is an early-2028 value; make the anchoring argument once (scenarioCommentary) and let the other fields point to it.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Horizon stated (into early 2027); Base anchored to the 41.0x NTM multiple on FY27E EPS, which is coherent once FY27 is the forward year."
     },
     {
       "id": "F-7",
@@ -66,7 +72,8 @@
       "quote": "two registrational starts the April 2026 proxy pointed to for later in 2026 are now guided to 2027",
       "issue": "Cross-section repetition. The KB407/KB111 slip from 2026 to 2027 is told in full in four places: analystCommentary (this quote), executiveSummary.risks[2] ('Pipeline timelines have already slipped once this year'), management.leadership ('The April 2026 proxy said the company had the potential to initiate registrational programs in cystic fibrosis and Hailey-Hailey disease later in 2026; the August 2026 press release now targets 2027 for both'), and risks.idiosyncratic[4] ('two registrational starts have moved from 2026 to 2027').",
       "fix": "Argue the slip once, in management.leadership; let the exec-summary risk point to it and cut it from analystCommentary and risks.idiosyncratic[4] (keep only the what-to-watch there).",
-      "status": "open"
+      "status": "addressed",
+      "note": "Slip argued once in management.leadership; exec-summary risk and risks.idiosyncratic[4] now point to it."
     },
     {
       "id": "F-8",
@@ -75,7 +82,8 @@
       "quote": "German negotiations run until at least 2H 2026 and French ones into 2027, so European revenue per patient is not yet settled",
       "issue": "Cross-section repetition of the European-pricing story. The Germany/France negotiation timeline and its consequence appear in growth.points[0] (this quote), risks.idiosyncratic[1] ('with negotiations running until at least 2H 2026 in Germany and into 2027 in France'), businessMoat.segments[0].body ('still under negotiation in Germany and France'), financials.incomeCommentary ('German and French pricing remains unsettled'), businessMoat.durability ('the outcome of European pricing') and executiveSummary.thesis.body ('the next leg depends on European pricing').",
       "fix": "Give the timeline once (risks.idiosyncratic[1] is the natural home, with what-to-watch) and refer back in words elsewhere ('the pending German and French prices; see Risks').",
-      "status": "open"
+      "status": "addressed",
+      "note": "Timeline kept in risks.idiosyncratic[1]; growth, segment, income and durability now point to Risks."
     },
     {
       "id": "F-9",
@@ -84,7 +92,8 @@
       "quote": "The same risk factor warns that a competitor can still win approval during that window with its own full BLA, that the period could be shortened by congressional action, and that recent FDA draft guidance could lower the burden for biosimilars.",
       "issue": "Cross-section repetition of the 10-K biosimilar/full-BLA risk, retold in moatFactors[1] (this quote), businessMoat.durability ('the 10-K itself flags that full-BLA competitors and changes to biosimilar policy could erode exclusivity'), risks.idiosyncratic[3] ('the 2025 10-K warns that a rival can win approval with its own BLA during the 12-year exclusivity window and that recent FDA draft guidance could accelerate biosimilar competition') and risks.systemic ('changes to biosimilar exclusivity').",
       "fix": "Explain the mechanism once in moatFactors[1]; durability can say 'exclusivity is not absolute (see above)', and risks.idiosyncratic[3] should carry only the impact and what-to-watch.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Mechanism kept in moatFactors[1]; durability and risks.idiosyncratic[3] now point back; systemic no longer repeats it."
     },
     {
       "id": "F-10",
@@ -93,7 +102,8 @@
       "quote": "the company held $1.1 billion in cash and investments at June 30, 2026, and the Street's FY27E EPS of $9.32 puts the stock at ~34.6x forward earnings",
       "issue": "Figure retelling across sections. ~34.6x on FY27E EPS of $9.32 appears in analystCommentary ('~34.6x FY27E consensus EPS'), thesis.body (this quote), valuation.multiplesCommentary and the Base driver; $1.1 billion cash appears in thesis.body, financials.balanceCommentary and risks.systemic; 'funds every disclosed program' appears in balanceCommentary ('Krystal can fund every disclosed program... without new equity') and finalRecommendation.body[0] ('the cash balance funds every disclosed program'); the Bear-below-Street-low point appears in analystCommentary and multiplesCommentary; 'Consensus EPS basis is unstated' appears in incomeCommentary and multiplesCommentary; the Q2'26 growth-vs-consensus-pace point appears in analystCommentary, thesis.body ('growth is slowing from FY25's'), incomeCommentary and finalRecommendation.body[1].",
       "fix": "Keep each figure's argument in its owning section (multiples in Valuation, cash in Financials, consensus-pace in incomeCommentary) and replace the other occurrences with word pointers.",
-      "status": "open"
+      "status": "addressed",
+      "note": "34.6x, $1.1B, funding capacity, Bear-vs-Street-low and EPS-basis points each now made once."
     },
     {
       "id": "F-11",
@@ -102,7 +112,8 @@
       "quote": "A September 2025 U.S. label update extended eligibility to patients from birth and allowed home application by patients or caregivers.",
       "issue": "Repeated in growth.points[1] ('the September 2025 label update opened treatment from birth and home application') and alluded to again in businessMoat.durability ('the expanded U.S. label'). Same claim, two sections.",
       "fix": "Keep the label update in growth.points[1] as a demand driver and refer to it in words in the moat factor, or vice versa.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Label update argued in growth.points[1]; moat factor points to Growth; durability no longer repeats it."
     },
     {
       "id": "F-12",
@@ -111,7 +122,8 @@
       "quote": "VYJUVEK launches in Italy and Spain, which the company expects before year end; see Growth.",
       "issue": "Honest dating. The report is dated October 3, 2026, two months after the August 3, 2026 press release and 10-Q. Company expectations ('expects before year end' here and in analystCommentary; 'before year end' for EMERALD-1 enrollment in catalysts[2] and growth.points[3]) are presented in the present tense as current without the date they were given. The 10-Q also framed Italy/Spain as 'potential launches ... in the second half of 2026' contingent on pricing, which is softer than the press release's 'continues to expect commercial launches in both countries before year end'.",
       "fix": "Date the guidance ('as of the August 3, 2026 results') at least once where it carries the catalyst, and note the 10-Q's conditional framing for Italy and Spain.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Guidance dated to August 3, 2026 in catalysts, growth and risks; 10-Q's conditional framing for Italy and Spain noted."
     },
     {
       "id": "F-13",
@@ -120,7 +132,8 @@
       "quote": "Overall governance looks standard for a founder-led biotech, with the combined Chairman and CEO role the main point to monitor.",
       "issue": "Judgment not reached for the holder. The proxy excerpt shows the CEO (Krish S. Krishnan) chairs the board and the Founder and President (Suma M. Krishnan) is also a named executive officer, yet the section stops at a benchmark ('standard for a founder-led biotech') that the surface does not support (no peer governance data is on the page) and does not say what the combined role means for an outside shareholder, e.g. who sets the board agenda on the capital-allocation questions raised in management.capitalAllocation (aesthetics spending, growing cash).",
       "fix": "Drop the unsupported 'standard for a founder-led biotech' comparison and state what the combined Chairman/CEO role, with no lead independent director in the excerpt, lets management do on the specific decisions the report worries about.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Unsupported benchmark dropped; section now reads the combined Chairman/CEO role for outside holders."
     },
     {
       "id": "F-14",
@@ -129,7 +142,8 @@
       "quote": "VYJUVEK keeps compounding at a 95% gross margin",
       "issue": "Voice. 'Keeps compounding' is hype-leaning given the report's own argument that growth is decelerating (Q2'26 +24.1% vs FY25 +33.9%) and below the pace consensus needs; the subtitle points the opposite way to the counter-case.",
       "fix": "Use a neutral verb, e.g. 'VYJUVEK grows 24% at a 95% gross margin'.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Subtitle now 'VYJUVEK grows 24% at a 95% gross margin'."
     },
     {
       "id": "F-15",
@@ -138,6 +152,16 @@
       "quote": "the company changed the KB803 dosing schedule after the study began",
       "issue": "Presented as a risk signal without the company's stated reason. The 10-Q says the schedule was modified 'After observing a promising clinical safety profile in the initial patients... to reduce the potential impact of human error in eye drop administration'. Omitting that tilts the reading.",
       "fix": "Quote or paraphrase the stated reason, then say why a mid-study protocol change still adds risk (e.g. 16 patients under the updated protocol).",
+      "status": "addressed",
+      "note": "Company's stated reason for the dosing change now given before the residual risk."
+    },
+    {
+      "id": "F-16",
+      "severity": "Minor",
+      "field": "sections.finalRecommendation.body[0]",
+      "quote": "a Base case near the 52-week high is balanced by a Bear case near the 52-week low, and the weighted value sits only modestly above the current price",
+      "issue": "Mild paraphrase repetition of the HOLD rationale introduced by the rewrite. 'Base above price, deep Bear, weighted value only modestly above the price' is told in analystCommentary ('That Base sits above today's price, but the Bear case is deep enough that the probability-weighted value offers only modest upside'), valuation.scenarioCommentary ('the probability-weighted fair value sits well below Base and only modestly above today's price'), finalRecommendation.body[0] (this quote), and the 52-week-low Bear is echoed again in executiveSummary.thesis.body ('could take the stock back toward the low end of its 52-week range'). Summary fields may restate the call, so this is Minor, but four tellings is past the point of notice.",
+      "fix": "Keep the argument in scenarioCommentary; let analystCommentary or finalRecommendation carry the one-line conclusion, not both, and point to Valuation from the other.",
       "status": "open"
     }
   ]
