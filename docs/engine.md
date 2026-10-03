@@ -98,9 +98,9 @@ A separate scoring layer produces:
 > 💡 **Deferred — re-building published reports.** `rating.decision` (conviction, moat, intrinsic) is
 > persisted in each `data/<ticker>.json` when `synth:build` runs, and the portfolio reads κ from there.
 > The 2026-10 scoring changes (measured beta, the reverse-DCF fixes, robust DCF penalty, SBC/goodwill/TTM
-> FCF capture) therefore reach sizing only when a report is re-built (`synth:build <T> <ACC> --date
-> <original date>`). Measured against the stored decisions, a re-build would move 45 convictions (42 up,
-> 3 down: GE, VRT, RL). Held back by the owner until a deliberate rollout.
+> FCF capture, the Shibui input check and TTM SBC) therefore reach sizing only when a report is re-built
+> (`synth:build <T> <ACC> --date <original date>`). Measured against the stored decisions, a re-build would
+> move 44 convictions (41 up, 3 down: GE, VRT, RDVT). Held back by the owner until a deliberate rollout.
 
 **P(touch fair value) — display only (`lib/portfolio/touch.ts`).** A GBM first-passage probability,
 `P = Φ((νT−b)/σ√T) + e^{2νb/σ²}·Φ((−b−νT)/σ√T)` with `b = ln(FV/S₀)`, σ from the report's ~30 recent

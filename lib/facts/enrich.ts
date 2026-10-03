@@ -312,8 +312,9 @@ function ttmConcept(facts: FactsBody, concepts: string[], periodEnd: string): nu
 
 /**
  * TTM free cash flow (operating cash flow − capex payments) from a companyfacts body, as of `periodEnd` or —
- * when SEC does not yet carry that period — the most recent reported period end within 200 days before it.
- * Returns the value and the period it is as of. Pure.
+ * when SEC does not yet carry that period — the most recent reported period end within 200 days before it,
+ * but never one before the last fiscal-year end (the fiscal-year FCF fallback would be fresher). Returns the
+ * value and the period it is as of. Pure.
  */
 export function secTtmFcf(facts: unknown, periodEnd: string): { fcf: number; asOf: string } | null {
   const body = facts as FactsBody;
@@ -322,7 +323,12 @@ export function secTtmFcf(facts: unknown, periodEnd: string): { fcf: number; asO
     const lag = daysBetween(e.end, periodEnd);
     if (lag > 0 && lag <= 200) ends.add(e.end);
   }
+  // A TTM older than the last fiscal year is staler than the fiscal-year FCF the DCF falls back to — never use it.
+  let lastFyEnd = "";
+  for (const c of OCF) for (const e of body.facts?.["us-gaap"]?.[c]?.units?.USD ?? [])
+    if (e.start && isAnnual({ start: e.start, end: e.end }) && e.end <= periodEnd && e.end > lastFyEnd) lastFyEnd = e.end;
   for (const end of [...ends].sort().reverse()) {
+    if (end < lastFyEnd) break;
     const ocf = ttmConcept(body, OCF, end);
     const capex = ttmConcept(body, CAPEX_RAW, end);
     if (ocf != null && capex != null) return { fcf: ocf - capex, asOf: end };

@@ -85,6 +85,8 @@ npm run facts:build  -- AVGO 0001730168-26-000080      # raw → validated FactP
 npm run facts:enrich -- AVGO 0001730168-26-000080      # stamp goodwill + SBC (SEC), peer multiples (Yahoo); fill a missing TTM EV/EBITDA or FCF yield from SEC
 npm run facts:beta   -- AVGO 0001730168-26-000080      # print the Shibui beta query; save its response to data/raw/…/shibui-beta.json
 npm run facts:beta   -- AVGO 0001730168-26-000080 --apply  # stamp the measured beta (2y weekly vs SPY, Blume-adjusted) onto the pack
+npm run facts:crosscheck -- AVGO 0001730168-26-000080      # print the Shibui cross-check query; save its response to data/raw/…/shibui-crosscheck.json
+npm run facts:crosscheck -- AVGO 0001730168-26-000080 --apply  # stamp shibuiCheck (diffs vs Shibui + Shibui TTM SBC) onto the pack
 npm run facts:diff   -- AVGO 0001730168-26-000080      # projected facts vs the hand-built golden fixture, formatted
 ```
 
@@ -109,6 +111,16 @@ vs SPY ending at the pack's quote date, Blume-adjusted (⅔·raw + ⅓) and clam
 Claude connector, not an HTTP API, so `facts:beta` prints the query, the response is saved verbatim, and
 `--apply` does the arithmetic. With no beta (no Shibui coverage, or under a year of history) the SIC sector
 proxy (`betaFromSic`) applies. `scripts/backfill-beta.ts --query | --apply <file>` re-stamps every pack.
+
+**Shibui cross-check.** Bad vendor inputs, not the model, drove the worst reverse-DCF outputs (FOUR's pack
+carried a TTM FCF about double the independent figure). `facts:crosscheck`
+(`lib/facts/shibui-check.ts`) compares the pack's price, market cap, shares, latest-quarter revenue and TTM
+FCF (fcfYield × market cap) with Shibui's point-in-time values — close and market cap on/before the quote
+date, the four fiscal quarters ending at the pack's latest quarter — and stamps `shibuiCheck`: each
+relative diff with a level (ok ≤ 10% < warn ≤ 25% < fail), plus Shibui's TTM stock-based compensation for
+the DCF. Same two-step capture as beta; `scripts/backfill-crosscheck.ts --query | --apply <file>` re-stamps
+every pack (mtimes preserved). The reverse DCF abstains when market cap, shares or TTM FCF *fails* the check
+and flags a *warn*; it also charges Shibui's TTM SBC against TTM FCF (`lib/synth/intrinsic.ts`).
 
 FactPack context also carries the **press release** (`context.pressRelease`, from the 8-K's exhibit 99.1),
 the longer **Risk Factors** excerpt (`context.riskFactorsSource`), and the **DEF 14A proxy**

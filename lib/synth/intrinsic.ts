@@ -229,7 +229,8 @@ export function impliedGrowth(oe0: number, equityValue: number, r: number, gt: n
 export interface OwnerEarningsDetail {
   oe: number; // owner earnings after SBC
   fcf: number; // the FCF base before SBC
-  fcfBasis: "ttm" | "fiscalYear" | "none"; // fcfYield × marketCap, the latest FCF row, or neither
+  fcfBasis: "ttm" | "fiscalYear" | "none"; // fcfYield × marketCap, the latest non-null FCF row, or neither
+  fcfYear: string | null; // on the fiscal-year path, the year whose FCF was used
   sbc: number | null; // the SBC charged (null = none isolated)
   sbcSource: "ttmShibui" | "fiscalYearSec" | null;
 }
@@ -249,16 +250,21 @@ export function ownerEarningsDetail(f: IntrinsicFacts): OwnerEarningsDetail {
   const y = f.ttm.fcfYield;
   let fcf: number;
   let fcfBasis: OwnerEarningsDetail["fcfBasis"];
+  let fcfIndex: number | null = null;
   if (num(y) && num(f.quote.marketCap)) {
     fcf = y * f.quote.marketCap;
     fcfBasis = "ttm";
   } else {
-    const row = series(f.statements.cashflow, "freeCashFlow");
-    const latest = row?.[row.length - 1];
-    fcf = num(latest) ? latest : 0;
-    fcfBasis = num(latest) ? "fiscalYear" : "none";
+    // The most recent fiscal year that HAS an FCF value (a null latest column must not read as zero).
+    const row = series(f.statements.cashflow, "freeCashFlow") ?? [];
+    let i = row.length - 1;
+    while (i >= 0 && !num(row[i])) i--;
+    fcf = i >= 0 ? (row[i] as number) : 0;
+    fcfBasis = i >= 0 ? "fiscalYear" : "none";
+    fcfIndex = i >= 0 ? i : null;
   }
-  const sbcFy = f.sbc?.[f.sbc.length - 1];
+  // On the fiscal-year path, pair the FCF with the same year's SEC SBC.
+  const sbcFy = fcfIndex != null && f.sbc?.length === f.statements.fiscalYears.length ? f.sbc[fcfIndex] : f.sbc?.[f.sbc.length - 1];
   const ttmRaw = f.shibuiCheck?.sbcTtm;
   const sbcTtm = num(ttmRaw) && ttmRaw >= 0 ? ttmRaw : null;
   let sbc: number | null = null;
@@ -270,7 +276,8 @@ export function ownerEarningsDetail(f: IntrinsicFacts): OwnerEarningsDetail {
     sbc = sbcFy;
     sbcSource = "fiscalYearSec";
   }
-  return { oe: sbc != null ? fcf - sbc : fcf, fcf, fcfBasis, sbc, sbcSource };
+  const fcfYear = fcfIndex != null ? f.statements.fiscalYears[fcfIndex] ?? null : null;
+  return { oe: sbc != null ? fcf - sbc : fcf, fcf, fcfBasis, fcfYear, sbc, sbcSource };
 }
 
 /** Trailing owner earnings after SBC — see ownerEarningsDetail for which FCF and SBC are used. */
@@ -383,6 +390,8 @@ export function intrinsicRead(f: IntrinsicFacts, cfg: IntrinsicConfig): Intrinsi
     : oed.sbcSource === "fiscalYearSec" ? "fiscal-year SBC (SEC) charged to owner earnings"
     : "trailing-FCF owner-earnings proxy (SBC not isolated)";
   const flags: string[] = [sbcFlag, "exogenous discount rate"];
+  const lastFy = f.statements.fiscalYears[f.statements.fiscalYears.length - 1];
+  if (oed.fcfBasis === "fiscalYear") flags.push(`owner earnings from ${oed.fcfYear} FCF (no TTM)${oed.fcfYear !== lastFy ? ` — ${lastFy} FCF missing` : ""}`);
   for (const d of inputCheckWarnings(f)) flags.push(`input check (Shibui): ${d.field} differs by ${pct(d.relDiff)}`);
 
   if (r > cfg.r) flags.push(`discount rate floored at ${(r * 100).toFixed(1)}% (cost of equity ${(cfg.r * 100).toFixed(1)}%)`);

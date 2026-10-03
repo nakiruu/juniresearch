@@ -58,6 +58,20 @@ export const FactPack = z.object({
     window: z.object({ start: z.string().nullable(), end: z.string() }),
     source: z.literal("shibui"),
   }).optional(),
+  // Independent cross-check of the vendor inputs against Shibui Finance (lib/facts/shibui-check.ts):
+  // Shibui's point-in-time price / market cap / shares / quarter revenue / TTM FCF, the relative diffs
+  // vs the pack (ok ≤ 10% < warn ≤ 25% < fail), and Shibui's TTM SBC. Optional: absent → never checked.
+  shibuiCheck: z.object({
+    asOf: z.string(),
+    quarterEnd: z.string().nullable(),
+    price: nullableNum, marketCap: nullableNum, sharesOutstanding: nullableNum,
+    revenueQuarter: nullableNum, fcfTtm: nullableNum, sbcTtm: nullableNum,
+    diffs: z.array(z.object({
+      field: z.enum(["price", "marketCap", "sharesOutstanding", "revenueQuarter", "fcfTtm"]),
+      pack: z.number(), shibui: z.number(), relDiff: z.number(), level: z.enum(["ok", "warn", "fail"]),
+    })),
+    source: z.literal("shibui"),
+  }).optional(),
   filing: z.object({
     form: z.enum(["10-Q", "10-K"]),
     accession: z.string(),

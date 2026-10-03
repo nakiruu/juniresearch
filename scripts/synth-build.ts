@@ -91,7 +91,7 @@ const scOff = sc?.diffs.filter((d) => d.level !== "ok") ?? [];
 const shibuiWarning = scOff.length
   ? `input check (Shibui, ${sc!.asOf}): ` +
     scOff.map((d) => `${d.level === "fail" ? "FAIL" : "warn"} ${d.field} ${compactNumber(d.pack)} vs ${compactNumber(d.shibui)} (${(Math.abs(d.relDiff) * 100).toFixed(0)}%)`).join("; ") +
-    (inputCheckReason(packFacts) ? " — reverse DCF abstained" : "")
+    (inputCheckReason(packFacts) && dcfApplicable(pack).reason === inputCheckReason(packFacts) ? " — reverse DCF abstained" : "")
   : null;
 extraWarnings = [
   ...(gateWarning ? [gateWarning] : []),

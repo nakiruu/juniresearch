@@ -560,6 +560,53 @@
       "source": "yahoo",
       "endpoint": "quoteSummary.defaultKeyStatistics.enterpriseToEbitda",
       "capturedAt": "2026-10-02T00:13:40.908Z"
+    },
+    {
+      "field": "shibuiCheck",
+      "source": "shibui",
+      "capturedAt": "2026-10-03T04:32:59.534Z",
+      "endpoint": "stock_data_query: close + valuation.market_cap on/before 2026-09-23; fundamentals_quarterly (4 quarters to 2026-06-30): shares_outstanding, revenue, Σfree_cash_flow, Σstock_based_compensation"
     }
-  ]
+  ],
+  "shibuiCheck": {
+    "asOf": "2026-09-23",
+    "quarterEnd": "2026-06-30",
+    "price": 57.98,
+    "marketCap": 9207471748.539999,
+    "sharesOutstanding": 158804273,
+    "revenueQuarter": 1148000000,
+    "fcfTtm": null,
+    "sbcTtm": null,
+    "diffs": [
+      {
+        "field": "price",
+        "pack": 57.98,
+        "shibui": 57.98,
+        "relDiff": 0,
+        "level": "ok"
+      },
+      {
+        "field": "marketCap",
+        "pack": 9209970688,
+        "shibui": 9207471748.539999,
+        "relDiff": 0.0003,
+        "level": "ok"
+      },
+      {
+        "field": "sharesOutstanding",
+        "pack": 158847373.0251811,
+        "shibui": 158804273,
+        "relDiff": 0.0003,
+        "level": "ok"
+      },
+      {
+        "field": "revenueQuarter",
+        "pack": 1148000000,
+        "shibui": 1148000000,
+        "relDiff": 0,
+        "level": "ok"
+      }
+    ],
+    "source": "shibui"
+  }
 }

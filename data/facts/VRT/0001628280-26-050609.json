@@ -591,6 +591,12 @@
       "source": "shibui",
       "capturedAt": "2026-10-03T03:46:39.826Z",
       "endpoint": "stock_data_query: 2y weekly log returns vs SPY (cov/var) → Blume-adjusted, clamped [0.3, 2.5]"
+    },
+    {
+      "field": "shibuiCheck",
+      "source": "shibui",
+      "capturedAt": "2026-10-03T04:32:59.534Z",
+      "endpoint": "stock_data_query: close + valuation.market_cap on/before 2026-09-22; fundamentals_quarterly (4 quarters to 2026-06-30): shares_outstanding, revenue, Σfree_cash_flow, Σstock_based_compensation"
     }
   ],
   "sbc": [
@@ -611,6 +617,54 @@
       "start": "2024-09-30",
       "end": "2026-09-22"
     },
+    "source": "shibui"
+  },
+  "shibuiCheck": {
+    "asOf": "2026-09-22",
+    "quarterEnd": "2026-06-30",
+    "price": 253.46,
+    "marketCap": 97356220503.36,
+    "sharesOutstanding": 384108816,
+    "revenueQuarter": 3274300000,
+    "fcfTtm": 2924000000,
+    "sbcTtm": 52200000,
+    "diffs": [
+      {
+        "field": "price",
+        "pack": 253.51,
+        "shibui": 253.46,
+        "relDiff": 0.0002,
+        "level": "ok"
+      },
+      {
+        "field": "marketCap",
+        "pack": 97598349312,
+        "shibui": 97356220503.36,
+        "relDiff": 0.0025,
+        "level": "ok"
+      },
+      {
+        "field": "sharesOutstanding",
+        "pack": 384988163.43339515,
+        "shibui": 384108816,
+        "relDiff": 0.0023,
+        "level": "ok"
+      },
+      {
+        "field": "revenueQuarter",
+        "pack": 3274300000,
+        "shibui": 3274300000,
+        "relDiff": 0,
+        "level": "ok"
+      },
+      {
+        "field": "fcfTtm",
+        "pack": 2929800000,
+        "shibui": 2924000000,
+        "relDiff": 0.002,
+        "level": "ok"
+      }
+    ],
     "source": "shibui"
   }
 }

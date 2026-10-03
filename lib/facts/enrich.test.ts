@@ -234,6 +234,16 @@ describe("ttmFromYtd / secTtmFcf — TTM cash flow from year-to-date tags", () =
     expect(secTtmFcf(facts(ocf, capex), "2026-06-30")?.asOf).toBe("2026-03-31");
     expect(secTtmFcf(facts(ocf, []), "2026-03-31")).toBeNull();
   });
+  it("never falls back to a TTM older than the last fiscal year (the FY figure is fresher)", () => {
+    // Pack quarter Dec 31 2025 is missing from SEC; the newest computable TTM would be Jun 30 2025,
+    // which predates the Sep 30 2025 fiscal year → null, so the DCF uses the fiscal-year FCF.
+    const o = [e("2023-10-01", "2024-06-30", 15000, "10-Q", "2024-07-30"), e("2023-10-01", "2024-09-30", 20000, "10-K", "2024-11-10"),
+      e("2024-10-01", "2025-06-30", 16821, "10-Q", "2025-07-30"), e("2024-10-01", "2025-09-30", 23059, "10-K", "2025-11-10")];
+    const c = [e("2023-10-01", "2024-06-30", 800, "10-Q", "2024-07-30"), e("2023-10-01", "2024-09-30", 1100, "10-K", "2024-11-10"),
+      e("2024-10-01", "2025-06-30", 1093, "10-Q", "2025-07-30"), e("2024-10-01", "2025-09-30", 1482, "10-K", "2025-11-10")];
+    expect(secTtmFcf(facts(o, c), "2025-12-31")).toEqual({ fcf: 23059 - 1482, asOf: "2025-09-30" });
+    expect(secTtmFcf(facts(o.slice(0, 3), c.slice(0, 3)), "2025-12-31")?.asOf).toBe("2025-06-30"); // no newer FY → still allowed
+  });
 });
 
 describe("restatedYears — goodwill a later 10-K recast", () => {

@@ -598,6 +598,12 @@
       "source": "edgar",
       "capturedAt": "2026-10-03T04:05:08.352Z",
       "endpoint": "companyconcept us-gaap/AllocatedShareBasedCompensationExpense (FY21, FY22, FY23, FY24, FY25)"
+    },
+    {
+      "field": "shibuiCheck",
+      "source": "shibui",
+      "capturedAt": "2026-10-03T04:32:59.534Z",
+      "endpoint": "stock_data_query: close + valuation.market_cap on/before 2026-09-22; fundamentals_quarterly (4 quarters to n/a): shares_outstanding, revenue, Σfree_cash_flow, Σstock_based_compensation"
     }
   ],
   "beta": {
@@ -611,6 +617,33 @@
       "start": "2024-09-30",
       "end": "2026-09-22"
     },
+    "source": "shibui"
+  },
+  "shibuiCheck": {
+    "asOf": "2026-09-22",
+    "quarterEnd": null,
+    "price": 263.46,
+    "marketCap": 53104143387.53999,
+    "sharesOutstanding": null,
+    "revenueQuarter": null,
+    "fcfTtm": null,
+    "sbcTtm": null,
+    "diffs": [
+      {
+        "field": "price",
+        "pack": 263.46,
+        "shibui": 263.46,
+        "relDiff": 0,
+        "level": "ok"
+      },
+      {
+        "field": "marketCap",
+        "pack": 93345824768,
+        "shibui": 53104143387.53999,
+        "relDiff": 0.7578,
+        "level": "fail"
+      }
+    ],
     "source": "shibui"
   }
 }

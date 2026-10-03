@@ -49,6 +49,13 @@ If the accession is unknown, run `npm run detect` first and use what it prints.
    save the response byte-for-byte to the printed `file`. Finally run
    `npm run facts:beta -- <TICKER> <ACCESSION> --apply` and report its output verbatim.
    A missing beta is not an error: the cost of equity falls back to the sector proxy.
+8. Shibui cross-check (optional — skip if the Shibui Finance connector is unavailable):
+   `npm run facts:crosscheck -- <TICKER> <ACCESSION>` prints one call. Make it the same way
+   as step 7 (schema + query patterns first if not yet called this session), save the
+   response byte-for-byte to the printed `file`, then run
+   `npm run facts:crosscheck -- <TICKER> <ACCESSION> --apply` and report its output verbatim.
+   A WARN/FAIL line is a finding to report (a vendor input disagrees with Shibui), not
+   something to fix by hand; a ticker Shibui does not cover simply gets no diffs.
 
 ## Rules
 

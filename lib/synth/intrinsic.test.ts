@@ -458,3 +458,13 @@ describe("dcfApplicable / intrinsicRead — input guard against Shibui", () => {
     expect(inputCheckStatus(f)).toBe("ok");
   });
 });
+
+describe("ownerEarningsDetail — fiscal-year FCF fallback skips a missing latest year", () => {
+  it("uses the most recent year with FCF (and that year's SBC) instead of reading null as zero", () => {
+    const f = synth([100, 110, 121, 133, 146], [10, 11, 12, 13, null], { ttm: { fcfYield: null }, sbc: [1, 1, 1, 2, 3] });
+    const d = ownerEarningsDetail(f);
+    expect(d).toMatchObject({ fcf: 13, fcfBasis: "fiscalYear", fcfYear: "FY24", sbc: 2, oe: 11 });
+    const read = intrinsicRead(f, { r: R, terminalGrowth: GT, horizon: N });
+    expect(read.flags).toContain("owner earnings from FY24 FCF (no TTM) — FY25 FCF missing");
+  });
+});
