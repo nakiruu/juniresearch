@@ -1,0 +1,603 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "EVER",
+  "cik": 1640428,
+  "company": "EverQuote, Inc.",
+  "exchange": "NASDAQGM",
+  "sic": 7370,
+  "sicDescription": "Services-Computer Programming, Data Processing, Etc.",
+  "goodwill": [
+    21501000,
+    21501000,
+    21501000,
+    21501000,
+    21501000
+  ],
+  "filing": {
+    "form": "10-Q",
+    "accession": "0001193125-26-332775",
+    "filedDate": "2026-08-04",
+    "periodEnd": "2026-06-30",
+    "url": "https://www.sec.gov/Archives/edgar/data/1640428/000119312526332775/ever-20260630.htm"
+  },
+  "capturedAt": "2026-10-03T03:14:56.624Z",
+  "quote": {
+    "price": 19.5,
+    "marketCap": 687175168,
+    "sharesOutstanding": 35239752.20512821,
+    "sharesSource": "derived",
+    "week52Low": 13.88,
+    "week52High": 28.73,
+    "dividendYield": 0,
+    "asOf": "2026-10-03"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          418515000,
+          404127000,
+          287921000,
+          500190000,
+          692521000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          394566000,
+          380147000,
+          265466000,
+          479268000,
+          673146000
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          -21924000,
+          -24788000,
+          -51975000,
+          31751000,
+          58336000
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          -16852000,
+          -18940000,
+          -45779000,
+          37423000,
+          62147000
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          -19434000,
+          -24416000,
+          -51287000,
+          32169000,
+          99311000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          -0.67,
+          -0.77,
+          -1.54,
+          0.88,
+          2.63
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          34851000,
+          30835000,
+          37956000,
+          102116000,
+          171379000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          85125000,
+          107486000,
+          80907000,
+          135368000,
+          238040000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          1.7865671012108173,
+          1.7832933248177594,
+          2.312040870842794,
+          2.3645198144503023,
+          2.938352709178877
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          7189000,
+          -15791000,
+          -2828000,
+          66566000,
+          95381000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -2862000,
+          -4290000,
+          -3840000,
+          -4114000,
+          -5057000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          -21024000
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          4327000,
+          -20081000,
+          -6668000,
+          62452000,
+          90324000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q2'26",
+    "periodEnd": "2026-06-30",
+    "revenue": 195086000,
+    "operatingMargin": 0.12038280553191925,
+    "revenueYoY": 0.24552924426511047
+  },
+  "ttm": {
+    "pe": 6.351791530944625,
+    "ps": 0.9099271555274246,
+    "evToEbitda": 5.943,
+    "grossMargin": 0.9764604779144013,
+    "operatingMargin": 0.11000029131433081,
+    "netMargin": 0.1515880603497361,
+    "netDebtToEbitda": null,
+    "interestCoverage": null,
+    "currentRatio": 3.329959708365311,
+    "fcfYield": 0.13844359405024367
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY26E",
+      "revenue": 801150760,
+      "eps": 2.6
+    },
+    "followingFY": {
+      "label": "FY27E",
+      "revenue": 882881250,
+      "eps": 3.07667
+    }
+  },
+  "analysts": {
+    "count": 8,
+    "buy": 6,
+    "hold": 2,
+    "sell": 0,
+    "consensusRating": "Buy",
+    "consensusTarget": 29.5,
+    "medianTarget": 28.5,
+    "highTarget": 34,
+    "lowTarget": 28,
+    "asOf": "2026-10-03"
+  },
+  "segments": {
+    "basis": "FY25 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 692521000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY25",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "ATHM",
+      "pe": 17.133331,
+      "ps": 0.43158597,
+      "evToEbitda": -28.423
+    },
+    {
+      "ticker": "CABO",
+      "pe": null,
+      "ps": 0.04805566,
+      "evToEbitda": 4.283
+    },
+    {
+      "ticker": "DLX",
+      "pe": 10.371559,
+      "ps": 0.49070504,
+      "evToEbitda": 5.936
+    },
+    {
+      "ticker": "FVRR",
+      "pe": 10.54321,
+      "ps": 0.73387945,
+      "evToEbitda": 1.165
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-21",
+      "close": 25.239999771118164
+    },
+    {
+      "date": "2026-08-24",
+      "close": 26.6200008392334
+    },
+    {
+      "date": "2026-08-25",
+      "close": 26.850000381469727
+    },
+    {
+      "date": "2026-08-26",
+      "close": 26.079999923706055
+    },
+    {
+      "date": "2026-08-27",
+      "close": 24.81999969482422
+    },
+    {
+      "date": "2026-08-28",
+      "close": 25.65999984741211
+    },
+    {
+      "date": "2026-08-31",
+      "close": 25.440000534057617
+    },
+    {
+      "date": "2026-09-01",
+      "close": 24.829999923706055
+    },
+    {
+      "date": "2026-09-02",
+      "close": 25.5
+    },
+    {
+      "date": "2026-09-03",
+      "close": 25.309999465942383
+    },
+    {
+      "date": "2026-09-04",
+      "close": 24.90999984741211
+    },
+    {
+      "date": "2026-09-08",
+      "close": 24.940000534057617
+    },
+    {
+      "date": "2026-09-09",
+      "close": 23.360000610351562
+    },
+    {
+      "date": "2026-09-10",
+      "close": 23.489999771118164
+    },
+    {
+      "date": "2026-09-11",
+      "close": 23.979999542236328
+    },
+    {
+      "date": "2026-09-14",
+      "close": 24.030000686645508
+    },
+    {
+      "date": "2026-09-15",
+      "close": 24.469999313354492
+    },
+    {
+      "date": "2026-09-16",
+      "close": 23.34000015258789
+    },
+    {
+      "date": "2026-09-17",
+      "close": 22.889999389648438
+    },
+    {
+      "date": "2026-09-18",
+      "close": 23.139999389648438
+    },
+    {
+      "date": "2026-09-21",
+      "close": 22.829999923706055
+    },
+    {
+      "date": "2026-09-22",
+      "close": 19.549999237060547
+    },
+    {
+      "date": "2026-09-23",
+      "close": 17.6299991607666
+    },
+    {
+      "date": "2026-09-24",
+      "close": 18.059999465942383
+    },
+    {
+      "date": "2026-09-25",
+      "close": 18.639999389648438
+    },
+    {
+      "date": "2026-09-28",
+      "close": 18.59000015258789
+    },
+    {
+      "date": "2026-09-29",
+      "close": 18.90999984741211
+    },
+    {
+      "date": "2026-09-30",
+      "close": 20.059999465942383
+    },
+    {
+      "date": "2026-10-01",
+      "close": 19.979999542236328
+    },
+    {
+      "date": "2026-10-02",
+      "close": 19.5
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "EverQuote, Inc. operates an online marketplace for insurance shopping in the United States. The company provides automotive, and home and renters insurance, as well as campaign management tools. The company serves insurance carriers and agents, and indirect distributors. The company was formerly known as AdHarmonics, Inc., and changed its name to EverQuote, Inc. in November 2014. EverQuote, Inc. was incorporated in 2008 and is based in Cambridge, Massachusetts.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-10-03"
+    },
+    "mdaExcerpt": {
+      "text": "Item 2. Management's Discussion and Analysis of Financial Condition and Results of Operations.\nThe following discussion and analysis of our financial condition and results of operations should be read together with our condensed consolidated financial statements and related notes and other financial information included elsewhere in this Quarterly Report on Form 10-Q and our consolidated financial statements and the related notes and other financial information included in our Annual Report on Form 10-K for the year ended December 31, 2025, on file with the Securities and Exchange Commission. The following discussion and analysis contains forward-looking statements that reflect our plans, estimates and beliefs. Our actual results could differ materially from those discussed in the forward-looking statements. Factors that could cause or contribute to these differences include those discussed below, elsewhere in this Quarterly Report on Form 10-Q and in Part I, Item 1A. Risk Factors in our Annual Report on Form 10-K for the year ended December 31, 2025.\nWe are a leading AI-powered growth solutions partner for regulated property and casualty insurance entities, enabling the largest insurance carriers and thousands of agents to maximize customer acquisition across digital channels. Fueled by our proprietary data assets and our AI traffic engine, EverQuote is transforming the way providers attract and engage consumers to grow market share.\nWe operate a marketplace to connect insurance providers to a large volume of high-intent, pre-validated consumer referrals that match the insurers' specific underwriting and profitability requirements. The transparency of our marketplace, as well as the campaign management tools we offer, are designed to make it easy for insurance carriers and third-party agents to evaluate the performance of their marketing spend on our platform and manage their own return on investment. We present consumers with a single starting point for a comprehensive insurance shopping experience where consumers can engage with insurance carriers through multiple channels based on their preferences. Our marketplace enables consumers to choose to visit an insurance provider's website to purchase a policy or engage with a carrier or agent by phone or submit their data to insurance providers to receive quotes. Our services are free for consumers, and we derive our revenue principally from consumer inquiries sold as referrals to insurance providers.\nIn the three months ended June 30, 2026 and 2025, our total revenue was $195.1 million and $156.6 million, respectively, representing a year-over-year increase of 24.6%. We had net income of $19.2 million and $14.7 million for the three months ended June 30, 2026 and 2025, respectively, and had $30.1 million and $22.0 million in Adjusted EBITDA for the three months ended June 30, 2026 and 2025, respectively. In the six months ended June 30, 2026 and 2025, our total revenue was $385.9 million and $323.3 million, respectively, representing a year-over-year increase of 19.4%. We had net income of $37.9 million and $22.7 million for the six months ended June 30, 2026 and 2025, respectively, and had $59.4 million and $44.5 million in Adjusted EBITDA for the six months ended June 30, 2026 and 2025, respectively. See the section titled \" Non-GAAP Financial Measure\" for information regarding our use of Adjusted EBITDA and its reconciliation to net income (loss) determined in accordance with generally accepted accounting principles in the United States, or GAAP.\nFactors Affecting Our Performance\nWe believe that our performance and future growth depend on a number of factors that present opportunities for us but also pose risks and challenges, including those discussed below, elsewhere in this Quarterly Report on Form 10-Q, and in Part I, Item 1A. Risk Factors in our Annual Report on Form 10-K for the year ended December 31, 2025.\nAuto insurance industry risk\nFor the six months ended June 30, 2026 and 2025, we derived 89% and 90%, respectively, of our revenue from auto insurance providers and our financial results depend on the performance of the auto insurance industry. Furthermore, total revenue from our two largest auto insurance carrier customers was 35% and 11% of our revenue, respectively, for the six months ended June 30, 2026 and total revenue from our two largest auto insurance carrier customers was 39% and 12% of our revenue, respectively, for the six months ended June 30, 2025. Business cycles within the auto insurance industry heavily impact our carrier customers' advertising spend with us, such as in 2022 and 2023 when the auto insurance industry experienced deteriorated underwriting performance due to a rise in claims, inflation, and inadequate policy premiums, which had a negative impact on the pricing and demand for consumer referrals in our marketplace throughout 2023.\n20\nTable of Contents\nExpanding consumer traffic\nOur success depends in part on the growth of our consumer traffic. We have historically increased consumer traffic to our marketplace by expanding existing advertising channels and adding new channels such as by engaging with consumers through our verified partner network. Over the long term, we plan to increase consumer traffic by leveraging the features and growing the data assets of our platform. While we plan to grow consumer traffic, we have the ability to decrease advertising spend when the revenue associated with such consumer traffic does not result in incremental profit to our business or in response to lower demand for consumer referrals. Further, our profitability will be impacted by our ability to acquire quote requests in significant volume, at prices that are attractive, and that represent high-intent shoppers for which insurance providers will purchase referrals.\nIncreasing the number of insurance providers and their respective spend in our marketplace\nOur success also depends on our ability to retain and grow our insurance provider network. Historically, we have generally expanded both the number of insurance providers and the spend per provider on our platform. However, we have also experienced periods of decreasing carrier spend in the automotive insurance vertical as described above.\nKey Business Metrics\nWe regularly review a number of metrics, including GAAP operating results and the key metrics listed below, to evaluate our business, measure our performance, identify trends affecting our business, formulate financial projections, and make operating and strategic decisions. Some of these metrics are non-financial metrics or are financial metrics that are not defined by GAAP.\nAdjusted EBITDA\nWe define Adjusted EBITDA as net income (loss), adjusted to exclude: stock-based compensation expense, depreciation and amortization expense, legal settlement expense, interest income and income taxes. Adjusted EBITDA is a non-GAAP financial measure that we present in this Quarterly Report on Form 10-Q to supplement the financial information we present on a GAAP basis. We monitor and present Adjusted EBITDA because it is a key measure used by our management and board of directors to understand and evaluate our operating performance, to establish budgets and to develop operational goals for managing our business. Adjusted EBITDA should not be considered in isolation from, or as an alternative to, measures prepared in accordance with GAAP. Adjusted EBITDA should be considered together with other operating and financial performance measures presented in accordance with GAAP. Also, our definition of Adjusted EBITDA may be different than similarly titled measures presented by other companies, including those in our industry, which may reduce its usefulness as a comparative measure. For further explanation of the uses and limitations of this measure and a reconciliation of Adjusted EBITDA to the most directly comparable GAAP measure, net income (loss), please see \" Non-GAAP Financial Measure\".\nVariable Marketing Dollars and Margin\nWe define variable marketing dollars, or VMD, as revenue, as reported in our consolidated statements of operations and comprehensive income, less advertising costs (a component of sales and marketing expense, as reported in our consolidated statements of operations and comprehensive income). We define variable marketing margin, or VMM, as VMD divided by revenue.\nWe use VMD and VMM to measure the efficiency of individual advertising and consumer acquisition sources and to make trade-off decisions to manage our return on advertising. We do not use VMD or VMM as a measure of profitability.\nKey Components of Our Results of Operations\nRevenue\nWe generate our revenue primarily from consumer inquiries sold as referrals to insurance provider customers, consisting of carriers and agents, as well as to indirect distributors. To simplify the quoting process for the consumer and improve performance for the provider, we are able to provide consumer-submitted quote request data along with each referral. We recognize revenue from consumer referrals at the time of delivery. We support three secure consumer referral formats:\nClicks: An online-to-online referral, with a handoff of the consumer to the provider's website.\nData: An online-to-offline referral, with quote request data transmitted to the provider for follow-up.\nCalls: An online-to-offline referral for outbound calls and an offline-to-offline referral for inbound calls, with the consumer and provider connected by phone.\n21\nTable of Contents\nFor the periods presented, our total revenue consisted of revenue generated within our insurance verticals as follows:\nThree Months Ended June 30,\nSix Months Ended June 30,\n2026\n2025\n2026\n2025\n(in thousands)\nAutomotive\n$\n172,051\n$\n139,584\n$\n344,437\n$\n292,299\nHome and renters\n23,035\n17,034\n41,501\n30,938\nOther\n11\n24\nTotal revenue\n$\n195,086\n$\n156,629\n$\n385,938\n$\n323,261\nWe expect an overall increase in revenue in 2026 as compared to 2025, driven by our automotive and home and renters verticals, as we anticipate increased spending from our carrier partners. We expect revenue from our other insurance verticals to be insignificant in 2026 as a result of our focus on the P&C market.\nCost and Operating Expenses\nOur cost and operating expenses consist of cost of revenue, sales and marketing, research and development, general and administrative, and legal settlement expense.\nWe allocate certain overhead expenses, such as rent, utilities, office supplies and depreciation and amortization of general office assets, to cost of revenue and operating expense categories based on headcount. As a result, an overhead expense allocation is reflected in cost of revenue, sales and marketing, research and development, and general and administrative expenses. Personnel-related costs included in cost of revenue and operating expense categories include wages, fringe benefit costs and stock-based compensation expense.\nCost of Revenue\nCost of revenue is comprised primarily of the costs of operating our marketplace and delivering consumer referrals to our customers. These costs consist primarily of technology service costs including hosting, software, data services, and third-party call center costs. In addition, cost of revenue includes depreciation and amortization of our platform technology assets and personnel-related costs.\nSales and Marketing\nSales and marketing expense consists primarily of advertising and marketing expenditures as well as personnel-related costs for employees engaged in sales, marketing, data analytics and consumer acquisition functions. Advertising expenditures consist of variable costs that are related to attracting consumers to our marketplace, generating consumer quote requests, including the cost of quote requests we acquire from our verified partner network, and promoting our marketplace to carriers and agents. Advertising costs are expensed as incurred. Marketing costs consist primarily of content and creative development, public relations, memberships, and event costs. We expect our sales and marketing expense will increase as we expect increased carrier spend for referrals, which will impact our advertising expenditures.\nResearch and Development\nResearch and development expense consists primarily of personnel-related costs for software development and product management. We have focused our research and development efforts on improving ease of use and functionality of our existing marketplace platform and developing new offerings and internal tools. We primarily expense research and development costs. Direct development costs related to software enhancements that add functionality are capitalized and amortized as a component of cost of revenue. We expect that research and development expense will increase in 2026 as compared to 2025, primarily due to personnel-related costs and technology services.\nGeneral and Administrative\nGeneral and administrative expense consists of personnel-related costs and related expenses for executive, finance, legal, human resources, technical support and administrative personnel as well as the costs associated with professional fees for external legal, accounting and other consulting services, insurance premiums and payment processing and billing costs. We expect that general and administrative expense will increase in 2026 as compared to 2025, primarily due to personnel-related costs.\n22\nTable of Contents\nLegal settlement\nLegal settlement includes costs associated with the settlement of our litigation in 2025 with the former owners of certain entities acquired in 2021.\nOther Income (Expense)\nOther income (expense) consists of interest income and other income (expense). Interest income consists of interest earned on invested cash balances. Other income (expense) consists of miscellaneous income (expense) unrelated to our core operations.\nIncome Taxes\nOur income tax expense is based on applying our estimated annual effective tax rate to year-to-date income before income taxes, and adjusting for discrete items occurring in the quarter. Our effective tax rate may vary from period to period, generally based on factors such as changes in forecasts and year-to-date results.\nAs a result of the release of our valuation allowance in the fourth quarter of 2025, we expect an increase to our income tax rate in 2026. To the extent allowed, we intend to use our available net operating loss carryforwards and tax credits to reduce cash tax payment obligations.\nNon-GAAP Financial Measure\nTo supplement our consolidated financial statements presented in accordance with GAAP and to provide investors with additional information regarding our financial results, we present in this Quarterly Report on Form 10-Q Adjusted EBITDA as a non-GAAP financial measure. Adjusted EBITDA is not based on any standardized methodology prescribed by GAAP and is not necessarily comparable to similarly titled measures presented by other companies.\nAdjusted EBITDA . We define Adjusted EBITDA as our net income (loss), excluding the impact of stock-based compensation expense, depreciation and amortization expense, legal settlement expense, interest income and income taxes. The most directly comparable GAAP measure to Adjusted EBITDA is net income (loss). We monitor and present in this Quarterly Report on Form 10-Q Adjusted EBITDA because it is a key measure used by our management and board of directors to understand and evaluate our operating performance, to establish budgets and to develop operational goals for managing our business. In particular, we believe that excluding the impact of these items in calculating Adjusted EBITDA can provide a useful measure for period-to-period comparisons of our core operating performance.\nWe use Adjusted EBITDA to evaluate our operating performance and trends and make planning decisions.",
+      "source": "edgar:10-Q",
+      "url": "https://www.sec.gov/Archives/edgar/data/1640428/000119312526332775/ever-20260630.htm",
+      "asOf": "2026-08-04",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "ITEM 1A. RI SK FACTORS\nInvesting in our Class A common stock involves a high degree of risk. Certain factors may have a material adverse effect on our business, financial condition and results of operation. You should carefully consider the risks and uncertainties described below, together with all of the other information included in this Annual Report on Form 10-K, including our consolidated financial statements and the related notes, and in our other filings with the SEC. Our business, financial condition, operating results, cash flow and prospects could be materially and adversely affected by any of these risks or uncertainties. In that case, the trading price of our Class A common stock could decline, and you may lose all or part of your investment.\nRisks Related to Our Business and Industry\nOur business is highly subject to business cycles and risks related to the property and casualty insurance industries, and specifically automotive insurance. Adverse conditions in the insurance markets, as well as the general economy, could have a material adverse effect on our business, financial condition, and results of operations.\nBecause a substantial majority of the referrals made through our marketplace are for automotive insurance, our financial prospects depend significantly on the larger automotive industry ecosystem. Revenue from automotive insurance providers accounted for 91% and 89% of our total revenue for 2025 and 2024, respectively. Market cycles in the automotive insurance industry have been, and are expected to continue to be, unpredictable. For example, carriers decreased the amount of money they spent with us in 2023 and 2022 due to a variety of adverse conditions in the insurance industry such as deteriorating underwriting performance, a rise in claims, inflation, and inadequate policy premiums, and such decreases could reoccur rapidly and without warning, and for time periods that can be difficult to predict accurately. We will likely experience the impacts of insurance industry cycles in the future, which could materially and adversely affect our business, financial condition, operating results, cash flows, and prospects.\nWe depend on relationships with insurance provider customers with no long-term minimum financial commitments. A reduction in spend by our customers, a loss of customers, lower advertising yields, or our inability to establish and maintain new relationships with insurance providers could materially harm our business, results of operations and financial condition.\nA substantial majority of our revenue is derived from qualified consumer inquiries that are sold as referrals in various ways, such as clicks, data and calls, to insurance provider customers, which includes both carriers and agents. We generate revenue from carriers and agents that directly purchase referrals from us. We also generate revenue from carriers that make subsidy payments to us to offset their agents' costs in buying referrals. Our relationships with those customers are dependent on our ability to deliver quality referrals at attractive volumes and prices. If insurance providers are not able to acquire their preferred referrals in our marketplace, they may stop buying referrals from us or decrease the amount they are willing to spend for referrals.\nOur insurance provider customers can stop participating in our marketplace or reduce or terminate their marketing spend with us at any time without notice. Furthermore, our agreements with these customers do not require them to spend any minimum amount. As a result, we cannot guarantee that insurance providers will continue to work with us, or, if they do, what their advertising volume, pricing or total spend with us will be. For example, we experienced significantly decreased insurance provider marketing spend in 2023 and while spending patterns have improved, not all of our carrier customers have increased their spend in a proportional or significant manner. In addition, we may not be able to attract new insurance providers to our marketplace or increase the amount of revenue we earn from insurance providers over time. If any of our customers decide not to continue to place marketing or advertising on our owned and operated websites or on our third-party publishers' websites, we could experience a rapid decline in our revenue over a relatively short period of time with little to no notice. Any factors that limit our customers' marketing or advertising spend with us could have a material adverse effect on our business, financial condition, operating results and cash flows.\nOur carrier customers who make subsidy payments to us on behalf of their agents have no obligation to provide such subsidies and may reduce the amount of these subsidies or cease providing them at any time. For example, one of our largest carrier customers discontinued payment of subsidies to us during 2023. This carrier resumed payment of certain subsidies in 2024, but there is no assurance that the carrier will continue to make these or any subsidy payments. If our carrier customers reduce the amounts of, or cease providing, such subsidies on behalf of their agents, our agent customers may terminate or reduce the extent of their relationships with us. If agents decide to terminate or reduce their relationships with us as a result of an elimination in subsidies, or for any reason, our revenue would likely be reduced, which could have a material adverse effect on our business, financial condition, operating results and cash flows.\n9\nTable of Contents\nWe generated a significant portion of our revenue in recent periods from a small number of customers, and our results of operations could be adversely affected and stockholder value harmed if we lose business from these customers.\nRevenue from our two largest insurance carrier customers was 38% and 11%, respectively, of our revenue for the year ended December 31, 2025. Revenue from our largest insurance carrier customer was 39% of our revenue for the year ended December 31, 2024. We have no assurances that these carrier customers will continue to purchase from us at their historical levels or at all. We in fact experienced significant decreased levels of purchasing from our largest customers in 2023, including a decrease in subsidies by one of our carrier customers. If our largest customers reduce their level of purchases from us or discontinue their relationships with us, the loss could have a material adverse effect on our results of operations in both the short and long term.\nWe depend on third-party media sources, such as third-party publishers, for a significant portion of our visitors. Any decline in the supply of media available through these third-party publishers for any reason, or increase in their prices could cause our revenue to decline or our cost to attract visitors to increase and our business and financial results may be harmed.\nOur success depends on our ability to attract visitors to our websites or marketplace and solicit inquiries for insurance products and services that we monetize as referrals to our insurance provider customers. A significant portion of our revenue is attributable to visitor traffic originating from third-party publishers. In many instances, third-party publishers can change the media inventory they make available to us, at any time in ways that could impact our results of operations. In addition, third-party publishers may place significant restrictions on our offerings. These restrictions may prohibit advertisements from specific customers or specific industries or restrict the use of certain creative content or formats.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/1640428/000119312526066957/ever-20251231.htm",
+      "asOf": "2026-02-24",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-K",
+    "pressRelease": {
+      "text": "EX-99.1\n2\never-ex99_1.htm\nEX-99.1\nEX-99.1\nExhibit 99.1\nEverQuote Announces Second Quarter 2026 Financial Results\n&#x2022; Grows revenue 25% year-over-year to $195.1 million\n&#x2022; Delivers net income of $19.2 million\n&#x2022; Reports record Adjusted EBITDA of $30.1 million, increasing 37% year-over-year\n&#x2022; Q3 outlook indicates healthy demand as carriers continue to target growth across digital channels\nCAMBRIDGE, Mass., August 3, 2026 -- EverQuote, Inc. (Nasdaq: EVER), a leading provider of growth solutions for property and casualty, or P&C, insurance providers, today announced financial results for the second quarter ended June 30, 2026.\n&#x201c;Our second quarter results mark another quarter of strong execution as we build on our commitment to helping P&C insurance providers maximize customer acquisition across digital channels to grow market share,&#x201d; said Jayme Mendal, CEO of EverQuote. &#x201c;We continue to innovate and execute to establish EverQuote as the trusted partner for P&C providers. Looking to the back half of the year, we will build on our leadership position and expand our market opportunities by introducing new solutions that harness the power of data, intelligence, and AI to deliver better outcomes at scale for both insurers and the consumers they are trying to reach.&#x201d;\nSecond Quarter 2026 Highlights:\n(Unless otherwise noted, all comparisons are relative to the second quarter of 2025).\n&#x2022; Total revenue grew 25% to $195.1 million.\n&#x2022; Revenue from the Company&#x2019;s automotive insurance vertical was $172.1 million and revenue from the home and renters insurance vertical was $23.0 million, marking growth of 23% and 35%, respectively.\n&#x2022; Variable Marketing Dollars increased to $56.9 million, compared to $45.5 million.\n&#x2022; GAAP net income increased to $19.2 million, compared to $14.7 million.\n&#x2022; Adjusted EBITDA grew 37% to $30.1 million, compared to $22.0 million.\n&#x2022; Operating cash flow was $24.3 million, compared to $25.3 million.\n&#x2022; The Company ended the second quarter of 2026 with $192.3 million in cash and cash equivalents and no outstanding debt.\n&#x2022; During the quarter, the Company repurchased 578 thousand shares of its common stock for approximately $9.1 million.\n&#x201c;Our positive results demonstrate our strong market position, a healthy demand environment and the depth and breadth of our relationships with carriers and agents seeking to grow their business,&#x201d; said Joseph Sanborn, CFO and Chief Administrative Officer of EverQuote. &#x201c;Ongoing momentum across the business reinforces our confidence in achieving our previously stated path to $1 billion in revenue and allows us to continue to invest in AI innovation and new product development to propel our growth long-term.&#x201d;\nThird Quarter 2026 Outlook:\n&#x2022; Revenue of $198.0 &#x2013; $208.0 million.\n&#x2022; Variable Marketing Dollars of $56.0 &#x2013; $59.0 million.\n&#x2022; Adjusted EBITDA of $28.0 &#x2013; $31.0 million.\nAdjusted EBITDA is a non-GAAP financial measure. Please see &#x201c;Non-GAAP Financial Measures&#x201d; below for more\ninformation. With respect to the Company&#x2019;s expectations under &#x201c;Third Quarter 2026 Outlook&#x201d; above, the Company has not reconciled Adjusted EBITDA to the most directly comparable GAAP measure, net income (loss), in this press release because the Company does not provide guidance for stock-based compensation expense, depreciation and amortization expense, legal settlement expense, interest income, and income taxes on a consistent basis as the Company is unable to quantify these amounts without unreasonable efforts, which would be required to include a reconciliation of\nAdjusted EBITDA to GAAP net income (loss). In addition, the Company believes such a reconciliation would imply a degree of precision that could be confusing or misleading to investors.\nConference Call and Webcast Information\nEverQuote will host a conference call and live webcast to discuss its second quarter 2026 financial results and other matters at 4:30 p.m. Eastern Time today, August 3, 2026 and supporting slides will be available at https://investors.everquote.com . To access the conference call, dial Toll Free: +1 (833) 461-5787 for the US, or +1 (585) 542-9983 for international callers, and provide conference ID 679163094. The live webcast and replay will be available on the Investors section of the Company&#x2019;s website at https://investors.everquote.com .\nSafe Harbor Statement\nThis press release contains forward-looking statements, within the meaning of Section 27A of the Securities Act of 1933, as amended, and Section 21E of the Securities Exchange Act of 1934, as amended. All statements other than statements of historical fact contained in this press release, including statements regarding our future results of operations, financial position, liquidity and capital resources; our business strategy and plans, including our development, deployment and monetization of new and enhanced products and services; expectations regarding the timing of introducing new products and services; trends in consumer traffic and demand for our products and services; our relationships with, and spending by, carriers and agents, including future carrier demand and growth; our use of and expected further investments in artificial intelligence (AI) and the anticipated benefits thereof; objectives of management for future operations; and our capital allocation priorities, are forward-looking statements. These statements involve known and unknown risks, uncertainties, and other important factors that may cause our actual results, performance or achievements to be materially different from any future results, performance, or achievements expressed or implied by the forward-looking statements. In some cases, you can identify forward-looking statements by terms such as &#x201c;aim,&#x201d; &#x201c;may,&#x201d; &#x201c;should,&#x201d; &#x201c;expects,&#x201d; &#x201c;might,&#x201d; &#x201c;plans,&#x201d; &#x201c;anticipates,&#x201d; &#x201c;could,&#x201d; &#x201c;intends,&#x201d; &#x201c;goals,&#x201d; &#x201c;target,&#x201d; &#x201c;projects,&#x201d; &#x201c;contemplates,&#x201d; &#x201c;believes,&#x201d; &#x201c;estimates,&#x201d; &#x201c;predicts,&#x201d; &#x201c;potential,&#x201d; &#x201c;seek,&#x201d; &#x201c;will,&#x201d; &#x201c;would&#x201d; or &#x201c;continues,&#x201d; or the negative of these terms or other similar expressions. The forward-looking statements in this press release are only predictions. We have based these forward-looking statements largely on our current expectations and projections about future events and financial trends that we believe may affect our business, financial condition, liquidity and results of operations. Although we believe that the expectations reflected in the forward-looking statements are reasonable, we cannot guarantee that the future results, levels of activity, performance or events and circumstances reflected in the forward-looking statements will be achieved or occur. These forward-looking statements speak only as of the date of this press release and, except as required by applicable law, we undertake no obligation to publicly update or revise any forward-looking statements, whether as a result of any new information, future events or otherwise. Because forward-looking statements are inherently subject to risks and uncertainties, some of which cannot be predicted or quantified, you should not rely on these forward-looking statements as predictions of future events. The events and circumstances reflected in our forward-looking statements may not be achieved or occur and actual results could differ materially from those projected in the forward-looking statements. Factors that could cause actual results to differ include, without limitation, the following: our dependence on revenue from the property and casualty, or P&C, insurance industries, and specifically automotive insurance, and exposure to risks related to those industries; our dependence on our relationships with insurance providers with no long-term minimum financial commitments and furthermore, our reliance on a small number of insurance providers for a significant portion of our revenue; adverse conditions in the insurance markets, as well as the general economy; our dependence on third-party media sources for a significant portion of visitors to our websites and marketplace; our ability to attract consumers to our websites and marketplace; our ability to market to consumers or collect, share and use data derived from consumer activities; risks related to cybersecurity incidents or other network disruptions; risks related to achieving the anticipated benefits associated with our further investment in and increased use of AI; our ability to develop new and enhanced products and services and to successfully monetize them on a timely basis; the impact of competition in our industry and innovation by our competitors; our ability to stay abreast of and comply with new or modified laws and regulations that currently apply or become applicable to our\nbusiness, including with respect to the insurance industry, telemarketing restrictions and data privacy requirements; and our ability to protect our intellectual property rights and maintain and build our brand. A further list and description of risks, uncertainties and assumptions that could cause or contribute to differences in our future results include the cautionary statements described in Part I, Item 1A. Risk Factors in our Annual Report on Form 10-K for the year ended December 31, 2025 and in our subsequent periodic filings with the Securities and Exchange Commission. We qualify all of our forward-looking statements by these cautionary statements.\nAbout EverQuote\nEverQuote (Nasdaq: EVER) is a leading AI-powered growth solutions partner for regulated property and casualty insurance entities, enabling the largest insurance carriers and thousands of agents to maximize customer acquisition across digital channels. Fueled by our proprietary data assets and our AI traffic engine, EverQuote is transforming the way providers attract and engage consumers to grow market share. To learn more visit investors.everquote.com .\nInvestor Relations Contact\nSara Buda\nEverQuote\nsara.buda@everquote.com\nEVERQUOTE, INC.\nSTATEMENTS OF OPERATIONS\nThree Months Ended June 30,\nSix Months Ended June 30,\n2026\n2025\n2026\n2025\n(in thousands except per share)\nRevenue\n$\n195,086\n$\n156,629\n$\n385,938\n$\n323,261\nCost and operating expenses(1):\nCost of revenue\n4,359\n4,842\n8,624\n10,222\nSales and marketing\n147,613\n121,055\n293,025\n250,485\nResearch and development\n9,429\n7,772\n17,977\n15,257\nGeneral and administrative\n10,200\n8,460\n19,411\n16,900\nLegal settlement\n&#x2014;\n332\n&#x2014;\n8,232\nTotal cost and operating expenses\n171,601\n142,461\n339,037\n301,096\nIncome from operations\n23,485\n14,168\n46,901\n22,165\nOther income (expense):\nInterest income\n1,050\n918\n2,011\n1,626\nOther income (expense), net\n(25\n)\n(22\n)\n(38\n)\n(53\n)\nTotal other income, net\n1,025\n896\n1,973\n1,573\nIncome before income taxes\n24,510\n15,064\n48,874\n23,738\nIncome tax expense\n(5,324\n)\n(363\n)\n(11,015\n)\n(1,047\n)\nNet income\n$\n19,186\n$\n14,701\n$\n37,859\n$\n22,691\nNet income per share:\nBasic\n$\n0.55\n$\n0.40\n$\n1.06\n$\n0.63\nDiluted\n$\n0.53\n$\n0.39\n$\n1.04\n$\n0.60\nWeighted average common shares outstanding, basic and diluted:\nBasic\n35,178\n36,327\n35,560\n36,104\nDiluted\n36,159\n38,014\n36,548\n37,841\n(1) Amounts include stock-based compensation expense, as follows:\nThree Months Ended June 30,\nSix Months Ended June 30,\n2026\n2025\n2026\n2025\n(in thousands)\nCost of revenue\n$\n33\n$\n39\n$\n63\n$\n48\nSales and marketing\n1,064\n2,006\n2,344\n3,571\nResearch and development\n1,711\n1,558\n3,145\n2,928\nGeneral and administrative\n2,864\n2,957\n5,261\n5,433\n$\n5,672\n$\n6,560\n$\n10,813\n$\n11,980\nEVERQUOTE, INC.\nBALANCE SHEET DATA\nJune 30,\nDecember 31,\n2026\n2025\n(in thousands)\nCash and cash equivalents\n$\n192,318\n$\n171,379\nWorking capital\n194,300\n169,067\nTotal assets\n341,006\n326,913\nTotal liabilities\n84,228\n88,873\nTotal stockholders' equity\n256,778\n238,040\nEVERQUOTE, INC.\nSTATEMENTS OF CASH FLOWS\nThree Months Ended June 30,\nSix Months Ended June 30,\n2026\n2025\n2026\n2025\n(in thousands)\nCash flows from operating activities:\nNet income\n$\n19,186\n$\n14,701\n$\n37,859\n$\n22,691\nAdjustments to reconcile net income to net cash\nprovided by operating activities:\nDepreciation and amortization expense\n971\n918\n1,756\n2,139\nStock-based compensation expense\n5,672\n6,560\n10,813\n11,980\nDeferred taxes\n3,934\n&#x2014;\n8,018\n&#x2014;\nUnrealized foreign currency transaction (gains) losses\n(3\n)\n75\n(37\n)\n110\nLitigation accrual settled with sale of assets\n&#x2014;\n(59\n)\n&#x2014;\n7,841\nChanges in operating assets and liabilities:\nAccounts receivable\n(4,241\n)\n6,843\n(875\n)\n6,386\nPrepaid expenses and other current assets\n(2,556\n)\n(1,491\n)\n410\n(995\n)\nCommissions receivable, current and non-current\n&#x2014;\n859\n&#x2014;\n1,873\nOperating lease right-of-use assets\n306\n281\n604\n548\nAccounts payable\n2,018\n1,747\n(6,580\n)\n(1,018\n)\nAccrued expenses and other current liabilities\n(702\n)\n(4,406\n)\n2,409\n(2,288\n)\nDeferred revenue\n52\n(454\n)\n163\n(119\n)\nOperating lease liabilities\n(313\n)\n(277\n)\n(618\n)\n(545\n)\nNet cash provided by operating activities\n24,324\n25,297\n53,922\n48,603\nCash flows from investing activities:\nAcquisition of property and equipment, including costs\ncapitalized for development of internal-use software\n(1,567\n)\n(1,461\n)\n(3,102\n)\n(2,594\n)\nNet cash used in investing activities\n(1,567\n)\n(1,461\n)\n(3,102\n)\n(2,594\n)\nCash flows from financing activities:\nProceeds from exercise of stock options\n922\n373\n985\n2,335\nRepurchase of common stock\n(9,149\n)\n&#x2014;\n(29,000\n)\n&#x2014;\nTax withholding payments related to net share settlement\n(720\n)\n(986\n)\n(1,867\n)\n(2,279\n)\nNet cash provided by (used in) financing activities\n(8,947\n)\n(613\n)\n(29,882\n)\n56\nEffect of exchange rate changes on cash, cash equivalents\nand restricted cash\n16\n(3\n)\n1\n7\nNet increase in cash, cash equivalents and\nrestricted cash\n13,826\n23,220\n20,939\n46,072\nCash, cash equivalents and restricted cash at beginning\nof period\n178,492\n124,968\n171,379\n102,116\nCash, cash equivalents and restricted cash at end\nof period\n$\n192,318\n$\n148,188\n$\n192,318\n$\n148,188\nEVERQUOTE, INC.\nFINANCIAL AND OPERATING METRICS\nRevenue by vertical:\nThree Months Ended June 30,\nChange\n2026\n2025\n%\n(in thousands)\nAutomotive\n$\n172,051\n$\n139,584\n23.3\n%\nHome and renters\n23,035\n17,034\n35.2\n%\nOther\n&#x2014;\n11\n-100.0\n%\nTotal revenue\n$\n195,086\n$\n156,629\n24.6\n%\nSix Months Ended June 30,\nChange\n2026\n2025\n%\n(in thousands)\nAutomotive\n$\n344,437\n$\n292,299\n17.8\n%\nHome and renters\n41,501\n30,938\n34.1\n%\nOther\n&#x2014;\n24\n-100.0\n%\nTotal revenue\n$\n385,938\n$\n323,261\n19.4\n%\nOther financial and non-financial metrics:\nThree Months Ended June 30,\nChange\n2026\n2025\n%\n(in thousands)\nIncome from operations\n$\n23,485\n$\n14,168\n65.8\n%\nNet income\n$\n19,186\n$\n14,701\n30.5\n%\nVariable marketing dollars\n$\n56,897\n$\n45,520\n25.0\n%\nAdjusted EBITDA(1)\n$\n30,103\n$\n21,956\n37.1\n%\nSix Months Ended June 30,\nChange\n2026\n2025\n%\n(in thousands)\nIncome from operations\n$\n46,901\n$\n22,165\n111.6\n%\nNet income\n$\n37,859\n$\n22,691\n66.8\n%\nVariable marketing dollars\n$\n112,795\n$\n92,380\n22.1\n%\nAdjusted EBITDA(1)\n$\n59,432\n$\n44,463\n33.7\n%\n(1) Adjusted EBITDA is a non-GAAP measure. Please see &#x201c;Non-GAAP Financial Measures&#x201d; below for more information.\nNon-GAAP Financial Measures\nTo supplement the Company&#x2019;s financial statements presented in accordance with GAAP and to provide investors with additional information regarding EverQuote&#x2019;s financial results, the Company has presented Adjusted EBITDA as a non-GAAP financial measure. Adjusted EBITDA is not based on any standardized methodology prescribed by GAAP and is not necessarily comparable to similarly titled measures presented by other companies.",
+      "source": "edgar:8-K ex-99.1",
+      "url": "https://www.sec.gov/Archives/edgar/data/1640428/000119312526330540/ever-ex99_1.htm",
+      "asOf": "2026-08-03",
+      "truncated": true
+    },
+    "proxyStatement": {
+      "text": "Board and director independence:\nDirector Independence\nUnder the rules of the Nasdaq Stock Market, or Nasdaq, independent directors must comprise a majority of a listed company's board of directors. In addition, Nasdaq rules require that, subject to specified exceptions, each member of a listed company's audit and compensation committees be independent and that director nominees be selected or recommended for the board's selection by independent directors constituting a majority of the independent directors or by a nominations committee comprised solely of independent directors. Under Nasdaq rules, a director will only qualify as \"independent\" if, in the opinion of the company's board of directors, that person does not have a relationship that would interfere with the exercise of independent judgment in carrying out the responsibilities of a director and that such person is \"independent\" as defined under Nasdaq and Securities and Exchange Commission, or SEC, rules.\nAudit committee members must also satisfy the independence criteria set forth in Rule 10A-3 under the Securities Exchange Act of 1934, as amended (the \"Exchange Act\"). In order to be considered independent for purposes of Rule 10A-3, a member of an audit committee of a listed company may not, other than in his or her capacity as a member of the audit committee, the board of directors or any other board committee: (1) accept, directly or indirectly, any consulting, advisory or other compensatory fee from the listed company or any of its subsidiaries or (2) be an affiliated person of the listed company or any of its subsidiaries.\n9\nTable of Contents\n2023-10-02\nWe are a \"controlled company\" as that term is set forth in Nasdaq rules. Under Nasdaq rules, as a \"controlled company,\" we are exempt from certain corporate governance requirements, including: (1) the requirement that a majority of our board of directors consist of independent directors, (2) the requirement that director nominees be selected or recommended for the board's selection by independent directors constituting a majority of the independent directors or by a nominations committee comprised solely of independent directors, and (3) the requirement that we have a compensation committee composed entirely of independent directors with a written charter specifying, among other things, the scope of the committee's responsibilities. We currently avail ourselves of certain of these exemptions and, for so long as we are a \"controlled company,\" we will maintain the option to utilize from time to time some or all of these exemptions. In accordance with these exemptions, we do not have a nominations committee, and director nominees are not selected or recommended for the board's selection by independent directors constituting a majority of the independent directors. Even as a \"controlled company,\" we must comply with the rules applicable to audit committees set forth in the Nasdaq rules.\n\nCompensation discussion and analysis:\nCompensation Discussion and Analysis\nThis Compensation Discussion and Analysis discusses our compensation philosophy and explains how our executive compensation program is structured to advance our goal of aligning our executives' compensation with the long-term interests of EverQuote stockholders. We also explain how the Board's Compensation Committee determined compensation for our named executive officers (our \"NEOs\") and the Compensation Committee's rationale for specific pay decisions. Our NEOs for 2025 were:\nJayme Mendal\nChief Executive\nOfficer and President\nAge: 40\nJoseph Sanborn\nChief Financial Officer, Chief\nAdministrative Officer,\nTreasurer and Secretary\nAge: 56\nDavid Brainard\nChief Technology\nOfficer\nAge:54\nJon Ayotte\nChief Accounting\nOfficer\nAge: 42\nIn addition, Julia Brncic (age 52), our Former General Counsel and Secretary, served as an executive officer until her resignation on September 12, 2025, and is therefore also an NEO for 2025.\nExecutive Summary\nBusiness Highlights\n2025 was a record year for EverQuote across all three key operating metrics. We continue to scale our marketplace, further integrate AI into our operations, and accelerate our strategy a growth partner for property and casualty insurance providers. Our results-driven marketplace, powered by our proprietary data and technology platform, is improving the way insurance providers attract and connect with consumers shopping for insurance.\n25\nTable of Contents\nRecord Revenue Growth\nIn 2025, EverQuote generated record revenue of $692.5 million, representing 38% year-over-year growth. This performance was driven by deepening provider engagement and continued expansion of our marketplace.\nGrowth in Variable Marketing Dollars\nVariable Marketing Dollars, a key indicator of marketplace efficiency, reached a record $191.9 million, representing 24% growth compared to the prior year. This increase reflects the continued expansion of our platform, improved monetization, new traffic channels and strong participation from our traffic partners.\nSignificant Profitability Expansion\n2025 Adjusted EBITDA was also a record of $94.6 million, representing 62% growth year-over-year, driven by strong operating leverage of our business and disciplined expense management. Adjusted EBITDA margin increased by 200 basis points year-over-year to 13.7%. The growth in Adjusted EBITDA and Adjusted EBITDA margin demonstrates our ability to translate strong revenue growth into meaningful profitability improvements while continuing to invest in the long-term growth of the business.\nStrategic Execution\nDuring 2025, management remained focused on executing our long-term strategy of strengthening relationships with our carrier partners, expanding our marketplace and investing in AI, technology and data capabilities to enhance the insurance provider experience and drive operating efficiencies. These efforts contributed to our record financial performance and positioned the Company for continued long-term growth.\nThe Compensation Committee believes that the Company's strong performance in 2025, including record levels of revenue, Variable Marketing Dollars, and Adjusted EBITDA, reflects the effective execution of our strategy by management and supports the performance-based outcomes of our executive compensation programs.\nCompensation Highlights\nOur executive compensation program aligns with our strategy and with stockholder interests in three significant respects.\nPay is aligned with performance . Direct compensation for the NEOs has three components: salary; an annual cash bonus opportunity tied to performance against prescribed financial goals; and equity, the value of which hinges on sustained stock price performance.\nMost compensation is variable and at risk . The vast majority of target total direct compensation for our NEOs depends on either company performance or stock price.\n26\nTable of Contents\nCompensation packages are competitive. We provide competitive base salaries and meaningful short- and long-term incentive opportunities to support our retention objectives and to tie compensation to achievement of EverQuote's financial and operational goals.\nCompensation Philosophy and Objectives\nThe objective of our compensation program is to enable us to hire, reward, and retain the world-class talent that we need to execute our strategy and successfully pursue our mission of helping people protect life's most important assets by simplifying the experience of shopping for insurance. To that end, our short- and long-term incentive compensation programs are tied to performance to ensure that only consistent and strong results will lead to higher compensation.\nAs EverQuote grows, the Compensation Committee will evaluate our compensation philosophy and objectives regularly to confirm that our program continues to appropriately encourage, motivate, and reward our NEOs.\n\nSecurity ownership:\nSECURITY OWNERSHIP OF CERTAIN BENEFICIAL OWNERS AND MANAGEMENT AND RELATED STOCKHOLDER MATTERS\nThe following table sets forth certain information known to us regarding the beneficial ownership of our capital stock as of April 7, 2026, for:\neach person, or group of affiliated persons, known by us to beneficially own more than 5% of our Class A common stock or Class B common stock;\neach of our named executive officers;\neach of our directors; and\nall of our executive officers and directors as a group.\nApplicable percentage ownership is based on 31,769,000 shares of Class A common stock and 3,604,278 shares of Class B common stock outstanding at April 7, 2026. The number of shares beneficially owned by each stockholder is determined under SEC rules and includes voting or investment power with respect to securities. Under these rules, beneficial ownership includes any shares as to which the individual or entity has sole or shared voting power or investment power. In computing the number of shares beneficially owned by an individual or entity and the percentage ownership of that person, shares of Class A common stock and Class B common stock subject to options, warrants or other rights held by such person that are currently exercisable or will become exercisable within 60 days after April 7, 2026 are considered outstanding, although these shares are not considered outstanding for purposes of computing the percentage ownership of any other person.\nUnless otherwise indicated, the address of all listed stockholders is c/o EverQuote, Inc., 141 Portland Street, Cambridge, MA 02139. Each of the stockholders listed has sole voting and investment power with respect to the shares beneficially owned by the stockholder unless noted otherwise, subject to community property laws where applicable.\nShares Beneficially Owned\n% of\nTotal\nVoting\nPower\nClass A\nClass B\nName\nNumber\n%\nNumber\n%\n5% Stockholders\nLink Ventures LLLP(1)\n3,157,501\n10.0\n3,556,462\n98.7\n57.1\nThe Vanguard Group(2)\n1,920,854\n6.0\n2.8\nBlackRock, Inc.(3)\n1,897,775\n6.0\n2.8\nNamed Executive Officers and Directors\nJayme Mendal(4)\n508,751\n1.6\n*\nJoseph Sanborn(5)\n193,234\n*\n*\nDavid Brainard(6)\n35,866\n*\n*\nJon Ayotte(7)\n31,795\n*\n*\nDavid Blundin(1)\n3,157,501\n10.0\n3,556,462\n98.7\n57.1\nSanju Bansal(8)\n462,563\n1.5\n*\nPaul Deninger(9)\n72,643\n*\n*\nGeorge Neble(10)\n52,161\n*\n*\nJohn Shields(11)\n25,219\n*\n*\nMira Wilczek(12)\n281,248\n*\n*\nAll current executive officers and directors as a group (10 persons)(13)\n4,820,981\n14.9\n3,556,462\n98.7\n59.6\n*\nLess than 1%.\n(1)\nConsists of (i) 84,781 shares of Class A common stock held directly by David Blundin, (ii) 95,451 shares of Class A common stock held by Recognition Capital, LLC; (iii) 3,556,462 shares of Class B common stock\n22\nTable of Contents\nand 2,598,154 shares of Class A common stock held by Link Ventures LLLP; and (iv) 379,115 shares of Class A common stock held by Cogo Fund 2020, LLC. David Blundin is the managing member of Link Management, LLC, which is the general partner of Link Ventures LLLP. David Blundin is also the manager and owner of Recognition Capital, LLC. David Blundin is the controlling stockholder of Cogo Labs, Inc., which is the sole manager of Cogo Fund 2020, LLC. As a result, David Blundin may be deemed to hold voting and dispositive power with respect to the shares held by Recognition Capital, LLC, Link Ventures LLLP, and Cogo Fund 2020, LLC. Each of the Link Ventures entities, Cogo Fund 2020, LLC, Recognition Capital LLC and the persons mentioned in this footnote disclaims beneficial ownership of the shares, except for those shares held of record by such entity and person, and except to the extent of their pecuniary interest therein. The address of the entities and persons mentioned in this footnote is One Kendall Square, Building 200 Suite B2106, Cambridge, Massachusetts 02139.\n(2)\nBased on a Schedule 13G/A filed with the SEC by The Vanguard Group on November 12, 2024.\n\nRelated-person transactions:\nRELATED PERSON TRANSACTIONS\nOther than compensation arrangements for our executive officers and directors which are described elsewhere in this proxy statement, below we describe transactions since January 1, 2025 to which we were or will be a participant and in which:\nthe amount involved exceeds the lesser of (i) $120,000 or (ii) 1% of the average of our total assets at year-end for the last two completed fiscal years; and\nany of our directors, executive officers or holders of more than 5% of our capital stock, or any member of the immediate family of, or person sharing the household with, the foregoing persons, had or will have a direct or indirect material interest.\nAgreements with Entities Affiliated with Link Ventures LLLP\nCogo Labs, Inc., a wholly owned subsidiary of Link Equity Partners, LLC, which is wholly owned by David Blundin, and various other affiliates and subsidiaries of Link Ventures LLLP, or Link Ventures, provide a range of marketing-related services to us, including email advertising, search engine marketing and market research data sharing services. We are also party to various data license and marketing services agreements with Cogo Labs, Inc., Affiliate Media Network, Inc., Reference Advisor, LLC, Cognius, LLC, Meta42 LLC, Nufit Media, Inc., Tenizen, Inc., and Minerva Analytics, Inc., each of which is a direct or indirect subsidiary of Link Ventures, whereby each such entity provides marketing services to us by delivering EverQuote-related advertisements through websites, social media platforms, emails and other marketing campaigns. We believe that the terms and conditions of each of these agreements are no less favorable to us than those that could be obtained in arms-length dealings. Pursuant to these agreements, we paid an aggregate of approximately $40.0 million in 2025 to Link Ventures and entities affiliated with Link Ventures.",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/1640428/000119312526173669/d60575ddef14a.htm",
+      "asOf": "2026-04-23",
+      "truncated": true
+    },
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
+      "source": "bigdata",
+      "capturedAt": "2026-10-03T03:14:56.624Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "derived: market_cap / price",
+      "source": "bigdata",
+      "capturedAt": "2026-10-03T03:14:56.624Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-10-03T03:14:56.624Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-10-03T03:14:56.624Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "bigdata_company_tearsheet.company_overview",
+      "source": "bigdata",
+      "capturedAt": "2026-10-03T03:14:56.624Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
+      "source": "bigdata",
+      "capturedAt": "2026-10-03T03:14:56.624Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
+      "source": "bigdata",
+      "capturedAt": "2026-10-03T03:14:56.624Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
+      "source": "bigdata",
+      "capturedAt": "2026-10-03T03:14:56.624Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
+      "source": "bigdata",
+      "capturedAt": "2026-10-03T03:14:56.624Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
+      "source": "bigdata",
+      "capturedAt": "2026-10-03T03:14:56.624Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "bigdata_company_tearsheet.analyst_data",
+      "source": "bigdata",
+      "capturedAt": "2026-10-03T03:14:56.624Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "bigdata_company_tearsheet.estimates",
+      "source": "bigdata",
+      "capturedAt": "2026-10-03T03:14:56.624Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-10-03T03:14:56.624Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-10-03T03:14:56.624Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-10-03T03:14:56.624Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-10-03T03:14:56.624Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-10-03T03:14:56.624Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-10-03T03:14:56.624Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-10-03T03:14:56.624Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-10-03T03:14:56.624Z"
+    },
+    {
+      "field": "ttm.evToEbitda",
+      "source": "yahoo",
+      "endpoint": "quoteSummary.defaultKeyStatistics.enterpriseToEbitda",
+      "capturedAt": "2026-10-03T03:15:10.325Z"
+    }
+  ],
+  "sbc": [
+    30020000,
+    28986000,
+    24096000,
+    20614000,
+    24299000
+  ]
+}
