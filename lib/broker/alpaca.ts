@@ -4,7 +4,7 @@
  * it against anything but the paper endpoint is an error — there is no live mode in this code.
  */
 import { z } from "zod";
-import type { BrokerAdapter, BrokerAccount, BrokerCalendarDay, BrokerClock, BrokerOrder, BrokerOrderStatus, BrokerPosition, SubmitOrderRequest } from "./adapter";
+import type { BrokerAdapter, BrokerAccount, BrokerCalendarDay, BrokerClock, BrokerOrder, BrokerOrderStatus, BrokerPosition, LatestSnapshot, SubmitOrderRequest } from "./adapter";
 import { PAPER_HOST } from "./guards";
 import { DEFAULT_TIMEOUTS, BrokerTimeoutError, OrderRejectedError, SubmitOutcomeUnknownError, fetchWithTimeout, withReadRetry } from "./http";
 
@@ -34,6 +34,26 @@ const Bars = z.object({ bars: z.record(z.string(), z.array(z.object({ t: z.strin
 const Asset = z.object({ symbol: z.string(), fractionable: z.boolean() });
 const LatestTrade = z.object({ trade: z.object({ p: numOrNullSoft.optional(), t: z.string().optional() }).optional() });
 const LatestQuote = z.object({ quote: z.object({ bp: numOrNullSoft.optional(), ap: numOrNullSoft.optional(), t: z.string().optional() }).optional() });
+/** /v2/stocks/snapshots: a map symbol → snapshot (null for a symbol with no data); only the latest trade and quote are read. */
+const Snapshots = z.record(z.string(), z.object({
+  latestTrade: z.object({ p: numOrNullSoft.optional(), t: z.string().optional() }).nullable().optional(),
+  latestQuote: z.object({ bp: numOrNullSoft.optional(), ap: numOrNullSoft.optional(), t: z.string().optional() }).nullable().optional(),
+}).nullable());
+/** Symbols per snapshots request (getLatestSnapshots). */
+const SNAPSHOT_BATCH = 200;
+
+/** A latest trade as the adapter reports it: positive price and a parseable timestamp, else null. */
+function tradeOf(t: { p?: number | null; t?: string } | null | undefined): LatestSnapshot["lastTrade"] {
+  const price = t?.p ?? null;
+  const tsMs = t?.t ? Date.parse(t.t) : NaN;
+  return price == null || !(price > 0) || !Number.isFinite(tsMs) ? null : { price, tsMs };
+}
+/** A latest quote: positive bid and ask and a parseable timestamp, else null. */
+function quoteOf(q: { bp?: number | null; ap?: number | null; t?: string } | null | undefined): LatestSnapshot["quote"] {
+  const bid = q?.bp ?? null, ask = q?.ap ?? null;
+  const tsMs = q?.t ? Date.parse(q.t) : NaN;
+  return bid == null || !(bid > 0) || ask == null || !(ask > 0) || !Number.isFinite(tsMs) ? null : { bid, ask, tsMs };
+}
 
 export class AlpacaPaperBroker implements BrokerAdapter {
   readonly kind = "alpaca-paper" as const;
@@ -111,18 +131,22 @@ export class AlpacaPaperBroker implements BrokerAdapter {
   }
   async getLatestTrade(symbol: string): Promise<{ price: number; tsMs: number } | null> {
     const body = await this.call(LatestTrade, `${this.data}/v2/stocks/${encodeURIComponent(symbol)}/trades/latest?feed=${this.feed}`);
-    const price = body.trade?.p ?? null;
-    const tsMs = body.trade?.t ? Date.parse(body.trade.t) : NaN;
-    if (price == null || !(price > 0) || !Number.isFinite(tsMs)) return null;
-    return { price, tsMs };
+    return tradeOf(body.trade);
   }
   async getLatestQuote(symbol: string): Promise<{ bid: number; ask: number; tsMs: number } | null> {
     const body = await this.call(LatestQuote, `${this.data}/v2/stocks/${encodeURIComponent(symbol)}/quotes/latest?feed=${this.feed}`);
-    const bid = body.quote?.bp ?? null;
-    const ask = body.quote?.ap ?? null;
-    const tsMs = body.quote?.t ? Date.parse(body.quote.t) : NaN;
-    if (bid == null || !(bid > 0) || ask == null || !(ask > 0) || !Number.isFinite(tsMs)) return null;
-    return { bid, ask, tsMs };
+    return quoteOf(body.quote);
+  }
+  /** One /v2/stocks/snapshots request per SNAPSHOT_BATCH symbols, read with the same rules as getLatestTrade/getLatestQuote. */
+  async getLatestSnapshots(symbols: string[]): Promise<Record<string, LatestSnapshot>> {
+    const out: Record<string, LatestSnapshot> = {};
+    const list = [...new Set(symbols)];
+    for (let i = 0; i < list.length; i += SNAPSHOT_BATCH) {
+      const chunk = list.slice(i, i + SNAPSHOT_BATCH);
+      const body = await this.call(Snapshots, `${this.data}/v2/stocks/snapshots?symbols=${chunk.map(encodeURIComponent).join(",")}&feed=${this.feed}`);
+      for (const s of chunk) { const snap = body[s]; out[s] = { lastTrade: tradeOf(snap?.latestTrade), quote: quoteOf(snap?.latestQuote) }; }
+    }
+    return out;
   }
   async isFractionable(symbols: string[]): Promise<Record<string, boolean>> {
     const out: Record<string, boolean> = {};

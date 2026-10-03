@@ -11,7 +11,7 @@
  * join on clientOrderId — keep working unchanged. Whole-share only (Schwab API has no fractional).
  */
 import { z } from "zod";
-import type { BrokerAdapter, BrokerAccount, BrokerCalendarDay, BrokerClock, BrokerOrder, BrokerOrderStatus, BrokerPosition, SubmitOrderRequest } from "./adapter";
+import type { BrokerAdapter, BrokerAccount, BrokerCalendarDay, BrokerClock, BrokerOrder, BrokerOrderStatus, BrokerPosition, LatestSnapshot, SubmitOrderRequest } from "./adapter";
 import { SCHWAB_HOST } from "./guards";
 import { nyseTradingDays } from "../trade/nyse-calendar";
 import { etMinutesOfDay, etWallToUtc, hhmmToMinutes, todayET } from "../trade/clock";
@@ -21,6 +21,8 @@ import { mapWithConcurrency } from "../concurrency";
 
 /** Max concurrent per-symbol price-history reads (well inside Schwab's ~120 req/min market-data limit). */
 const PRICE_HISTORY_CONCURRENCY = 4;
+/** Symbols per batched /quotes request (getLatestSnapshots) — well inside the URL and response limits. */
+const SNAPSHOT_BATCH = 200;
 
 export interface SchwabOptions {
   tokenStore: SchwabTokenStore; clientId: string; clientSecret: string; accountHash: string;
@@ -210,13 +212,28 @@ export class SchwabBroker implements BrokerAdapter {
     }
     return p;
   }
-  async getLatestTrade(symbol: string): Promise<{ price: number; tsMs: number } | null> {
-    const q = (await this.fetchQuote(symbol))[symbol]?.quote;
+  private tradeOf(q: z.infer<typeof Quote>["quote"]): LatestSnapshot["lastTrade"] {
     return q?.lastPrice != null ? { price: q.lastPrice, tsMs: q.tradeTime ?? this.now() } : null;
   }
-  async getLatestQuote(symbol: string): Promise<{ bid: number; ask: number; tsMs: number } | null> {
-    const q = (await this.fetchQuote(symbol))[symbol]?.quote;
+  private quoteOf(q: z.infer<typeof Quote>["quote"]): LatestSnapshot["quote"] {
     return q?.bidPrice != null && q?.askPrice != null ? { bid: q.bidPrice, ask: q.askPrice, tsMs: q.quoteTime ?? this.now() } : null;
+  }
+  async getLatestTrade(symbol: string): Promise<{ price: number; tsMs: number } | null> {
+    return this.tradeOf((await this.fetchQuote(symbol))[symbol]?.quote);
+  }
+  async getLatestQuote(symbol: string): Promise<{ bid: number; ask: number; tsMs: number } | null> {
+    return this.quoteOf((await this.fetchQuote(symbol))[symbol]?.quote);
+  }
+  /** /quotes takes a comma-separated symbol list: one request per SNAPSHOT_BATCH symbols instead of one per symbol. */
+  async getLatestSnapshots(symbols: string[]): Promise<Record<string, LatestSnapshot>> {
+    const out: Record<string, LatestSnapshot> = {};
+    const list = [...new Set(symbols)];
+    for (let i = 0; i < list.length; i += SNAPSHOT_BATCH) {
+      const chunk = list.slice(i, i + SNAPSHOT_BATCH);
+      const body = await this.get(QuotesResp, `${this.data}/quotes?symbols=${chunk.map(encodeURIComponent).join(",")}`);
+      for (const s of chunk) { const q = body[s]?.quote; out[s] = { lastTrade: this.tradeOf(q), quote: this.quoteOf(q) }; }
+    }
+    return out;
   }
   async isFractionable(symbols: string[]): Promise<Record<string, boolean>> {
     return Object.fromEntries(symbols.map((s) => [s, true])); // Schwab takes fractional quantities, but only on MARKET orders (see submitOrder)

@@ -13,6 +13,7 @@ vi.mock("./orders", async (importOriginal) => {
 import { planRun, liveMark } from "./pipeline";
 import { tradesToOrders } from "./orders";
 import { FakeBroker } from "../broker/fake";
+import type { LatestSnapshot } from "../broker/adapter";
 import { resolveTradeConfig } from "./config";
 import { fixtureReport } from "../portfolio/__fixtures__/reports";
 
@@ -204,5 +205,32 @@ describe("planRun — markMode settled is unchanged", () => {
     expect(reads).toEqual({ trade: 1, quote: 1 });
     expect(lastSizing().mkts.NVT.close).toBe(100);
     expect(out.sized.orders[0]).toMatchObject({ tier: 1, pRef: 104 });
+  });
+});
+
+describe("planRun live — a batching broker (getLatestSnapshots)", () => {
+  it("reads every decision ticker in ONE batch call, no per-ticker reads, and decides on it", async () => {
+    const { b, reads } = broker(["NVT", "QQQ"]);
+    const batches: string[][] = [];
+    Object.assign(b, { getLatestSnapshots: async (symbols: string[]): Promise<Record<string, LatestSnapshot>> => {
+      batches.push(symbols);
+      return Object.fromEntries(symbols.map((s) => [s, s === "NVT" ? { lastTrade: { price: 104, tsMs: NOW - 60_000 }, quote: null } : { lastTrade: null, quote: null }]));
+    } });
+    const out = await planRun({ adapter: b, reports: [report("NVT"), report("QQQ")], sics: {}, marketCapUsd: {}, fills: [], today: TODAY, cfg, runId: "r1", nowMs: NOW });
+    expect(batches).toEqual([["NVT", "QQQ"]]);
+    expect(out.record.markSources).toEqual({ NVT: "trade", QQQ: "close" });
+    expect(out.marks.NVT).toBe(104);
+    // Execution reuses the batch snapshot: no per-ticker trade/quote reads at all.
+    expect(reads).toEqual({ trade: 0, quote: 0 });
+  });
+  it("a failed batch decides every ticker on its settled close, records why, and never fans out per ticker", async () => {
+    const { b, reads } = broker(["NVT", "QQQ"]);
+    Object.assign(b, { getLatestSnapshots: async (): Promise<Record<string, LatestSnapshot>> => { throw new Error("429 Too Many Requests"); } });
+    const out = await planRun({ adapter: b, reports: [report("NVT"), report("QQQ")], sics: {}, marketCapUsd: {}, fills: [], today: TODAY, cfg, runId: "r1", nowMs: NOW });
+    expect(out.record.markSources).toEqual({ NVT: "close", QQQ: "close" });
+    expect(out.marks).toEqual({ NVT: 100, QQQ: 100 });
+    expect(out.record.notes.filter((n) => n.includes("429"))).toHaveLength(2);
+    // Only traded tickers are re-read at execution (to anchor their order), never the whole decision set.
+    expect(reads.trade).toBe(new Set(out.plan.trades.map((t) => t.ticker)).size);
   });
 });

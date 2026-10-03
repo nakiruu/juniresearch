@@ -105,6 +105,29 @@ describe("SchwabBroker reads", () => {
     await b.getLatestQuote("NEE"); // nothing cached past settlement: fresh read
     expect(quoteCalls()).toBe(2);
   });
+  it("getLatestSnapshots batches every symbol into ONE /quotes request, read with the same rules", async () => {
+    const calls: string[] = [];
+    const fetchImpl = (async (url: string) => {
+      calls.push(url);
+      return json({ NEE: { quote: { lastPrice: 75.5, bidPrice: 75.4, askPrice: 75.6, tradeTime: NOW, quoteTime: NOW } }, AMZN: { quote: { lastPrice: 180 } } });
+    }) as unknown as typeof fetch;
+    const snaps = await mk(fetchImpl).getLatestSnapshots(["NEE", "AMZN", "GONE", "NEE"]);
+    expect(calls).toHaveLength(1);
+    expect(new URL(calls[0]).searchParams.get("symbols")).toBe("NEE,AMZN,GONE");
+    expect(snaps).toEqual({
+      NEE: { lastTrade: { price: 75.5, tsMs: NOW }, quote: { bid: 75.4, ask: 75.6, tsMs: NOW } },
+      AMZN: { lastTrade: { price: 180, tsMs: NOW }, quote: null }, // no bid/ask; untimed trade stamped now(), as getLatestTrade
+      GONE: { lastTrade: null, quote: null },                       // a symbol the broker omitted
+    });
+  });
+  it("getLatestSnapshots splits more than 200 symbols across requests", async () => {
+    const calls: string[] = [];
+    const fetchImpl = (async (url: string) => { calls.push(url); return json({}); }) as unknown as typeof fetch;
+    const syms = Array.from({ length: 450 }, (_, i) => `S${i}`);
+    const snaps = await mk(fetchImpl).getLatestSnapshots(syms);
+    expect(calls.map((u) => new URL(u).searchParams.get("symbols")!.split(",").length)).toEqual([200, 200, 50]);
+    expect(Object.keys(snaps)).toHaveLength(450);
+  });
   it("isFractionable is true (fractional quantities are taken at MARKET)", async () => {
     expect(await mk(mockFetch({}).fetchImpl).isFractionable(["NEE", "AMZN"])).toEqual({ NEE: true, AMZN: true });
   });

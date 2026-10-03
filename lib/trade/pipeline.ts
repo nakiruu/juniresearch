@@ -100,12 +100,26 @@ export function liveMark(
 interface LiveCapture { lastTrade: Mkt["lastTrade"]; quote: Mkt["quote"]; at: number; error?: string }
 
 /**
- * One trade + one quote read per ticker, a few tickers at once (Schwab serves both from one /quotes
- * call), each stamped with the clock the moment ITS data lands. A failed read is not fatal: that ticker
- * decides on the settled close (recorded) and execution re-reads it if it trades — so live marks never
- * fail a run that settled marks would have completed.
+ * Every decision ticker's latest trade and quote, each stamped with the clock the moment ITS data lands.
+ * With a batching broker (getLatestSnapshots: Schwab /quotes, Alpaca /snapshots) that is one request per
+ * ~200 tickers; one read per ticker would put ~90 market-data requests on top of the settled-close reads and
+ * run into the broker's rate limit. Otherwise one trade + one quote read per ticker, a few tickers at once
+ * (Schwab serves both from one /quotes call). A failed read is not fatal: the ticker decides on the settled
+ * close (recorded) and execution re-reads it if it trades — so live marks never fail a run that settled marks
+ * would have completed. A failed BATCH marks every ticker failed rather than falling back to per-ticker
+ * reads, which would recreate the burst the batch exists to avoid.
  */
 async function captureLive(adapter: BrokerAdapter, tickers: string[], clock: () => number): Promise<Map<string, LiveCapture>> {
+  if (adapter.getLatestSnapshots) {
+    try {
+      const snaps = await adapter.getLatestSnapshots(tickers);
+      const at = clock();
+      return new Map(tickers.map((t) => [t, { lastTrade: snaps[t]?.lastTrade ?? null, quote: snaps[t]?.quote ?? null, at }]));
+    } catch (e) {
+      const at = clock(), error = e instanceof Error ? e.message : String(e);
+      return new Map(tickers.map((t) => [t, { lastTrade: null, quote: null, at, error }]));
+    }
+  }
   const caps = await mapWithConcurrency(tickers, MARKET_DATA_CONCURRENCY, async (ticker): Promise<LiveCapture> => {
     try {
       const [lastTrade, quote] = await allInOrder([adapter.getLatestTrade(ticker), adapter.getLatestQuote(ticker)]);

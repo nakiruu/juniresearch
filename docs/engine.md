@@ -691,6 +691,10 @@ the engine keeps exactly **one** decision a day and makes it at **15:10 ET on li
   the run: that name decides on the close and execution re-reads it. Every fallback is recorded
   (`markSources`, notes). The settled closes are always fetched first and stay execution's reference; the
   decision's own trade/quote snapshot is reused as the execution anchor (one read per ticker per run).
+  The snapshot is **batched** when the broker supports it (`getLatestSnapshots`: one Schwab `/quotes` or Alpaca
+  `/v2/stocks/snapshots` request per 200 tickers). Without batching, ~90 per-ticker reads on top of the settled
+  closes would run into the broker's market-data rate limit; a 429 is not retried. If the batch fails, every
+  name decides on its settled close (recorded). The run never falls back to per-ticker reads.
   Outside today's session — `trade:plan --date`, pre/post-market, a holiday — the run marks settled, exactly
   as before.
 - *Revert:* `cronTimesET: ["09:45"]` and `markMode: "settled"` in `lib/trade/config.ts`, then re-run

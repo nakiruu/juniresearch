@@ -18,6 +18,24 @@ const mk = (routes: Record<string, unknown>) => {
 };
 
 describe("AlpacaPaperBroker", () => {
+  it("getLatestSnapshots reads every symbol's latest trade and quote from ONE /v2/stocks/snapshots request", async () => {
+    const { b, calls } = mk({ "/v2/stocks/snapshots": {
+      NVT: { latestTrade: { p: 104.5, t: "2026-09-25T19:09:00Z" }, latestQuote: { bp: 104.4, ap: 104.6, t: "2026-09-25T19:09:30Z" } },
+      QQQ: { latestTrade: { p: 0, t: "2026-09-25T19:09:00Z" }, latestQuote: { bp: 101, ap: 102, t: "bad" } },
+      NONE: null,
+    } });
+    const snaps = await b.getLatestSnapshots(["NVT", "QQQ", "NONE", "MISSING"]);
+    expect(calls).toHaveLength(1);
+    const q = new URL(calls[0].url).searchParams;
+    expect(q.get("symbols")).toBe("NVT,QQQ,NONE,MISSING");
+    expect(q.get("feed")).toBe("iex");
+    expect(snaps).toEqual({
+      NVT: { lastTrade: { price: 104.5, tsMs: Date.parse("2026-09-25T19:09:00Z") }, quote: { bid: 104.4, ask: 104.6, tsMs: Date.parse("2026-09-25T19:09:30Z") } },
+      QQQ: { lastTrade: null, quote: null }, // zero price, unparseable time: the same rules as getLatestTrade/getLatestQuote
+      NONE: { lastTrade: null, quote: null },
+      MISSING: { lastTrade: null, quote: null },
+    });
+  });
   it("lists orders newest-first and forwards the after bound", async () => {
     const { b, calls } = mk({ "/v2/orders": [] });
     await b.getOrders("all", "2026-09-28T13:44:00.000Z");

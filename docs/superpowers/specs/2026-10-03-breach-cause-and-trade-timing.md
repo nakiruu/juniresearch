@@ -139,5 +139,6 @@ that losers rebound in panic states (Daniel & Moskowitz 2016, *JFE*) and that no
 - Behaviour is described in `docs/engine.md` §4.2, §5.1 and §7.
 
 **Watch in the first live runs.**
-- Rate-limit fallbacks in the run notes ("read failed (429…)"). A batch-quote adapter method would remove the risk.
+- Live reads are batched (`getLatestSnapshots`, one request per 200 tickers), so the rate-limit risk is gone
+  from the decision path. A failed batch shows in the notes as settled-close fallbacks.
 - The Schwab adapter stamps a quote that has no timestamp with now(), so such a quote counts as fresh.
