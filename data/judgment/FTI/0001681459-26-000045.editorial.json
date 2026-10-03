@@ -1,0 +1,207 @@
+{
+  "judgmentSha256": "e1f3cf8e78914b0332d07e3c42aa0250f7802c614af02a198baab19acd2bc578",
+  "reviewedAt": "2026-10-03T01:25:58Z",
+  "reviewer": "claude-opus-5-5",
+  "round": 1,
+  "verdict": "needs-fix-round",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.management.governance",
+      "quote": "The Board has no tenure limit",
+      "issue": "Misattributes the proxy. The proxy says the Board 'has not adopted a policy that deems a director to be non-independent after a certain tenure' and in the same sentence cites 'our retirement policy and natural turnover' as the mechanism that balances tenure. That is a statement about tenure-based independence, not an absence of any tenure limit; the proxy explicitly refers to a retirement policy.",
+      "fix": "Say what the proxy says: the Board has not adopted a tenure-based independence cut-off and relies on its retirement policy and natural turnover instead (proxy dated March 19, 2026).",
+      "status": "open"
+    },
+    {
+      "id": "F-2",
+      "severity": "Critical",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "That Subsea increase is larger than the consolidated increase, so the rest of the company's revenue declined year over year; the truncated 10-Q excerpt does not carry the Surface Technologies table that would show by how much.",
+      "issue": "Segment/period-mismatch trap. Subsea's $270.6 million segment increase is reported gross of intersegment eliminations and corporate items, so subtracting it from the consolidated $228.4 million increase does not establish that Surface Technologies revenue fell; the 10-Q never says that. The inference also contradicts sections.businessMoat.segments[0].body, which says Surface Technologies' 'recent trend is not visible in the excerpt'.",
+      "fix": "Drop the inference that the rest of the company declined. Say the 10-Q attributes the gain primarily to Subsea and that the excerpt does not carry the Surface Technologies result, and keep the two sections consistent.",
+      "status": "open"
+    },
+    {
+      "id": "F-3",
+      "severity": "Critical",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "Base carries 55% because the second quarter of 2026 showed backlog converting on plan and consensus does not require margin gains beyond what the company is already reporting.",
+      "issue": "Two unsupported premises carry the 55% weight. No plan, guidance or conversion schedule is on the surface, so 'on plan' has no referent. No consensus margin figure is on the surface (only consensus revenue and EPS), so the report cannot say what margin consensus requires.",
+      "fix": "Argue the Base weight from what is on the page: Q2 2026 revenue +9.0% with the 10-Q crediting backlog conversion, and FY26E/FY27E consensus EPS of $3.14 and $3.62. Remove 'on plan' and the margin claim, or frame them as the analyst's view without asserting a fact.",
+      "status": "open"
+    },
+    {
+      "id": "F-4",
+      "severity": "Critical",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "the vendor tables show five years of revenue growth, operating margin expansion and debt reduction",
+      "issue": "The income table covers FY21-FY25: five data points, four year-over-year changes (FY22 +4.6% through FY25 +9.4%). The series does not show five years of revenue growth or of margin expansion.",
+      "fix": "Say 'four consecutive years of revenue growth and margin expansion through FY25' or 'revenue and operating margin rose every year from FY21 to FY25'.",
+      "status": "open"
+    },
+    {
+      "id": "F-5",
+      "severity": "Critical",
+      "field": "sections.businessMoat.moatFactors[2].body",
+      "quote": "Service work on equipment the company installed tends to stay with the original supplier",
+      "issue": "A statement of industry fact that nothing on the surface supports; the 10-Q only says it foresees 'the expanding reach of Subsea Services, derived from an aging installed base that continues to grow'. The same pattern, less severely, in moatFactors[0].body: 'Integrated scope raises switching costs once a client standardizes on it.'",
+      "fix": "Frame both as the analyst's reasoning ('we expect', 'we think') rather than as established fact, and anchor the services factor to the 10-Q's own words about the aging installed base.",
+      "status": "open"
+    },
+    {
+      "id": "F-6",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "Below the operating line, net income of $362.1 million was up 35.0%, faster than pre-tax income at 27.1%. Two non-operating items helped: net interest expense fell to $3.6 million from $14.4 million, and the effective tax rate fell to 24.0% from 28.4%",
+      "issue": "Causal logic error. Net interest expense sits above income before income taxes, so its decline is already inside the 27.1% pre-tax growth; it cannot explain why net income grew faster than pre-tax income. Only the lower effective tax rate explains that gap. The analystCommentary repeats the same point ('helped by lower net interest expense and a lower effective tax rate').",
+      "fix": "Separate the two effects: lower net interest expense lifted pre-tax income relative to operating profit; the lower effective tax rate (24.0% vs 28.4%) explains net income growing faster than pre-tax. Make the point once, here, and drop it from analystCommentary.",
+      "status": "open"
+    },
+    {
+      "id": "F-7",
+      "severity": "Important",
+      "field": "sections.financials.cashflowCommentary",
+      "quote": "Shareholder returns are small relative to cash generation: the dividend yield is 0.29%, and the vendor's buyback line shows no data after FY21, which we read as missing rather than zero.",
+      "issue": "Self-contradicting conclusion: the report concludes shareholder returns are small while stating that buyback data are missing, and sections.management.capitalAllocation notes the share count fell from 401,559,289 (March 1, 2026) to ~392.16M, which is at least consistent with repurchases. The conclusion is not supported. The buyback-line caveat is also repeated in capitalAllocation ('The vendor's buyback line shows no data after FY21, so we cannot say how much stock was repurchased').",
+      "fix": "Limit the claim to the dividend (0.29% yield, FY25 dividends of $0.1B), say total shareholder returns cannot be sized because buyback data are missing, and make the buyback caveat once, in capitalAllocation.",
+      "status": "open"
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "sections.management.capitalAllocation",
+      "quote": "The vendor's share count of ~392.16M, derived from market cap, sits below the 401,559,289 shares the proxy reports outstanding on March 1, 2026; the prompt carries no data that explains the gap.",
+      "issue": "Rubric 8: the disagreement is flagged but the report does not say which figure it used (market cap and per-share figures rest on the vendor count). 'The prompt' also exposes the authoring process to the reader.",
+      "fix": "State which share count the report relies on and why, and replace 'the prompt carries no data' with 'the sources captured do not explain the gap'.",
+      "status": "open"
+    },
+    {
+      "id": "F-9",
+      "severity": "Important",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "No peer multiples were captured, so we cannot say whether these are rich or cheap against comparable contractors.",
+      "issue": "The section disclaims any rich/cheap judgment, then asserts one: 'The multiple already credits most of the expected earnings growth.' Bull also posits 'a premium multiple' with no comparison base, and executiveSummary.risks[2] calls the multiple 'already above its forward level', which is just what a trailing P/E above a forward P/E means for a company with growing EPS, not a sign of excess. The section reaches no usable view on what the multiple prices in.",
+      "fix": "Anchor the valuation view to what is on the page: e.g. the price vs consensus target ($75.95) and median ($80.00), or the trailing-to-forward step from 24.0x to ~19.0x against FY26E/FY27E EPS. Rewrite risks[2] as a real pointer (e.g. a de-rating if FY26E EPS of $3.14 is missed), and drop 'premium' from the Bull driver or say premium to what.",
+      "status": "open"
+    },
+    {
+      "id": "F-10",
+      "severity": "Important",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "and the trailing multiple rests on GAAP figures",
+      "issue": "Unsupported characterisation of the vendor's P/E (TTM) 24.0x. Nothing on the surface says the TTM EPS behind it is GAAP; the Facts block gives no TTM EPS at all.",
+      "fix": "Say the basis of both trailing and forward multiples is not stated, without labeling the trailing one GAAP.",
+      "status": "open"
+    },
+    {
+      "id": "F-11",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "with a $65 to $80 target range that brackets the Base.",
+      "issue": "Calls coherence: the band brackets the Base ($75.95), but nothing in the prose argues where $65 and $80 come from. $80 matches the Street median target without saying so; $65 has no anchor at all.",
+      "fix": "Give the band an anchor in one sentence in scenarioCommentary (e.g. the Base implied price plus or minus a stated range, or the median target as the top), and say it once.",
+      "status": "open"
+    },
+    {
+      "id": "F-12",
+      "severity": "Important",
+      "field": "analystCommentary",
+      "quote": "The stock already reflects much of that.",
+      "issue": "Cross-section repetition of the core valuation claim, in paraphrase, across five fields: meta.subtitle ('the shares already sit near the consensus path'), analystCommentary (quoted), executiveSummary.thesis.body ('Our probability-weighted value is close to today's price'), valuation.multiplesCommentary ('The multiple already credits most of the expected earnings growth') and finalRecommendation.body[0] ('the price already reflects most of the consensus earnings path'). The HOLD-with-$65-to-$80 statement also appears in analystCommentary, scenarioCommentary and finalRecommendation.",
+      "fix": "Argue the valuation claim once, in valuation (multiplesCommentary/scenarioCommentary). Elsewhere point to it in words; state the rating and band once in the prose (finalRecommendation) and point from analystCommentary.",
+      "status": "open"
+    },
+    {
+      "id": "F-13",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "Revenue rose every year from $6.4B in FY21 to $9.9B in FY25, and operating margin rose every year from 2.9% to 14.5%.",
+      "issue": "Restatement and repetition. The sentence restates the Facts income table, and the same story is already told in analystCommentary ('the vendor's operating margin rose in each year from FY21 to FY25') and the thesis. The Q2 revenue figure is likewise told twice ($2,763.1 million in analystCommentary and in incomeCommentary), and the deleveraging story appears in analystCommentary ('net debt turned negative in FY24'), thesis ('debt reduction'), balanceCommentary and capitalAllocation ('Capital went first to deleveraging'). The FY25 $9.9B revenue and EPS line in companyOverview restates the snapshot.",
+      "fix": "Keep the multi-year trend and the Q2 numbers in financials only and argue what they mean (e.g. what share of the margin step is mix vs volume); have analystCommentary and thesis point to the conclusion without retelling the series.",
+      "status": "open"
+    },
+    {
+      "id": "F-14",
+      "severity": "Important",
+      "field": "sections.businessMoat.segments[0].body",
+      "quote": "The company tearsheet and the 10-Q describe two operating segments, Subsea and Surface Technologies; we do not quote a revenue split between them.",
+      "issue": "Rubric 8: the vendor-vs-company segment disagreement is already stated in executiveSummary.companyOverview ('The tearsheet describes two segments, Subsea and Surface Technologies; the vendor data in this report treat the company as a single consolidated segment, so we do not quote a segment split'). Saying it twice is a repetition finding. The Subsea operating-profit story (19.6% vs 17.2% margin in incomeCommentary; 'up 27.9%' here) is also told in two sections.",
+      "fix": "State the segment disagreement once (in businessMoat, where segments are discussed) and remove it from companyOverview; keep the Subsea profit figures in one section and refer back in words.",
+      "status": "open"
+    },
+    {
+      "id": "F-15",
+      "severity": "Important",
+      "field": "sections.risks.systemic",
+      "quote": "a sustained decline can lead to cancellation, modification or re-scheduling of backlog orders",
+      "issue": "Paraphrase repetition across risk material: scenarioCommentary already argues the same 10-K point ('notes that declines can lead to cancellation or re-scheduling of backlog orders'); the Middle East re-rating argument appears in catalysts[3], scenarioCommentary (Bull) and systemic; the industry-consolidation counter-case appears in moatFactors[0].body ('could produce rivals with similar scope') and idiosyncratic[3] ('a consolidated rival with integrated scope could compete on price'); fixed-price losses appear in risks[1], the Bear driver, durability and idiosyncratic[0].",
+      "fix": "Argue each risk once, in the risks section; let scenarioCommentary and moatFactors refer back in words ('the demand risk set out under Risks').",
+      "status": "open"
+    },
+    {
+      "id": "F-16",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[2]",
+      "quote": "Watch for restructuring or impairment charges, which were $5.0 million in the second quarter of 2026.",
+      "issue": "The watch item does not measure the risk. The 10-Q attributes Q2 2026 restructuring, impairment and other expenses to Subsea impairment and restructuring, not to subcontractor, supplier or joint-venture failure, so the $5.0 million figure is attached to a risk it does not evidence.",
+      "fix": "Name a watch item that would show partner failure (e.g. project charges or margin reversals the 10-Q attributes to suppliers or partners), or drop the figure.",
+      "status": "open"
+    },
+    {
+      "id": "F-17",
+      "severity": "Important",
+      "field": "sections.management.governance",
+      "quote": "We see nothing in the excerpt that weakens outside holders' position.",
+      "issue": "Mostly restatement of the proxy text with a one-line conclusion and no counter-case. The section does not read what the facts mean: e.g. a director on the board of FMC Corporation, a counterparty to live separation and joint litigation defense agreements, and no tenure-based independence test with an average independent-director tenure of about seven years. Those are the readings that cut the other way.",
+      "fix": "Reach a view on the facts (e.g. whether the FMC Corporation link matters given the agreements are from 2001) and name the counter-reading using the proxy's own facts.",
+      "status": "open"
+    },
+    {
+      "id": "F-18",
+      "severity": "Important",
+      "field": "sections.management.insiderOwnership",
+      "quote": "The proxy lists four holders above 5%: The Vanguard Group at 9.94%, BlackRock, Inc. at 9.33%, T. Rowe Price Associates, Inc. at 9.04% and T. Rowe Price Investment Management, Inc. at 5.54%.",
+      "issue": "Dating: only the Vanguard 13G is dated (February 13, 2024); the BlackRock and T. Rowe Price filing dates are not on the surface, yet the stakes are presented as current. The proxy itself is from March 2026, before the June 30, 2026 quarter. The reading also misses that two of the four holders are T. Rowe Price entities, which together form the largest holder block. 'ownership is dispersed among index and active managers' characterises the holders with labels the surface does not give.",
+      "fix": "Say that the 13G stakes are as reported in the proxy dated March 19, 2026 and that the underlying filing dates for BlackRock and T. Rowe Price were not captured. Note in words that the two T. Rowe Price entities together exceed any single holder. Drop the index/active label.",
+      "status": "open"
+    },
+    {
+      "id": "F-19",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "The counter-case to our caution is that offshore spending keeps rising through the decade, as management argues in the 10-Q",
+      "issue": "Slight over-attribution: the 10-Q says offshore will 'receive an increasing share of capital investment' and that 'activity will remain strong through the end of the decade', not that spending keeps rising through the decade.",
+      "fix": "Quote management's phrasing: 'activity will remain strong through the end of the decade'.",
+      "status": "open"
+    },
+    {
+      "id": "F-20",
+      "severity": "Minor",
+      "field": "sections.management.leadership",
+      "quote": "Higher share-based compensation drove a $27.8 million rise in six-month SG&A",
+      "issue": "The 10-Q says the rise was 'primarily driven by higher share-based compensation expenses'; 'drove' drops the qualifier.",
+      "fix": "Write 'was primarily driven by higher share-based compensation', as the 10-Q does.",
+      "status": "open"
+    },
+    {
+      "id": "F-21",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.risks[0]",
+      "quote": "a risk factor in the 10-K filed 2026-02-19",
+      "issue": "ISO dates in prose. Also in sections.management.governance ('proxy statement dated 2026-03-19').",
+      "fix": "Write February 19, 2026 and March 19, 2026.",
+      "status": "open"
+    },
+    {
+      "id": "F-22",
+      "severity": "Minor",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "Subsea operating profit margin was 19.6% versus 17.2%.",
+      "issue": "The comparison period is not named; the reader has to infer the second quarter of 2025.",
+      "fix": "Write 'versus 17.2% in the second quarter of 2025'.",
+      "status": "open"
+    }
+  ]
+}
