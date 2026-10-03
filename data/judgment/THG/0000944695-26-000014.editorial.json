@@ -1,8 +1,8 @@
 {
-  "judgmentSha256": "6b2a1d6b49b7feaaccb27cebbf9eccf61af201681d3774e0f6df5ca8abeb6951",
-  "reviewedAt": "2026-10-03T01:27:50Z",
+  "judgmentSha256": "d5978aaf35887ab17bc52c305c448c437d3644d1dede4a113006ec84f7fb090c",
+  "reviewedAt": "2026-10-03T01:32:42Z",
   "reviewer": "claude-opus-5-5",
-  "round": 1,
+  "round": 2,
   "verdict": "needs-fix-round",
   "findings": [
     {
@@ -12,7 +12,7 @@
       "quote": "The gain came from a lighter catastrophe quarter, higher investment income and favorable prior-year reserve development.",
       "issue": "Causal claim contradicted by the surface. In Q2 2026 the prior-year development ratio was (1.3)% against (1.2)%, only 0.1 point apart, and the MD&A attributes the Q2 increase to lower catastrophe losses, higher net investment income and 'improvements in current accident year underwriting results, driven by Personal Lines'. For the six months, the current accident year combined ratio excluding catastrophes improved to 86.9% from 87.9%, against a catastrophe ratio of 6.0% vs 6.7% and a prior-year development ratio of (1.5)% vs (1.3)%. Catastrophe losses fell only $12.4 million while operating income before interest and taxes rose $105.8 million. The same premise appears in: meta.subtitle ('earnings rose on lighter catastrophes and reserve releases'); thesis.body bullet 2; financials.incomeCommentary ('The quarter's improvement was weather, reserve development and investment income (see Growth), not a better current-year book'); valuation.scenarioCommentary paragraph 3; finalRecommendation.body[0].",
       "fix": "Restate the drivers as the company does: Q2 2026 gain from lower catastrophes, higher net investment income and Personal Lines current-year improvement; for the six months, current accident year improvement (86.9% vs 87.9%) was the largest piece. Keep the bearish point that commercial current-year margins weakened in Q2 and that releases rose, but drop 'reserve development' as a driver of the Q2 gain and the claim that 2026's improvement rests on weather and releases rather than current-year results. Fix all six locations, and rebalance the HOLD argument that leans on this premise.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-2",
@@ -21,7 +21,7 @@
       "quote": "but each of those has shown up in the 2026 data, and they could arrive in the same bad year, so that weight is not a stretch",
       "issue": "Unsupported. Of the three Bear ingredients (weather, commercial loss trends, fading reserve releases), only the commercial loss trend appears in 2026 data. Catastrophe losses were lower ($190.7 million vs $203.1 million for the six months; catastrophe ratio 5.7% vs 7.0% in Q2) and favorable non-catastrophe development was larger ($46.5 million vs $38.2 million), with $61.7 million vs $18.0 million of favorable catastrophe development. The 25% Bear weight is argued on a premise the data contradicts.",
       "fix": "Argue the Bear weight on what the surface does show: the Q2 2026 rise in Core Commercial and Specialty current-year ratios and the reliance on releases that could stop, plus the FY22-FY23 EPS series as evidence of how fast a bad year arrives. Do not say heavier weather or fading releases have appeared in 2026.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-3",
@@ -30,7 +30,7 @@
       "quote": "so its premium growth is price, not units",
       "issue": "Contradicts the source and mismatches periods. The release says Personal Lines net premiums written rose 2.6% in Q2 2026 'primarily due to higher new business, and to a lesser extent, the impact of renewal price increases' (MD&A says the same for the six months). 'Policies in force ... essentially flat' is a sequential comparison with Q1 2026, which cannot establish what drove year-over-year premium growth. The opening 'Pricing is doing the work in Personal Lines' is unsupported for premium for the same reason. The same sequential-PIF inference is in businessMoat.moatFactors[1] ('so the account focus is not producing unit growth right now').",
       "fix": "Quote the company's attribution (new business first, renewal price second). If you keep the PIF point, date it as flat against Q1 2026 and present it as a watch item, not as proof that growth is price-only. Pricing can still be credited for the Personal Lines current accident year loss ratio improvement, which is where the release credits earned pricing.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-4",
@@ -39,7 +39,7 @@
       "quote": "The forward multiples sit above the trailing one because consensus EPS steps down from $20.39 for FY26E to $19.61 for FY27E.",
       "issue": "The stated mechanism does not explain the result. The FY26E-to-FY27E step-down explains only why the FY27E multiple (~11.2x) is above the NTM multiple (10.8x). The NTM multiple sits above the 10.5x trailing multiple because NTM/FY26E consensus EPS is below trailing EPS, which the sentence does not say. That is the more material point for the HOLD case: the Street expects FY26E EPS below the trailing figure as well as a further dip in FY27E.",
       "fix": "Separate the two: forward multiples exceed the trailing one because consensus forward EPS is below trailing earnings, and FY27E is higher again because consensus EPS falls from $20.39 to $19.61. Do not compute a trailing EPS figure; make the claim in words.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-5",
@@ -48,7 +48,7 @@
       "quote": "ROE-based pay paid at maximum in a period of volatile catastrophe and reserve outcomes",
       "issue": "Unsupported characterization. The surface says nothing about catastrophe or reserve outcomes in 2023-2025; the report itself says in businessMoat.durability that 'the data does not say what caused that year's trough' and in incomeCommentary that neither source explains the FY22-FY23 trough. Saying the 2023-2025 period had volatile catastrophe and reserve outcomes contradicts the report's own caveat.",
       "fix": "Say that the ROE PBRSUs paid at the 150.0% maximum on a 15.4% three-year average adjusted operating ROE, and frame the watch item (whether targets adjust for reserve releases) without asserting what drove 2023-2025 results.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-6",
@@ -57,7 +57,7 @@
       "quote": "Specialty's increased 2.7 points, to 88.6%, which the company calls consistent with its long-term expectations",
       "issue": "Characterizations attached to the wrong ratio. The release calls Specialty's current accident year loss and LAE ratio excluding catastrophes (51.6%, up 2.6 points) 'consistent with the company's long-term expectations', not the 88.6% combined ratio. The same pattern appears in the same paragraph for Personal Lines: the release attributes the 4.2-point drop in the current accident year loss and LAE ratio (to 55.6%) to earned pricing, benign frequency and lower homeowners large losses, but the report attaches those causes to the 2.9-point combined-ratio decrease, which also absorbed a 1.3-point expense-ratio rise. Core Commercial's 'increased loss ratio selections' likewise explains the 58.7% loss ratio (+2.2 points), not the 1.8-point combined-ratio move.",
       "fix": "Attach each company explanation to the ratio it explains: quote the loss and LAE ratio where the company's words are about it, or use the combined ratio without the company's characterization.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-7",
@@ -66,7 +66,7 @@
       "quote": "the proxy reports a three-year average adjusted operating ROE of 15.4% for 2023 to 2025, so the current return level is above the recent multi-year average",
       "issue": "Basis mismatch. The 15.4% is the proxy's compensation-plan 'Adjusted Operating ROE'; the 20.0% it is compared with is the release's operating return on equity, a different, separately defined non-GAAP measure. The comparison is not like for like. businessMoat.durability repeats it with an extra derivation ('sits well below the 2026 run-rate'), treating six months as a run-rate. The proxy also reports FY25 net return on equity of 20.6%, which the report never uses and which cuts against the 'above average' reading.",
       "fix": "Flag that the two measures are defined differently, or compare like with like (for example, FY25 net ROE of 20.6% from the proxy against six-month 2026 net ROE of 21.0%). Make the point once, in Valuation, and point back to it from Moat.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-8",
@@ -75,7 +75,7 @@
       "quote": "Core Commercial's current accident year loss and LAE ratio excluding catastrophes was 58.7% in the second quarter of 2026, 2.2 points higher than a year earlier",
       "issue": "Missing counter-case on the report's main bearish driver. The same release sentence goes on to say the ratio was '0.4 points improved from the full year of 2025', and that 'the loss ratio in the prior-year quarter benefited from lower-than-usual property losses'. For the six months, Core Commercial's current accident year combined ratio excluding catastrophes improved to 91.3% from 92.3%, and segment operating income rose to $152.3 million from $110.7 million. None of this appears anywhere in the report, so 'commercial current-year margins weakening' reads as a trend when the surface shows a one-quarter comparison against an easy base. The scenarioCommentary upgrade trigger ('stop rising for two quarters') ignores that the six-month ratio already fell year over year.",
       "fix": "Add the counter-case in this risk item or in incomeCommentary, using the 0.4-point improvement against FY25, the easy prior-year comparison and the six-month 91.3% vs 92.3%. Reframe the upgrade trigger accordingly.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-9",
@@ -84,7 +84,7 @@
       "quote": "Watch for the formal succession announcement and any change in capital or underwriting targets that comes with it.",
       "issue": "Dating and inference. The release quotes Roche saying 'As we announced earlier this month, I plan to retire', so the announcement was made earlier in July 2026, before the release, and is not in the pack. Telling the reader to watch for it presents a past event as pending. The section also treats Lavey as the named successor ('An internal successor described as a strategy architect'; 'the formal terms of Lavey's appointment'), but the excerpt only says Lavey's leadership 'position[s] him well to successfully lead The Hanover into its next chapter'. It never states that he has been appointed CEO.",
       "fix": "Say the retirement was announced in July 2026, before the July 28, 2026 release, and that the announcement is not in the pack. Describe Lavey only in the release's words, without calling him the appointed successor. Change the watch item to whatever is still to come, for example confirmation of the successor's title and any change in targets.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-10",
@@ -93,7 +93,7 @@
       "quote": "The quarterly dividend was raised 5.6% to $0.95 per share, or $3.80 annualized.",
       "issue": "Stale fact presented as current. The raise comes from the proxy's 'Fiscal 2025 Results' list (2026 proxy dated March 26, 2026), so it is a 2025 action. Undated, in the present-tense capital-return paragraph after 2026 buybacks, it reads as a 2026 increase.",
       "fix": "Date it: 'In 2025, per the March 26, 2026 proxy, the quarterly dividend was raised 5.6% to $0.95 per share ($3.80 annualized).' Do not imply a 2026 increase.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-11",
@@ -102,7 +102,7 @@
       "quote": "which is roughly the ~11.2x the market pays today for FY27E earnings applied instead to FY26E consensus EPS",
       "issue": "Calls coherence. One year out, FY26 earnings are trailing, so this anchor implies a re-rating from today's 10.5x trailing multiple to about 11.2x while consensus EPS declines. The driver does not argue for that expansion. The pairing (11.2x times $20.39) is also a computed figure that is not on the surface. In addition, the Base says investors 'look past the consensus EPS dip into FY27E rather than price it in full', while scenarioCommentary says Base sits below the consensus target because of 'the weight given here to the consensus EPS decline into FY27E'. The two explanations pull in opposite directions.",
       "fix": "Anchor Base to the Street low target of $229.00 in words and give one consistent reason for it, for example that the multiple holds near current levels on FY26E delivery. Remove the derived multiple-times-EPS pairing, and make the Base driver and scenarioCommentary agree on how the FY27E dip is treated.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-12",
@@ -111,7 +111,7 @@
       "quote": "but the earnings it is priced on include a light catastrophe quarter and reserve releases.",
       "issue": "Cross-section repetition of the report's central claim, aside from its substance (see F-1). The 'lighter catastrophes plus reserve releases, not current-year underwriting' point is argued in at least seven places: meta.subtitle, analystCommentary paragraph 1, executiveSummary.thesis bullet 2, executiveSummary.risks[0], financials.incomeCommentary paragraph 2, valuation.multiplesCommentary (this sentence), valuation.scenarioCommentary paragraph 3 and finalRecommendation.body[0].",
       "fix": "Argue it once, in financials.incomeCommentary. Use one-line pointers in the executive summary and finalRecommendation, and cut it from multiplesCommentary and scenarioCommentary or replace it with a reference back in words.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-13",
@@ -120,7 +120,7 @@
       "quote": "The Street is therefore modeling continued top-line growth with lower margins, which is consistent with the commercial current-year trend in the second quarter of 2026.",
       "issue": "Repetition and an internal inconsistency. The consensus EPS step-down into FY27E is restated in analystCommentary paragraph 3, thesis bullet 3, multiplesCommentary paragraph 1, the Base driver, scenarioCommentary paragraph 3 and here. This point links the dip to the commercial current-year trend, but multiplesCommentary says 'the estimates do not say why'. The lower EPS could equally reflect normalizing catastrophes or smaller releases.",
       "fix": "Introduce the FY26E/FY27E EPS dip once, in Valuation, and refer back to it in words elsewhere. In Growth, keep the revenue estimates and drop the causal link to the commercial trend, or label it as this report's reading rather than the Street's.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-14",
@@ -129,7 +129,7 @@
       "quote": "A Bear case that revisits the 52-week low carries more downside than the Bull carries upside, which keeps the probability-weighted value close to the current price.",
       "issue": "Paraphrase repetition. The Bull/Bear asymmetry and its effect on the weighted value are argued here, in executiveSummary.thesis bullet 4 ('The Bear case carries a larger move than the Bull case') and in valuation.scenarioCommentary paragraph 2 ('The Bear sits further below Base than the Bull sits above it. The probability-weighted fair value therefore lands below Base and only slightly above the current price').",
       "fix": "Keep the argument in scenarioCommentary. In analystCommentary and the thesis, state the outcome briefly (HOLD, weighted value near the current price) and point to Valuation.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-15",
@@ -138,7 +138,7 @@
       "quote": "Stabilizing commercial margins at a lower price would support an upgrade; rising loss picks combined with shrinking releases would support a downgrade.",
       "issue": "Repeats the 'What would move the call' paragraph of valuation.scenarioCommentary in different words, and the two versions disagree. Valuation makes an upgrade need stable Core Commercial ratios OR a price pullback, while this sentence requires both.",
       "fix": "Keep the triggers in one place, with one condition set. finalRecommendation can list the signals to watch and point back to Valuation for the thresholds.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-16",
@@ -147,7 +147,7 @@
       "quote": "FY23 diluted EPS shows how quickly a year's earnings can disappear; the data does not say what caused that year's trough",
       "issue": "Paraphrase repetition across sections: (a) the unexplained FY23 trough is already made in financials.incomeCommentary paragraph 1 ('Neither the vendor table nor the filing excerpts explain the FY22 to FY23 trough'); (b) the 15.4% adjusted ROE vs current returns comparison in this same field repeats valuation.multiplesCommentary paragraph 2; (c) the net investment income cause (earned yields plus operating cash flows) is in both financials.cashflowCommentary paragraph 3 and growth.points[2]; (d) flat Personal Lines PIF is used as a counter-case in both businessMoat.moatFactors[1] and growth.points[1].",
       "fix": "Make each claim once and point back to it in words. Durability can say 'the FY23 trough (see Financials)' without repeating the caveat. Keep the ROE comparison in Valuation, the NII driver in Growth and the PIF point in one section.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-17",
@@ -156,7 +156,7 @@
       "quote": "buybacksLatestFY",
       "issue": "management.capitalAllocation says the proxy's $130.1 million FY25 repurchase figure is used instead of the vendor's $129.2M, but the chosen highlight cell renders the vendor's -$129.2M on the page. The reader sees the figure the prose set aside.",
       "fix": "Swap the buybacksLatestFY highlight for another key, or note in capitalAllocation that the highlight shows the vendor figure.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-18",
@@ -165,7 +165,7 @@
       "quote": "in a proxy those figures usually come from the holders' own Schedule 13G filings",
       "issue": "A general claim about proxy practice that is not on the grounding surface. It adds nothing the reader needs.",
       "fix": "Cut the clause and keep 'The proxy excerpt carries no beneficial ownership table and lists no 5% holders; no Schedule 13G filings are in the data.'",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-19",
@@ -174,6 +174,60 @@
       "quote": "The counter-case is that the excerpts give no agent count",
       "issue": "Verbal tic: 'The counter-case' opens a sentence in businessMoat.moatFactors[0], [1] and [2], growth.points[1] and management.leadership, and 'The counter-point' in financials.cashflowCommentary. Repeated six times, the label becomes noticeable.",
       "fix": "Vary the phrasing or just state the opposing figure. The counter-case reads better when argued than when labeled.",
+      "status": "addressed"
+    },
+    {
+      "id": "F-20",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "an upgrade needs Core Commercial's current accident year loss ratio in the second half of 2026 back at or below its full-year 2025 level",
+      "issue": "The upgrade trigger is already met, so it does not work as a trigger. The release says Core Commercial's Q2 2026 current accident year loss and LAE ratio excluding catastrophes was 58.7%, '0.4 points improved from the full year of 2025', and incomeCommentary repeats this. 'Back at or below' implies the ratio is above the FY25 level, but it is already below. The only part of the trigger that is not yet met is 'no further liability loss-pick increases'.",
+      "fix": "Set a threshold the data has not already crossed. For example, the ratio holds at or below the Q2 2026 58.7% for the second half of 2026 with no further liability loss-pick increases, or the year-over-year rise reverses. Alternatively, state the trigger in words without a level.",
+      "status": "open"
+    },
+    {
+      "id": "F-21",
+      "severity": "Important",
+      "field": "analystCommentary",
+      "quote": "Over the six months ended June 30, 2026, the current accident year combined ratio excluding catastrophes improved to 86.9% from 87.9%, so the underlying book is better, not just the weather.",
+      "issue": "The fix for round-1 F-1 introduced a cross-section retelling. analystCommentary paragraph 1 now repeats, with the same figures, both the six-month 86.9%/87.9% comparison and the company's attribution sentence ('lower catastrophe losses, higher net investment income and improvements in current accident year underwriting results, driven by Personal Lines'). financials.incomeCommentary paragraph 2 makes the same argument with the same figures ('The company attributes the quarter's operating income gain to lower catastrophe losses, higher net investment income ... and current accident year improvement driven by Personal Lines. Over the six months, the current accident year combined ratio excluding catastrophes improved to 86.9% from 87.9%').",
+      "fix": "Keep the figures and the attribution in incomeCommentary. In analystCommentary, give the conclusion in words (the half-year underlying book improved, not just the weather) and point to Financials.",
+      "status": "open"
+    },
+    {
+      "id": "F-22",
+      "severity": "Important",
+      "field": "sections.businessMoat.moatFactors[1].body",
+      "quote": "the company attributes Personal Lines premium growth primarily to higher new business. Both point to an agency model still adding accounts.",
+      "issue": "Two problems. (1) Paraphrase repetition: growth.points[1] makes the same attribution ('which the company attributes primarily to higher new business'). (2) 'Still adding accounts' is an inference the source does not make, and the field omits its counter-case. The 89% multi-policy share says nothing about adding accounts, and Personal Lines policies in force were essentially flat against Q1 2026 (stated in growth.points[1]). New business may only be replacing lapses.",
+      "fix": "Keep the new-business attribution in Growth only. In the moat factor, use the 89% multi-policy share and the missing retention data. If you mention new business, set it against flat policies in force rather than concluding that the agency model is adding accounts.",
+      "status": "open"
+    },
+    {
+      "id": "F-23",
+      "severity": "Important",
+      "field": "sections.financials.cashflowCommentary",
+      "quote": "so the cash figures set an upper bound on distributions rather than a forecast of them",
+      "issue": "New unsupported claim that contradicts the paragraph before it. The previous paragraph says operating cash flow 'should not be read as payout capacity'. This sentence then treats it as an upper bound on distributions, which is a payout-capacity reading. Nothing on the surface establishes that distributions are capped by vendor operating cash flow, and the sentence's own premise is that the excerpts say nothing about statutory dividend limits.",
+      "fix": "Cut the clause, or end on the stated gap: the excerpts do not describe statutory dividend limits, so how much of this cash can reach the holding company cannot be judged from the data.",
+      "status": "open"
+    },
+    {
+      "id": "F-24",
+      "severity": "Important",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "the constraint is a consensus that expects earnings to fall.",
+      "issue": "Same claim twice in one field. Paragraph 1 already concludes 'The Street, in other words, expects earnings to come down from the current level, which caps how far the multiple can expand.' The closing sentence of paragraph 3 restates it. The executive-summary thesis bullet ('which limits re-rating at 10.5x trailing') points to it correctly.",
+      "fix": "Make the point once in this field, in paragraph 1. End paragraph 3 on the book-value and returns reading instead.",
+      "status": "open"
+    },
+    {
+      "id": "F-25",
+      "severity": "Minor",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "Specialty's current accident year loss ratio of 51.6% rose 2.6 points",
+      "issue": "The quantity label is shortened. The release's 51.6% is the 'current accident year loss and LAE ratio, excluding catastrophes', and 'loss ratio' without 'excluding catastrophes' names a different quantity. The same shortening appears in risks.idiosyncratic[1] and scenarioCommentary ('current accident year loss ratio'). Separately, this field is now at about 2,320 of 2,500 characters (93% of the cap), which leaves little room for the next round.",
+      "fix": "Use the full label at first mention in each section ('current accident year loss and LAE ratio excluding catastrophes') and refer back in words after that. Trimming the duplicated attribution (see the analystCommentary finding) would also restore headroom.",
       "status": "open"
     }
   ]
