@@ -1,0 +1,730 @@
+{
+  "schemaVersion": "1.1.0",
+  "meta": {
+    "company": "EverQuote, Inc.",
+    "ticker": "EVER",
+    "exchange": "NASDAQGM",
+    "subtitle": "Revenue up 24.6% in Q2'26 and the stock at ~6.3x FY27E earnings, but carrier concentration and a controlling holder cap the multiple",
+    "reportDate": "October 3, 2026",
+    "asOf": "Oct 3, 2026",
+    "analyst": "Juniper Finance Research Desk",
+    "analystName": "Nico — Senior Analyst",
+    "fiscalYearEnd": "December 31",
+    "currency": "USD",
+    "filing": {
+      "form": "10-Q",
+      "fiscalPeriod": "fiscal Q2 2026",
+      "filedDate": "Aug 4, 2026",
+      "accession": "0001193125-26-332775"
+    }
+  },
+  "quote": {
+    "currentPrice": 19.5,
+    "marketCap": 687175168,
+    "sharesOutstanding": 35239752.20512821,
+    "week52Low": 13.88,
+    "week52High": 28.73,
+    "dividendYield": 0,
+    "history": [
+      {
+        "date": "2026-08-21",
+        "close": 25.239999771118164
+      },
+      {
+        "date": "2026-08-24",
+        "close": 26.6200008392334
+      },
+      {
+        "date": "2026-08-25",
+        "close": 26.850000381469727
+      },
+      {
+        "date": "2026-08-26",
+        "close": 26.079999923706055
+      },
+      {
+        "date": "2026-08-27",
+        "close": 24.81999969482422
+      },
+      {
+        "date": "2026-08-28",
+        "close": 25.65999984741211
+      },
+      {
+        "date": "2026-08-31",
+        "close": 25.440000534057617
+      },
+      {
+        "date": "2026-09-01",
+        "close": 24.829999923706055
+      },
+      {
+        "date": "2026-09-02",
+        "close": 25.5
+      },
+      {
+        "date": "2026-09-03",
+        "close": 25.309999465942383
+      },
+      {
+        "date": "2026-09-04",
+        "close": 24.90999984741211
+      },
+      {
+        "date": "2026-09-08",
+        "close": 24.940000534057617
+      },
+      {
+        "date": "2026-09-09",
+        "close": 23.360000610351562
+      },
+      {
+        "date": "2026-09-10",
+        "close": 23.489999771118164
+      },
+      {
+        "date": "2026-09-11",
+        "close": 23.979999542236328
+      },
+      {
+        "date": "2026-09-14",
+        "close": 24.030000686645508
+      },
+      {
+        "date": "2026-09-15",
+        "close": 24.469999313354492
+      },
+      {
+        "date": "2026-09-16",
+        "close": 23.34000015258789
+      },
+      {
+        "date": "2026-09-17",
+        "close": 22.889999389648438
+      },
+      {
+        "date": "2026-09-18",
+        "close": 23.139999389648438
+      },
+      {
+        "date": "2026-09-21",
+        "close": 22.829999923706055
+      },
+      {
+        "date": "2026-09-22",
+        "close": 19.549999237060547
+      },
+      {
+        "date": "2026-09-23",
+        "close": 17.6299991607666
+      },
+      {
+        "date": "2026-09-24",
+        "close": 18.059999465942383
+      },
+      {
+        "date": "2026-09-25",
+        "close": 18.639999389648438
+      },
+      {
+        "date": "2026-09-28",
+        "close": 18.59000015258789
+      },
+      {
+        "date": "2026-09-29",
+        "close": 18.90999984741211
+      },
+      {
+        "date": "2026-09-30",
+        "close": 20.059999465942383
+      },
+      {
+        "date": "2026-10-01",
+        "close": 19.979999542236328
+      },
+      {
+        "date": "2026-10-02",
+        "close": 19.5
+      }
+    ]
+  },
+  "rating": {
+    "label": "BUY",
+    "tone": "bull",
+    "targetLow": 21,
+    "targetHigh": 26,
+    "conviction": {
+      "expectedUpside": 0.14846153846153842,
+      "bearDownside": 0.28820512820512817,
+      "rewardRisk": 0.5151245551601423,
+      "derivedLabel": "BUY"
+    },
+    "gate": {
+      "sector": "industrial",
+      "ceiling": "STRONG BUY",
+      "gatedLabel": "BUY",
+      "distress": "SAFE",
+      "piotroski": 5,
+      "accruals": null,
+      "confidence": "medium",
+      "flags": []
+    },
+    "decision": {
+      "conviction": 87,
+      "tier": "high",
+      "proposed": "BUY",
+      "reasons": [
+        "E/R proposed BUY"
+      ],
+      "advisories": [],
+      "moat": {
+        "width": "WIDE",
+        "trend": "STABLE",
+        "contingent": false,
+        "bearFloor": 0.15
+      },
+      "intrinsic": {
+        "marginOfSafety": 5.133249017250638,
+        "impliedGrowth": -0.04110932374540849,
+        "achievableGrowth": 0.2
+      },
+      "composite": {
+        "percentile": 56.82545624540669,
+        "confidence": "high"
+      },
+      "uncertainty": {
+        "tier": "low",
+        "points": 0,
+        "drivers": []
+      }
+    }
+  },
+  "snapshot": [
+    {
+      "label": "Current Price",
+      "value": 19.5,
+      "unit": "usd"
+    },
+    {
+      "label": "Market Cap",
+      "value": 687175168,
+      "unit": "usdLarge",
+      "approx": true
+    },
+    {
+      "label": "52-Week Range",
+      "raw": "$13.88 – $28.73"
+    },
+    {
+      "label": "Shares Outstanding",
+      "value": 35239752.20512821,
+      "unit": "shares",
+      "approx": true
+    },
+    {
+      "label": "P/E (TTM)",
+      "value": 6.351791530944625,
+      "unit": "mult"
+    },
+    {
+      "label": "Consensus Target",
+      "value": 29.5,
+      "unit": "usd",
+      "change": 0.5128205128205128
+    },
+    {
+      "label": "EV/EBITDA (TTM)",
+      "value": 5.943,
+      "unit": "mult"
+    },
+    {
+      "label": "Analyst Consensus",
+      "raw": "Buy (6 B / 2 H / 0 S)"
+    },
+    {
+      "label": "FY25 Revenue",
+      "value": 692521000,
+      "unit": "usdLarge",
+      "change": 0.38451588396409364
+    },
+    {
+      "label": "FY25 Net Income",
+      "value": 99311000,
+      "unit": "usdLarge"
+    },
+    {
+      "label": "FY25 Diluted EPS",
+      "value": 2.63,
+      "unit": "usd"
+    },
+    {
+      "label": "FY26E Revenue",
+      "value": 801150760,
+      "unit": "usdLarge",
+      "approx": true,
+      "change": 0.15686132261693153,
+      "changeDp": 0
+    },
+    {
+      "label": "Q2'26 Revenue",
+      "value": 195086000,
+      "unit": "usdLarge",
+      "change": 0.24552924426511047,
+      "changeDp": 0
+    },
+    {
+      "label": "Q2'26 Operating Margin",
+      "value": 0.12038280553191925,
+      "unit": "pct",
+      "dp": 0
+    },
+    {
+      "label": "Fwd P/E (FY27E)",
+      "value": 6.33802130225211,
+      "unit": "mult",
+      "approx": true
+    },
+    {
+      "label": "Dividend Yield",
+      "value": 0,
+      "unit": "pct",
+      "dp": 2
+    },
+    {
+      "label": "FY25 Free Cash Flow",
+      "value": 90324000,
+      "unit": "usdLarge"
+    },
+    {
+      "label": "FCF Yield (TTM)",
+      "value": 0.13844359405024367,
+      "unit": "pct",
+      "dp": 1
+    },
+    {
+      "label": "FY25 Share Repurchases",
+      "value": -21024000,
+      "unit": "usdLarge"
+    },
+    {
+      "label": "Current Ratio (TTM)",
+      "raw": "3.33"
+    }
+  ],
+  "analystSentiment": {
+    "numAnalysts": 8,
+    "buy": 6,
+    "hold": 2,
+    "sell": 0,
+    "consensusRating": "Buy",
+    "consensusTarget": 29.5,
+    "medianTarget": 28.5,
+    "highTarget": 34,
+    "lowTarget": 28,
+    "commentary": "We rate EverQuote a BUY with a $21.00–$26.00 target range. At $19.50 the stock trades at ~6.3x consensus FY27E EPS, with $192.3 million of cash and no outstanding debt at June 30, 2026. The second quarter of 2026 showed the marketplace still growing: revenue rose 24.6% year over year to $195.1 million and the company guided third-quarter revenue to $198.0–$208.0 million on August 3, 2026.\n\nThe discount is not irrational. The top carrier customer supplied 35% of six-month 2026 revenue with no minimum spend commitment, and Link Ventures LLLP, through David Blundin, held 57.1% of total voting power as of April 7, 2026. Carrier spend fell hard in 2022 and 2023, and the income statement shows how fast that reached the bottom line.\n\nWe set Base on the current forward multiple rolled onto FY27E rather than on Street targets, and we keep a Bear case that sends the stock back to its 52-week low. The full scenario argument sits in the valuation section."
+  },
+  "sections": {
+    "executiveSummary": {
+      "companyOverview": "EverQuote operates an online marketplace for insurance shopping in the United States. It sells consumer inquiries as referrals to insurance carriers, agents and indirect distributors in three formats: clicks, data and calls. Services are free to consumers; revenue comes principally from those referrals, and the company describes itself as focused on the property and casualty (P&C) market.\n\nThe business reports as a single segment. Within it, the 10-Q breaks revenue into automotive, home and renters, and an other vertical that the company expects to be insignificant in 2026. Automotive insurance providers account for a substantial majority of revenue, in the 10-K's words, so the auto insurance cycle drives results.\n\nThe company was incorporated in 2008, is based in Cambridge, Massachusetts, and changed its name from AdHarmonics, Inc. in November 2014. Its Class B shares give Link Ventures LLLP voting control, and the 2026 proxy states the company is a \"controlled company\" under Nasdaq rules.",
+      "thesis": {
+        "label": "BUY",
+        "body": "The valuation gives little credit for carrier spending holding up. FY25 revenue of $692.5M (+38.5%) and FY25 free cash flow of $90.3M show what the marketplace earns when carriers are spending, and the Q3 2026 outlook from August 3, 2026 does not yet show spending rolling over. At ~6.3x FY27E EPS with net cash, the shares need only a stable multiple on consensus earnings to work. The thesis breaks if the top carrier cuts spend, because its share of revenue makes that a direct hit, and the controlling holder means outside investors have no voice in how the company responds."
+      },
+      "catalysts": [
+        "Third-quarter 2026 results against the August 3, 2026 outlook; the growth section sets out what the range implies.",
+        "Continued buybacks funded from operating cash flow (see capital allocation).",
+        "Launch of the new data and AI products the CEO said would come in the back half of 2026; no revenue figure is attached yet.",
+        "Progress toward the CFO's stated path to $1 billion in revenue, which has no date in the release."
+      ],
+      "risks": [
+        "Customer concentration: two carriers supplied close to half of six-month 2026 revenue, with no minimum spend commitments (see risks).",
+        "Auto insurance cycle: carriers cut spend in 2022 and 2023, and the 10-K says it could happen again without warning.",
+        "Control and related-party spending: the controlling holder's affiliates are also paid marketing suppliers (see governance).",
+        "Higher 2026 tax rate after the valuation-allowance release will hold GAAP earnings growth below operating income growth."
+      ]
+    },
+    "financials": {
+      "income": {
+        "columns": [
+          "Metric",
+          "FY21",
+          "FY22",
+          "FY23",
+          "FY24",
+          "FY25"
+        ],
+        "rows": [
+          {
+            "label": "Revenue ($B)",
+            "values": [
+              418515000,
+              404127000,
+              287921000,
+              500190000,
+              692521000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "YoY Growth",
+            "values": [
+              null,
+              -0.034378696104082285,
+              -0.28754822122748547,
+              0.7372473699382818,
+              0.38451588396409364
+            ],
+            "format": "pctSigned"
+          },
+          {
+            "label": "Gross Margin",
+            "values": [
+              0.9427762445790473,
+              0.9406622175702193,
+              0.922009856870461,
+              0.9581718946800216,
+              0.9720225090647071
+            ],
+            "format": "pct"
+          },
+          {
+            "label": "Operating Income ($B)",
+            "values": [
+              -21924000,
+              -24788000,
+              -51975000,
+              31751000,
+              58336000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Operating Margin",
+            "values": [
+              -0.052385219167771765,
+              -0.061337153914487276,
+              -0.18051826716356223,
+              0.06347787840620564,
+              0.08423715670716123
+            ],
+            "format": "pct"
+          },
+          {
+            "label": "EBITDA ($B)",
+            "values": [
+              -16852000,
+              -18940000,
+              -45779000,
+              37423000,
+              62147000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Net Income ($B)",
+            "values": [
+              -19434000,
+              -24416000,
+              -51287000,
+              32169000,
+              99311000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Diluted EPS ($)*",
+            "values": [
+              -0.67,
+              -0.77,
+              -1.54,
+              0.88,
+              2.63
+            ],
+            "format": "eps"
+          }
+        ],
+        "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
+      },
+      "incomeCommentary": "The five-year record is a cycle, not a trend. Revenue growth ran -3.4% in FY22 and -28.8% in FY23, then {+ +73.7% +} in FY24 and {+ +38.5% +} in FY25. Operating margin moved with it, from -18.1% in FY23 to 8.4% in FY25 and 11.0% on a trailing basis. That swing shows high operating leverage in both directions.\n\nThe second quarter of 2026 extended the upswing. Revenue reached $195.1 million, income from operations rose {+ 65.8% +} year over year, and operating margin was 12.0%. Adjusted EBITDA, a non-GAAP measure, was $30.1 million, which the press release calls a \"record\". GAAP net income grew less, to $19.2 million from $14.7 million, because income tax expense rose sharply; the 10-Q expects a higher 2026 tax rate after it released its valuation allowance in the fourth quarter of 2025. Diluted EPS was $0.53 against $0.39.\n\nGross margin of 97.2% in FY25 overstates economics. Advertising costs, the main variable cost of acquiring consumers, sit in sales and marketing, not cost of revenue. Variable Marketing Dollars (revenue less advertising costs) of $56.9 million in the quarter, against $45.5 million a year earlier, is the better gauge of what the marketplace keeps.\n\nThe counter-case is FY23: the same leverage that lifted margins took operating margin deep into losses within one year when carriers pulled back.",
+      "balance": {
+        "columns": [
+          "Metric ($B)",
+          "FY21",
+          "FY22",
+          "FY23",
+          "FY24",
+          "FY25"
+        ],
+        "rows": [
+          {
+            "label": "Cash & ST Investments",
+            "values": [
+              34851000,
+              30835000,
+              37956000,
+              102116000,
+              171379000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Total Debt",
+            "values": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Net Debt",
+            "values": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Total Equity",
+            "values": [
+              85125000,
+              107486000,
+              80907000,
+              135368000,
+              238040000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Current Ratio",
+            "values": [
+              1.7865671012108173,
+              1.7832933248177594,
+              2.312040870842794,
+              2.3645198144503023,
+              2.938352709178877
+            ],
+            "format": "num2"
+          }
+        ],
+        "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
+      },
+      "balanceCommentary": "The balance sheet carries no financial risk. EverQuote ended the second quarter of 2026 with $192.3 million in cash and cash equivalents and, per the press release, no outstanding debt; the vendor table shows debt as missing rather than zero, and we rely on the company's statement. Cash is a large share of the ~$687.2M market cap.\n\nLiquidity has improved: the current ratio was 3.33 on a trailing basis against 2.94 at FY25. Total stockholders' equity rose between December 31, 2025 and June 30, 2026 despite buybacks.\n\nThe limit of this strength is that cash does not protect revenue. A carrier pullback like 2023 would not threaten solvency, but the cash pile would not stop the earnings decline either. We treat the cash as downside support for the share price and as buyback capacity, not as a reason to pay a higher multiple on earnings.",
+      "cashflow": {
+        "columns": [
+          "Metric ($B)",
+          "FY21",
+          "FY22",
+          "FY23",
+          "FY24",
+          "FY25"
+        ],
+        "rows": [
+          {
+            "label": "Operating Cash Flow",
+            "values": [
+              7189000,
+              -15791000,
+              -2828000,
+              66566000,
+              95381000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Capital Expenditure",
+            "values": [
+              -2862000,
+              -4290000,
+              -3840000,
+              -4114000,
+              -5057000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Share Repurchases",
+            "values": [
+              null,
+              null,
+              null,
+              null,
+              -21024000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Dividends Paid",
+            "values": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Free Cash Flow",
+            "values": [
+              4327000,
+              -20081000,
+              -6668000,
+              62452000,
+              90324000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "FCF Margin",
+            "values": [
+              0.010338936477784548,
+              -0.049689825228207966,
+              -0.023159130455923674,
+              0.12485655450928647,
+              0.13042781374138834
+            ],
+            "format": "pct"
+          }
+        ],
+        "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
+      },
+      "cashflowCommentary": "Free cash flow turned with the cycle. FCF margin was -5.0% in FY22 and -2.3% in FY23, then 12.5% in FY24 and 13.0% in FY25, when free cash flow reached $90.3M. On the current price the trailing FCF yield is 13.8%.\n\nCash conversion should stay ahead of GAAP earnings for a while. The 10-Q says the company intends to use its net operating loss carryforwards and tax credits to reduce cash tax payments, and the cash-flow statement shows deferred taxes as a non-cash add-back in 2026. Higher reported tax expense therefore overstates the cash cost.\n\nQuarterly cash flow is lumpier than earnings. Second-quarter 2026 operating cash flow fell year over year to $24.3 million from $25.3 million despite higher net income; the cash-flow statement shows a receivables build in the 2026 quarter against a release in the 2025 quarter. Capital spending is small, so operating cash flow passes almost entirely through to free cash flow. One quarter of working-capital swing is not a concern; a run of them alongside rising revenue would be."
+    },
+    "valuation": {
+      "multiples": {
+        "columns": [
+          "Multiple (TTM)",
+          "EVER"
+        ],
+        "rows": [
+          {
+            "label": "P/E",
+            "values": [
+              6.351791530944625
+            ],
+            "format": "mult"
+          },
+          {
+            "label": "P/S",
+            "values": [
+              0.9099271555274246
+            ],
+            "format": "mult"
+          },
+          {
+            "label": "EV/EBITDA",
+            "values": [
+              5.943
+            ],
+            "format": "mult"
+          },
+          {
+            "label": "Fwd P/E (NTM)",
+            "values": [
+              7.5
+            ],
+            "format": "mult"
+          }
+        ],
+        "note": "Peer multiples pending a peer data source."
+      },
+      "multiplesCommentary": "On every multiple available EverQuote screens cheap: P/E (TTM) of 6.4x, EV/EBITDA (TTM) of 5.9x, P/S of 0.9x, Fwd P/E (NTM) of 7.5x and ~6.3x on FY27E. No peer multiples were captured, so we judge these against the company's own earnings path rather than a peer set.\n\nThe forward multiple is higher than the trailing one because forward earnings are lower. Consensus FY26E EPS of $2.60 sits below FY25 diluted EPS of $2.63, and the trailing figures include the fourth-quarter 2025 valuation-allowance release; trailing net margin of 15.2% above trailing operating margin of 11.0% is consistent with that tax benefit. The trailing P/E therefore flatters the stock. FY27E EPS of $3.08 is what brings the multiple back down.\n\nThe consensus EPS basis is unstated. GAAP diluted EPS for the six months ended June 30, 2026 was $1.04, which looks low against the full-year estimate, so the forward multiples may rest on an adjusted basis or on a heavier second half. We do not call them GAAP multiples. Even with that caveat, the stock sits below the Street: the consensus target is $29.50 and the lowest target is $28.00, with 6 of 8 analysts at Buy.",
+      "scenarios": [
+        {
+          "name": "Bull",
+          "driver": "Carriers keep spending through 2027, third-quarter 2026 revenue lands at or above the top of the $198.0–$208.0 million outlook, and the top carrier's share of revenue keeps falling. The market closes the gap to the Street and pays the consensus target of $29.50 within 12 months.",
+          "impliedPrice": 29.5,
+          "probability": 0.25
+        },
+        {
+          "name": "Base",
+          "driver": "Growth slows toward the +16% consensus FY26E rate without a carrier pullback. The market holds today's 7.5x Fwd P/E (NTM) and, over a 12-month horizon, rolls it onto FY27E EPS of $3.08, for $23.10. The discount to the Street for concentration and control persists.",
+          "impliedPrice": 23.1,
+          "probability": 0.5
+        },
+        {
+          "name": "Bear",
+          "driver": "A large carrier cuts spend as in 2023, FY27 earnings stall near the FY26E $2.60 level instead of growing, and the multiple compresses below today's 6.4x trailing P/E. The stock returns to its 52-week low of $13.88 within 12 months; net cash limits the fall beyond that.",
+          "impliedPrice": 13.88,
+          "probability": 0.25
+        }
+      ],
+      "scenarioCommentary": "Base is our anchor: no rerating, just the current forward multiple applied one year further out. That alone sits above today's price, because consensus expects EPS to rise from FY26E to FY27E. Base ends well below the Street's lowest target, which reflects our view that concentration and control deserve a standing discount.\n\nWe give Base half the weight because the data in hand shows demand intact: second-quarter growth was still strong and the third-quarter outlook sits above the second-quarter result. Bull and Bear each get a quarter. Bull needs only the Street's own consensus target, and Bear needs one large carrier to act as carriers did in 2023, which the 10-K says can happen without warning. We do not weight Bear lower, because the top customer's share of revenue moves earnings more than any other input and the company cannot contract around it.\n\nThe probability-weighted fair value of $22.40 sits inside our $21.00–$26.00 range and below Base, because Bear sits further below Base than Bull sits above it. The rating is BUY, but on a thin reward-to-risk margin: expected upside of 14.8% clears the bar while the bear-case downside is 28.8%. That is why the target range stops well short of the Street."
+    },
+    "businessMoat": {
+      "segments": [
+        {
+          "name": "Consolidated",
+          "sharePct": 1,
+          "revenue": 692521000,
+          "body": "EverQuote reports one segment, with FY25 revenue of $692.5M. Inside it, the 10-Q reports revenue for automotive, home and renters, and other verticals; we do not quote that split here. The second-quarter 2026 press release shows home and renters growing faster than automotive, but automotive remains the substantial majority. Management expects 2026 growth from both main verticals as carrier partners increase spending, and expects other verticals to be insignificant given its P&C focus.\n\nThe product is a referral delivered as a click, a data lead or a call, recognized as revenue at delivery. Carriers and agents can evaluate return on their spend directly, which keeps the marketplace transparent but also means spend moves quickly when carrier economics change."
+        }
+      ],
+      "segmentsBasis": "FY25 (single reportable segment) mix",
+      "geographyBasis": "FY25",
+      "geoMix": [],
+      "moatRating": "NONE",
+      "moatFactors": [
+        {
+          "name": "Marketplace scale",
+          "strength": "Moderate",
+          "body": "Volume of consumer quote requests and a carrier and agent network give EverQuote something to sell that a new entrant would need time to build. The weakness is that insurance providers can stop participating or cut spend at any time without notice, per the 10-K, so scale does not translate into locked-in revenue."
+        },
+        {
+          "name": "Data and AI traffic engine",
+          "strength": "Unproven",
+          "body": "The company says its proprietary data assets and AI traffic engine set it apart. Nothing in the filings quantifies that edge, and the new AI products are still to be launched. We count it once it shows up in Variable Marketing Dollars growing faster than revenue across a full cycle."
+        },
+        {
+          "name": "Customer switching costs",
+          "strength": "Weak",
+          "body": "Agreements carry no minimum spend. In 2023 one of its \"largest carrier customers\" stopped paying agent subsidies, per the 10-K, and resumed only some in 2024. That shows buyers can walk away and come back on their own terms."
+        },
+        {
+          "name": "Traffic supply",
+          "strength": "Weak",
+          "body": "A significant portion of visitors comes from third-party publishers that can change inventory or prices at any time, per the 10-K. Some of that supply comes from affiliates of the controlling holder, which ties the cost base to a related party."
+        }
+      ],
+      "durability": "We rate the moat NONE. The FY23 revenue decline of 28.8% is the clearest test available: when carriers cut spend, the marketplace had no contractual or structural defense. The rebound since then shows the platform recovers well when carriers return, which is valuable but is a cyclical strength, not a moat. The concentration of revenue in two carriers points the same way, because the buyer with that much share sets the terms. A moat case would need evidence of pricing power through a downturn, which the record does not yet contain."
+    },
+    "growth": {
+      "points": [
+        "Growth is still strong but the Street expects it to slow. Revenue rose 24.6% year over year in the second quarter of 2026 and 19.4% for the six months ended June 30, 2026, while consensus FY26E revenue of ~$801.2M implies +16% for the full year. A slowdown is already in the estimates, so a second half near the six-month pace would be upside.",
+        "The third-quarter outlook, issued August 3, 2026, is revenue of $198.0–$208.0 million and Adjusted EBITDA of $28.0–$31.0 million. Even the low end of the revenue range is above the second quarter's level sequentially. The Adjusted EBITDA range brackets the second quarter's result, so management is not guiding to further margin expansion next quarter. Watch whether revenue lands near the top while Adjusted EBITDA stays flat, which would point to stepped-up investment.",
+        "Home and renters grew faster than automotive in the second quarter of 2026, per the press release. That widens the base beyond auto, but automotive is still the substantial majority, so it does not yet change the cyclical exposure.",
+        "The CFO cited a \"previously stated path to $1 billion in revenue\" without a date. Consensus FY27E revenue of $882.9M does not reach that level, so the Street is not underwriting the goal on the forecast horizon.",
+        "The CEO said new solutions using data, intelligence and AI would arrive in the back half of 2026. No revenue or margin figure is attached, and the 10-Q expects higher research and development spend in 2026, so the cost comes before any evidence of payback."
+      ]
+    },
+    "management": {
+      "leadership": "Per the proxy statement filed April 23, 2026, the 2025 named executive officers were Jayme Mendal, Chief Executive Officer and President (age 40); Joseph Sanborn, Chief Financial Officer, Chief Administrative Officer, Treasurer and Secretary (age 56); David Brainard, Chief Technology Officer (age 54); and Jon Ayotte, Chief Accounting Officer (age 42). Julia Brncic, the former General Counsel and Secretary, resigned on September 12, 2025.\n\nThe team has delivered on the recovery: the operating turnaround since FY23 is set out in the income commentary. The open question is whether margins hold when carriers next pull back; the record since FY23 contains no downturn to test that.\n\nThe proxy describes pay as salary, an annual cash bonus tied to financial goals, and equity, with the vast majority of target pay variable. The excerpt carries no pay figures, so we cannot judge the size of awards against results.",
+      "capitalAllocation": "Capital allocation is buybacks plus internal investment, with no dividend. Share repurchases were $21M in FY25, and in the second quarter of 2026 the company repurchased 578 thousand shares for approximately $9.1 million. Diluted weighted shares fell year over year in the quarter, which suggests repurchases are more than offsetting dilution from stock compensation.\n\nAt a 13.8% FCF yield, repurchases are a sensible use of cash, and they leave the cash balance growing. The CFO also said results allow continued investment in AI innovation and new product development. We would rather see buybacks continue at the current pace than a large acquisition; the 10-Q references litigation settled in 2025 with former owners of entities acquired in 2021, a reminder that past deals have carried costs.",
+      "governance": "EverQuote is a \"controlled company\" under Nasdaq rules, per the proxy statement filed April 23, 2026. It uses the exemptions: it has no nominations committee, and director nominees are not selected by a majority of independent directors. Audit committee rules still apply in full.\n\nThe main governance issue is related-party spending. Cogo Labs, Inc. and other affiliates of Link Ventures, which David Blundin controls, provide marketing services to EverQuote. The company paid approximately $40.0 million to Link Ventures and its affiliates in 2025, and states it believes the terms are no less favorable than arm's-length dealings. The proxy gives no independent benchmark for that claim.\n\nFor outside holders, control means the board answers to one holder and the related-party supply relationships are unlikely to change unless that holder chooses. That is the main reason we keep a discount to the Street in the valuation. Watch the next proxy for the size of related-party payments relative to revenue growth.",
+      "insiderOwnership": "As of April 7, 2026, per the proxy, Link Ventures LLLP held 98.7% of the Class B shares and 10.0% of the Class A shares, giving it 57.1% of total voting power; David Blundin is deemed to hold voting and dispositive power over those shares. All current executive officers and directors as a group held 14.9% of the Class A shares and 59.6% of total voting power.\n\nAmong executives, Jayme Mendal held 508,751 Class A shares, or 1.6%; other named executives each held less than 1%. The Vanguard Group was listed at 6.0% of Class A based on a Schedule 13G/A filed November 12, 2024, so that figure is stale. BlackRock, Inc. was listed at the same level; the excerpt does not show the source date for that figure.\n\nThe structure aligns the controlling holder with the share price, but outside holders cannot change the board, so alignment rests on that one holder's interests."
+    },
+    "risks": {
+      "idiosyncratic": [
+        "Customer concentration. The \"two largest auto insurance carrier customers\" supplied 35% and 11% of revenue in the six months ended June 30, 2026, against 39% and 12% a year earlier. Agreements carry no minimum spend, so a cut by the top buyer flows straight to revenue and, through operating leverage, to earnings. The trend is improving. Watch the concentration disclosure in each 10-Q and whether the top carrier's share keeps falling.",
+        "Auto insurance cycle. The 10-K filed February 24, 2026 says carriers cut spend in 2022 and 2023 on deteriorating underwriting, rising claims, inflation and inadequate premiums, and that such cuts could recur rapidly and without warning. The mechanism is carrier profitability: when underwriting turns, marketing budgets go first. Watch automotive vertical growth against total revenue and any change in carrier tone in the next outlook.",
+        "Traffic cost and supply. The 10-K warns that a decline in third-party publisher media supply, or a rise in its price, could raise the cost of attracting visitors. Higher traffic costs would squeeze Variable Marketing Dollars before they show in revenue. Watch Variable Marketing Dollars against the third-quarter outlook of $56.0–$59.0 million.",
+        "Related-party dependence. Affiliates of the controlling holder are paid marketing suppliers, so part of the cost base is set by a party that also controls the board. Mechanism: any shift in those terms moves margins without outside holders having a vote. Watch the related-party disclosure in the next proxy.",
+        "Tax normalization. The 10-Q expects a higher 2026 tax rate after the valuation-allowance release, which keeps GAAP EPS growth below operating income growth. Watch the gap between GAAP EPS and consensus estimates, whose basis is unstated."
+      ],
+      "systemic": "The broad risks run through the insurance industry and the economy rather than through EverQuote alone. The 10-K ties results to adverse conditions in insurance markets and in the general economy. A rise in auto claims or inflation that hurts carrier underwriting would reduce marketing budgets across the industry at once.\n\nRegulation is the second systemic channel. The press release's forward-looking statements list telemarketing restrictions, data privacy requirements and insurance-industry rules among the factors that could change results. Calls and data referrals depend on consumer contact and data sharing, so tighter rules would hit the product directly.\n\nA third channel is technology: the same release lists risks around the company's investment in AI and competitors' innovation. These are not quantified. Watch the next 10-K's risk factors for new language on any of the three."
+    },
+    "finalRecommendation": {
+      "body": [
+        "BUY, $21.00–$26.00. The case is a cheap multiple on intact demand, with net cash under the share price; the discount for concentration and control is real, which is why our range sits below the Street. The scenario argument is in the valuation section.",
+        "We would move to a higher target if third-quarter 2026 revenue comes in above $208.0 million and the top carrier's share of six-month revenue falls again in the next 10-Q. We would cut to HOLD if third-quarter revenue falls below $198.0 million, or if the next proxy shows related-party payments to Link Ventures affiliates rising faster than revenue."
+      ]
+    }
+  },
+  "disclaimer": "DISCLAIMER: This report is for informational/educational purposes only and does not constitute investment advice. All equity securities carry risk and can be volatile, and past performance is not indicative of future results. Conduct your own due diligence. The author may hold positions in securities discussed."
+}
