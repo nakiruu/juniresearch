@@ -18,6 +18,7 @@
  */
 import { classifySector } from "./gates";
 import { MACRO } from "./macro";
+import { portfolioBreakIndex } from "./intrinsic";
 
 interface Row {
   key: string;
@@ -199,8 +200,15 @@ export function moatRead(f: MoatFacts, cfg: MoatConfig = {}): MoatResult {
   const roic = roicSeries(f, taxRate);
   const spread = roic.map((r) => r - wacc);
   const ic = investedCapitalSeries(f);
-  const from = comparableWindow(ic);
-  if (from > 0) flags.push(`structural break at ${f.statements.fiscalYears[from]} — pre-break years dropped`);
+  // Two break tests, the later one wins: an invested-capital jump (a large stock-funded deal) and a spin-off
+  // (a > 20% revenue drop in a pack whose history a later 10-K restated — portfolioBreakIndex, the reverse
+  // DCF's own test, so both engines drop the same pre-spin years; DD's Qnity spin halved revenue but moved
+  // invested capital < 50%). A cyclical revenue collapse with no restatement is evidence, not a break.
+  const icBreak = comparableWindow(ic);
+  const revBreak = Math.max(0, portfolioBreakIndex(f));
+  const from = Math.max(icBreak, revBreak);
+  if (from > 0)
+    flags.push(`structural break at ${f.statements.fiscalYears[from]} (${from === revBreak && revBreak > icBreak ? "spin-off: revenue drop > 20%, history restated" : "invested-capital jump > 50%"}) — pre-break years dropped`);
   const inc = incrementalRoic(f, taxRate, from);
 
   const cmpRoic = roic.slice(from);

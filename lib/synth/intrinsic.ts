@@ -36,6 +36,7 @@ export interface IntrinsicFacts {
   sector?: string;
   sic?: number | null;
   sbc?: (number | null)[]; // stock-based compensation per fiscal year, aligned to statements.fiscalYears
+  goodwillRestated?: string[]; // fiscal years whose goodwill a later 10-K recast (lib/facts/enrich.ts restatedYears)
   quote: { price: number; marketCap: number; sharesOutstanding: number };
   ttm: { fcfYield: number | null };
   statements: { fiscalYears: string[]; income: Row[]; cashflow: Row[] };
@@ -300,6 +301,18 @@ export function revenueBreakIndex(revenue: (number | null)[] | undefined): numbe
   return idx;
 }
 
+/**
+ * The first post-spin year, or −1. A > 20% revenue drop counts as a portfolio change (spin-off /
+ * divestiture) only when a later 10-K also restated the history (`goodwillRestated` non-empty) — a
+ * cyclical collapse (ZBRA 2023, MP's rare-earth prices, UEC) or a secular decline (INTC) restates
+ * nothing and is real evidence, not a break to drop. Shared by the reverse DCF and the moat engine so
+ * both ignore the same pre-spin years.
+ */
+export function portfolioBreakIndex(f: { goodwillRestated?: string[]; statements: { income: Row[] } }): number {
+  if (!f.goodwillRestated?.length) return -1;
+  return revenueBreakIndex(series(f.statements.income, "revenue"));
+}
+
 const cagr = (vals: (number | null)[] | undefined): number | null => {
   if (!vals || vals.length < 2) return null;
   const first = vals[0];
@@ -318,8 +331,9 @@ export interface AchievableGrowthDetail {
 
 /**
  * A disciplined achievable (starting) growth from the statements, clamped to [−10%, +15%]:
- *  1. Structural break — a year-over-year revenue drop of more than 20% is a portfolio change (DD's
- *     Qnity spin, MMM's Solventum spin), not organic decline: both CAGRs use only the years from the
+ *  1. Structural break — a year-over-year revenue drop of more than 20% in a pack whose history a later
+ *     10-K restated is a portfolio change (DD's Qnity spin, MMM's Solventum spin; portfolioBreakIndex),
+ *     not organic decline: both CAGRs use only the years from the
  *     break onward. With fewer than 2 growth years left, the revenue change over what remains is used
  *     (0 when there is none), and a flag says so.
  *  2. Meaningful base — the FCF CAGR is used only when both endpoints are positive and the first is at
@@ -334,7 +348,7 @@ export function achievableGrowthDetail(f: IntrinsicFacts): AchievableGrowthDetai
   const flags: string[] = [];
   const rev = series(f.statements.income, "revenue");
   const fcf = series(f.statements.cashflow, "freeCashFlow");
-  const br = revenueBreakIndex(rev);
+  const br = portfolioBreakIndex(f);
   const revW = rev?.slice(Math.max(0, br));
   const fcfW = fcf?.slice(Math.max(0, br));
   if (br >= 0)

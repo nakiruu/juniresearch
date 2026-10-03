@@ -194,3 +194,27 @@ function investedCapital(f: MoatFacts, i: number): number {
   const g = (k: string) => f.statements.balance.find((r) => r.key === k)?.values[i] ?? 0;
   return (g("totalDebt") as number) + (g("totalEquity") as number) - (g("cashAndInvestments") as number);
 }
+
+describe("structural break — spin-off (revenue drop + restated history) vs cyclical collapse", () => {
+  const rows = (key: string, values: number[]) => ({ key, label: key, values });
+  const shape = (goodwillRestated?: string[]): MoatFacts => ({
+    ticker: "SPN", sic: 3559, goodwillRestated,
+    quote: { marketCap: 20000 }, ttm: { interestCoverage: 20 },
+    statements: {
+      fiscalYears: ["FY21", "FY22", "FY23", "FY24", "FY25"],
+      income: [rows("operatingIncome", [200, 210, 60, 70, 80]), rows("revenue", [1200, 1300, 660, 690, 720]), rows("grossProfit", [500, 540, 270, 285, 300])],
+      balance: [rows("totalEquity", [900, 900, 880, 900, 920]), rows("totalDebt", [100, 100, 100, 100, 100]), rows("cashAndInvestments", [50, 50, 50, 50, 50])],
+      cashflow: [rows("freeCashFlow", [150, 160, 50, 55, 60])],
+    },
+  });
+  it("drops pre-spin years when revenue halves and a later 10-K restated the history (DD-shape)", () => {
+    const m = moatRead(shape(["FY21", "FY23"]), { wacc: 0.08 });
+    expect(m.comparableFrom).toBe(2);
+    expect(m.flags.some((f) => /structural break at FY23 \(spin-off/.test(f))).toBe(true);
+  });
+  it("keeps the downturn years when nothing was restated (a cyclical collapse is evidence)", () => {
+    const m = moatRead(shape(undefined), { wacc: 0.08 });
+    expect(m.comparableFrom).toBe(0);
+    expect(m.flags.some((f) => f.startsWith("structural break"))).toBe(false);
+  });
+});

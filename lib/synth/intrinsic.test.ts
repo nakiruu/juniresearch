@@ -9,6 +9,7 @@ import {
   achievableGrowth,
   achievableGrowthDetail,
   revenueBreakIndex,
+  portfolioBreakIndex,
   intrinsicRead,
   dcfApplicable,
   ownerEarningsDetail,
@@ -234,19 +235,28 @@ describe("achievableGrowth — base-year guard, structural break, sign rule, cap
   });
   it("measures growth only from a structural break onward (spin-off ≠ organic decline)", () => {
     // DD-shape: revenue halves in FY23 (13.0B → 6.6B) then grows; the full-window CAGR would be ~−15%.
-    const f = synth([12.0, 13.0, 6.6, 6.9, 7.2], [1.5, 1.6, 0.9, 0.95, 1.0]);
+    const f = synth([12.0, 13.0, 6.6, 6.9, 7.2], [1.5, 1.6, 0.9, 0.95, 1.0], { goodwillRestated: ["FY21", "FY23"] });
     const d = achievableGrowthDetail(f);
     expect(d.breakIndex).toBe(2);
     expect(d.g).toBeCloseTo((1.0 / 0.9) ** 0.5 - 1, 8); // FCF CAGR over FY23..FY25
     expect(d.flags.some((x) => /structural break at FY23/.test(x))).toBe(true);
   });
+  it("treats the same revenue drop without a restated history as evidence, not a break (cyclical collapse)", () => {
+    const f = synth([12.0, 13.0, 6.6, 6.9, 7.2], [1.5, 1.6, 0.9, 0.95, 1.0]); // ZBRA/MP-shape: nothing restated
+    const d = achievableGrowthDetail(f);
+    expect(d.breakIndex).toBe(-1);
+    expect(d.flags.some((x) => /structural break/.test(x))).toBe(false);
+    expect(portfolioBreakIndex(f)).toBe(-1);
+    expect(portfolioBreakIndex({ ...f, goodwillRestated: ["FY22"] })).toBe(2);
+  });
   it("with one post-break year left, uses that revenue change; with none, 0 — and flags it", () => {
-    const one = achievableGrowthDetail(synth([100, 105, 110, 70, 77], [10, 11, 12, 8, 4]));
+    const spun = { goodwillRestated: ["FY23"] };
+    const one = achievableGrowthDetail(synth([100, 105, 110, 70, 77], [10, 11, 12, 8, 4], spun));
     expect(one.breakIndex).toBe(3);
     expect(one.source).toBe("revenue");
     expect(one.g).toBeCloseTo(0.1, 8); // 70 → 77, the FCF change is ignored
     expect(one.flags.some((x) => /fewer than 2 post-break years/.test(x))).toBe(true);
-    const none = achievableGrowthDetail(synth([100, 105, 110, 115, 70], [10, 11, 12, 13, 8]));
+    const none = achievableGrowthDetail(synth([100, 105, 110, 115, 70], [10, 11, 12, 13, 8], spun));
     expect(none.breakIndex).toBe(4);
     expect(none.g).toBe(0);
     expect(none.flags.some((x) => /set to 0/.test(x))).toBe(true);

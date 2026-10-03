@@ -86,14 +86,16 @@ A separate scoring layer produces:
   FactPack's **measured beta** (2y weekly vs SPY, Blume-adjusted, clamped [0.3, 2.5]; `lib/facts/beta.ts`,
   captured from Shibui Finance) and the SIC sector proxy only when none was captured.
 
-> 💡 **Deferred — point-in-time FactPacks (goodwill basis).** A pack's statement columns come from the
-> vendor year by year and mix bases after a spin-off (DD's FY23+ revenue is restated for the Qnity spin,
-> FY21–22 as reported; T's FY21 includes WarnerMedia). Goodwill is stamped on the latest-filed
-> (restated) basis, so for the years in `goodwillRestated` the moat's ex-goodwill ROIC can mix restated
-> goodwill with as-reported statements; `moatRead` flags those years instead of guessing. Measured
-> 2026-10: neither basis changes any moat verdict on the affected names (DD, GE, HON, LH, LRCX, MMM, NVT,
-> T). The fix is to rebuild every year's statements from SEC on one rule (latest filed), which would also
-> steady the reverse DCF's spin-off handling.
+> 💡 **Deferred — point-in-time FactPacks (goodwill basis).** A pack's statement columns mix bases after a
+> spin-off (DD's FY23+ revenue is restated for the Qnity spin, FY21–22 as reported; T's FY21 includes
+> WarnerMedia). Goodwill is stamped on the latest-filed (restated) basis, so for the years in
+> `goodwillRestated` the moat's ex-goodwill ROIC can mix bases; `moatRead` flags them. Rebuilding the
+> statements from SEC would not fully fix it — a 10-K recasts only 3 years of income statement and 2 of
+> balance sheet, so the oldest years of a 5-year history stay pre-spin in any filing — and neither goodwill
+> basis changed a moat verdict (measured 2026-10). Instead both engines drop pre-spin years with one rule,
+> `portfolioBreakIndex` (a > 20% revenue drop in a pack whose history a later 10-K restated): DD, GE, MDU,
+> MMM today. A cyclical collapse with no restatement (ZBRA 2023, MP, UEC) is kept as evidence. Revisit the
+> rebuild only if a moat or DCF verdict is found to hinge on mixed-basis years.
 
 > 💡 **Deferred — re-building published reports.** `rating.decision` (conviction, moat, intrinsic) is
 > persisted in each `data/<ticker>.json` when `synth:build` runs, and the portfolio reads κ from there.
