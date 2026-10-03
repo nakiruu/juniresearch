@@ -180,7 +180,7 @@
         "key": "capex",
         "label": "Capital Expenditure",
         "values": [
-          -3710000,
+          -4738000,
           null,
           null,
           null,
@@ -213,7 +213,7 @@
         "key": "freeCashFlow",
         "label": "Free Cash Flow",
         "values": [
-          -60491000,
+          -61519000,
           null,
           null,
           null,
@@ -585,6 +585,12 @@
       "source": "shibui",
       "capturedAt": "2026-10-03T03:46:39.826Z",
       "endpoint": "stock_data_query: 2y weekly log returns vs SPY (cov/var) → Blume-adjusted, clamped [0.3, 2.5]"
+    },
+    {
+      "field": "statements.cashflow.capex",
+      "source": "edgar",
+      "capturedAt": "2026-10-03T05:24:02.422Z",
+      "endpoint": "capex incl. CAPEX_EXTRA: companyfacts PaymentsToDevelopSoftware added to the PP&E capex (and deducted from freeCashFlow) per fiscal year: FY21 1.0M, FY22 0.0M, FY23 0.0M, FY24 0.0M, FY25 0.0M"
     },
     {
       "field": "shibuiCheck",

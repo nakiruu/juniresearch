@@ -187,11 +187,11 @@
         "key": "capex",
         "label": "Capital Expenditure",
         "values": [
-          -112143000,
-          -235019000,
-          -176529000,
-          -254852000,
-          -302108000
+          -133009000,
+          -264114000,
+          -225986000,
+          -313821000,
+          -370859000
         ]
       },
       {
@@ -220,11 +220,11 @@
         "key": "freeCashFlow",
         "label": "Free Cash Flow",
         "values": [
-          462641000,
-          705988000,
-          989678000,
-          1126875000,
-          1310241000
+          441775000,
+          676893000,
+          940221000,
+          1067906000,
+          1241490000
         ]
       }
     ]
@@ -246,7 +246,7 @@
     "netDebtToEbitda": null,
     "interestCoverage": -4.98964197252871,
     "currentRatio": 1.5701281896151602,
-    "fcfYield": 0.006013256853365172
+    "fcfYield": 0.00570257975311053
   },
   "estimates": {
     "nextFY": {
@@ -612,6 +612,18 @@
       "capturedAt": "2026-10-03T04:35:47.729Z"
     },
     {
+      "field": "statements.cashflow.capex",
+      "source": "edgar",
+      "capturedAt": "2026-10-03T05:24:02.422Z",
+      "endpoint": "capex incl. CAPEX_EXTRA: companyfacts PaymentsToDevelopSoftware added to the PP&E capex (and deducted from freeCashFlow) per fiscal year: FY22 20.9M, FY23 29.1M, FY24 49.5M, FY25 59.0M, FY26 68.8M"
+    },
+    {
+      "field": "ttm.fcfYield",
+      "source": "edgar",
+      "capturedAt": "2026-10-03T05:24:02.422Z",
+      "endpoint": "TTM to 2026-07-31 (last FY + YTD − prior YTD): operating cash flow − (PP&E + PaymentsToDevelopSoftware) / quote.marketCap, SEC companyfacts"
+    },
+    {
       "field": "shibuiCheck",
       "source": "shibui",
       "capturedAt": "2026-10-03T04:32:59.534Z",
@@ -671,9 +683,9 @@
       },
       {
         "field": "fcfTtm",
-        "pack": 1608718000,
+        "pack": 1525603000,
         "shibui": 1525603000,
-        "relDiff": 0.0545,
+        "relDiff": 0,
         "level": "ok"
       }
     ],

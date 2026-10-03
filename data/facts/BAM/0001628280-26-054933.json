@@ -45,9 +45,9 @@
         "key": "revenue",
         "label": "Revenue",
         "values": [
-          3142000000,
-          3381000000,
-          3944000000
+          4062000000,
+          3980000000,
+          4817000000
         ]
       },
       {
@@ -194,17 +194,17 @@
   "latestQuarter": {
     "label": "Q2'26",
     "periodEnd": "2026-06-30",
-    "revenue": 1047000000,
+    "revenue": 1753000000,
     "operatingMargin": null,
-    "revenueYoY": 0.12459720730397428
+    "revenueYoY": 0.608256880733945
   },
   "ttm": {
     "pe": 26.595375,
-    "ps": 17.941782,
+    "ps": 12.809750579048282,
     "evToEbitda": 20.395,
     "grossMargin": null,
     "operatingMargin": null,
-    "netMargin": 0.748291015625,
+    "netMargin": 0.534251350880251,
     "netDebtToEbitda": null,
     "interestCoverage": null,
     "currentRatio": null,
@@ -556,6 +556,18 @@
       "endpoint": "stock_data_query: 2y weekly log returns vs SPY (cov/var) → Blume-adjusted, clamped [0.3, 2.5]"
     },
     {
+      "field": "latestQuarter.revenue",
+      "source": "edgar",
+      "endpoint": "companyfacts us-gaap:Revenues 2026-04-01→2026-06-30 = $1,753M (10-Q 0001628280-26-054933). Vendor value $1,047M was base management & advisory fees ($919M) + incentive fees ($128M) only; replaced so actuals share the GAAP basis of consensus estimates. Annual revenue FY23–FY25 from 10-K 0001628280-26-013098; ttm.ps and ttm.netMargin recomputed on GAAP TTM revenue $5,737M.",
+      "capturedAt": "2026-10-03T00:00:00.000Z"
+    },
+    {
+      "field": "ttm.fcfYield",
+      "source": "edgar",
+      "endpoint": "verified vs companyfacts TTM to 2026-06-30: NetCashProvidedByUsedInOperatingActivities 2,341 − PaymentsToAcquireOtherPropertyPlantAndEquipment 22 = $2,319M. Shibui fcfTtm −232 sums net cash from INVESTING activities — Shibui mapping error, not adopted.",
+      "capturedAt": "2026-10-03T00:00:00.000Z"
+    },
+    {
       "field": "shibuiCheck",
       "source": "shibui",
       "capturedAt": "2026-10-03T04:32:59.534Z",
@@ -608,10 +620,10 @@
       },
       {
         "field": "revenueQuarter",
-        "pack": 1047000000,
+        "pack": 1753000000,
         "shibui": 1753000000,
-        "relDiff": 0.4027,
-        "level": "fail"
+        "relDiff": 0,
+        "level": "ok"
       },
       {
         "field": "fcfTtm",

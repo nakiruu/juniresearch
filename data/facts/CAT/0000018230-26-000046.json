@@ -187,11 +187,11 @@
         "key": "capex",
         "label": "Capital Expenditure",
         "values": [
-          -1093000000,
-          -1296000000,
-          -1597000000,
-          -1988000000,
-          -2821000000
+          -2472000000,
+          -2599000000,
+          -3092000000,
+          -3215000000,
+          -4286000000
         ]
       },
       {
@@ -220,11 +220,11 @@
         "key": "freeCashFlow",
         "label": "Free Cash Flow",
         "values": [
-          6105000000,
-          6470000000,
-          11288000000,
-          10047000000,
-          8918000000
+          4726000000,
+          5167000000,
+          9793000000,
+          8820000000,
+          7453000000
         ]
       }
     ]
@@ -246,7 +246,7 @@
     "netDebtToEbitda": null,
     "interestCoverage": null,
     "currentRatio": 1.3684342799698417,
-    "fcfYield": 0.028660587454405393
+    "fcfYield": 0.024095468645066564
   },
   "estimates": {
     "nextFY": {
@@ -612,6 +612,18 @@
       "endpoint": "companyconcept us-gaap/AllocatedShareBasedCompensationExpense (FY21, FY22, FY23, FY24, FY25)"
     },
     {
+      "field": "statements.cashflow.capex",
+      "source": "edgar",
+      "capturedAt": "2026-10-03T05:24:02.422Z",
+      "endpoint": "capex incl. CAPEX_EXTRA: companyfacts PaymentsToAcquireEquipmentOnLease added to the PP&E capex (and deducted from freeCashFlow) per fiscal year: FY21 1379.0M, FY22 1303.0M, FY23 1495.0M, FY24 1227.0M, FY25 1465.0M"
+    },
+    {
+      "field": "ttm.fcfYield",
+      "source": "edgar",
+      "capturedAt": "2026-10-03T05:24:02.422Z",
+      "endpoint": "TTM to 2026-06-30 (last FY + YTD − prior YTD): operating cash flow − (PP&E + PaymentsToAcquireEquipmentOnLease) / quote.marketCap, SEC companyfacts"
+    },
+    {
       "field": "shibuiCheck",
       "source": "shibui",
       "capturedAt": "2026-10-03T04:32:59.534Z",
@@ -671,9 +683,9 @@
       },
       {
         "field": "fcfTtm",
-        "pack": 10698000000,
+        "pack": 8994000000,
         "shibui": 9773000000,
-        "relDiff": 0.0946,
+        "relDiff": 0.0797,
         "level": "ok"
       }
     ],

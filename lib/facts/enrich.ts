@@ -10,7 +10,7 @@
  */
 import { sleep, type FetchLike } from "../edgar/client";
 import { padCik } from "../edgar/submissions";
-import { CAPEX_RAW, OCF, fetchCompanyFacts, parseCompanyFacts, type SecPeriod } from "./free/sec";
+import { CAPEX_ALL_IN, CAPEX_EXTRA, CAPEX_RAW, OCF, fetchCompanyFacts, parseCompanyFacts, type SecPeriod } from "./free/sec";
 
 const YAHOO_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) juniper-research";
 const num = (x: unknown): x is number => typeof x === "number" && Number.isFinite(x);
@@ -301,13 +301,22 @@ export function ttmFromYtd(entries: DurationEntry[], periodEnd: string): number 
 
 type FactsBody = { facts?: { "us-gaap"?: Record<string, { units?: { USD?: DurationEntry[] } }> } };
 
-/** First concept (in priority order) whose TTM is computable at `periodEnd`. */
-function ttmConcept(facts: FactsBody, concepts: string[], periodEnd: string): number | null {
+/** First concept (in priority order) whose TTM is computable at `periodEnd`, and which concept it was. */
+function ttmConceptDetail(facts: FactsBody, concepts: string[], periodEnd: string): { v: number; concept: string } | null {
   for (const c of concepts) {
     const v = ttmFromYtd(facts.facts?.["us-gaap"]?.[c]?.units?.USD ?? [], periodEnd);
-    if (v != null) return v;
+    if (v != null) return { v, concept: c };
   }
   return null;
+}
+const ttmConcept = (facts: FactsBody, concepts: string[], periodEnd: string): number | null => ttmConceptDetail(facts, concepts, periodEnd)?.v ?? null;
+
+/** TTM capex payments: the CAPEX_RAW base plus tagged CAPEX_EXTRA lines (unless the base is all-in). */
+export function ttmCapex(facts: FactsBody, periodEnd: string): number | null {
+  const base = ttmConceptDetail(facts, CAPEX_RAW, periodEnd);
+  if (!base) return null;
+  if (base.concept === CAPEX_ALL_IN) return base.v;
+  return base.v + CAPEX_EXTRA.reduce((a, c) => a + (ttmConcept(facts, [c], periodEnd) ?? 0), 0);
 }
 
 /**
@@ -330,7 +339,7 @@ export function secTtmFcf(facts: unknown, periodEnd: string): { fcf: number; asO
   for (const end of [...ends].sort().reverse()) {
     if (end < lastFyEnd) break;
     const ocf = ttmConcept(body, OCF, end);
-    const capex = ttmConcept(body, CAPEX_RAW, end);
+    const capex = ttmCapex(body, end);
     if (ocf != null && capex != null) return { fcf: ocf - capex, asOf: end };
   }
   return null;

@@ -180,11 +180,11 @@
         "key": "capex",
         "label": "Capital Expenditure",
         "values": [
-          -8200000,
-          -8000000,
-          -14000000,
-          -7000000,
-          -10000000
+          -54500000,
+          -64200000,
+          -136000000,
+          -173000000,
+          -234000000
         ]
       },
       {
@@ -213,11 +213,11 @@
         "key": "freeCashFlow",
         "label": "Free Cash Flow",
         "values": [
-          -5200000,
-          267400000,
-          332000000,
-          493000000,
-          624000000
+          -51500000,
+          211200000,
+          210000000,
+          327000000,
+          400000000
         ]
       }
     ]
@@ -239,7 +239,7 @@
     "netDebtToEbitda": 4.511400651465798,
     "interestCoverage": 1.5396825396825398,
     "currentRatio": 1.211111111111111,
-    "fcfYield": 0.1998575501882559
+    "fcfYield": 0.10847416772870434
   },
   "estimates": {
     "nextFY": {
@@ -593,6 +593,18 @@
       "endpoint": "stock_data_query: 2y weekly log returns vs SPY (cov/var) → Blume-adjusted, clamped [0.3, 2.5]"
     },
     {
+      "field": "ttm.fcfYield",
+      "source": "edgar",
+      "endpoint": "companyfacts TTM to 2026-06-30 (FY25 + H1'26 − H1'25): NetCashProvidedByUsedInOperatingActivities 593 − (PaymentsToAcquirePropertyPlantAndEquipment 20 + PaymentsToAcquireEquipmentOnLease 140 + capitalized software 122 [untagged; 10-K 0001794669-26-000010 and 10-Q 0001794669-26-000045 cash-flow statements]) = $311M ÷ quote.marketCap; matches the company's FCF reconciliation (8-K ex. 99.1, Q2'26). Replaces OCF − PP&E only.",
+      "capturedAt": "2026-10-03T00:00:00.000Z"
+    },
+    {
+      "field": "statements.cashflow.capex",
+      "source": "edgar",
+      "endpoint": "10-K 0001794669-26-000010 cash-flow statement: PP&E + equipment to be leased + capitalized software development costs (FY23–FY25); FY21–FY22 include the tagged equipment-on-lease and software lines only (capitalized software for those years unverified)",
+      "capturedAt": "2026-10-03T00:00:00.000Z"
+    },
+    {
       "field": "shibuiCheck",
       "source": "shibui",
       "capturedAt": "2026-10-03T04:32:59.534Z",
@@ -659,10 +671,10 @@
       },
       {
         "field": "fcfTtm",
-        "pack": 573000000,
+        "pack": 311000000,
         "shibui": 311300000,
-        "relDiff": 0.8407,
-        "level": "fail"
+        "relDiff": 0.001,
+        "level": "ok"
       }
     ],
     "source": "shibui"

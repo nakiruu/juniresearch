@@ -182,9 +182,9 @@
         "values": [
           -2743000,
           -2319000,
-          -762000,
-          -2418000,
-          -1835000
+          -12651000,
+          -21212000,
+          -30260000
         ]
       },
       {
@@ -215,9 +215,9 @@
         "values": [
           54229000,
           -15285000,
-          20342000,
-          55752000,
-          160788000
+          8453000,
+          36958000,
+          132363000
         ]
       }
     ]
@@ -239,7 +239,7 @@
     "netDebtToEbitda": null,
     "interestCoverage": null,
     "currentRatio": 1.6640696484060045,
-    "fcfYield": 0.11502780755194804
+    "fcfYield": 0.09704698553521401
   },
   "estimates": {
     "nextFY": {
@@ -593,6 +593,18 @@
       "endpoint": "stock_data_query: 2y weekly log returns vs SPY (cov/var) → Blume-adjusted, clamped [0.3, 2.5]"
     },
     {
+      "field": "statements.cashflow.capex",
+      "source": "edgar",
+      "capturedAt": "2026-10-03T05:24:02.422Z",
+      "endpoint": "capex incl. CAPEX_EXTRA: companyfacts PaymentsForSoftware added to the PP&E capex (and deducted from freeCashFlow) per fiscal year: FY21 0.0M, FY22 0.0M, FY23 11.9M, FY24 18.8M, FY25 28.4M"
+    },
+    {
+      "field": "ttm.fcfYield",
+      "source": "edgar",
+      "capturedAt": "2026-10-03T05:24:02.422Z",
+      "endpoint": "TTM to 2026-06-30 (last FY + YTD − prior YTD): operating cash flow − (PP&E + PaymentsForSoftware) / quote.marketCap, SEC companyfacts"
+    },
+    {
       "field": "shibuiCheck",
       "source": "shibui",
       "capturedAt": "2026-10-03T04:32:59.534Z",
@@ -659,10 +671,10 @@
       },
       {
         "field": "fcfTtm",
-        "pack": 198174000,
+        "pack": 167196000,
         "shibui": 167196000,
-        "relDiff": 0.1853,
-        "level": "warn"
+        "relDiff": 0,
+        "level": "ok"
       }
     ],
     "source": "shibui"

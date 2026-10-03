@@ -192,8 +192,8 @@
         "key": "capex",
         "label": "Capital Expenditure",
         "values": [
-          -1250000000,
-          -1371000000,
+          -1361000000,
+          -1484000000,
           -862000000,
           -1032000000,
           -1273000000
@@ -225,8 +225,8 @@
         "key": "freeCashFlow",
         "label": "Free Cash Flow",
         "values": [
-          2231000000,
-          4546000000,
+          2120000000,
+          4433000000,
           4327000000,
           3678000000,
           7264000000
@@ -597,6 +597,18 @@
       "source": "edgar",
       "capturedAt": "2026-10-03T04:23:08.007Z",
       "endpoint": "companyconcept us-gaap/AllocatedShareBasedCompensationExpense (FY21, FY22, FY23, FY24, FY25)"
+    },
+    {
+      "field": "statements.cashflow.capex",
+      "source": "edgar",
+      "capturedAt": "2026-10-03T05:24:02.422Z",
+      "endpoint": "capex incl. CAPEX_EXTRA: companyfacts PaymentsForSoftware added to the PP&E capex (and deducted from freeCashFlow) per fiscal year: FY21 111.0M, FY22 113.0M, FY23 0.0M, FY24 0.0M, FY25 0.0M"
+    },
+    {
+      "field": "ttm.fcfYield",
+      "source": "edgar",
+      "capturedAt": "2026-10-03T05:24:02.422Z",
+      "endpoint": "TTM to 2026-06-30 (last FY + YTD − prior YTD): operating cash flow − (PP&E + PaymentsForSoftware) / quote.marketCap, SEC companyfacts"
     },
     {
       "field": "shibuiCheck",

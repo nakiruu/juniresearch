@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { alignAnnualSeries, restatedYears, mergeConceptSeries, fetchSbcSeries, stampSbcProvenance, parsePeerMultiples, enrichPack, secEvToEbitda, evToEbitdaNotMeaningful, ttmFromYtd, secTtmFcf } from "./enrich";
+import { alignAnnualSeries, restatedYears, mergeConceptSeries, fetchSbcSeries, stampSbcProvenance, parsePeerMultiples, enrichPack, secEvToEbitda, evToEbitdaNotMeaningful, ttmFromYtd, secTtmFcf, ttmCapex } from "./enrich";
 
 // Hand-built companyconcept facts. A 10-K reports the current year plus comparatives, all under the
 // filing's own `fy` — which is why alignment must key on the period end, not `fy`.
@@ -266,5 +266,19 @@ describe("restatedYears — goodwill a later 10-K recast", () => {
       inst("2025-12-31", 160, "k25", 2025, "2026-02-10"),
     ];
     expect(restatedYears(e, ["FY24", "FY25"], "2026-06-30")).toEqual([]);
+  });
+});
+
+describe("ttmCapex — tagged software / lease equipment join the PP&E capex", () => {
+  const e = (start: string, end: string, val: number, form = "10-Q", filed = "2026-08-01") => ({ start, end, val, form, filed });
+  const leg = (fy: number, ytd: number, prior: number) => [e("2024-07-01", "2024-12-31", prior, "10-Q", "2025-02-01"), e("2024-07-01", "2025-06-30", fy, "10-K", "2025-08-01"), e("2025-07-01", "2025-12-31", ytd)];
+  const body = (c: Record<string, ReturnType<typeof leg>>) => ({ facts: { "us-gaap": Object.fromEntries(Object.entries(c).map(([k, v]) => [k, { units: { USD: v } }])) } });
+  it("sums the PP&E base and every tagged extra over the same TTM window", () => {
+    const b = body({ PaymentsToAcquirePropertyPlantAndEquipment: leg(20, 12, 10), PaymentsToDevelopSoftware: leg(8, 5, 4) });
+    expect(ttmCapex(b, "2025-12-31")).toBe(20 + 12 - 10 + (8 + 5 - 4));
+  });
+  it("leaves an all-in productive-assets base alone", () => {
+    const b = body({ PaymentsToAcquireProductiveAssets: leg(20, 12, 10), PaymentsToDevelopSoftware: leg(8, 5, 4) });
+    expect(ttmCapex(b, "2025-12-31")).toBe(22);
   });
 });

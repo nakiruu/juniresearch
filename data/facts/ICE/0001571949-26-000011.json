@@ -187,11 +187,11 @@
         "key": "capex",
         "label": "Capital Expenditure",
         "values": [
-          -179000000,
-          -225000000,
-          -190000000,
-          -406000000,
-          -373000000
+          -452000000,
+          -482000000,
+          -489000000,
+          -752000000,
+          -791000000
         ]
       },
       {
@@ -220,11 +220,11 @@
         "key": "freeCashFlow",
         "label": "Free Cash Flow",
         "values": [
-          2944000000,
-          3329000000,
-          3352000000,
-          4203000000,
-          4289000000
+          2671000000,
+          3072000000,
+          3053000000,
+          3857000000,
+          3871000000
         ]
       }
     ]
@@ -246,7 +246,7 @@
     "netDebtToEbitda": 2.850199543899658,
     "interestCoverage": 6.7997512437810945,
     "currentRatio": 1.0123407643312101,
-    "fcfYield": 0.058180567603381056
+    "fcfYield": 0.053173693234992415
   },
   "estimates": {
     "nextFY": {
@@ -594,6 +594,18 @@
       "endpoint": "stock_data_query: 2y weekly log returns vs SPY (cov/var) → Blume-adjusted, clamped [0.3, 2.5]"
     },
     {
+      "field": "statements.cashflow.capex",
+      "source": "edgar",
+      "capturedAt": "2026-10-03T05:24:02.422Z",
+      "endpoint": "capex incl. CAPEX_EXTRA: companyfacts PaymentsToDevelopSoftware added to the PP&E capex (and deducted from freeCashFlow) per fiscal year: FY21 273.0M, FY22 257.0M, FY23 299.0M, FY24 346.0M, FY25 418.0M"
+    },
+    {
+      "field": "ttm.fcfYield",
+      "source": "edgar",
+      "capturedAt": "2026-10-03T05:24:02.422Z",
+      "endpoint": "TTM to 2026-06-30 (last FY + YTD − prior YTD): operating cash flow − (PP&E + PaymentsToDevelopSoftware) / quote.marketCap, SEC companyfacts"
+    },
+    {
       "field": "shibuiCheck",
       "source": "shibui",
       "capturedAt": "2026-10-03T04:32:59.534Z",
@@ -653,9 +665,9 @@
       },
       {
         "field": "fcfTtm",
-        "pack": 5078000000,
+        "pack": 4641000000,
         "shibui": 4641000000,
-        "relDiff": 0.0942,
+        "relDiff": 0,
         "level": "ok"
       }
     ],

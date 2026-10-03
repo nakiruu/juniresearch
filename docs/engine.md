@@ -102,7 +102,9 @@ A separate scoring layer produces:
 > The 2026-10 scoring changes (measured beta, the reverse-DCF fixes, robust DCF penalty, SBC/goodwill/TTM
 > FCF capture, the Shibui input check and TTM SBC) therefore reach sizing only when a report is re-built
 > (`synth:build <T> <ACC> --date <original date>`). Measured against the stored decisions, a re-build would
-> move 44 convictions (41 up, 3 down: GE, VRT, RDVT). Held back by the owner until a deliberate rollout.
+> move 46 convictions (42 up, 4 down: DSP, GE, RDVT, VRT). FOUR and DSP's published reports were also written
+> on an overstated FCF (docs/superpowers/specs/2026-10-03-crosscheck-input-review.md) and need re-synthesis, not
+> just a re-build. Held back by the owner until a deliberate rollout.
 
 **P(touch fair value) — display only (`lib/portfolio/touch.ts`).** A GBM first-passage probability,
 `P = Φ((νT−b)/σ√T) + e^{2νb/σ²}·Φ((−b−νT)/σ√T)` with `b = ln(FV/S₀)`, σ from the report's ~30 recent

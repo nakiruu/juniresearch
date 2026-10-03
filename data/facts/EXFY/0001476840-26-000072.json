@@ -173,11 +173,11 @@
         "key": "capex",
         "label": "Capital Expenditure",
         "values": [
-          -2706000,
-          -585000,
-          -1384000,
-          0,
-          -17000
+          -7614000,
+          -2204000,
+          -7294000,
+          -7628000,
+          -3555000
         ]
       },
       {
@@ -206,11 +206,11 @@
         "key": "freeCashFlow",
         "label": "Free Cash Flow",
         "values": [
-          2780000,
-          32291000,
-          175000,
-          23877000,
-          20072000
+          -2128000,
+          30672000,
+          -5735000,
+          16249000,
+          16534000
         ]
       }
     ]
@@ -232,7 +232,7 @@
     "netDebtToEbitda": null,
     "interestCoverage": null,
     "currentRatio": 3.4967117198838897,
-    "fcfYield": 0.06141248720573183
+    "fcfYield": 0.040093580932884926
   },
   "estimates": {
     "nextFY": {
@@ -592,6 +592,18 @@
       "capturedAt": "2026-10-03T04:35:50.565Z"
     },
     {
+      "field": "statements.cashflow.capex",
+      "source": "edgar",
+      "capturedAt": "2026-10-03T05:24:02.422Z",
+      "endpoint": "capex incl. CAPEX_EXTRA: companyfacts PaymentsToDevelopSoftware added to the PP&E capex (and deducted from freeCashFlow) per fiscal year: FY21 4.9M, FY22 1.6M, FY23 5.9M, FY24 7.6M, FY25 3.5M"
+    },
+    {
+      "field": "ttm.fcfYield",
+      "source": "edgar",
+      "capturedAt": "2026-10-03T05:24:02.422Z",
+      "endpoint": "TTM to 2026-06-30 (last FY + YTD − prior YTD): operating cash flow − (PP&E + PaymentsToDevelopSoftware) / quote.marketCap, SEC companyfacts"
+    },
+    {
       "field": "shibuiCheck",
       "source": "shibui",
       "capturedAt": "2026-10-03T04:32:59.534Z",
@@ -658,9 +670,9 @@
       },
       {
         "field": "fcfTtm",
-        "pack": 12600000,
+        "pack": 8226000,
         "shibui": 10545000,
-        "relDiff": 0.1949,
+        "relDiff": 0.2199,
         "level": "warn"
       }
     ],

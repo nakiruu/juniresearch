@@ -180,11 +180,11 @@
         "key": "capex",
         "label": "Capital Expenditure",
         "values": [
-          -280000,
-          -373000,
-          -122000,
-          -169000,
-          -563000
+          -5244000,
+          -8829000,
+          -9146000,
+          -9567000,
+          -11156000
         ]
       },
       {
@@ -213,11 +213,11 @@
         "key": "freeCashFlow",
         "label": "Free Cash Flow",
         "values": [
-          8668000,
-          12086000,
-          14949000,
-          23791000,
-          28786000
+          3704000,
+          3630000,
+          5925000,
+          14393000,
+          18193000
         ]
       }
     ]
@@ -239,7 +239,7 @@
     "netDebtToEbitda": null,
     "interestCoverage": null,
     "currentRatio": 10.883383383383384,
-    "fcfYield": 0.02632600327486581
+    "fcfYield": 0.016602209897659693
   },
   "estimates": {
     "nextFY": {
@@ -587,6 +587,18 @@
       "endpoint": "stock_data_query: 2y weekly log returns vs SPY (cov/var) → Blume-adjusted, clamped [0.3, 2.5]"
     },
     {
+      "field": "statements.cashflow.capex",
+      "source": "edgar",
+      "capturedAt": "2026-10-03T05:24:02.422Z",
+      "endpoint": "capex incl. CAPEX_EXTRA: companyfacts PaymentsForSoftware added to the PP&E capex (and deducted from freeCashFlow) per fiscal year: FY21 5.0M, FY22 8.5M, FY23 9.0M, FY24 9.4M, FY25 10.6M"
+    },
+    {
+      "field": "ttm.fcfYield",
+      "source": "edgar",
+      "capturedAt": "2026-10-03T05:24:02.422Z",
+      "endpoint": "TTM to 2026-06-30 (last FY + YTD − prior YTD): operating cash flow − (PP&E + PaymentsForSoftware) / quote.marketCap, SEC companyfacts"
+    },
+    {
       "field": "shibuiCheck",
       "source": "shibui",
       "capturedAt": "2026-10-03T04:32:59.534Z",
@@ -653,10 +665,10 @@
       },
       {
         "field": "fcfTtm",
-        "pack": 33604000,
+        "pack": 21192000.000000004,
         "shibui": 21192000,
-        "relDiff": 0.5857,
-        "level": "fail"
+        "relDiff": 0,
+        "level": "ok"
       }
     ],
     "source": "shibui"
