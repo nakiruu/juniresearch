@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "781a8d805dbe98ecbceb596972a79fc01a85bbb3bb2aae092d4eecc1a5f46ea5",
-  "reviewedAt": "2026-10-03T03:26:51Z",
+  "judgmentSha256": "1a8cb99fab6147ab364399f0d72eea30aab4b00cdeefa094f12cf7a03b20d42b",
+  "reviewedAt": "2026-10-03T03:27:52Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved",
   "findings": [
     {
       "id": "F-1",
@@ -192,7 +192,8 @@
       "quote": "the shares fell sharply in late September 2026 without a captured explanation, and the last company outlook predates that fall, so we cannot tell whether carrier demand has turned.",
       "issue": "Repetition (paraphrase), introduced by the F-1 fix. Round 1 asked for the late-September fall to be said once. The same claim (sharp fall, no explanation, last outlook predates it) is now made in meta.subtitle (\"an unexplained late-September fall postdates the last outlook\"), analystCommentary (\"The shares fell sharply in late September 2026 for a reason we could not find, after the last company outlook was issued, so the newest demand evidence is older than the price move\"), this thesis sentence, scenarioCommentary (\"The demand evidence in hand ... predates that fall\") and finalRecommendation.body[0] (\"an unexplained share-price fall that postdates the last outlook\"). It is also restated in catalysts[0], scenarios[0].driver and capitalAllocation.",
       "fix": "Argue it once, in scenarioCommentary, where it sets the weights. Make the subtitle, analystCommentary, thesis and finalRecommendation one-clause pointers (e.g. \"the September fall, see valuation\"), and keep the scenario driver and capital-allocation mentions to the consequence only.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed: the September fall is argued once, in scenarioCommentary. The subtitle drops it; analystCommentary, the thesis and finalRecommendation.body[0] now only point to valuation; the Bull driver and catalysts[0] no longer restate it; capitalAllocation keeps only the consequence."
     },
     {
       "id": "F-20",
@@ -201,7 +202,8 @@
       "quote": "Repurchases retire Class A shares while the Class B shares stay outstanding, so each buyback raises the controlling holder's share of the vote.",
       "issue": "Unsupported claim, introduced by the F-7 fix. The surface says only that the company \"repurchased 578 thousand shares of its common stock\" (press release) and records \"Repurchase of common stock\" in the cash-flow statement. Nothing captured says the repurchased shares are Class A. The point does not need that detail: any repurchase from holders other than the controller raises the controller's share of the vote.",
       "fix": "Drop the class detail: e.g. \"Repurchases from other holders shrink the share count while the controlling holder's shares stay outstanding, so each buyback raises its share of the vote.\"",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed: the share-class detail is gone, and the text now reads \"Repurchases from other holders shrink the share count while the controlling holder's shares stay outstanding\"."
     },
     {
       "id": "F-21",
@@ -210,7 +212,8 @@
       "quote": "at ~6.3x FY27E EPS with net cash the shares do not need a rerating to work.",
       "issue": "Calls coherence, minor. scenarioCommentary now concedes that, measured on FY27E, Base \"is a modest rerating, which we accept because the time roll accounts for it\". The thesis states the FY27E multiple and then says no rerating is needed, which reads against the valuation section on that same basis.",
       "fix": "Align the thesis with the time-roll framing, e.g. \"the shares need only today's current-year multiple held as earnings roll forward\".",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed: the thesis now says the shares \"need only today's current-year multiple held as earnings roll forward\", which matches the time-roll framing."
     }
   ]
 }
