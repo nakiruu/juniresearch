@@ -59,6 +59,11 @@ describe("classify — held", () => {
     expect(c.classification).toBe("EXIT");
     expect(c.reasons.some((r) => r.startsWith("R —"))).toBe(true);
   });
+  it("names the bear breach when the price has fallen to or below the bear case (D = 0)", () => {
+    const c = classify(sig({ R: null, D: 0, mu: 0.4 }), true, NONE, TODAY, cfg);
+    expect(c.classification).toBe("EXIT");
+    expect(c.reasons).toContain("R — < exit 0.35 (price at or below the bear case)");
+  });
   it("DEFERs an exit while sell-locked and reports the unlock date", () => {
     const L: Locks = { buyLockUntil: {}, sellLockUntil: { NVT: "2026-09-29" } };
     const c = classify(sig({ mu: 0.02 }), true, L, TODAY, cfg);

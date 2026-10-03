@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { scoreWeight, allocateCapped, sizePortfolio } from "./sizing";
+import { scoreWeight, sizingRewardRisk, allocateCapped, sizePortfolio } from "./sizing";
 import { DEFAULT_CONFIG } from "./config";
 import type { Signal } from "./signal";
 
@@ -41,6 +41,52 @@ describe("scoreWeight", () => {
   it("multiplies by quality when the tilt is requested", () => {
     expect(scoreWeight(sig({ quality: 1.2 }), DEFAULT_CONFIG, { qualityTilt: true })).toBeCloseTo(0.144, 9);
     expect(scoreWeight(sig({ quality: 0.8 }), DEFAULT_CONFIG, { qualityTilt: true })).toBeCloseTo(0.096, 9);
+  });
+});
+
+describe("sizingRewardRisk — the bear floor on D", () => {
+  // A consistent signal re-marked at `price`: scenarios bull 150 / base 120 / bear 80 at p .25/.5/.25.
+  const at = (price: number): Signal => {
+    const rets = [150, 120, 80].map((x) => x / price - 1), ps = [0.25, 0.5, 0.25];
+    const mu = rets.reduce((a, r, i) => a + ps[i] * r, 0);
+    const D = Math.max(0, -Math.min(...rets));
+    return sig({ price, mu, D, R: D > 0 ? mu / D : null });
+  };
+
+  it("leaves R untouched when D is at or above the floor (every name at its publication price)", () => {
+    expect(sizingRewardRisk(sig({ D: 0.2, R: 1 }), 0.15)).toBe(1);
+    expect(sizingRewardRisk(sig({ D: 0.15, R: 1 }), 0.15)).toBe(1);
+  });
+
+  it("is mu / bearFloor once D is below the floor", () => {
+    const s = at(84); // bear 80 is 4.8% below
+    expect(s.D).toBeLessThan(0.15);
+    expect(sizingRewardRisk(s, 0.15)).toBeCloseTo(s.mu / 0.15, 12);
+  });
+
+  it("keeps R null when there is no downside at all (the gates still see the bear breach)", () => {
+    expect(sizingRewardRisk(sig({ D: 0, R: null }), 0.15)).toBeNull();
+  });
+
+  it("bearFloor 0 restores the raw R", () => {
+    const s = at(84);
+    expect(sizingRewardRisk(s, 0)).toBe(s.R);
+  });
+
+  it("keeps the score bounded as the price nears the bear, where raw R explodes", () => {
+    const raw = { ...DEFAULT_CONFIG, bearFloor: 0 };
+    const near = at(80.4); // 0.5% above the bear
+    expect(scoreWeight(near, raw) / scoreWeight(at(92), raw)).toBeGreaterThan(20);
+    expect(scoreWeight(near, DEFAULT_CONFIG) / scoreWeight(at(92), DEFAULT_CONFIG)).toBeLessThan(3);
+  });
+
+  it("still buys a falling name harder: the floored score rises monotonically as the price falls", () => {
+    let prev = 0;
+    for (const p of [100, 95, 92, 90, 88, 85, 82, 80.5]) {
+      const sc = scoreWeight(at(p), DEFAULT_CONFIG);
+      expect(sc).toBeGreaterThan(prev);
+      prev = sc;
+    }
   });
 });
 

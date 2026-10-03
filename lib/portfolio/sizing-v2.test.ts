@@ -37,6 +37,11 @@ describe("scoreWeightV2", () => {
     expect(scoreWeightV2(sig({}), 50, 0.7, c)).toBeCloseTo(0.14, 9);
     expect(scoreWeightV2(sig({ staleness: 0.5 }), 50, 1, c)).toBeCloseTo(0.1, 9);
   });
+  it("floors D in the mu*R core like the production sizer (a name near its bear price can't blow up)", () => {
+    // D 0.03 < bearFloor 0.15: R_size = R * 0.03/0.15 = mu/0.15
+    expect(scoreWeightV2(sig({ mu: 0.3, D: 0.03, R: 10 }), 50, 1, c)).toBeCloseTo(0.3 * (0.3 / 0.15), 9);
+    expect(scoreWeightV2(sig({ mu: 0.3, D: 0.03, R: 10 }), 50, 1, { ...c, bearFloor: 0 })).toBeCloseTo(3, 9);
+  });
   it("uses the bounded 1/sigma core (never mu/sigma^2) when riskCore is invSigma", () => {
     const iv = { ...c, riskCore: "invSigma" as const };
     expect(scoreWeightV2(sig({ mu: 0.2, sigma: 0.25 }), 50, 1, iv)).toBeCloseTo(0.8, 9); // 0.2 / 0.25

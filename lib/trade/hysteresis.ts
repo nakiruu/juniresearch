@@ -24,7 +24,9 @@ export function classify(s: Signal, held: boolean, locks: Locks, today: TradingD
     if (!BUY_SIDE.has(s.label)) exits.push(`label ${s.label} not buy-side`);
     if (s.gatedLabel && !BUY_SIDE.has(s.gatedLabel)) exits.push(`gate ceiling ${s.gatedLabel}`);
     if (s.mu < cfg.muExit) exits.push(`mu ${pct(s.mu)} < exit ${pct(cfg.muExit)} (thesis played out)`);
-    if (s.R == null || s.R < cfg.rExit) exits.push(`R ${rStr(s.R)} < exit ${cfg.rExit}`);
+    // R is null once the price is at or below the bear-case implied price (D = 0): the market has passed the
+    // report's worst scenario, and the name exits. Say so — "R —" alone hides that this is a stop at the bear.
+    if (s.R == null || s.R < cfg.rExit) exits.push(`R ${rStr(s.R)} < exit ${cfg.rExit}${s.R == null && s.D <= 0 ? " (price at or below the bear case)" : ""}`);
     if (s.ageDays > cfg.stalenessMaxDays) exits.push(`stale ${s.ageDays}d > ${cfg.stalenessMaxDays}d`);
     if (exits.length === 0) return { ticker: t, classification: "HOLD", reasons: [] };
     if (isSellLocked(locks, t, today)) return { ticker: t, classification: "DEFER_EXIT", reasons: exits, unlockOn: locks.sellLockUntil[t] };

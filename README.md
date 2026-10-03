@@ -205,7 +205,8 @@ npm run portfolio:build -- --muExp 1 --convExp 1 --rExp 1 # override score expon
 
 A name is eligible only if it's buy-side on **both** the label and the gate ceiling, with μ, R, conviction
 and freshness all above their floors (`lib/portfolio/eligibility.ts`). Eligible names are scored
-`μ · κ · R · staleness`, allocated **proportional to score**, then **water-filled** under a per-name cap
+`μ · κ · R · staleness` (R with the bear-case downside floored at the desk's 15%, so a name nearing its bear
+price can't blow up to the cap), allocated **proportional to score**, then **water-filled** under a per-name cap
 (10%) and a sector cap (30%); shed weight flows to the best remaining names, and any shortfall the caps
 can't absorb becomes cash — **never leverage**. `ICE` is a **hard compliance ban** (the owner is an ICE
 employee) that lives outside the config and can't be switched off. See `docs/engine.md` §3 for the full math.

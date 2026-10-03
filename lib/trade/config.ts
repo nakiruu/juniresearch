@@ -122,6 +122,7 @@ export function resolveTradeConfig(overrides: Partial<TradeConfig> = {}): TradeC
   if (!(cfg.rExit < cfg.rEnter)) throw new Error(`rExit (${cfg.rExit}) must be below rEnter (${cfg.rEnter})`);
   if (!(cfg.muExit < cfg.muEnter)) throw new Error(`muExit (${cfg.muExit}) must be below muEnter (${cfg.muEnter})`);
   if (!Number.isInteger(cfg.lockBusinessDays) || cfg.lockBusinessDays < 1) throw new Error("lockBusinessDays must be a positive integer");
+  if (!(cfg.bearFloor >= 0 && cfg.bearFloor < 1)) throw new Error(`bearFloor (${cfg.bearFloor}) must be in [0, 1)`);
 
   for (const b of BUCKETS) {
     if (!(cfg.limitTol[b] > 0)) throw new Error(`limitTol.${b} (${cfg.limitTol[b]}) must be positive`);

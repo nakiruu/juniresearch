@@ -36,6 +36,11 @@ describe("resolveTradeConfig", () => {
     expect(() => resolveTradeConfig({ lockBusinessDays: -1 })).toThrow(/positive integer/);
     expect(() => resolveTradeConfig({ lockBusinessDays: 2.5 })).toThrow(/positive integer/);
   });
+  it("rejects a sizing bear floor outside [0, 1)", () => {
+    expect(() => resolveTradeConfig({ bearFloor: -0.01 })).toThrow(/bearFloor/);
+    expect(() => resolveTradeConfig({ bearFloor: 1 })).toThrow(/bearFloor/);
+    expect(resolveTradeConfig({ bearFloor: 0 }).bearFloor).toBe(0);
+  });
 });
 
 describe("daily turnover cap config", () => {

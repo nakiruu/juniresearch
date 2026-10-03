@@ -148,6 +148,10 @@ Notes that matter downstream:
   what makes the book mechanically buy dips and trim rallies.
 - **R here uses the empirically worst scenario** as the bear, which equals the report's named bear when
   that is the lowest leg (the usual case).
+- **Near the bear price, R explodes.** Re-marking shrinks D as the price falls: at the bear price D = 0 and
+  R = μ/D → ∞; below it R is null. The desk floor guarantees D ≥ 15% only at the *publication* price (median
+  held D is ~0.6× the name's annual realized vol, so a bear touch is routine — ~58% within a year for the
+  median holding under GBM). The sizers therefore floor D (§3.2) and the gates read a null R as a bear breach (§4.2).
 
 > 💡 **Deferred — the scenario σ is fragile.** σ and σ↓ come from a **3-point** distribution; a
 > point-mass estimator of variance is noisy. A blend with trailing realized volatility would steady it —
@@ -186,18 +190,54 @@ auditable (this is what the dashboard's "Considered & excluded" panel renders).
 ### 3.2 The score (production sizer)  (`scoreWeight`)
 
 ```
-score = μ^muExp · κ^convExp · R^rExp · staleness · (Q if useQualityTilt else 1)
-      = μ¹ · κ¹ · R¹ · staleness            (defaults: all exponents 1, tilt off in the analytical snapshot)
+R_size = μ / max(D, bearFloor)            = R · min(1, D / bearFloor)      (sizingRewardRisk; bearFloor 0.15)
+score  = μ^muExp · κ^convExp · R_size^rExp · staleness · (Q if useQualityTilt else 1)
+       = μ¹ · κ¹ · R_size¹ · staleness     (defaults: all exponents 1, tilt off in the analytical snapshot)
 ```
 
 Weight is then allocated *in proportion to score*, so the best names on (expected return × conviction ×
 reward/risk) become the largest holdings. Exponents are tunable knobs (`--muExp/--convExp/--rExp`).
+
+**The bear floor (`bearFloor`, default 0.15 = the desk's `rating.bearFloor`).** Without it, μ·R = μ²/D: as a
+name slides toward its bear price the score explodes and the name goes to the cap a few percent above the
+bear, then exits one tick below it (§4.2). Measured 2026-10-03: BAC, 9.7% lower 17 days after publication
+(6.9% above its bear), moved from 0.9% to 7.1% of the book; traced down, it hits the 10% cap 5% above the
+bear. The 3-point scenarios put zero mass below the bear, so "D → 0" is model error, not a riskless bet — the
+desk already refuses to publish a bear less than 15% below the price. Flooring D at the same depth keeps a
+falling name's score rising (μ still grows, BAC 0.9% → 3.5%) but finite and continuous. It changes nothing at
+publication prices (every D ≥ 0.15) and only sizing: eligibility and the hysteresis gates keep the raw R.
+`--bearFloor 0` restores the raw R.
 
 > 🚫 **Not an option — mean-CVaR allocation.** Single-name CVaR at α ≤ p_bear *is* the bear-leg loss D
 > (already in R), and a portfolio CVaR needs a joint scenario distribution the reports don't have. Assuming
 > comonotonic bears makes it an LP whose solution is bang-bang — 10 names at the cap, or 5 names and ~50%
 > cash at λ = 1 (N_eff ≤ 10 vs 26 today) — a cruder, more concentrated μ − λD that drops κ and per-name
 > explainability. The `μ·κ·R` score stays.
+
+> 🚫 **Not an option — a historical Expected Shortfall (or inverse-vol) overlay from daily returns**
+> (`w × min(1, ES_target/ES_i)`, ES from 252 daily closes). Daily ES is ≈ 2.3× daily σ, so this is an inverse-vol
+> tilt on a horizon (one day) that is not the thesis horizon (~12 months). The data is unsafe as an input:
+> Shibui/Yahoo closes are split- but not spin-adjusted (DD's Qnity spin prints as a −57.5% day and inflates its
+> ES), new listings (SOLS) and names Shibui lacks (NVT) have short or no history, and the headless trade layer
+> cannot call Shibui. It also does not answer the critique it was proposed for: D already tracks realized vol
+> (Spearman +0.75), so R is vol-neutral (−0.06). On the 2026-10-03 book it cut model book μ by 0.9pp (21.1% →
+> 20.2%) for 17% less trailing vol — only worth having if μ is overstated for volatile names, which is the
+> question below.
+
+> 💡 **Deferred — a risk-aware tilt, gated on calibration.** The score leans toward volatile names (Spearman
+> +0.34 with realized vol among holdings; book vol 48% vs 45% equal-weight) because authored μ rises with vol
+> (+0.63) while R does not. Growth-optimal sizing penalizes a name's covariance with the book (≈ λ·βᵢ, λ =
+> β_book·σ²_m ≈ 0.04), not its own vol, and the FactPacks already carry measured β. At face-value μ that
+> penalty barely moves the book (5% turnover, β 1.14 → 1.11), because the claimed upsides dwarf the variance
+> drag. It matters only if μ's information content b (realized excess ≈ b·μ) is well below 1. The evidence
+> points that way for sell-side targets:
+> - claimed undervaluation is realized at 16–18¢ per $ (Green, Hand & Sikochi 2024);
+> - optimism grows with β, idiosyncratic vol and small size (Brav & Lehavy 2003; Dechow & You 2020).
+>
+> But the right book swings widely across b. The penalty in model-μ units is λ/b, so at b ≈ 0.17 the change
+> is 31% turnover and 43 of 49 names go to ~0. That is too large to set from a prior. Decide once the
+> calibration log (`lib/calibration/realized.ts`) gives a slope b, and a vol gradient, at d63/d126 on ≥ 10 names.
+> Details: `docs/superpowers/specs/2026-10-03-engine-audit-review.md` §3.
 
 ### 3.3 Water-fill allocation with caps  (`allocateCapped`)
 
@@ -226,6 +266,18 @@ portfolio upside = Σ w_i · μ_i                book-level weighted expected up
 > ⚠️ **Read `activeWeight` correctly.** The benchmark is a **1/N equal-weight of the covered universe**,
 > not the S&P 500. A name sized below 1/N legitimately shows a small negative tilt.
 
+> ⚠️ **N_eff counts names, not bets.** On the 2026-10-03 book (49 names, N_eff 32.7) the trailing-year
+> diversification ratio Σwσ/σ_p was 2.10, so DR² ≈ 4.4 independent bets. Book beta to SPY was 1.44, and
+> correlation with SPY 0.84. An equal-weight book of the same names scores DR² ≈ 4.6. The caps are not at
+> fault: every long-only stock book is mostly one market factor. Sector caps are a coarse proxy for the
+> rest. SIC 2-digit splits one theme across "sectors". On that book, semis, electronic components and
+> data-center power (AIP, AVGO, LRCX, MPWR, NVDA, LASR, VSH, VICR, VRT, LTRX, EVLV) held 30.8%, across SIC
+> 35/36/37. The largest SIC-2 sector was 21.3%, so the 30% cap never bound on the theme.
+
+> 💡 **Deferred — a GICS industry-group (or correlation-cluster) cap.** Would bind the theme above. Profit
+> effect unknown: it trims the highest-μ cluster, so at face-value μ it costs expected return. Revisit with
+> the risk-aware tilt, once calibration says how far to trust μ.
+
 ### 3.5 The hard ban (compliance, not a knob)  (`BANNED_TICKERS`)
 
 `ICE` is hard-banned — the owner is an ICE employee. The ban lives **outside** `PortfolioConfig` so no
@@ -239,7 +291,7 @@ Injected via `--model kellyTilt`; shares eligibility, caps, dust and cash unchan
 differs:
 
 ```
-w_raw = core · (C/50)^α · (Q/50)^β · staleness · L      core = μ·R (default) or μ/σ ;  C = κ·100
+w_raw = core · (C/50)^α · (Q/50)^β · staleness · L      core = μ·R_size (default) or μ/σ ;  C = κ·100
         α = convTiltExp (1.0),  β = qualTiltExp (0.6),  L = liquidity factor (large 1.0 / mid 0.9 / small 0.7)
 ```
 
@@ -296,6 +348,22 @@ into a denser R region). Locks turn EXIT→`DEFER_EXIT` and ENTER→`BARRED_ENTR
 
 `resolveTradeConfig` *enforces* `rExit < rEnter` and `muExit < muEnter` at construction — the band can't be
 misconfigured into an overlap.
+
+**The bear-breach exit.** When the live price falls to or below the report's bear implied price, D = 0 and R is
+null, so a held name EXITs. Its reason reads `R — < exit 0.35 (price at or below the bear case)`. This is a
+stop-loss at the bear price, and it is tight. Median held D is ~0.6× annual realized vol, so under GBM the
+median holding touches its bear with probability ~23% within a quarter and ~58% within a year. The gates use
+the raw R, so the sizing floor (§3.2) does not change when this fires. It only stops the name from sitting at
+the cap just before.
+
+> 💡 **Deferred — bear-breach policy (owner decision).** Exiting at the bear sells the whole position after a
+> ~0.6σ move, at the point of highest re-marked μ. The evidence on tight stops in single stocks is against it:
+> Kaminski & Lo (2014) show stops add return only when returns trend at the stop horizon. Lo & Remorov (2017)
+> find tight stops on individual US stocks underperform buy-and-hold. One-month reversal (Jegadeesh 1990)
+> works the same way. Intermediate momentum and sticky targets cut the other way. The design-consistent
+> alternative is to **freeze** a breached name (hold, no adds) and flag it for re-synthesis. The next report
+> then decides, with an exit only if it is not re-underwritten within N days. That changes live exits, so it
+> waits for the owner. The calibration log can measure post-breach returns as breaches accumulate.
 
 ### 4.3 The emitter — target vs current  (`lib/trade/rebalance.ts` → `emitTrades`)
 
@@ -461,6 +529,29 @@ wrongly-read book can't turn into a full re-buy. A one-shot manual build still g
 sell proceeds − the cash floor; `executeOrders` sends sells first and skips (never sends) a buy the
 backstop refuses. Both caps now measure an order as `qty × limitPrice` — what an IOC limit can spend.
 
+> 🚫 **Not an option — a portfolio drawdown circuit breaker** (e.g. after a 10% drawdown halve new entries
+> and raise the entry bars until it recovers to 5%). It throttles buying exactly when re-marked μ is highest
+> across the book, fighting the engine's own dip-buying. It also cuts exposure when forward returns have
+> been highest. Measured on Shibui, halving exposure while the 10%→5% state is on:
+>
+> | | Buy & hold | With breaker | Annual return in the state vs out of it |
+> |---|---|---|---|
+> | SPY, 1994–2026 | 9.1% CAGR | 7.0% | 13.0% vs 8.5% |
+> | IWM, 2001–2026 | 7.4% | 5.0% | 14.5% vs 4.6% |
+>
+> The state was on 45–54% of days. The audit's milder version has the same sign.
+>
+> The cited support does not apply here. Daniel & Moskowitz (2016) momentum crashes are the *short* losers
+> leg rebounding after declines, which is a gain for a dip-buying book. The "1%/2%/3% → cut 20/30/50%" rule
+> comes from a minute-bar BTC strategy (arXiv 2512.02227).
+
+> 🚫 **Not an option — a volatility-regime overlay or time-series vol targeting** (e.g. raise `muEnter`/`rEnter`
+> when SPY's 50-day vol is above its 1-year median). Returns are not lower in high-vol states. SPY returned
+> 10.6% in them vs 10.5% in calm states, and IWM 13.4% vs 7.0%. Halving exposure in them cost 1.7pp/yr (SPY)
+> and 1.8pp/yr (IWM). Vol-managed portfolios raise Sharpe only by levering up in calm periods (Moreira & Muir
+> 2017). Under no-leverage that becomes "lower alphas", and out of sample the gain mostly disappears
+> (Cederburg et al. 2020). This engine never levers, so the overlay can only cost return.
+
 ### 6.2 Broker-truth audit  (`lib/trade/audit.ts` → `crossCheckBroker`)
 
 After every execute, the day's broker orders are cross-checked against `fills.jsonl` and the run's expected
@@ -534,6 +625,7 @@ and `GET /api/trade/status` reports `schwabRefreshExpiresAt`.
 | `muMin` / `rMin` / `convictionMin` | 0.05 / 0.50 / 45 | eligibility (analytical) |
 | `stalenessMaxDays` / `stalenessHalfLifeDays` | 120 / 90 | eligibility / recency |
 | `muExp` / `convExp` / `rExp` | 1 / 1 / 1 | score |
+| `bearFloor` | 0.15 (= desk `rating.bearFloor`) | score (floor on D in R_size) |
 | `wMax` / `sectorMax` / `wMin` | 0.10 / 0.30 / 0 | caps / dust |
 | `cashFloor` / `cashCeiling` | 0.01 / 0.35 | cash |
 | quality tilt `qGainComposite/qGainMoat/qPenaltyEroding/qLo/qHi` | 0.10 / 0.20 / 0.10 / 0.8 / 1.2 | quality |
@@ -562,6 +654,7 @@ and `GET /api/trade/status` reports `schwabRefreshExpiresAt`.
 | E / μ | expected upside — probability-weighted fair value vs price (E vs report price, μ vs live price) |
 | D | bear-case downside magnitude (worst scenario / named bear) |
 | R | reward/risk = μ / D (the engine's core risk unit; null when D ≤ 0) |
+| R_size | R for sizing only: μ / max(D, bearFloor) — finite as the price nears the bear |
 | σ / σ↓ | scenario standard deviation / downside semi-deviation |
 | κ | conviction, `decision.conviction / 100` ∈ [0,1] |
 | Q | quality tilt (0.8–1.2 signal-level; a richer 0–100 composite in kellyTilt) |

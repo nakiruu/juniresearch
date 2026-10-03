@@ -20,12 +20,15 @@ import { assessEligibility, isBannedTicker } from "./eligibility";
  * Every eligible name has mu, kappa and R strictly positive (the eligibility gate
  * requires mu >= muMin, R >= rMin, kappa*100 >= convictionMin), so the product is
  * well-defined and positive. We still guard defensively for a null/degenerate R.
+ * R enters through sizingRewardRisk, which floors the bear-case downside at
+ * config.bearFloor.
  */
 export function scoreWeight(s: Signal, config: PortfolioConfig, opts: { qualityTilt?: boolean } = {}): number {
-  if (s.R == null) return 0;
+  const rSize = sizingRewardRisk(s, config.bearFloor);
+  if (rSize == null) return 0;
   const mu = Math.max(s.mu, 0);
   const conv = Math.max(s.kappa, 0);
-  const r = Math.max(s.R, 0);
+  const r = Math.max(rSize, 0);
   const score =
     Math.pow(mu, config.muExp) *
     Math.pow(conv, config.convExp) *
@@ -33,6 +36,25 @@ export function scoreWeight(s: Signal, config: PortfolioConfig, opts: { qualityT
     s.staleness *
     (opts.qualityTilt ? s.quality : 1);   // spec §5.4: the moat/composite tilt, opt-in so the analytical snapshot is unchanged
   return Number.isFinite(score) && score > 0 ? score : 0;
+}
+
+/**
+ * sizingRewardRisk — R as the sizers use it: μ / max(D, bearFloor).
+ *
+ * R = μ/D is re-marked to the live price, and the 3-point scenarios say the price cannot fall below the bear.
+ * So as a name slides toward its bear price D → 0 and R → ∞, and μ·R = μ²/D puts it at the per-name cap a few
+ * percent above the bear. One tick below, D = 0, R is null and the trade gates exit the whole position. Real
+ * returns have a tail beyond the bear case, which the desk acknowledges by refusing to publish a bear less than
+ * bearFloor below the price. Flooring D at the same depth keeps the score finite and continuous; a falling name
+ * is still bought harder as μ rises. The floor shapes how much is held, never whether: eligibility and the
+ * hysteresis gates keep the raw R.
+ *
+ * Written as R · min(1, D / bearFloor) (= μ / bearFloor when D < bearFloor), so R is untouched whenever
+ * D ≥ bearFloor — every name at its publication price, by the desk rule.
+ */
+export function sizingRewardRisk(s: Pick<Signal, "R" | "D">, bearFloor: number): number | null {
+  if (s.R == null) return null;
+  return bearFloor > 0 && s.D < bearFloor ? s.R * (s.D / bearFloor) : s.R;
 }
 
 export interface Weighted { ticker: string; sector: string; weight: number }

@@ -23,7 +23,7 @@ const asOf = flag("--date") ?? new Date().toISOString().slice(0, 10);
 const model = flag("--model") ?? "score";
 if (model !== "score" && model !== "kellyTilt") { console.error(`--model must be "score" or "kellyTilt", got ${JSON.stringify(model)}`); process.exit(1); }
 const overrides: Partial<PortfolioConfig> = {};
-for (const k of ["wMax", "sectorMax", "cashCeiling", "muExp", "convExp", "rExp"] as const) {
+for (const k of ["wMax", "sectorMax", "cashCeiling", "muExp", "convExp", "rExp", "bearFloor"] as const) {
   const v = flag(`--${k}`);
   if (v != null) {
     const n = Number(v);
@@ -35,6 +35,7 @@ for (const k of ["wMax", "sectorMax", "cashCeiling", "muExp", "convExp", "rExp"]
   }
 }
 const config = resolveConfig(overrides);
+if (!(config.bearFloor >= 0 && config.bearFloor < 1)) { console.error(`--bearFloor must be in [0, 1), got ${config.bearFloor}`); process.exit(1); }
 const today = new Date(asOf + "T00:00:00Z");
 
 // Latest close from Yahoo over a short trailing window == the live mark.
@@ -90,7 +91,7 @@ if (failed.length) {
   console.warn(`Skipped ${failed.length} ticker(s): ${failed.map((f) => f.ticker).join(", ")}`);
 }
 
-const scorer = model === "kellyTilt" ? makeV2Scorer(reports, marketCap, DEFAULT_SIZING_V2) : undefined;
+const scorer = model === "kellyTilt" ? makeV2Scorer(reports, marketCap, { ...DEFAULT_SIZING_V2, bearFloor: config.bearFloor }) : undefined;
 const sized = scorer ? sizePortfolio(signals, config, scorer) : sizePortfolio(signals, config);
 const active = activeWeights(signals.map((s) => s.ticker), sized.holdings);
 const snap = assembleSnapshot({ asOf, signals, sized, active, spyPrice, config });
