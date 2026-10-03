@@ -1,6 +1,6 @@
 {
-  "judgmentSha256": "cf9f20cec8318eb4726dcc5202b25662b8b4604d60ce56c21f896dea6cb78ec0",
-  "reviewedAt": "2026-10-03T01:05:39Z",
+  "judgmentSha256": "e5d6acb7fd4456d10bae22606085ead91fb9f943710323ca1f6484803432f008",
+  "reviewedAt": "2026-10-03T01:06:29Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
   "verdict": "approved-with-minors",
@@ -162,6 +162,16 @@
       "quote": "a Base case near the 52-week high is balanced by a Bear case near the 52-week low, and the weighted value sits only modestly above the current price",
       "issue": "Mild paraphrase repetition of the HOLD rationale introduced by the rewrite. 'Base above price, deep Bear, weighted value only modestly above the price' is told in analystCommentary ('That Base sits above today's price, but the Bear case is deep enough that the probability-weighted value offers only modest upside'), valuation.scenarioCommentary ('the probability-weighted fair value sits well below Base and only modestly above today's price'), finalRecommendation.body[0] (this quote), and the 52-week-low Bear is echoed again in executiveSummary.thesis.body ('could take the stock back toward the low end of its 52-week range'). Summary fields may restate the call, so this is Minor, but four tellings is past the point of notice.",
       "fix": "Keep the argument in scenarioCommentary; let analystCommentary or finalRecommendation carry the one-line conclusion, not both, and point to Valuation from the other.",
+      "status": "addressed",
+      "note": "HOLD argument now made only in valuation.scenarioCommentary; analystCommentary points to Valuation and finalRecommendation.body[0] states the call. The thesis keeps one 52-week-low echo as its counter-case, which is acceptable."
+    },
+    {
+      "id": "F-17",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "A miss on those fronts could take the stock back toward the low end of its 52-week range.",
+      "issue": "The trim went slightly too far. With the closing sentence ('Weighing both, we see the shares as fairly priced for a HOLD rather than a BUY') removed, the thesis now ends on the counter-case and never says which way the bull and bear points net out or link them to the HOLD. A reader of the executive summary alone gets two opposing points and no conclusion. finalRecommendation.body[0] is likewise now a bare restatement of the rating with no reason or pointer.",
+      "fix": "Add one short concluding pointer to the thesis, e.g. 'On balance the shares look fairly priced; see Valuation for the scenarios behind the HOLD', without bringing back the fair-value arithmetic. Optionally add 'see Valuation' to finalRecommendation.body[0].",
       "status": "open"
     }
   ]
