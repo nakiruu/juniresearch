@@ -125,11 +125,11 @@ const SHORT_TERM_BORROWINGS = ["ShortTermBorrowings", "CommercialPaper"];
 const TOTAL_EQUITY = ["StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest", "StockholdersEquity"];
 const CURRENT_ASSETS = ["AssetsCurrent"];
 const CURRENT_LIABILITIES = ["LiabilitiesCurrent"];
-const OCF = ["NetCashProvidedByUsedInOperatingActivities", "NetCashProvidedByUsedInOperatingActivitiesContinuingOperations"];
+export const OCF = ["NetCashProvidedByUsedInOperatingActivities", "NetCashProvidedByUsedInOperatingActivitiesContinuingOperations"];
 // LLY tags neither of the spec's two concepts for its current capex line; it uses "other
 // property, plant and equipment" instead. Appended at lowest priority — per-period merging
 // (see mergeByPriority) means this is only reached for periods neither spec concept covers.
-const CAPEX_RAW = ["PaymentsToAcquirePropertyPlantAndEquipment", "PaymentsToAcquireProductiveAssets", "PaymentsToAcquireOtherPropertyPlantAndEquipment"];
+export const CAPEX_RAW = ["PaymentsToAcquirePropertyPlantAndEquipment", "PaymentsToAcquireProductiveAssets", "PaymentsToAcquireOtherPropertyPlantAndEquipment"];
 const BUYBACKS_RAW = ["PaymentsForRepurchaseOfCommonStock"];
 const DIVIDENDS_RAW = ["PaymentsOfDividendsCommonStock", "PaymentsOfDividends"];
 

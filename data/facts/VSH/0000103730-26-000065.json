@@ -246,7 +246,7 @@
     "netDebtToEbitda": null,
     "interestCoverage": 2.7687662649384777,
     "currentRatio": 1.8022310394387082,
-    "fcfYield": null
+    "fcfYield": -0.0013690772948957192
   },
   "estimates": {
     "nextFY": {
@@ -610,6 +610,12 @@
       "source": "edgar",
       "capturedAt": "2026-10-03T04:05:08.352Z",
       "endpoint": "companyconcept us-gaap/AllocatedShareBasedCompensationExpense (FY21, FY22, FY23, FY24, FY25)"
+    },
+    {
+      "field": "ttm.fcfYield",
+      "source": "edgar",
+      "endpoint": "derived: TTM (operating cash flow − capex; last FY + YTD − prior YTD) to 2026-07-04 / market cap, SEC companyfacts",
+      "capturedAt": "2026-10-03T04:16:05.488Z"
     }
   ],
   "beta": {

@@ -14,6 +14,8 @@ import {
   GROWTH_CAP,
   GROWTH_FLOOR,
   MIN_OWNER_EARNINGS_YIELD,
+  MIN_DISCOUNT_SPREAD,
+  IMPLIED_GROWTH_BAND,
   type IntrinsicFacts,
 } from "./intrinsic";
 
@@ -334,5 +336,39 @@ describe("intrinsicRead — mosRange over r ± 1pt × base growth ± 2pt", () =>
     expect(read.achievableGrowth).toBe(GROWTH_CAP);
     const atCap = fairValuePerShare(ownerEarningsBase(NVDA), GROWTH_CAP, NVDA.quote.sharesOutstanding, R - 0.01, GT, N);
     expect(read.mosRange.max).toBeGreaterThan(atCap / NVDA.quote.price - 1); // used 17%, not 15%
+  });
+});
+
+describe("intrinsicRead — discount-rate floor (r ≥ gt + 4pt)", () => {
+  const f = synth([100, 110, 121, 133, 146], [10, 11, 12, 13, 14]);
+  it("floors a low cost of equity at gt + 4pt and flags it; a normal r passes through untouched", () => {
+    const low = intrinsicRead(f, { r: 0.055, terminalGrowth: GT, horizon: N });
+    expect(low.discountRate).toBeCloseTo(GT + MIN_DISCOUNT_SPREAD, 10);
+    expect(low.flags.some((x) => x.startsWith("discount rate floored at 7.0%"))).toBe(true);
+    const atFloor = intrinsicRead(f, { r: GT + MIN_DISCOUNT_SPREAD, terminalGrowth: GT, horizon: N });
+    expect(low.marginOfSafety).toBeCloseTo(atFloor.marginOfSafety, 10);
+    const normal = intrinsicRead(f, { r: R, terminalGrowth: GT, horizon: N });
+    expect(normal.discountRate).toBe(R);
+    expect(normal.flags.some((x) => x.startsWith("discount rate floored"))).toBe(false);
+  });
+  it("lets the r − 1pt robustness corner sit no closer than 3pt to gt", () => {
+    const read = intrinsicRead(f, { r: 0.05, terminalGrowth: GT, horizon: N });
+    const oe0 = ownerEarningsBase(f);
+    const g = read.achievableGrowth;
+    const hi = fairValuePerShare(oe0, g + 0.02, f.quote.sharesOutstanding, GT + MIN_DISCOUNT_SPREAD - 0.01, Math.min(GT, Math.max(g + 0.02, 0)), N);
+    expect(read.mosRange.max).toBeCloseTo(hi / f.quote.price - 1, 10);
+  });
+});
+
+describe("intrinsicRead — implied growth at the solver edge is flagged", () => {
+  it("flags a price the band cannot explain (owner earnings 3× market cap)", () => {
+    const cheap = synth([100, 100, 100, 100, 100], [10, 10, 10, 10, 10], { ttm: { fcfYield: 3 } });
+    const read = intrinsicRead(cheap, { r: R, terminalGrowth: GT, horizon: N });
+    expect(read.impliedGrowth).toBeCloseTo(IMPLIED_GROWTH_BAND[0], 2);
+    expect(read.flags.some((x) => x.startsWith("market-implied growth is outside the solver band"))).toBe(true);
+  });
+  it("does not flag an interior solution", () => {
+    const read = intrinsicRead(synth([100, 110, 121, 133, 146], [10, 11, 12, 13, 14]), { r: R, terminalGrowth: GT, horizon: N });
+    expect(read.flags.some((x) => x.startsWith("market-implied growth is outside"))).toBe(false);
   });
 });

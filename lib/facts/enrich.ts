@@ -10,7 +10,7 @@
  */
 import { sleep, type FetchLike } from "../edgar/client";
 import { padCik } from "../edgar/submissions";
-import { fetchCompanyFacts, parseCompanyFacts, type SecPeriod } from "./free/sec";
+import { CAPEX_RAW, OCF, fetchCompanyFacts, parseCompanyFacts, type SecPeriod } from "./free/sec";
 
 const YAHOO_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) juniper-research";
 const num = (x: unknown): x is number => typeof x === "number" && Number.isFinite(x);
@@ -236,6 +236,71 @@ export function secEvToEbitda(quarters: Pick<SecPeriod, "report_date" | "ebitda"
   return (marketCap + (last4[3].net_debt as number)) / ebitda;
 }
 
+interface DurationEntry { start?: string; end: string; val: number; form: string; filed: string }
+
+const daysBetween = (a: string, b: string) => (Date.parse(b) - Date.parse(a)) / 86_400_000;
+const isAnnual = (e: { start: string; end: string }) => { const d = daysBetween(e.start, e.end); return d >= 350 && d <= 380; };
+
+/**
+ * Trailing-twelve-month value of a cash-flow concept ending at `periodEnd`, from the duration entries 10-Ks
+ * and 10-Qs tag. Cash flows are tagged year-to-date, so TTM = last fiscal year + current YTD − prior-year
+ * YTD of the same length; when `periodEnd` is itself a fiscal-year end the annual entry is the TTM. Works
+ * for any fiscal calendar (V's September year, 52/53-week filers: dates match within ±10 days). Entries are
+ * deduped by (start, end), latest filed wins. null when any leg is missing. Pure.
+ */
+export function ttmFromYtd(entries: DurationEntry[], periodEnd: string): number | null {
+  const byPeriod = new Map<string, { start: string; end: string; val: number; filed: string }>();
+  for (const e of entries) {
+    if (!e.start || !/^10-[KQ]/.test(e.form)) continue;
+    const k = `${e.start}|${e.end}`;
+    const prev = byPeriod.get(k);
+    if (!prev || prev.filed < e.filed) byPeriod.set(k, { start: e.start, end: e.end, val: e.val, filed: e.filed });
+  }
+  const list = [...byPeriod.values()];
+  const ending = list.filter((e) => e.end === periodEnd);
+  const annual = ending.find(isAnnual);
+  if (annual) return annual.val;
+  // The YTD leg is the longest sub-annual period ending at periodEnd (it starts at the fiscal-year start).
+  const ytd = ending.filter((e) => daysBetween(e.start, e.end) < 350).sort((a, b) => daysBetween(b.start, b.end) - daysBetween(a.start, a.end))[0];
+  if (!ytd) return null;
+  const len = daysBetween(ytd.start, ytd.end);
+  const prior = list.find((e) => Math.abs(daysBetween(e.end, periodEnd) - 365) <= 10 && Math.abs(daysBetween(e.start, e.end) - len) <= 10);
+  const fy = list.find((e) => isAnnual(e) && Math.abs(daysBetween(e.end, ytd.start)) <= 10);
+  if (!prior || !fy) return null;
+  return fy.val + ytd.val - prior.val;
+}
+
+type FactsBody = { facts?: { "us-gaap"?: Record<string, { units?: { USD?: DurationEntry[] } }> } };
+
+/** First concept (in priority order) whose TTM is computable at `periodEnd`. */
+function ttmConcept(facts: FactsBody, concepts: string[], periodEnd: string): number | null {
+  for (const c of concepts) {
+    const v = ttmFromYtd(facts.facts?.["us-gaap"]?.[c]?.units?.USD ?? [], periodEnd);
+    if (v != null) return v;
+  }
+  return null;
+}
+
+/**
+ * TTM free cash flow (operating cash flow − capex payments) from a companyfacts body, as of `periodEnd` or —
+ * when SEC does not yet carry that period — the most recent reported period end within 200 days before it.
+ * Returns the value and the period it is as of. Pure.
+ */
+export function secTtmFcf(facts: unknown, periodEnd: string): { fcf: number; asOf: string } | null {
+  const body = facts as FactsBody;
+  const ends = new Set<string>([periodEnd]);
+  for (const c of OCF) for (const e of body.facts?.["us-gaap"]?.[c]?.units?.USD ?? []) {
+    const lag = daysBetween(e.end, periodEnd);
+    if (lag > 0 && lag <= 200) ends.add(e.end);
+  }
+  for (const end of [...ends].sort().reverse()) {
+    const ocf = ttmConcept(body, OCF, end);
+    const capex = ttmConcept(body, CAPEX_RAW, end);
+    if (ocf != null && capex != null) return { fcf: ocf - capex, asOf: end };
+  }
+  return null;
+}
+
 /** SIC 6000–6199 (banks, savings institutions, credit and lending) and 6300–6411 (insurance): EV/EBITDA is left blank. */
 export function evToEbitdaNotMeaningful(sic: number | null | undefined): boolean {
   return sic != null && ((sic >= 6000 && sic <= 6199) || (sic >= 6300 && sic <= 6411));
@@ -274,6 +339,27 @@ export async function fillEvToEbitda(
     return "yahoo";
   }
   return null;
+}
+
+/**
+ * Fill a pack's missing TTM FCF yield from SEC data (secFcfYield). Without it the reverse DCF falls back to the
+ * last fiscal year's FCF, up to a year stale. Leaves the field null when SEC can't supply four quarters. Records
+ * the source in provenance. Returns whether it filled the field.
+ */
+export async function fillFcfYield(
+  pack: { cik: number; quote?: { marketCap: number | null }; latestQuarter?: { periodEnd: string } | null; ttm?: { fcfYield: number | null }; provenance?: Provenance[] },
+  contact: string, fetchImpl: FetchLike = fetch, now: () => Date = () => new Date(),
+): Promise<boolean> {
+  if (!pack.ttm || pack.ttm.fcfYield != null) return false;
+  const periodEnd = pack.latestQuarter?.periodEnd;
+  if (!periodEnd) return false;
+  const cap = pack.quote?.marketCap;
+  if (!(cap != null && cap > 0)) return false;
+  const t = secTtmFcf(await fetchCompanyFacts(pack.cik, contact, fetchImpl), periodEnd);
+  if (t == null) return false;
+  pack.ttm.fcfYield = t.fcf / cap;
+  pack.provenance?.push({ field: "ttm.fcfYield", source: "edgar", endpoint: `derived: TTM (operating cash flow − capex; last FY + YTD − prior YTD) to ${t.asOf} / market cap, SEC companyfacts`, capturedAt: now().toISOString() });
+  return true;
 }
 
 interface EnrichablePack {

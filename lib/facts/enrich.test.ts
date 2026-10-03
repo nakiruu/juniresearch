@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { alignAnnualSeries, mergeConceptSeries, fetchSbcSeries, stampSbcProvenance, parsePeerMultiples, enrichPack, secEvToEbitda, evToEbitdaNotMeaningful } from "./enrich";
+import { alignAnnualSeries, mergeConceptSeries, fetchSbcSeries, stampSbcProvenance, parsePeerMultiples, enrichPack, secEvToEbitda, evToEbitdaNotMeaningful, ttmFromYtd, secTtmFcf } from "./enrich";
 
 // Hand-built companyconcept facts. A 10-K reports the current year plus comparatives, all under the
 // filing's own `fy` — which is why alignment must key on the period end, not `fy`.
@@ -197,5 +197,41 @@ describe("evToEbitdaNotMeaningful", () => {
   it("is true for banks, lenders and insurers, false for exchanges, asset managers and non-financials", () => {
     for (const sic of [6021, 6022, 6035, 6141, 6199, 6311, 6331, 6411]) expect(evToEbitdaNotMeaningful(sic)).toBe(true);
     for (const sic of [6200, 6211, 6282, 6798, 3674, 7372, null, undefined]) expect(evToEbitdaNotMeaningful(sic)).toBe(false);
+  });
+});
+
+describe("ttmFromYtd / secTtmFcf — TTM cash flow from year-to-date tags", () => {
+  const e = (start: string, end: string, val: number, form = "10-Q", filed = "2026-08-01") => ({ start, end, val, form, filed });
+  // Visa-style September fiscal year, measured at fiscal Q2 (Mar 31): TTM = FY25 + YTD26 − YTD25.
+  const ocf = [
+    e("2024-10-01", "2025-03-31", 8000, "10-Q", "2025-04-30"),
+    e("2024-10-01", "2025-09-30", 23059, "10-K", "2025-11-10"),
+    e("2025-10-01", "2025-12-31", 6780),
+    e("2025-10-01", "2026-03-31", 9788),
+  ];
+  it("adds the last fiscal year to the current YTD and subtracts the prior-year YTD of the same length", () => {
+    expect(ttmFromYtd(ocf, "2026-03-31")).toBe(23059 + 9788 - 8000);
+  });
+  it("returns the annual value when the period end is a fiscal-year end", () => {
+    expect(ttmFromYtd(ocf, "2025-09-30")).toBe(23059);
+  });
+  it("lets a later filing win for the same period and ignores non-10-K/10-Q forms", () => {
+    const restated = [...ocf, e("2024-10-01", "2025-09-30", 23500, "10-K", "2026-11-10"), e("2025-10-01", "2026-03-31", 1, "8-K", "2026-12-01")];
+    expect(ttmFromYtd(restated, "2026-03-31")).toBe(23500 + 9788 - 8000);
+  });
+  it("returns null when a leg is missing", () => {
+    expect(ttmFromYtd(ocf.filter((x) => x.val !== 8000), "2026-03-31")).toBeNull();
+    expect(ttmFromYtd(ocf, "2026-06-30")).toBeNull();
+  });
+  const facts = (o: typeof ocf, capex: typeof ocf) => ({ facts: { "us-gaap": {
+    NetCashProvidedByUsedInOperatingActivities: { units: { USD: o } },
+    PaymentsToAcquireProductiveAssets: { units: { USD: capex } },
+  } } });
+  const capex = [e("2024-10-01", "2025-03-31", 700, "10-Q", "2025-04-30"), e("2024-10-01", "2025-09-30", 1482, "10-K", "2025-11-10"), e("2025-10-01", "2026-03-31", 761)];
+  it("is OCF − capex payments, falling back to the latest period SEC carries within 200 days", () => {
+    expect(secTtmFcf(facts(ocf, capex), "2026-03-31")).toEqual({ fcf: 23059 + 9788 - 8000 - (1482 + 761 - 700), asOf: "2026-03-31" });
+    // The pack's latest quarter (Jun 30) is not in SEC's data yet → the Mar 31 TTM is used and dated.
+    expect(secTtmFcf(facts(ocf, capex), "2026-06-30")?.asOf).toBe("2026-03-31");
+    expect(secTtmFcf(facts(ocf, []), "2026-03-31")).toBeNull();
   });
 });

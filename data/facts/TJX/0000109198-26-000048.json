@@ -239,7 +239,7 @@
     "netDebtToEbitda": null,
     "interestCoverage": null,
     "currentRatio": 1.147380239520958,
-    "fcfYield": null
+    "fcfYield": 0.04059536782439528
   },
   "estimates": {
     "nextFY": {
@@ -591,6 +591,12 @@
       "source": "shibui",
       "capturedAt": "2026-10-03T03:46:39.826Z",
       "endpoint": "stock_data_query: 2y weekly log returns vs SPY (cov/var) → Blume-adjusted, clamped [0.3, 2.5]"
+    },
+    {
+      "field": "ttm.fcfYield",
+      "source": "edgar",
+      "endpoint": "derived: TTM (operating cash flow − capex; last FY + YTD − prior YTD) to 2026-08-01 / market cap, SEC companyfacts",
+      "capturedAt": "2026-10-03T04:16:03.726Z"
     }
   ],
   "sbc": [

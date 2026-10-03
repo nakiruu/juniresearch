@@ -49,6 +49,15 @@ export const FCF_BASE_MIN_RATIO = 0.25;
 export const REVENUE_BREAK_DROP = 0.2;
 /** Owner earnings below this share of market cap are too small a base to value (value is linear in it). */
 export const MIN_OWNER_EARNINGS_YIELD = 0.015;
+/**
+ * The discount rate is floored at terminal growth + this spread. Value scales with 1/(r − gt), so a
+ * low-beta name's cost of equity (AT&T ~6%) sat under 3pt above the 3% terminal and the terminal value
+ * dominated: one point of r moved the median margin of safety ~11pt. Robustness corners and the
+ * implied-growth band may sit one point lower (never closer than 3pt to gt).
+ */
+export const MIN_DISCOUNT_SPREAD = 0.04;
+/** The implied-growth solver's search band; a solution at either edge is reported, not trusted. */
+export const IMPLIED_GROWTH_BAND: readonly [number, number] = [-0.5, 2.0];
 
 /**
  * A reverse DCF only makes sense for a mature, FCF-generative operating company.
@@ -78,7 +87,7 @@ export interface IntrinsicConfig {
 export interface IntrinsicResult {
   ownerEarnings: number;
   impliedGrowth: number; // market-implied STARTING growth (year 1), faded linearly to terminal by year N
-  impliedGrowthBand: [number, number, number]; // at r-2%, r, r+2%
+  impliedGrowthBand: [number, number, number]; // at r−2% (never below gt + 3pt), r, r+2%
   achievableGrowth: number;
   gap: number; // impliedGrowth − achievableGrowth (the signal)
   fairValue: { bear: number; base: number; bull: number }; // per share
@@ -87,12 +96,13 @@ export interface IntrinsicResult {
   /**
    * Robustness band on the margin of safety: min / max over the centre point and the four corners
    * {r − 1pt, r + 1pt} × {base growth − 2pt, base growth + 2pt}. The shifted growth is NOT re-clamped
-   * to the cap/floor; the terminal-≤-explicit rule still applies. mosRange.max < 0 means the price
+   * to the cap/floor; the terminal-≤-explicit rule still applies. The r − 1pt corner never goes
+   * below gt + 3pt (MIN_DISCOUNT_SPREAD − 1pt). mosRange.max < 0 means the price
    * sits above fair value under every nearby assumption (a robust disagreement).
    */
   mosRange: { min: number; max: number };
   scenarios: ScenarioIn[]; // fed into computeConviction()
-  discountRate: number; // always reported
+  discountRate: number; // the rate actually used: the cost of equity, floored at gt + MIN_DISCOUNT_SPREAD
   flags: string[];
 }
 
@@ -134,8 +144,7 @@ export const fairValuePerShare = (oe0: number, g: number, shares: number, r: num
  * to [−50%, +200%] (the old [−10%, +80%] band pinned cheap names such as T and FOUR at −10%).
  */
 export function impliedGrowth(oe0: number, equityValue: number, r: number, gt: number, N: number): number {
-  let lo = -0.5;
-  let hi = 2.0;
+  let [lo, hi] = IMPLIED_GROWTH_BAND;
   for (let i = 0; i < 100; i++) {
     const mid = (lo + hi) / 2;
     if (dcfEquityValue(oe0, mid, r, gt, N) > equityValue) hi = mid;
@@ -257,7 +266,9 @@ export function achievableGrowthDetail(f: IntrinsicFacts): AchievableGrowthDetai
 export const achievableGrowth = (f: IntrinsicFacts): number => achievableGrowthDetail(f).g;
 
 export function intrinsicRead(f: IntrinsicFacts, cfg: IntrinsicConfig): IntrinsicResult {
-  const { r, terminalGrowth: gt, horizon: N } = cfg;
+  const { terminalGrowth: gt, horizon: N } = cfg;
+  const r = Math.max(cfg.r, gt + MIN_DISCOUNT_SPREAD);
+  const rNear = (x: number) => Math.max(x, gt + MIN_DISCOUNT_SPREAD - 0.01); // corners / band
   const oe0 = ownerEarningsBase(f);
   const equity = f.quote.marketCap;
   const shares = f.quote.sharesOutstanding;
@@ -265,7 +276,10 @@ export function intrinsicRead(f: IntrinsicFacts, cfg: IntrinsicConfig): Intrinsi
   const sbcLatest = f.sbc?.[f.sbc.length - 1];
   const flags: string[] = [num(sbcLatest) ? "SBC charged to owner earnings" : "trailing-FCF owner-earnings proxy (SBC not isolated)", "exogenous discount rate"];
 
+  if (r > cfg.r) flags.push(`discount rate floored at ${(r * 100).toFixed(1)}% (cost of equity ${(cfg.r * 100).toFixed(1)}%)`);
   const gImpl = impliedGrowth(oe0, equity, r, gt, N);
+  if (gImpl - IMPLIED_GROWTH_BAND[0] < 1e-3 || IMPLIED_GROWTH_BAND[1] - gImpl < 1e-3)
+    flags.push(`market-implied growth is outside the solver band [${IMPLIED_GROWTH_BAND.map((b) => `${b * 100}%`).join(", ")}] — implied growth and bull/bear are unreliable`);
   const ach = achievableGrowthDetail(f);
   const gAch = ach.g;
   flags.push(...ach.flags);
@@ -295,14 +309,14 @@ export function intrinsicRead(f: IntrinsicFacts, cfg: IntrinsicConfig): Intrinsi
   const bear = { g: bearG, price: fv(bearG) }, base = { g: baseG, price: fv(baseG) }, bull = { g: bullG, price: fv(bullG) };
   // Robustness band: centre + the four {r ± 1pt} × {base g ± 2pt} corners (growth shifted unclamped).
   const mosGrid = [base.price / price - 1];
-  for (const dr of [-0.01, 0.01]) for (const dg of [-0.02, 0.02]) mosGrid.push(fvAt(baseG + dg, r + dr) / price - 1);
+  for (const dr of [-0.01, 0.01]) for (const dg of [-0.02, 0.02]) mosGrid.push(fvAt(baseG + dg, rNear(r + dr)) / price - 1);
   const mosRange = { min: Math.min(...mosGrid), max: Math.max(...mosGrid) };
 
   return {
     ownerEarnings: oe0,
     impliedGrowth: gImpl,
     impliedGrowthBand: [
-      impliedGrowth(oe0, equity, r - 0.02, gt, N),
+      impliedGrowth(oe0, equity, rNear(r - 0.02), gt, N),
       gImpl,
       impliedGrowth(oe0, equity, r + 0.02, gt, N),
     ],
