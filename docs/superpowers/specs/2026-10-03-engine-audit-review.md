@@ -321,7 +321,8 @@ paper does not make (3, 6, 8).
 ## Owner decisions and follow-ups
 
 1. **Merge the bear floor** (this branch). It changes live sizing, not entries or exits.
-2. **Bear-breach policy:** keep the exit, or freeze and re-synthesize (F1).
+2. **Bear-breach policy:** decided. Breaches are handled by cause, and the one daily decision moves to 15:10 ET
+   on live prices. Evidence and design: `docs/superpowers/specs/2026-10-03-breach-cause-and-trade-timing.md`.
 3. **Keep running `calibration:log`.** Every deferred item (#1 theme cap, #2 risk-aware tilt) is gated on b.
    - The first d21 cells fill around late October, d63 around December.
    - Add one regression when they do: realized excess on E and on E × realized vol (`realizedVol252` is
