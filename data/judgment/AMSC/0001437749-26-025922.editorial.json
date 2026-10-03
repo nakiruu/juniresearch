@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "67c4a9fa8e0e4bf762e2baab5419a090b778cae8461dfacbfb2765614f406d20",
-  "reviewedAt": "2026-10-03T06:25:37Z",
+  "judgmentSha256": "4c240af4a8bd2e4259060c4df17b38bbc44c5a561a0d554789ec797bf94a85a4",
+  "reviewedAt": "2026-10-03T06:26:43Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved-with-minors",
   "findings": [
     {
       "id": "F-1",
@@ -242,7 +242,18 @@
       "quote": "The market could just as easily pay only the lower multiple it already pays on FY28E, which leaves the shares at today's level even with FY28E EPS delivered. We treat the two readings as equally likely and price Base at their midpoint",
       "issue": "The equal-odds split sets the Base price, and with it the label, but it is asserted rather than argued. The paragraph gives only flat-side evidence: slowing revenue into FY28E and no FY29E estimate. It names nothing on the roll side, then calls the two readings equal ('just as easily'). By its own terms the argument points to the flat reading at least as often as the roll, so the split does not look tuned toward HOLD. If anything, the stated evidence would carry a more pessimistic split. But the label turns on it. With the Bull and Bear weights unchanged, a flat share of Base below roughly one third would derive BUY. The earlier draft's implied split of about 10 of 45 points was on that side. A coin flip that decides the call needs its own reasons. The roll side has evidence on the surface that the commentary does not weigh: June-quarter revenue up 30.0% at a 10.5% operating margin against FY26's 3.8%, and the consensus EPS step from FY27E to FY28E itself.",
       "fix": "Keep the 50/50 if the author still holds it after weighing both sides, but argue it in one or two sentences. Set the roll-side evidence above against the flat-side evidence already given, and say why they balance. Then add, in words and without a computed threshold, that the label is sensitive to this split: a modestly smaller flat share would derive BUY, so the HOLD reflects a real judgment that the flat reading is as likely as the roll. No reweighting is required.",
-      "status": "open"
+      "status": "addressed",
+      "note": "The roll-side evidence (June-quarter growth and margin against FY26, and the consensus EPS step) is now weighed against the flat-side evidence. It refers back to the figures in words, without restating them. The commentary now says 'the HOLD rests on the even split' and that a smaller flat share would derive BUY."
+    },
+    {
+      "id": "F-25",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "The market could just as easily pay only the lower multiple it already pays on FY28E, which leaves the shares at today's level even with FY28E EPS delivered.",
+      "issue": "Fit and order. The F-24 addition takes scenarioCommentary back to 2,238 of 2,500 characters, close to the cap again (compare F-23). This sentence also announces the equal-odds conclusion ('just as easily') before the new 'The evidence cuts both ways' passage argues it, so the paragraph reaches its verdict twice.",
+      "fix": "Recast the sentence as a statement of the flat reading only, e.g. 'The alternative is that the market pays only the lower multiple it already pays on FY28E, which leaves the shares at today's level even with FY28E EPS delivered.' Let 'Neither outweighs the other' carry the conclusion, and trim elsewhere if more room is needed.",
+      "status": "declined",
+      "note": "Agreed on substance; deferred to the next AMSC synthesis because editing the judgment after the final (second) review round would leave it unreviewed."
     }
   ]
 }
