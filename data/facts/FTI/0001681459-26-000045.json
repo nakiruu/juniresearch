@@ -6,12 +6,12 @@
   "exchange": "NYSE",
   "sic": 3533,
   "sicDescription": "Oil & Gas Field Machinery & Equipment",
-  "goodwill": [
-    3128500000,
-    null,
-    null,
-    null,
-    null
+  "sbc": [
+    26800000,
+    40500000,
+    40900000,
+    58300000,
+    61900000
   ],
   "filing": {
     "form": "10-Q",
@@ -585,6 +585,12 @@
       "source": "shibui",
       "capturedAt": "2026-10-03T03:46:39.826Z",
       "endpoint": "stock_data_query: 2y weekly log returns vs SPY (cov/var) → Blume-adjusted, clamped [0.3, 2.5]"
+    },
+    {
+      "field": "sbc",
+      "source": "edgar",
+      "capturedAt": "2026-10-03T04:05:08.352Z",
+      "endpoint": "companyconcept us-gaap/AllocatedShareBasedCompensationExpense (FY21, FY22, FY23, FY24, FY25)"
     }
   ],
   "beta": {

@@ -6,6 +6,20 @@
   "exchange": "NYSE",
   "sic": 6022,
   "sicDescription": "State Commercial Banks",
+  "goodwill": [
+    7116000000,
+    8173000000,
+    8188000000,
+    8187000000,
+    8187000000
+  ],
+  "sbc": [
+    59000000,
+    84000000,
+    87000000,
+    97000000,
+    120000000
+  ],
   "filing": {
     "form": "10-Q",
     "accession": "0000759944-26-000148",
@@ -578,6 +592,12 @@
       "source": "shibui",
       "capturedAt": "2026-10-03T03:46:39.826Z",
       "endpoint": "stock_data_query: 2y weekly log returns vs SPY (cov/var) → Blume-adjusted, clamped [0.3, 2.5]"
+    },
+    {
+      "field": "sbc",
+      "source": "edgar",
+      "capturedAt": "2026-10-03T04:05:08.352Z",
+      "endpoint": "companyconcept us-gaap/AllocatedShareBasedCompensationExpense (FY21, FY22, FY23, FY24, FY25)"
     }
   ],
   "beta": {

@@ -7,11 +7,18 @@
   "sic": 3600,
   "sicDescription": "Electronic & Other Electrical Equipment (No Computer Equip)",
   "goodwill": [
-    26182000000,
-    25798000000,
-    13385000000,
+    13303000000,
+    8835000000,
+    8948000000,
     8538000000,
     9060000000
+  ],
+  "sbc": [
+    305000000,
+    143000000,
+    192000000,
+    286000000,
+    325000000
   ],
   "filing": {
     "form": "10-Q",
@@ -579,6 +586,12 @@
       "source": "shibui",
       "capturedAt": "2026-10-03T03:46:39.826Z",
       "endpoint": "stock_data_query: 2y weekly log returns vs SPY (cov/var) → Blume-adjusted, clamped [0.3, 2.5]"
+    },
+    {
+      "field": "sbc",
+      "source": "edgar",
+      "capturedAt": "2026-10-03T04:05:08.352Z",
+      "endpoint": "companyconcept us-gaap/AllocatedShareBasedCompensationExpense (FY21, FY22, FY23, FY24, FY25)"
     }
   ],
   "beta": {

@@ -7,11 +7,18 @@
   "sic": 4813,
   "sicDescription": "Telephone Communications (No Radiotelephone)",
   "goodwill": [
-    133223000000,
+    92740000000,
     67895000000,
     67854000000,
     63432000000,
     63425000000
+  ],
+  "sbc": [
+    447000000,
+    518000000,
+    479000000,
+    505000000,
+    536000000
   ],
   "filing": {
     "form": "10-Q",
@@ -708,6 +715,12 @@
       "source": "shibui",
       "capturedAt": "2026-10-03T03:46:39.826Z",
       "endpoint": "stock_data_query: 2y weekly log returns vs SPY (cov/var) → Blume-adjusted, clamped [0.3, 2.5]"
+    },
+    {
+      "field": "sbc",
+      "source": "edgar",
+      "capturedAt": "2026-10-03T04:05:08.352Z",
+      "endpoint": "companyconcept us-gaap/AllocatedShareBasedCompensationExpense (FY21, FY22, FY23, FY24, FY25)"
     }
   ],
   "beta": {

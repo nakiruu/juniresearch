@@ -1,8 +1,9 @@
 /**
  * enrich.ts — forward-path capture of the two data items the moat/composite layers
- * need but the vendor tearsheet does not carry: per-year goodwill (SEC companyfacts)
- * and peer multiples (Yahoo quoteSummary). Run after facts:build via facts:enrich;
- * the one-off backfill scripts stamped the existing packs with the same logic.
+ * need but the vendor tearsheet does not carry: per-year goodwill and SBC (SEC
+ * companyconcept, aligned by period end) and peer multiples (Yahoo quoteSummary). Run
+ * after facts:build via facts:enrich; scripts/backfill-sec-series.ts re-stamps the
+ * goodwill/SBC series on existing packs with the same logic.
  *
  * Contact discipline: the SEC contact (EDGAR_CONTACT) is used ONLY for the SEC
  * request; Yahoo gets a generic browser UA, never the SEC contact.
@@ -23,18 +24,94 @@ export interface PeerMultiples {
 
 // --- pure helpers (unit-tested) ---------------------------------------------
 
-interface GoodwillEntry {
-  fy?: number;
+/** One fact from an SEC companyconcept `units.<unit>` array. Duration facts carry `start`; instants only `end`. */
+export interface ConceptEntry {
+  start?: string;
+  end: string;
   val: number;
+  accn?: string;
+  fy?: number | null;
+  fp?: string | null;
   form: string;
-  fp: string;
+  filed?: string;
+  frame?: string;
 }
 
-/** Align annual (10-K / FY) goodwill values to a pack's fiscal-year labels; null where absent. */
-export function alignGoodwill(usd: GoodwillEntry[], fiscalYears: string[]): (number | null)[] {
-  const byFy: Record<number, number> = {};
-  for (const u of usd) if (u.form === "10-K" && u.fp === "FY" && u.fy != null) byFy[u.fy] = u.val; // last (latest amendment) wins
-  return fiscalYears.map((fy) => byFy[2000 + Number(fy.slice(2))] ?? null);
+const DAY_MS = 86_400_000;
+const days = (a: string, b: string) => (Date.parse(b) - Date.parse(a)) / DAY_MS;
+const shiftYears = (iso: string, n: number) => {
+  const d = new Date(`${iso}T00:00:00Z`);
+  d.setUTCFullYear(d.getUTCFullYear() + n);
+  return d.toISOString().slice(0, 10);
+};
+const ANNUAL_MIN_DAYS = 330, ANNUAL_MAX_DAYS = 380;
+/** 52/53-week years put a fiscal-year end within a week of its calendar anniversary; 20 days is ample. */
+const FYE_TOLERANCE_DAYS = 20;
+
+/**
+ * Align a companyconcept series to a pack's fiscal-year labels by the PERIOD END date — not by the
+ * `fy` field, which is the fiscal year of the filing that reported the fact (a 10-K re-reports prior
+ * years under its own `fy`, and January filers' `fy` lags the period). Pure.
+ *
+ * - Only annual facts: form 10-K / 10-K/A, fp "FY"; duration facts must span 330–380 days.
+ * - Deduped by `end`: the latest `filed` wins (amendments and restatements).
+ * - `anchor` is the pack's filing period end (`filing.periodEnd`). The last label is the most recent
+ *   fiscal year ending at or before it; each earlier label is one year earlier. A label takes the fact
+ *   whose `end` falls within 20 days of that year's expected end (52/53-week drift), so a missing year
+ *   leaves a null rather than shifting the series. If the latest fiscal year's 10-K is absent from the
+ *   feed, the expected ends are rolled forward so the newest label stays null instead of taking last year's value.
+ */
+export function alignAnnualSeries(entries: ConceptEntry[], fiscalYears: string[], anchor: string): (number | null)[] {
+  const annual = entries.filter((e) =>
+    (e.form === "10-K" || e.form === "10-K/A") && e.fp === "FY" && typeof e.end === "string" && num(e.val) &&
+    (e.start == null || (days(e.start, e.end) >= ANNUAL_MIN_DAYS && days(e.start, e.end) <= ANNUAL_MAX_DAYS)));
+  if (!annual.length || !fiscalYears.length) return fiscalYears.map(() => null);
+
+  // Dedupe by period end — latest filed wins; on a filed-date tie the later entry in the feed wins.
+  const byEnd = new Map<string, ConceptEntry>();
+  for (const e of annual) {
+    const prev = byEnd.get(e.end);
+    if (!prev || (e.filed ?? "") >= (prev.filed ?? "")) byEnd.set(e.end, e);
+  }
+
+  // Fiscal-year ends: the latest period end each 10-K reports (its balance-sheet date / year end).
+  // For an instant concept this excludes comparatives and mid-year instants (e.g. an acquisition date).
+  const fyeByFiling = new Map<string, string>();
+  for (const e of annual) {
+    const key = e.accn ?? `${e.form}|${e.filed ?? ""}|${e.fy ?? ""}`;
+    const cur = fyeByFiling.get(key);
+    if (!cur || e.end > cur) fyeByFiling.set(key, e.end);
+  }
+  const fyes = [...new Set(fyeByFiling.values())].filter((d) => d <= anchor).sort();
+  if (!fyes.length) return fiscalYears.map(() => null);
+
+  // The latest fiscal year ending at/before the anchor. A 10-K anchor IS a fiscal-year end and a 10-Q
+  // anchor is a quarter end ~3–9 months after one, so a gap of 350+ days means a later year has closed
+  // whose 10-K the feed lacks: roll the expected end forward so that label stays null.
+  let lastEnd = fyes[fyes.length - 1];
+  while (days(lastEnd, anchor) >= 350) lastEnd = shiftYears(lastEnd, 1);
+
+  const ends = [...byEnd.keys()];
+  const n = fiscalYears.length;
+  return fiscalYears.map((_, i) => {
+    const expected = shiftYears(lastEnd, i - (n - 1));
+    let best: string | null = null;
+    for (const end of ends) {
+      const gap = Math.abs(days(expected, end));
+      if (gap <= FYE_TOLERANCE_DAYS && (best == null || gap < Math.abs(days(expected, best)))) best = end;
+    }
+    return best == null ? null : byEnd.get(best)!.val;
+  });
+}
+
+/** Fill the nulls of `primary` from `fallback`, recording which concept supplied each year. Pure. */
+export function mergeConceptSeries(
+  primary: { concept: string; values: (number | null)[] },
+  fallback: { concept: string; values: (number | null)[] },
+): { values: (number | null)[]; concepts: (string | null)[] } {
+  const values = primary.values.map((v, i) => v ?? fallback.values[i] ?? null);
+  const concepts = primary.values.map((v, i) => (v != null ? primary.concept : fallback.values[i] != null ? fallback.concept : null));
+  return { values, concepts };
 }
 
 interface QuoteSummaryResult {
@@ -53,23 +130,67 @@ export function parsePeerMultiples(result: QuoteSummaryResult | undefined): Peer
 
 // --- network fetchers (fetch injectable for tests) --------------------------
 
-/** SEC companyconcept for a us-gaap concept → a per-fiscal-year annual series aligned to `fiscalYears`. */
-async function fetchConceptSeries(cik: number, concept: string, fiscalYears: string[], contact: string, fetchImpl: FetchLike): Promise<(number | null)[]> {
+/**
+ * SEC companyconcept us-gaap/<concept> → its USD facts. [] when the filer never tagged the concept
+ * (404); throws on any other failure so a caller can tell "not tagged" from "request failed".
+ *
+ * The companyconcept endpoint sometimes serves a hollow body (`"units":{"USD":{}}` — seen for Visa)
+ * although the same facts are in companyfacts; in that case the concept is read from companyfacts.
+ */
+export async function fetchConceptEntries(cik: number, concept: string, contact: string, fetchImpl: FetchLike = fetch): Promise<ConceptEntry[]> {
   const url = `https://data.sec.gov/api/xbrl/companyconcept/CIK${padCik(cik)}/us-gaap/${concept}.json`;
   const res = await fetchImpl(url, { headers: { "User-Agent": contact } });
-  if (!res.ok) return fiscalYears.map(() => null);
-  const body = (await res.json()) as { units?: Record<string, GoodwillEntry[]> };
-  const usd = Array.isArray(body.units?.USD) ? body.units!.USD : [];
-  return alignGoodwill(usd, fiscalYears);
+  if (res.status === 404) return [];
+  if (!res.ok) throw new Error(`SEC companyconcept ${concept} responded ${res.status} for CIK ${cik}`);
+  const body = (await res.json()) as { units?: Record<string, unknown> };
+  const usd = body.units?.USD;
+  if (Array.isArray(usd)) return usd as ConceptEntry[];
+  if (usd == null) return [];
+  const facts = (await fetchCompanyFacts(cik, contact, fetchImpl)) as { facts?: Record<string, Record<string, { units?: Record<string, unknown> }>> };
+  const fromFacts = facts.facts?.["us-gaap"]?.[concept]?.units?.USD;
+  return Array.isArray(fromFacts) ? (fromFacts as ConceptEntry[]) : [];
 }
 
-/** SEC companyconcept us-gaap/Goodwill → a per-fiscal-year series aligned to `fiscalYears`. */
-export const fetchGoodwillSeries = (cik: number, fiscalYears: string[], contact: string, fetchImpl: FetchLike = fetch) =>
-  fetchConceptSeries(cik, "Goodwill", fiscalYears, contact, fetchImpl);
+/** SEC companyconcept us-gaap/Goodwill → a per-fiscal-year series aligned to `fiscalYears` (see alignAnnualSeries). */
+export async function fetchGoodwillSeries(cik: number, fiscalYears: string[], anchor: string, contact: string, fetchImpl: FetchLike = fetch) {
+  return alignAnnualSeries(await fetchConceptEntries(cik, "Goodwill", contact, fetchImpl), fiscalYears, anchor);
+}
 
-/** SEC companyconcept us-gaap/ShareBasedCompensation → a per-fiscal-year series aligned to `fiscalYears`. */
-export const fetchSbcSeries = (cik: number, fiscalYears: string[], contact: string, fetchImpl: FetchLike = fetch) =>
-  fetchConceptSeries(cik, "ShareBasedCompensation", fiscalYears, contact, fetchImpl);
+export const SBC_CONCEPT = "ShareBasedCompensation";
+export const SBC_FALLBACK_CONCEPT = "AllocatedShareBasedCompensationExpense";
+
+/**
+ * Per-fiscal-year SBC aligned to `fiscalYears`: us-gaap/ShareBasedCompensation (the cash-flow add-back),
+ * with any year it leaves null filled from AllocatedShareBasedCompensationExpense (the expense note) —
+ * fetched only when needed. `concepts[i]` names the concept that supplied year i.
+ */
+export async function fetchSbcSeries(cik: number, fiscalYears: string[], anchor: string, contact: string, fetchImpl: FetchLike = fetch, pause: () => Promise<unknown> = async () => {}) {
+  const primary = { concept: SBC_CONCEPT, values: alignAnnualSeries(await fetchConceptEntries(cik, SBC_CONCEPT, contact, fetchImpl), fiscalYears, anchor) };
+  if (primary.values.every((v) => v != null)) return { values: primary.values, concepts: primary.values.map(() => SBC_CONCEPT) as (string | null)[] };
+  await pause();
+  const fallback = { concept: SBC_FALLBACK_CONCEPT, values: alignAnnualSeries(await fetchConceptEntries(cik, SBC_FALLBACK_CONCEPT, contact, fetchImpl), fiscalYears, anchor) };
+  return mergeConceptSeries(primary, fallback);
+}
+
+type Provenance = { field: string; source: "fmp" | "bigdata" | "edgar" | "yahoo" | "shibui"; endpoint: string; capturedAt: string };
+
+/**
+ * Record on the pack which years' SBC came from the fallback concept: replaces any earlier "sbc"
+ * provenance entry, and adds one only when the fallback supplied a value (the primary concept is
+ * the default the schema documents). Mutates.
+ */
+export function stampSbcProvenance(pack: { statements: { fiscalYears: string[] }; provenance?: Provenance[] }, concepts: (string | null)[], capturedAt: string): void {
+  if (!pack.provenance) return;
+  pack.provenance = pack.provenance.filter((p) => p.field !== "sbc");
+  const fallbackYears = pack.statements.fiscalYears.filter((_, i) => concepts[i] === SBC_FALLBACK_CONCEPT);
+  if (!fallbackYears.length) return;
+  const primaryYears = pack.statements.fiscalYears.filter((_, i) => concepts[i] === SBC_CONCEPT);
+  pack.provenance.push({
+    field: "sbc", source: "edgar", capturedAt,
+    endpoint: `companyconcept us-gaap/${SBC_FALLBACK_CONCEPT} (${fallbackYears.join(", ")})` +
+      (primaryYears.length ? `; us-gaap/${SBC_CONCEPT} (${primaryYears.join(", ")})` : ""),
+  });
+}
 
 /** Yahoo quoteSummary (summaryDetail + defaultKeyStatistics) for each ticker, via the crumb flow. */
 export async function fetchPeerMultiples(tickers: string[], fetchImpl: FetchLike = fetch): Promise<Record<string, PeerMultiples>> {
@@ -120,8 +241,6 @@ export function evToEbitdaNotMeaningful(sic: number | null | undefined): boolean
   return sic != null && ((sic >= 6000 && sic <= 6199) || (sic >= 6300 && sic <= 6411));
 }
 
-type Provenance = { field: string; source: "fmp" | "bigdata" | "edgar" | "yahoo"; endpoint: string; capturedAt: string };
-
 /**
  * Fill a pack's missing TTM EV/EBITDA. First choice: calculated from SEC data (secEvToEbitda). Fallback:
  * Yahoo's enterpriseToEbitda for the subject, fetched now — so it is only as current as this run. Leaves
@@ -159,24 +278,33 @@ export async function fillEvToEbitda(
 
 interface EnrichablePack {
   cik: number;
+  filing: { periodEnd: string };
   statements: { fiscalYears: string[] };
   peers?: { ticker: string; pe: number | null; ps: number | null; evToEbitda: number | null }[];
   goodwill?: (number | null)[];
   sbc?: (number | null)[];
+  provenance?: Provenance[];
 }
 
 /** Stamp goodwill, SBC + peer multiples onto a freshly-built pack (mutates and returns it). */
-export async function enrichPack<T extends EnrichablePack>(pack: T, contact: string, fetchImpl: FetchLike = fetch): Promise<T> {
-  // The three fetches are independent (two SEC requests — well under its 10 req/s — and Yahoo's
-  // peer loop), so they run concurrently; results are applied in the original order, keeping the
-  // pack's key order (goodwill before sbc) and therefore the written JSON unchanged.
+export async function enrichPack<T extends EnrichablePack>(pack: T, contact: string, fetchImpl: FetchLike = fetch, now: () => Date = () => new Date()): Promise<T> {
+  // The three fetches are independent (two or three SEC requests — well under its 10 req/s — and
+  // Yahoo's peer loop), so they run concurrently; results are applied in the original order, keeping
+  // the pack's key order (goodwill before sbc) and therefore the written JSON unchanged. A failed SEC
+  // request leaves that series unstamped rather than failing the enrichment.
+  const { fiscalYears } = pack.statements;
+  const anchor = pack.filing.periodEnd;
+  const none = () => fiscalYears.map(() => null);
   const [goodwill, sbc, multiples] = await Promise.all([
-    fetchGoodwillSeries(pack.cik, pack.statements.fiscalYears, contact, fetchImpl),
-    fetchSbcSeries(pack.cik, pack.statements.fiscalYears, contact, fetchImpl),
+    fetchGoodwillSeries(pack.cik, fiscalYears, anchor, contact, fetchImpl).catch(none),
+    fetchSbcSeries(pack.cik, fiscalYears, anchor, contact, fetchImpl).catch(() => ({ values: none(), concepts: none() })),
     pack.peers?.length ? fetchPeerMultiples(pack.peers.map((p) => p.ticker), fetchImpl) : null,
   ]);
   if (goodwill.some((g) => g != null)) pack.goodwill = goodwill;
-  if (sbc.some((s) => s != null)) pack.sbc = sbc;
+  if (sbc.values.some((s) => s != null)) {
+    pack.sbc = sbc.values;
+    stampSbcProvenance(pack, sbc.concepts, now().toISOString());
+  }
 
   if (pack.peers?.length && multiples) {
     for (const p of pack.peers) {
