@@ -52,6 +52,23 @@ export function hhmmToMinutes(hhmm: string): number {
   return +m[1] * 60 + +m[2];
 }
 
+/**
+ * The UTC instant of "HH:MM" ET on the ET calendar date `day` (YYYY-MM-DD), DST-correct — e.g. today's
+ * submit cutoff. Throws on a malformed date or time: a cutoff that silently became NaN would never trip.
+ */
+export function etInstantOn(day: string, hhmm: string): number {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(day);
+  if (!m) throw new Error(`expected "YYYY-MM-DD", got "${day}"`);
+  const min = hhmmToMinutes(hhmm);
+  return etWallToUtc(+m[1], +m[2], +m[3], Math.floor(min / 60), min % 60);
+}
+
+/** "HH:MM ET" for an instant — log/notes text only. */
+export function etHHMM(ms: number): string {
+  const p = partsInTZ(ms);
+  return `${String(p.h).padStart(2, "0")}:${String(p.mi).padStart(2, "0")} ET`;
+}
+
 const TRADING_DAYS = nyseTradingDays(COVERAGE_START, COVERAGE_END).map((d) => d.date);
 
 export function nextRunAtET(nowMs: number, hhmm: string): number {

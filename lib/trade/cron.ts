@@ -19,7 +19,7 @@ import { turnoverBreaker, clipToTurnover, dayTurnoverUsd, readHaltState, bumpHal
 import { crossCheckBroker } from "./audit";
 import { allocationFromRun, summaryFromRun, type AllocationInput, type RunSummaryInput } from "./notify";
 import { writeRunRecord } from "./run-record";
-import { currentSlot, etMinutesOfDay, hhmmToMinutes } from "./clock";
+import { currentSlot, etInstantOn, etMinutesOfDay, hhmmToMinutes } from "./clock";
 import { refreshTokenHealth } from "../broker/schwab-auth";
 import { maybeWarnAuth } from "./auth-health";
 import { nextSlotRunAtET } from "./clock";
@@ -51,7 +51,11 @@ export interface CronDeps {
    * step-1 `disabled` read, so it must carry the real environment, not an empty stand-in.
    */
   env: NodeJS.ProcessEnv;
-  /** Wall clock for per-ticker market-data capture times (latency/freshness); default: frozen at nowMs. */
+  /**
+   * Wall clock for per-ticker market-data capture times (latency/freshness) and the submit loop
+   * (timestamps, the submit cutoff). Default: frozen at nowMs for capture; the submit loop then runs on
+   * nowMs + real elapsed time instead — a clock frozen at nowMs would never reach the cutoff.
+   */
   clock?: () => number;
   /** Lookup schedule for an order submit with an unknown outcome (tests pass zeros). */
   resolveDelaysMs?: readonly number[];
@@ -120,8 +124,11 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
   }
 
   // 1b. Fire window. A scheduled run that starts more than maxLateMin after cronTimeET (a missed
-  // trigger fired late, a catch-up after a mid-day restart) trades at a worse, unplanned time of day —
-  // skip it; the next scheduled morning runs normally. Checked before any broker call.
+  // trigger fired late, a catch-up after a restart) trades at a worse, unplanned time of day — skip it;
+  // the next scheduled slot runs normally. Checked before any broker call. With the 15:10 slot the
+  // window ends 15:30, and the submit cutoff (step 8) still bounds a run that starts inside it.
+  // Early-close days (13:00 ET) need no special case: at 15:10 the broker clock (step 2) reads closed,
+  // so the run exits "closed" and nothing trades that day (accepted: ~3 days a year).
   const slot = currentSlot(nowMs, cfg.cronTimesET);
   if (!deps.ignoreWindow && slot && etMinutesOfDay(nowMs) > hhmmToMinutes(slot) + cfg.maxLateMin) {
     appendLog(paths.log, logLine(today, runId, "late", { reason: `after ${slot} ET + ${cfg.maxLateMin}m` }));
@@ -266,14 +273,22 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
       brokerKind: adapter.kind, configuredBaseUrl, locks: out.locks, today, nav: out.ledger.nav, cfg,
       env, cashUsd: out.ledger.cash, counters: { orders: 0, notionalUsd: 0, buyNotionalUsd: 0, sellProceedsUsd: 0 },
     };
-    const { fills, executed, aborted, skippedCash, rejected, skippedLegs } = await executeOrders({ adapter, sized: out.sized, ctx, runId, fillsPath: paths.fills, resolveDelaysMs: deps.resolveDelaysMs, now: deps.clock });
+    // Submit cutoff (cfg.submitCutoffET, 15:50 ET): no order goes out at or after it, however late the
+    // run started or however long earlier orders polled — never into the close. Remaining orders are
+    // recorded as skipped (sells go first, so a cutoff only ever leaves cash).
+    const cutoffMs = etInstantOn(today, cfg.submitCutoffET);
+    const t0 = Date.now();
+    const submitClock = deps.clock ?? (() => nowMs + (Date.now() - t0));
+    const { fills, executed, aborted, skippedCash, rejected, skippedLegs, skippedCutoff } = await executeOrders({ adapter, sized: out.sized, ctx, runId, fillsPath: paths.fills, resolveDelaysMs: deps.resolveDelaysMs, now: submitClock, cutoffMs });
     const rec = {
       ...out.record, fills: fills as unknown as Record<string, unknown>[], orders: mergeExecution(out.record.orders, executed),
       notes: [...out.record.notes, ...skippedCash.map((s) => `cash skipped: ${s.ticker} — ${s.detail}`),
-        ...rejected.map((r) => `rejected: ${r.ticker} — ${r.detail}`), ...skippedLegs.map((l) => `leg skipped: ${l.ticker} — ${l.detail}`)],
+        ...rejected.map((r) => `rejected: ${r.ticker} — ${r.detail}`), ...skippedLegs.map((l) => `leg skipped: ${l.ticker} — ${l.detail}`),
+        ...skippedCutoff.map((c) => `cutoff skipped: ${c.ticker} — ${c.detail}`)],
     };
     if (rejected.length) notify(`cron: ${rejected.length} order(s) rejected by the broker (nothing placed for them) — ${rejected.map((r) => `${r.ticker}: ${r.detail}`).join("; ")}`);
     if (skippedCash.length) notify(`cron: ${skippedCash.length} buy(s) skipped by the cash backstop — ${skippedCash.map((s) => s.ticker).join(", ")} (broker cash couldn't cover them; usually a funding sell that didn't fill)`);
+    if (skippedCutoff.length) notify(`cron: ${skippedCutoff.length} order(s) NOT sent — the ${cfg.submitCutoffET} ET submit cutoff passed mid-run — ${skippedCutoff.map((c) => c.ticker).join(", ")} (nothing placed for them; the next run re-plans)`);
     writeRunRecord(paths.runs, rec);
 
     // 9. Broker-truth cross-check (spec §4). The recorded fills must match what the broker actually
@@ -304,7 +319,7 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
     }
     clearHalt(paths.haltState);
     appendLog(paths.log, logLine(today, runId, "executed", { ...summaryFields(out), haltSkip: out.sized.skippedHalt.length }));
-    deps.notifySummary?.(summaryFromRun(out, "executed", fills, audit));
+    deps.notifySummary?.(summaryFromRun(out, "executed", fills, audit, skippedCutoff));
     if (out.sized.skippedHalt.length) {
       notify(`cron: ${out.sized.skippedHalt.length} order(s) skipped by the per-ticker halt — ${out.sized.skippedHalt.map((h) => `${h.ticker} (${h.reason})`).join(", ")}`);
     }

@@ -1,6 +1,6 @@
 /**
  * trade:cron — the scheduler entrypoint (spec §2, §3). Windows Task Scheduler invokes `npm run
- * trade:cron` once each trading morning; this script builds the real dependencies and calls
+ * trade:cron` at each cronTimesET slot (default 15:10 ET); this script builds the real dependencies and calls
  * `runCron` (lib/trade/cron.ts), which does all the actual reconcile → plan → execute-if-any
  * orchestration, breakers, locking and logging. This file is thin wiring, mirroring
  * scripts/trade-execute.ts: build the real Alpaca PAPER adapter, refuse non-paper, assemble

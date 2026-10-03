@@ -18,7 +18,10 @@ const runId = newRunId(today);
 const out = await planRun({ adapter, reports, sics, marketCapUsd, fills, today, cfg, runId });
 writeLedger(LEDGER_PATH, out.ledger);
 const path = writeRunRecord(RUNS_DIR, out.record);
-console.log(`Plan ${runId} · broker ${adapter.kind} · marks ${out.markDate} (${cfg.markMode}) · NAV $${out.ledger.nav.toFixed(0)} · invested→ ${(out.plan.plannedInvested * 100).toFixed(1)}% · cash→ ${(out.plan.plannedCash * 100).toFixed(1)}%`);
+// Decision marks: live prices only when this is today's ET session in markMode "live" (the run record
+// says which, per ticker); otherwise — e.g. --date — the settled close of out.markDate.
+const marksText = out.record.markMode === "live" ? `live (ref close ${out.markDate})` : `${out.markDate} settled${cfg.markMode === "live" ? " (live mode, outside today's session)" : ""}`;
+console.log(`Plan ${runId} · broker ${adapter.kind} · marks ${marksText} · NAV $${out.ledger.nav.toFixed(0)} · invested→ ${(out.plan.plannedInvested * 100).toFixed(1)}% · cash→ ${(out.plan.plannedCash * 100).toFixed(1)}%`);
 for (const t of out.plan.trades) console.log(`  ${t.side.toUpperCase().padEnd(4)} ${t.ticker.padEnd(6)} ${t.reason.padEnd(5)} ${(t.currentWeight * 100).toFixed(1).padStart(5)}% → ${(t.targetWeight * 100).toFixed(1).padStart(5)}%`);
 for (const o of out.sized.orders) console.log(`  order ${o.side} ${o.ticker} ${o.qty} sh ${o.type === "market" ? `@ market (~$${o.limitPrice})` : `@ limit $${o.limitPrice} ioc`} (tier ${o.tier}${o.capBound ? ", cap-bound" : ""}) ~cost $${o.estCostUsd.toFixed(2)} (${o.bucket})`);
 for (const h of out.sized.skippedHalt) console.log(`  halt  ${h.ticker.padEnd(6)} ${h.reason}`);

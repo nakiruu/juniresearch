@@ -43,15 +43,22 @@ export function goalBook(currentWeights: Record<string, number>, trades: { ticke
   return Object.entries(g).filter(([, w]) => w > 0).map(([ticker, weight]) => ({ ticker, weight })).sort((a, b) => b.weight - a.weight);
 }
 
-/** Pure adapter: a pipeline run → the notification summary (used identically by cron and trade:execute). */
-export function summaryFromRun(out: PlanRunOutput, status: string, fills: Fill[], audit?: AuditResult): RunSummaryInput {
+/**
+ * Pure adapter: a pipeline run → the notification summary (used identically by cron and trade:execute).
+ * `skippedCutoff`: orders executeOrders did not send because the submit cutoff passed — listed with the
+ * other skips so the embed shows exactly which orders never went out.
+ */
+export function summaryFromRun(out: PlanRunOutput, status: string, fills: Fill[], audit?: AuditResult, skippedCutoff: { ticker: string; detail: string }[] = []): RunSummaryInput {
   return {
     today: out.record.today, runId: out.record.runId, broker: out.record.broker, status,
     nav: out.ledger.nav, cash: out.ledger.cash,
     goal: goalBook(weightsOf(out.ledger), out.plan.trades),
     orders: out.sized.orders.map((o) => ({ ticker: o.ticker, side: o.side, qty: o.qty, limitPrice: o.limitPrice, type: o.type, reason: o.reason })),
     fills: fills.map((f) => ({ ticker: f.ticker, qty: f.qty, price: f.price })),
-    skipped: [...out.sized.skippedHalt.map((h) => ({ ticker: h.ticker, reason: h.reason })), ...out.sized.skippedDust.map((d) => ({ ticker: d.ticker, reason: "dust" }))],
+    skipped: [
+      ...out.sized.skippedHalt.map((h) => ({ ticker: h.ticker, reason: h.reason })), ...out.sized.skippedDust.map((d) => ({ ticker: d.ticker, reason: "dust" })),
+      ...skippedCutoff.map((c) => ({ ticker: c.ticker, reason: c.detail })),
+    ],
     audit: audit ? { ok: audit.ok, critical: audit.critical, warn: audit.warn } : undefined,
   };
 }
