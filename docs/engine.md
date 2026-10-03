@@ -234,7 +234,8 @@ sees it. `--bearFloor 0` restores the raw R (the trade layer then needs `breachP
 > penalty barely moves the book (5% turnover, β 1.14 → 1.11), because the claimed upsides dwarf the variance
 > drag. It matters only if μ's information content b (realized excess ≈ b·μ) is well below 1. The evidence
 > points that way for sell-side targets:
-> - claimed undervaluation is realized at 16–18¢ per $ (Green, Hand & Sikochi 2024);
+> - claimed undervaluation is realized at 16–18¢ per $ (Green, Hand & Sikochi 2024), on upside *above* the analyst's
+>   cost of equity (≈ 11%) and mostly within two quarters;
 > - optimism grows with β, idiosyncratic vol and small size (Brav & Lehavy 2003; Dechow & You 2020).
 >
 > But the right book swings widely across b. The penalty in model-μ units is λ/b, so at b ≈ 0.17 the change
@@ -781,6 +782,11 @@ the engine keeps exactly **one** decision a day and makes it at **15:10 ET on li
 | `maxLateMin` | 20 (15:10 → 15:30 ET) | fire window |
 | `submitCutoffET` | "15:50" | no submit at or after it |
 | buckets | large ≥ $10B, mid ≥ $2B, else small (null→mid) | liquidity |
+
+> 💡 **Audited 2026-10-03** (`docs/superpowers/specs/2026-10-03-config-audit.md`): literature plus a simulation of this
+> engine over 36 real-price universes. Recommended, pending the owner: `stalenessMaxDays` 150, `rExit` 0.15 and, optionally,
+> `bearFloor` 0.25 (+0.74pp/yr together). Every other default sits at a flat optimum or waits on μ's measured
+> information content. `muEnter`, `muExit` and `convictionMin` never bind: the R gates fire first.
 
 `resolveTradeConfig` enforces the invariants (`rExit < rEnter`, `muExit < muEnter`, `limitTol ≤ limitTolMax ≤ 0.5`,
 `gapHalt ∈ (0,1)`, positive freshness, `closeAnchorSizeMult ∈ (0,1]`, `0 < breachMarketShareMax < breachStockShareMin ≤ 1.5`,
