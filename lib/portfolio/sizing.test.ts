@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { scoreWeight, allocateCapped, sizePortfolio } from "./sizing";
+import { scoreWeight, sizingRewardRisk, allocateCapped, sizePortfolio } from "./sizing";
 import { DEFAULT_CONFIG } from "./config";
 import type { Signal } from "./signal";
 
@@ -41,6 +41,74 @@ describe("scoreWeight", () => {
   it("multiplies by quality when the tilt is requested", () => {
     expect(scoreWeight(sig({ quality: 1.2 }), DEFAULT_CONFIG, { qualityTilt: true })).toBeCloseTo(0.144, 9);
     expect(scoreWeight(sig({ quality: 0.8 }), DEFAULT_CONFIG, { qualityTilt: true })).toBeCloseTo(0.096, 9);
+  });
+});
+
+describe("sizingRewardRisk — the bear floor on D", () => {
+  // A consistent signal re-marked at `price`: scenarios bull 150 / base 120 / bear 80 at p .25/.5/.25.
+  const at = (price: number): Signal => {
+    const rets = [150, 120, 80].map((x) => x / price - 1), ps = [0.25, 0.5, 0.25];
+    const mu = rets.reduce((a, r, i) => a + ps[i] * r, 0);
+    const D = Math.max(0, -Math.min(...rets));
+    return sig({ price, mu, D, R: D > 0 ? mu / D : null });
+  };
+
+  it("leaves R untouched when D is at or above the floor (every name at its publication price)", () => {
+    expect(sizingRewardRisk(sig({ D: 0.2, R: 1 }), 0.15)).toBe(1);
+    expect(sizingRewardRisk(sig({ D: 0.15, R: 1 }), 0.15)).toBe(1);
+  });
+
+  it("is mu / bearFloor once D is below the floor", () => {
+    const s = at(84); // bear 80 is 4.8% below
+    expect(s.D).toBeLessThan(0.15);
+    expect(sizingRewardRisk(s, 0.15)).toBeCloseTo(s.mu / 0.15, 12);
+  });
+
+  it("sizes a name at or below its bear (D = 0, R null) at mu / bearFloor — what the trade layer holds for a market-driven breach", () => {
+    expect(sizingRewardRisk(sig({ mu: 0.2, D: 0, R: null }), 0.15)).toBeCloseTo(0.2 / 0.15, 12);
+    const below = at(76); // 5% under the bear: every scenario is upside
+    expect(below.R).toBeNull();
+    expect(sizingRewardRisk(below, 0.15)).toBeCloseTo(below.mu / 0.15, 12);
+    expect(scoreWeight(below, DEFAULT_CONFIG)).toBeGreaterThan(scoreWeight(at(80.5), DEFAULT_CONFIG)); // still bought harder as it falls
+  });
+
+  it("is continuous across the bear price", () => {
+    const above = sizingRewardRisk(at(80.0001), 0.15)!, on = sizingRewardRisk(at(80), 0.15)!, under = sizingRewardRisk(at(79.9999), 0.15)!;
+    expect(on).toBeCloseTo(above, 4);
+    expect(under).toBeCloseTo(on, 4);
+  });
+
+  it("keeps R null when the floor is off, when mu is not positive, or when R is null with a downside (no such signal is built)", () => {
+    expect(sizingRewardRisk(sig({ D: 0, R: null }), 0)).toBeNull();
+    expect(sizingRewardRisk(sig({ mu: 0, D: 0, R: null }), 0.15)).toBeNull();
+    expect(sizingRewardRisk(sig({ D: 0.2, R: null }), 0.15)).toBeNull();
+  });
+
+  it("never lets a null-R name into the analytical snapshot: eligibility screens it out before the floor is reached", () => {
+    const out = sizePortfolio([sig({ ticker: "OK" }), sig({ ticker: "BRK", mu: 0.6, D: 0, R: null })], DEFAULT_CONFIG);
+    expect(out.holdings.map((h) => h.ticker)).toEqual(["OK"]);
+    expect(out.excluded).toContainEqual(expect.objectContaining({ ticker: "BRK" }));
+  });
+
+  it("bearFloor 0 restores the raw R", () => {
+    const s = at(84);
+    expect(sizingRewardRisk(s, 0)).toBe(s.R);
+  });
+
+  it("keeps the score bounded as the price nears the bear, where raw R explodes", () => {
+    const raw = { ...DEFAULT_CONFIG, bearFloor: 0 };
+    const near = at(80.4); // 0.5% above the bear
+    expect(scoreWeight(near, raw) / scoreWeight(at(92), raw)).toBeGreaterThan(20);
+    expect(scoreWeight(near, DEFAULT_CONFIG) / scoreWeight(at(92), DEFAULT_CONFIG)).toBeLessThan(3);
+  });
+
+  it("still buys a falling name harder: the floored score rises monotonically as the price falls", () => {
+    let prev = 0;
+    for (const p of [100, 95, 92, 90, 88, 85, 82, 80.5]) {
+      const sc = scoreWeight(at(p), DEFAULT_CONFIG);
+      expect(sc).toBeGreaterThan(prev);
+      prev = sc;
+    }
   });
 });
 

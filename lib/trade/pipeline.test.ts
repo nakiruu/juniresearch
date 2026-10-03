@@ -335,3 +335,77 @@ describe("planRun — concurrent reads keep the book-read order (latency)", () =
     expect(log.filter((e) => e === "getLatestQuote:start")).toHaveLength(1);
   });
 });
+
+describe("executeOrders — submit cutoff (submitCutoffET)", () => {
+  const D = "2026-09-25";
+  const CUTOFF = Date.parse(`${D}T15:50:00-04:00`);
+  const mk = (o: Partial<OrderRequest> & Pick<OrderRequest, "ticker" | "side" | "qty" | "limitPrice">): OrderRequest => ({
+    sector: "0", kind: "qty", type: "limit", timeInForce: "ioc", tier: 1, capBound: false, anchorReason: "ok",
+    clientOrderId: `c-${o.ticker}-${o.side}-${o.leg ?? "x"}`, reason: o.side === "buy" ? "ENTER" : "TRIM", deltaUsd: o.qty * o.limitPrice, estCostUsd: 0, bucket: "large", ...o,
+  });
+  const sized = (orders: OrderRequest[]): SizedOrders => ({ orders, skippedDust: [], skippedHalt: [] });
+  /** Holds 10 AAA; $50k cash. Every limit at 101 is marketable against the fake's $100 close. */
+  const setup = async () => {
+    const b = new FakeBroker({ calendar: CAL, closes: { AAA: { [D]: 100 }, BBB: { [D]: 100 }, CCC: { [D]: 100 } }, equity: 51_000, cash: 51_000, isOpen: true, today: D });
+    await b.submitOrder({ symbol: "AAA", side: "buy", qty: 10, clientOrderId: "seed", estNotionalUsd: 1_000 });
+    b.submitCount = 0;
+    const ctx: GuardContext = { brokerKind: "fake", configuredBaseUrl: "memory://", locks: { buyLockUntil: {}, sellLockUntil: {} }, today: D, nav: 100_000, cashUsd: 50_000, cfg, env: {} as NodeJS.ProcessEnv, counters: { orders: 0, notionalUsd: 0, buyNotionalUsd: 0, sellProceedsUsd: 0 } };
+    return { b, ctx, fillsPath: join(mkdtempSync(join(tmpdir(), "cutoff-")), "fills.jsonl") };
+  };
+  // Buys listed BEFORE the sell: executeOrders still sends the sell first.
+  const plan = () => sized([mk({ ticker: "BBB", side: "buy", qty: 5, limitPrice: 101 }), mk({ ticker: "CCC", side: "buy", qty: 5, limitPrice: 101 }), mk({ ticker: "AAA", side: "sell", qty: 4, limitPrice: 99 })]);
+
+  it("stops at the cutoff: the order in flight finishes, every later one is recorded unsent (sells first is preserved)", async () => {
+    const { b, ctx, fillsPath } = await setup();
+    let t = CUTOFF - 60_000;
+    const submit = b.submitOrder.bind(b);
+    b.submitOrder = async (req) => { const o = await submit(req); t = CUTOFF; return o; }; // the first submit's polls run the clock to the cutoff
+    const r = await executeOrders({ adapter: b, sized: plan(), ctx, runId: "r", fillsPath, pollMs: 0, now: () => t, cutoffMs: CUTOFF });
+    expect(b.submitCount).toBe(1);
+    expect(r.executed.map((e) => e.clientOrderId)).toEqual(["c-AAA-sell-x"]);
+    expect(r.fills).toEqual([expect.objectContaining({ ticker: "AAA", side: "sell", qty: 4 })]);
+    expect(readFills(fillsPath)).toEqual(r.fills);
+    expect(r.skippedCutoff).toEqual([
+      { ticker: "BBB", clientOrderId: "c-BBB-buy-x", detail: "submit cutoff 15:50 ET passed — not sent" },
+      { ticker: "CCC", clientOrderId: "c-CCC-buy-x", detail: "submit cutoff 15:50 ET passed — not sent" },
+    ]);
+    expect(r.skippedCash).toEqual([]);
+    expect(r.skippedLegs).toEqual([]);
+    expect(ctx.counters).toMatchObject({ orders: 1, buyNotionalUsd: 0 }); // nothing reserved for the unsent buys
+  });
+  it("a run that reaches the submit loop after the cutoff sends nothing at all", async () => {
+    const { b, ctx, fillsPath } = await setup();
+    const r = await executeOrders({ adapter: b, sized: plan(), ctx, runId: "r", fillsPath, pollMs: 0, now: () => CUTOFF + 5 * 60_000, cutoffMs: CUTOFF });
+    expect(b.submitCount).toBe(0);
+    expect(r.executed).toEqual([]);
+    expect(r.fills).toEqual([]);
+    expect(r.skippedCutoff.map((s) => s.clientOrderId)).toEqual(["c-AAA-sell-x", "c-BBB-buy-x", "c-CCC-buy-x"]); // in submit order
+  });
+  it("before the cutoff everything is sent; without one, behaviour is unchanged", async () => {
+    for (const cutoffMs of [CUTOFF, undefined]) {
+      const { b, ctx, fillsPath } = await setup();
+      const r = await executeOrders({ adapter: b, sized: plan(), ctx, runId: "r", fillsPath, pollMs: 0, now: () => CUTOFF - 1, cutoffMs });
+      expect(b.submitCount).toBe(3);
+      expect(r.skippedCutoff).toEqual([]);
+      expect(r.executed.map((e) => e.clientOrderId)).toEqual(["c-AAA-sell-x", "c-BBB-buy-x", "c-CCC-buy-x"]);
+    }
+  });
+  it("a market remainder queued behind the cutoff is a cutoff skip — not sent, even though its limit leg filled", async () => {
+    const { b, ctx, fillsPath } = await setup();
+    let t = CUTOFF - 1;
+    const submit = b.submitOrder.bind(b);
+    b.submitOrder = async (req) => { const o = await submit(req); t = CUTOFF; return o; };
+    const r = await executeOrders({ adapter: b, ctx, runId: "r", fillsPath, pollMs: 0, now: () => t, cutoffMs: CUTOFF, sized: sized([
+      mk({ ticker: "BBB", side: "buy", qty: 2, limitPrice: 101, leg: "whole" }),
+      mk({ ticker: "BBB", side: "buy", qty: 0.5, limitPrice: 101, leg: "frac", type: "market", timeInForce: "day" }),
+    ]) });
+    expect(b.submitCount).toBe(1);
+    expect(r.skippedCutoff).toEqual([expect.objectContaining({ ticker: "BBB", clientOrderId: "c-BBB-buy-frac" })]);
+    expect(r.skippedLegs).toEqual([]);
+  });
+  it("refuses a non-finite cutoff before sending anything (a NaN cutoff would never trip)", async () => {
+    const { b, ctx, fillsPath } = await setup();
+    await expect(executeOrders({ adapter: b, sized: plan(), ctx, runId: "r", fillsPath, pollMs: 0, cutoffMs: NaN })).rejects.toThrow(/cutoffMs must be a finite epoch ms/);
+    expect(b.submitCount).toBe(0);
+  });
+});

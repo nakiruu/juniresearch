@@ -19,6 +19,8 @@
  */
 import type { Report } from "@/lib/report.schema";
 import type { Signal } from "./signal";
+import { DEFAULT_CONFIG } from "./config";
+import { sizingRewardRisk } from "./sizing";
 import { qualityScores, DEFAULT_QUALITY_WEIGHTS, type QualityWeights } from "./quality";
 
 export interface LiquidityBuckets { largeMinUsd: number; midMinUsd: number; largeL: number; midL: number; smallL: number }
@@ -28,6 +30,7 @@ export interface SizingV2Config {
   convTiltExp: number;        // α — conviction tilt exponent (default 1.0)
   qualTiltExp: number;        // β — quality tilt exponent (default 0.6)
   sigmaFloor: number;         // floor on σ for the invSigma core, so a tight scenario spread can't blow up
+  bearFloor: number;          // floor on D for the μ·R core (sizingRewardRisk), so a name near its bear price can't blow up
   taxRate: number;            // for the ROIC sub-score
   qualityWeights: QualityWeights;
   liquidityBuckets: LiquidityBuckets;
@@ -38,6 +41,7 @@ export const DEFAULT_SIZING_V2: SizingV2Config = {
   convTiltExp: 1.0,
   qualTiltExp: 0.6,
   sigmaFloor: 0.05,
+  bearFloor: DEFAULT_CONFIG.bearFloor,
   taxRate: 0.21,
   qualityWeights: DEFAULT_QUALITY_WEIGHTS,
   liquidityBuckets: { largeMinUsd: 10e9, midMinUsd: 2e9, largeL: 1.0, midL: 0.9, smallL: 0.7 },
@@ -53,9 +57,10 @@ export function liquidityFactor(marketCapUsd: number | null, cfg: SizingV2Config
 }
 
 export function scoreWeightV2(s: Signal, quality100: number, liquidity: number, cfg: SizingV2Config): number {
-  if (s.R == null) return 0;
+  const rSize = sizingRewardRisk(s, cfg.bearFloor);
+  if (rSize == null) return 0;
   const mu = Math.max(s.mu, 0);
-  const core = cfg.riskCore === "invSigma" ? mu / Math.max(s.sigma, cfg.sigmaFloor) : mu * Math.max(s.R, 0);
+  const core = cfg.riskCore === "invSigma" ? mu / Math.max(s.sigma, cfg.sigmaFloor) : mu * Math.max(rSize, 0);
   const C = Math.max(s.kappa * 100, 1e-9);
   const Q = Math.max(quality100, 1e-9);
   const tilt = Math.pow(C / 50, cfg.convTiltExp) * Math.pow(Q / 50, cfg.qualTiltExp);

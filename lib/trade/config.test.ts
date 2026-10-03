@@ -1,4 +1,7 @@
 import { describe, it, expect } from "vitest";
+import { readFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { join } from "node:path";
 import { DEFAULT_TRADE_CONFIG, resolveTradeConfig, bucketFor, tradeConfigFromEnv } from "./config";
 
 describe("resolveTradeConfig", () => {
@@ -9,7 +12,7 @@ describe("resolveTradeConfig", () => {
     expect(cfg.rEnter).toBe(0.6);
     expect(cfg.rExit).toBe(0.35);
     expect(cfg.lockBusinessDays).toBe(5);
-    expect(cfg.markMode).toBe("settled");
+    expect(cfg.markMode).toBe("live"); // 2026-10: decide at 15:10 on live prices (was "settled")
     // inherits the portfolio config it extends
     expect(cfg.wMax).toBe(DEFAULT_TRADE_CONFIG.wMax);
   });
@@ -36,6 +39,44 @@ describe("resolveTradeConfig", () => {
     expect(() => resolveTradeConfig({ lockBusinessDays: -1 })).toThrow(/positive integer/);
     expect(() => resolveTradeConfig({ lockBusinessDays: 2.5 })).toThrow(/positive integer/);
   });
+  it("rejects a sizing bear floor outside [0, 1)", () => {
+    expect(() => resolveTradeConfig({ bearFloor: -0.01 })).toThrow(/bearFloor/);
+    expect(() => resolveTradeConfig({ bearFloor: 1 })).toThrow(/bearFloor/);
+    // bearFloor 0 (raw R) now needs breachPolicy "exit": the by-cause hold sizes a breached name through the floor.
+    expect(resolveTradeConfig({ bearFloor: 0, breachPolicy: "exit" }).bearFloor).toBe(0);
+  });
+});
+
+describe("bear-breach config", () => {
+  it("defaults to the by-cause rule with thresholds 0.5 / 0.9", () => {
+    expect(resolveTradeConfig()).toMatchObject({ breachPolicy: "byCause", breachMarketShareMax: 0.5, breachStockShareMin: 0.9 });
+    expect(resolveTradeConfig({ breachPolicy: "exit" }).breachPolicy).toBe("exit");
+  });
+  it("rejects an unknown policy", () => {
+    expect(() => resolveTradeConfig({ breachPolicy: "hold" as never })).toThrow(/breachPolicy/);
+  });
+  it("needs 0 < breachMarketShareMax < breachStockShareMin <= 1.5", () => {
+    expect(() => resolveTradeConfig({ breachMarketShareMax: 0 })).toThrow(/breach thresholds/);
+    expect(() => resolveTradeConfig({ breachMarketShareMax: 0.9 })).toThrow(/breach thresholds/);   // equal is not below
+    expect(() => resolveTradeConfig({ breachMarketShareMax: 0.95 })).toThrow(/breach thresholds/);
+    expect(() => resolveTradeConfig({ breachStockShareMin: 1.6 })).toThrow(/breach thresholds/);
+    expect(() => resolveTradeConfig({ breachMarketShareMax: Number.NaN })).toThrow(/breach thresholds/);
+    expect(resolveTradeConfig({ breachMarketShareMax: 0.3, breachStockShareMin: 1.2 })).toMatchObject({ breachMarketShareMax: 0.3, breachStockShareMin: 1.2 });
+  });
+  it("byCause needs a bear floor (a market-driven hold is sized through it); exit does not", () => {
+    expect(() => resolveTradeConfig({ bearFloor: 0 })).toThrow(/byCause.*bearFloor/);
+    expect(() => resolveTradeConfig({ bearFloor: 0, breachPolicy: "exit" })).not.toThrow();
+  });
+});
+
+describe("stale-entry gate config", () => {
+  it("defaults on: 5% fall, 120-day earnings window", () => {
+    expect(resolveTradeConfig()).toMatchObject({ staleEntryGate: true, staleEntryMinFall: 0.05, staleEntryEarningsMaxDays: 120 });
+  });
+  it("rejects a fall outside (0, 1) and a non-integer or non-positive window", () => {
+    for (const v of [0, 1, -0.1]) expect(() => resolveTradeConfig({ staleEntryMinFall: v })).toThrow(/staleEntryMinFall/);
+    for (const v of [0, 1.5, -3]) expect(() => resolveTradeConfig({ staleEntryEarningsMaxDays: v })).toThrow(/staleEntryEarningsMaxDays/);
+  });
 });
 
 describe("daily turnover cap config", () => {
@@ -47,8 +88,8 @@ describe("daily turnover cap config", () => {
 });
 
 describe("daily slots config", () => {
-  it("defaults to one slot and keeps cronTimeET as the first slot", () => {
-    expect(resolveTradeConfig()).toMatchObject({ cronTimeET: "09:45", cronTimesET: ["09:45"] });
+  it("defaults to one late-day slot and keeps cronTimeET as the first slot", () => {
+    expect(resolveTradeConfig()).toMatchObject({ cronTimeET: "15:10", cronTimesET: ["15:10"], submitCutoffET: "15:50", maxLateMin: 20 });
     expect(resolveTradeConfig({ cronTimeET: "09:50" }).cronTimesET).toEqual(["09:50"]);
     expect(resolveTradeConfig({ cronTimesET: ["09:45", "10:40"] }).cronTimeET).toBe("09:45");
   });
@@ -56,6 +97,48 @@ describe("daily slots config", () => {
     for (const cronTimesET of [["10:40", "09:45"], ["09:45", "09:45"], ["9:45"], [], ["09:40", "10:00", "11:00", "12:00", "13:00"]]) {
       expect(() => resolveTradeConfig({ cronTimesET })).toThrow();
     }
+  });
+});
+
+describe("submit cutoff config (submitCutoffET)", () => {
+  it("must be a valid HH:MM before the 16:00 close", () => {
+    expect(() => resolveTradeConfig({ submitCutoffET: "3:50" })).toThrow(/HH:MM/);
+    expect(() => resolveTradeConfig({ submitCutoffET: "15:60" })).toThrow(/HH:MM/);
+    expect(() => resolveTradeConfig({ submitCutoffET: "16:00" })).toThrow(/before the 16:00 ET close/);
+    expect(() => resolveTradeConfig({ submitCutoffET: "17:00" })).toThrow(/before the 16:00 ET close/);
+    expect(resolveTradeConfig({ submitCutoffET: "15:59" }).submitCutoffET).toBe("15:59");
+  });
+  it("must fall after every fire slot", () => {
+    expect(() => resolveTradeConfig({ submitCutoffET: "15:10" })).toThrow(/after every cronTimesET slot \(last: 15:10\)/); // equal is not after
+    expect(() => resolveTradeConfig({ submitCutoffET: "15:00" })).toThrow(/after every cronTimesET slot/);
+    expect(() => resolveTradeConfig({ cronTimesET: ["15:10", "15:50"] })).toThrow(/last: 15:50/);
+    expect(() => resolveTradeConfig({ cronTimeET: "15:55" })).toThrow(/submitCutoffET/);
+    expect(resolveTradeConfig({ cronTimesET: ["09:45", "15:10", "15:45"] }).cronTimesET).toEqual(["09:45", "15:10", "15:45"]);
+    expect(resolveTradeConfig({ cronTimesET: ["09:45"], markMode: "settled" })).toMatchObject({ cronTimeET: "09:45", markMode: "settled" }); // the documented revert
+  });
+});
+
+describe("register-trade-cron scripts read the fire slots from config.ts", () => {
+  // The .sh/.ps1 grep config.ts for the first `cronTimesET: [...]` literal; these are the same regexes
+  // (asserted against the scripts' own text), so a comment or reformat that breaks the grep fails here.
+  const read = (rel: string) => readFileSync(join(process.cwd(), rel), "utf8");
+  const config = read("lib/trade/config.ts");
+  it("register-trade-cron.sh gets [\"15:10\"]", () => {
+    expect(read("scripts/register-trade-cron.sh")).toContain("grep -oE 'cronTimesET: \\[[^]]*\\]'"); // POSIX ERE: [^]] = not ']'
+    const first = config.match(/cronTimesET: \[[^\]]*\]/)?.[0] ?? "";                        // …| head -1
+    expect(first.match(/[0-9]{2}:[0-9]{2}/g)).toEqual(["15:10"]);                               // …| grep -oE '[0-9]{2}:[0-9]{2}'
+    expect(first.match(/[0-9]{2}:[0-9]{2}/g)).toEqual(DEFAULT_TRADE_CONFIG.cronTimesET);
+  });
+  it.skipIf(process.platform === "win32")("the .sh's own SLOTS= line, run under bash, yields 15:10", () => {
+    const line = read("scripts/register-trade-cron.sh").split("\n").find((l) => l.startsWith("SLOTS="));
+    expect(line).toBeDefined();
+    const out = execFileSync("bash", ["-c", `REPO=${JSON.stringify(process.cwd())}; ${line}; printf %s "$SLOTS"`], { encoding: "utf8" });
+    expect(out.trim()).toBe("15:10");
+  });
+  it("register-trade-cron.ps1 gets [\"15:10\"]", () => {
+    expect(read("scripts/register-trade-cron.ps1")).toContain("-Pattern 'cronTimesET: \\[([^\\]]*)\\]'");
+    const group = config.match(/cronTimesET: \[([^\]]*)\]/)?.[1] ?? "";                       // Select-String -First 1, Groups[1]
+    expect(group.match(/\d{2}:\d{2}/g)).toEqual(["15:10"]);
   });
 });
 

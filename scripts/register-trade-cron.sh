@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 # register-trade-cron.sh — Linux scheduler registration for the Phase-2 trade:cron job (the
-# systemd/cron counterpart of register-trade-cron.ps1). Run once to install a daily 09:45 ET job
-# that runs `npm run trade:cron`.
+# systemd/cron counterpart of register-trade-cron.ps1). Run once to install a weekday job that runs
+# `npm run trade:cron` at each cronTimesET slot in lib/trade/config.ts — by default ONE late-day run
+# at 15:10 ET that decides on live prices (markMode "live"). Re-run it after changing cronTimesET.
+#
+# LEGACY: the deployed app runs the trade job itself: the in-app scheduler, armed by
+# TRADE_SCHEDULER_ENABLED=1 in .env.local for the Docker `trader` service (see README "Scheduling").
+# Use this only on a box without that scheduler, and never run both: each would place the day's orders.
 #
 #   ./scripts/register-trade-cron.sh            # install a systemd --user timer (preferred)
 #   ./scripts/register-trade-cron.sh --cron     # install a crontab entry instead
@@ -10,7 +15,10 @@
 # The broker is chosen by BROKER in .env.local (alpaca-paper default | schwab LIVE), NOT by this
 # script — keeping "BROKER=schwab is the deliberate live opt-in" intact, exactly like the Windows job.
 # trade:cron self-guards: it checks the broker market clock first and exits 0 on a closed
-# day/weekend/holiday, so it is safe to fire every weekday without a holiday calendar here.
+# day/weekend/holiday, so it is safe to fire every weekday without a holiday calendar here. On an
+# early-close day (13:00 ET: the day after Thanksgiving, Christmas Eve) the market is already shut at
+# 15:10, so that day's run exits "closed" and nothing trades — by design. Nothing is submitted after
+# submitCutoffET (15:50 ET), however late a run starts.
 # Kill switch: set TRADE_DISABLED=1 in .env.local.
 set -euo pipefail
 

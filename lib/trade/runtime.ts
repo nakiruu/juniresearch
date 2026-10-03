@@ -8,8 +8,10 @@ import { AlpacaPaperBroker } from "../broker/alpaca";
 import { SchwabBroker } from "../broker/schwab";
 import { SchwabTokenStore, currentRefreshObtainedAt, refreshSeedFromEnv } from "../broker/schwab-auth";
 import { SCHWAB_HOST } from "../broker/guards";
+import { betaFor } from "../synth/moat";
 import { readFills } from "./fills";
 import { RunRecord } from "./run-record";
+import { readEarnings, type LastEarnings } from "./earnings";
 
 export const TRADE_DIR = join("data", "trade");
 export const FILLS_PATH = join(TRADE_DIR, "fills.jsonl");
@@ -75,17 +77,28 @@ export function brokerBaseUrl(adapter: BrokerAdapter): string {
   return "memory://";
 }
 
-export async function loadReportsAndMeta(): Promise<{ reports: Report[]; sics: Record<string, number | null>; marketCapUsd: Record<string, number | null> }> {
-  const reports: Report[] = [], sics: Record<string, number | null> = {}, marketCapUsd: Record<string, number | null> = {};
+/**
+ * Every published report plus the per-name facts the trade layer reads from its FactPack: SIC (sector), market
+ * cap (liquidity bucket) and beta (a bear breach's market part, lib/trade/breach.ts — the pack's measured beta,
+ * else the SIC proxy, exactly as the WACC build-up uses it; null only with no FactPack), plus each name's latest
+ * earnings from data/earnings/latest.json (the stale-on-bad-news entry gate; fail-open — an unreadable file is
+ * warned about and treated as none).
+ */
+export async function loadReportsAndMeta(): Promise<{ reports: Report[]; sics: Record<string, number | null>; marketCapUsd: Record<string, number | null>; betas: Record<string, number | null>; earnings: Record<string, LastEarnings> }> {
+  const reports: Report[] = [], sics: Record<string, number | null> = {}, marketCapUsd: Record<string, number | null> = {}, betas: Record<string, number | null> = {};
   for (const t of await listReportTickers()) {
     const r = await loadReport(t); if (!r) continue;
     reports.push(r);
     const p = join("data", "facts", r.meta.ticker.toUpperCase(), `${r.meta.filing.accession}.json`);
-    sics[r.meta.ticker] = existsSync(p) ? FactPack.parse(JSON.parse(readFileSync(p, "utf8"))).sic ?? null : null;
+    const pack = existsSync(p) ? FactPack.parse(JSON.parse(readFileSync(p, "utf8"))) : null;
+    sics[r.meta.ticker] = pack?.sic ?? null;
+    betas[r.meta.ticker] = pack ? betaFor(pack).beta : null;
     const cell = (r as unknown as { snapshot?: { label: string; value: unknown }[] }).snapshot?.find((c) => /market cap/i.test(c.label));
     marketCapUsd[r.meta.ticker] = typeof cell?.value === "number" ? cell.value : null;
   }
-  return { reports, sics, marketCapUsd };
+  const e = readEarnings();
+  if (e.warning) console.warn(e.warning);
+  return { reports, sics, marketCapUsd, betas, earnings: e.byTicker };
 }
 
 export function readRunRecord(runId: string): RunRecord {

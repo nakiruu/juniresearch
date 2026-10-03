@@ -15,6 +15,7 @@ export interface SubmitOrderRequest {
   /** Optional slippage cap (spec §Phase 2 Task 4). Unset → market order, exactly as today. */
   limitPrice?: number; timeInForce?: "ioc" | "day";
 }
+export interface LatestSnapshot { lastTrade: { price: number; tsMs: number } | null; quote: { bid: number; ask: number; tsMs: number } | null }
 export interface BrokerAdapter {
   readonly kind: "alpaca-paper" | "schwab" | "fake";
   getClock(): Promise<BrokerClock>;
@@ -25,6 +26,13 @@ export interface BrokerAdapter {
   getLastClose(symbols: string[], tradingDate: string): Promise<Record<string, number>>;
   getLatestTrade(symbol: string): Promise<{ price: number; tsMs: number } | null>;
   getLatestQuote(symbol: string): Promise<{ bid: number; ask: number; tsMs: number } | null>;
+  /**
+   * Optional batch form of getLatestTrade + getLatestQuote: every symbol's latest trade and quote in as few
+   * requests as the broker allows (one per ~200 symbols), with the same semantics per symbol; a symbol the
+   * broker returned nothing for maps to both null. Live decision marks read ~90 tickers at once, which one
+   * request per ticker would push past a broker's market-data rate limit.
+   */
+  getLatestSnapshots?(symbols: string[]): Promise<Record<string, LatestSnapshot>>;
   isFractionable(symbols: string[]): Promise<Record<string, boolean>>;
   /**
    * Throws SubmitOutcomeUnknownError (lib/broker/http.ts) when the order MAY have been placed (timeout,

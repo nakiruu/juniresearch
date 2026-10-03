@@ -18,6 +18,24 @@ const mk = (routes: Record<string, unknown>) => {
 };
 
 describe("AlpacaPaperBroker", () => {
+  it("getLatestSnapshots reads every symbol's latest trade and quote from ONE /v2/stocks/snapshots request", async () => {
+    const { b, calls } = mk({ "/v2/stocks/snapshots": {
+      NVT: { latestTrade: { p: 104.5, t: "2026-09-25T19:09:00Z" }, latestQuote: { bp: 104.4, ap: 104.6, t: "2026-09-25T19:09:30Z" } },
+      QQQ: { latestTrade: { p: 0, t: "2026-09-25T19:09:00Z" }, latestQuote: { bp: 101, ap: 102, t: "bad" } },
+      NONE: null,
+    } });
+    const snaps = await b.getLatestSnapshots(["NVT", "QQQ", "NONE", "MISSING"]);
+    expect(calls).toHaveLength(1);
+    const q = new URL(calls[0].url).searchParams;
+    expect(q.get("symbols")).toBe("NVT,QQQ,NONE,MISSING");
+    expect(q.get("feed")).toBe("iex");
+    expect(snaps).toEqual({
+      NVT: { lastTrade: { price: 104.5, tsMs: Date.parse("2026-09-25T19:09:00Z") }, quote: { bid: 104.4, ask: 104.6, tsMs: Date.parse("2026-09-25T19:09:30Z") } },
+      QQQ: { lastTrade: null, quote: null }, // zero price, unparseable time: the same rules as getLatestTrade/getLatestQuote
+      NONE: { lastTrade: null, quote: null },
+      MISSING: { lastTrade: null, quote: null },
+    });
+  });
   it("lists orders newest-first and forwards the after bound", async () => {
     const { b, calls } = mk({ "/v2/orders": [] });
     await b.getOrders("all", "2026-09-28T13:44:00.000Z");
@@ -88,6 +106,29 @@ describe("AlpacaPaperBroker", () => {
     expect(calls[0].url).toContain("timeframe=1Day");
     expect(calls[0].url).toContain("feed=iex");
     await expect(b.getLastClose(["ZZZ"], "2026-09-24")).rejects.toThrow(/no bar/);
+  });
+  it("reads the last close on/before the date from a 10-day window: a trading day gets its own bar, a weekend the prior session's", async () => {
+    const bar = (d: string, c: number) => ({ t: `${d}T04:00:00Z`, o: 1, h: 1, l: 1, c, v: 1 });
+    const { b, calls } = mk({ "/v2/stocks/bars": { bars: { SPY: [bar("2026-09-17", 650), bar("2026-09-18", 652.5)], NVT: [bar("2026-09-18", 99)] }, next_page_token: null } });
+    expect(await b.getLastClose(["SPY", "NVT"], "2026-09-20")).toEqual({ SPY: 652.5, NVT: 99 }); // Sunday → Friday's close
+    const q = new URL(calls[0].url).searchParams;
+    expect(q.get("start")).toBe("2026-09-10");
+    expect(q.get("end")).toBe("2026-09-20");
+    const day = mk({ "/v2/stocks/bars": { bars: { NVT: [bar("2026-09-23", 100), bar("2026-09-24", 101.25), bar("2026-09-25", 105)] } } });
+    expect(await day.b.getLastClose(["NVT"], "2026-09-24")).toEqual({ NVT: 101.25 }); // the date's own bar; a later bar is never used
+  });
+  it("follows next_page_token so a symbol on a later page is not missed", async () => {
+    const urls: string[] = [];
+    const pages = [
+      { bars: { AAA: [{ t: "2026-09-24T04:00:00Z", c: 10 }] }, next_page_token: "p2" },
+      { bars: { AAA: [{ t: "2026-09-25T04:00:00Z", c: 11 }], ZZZ: [{ t: "2026-09-25T04:00:00Z", c: 20 }] }, next_page_token: null },
+    ];
+    const impl = (async (url: string) => { urls.push(url); return new Response(JSON.stringify(pages[urls.length - 1]), { status: 200 }); }) as unknown as typeof fetch;
+    const b = new AlpacaPaperBroker({ keyId: "k", secretKey: "s", baseUrl: "https://paper-api.alpaca.markets", fetchImpl: impl });
+    expect(await b.getLastClose(["AAA", "ZZZ"], "2026-09-25")).toEqual({ AAA: 11, ZZZ: 20 });
+    expect(urls).toHaveLength(2);
+    expect(new URL(urls[0]).searchParams.get("page_token")).toBeNull();
+    expect(new URL(urls[1]).searchParams.get("page_token")).toBe("p2");
   });
   it("reads fractionability per asset", async () => {
     const { b } = mk({ "/v2/assets/NVT": { symbol: "NVT", fractionable: true, tradable: true } });

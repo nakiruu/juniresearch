@@ -4,11 +4,18 @@
 
       powershell -ExecutionPolicy Bypass -File scripts\register-trade-cron.ps1
 
-  The job runs `npm run trade:cron` once each morning at cronTimeET (default 09:45 ET — set the
-  task/box timezone to America/New_York, or adjust -At below to the equivalent local time). The
-  job self-guards: trade:cron checks the Alpaca clock first and exits 0 immediately (status
-  "closed") on a non-trading day/weekend/holiday, so it is safe to trigger it daily rather than
-  maintaining a separate market-holiday calendar in the scheduler itself.
+  LEGACY: the deployed app runs the trade job itself: the in-app scheduler, armed by
+  TRADE_SCHEDULER_ENABLED=1 in .env.local for the Docker `trader` service (see README "Scheduling").
+  Use this only on a box without that scheduler, and never run both: each would place the day's orders.
+
+  The job runs `npm run trade:cron` at each cronTimesET slot in lib/trade/config.ts — by default once
+  each trading afternoon at 15:10 ET, one late-day decision on live prices (set the task/box timezone
+  to America/New_York, or adjust -At below to the equivalent local time). Re-run this script after
+  changing cronTimesET. The job self-guards: trade:cron checks the broker clock first and exits 0
+  immediately (status "closed") on a non-trading day/weekend/holiday — and on an early-close day
+  (13:00 ET), when the market is already shut at 15:10, so nothing trades that day — so it is safe to
+  trigger it daily rather than maintaining a separate market-holiday calendar in the scheduler itself.
+  Nothing is submitted after submitCutoffET (15:50 ET), however late a run starts.
 
   Re-running this script updates the existing task in place (-Force) rather than erroring if
   "juni-trade-cron" is already registered.

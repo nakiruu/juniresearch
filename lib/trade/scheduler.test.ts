@@ -136,24 +136,49 @@ describe("startScheduler", () => {
     expect(getSchedulerStatus().armed).toBe(false);
   });
 
-  it("does not double-fire the same day: catch-up then the armed same-day timer skips runOnce", async () => {
+  it("does not double-fire the same day: after a catch-up, a timer for the same slot skips runOnce", async () => {
     const dir = mkdtempSync(join(tmpdir(), "sched-"));
     const timer = fakeTimer();
     const runOnce = vi.fn(async (): Promise<CronResult> => ({ status: "executed", orders: 1, fills: 1 }));
     const s = startScheduler({
       runOnce, marketOpenNow: async () => true,
       cfg: { cronTimeET: "09:45" }, broker: "alpaca-paper", env: {} as unknown as NodeJS.ProcessEnv,
-      now: () => Date.parse("2026-07-01T13:35:00Z"), // 09:35 ET, market open, before today's 09:45
+      now: () => Date.parse("2026-07-01T13:50:00Z"), // 09:50 ET, market open, the 09:45 slot in force and not yet fired
       setTimer: timer.setTimer, stateDir: dir,
     });
     await Promise.resolve(); await Promise.resolve(); await Promise.resolve();
     expect(runOnce).toHaveBeenCalledTimes(1);                 // catch-up fired
-    expect(readSchedulerState(dir).lastFiredDay).toBe("2026-07-01");
-    expect(timer.pending()).toBe(true);                       // armed for the SAME day's 09:45
-    timer.fire();                                             // the same-day 09:45 timer fires
+    expect(readSchedulerState(dir)).toEqual({ lastFiredDay: "2026-07-01", lastFiredSlot: "09:45" });
+    expect(timer.pending()).toBe(true);
+    timer.fire();                                             // a timer firing while the clock still reads the same slot (e.g. a stepped wall clock)
     await Promise.resolve(); await Promise.resolve(); await Promise.resolve();
     expect(runOnce).toHaveBeenCalledTimes(1);                 // NOT re-run — same-day guard held
     expect(timer.pending()).toBe(true);                       // still re-armed
+    s.stop();
+  });
+
+  it("a boot BEFORE the day's first slot does not catch up (it would trade at boot time); it arms for the slot, which fires once", async () => {
+    // Previously a boot between the open and the slot fired at once. With the one late-day slot (15:10)
+    // that would make the day's only decision at whatever time the process started.
+    const dir = mkdtempSync(join(tmpdir(), "sched-"));
+    const timer = fakeTimer();
+    let now = Date.parse("2026-07-01T15:00:00Z"); // 11:00 EDT, market open, before 15:10
+    let armedFor = 0;
+    const runOnce = vi.fn(async (): Promise<CronResult> => ({ status: "executed", orders: 1, fills: 1 }));
+    const s = startScheduler({
+      runOnce, marketOpenNow: async () => true,
+      cfg: { cronTimeET: "15:10", cronTimesET: ["15:10"] }, broker: "schwab", env: {} as unknown as NodeJS.ProcessEnv,
+      now: () => now, setTimer: (f, ms) => { armedFor = now + ms; return timer.setTimer(f); }, stateDir: dir,
+    });
+    await Promise.resolve(); await Promise.resolve(); await Promise.resolve();
+    expect(runOnce).not.toHaveBeenCalled();
+    expect(readSchedulerState(dir)).toEqual({ lastFiredDay: null });
+    expect(new Date(armedFor).toISOString()).toBe("2026-07-01T19:10:00.000Z"); // today 15:10 EDT
+    now = armedFor;
+    timer.fire();
+    await Promise.resolve(); await Promise.resolve(); await Promise.resolve();
+    expect(runOnce).toHaveBeenCalledTimes(1);
+    expect(readSchedulerState(dir)).toEqual({ lastFiredDay: "2026-07-01", lastFiredSlot: "15:10" });
     s.stop();
   });
 

@@ -1,4 +1,6 @@
 import { describe, it, expect } from "vitest";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { DEFAULT_CONFIG, resolveConfig } from "./config";
 
 describe("portfolio config", () => {
@@ -10,5 +12,9 @@ describe("portfolio config", () => {
     expect(c.wMax).toBe(0.08);
     expect(c.alpha).toBe(DEFAULT_CONFIG.alpha);
     expect(DEFAULT_CONFIG.wMax).toBe(0.10); // unchanged
+  });
+  it("floors the sizing D at the desk's own bear floor (data/desk/desk.json rating.bearFloor)", () => {
+    const desk = JSON.parse(readFileSync(join(process.cwd(), "data", "desk", "desk.json"), "utf8"));
+    expect(DEFAULT_CONFIG.bearFloor).toBe(desk.rating.bearFloor);
   });
 });

@@ -33,7 +33,8 @@
     "trade:cron": "node --env-file-if-exists=.env.local --import tsx scripts/trade-cron.ts",
     "trade:review": "node --env-file-if-exists=.env.local --import tsx scripts/trade-review.ts",
     "trade:audit": "node --env-file-if-exists=.env.local --import tsx scripts/trade-audit.ts",
-    "trade:auth": "node --env-file-if-exists=.env.local --import tsx scripts/trade-auth.ts"
+    "trade:auth": "node --env-file-if-exists=.env.local --import tsx scripts/trade-auth.ts",
+    "trade:earnings": "node --env-file-if-exists=.env.local --import tsx scripts/trade-earnings.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",

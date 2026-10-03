@@ -11,7 +11,7 @@ import { newRunId, writeRunRecord } from "../lib/trade/run-record";
 import { writeLedger, ReconcileError } from "../lib/trade/ledger";
 import { SchwabAuthError } from "../lib/broker/schwab-auth";
 import { has, isPreviewOnly, loadReportsAndMeta, makeBroker, brokerBaseUrl, readFills, FILLS_PATH, LEDGER_PATH, RUNS_DIR } from "./_trade-common";
-import { todayET } from "../lib/trade/clock";
+import { etInstantOn, todayET } from "../lib/trade/clock";
 
 const args = process.argv.slice(2);
 // --preview, or PREVIEW_ONLY=true in the environment: plan + post the allocation, never submit.
@@ -31,12 +31,12 @@ try {
   if (e instanceof SchwabAuthError) { notifier.message(e.message); await notifier.flush(); console.error(e.message); process.exit(2); }
   throw e;
 }
-const { reports, sics, marketCapUsd } = await loadReportsAndMeta();
+const { reports, sics, marketCapUsd, betas, earnings } = await loadReportsAndMeta();
 const runId = newRunId(today);
 let out: Awaited<ReturnType<typeof planRun>>;
 try {
   // Planning only reads the broker, so it also runs with the market closed (nothing is submitted then).
-  out = await planRun({ adapter, reports, sics, marketCapUsd, fills: readFills(FILLS_PATH), today, cfg, runId, clock: Date.now });
+  out = await planRun({ adapter, reports, sics, marketCapUsd, betas, earnings, fills: readFills(FILLS_PATH), today, cfg, runId, clock: Date.now });
 } catch (e) {
   if (e instanceof ReconcileError) {
     const msg = `trade:execute halted at reconcile — ${e.message}`;
@@ -64,14 +64,18 @@ if (!has(args, "--yes")) {
   if (a !== "y") { await sendAllocation("declined — nothing submitted"); console.log("Aborted; nothing submitted."); process.exit(0); }
 }
 await sendAllocation(`submitting ${out.sized.orders.length} order(s)`);
-const { fills, executed, aborted, skippedCash, rejected, skippedLegs } = await executeOrders({ adapter, sized: out.sized, ctx: { brokerKind: adapter.kind, configuredBaseUrl: baseUrl, locks: out.locks, today, nav: out.ledger.nav, cashUsd: out.ledger.cash, cfg, env: process.env, counters: { orders: 0, notionalUsd: 0, buyNotionalUsd: 0, sellProceedsUsd: 0 } }, runId, fillsPath: FILLS_PATH });
+// Submit cutoff (cfg.submitCutoffET, 15:50 ET): nothing is sent at or after it, even mid-run — never into the close.
+const cutoffMs = etInstantOn(today, cfg.submitCutoffET);
+const { fills, executed, aborted, skippedCash, rejected, skippedLegs, skippedCutoff } = await executeOrders({ adapter, sized: out.sized, ctx: { brokerKind: adapter.kind, configuredBaseUrl: baseUrl, locks: out.locks, today, nav: out.ledger.nav, cashUsd: out.ledger.cash, cfg, env: process.env, counters: { orders: 0, notionalUsd: 0, buyNotionalUsd: 0, sellProceedsUsd: 0 } }, runId, fillsPath: FILLS_PATH, cutoffMs });
 out.record.fills = fills as unknown as Record<string, unknown>[];
 out.record.orders = mergeExecution(out.record.orders, executed);
-out.record.notes.push(...skippedCash.map((s) => `cash skipped: ${s.ticker} — ${s.detail}`), ...rejected.map((r) => `rejected: ${r.ticker} — ${r.detail}`), ...skippedLegs.map((l) => `leg skipped: ${l.ticker} — ${l.detail}`));
+out.record.notes.push(...skippedCash.map((s) => `cash skipped: ${s.ticker} — ${s.detail}`), ...rejected.map((r) => `rejected: ${r.ticker} — ${r.detail}`), ...skippedLegs.map((l) => `leg skipped: ${l.ticker} — ${l.detail}`), ...skippedCutoff.map((c) => `cutoff skipped: ${c.ticker} — ${c.detail}`));
 for (const s of skippedCash) console.warn(`  skipped (cash backstop): ${s.ticker} — ${s.detail}`);
 for (const r of rejected) console.warn(`  REJECTED: ${r.ticker} — ${r.detail}`);
 for (const l of skippedLegs) console.warn(`  market remainder skipped: ${l.ticker} — ${l.detail}`);
+for (const c of skippedCutoff) console.warn(`  NOT SENT (past the ${cfg.submitCutoffET} ET submit cutoff): ${c.ticker}`);
 if (rejected.length) notifier.message(`trade:execute: ${rejected.length} order(s) rejected (nothing placed for them) — ${rejected.map((r) => `${r.ticker}: ${r.detail}`).join("; ")}`);
+if (skippedCutoff.length) notifier.message(`trade:execute: ${skippedCutoff.length} order(s) NOT sent — the ${cfg.submitCutoffET} ET submit cutoff passed — ${skippedCutoff.map((c) => c.ticker).join(", ")}`);
 const path = writeRunRecord(RUNS_DIR, out.record);
 console.log(`Submitted ${executed.length} of ${out.sized.orders.length} order(s); ${fills.length} fill(s) recorded to ${FILLS_PATH}. Run record ${path}. Run trade:reconcile before the next plan.`);
 
@@ -86,7 +90,7 @@ const audit = crossCheckBroker({
   fills,
 });
 for (const d of audit.discrepancies) console.error(`  [${d.severity.toUpperCase()}] ${d.code} ${d.ticker}${d.orderId ? ` (${d.orderId})` : ""} — ${d.detail}`);
-notifier.runSummary(summaryFromRun(out, "executed", fills, audit));
+notifier.runSummary(summaryFromRun(out, "executed", fills, audit, skippedCutoff));
 if (aborted) {
   const msg = `STOPPED: the order submit for ${aborted.ticker} has an UNKNOWN outcome (${aborted.detail}). Remaining orders were NOT sent. Check the broker's order history; if it executed, run \`npm run trade:reconcile -- --record-missing\`.`;
   notifier.message(msg);

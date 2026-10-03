@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { goalBook, runEmbed, alertEmbed, postDiscord, makeNotifier, summaryFromRun, allocationRows, allocationEmbed, allocationFromRun, type RunSummaryInput } from "./notify";
+import { goalBook, runEmbed, alertEmbed, postDiscord, makeNotifier, summaryFromRun, allocationRows, allocationEmbed, allocationFromRun, breachLines, type RunSummaryInput } from "./notify";
 
 const baseSummary = (over: Partial<RunSummaryInput> = {}): RunSummaryInput => ({
   today: "2026-09-25", runId: "r1", broker: "schwab", status: "executed", nav: 100_000, cash: 41_487,
@@ -105,6 +105,10 @@ describe("summaryFromRun", () => {
     expect(s.goal).toContainEqual({ ticker: "BBB", weight: 0.1 });
     expect(s.skipped).toEqual([{ ticker: "CCC", reason: "gap" }]);
     expect(s.audit).toEqual({ ok: true, critical: 0, warn: 0 });
+    // Orders the submit cutoff kept from going out are listed with the other skips (and turn the embed yellow).
+    const cut = summaryFromRun(out, "executed", [], undefined, [{ ticker: "DDD", detail: "submit cutoff 15:50 ET passed — not sent" }]);
+    expect(cut.skipped).toEqual([{ ticker: "CCC", reason: "gap" }, { ticker: "DDD", reason: "submit cutoff 15:50 ET passed — not sent" }]);
+    expect((runEmbed(cut).embeds as { fields: { name: string; value: string }[] }[])[0].fields.find((f) => f.name.startsWith("Skipped"))?.value).toContain("DDD — submit cutoff 15:50 ET passed — not sent");
   });
 });
 
@@ -153,6 +157,10 @@ describe("allocation (every trade:execute)", () => {
     expect(e.fields.reduce((a, f) => a + f.value.length, 0)).toBeLessThan(6000);
     expect(e.fields.at(-1)!.value).toMatch(/\+\d+ more/);
   });
+  it("leaves the description and fields alone when nothing is in breach", () => {
+    expect(allocationFromRun(out, "preview").breaches).toBeUndefined();
+    expect(summaryFromRun({ ...(out as object), sized: { orders: [], skippedHalt: [], skippedDust: [] } } as unknown as Parameters<typeof summaryFromRun>[0], "noop", []).breaches).toBeUndefined();
+  });
   it("makeNotifier.allocation posts it", async () => {
     const calls: string[] = [];
     const n = makeNotifier({ webhookUrl: "https://discord/x", onLog: () => {}, fetchImpl: (async (_u: string, init: RequestInit) => { calls.push(String(init.body)); return jsonRes(204); }) as unknown as typeof fetch });
@@ -160,5 +168,72 @@ describe("allocation (every trade:execute)", () => {
     await n.flush();
     expect(calls).toHaveLength(1);
     expect(calls[0]).toContain("ALLOCATION · declined");
+  });
+});
+
+describe("bear breaches (the owner's re-write list)", () => {
+  // NAV $1,000. Five held names past their bear (R null, D 0): BAC market-driven (held), XYZ stock-specific
+  // (exiting), ABC mixed (frozen), DEF with no cause (plain exit), QQQ stock-specific but sell-locked. OK is held
+  // above its bear; NEW is past its bear but not held — neither is a breach to report.
+  const brk = { R: null, D: 0 };
+  const why = (cause: string, share: number) => ({ cause, share, total: -0.2, residual: -0.2 * share, beta: 1, spyReturn: -0.1 });
+  const out = {
+    record: { today: "2026-10-05", runId: "r2", broker: "schwab" },
+    ledger: { nav: 1_000, cash: 50, positions: ["BAC", "XYZ", "ABC", "DEF", "QQQ", "OK"].map((ticker) => ({ ticker, qty: 1, marketValue: ticker === "OK" ? 200 : 150, avgCost: 1 })) },
+    signals: [
+      { ticker: "BAC", ...brk }, { ticker: "XYZ", ...brk }, { ticker: "ABC", ...brk }, { ticker: "DEF", ...brk }, { ticker: "QQQ", ...brk },
+      { ticker: "OK", R: 1, D: 0.2 }, { ticker: "NEW", ...brk },
+    ],
+    breaches: { BAC: why("market", 0.32), XYZ: why("stock", 0.95), ABC: why("mixed", 0.7), QQQ: why("stock", 1.1) },
+    plan: {
+      plannedCash: 0.05,
+      trades: [{ ticker: "XYZ", reason: "EXIT", targetWeight: 0, currentWeight: 0.15 }, { ticker: "DEF", reason: "EXIT", targetWeight: 0, currentWeight: 0.15 }],
+      skipped: [
+        { ticker: "ABC", code: "FREEZE", reasons: ["bear breach, mixed (stock-specific share 70%) — frozen until the report is re-written"], currentWeight: 0.15, targetWeight: 0.15 },
+        { ticker: "QQQ", code: "DEFER_EXIT", reasons: ["bear breach, stock-specific (stock-specific share 110%) — exit"], unlockOn: "2026-10-08", currentWeight: 0.15, targetWeight: 0.15 },
+        { ticker: "BAC", code: "BELOW_BAND", reasons: [], currentWeight: 0.15, targetWeight: 0.16 },
+      ],
+      classifications: [
+        { ticker: "BAC", classification: "HOLD", reasons: [] }, { ticker: "XYZ", classification: "EXIT", reasons: [] },
+        { ticker: "ABC", classification: "FREEZE", reasons: [] }, { ticker: "DEF", classification: "EXIT", reasons: [] },
+        { ticker: "QQQ", classification: "DEFER_EXIT", reasons: [], unlockOn: "2026-10-08" }, { ticker: "OK", classification: "HOLD", reasons: [] },
+        { ticker: "NEW", classification: "INELIGIBLE", reasons: [] },
+      ],
+    },
+    sized: { orders: [{ ticker: "XYZ", side: "sell", qty: 1, limitPrice: 150, reason: "EXIT" }, { ticker: "DEF", side: "sell", qty: 1, limitPrice: 150, reason: "EXIT" }], skippedHalt: [], skippedDust: [] },
+  } as unknown as Parameters<typeof breachLines>[0];
+  const LINES = [
+    "BAC market-driven (32%) — holding",
+    "XYZ stock-specific (95%) — exiting",
+    "ABC mixed (70%) — frozen (re-write report)",
+    "DEF cause unknown — exiting",
+    "QQQ stock-specific (110%) — exit deferred (sell-locked) until 2026-10-08",
+  ];
+
+  it("lists every held name past its bear, with its cause and what the run does", () => {
+    expect(breachLines(out)).toEqual(LINES);
+  });
+  it("labels a FREEZE row in the allocation", () => {
+    expect(allocationRows(out).find((r) => r.ticker === "ABC")).toMatchObject({ currentWeight: 0.15, targetWeight: 0.15, action: "frozen — bear breach (mixed); re-write the report" });
+  });
+  it("puts them in the allocation post's description, inside Discord's limits", () => {
+    const a = allocationFromRun(out, "preview");
+    expect(a.breaches).toEqual(LINES);
+    const e = allocationEmbed(a).embeds![0] as { description: string; fields: { value: string }[] };
+    expect(e.description).toContain("\nBear breaches: BAC market-driven (32%) — holding · XYZ stock-specific (95%) — exiting");
+    expect(e.description.length).toBeLessThan(4096);
+    expect(e.fields.every((f) => f.value.length <= 1024)).toBe(true);
+  });
+  it("adds a re-write field to the run summary", () => {
+    const s = summaryFromRun(out, "executed", []);
+    expect(s.breaches).toEqual(LINES);
+    const f = (runEmbed(s).embeds as { fields: { name: string; value: string }[] }[])[0].fields.find((x) => x.name.startsWith("Bear breaches"))!;
+    expect(f.name).toBe("Bear breaches (5) — re-write these reports");
+    expect(f.value).toContain("ABC mixed (70%) — frozen (re-write report)");
+  });
+  it("falls back to the run record's breaches when the run output has none", () => {
+    const rest = { ...(out as unknown as Record<string, unknown>) };
+    const recOnly = { ...rest, breaches: undefined, record: { ...(rest.record as object), breaches: (rest as { breaches: unknown }).breaches } } as unknown as Parameters<typeof breachLines>[0];
+    expect(breachLines(recOnly)).toEqual(LINES);
   });
 });
