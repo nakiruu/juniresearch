@@ -1,6 +1,6 @@
 {
-  "judgmentSha256": "1fb6669f376a1c22bbefeac5f2cc816dbc3ad8081a3da013a40baf9d937b9a46",
-  "reviewedAt": "2026-10-03T06:21:08Z",
+  "judgmentSha256": "bcbd1214a6a293d08b9fde39a0ddd42bc91bcd924fef0f9b116345e06d8c909e",
+  "reviewedAt": "2026-10-03T06:23:24Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
   "verdict": "needs-fix-round",
@@ -212,6 +212,25 @@
       "quote": "The risk to that anchor is compression as growth slows, which is what Bear prices.",
       "issue": "The one-year roll itself holds against the surface. The MD&A says fiscal 2026 began April 1, 2026, so the vendor's FY27E is the year in progress. The 34.0x NTM multiple matches $30.01 on FY27E EPS of $0.88, not a blend with FY28E. A year from now FY28E is the year in progress, so carrying 34.0x onto $1.36 rolls the multiple by one year, and about $46 follows. The counter-case, however, is misdescribed. Bear does not price compression on its own: it combines an earnings stall (FY27E's $0.88) with compression to ~22.1x. The compression-only reading is never named. In that reading FY28E's $1.36 is delivered but the stock keeps the ~22.1x it carries on FY28E today, and the price lands at about today's level. Today's 34.0x rests on the visible step from $0.88 to $1.36. A year on, the surface shows only slowing revenue (FY28E $423.6M after FY27E $367.8M) and no FY29E, so 'no expansion' still assumes the market will pay for another large EPS step the page does not show.",
       "fix": "Keep the one-year-roll argument. Correct the counter-case sentence: say Bear prices a stall plus compression, then name the compression-only reading in words, without a new figure. In that reading, delivered FY28E EPS on the ~22.1x the stock already carries on it leaves the price near today's level. Then argue why Base still earns 45% over that reading, for example what has to stay true about growth beyond FY28E for 34.0x to hold. Alternatively, move part of the Base weight to that outcome.",
+      "status": "addressed",
+      "note": "Bear is now described correctly as stall plus compression. The flat outcome (FY28E delivered on the lower multiple) is named in words, and the 34x assumption about an unseen further EPS step is stated. How the weight was then moved is a new defect, F-22."
+    },
+    {
+      "id": "F-22",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "Bear gets 50%: it absorbs the weight moved out of Base, which overstates the downside of the flat outcome and makes the weighted value conservative",
+      "issue": "The probabilities no longer state the author's view. By the author's own account, part of Bear's 50% belongs to the flat outcome, which the commentary says leaves the shares 'roughly where they trade now', not at $19.50. The page still shows Bear as a 50% chance of $19.50. The weighted $35.00 is a figure the author calls biased low. The HOLD is then justified as arithmetic ('That upside does not cover the Bear downside by enough for a BUY'; thesis: 'the reward is too thin against the Bear downside for a BUY'). But the label depends on that bias. If the roughly ten points priced at today's price instead of $19.50, E is about +20% and R about 0.57, which derives BUY. The label is honest only as a deliberate notch below BUY, not as a mathematical result. The band also uses the flat outcome to set the $30 low, while the weights treat that outcome as Bear.",
+      "fix": "Make the weights mean what they say. One option: keep Bear at the weight the author actually assigns to the stall-plus-compression case, and move the flat outcome's weight into Base, repricing Base in words as a blend of the 34.0x roll and the lower FY28E multiple. Re-derive the label, and do not quote the reviewer's arithmetic. The other option: keep 15/35/50 but say plainly that Bear's weight includes the flat outcome and that on the author's own view the derived label would be BUY. Then present HOLD as a one-notch conservative call, give its reason, and drop the claim that the arithmetic forces it. Make the thesis pointer and finalRecommendation consistent with whichever option is chosen.",
+      "status": "open"
+    },
+    {
+      "id": "F-23",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "The weights reflect it. Base gets 35%.",
+      "issue": "Fit. scenarioCommentary is 2,222 characters against a 2,500 cap, leaving little room for the F-22 rewrite.",
+      "fix": "Tighten while fixing F-22. The Street paragraph can lose its restatement of the 52-week-high fall, which the Bear paragraph above already carries. The one-year-roll paragraph can lean on multiplesCommentary, which already identifies 34.0x as a multiple on the year in progress.",
       "status": "open"
     }
   ]
