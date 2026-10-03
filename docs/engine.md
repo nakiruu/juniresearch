@@ -151,7 +151,8 @@ Notes that matter downstream:
 - **Near the bear price, R explodes.** Re-marking shrinks D as the price falls: at the bear price D = 0 and
   R = μ/D → ∞; below it R is null. The desk floor guarantees D ≥ 15% only at the *publication* price (median
   held D is ~0.6× the name's annual realized vol, so a bear touch is routine — ~58% within a year for the
-  median holding under GBM). The sizers therefore floor D (§3.2) and the gates read a null R as a bear breach (§4.2).
+  median holding under GBM). The sizers therefore floor D (§3.2) and the gates read a null R as a bear breach,
+  which holds, freezes or exits a held name by the cause of its fall (§4.2).
 
 > 💡 **Deferred — the scenario σ is fragile.** σ and σ↓ come from a **3-point** distribution; a
 > point-mass estimator of variance is noisy. A blend with trailing realized volatility would steady it —
@@ -206,7 +207,9 @@ bear. The 3-point scenarios put zero mass below the bear, so "D → 0" is model 
 desk already refuses to publish a bear less than 15% below the price. Flooring D at the same depth keeps a
 falling name's score rising (μ still grows, BAC 0.9% → 3.5%) but finite and continuous. It changes nothing at
 publication prices (every D ≥ 0.15) and only sizing: eligibility and the hysteresis gates keep the raw R.
-`--bearFloor 0` restores the raw R.
+At or below the bear (D = 0, R null) R_size = μ/bearFloor, its value just above — reached only by a
+market-driven breach the trade layer holds (§4.2); a null R fails eligibility, so the analytical book never
+sees it. `--bearFloor 0` restores the raw R (the trade layer then needs `breachPolicy: "exit"`).
 
 > 🚫 **Not an option — mean-CVaR allocation.** Single-name CVaR at α ≤ p_bear *is* the bear-leg loss D
 > (already in R), and a portfolio CVaR needs a joint scenario distribution the reports don't have. Assuming
@@ -340,35 +343,63 @@ NOT held → ENTER   iff  buy-side label + gatedLabel, μ ≥ muEnter (0.08), R 
 HELD     → EXIT    iff  banned, OR label/gate no longer buy-side, OR μ < muExit (0.03, "thesis played out"),
                         OR R < rExit (0.35), OR stale > 120d
          → HOLD    otherwise  (the whole band muExit..muEnter / rExit..rEnter is a no-churn zone)
+         → HOLD / FREEZE / EXIT  when a bear breach (R null, D = 0) is the ONLY exit reason: by its cause (below)
 ```
 
 The gap between `rEnter 0.60` and `rExit 0.35` (and `muEnter 0.08` vs `muExit 0.03`) is the **hysteresis
 band** — it exists specifically because a single R gate whipsaws (raising it just relocates the knife-edge
-into a denser R region). Locks turn EXIT→`DEFER_EXIT` and ENTER→`BARRED_ENTRY` (§4.4).
+into a denser R region). Locks turn EXIT→`DEFER_EXIT` and ENTER→`BARRED_ENTRY` (§4.4). `FREEZE` keeps a held
+name exactly as it is — no add, no trim — and is never touched by a lock (it never trades).
 
 `resolveTradeConfig` *enforces* `rExit < rEnter` and `muExit < muEnter` at construction — the band can't be
 misconfigured into an overlap.
 
-**The bear-breach exit.** When the live price falls to or below the report's bear implied price, D = 0 and R is
-null, so a held name EXITs. Its reason reads `R — < exit 0.35 (price at or below the bear case)`. This is a
-stop-loss at the bear price, and it is tight. Median held D is ~0.6× annual realized vol, so under GBM the
-median holding touches its bear with probability ~23% within a quarter and ~58% within a year. The gates use
-the raw R, so the sizing floor (§3.2) does not change when this fires. It only stops the name from sitting at
-the cap just before.
+**The bear breach — held, frozen or exited by its cause (`lib/trade/breach.ts`).** When the live price falls to
+or below the report's bear implied price, D = 0 and R is null. Exiting every such name is a stop-loss at the bear,
+and a tight one: median held D is ~0.6× annual realized vol, so under GBM the median holding touches its bear
+with probability ~23% within a quarter and ~58% within a year — and the exit sells at the point of highest
+re-marked μ. What follows a breach depends on *why* the price got there, so `breachPolicy: "byCause"` (default)
+splits the fall since the report into the part the market explains and the rest:
 
-> 💡 **Deferred — bear-breach policy (owner decision).** Exiting at the bear sells the whole position after a
-> ~0.6σ move, at the point of highest re-marked μ. The evidence on tight stops in single stocks is against it:
-> Kaminski & Lo (2014) show stops add return only when returns trend at the stop horizon. Lo & Remorov (2017)
-> find tight stops on individual US stocks underperform buy-and-hold. One-month reversal (Jegadeesh 1990)
-> works the same way. Intermediate momentum and sticky targets cut the other way. The design-consistent
-> alternative is to **freeze** a breached name (hold, no adds) and flag it for re-synthesis. The next report
-> then decides, with an exit only if it is not re-underwritten within N days. That changes live exits, so it
-> waits for the owner. The calibration log can measure post-breach returns as breaches accumulate.
+```
+total    = P / P0 − 1                    P = the decision mark, P0 = report price (quote.currentPrice, as of meta.asOf)
+market   = β · (SPY / SPY0 − 1)          β = FactPack measured beta, else the SIC proxy (betaFor)
+residual = total − market
+share    = residual / total              stock-specific share; > 1 if SPY rose, < 0 if SPY fell more than β explains
+
+share < breachMarketShareMax (0.5)       → HOLD    market-driven: sized through the floor (R_size = μ/bearFloor), keeps buying
+0.5 ≤ share < breachStockShareMin (0.9)  → FREEZE  mixed: weight held, no add, no trim, until the report is re-written
+share ≥ 0.9                              → EXIT    stock-specific: DEFER_EXIT while sell-locked, never added to meanwhile
+```
+
+Evidence: an event study of 7,237 US-stock bear breaches 2010–2025 (≥ $2B; bear ≈ 0.6σ below a quarterly
+report price). Over the next 6 months vs a typical stock, market-driven breaches returned **+3.5pp** (+5pp
+measured from day 6), mixed **−0.8pp**, stock-specific **−3.3pp** (−3.8pp from day 6), with or without earnings
+news — the same signs in 2010–15, 2016–20 and 2021–25. The tight-stop evidence (Kaminski & Lo 2014; Lo & Remorov
+2017: stops on single stocks underperform unless returns trend at the stop horizon) holds for the market-driven
+breaches; the stock-specific ones keep trending down, so for them the exit stands.
+
+The rule applies only when the breach is the **sole** exit reason — a downgrade, a gate trip, staleness or the
+ban still exits — and only with every input in hand. No SPY close for either date (or a broker error), no beta
+(neither measured nor a SIC), a report priced after the mark, or any non-finite number leaves the plain exit,
+reason `R — < exit 0.35 (price at or below the bear case)`: **missing data never holds a name.** SPY is read only
+when a held name is in breach and only under `byCause`: the close on/before the report's price date, and the
+close at the decision-mark date from the same source as the stock marks (`spyDecisionMark` in `planRun`). The
+run record keeps each cause (`breaches`), its notes say why a breach had none, and the Discord run summary and
+allocation post list every held breach (`BAC market-driven (32%) — holding`) — each is a report the market has
+passed, so each wants a re-synthesis. The cause is re-measured every run, so a FREEZE lifts by itself when the
+price recovers above the bear, a new report resets the targets, or the fall's cause shifts; the 5-day locks
+apply unchanged (buying a market-driven breach starts a sell lock like any buy). `breachPolicy: "exit"` restores the plain exit for
+every breach (and is required with `bearFloor 0`, since a market-driven hold is sized through the floor).
+
+> 💡 **Deferred — re-fit the 0.5 / 0.9 bands on our own breaches.** The thresholds come from the event study
+> above, not from this book. Once the calibration log (`lib/calibration/realized.ts`) has post-breach d63/d126
+> returns on enough held breaches, check the three buckets' signs before tuning the bands.
 
 ### 4.3 The emitter — target vs current  (`lib/trade/rebalance.ts` → `emitTrades`)
 
-1. **Freeze** held names with no current signal, and deferred exits (locked) — their weight is held, not
-   traded.
+1. **Freeze** held names with no current signal, deferred exits (locked), and `FREEZE` names (a mixed bear
+   breach, §4.2; skip code `FREEZE`, target = current weight) — their weight is held, not traded.
 2. **Re-size** the `HOLD ∪ ENTER` set with the same `sizePortfolio` core into `1 − cashFloor − frozenWeight`.
 3. For each name, compare target `tw` to current `w`:
    - `ENTER` (was 0): buy `tw` (band-exempt — a new position always fires).
@@ -571,11 +602,11 @@ A CRITICAL fails `trade:execute` (non-zero exit) and, in `trade:cron`, halts wit
 
 ### 6.3 What the run persists / reports
 
-The run record (`data/trade/runs/<id>.json`) stores marks, signals, classifications, locks, the plan, the
-orders (with sector, broker status, id, submittedAt), and fills. `trade:review` produces a weekly digest
-(turnover, cash, deferrals, reconciled-every-run, lock violations, cap-binds). The **Discord notifier**
-(`lib/trade/notify.ts`) posts a per-run embed (orders, fills, the goal/target book via `goalBook`, cash,
-audit) plus halt/auth alerts; best-effort, never fails a run.
+The run record (`data/trade/runs/<id>.json`) stores marks, signals, classifications, locks, bear-breach causes
+(`breaches`, §4.2), the plan, the orders (with sector, broker status, id, submittedAt), and fills. `trade:review`
+produces a weekly digest (turnover, cash, deferrals, reconciled-every-run, lock violations, cap-binds). The
+**Discord notifier** (`lib/trade/notify.ts`) posts a per-run embed (orders, fills, the goal/target book via
+`goalBook`, cash, audit, held bear breaches to re-write) plus halt/auth alerts; best-effort, never fails a run.
 
 ---
 
@@ -631,6 +662,8 @@ and `GET /api/trade/status` reports `schwabRefreshExpiresAt`.
 | quality tilt `qGainComposite/qGainMoat/qPenaltyEroding/qLo/qHi` | 0.10 / 0.20 / 0.10 / 0.8 / 1.2 | quality |
 | `muEnter` / `muExit` | 0.08 / 0.03 | hysteresis |
 | `rEnter` / `rExit` | 0.60 / 0.35 | hysteresis |
+| `breachPolicy` | "byCause" (`"exit"` = sell every bear breach) | hysteresis (bear breach) |
+| `breachMarketShareMax` / `breachStockShareMin` | 0.5 / 0.9 | bear breach: HOLD below / FREEZE between / EXIT at or above |
 | `tradeBand` | 0.025 | emitter |
 | `lockBusinessDays` | 5 | locks |
 | `minOrderUsd` / `maxOrdersPerRun` / `maxNotionalFrac` | 25 / 40 / 1.0 | guards |
@@ -645,7 +678,8 @@ and `GET /api/trade/status` reports `schwabRefreshExpiresAt`.
 | buckets | large ≥ $10B, mid ≥ $2B, else small (null→mid) | liquidity |
 
 `resolveTradeConfig` enforces the invariants (`rExit < rEnter`, `muExit < muEnter`, `limitTol ≤ limitTolMax ≤ 0.5`,
-`gapHalt ∈ (0,1)`, positive freshness, `closeAnchorSizeMult ∈ (0,1]`, etc.) at construction.
+`gapHalt ∈ (0,1)`, positive freshness, `closeAnchorSizeMult ∈ (0,1]`, `0 < breachMarketShareMax < breachStockShareMin ≤ 1.5`,
+`byCause` ⇒ `bearFloor > 0`, etc.) at construction.
 
 ## 9. Symbol glossary
 
@@ -654,7 +688,8 @@ and `GET /api/trade/status` reports `schwabRefreshExpiresAt`.
 | E / μ | expected upside — probability-weighted fair value vs price (E vs report price, μ vs live price) |
 | D | bear-case downside magnitude (worst scenario / named bear) |
 | R | reward/risk = μ / D (the engine's core risk unit; null when D ≤ 0) |
-| R_size | R for sizing only: μ / max(D, bearFloor) — finite as the price nears the bear |
+| R_size | R for sizing only: μ / max(D, bearFloor) — finite as the price nears the bear (μ / bearFloor at or below it) |
+| share | a bear breach's stock-specific share of the fall since the report: (total − β·SPY return) / total |
 | σ / σ↓ | scenario standard deviation / downside semi-deviation |
 | κ | conviction, `decision.conviction / 100` ∈ [0,1] |
 | Q | quality tilt (0.8–1.2 signal-level; a richer 0–100 composite in kellyTilt) |

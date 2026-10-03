@@ -38,7 +38,8 @@ export interface CronDeps {
   paths: { lock: string; haltState: string; log: string; fills: string; runs: string; authWarn?: string };
   /** Schwab only: the refresh token's issue time (epoch ms, undefined if unknown) for the proactive re-auth notice. */
   refreshObtainedAt?: () => number | undefined;
-  loadInputs: () => Promise<{ reports: Report[]; sics: Record<string, number | null>; marketCapUsd: Record<string, number | null>; fills: Fill[] }>;
+  /** betas: optional (absent → the SIC proxy) — prices a held bear breach's market part (breach.ts). */
+  loadInputs: () => Promise<{ reports: Report[]; sics: Record<string, number | null>; marketCapUsd: Record<string, number | null>; betas?: Record<string, number | null>; fills: Fill[] }>;
   notify: (msg: string) => void;
   /** Optional rich run summary sink (orders/fills/goal book/audit) — called on executed and noop runs. Injected like notify so cron stays pure and testable; absent → nothing extra happens. */
   notifySummary?: (s: RunSummaryInput) => void;

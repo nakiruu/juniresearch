@@ -19,6 +19,11 @@ export const RunRecord = z.object({
   })),
   classifications: z.array(z.object({ ticker: z.string(), classification: z.string(), reasons: z.array(z.string()), unlockOn: z.string().optional() })),
   locks: z.object({ buyLockUntil: z.record(z.string(), z.string()), sellLockUntil: z.record(z.string(), z.string()) }),
+  // The cause of each held bear breach the run could price (lib/trade/breach.ts), by ticker. Optional: older
+  // records, and runs before breachPolicy "byCause", lack it.
+  breaches: z.record(z.string(), z.object({
+    cause: z.enum(["market", "mixed", "stock"]), share: z.number(), total: z.number(), residual: z.number(), beta: z.number(), spyReturn: z.number(),
+  })).optional(),
   plan: loose, orders: z.array(loose), fills: z.array(loose), notes: z.array(z.string()),
 });
 export type RunRecord = z.infer<typeof RunRecord>;

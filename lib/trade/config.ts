@@ -49,6 +49,10 @@ export interface TradeConfig extends PortfolioConfig {
   turnoverClipBuyOnly: boolean;                  // a BUY-ONLY plan (ENTER/ADD, no sells) over the turnover cap is clipped to the cap and the rest deferred (not halted), so a first rebalance converges over several runs
   reconcileOrders: boolean;                      // reconcile also requires every broker order in the lock window to be recorded in fills.jsonl
   maxLateMin: number;                            // fire window: a cron run starting later than cronTimeET + this (ET) is refused as "late"
+  // Bear breach (docs/engine.md §4.2, breach.ts): a held name at/below its bear price (D = 0, R null).
+  breachPolicy: "exit" | "byCause";              // "exit": sell every breach; "byCause": hold / freeze / exit by the stock-specific share of the fall
+  breachMarketShareMax: number;                  // share below this → market-driven → HOLD, sized through bearFloor (0.5)
+  breachStockShareMin: number;                   // share at/above this → stock-specific → EXIT; between the two → FREEZE (0.9)
 }
 
 export const DEFAULT_TRADE_CONFIG: TradeConfig = {
@@ -68,6 +72,7 @@ export const DEFAULT_TRADE_CONFIG: TradeConfig = {
   closeAnchorSizeMult: 0.5, maxRunTurnoverFrac: 0.15, maxDayTurnoverFrac: 0.25, consecutiveHaltLimit: 3,
   maxLateMin: 20, reconcileOrders: true, turnoverClipBuyOnly: true, topUpRecentBuys: false, residualBand: 0.005,
   schwabRefreshLifetimeDays: 7, schwabAuthWarnHours: 72,
+  breachPolicy: "byCause", breachMarketShareMax: 0.5, breachStockShareMin: 0.9,
 };
 
 /**
@@ -123,6 +128,13 @@ export function resolveTradeConfig(overrides: Partial<TradeConfig> = {}): TradeC
   if (!(cfg.muExit < cfg.muEnter)) throw new Error(`muExit (${cfg.muExit}) must be below muEnter (${cfg.muEnter})`);
   if (!Number.isInteger(cfg.lockBusinessDays) || cfg.lockBusinessDays < 1) throw new Error("lockBusinessDays must be a positive integer");
   if (!(cfg.bearFloor >= 0 && cfg.bearFloor < 1)) throw new Error(`bearFloor (${cfg.bearFloor}) must be in [0, 1)`);
+  if (cfg.breachPolicy !== "exit" && cfg.breachPolicy !== "byCause") throw new Error(`breachPolicy (${JSON.stringify(cfg.breachPolicy)}) must be "exit" or "byCause"`);
+  if (!(cfg.breachMarketShareMax > 0 && cfg.breachMarketShareMax < cfg.breachStockShareMin && cfg.breachStockShareMin <= 1.5)) {
+    throw new Error(`breach thresholds must satisfy 0 < breachMarketShareMax (${cfg.breachMarketShareMax}) < breachStockShareMin (${cfg.breachStockShareMin}) <= 1.5`);
+  }
+  // A market-driven breach is held with D = 0 and R null; only the bear floor gives it a finite size
+  // (sizingRewardRisk). Without the floor its score is 0 and the "hold" would be sold down to nothing.
+  if (cfg.breachPolicy === "byCause" && !(cfg.bearFloor > 0)) throw new Error(`breachPolicy "byCause" needs bearFloor > 0 (got ${cfg.bearFloor}) — a market-driven breach is sized through the floor`);
 
   for (const b of BUCKETS) {
     if (!(cfg.limitTol[b] > 0)) throw new Error(`limitTol.${b} (${cfg.limitTol[b]}) must be positive`);

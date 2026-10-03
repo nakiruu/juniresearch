@@ -30,7 +30,7 @@ const Order = z.object({
   id: z.string(), client_order_id: z.string(), symbol: z.string(), side: z.enum(["buy", "sell"]), status: z.string(),
   qty: numOrNull, notional: numOrNull, filled_qty: numOrNull, filled_avg_price: numOrNull, filled_at: z.string().nullable().optional(), submitted_at: z.string().nullable().optional(),
 });
-const Bars = z.object({ bars: z.record(z.string(), z.array(z.object({ t: z.string(), c: num }))).default({}) });
+const Bars = z.object({ bars: z.record(z.string(), z.array(z.object({ t: z.string(), c: num }))).default({}), next_page_token: z.string().nullable().optional() });
 const Asset = z.object({ symbol: z.string(), fractionable: z.boolean() });
 const LatestTrade = z.object({ trade: z.object({ p: numOrNullSoft.optional(), t: z.string().optional() }).optional() });
 const LatestQuote = z.object({ quote: z.object({ bp: numOrNullSoft.optional(), ap: numOrNullSoft.optional(), t: z.string().optional() }).optional() });
@@ -81,11 +81,32 @@ export class AlpacaPaperBroker implements BrokerAdapter {
     const q = new URLSearchParams({ status, limit: "500", direction: "desc" }); if (after) q.set("after", after);
     return (await this.call(z.array(Order), `${this.base}/v2/orders?${q}`)).map((o) => this.toOrder(o));
   }
+  /**
+   * The last daily close on or before tradingDate, from a 10-calendar-day window (as SchwabBroker.getLastClose):
+   * a trading day gets its own bar, exactly as before; a weekend or holiday (a report's price date) gets the
+   * prior session's. The multi-symbol endpoint caps bars per page across ALL symbols, and a window holds ~7
+   * bars per symbol, so pages are followed to the end — a symbol cut off mid-window would read a stale close.
+   */
   async getLastClose(symbols: string[], tradingDate: string): Promise<Record<string, number>> {
-    const q = new URLSearchParams({ symbols: symbols.join(","), timeframe: "1Day", start: tradingDate, end: tradingDate, limit: "1000", adjustment: "raw", feed: this.feed });
-    const { bars } = await this.call(Bars, `${this.data}/v2/stocks/bars?${q}`);
+    const start = new Date(Date.parse(tradingDate + "T00:00:00Z") - 10 * 86_400_000).toISOString().slice(0, 10);
+    const bySymbol: Record<string, { t: string; c: number }[]> = {};
+    let pageToken: string | null | undefined;
+    for (let page = 0; ; page++) {
+      if (page >= 100) throw new Error(`Alpaca: daily bars for ${symbols.length} symbols ending ${tradingDate} still paging after ${page} pages`);
+      const q = new URLSearchParams({ symbols: symbols.join(","), timeframe: "1Day", start, end: tradingDate, limit: "1000", adjustment: "raw", feed: this.feed });
+      if (pageToken) q.set("page_token", pageToken);
+      const body = await this.call(Bars, `${this.data}/v2/stocks/bars?${q}`);
+      for (const [s, b] of Object.entries(body.bars)) (bySymbol[s] ??= []).push(...b);
+      pageToken = body.next_page_token;
+      if (!pageToken) break;
+    }
     const out: Record<string, number> = {};
-    for (const s of symbols) { const b = bars[s]; if (!b?.length) throw new Error(`Alpaca: no bar for ${s} on ${tradingDate}`); out[s] = b[b.length - 1].c; }
+    for (const s of symbols) {
+      // Daily bars are stamped at midnight ET ("2026-09-24T04:00:00Z"), so the UTC date is the session date.
+      const b = (bySymbol[s] ?? []).filter((x) => x.t.slice(0, 10) <= tradingDate).sort((x, y) => x.t.localeCompare(y.t)).at(-1);
+      if (!b) throw new Error(`Alpaca: no bar for ${s} on/before ${tradingDate}`);
+      out[s] = b.c;
+    }
     return out;
   }
   async getLatestTrade(symbol: string): Promise<{ price: number; tsMs: number } | null> {

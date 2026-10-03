@@ -64,8 +64,30 @@ describe("sizingRewardRisk — the bear floor on D", () => {
     expect(sizingRewardRisk(s, 0.15)).toBeCloseTo(s.mu / 0.15, 12);
   });
 
-  it("keeps R null when there is no downside at all (the gates still see the bear breach)", () => {
-    expect(sizingRewardRisk(sig({ D: 0, R: null }), 0.15)).toBeNull();
+  it("sizes a name at or below its bear (D = 0, R null) at mu / bearFloor — what the trade layer holds for a market-driven breach", () => {
+    expect(sizingRewardRisk(sig({ mu: 0.2, D: 0, R: null }), 0.15)).toBeCloseTo(0.2 / 0.15, 12);
+    const below = at(76); // 5% under the bear: every scenario is upside
+    expect(below.R).toBeNull();
+    expect(sizingRewardRisk(below, 0.15)).toBeCloseTo(below.mu / 0.15, 12);
+    expect(scoreWeight(below, DEFAULT_CONFIG)).toBeGreaterThan(scoreWeight(at(80.5), DEFAULT_CONFIG)); // still bought harder as it falls
+  });
+
+  it("is continuous across the bear price", () => {
+    const above = sizingRewardRisk(at(80.0001), 0.15)!, on = sizingRewardRisk(at(80), 0.15)!, under = sizingRewardRisk(at(79.9999), 0.15)!;
+    expect(on).toBeCloseTo(above, 4);
+    expect(under).toBeCloseTo(on, 4);
+  });
+
+  it("keeps R null when the floor is off, when mu is not positive, or when R is null with a downside (no such signal is built)", () => {
+    expect(sizingRewardRisk(sig({ D: 0, R: null }), 0)).toBeNull();
+    expect(sizingRewardRisk(sig({ mu: 0, D: 0, R: null }), 0.15)).toBeNull();
+    expect(sizingRewardRisk(sig({ D: 0.2, R: null }), 0.15)).toBeNull();
+  });
+
+  it("never lets a null-R name into the analytical snapshot: eligibility screens it out before the floor is reached", () => {
+    const out = sizePortfolio([sig({ ticker: "OK" }), sig({ ticker: "BRK", mu: 0.6, D: 0, R: null })], DEFAULT_CONFIG);
+    expect(out.holdings.map((h) => h.ticker)).toEqual(["OK"]);
+    expect(out.excluded).toContainEqual(expect.objectContaining({ ticker: "BRK" }));
   });
 
   it("bearFloor 0 restores the raw R", () => {

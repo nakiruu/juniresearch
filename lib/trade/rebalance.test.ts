@@ -3,6 +3,7 @@ import { emitTrades } from "./rebalance";
 import { resolveTradeConfig } from "./config";
 import type { Signal } from "../portfolio/signal";
 import type { Locks } from "./locks";
+import type { BreachInfo } from "./breach";
 
 const sig = (o: Partial<Signal> = {}): Signal => ({
   ticker: "A", company: "A", sector: "35", label: "BUY", gatedLabel: "BUY",
@@ -92,6 +93,73 @@ describe("emitTrades", () => {
     const w = (p: ReturnType<typeof run>, t: string) => p.trades.find((x) => x.ticker === t)!.targetWeight;
     expect(w(tilted, "A")).toBeGreaterThan(w(tilted, "B"));
     expect(w(flat, "A")).toBeCloseTo(w(flat, "B"), 9);
+  });
+});
+
+describe("bear breaches by cause (breachPolicy byCause)", () => {
+  // A held at or below its bear: D = 0, R null; its cause comes in through `breaches`.
+  const breached = sig({ ticker: "A", R: null, D: 0, mu: 0.4 });
+  const why = (cause: BreachInfo["cause"], share: number): BreachInfo => ({ cause, share, total: -0.2, residual: -0.2 * share, beta: 1, spyReturn: -0.1 });
+  const runB = (signals: Signal[], currentWeights: Record<string, number>, breaches: Record<string, BreachInfo>, locks = NONE, c = cfg) =>
+    emitTrades({ signals, currentWeights, locks, today: TODAY, cfg: c, breaches });
+
+  it("FREEZE keeps the current weight untraded, counts it as frozen, and sizes the rest into what is left", () => {
+    const p = runB([breached, sig({ ticker: "B" })], { A: 0.30 }, { A: why("mixed", 0.7) });
+    expect(p.classifications.find((c) => c.ticker === "A")!.classification).toBe("FREEZE");
+    expect(p.frozenWeight).toBeCloseTo(0.30, 9);
+    expect(p.sizingTarget).toBeCloseTo(0.69, 9);
+    expect(p.skipped).toContainEqual({ ticker: "A", code: "FREEZE", reasons: ["bear breach, mixed (stock-specific share 70%) — frozen until the report is re-written"], unlockOn: undefined, currentWeight: 0.30, targetWeight: 0.30 });
+    expect(p.trades.map((t) => t.ticker)).toEqual(["B"]);
+    expect(p.trades[0].deltaWeight).toBeCloseTo(0.69, 9);
+    expect(p.plannedCash).toBeCloseTo(0.01, 9);
+  });
+  it("FREEZE never adds or trims, even far off target, and never pushes the book past the cash floor", () => {
+    // A frozen at 0.70; B held at 0.20 wants the rest (0.29): an ADD that lands exactly on the floor, nothing more.
+    const p = runB([breached, sig({ ticker: "B" })], { A: 0.70, B: 0.20 }, { A: why("mixed", 0.5) });
+    expect(p.trades.find((t) => t.ticker === "A")).toBeUndefined();
+    expect(p.trades.find((t) => t.ticker === "B")!.deltaWeight).toBeCloseTo(0.09, 9);
+    expect(p.plannedInvested).toBeLessThanOrEqual(0.99 + 1e-9);
+    // A frozen at 0.60 and B over target but sell-locked (DEFER_TRIM, kept at 0.39): C's ENTER would lever the
+    // book, so buys scale to zero — the frozen weight is never sold to make room, and cash never goes below the floor.
+    const L: Locks = { buyLockUntil: {}, sellLockUntil: { B: "2026-09-29" } };
+    const q = runB([breached, sig({ ticker: "B" }), sig({ ticker: "C" })], { A: 0.60, B: 0.39 }, { A: why("mixed", 0.6) }, L);
+    expect(q.trades).toEqual([]);
+    expect(q.buyScale).toBeCloseTo(0, 9);
+    expect(q.skipped).toContainEqual(expect.objectContaining({ ticker: "C", code: "NO_CAPACITY" }));
+    expect(q.plannedCash).toBeCloseTo(0.01, 9);
+  });
+  it("a market-driven breach is a HOLD sized through the bear floor: positive target, ADD when under it outside the band", () => {
+    const capped = resolveTradeConfig(); // wMax 10%
+    const p = runB([breached, sig({ ticker: "B", sector: "20" })], { A: 0.04 }, { A: why("market", 0.1) }, NONE, capped);
+    expect(p.classifications.find((c) => c.ticker === "A")!.classification).toBe("HOLD");
+    const a = p.trades.find((t) => t.ticker === "A")!;
+    expect(a).toEqual(expect.objectContaining({ side: "buy", reason: "ADD", currentWeight: 0.04 }));
+    expect(a.targetWeight).toBeCloseTo(0.10, 9);
+    expect(a.deltaWeight).toBeCloseTo(0.06, 9);
+  });
+  it("a market-driven HOLD still respects a buy lock (BARRED_ADD)", () => {
+    const L: Locks = { buyLockUntil: { A: "2026-09-29" }, sellLockUntil: {} };
+    const p = runB([breached], { A: 0.04 }, { A: why("market", 0.1) }, L, resolveTradeConfig());
+    expect(p.trades).toEqual([]);
+    expect(p.skipped).toContainEqual(expect.objectContaining({ ticker: "A", code: "BARRED_ADD", unlockOn: "2026-09-29" }));
+  });
+  it("without a cause (or under breachPolicy exit) the breach sells the whole position, as before", () => {
+    for (const p of [runB([breached], { A: 0.07 }, {}), runB([breached], { A: 0.07 }, { A: why("market", 0.1) }, NONE, resolveTradeConfig({ wMax: 1, sectorMax: 1, breachPolicy: "exit" }))]) {
+      expect(p.trades).toEqual([expect.objectContaining({ ticker: "A", side: "sell", reason: "EXIT", currentWeight: 0.07, targetWeight: 0 })]);
+    }
+  });
+  it("a stock-specific breach exits, or waits out a sell lock frozen at its weight (DEFER_EXIT)", () => {
+    expect(runB([breached], { A: 0.07 }, { A: why("stock", 0.95) }).trades).toEqual([expect.objectContaining({ ticker: "A", reason: "EXIT" })]);
+    const L: Locks = { buyLockUntil: {}, sellLockUntil: { A: "2026-09-29" } };
+    const p = runB([breached], { A: 0.07 }, { A: why("stock", 0.95) }, L);
+    expect(p.trades).toEqual([]);
+    expect(p.skipped).toContainEqual(expect.objectContaining({ ticker: "A", code: "DEFER_EXIT", unlockOn: "2026-09-29", targetWeight: 0.07 }));
+    expect(p.frozenWeight).toBeCloseTo(0.07, 9);
+  });
+  it("a cause on a name not held never makes it enterable", () => {
+    const p = runB([breached], {}, { A: why("market", 0.1) });
+    expect(p.trades).toEqual([]);
+    expect(p.skipped).toContainEqual(expect.objectContaining({ ticker: "A", code: "INELIGIBLE" }));
   });
 });
 

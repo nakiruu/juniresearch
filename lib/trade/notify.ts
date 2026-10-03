@@ -9,6 +9,7 @@ import { weightsOf } from "./ledger";
 import type { PlanRunOutput } from "./pipeline";
 import type { Fill } from "./fills";
 import type { AuditResult } from "./audit";
+import type { BreachCause } from "./breach";
 
 export interface DiscordPayload { content?: string; embeds?: unknown[] }
 export interface RunSummaryInput {
@@ -19,6 +20,8 @@ export interface RunSummaryInput {
   fills: { ticker: string; qty: number; price: number }[];
   skipped: { ticker: string; reason: string }[];
   audit?: { ok: boolean; critical: number; warn: number };
+  /** Held names past their bear case, one line each (breachLines) — their reports need re-writing. */
+  breaches?: string[];
 }
 /** One name in the target book: where it is, where the plan wants it, and what this run does about it. */
 export interface AllocationRow {
@@ -29,6 +32,8 @@ export interface AllocationRow {
 export interface AllocationInput {
   today: string; broker: string; status: string; // e.g. "preview", "declined", "market closed", "submitting 4 orders"
   nav: number; cash: number; plannedCash: number; rows: AllocationRow[];
+  /** Held names past their bear case, one line each (breachLines) — their reports need re-writing. */
+  breaches?: string[];
 }
 export interface TradeNotifier {
   message(text: string): void; runSummary(s: RunSummaryInput): void; allocation(a: AllocationInput): void; flush(): Promise<void>;
@@ -43,8 +48,35 @@ export function goalBook(currentWeights: Record<string, number>, trades: { ticke
   return Object.entries(g).filter(([, w]) => w > 0).map(([ticker, weight]) => ({ ticker, weight })).sort((a, b) => b.weight - a.weight);
 }
 
+const CAUSE: Record<BreachCause, string> = { market: "market-driven", mixed: "mixed", stock: "stock-specific" };
+
+/**
+ * One line per HELD name at or below its bear price (R null, D = 0): the cause of the fall (breach.ts) and what
+ * this run does about it — "BAC market-driven (32%) — holding". Every one of them is a report the market has
+ * passed, so each wants a re-write; "cause unknown" means a missing input left the plain exit. Pure, tolerant
+ * of a partial run output (no signals → no lines).
+ */
+export function breachLines(out: PlanRunOutput): string[] {
+  const signals = out.signals ?? [];
+  if (!signals.length) return [];
+  const cur = weightsOf(out.ledger);
+  const info = out.breaches ?? out.record?.breaches ?? {};
+  const cls = new Map((out.plan?.classifications ?? []).map((c) => [c.ticker, c]));
+  return signals.filter((s) => (cur[s.ticker] ?? 0) > 0 && s.R == null && s.D <= 0).map((s) => {
+    const b = info[s.ticker];
+    const c = cls.get(s.ticker);
+    const what = !c ? "unclassified"
+      : c.classification === "HOLD" ? "holding"
+      : c.classification === "FREEZE" ? "frozen (re-write report)"
+      : c.classification === "DEFER_EXIT" ? `exit deferred (sell-locked)${c.unlockOn ? ` until ${c.unlockOn}` : ""}`
+      : c.classification === "EXIT" ? "exiting" : c.classification;
+    return `${s.ticker} ${b ? `${CAUSE[b.cause]} (${(b.share * 100).toFixed(0)}%)` : "cause unknown"} — ${what}`;
+  });
+}
+
 /** Pure adapter: a pipeline run → the notification summary (used identically by cron and trade:execute). */
 export function summaryFromRun(out: PlanRunOutput, status: string, fills: Fill[], audit?: AuditResult): RunSummaryInput {
+  const breaches = breachLines(out);
   return {
     today: out.record.today, runId: out.record.runId, broker: out.record.broker, status,
     nav: out.ledger.nav, cash: out.ledger.cash,
@@ -53,6 +85,7 @@ export function summaryFromRun(out: PlanRunOutput, status: string, fills: Fill[]
     fills: fills.map((f) => ({ ticker: f.ticker, qty: f.qty, price: f.price })),
     skipped: [...out.sized.skippedHalt.map((h) => ({ ticker: h.ticker, reason: h.reason })), ...out.sized.skippedDust.map((d) => ({ ticker: d.ticker, reason: "dust" }))],
     audit: audit ? { ok: audit.ok, critical: audit.critical, warn: audit.warn } : undefined,
+    ...(breaches.length ? { breaches } : {}),
   };
 }
 
@@ -60,6 +93,7 @@ const SKIP_ACTION: Record<string, string> = {
   BELOW_BAND: "hold (within band)", DEFER_EXIT: "exit deferred (sell-locked)", DEFER_TRIM: "trim deferred (sell-locked)",
   BARRED_ENTRY: "entry barred (buy-locked)", BARRED_ADD: "add barred (buy-locked)", NO_CAPACITY: "no room under caps",
   NO_SIGNAL: "held, no report — frozen", INELIGIBLE: "ineligible", TURNOVER_CLIP: "deferred (turnover cap)",
+  FREEZE: "frozen — bear breach (mixed); re-write the report",
 };
 
 /**
@@ -105,12 +139,14 @@ export function allocationLines(rows: AllocationRow[]): string[] {
 /** The allocation as a Discord embed: header line + the book split across fields (each ≤1024 chars, ≤5.5k total). */
 export function allocationEmbed(a: AllocationInput): DiscordPayload {
   const lines = allocationLines(a.rows);
+  // Bear breaches lead the description (the owner's to-do: re-write those reports); the book gives up the room.
+  const breach = a.breaches?.length ? `\nBear breaches: ${a.breaches.join(" · ")}`.slice(0, 600) : "";
   const fields: { name: string; value: string }[] = [];
   let chunk: string[] = [], used = 0, shown = 0;
   const push = () => { if (chunk.length) fields.push({ name: fields.length ? "\u200b" : `Target book (${a.rows.length})`, value: "```\n" + chunk.join("\n") + "\n```" }); chunk = []; };
   for (const l0 of lines) {
     const l = l0.length > 110 ? l0.slice(0, 107) + "…" : l0;
-    if (used + l.length > 5000 || fields.length >= 20) break;
+    if (used + l.length > 5000 - breach.length || fields.length >= 20) break;
     if (chunk.join("\n").length + l.length + 9 > 1000) push();
     chunk.push(l); used += l.length + 1; shown++;
   }
@@ -120,14 +156,15 @@ export function allocationEmbed(a: AllocationInput): DiscordPayload {
   const cashPct = a.nav > 0 ? (a.cash / a.nav) * 100 : 0;
   return { embeds: [{
     title: `ALLOCATION · ${a.status} · ${a.broker} · ${a.today}`,
-    description: `NAV $${a.nav.toFixed(0)} · cash now ${cashPct.toFixed(1)}% · target cash ${(a.plannedCash * 100).toFixed(1)}%`,
+    description: `NAV $${a.nav.toFixed(0)} · cash now ${cashPct.toFixed(1)}% · target cash ${(a.plannedCash * 100).toFixed(1)}%${breach}`,
     color: /submitting|executed/.test(a.status) ? GREEN : BLUE, fields,
   }] };
 }
 
 /** Pure adapter: a plan → the allocation notification. */
 export function allocationFromRun(out: PlanRunOutput, status: string): AllocationInput {
-  return { today: out.record.today, broker: out.record.broker, status, nav: out.ledger.nav, cash: out.ledger.cash, plannedCash: out.plan.plannedCash, rows: allocationRows(out) };
+  const breaches = breachLines(out);
+  return { today: out.record.today, broker: out.record.broker, status, nav: out.ledger.nav, cash: out.ledger.cash, plannedCash: out.plan.plannedCash, rows: allocationRows(out), ...(breaches.length ? { breaches } : {}) };
 }
 
 /** A ```-fenced field value from the first `max` lines, with a "+N more" tail, kept under Discord's 1024-char limit. */
@@ -156,6 +193,7 @@ export function runEmbed(s: RunSummaryInput): DiscordPayload {
     { name: `Goal book (${s.goal.length})`, value: block(s.goal.map((g) => `${g.ticker} ${(g.weight * 100).toFixed(1)}%`), 15) },
   ];
   if (s.skipped.length) fields.push({ name: `Skipped (${s.skipped.length})`, value: block(s.skipped.map((k) => `${k.ticker} — ${k.reason}`), 10) });
+  if (s.breaches?.length) fields.push({ name: `Bear breaches (${s.breaches.length}) — re-write these reports`, value: block(s.breaches, 10) });
   if (s.audit) fields.push({ name: "Broker-truth audit", value: s.audit.ok ? (s.audit.warn ? `OK · ${s.audit.warn} warning(s)` : "OK — matches broker") : `FAIL — ${s.audit.critical} critical` });
   return { embeds: [{ title: `${s.status.toUpperCase()} · ${s.broker} · ${s.today}`, color: statusColor(s), fields }] };
 }
@@ -192,7 +230,7 @@ export function makeNotifier(opts: { webhookUrl?: string; onLog?: (line: string)
       enqueue(runEmbed(s));
     },
     allocation(a: AllocationInput): void {
-      onLog(`allocation ${a.status} ${a.broker} ${a.today} — ${a.rows.length} name(s)`);
+      onLog(`allocation ${a.status} ${a.broker} ${a.today} — ${a.rows.length} name(s)${a.breaches?.length ? ` · bear breaches: ${a.breaches.join(" · ")}` : ""}`);
       enqueue(allocationEmbed(a));
     },
     async flush(): Promise<void> { await Promise.allSettled(pending.splice(0)); },
