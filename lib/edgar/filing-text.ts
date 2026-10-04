@@ -44,6 +44,10 @@ export function extractCoverShares(text: string): number | null {
 
 export function htmlToText(html: string): string {
   return html
+    // Hex numeric entities (&#x2019;) become their decimal twins first, so every rule below treats them the
+    // same. Left as literal text they broke heading matches ("MANAGEMENT&#x2019;S" has 8 characters where the
+    // title pattern allows 5, so the MD&A was never found) and leaked into excerpts.
+    .replace(/&#x([0-9a-f]+);/gi, (_, hex: string) => `&#${parseInt(hex, 16)};`)
     .replace(/<script[\s\S]*?<\/script>/gi, " ")
     .replace(/<style[\s\S]*?<\/style>/gi, " ")
     .replace(/<\/(p|div|tr|li|h[1-6]|br|td|th)\s*>/gi, "\n")

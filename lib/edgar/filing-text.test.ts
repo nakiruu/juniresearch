@@ -12,6 +12,23 @@ describe("htmlToText", () => {
   it("drops scripts and styles", () => {
     expect(htmlToText("<style>p{}</style><script>x()</script><p>ok</p>")).toBe("ok");
   });
+  it.each(["&#x2019;", "&#X2019;", "&#8217;", "&rsquo;"])("decodes the apostrophe in hex, decimal and named form (%s)", (entity) => {
+    expect(htmlToText(`<p>Management${entity}s Discussion</p>`)).toBe("Management's Discussion");
+  });
+  it.each([["&#x201C;", "&#8220;"], ["&#xA0;", "&#160;"], ["&#x2022;", "&#8226;"], ["&#x2014;", "&#8212;"], ["&#xFEFF;", "&#65279;"]])(
+    "decodes hex %s exactly like its decimal twin %s", (hex, dec) => {
+      expect(htmlToText(`<p>a${hex}b</p>`)).toBe(htmlToText(`<p>a${dec}b</p>`));
+    });
+  it("never leaves a hex entity as literal text", () => {
+    expect(htmlToText("<p>&#x2022; one &#x2014; two &#xA7; three &#x1F600;</p>")).not.toContain("&#x");
+  });
+  it("finds an MD&A heading whose apostrophe is a hex entity", () => {
+    const html = "<p>Item 7. MANAGEMENT&#x2019;S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION</p><p>"
+      + "Revenue grew. ".repeat(40) + "</p><p>Item 7A. Market risk</p><p>Rates.</p>";
+    const { mda } = extractSections(htmlToText(html), "10-K");
+    expect(mda).not.toBeNull();
+    expect(mda!.text.startsWith("Item 7. MANAGEMENT'S DISCUSSION")).toBe(true);
+  });
 });
 
 describe("capAtSentence", () => {
