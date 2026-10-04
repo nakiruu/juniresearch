@@ -154,9 +154,9 @@
     "targetLow": 380,
     "targetHigh": 470,
     "conviction": {
-      "expectedUpside": 0.1446190234836966,
+      "expectedUpside": 0.11575716618798215,
       "bearDownside": 0.39460494452891814,
-      "rewardRisk": 0.366490652204938,
+      "rewardRisk": 0.29334950763522183,
       "derivedLabel": "HOLD"
     },
     "gate": {
@@ -327,7 +327,7 @@
     "medianTarget": 535,
     "highTarget": 715,
     "lowTarget": 215.88,
-    "commentary": "We rate Broadcom a HOLD. The fiscal third quarter confirmed that custom AI accelerators and AI networking now drive the company, and the 10-Q's numbers for the quarter are strong. The question for the shares is the shape of the risk that came with that growth, which the thesis sets out.\n\nThe shares sit well below their 52-week high of $495.00. Expected return on our scenarios is positive, but a stall in the AI ramp would cost more than the upside offers, so the label stops at HOLD. The valuation section makes that case, and the final recommendation states what would change it."
+    "commentary": "We rate Broadcom a HOLD. The fiscal third quarter confirmed that custom AI accelerators and AI networking now drive the company, and the 10-Q's numbers for the quarter are strong. The question for the shares is the shape of the risk that came with that growth, which the thesis sets out.\n\nThe shares sit well below their 52-week high of $495.00. Expected return on our scenarios is positive, but a stall in the AI ramp would cost more than the expected upside offers, so the label stops at HOLD. The valuation section makes that case, and the final recommendation states what would change it."
   },
   "sections": {
     "executiveSummary": {
@@ -651,16 +651,16 @@
           "name": "Base",
           "driver": "The fourth quarter lands near guidance and fiscal 2027 EPS arrives close to consensus. Concentration and the Backstop stay as they are, without incident. As the market's frame rolls toward fiscal 2028, it pays a multiple in the low twenties on FY27E EPS, above today's forward multiple but well below the current-year one.",
           "impliedPrice": 420,
-          "probability": 0.55
+          "probability": 0.5
         },
         {
           "name": "Bear",
           "driver": "AI deployments slow: a top-five customer defers racks, or a later AI XPV tranche fails to find financing, and fiscal 2027 EPS lands about a quarter below consensus. The multiple de-rates to the mid-teens as the growth it paid for fades and the market starts to price the Backstop. That lands near the $215.88 low Street target, well below the $289.96 52-week low.",
           "impliedPrice": 215,
-          "probability": 0.2
+          "probability": 0.25
         }
       ],
-      "scenarioCommentary": "The horizon is twelve months. Weights of 25% Bull, 55% Base and 20% Bear give a weighted fair value of $406.50, expected upside of +14.5%, bear-case downside of 39.5% and reward/risk of 0.37x. The rule derives HOLD, and that is our call.\n\nThe three cases share one frame, FY27E consensus EPS and the multiple paid on it, so they can be checked against each other. Bull needs no beat, only for the multiple to roll forward without compressing. Base holds consensus and pays a low-twenties multiple as the market looks toward fiscal 2028. Bear cuts earnings and de-rates them together, because a slowdown that exposes concentration and Backstop risk would also change the growth the multiple pays for.\n\nBase carries the most weight because the near-term evidence is strong: the company guided the fourth quarter higher, and the forward multiple already sits well below the trailing ones. Bear gets a fifth rather than a quarter because it needs both a customer pause and a de-rating. A reader could argue for more Bear weight from the price action: the shares trade at $355.14, far below the 52-week high, after a quarter in which revenue, operating income and free cash flow all rose sharply year over year. The daily closes since late August stay in a narrow band, so the fall from the high predates the release, and no source in hand explains it.\n\nThe label does not hinge on that split. Expected upside clears the BUY threshold, but the Bear sits so far below the price that no weighting we find credible lifts reward/risk to the BUY bar. The $380–$470 range brackets Base."
+      "scenarioCommentary": "The horizon is twelve months. Weights of 25% Bull, 50% Base and 25% Bear give a weighted fair value of $396.25, expected upside of +11.6%, bear-case downside of 39.5% and reward/risk of 0.29x. The rule derives HOLD, and that is our call.\n\nThe three cases share one frame, FY27E consensus EPS and the multiple paid on it, so they can be checked against each other. Bull needs no beat, only for the multiple to roll forward without compressing. Base holds consensus and pays a low-twenties multiple as the market looks toward fiscal 2028. Bear cuts earnings and de-rates them together, because a slowdown that exposes concentration and Backstop risk would also change the growth the multiple pays for.\n\nBase carries half the weight because the near-term evidence is strong: the company guided the fourth quarter higher, and the forward multiple already sits well below the trailing ones. Bear carries a quarter because it needs only one trigger, a top-five customer deferring or a tranche failing to find financing, and the concentration and funding dependence argued under Risks make either plausible within a year; the de-rating then follows from the slowdown rather than adding a second hurdle. The price action supports that weight: the shares trade at $355.14, far below the 52-week high, after a quarter in which revenue, operating income and free cash flow all rose sharply year over year. The daily closes since late August stay in a narrow band, so the fall from the high predates the release, and no source in hand explains it.\n\nThe label does not hinge on the exact split. Expected upside clears the BUY threshold, but the Bear sits so far below the price that no weighting we find credible lifts reward/risk to the BUY bar. The $380–$470 range brackets Base and the weighted fair value, both above today's price, because it describes the central outcome; the call is HOLD because the depth of the bear case holds reward/risk well below the BUY bar, so the weakness is the downside, not the upside."
     },
     "businessMoat": {
       "segments": [
