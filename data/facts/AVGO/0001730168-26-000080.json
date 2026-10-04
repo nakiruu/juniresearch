@@ -3,7 +3,7 @@
   "ticker": "AVGO",
   "cik": 1730168,
   "company": "Broadcom Inc.",
-  "exchange": "NASDAQ",
+  "exchange": "NASDAQGS",
   "sic": 3674,
   "sicDescription": "Semiconductors & Related Devices",
   "goodwill": [
@@ -13,13 +13,6 @@
     97873000000,
     97801000000
   ],
-  "sbc": [
-    1704000000,
-    1533000000,
-    2171000000,
-    5741000000,
-    7568000000
-  ],
   "filing": {
     "form": "10-Q",
     "accession": "0001730168-26-000080",
@@ -27,16 +20,16 @@
     "periodEnd": "2026-08-02",
     "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm"
   },
-  "capturedAt": "2026-09-13T03:18:05.482Z",
+  "capturedAt": "2026-10-04T03:24:54.905Z",
   "quote": {
-    "price": 361.99,
-    "marketCap": 1722196384200,
+    "price": 355.14,
+    "marketCap": 1695307005952,
     "sharesOutstanding": 4773629865,
     "sharesSource": "cover",
     "week52Low": 289.96,
     "week52High": 495,
-    "dividendYield": 0.00701677,
-    "asOf": "2026-09-11"
+    "dividendYield": 0.0073,
+    "asOf": "2026-10-04"
   },
   "statements": {
     "fiscalYears": [
@@ -84,11 +77,11 @@
         "key": "ebitda",
         "label": "EBITDA",
         "values": [
-          14691000000,
-          19155000000,
-          20554000000,
-          23879000000,
-          34714000000
+          null,
+          null,
+          19956000000,
+          23323000000,
+          34120000000
         ]
       },
       {
@@ -106,7 +99,7 @@
         "key": "epsDiluted",
         "label": "Diluted EPS",
         "values": [
-          1.5,
+          15,
           2.65,
           3.3,
           1.23,
@@ -130,29 +123,29 @@
         "key": "totalDebt",
         "label": "Total Debt",
         "values": [
-          40273000000,
-          39978000000,
-          39648000000,
-          67566000000,
-          65136000000
+          39704000000,
+          403000000,
+          1563000000,
+          1245000000,
+          3152000000
         ]
       },
       {
         "key": "netDebt",
         "label": "Net Debt",
         "values": [
-          28110000000,
-          27562000000,
-          25459000000,
-          58218000000,
-          48958000000
+          27541000000,
+          -12013000000,
+          -12626000000,
+          -8103000000,
+          -13026000000
         ]
       },
       {
         "key": "totalEquity",
         "label": "Total Equity",
         "values": [
-          24989000000,
+          24962000000,
           22709000000,
           23988000000,
           67678000000,
@@ -198,19 +191,19 @@
         "key": "buybacks",
         "label": "Share Repurchases",
         "values": [
-          -1299000000,
-          -8455000000,
-          -7685000000,
-          -12392000000,
-          -6310000000
+          0,
+          -7000000000,
+          -5824000000,
+          -7176000000,
+          -2450000000
         ]
       },
       {
         "key": "dividends",
         "label": "Dividends Paid",
         "values": [
-          -6212000000,
-          -7032000000,
+          -5913000000,
+          -6733000000,
           -7645000000,
           -9814000000,
           -11142000000
@@ -237,160 +230,82 @@
     "revenueYoY": 0.8550025075225678
   },
   "ttm": {
-    "pe": 44.911910669975185,
-    "ps": 19.327935717812892,
-    "evToEbitda": 33.63068297265752,
-    "grossMargin": 0.6765913988148681,
-    "operatingMargin": 0.48272804812354103,
+    "pe": 45.2984693877551,
+    "ps": 19.026160508529358,
+    "evToEbitda": 33.118,
+    "grossMargin": 0.687702011133058,
+    "operatingMargin": 0.4804947028191776,
     "netMargin": 0.4294420003591309,
-    "netDebtToEbitda": 0.6781853318791496,
-    "interestCoverage": 14.195709570957096,
+    "netDebtToEbitda": null,
+    "interestCoverage": 13.7400513478819,
     "currentRatio": 2.503743161531817,
-    "fcfYield": 0.022879504545182054
+    "fcfYield": 0.023242397902952825
   },
   "estimates": {
     "nextFY": {
       "label": "FY26E",
-      "revenue": 105864823726,
-      "eps": 11.62904
+      "revenue": 105972843240,
+      "eps": 11.65755
     },
     "followingFY": {
       "label": "FY27E",
-      "revenue": 174757026654,
-      "eps": 19.28126
+      "revenue": 173928264520,
+      "eps": 19.39382
     }
   },
   "analysts": {
-    "count": 60,
-    "buy": 54,
-    "hold": 6,
+    "count": 50,
+    "buy": 47,
+    "hold": 3,
     "sell": 0,
-    "consensusRating": "Buy",
-    "consensusTarget": 509.61,
-    "medianTarget": 517.5,
-    "highTarget": 600,
-    "lowTarget": 350,
-    "asOf": "2026-09-13"
+    "consensusRating": "Strong Buy",
+    "consensusTarget": 531.3149,
+    "medianTarget": 535,
+    "highTarget": 715,
+    "lowTarget": 215.88,
+    "asOf": "2026-10-04"
   },
   "segments": {
-    "basis": "FY25",
+    "basis": "FY25 (single reportable segment)",
     "items": [
       {
-        "name": "Infrastructure Software",
-        "revenue": 27029000000,
-        "share": 0.42307511700345923
-      },
-      {
-        "name": "Semiconductor Solutions",
-        "revenue": 36858000000,
-        "share": 0.5769248829965408
+        "name": "Consolidated",
+        "revenue": 63887000000,
+        "share": 1
       }
     ]
   },
   "geoMix": {
     "basis": "FY25",
-    "items": [
-      {
-        "region": "Americas",
-        "share": 0.29644528620846183
-      },
-      {
-        "region": "Asia Pacific",
-        "share": 0.5618670465039836
-      },
-      {
-        "region": "EMEA",
-        "share": 0.14168766728755458
-      }
-    ]
+    "items": []
   },
   "peers": [
     {
       "ticker": "ADI",
-      "pe": 45.486935,
-      "ps": 13.369255,
-      "evToEbitda": 27.797
+      "pe": 49.483982,
+      "ps": 14.561317,
+      "evToEbitda": 30.187
     },
     {
       "ticker": "AMD",
-      "pe": 157.02042,
-      "ps": 24.32686,
-      "evToEbitda": 104.161
+      "pe": 161.30025,
+      "ps": 25.053679,
+      "evToEbitda": 107.3
     },
     {
       "ticker": "ASML",
-      "pe": 58.889194,
-      "ps": 18.606411,
-      "evToEbitda": 2706.924
+      "pe": 64.92733,
+      "ps": 20.302422,
+      "evToEbitda": 2953.703
     },
     {
       "ticker": "FORM",
-      "pe": 82.854164,
-      "ps": 10.330665,
-      "evToEbitda": 48.214
+      "pe": 102.86206,
+      "ps": 12.9144125,
+      "evToEbitda": 60.696
     }
   ],
   "history": [
-    {
-      "date": "2026-07-31",
-      "close": 389.2799987792969
-    },
-    {
-      "date": "2026-08-03",
-      "close": 392.2300109863281
-    },
-    {
-      "date": "2026-08-04",
-      "close": 418.1600036621094
-    },
-    {
-      "date": "2026-08-05",
-      "close": 418.2799987792969
-    },
-    {
-      "date": "2026-08-06",
-      "close": 420.57000732421875
-    },
-    {
-      "date": "2026-08-07",
-      "close": 427.760009765625
-    },
-    {
-      "date": "2026-08-10",
-      "close": 422.3999938964844
-    },
-    {
-      "date": "2026-08-11",
-      "close": 416.0799865722656
-    },
-    {
-      "date": "2026-08-12",
-      "close": 416.04998779296875
-    },
-    {
-      "date": "2026-08-13",
-      "close": 417.82000732421875
-    },
-    {
-      "date": "2026-08-14",
-      "close": 392.989990234375
-    },
-    {
-      "date": "2026-08-17",
-      "close": 392.42999267578125
-    },
-    {
-      "date": "2026-08-18",
-      "close": 380
-    },
-    {
-      "date": "2026-08-19",
-      "close": 362.4800109863281
-    },
-    {
-      "date": "2026-08-20",
-      "close": 364.0299987792969
-    },
     {
       "date": "2026-08-21",
       "close": 368.45001220703125
@@ -450,13 +365,73 @@
     {
       "date": "2026-09-11",
       "close": 361.989990234375
+    },
+    {
+      "date": "2026-09-14",
+      "close": 344.7200012207031
+    },
+    {
+      "date": "2026-09-15",
+      "close": 339.2699890136719
+    },
+    {
+      "date": "2026-09-16",
+      "close": 339.510009765625
+    },
+    {
+      "date": "2026-09-17",
+      "close": 347.29998779296875
+    },
+    {
+      "date": "2026-09-18",
+      "close": 357.6099853515625
+    },
+    {
+      "date": "2026-09-21",
+      "close": 362.6600036621094
+    },
+    {
+      "date": "2026-09-22",
+      "close": 364.5400085449219
+    },
+    {
+      "date": "2026-09-23",
+      "close": 354.989990234375
+    },
+    {
+      "date": "2026-09-24",
+      "close": 350.3599853515625
+    },
+    {
+      "date": "2026-09-25",
+      "close": 352.80999755859375
+    },
+    {
+      "date": "2026-09-28",
+      "close": 349.57000732421875
+    },
+    {
+      "date": "2026-09-29",
+      "close": 355.1000061035156
+    },
+    {
+      "date": "2026-09-30",
+      "close": 351.19000244140625
+    },
+    {
+      "date": "2026-10-01",
+      "close": 343.6400146484375
+    },
+    {
+      "date": "2026-10-02",
+      "close": 355.1400146484375
     }
   ],
   "context": {
     "description": {
-      "text": "Broadcom Inc. is a prominent global technology enterprise focused on the innovation, development, and supply of advanced semiconductor solutions and critical infrastructure software. The company's headquarters are situated in San Jose, California, and it maintains a significant team of 19,000 full-time staff. Its operations are segmented into four primary divisions: Wired Infrastructure, Wireless Communications, Enterprise Storage, and Industrial & Other. Broadcom’s diverse product range is integrated into numerous end-user technologies, including enterprise and data center networking, residential internet solutions, digital television receivers, telecommunications apparatus, mobile phones, data center servers and storage architectures, industrial automation, alternative and power generation systems, and electronic display technologies. The company's product offerings extend from fundamental discrete components to intricate sub-systems incorporating various device categories. This also encompasses specialized firmware designed to facilitate interaction between analog and digital systems, alongside mechanical hardware engineered to connect with optoelectronic or capacitive sensing technologies.",
+      "text": "Broadcom Inc. designs, develops, and supplies various semiconductor devices and infrastructure software solutions internationally. The company operates in two segments: Semiconductor Solutions and Infrastructure Software. The company offers networking connectivity, such as custom silicon solutions, ethernet switching & routing, ethernet NIC controllers, physical layer devices, and fiber optic components; wireless device connectivity, including RF semiconductor devices, connectivity solutions, custom touch controllers, and inductive charging ASICS; servers and storage system solutions, such as PCIE switches, SAS & raid products, fibre channel products, and HDD & SSD solutions; broadband solutions, includes set-top box, and broadband access; and industrial. The company also offers a private cloud software portfolio, including the VMware Cloud Foundation, Edge, vSphere foundation, telco cloud platform, private AI, live recovery, application networking and security, application development and data services; mainframe software, such as AIOPS & automation, database & data management, DEVX & DEVOPS, cybersecurity & compliance management, beyond code programs, foundational & open mainframe solutions; cybersecurity, such as endpoint, network, information, application security, and identity & access management; enterprise software; and fc san management. Its products are used in various applications in enterprise and data center networking, including artificial intelligence networking and connectivity, home connectivity, set-top boxes, broadband access, telecommunication equipment, wireless device and base stations, data center servers and storage systems, factory automation, power generation and alternative energy systems, and electronic displays. Broadcom Inc. was founded in 1961 and is headquartered in Palo Alto, California.",
       "source": "bigdata:company_tearsheet",
-      "asOf": "2026-09-11"
+      "asOf": "2026-10-04"
     },
     "mdaExcerpt": {
       "text": "Item 2. Management's Discussion and Analysis of Financial Condition and Results of Operations\nThis Management's Discussion and Analysis of Financial Condition and Results of Operations should be read in conjunction with the unaudited condensed consolidated financial statements and the related notes thereto included elsewhere in this Quarterly Report on Form 10-Q (\"Form 10-Q\") and the audited consolidated financial statements and notes thereto and management's discussion and analysis of financial condition and results of operations for the fiscal year ended November 2, 2025 (\"fiscal year 2025\") included in our Annual Report on Form 10-K for fiscal year 2025 (\"2025 Annual Report on Form 10-K\"). This Form 10-Q contains forward-looking statements within the meaning of federal securities laws. These statements are indicated by words or phrases such as \"anticipate,\" \"expect,\" \"estimate,\" \"seek,\" \"plan,\" \"believe,\" \"could,\" \"intend,\" \"will,\" and similar words or phrases. Forward-looking statements provide current expectations of future events based on certain assumptions and include any statement that does not directly relate to any historical or current fact. These forward-looking statements may include our projected financial results or expectations regarding acquisitions, business strategies and models, and developments in technology, solutions and products. Such statements are based on current expectations, estimates, forecasts and projections of our industry performance and macroeconomic conditions, based on management's judgment, beliefs, current trends and market conditions, and involve risks and uncertainties that may cause actual results to differ materially from those contained in the forward-looking statements. We derive many of our forward-looking statements from our operating budgets and forecasts, which are based upon many detailed assumptions. While we believe that our assumptions are reasonable, we caution that it is very difficult to predict the impact of known factors, and it is impossible for us to anticipate all factors that could affect our actual results. Accordingly, we caution you not to place undue reliance on these statements. Material factors that could cause actual results to differ materially from our expectations include, but are not limited to, those disclosed under \"Risk Factors\" in Part II, Item 1A of this Form 10-Q, and in other documents we file from time to time with the Securities and Exchange Commission (the \"SEC\"). We undertake no intent or obligation to publicly update or revise any forward-looking statements for any reason, except as required by law.\nUnless stated otherwise or the context otherwise requires, references to \"Broadcom,\" \"we,\" \"our,\" and \"us\" mean Broadcom Inc. and its consolidated subsidiaries.\nOverview\nWe are a global technology leader that designs, develops and supplies a broad range of semiconductor and semiconductor-based solutions and infrastructure software solutions. Our semiconductor and semiconductor-based solutions include a broad portfolio of complex digital and mixed signal devices based on silicon wafers with complementary metal oxide semiconductor transistors, III-V based devices, network interface cards and other modules, switches, subsystems and, in some cases, racks. Our solutions are used in a wide array of environments, end products and applications, such as enterprise and artificial intelligence (\"AI\") data centers, servers and networking and connectivity equipment, as well as storage systems, home connectivity devices, set-top boxes, broadband access, telecommunication equipment, wireless devices and base stations, factory automation, power generation and alternative energy systems, and electronic displays. Our infrastructure software solutions help enterprises simplify their information technology environments. Our customers rely on our infrastructure and security software solutions to modernize, optimize, and secure the most complex private cloud, hybrid cloud and edge environments. This enables scalability, agility, automation, insights, resiliency and security, making it easy for customers to run their mission-critical workloads. We also offer mission-critical fibre channel storage area networking (\"FC SAN\") products and related software in the form of modules, switches and subsystems incorporating multiple semiconductor products.\nWe have two reportable segments: semiconductor solutions and infrastructure software. Our semiconductor solutions segment includes all of our semiconductor-based product lines and intellectual property (\"IP\") licensing. Our infrastructure software segment includes our private cloud, mainframe software, cybersecurity and enterprise software portfolios, and our FC SAN business.\n23\nTable of Contents\nQuarterly Highlights\nHighlights during the fiscal quarter ended August 2, 2026 include the following:\nWe generated $14,197 million of cash from operations.\nWe paid $3,103 million in cash dividends.\nWe repurchased $5,641 million of our senior notes.\nRecent Developments\nWe see unprecedented demand for our custom AI accelerators or XPUs and AI networking solutions from our customers, including the leading frontier AI labs, due to the demand for AI compute. However, deploying AI infrastructure to meet this demand requires our customers to access significant capital.\nWe established the AI XPV platform with certain sophisticated financial partners to enable more than 20 gigawatts in compute capacity using our custom AI accelerators or XPUs and networking solutions customized for the leading frontier AI labs through 2028. The AI XPV platform provides for future deployments of XPU-based compute capacity and networking that enable frontier model training and inference. The AI XPV platform bridges the gap between the current cash flows of the leading frontier AI labs and significant upfront investments required for their businesses. Through the AI XPV platform, the financial partners fund and we provide the technology to the leading frontier AI labs to allow them to deploy AI infrastructure at a scale that meets their increasing demand. Where necessary, we may provide residual value guarantees, which are contingent liabilities we believe would have a low probability of occurring, supported by the strong profitability trajectory of the leading frontier AI labs and the sustaining value of the underlying assets.\nIn June 2026, we launched the AI XPV platform with an initial tranche of $35 billion led by a financial partner to facilitate the deployment of more than 1 gigawatt of compute infrastructure for our customer. Pursuant to the AI XPV platform, we arranged for the financial partner to take on certain agreements to purchase AI racks based on custom AI accelerators designed by us and the related lease agreements with a customer that enable access to compute capacity.\nIn connection with this arrangement, we entered into a backstop agreement with the financial partner for the customer's lease obligations over the 5-year lease terms (the \"Backstop\"). The total Backstop amount increases as the AI racks are delivered and deployed and decreases as the customer makes payments on its lease obligations. In the event of a lease default by the customer, our Backstop liability will be equal to any difference between 85% of the outstanding amounts owed on the lease Backstop and the value of the AI racks received upon sale of the assets at that time. Remedies to limit our total liability exposure in a lease default include the assumption of the applicable lease, reselling the AI racks back to the seller at a fixed price under certain conditions or arranging a sale of the applicable AI racks.\nOur maximum potential liability under the Backstop upon the deployment of all AI racks, on an undiscounted basis, was approximately $29 billion. The fair value of the Backstop was not material. No amounts have been paid under the Backstop. Refer to Note 10. \"Commitments and Contingencies\" in Part 1, Item 1 of this Form 10-Q.\nCritical Accounting Estimates\nThe preparation of financial statements in accordance with generally accepted accounting principles in the United States requires us to make estimates and assumptions that affect the reported amounts of assets and liabilities and disclosure of contingent assets and liabilities at the date of the financial statements and the reported amounts of revenue and expenses during the reporting period. We base our estimates and assumptions on current facts, historical experience and various other factors that we believe to be reasonable under the circumstances, the results of which form the basis for making judgments about the carrying values of assets and liabilities and the accrual of costs and expenses that are not readily apparent from other sources. Our actual financial results may differ materially and adversely from our estimates. Our critical accounting policies are those that affect our financial statements materially and involve difficult, subjective or complex judgments by management. Those policies include revenue recognition, business combinations, valuation of goodwill and long-lived assets, and income taxes.\nThere were no significant changes in our critical accounting estimates during the three fiscal quarters ended August 2, 2026 compared to those previously disclosed in \"Critical Accounting Estimates\" in \"Management's Discussion and Analysis of Financial Condition and Results of Operations\" included in the 2025 Annual Report on Form 10-K.\nMacroeconomic Factors\nWe are subject to risks and exposures from evolving macroeconomic conditions, including uncertainty and volatility in financial markets, geopolitical events, supply constraints, efforts of governments to stimulate or stabilize the economy and other unfavorable changes in economic conditions, as well as an increase in trade tensions and related tariffs with U.S. trading partners. While difficult to isolate and quantify, these risks and exposures may cause our net revenue to fluctuate\n24\nTable of Contents\nsignificantly, disrupt supply chain operations and could affect trends in our operating results. We continuously monitor the broader impacts of these circumstances on our business, our supply chain and our results of operations.\n25\nTable of Contents\nResults of Operations\nFiscal Quarter and Three Fiscal Quarters Ended August 2, 2026 Compared to Fiscal Quarter and Three Fiscal Quarters Ended August 3, 2025\nThe following tables set forth our results of operations for the periods presented:\nFiscal Quarter Ended\nAugust 2,\n2026\nAugust 3,\n2025\nAugust 2,\n2026\nAugust 3,\n2025\n(In millions)\n(As a percentage of net revenue)\nStatements of Operations Data:\nNet revenue:\nProducts\n$\n24,279\n$\n11,173\n82\n%\n70\n%\nSubscriptions and services\n5,312\n4,779\n18\n30\nTotal net revenue\n29,591\n15,952\n100\n100\nCost of revenue:\nCost of products sold\n6,983\n3,098\n24\n19\nCost of subscriptions and services\n641\n606\n2\n4\nAmortization of acquisition-related intangible assets\n1,499\n1,519\n5\n10\nRestructuring charges\n12\n26\nTotal cost of revenue\n9,135\n5,249\n31\n33\nGross margin\n20,456\n10,703\n69\n67\nResearch and development\n2,895\n3,050\n10\n19\nSelling, general and administrative\n996\n1,072\n3\n7\nAmortization of acquisition-related intangible assets\n507\n507\n2\n3\nRestructuring and other charges\n103\n187\n1\nTotal operating expenses\n4,501\n4,816\n15\n30\nOperating income\n$\n15,955\n$\n5,887\n54\n%\n37\n%\n26\nTable of Contents\nThree Fiscal Quarters Ended\nAugust 2,\n2026\nAugust 3,\n2025\nAugust 2,\n2026\nAugust 3,\n2025\n(In millions)\n(As a percentage of net revenue)\nStatements of Operations Data:\nNet revenue:\nProducts\n$\n55,301\n$\n31,625\n78\n%\n69\n%\nSubscriptions and services\n15,788\n14,247\n22\n31\nTotal net revenue\n71,089\n45,872\n100\n100\nCost of revenue:\nCost of products sold\n15,689\n8,515\n22\n18\nCost of subscriptions and services\n1,915\n1,758\n3\n4\nAmortization of acquisition-related intangible assets\n4,422\n4,486\n6\n10\nRestructuring charges\n35\n68\nTotal cost of revenue\n22,061\n14,827\n31\n32\nGross margin\n49,028\n31,045\n69\n68\nResearch and development\n8,855\n7,996\n13\n18\nSelling, general and administrative\n3,070\n3,104\n4\n7\nAmortization of acquisition-related intangible assets\n1,520\n1,524\n2\n3\nRestructuring and other charges\n277\n445\n1\nTotal operating expenses\n13,722\n13,069\n19\n29\nOperating income\n$\n35,306\n$\n17,976\n50\n%\n39\n%\nWe included upfront license revenue of $3,465 million and $7,184 million within products revenue for the fiscal quarter and three fiscal quarters ended August 2, 2026, respectively. We included the related costs, which were immaterial, in cost of products sold. To conform to the current period presentation, we reclassified $1,916 million and $5,691 million of upfront license revenue from subscriptions and services revenue to products revenue for the fiscal quarter and three fiscal quarters ended August 3, 2025, respectively. We also reclassified the related costs for the upfront license revenue, which were immaterial for the periods presented. See Note 2. \"Revenue from Contracts with Customers\" in Part I, Item 1. of this Form 10-Q for additional information.\nNet Revenue\nA relatively small number of customers account for a significant portion of our net revenue. Direct sales to one semiconductor solutions customer, which is a distributor, accounted for 50% and 46% of our net revenue for the fiscal quarter and three fiscal quarters ended August 2, 2026, respectively, and 32% and 30% of our net revenue for the fiscal quarter and three fiscal quarters ended August 3, 2025, respectively.\nWe believe aggregate sales to our top five end customers, through all channels, accounted for approximately 55% and 50% of our net revenue for the fiscal quarter and three fiscal quarters ended August 2, 2026, respectively, and approximately 40% of our net revenue for each of the fiscal quarter and three fiscal quarters ended August 3, 2025. We expect to continue to experience significant customer concentration in future periods. The loss of, or significant decrease in demand from, any of our top five end customers could have a material adverse effect on our business, results of operations and financial condition.\nFrom time to time, some of our key semiconductor customers place large orders or delay orders, causing our quarterly net revenue to fluctuate significantly. This is particularly true of our products used in AI and wireless applications as fluctuations may be magnified by the timing of customer deployments, as well as product launches. For infrastructure software, the timing and extent of renewals and relative volume of customer contracts without the right to terminate causes variations in revenue recognized in each period.\n27\nTable of Contents\nThe following tables set forth net revenue by segment for the periods presented:\nFiscal Quarter Ended\nThree Fiscal Quarters Ended\nNet Revenue by Segment\nAugust 2, 2026\nAugust 3, 2025\n$ Change\n% Change\nAugust 2, 2026\nAugust 3, 2025\n$ Change\n% Change\n(Dollars in millions)\nSemiconductor solutions\n$\n20,839\n$\n9,166\n$\n11,673\n127\n%\n$\n48,363\n$\n25,786\n$\n22,577\n88\n%\nInfrastructure software\n8,752\n6,786\n1,966\n29\n%\n22,726\n20,086\n2,640\n13\n%\nTotal net revenue\n$\n29,591\n$\n15,952\n$\n13,639\n86\n%\n$\n71,089\n$\n45,872\n$\n25,217\n55\n%\nFiscal Quarter Ended\nThree Fiscal Quarters Ended\nNet Revenue by Segment\nAugust 2,\n2026\nAugust 3,\n2025\nAugust 2,\n2026\nAugust 3,\n2025\n(As a percentage of net revenue)\nSemiconductor solutions\n70\n%\n57\n%\n68\n%\n56\n%\nInfrastructure software\n30\n43\n32\n44\nTotal net revenue\n100\n%\n100\n%\n100\n%\n100\n%\nNet revenue from our semiconductor solutions segment increased in the fiscal quarter and three fiscal quarters ended August 2, 2026 compared to the prior year fiscal periods due to strong demand for our networking solutions, primarily custom AI accelerators and AI networking products.",
@@ -487,228 +462,180 @@
       "asOf": "2026-03-02",
       "truncated": true
     },
-    "transcriptHighlights": {
-      "text": "This strong momentum continues into Q4. During the quarter, we expect to accelerate shipments of Ironwood to Anthropic. We also expect to ramp up high volume shipments of the TPU v8i to Google. Shipments of Jalapeño for OpenAI will continue, and for Meta, we expect production shipments of their custom MTIA accelerator optimized for inference and recommendation at scale. In Q4, we expect both XPUs and AI networking revenue to triple year-on-year. Together, we expect these deployments to drive our Q4 AI revenue to $21.7 billion, which is up 236% year-on-year. Based on this Q4 guidance, I should say, we expect our fiscal 2026 AI revenue to be $58 billion for the year, up 186% year upon year, and above our prior guidance of $56 million. We are continuing to see exponential growth in demand from our XPU customers.\n\nThe lesson here is when you co-develop a chip that is optimized for your particular LLM workloads, you will outperform any GPU. Like GPUs, Jalapeño demonstrates that it can also run other frontier models, and you can do all this at half the cost of a GPU. Our partnership with Meta to deliver multiple generations of MTIA XPUs remains on track. Between now and the end of 2027, we will be delivering three generations of MTIA accelerators to Meta. Across these three generations, we have line of sight to deploying 3 gigawatts through 2028. Our content in AI, as you know, goes beyond XPUs. We are the leader in AI networking, and we continue to extend our lead.\nIn Ethernet switching for scale up and scale out, we were first to market with our 100 terabit Tomahawk 6, and we just picked up Tomahawk 7, the industry's first 200 terabit per second Ethernet switch. For scaling in, we continue to be the leader in every generation of PCI Express switching. We are now the leader in leading-edge optical DSPs and are rapidly expanding our capacity and market position as a leader in EMLs, VCSELs, and CW lasers for optical interconnects. In sum, we continue to invest, and invest heavily, to provide the broadest and most leading-edge AI portfolio. In fact, our AI networking revenue is expected to grow just as fast as XPUs over the next few years. Reflecting our excellent progress with this key group of LLM customers, here is our outlook for our AI semiconductor revenue.\n\nIn Q4, we forecast non-AI semiconductor revenue to be approximately $4.3 billion, again up 5% sequentially. Talking about infrastructure software, Q3 revenue of $8.8 billion was up 29% year-on-year and we sustained ARR growth of 15% year-on-year. For Q4, we forecast infrastructure software revenue to stabilize at approximately $8.7 billion. We announced VMware Private AI Cloud, giving enterprises a secure, cost-effective platform to build and run AI alongside their existing applications. It brings together AI infrastructure, security, and compliance, and the tools to build and operate trusted AI agents, all while protecting enterprise data. VCF, VMware Cloud that is also making it easier for customers to repatriate workloads from public cloud to private cloud, where they can gain greater control and significantly improve infrastructure economics. Enterprise consumption of AI is in fact opening a new opportunity for our infrastructure software business.\nTo sum it all, for Q4 2026, we expect consolidated revenue to grow to $34.8 billion, up 93% year-on-year. We expect Q4 AI revenue to be $21.7 billion, up 236% year-on-year, and we expect operating margin to be approximately 66% of revenue. With that, let me turn it over to Pan.\n\nRevenue for our Semiconductor Solutions segment was a record $20.8 billion, up 127% year-on-year, and represented 70% of our total revenue. AI semiconductor revenue of $16.7 billion represented 56% of total revenue, up from 49% in Q2. Gross margin for our Semiconductor Solutions segment was approximately 76%. Operating expenses of $1.2 billion reflected investments in R&D, with OpEx representing 6% of segment revenue. Operating margin of 61% was up 440 basis points year-on-year as revenue growth of 127% outpaced operating expenses, which grew 22% year-on-year. Moving on to infrastructure software. Revenue of $8.8 billion was up 29% year-on-year and represented 30% of our total revenue. Gross margin for infrastructure software was 94% in the quarter, and operating expenses were over $900 million. Q3 software operating margin was up 650 basis points year-on-year to approximately 84%.\n\nMoving on to the balance sheet. We ended the third quarter with $24 billion of cash, compared to $19.6 billion in the prior quarter, up $4.3 billion sequentially. We ended the third quarter with inventory of $4.5 billion to support our strong semiconductor demand. Moving on to cash flow. Free cash flow in the quarter was a record $13.7 billion and represented 46% of revenue. We spent $532 million on capital expenditures in the quarter. Turning to capital allocation. In Q3, we paid stockholders $3.1 billion of cash dividends based on a quarterly common stock dividend of $0.65 per share. In Q3, we also paid down $5.6 billion of long-term debt. Subsequent to quarter end, we paid down an additional $1.5 billion of senior notes upon maturity.\n\nThe weighted average coupon rate and years to maturity of our gross principal fixed rate debt of $59.6 billion is 4% and 7.4 years, respectively. In June, we established the AI XPV Platform in partnership with Apollo and Blackstone to enable more than 20 gigawatts of compute infrastructure for OpenAI and Anthropic by the end of 2028. We closed the first $35 billion tranche in June for Anthropic's one gigawatt deployment, which is already underway. While future tranches will include unique features tailored to specific lab and investor needs, our core strategy remains consistent. First, we are empowering two of our most strategic customers, the leading AI labs, to bridge the gap between their current cash flow and the significant upfront investments required for their businesses. Our XPUs enable cost-effective, sustainable growth at multiples of their infrastructure costs.\n\nSecond, this XPV Platform enables highly investable customers and facilitates execution where demand is already locked in. Third, we review any strategic financings through a commercial as well as balance sheet lens, consistent with our existing capital allocation framework. Through the XPV Platform, we partner with sophisticated third-party financial partners to independently underwrite and capitalize the assets, rather than providing the direct financing ourselves. Where necessary, we may provide modest residual value guarantees, which are contingent liabilities we view as low risk, supported by the strong profitability trajectory of these labs and the sustaining value of the underlying assets. Moving on to guidance. Our guidance for Q4 is for consolidated revenue of $34.8 billion, up 93% year-on-year. We forecast semiconductor revenue of approximately $26.1 billion, up 136% year-on-year. Within this, we expect Q4 AI semiconductor revenue of $21.7 billion, up over 236% year-on-year.\n\nIt will be 30 gigawatts between the customers we have, the six customers we have. Question is, will all 30 come into production within these two fiscal years? We are giving you a judged number of $115 billion of chips to these guys in fiscal 2027, another $230 billion in 2028, which would add up, I know, to about $350 billion. Another way of saying is, we believe with a pretty high degree of confidence, we will ship $350 billion of AI semiconductors to these customers in the next two years. That's the best way to look at it. It doesn't necessarily mean all 30 gigawatts need to have been deployed within that period. Turning to your more next interesting question. Right.\nAs I said, when you do an XPU, it not only performs as well, if not better, for your particular LLM workloads for each of our customers, it's also half the cost. In fact, less than half the cost. You made my point exactly.\n\nWell, thank you, Jee, and thank you everyone here for joining us today. We delivered an exceptional quarter with revenue, operating income and free cash flow all exceeding prior records. Driving this was our Q3 AI semiconductor revenue, which grew 221% year-on-year and up 54% sequentially. This brought our consolidated revenue to $29.6 billion, which was up 86% year-on-year. Operating income grew even faster at 92% year-on-year, with operating margin at a record 68% of revenue, reflecting strong operating leverage. Q3 demand was simply hot and we're just getting started. Our six XPU customers are accelerating the adoption of custom accelerators and AI semiconductor revenue more than tripled year-over-year to $16.7 billion. During the quarter, we delivered Ironwood TPU v7, version 7 in high volume to both Anthropic and Google.\n\nAt the same time, we began production shipments of the next generation TPU v8i for Google. This new TPU generation has been designed with more memory and bandwidth compared to Ironwood and just like Ironwood, is optimized for inference workloads. In performance, it is comparable, if not surpasses the Vera Rubin GPU. Just to reiterate the major technology challenges of developing these complex accelerators, Broadcom is now shipping the TPU v8i ahead of the MediaTek v8t, which in fact was initiated earlier. In Q3, we also shipped Jalapeño, OpenAI's first generation custom accelerator, which outperforms Grace Blackwell GPU for inference workloads. Overall, our XPU shipments for the third quarter were up over 3.5x year-on-year and represented 73% of AI revenue during the quarter. Our AI networking revenue was up over 2.5x year-on-year.\n\nWe believe the vast majority of compute demand for AI workloads today originates from this concentrated group who develops state-of-the-art frontier models. We expect their need for compute infrastructure to inflate even more in 2027 and 2028. They are all growing with XPUs to achieve superior performance, cost, and power. Let me now walk you through each of their journey, each of our customers' journey towards using XPUs at scale to run their frontier models worldwide. Our engagement with Google has never been stronger. This has been recently strengthened by a long-term agreement to develop and supply future generations of TPUs and AI networking. Under this agreement, we're planning to deliver multi-tens of billions of dollars of TPUs annually over the next several years.\n\nWe expect this growing demand in 2028 and 2029 to be fulfilled through successive generations of the increasingly complex TPUs we are developing today with Google. Our partnership with Google will continue to sustain because we have the strongest IP portfolio in semiconductor design, including industry-leading SERDES, chip-to-chip interconnect, leading-edge HBM and SRAM integration, and simply differentiated advanced packaging. Most of all, we have consistently, I should say, delivered the fastest time to market for TPUs from product definition to production without the need for resmits. We believe these are very deep moats for any competitor to cross. Moving on to Anthropic. Starting with the 1 gigawatt of Ironwood we are deploying in 2026, we expect Anthropic to deploy another 5 gigawatts of TPU v8i in 2027.\n\nIn 2028, we have clear line of sight to deliver an incremental 10 gigawatts, even as we expect Google to grow for us. Anthropic is on track to become our largest XPU customer in 2027 and sustain that in 2028. For OpenAI, Jalapeño is on track for the planned deployment of 1.3 gigawatts in 2027. Together with OpenAI, we are deep in development of the next generation XPU beyond Jalapeño, which is approaching tape-out. In 2028, we have line of sight for OpenAI to deploy over 5 gigawatts of Jalapeño and its successor generation of XPU, which would make OpenAI our second-largest XPU customer. In addition, we are in development with OpenAI on their third generation XPU. As OpenAI announced last week, Jalapeño outperforms the Grace Blackwell Ultra in performance per watt, latency, throughput, and power, and is actually comparable to very robust GPUs in running OpenAI workloads.\n\nIn 2027, we have secured the supply to again double AI revenue to approximately $115 billion. Our demand actually exceeds this outlook, and we will work to improve supply. In 2028, we expect the trajectory of growth to continue. We have line of sight for fiscal 2028 AI semiconductor revenue growth to again double to $230 billion. Here again, we have secured the supply to meet this outlook. This AI revenue guidance through 2028 is being provided to give you the trajectory of our growth. That demand for compute continues to be extremely strong. As a result, I got to say, we are very much on target to exceed $30 in earnings per share in fiscal 2028. Turning to non-AI semiconductors, Q3 revenue of $4.2 billion was up 5% year-on-year and flat sequentially. Broadband and server storage together were up, partially offset by a decline in wireless.\n\nLet me now provide additional detail on our Q3 financial performance. Consolidated revenue was a record $29.6 billion for the quarter, up 86% year-on-year. Gross margin was 75% of revenue in the quarter, down 210 basis points sequentially as AI semiconductor revenue was a greater proportion of our total revenue mix. This was better than our guidance of 74%. Q3 operating income was a record $20.1 billion, up 92% from a year ago. Even with the decline in gross margin due to revenue mix, operating margin increased 240 basis points year-over-year to 67.9% because of the phenomenal operating leverage we are achieving. Aligned with this, Q3 non-GAAP EPS of $3.32 was up 96% year-on-year. Now I will review the P&L for our two segments, starting with semiconductors. Revenue for our Semiconductor Solutions segment was a record $20.8 billion, up 127% year-on-year, and represented 70% of our total revenue.\n\nAI semiconductor revenue of $16.7 billion represented 56% of total revenue, up from 49% in Q2. Gross margin for our Semiconductor Solutions segment was approximately 76%. Operating expenses of $1.2 billion reflected investments in R&D, with OPEX representing 6% of segment revenue. Operating margin of 61% was up 440 basis points year-on-year as revenue growth of 127% outpaced operating expenses, which grew 22% year-on-year. Moving on to infrastructure software. Revenue of $8.8 billion was up 29% year-on-year and represented 30% of our total revenue. Gross margins for infrastructure software was 94% in the quarter, and operating expenses were over $900 million. Q3 software operating margin was up 650 basis points year-on-year to approximately 84%. Moving on to the balance sheet. We ended the third quarter with $24 billion of cash, compared to $19.6 billion in the prior quarter, up $4.3 billion sequentially.\n\nIn June, we established the AI XPV platform in partnership with Apollo and Blackstone to enable more than 20 gigawatts of compute infrastructure for OpenAI and Anthropic by the end of 2028. We closed the first $35 billion tranche in June for Anthropic's one gigawatt deployment, which is already underway. While future tranches will include unique features tailored to specific lab and investor needs, our core strategy remains consistent. First, we are empowering two of our most strategic customers, the leading AI labs, to bridge the gap between their current cash flow and the significant upfront investments required for their businesses. Our XPUs enable cost-effective, sustainable growth at multiples of their infrastructure costs. Second, this XPV platform enables highly investable customers and facilitates execution where demand is already locked in.\n\nAnd third, we review any strategic financings through a commercial as well as balance sheet lens, consistent with our existing capital allocation framework.",
-      "source": "bigdata:Quartr Transcripts",
-      "asOf": "2026-09-02",
-      "truncated": true,
-      "url": "https://app.bigdata.com/documents/EA18C42CD71533FFBD9B9301B6401E92"
-    },
-    "headlines": [
-      {
-        "text": "What Is Going on With Broadcom Stock on Tuesday?",
-        "source": "bigdata:Benzinga",
-        "asOf": "2026-08-04",
-        "url": "https://app.bigdata.com/documents/B2A63DCA0F4374F148907C96C83CBB57?cnum=1&cnum=3"
-      },
-      {
-        "text": "Why Broadcom Stock Rallied Today",
-        "source": "bigdata:Nasdaq",
-        "asOf": "2026-08-04",
-        "url": "https://app.bigdata.com/documents/AFBAA6891805050E73396F4617BD151A?cnum=1&cnum=2&cnum=3"
-      },
-      {
-        "text": "Why Broadcom Stock Rallied Today",
-        "source": "bigdata:The Globe And Mail",
-        "asOf": "2026-08-04",
-        "url": "https://app.bigdata.com/documents/EC59FD58DA59D13FFC1FEF88F76CC7CD?cnum=1&cnum=2"
-      },
-      {
-        "text": "Why Broadcom Stock Rallied Today",
-        "source": "bigdata:AOL.com",
-        "asOf": "2026-08-04",
-        "url": "https://app.bigdata.com/documents/BA7DD8177DCEF8CA7D2ED9B30BFE292B?cnum=1"
-      },
-      {
-        "text": "Marvell Stock Surges 10%: Next-Gen AI Storage Unveiled Ahead of Q2 Earnings",
-        "source": "bigdata:Benzinga",
-        "asOf": "2026-08-04",
-        "url": "https://app.bigdata.com/documents/4AF37FF7BDABF7766A3610C718F23D56?cnum=1"
-      },
-      {
-        "text": "Intel Soars 10%, AMD Jumps 8%, Broadcom Rises 6% as Chip Stocks Ride a Risk-On Rally",
-        "source": "bigdata:AOL.com",
-        "asOf": "2026-08-04",
-        "url": "https://app.bigdata.com/documents/864F41DBD0A29775FDDB9AEDB73B0ABF?cnum=1&cnum=2"
-      },
-      {
-        "text": "Why Broadcom Stock Rallied Today",
-        "source": "bigdata:Yahoo! Finance",
-        "asOf": "2026-08-04",
-        "url": "https://app.bigdata.com/documents/7A455995F4F3221E0B151392BD143634?cnum=1"
-      },
-      {
-        "text": "Goldman Sachs Just Added Microsoft to Its Closely Watched 'Conviction List.' Broadcom and ServiceNow Were Removed.",
-        "source": "bigdata:AOL.com",
-        "asOf": "2026-08-04",
-        "url": "https://app.bigdata.com/documents/77E4390A1096C05D77BE56B10D7C5242?cnum=1"
-      },
-      {
-        "text": "JPMorgan Says Bet NVDA, AMD, but Morgan Stanley Backs MSFT, GOOGL: What Is the Best AI Trade?",
-        "source": "bigdata:Benzinga",
-        "asOf": "2026-08-04",
-        "url": "https://app.bigdata.com/documents/EED1D792A6D5B2F63019DA527CD0AC44?cnum=1&cnum=2"
-      },
-      {
-        "text": "Microsoft added to Goldman's top list - Broadcom removed",
-        "source": "bigdata:Finwire",
-        "asOf": "2026-08-03",
-        "url": "https://app.bigdata.com/documents/954C2A7E7B04652E7A754A907F381619?cnum=1"
-      }
-    ]
+    "transcriptHighlights": null,
+    "headlines": []
   },
   "provenance": [
     {
       "field": "quote",
-      "endpoint": "bigdata_company_tearsheet.company_overview + price_performance",
-      "source": "bigdata",
-      "capturedAt": "2026-09-13T03:18:05.482Z"
+      "endpoint": "yahoo quoteSummary price.regularMarketPrice + price.marketCap + summaryDetail.fiftyTwoWeekLow/High (facts:free)",
+      "source": "yahoo",
+      "capturedAt": "2026-10-04T03:24:54.905Z"
     },
     {
       "field": "quote.dividendYield",
-      "endpoint": "bigdata_company_tearsheet.fundamentals.ratios[TTM]",
-      "source": "bigdata",
-      "capturedAt": "2026-09-13T03:18:05.482Z"
+      "endpoint": "yahoo quoteSummary summaryDetail.dividendYield (trailingAnnualDividendYield fallback) (facts:free)",
+      "source": "yahoo",
+      "capturedAt": "2026-10-04T03:24:54.905Z"
     },
     {
       "field": "company",
-      "endpoint": "bigdata_company_tearsheet.company_overview",
-      "source": "bigdata",
-      "capturedAt": "2026-09-13T03:18:05.482Z"
+      "endpoint": "yahoo quoteSummary price.longName (shortName fallback) (facts:free)",
+      "source": "yahoo",
+      "capturedAt": "2026-10-04T03:24:54.905Z"
     },
     {
       "field": "context.description",
-      "endpoint": "bigdata_company_tearsheet.company_overview",
-      "source": "bigdata",
-      "capturedAt": "2026-09-13T03:18:05.482Z"
+      "endpoint": "yahoo quoteSummary assetProfile.longBusinessSummary (facts:free)",
+      "source": "yahoo",
+      "capturedAt": "2026-10-04T03:24:54.905Z"
     },
     {
       "field": "quote.sharesOutstanding",
       "endpoint": "edgar primary document (cover page)",
       "source": "edgar",
-      "capturedAt": "2026-09-13T03:18:05.482Z"
+      "capturedAt": "2026-10-04T03:24:54.905Z"
     },
     {
       "field": "statements",
-      "endpoint": "bigdata_company_tearsheet.financial_statements (annual)",
-      "source": "bigdata",
-      "capturedAt": "2026-09-13T03:18:05.482Z"
+      "endpoint": "SEC companyfacts XBRL (annual 10-K facts), merged with the filing's and prior 10-K's inline XBRL when captured (facts:free)",
+      "source": "edgar",
+      "capturedAt": "2026-10-04T03:24:54.905Z"
     },
     {
       "field": "latestQuarter",
-      "endpoint": "bigdata_company_tearsheet.financial_statements (quarter)",
-      "source": "bigdata",
-      "capturedAt": "2026-09-13T03:18:05.482Z"
+      "endpoint": "SEC companyfacts XBRL (discrete quarters), merged with the filing's inline XBRL when captured (facts:free)",
+      "source": "edgar",
+      "capturedAt": "2026-10-04T03:24:54.905Z"
     },
     {
       "field": "ttm",
-      "endpoint": "bigdata_company_tearsheet.fundamentals.key_metrics[TTM] + ratios[TTM]",
-      "source": "bigdata",
-      "capturedAt": "2026-09-13T03:18:05.482Z"
+      "endpoint": "derived: last four discrete quarters + latest balance sheet from SEC companyfacts XBRL (discrete quarters), merged with the filing's inline XBRL when captured; P/E, P/S, EV/EBITDA and FCF yield priced with yahoo quoteSummary price/market cap (P/E falls back to summaryDetail.trailingPE when quarterly EPS cannot be summed) (facts:free)",
+      "source": "edgar",
+      "capturedAt": "2026-10-04T03:24:54.905Z"
     },
     {
       "field": "segments",
-      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.product",
-      "source": "bigdata",
-      "capturedAt": "2026-09-13T03:18:05.482Z"
+      "endpoint": "derived: single 'Consolidated' segment from the latest SEC annual revenue (facts:free emits no product segmentation)",
+      "source": "edgar",
+      "capturedAt": "2026-10-04T03:24:54.905Z"
     },
     {
       "field": "geoMix",
-      "endpoint": "bigdata_company_tearsheet.revenue_segmentation.geographic",
-      "source": "bigdata",
-      "capturedAt": "2026-09-13T03:18:05.482Z"
+      "endpoint": "none: facts:free emits no geographic segmentation (empty mix)",
+      "source": "edgar",
+      "capturedAt": "2026-10-04T03:24:54.905Z"
     },
     {
       "field": "analysts",
-      "endpoint": "bigdata_company_tearsheet.analyst_data",
-      "source": "bigdata",
-      "capturedAt": "2026-09-13T03:18:05.482Z"
+      "endpoint": "yahoo quoteSummary financialData target*Price + recommendationKey + recommendationTrend.trend[0] (facts:free)",
+      "source": "yahoo",
+      "capturedAt": "2026-10-04T03:24:54.905Z"
     },
     {
       "field": "estimates",
-      "endpoint": "bigdata_company_tearsheet.estimates",
-      "source": "bigdata",
-      "capturedAt": "2026-09-13T03:18:05.482Z"
+      "endpoint": "yahoo quoteSummary earningsTrend annual periods (revenueEstimate.avg, earningsEstimate.avg) (facts:free)",
+      "source": "yahoo",
+      "capturedAt": "2026-10-04T03:24:54.905Z"
     },
     {
       "field": "peers",
       "endpoint": "fmp company/peers (tickers only)",
       "source": "fmp",
-      "capturedAt": "2026-09-13T03:18:05.482Z"
+      "capturedAt": "2026-10-04T03:24:54.905Z"
     },
     {
       "field": "history",
       "endpoint": "yahoo v8 chart (daily close)",
       "source": "yahoo",
-      "capturedAt": "2026-09-13T03:18:05.482Z"
+      "capturedAt": "2026-10-04T03:24:54.905Z"
     },
     {
       "field": "context.mdaExcerpt",
       "endpoint": "edgar primary document",
       "source": "edgar",
-      "capturedAt": "2026-09-13T03:18:05.482Z"
+      "capturedAt": "2026-10-04T03:24:54.905Z"
     },
     {
       "field": "context.riskFactorsExcerpt",
       "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
       "source": "edgar",
-      "capturedAt": "2026-09-13T03:18:05.482Z"
+      "capturedAt": "2026-10-04T03:24:54.905Z"
     },
     {
       "field": "context.pressRelease",
       "endpoint": "edgar 8-K exhibit 99.1",
       "source": "edgar",
-      "capturedAt": "2026-09-13T03:18:05.482Z"
+      "capturedAt": "2026-10-04T03:24:54.905Z"
     },
     {
       "field": "context.proxyStatement",
       "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
       "source": "edgar",
-      "capturedAt": "2026-09-13T03:18:05.482Z"
+      "capturedAt": "2026-10-04T03:24:54.905Z"
     },
     {
       "field": "context.transcriptHighlights",
       "endpoint": "bigdata_search",
       "source": "bigdata",
-      "capturedAt": "2026-09-13T03:18:05.482Z"
+      "capturedAt": "2026-10-04T03:24:54.905Z"
     },
     {
       "field": "context.headlines",
       "endpoint": "bigdata_search",
       "source": "bigdata",
-      "capturedAt": "2026-09-13T03:18:05.482Z"
+      "capturedAt": "2026-10-04T03:24:54.905Z"
+    },
+    {
+      "field": "ttm.evToEbitda",
+      "source": "yahoo",
+      "endpoint": "quoteSummary.defaultKeyStatistics.enterpriseToEbitda",
+      "capturedAt": "2026-10-04T03:25:14.864Z"
+    },
+    {
+      "field": "ttm.fcfYield",
+      "source": "edgar",
+      "endpoint": "derived: TTM (operating cash flow − capex; last FY + YTD − prior YTD) to 2026-08-02 / market cap, SEC companyfacts",
+      "capturedAt": "2026-10-04T03:25:14.917Z"
     },
     {
       "field": "beta",
       "source": "shibui",
-      "capturedAt": "2026-10-03T03:46:39.826Z",
+      "capturedAt": "2026-10-04T03:25:33.980Z",
       "endpoint": "stock_data_query: 2y weekly log returns vs SPY (cov/var) → Blume-adjusted, clamped [0.3, 2.5]"
     },
     {
       "field": "shibuiCheck",
       "source": "shibui",
-      "capturedAt": "2026-10-03T04:32:59.534Z",
-      "endpoint": "stock_data_query: close + valuation.market_cap on/before 2026-09-11; fundamentals_quarterly (4 quarters to 2026-08-02): shares_outstanding, revenue, Σfree_cash_flow, Σstock_based_compensation"
+      "capturedAt": "2026-10-04T03:25:56.177Z",
+      "endpoint": "stock_data_query: close + valuation.market_cap on/before 2026-10-04; fundamentals_quarterly (4 quarters to 2026-08-02): shares_outstanding, revenue, Σfree_cash_flow, Σstock_based_compensation"
     }
   ],
+  "sbc": [
+    1704000000,
+    1533000000,
+    2171000000,
+    5741000000,
+    7568000000
+  ],
   "beta": {
-    "value": 1.813,
-    "raw": 2.22,
-    "standardError": 0.233,
-    "r2": 0.471,
-    "observations": 104,
+    "value": 1.807,
+    "raw": 2.211,
+    "standardError": 0.235,
+    "r2": 0.467,
+    "observations": 103,
     "benchmark": "SPY",
     "window": {
-      "start": "2024-09-16",
-      "end": "2026-09-11"
+      "start": "2024-10-14",
+      "end": "2026-10-04"
     },
     "source": "shibui"
   },
   "shibuiCheck": {
-    "asOf": "2026-09-11",
+    "asOf": "2026-10-04",
     "quarterEnd": "2026-08-02",
-    "price": 361.99,
-    "marketCap": 1722196455874.02,
+    "price": 355.14,
+    "marketCap": 1689607031517.72,
     "sharesOutstanding": 4757580198,
     "revenueQuarter": 29591000000,
     "fcfTtm": 39403000000,
@@ -716,16 +643,16 @@
     "diffs": [
       {
         "field": "price",
-        "pack": 361.99,
-        "shibui": 361.99,
+        "pack": 355.14,
+        "shibui": 355.14,
         "relDiff": 0,
         "level": "ok"
       },
       {
         "field": "marketCap",
-        "pack": 1722196384200,
-        "shibui": 1722196455874.02,
-        "relDiff": 0,
+        "pack": 1695307005952,
+        "shibui": 1689607031517.72,
+        "relDiff": 0.0034,
         "level": "ok"
       },
       {
