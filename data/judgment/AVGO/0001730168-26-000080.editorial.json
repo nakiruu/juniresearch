@@ -129,7 +129,8 @@
       "quote": "Consolidated",
       "issue": "The block is named \"Consolidated\", but its body describes the two reportable segments from the 10-Q, which the company overview says this report uses.",
       "fix": "Rename it to reflect the content, for example \"Semiconductor solutions and infrastructure software\", or split it into two segment entries.",
-      "status": "open"
+      "status": "declined",
+      "note": "The segment card name must match the FactPack's segment key (\"Consolidated\"); merge.ts maps card bodies by that name, so a rename would render an empty card. The body itself states that it uses the 10-Q's two-segment split."
     },
     {
       "id": "F-15",
