@@ -29,6 +29,24 @@ describe("htmlToText", () => {
     expect(mda).not.toBeNull();
     expect(mda!.text.startsWith("Item 7. MANAGEMENT'S DISCUSSION")).toBe(true);
   });
+  // Numeric entities 128–159 are Windows-1252 code points (browsers decode them that way); the decoder turned
+  // every one into a space, so "Management&#146;s" read "Management s" in 22 of 297 sampled 10-Ks.
+  it.each(["&#145;", "&#146;", "&#8216;", "&lsquo;"])("decodes cp1252 and left single quotes to an apostrophe (%s)", (entity) => {
+    expect(htmlToText(`<p>Management${entity}s Discussion</p>`)).toBe("Management's Discussion");
+  });
+  it.each([["&#147;", "&#8220;"], ["&#148;", "&#8221;"]])("decodes cp1252 double quote %s like its unicode twin %s", (cp, uni) => {
+    expect(htmlToText(`<p>a${cp}b</p>`)).toBe('a"b');
+    expect(htmlToText(`<p>a${uni}b</p>`)).toBe('a"b');
+  });
+  it("reads MD&A text with cp1252 apostrophes correctly", () => {
+    const html = "<p>Item 7. Management&#146;s Discussion and Analysis of Financial Condition</p><p>"
+      + "The Company&#146;s revenue grew. ".repeat(40) + "</p><p>Item 7A. Market risk</p><p>Rates.</p>";
+    const { mda } = extractSections(htmlToText(html), "10-K");
+    expect(mda).not.toBeNull();
+    expect(mda!.text.startsWith("Item 7. Management's Discussion")).toBe(true);
+    expect(mda!.text).toContain("Company's revenue");
+    expect(mda!.text).not.toContain("Company s");
+  });
 });
 
 describe("capAtSentence", () => {

@@ -42,12 +42,23 @@ export function extractCoverShares(text: string): number | null {
   return null;
 }
 
+/** Windows-1252 code points 128–159 → Unicode (the 27 defined ones). */
+const CP1252: Record<number, number> = {
+  128: 8364, 130: 8218, 131: 402, 132: 8222, 133: 8230, 134: 8224, 135: 8225, 136: 710, 137: 8240,
+  138: 352, 139: 8249, 140: 338, 142: 381, 145: 8216, 146: 8217, 147: 8220, 148: 8221, 149: 8226,
+  150: 8211, 151: 8212, 152: 732, 153: 8482, 154: 353, 155: 8250, 156: 339, 158: 382, 159: 376,
+};
+
 export function htmlToText(html: string): string {
   return html
     // Hex numeric entities (&#x2019;) become their decimal twins first, so every rule below treats them the
     // same. Left as literal text they broke heading matches ("MANAGEMENT&#x2019;S" has 8 characters where the
     // title pattern allows 5, so the MD&A was never found) and leaked into excerpts.
     .replace(/&#x([0-9a-f]+);/gi, (_, hex: string) => `&#${parseInt(hex, 16)};`)
+    // Numeric entities 128–159 are Windows-1252 code points (browsers decode them that way: &#146; is the right
+    // single quote). Map them to their Unicode twins so the rules below see one form. The five undefined points
+    // (129, 141, 143, 144, 157) fall through to the generic rule and become a space.
+    .replace(/&#(1[2-5]\d);/g, (_, n: string) => `&#${CP1252[Number(n)] ?? Number(n)};`)
     .replace(/<script[\s\S]*?<\/script>/gi, " ")
     .replace(/<style[\s\S]*?<\/style>/gi, " ")
     .replace(/<\/(p|div|tr|li|h[1-6]|br|td|th)\s*>/gi, "\n")
@@ -55,7 +66,7 @@ export function htmlToText(html: string): string {
     .replace(/<[^>]+>/g, " ")
     .replace(/&nbsp;|&#160;/g, " ")
     .replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"')
-    .replace(/&#8217;|&rsquo;|&#39;/g, "'").replace(/&#8220;|&#8221;|&ldquo;|&rdquo;/g, '"')
+    .replace(/&#8217;|&rsquo;|&#39;|&#8216;|&lsquo;/g, "'").replace(/&#8220;|&#8221;|&ldquo;|&rdquo;/g, '"') // both single quotes; the left one was a space before
     .replace(/&#\d+;|&[a-z]+;/gi, " ")
     .replace(/[ \t\r\f\v]+/g, " ")
     .replace(/ *\n */g, "\n")
