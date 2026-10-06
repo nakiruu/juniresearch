@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "2d4358e7b6b1a19919d8c0b9423e1070ccbbd1a9082a73c81b76a33335370ec1",
-  "reviewedAt": "2026-10-06T11:24:05Z",
+  "judgmentSha256": "979cbabc8fdaa352020da57351d8f9758bb834b8b18eafabeffd87fe9dc03f34",
+  "reviewedAt": "2026-10-06T11:28:47Z",
   "reviewer": "claude-opus-5-5",
-  "round": 1,
-  "verdict": "needs-fix-round",
+  "round": 2,
+  "verdict": "approved-with-minors",
   "findings": [
     {
       "id": "F-1",
@@ -12,7 +12,8 @@
       "quote": "Class A1 and B1 conversions are capped where a holder would beneficially own more than 4.99% of Class A Shares.",
       "issue": "Mischaracterizes the proxy. The April 16, 2026 excerpt does not cap conversion. It says that if a holder would own more than 4.99% of the Class A Shares, the holder must give at least sixty-one (61) days' prior notice before converting. A notice requirement is not a cap, and the difference matters to the overhang argument (see F-8).",
       "fix": "Restate the mechanism as the proxy gives it. A1 and B1 shares convert one-for-one into Class A Shares on notice, and a conversion that would take a holder above 4.99% of the Class A Shares needs at least sixty-one days' prior notice.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Now: A1/B1 convert one-for-one on notice, with at least sixty-one days' prior notice above 4.99%, as the proxy gives it."
     },
     {
       "id": "F-2",
@@ -21,7 +22,8 @@
       "quote": "Revenue tracks consensus and the FY27E EPS of $1.62 stays intact, but the multiple stays roughly where it is rather than expanding. We anchor to the Street low target of $87.00 over a 12-month horizon.",
       "issue": "The Base mechanism does not produce the Base price. Today the stock trades at ~47.2x the intact FY27E EPS of $1.62, so 'EPS intact, multiple stays roughly where it is' gives roughly today's $76.31, not $87.00. Reaching $87.00 on $1.62 needs a higher FY27E multiple than today's, which is the expansion the driver rules out. (If 'where it is' means the 65.9x current-year multiple rolled onto FY27E, the result sits near the $108.00 Bull price instead.) The scenarioCommentary repeats the 'no further multiple gain' rationale, so the inconsistency carries into the argument for the weights.",
       "fix": "Pick one anchor and make the words match it. Either anchor plainly to the Street low target of $87.00 and say in words that it implies a modestly higher multiple of FY27E EPS than today's ~47.2x, or keep the 'multiple unchanged' logic and accept the price it implies (and whatever label then follows). Do not tune the price toward either side of the BUY line.",
-      "status": "open"
+      "status": "addressed",
+      "note": "The Base is now anchored to the $87.00 Street low and says this implies a modestly higher FY27E multiple than ~47.2x. The reason is stated (pricing growth beyond FY27; all 8 targets at or above it)."
     },
     {
       "id": "F-3",
@@ -30,7 +32,8 @@
       "quote": "Growth slows, FY27 estimates are cut back toward the FY26E EPS of $1.16, and the market pays roughly the current ~47.2x FY27E multiple on that lower base instead of next year's number.",
       "issue": "The Bear holds today's forward multiple (~47.2x FY27E) and only cuts earnings, so it is an earnings reset at an unchanged forward multiple, not a derating. Yet analystCommentary calls it 'a real derating paired with slower earnings' and scenarioCommentary says it 'pairs weaker earnings with a lower effective multiple'. Also, FY27 EPS cut to the FY26E level means no EPS growth in FY27, which is a stall rather than 'growth slows'. The three descriptions of the same scenario disagree.",
       "fix": "Describe the Bear once, as what it is: FY27 EPS stalls at about the FY26E $1.16 and the market keeps paying today's ~47.2x forward multiple. Remove 'real derating' and 'lower effective multiple' from analystCommentary and scenarioCommentary, or add an actual derating to the Bear and reprice it.",
-      "status": "open"
+      "status": "addressed",
+      "note": "The Bear is now an EPS stall at about $1.16 plus a derating to a multiple below today's forward multiple, at $48. The commentary describes it the same way."
     },
     {
       "id": "F-4",
@@ -39,16 +42,18 @@
       "quote": "Weights reflect what we believe: we think strong execution is more likely than a derating, but not by enough to justify more than a quarter weight on Bull.",
       "issue": "The stated belief does not map to the weights. Bull and Bear are both 25%, so the tails are symmetric. If strong execution is more likely than a derating, the weights should say so, or the paragraph should explain that 'strong execution' is the 50% Base (which F-2 shows is itself not clearly defined). As written, the reader cannot tell which outcome the author thinks is more likely than which.",
       "fix": "State plainly what each weight represents and why the two tails are equal (for example: Base is the strong-execution case; Bull needs execution plus a higher multiple, and Bear needs a stall; we see the two tails as equally likely because ...). If the belief is really asymmetric, reweight and accept the derived label.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Each weight now maps to an outcome (Base = strong execution; Bull = beat plus a higher multiple; Bear = stall plus a derating), and the 25/20 asymmetry is argued from both sides."
     },
     {
       "id": "F-5",
       "severity": "Important",
       "field": "analystCommentary",
       "quote": "After a run from the low end of the 52-week range to near its top",
-      "issue": "Unsupported sequence. The surface gives only the 52-week endpoints ($35.20–$82.94) and a price history running from August 24 to October 5, 2026, in which the shares traded within the high $70s and low $80s. Nothing shows the order in which the low and the high were hit. scenarioCommentary goes further: 'because the stock has already re-rated sharply over the past year'. 'Re-rated' is a claim about the multiple, and the page has no multiple history (earnings also rose over the period, with FY25 EPS turning positive). Two places: analystCommentary and scenarioCommentary.",
+      "issue": "Unsupported sequence. The surface gives only the 52-week endpoints ($35.20\u2013$82.94) and a price history running from August 24 to October 5, 2026, in which the shares traded within the high $70s and low $80s. Nothing shows the order in which the low and the high were hit. scenarioCommentary goes further: 'because the stock has already re-rated sharply over the past year'. 'Re-rated' is a claim about the multiple, and the page has no multiple history (earnings also rose over the period, with FY25 EPS turning positive). Two places: analystCommentary and scenarioCommentary.",
       "fix": "Say what the surface shows: the shares trade at more than double the 52-week low of $35.20 and near the $82.94 high. Drop 're-rated sharply'. If the price move is the point, say the price has risen sharply over the 52-week window without attributing it to a multiple change.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Now 'more than double the 52-week low of $35.20 and close to the $82.94 high'. 're-rated sharply' has been removed."
     },
     {
       "id": "F-6",
@@ -57,7 +62,8 @@
       "quote": "so earnings grow slower than the revenue headline suggests.",
       "issue": "Unsupported as a general claim, and it conflicts with the estimates that the valuation uses. Consensus EPS runs from $0.75 (FY25) to $1.16 (FY26E) to $1.62 (FY27E), while revenue runs from $677.6M to $993.7M to $1.2B. On those figures, consensus earnings grow faster than revenue in both years, and the FY25 operating margin turned positive. Only the Q2'26 net income comparison ($25.4 million vs $17.8 million against a +55.4% revenue increase) supports slower earnings growth.",
       "fix": "Limit the claim to what the quarter shows: Q2'26 net income grew more slowly than revenue as collaboration and R&D costs rose. Then say that the consensus path assumes operating leverage from here, and that whether it arrives is the valuation question. Argue that point once, in valuation.",
-      "status": "open"
+      "status": "addressed",
+      "note": "incomeCommentary now limits the claim to the quarter. multiplesCommentary says the consensus path assumes operating leverage."
     },
     {
       "id": "F-7",
@@ -66,7 +72,8 @@
       "quote": "up from low single-digit margins in FY22 through FY24",
       "issue": "Mischaracterizes the series. FCF margin was 2.6% in FY22, 4.9% in FY23 and 6.0% in FY24. 6.0% is not low single-digit.",
       "fix": "Write 'up from single-digit margins (2.6% to 6.0%) in FY22 through FY24', or quote the three figures.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Now 'single-digit margins of 2.6%, 4.9% and 6.0%'."
     },
     {
       "id": "F-8",
@@ -75,16 +82,18 @@
       "quote": "The multi-class structure also means the vendor's share count should not be over-read.",
       "issue": "No reading for the holder, and a silent source disagreement. The paragraph lists four share counts and ends on a vague caution. It does not say what the structure means for an outside Class A holder: a sizeable block of A1 and B1 shares sits outside the Class A count and can convert into Class A on notice, which bears on float and potential supply of Class A shares. It also hints that the vendor's ~78.02M (derived from market cap) disagrees with the proxy's class counts as of its record date, without saying so or stating which figure the report uses.",
       "fix": "Say once that the vendor's ~78.02M share count (derived from market cap) and the proxy's class-by-class counts as of the record date are on different bases, and state which one the per-share figures use. Then give a view: what the convertible A1/B1 block means for an outside Class A holder. Do not compute a new total.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Now gives an outside-holder reading (convertible A1/B1 pool as potential supply, with notice as warning) and states that per-share figures use the vendor's count."
     },
     {
       "id": "F-9",
       "severity": "Important",
       "field": "sections.financials.balanceCommentary",
       "quote": "The counterweight is that a debt-free balance sheet does not protect the equity from a valuation reset, which is the main risk we see.",
-      "issue": "Cross-section repetition of the valuation-stretch claim. The same point (the multiple is high and leaves little room for disappointment) is made in analystCommentary ('The problem is the entry price…', 'the valuation leaves little room for a stumble'), thesis ('The shares already discount much of it'), balanceCommentary (quoted), cashflowCommentary ('Cash flow supports the business but does not by itself support the valuation'), multiplesCommentary ('Even on next year's estimates the stock carries a high earnings multiple'), executiveSummary.risks[2], risks.systemic ('Broader equity sentiment toward high-multiple growth stocks') and finalRecommendation.body[0].",
+      "issue": "Cross-section repetition of the valuation-stretch claim. The same point (the multiple is high and leaves little room for disappointment) is made in analystCommentary ('The problem is the entry price\u2026', 'the valuation leaves little room for a stumble'), thesis ('The shares already discount much of it'), balanceCommentary (quoted), cashflowCommentary ('Cash flow supports the business but does not by itself support the valuation'), multiplesCommentary ('Even on next year's estimates the stock carries a high earnings multiple'), executiveSummary.risks[2], risks.systemic ('Broader equity sentiment toward high-multiple growth stocks') and finalRecommendation.body[0].",
       "fix": "Argue the valuation claim once, in valuation. Let the thesis and final recommendation point to it in a clause. Remove it from balanceCommentary and cashflowCommentary, or point back in words, and cut the high-multiple sentence from risks.systemic.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Removed from balance, cashflow and systemic. The thesis, executive risks and final recommendation now point to the valuation section."
     },
     {
       "id": "F-10",
@@ -93,7 +102,8 @@
       "quote": "Kiniksa is executing well on ARCALYST and its pipeline, and the balance sheet carries no debt. The valuation already reflects that execution",
       "issue": "The summary fields restate one another. analystCommentary already says 'The balance sheet carries no debt' and 'The business is executing well; the valuation leaves little room for a stumble', and the thesis retells the same chain (strong growth, no debt, raised guidance, half to Regeneron, follow-on in Phase 3, weighted value thin against the Bear). management.leadership then retells three growth points: 'guidance went up, PASTORALE started dosing, and the manufacturing transfer cleared FDA approval'.",
       "fix": "Give analystCommentary, the thesis and the final recommendation distinct jobs. For example: the commentary frames the setup, the thesis states the call in two sentences, and the final recommendation gives the call, the range and the triggers without retelling the story. In leadership, point back to the growth section in words rather than relisting the events.",
-      "status": "open"
+      "status": "addressed",
+      "note": "The final recommendation now points to the valuation section, and leadership points to the growth section. The summary fields no longer retell the story."
     },
     {
       "id": "F-11",
@@ -102,7 +112,8 @@
       "quote": "which the company expects only in 2028 or 2029",
       "issue": "The same facts are retold across sections. The KPL-387 '2028 or 2029' timing appears in analystCommentary, executiveSummary.risks[3], businessMoat.durability and growth.points[2]. The even Regeneron profit split is argued in analystCommentary, the thesis, incomeCommentary ('roughly half of the incremental profit flows to the partner by design'), durability ('Kiniksa owns only half the economics') and risks.idiosyncratic[1]. The Samsung transfer appears in growth.points[4], risks.idiosyncratic[2], management.leadership and finalRecommendation.body[1].",
       "fix": "Give each fact one home. Put the KPL-387 timing in growth.points[2], the profit-split mechanism in incomeCommentary with its consequence in risks.idiosyncratic[1], and the Samsung transfer in one growth or risk item. Elsewhere, refer to them in words ('the late-decade launch', 'the partner split') without restating the figures or the dates.",
-      "status": "open"
+      "status": "addressed",
+      "note": "The 2028/2029 timing now appears only in growth.points[2], the profit-split mechanism only in incomeCommentary, and Samsung only in risks.idiosyncratic[2]. Other sections refer back in words (see F-17 on the repeated phrase)."
     },
     {
       "id": "F-12",
@@ -111,7 +122,8 @@
       "quote": "A disruption during the move to Samsung Biologics could interrupt sales.",
       "issue": "Stale risk presented as current, and it contradicts the growth section. The FDA approved Samsung as the replacement CDMO in June 2026. growth.points[4] says that approval 'removes one supply uncertainty', yet executiveSummary.risks[1] ('the move of ARCALYST drug substance manufacturing to a new contract manufacturer') and this item still treat the move as pending. The 10-K language about 'delays in the ongoing technology transfer' dates from February 24, 2026, before the approval.",
       "fix": "Date the 10-K risk to February 2026 and note that the approval came in June 2026. Restate the residual risk as what the July 28, 2026 release still cites: reliance on third parties as the sole source of supply of drug substance and drug product. Make executiveSummary.risks[1] match.",
-      "status": "open"
+      "status": "addressed",
+      "note": "The supply risk now dates the 10-K item to February 24, 2026, notes the June 2026 approval, and restates the residual sole-source risk. The executive risk matches."
     },
     {
       "id": "F-13",
@@ -119,8 +131,9 @@
       "field": "sections.management.capitalAllocation",
       "quote": "In February 2025 the company discontinued development of abiprubart in Sjogren's Disease",
       "issue": "The 10-Q says the company 'announced our plans to discontinue development of abiprubart in Sjogren's Disease and to explore strategic alternatives'. The report drops the 'plans to' hedge.",
-      "fix": "Write 'In February 2025 the company announced plans to discontinue development of abiprubart in Sjogren's Disease…'.",
-      "status": "open"
+      "fix": "Write 'In February 2025 the company announced plans to discontinue development of abiprubart in Sjogren's Disease\u2026'.",
+      "status": "addressed",
+      "note": "Now 'announced plans to discontinue'."
     },
     {
       "id": "F-14",
@@ -129,7 +142,8 @@
       "quote": "ARCALYST rights in an Asian territory to Huadong",
       "issue": "The Huadong Territory as the 10-Q defines it includes New Zealand as well as Asian countries, so 'an Asian territory' is not quite accurate.",
       "fix": "Write 'ARCALYST rights in a defined territory, mostly in Asia, to Huadong', or 'in the Huadong Territory'.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Now 'in the Huadong Territory'."
     },
     {
       "id": "F-15",
@@ -138,7 +152,28 @@
       "quote": "On these weights the expected upside clears the BUY hurdle on E",
       "issue": "The page's expected upside is +10.4% against a +10.0% hurdle, so it clears only narrowly. 'Clears' with no qualifier overstates the margin, and a reader should know that a small change to the Base price would move E below the line.",
       "fix": "Write 'clears the BUY hurdle on E only narrowly'.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Now 'clears the BUY hurdle only narrowly'."
+    },
+    {
+      "id": "F-16",
+      "severity": "Minor",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "Consensus EPS rises from $0.75 in FY25 through FY26E to FY27E faster than consensus revenue grows",
+      "issue": "FY25 diluted EPS of $0.75 is a reported figure, not a consensus estimate. The sentence labels the whole path as consensus.",
+      "fix": "Write 'EPS rises from a reported $0.75 in FY25 to consensus estimates for FY26E and FY27E faster than revenue', or similar.",
+      "status": "declined",
+      "note": "Deferred to the next synthesis; round 2 is the final review round and editing the judgment now would leave it unreviewed."
+    },
+    {
+      "id": "F-17",
+      "severity": "Minor",
+      "field": "sections.businessMoat.durability",
+      "quote": "rests on the late-decade launch of the Phase 3 antibody",
+      "issue": "Verbal tic. The coined phrase 'late-decade launch' now stands in for the KPL-387 timing three times: analystCommentary ('its lead candidate is a late-decade launch'), executiveSummary.risks[3] ('the franchise extension is a late-decade launch') and durability (quoted). Pointing back in words is right, but repeating the same phrase becomes noticeable.",
+      "fix": "Vary or drop the phrase in one or two places, e.g. 'rests on KPL-387 reaching the market (see Growth)'.",
+      "status": "declined",
+      "note": "Deferred to the next synthesis; round 2 is the final review round and editing the judgment now would leave it unreviewed."
     }
   ]
 }
