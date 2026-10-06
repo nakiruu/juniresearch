@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "deb0d680b00d38df8d4e87605b17059bec4d073f05b6f6be3ae5f83808bbd56e",
-  "reviewedAt": "2026-10-06T11:59:05Z",
+  "judgmentSha256": "96439d54a49edfd4289508ad30de32a2edfa3b3b1808d3dfcf81611edf9eecd2",
+  "reviewedAt": "2026-10-06T12:00:29Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved",
   "findings": [
     {
       "id": "F-1",
@@ -202,7 +202,8 @@
       "quote": "We keep the Bear weight because a downturn deeper than our Bear, like the one in Financials, remains possible and is not priced in any scenario.",
       "issue": "New in the rewrite. The 30% Bear weight is now justified by an outcome that the Bear scenario explicitly excludes: the same paragraph calls Bear 'a growth stall rather than a repeat of the last downturn'. Weights must state the probability of the scenario as written. Using Bear weight to stand in for a deeper, unpriced downturn is the parking pattern the desk has rejected before (AMSC). It also concedes that no scenario covers a plausible downside, which weakens the claim that Bear is a real bear. The deciding Bear-vs-Base split, which the label rests on, is therefore argued on grounds the Bear price does not contain. incomeCommentary repeats the link: 'That downturn is the reference point for our Bear weight'.",
       "fix": "Justify the 30% on the growth-stall scenario itself, using the points already on the page: limited order visibility, AI capex dependence, and the possible multiple questioning behind the 52-week-high fall. Alternatively, if a deeper downturn is a real possibility, price it into Bear and re-check the label. Align incomeCommentary's 'reference point for our Bear weight' sentence with whichever you choose.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Fixed: the 30% is now argued on the growth-stall case itself: FY26E to FY27E revenue growth must keep compounding, the 10-Q says lead times affect the timing of some customer demand, order visibility is limited, and the market may be questioning the multiple. The deeper downturn is named as a tail outside the scenarios and not used to raise the weight. incomeCommentary is aligned. Both new 10-Q and consensus references are grounded."
     },
     {
       "id": "F-21",
@@ -211,7 +212,8 @@
       "quote": "The forward multiples rest on consensus earnings that exclude items GAAP results carry (see Valuation)",
       "issue": "New in the rewrite: the hedge is lost. Valuation says consensus EPS is 'very likely non-GAAP', which is an inference. The pointer now states as fact that consensus excludes GAAP items.",
       "fix": "Restore the hedge, for example 'consensus earnings that we read as non-GAAP (see Valuation)'.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Fixed: now 'consensus earnings that are very likely non-GAAP (see Valuation)'."
     },
     {
       "id": "F-22",
@@ -220,7 +222,8 @@
       "quote": "Second-quarter 2026 results exceeded guidance (see Financials)",
       "issue": "New in the rewrite: the pointer is misdirected. Financials gives the Q3 guidance but never says Q2 results beat guidance. That fact appears only in analystCommentary, citing the August 3, 2026 release.",
       "fix": "Attribute it directly ('exceeded the high end of guidance on revenue and EPS, according to the August 3, 2026 release') or drop the pointer.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Fixed: now cites the August 3, 2026 release directly for Q2 revenue and EPS exceeding the high end of guidance."
     }
   ]
 }
