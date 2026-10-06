@@ -1,0 +1,153 @@
+{
+  "judgmentSha256": "3ef271ac2a0f2728b5d684402c61a6e4260c9181ff5ac8654dd8d212673f6cae",
+  "reviewedAt": "2026-10-06T11:53:10Z",
+  "reviewer": "Claude Opus 5.5",
+  "round": 1,
+  "verdict": "needs-fix-round",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "Total debt was $29.5B at fiscal year-end, including commercial paper, up from $28.1B.",
+      "issue": "Recalled fact. Commercial paper appears nowhere in the Facts or Context blocks; the balance sheet shows only short-term debt ($10,161 million) and long-term debt, and the MD&A gives total debt without a breakdown. The same recalled instrument carries the argument in sections.risks.idiosyncratic[4]: \"so Cisco depends on rolling commercial paper and maturing notes\".",
+      "fix": "Drop \"including commercial paper\" here. In the refinancing risk, say Cisco must refinance or repay the short-term debt that now falls due within a year, without naming the instruments.",
+      "status": "open"
+    },
+    {
+      "id": "F-2",
+      "severity": "Critical",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "The vendor's peer set mixes networking with unrelated businesses, and no comparable peer figures are available here. Against its own history, the trailing GAAP multiple is high",
+      "issue": "Two claims about material the pack does not carry. No vendor peer set is on the surface: the Multiples block says \"peers pending a peer data source\", so there is nothing to characterise as mixing unrelated businesses. No historical multiple series is on the surface either, so \"against its own history\" is unsupported.",
+      "fix": "Say peer multiples are not available in the pack and you do not use them. Drop \"against its own history\" and keep the explanation that the trailing GAAP multiple is inflated relative to the forward one by amortization and restructuring that non-GAAP excludes.",
+      "status": "open"
+    },
+    {
+      "id": "F-3",
+      "severity": "Critical",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "The provision for inventory and purchase commitments fell to $387 million from $493 million, so the build has not yet produced write-downs.",
+      "issue": "Unsupported inference that contradicts its own figure. The $387 million is itself a provision for excess and obsolete inventory and purchase commitments, i.e. a write-down charged to cost of sales. A lower provision shows that charges fell, not that the build produced none, and the pack does not tie any part of the provision to the fiscal 2026 build.",
+      "fix": "Say the provision fell to $387 million from $493 million, so the build has not yet raised write-down charges, and leave the judgment on the new inventory open.",
+      "status": "open"
+    },
+    {
+      "id": "F-4",
+      "severity": "Critical",
+      "field": "sections.growth.points[2]",
+      "quote": "which tells us the Street already treats part of fiscal 2027 as a cyclical peak",
+      "issue": "Inference the source does not make. Consensus FY28E revenue of $78.1B is above FY27E of ~$73.2B, so the Street models continued growth at a slower rate, not a peak. Nothing on the surface says what the Street believes about cyclicality.",
+      "fix": "Say consensus expects growth to slow sharply in fiscal 2028, and give your own view of whether part of fiscal 2027 is pulled forward by the hyperscaler orders, labelled as your view.",
+      "status": "open"
+    },
+    {
+      "id": "F-5",
+      "severity": "Critical",
+      "field": "sections.businessMoat.durability",
+      "quote": "because the revenue driving growth is hardware sold to a concentrated set of hyperscalers",
+      "issue": "Overstated against the surface. Hyperscaler AI infrastructure was approximately 6% of fiscal 2026 revenue (about $4 billion per the release), so it explains only part of the year's growth. The 10-K ties Networking's 22% growth to AI Infrastructure and Campus Networking, product revenue grew across all customer markets, and the report itself (growth.points[1]) says Q4 orders grew 25% excluding hyperscalers. The claim as written conflicts with the report's own growth section.",
+      "fix": "Say a meaningful and fast-growing part of the growth is hardware sold to hyperscalers, which the company itself links to customer concentration, while campus and other customer markets also grew. Keep the moat argument but scale it to that share.",
+      "status": "open"
+    },
+    {
+      "id": "F-6",
+      "severity": "Important",
+      "field": "analystCommentary",
+      "quote": "on a non-GAAP basis Q4 fiscal 2026 gross margin was 66.3% against 68.4% a year earlier",
+      "issue": "Selective basis with no counter-figure. On a GAAP basis Q4 fiscal 2026 total gross margin rose to 64.1% from 63.2%, and product gross margin rose to 62.6% from 61.5%; the 10-K credits the absence of the fiscal 2025 supplier charge and favorable pricing. The report cites only the non-GAAP Q4 decline, here and again in sections.financials.incomeCommentary (\"Q4 non-GAAP product gross margin was 64.8% against 67.5%\"), sections.businessMoat.moatFactors[2] and sections.valuation.scenarioCommentary. A reader is never told the two bases moved in opposite directions.",
+      "fix": "In incomeCommentary, state once that GAAP Q4 gross margin rose 0.9 points largely because the fiscal 2025 supplier charge did not recur, while non-GAAP margin, which excludes that kind of item, fell. Say why you treat the non-GAAP figure as the better read on memory costs. Elsewhere, point back in words.",
+      "status": "open"
+    },
+    {
+      "id": "F-7",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[2].driver",
+      "quote": "Hyperscaler orders pause and memory costs push margins lower, so earnings land at the low end of FY27 non-GAAP EPS guidance, $5.05, and the multiple compresses to the high teens as growth fades.",
+      "issue": "The Bear driver and its numbers do not match. A pause in hyperscaler orders combined with lower margins still lands earnings inside company guidance, only slightly below consensus FY27E of $5.15, so nearly all the downside comes from the multiple. The scenario also uses FY27 EPS while Base and Bull use FY28E over the same 12-month horizon, and scenarioCommentary does not say why. The bear is closer to a de-rating with flat earnings than to the operational scenario it names.",
+      "fix": "Either describe Bear honestly as a de-rating with earnings stalling at the low end of guidance and no growth into fiscal 2028, or anchor it to an earnings figure below guidance described in words. State the EPS year used and why it differs from Base.",
+      "status": "open"
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "Below the operating line, other income swung from a small loss in fiscal 2025 to a gain in fiscal 2026, and the excerpt does not explain the swing",
+      "issue": "Restatement with no view. The other-income line moved from a $68 million loss to a $1,245 million gain (Q4 alone: $822 million), a large part of the rise in pre-tax income and of the 52% rise in Q4 GAAP EPS. The paragraph opens \"Operating leverage did the work\" and never says what this non-operating gain means for earnings quality or for the 33.9x trailing multiple.",
+      "fix": "Give the size of the swing from the income statement, say it is non-operating and unexplained in the excerpt, and give a view: it flatters fiscal 2026 GAAP EPS and its rise, and should not be extrapolated.",
+      "status": "open"
+    },
+    {
+      "id": "F-9",
+      "severity": "Important",
+      "field": "sections.management.governance",
+      "quote": "Say-on-pay support was approximately 77% at the prior meeting, up from approximately 75%.",
+      "issue": "Stale fact not dated. The 77% is \"last year's\" vote as described in the proxy filed October 28, 2025, i.e. the meeting before that proxy, now roughly two years old. \"At the prior meeting\" reads as the most recent vote, and the result of any vote after that proxy is not captured.",
+      "fix": "Say the October 2025 proxy reports about 77% support at the previous year's meeting, up from about 75%, and that the pack carries no later vote.",
+      "status": "open"
+    },
+    {
+      "id": "F-10",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "The company attributes the increase to product revenue, up 16%, while services were flat; total software revenue was $23.2 billion, up 4%, and subscription revenue rose 1%.",
+      "issue": "The product-versus-recurring mix story is told in seven places: analystCommentary (\"services revenue was flat and subscription revenue grew 1%\"), executiveSummary.companyOverview (\"product revenue rose 16% and services revenue was flat\"), here, businessMoat.segments[0].body (\"Product revenue grew 16%... Services revenue was flat\"), businessMoat.moatFactors[0] (\"services revenue was flat in fiscal 2026\"), businessMoat.durability (\"recurring revenue lines grew slowly\") and valuation.multiplesCommentary (\"whose services revenue is flat\").",
+      "fix": "Argue it once, in the segment body or here, and have the other sections point back in words (\"the slow recurring lines covered under Financials\"). Drop the figures from companyOverview and analystCommentary.",
+      "status": "open"
+    },
+    {
+      "id": "F-11",
+      "severity": "Important",
+      "field": "sections.finalRecommendation.body[0]",
+      "quote": "the growth is hardware-led and concentrated, margins and free cash flow moved the wrong way, and the stock already trades at 21.9x consensus FY27E EPS. Our weighted value is above the price but short of the BUY threshold, and the bear case is a credible downside.",
+      "issue": "The verdict paragraph is written three times. analystCommentary (\"At $112.82 the stock trades at 21.9x consensus FY27E EPS... short of the BUY threshold, and the bear case... is a plausible outcome rather than a tail\"), executiveSummary.thesis (\"growth is hardware-led... 21.9x consensus FY27E EPS... weighted outcome sits a little above the price\") and this paragraph make the same claims in close paraphrase; the 21.9x also reappears in multiplesCommentary and the Base driver.",
+      "fix": "Keep the full statement in one place (analystCommentary), make the thesis a two-sentence pointer, and have this paragraph state the call and point back in words rather than restating the multiple and the bear-case verdict.",
+      "status": "open"
+    },
+    {
+      "id": "F-12",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[2]",
+      "quote": "inventories rose sharply in fiscal 2026, and the risk factors warn that procuring components to meet demand increases inventory and purchase commitments that may become excess if demand slows",
+      "issue": "Paraphrase repeated across sections. The inventory risk-factor point is already made in financials.balanceCommentary (\"its risk factors note that managing component supply challenges has in the past increased inventory and purchase commitments\"). Likewise: free cash flow down and short-term debt up is argued in cashflowCommentary and balanceCommentary and retold in management.capitalAllocation (\"With free cash flow down and short-term debt up\") and risks.idiosyncratic[4] (\"short-term debt roughly doubled\"); the hyperscaler share of about 6% is stated in growth.points[0] and again in risks.idiosyncratic[0]. The quoted sentence also fuses two separate risk-factor passages (the procurement passage and the slowdown passage's \"risk of excess and obsolete inventories\") into one warning.",
+      "fix": "Make the inventory risk-factor point once (in Risks) and point back from the balance sheet. In capitalAllocation and the refinancing risk, refer to the balance-sheet discussion in words. Drop the 6% from the risk bullet. Attribute the excess-inventory warning to the slowdown risk factor it comes from.",
+      "status": "open"
+    },
+    {
+      "id": "F-13",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.catalysts[2]",
+      "quote": "Non-GAAP gross margin holding inside the guided 65% - 66% range for Q1 fiscal 2027 despite memory costs; see Financials.",
+      "issue": "Wrong pointer. Financials does not discuss the Q1 fiscal 2027 margin guide; the 65% - 66% range is argued in risks.idiosyncratic[1].",
+      "fix": "Point to Risks.",
+      "status": "open"
+    },
+    {
+      "id": "F-14",
+      "severity": "Minor",
+      "field": "sections.management.leadership",
+      "quote": "The fiscal 2025 proxy (filed 2025-10-28)",
+      "issue": "ISO date in prose; the same appears in management.governance (\"Per the fiscal 2025 proxy filed 2025-10-28\").",
+      "fix": "Write October 28, 2025 in both places.",
+      "status": "open"
+    },
+    {
+      "id": "F-15",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "the hyperscaler order backlog",
+      "issue": "No hyperscaler backlog figure is on the surface. The pack gives fiscal 2026 hyperscaler orders of $9.3 billion against approximately $4 billion of revenue, and a company-wide RPO; \"backlog\" implies a disclosed figure.",
+      "fix": "Say \"the gap between fiscal 2026 hyperscaler orders and revenue\" or refer to RPO by name.",
+      "status": "open"
+    },
+    {
+      "id": "F-16",
+      "severity": "Minor",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "but its improvement rests on hardware volume rather than margin",
+      "issue": "Reads as contradicting the same paragraph's \"Operating leverage did the work\" and the 3.5-point rise in operating margin. The intended point is gross margin.",
+      "fix": "Say the improvement rests on hardware volume and expense leverage rather than gross margin.",
+      "status": "open"
+    }
+  ]
+}
