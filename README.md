@@ -348,6 +348,12 @@ than 120 days is ignored, and a missing or unreadable file turns the gate off ra
 - **Stale-on-bad-news entry gate** (`lib/trade/stale-entry.ts`): a not-held name that would be entered is skipped
   (`STALE_ENTRY`) when it is ≥ 5% below its report price, the fall is its own (≥ 90%), and its latest earnings
   missed (≤ 120 days ago). The report is likely stale; re-write it. Any missing input lets the buy through.
+- **Re-label flag — advisory only** (`lib/trade/relabel.ts`): the stored label never moves with the price, so a
+  HOLD stays a HOLD until its report is re-run. Each run re-applies the rating rule (the desk bands in
+  `data/desk/desk.json` and the report's own gate ceiling) to the report's scenarios at today's mark. When the
+  result differs from the label the rule gave at publish on **3 consecutive run days**, the run summary and
+  allocation post list the name as a report to re-run. Preview runs count too. The streaks live in
+  `data/trade/relabel-state.json`, and nothing here changes a trade.
 - **Compliance locks** (`lib/trade/locks.ts`): symmetric, whole-ticker, **5 business days** — a buy fill
   blocks selling for 5 days and vice-versa (same-side adds are legal).
 - **Slippage-capped IOC limits** (`lib/trade/limit.ts`): a per-liquidity-bucket anchor waterfall (fresh
@@ -392,7 +398,7 @@ than 120 days is ignored, and a missing or unreadable file turns the gate off ra
   (`schwabAuthWarnHours`, at most once a day per level) and alert on a failed refresh.
 
 The **Discord notifier** (`lib/trade/notify.ts`) posts a per-run embed (orders, fills, the goal book, cash,
-audit, bear breaches, names kept out by the stale-entry gate), the target allocation on `trade:execute` and
+audit, bear breaches, names kept out by the stale-entry gate, confirmed re-label candidates), the target allocation on `trade:execute` and
 preview runs, and halt/auth alerts, when `DISCORD_WEBHOOK_URL` is set. It is best-effort: a Discord outage
 never fails a run.
 

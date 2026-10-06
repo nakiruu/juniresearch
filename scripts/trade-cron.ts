@@ -14,7 +14,7 @@ import { resolveTradeConfig, tradeConfigFromEnv } from "../lib/trade/config";
 import { newRunId } from "../lib/trade/run-record";
 import { makeNotifier } from "../lib/trade/notify";
 import type { BrokerAdapter } from "../lib/broker/adapter";
-import { loadReportsAndMeta, makeBroker, brokerBaseUrl, readFills, schwabRefreshObtainedAt, isPreviewOnly, isTurnoverBreakerOn, AUTH_WARN_PATH, CRON_LOCK_PATH, CRON_LOG_PATH, FILLS_PATH, HALT_STATE_PATH, RUNS_DIR } from "./_trade-common";
+import { loadReportsAndMeta, makeBroker, brokerBaseUrl, readFills, schwabRefreshObtainedAt, isPreviewOnly, isTurnoverBreakerOn, AUTH_WARN_PATH, RELABEL_STATE_PATH, CRON_LOCK_PATH, CRON_LOG_PATH, FILLS_PATH, HALT_STATE_PATH, RUNS_DIR } from "./_trade-common";
 import { todayET } from "../lib/trade/clock";
 
 /**
@@ -66,11 +66,11 @@ async function main(): Promise<CronResult> {
 
   return runCron({
     adapter, cfg, today, nowMs, runId, configuredBaseUrl,
-    paths: { lock: CRON_LOCK_PATH, haltState: HALT_STATE_PATH, log: CRON_LOG_PATH, fills: FILLS_PATH, runs: RUNS_DIR, authWarn: AUTH_WARN_PATH },
+    paths: { lock: CRON_LOCK_PATH, haltState: HALT_STATE_PATH, log: CRON_LOG_PATH, fills: FILLS_PATH, runs: RUNS_DIR, authWarn: AUTH_WARN_PATH, relabelState: RELABEL_STATE_PATH },
     refreshObtainedAt: disabled ? undefined : schwabRefreshObtainedAt(),
     loadInputs: async () => {
-      const { reports, sics, marketCapUsd, betas, earnings } = await loadReportsAndMeta();
-      return { reports, sics, marketCapUsd, betas, earnings, fills: readFills(FILLS_PATH) };
+      const { reports, sics, marketCapUsd, betas, earnings, deskRating } = await loadReportsAndMeta();
+      return { reports, sics, marketCapUsd, betas, earnings, deskRating, fills: readFills(FILLS_PATH) };
     },
     notify: notifier.message,
     notifySummary: notifier.runSummary,

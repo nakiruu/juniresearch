@@ -7,11 +7,12 @@
  * deferral/bar carried a correct unlock date; broker reconciled every run; zero orders in a lock
  * window (broker order history vs fills.jsonl); cap-bind frequency per name.
  */
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { resolveTradeConfig, tradeConfigFromEnv, type TradeConfig } from "../lib/trade/config";
-import { flag, readFills, CRON_LOG_PATH, FILLS_PATH, RUNS_DIR } from "./_trade-common";
+import { flag, readFills, CRON_LOG_PATH, FILLS_PATH, RUNS_DIR, RELABEL_STATE_PATH } from "./_trade-common";
+import { advanceRelabels, confirmedRelabels, readRelabelState, relabelLine, RELABEL_CONFIRM_DAYS, type RelabelEntry, type RelabelState } from "../lib/trade/relabel";
 
 // ---- input shapes --------------------------------------------------------------------------
 // Loose/optional on purpose: a real RunRecord (lib/trade/run-record.ts, read back as JSON) satisfies
@@ -31,6 +32,8 @@ export interface ReviewRun {
   date?: string;  // accepted alias (a review fixture, or any other date-bearing summary row)
   plan?: { plannedCash?: number; trades?: { deltaWeight: number }[]; skipped?: ReviewSkip[] };
   orders?: ReviewOrder[];
+  /** Advisory re-label candidates (lib/trade/relabel.ts) — absent on older records. */
+  relabel?: RelabelEntry[];
 }
 export interface ReviewFill { ticker: string; side: "buy" | "sell"; tradingDate: string }
 /** An order dated independently of its owning run — e.g. a richer feed (real broker order history)
@@ -158,6 +161,32 @@ export function buildReview(
   return { turnoverByRun, cashRange, deferralsWithUnlock, reconciledEveryRun, lockViolations, capBindByTicker };
 }
 
+// ---- advisory re-label (lib/trade/relabel.ts) ------------------------------------------------
+
+/**
+ * The re-label streaks as of the last run day in `runs`, rebuilt from the records with the same rule cron uses.
+ * Only records that carry a `relabel` array count as run days — an older record says nothing about the check.
+ * `runs` is in run order; within a day the last record wins.
+ * Preview-only runs write no record, so cron's state file (data/trade/relabel-state.json) is the fuller source;
+ * printReview prints that too.
+ */
+export function relabelFromRuns(runs: ReviewRun[]): { state: RelabelState; latest: RelabelEntry[] } {
+  const days = new Map<string, RelabelEntry[]>();
+  // `runs` must be in the order they ran (printReview sorts by file time; a runId's suffix is random), so the
+  // last record of a day is that day's reading.
+  for (const r of runs) {
+    if (!r.relabel) continue;
+    days.set(runDate(r), r.relabel);
+  }
+  let state: RelabelState = {};
+  let latest: RelabelEntry[] = [];
+  for (const [day, entries] of [...days].sort(([a], [b]) => a.localeCompare(b))) {
+    state = advanceRelabels(state, day, entries);
+    latest = entries;
+  }
+  return { state, latest };
+}
+
 // ---- execution quality (spec #9/#10) ---------------------------------------------------------
 
 export interface FillRatio { orders: number; filledFrac: number | null } // Σ filledQty / Σ qty
@@ -218,7 +247,9 @@ export async function printReview(since: string): Promise<void> {
   const runs: ReviewRun[] = existsSync(RUNS_DIR)
     ? readdirSync(RUNS_DIR)
         .filter((f) => f.endsWith(".json"))
-        .map((f) => JSON.parse(readFileSync(join(RUNS_DIR, f), "utf8")) as ReviewRun)
+        .map((f) => ({ f, m: statSync(join(RUNS_DIR, f)).mtimeMs }))
+        .sort((a, b) => a.m - b.m) // run order (a runId's suffix is random)
+        .map(({ f }) => JSON.parse(readFileSync(join(RUNS_DIR, f), "utf8")) as ReviewRun)
         .filter((r) => runDate(r) >= since)
     : [];
   const allFills = readFills(FILLS_PATH);
@@ -254,6 +285,21 @@ export async function printReview(since: string): Promise<void> {
     for (const [b, x] of Object.entries(s.tauPressure)) if (x.n) console.log(`  τ wanted / τ_max, ${b}: ${p(x, (v) => v.toFixed(2))}`);
     const sec = (v: number) => `${(v / 1000).toFixed(1)}s`;
     console.log(`  latency anchor→submit: ${p(s.latency.anchorToSubmit, sec)}; submit→ack: ${p(s.latency.submitToAck, sec)}; submit→terminal: ${p(s.latency.submitToTerminal, sec)}`);
+  }
+  // Advisory re-label: names whose label would change on a re-run at the latest run's price. Confirmed = held on
+  // RELABEL_CONFIRM_DAYS consecutive run days. Nothing here changes a trade.
+  const fromRuns = relabelFromRuns(runs);
+  const saved = readRelabelState(RELABEL_STATE_PATH);
+  const confirmed = confirmedRelabels(fromRuns.state, fromRuns.latest);
+  console.log(`Re-label candidates at the latest recorded run (advisory): ${fromRuns.latest.length}, confirmed over ${RELABEL_CONFIRM_DAYS}+ run days: ${confirmed.length}`);
+  for (const e of fromRuns.latest) {
+    const c = confirmed.find((x) => x.ticker === e.ticker);
+    console.log(`  ${c ? relabelLine(c) : relabelLine({ ...e, days: fromRuns.state[e.ticker]?.days.length ?? 1 })}${c ? " — re-run this report" : ""}`);
+  }
+  const savedTickers = Object.entries(saved);
+  if (savedTickers.length) {
+    console.log(`Re-label streaks in ${RELABEL_STATE_PATH} (includes preview-only runs):`);
+    for (const [t, st] of savedTickers) console.log(`  ${t} ${st.key.split("|").slice(1).join(" → ")} · ${st.days.length} day(s), last ${st.days[st.days.length - 1]}`);
   }
   const haltLines = logLines.filter((l) => /halted|reason=/.test(l));
   if (haltLines.length) {

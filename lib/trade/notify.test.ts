@@ -237,3 +237,20 @@ describe("bear breaches (the owner's re-write list)", () => {
     expect(breachLines(recOnly)).toEqual(LINES);
   });
 });
+
+describe("re-label candidates (advisory)", () => {
+  it("runEmbed lists them in their own field; none → no field", () => {
+    const line = "VST HOLD → BUY at $145.00 · E +16.9% · R 0.63× · 3 days";
+    const fields = (s: RunSummaryInput) => (runEmbed(s).embeds as { fields: { name: string; value: string }[] }[])[0].fields;
+    const f = fields(baseSummary({ relabels: [line] })).find((x) => /Re-label/.test(x.name));
+    expect(f?.name).toBe("Re-label candidates (1) — advisory, re-run these reports");
+    expect(f?.value).toContain(line);
+    expect(fields(baseSummary()).some((x) => /Re-label/.test(x.name))).toBe(false);
+  });
+
+  it("allocationEmbed adds them to the description", () => {
+    const a = { today: "2026-10-07", broker: "schwab", status: "preview", nav: 10_000, cash: 10_000, plannedCash: 1, rows: [], relabels: ["VST HOLD → BUY at $145.00 · E +16.9% · R 0.63× · 3 days"] };
+    const d = (allocationEmbed(a).embeds as { description: string }[])[0].description;
+    expect(d).toContain("Re-label candidates (advisory, re-run these reports): VST HOLD → BUY");
+  });
+});

@@ -25,6 +25,8 @@ import { classifyStaleEntry, fellEnough, usableMiss, type StaleEntryInfo } from 
 import type { LastEarnings } from "./earnings";
 import { betaFromSic } from "../synth/moat";
 import { toYmd } from "../calibration/realized";
+import type { DeskRating } from "../synth/desk.schema";
+import { relabelCandidates, type ConfirmedRelabel, type RelabelEntry } from "./relabel";
 
 export interface PlanRunInput {
   adapter: BrokerAdapter; reports: Report[]; sics: Record<string, number | null>; marketCapUsd: Record<string, number | null>;
@@ -45,6 +47,8 @@ export interface PlanRunInput {
   betas?: Record<string, number | null>;
   /** Latest earnings by ticker (data/earnings/latest.json) — the stale-on-bad-news entry gate; absent → the gate bars nothing. */
   earnings?: Record<string, LastEarnings>;
+  /** The desk's label bands (data/desk/desk.json) — the advisory re-label check (relabel.ts); absent → no check. */
+  deskRating?: DeskRating;
 }
 export interface PlanRunOutput {
   /** markDate: the settled reference close's date (prevTradingDay(today)); marks: the decision marks (live in a live run). */
@@ -54,6 +58,10 @@ export interface PlanRunOutput {
   breaches: Record<string, BreachInfo>;
   /** Not-held names the stale-on-bad-news gate barred (stale-entry.ts). */
   staleEntries: Record<string, StaleEntryInfo>;
+  /** Advisory: names whose rule-derived label at the decision mark differs from the published one (unconfirmed). */
+  relabel: RelabelEntry[];
+  /** Advisory: the relabel entries confirmed over consecutive run days — set by cron, which keeps the streaks. */
+  relabelConfirmed?: ConfirmedRelabel[];
 }
 
 /** The fill's ET trading date — the lock clock starts here. Broker timestamps are UTC ("…Z" or "+0000"). */
@@ -240,6 +248,7 @@ export async function planRun(input: PlanRunInput): Promise<PlanRunOutput> {
     anchorAtMs[ticker] = captured[i].at;
   });
   const sized = tradesToOrders({ plan, nav: ledger.nav, marks, positions: positionsOf(ledger), marketCapUsd, mkts, nowMs, runId, cfg, anchorAtMs });
+  const relabel = input.deskRating ? relabelCandidates(reports, marks, input.deskRating) : [];
   const scenariosByTicker = new Map(reports.map((r) => [r.meta.ticker, r.sections.valuation.scenarios.map((x) => ({ name: x.name, impliedPrice: x.impliedPrice, probability: x.probability }))]));
   const record: RunRecord = {
     runId, today, markMode: live ? "live" : "settled", broker: adapter.kind, marks, refCloses, markSources,
@@ -249,6 +258,7 @@ export async function planRun(input: PlanRunInput): Promise<PlanRunOutput> {
       scenarios: scenariosByTicker.get(s.ticker),
     })),
     classifications: plan.classifications, locks, breaches: breach.info, staleEntries: stale.info,
+    ...(input.deskRating ? { relabel } : {}),
     plan: { frozenWeight: plan.frozenWeight, sizingTarget: plan.sizingTarget, plannedInvested: plan.plannedInvested, plannedCash: plan.plannedCash, buyScale: plan.buyScale, trades: plan.trades, skipped: plan.skipped },
     orders: sized.orders as unknown as Record<string, unknown>[], fills: [],
     notes: [
@@ -259,7 +269,7 @@ export async function planRun(input: PlanRunInput): Promise<PlanRunOutput> {
       ...stale.unknown.map((u) => `stale-entry gate ${u.ticker}: not checked (${u.why}) — entry allowed`),
     ],
   };
-  return { ledger, calendar, markDate, marks, signals, locks, plan, sized, record, breaches: breach.info, staleEntries: stale.info };
+  return { ledger, calendar, markDate, marks, signals, locks, plan, sized, record, breaches: breach.info, staleEntries: stale.info, relabel };
 }
 
 /** A per-run SPY close cache: one read per key (a date, or "decision-mark"); a failed read or a non-positive close is null, never a throw. */

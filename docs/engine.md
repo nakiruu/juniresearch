@@ -677,9 +677,27 @@ The run record (`data/trade/runs/<id>.json`) stores the decision marks with thei
 trade / quote / close) and the settled reference closes (`refCloses`), signals, classifications, locks, bear-breach
 causes (`breaches`, §4.2), the plan, the orders (with sector, broker status, id, submittedAt), fills, and notes
 (live-mark fallbacks, skips — including orders not sent because the submit cutoff passed). `trade:review` produces a
-weekly digest (turnover, cash, deferrals, reconciled-every-run, lock violations, cap-binds). The **Discord notifier**
-(`lib/trade/notify.ts`) posts a per-run embed (orders, fills, the goal/target book via `goalBook`, cash, audit, held
-bear breaches to re-write) plus halt/auth alerts; best-effort, never fails a run.
+weekly digest (turnover, cash, deferrals, reconciled-every-run, lock violations, cap-binds, re-label candidates). The
+**Discord notifier** (`lib/trade/notify.ts`) posts a per-run embed (orders, fills, the goal/target book via `goalBook`,
+cash, audit, held bear breaches to re-write, confirmed re-label candidates) plus halt/auth alerts; best-effort, never
+fails a run.
+
+**Re-label flag — advisory only (`lib/trade/relabel.ts`).** The label a report carries is derived once, at publish,
+and the engine never re-derives it: a HOLD whose price falls into BUY territory is still a HOLD to `classify` until
+its report is re-run. Each run compares rule with rule:
+
+```
+published = rating.gate.gatedLabel ?? rating.conviction.derivedLabel          the rule's label at publish
+live      = applyGateCeiling(deriveLabel(computeConviction(scenarios, mark), desk.rating), rating.gate.ceiling)
+```
+
+A name where `live ≠ published` is a candidate, and the run record carries it (`relabel`). The author's own label
+(`rating.label`) is shown but never compared, so a report taken one notch conservative is not flagged for that
+alone. Cron keeps a streak per name in `data/trade/relabel-state.json`. A streak is the same report, the same
+published label and the same live label. It grows by one per run day, and preview runs count. A day with no run
+leaves it alone. A run day without the candidate drops it. At **3 run days** the name is posted in the run summary
+and the allocation post as a report to re-run. Nothing here feeds `classify`, eligibility, sizing or locks. An
+unreadable state file or `desk.json` skips the check; it never fails a run.
 
 ---
 
