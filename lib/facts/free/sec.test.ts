@@ -426,7 +426,15 @@ describe("combineCapex — PP&E capex plus separately tagged reinvestment", () =
 });
 
 describe("deriveTotalDebt", () => {
-  const none = { ltdNoncurrent: null, ltdTotal: null, ltdCurrent: null, debtCurrent: null, shortTermBorrowings: null };
+  const none = {
+    ltdNoncurrent: null,
+    ltdTotal: null,
+    ltdCurrent: null,
+    debtCurrent: null,
+    shortTermBorrowings: null,
+    convertibleNoncurrent: null,
+    convertibleCurrent: null,
+  };
 
   it("adds all current debt (DebtCurrent, commercial paper included) to noncurrent long-term debt", () => {
     // CSCO FY2026 10-K: LongTermDebtNoncurrent $19,372M; DebtCurrent $10,161M (commercial paper +
@@ -449,5 +457,18 @@ describe("deriveTotalDebt", () => {
   it("falls back to current debt alone, and is null when nothing is tagged", () => {
     expect(deriveTotalDebt({ ...none, ltdCurrent: 100e6, shortTermBorrowings: 50e6 })).toBe(150e6);
     expect(deriveTotalDebt(none)).toBeNull();
+  });
+
+  it("falls back to convertible notes when no long-term debt concept is tagged", () => {
+    // NET 2025-12-31: ConvertibleDebtNoncurrent $1,974.1M + ConvertibleDebtCurrent $1,291.3M, nothing else.
+    expect(deriveTotalDebt({ ...none, convertibleNoncurrent: 1_974.12e6, convertibleCurrent: 1_291.281e6 })).toBe(3_265.401e6);
+    expect(deriveTotalDebt({ ...none, convertibleCurrent: 12.117e6 })).toBe(12.117e6);
+    // DebtCurrent, when tagged, already holds the current convertibles.
+    expect(deriveTotalDebt({ ...none, convertibleNoncurrent: 1_000e6, convertibleCurrent: 200e6, debtCurrent: 250e6 })).toBe(1_250e6);
+  });
+
+  it("ignores convertible concepts when a long-term debt concept reports the period", () => {
+    expect(deriveTotalDebt({ ...none, ltdNoncurrent: 1_000e6, convertibleNoncurrent: 400e6, convertibleCurrent: 50e6 })).toBe(1_000e6);
+    expect(deriveTotalDebt({ ...none, ltdTotal: 1_000e6, convertibleNoncurrent: 400e6 })).toBe(1_000e6);
   });
 });

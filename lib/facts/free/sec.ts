@@ -126,6 +126,10 @@ const SHORT_TERM_INVESTMENTS = [
   "MarketableSecuritiesCurrent",
   "OtherShortTermInvestments",
   "DebtSecuritiesAvailableForSaleExcludingAccruedInterestCurrent",
+  // NET tags its available-for-sale securities only as AvailableForSaleSecuritiesDebtSecuritiesCurrent
+  // ($3,157.7M at FY2025), so without it cash + investments read $943.5M against the $4,101.3M reported.
+  // Lowest priority: some filers also tag it as a note-level subset of a face-statement total above.
+  "AvailableForSaleSecuritiesDebtSecuritiesCurrent",
 ];
 // Debt concepts are kept apart because they overlap: LongTermDebt is the long-term total *including*
 // its current portion, and DebtCurrent is all current debt (current long-term debt + commercial paper +
@@ -137,6 +141,11 @@ const LTD_TOTAL = ["LongTermDebt"];
 const LTD_CURRENT = ["LongTermDebtCurrent"];
 const DEBT_CURRENT = ["DebtCurrent"];
 const SHORT_TERM_BORROWINGS = ["ShortTermBorrowings", "CommercialPaper"];
+// Convertible notes tagged apart from long-term debt. Read only when no long-term debt concept reports the
+// period (see deriveTotalDebt), since filers that do tag LongTermDebt* often tag these as a subset of it.
+// NET FY2025: ConvertibleDebtNoncurrent $1,974.1M + ConvertibleDebtCurrent $1,291.3M, and no other debt.
+const CONVERTIBLE_NONCURRENT = ["ConvertibleDebtNoncurrent", "ConvertibleLongTermNotesPayable"];
+const CONVERTIBLE_CURRENT = ["ConvertibleDebtCurrent", "ConvertibleNotesPayableCurrent"];
 const TOTAL_EQUITY = ["StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest", "StockholdersEquity"];
 const CURRENT_ASSETS = ["AssetsCurrent"];
 const CURRENT_LIABILITIES = ["LiabilitiesCurrent"];
@@ -434,6 +443,8 @@ interface RawValues {
   ltdCurrent: number | null;
   debtCurrent: number | null;
   shortTermBorrowings: number | null;
+  convertibleNoncurrent: number | null;
+  convertibleCurrent: number | null;
   totalEquity: number | null;
   currentAssets: number | null;
   currentLiabilities: number | null;
@@ -449,9 +460,13 @@ type DerivedFields = Omit<SecPeriod, "fiscal_period" | "fiscal_year" | "report_d
  * Total debt for one period. Noncurrent long-term debt + all current debt when the noncurrent line is
  * tagged; otherwise the long-term total (which already holds its current portion) + only the current
  * debt that is not long-term (DebtCurrent − LongTermDebtCurrent when both exist, else short-term
- * borrowings / commercial paper). Null when no debt concept reports the period.
+ * borrowings / commercial paper). A filer with no long-term debt concept falls back to its convertible
+ * notes: noncurrent convertibles + all current debt (else current convertibles). Null when no debt
+ * concept reports the period.
  */
-export function deriveTotalDebt(r: Pick<RawValues, "ltdNoncurrent" | "ltdTotal" | "ltdCurrent" | "debtCurrent" | "shortTermBorrowings">): number | null {
+export function deriveTotalDebt(
+  r: Pick<RawValues, "ltdNoncurrent" | "ltdTotal" | "ltdCurrent" | "debtCurrent" | "shortTermBorrowings" | "convertibleNoncurrent" | "convertibleCurrent">,
+): number | null {
   const otherCurrent =
     r.debtCurrent != null && r.ltdCurrent != null ? r.debtCurrent - r.ltdCurrent : r.shortTermBorrowings;
   const allCurrent =
@@ -459,7 +474,9 @@ export function deriveTotalDebt(r: Pick<RawValues, "ltdNoncurrent" | "ltdTotal" 
     (r.ltdCurrent == null && r.shortTermBorrowings == null ? null : (r.ltdCurrent ?? 0) + (r.shortTermBorrowings ?? 0));
   if (r.ltdNoncurrent != null) return r.ltdNoncurrent + (allCurrent ?? 0);
   if (r.ltdTotal != null) return r.ltdTotal + (otherCurrent ?? 0);
-  return allCurrent;
+  const current = allCurrent ?? r.convertibleCurrent;
+  if (r.convertibleNoncurrent != null) return r.convertibleNoncurrent + (current ?? 0);
+  return current;
 }
 
 function deriveFields(r: RawValues): DerivedFields {
@@ -584,6 +601,8 @@ export function parseCompanyFacts(facts: unknown): { annual: SecPeriod[]; quarte
   const ltdCurrent = instantSeries(facts, LTD_CURRENT);
   const debtCurrent = instantSeries(facts, DEBT_CURRENT);
   const shortTermBorrowings = instantSeries(facts, SHORT_TERM_BORROWINGS);
+  const convertibleNoncurrent = instantSeries(facts, CONVERTIBLE_NONCURRENT);
+  const convertibleCurrent = instantSeries(facts, CONVERTIBLE_CURRENT);
   const totalEquity = instantSeries(facts, TOTAL_EQUITY);
   const currentAssets = instantSeries(facts, CURRENT_ASSETS);
   const currentLiabilities = instantSeries(facts, CURRENT_LIABILITIES);
@@ -614,6 +633,8 @@ export function parseCompanyFacts(facts: unknown): { annual: SecPeriod[]; quarte
     ltdCurrent: at(ltdCurrent[side] as Map<K, UnitEntry>, key),
     debtCurrent: at(debtCurrent[side] as Map<K, UnitEntry>, key),
     shortTermBorrowings: at(shortTermBorrowings[side] as Map<K, UnitEntry>, key),
+    convertibleNoncurrent: at(convertibleNoncurrent[side] as Map<K, UnitEntry>, key),
+    convertibleCurrent: at(convertibleCurrent[side] as Map<K, UnitEntry>, key),
     totalEquity: at(totalEquity[side] as Map<K, UnitEntry>, key),
     currentAssets: at(currentAssets[side] as Map<K, UnitEntry>, key),
     currentLiabilities: at(currentLiabilities[side] as Map<K, UnitEntry>, key),
