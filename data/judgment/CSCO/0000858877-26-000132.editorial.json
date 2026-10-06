@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "ec6442e8850c7e45f7ed107d145326adf5727d290fd5007e726bf05be971ed10",
-  "reviewedAt": "2026-10-06T11:56:37Z",
+  "judgmentSha256": "5208c717e1744dbc864d0f21b20e2b3689617398a019db5e0ea4a18cac5c7bc7",
+  "reviewedAt": "2026-10-06T11:57:42Z",
   "reviewer": "Claude Opus 5.5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved",
   "findings": [
     {
       "id": "F-1",
@@ -172,7 +172,8 @@
       "quote": "the 52-week low of $66.81 shows the stock traded far lower on a multiple within the past year",
       "issue": "Unsupported inference introduced in the rewrite. The 52-week low shows only a lower price. No historical multiple series or EPS at the time of the low is on the surface, so 'on a multiple' asserts a valuation fact the pack does not carry. This is the same defect F-2 removed from multiplesCommentary ('against its own history').",
       "fix": "Say the stock traded far lower within the past year, at $66.81, without claiming what multiple that price represented, and keep the point that the Street low target is too close to the price to serve as a real downside.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Now reads 'The shares traded as low as $66.81 within the past year', a price only with no claim about the multiple."
     },
     {
       "id": "F-18",
@@ -181,7 +182,8 @@
       "quote": "Below the operating line, other income (loss), net moved from a loss of $68 million in fiscal 2025 to a gain of $1,245 million in fiscal 2026, $822 million of it in Q4.",
       "issue": "Fit. incomeCommentary is now 2,273 of 2,500 characters (about 91% of the cap), leaving little room for the next round. scenarioCommentary is also near its cap at 1,998 of 2,500.",
       "fix": "Trim restated context the next time this field is edited, e.g. the FY25/FY24 growth history in the opening sentence or the restated GAAP-versus-non-GAAP EPS figures, so the field keeps some headroom.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Trims were deletions only. incomeCommentary is now 2,025 of 2,500 characters and scenarioCommentary 1,774 of 2,500. No fact, hedge or pointer target was lost; the pricing-power factor's 'pricing actions' credit is still grounded in the MD&A."
     }
   ]
 }
