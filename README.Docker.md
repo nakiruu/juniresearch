@@ -37,7 +37,7 @@ docker run --rm -p 58472:3000 juniresearch-web
 The deployed service (`docker-compose.yml`) builds the `trader` target: the
 full app, not just the static site. It serves the site, arms the in-process
 trade scheduler (`instrumentation.ts`, gated by `TRADE_SCHEDULER_ENABLED`),
-and lets you run the `trade:*` CLI by hand via `docker exec`. The lean
+and lets you run the `trade:*` CLI by hand via `docker compose exec`. The lean
 `runner` stage from before still exists for a site-only deploy with no
 secrets: `docker build --target runner -t juniresearch-web .`.
 
@@ -52,16 +52,28 @@ Leaving `TRADE_SCHEDULER_ENABLED` unset keeps the container serving pages
 without ever trading — deploying the image never auto-arms it.
 
 **Run the CLI in-container.** The trader image keeps every dependency
-(including `tsx`), so the `trade:*` npm scripts work over `docker exec`:
+(including `tsx`), so the `trade:*` npm scripts work over `docker compose exec`.
+Run these from the repo directory (where `docker-compose.yml` lives). `web` is
+the compose service name, and it must come right after `exec`:
 
 ```bash
-docker exec -it <service> npm run trade:reconcile
-docker exec -it <service> npm run trade:plan
-docker exec -it <service> npm run trade:audit
-docker exec -it <service> npm run trade:execute
+docker compose exec web npm run trade:reconcile
+docker compose exec web npm run trade:plan
+docker compose exec web npm run trade:execute -- --preview   # plan only, never submits
+docker compose exec web npm run trade:execute
+docker compose exec web npm run trade:audit
 ```
 
-**Schwab.** `docker exec -it <service> npm run trade:auth` writes the OAuth
+- Leaving out `web` makes compose read `npm` as the service name and fail with
+  `service "npm" is not running`.
+- Plain `docker exec` needs the container name, not the service name:
+  `docker exec -it juniresearch-web-1 npm run …`. `docker compose ps` shows the
+  name; the prefix is the project, which defaults to the directory name.
+- Inside the container the scripts print `.env.local not found. Continuing
+  without it.` That is expected: `.env.local` is not copied into the image, and
+  compose passes its variables to the container through `env_file`.
+
+**Schwab.** `docker compose exec web npm run trade:auth` writes the OAuth
 token to the mounted `data/trade` volume. Its refresh token expires every
 ~7 days — re-run `trade:auth` weekly.
 
