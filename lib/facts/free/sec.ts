@@ -257,29 +257,26 @@ function ytdBucketOf(days: number, end: string): YtdBucket | null {
 }
 
 /**
- * Groups a concept's 10-Q entries by fiscal year (the period-end's calendar year) and YTD
- * bucket, keeping only the latest-filed entry per (year, bucket) — mirroring keepLatestFiled.
- * Only entries whose start falls in the same calendar year as their end are considered "YTD"
- * (guards against stray cross-year durations coincidentally matching a bucket width).
+ * Groups a concept's 10-Q entries by fiscal year and YTD bucket, keeping only the latest-filed
+ * entry per (fiscal year, bucket) — mirroring keepLatestFiled. A fiscal year is identified by the
+ * start date its YTD entries share, so only entries cumulating from the same start are differenced
+ * (a stray duration that merely matches a bucket width has its own start and never joins a group).
+ * Keying on the start, not the period-end's calendar year, keeps fiscal years that begin in the
+ * prior calendar year: ADI's FY2026 YTD entries all start 2025-11-02, and a same-calendar-year
+ * guard dropped every one of them, leaving its Q2/Q3 D&A, cash flow and EBITDA null.
  */
-function ytdByYear(entries: UnitEntry[]): Map<number, Partial<Record<YtdBucket, UnitEntry>>> {
-  const latestPerKey = new Map<string, UnitEntry>();
+function ytdByYear(entries: UnitEntry[]): Map<string, Partial<Record<YtdBucket, UnitEntry>>> {
+  const byStart = new Map<string, Partial<Record<YtdBucket, UnitEntry>>>();
   for (const e of entries) {
-    if (e.form !== "10-Q" || !e.start || yearOf(e.start) !== yearOf(e.end)) continue;
+    if (e.form !== "10-Q" || !e.start) continue;
     const bucket = ytdBucketOf(daysBetween(e.start, e.end), e.end);
     if (!bucket) continue;
-    const key = `${yearOf(e.end)}:${bucket}`;
-    const prev = latestPerKey.get(key);
-    if (!prev || e.filed > prev.filed) latestPerKey.set(key, e);
+    if (!byStart.has(e.start)) byStart.set(e.start, {});
+    const group = byStart.get(e.start)!;
+    const prev = group[bucket];
+    if (!prev || e.filed > prev.filed) group[bucket] = e;
   }
-  const byYear = new Map<number, Partial<Record<YtdBucket, UnitEntry>>>();
-  for (const [key, entry] of latestPerKey) {
-    const [yearStr, bucket] = key.split(":") as [string, YtdBucket];
-    const year = Number(yearStr);
-    if (!byYear.has(year)) byYear.set(year, {});
-    byYear.get(year)![bucket] = entry;
-  }
-  return byYear;
+  return byStart;
 }
 
 /** Reconstructs discrete Q1/Q2/Q3 entries by differencing consecutive YTD entries, per fiscal year. */

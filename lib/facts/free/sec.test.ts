@@ -162,6 +162,54 @@ describe("YTD bucket anchoring (off-quarter ~90-day entries must not occupy the 
   });
 });
 
+// ADI-shape: a fiscal year that starts in the prior calendar year (FY2026 runs 2025-11-02 to
+// 2026-10-31). Every YTD entry starts in 2025 and ends in 2026; a same-calendar-year guard dropped
+// them all, so Q2/Q3 cash flow and D&A (and therefore EBITDA) came out null.
+describe("YTD reconstruction for a fiscal year that starts in the prior calendar year", () => {
+  const q = (start: string, end: string, val: number, filed: string) => ({ start, end, val, form: "10-Q", filed });
+  const offCalendarFacts = {
+    facts: {
+      "us-gaap": {
+        Revenues: {
+          units: {
+            USD: [
+              q("2025-11-02", "2026-01-31", 3000, "2026-02-18"),
+              q("2026-02-01", "2026-05-02", 3500, "2026-05-20"),
+              q("2026-05-03", "2026-08-01", 4000, "2026-08-19"),
+            ],
+          },
+        },
+        NetIncomeLoss: {
+          units: {
+            USD: [
+              q("2025-11-02", "2026-01-31", 600, "2026-02-18"),
+              q("2026-02-01", "2026-05-02", 700, "2026-05-20"),
+              q("2026-05-03", "2026-08-01", 800, "2026-08-19"),
+            ],
+          },
+        },
+        NetCashProvidedByUsedInOperatingActivities: {
+          units: {
+            USD: [
+              q("2025-11-02", "2026-01-31", 1000, "2026-02-18"),
+              q("2025-11-02", "2026-05-02", 2500, "2026-05-20"),
+              q("2025-11-02", "2026-08-01", 4200, "2026-08-19"),
+            ],
+          },
+        },
+      },
+    },
+  };
+
+  it("reconstructs Q2 and Q3 from YTD entries that start in the prior calendar year", () => {
+    const { quarter } = parseCompanyFacts(offCalendarFacts);
+    const byEnd = (end: string) => quarter.find((p) => p.report_date === end)!;
+    expect(byEnd("2026-01-31").operating_cash_flow).toBe(1000);
+    expect(byEnd("2026-05-02").operating_cash_flow).toBe(2500 - 1000);
+    expect(byEnd("2026-08-01").operating_cash_flow).toBe(4200 - 2500);
+  });
+});
+
 // The review also flagged that "a discrete tag always wins over a reconstructed value" (the
 // merge in quarterFlowWithYtdFallback) was never exercised with a case where the two actually
 // differ — a bug there would be invisible as long as the reconstructed and discrete values
