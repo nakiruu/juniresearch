@@ -1,0 +1,229 @@
+{
+  "judgmentSha256": "96439d54a49edfd4289508ad30de32a2edfa3b3b1808d3dfcf81611edf9eecd2",
+  "reviewedAt": "2026-10-06T12:00:29Z",
+  "reviewer": "claude-opus-5-5",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "The vendor's peer list is made up of companies that are not power-conversion or semiconductor-equipment businesses, so we make no peer-multiple comparison.",
+      "issue": "Characterizes a document the pack does not carry. The Facts block's Multiples heading reads 'company column; peers pending a peer data source'. No peer list appears anywhere on the surface, so the reader cannot check what the list contains, and the report's reason for skipping the comparison is invented.",
+      "fix": "Say only what the surface shows: no peer multiples were available ('peers pending a peer data source'), so the report makes no peer comparison. Do not describe the contents of a peer list.",
+      "status": "addressed",
+      "note": "Fixed: multiplesCommentary now says no peer multiples were available ('peers are pending a peer data source') and drops the description of a peer list."
+    },
+    {
+      "id": "F-2",
+      "severity": "Critical",
+      "field": "sections.businessMoat.moatFactors[2].body",
+      "quote": "The 2026 proxy says the company exited its last factory in China during 2025 and added capacity in the Philippines and Mexico, which helped it manage tariffs.",
+      "issue": "Causal link the source does not make. The proxy says the company exited its last factory in China while adding capacity in the Philippines and Mexico, and in a separate sentence that 'In a dynamic environment, we effectively managed the impact of tariffs'. It does not say the footprint move is what managed tariffs. The next sentence, 'That is an operating advantage while trade policy is in flux', builds the moat factor on that inference.",
+      "fix": "Report the two proxy statements separately and attribute them: the footprint changes, and the company's statement that it 'effectively managed the impact of tariffs'. If you keep the advantage claim, mark it as your inference ('we think the move may reduce tariff exposure'), not as something the proxy says.",
+      "status": "addressed",
+      "note": "Fixed: the proxy's two statements are reported separately, and the tariff link is marked as the author's inference ('the proxy does not link the two')."
+    },
+    {
+      "id": "F-3",
+      "severity": "Critical",
+      "field": "sections.growth.points[1]",
+      "quote": "Semiconductor Equipment has returned to growth.",
+      "issue": "Two unsupported claims. (1) 'Returned to growth': the same paragraph quotes the proxy saying Semiconductor revenue grew 6% in 2025 ('our second strongest year'), so the market was already growing in 2025. Nothing on the surface shows a decline that it 'returned' from. (2) 'This market is the one with the clearest cyclical history' compares cyclicality across markets, but the surface has no market-level revenue history. The 10-K says only that 'several of the markets in which we compete are highly cyclical', without naming them.",
+      "fix": "Write 'Semiconductor Equipment growth accelerated' (6% in 2025, 33% in the second quarter of 2026, per the release). Drop 'clearest cyclical history', or replace it with the 10-K's unnamed wording that several of the company's markets are highly cyclical.",
+      "status": "addressed",
+      "note": "Fixed: now 'growth accelerated' (6% in 2025, 33% in Q2 2026), with the 10-K's 'several of the markets' wording in place of 'clearest cyclical history'."
+    },
+    {
+      "id": "F-4",
+      "severity": "Critical",
+      "field": "sections.management.governance",
+      "quote": "executives are paid partly on the non-GAAP figures that exclude items such as the convertible inducement costs",
+      "issue": "Over-attribution. The release says 'management's incentive plans include certain of these non-GAAP measures as criteria', and its list of non-GAAP exclusions does not name the inducement costs. The proxy excerpt does not say which metrics the 2025 STI used, because the table marking them was not captured. Nothing on the surface establishes that executive pay is computed excluding the 2026 inducement costs. The 2025 plans were also set before the May 2026 refinancing.",
+      "fix": "Keep the sourced point, that incentive plans use certain non-GAAP measures (per the release). Drop the claim that they exclude the inducement costs, or phrase it as an open question for the next proxy. The advice to track GAAP results and the diluted share count still stands without it.",
+      "status": "addressed",
+      "note": "Fixed: the inducement-cost exclusion claim is gone. Which measures the plans use, and how they treat convertible costs, is left as a question for the next proxy."
+    },
+    {
+      "id": "F-5",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "The convertible refinancing completed in May 2026 left the company with more cash than debt.",
+      "issue": "Misleading attribution of the net cash position. The company already had net cash before the refinancing: FY25 net debt was -$223.7M (Facts), a point balanceCommentary makes. Comparing the June 30 cash ($1,396.5 million) with debt ($135.6 million current plus $1,128.6 million long-term) shows the cash cushion was narrower after the refinancing, not created by it. The same framing appears in sections.management.capitalAllocation: 'left the company with more cash than debt, at the cost of more potential shares'. balanceCommentary gets it right with 'so cash still exceeded total debt'.",
+      "fix": "In the thesis and capitalAllocation, say the company still holds more cash than debt after the refinancing, which moved most of the debt into 0% notes due 2031. Do not imply that the refinancing created the net cash position. Make the point once (Financials) and point back to it in capitalAllocation.",
+      "status": "addressed",
+      "note": "Fixed: balanceCommentary says the company held net cash before the refinancing and that cash still exceeds debt by a narrower margin. The thesis and capitalAllocation now use 'still'."
+    },
+    {
+      "id": "F-6",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[2].driver",
+      "quote": "AI-related and semiconductor equipment orders pause, as revenue did in FY23–FY24. Earnings stall near FY26E EPS of $11.24, and the market pays only the lower FY27E-based multiple named in Base.",
+      "issue": "The Bear mechanism does not match the Bear price. The analogy is a downturn in which revenue fell 10.3% and 10.5% and diluted EPS fell from $5.29 to $1.43 (FY22–FY24). Yet the price holds earnings at FY26E consensus EPS, the non-GAAP figure that embeds about 35% revenue growth this year. A flat FY27 is not an FY23–FY24-style decline. scenarioCommentary repeats the mismatch: 'In the Bear case both earnings and the multiple compress, which is the structure of the last downturn'. In this Bear case earnings flatten at a peak-cycle non-GAAP level rather than compress.",
+      "fix": "Make the narrative and the number agree. Either describe Bear as a growth stall (FY27 earnings no higher than FY26E consensus, multiple de-rates to ~19.4x) and drop the FY23–FY24 analogy, or keep the analogy and price a real earnings decline. If the price changes, re-check the label and say so.",
+      "status": "addressed",
+      "note": "Fixed: the Bear driver is now a growth stall consistent with its price, and the FY23–FY24 analogy is dropped. The new Bear-weight rationale is a separate issue (F-20)."
+    },
+    {
+      "id": "F-7",
+      "severity": "Important",
+      "field": "sections.executiveSummary.catalysts[3]",
+      "quote": "Settlement of the 2028 Notes redemption set for September 23, 2026, which will show the post-refinancing share count (see Financials).",
+      "issue": "Stale event shown as a forward catalyst. The report is dated October 6, 2026, and the price is quoted as of that date, so the September 23, 2026 redemption date has passed. The settlement does not itself 'show' a share count: the third-quarter 10-Q will. Related dating error in sections.financials.balanceCommentary: 'The remaining $136.7 million of 2028 Notes was called for redemption on September 23, 2026'. The notice was issued June 12, 2026, and September 23 is the redemption date.",
+      "fix": "Recast the catalyst as the third-quarter 10-Q's diluted share count, which will show the effect of the 2028 Notes redemption that was set for September 23, 2026 (now past, with the outcome not yet in the sources). In balanceCommentary, write 'called on June 12, 2026 for redemption on September 23, 2026'.",
+      "status": "addressed",
+      "note": "Fixed: catalysts[3] now points at the Q3 10-Q share count and says the outcome is not yet in the sources. balanceCommentary dates the call notice June 12 and the redemption September 23, and notes that date has passed."
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "sections.executiveSummary.catalysts[0]",
+      "quote": "Third-quarter 2026 results, measured against the revenue and EPS guidance in the August 3, 2026 release (see Valuation).",
+      "issue": "The pointer leads nowhere. Valuation never states the third-quarter guidance, and no section does: revenue of $640 million +/- $20 million, GAAP EPS of $2.38 +/- $0.25 and non-GAAP EPS of $3.00 +/- $0.25 all appear on the surface. The thesis ('management guides the third quarter of 2026 higher again') and scenarioCommentary ('third-quarter guidance support the consensus growth path') lean on it without the figures. Both triggers in sections.finalRecommendation.body[1] ('above the top of the guided revenue and non-GAAP EPS ranges', 'below the bottom of the guided range') use ranges the reader is never shown.",
+      "fix": "State the guidance once with its figures and date, most naturally in Financials or Valuation where the Base case leans on it. Point the catalyst at that section. The final recommendation triggers can then refer back to it in words.",
+      "status": "addressed",
+      "note": "Fixed: the Q3 2026 guidance figures are stated once in incomeCommentary and dated to the August 3 release. The catalyst and the final-recommendation triggers point to it."
+    },
+    {
+      "id": "F-9",
+      "severity": "Important",
+      "field": "sections.financials.cashflowCommentary",
+      "quote": "The 2025 proxy reports operating cash flow from continuing operations of $235 million for that year.",
+      "issue": "Wrong source label. The only proxy on the surface is the 2026 proxy statement (DEF 14A filed March 26, 2026), which reports FY2025 results. Everywhere else the report calls it 'the 2026 proxy' (moatFactors[2], growth[0]) or dates it March 26, 2026 (leadership, governance). 'The 2025 proxy' points the reader to a document that is not in the pack.",
+      "fix": "Write 'The 2026 proxy statement reports record FY2025 operating cash flow from continuing operations of $235 million.'",
+      "status": "addressed",
+      "note": "Fixed: now reads 'The 2026 proxy statement reports FY2025 operating cash flow…'."
+    },
+    {
+      "id": "F-10",
+      "severity": "Important",
+      "field": "analystCommentary",
+      "quote": "This is a cyclical supplier whose revenue fell in two consecutive years as recently as FY23 and FY24, so a real Bear case carries real weight.",
+      "issue": "Cross-section repetition. The FY23–FY24 revenue-decline story is told in nine places: analystCommentary (quoted); thesis ('The revenue history also shows how quickly this business can turn down'); incomeCommentary (where it is argued with figures); moatFactors[1] ('revenue still fell in both FY23 and FY24'); durability ('including two years of falling revenue'); the Bear driver ('as revenue did in FY23–FY24'); scenarioCommentary ('The FY23–FY24 record shows this revenue base can fall two years running' and 'which is the structure of the last downturn'); and risks.systemic ('The FY23–FY24 revenue declines show how this works in practice'). The executive-summary risk pointer is fine.",
+      "fix": "Argue the cyclical record once, in incomeCommentary, with its figures. Keep the risk pointer. In analystCommentary, thesis, moat, scenarioCommentary and risks.systemic, refer back in words ('the last downturn, see Financials') or drop the line. Each section should add its own angle, not retell the decline.",
+      "status": "addressed",
+      "note": "Fixed: the downturn is argued once in incomeCommentary. Other sections now point to it in words."
+    },
+    {
+      "id": "F-11",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "The sharp fall from the 52-week high shows the market is already willing to cut the multiple.",
+      "issue": "Unsupported claim and repetition. (1) multiplesCommentary says no source explains the fall and reads it as the market questioning 'either the durability of AI-related demand or the multiple'. Here the same fall 'shows' a multiple cut, which is stronger than the evidence and contradicts the earlier either/or. (2) The unexplained fall is argued in six places: analystCommentary ('nothing in the 10-Q, the release or the 10-K explains that fall'), multiplesCommentary (the argument), scenarioCommentary three times (Bull weight, Bear weight, and 'because the cause of the recent fall is unknown'), and finalRecommendation.body[0] ('the stock's fall from its 52-week high is unexplained').",
+      "fix": "Argue it once in multiplesCommentary. In scenarioCommentary, cite it once as a reason for the weights, in words that match the either/or ('the market may already be questioning the multiple'). Drop the retellings in analystCommentary and finalRecommendation, or reduce each to a short pointer.",
+      "status": "addressed",
+      "note": "Fixed: the 52-week-high fall is argued once in multiplesCommentary with the either/or reading. scenarioCommentary uses a hedged 'may'. analystCommentary points, and finalRecommendation drops it."
+    },
+    {
+      "id": "F-12",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "the forward multiples rest on consensus EPS that we read as non-GAAP",
+      "issue": "Cross-section repetition of the non-GAAP-consensus argument. It is argued properly in multiplesCommentary ('consensus EPS is very likely non-GAAP...'). It is then retold in analystCommentary ('built on consensus EPS that we read as non-GAAP, while GAAP earnings carry the costs of the 2026 convertible refinancing'), the thesis (quoted), the Base driver ('comes through on a non-GAAP basis'), scenarioCommentary ('because those earnings are non-GAAP'), finalRecommendation.body[0] ('the valuation already leans on non-GAAP consensus earnings for 2027') and governance ('outside holders should track GAAP results...').",
+      "fix": "Keep the argument in multiplesCommentary and the short reference in the Base driver. Elsewhere, point back in a few words ('on the non-GAAP basis discussed in Valuation') rather than re-arguing the GAAP gap.",
+      "status": "addressed",
+      "note": "Fixed: the non-GAAP argument now sits in multiplesCommentary. Other sections refer back to 'the earnings basis discussed in Valuation'."
+    },
+    {
+      "id": "F-13",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[0]",
+      "quote": "The 2028 Notes convert at approximately $137.46, well below the current price, and the company settles the amount above principal in shares.",
+      "issue": "Repeated figures and claims on convertible dilution. The conversion price and the cash/share settlement are introduced in balanceCommentary ('with a conversion price of approximately $137.46. The company settles principal in cash and the remainder in shares') and restated here. The 10-Q list of hedge, warrant and capped-call risks appears in both capitalAllocation and this risk. The dilution conclusion is drawn in the thesis, incomeCommentary ('a larger diluted share count'), balanceCommentary ('the cost of this structure is dilution'), capitalAllocation ('at the cost of more potential shares'; 'reasonable but dilutive'), insiderOwnership and finalRecommendation.body[0].",
+      "fix": "Make the risk section the home of the dilution mechanism. Balance sheet gives the terms once, and the risk refers back in words ('at the conversion price given in Financials'). Name the hedge and warrant risks once, in either capitalAllocation or Risks, and point to them from the other. Cut the dilution verdict from incomeCommentary and balanceCommentary.",
+      "status": "addressed",
+      "note": "Fixed: the terms appear once in Financials, and the risk refers to 'the conversion price given in Financials'. The hedge and warrant risks now appear only in Risks, and the dilution verdicts in Financials are trimmed."
+    },
+    {
+      "id": "F-14",
+      "severity": "Important",
+      "field": "sections.businessMoat.durability",
+      "quote": "Sales on purchase orders without long-term commitments also mean the advantage has to be re-earned with each design cycle.",
+      "issue": "Repetition and dropped hedges on order visibility. The 10-K purchase-order point is made in companyOverview ('sales are primarily made on a purchase order basis without long-term purchase commitments'), growth[0] ('who buy on purchase orders'), durability (quoted), scenarioCommentary ('The 10-K says sales are made on purchase orders that customers can delay or cancel' and 'the order book carries no long-term commitments') and risks.idiosyncratic[1], where it is argued. The 10-K hedges are also lost: it says the company 'generally' does not have long-term purchase commitments, and that customers 'may not be subject to cancellation penalties'. The report writes 'without long-term purchase commitments', 'no long-term commitments' and, in risks.idiosyncratic[1], 'customers may delay or cancel orders without penalties'. growth[0] also attaches the purchase-order fact to hyperscale customers specifically, which the 10-K does not do.",
+      "fix": "Argue order visibility once, in risks.idiosyncratic[1], with the 10-K's hedges ('generally', 'may not be subject to cancellation penalties'). Drop it from companyOverview and growth[0], and point back in words from durability and scenarioCommentary.",
+      "status": "addressed",
+      "note": "Fixed: order visibility is argued once in risks.idiosyncratic[1] with the 10-K hedges restored. It is dropped from companyOverview and growth[0], and durability and scenarioCommentary point back to it."
+    },
+    {
+      "id": "F-15",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "The company attributes the growth to AI-related demand for leading-edge logic and memory in Semiconductor Equipment, higher AI investment by hyperscale customers in Data Center Computing, and a continued recovery in Industrial and Medical.",
+      "issue": "Paraphrase repetition across sections. (1) This end-market attribution retells growth.points[0]–[2], which argue the same three drivers. (2) The FY21–FY25 gross-margin band (35.7%–37.7%) is introduced in incomeCommentary and introduced again in durability ('Gross margin stayed between 35.7% and 37.7%'). (3) The use of proceeds ('general corporate purposes and debt repayment') appears in both balanceCommentary and capitalAllocation. (4) The split chair and CEO roles appear in both leadership and governance. (5) The 'AI demand in two markets at once' point appears in companyOverview, growth.points[4] and risks.systemic.",
+      "fix": "Keep each claim in one home: drivers in Growth, the margin band in incomeCommentary (durability points back to it in words), use of proceeds in balanceCommentary, chair/CEO in governance, and two-market AI exposure in risks.systemic. Elsewhere use a short pointer or cut the line.",
+      "status": "addressed",
+      "note": "Fixed: drivers now point to Growth, durability points back to the margin band, use of proceeds appears only in balanceCommentary, chair/CEO only in governance, and the two-markets point only in risks.systemic."
+    },
+    {
+      "id": "F-16",
+      "severity": "Minor",
+      "field": "sections.growth.points[2]",
+      "quote": "the 10-Q says demand has returned to normalized levels",
+      "issue": "Dropped hedges and a garbled sequence. (1) The 10-Q says 'we believe demand in the Industrial and Medical market has returned to normalized levels', and the report drops 'we believe'. (2) risks.systemic says 'markets the 10-K calls highly cyclical', but the 10-K says 'several of the markets in which we compete are highly cyclical'. (3) 'fell 11% in 2025 after bottoming in Q1 2025' reverses the proxy's sequence. The proxy says revenue fell 11% for the year, bottomed in Q1 2025, then rose sequentially each quarter and returned to year-over-year growth by Q4.",
+      "fix": "Restore the hedges ('the company believes demand has returned to normalized levels'; 'several of the markets it serves are highly cyclical, per the 10-K'). Rewrite the proxy sequence: revenue fell 11% for 2025, but it bottomed in Q1 and grew year over year by Q4.",
+      "status": "addressed",
+      "note": "Fixed: the 'believes' and 'several of the markets' hedges are restored, and the proxy's Industrial and Medical sequence is now correct."
+    },
+    {
+      "id": "F-17",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarios[1].driver",
+      "quote": "the market values it at a multiple between today's ~19.4x on FY27E and the 26.4x it pays on FY26E",
+      "issue": "The Base anchor is a range ($297–$405 on these inputs), so a reader cannot check how $350 was chosen within it. The Bear case states its anchor exactly (FY26E EPS at the ~19.4x multiple). Base should be just as checkable.",
+      "fix": "Say in words where in the range Base sits and why, for example 'roughly midway between the two multiples', without computing a new figure. Or anchor Base to a checkable figure on the surface.",
+      "status": "addressed",
+      "note": "Fixed: Base now says 'roughly midway' between the two multiples, which a reader can check."
+    },
+    {
+      "id": "F-18",
+      "severity": "Minor",
+      "field": "sections.risks.idiosyncratic[3]",
+      "quote": "Watch for new product adoption in Data Center Computing, which the 10-Q expects to support growth.",
+      "issue": "Tic. All four idiosyncratic risks end with a 'Watch …' sentence: [0] 'Watch the diluted share count…', [1] 'Watch Data Center Computing commentary…', [2] 'Watch gross margin…' and [3] (quoted). The desk has flagged repeated 'Watch' as a house tic.",
+      "fix": "Vary the closing sentences (for example 'The third-quarter 10-Q will show…', 'The signal to track is…'), or fold the monitoring point into the mechanism sentence.",
+      "status": "addressed",
+      "note": "Fixed: the 'Watch' closers are replaced with varied wording."
+    },
+    {
+      "id": "F-19",
+      "severity": "Minor",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "Diluted weighted-average shares rose to 42.3 from 37.8 a year earlier.",
+      "issue": "Missing unit: the figures are in millions. The sentence also implies the step-up happened in the second quarter, but the release shows 42.2 million in the first quarter of 2026, so the share count was flat sequentially.",
+      "fix": "Write 'Diluted weighted-average shares were 42.3 million, against 37.8 million a year earlier and 42.2 million in the first quarter.'",
+      "status": "addressed",
+      "note": "Fixed: the figures now carry 'million', and the Q1 figure of 42.2 million is added."
+    },
+    {
+      "id": "F-20",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "We keep the Bear weight because a downturn deeper than our Bear, like the one in Financials, remains possible and is not priced in any scenario.",
+      "issue": "New in the rewrite. The 30% Bear weight is now justified by an outcome that the Bear scenario explicitly excludes: the same paragraph calls Bear 'a growth stall rather than a repeat of the last downturn'. Weights must state the probability of the scenario as written. Using Bear weight to stand in for a deeper, unpriced downturn is the parking pattern the desk has rejected before (AMSC). It also concedes that no scenario covers a plausible downside, which weakens the claim that Bear is a real bear. The deciding Bear-vs-Base split, which the label rests on, is therefore argued on grounds the Bear price does not contain. incomeCommentary repeats the link: 'That downturn is the reference point for our Bear weight'.",
+      "fix": "Justify the 30% on the growth-stall scenario itself, using the points already on the page: limited order visibility, AI capex dependence, and the possible multiple questioning behind the 52-week-high fall. Alternatively, if a deeper downturn is a real possibility, price it into Bear and re-check the label. Align incomeCommentary's 'reference point for our Bear weight' sentence with whichever you choose.",
+      "status": "addressed",
+      "note": "Fixed: the 30% is now argued on the growth-stall case itself: FY26E to FY27E revenue growth must keep compounding, the 10-Q says lead times affect the timing of some customer demand, order visibility is limited, and the market may be questioning the multiple. The deeper downturn is named as a tail outside the scenarios and not used to raise the weight. incomeCommentary is aligned. Both new 10-Q and consensus references are grounded."
+    },
+    {
+      "id": "F-21",
+      "severity": "Minor",
+      "field": "analystCommentary",
+      "quote": "The forward multiples rest on consensus earnings that exclude items GAAP results carry (see Valuation)",
+      "issue": "New in the rewrite: the hedge is lost. Valuation says consensus EPS is 'very likely non-GAAP', which is an inference. The pointer now states as fact that consensus excludes GAAP items.",
+      "fix": "Restore the hedge, for example 'consensus earnings that we read as non-GAAP (see Valuation)'.",
+      "status": "addressed",
+      "note": "Fixed: now 'consensus earnings that are very likely non-GAAP (see Valuation)'."
+    },
+    {
+      "id": "F-22",
+      "severity": "Minor",
+      "field": "sections.management.leadership",
+      "quote": "Second-quarter 2026 results exceeded guidance (see Financials)",
+      "issue": "New in the rewrite: the pointer is misdirected. Financials gives the Q3 guidance but never says Q2 results beat guidance. That fact appears only in analystCommentary, citing the August 3, 2026 release.",
+      "fix": "Attribute it directly ('exceeded the high end of guidance on revenue and EPS, according to the August 3, 2026 release') or drop the pointer.",
+      "status": "addressed",
+      "note": "Fixed: now cites the August 3, 2026 release directly for Q2 revenue and EPS exceeding the high end of guidance."
+    }
+  ]
+}

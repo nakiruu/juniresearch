@@ -1,0 +1,609 @@
+{
+  "schemaVersion": "1.2.0",
+  "ticker": "CSCO",
+  "cik": 858877,
+  "company": "Cisco Systems, Inc.",
+  "exchange": "NASDAQGS",
+  "sic": 3576,
+  "sicDescription": "Computer Communications Equipment",
+  "goodwill": [
+    38304000000,
+    38535000000,
+    58660000000,
+    59136000000,
+    59477000000
+  ],
+  "filing": {
+    "form": "10-K",
+    "accession": "0000858877-26-000132",
+    "filedDate": "2026-09-02",
+    "periodEnd": "2026-07-25",
+    "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000132/csco-20260725.htm"
+  },
+  "capturedAt": "2026-10-06T11:39:57.181Z",
+  "quote": {
+    "price": 112.82,
+    "marketCap": 444802662400,
+    "sharesOutstanding": 3942586873,
+    "sharesSource": "cover",
+    "week52Low": 66.81,
+    "week52High": 130.37,
+    "dividendYield": 0.0149,
+    "asOf": "2026-10-06"
+  },
+  "statements": {
+    "fiscalYears": [
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25",
+      "FY26"
+    ],
+    "income": [
+      {
+        "key": "revenue",
+        "label": "Revenue",
+        "values": [
+          51557000000,
+          56998000000,
+          53803000000,
+          56654000000,
+          63325000000
+        ]
+      },
+      {
+        "key": "grossProfit",
+        "label": "Gross Profit",
+        "values": [
+          32248000000,
+          35753000000,
+          34828000000,
+          36790000000,
+          40860000000
+        ]
+      },
+      {
+        "key": "operatingIncome",
+        "label": "Operating Income",
+        "values": [
+          13969000000,
+          15031000000,
+          12181000000,
+          11760000000,
+          15368000000
+        ]
+      },
+      {
+        "key": "ebitda",
+        "label": "EBITDA",
+        "values": [
+          14769000000,
+          15731000000,
+          12881000000,
+          12460000000,
+          16068000000
+        ]
+      },
+      {
+        "key": "netIncome",
+        "label": "Net Income",
+        "values": [
+          11812000000,
+          12613000000,
+          10320000000,
+          10180000000,
+          13267000000
+        ]
+      },
+      {
+        "key": "epsDiluted",
+        "label": "Diluted EPS",
+        "values": [
+          2.82,
+          3.07,
+          2.54,
+          2.55,
+          3.33
+        ]
+      }
+    ],
+    "balance": [
+      {
+        "key": "cashAndInvestments",
+        "label": "Cash & ST Investments",
+        "values": [
+          19267000000,
+          26146000000,
+          17854000000,
+          14549000000,
+          14297000000
+        ]
+      },
+      {
+        "key": "totalDebt",
+        "label": "Total Debt",
+        "values": [
+          9515000000,
+          8391000000,
+          30962000000,
+          28093000000,
+          29533000000
+        ]
+      },
+      {
+        "key": "netDebt",
+        "label": "Net Debt",
+        "values": [
+          2436000000,
+          -1732000000,
+          23454000000,
+          19747000000,
+          22315000000
+        ]
+      },
+      {
+        "key": "totalEquity",
+        "label": "Total Equity",
+        "values": [
+          39773000000,
+          44353000000,
+          45457000000,
+          46843000000,
+          50285000000
+        ]
+      },
+      {
+        "key": "currentRatio",
+        "label": "Current Ratio",
+        "values": [
+          1.4320202808112326,
+          1.3845220224216679,
+          0.9082889808791642,
+          0.9977754962354551,
+          0.9311258278145695
+        ]
+      }
+    ],
+    "cashflow": [
+      {
+        "key": "operatingCashFlow",
+        "label": "Operating Cash Flow",
+        "values": [
+          13226000000,
+          19886000000,
+          10880000000,
+          14193000000,
+          14177000000
+        ]
+      },
+      {
+        "key": "capex",
+        "label": "Capital Expenditure",
+        "values": [
+          -477000000,
+          -849000000,
+          -670000000,
+          -905000000,
+          -1410000000
+        ]
+      },
+      {
+        "key": "buybacks",
+        "label": "Share Repurchases",
+        "values": [
+          -7689000000,
+          -4293000000,
+          -5787000000,
+          -6000000000,
+          -6106000000
+        ]
+      },
+      {
+        "key": "dividends",
+        "label": "Dividends Paid",
+        "values": [
+          -6224000000,
+          -6302000000,
+          -6384000000,
+          -6437000000,
+          -6553000000
+        ]
+      },
+      {
+        "key": "freeCashFlow",
+        "label": "Free Cash Flow",
+        "values": [
+          12749000000,
+          19037000000,
+          10210000000,
+          13288000000,
+          12767000000
+        ]
+      }
+    ]
+  },
+  "latestQuarter": {
+    "label": "Q4'26",
+    "periodEnd": "2026-07-25",
+    "revenue": 17252000000,
+    "operatingMargin": 0.24715974959424994,
+    "revenueYoY": 0.1591748975340994
+  },
+  "ttm": {
+    "pe": 33.87987987987988,
+    "ps": 7.02412415949467,
+    "evToEbitda": 24.679,
+    "grossMargin": 0.645242795104619,
+    "operatingMargin": 0.24268456375838926,
+    "netMargin": 0.20950651401500198,
+    "netDebtToEbitda": null,
+    "interestCoverage": 10.454421768707483,
+    "currentRatio": 0.9311258278145695,
+    "fcfYield": 0.02870261596707565
+  },
+  "estimates": {
+    "nextFY": {
+      "label": "FY27E",
+      "revenue": 73171895480,
+      "eps": 5.1453
+    },
+    "followingFY": {
+      "label": "FY28E",
+      "revenue": 78072054470,
+      "eps": 5.62033
+    }
+  },
+  "analysts": {
+    "count": 29,
+    "buy": 19,
+    "hold": 10,
+    "sell": 0,
+    "consensusRating": "Buy",
+    "consensusTarget": 136.16,
+    "medianTarget": 135,
+    "highTarget": 170,
+    "lowTarget": 110,
+    "asOf": "2026-10-06"
+  },
+  "segments": {
+    "basis": "FY26 (single reportable segment)",
+    "items": [
+      {
+        "name": "Consolidated",
+        "revenue": 63325000000,
+        "share": 1
+      }
+    ]
+  },
+  "geoMix": {
+    "basis": "FY26",
+    "items": []
+  },
+  "peers": [
+    {
+      "ticker": "AMAT",
+      "pe": 46.788612,
+      "ps": 13.955704,
+      "evToEbitda": 42.193
+    },
+    {
+      "ticker": "ANET",
+      "pe": 65.268135,
+      "ps": 24.755938,
+      "evToEbitda": 53.368
+    },
+    {
+      "ticker": "CRM",
+      "pe": 21.023787,
+      "ps": 4.3041825,
+      "evToEbitda": 17.063
+    },
+    {
+      "ticker": "IBM",
+      "pe": 19.696001,
+      "ps": 3.0213206,
+      "evToEbitda": 16.147
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-08-24",
+      "close": 110.2300033569336
+    },
+    {
+      "date": "2026-08-25",
+      "close": 111.11000061035156
+    },
+    {
+      "date": "2026-08-26",
+      "close": 112.36000061035156
+    },
+    {
+      "date": "2026-08-27",
+      "close": 112.1500015258789
+    },
+    {
+      "date": "2026-08-28",
+      "close": 109.93000030517578
+    },
+    {
+      "date": "2026-08-31",
+      "close": 110.48999786376953
+    },
+    {
+      "date": "2026-09-01",
+      "close": 109.73999786376953
+    },
+    {
+      "date": "2026-09-02",
+      "close": 109.45999908447266
+    },
+    {
+      "date": "2026-09-03",
+      "close": 108.61000061035156
+    },
+    {
+      "date": "2026-09-04",
+      "close": 109.19999694824219
+    },
+    {
+      "date": "2026-09-08",
+      "close": 109.16999816894531
+    },
+    {
+      "date": "2026-09-09",
+      "close": 109.43000030517578
+    },
+    {
+      "date": "2026-09-10",
+      "close": 107.44000244140625
+    },
+    {
+      "date": "2026-09-11",
+      "close": 112.12999725341797
+    },
+    {
+      "date": "2026-09-14",
+      "close": 110.05999755859375
+    },
+    {
+      "date": "2026-09-15",
+      "close": 110.06999969482422
+    },
+    {
+      "date": "2026-09-16",
+      "close": 107.73999786376953
+    },
+    {
+      "date": "2026-09-17",
+      "close": 110.23999786376953
+    },
+    {
+      "date": "2026-09-18",
+      "close": 109.51000213623047
+    },
+    {
+      "date": "2026-09-21",
+      "close": 111.45999908447266
+    },
+    {
+      "date": "2026-09-22",
+      "close": 106.44000244140625
+    },
+    {
+      "date": "2026-09-23",
+      "close": 106.43000030517578
+    },
+    {
+      "date": "2026-09-24",
+      "close": 106.97000122070312
+    },
+    {
+      "date": "2026-09-25",
+      "close": 106.69999694824219
+    },
+    {
+      "date": "2026-09-28",
+      "close": 106.73999786376953
+    },
+    {
+      "date": "2026-09-29",
+      "close": 106.94000244140625
+    },
+    {
+      "date": "2026-09-30",
+      "close": 107.62999725341797
+    },
+    {
+      "date": "2026-10-01",
+      "close": 108.76000213623047
+    },
+    {
+      "date": "2026-10-02",
+      "close": 112.19999694824219
+    },
+    {
+      "date": "2026-10-05",
+      "close": 112.81999969482422
+    }
+  ],
+  "context": {
+    "description": {
+      "text": "Cisco Systems, Inc. designs, develops, and sells technologies to power, help, secure, and draw insights from the internet in the Americas, Europe, the Middle East, Africa, the Asia Pacific, Japan, and China. The company provides data center switching; network security, identity and access management, and secure access service edge; identity and agentic security solutions; interconnects public and private wireline and mobile networks, delivering connectivity to campus, data center, and branch networks; WEBEX suite, collaboration devices, and contact center; communication platform as a service software, including perpetual licenses, subscription arrangements, and hardware solutions; network assurance and observability suite; accelerated issue resolution, software support, and hardware replacement; professional services, such as planning, design, implementation, and high-value consulting; service and support packages, financing, and managed network services; and regional, national, and international wireline carriers, webscale products, internet, and cable. It also provides wireless products, including indoor and outdoor coverage designed for seamless roaming use of voice, video, and data applications; end-to-end collaboration solutions through cloud, on-premise, or within hybrid cloud environments. In addition, it offers technical support services. The company serves businesses, public institutions, governments, and service providers. It sells its products and services directly, through systems integrators, service providers, and other thirdy-party resellers, and distributors. Cisco Systems, Inc. was incorporated in 1984 and is headquartered in San Jose, California.",
+      "source": "bigdata:company_tearsheet",
+      "asOf": "2026-10-06"
+    },
+    "mdaExcerpt": {
+      "text": "Item 7.\nManagement's Discussion and Analysis of Financial Condition and Results of Operations\nForward-Looking Statements\nThis Annual Report on Form 10-K, including this Management's Discussion and Analysis of Financial Condition and Results of Operations, contains forward-looking statements regarding future events and our future results that are subject to the safe harbors created under the Securities Act of 1933, as amended (the \"Securities Act\"), and the Securities Exchange Act of 1934, as amended (the \"Exchange Act\"). All statements other than statements of historical facts are statements that could be deemed forward-looking statements. These statements are based on current expectations, estimates, forecasts, and projections about the industries in which we operate and the beliefs and assumptions of our management. Words such as \"expects,\" \"anticipates,\" \"targets,\" \"goals,\" \"projects,\" \"intends,\" \"plans,\" \"believes,\" \"momentum,\" \"seeks,\" \"estimates,\" \"continues,\" \"endeavors,\" \"strives,\" \"may,\" variations of such words, and similar expressions are intended to identify such forward-looking statements. In addition, any statements that refer to projections of our future financial performance, our anticipated growth and trends in our businesses, and other characterizations of future events or circumstances are forward-looking statements. Readers are cautioned that these forward-looking statements are only predictions and are subject to risks, uncertainties, and assumptions that are difficult to predict, including those under \"Part I, Item 1A. Risk Factors,\" and elsewhere herein. Therefore, actual results may differ materially and adversely from those expressed in any forward-looking statements. We undertake no obligation to revise or update any forward-looking statements for any reason.\nOVERVIEW\nCisco designs and sells a broad range of technologies including hardware, software, and artificial intelligence (AI) powered digital infrastructure to power, help secure, and draw insights from the Internet. We are incorporating AI into our product portfolios across networking, security, collaboration and observability, as well as integrating our products more tightly together into a platform. We are simplifying how our technology is delivered, managed and optimized and helping customers maximize the business value of their technology investments.\nA summary of our results is as follows (in millions, except percentages and per-share amounts):\nThree Months Ended\nYears Ended\nJuly 25, 2026\nJuly 26, 2025\nVariance\nJuly 25, 2026\nJuly 26, 2025\nVariance\nRevenue\n$\n17,252\n$\n14,673\n18\n%\n$\n63,325\n$\n56,654\n12\n%\nGross margin percentage\n64.1\n%\n63.2\n%\n0.9\npts\n64.5\n%\n64.9\n%\n(0.4)\npts\nResearch and development\n$\n2,431\n$\n2,380\n2\n%\n$\n9,563\n$\n9,300\n3\n%\nSales and marketing\n$\n2,952\n$\n2,818\n5\n%\n$\n11,559\n$\n10,966\n5\n%\nGeneral and administrative\n$\n679\n$\n706\n(4)\n%\n$\n2,761\n$\n2,992\n(8)\n%\nTotal R&D, sales and marketing, general and administrative\n$\n6,062\n$\n5,904\n3\n%\n$\n23,883\n$\n23,258\n3\n%\nTotal as a percentage of revenue\n35.1\n%\n40.2\n%\n(5.1)\npts\n37.7\n%\n41.1\n%\n(3.4)\npts\nRestructuring and other charges included in operating expenses\n$\n511\n$\n35\nNM\n$\n693\n$\n744\n(7)\n%\nOperating income as a percentage of revenue\n24.7\n%\n21.0\n%\n3.7\npts\n24.3\n%\n20.8\n%\n3.5\npts\nIncome tax percentage\n21.8\n%\n15.0\n%\n6.8\npts\n17.1\n%\n8.3\n%\n8.8\npts\nNet income\n$\n3,859\n$\n2,550\n51\n%\n$\n13,267\n$\n10,180\n30\n%\nNet income as a percentage of revenue\n22.4\n%\n17.4\n%\n5.0\npts\n21.0\n%\n18.0\n%\n3.0\npts\nEarnings per share diluted\n$\n0.97\n$\n0.64\n52\n%\n$\n3.33\n$\n2.55\n31\n%\nPercentages may not recalculate due to rounding.\nNM Not meaningful\n30\nTable of Contents\nCISCO SYSTEMS, INC.\nMANAGEMENT'S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS (Continued)\nFiscal 2026 Compared with Fiscal 2025\nIn fiscal 2026, we delivered strong revenue growth and profitability in a continued positive demand environment. Total revenue was $63.3 billion, an increase of 12% compared with fiscal 2025. Within total revenue, product revenue increased by 16% and services revenue was flat. Total software revenue was $23.2 billion across all product areas and services, an increase of 4%, and total subscription revenue increased 1%.\nWe saw demand in fiscal 2026 for AI infrastructure from our hyperscaler customers, which represented approximately 6% of total revenue in fiscal 2026 compared with less than 2% in fiscal 2025. We expect this demand to remain a significant driver of our results in fiscal 2027, and we discuss the associated customer concentration and supply considerations in Part I, Item 1A. Risk Factors.\nTotal gross margin decreased by 0.4 percentage points, primarily driven by a decline in product gross margin, partially offset by an increase in services gross margin. Product gross margin decreased by 0.5 percentage points, primarily driven by negative impacts from product mix and higher memory costs, partially offset by productivity improvements, pricing actions, lower amortization of purchased intangible assets and a charge in fiscal 2025 as a result of a legal dispute with a supplier, which did not recur in fiscal 2026. As a percentage of revenue, research and development, sales and marketing, and general and administrative expenses, collectively, decreased by 3.4 percentage points. Operating income as a percentage of revenue increased by 3.5 percentage points primarily driven by revenue growth, partially offset by lower gross margin and higher operating expenses in fiscal 2026. Diluted earnings per share increased 31%, driven by revenue growth and operating margin improvement.\nIn terms of our geographic segments, revenue from the Americas increased by $4.1 billion, EMEA revenue increased by $1.8 billion and APJC revenue increased by $0.7 billion. From a customer market standpoint, we experienced product revenue growth across all of our customer markets.\nFrom a product category perspective, the product revenue increase of 16% was driven by growth in Networking of 22%, particularly within our AI Infrastructure and Campus Networking solutions. We also saw product revenue growth in Collaboration of 4%, Observability of 4%, and Security of 2%.\nWe continue to operate in a highly competitive and complex environment, especially as it relates to memory constraints and costs, and trade policy. Notwithstanding these challenges, we believe that we are making progress on our strategic priorities. We continue to invest in key priority areas with the objective of driving profitable growth over the long term, and we remain focused on delivering innovation across our technologies to assist our customers in executing on their digital transformations.\n31\nTable of Contents\nCISCO SYSTEMS, INC.\nMANAGEMENT'S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS (Continued)\nFourth Quarter Snapshot\nFor the fourth quarter of fiscal 2026, as compared with the fourth quarter of fiscal 2025, total revenue increased by 18% to $17.3 billion. Within total revenue, product revenue increased by 24% to $13.5 billion and services revenue was flat at $3.8 billion. With regard to our geographic segment performance, on a year-over-year basis, revenue from the Americas increased by 18%, EMEA increased by 19% and APJC increased by 14%. From a product category perspective, on a year-over-year basis, product revenue increased in Networking by 28%, Security by 14%, Collaboration by 12% and Observability by 6%. The increase in Networking reflected growth in AI infrastructure and data center switching.\nTotal gross margin increased by 0.9 percentage point s, primarily driven by the absence in the fourth quarter of fiscal 2026 of a charge recorded in the fourth quarter of fiscal 2025 as a result of a legal dispute with a supplier, and by favorable pricing. These impacts were partially offset by negative impacts from product mix and higher memory costs . As a percentage of revenue, research and development, sales and marketing, and general and administrative expenses, collectively, decreased by 5.1 percentage points driven by the revenue growth and disciplined expense management. Operating income as a percentage of revenue increased by 3.7 percentage points, primarily driven by revenue growth and higher gross margin as discussed above, partially offset by higher restructuring and other charges. Diluted earnings per share increased by 52%, primarily driven by a revenue increase and the increase in our operating margin percentage.\nStrategy and Priorities\nIn today's fast-paced world shaped by AI, businesses and organizations globally are deploying technology to pursue their strategic objectives, from accelerating growth to enhancing operational efficiency and fostering innovation. Our strategy is to securely connect everything to make those desired outcomes possible.\nFor a full discussion of our strategy and priorities, see \"Item 1. Business.\"\nOther Key Financial Measures\nThe following is a summary of our other key financial measures for fiscal 2026 compared with fiscal 2025 (in millions):\nFiscal 2026\nFiscal 2025\nCash and cash equivalents and investments\n$15,918\n$16,110\nCash provided by operating activities\n$14,177\n$14,193\nRemaining performance obligations\n$46,734\n$43,533\nRepurchases of common stock stock repurchase program\n$6,106\n$5,995\nDividends paid\n$6,553\n$6,437\nInventories\n$5,694\n$3,164\nTotal debt\n$29,533\n$28,093\n32\nTable of Contents\nCISCO SYSTEMS, INC.\nMANAGEMENT'S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS (Continued)\nCRITICAL ACCOUNTING ESTIMATES\nThe preparation of financial statements and related disclosures in conformity with accounting principles generally accepted in the United States requires us to make judgments, assumptions, and estimates that affect the amounts reported in the Consolidated Financial Statements and accompanying notes. Note 2 to the Consolidated Financial Statements describes the significant accounting policies and methods used in the preparation of the Consolidated Financial Statements. The accounting policies described below are significantly affected by critical accounting estimates. Such accounting policies require significant judgments, assumptions, and estimates used in the preparation of the Consolidated Financial Statements, and actual results could differ materially from the amounts reported based on these policies.\nRevenue Recognition\nWe enter into contracts with customers that can include various combinations of products and services which are generally distinct and accounted for as separate performance obligations, resulting in contracts that may contain multiple performance obligations. We determine whether arrangements are distinct based on whether the customer can benefit from the product or service on its own or together with other resources that are readily available and whether our commitment to transfer the product or service to the customer is separately identifiable from other obligations in the contract. We classify our hardware, perpetual software licenses, and SaaS as distinct performance obligations. Term software licenses represent multiple obligations, which include software licenses and software maintenance. In transactions where we deliver hardware or software, we are typically the principal and we record revenue and costs of goods sold on a gross basis.\nWe recognize revenue upon transfer of control of promised goods or services in a contract with a customer in an amount that reflects the consideration we expect to receive in exchange for those products or services. Transfer of control occurs once the customer has the contractual right to use the product, generally upon shipment, electronic delivery (or when the software is available for download by the customer), or once title and risk of loss has transferred to the customer. Transfer of control can also occur over time for software maintenance and services as the customer receives the benefit over the contract term. Our hardware and perpetual software licenses are distinct performance obligations where revenue is recognized upfront upon transfer of control. Term software licenses include multiple performance obligations where the term licenses are recognized upfront upon transfer of control, with the associated software maintenance revenue recognized ratably over the contract term as services and software updates are provided. SaaS arrangements do not include the right for the customer to take possession of the software during the term, and therefore have one distinct performance obligation which is satisfied over time with revenue recognized ratably over the contract term as the customer consumes the services. On our product sales, we record consideration from shipping and handling on a gross basis within net product sales. We record our revenue net of any associated sales taxes.\nRevenue is allocated among these performance obligations in a manner that reflects the consideration that we expect to be entitled to for the promised goods or services based on standalone selling prices (SSP). SSP is estimated for each distinct performance obligation and judgment may be required in their determination. The best evidence of SSP is the observable price of a product or service when we sell the goods separately in similar circumstances and to similar customers. In instances where SSP is not directly observable, we determine SSP using information that may include market conditions and other observable inputs.\nWe assess relevant contractual terms in our customer contracts to determine the transaction price. We apply judgment in identifying contractual terms and determining the transaction price as we may be required to estimate variable consideration when determining the amount of revenue to recognize. Variable consideration includes potential contractual penalties and various rebate, cooperative marketing and other incentive programs that we offer to our distributors, channel partners and direct sale customers. When determining the amount of revenue to recognize, we estimate the expected usage of these programs, applying the expected value or most likely estimate and update the estimate at each reporting period as actual utilization becomes available. We also consider the customers' right of return in determining the transaction price, where applicable. If actual credits received by customers under these programs were to deviate significantly from our estimates, which are based on historical experience, our revenue could be adversely affected.\nSee Note 3 to the Consolidated Financial Statements for more details.\nInventory Valuation and Liability for Purchase Commitments with Contract Manufacturers and Suppliers\nInventory is written down based on excess and obsolete inventories, determined primarily by future demand forecasts. Inventory write-downs are measured as the difference between the cost of the inventory and net realizable value, based upon assumptions about future demand, and are charged to the provision for inventory. At the point of the loss recognition, a new, lower cost basis for that inventory is established, and subsequent changes in facts and circumstances do not result in the restoration or increase in that newly established cost basis.\n33\nTable of Contents\nCISCO SYSTEMS, INC.\nMANAGEMENT'S DISCUSSION AND ANALYSIS OF FINANCIAL CONDITION AND RESULTS OF OPERATIONS (Continued)\nWe record a provision for firm, noncancelable, and unconditional purchase commitments with contract manufacturers and suppliers for quantities in excess of our future demand forecasts consistent with the valuation of our excess and obsolete inventory. Both provisions are a component of cost of sales.\nOur total provisions for inventory and the liability related to purchase commitments with contract manufacturers and suppliers were $387 million, $493 million, and $819 million in fiscal 2026, 2025, and 2024, respectively.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000132/csco-20260725.htm",
+      "asOf": "2026-09-02",
+      "truncated": true
+    },
+    "riskFactorsExcerpt": {
+      "text": "Item 1A.\nRisk Factors\nSet forth below and elsewhere in this report and in other documents we file with the SEC are descriptions of the risks and uncertainties that could cause our actual results to differ materially from the results contemplated by the forward-looking statements contained in this report.\nRisks Related to our Business and Industry\nOur operations can be difficult to predict because our results of operations may fluctuate in future periods.\nOur results of operations have been in the past, and will continue to be, subject to quarterly and annual fluctuations as a result of numerous factors, some of which may contribute to more pronounced fluctuations in an uncertain global economic environment. Consequently, our results of operations are not a reliable indicator of future results. These factors include:\nCustomer patterns, such as fluctuating demand for our products and services, especially with respect to service providers and cloud customers; the timing, size, and mix of orders from customers; and changes in sales and implementation cycles for our products and reduced visibility into our customers' spending plans and associated revenue\nOur ability to maintain appropriate inventory levels and purchase commitments and manage manufacturing and customer lead times\nPrice and product competition in the communications and networking industries, which can change rapidly due to technological innovation and different business models from various geographic regions\nIndustry trends such as consolidation among our competitors and our customers, and the introduction and market acceptance of new technologies, products and technology standards, and our success in these new and evolving markets and with emerging technologies, including AI\nVariations in sales channels, product costs, or mix of products sold (e.g., hardware and software sales, including mix of cloud-based and on-premise software sales)\nFluctuations in our gross margins, and the factors that contribute to such fluctuations\nThe ability of our direct sale customers, channel partners, contract manufacturers and suppliers to obtain financing, to fund capital expenditures, or withstand financial problems\nActual events, circumstances, outcomes, and amounts differing from judgments, assumptions, and estimates used in determining the values of certain assets (including the amounts of related valuation allowances), liabilities, and other items reflected in our Consolidated Financial Statements\nHow well we execute on our strategy and operating plans and the impact of changes in our business model that could result in significant restructuring charges\nOur ability to achieve targeted cost reductions and anticipated benefits from our investments\nChanges in tax laws or accounting rules, or interpretations thereof\nAny of these factors, or others discussed in this report, could materially harm our business, results of operations, or financial condition.\nOur results of operations may be negatively impacted by unfavorable economic and market conditions and the uncertain geopolitical environment.\nThe global macroeconomic environment can be challenging and uncertain. Challenging global economic conditions, including tariffs or other trade barriers or disruptions, rising inflation, or other changes, have contributed, and may continue to contribute, to slowdowns in the markets in which we operate, resulting in: reduced demand for our products due to constrained IT-related spending by customers, particularly service provider, cloud, enterprise and other customer markets; increased price competition for our products, not only from our competitors but also as a consequence of customers disposing of unutilized products; risk of excess and obsolete inventories; risk of supply constraints; risk of excess facilities and manufacturing capacity; and higher overhead costs as a percentage of revenue and higher interest expense.\nFurthermore, the impact of uncertainty regarding global central bank monetary policy, the instability in the geopolitical environment in many parts of the world (including as a result of the ongoing Russia and Ukraine war, Middle East conflicts and wars, and China-Taiwan relations), government-related disruptions or shutdowns, and other disruptions may continue to put pressure on global economic conditions.\nEconomic conditions specific to one or more segments or customer markets may also affect our results of operations in those segments. If global economic and market conditions were to deteriorate, we may experience material harm to our business, results of operations, or financial condition.\n11\nTable of Contents\nOur revenue for a particular period is difficult to predict, and a shortfall in revenue may harm our results of operations.\nOur quarterly revenue is difficult to predict, which can be exacerbated during challenging global macroenvironments and resulting market uncertainty. As in prior periods, we may experience a decline or slower revenue growth rate on a year-over-year basis. Our ability to meet financial expectations could also be negatively impacted if nonlinear sales or shipping patterns seen in prior quarters occur again in future periods. Nonlinear shipping patterns have occurred when shipments have exceeded net bookings or manufacturing or other issues have delayed shipments, making it difficult to predict revenue for a particular period. Furthermore, nonlinear or irregular shipping patterns can increase costs, due to resulting periods of underutilized capacity, overtime expenses, and potential additional inventory management-related costs. In addition, delayed shipments arising from manufacturing, component shortages, or any other issues, particularly in periods in which our contract manufacturers are operating at higher levels of capacity, could negatively impact revenue for a quarter if such matters occur and are not remediated within the same quarter.\nThe timing of large orders can also have a significant impact on our business and results of operations from quarter to quarter. From time to time, we receive large orders that have a significant effect on our results of operations in the period in which the order is recognized as revenue. The timing of such orders is difficult to predict, and the timing of revenue recognition from such orders may affect period to period changes in revenue. As a result, our results of operations could vary materially from quarter to quarter based on the receipt of such orders and their ultimate recognition as revenue. Additionally, longer than normal manufacturing lead times in the past have caused, and in the future could cause, some customers to place multiple orders within our various sales channels and to cancel the duplicative orders upon shipment or receipt of the product, or to also place orders with other vendors with shorter manufacturing lead times. Such multiple ordering (along with other factors) or risk of order cancellation may cause difficulty in predicting our revenue. Further, our efforts to improve manufacturing lead-time performance may result in more variability and less predictability in our revenue and results of operations. In addition, when managing component supply-related challenges, we have in the past, and may in the future, increase efforts in procuring components to meet customer expectations, which in turn contributes to an increase in inventory and purchase commitments. Product demand conditions for future periods can be difficult to predict or may persist longer than anticipated. Because we plan our operating expenses primarily based on forecasted revenue levels and these costs and the impact of long term commitments are relatively fixed in the short term, a revenue shortfall from short term business changes or otherwise, may prevent us from adjusting these fixed expenses quickly enough to meet financial expectations. Any of the above factors could materially harm our operations and financial results.",
+      "source": "edgar:10-K",
+      "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000132/csco-20260725.htm",
+      "asOf": "2026-09-02",
+      "truncated": true
+    },
+    "riskFactorsSource": "10-K",
+    "pressRelease": {
+      "text": "EX-99.1\n2\nexhibit991pressrelease-q4f.htm\nEX-99.1\nDocument\nPress Contact\nInvestor Relations Contact\nRobyn Blum\nSami Badri\nCisco\nCisco\n1 (408) 930-8548\n1 (469) 420-4834\nrojenkin cisco.com\nsambadri cisco.com\nCISCO REPORTS FOURTH QUARTER AND FISCAL YEAR 2026 EARNINGS\nNews Summary\nRecord top and bottom-line performance with double-digit growth in Q4 and FY 2026, exceeding the high end of guidance ranges\nExceptional FY 2026 operating margin results, demonstrating strong execution and operating efficiency\nBroad-based, record high demand for Cisco technology with a networking supercycle underway\nQ4 total product orders up 35% year over year up 25% excluding hyperscalers, with double-digit growth across every geography and customer market\nNetworking product orders grew 40% year over year in Q4, marking the eighth consecutive quarter of double-digit growth\nSignificant momentum and raised expectations for AI infrastructure from hyperscalers\n$4 billion of orders taken in Q4, bringing the total for FY 2026 to $9.3 billion\nDelivered approximately $4 billion of revenue in FY 2026 $7.5 billion expected in FY 2027\nQ4 FY 2026 Results\nRevenue $17.3 billion\nIncrease of 18% year over year\nOperating Margin GAAP 24.7% Non-GAAP 35.9%\nEarnings per Share GAAP $0.97 Non-GAAP $1.22\nGAAP EPS increased 52% year over year\nNon-GAAP EPS increased 23% year over year\nFY 2026 Results\nRevenue $63.3 billion\nIncrease of 12% year over year\nOperating Margin GAAP 24.3% Non-GAAP 34.8%\nEarnings per Share GAAP $3.33 Non-GAAP $4.33\nGAAP EPS increased 31% year over year\nNon-GAAP EPS increased 14% year over year\nQ1 FY 2027 Guidance\nRevenue $18.0 billion to $18.2 billion\nEarnings per Share GAAP $1.08 to $1.10 Non-GAAP $1.32 to $1.34\nFY 2027 Guidance\nRevenue $72.2 billion to $73.4 billion\nEarnings per Share GAAP $4.00 to $4.06 Non-GAAP $5.05 to $5.11\n1\nSAN JOSE, Calif. -- August 12, 2026 -- Cisco (NASDAQ CSCO) today reported fourth quarter and fiscal year results for the period ended July 25, 2026. Cisco reported fourth quarter revenue of $17.3 billion, net income on a generally accepted accounting principles (GAAP) basis of $3.9 billion or $0.97 per share, and non-GAAP net income of $4.9 billion or $1.22 per share.\n\"We delivered a very strong close to fiscal 2026, marking another record year for Cisco. Our record performance is a testament to the accelerated pace of innovation and the excellent execution by our teams,\" said Chuck Robbins, Chair and CEO of Cisco. \"With the breadth and depth of our portfolio and our competitive differentiation in secure networking, Cisco is well positioned to support our customers however or wherever they decide to deploy AI.\"\n\"In Q4, we delivered record revenue, non-GAAP operating income and EPS, all exceeding the high end of our guidance ranges and demonstrating strong financial discipline and operating leverage,\" said Mark Patterson, CFO of Cisco. \"In fiscal 2026, Cisco achieved its highest productivity metrics in 30 years measured by revenue, non-GAAP operating margin, and earnings per employee. As we enter fiscal 2027, we remain focused on delivering durable growth, consistent profitability and continued capital returns as we make the strategic investments to capitalize on the significant growth opportunities we see ahead.\"\nQ4 GAAP Results\nQ4 FY 2026\nQ4 FY 2025\nVs. Q4 FY 2025\nRevenue\n$\n17.3\nbillion\n$\n14.7\nbillion\n18%\nNet Income\n$\n3.9\nbillion\n$\n2.6\nbillion\n51%\nDiluted Earnings per Share (EPS)\n$\n0.97\n$\n0.64\n52%\nQ4 Non-GAAP Results\nQ4 FY 2026\nQ4 FY 2025\nVs. Q4 FY 2025\nNet Income\n$\n4.9\nbillion\n$\n4.0\nbillion\n23%\nEPS\n$\n1.22\n$\n0.99\n23%\nFiscal Year GAAP Results\nFY 2026\nFY 2025\nVs. FY 2025\nRevenue\n$\n63.3\nbillion\n$\n56.7\nbillion\n12%\nNet Income\n$\n13.3\nbillion\n$\n10.2\nbillion\n30%\nEPS\n$\n3.33\n$\n2.55\n31%\nFiscal Year Non-GAAP Results\nFY 2026\nFY 2025\nVs. FY 2025\nNet Income\n$\n17.2\nbillion\n$\n15.2\nbillion\n13%\nEPS\n$\n4.33\n$\n3.81\n14%\nReconciliations between net income, EPS, and other measures on a GAAP and non-GAAP basis are provided in the tables located in the section entitled Reconciliations of GAAP to non-GAAP Measures.\nCisco Declares Quarterly Dividend\nCisco has declared a quarterly dividend of $0.42 per common share to be paid on October 21, 2026, to all stockholders of record as of the close of business on October 2, 2026. Future dividends will be subject to Board approval.\n2\nFinancial Summary\nAll comparative percentages are on a year-over-year basis unless otherwise noted.\nQ4 FY 2026 Highlights\nRevenue -- Total revenue was $17.3 billion, up 18%, with product revenue up 24% and services revenue was flat.\nRevenue by geographic segment was Americas up 18%, EMEA up 19%, and APJC up 14%. Product revenue performance reflected growth in Networking up 28%, Security up 14%, Collaboration up 12%, and Observability up 6%.\nGross Margin -- On a GAAP basis, total gross margin, product gross margin, and services gross margin were 64.1%, 62.6%, and 69.4%, respectively, as compared with 63.2%, 61.5%, and 68.3%, respectively, in the fourth quarter of fiscal 2025.\nTotal gross margins by geographic segment were 64.5% for the Americas, 70.1% for EMEA and 67.3% for APJC.\nOn a non-GAAP basis, total gross margin, product gross margin, and services gross margin were 66.3%, 64.8%, and 71.6%, respectively, as compared with 68.4%, 67.5%, and 70.8%, respectively, in the fourth quarter of fiscal 2025.\nOperating Expenses -- On a GAAP basis, operating expenses were $6.8 billion, up 10% year over year, and were 39.4% of revenue. Non-GAAP operating expenses were $5.2 billion, up 5%, and were 30.4% of revenue.\nOperating Income -- GAAP operating income was $4.3 billion, up 38%, with GAAP operating margin of 24.7%. Non-GAAP operating income was $6.2 billion, up 23%, with non-GAAP operating margin at 35.9%.\nProvision for Income Taxes -- The GAAP tax provision rate was 21.8%. The non-GAAP tax provision rate was 18.8%.\nNet Income and EPS -- On a GAAP basis, net income was $3.9 billion, an increase of 51%, and EPS was $0.97, an increase of 52%. On a non-GAAP basis, net income was $4.9 billion, an increase of 23%, and EPS was $1.22, an increase of 23%.\nCash Flow from Operating Activities -- $5.4 billion for the fourth quarter of fiscal 2026, an increase of 27% compared with $4.2 billion for the fourth quarter of fiscal 2025.\nFY 2026 Highlights\nRevenue -- Total revenue was $63.3 billion, an increase of 12%.\nOperating Income -- GAAP operating income was $15.4 billion, up 31%, with GAAP operating margin of 24.3%. Non-GAAP operating income was $22.0 billion, up 13%, with non-GAAP operating margin at 34.8%.\nNet Income and EPS -- On a GAAP basis, net income was $13.3 billion, an increase of 30%, and EPS was $3.33, an increase of 31%. On a non-GAAP basis, net income was $17.2 billion, an increase of 13%, and EPS was $4.33, an increase of 14%.\nCash Flow from Operating Activities -- $14.2 billion for fiscal 2026, flat compared with fiscal 2025.\nBalance Sheet and Other Financial Highlights\nCash and Cash Equivalents and Investments -- $15.9 billion at the end of the fourth quarter of fiscal 2026, compared with $16.6 billion at the end of the third quarter of fiscal 2026, and compared with $16.1 billion at the end of fiscal 2025.\nRemaining Performance Obligations (RPO) -- $46.7 billion, up 7% in total. Product RPO was up 9% and services RPO was up 6%.\nDeferred Revenue -- $29.8 billion, up 3% in total, with deferred product revenue up 2%. Deferred services revenue up 4%.\nCapital Allocation -- In the fourth quarter of fiscal 2026, we returned $3.2 billion to stockholders through share buybacks and dividends. We declared and paid a cash dividend of $0.42 per common share, or $1.7 billion, and repurchased approximately 13 million shares of common stock under our stock repurchase program at an average price of $111.53 per share for an aggregate purchase price of $1.5 billion. The remaining authorized amount for stock repurchases under the program is $8.1 billion with no termination date.\nAcquisitions\nIn the fourth quarter of fiscal 2026, we closed the following acquisitions\nGalileo Technologies, Inc. , a privately held observability company\nAstrix Securities Ltd. , a privately held security company focused on Non-Human Identity (NHI) Security\n3\nGuidance\nCisco expects to achieve the following results for the first quarter of fiscal 2027\nQ1 FY 2027\nRevenue\n$18.0 billion - $18.2 billion\nNon-GAAP gross margin\n65% - 66%\nNon-GAAP operating margin\n35.5% - 36.5%\nNon-GAAP EPS\n$1.32 - $1.34\nCisco estimates that GAAP EPS will be $1.08 to $1.10 for the first quarter of fiscal 2027.\nCisco expects to achieve the following results for fiscal 2027\nFY 2027\nRevenue\n$72.2 billion - $73.4 billion\nNon-GAAP EPS\n$5.05 - $5.11\nCisco estimates that GAAP EPS will be $4.00 to $4.06 for fiscal 2027.\nOur Q1 FY 2027 guidance assumes an effective tax provision rate of approximately 15% for GAAP and approximately 18.5% for non-GAAP results. Our FY 2027 guidance assumes an effective tax provision rate of approximately 14.5% for GAAP and approximately 18.5% for non-GAAP results.\nA reconciliation between the guidance on a GAAP and non-GAAP basis is provided in the tables entitled GAAP to non-GAAP Guidance located in the section entitled Reconciliations of GAAP to non-GAAP Measures.\nEditor's Notes\nQ4 fiscal year 2026 conference call to discuss Cisco's results along with its guidance will be held on Wednesday, August 12, 2026 at 1 30 p.m. Pacific Time. Conference call number is 1-888-848-6507 (United States) or 1-212-519-0847 (international).\nConference call replay will be available from 4 00 p.m. Pacific Time, August 12, 2026 to 10 00 p.m. Pacific Time, August 18, 2026 at 1-800-839-2232 (United States) or 1-203-369-3662 (international). The replay will also be available via webcast on the Cisco Investor Relations website at https investor.cisco.com.\nAdditional information regarding Cisco's financials, as well as a webcast of the conference call with visuals designed to guide participants through the call, will be available at 1 30 p.m. Pacific Time, August 12, 2026. The conference call will also be livestreamed on YouTube at https www.youtube.com live yYJFmYwIPeM, LinkedIn at https www.linkedin.com events 7490076339694387200 X at https x.com i broadcasts 1AxRnnDawDgxl. Text of the conference call's prepared remarks will be available within 24 hours of completion of the call. The webcast and livestreaming will include both the prepared remarks and the question-and-answer session. This information, along with the GAAP to non-GAAP reconciliation information, will be available on the Cisco Investor Relations website at https investor.cisco.com.\n4\nCISCO SYSTEMS, INC.\nCONSOLIDATED STATEMENTS OF OPERATIONS\n(In millions, except per-share amounts)\n(Unaudited)\nThree Months Ended\nFiscal Year Ended\nJuly 25,\n2026\nJuly 26,\n2025\nJuly 25,\n2026\nJuly 26,\n2025\nREVENUE\nProduct\n$\n13,459\n$\n10,886\n$\n48,295\n$\n41,608\nServices\n3,793\n3,787\n15,030\n15,046\nTotal revenue\n17,252\n14,673\n63,325\n56,654\nCOST OF SALES\nProduct\n5,029\n4,194\n17,781\n15,121\nServices\n1,160\n1,199\n4,684\n4,743\nTotal cost of sales\n6,189\n5,393\n22,465\n19,864\nGROSS MARGIN\n11,063\n9,280\n40,860\n36,790\nOPERATING EXPENSES\nResearch and development\n2,431\n2,380\n9,563\n9,300\nSales and marketing\n2,952\n2,818\n11,559\n10,966\nGeneral and administrative\n679\n706\n2,761\n2,992\nAmortization of purchased intangible assets\n226\n254\n916\n1,028\nRestructuring and other charges\n511\n35\n693\n744\nTotal operating expenses\n6,799\n6,193\n25,492\n25,030\nOPERATING INCOME\n4,264\n3,087\n15,368\n11,760\nInterest income\n220\n227\n866\n1,001\nInterest expense\n(373)\n(368)\n(1,470)\n(1,593)\nOther income (loss), net\n822\n53\n1,245\n(68)\nInterest and other income (loss), net\n669\n(88)\n641\n(660)\nINCOME BEFORE PROVISION FOR INCOME TAXES\n4,933\n2,999\n16,009\n11,100\nProvision for income taxes\n1,074\n449\n2,742\n920\nNET INCOME\n$\n3,859\n$\n2,550\n$\n13,267\n$\n10,180\nNet income per share\nBasic\n$\n0.98\n$\n0.64\n$\n3.36\n$\n2.56\nDiluted\n$\n0.97\n$\n0.64\n$\n3.33\n$\n2.55\nShares used in per-share calculation\nBasic\n3,949\n3,960\n3,953\n3,976\nDiluted\n3,984\n3,992\n3,987\n3,998\n5\nCISCO SYSTEMS, INC.\nREVENUE BY SEGMENT\n(In millions, except percentages)\nJuly 25, 2026\nThree Months Ended\nFiscal Year Ended\nAmount\nY Y%\nAmount\nY Y%\nRevenue\nAmericas\n$\n10,396\n18%\n$\n37,799\n12%\nEMEA\n4,350\n19%\n16,613\n12%\nAPJC\n2,506\n14%\n8,914\n9%\nTotal\n$\n17,252\n18%\n$\n63,325\n12%\nAmounts may not sum and percentages may not recalculate due to rounding.\nCISCO SYSTEMS, INC.\nGROSS MARGIN PERCENTAGE BY SEGMENT\n(In percentages)\nJuly 25, 2026\nThree Months Ended\nFiscal Year Ended\nGross Margin Percentage\nAmericas\n64.5%\n65.1%\nEMEA\n70.1%\n71.2%\nAPJC\n67.3%\n66.6%\nCISCO SYSTEMS, INC.\nREVENUE FOR GROUPS OF SIMILAR PRODUCTS AND SERVICES\n(In millions, except percentages)\nJuly 25, 2026\nThree Months Ended\nFiscal Year Ended\nAmount\nY Y %\nAmount\nY Y %\nRevenue\nNetworking\n$\n9,791\n28%\n$\n34,668\n22%\nSecurity\n2,226\n14%\n8,232\n2%\nCollaboration\n1,167\n12%\n4,300\n4%\nObservability\n275\n6%\n1,095\n4%\nTotal Product\n13,459\n24%\n48,295\n16%\nServices\n3,793\n%\n15,030\n%\nTotal\n$\n17,252\n18%\n$\n63,325\n12%\nAmounts may not sum and percentages may not recalculate due to rounding.\n6\nCISCO SYSTEMS, INC.\nCONDENSED CONSOLIDATED BALANCE SHEETS\n(In millions)\n(Unaudited)\nJuly 25,\n2026\nJuly 26,\n2025\nASSETS\nCurrent assets\nCash and cash equivalents\n$\n7,218\n$\n8,346\nInvestments\n8,700\n7,764\nAccounts receivable, net of allowance\nof $78 at July 25, 2026 and $69 at July 26, 2025\n7,470\n6,701\nInventories\n5,694\n3,164\nFinancing receivables, net\n3,392\n3,061\nOther current assets\n6,191\n5,950\nTotal current assets\n38,665\n34,986\nProperty and equipment, net\n2,760\n2,113\nFinancing receivables, net\n4,940\n3,466\nGoodwill\n59,477\n59,136\nPurchased intangible assets, net\n7,557\n9,175\nDeferred tax assets\n7,109\n7,356\nOther assets\n9,129\n6,059\nTOTAL ASSETS\n$\n129,637\n$\n122,291\nLIABILITIES AND EQUITY\nCurrent liabilities\nShort-term debt\n$\n10,161\n$\n5,232\nAccounts payable\n3,366\n2,528\nIncome taxes payable\n190\n1,857\nAccrued compensation\n4,057\n3,611\nDeferred revenue\n16,988\n16,416\nOther current liabilities\n6,763\n5,420\nTotal current liabilities\n41,525\n35,064\nLong-term debt\n19,372\n22,861\nIncome taxes payable\n2,339\n2,165\nDeferred revenue\n12,793\n12,363\nOther long-term liabilities\n3,323\n2,995\nTotal liabilities\n79,352\n75,448\nTotal equity\n50,285\n46,843\nTOTAL LIABILITIES AND EQUITY\n$\n129,637\n$\n122,291\n7\nCISCO SYSTEMS, INC.",
+      "source": "edgar:8-K ex-99.1",
+      "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000106/exhibit991pressrelease-q4f.htm",
+      "asOf": "2026-08-12",
+      "truncated": true
+    },
+    "proxyStatement": {
+      "text": "Board and director independence:\nBoard Independence\nOur Board believes strongly in the value of an independent board of directors. Other than Mr. Robbins, our CEO, all members of our Board are independent. Independent Board members have consistently comprised over 75% of the members of our Board. Additionally, all members of our Board committees, including the Audit Committee, the Compensation Committee and the Nomination and Governance Committee, are independent. The independent members of the Board also meet regularly during executive sessions of the Board without management present, and the Lead Independent Director chairs those sessions. Mr. Capellas currently serves as Lead Independent Director, and Mr. Robbins currently serves as Board Chair and CEO.\nBoard Chair\nThe Board believes it should maintain flexibility to determine the Board leadership structure from time to time. Our policies do not preclude our CEO from also serving as Board Chair. For instance, Mr. Robbins, our CEO, currently serves as Board Chair. The Board believes our current leadership structure, which includes a strong Lead Independent Director, provides appropriate balance and currently is in the best interest of Cisco and our stockholders. The broad authority and oversight given to the Lead Independent Director role, as described in detail below, helps ensure a strong independent and active Board. Additionally, Mr. Robbins' demonstrated leadership during his tenure at Cisco, and his ability to speak as both Board Chair and CEO, provides a strong unified leadership for Cisco.\nGovernance and Board Matters\n7\nLead Independent Director\nThe Lead Independent Director is elected by and from the independent directors.\n\nCompensation discussion and analysis:\nCompensation Discussion and Analysis\nIntroduction\nThe following discussion describes Cisco's compensation program for its named executive officers. Cisco's named executive officers for fiscal 2025 are our CEO, our Chief Financial Officer (\"CFO\"), our three most highly compensated executive officers (other than the CEO and CFO) who were serving as executive officers at the end of fiscal 2025, and one former executive officer who was not serving as an executive officer at the end of fiscal 2025.\nThe named executive officers are:\nCharles H.\nRobbins\nChair and\nChief Executive\nOfficer\nR. Scott Herren\nFormer Executive Vice President and\nChief Financial\nOfficer\nJeetendra (Jeetu) Patel\nPresident and\nChief Product Officer\nDeborah (Dev)\nL. Stahlkopf\nExecutive Vice\nPresident and\nChief Legal\nOfficer\nThimaya\nSubaiya\nExecutive\nVice President,\nOperations\nGary Steele\nFormer President,\nGo-to-Market\nThe following are performance and compensation highlights for fiscal 2025.\nExecutive Summary\nCompany Performance\nIn fiscal 2025, we delivered strong revenue growth across all geographies demonstrating robust demand for our technologies. Our results for fiscal 2025 include a full year of Splunk's results compared to approximately four months for fiscal 2024. Revenue was $56.7 billion, up 5% year over year. RPO grew 6% year over year to $43.5 billion, providing a strong foundation for our future performance. Total subscription revenue increased 15% to $31.5 billion, accounting for 56% of total revenue, reflecting the strength of our software and services and helping to fuel our strong profitability. The profitable growth of our business continues to produce strong cash flows, enabling us to return significant value to shareholders. In fiscal 2025, we returned a total of $12.4 billion through dividends and share repurchases, representing 94% of our free cash flow (1) . We remain focused on making strategic investments in innovation, driving durable, profitable growth, and delivering stockholder value.\nOur fiscal 2025 results compared with fiscal 2024 were as follows (all comparisons year over year):\nl Revenue of $56.7 billion, up 5%\nl Profit Before Taxes (1) of $18.6 billion, flat\nl Operating Income (1) of $19.5 billion, up 6%\nl Product ARR (2) of $17.0 billion, up 8%\n(1) Represents a non-GAAP financial measure. See the Appendix for a definition of this measure and a reconciliation of this measure to its most directly comparable GAAP financial measure. In the case of Profit Before Taxes and Operating Income, the measure is calculated differently than the same term used under our annual cash and long-term, equity-based incentive programs, as applicable. Such adjustments are intended to improve comparability by reflecting the impact of the Splunk acquisition in both fiscal years.\n(2) For a definition of this term, see the description thereof contained in the discussion of transformational PRSUs in the CD&A below.\n40\nCisco 2025 Proxy Statement\nStockholder Returns\nWe maintained our historical practice of paying cash dividends and making share repurchases. We returned $12.4 billion to stockholders in fiscal 2025 consisting of:\nl $6.0 billion in share repurchases\nl $6.4 billion in cash dividends\nAs of the end of fiscal 2025, our 1-year and 3-year TSR (1) were 47% and 66%, respectively.\n(1) TSR represents cumulative stock price change with dividends reinvested. 1-year and 3-year TSR are measured based on the fiscal year periods ending July 26, 2025.\nSay-On-Pay Support and Engaging with Our Stockholders\nOur Compensation Committee relies on our regular stockholder outreach and engagement activities, as well as more formal channels to communicate with stockholders, including the opportunity for our stockholders to cast a non- binding advisory vote regarding executive compensation at Cisco's annual meeting of stockholders. See the \" Governance and Board Matters Corporate Governance Stockholder Engagement \" section above for a discussion of our fiscal 2025 stockholder outreach and engagement. See also the \" Governance and Board Matters Corporate Governance Board of Directors Stockholder Communications with the Board \" section above.\nThe Compensation Committee is interested in the ideas and feedback of our stockholders regarding executive compensation. Last year's say-on-pay proposal was approved by approximately 77% of stockholder votes, an increase from approximately 75% the prior year. In response to this vote, we continued our robust engagement with stockholders to consider enhancements to our compensation program in fiscal 2025. In fiscal 2025, with the frequent participation of the chair of our Compensation Committee, Cisco engaged with stockholders representing approximately 61% of our outstanding shares at the end of the fiscal year, including 30% of our 30 largest stockholders, on a variety of topics, including our executive compensation program. See below for our response to feedback received from stockholders during these engagements.",
+      "source": "edgar:DEF 14A",
+      "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887725000150/csco-20251027.htm",
+      "asOf": "2025-10-28",
+      "truncated": true
+    },
+    "transcriptHighlights": null,
+    "headlines": []
+  },
+  "provenance": [
+    {
+      "field": "quote",
+      "endpoint": "yahoo quoteSummary price.regularMarketPrice + price.marketCap + summaryDetail.fiftyTwoWeekLow/High (facts:free)",
+      "source": "yahoo",
+      "capturedAt": "2026-10-06T11:39:57.181Z"
+    },
+    {
+      "field": "quote.dividendYield",
+      "endpoint": "yahoo quoteSummary summaryDetail.dividendYield (trailingAnnualDividendYield fallback) (facts:free)",
+      "source": "yahoo",
+      "capturedAt": "2026-10-06T11:39:57.181Z"
+    },
+    {
+      "field": "company",
+      "endpoint": "yahoo quoteSummary price.longName (shortName fallback) (facts:free)",
+      "source": "yahoo",
+      "capturedAt": "2026-10-06T11:39:57.181Z"
+    },
+    {
+      "field": "context.description",
+      "endpoint": "yahoo quoteSummary assetProfile.longBusinessSummary (facts:free)",
+      "source": "yahoo",
+      "capturedAt": "2026-10-06T11:39:57.181Z"
+    },
+    {
+      "field": "quote.sharesOutstanding",
+      "endpoint": "edgar primary document (cover page)",
+      "source": "edgar",
+      "capturedAt": "2026-10-06T11:39:57.181Z"
+    },
+    {
+      "field": "statements",
+      "endpoint": "SEC companyfacts XBRL (annual 10-K facts), merged with the filing's and prior 10-K's inline XBRL when captured (facts:free)",
+      "source": "edgar",
+      "capturedAt": "2026-10-06T11:39:57.181Z"
+    },
+    {
+      "field": "latestQuarter",
+      "endpoint": "SEC companyfacts XBRL (discrete quarters), merged with the filing's inline XBRL when captured (facts:free)",
+      "source": "edgar",
+      "capturedAt": "2026-10-06T11:39:57.181Z"
+    },
+    {
+      "field": "ttm",
+      "endpoint": "derived: last four discrete quarters + latest balance sheet from SEC companyfacts XBRL (discrete quarters), merged with the filing's inline XBRL when captured; P/E, P/S, EV/EBITDA and FCF yield priced with yahoo quoteSummary price/market cap (P/E falls back to summaryDetail.trailingPE when quarterly EPS cannot be summed) (facts:free)",
+      "source": "edgar",
+      "capturedAt": "2026-10-06T11:39:57.181Z"
+    },
+    {
+      "field": "segments",
+      "endpoint": "derived: single 'Consolidated' segment from the latest SEC annual revenue (facts:free emits no product segmentation)",
+      "source": "edgar",
+      "capturedAt": "2026-10-06T11:39:57.181Z"
+    },
+    {
+      "field": "geoMix",
+      "endpoint": "none: facts:free emits no geographic segmentation (empty mix)",
+      "source": "edgar",
+      "capturedAt": "2026-10-06T11:39:57.181Z"
+    },
+    {
+      "field": "analysts",
+      "endpoint": "yahoo quoteSummary financialData target*Price + recommendationKey + recommendationTrend.trend[0] (facts:free)",
+      "source": "yahoo",
+      "capturedAt": "2026-10-06T11:39:57.181Z"
+    },
+    {
+      "field": "estimates",
+      "endpoint": "yahoo quoteSummary earningsTrend annual periods (revenueEstimate.avg, earningsEstimate.avg) (facts:free)",
+      "source": "yahoo",
+      "capturedAt": "2026-10-06T11:39:57.181Z"
+    },
+    {
+      "field": "peers",
+      "endpoint": "fmp company/peers (tickers only)",
+      "source": "fmp",
+      "capturedAt": "2026-10-06T11:39:57.181Z"
+    },
+    {
+      "field": "history",
+      "endpoint": "yahoo v8 chart (daily close)",
+      "source": "yahoo",
+      "capturedAt": "2026-10-06T11:39:57.181Z"
+    },
+    {
+      "field": "context.mdaExcerpt",
+      "endpoint": "edgar primary document",
+      "source": "edgar",
+      "capturedAt": "2026-10-06T11:39:57.181Z"
+    },
+    {
+      "field": "context.riskFactorsExcerpt",
+      "endpoint": "edgar primary document (10-K wins for a 10-Q when it is the longer candidate)",
+      "source": "edgar",
+      "capturedAt": "2026-10-06T11:39:57.181Z"
+    },
+    {
+      "field": "context.pressRelease",
+      "endpoint": "edgar 8-K exhibit 99.1",
+      "source": "edgar",
+      "capturedAt": "2026-10-06T11:39:57.181Z"
+    },
+    {
+      "field": "context.proxyStatement",
+      "endpoint": "edgar DEF 14A primary document (board, pay, ownership, related-party sections)",
+      "source": "edgar",
+      "capturedAt": "2026-10-06T11:39:57.181Z"
+    },
+    {
+      "field": "context.transcriptHighlights",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-10-06T11:39:57.181Z"
+    },
+    {
+      "field": "context.headlines",
+      "endpoint": "bigdata_search",
+      "source": "bigdata",
+      "capturedAt": "2026-10-06T11:39:57.181Z"
+    },
+    {
+      "field": "ttm.evToEbitda",
+      "source": "yahoo",
+      "endpoint": "quoteSummary.defaultKeyStatistics.enterpriseToEbitda",
+      "capturedAt": "2026-10-06T11:46:47.039Z"
+    },
+    {
+      "field": "ttm.fcfYield",
+      "source": "edgar",
+      "endpoint": "derived: TTM (operating cash flow − capex; last FY + YTD − prior YTD) to 2026-07-25 / market cap, SEC companyfacts",
+      "capturedAt": "2026-10-06T11:46:47.146Z"
+    }
+  ],
+  "sbc": [
+    1886000000,
+    2353000000,
+    3074000000,
+    3641000000,
+    3830000000
+  ]
+}
