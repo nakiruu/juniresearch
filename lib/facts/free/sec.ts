@@ -118,9 +118,24 @@ const CASH = ["CashAndCashEquivalentsAtCarryingValue"];
 // ever tagged; the others are appended for filers that use them instead. Priority order matters only when
 // two concepts both report the same period (see mergeByPriority) — a stale/unused concept here can't shadow
 // a live one for a period it doesn't cover.
-const SHORT_TERM_INVESTMENTS = ["ShortTermInvestments", "AvailableForSaleSecuritiesCurrent", "MarketableSecuritiesCurrent", "OtherShortTermInvestments"];
-const LTD_NONCURRENT = ["LongTermDebtNoncurrent", "LongTermDebt"];
-const LTD_CURRENT = ["LongTermDebtCurrent", "DebtCurrent"];
+// CALX tags its current marketable securities only as DebtSecuritiesAvailableForSaleExcludingAccruedInterestCurrent
+// in its 10-K ($245.0M at FY2025), so without it cash + investments read $143.1M against the $388.1M reported.
+const SHORT_TERM_INVESTMENTS = [
+  "ShortTermInvestments",
+  "AvailableForSaleSecuritiesCurrent",
+  "MarketableSecuritiesCurrent",
+  "OtherShortTermInvestments",
+  "DebtSecuritiesAvailableForSaleExcludingAccruedInterestCurrent",
+];
+// Debt concepts are kept apart because they overlap: LongTermDebt is the long-term total *including*
+// its current portion, and DebtCurrent is all current debt (current long-term debt + commercial paper +
+// short-term borrowings). Treating LongTermDebt as a noncurrent fallback double-counted the current
+// portion (AEIS FY2025: $567.5M reported as $1,135.0M), and preferring LongTermDebtCurrent over
+// DebtCurrent dropped commercial paper (CSCO FY2026: $29,533M reported as $22,872M). See deriveFields.
+const LTD_NONCURRENT = ["LongTermDebtNoncurrent"];
+const LTD_TOTAL = ["LongTermDebt"];
+const LTD_CURRENT = ["LongTermDebtCurrent"];
+const DEBT_CURRENT = ["DebtCurrent"];
 const SHORT_TERM_BORROWINGS = ["ShortTermBorrowings", "CommercialPaper"];
 const TOTAL_EQUITY = ["StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest", "StockholdersEquity"];
 const CURRENT_ASSETS = ["AssetsCurrent"];
@@ -415,7 +430,9 @@ interface RawValues {
   cash: number | null;
   shortTermInvestments: number | null;
   ltdNoncurrent: number | null;
+  ltdTotal: number | null;
   ltdCurrent: number | null;
+  debtCurrent: number | null;
   shortTermBorrowings: number | null;
   totalEquity: number | null;
   currentAssets: number | null;
@@ -428,6 +445,23 @@ interface RawValues {
 
 type DerivedFields = Omit<SecPeriod, "fiscal_period" | "fiscal_year" | "report_date">;
 
+/**
+ * Total debt for one period. Noncurrent long-term debt + all current debt when the noncurrent line is
+ * tagged; otherwise the long-term total (which already holds its current portion) + only the current
+ * debt that is not long-term (DebtCurrent − LongTermDebtCurrent when both exist, else short-term
+ * borrowings / commercial paper). Null when no debt concept reports the period.
+ */
+export function deriveTotalDebt(r: Pick<RawValues, "ltdNoncurrent" | "ltdTotal" | "ltdCurrent" | "debtCurrent" | "shortTermBorrowings">): number | null {
+  const otherCurrent =
+    r.debtCurrent != null && r.ltdCurrent != null ? r.debtCurrent - r.ltdCurrent : r.shortTermBorrowings;
+  const allCurrent =
+    r.debtCurrent ??
+    (r.ltdCurrent == null && r.shortTermBorrowings == null ? null : (r.ltdCurrent ?? 0) + (r.shortTermBorrowings ?? 0));
+  if (r.ltdNoncurrent != null) return r.ltdNoncurrent + (allCurrent ?? 0);
+  if (r.ltdTotal != null) return r.ltdTotal + (otherCurrent ?? 0);
+  return allCurrent;
+}
+
 function deriveFields(r: RawValues): DerivedFields {
   const grossProfit = r.grossProfitDirect ?? (r.revenue != null && r.cogs != null ? r.revenue - r.cogs : null);
   const operatingIncome = r.operatingIncomeDirect ?? (r.pretax != null && r.nonoperating != null ? r.pretax - r.nonoperating : null);
@@ -439,10 +473,7 @@ function deriveFields(r: RawValues): DerivedFields {
   // never null merely because the STI leg wasn't separately disclosed for that period.
   const cashAndShortTermInvestments =
     r.cashAndStDirect ?? (r.cash != null ? r.cash + (r.shortTermInvestments ?? 0) : null);
-  const totalDebt =
-    r.ltdNoncurrent == null && r.ltdCurrent == null && r.shortTermBorrowings == null
-      ? null
-      : (r.ltdNoncurrent ?? 0) + (r.ltdCurrent ?? 0) + (r.shortTermBorrowings ?? 0);
+  const totalDebt = deriveTotalDebt(r);
   const netDebt = totalDebt != null && r.cash != null ? totalDebt - r.cash : null;
   const capex = r.capexRaw != null ? -r.capexRaw : null;
   const commonStockRepurchased = r.buybacksRaw != null ? -r.buybacksRaw : null;
@@ -549,7 +580,9 @@ export function parseCompanyFacts(facts: unknown): { annual: SecPeriod[]; quarte
   const cash = instantSeries(facts, CASH);
   const shortTermInvestments = instantSeries(facts, SHORT_TERM_INVESTMENTS);
   const ltdNoncurrent = instantSeries(facts, LTD_NONCURRENT);
+  const ltdTotal = instantSeries(facts, LTD_TOTAL);
   const ltdCurrent = instantSeries(facts, LTD_CURRENT);
+  const debtCurrent = instantSeries(facts, DEBT_CURRENT);
   const shortTermBorrowings = instantSeries(facts, SHORT_TERM_BORROWINGS);
   const totalEquity = instantSeries(facts, TOTAL_EQUITY);
   const currentAssets = instantSeries(facts, CURRENT_ASSETS);
@@ -577,7 +610,9 @@ export function parseCompanyFacts(facts: unknown): { annual: SecPeriod[]; quarte
     cash: at(cash[side] as Map<K, UnitEntry>, key),
     shortTermInvestments: at(shortTermInvestments[side] as Map<K, UnitEntry>, key),
     ltdNoncurrent: at(ltdNoncurrent[side] as Map<K, UnitEntry>, key),
+    ltdTotal: at(ltdTotal[side] as Map<K, UnitEntry>, key),
     ltdCurrent: at(ltdCurrent[side] as Map<K, UnitEntry>, key),
+    debtCurrent: at(debtCurrent[side] as Map<K, UnitEntry>, key),
     shortTermBorrowings: at(shortTermBorrowings[side] as Map<K, UnitEntry>, key),
     totalEquity: at(totalEquity[side] as Map<K, UnitEntry>, key),
     currentAssets: at(currentAssets[side] as Map<K, UnitEntry>, key),

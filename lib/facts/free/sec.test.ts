@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
-import { parseCompanyFacts, combineCapex, CAPEX_RAW, type SecPeriod } from "./sec";
+import { parseCompanyFacts, combineCapex, deriveTotalDebt, CAPEX_RAW, type SecPeriod } from "./sec";
 
 const facts = JSON.parse(readFileSync("lib/facts/free/__fixtures__/lly-companyfacts.json", "utf8"));
 
@@ -422,5 +422,32 @@ describe("combineCapex — PP&E capex plus separately tagged reinvestment", () =
   });
   it("never turns extras alone into a capex figure", () => {
     expect(combineCapex(base(), [m(10)]).has(2025)).toBe(false);
+  });
+});
+
+describe("deriveTotalDebt", () => {
+  const none = { ltdNoncurrent: null, ltdTotal: null, ltdCurrent: null, debtCurrent: null, shortTermBorrowings: null };
+
+  it("adds all current debt (DebtCurrent, commercial paper included) to noncurrent long-term debt", () => {
+    // CSCO FY2026 10-K: LongTermDebtNoncurrent $19,372M; DebtCurrent $10,161M (commercial paper +
+    // $3,500M LongTermDebtCurrent). Preferring LongTermDebtCurrent dropped the commercial paper.
+    expect(
+      deriveTotalDebt({ ...none, ltdNoncurrent: 19_372e6, ltdTotal: 22_872e6, ltdCurrent: 3_500e6, debtCurrent: 10_161e6 }),
+    ).toBe(29_533e6);
+  });
+
+  it("does not add the current portion on top of LongTermDebt when no noncurrent line is tagged", () => {
+    // AEIS 2025-12-31: LongTermDebt $567.5M and LongTermDebtCurrent $567.5M are the same notes.
+    expect(deriveTotalDebt({ ...none, ltdTotal: 567.5e6, ltdCurrent: 567.5e6 })).toBe(567.5e6);
+  });
+
+  it("adds non-long-term current debt to LongTermDebt", () => {
+    expect(deriveTotalDebt({ ...none, ltdTotal: 1_000e6, ltdCurrent: 100e6, debtCurrent: 300e6 })).toBe(1_200e6);
+    expect(deriveTotalDebt({ ...none, ltdTotal: 1_000e6, shortTermBorrowings: 50e6 })).toBe(1_050e6);
+  });
+
+  it("falls back to current debt alone, and is null when nothing is tagged", () => {
+    expect(deriveTotalDebt({ ...none, ltdCurrent: 100e6, shortTermBorrowings: 50e6 })).toBe(150e6);
+    expect(deriveTotalDebt(none)).toBeNull();
   });
 });
