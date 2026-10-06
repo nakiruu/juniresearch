@@ -162,6 +162,27 @@ describe("YTD bucket anchoring (off-quarter ~90-day entries must not occupy the 
   });
 });
 
+// VST-shape: total operating revenue (Revenues) differs from customer-contract revenue, which excludes hedging.
+describe("revenue prefers the income-statement total over customer-contract revenue", () => {
+  const q = (start: string, end: string, val: number, filed: string) => ({ start, end, val, form: "10-Q", filed });
+  const facts = {
+    facts: {
+      "us-gaap": {
+        Revenues: { units: { USD: [q("2025-04-01", "2025-06-30", 4_250, "2025-08-07"), q("2026-04-01", "2026-06-30", 4_017, "2026-08-10")] } },
+        RevenueFromContractWithCustomerExcludingAssessedTax: {
+          units: { USD: [q("2025-04-01", "2025-06-30", 3_753, "2025-08-07"), q("2026-04-01", "2026-06-30", 4_401, "2026-08-10")] },
+        },
+        NetIncomeLoss: { units: { USD: [q("2025-04-01", "2025-06-30", 100, "2025-08-07"), q("2026-04-01", "2026-06-30", 120, "2026-08-10")] } },
+      },
+    },
+  };
+  it("takes Revenues when both are tagged for the same quarter", () => {
+    const { quarter } = parseCompanyFacts(facts);
+    expect(quarter.find((p) => p.report_date === "2026-06-30")!.revenue).toBe(4_017);
+    expect(quarter.find((p) => p.report_date === "2025-06-30")!.revenue).toBe(4_250);
+  });
+});
+
 // BSX-shape: long-term debt tagged only as LongTermDebtAndCapitalLeaseObligations (noncurrent), current
 // debt as DebtCurrent. Total debt must be both, not the current line alone.
 describe("total debt from LongTermDebtAndCapitalLeaseObligations", () => {
@@ -184,6 +205,37 @@ describe("total debt from LongTermDebtAndCapitalLeaseObligations", () => {
     const fy2025 = annual.find((p) => p.fiscal_year === 2025)!;
     expect(fy2025.total_debt).toBe(11_137 + 299);
     expect(fy2025.net_debt).toBe(11_137 + 299 - 1_965);
+  });
+
+  it("prefers LongTermDebt when it is tagged beside the debt-and-lease line (VST-shape)", () => {
+    // VST 2025-12-31: LongTermDebt $17,043M (holds the current portion), noncurrent debt-and-lease $15,842M,
+    // current portion tagged LongTermDebtAndCapitalLeaseObligationsCurrent $1,201M, short-term borrowings $1,800M.
+    const vst = {
+      facts: {
+        "us-gaap": {
+          Revenues: { units: { USD: [fy(17_586)] } },
+          NetIncomeLoss: { units: { USD: [fy(944)] } },
+          LongTermDebt: { units: { USD: [inst(17_043)] } },
+          LongTermDebtAndCapitalLeaseObligations: { units: { USD: [inst(15_842)] } },
+          LongTermDebtAndCapitalLeaseObligationsCurrent: { units: { USD: [inst(1_201)] } },
+          ShortTermBorrowings: { units: { USD: [inst(1_800)] } },
+        },
+      },
+    };
+    const fy2025 = parseCompanyFacts(vst).annual.find((p) => p.fiscal_year === 2025)!;
+    expect(fy2025.total_debt).toBe(17_043 + 1_800);
+  });
+});
+
+describe("deriveTotalDebt with the debt-and-lease line", () => {
+  const none = {
+    ltdNoncurrent: null, ltdTotal: null, ltdLeaseNoncurrent: null, ltdCurrent: null,
+    debtCurrent: null, shortTermBorrowings: null, convertibleNoncurrent: null, convertibleCurrent: null,
+  };
+  it("uses it only after LongTermDebtNoncurrent and LongTermDebt", () => {
+    expect(deriveTotalDebt({ ...none, ltdLeaseNoncurrent: 15_842, ltdCurrent: 1_201, shortTermBorrowings: 1_800 })).toBe(18_843);
+    expect(deriveTotalDebt({ ...none, ltdTotal: 17_043, ltdLeaseNoncurrent: 15_842, ltdCurrent: 1_201, shortTermBorrowings: 1_800 })).toBe(18_843);
+    expect(deriveTotalDebt({ ...none, ltdNoncurrent: 15_000, ltdLeaseNoncurrent: 15_842, debtCurrent: 500 })).toBe(15_500);
   });
 });
 
@@ -538,6 +590,7 @@ describe("deriveTotalDebt", () => {
   const none = {
     ltdNoncurrent: null,
     ltdTotal: null,
+    ltdLeaseNoncurrent: null,
     ltdCurrent: null,
     debtCurrent: null,
     shortTermBorrowings: null,

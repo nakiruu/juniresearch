@@ -1,0 +1,229 @@
+{
+  "judgmentSha256": "2cf9f6510b055dbd0fa57dd97b6b30d2b773227203804dc4be055b5ce253df01",
+  "reviewedAt": "2026-10-06T23:47:56Z",
+  "reviewer": "Claude Opus 5.5",
+  "round": 2,
+  "verdict": "approved-with-minors",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary / sections.finalRecommendation.body[0] / sections.valuation.scenarios[1].driver",
+      "quote": "The price has also moved sharply within the past year, between a 52-week low of $132.66 and a high of $217.10, and none of the documents we draw on gives a cause.",
+      "issue": "The report covers the 52-week range but not the move the page's own price chart shows most clearly (rubrics 5 and 6; house lesson from EVER: acknowledge sharp recent moves even when no source explains them). The rendered history has the stock closing between about $137 and $152 from late August to October 2, at $144.89 on October 5 and at $160.50 on October 6. That is about 11% in the last session and about 15% over two. The build's input check also flagged the quote against a second source ($161 vs $145). The label depends on this move. finalRecommendation.body[0] says the scenarios derive BUY below $148, and the stock closed below $148 in all but four of the 29 sessions before October 6. The Base applies 'the multiple the market now pays' on FY26 EPS, so it always sits the same percentage above the current price and rose with the jump. A reader who sees the chart is not told why the scenarios gave a BUY a day earlier and give a HOLD now.",
+      "fix": "In scenarioCommentary, say in words that the stock rose sharply in the sessions just before this report, that no source we hold explains it, and that at the prices of the preceding weeks the same scenarios would derive BUY. Do not quote closes that are not in the Facts block. Say plainly that the HOLD rests on the current price, and give the reader a view: is the rise a reason to wait, with the zone below the target low as the entry point? In the Base driver or multiplesCommentary, say that 'the multiple the market now pays' moves with the price, so the Base inherits the jump. Keep that anchor if you defend it, but say so. (Desk: the $160.50 quote should be confirmed given the input-check warning.)",
+      "status": "addressed",
+      "note": "Addressed. scenarioCommentary now says the stock rose sharply in the two sessions to October 6, that no source explains it, that most earlier closes derive BUY on the published scenarios and that the call rests on the current price. The Base driver says the Base inherited the rally, and finalRecommendation tells a buyer to wait for the low end. The $160.50 quote itself is unchanged, and the input-check warning remains for the desk to confirm."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "meta.subtitle / analystCommentary / sections.executiveSummary.{thesis.body, risks[0]} / sections.valuation.scenarioCommentary / sections.management.capitalAllocation / sections.risks.idiosyncratic[0]",
+      "quote": "but debt keeps rising and the Bear case is deep",
+      "issue": "Rising debt is stated as a current fact in seven places, but the surface shows the rise only through FY25 (rubric 3, with rubric 7 for the count). The seven: subtitle (quoted), analystCommentary ('a balance sheet whose debt is still growing'), thesis ('debt is rising into a heavy spending program'), executiveSummary.risks[0] ('Leverage is rising'), scenarioCommentary ('the rising debt'), capitalAllocation ('while leverage rises') and risks.idiosyncratic[0] ('With debt rising'). The only 2026 debt events on the surface are the $2.444 billion Term Loan B-3 repayment in April 2026 and the $172 million drawn on the non-recourse TxEF loan. The trailing net debt/EBITDA of 3.5x is lower than FY25 net debt over FY25 EBITDA would give. balanceCommentary itself concedes 'we cannot say where net debt stands today', so the report contradicts its own balance-sheet section. The pending Cogentrix and Helix commitments support a forecast that debt will rise, not a statement that it is rising now.",
+      "fix": "Date the rise ('total debt rose every year through FY25'). Frame the forward view as an expectation tied to Cogentrix and Helix. In balanceCommentary, say once, in words, that the trailing leverage ratio sits below the FY25 one and that the April repayment came after FY25, so leverage on the latest figures may have eased. Then give the view. Make the leverage claim once, there; the other six places point back in a clause or drop it. Rewrite the subtitle to say something the surface supports. If the Bear weight in scenarioCommentary leans on 'the rising debt', argue it instead on the forward commitments.",
+      "status": "addressed",
+      "note": "Addressed. The rise is dated ('rose every year through FY25'). balanceCommentary says leverage on the latest figures may have eased (trailing ratio below FY25's; the April repayment came after FY25). The forward view is an expectation tied to the Cogentrix cash. The subtitle, analystCommentary and thesis no longer carry the claim, and the other places use the Cogentrix cash as a clause."
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.finalRecommendation.body[1]",
+      "quote": "we would move toward BUY if Cogentrix closes on the stated terms and the company's 2027 guidance, when issued, sits at or above the top of its midpoint-opportunity range, because that would cut the weight we give the Bear.",
+      "issue": "The mechanism does not match the page's math (rubric 6; house lesson from ADI F-25: a trigger must sit where the page's own math changes the label). With the Bear at $106.00, the bear-case downside stays at 34.0% whatever the weights. BUY needs reward/risk of at least 0.50x, so expected upside of about 17% or more, a weighted value near $188. With Base held at 55%, that means moving almost all of the Bear's 20% to Bull and leaving the Bear at about two points. Cutting the Bear's weight would not by itself derive BUY. scenarioCommentary already says 'The label is more sensitive to the Bear's depth', which contradicts the reason given here.",
+      "fix": "Tie the BUY trigger to what would raise the Bear price, for example 2027 guidance that lifts the earnings floor so that the Bear no longer rests on the lowest Street target. Or say in words how far the Bear would have to rise. Keep it consistent with scenarioCommentary's sensitivity sentence. If you keep the weight language, add that the Bear price would also have to move.",
+      "status": "addressed",
+      "note": "Addressed. The BUY trigger now works through raising the Bear toward the 52-week low and shifting weight to Bull, which matches the scenarioCommentary sensitivity. The SELL trigger (Base pulled well below the price) and the downgrade sentence also match the page's math."
+    },
+    {
+      "id": "F-4",
+      "severity": "Important",
+      "field": "analystCommentary / sections.executiveSummary.thesis.body / sections.finalRecommendation.body[0]",
+      "quote": "We expect consensus 2027 earnings to arrive, but we give real weight to a de-rating if the demand story weakens.",
+      "issue": "analystCommentary and the thesis tell the same story in different words, and finalRecommendation.body[0] tells it a third time (rubric 7; see CVLG F-26 and PLOW F-25). (1) Hedges carry earnings. analystCommentary: 'With expected generation for 2026 and most of 2027 already hedged, we think near-term earnings are well covered'. Thesis: 'Most of Vistra's expected 2026 and 2027 generation is already hedged ... so we expect FY27 consensus EPS of $10.36 to arrive'. finalRecommendation: 'The hedges make 2026 and 2027 earnings visible'. (2) The demand downside outweighs the Base upside. analystCommentary has the quoted sentence and 'That asymmetry sets the call at HOLD'. Thesis: 'a Bear case built on the 10-K's own demand risk falls much further than the Base rises'. finalRecommendation: 'the downside if demand disappoints is much larger'. (3) Adjusted EBITDA growth plus the reaffirmed 2026 ranges opens both analystCommentary and the thesis.",
+      "fix": "Give the summary fields different jobs. For example, analystCommentary gives the quarter's read and the call in a sentence, and the thesis gives the dependencies (hedges, consensus, Bear depth). In finalRecommendation.body[0], keep the figures and the range logic. Replace the restated asymmetry with what the HOLD means in practice for a holder and for a buyer.",
+      "status": "addressed",
+      "note": "Addressed. analystCommentary gives the quarter's read and the call. The thesis gives three dependencies. finalRecommendation.body[0] keeps the figures and range logic and adds what HOLD means for a holder and a buyer."
+    },
+    {
+      "id": "F-5",
+      "severity": "Important",
+      "field": "sections.financials.cashflowCommentary",
+      "quote": "With FY25 free cash flow already returned to shareholders, we expect much of that spending to be funded with debt, which is why we weight the balance sheet heavily.",
+      "issue": "The judgment names no counter-case, though the surface has several (rubric 5). (1) The paragraph lists 'Meta uprate capital from 2026 through 2034' as spending 'still coming', but the 10-Q projects 'less than 20% of the aggregate spend' to occur 'by year end 2028'. Most of it falls after the period the call covers. (2) Part of the Cogentrix consideration is 5,000,000 shares, not cash. (3) The Permian peaker has its own $583 million TxEF loan, non-recourse to Vistra. (4) The pending sale of the Casco Bay, Beaver Falls and Syracuse plants is a source of cash the paragraph does not weigh. (5) The 2026 Ongoing Operations Adjusted FCFbG guidance the paragraph has just quoted is the company's own view of cash before growth. The paragraph sets it aside without saying whether it changes the funding view. FY25 free cash flow alone cannot show how 2026-2027 spending will be funded.",
+      "fix": "Name the reading that cuts the other way using these items, then reach the view. For example: the uprate spending falls mostly after 2028, the peaker has its own non-recourse loan, part of Cogentrix is paid in shares and the plant sale brings in cash. That leaves the Cogentrix cash and the Helix commitment as the main debt-funded items. Say whether that still justifies weighting the balance sheet heavily.",
+      "status": "addressed",
+      "note": "Addressed. cashflowCommentary now names the counter-case: under 20% of uprate spend by 2028, the non-recourse TxEF loan, part of Cogentrix paid in shares, and plant-sale proceeds. It concludes that the Cogentrix cash and Helix are the main items that may need debt, so the balance sheet is a constraint rather than the deciding issue."
+    },
+    {
+      "id": "F-6",
+      "severity": "Important",
+      "field": "sections.management.capitalAllocation / analystCommentary",
+      "quote": "In our judgment Helix is the least conventional, a fund investment in data center and infrastructure assets rather than in Vistra's own fleet.",
+      "issue": "The description leaves out what the surface says ties Helix to the fleet, so a counter-case goes unnamed (rubric 5). It also comes close to describing the fund in a way the sources do not support (rubric 2). The 10-Q makes the second $500 million subject to 'certain commercial power supply milestones for our existing generation assets'. It lists 'baseload and flexible power generation' among the fund's targets and says the investment is made 'while leveraging our existing fleet and development capabilities'. The release refers to 'Vistra's role as Helix's preferred power provider'. The report's own summary of the terms ('subject to power supply milestones') drops 'for our existing generation assets'. analystCommentary's 'a data-center investment fund' narrows the fund in the same way.",
+      "fix": "Keep the view that Helix is a fund investment rather than capital spent on the fleet. But name the link the company draws: the milestones concern power supply from its existing generation assets, and the release calls Vistra the preferred power provider. Then say what that link is worth to a holder and what the risk is. Match the wording in analystCommentary.",
+      "status": "addressed",
+      "note": "Addressed. capitalAllocation quotes the milestones 'for our existing generation assets', the fund's 'baseload and flexible power generation' target and the preferred-power-provider role. It gives the upside and the risk. analystCommentary no longer narrows the fund."
+    },
+    {
+      "id": "F-7",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[0]",
+      "quote": "With debt rising and the Cogentrix cash and assumed debt still to come, a downgrade would bring the liens back and undo the main credit gain of 2026.",
+      "issue": "'undo the main credit gain of 2026' goes further than the 10-Q (rubrics 2 and 5). The reversion clause applies to the Senior Secured Notes indenture. For the bank lines, the 10-Q says the Credit Agreement and the Commodity-Linked Credit Facility 'were amended in June 2026 to, among other things, remove the collateral reinstatement requirements'. A downgrade would therefore bring back the notes' liens, after the 60-day grace period, but not the facilities' liens. The April repayment would not be undone either. That limit is the counter-case that bounds this risk, and the paragraph leaves it out. ('With debt rising' is covered by F-2.)",
+      "fix": "Limit the reversion to the Senior Secured Notes, and say that the June 2026 amendments removed the reinstatement requirements for the credit facilities. Then give the view on what a reversion would mean for a holder.",
+      "status": "addressed",
+      "note": "Addressed. Reversion is limited to the notes, the June 2026 amendments are cited for the facilities, and the holder view is 'not a return to the pre-2026 structure'."
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "sections.businessMoat.moatFactors[0].body",
+      "quote": "Retail's six-month decline, set out under segments, shows the retail side has not been immune, though the release does not give its cause.",
+      "issue": "The sentence links Retail's six-month decline to the 10-K risks quoted just before it (competition from other REPs, volatile power supply costs), then says the release gives no cause (rubric 2). 'Has not been immune' is still a causal reading. It also contradicts segments[0].body, which says 'we assign no segment drivers'. Retail's second-quarter Adjusted EBITDA rose ($773 million against $756 million), so the half-year decline came earlier in the year, and the page does not explain it.",
+      "fix": "Drop 'shows the retail side has not been immune'. Or recast it as something the data cannot yet answer: Retail's six-month Adjusted EBITDA fell while its second quarter rose, and no source gives the cause. Rest the moat view on the integration argument and the 10-K counter-case.",
+      "status": "addressed",
+      "note": "Addressed. The causal sentence is gone from moatFactors[0]. segments[0].body now treats Retail as an open question pending second-half figures."
+    },
+    {
+      "id": "F-9",
+      "severity": "Important",
+      "field": "sections.businessMoat.moatFactors[1].body",
+      "quote": "The two 20-year nuclear PPAs described under growth turn part of the nuclear fleet's output into contracted revenue",
+      "issue": "'two' is not on the surface (rubric 1). The 10-Q says Vistra 'entered into 20-year PPAs with Meta' (plural, number not given) and, separately, a 20-year PPA with AWS. So there are at least three contracts with two counterparties. The count does not carry the argument, so this is Important rather than Critical, but a reader will take it as fact.",
+      "fix": "Write 'The 20-year nuclear agreements with Meta and AWS described under growth', or similar, without a count.",
+      "status": "addressed",
+      "note": "Addressed. It now reads 'The 20-year nuclear agreements with Meta and AWS', with no count."
+    },
+    {
+      "id": "F-10",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary / sections.executiveSummary.thesis.body",
+      "quote": "The vendor's consensus revenue estimates do not state their basis, so we do not set them beside reported revenue.",
+      "issue": "The report sets aside consensus revenue because its basis is not stated, but relies on consensus EPS, whose basis it also says is not stated (multiplesCommentary: 'The vendor does not say whether consensus EPS is GAAP or adjusted'). Yet the thesis says 'we expect FY27 consensus EPS of $10.36 to arrive', and the Base is built on that figure (rubrics 4 and 6). If consensus EPS is GAAP, hedge marks alone can make it miss, the point risks[3] makes. If it is adjusted, 'arrive' has to be judged on that basis. The page snapshot shows FY26E revenue of ~$22.5B (+27%) next to Q2'26 revenue down 5%. A one-sentence refusal leaves that tension unread.",
+      "fix": "Treat consensus the same way throughout. Either apply the basis caveat to EPS too, saying in the thesis or the multiples section what 'arrive' means when GAAP earnings carry hedge marks, or explain why EPS can be used when revenue cannot. In incomeCommentary, give a reading in words of the gap between the +27% revenue consensus and the falling second quarter. That reading can be that no source explains the gap and so you give it no weight.",
+      "status": "addressed",
+      "note": "Addressed. incomeCommentary reads the +27% revenue gap and gives it no weight. multiplesCommentary explains why consensus EPS can be used: the forward multiples share its basis. The thesis says EPS must arrive 'on the Street's own basis' and that GAAP EPS can miss on hedge marks alone."
+    },
+    {
+      "id": "F-11",
+      "severity": "Important",
+      "field": "sections.executiveSummary.catalysts[3] / sections.management.capitalAllocation",
+      "quote": "Completion of the remaining share repurchase authorization, which the company expects no later than year-end 2027.",
+      "issue": "This catalyst points to a section that argues the opposite (rubrics 4 and 7). capitalAllocation ends 'We would prefer buybacks to slow until Cogentrix is absorbed'. A program that runs over about fifteen months is also not an event that moves the stock on a date. The reader cannot tell whether the report thinks the buyback helps the case or hurts it.",
+      "fix": "Replace catalysts[3] with a dated event that the sections argue, such as the closing of the gas-plant sale (expected in the second half of 2026), or drop it, since three catalysts meet the minimum. If you keep the buyback, make catalysts[3] and capitalAllocation agree.",
+      "status": "addressed",
+      "note": "Addressed. catalysts[3] is now the gas-plant sale closing, which cashflowCommentary weighs. capitalAllocation wants the buyback 'paced than accelerated', which no longer conflicts with any catalyst."
+    },
+    {
+      "id": "F-12",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[3]",
+      "quote": "The 10-K also flags the risk of nuclear accidents.",
+      "issue": "The paragraph lists two dated incidents and a 10-K risk factor, and reaches no view (rubric 4). The incidents date from November 2024 and January 2025, and the paragraph itself says Martin Lake was back in service by February 2026. The reader is not told what they mean for risk from here. Do they point to a pattern? What does an outage mean when nearly all of 2026 output is hedged? Is this part of the Bear case?",
+      "fix": "Add the view in a sentence or two, using what is already on the page, and say whether it sits in the Bear case. If there is no view to give, replace the item with a risk that bears on the call.",
+      "status": "addressed",
+      "note": "Addressed. The item is replaced with a Cogentrix-completion risk. It is dated to the 10-K, notes that the excerpt does not confirm HSR clearance, and gives a view on why it is not in the Bear."
+    },
+    {
+      "id": "F-13",
+      "severity": "Important",
+      "field": "sections.growth.points[2] / sections.growth.points[4]",
+      "quote": "A 20-year PPA announced in September 2025 supplies AWS with 1,200 MW from Comanche Peak, starting in the fourth quarter of 2027.",
+      "issue": "The source's hedges and dates are dropped (rubric 3; house lesson: keep the source's hedges). (1) The 10-Q says Vistra 'anticipates power delivery to begin in the fourth quarter of 2027'. 'supplies ... starting in' states that as fact, in the present tense, for deliveries that have not begun. (2) 'In January 2026 Vistra signed 20-year PPAs': the 10-Q says that in January 2026 Vistra 'announced it had entered into' them, and gives no signing date. (3) In growth.points[4], 'In Texas it plans up to 860 MW of peaking plants ... and a repowering of Coleto Creek' presents as current an intention the 10-Q dates to a May 2024 announcement. The 10-Q updates the peakers (early development under way, online anticipated in 2028, the TxEF loan) but says nothing further about Coleto Creek.",
+      "fix": "Write 'anticipates delivery beginning in the fourth quarter of 2027' and 'announced in January 2026'. Date the Texas plan to its May 2024 announcement, and say the 10-Q gives no update on Coleto Creek beyond the plan.",
+      "status": "addressed",
+      "note": "Addressed. The Meta PPAs are 'announced ... in January 2026' and AWS delivery is 'anticipates ... to begin'. The Texas plan is dated to May 2024, and the report notes the 10-Q gives no update on Coleto Creek."
+    },
+    {
+      "id": "F-14",
+      "severity": "Important",
+      "field": "sections.executiveSummary.risks[3] / sections.risks.systemic / sections.risks.idiosyncratic[2] / sections.financials.balanceCommentary",
+      "quote": "Unrealized hedge marks will keep GAAP earnings volatile and can obscure the trend in the business, as the second quarter showed.",
+      "issue": "Several claims are made twice in different words (rubric 7). (1) The thesis says 'GAAP earnings swing with hedge marks' and executiveSummary.risks[3] (quoted) says the same, so the executive summary makes the claim twice; incomeCommentary argues it ('the reported line will stay volatile'). (2) Wholesale prices: durability quotes the 10-K that revenues 'are affected by price fluctuations in the wholesale power market', and systemic retells it ('Wholesale power prices drive revenue, and the 10-K puts their fluctuation at the top of its market risks'). (3) Uprate approvals: moatFactors[1] says the uprate spending depends on 'regulatory approvals, engineering evaluations and capital allocation decisions', and idiosyncratic[2] retells it ('depend on approvals and engineering work the company does not fully control'). idiosyncratic[2] also extends that dependency to 'The Meta deliveries', but the 10-Q ties it to the uprates only; the operating energy comes from plants already running. (4) balanceCommentary says 'current liabilities exceed current assets' twice.",
+      "fix": "(1) Keep the hedge-mark point in the thesis clause or in risks[3], not both, and point to incomeCommentary. (2) Make the wholesale-price point once, in systemic, and have durability refer to it (or the reverse). (3) Keep the approval dependency in idiosyncratic[2], applied to the uprates only, and cut moatFactors[1] to a pointer. (4) Drop the second 'current liabilities exceed current assets' and refer back in words.",
+      "status": "addressed",
+      "note": "Addressed. executiveSummary.risks[3] is gone, so the hedge-mark point sits in the thesis and incomeCommentary. durability points to systemic for wholesale prices. moatFactors[1] points to risks for uprate approvals, and idiosyncratic[2] limits them to the uprates. balanceCommentary refers back to the current ratio in words."
+    },
+    {
+      "id": "F-15",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.companyOverview",
+      "quote": "At $160.50 on 2026-10-06 the market capitalization is about $53.9B.",
+      "issue": "Dates appear in ISO form in prose (rubric 9). The same field has '(dated 2026-10-06)' for the company description, but that is the day the description was captured, not the date of its contents. Elsewhere the report mixes styles: 'Aug. 7, 2026', 'Oct. 22, 2025', 'December 2, 2025'.",
+      "fix": "Write 'October 6, 2026'. Drop the date on the description, or say it was retrieved that day. Use one month style throughout.",
+      "status": "addressed",
+      "note": "Addressed. Prose dates are now in full form ('October 6, 2026', 'August 7, 2026'), and the description is 'retrieved October 6, 2026'."
+    },
+    {
+      "id": "F-16",
+      "severity": "Minor",
+      "field": "sections.businessMoat.moatFactors[0].body / moatFactors[2].body / sections.financials.{incomeCommentary, balanceCommentary} / sections.valuation.multiplesCommentary",
+      "quote": "We read the hedge book as the main source of Vistra's near-term earnings visibility.",
+      "issue": "Five views open with 'We read': moatFactors[0] ('We read owning both the customers and the plants'), moatFactors[2] (quoted), incomeCommentary ('We read the business'), balanceCommentary ('We read the balance sheet') and multiplesCommentary ('we read it as a current-year multiple'). 'In our judgment' appears twice more. The phrase is a tic that readers will notice (rubric 9).",
+      "fix": "Vary it or drop it. Most of these sentences can state the view directly.",
+      "status": "addressed",
+      "note": "Addressed. 'We read' no longer appears, and 'In our judgment' appears once."
+    },
+    {
+      "id": "F-17",
+      "severity": "Minor",
+      "field": "sections.risks.systemic",
+      "quote": "the 10-K puts their fluctuation at the top of its market risks, followed by fuel costs",
+      "issue": "The 10-K summary lists its risks without ranking them, so 'at the top' attributes an order of importance the document does not give. Wholesale prices are simply listed first.",
+      "fix": "Write 'lists their fluctuation first among its market risks', or drop the ordering. The sentence may go anyway under F-14.",
+      "status": "addressed",
+      "note": "Addressed. systemic now quotes the 10-K risk and says it 'lists fuel costs next', with no ranking."
+    },
+    {
+      "id": "F-18",
+      "severity": "Minor",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "Those investment-grade ratings released the collateral securing the Senior Secured Notes on April 2, 2026",
+      "issue": "The 10-Q gives two conditions: the ratings 'and the satisfaction of certain other conditions specified in the Vistra Operations Senior Secured Indenture'. The sentence credits the ratings alone.",
+      "fix": "Add 'together with other conditions in the indenture', or write that the collateral was released after the ratings were upgraded.",
+      "status": "addressed",
+      "note": "Addressed. The sentence now reads 'After those upgrades, and with other conditions in the indenture satisfied'."
+    },
+    {
+      "id": "F-19",
+      "severity": "Minor",
+      "field": "sections.businessMoat.segments[0].name",
+      "quote": "Consolidated",
+      "issue": "The body says 'We follow the company' and discusses Retail, Texas, East and West, but the only entry keeps the vendor's title, 'Consolidated'. The body is mostly a list of figures, with a one-line view at the end.",
+      "fix": "Retitle the entry (e.g. 'Segments (company basis)'), or split it into Retail and the generation segments, each with a sentence of view. The fields have room.",
+      "status": "declined",
+      "note": "Decline accepted. segmentIssues in lib/synth/validate-judgment.ts requires segment names to match the fact segments exactly, so the entry must stay 'Consolidated'. The body now follows the company's segments and ends with a view: the regional segments carried the growth, and Retail is open pending second-half figures."
+    },
+    {
+      "id": "F-20",
+      "severity": "Minor",
+      "field": "sections.growth.points[1] / sections.financials.incomeCommentary",
+      "quote": "Hedge cover steps down from approximately 94% of expected 2027 generation to approximately 72% for 2028, so the path after 2027 is more open.",
+      "issue": "growth.points[1] uses 528 of its 600 characters and incomeCommentary 2,153 of 2,500 (rubric 10). The fixes for F-10 and F-14 add to incomeCommentary, which leaves little room.",
+      "fix": "In incomeCommentary, keep only the six-month figure the multiples section relies on (net income), or shorten the quoted Adjusted EBITDA definition. In growth.points[1], shorten the sentence on exclusions.",
+      "status": "addressed",
+      "note": "Addressed for the named fields: incomeCommentary is 1,921 of 2,500 characters and growth.points[1] is 392 of 600. The rewrite moved the pressure to other fields; see F-21."
+    },
+    {
+      "id": "F-21",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarioCommentary / sections.growth.points[2]",
+      "quote": "We keep the anchor because it ties the Base to a multiple and an EPS a reader can check, rather than to a target, but the Base carries a move we cannot explain.",
+      "issue": "The F-1 fix states one point three times in two places (rubric 7, minor here). The Base driver says 'this Base inherited the late rally'. scenarioCommentary then says 'The Base, as its driver notes, inherited the rise', and closes the same paragraph with 'the Base carries a move we cannot explain' (quoted). The new text also left two fields with little room (rubric 10): scenarioCommentary is 2,303 of 2,500 characters and growth.points[2] is 532 of 600.",
+      "fix": "Keep the pointer to the driver and the 'lower Base at the earlier prices' point. End the paragraph on why you keep the anchor, and drop the closing clause. In growth.points[2], shorten the delivery sentences, for example by cutting 'of the operating energy and capacity'.",
+      "status": "declined",
+      "note": "Deferred to the next synthesis: round 2 was the final review, and editing the judgment now would leave it unreviewed."
+    },
+    {
+      "id": "F-22",
+      "severity": "Minor",
+      "field": "analystCommentary",
+      "quote": "The release also reported FERC approval of the pending Cogentrix acquisition and announced Helix Digital Infrastructure alongside KKR, KIA and NVIDIA.",
+      "issue": "This new sentence lists two release highlights without saying what they mean for the call (rubric 4, minor in a summary field). It also uses 'KIA', which no reader will recognize; the release spells it out as Kuwait Investment Authority (rubric 9). Elsewhere, risks.idiosyncratic[3] notes that the HSR condition is not yet confirmed, so naming FERC approval alone in the summary reads as further along than the report later says.",
+      "fix": "Cut the sentence, or tie it to the call in a clause (for example, the Cogentrix closing still needs the HSR waiting period, as the risks section notes). If you keep the partner list, write 'Kuwait Investment Authority' or drop the partners.",
+      "status": "declined",
+      "note": "Deferred to the next synthesis: round 2 was the final review, and editing the judgment now would leave it unreviewed."
+    }
+  ]
+}

@@ -77,8 +77,12 @@ const REVENUE = [
   // without this concept the quarterly series went stale at Q4'14; RevenuesNetOfInterestExpense carries
   // the live quarterly net revenue. Non-banks never tag it, so per-period selection is unaffected.
   "RevenuesNetOfInterestExpense",
-  "RevenueFromContractWithCustomerExcludingAssessedTax",
+  // `Revenues` is the income-statement total and outranks the customer-contract (ASC 606) amount, which
+  // leaves out hedging, derivative, lease and insurance revenue. Most filers tag both at the same value; where
+  // they differ, the contract line is a footnote subset (VST Q2 2026: total $4,017M, contract $4,401M, so
+  // growth read +17% YoY when the reported top line fell; CEG, GE, PGY, BAM likewise). Owner-approved 2026-10-06.
   "Revenues",
+  "RevenueFromContractWithCustomerExcludingAssessedTax",
   "RevenueFromContractWithCustomerIncludingAssessedTax",
   "SalesRevenueNet",
 ];
@@ -141,10 +145,14 @@ const SHORT_TERM_INVESTMENTS = [
 // portion (AEIS FY2025: $567.5M reported as $1,135.0M), and preferring LongTermDebtCurrent over
 // DebtCurrent dropped commercial paper (CSCO FY2026: $29,533M reported as $22,872M). See deriveFields.
 // LongTermDebtAndCapitalLeaseObligations is the noncurrent debt-and-finance-lease line; BSX tags its long-term
-// debt only that way ($11,137M at FY2025), so without it total debt read as current debt alone ($299M).
-const LTD_NONCURRENT = ["LongTermDebtNoncurrent", "LongTermDebtAndCapitalLeaseObligations"];
+// debt only that way ($11,137M at FY2025), so without it total debt read as current debt alone ($299M). It is
+// read only when neither LongTermDebtNoncurrent nor LongTermDebt reports the period (see deriveTotalDebt): VST
+// tags it beside LongTermDebt, with its current portion as LongTermDebtAndCapitalLeaseObligationsCurrent, and
+// preferring it there dropped that portion (FY2025: $18,843M read as $17,642M).
+const LTD_NONCURRENT = ["LongTermDebtNoncurrent"];
+const LTD_LEASE_NONCURRENT = ["LongTermDebtAndCapitalLeaseObligations"];
 const LTD_TOTAL = ["LongTermDebt"];
-const LTD_CURRENT = ["LongTermDebtCurrent"];
+const LTD_CURRENT = ["LongTermDebtCurrent", "LongTermDebtAndCapitalLeaseObligationsCurrent"];
 const DEBT_CURRENT = ["DebtCurrent"];
 const SHORT_TERM_BORROWINGS = ["ShortTermBorrowings", "CommercialPaper"];
 // Convertible notes tagged apart from long-term debt. Read only when no long-term debt concept reports the
@@ -443,6 +451,7 @@ interface RawValues {
   shortTermInvestments: number | null;
   ltdNoncurrent: number | null;
   ltdTotal: number | null;
+  ltdLeaseNoncurrent: number | null;
   ltdCurrent: number | null;
   debtCurrent: number | null;
   shortTermBorrowings: number | null;
@@ -463,12 +472,15 @@ type DerivedFields = Omit<SecPeriod, "fiscal_period" | "fiscal_year" | "report_d
  * Total debt for one period. Noncurrent long-term debt + all current debt when the noncurrent line is
  * tagged; otherwise the long-term total (which already holds its current portion) + only the current
  * debt that is not long-term (DebtCurrent − LongTermDebtCurrent when both exist, else short-term
- * borrowings / commercial paper). A filer with no long-term debt concept falls back to its convertible
- * notes: noncurrent convertibles + all current debt (else current convertibles). Null when no debt
- * concept reports the period.
+ * borrowings / commercial paper); otherwise the noncurrent debt-and-lease line + all current debt. A filer
+ * with none of those falls back to its convertible notes: noncurrent convertibles + all current debt (else
+ * current convertibles). Null when no debt concept reports the period.
  */
 export function deriveTotalDebt(
-  r: Pick<RawValues, "ltdNoncurrent" | "ltdTotal" | "ltdCurrent" | "debtCurrent" | "shortTermBorrowings" | "convertibleNoncurrent" | "convertibleCurrent">,
+  r: Pick<
+    RawValues,
+    "ltdNoncurrent" | "ltdTotal" | "ltdLeaseNoncurrent" | "ltdCurrent" | "debtCurrent" | "shortTermBorrowings" | "convertibleNoncurrent" | "convertibleCurrent"
+  >,
 ): number | null {
   const otherCurrent =
     r.debtCurrent != null && r.ltdCurrent != null ? r.debtCurrent - r.ltdCurrent : r.shortTermBorrowings;
@@ -477,6 +489,7 @@ export function deriveTotalDebt(
     (r.ltdCurrent == null && r.shortTermBorrowings == null ? null : (r.ltdCurrent ?? 0) + (r.shortTermBorrowings ?? 0));
   if (r.ltdNoncurrent != null) return r.ltdNoncurrent + (allCurrent ?? 0);
   if (r.ltdTotal != null) return r.ltdTotal + (otherCurrent ?? 0);
+  if (r.ltdLeaseNoncurrent != null) return r.ltdLeaseNoncurrent + (allCurrent ?? 0);
   const current = allCurrent ?? r.convertibleCurrent;
   if (r.convertibleNoncurrent != null) return r.convertibleNoncurrent + (current ?? 0);
   return current;
@@ -601,6 +614,7 @@ export function parseCompanyFacts(facts: unknown): { annual: SecPeriod[]; quarte
   const shortTermInvestments = instantSeries(facts, SHORT_TERM_INVESTMENTS);
   const ltdNoncurrent = instantSeries(facts, LTD_NONCURRENT);
   const ltdTotal = instantSeries(facts, LTD_TOTAL);
+  const ltdLeaseNoncurrent = instantSeries(facts, LTD_LEASE_NONCURRENT);
   const ltdCurrent = instantSeries(facts, LTD_CURRENT);
   const debtCurrent = instantSeries(facts, DEBT_CURRENT);
   const shortTermBorrowings = instantSeries(facts, SHORT_TERM_BORROWINGS);
@@ -633,6 +647,7 @@ export function parseCompanyFacts(facts: unknown): { annual: SecPeriod[]; quarte
     shortTermInvestments: at(shortTermInvestments[side] as Map<K, UnitEntry>, key),
     ltdNoncurrent: at(ltdNoncurrent[side] as Map<K, UnitEntry>, key),
     ltdTotal: at(ltdTotal[side] as Map<K, UnitEntry>, key),
+    ltdLeaseNoncurrent: at(ltdLeaseNoncurrent[side] as Map<K, UnitEntry>, key),
     ltdCurrent: at(ltdCurrent[side] as Map<K, UnitEntry>, key),
     debtCurrent: at(debtCurrent[side] as Map<K, UnitEntry>, key),
     shortTermBorrowings: at(shortTermBorrowings[side] as Map<K, UnitEntry>, key),
