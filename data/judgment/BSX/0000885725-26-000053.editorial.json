@@ -1,0 +1,189 @@
+{
+  "judgmentSha256": "877d0d79add115cb9177b9a0a91bc4df50778ce4bd8f8b526a5a4d455ab2d3d7",
+  "reviewedAt": "2026-10-06T18:17:25Z",
+  "reviewer": "claude-opus-5-5",
+  "round": 1,
+  "verdict": "needs-fix-round",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.businessMoat.moatFactors[1].body / sections.financials.incomeCommentary / sections.businessMoat.durability",
+      "quote": "it stands at 69.9% on a trailing-twelve-month basis, which points to pricing that has held across the portfolio",
+      "issue": "The second-quarter margin gain is read as lasting and as evidence of pricing, but the 10-Q's own bridge says otherwise (rubrics 2 and 4). The 10-Q takes the quarter's gross margin from 67.7% to 70.7% as follows: 0.6% from \"Sales pricing, volume and mix\", (0.4)% from currency and 2.9% from \"All other, including inventory charges and other period expenses\". Its text ties the gain to the tariff recovery and lower inventory charges as well as mix. So most of the gain is in the line that the report's own systemic risk says \"may not recur\". Even so, incomeCommentary opens with \"The second quarter of 2026 added to the margin gains\" and never uses the bridge. moatFactors[1] then reads the trailing 69.9%, which includes that quarter, as pointing to pricing \"held across the portfolio\". The pack does not support that: the bridge does not separate pricing from volume and mix. The same paragraph also contradicts it two sentences later (\"the pricing strength is not uniform\"). durability relies on the trailing 19.8% operating margin in the same way.",
+      "fix": "In incomeCommentary, use the bridge. Say in words that most of the second-quarter gain came from the 'all other' line (the tariff recovery and lower inventory charges), not from pricing, volume and mix, and say how much of the 70.7% you expect to hold. In moatFactors[1], base the factor on the FY21-FY25 range. Drop 'pricing that has held across the portfolio', or say the bridge cannot isolate pricing. Note that the trailing figure includes one-off items. In durability, add the same caveat to the trailing operating margin or cite the FY range instead.",
+      "status": "open"
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.management.capitalAllocation / sections.executiveSummary.catalysts[3] / sections.valuation.scenarioCommentary",
+      "quote": "The release gives no average purchase price, so we cannot judge the buyback's return against today's price.",
+      "issue": "The page does let the reader judge the buyback, and the report declines to (rubric 4). The release gives both the $2 billion and \"approximately 40 million shares\". Together they put the average purchase price above today's $42.26, so the buyback is under water at the current price. That is the most useful read on the quarter's largest capital decision. Instead, capitalAllocation ends \"We see the buyback as supportive of per-share earnings\" with no counter-case (rubric 5). The same supportive claim is made three times (rubric 7): in catalysts[3] (\"lowers the share count and supports per-share earnings\"), in capitalAllocation, and in scenarioCommentary (\"the accelerated share repurchase has cut the share count, which supports EPS even if net income stalls\"). catalysts[3] also lists a completed event as a catalyst (the ADI F-13 pattern). Separately, \"which retired approximately 40 million shares\" goes beyond the release, which says \"repurchasing\".",
+      "fix": "In capitalAllocation, say in words, without computing a price, that the $2 billion and roughly 40 million shares imply an average price above the current price. Then give the view: the per-share benefit is real, but the company paid more than the market now asks, and together with MiRus the buyback used cash (see F-12). Make the per-share point once, there; scenarioCommentary can refer back in words. Replace catalysts[3] with a forward-looking item or drop it. Use the release's 'repurchasing' instead of 'retired'.",
+      "status": "open"
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[2].driver / sections.valuation.scenarios[1].driver / sections.valuation.scenarios[0].driver",
+      "quote": "the multiple compresses to 10x, our assumption for a device maker with little earnings growth",
+      "issue": "The Bear's multiple has no anchor on the page (rubric 6; house lesson: anchor Base and Bear to a figure a reader can check). It is the only input to the calls that does not trace to the Facts or Context blocks. The pack carries no peer multiples (\"peers pending a peer data source\"), so \"for a device maker with little earnings growth\" implies a sector norm the page cannot show, which is close to the ungrounded-peer trap. Three smaller problems in the drivers: (1) The Base says \"Growth follows the company's July 29 guidance\", but that guidance covers only 2026, and the Base is an FY27 scenario. (2) The Bull requires \"Third-quarter results land within or above guidance\", the same condition as the Base. Its only difference is that the market pays the Street median. Meanwhile, finalRecommendation.body[1] uses a stricter test (\"at or above the top of the company's third-quarter range\") to move weight to the Bull. (3) \"Both earnings and the multiple sit below the Base\" only restates the arithmetic.",
+      "fix": "Give the Bear multiple a basis a reader can check on the page, or say plainly that 10x is a judgment and argue it in words. One option is to tie it to the report's own adjusted-versus-reported argument in risks.idiosyncratic[2]. Drop 'for a device maker with little earnings growth'. In the Base, say growth follows FY27 consensus, since the guidance runs only to 2026. Give the Bull a condition that differs from the Base, and make it match the test in the final recommendation. Cut the closing restatement in the Bear.",
+      "status": "open"
+    },
+    {
+      "id": "F-4",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "Keeping today's multiple is the neutral assumption when nothing in our documents points to either a further derating or a recovery.",
+      "issue": "The weights are argued with evidence about other periods, and the Base argument is contradicted by the next two paragraphs (rubric 6; the ADI F-2 pattern). The opening says \"Each weight rests on evidence about FY27\". The evidence actually cited is the second quarter (cost discipline), third-quarter guidance (cited twice) and the share price. The Base's 55% gets two sentences. \"It asks little of the company\" describes the scenario; it is not evidence for it. The quoted sentence then says nothing in the documents points either way, yet the next two paragraphs cite evidence on both sides: Electrophysiology competition and the third-quarter slowdown for the Bear, and clinical results and the Street's ratings for the Bull. Two of the three points against the Bear are weak as stated. The ASR is complete, and the second-quarter share count already shows it, so it adds little to FY27 EPS beyond the FY26 figure the Bear holds flat. The new restructuring program has no size or savings estimate, by the report's own account. The page has Base evidence the report uses only to infer the consensus basis: FY26 consensus EPS of $3.26 sits below the company's guided $3.28 to $3.32.",
+      "fix": "Argue the 55% on why FY27 consensus is achievable, using what the page shows. That includes the Street's FY26 figure sitting below the company's own guided range, and second-quarter results against guidance (state these once and refer back). Replace the 'nothing ... points' sentence with an honest one: the evidence points both ways, and the Base is the midpoint. Either drop the claim that every weight rests on FY27 evidence or make it true. In the list of points against the Bear, state the limits of the ASR and restructuring points, or replace them with points that bear on FY27.",
+      "status": "open"
+    },
+    {
+      "id": "F-5",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary / sections.finalRecommendation.body[1] / sections.finalRecommendation.body[0]",
+      "quote": "The label does not hinge on the split: swapping the Bull and Bear weights still leaves expected upside short of the BUY line.",
+      "issue": "The sensitivity test is too small to support the claim (rubric 6; house lesson from AMSC F-24: if a call is close, say so and argue the deciding split). A swap moves only five points. A ten-point move from Bear to Bull (Bull 30%, Base 55%, Bear 15%) gives a weighted value of about $47.20, expected upside of about +11.7% and reward/risk of about 0.51x. That derives BUY at today's price. So BUY is ten points of weight away, while SELL is far off. The final recommendation's upgrade evidence (\"would move weight from Bear to Bull\") is exactly the move that flips the label, but body[1] never says whether that evidence would move enough weight to change the call. body[0] (\"we would need a lower price or better third-quarter evidence\") implies that it would, which the quoted sentence denies.",
+      "fix": "Replace the sentence with an honest sensitivity statement in words: a swap leaves the label at HOLD, but a shift of about ten points from Bear to Bull would derive BUY. Argue that split from both sides once, in scenarioCommentary. In body[1], say whether the named third-quarter evidence would move weight that far, so the upgrade trigger and the page's math agree. Keep body[0] consistent with that answer. Do not quote a computed fair value or upside for the hypothetical; describe it in words.",
+      "status": "open"
+    },
+    {
+      "id": "F-6",
+      "severity": "Important",
+      "field": "analystCommentary / sections.valuation.scenarioCommentary",
+      "quote": "Our scenarios weight a Base that keeps today's multiple at 55%, a Bear in which earnings stall and the multiple compresses at 25%, and a Bull at the Street's median target at 20%.",
+      "issue": "Each scenario's probability appears in three places: here, in the scenario table, and again with its argument in scenarioCommentary (rubrics 6 and 7). analystCommentary also restates each scenario's driver in a clause, so the reader meets the scenario design three times before the valuation section argues it. The next sentence's fair value and expected upside appear again in scenarioCommentary's closing paragraph (\"These weights give a probability-weighted fair value of $44.46, expected upside of +5.2%\"), and the page's conviction block renders them as well.",
+      "fix": "Give analystCommentary the conclusion in words: a weighted value close to the price, a real bear case below it, and therefore HOLD. Point to the valuation section for the weights. Keep the weight-by-weight recap in one prose place, scenarioCommentary. The fair value can stay in one of the two fields, not both.",
+      "status": "open"
+    },
+    {
+      "id": "F-7",
+      "severity": "Important",
+      "field": "sections.valuation.multiplesCommentary / sections.valuation.scenarioCommentary / sections.valuation.scenarios[0].driver / sections.risks.idiosyncratic[1] / sections.executiveSummary.thesis.body",
+      "quote": "That fall frames every multiple here: the 52-week range runs from $41.94 to $105.65, and the price sits near the bottom of it. A low multiple on consensus earnings is attractive only if consensus holds, and the risks section explains why we cannot rule out that it will not.",
+      "issue": "The unexplained fall, and its consequence that consensus may be too high, are retold across the report (rubric 7; recent price moves are among the desk's most repeated offenders). multiplesCommentary makes the point in the quoted passage and again in \"some may predate part of the fall in the shares\". scenarioCommentary retells it (\"yet more than two months after results that met or beat guidance the price sits near its 52-week low\"). The Bull driver adds \"it would still sit well below the 52-week high\". risks.idiosyncratic[1] argues it in full (\"If the market's caution proves right, consensus earnings may be too high, and so would our Base\"), and thesis.body already frames the call on the same consensus question. Counting the subtitle, analystCommentary and executive-summary risk[1], the reader meets the point about nine times.",
+      "fix": "Make idiosyncratic[1] the one place that argues the fall and what it implies for consensus. In multiplesCommentary, give the 52-week range once, drop the 'frames every multiple' passage and point to the risks section in words. scenarioCommentary and the Bull driver should use the fall only where it argues a weight, and then refer back. The subtitle, analystCommentary and executive-summary risk can keep their one-line mentions.",
+      "status": "open"
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary / sections.management.leadership / sections.financials.cashflowCommentary / sections.financials.balanceCommentary / sections.growth.points[1]",
+      "quote": "Clinical results and the Street's ratings support it; the company's near-term outlook, which slows into the third quarter, does not yet.",
+      "issue": "The guided slowdown is argued in growth.points[0] and then retold in other words across the report (rubric 7). scenarioCommentary tells it twice: in the Bear paragraph (\"third-quarter guidance points to a slowdown from the second quarter\") and in the Bull paragraph (quoted). leadership retells it (\"the outlook management set at the same time, which slows into the third quarter\"). cashflowCommentary has \"much faster revenue growth than the company now guides to\", balanceCommentary has \"while growth slows\", and growth.points[1] opens \"The Street expects the slowdown to last\". The companion claim, that the quarter met or beat guidance, also recurs: in the subtitle, analystCommentary, leadership (with the figures) and scenarioCommentary (\"results that met or beat guidance\").",
+      "fix": "Let growth.points[0] carry the slowdown and leadership carry the results-against-guidance figures. Elsewhere, refer back in words at most once per field. In scenarioCommentary, use the slowdown once, where it argues a weight. Cut the clauses in cashflowCommentary and balanceCommentary unless they add something the growth section has not.",
+      "status": "open"
+    },
+    {
+      "id": "F-9",
+      "severity": "Important",
+      "field": "sections.businessMoat.segments[0].body / sections.executiveSummary.companyOverview / sections.growth.points[2] / sections.growth.points[3] / sections.risks.idiosyncratic[0]",
+      "quote": "The mix leans toward the faster-growing Cardiovascular segment, so the company's growth depends most on how that segment performs.",
+      "issue": "The same claim appears five times in different words: Cardiovascular is the larger segment and the company's growth rides on it (rubric 7). companyOverview: \"Cardiovascular is the larger segment, with second-quarter 2026 net sales of $3,624 million against $1,818 million for MedSurg.\" segments[0]: quoted. growth.points[2]: \"Cardiovascular carries the growth and the pressure.\" growth.points[3]: \"Both are smaller than Cardiovascular, so they cushion rather than replace it.\" risks.idiosyncratic[0]: \"share loss there would hit the larger segment first.\"",
+      "fix": "Make the dependence argument once, in segments[0] or growth.points[2]. The other fields should refer back in words or drop the clause. companyOverview can keep the segment sizes as description without drawing the conclusion.",
+      "status": "open"
+    },
+    {
+      "id": "F-10",
+      "severity": "Important",
+      "field": "sections.management.capitalAllocation / sections.executiveSummary.catalysts[2] / sections.risks.idiosyncratic[2] / sections.valuation.scenarioCommentary",
+      "quote": "The excerpt gives no cost or savings figure for the new program, and restructuring charges sit among the items adjusted EPS guidance excludes.",
+      "issue": "The new restructuring program is retold rather than argued (rubric 7). The first half of the quoted sentence repeats catalysts[2] almost word for word (\"the 10-Q excerpt gives no size or savings estimate\"), so the same sentence appears in two sections. The second half makes the same claim as risks.idiosyncratic[2] (\"The new restructuring program is likely to add charges that fall outside the adjusted figure\"), and incomeCommentary has already listed restructuring among the release's exclusions. scenarioCommentary repeats catalysts[2]'s \"may lower costs\". None of these places reaches a view on what the program means for FY27 earnings.",
+      "fix": "Give the program one home. capitalAllocation can place it next to the 2023 plan and give the view. idiosyncratic[2] keeps the adjusted-versus-reported consequence. catalysts[2] stays a one-line pointer without the 'no size' clause. scenarioCommentary refers back in words or drops the point (see F-4).",
+      "status": "open"
+    },
+    {
+      "id": "F-11",
+      "severity": "Important",
+      "field": "sections.businessMoat.moatFactors[2].body",
+      "quote": "R&D expenses were $554 million in the second quarter of 2026, or 10.2% of net sales, spent, in the 10-Q's words, \"to maintain a pipeline of products that we believe will contribute to future sales growth\".",
+      "issue": "The quote describes a different subject from the one the report attaches it to (over-attribution; house lesson: quote a phrase with the subject it describes). The 10-Q says \"The increase in R&D expenses in both periods was primarily driven by investments across our businesses in order to maintain a pipeline of products that we believe will contribute to future sales growth.\" The phrase explains the $28 million increase, not the whole $554 million. The report also drops the source's hedge, \"primarily\".",
+      "fix": "Attach the phrase to the increase: R&D rose $28 million, which the 10-Q attributes primarily to investments made \"to maintain a pipeline ...\". Or describe the $554 million without the quote. If a quote on the total is wanted, the 10-Q's general line is available: \"We remain committed to advancing medical technologies and investing in meaningful R&D projects across our businesses\".",
+      "status": "open"
+    },
+    {
+      "id": "F-12",
+      "severity": "Important",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "Our figures include no quarter-end cash or debt balance, so we cannot show what moved it.",
+      "issue": "The paragraph has the evidence for its own question and does not use it (rubric 4; the ADI F-6 pattern). The tables give year-end net debt of $9.5B and FY25 EBITDA of $5.0B, a ratio below the 2.2x on the trailing line. Trailing EBITDA should not be lower than FY25's, since the trailing operating margin is 19.8% against 18.0%, on higher revenue. So the trailing ratio points to net debt above the year-end level, and the fall in the current ratio fits that reading. The paragraph names the likely causes (\"each required cash\") but stops short of the conclusion. It calls leverage \"comfortable\" on figures that predate the $2 billion ASR and the $1.5 billion MiRus payment. Two sentences list facts without reading them: \"Second-quarter 2026 interest expense was $96 million against $90 million a year earlier.\" and \"The restructuring reserve balance fell to $33 million at June 30, 2026 from $59 million at December 31, 2025.\"",
+      "fix": "Say in words, without a new figure, that the trailing leverage ratio is higher than the year-end figures give. That points to higher net debt after the buyback and the MiRus payment. Then say whether the trailing 2.2x and the 11.4x coverage still leave room for the MiRus TAVR option. Drop the interest-expense and reserve sentences, or give each a reading.",
+      "status": "open"
+    },
+    {
+      "id": "F-13",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[0] / analystCommentary / sections.valuation.scenarios[2].driver",
+      "quote": "Electrophysiology is one of the two business units the 10-Q credits with growth, so share loss there would hit the larger segment first.",
+      "issue": "The risk that carries the Bear case is quoted rather than argued (rubrics 4 and 5). WATCHMAN appears seven times: in analystCommentary, executive-summary risk[0], the Bull and Bear drivers, growth.points[2] and twice here. The report never says what it is, though the company description in Context identifies \"WATCHMAN FLX, a left atrial appendage closure (LAAC) device\". The item does not interpret the 10-Q's hedge, \"certain WATCHMAN procedures\". Nor does it weigh the reading that cuts the other way: in the same quarter, the 10-Q still credits Electrophysiology, led by Farapulse, as a primary growth driver. So the evidence shows pressure on growth, not lost share, and \"share loss\" goes beyond \"increased competition\". analystCommentary's \"new pressure\" likewise says more than the 10-Q, which reports \"increased competition\" without saying the pressure is new.",
+      "fix": "Identify WATCHMAN once, from the company description, and keep the 10-Q's 'certain'. Say what the pairing means: Electrophysiology both drove growth and faced increased competition in the same quarter, so the risk is slower growth rather than decline. Then say why that is enough to support the Bear's 25%. Use 'increased competition' instead of 'share loss' and 'new pressure'. The third-quarter test belongs in the final recommendation, so this item need not repeat it (see F-15).",
+      "status": "open"
+    },
+    {
+      "id": "F-14",
+      "severity": "Minor",
+      "field": "sections.financials.cashflowCommentary / sections.financials.incomeCommentary",
+      "quote": "The company pays no dividend. The vendor's cash flow table shows no repurchases in FY21 and FY22 and no figure for FY23 to FY25; the 2026 buyback is covered under capital allocation.",
+      "issue": "These sentences restate the table directly above them without reading it (rubric 4). The same table shows dividends paid of -0.1 in FY21 and FY22. A reader who sees that row is left with an unreconciled 'pays no dividend'. incomeCommentary's first paragraph also lists the table (revenue, growth, operating margin, FY25 EPS) without a view. The cash-flow counter-case opens with the house tic 'The counter-case is that'.",
+      "fix": "Cut the repurchase sentence or turn it into a view. Date the dividend statement against the table: a 0.00% yield today, with small payments in the table's early years. Do not say what those payments were. Give incomeCommentary's first paragraph a reading, or fold it into the next paragraph. Work the cash-flow counter-case into the argument without the label.",
+      "status": "open"
+    },
+    {
+      "id": "F-15",
+      "severity": "Minor",
+      "field": "sections.management.leadership / sections.risks.idiosyncratic[0]",
+      "quote": "On this quarter's evidence the team guides accurately; the next two quarters will show whether the slower outlook is conservative or a sign of lost momentum.",
+      "issue": "The evidence in the same paragraph points to conservative guidance, not accurate guidance: reported and organic growth landed at the top of their ranges, and adjusted EPS beat its range. That reading matters for the Bull, whose weight depends on whether the third-quarter guide of approximately 3 to 5 percent can be beaten. One quarter also cannot show a pattern either way. The closing clause is one of several 'the third quarter will tell' lines; idiosyncratic[0] has another (\"The third-quarter report is the next evidence on whether the pressure is deepening\"). That point belongs once, in the final recommendation.",
+      "fix": "Say the quarter landed at or above the top of guidance, which on one quarter's evidence fits conservative guidance. Then say what that implies for the third-quarter guide. Cut the what-to-watch closers in leadership and idiosyncratic[0], and leave the test in finalRecommendation.",
+      "status": "open"
+    },
+    {
+      "id": "F-16",
+      "severity": "Minor",
+      "field": "sections.management.capitalAllocation / sections.growth.points[4] / sections.valuation.multiplesCommentary / sections.financials.incomeCommentary / sections.executiveSummary.catalysts[2]",
+      "quote": "The release gives no average purchase price",
+      "issue": "'Our documents / the excerpt do not ...' has become a tic (rubric 9; the learnings list a repeated 'the sources do not ...'). It appears about sixteen times: 'a fall our documents do not explain' (subtitle), 'none of the documents we draw on' (analystCommentary), 'information our documents do not contain' (executive-summary risk[1]), 'gives no size or savings estimate' (catalysts[2]), 'sits outside our excerpt' (incomeCommentary), 'Our figures include no quarter-end cash or debt balance' (balanceCommentary), 'Our data does not date these targets' (multiplesCommentary), 'nothing in our documents points' (scenarioCommentary), 'With no launch dates in our documents' (growth.points[4]), the quoted sentence and 'The excerpt gives no cost or savings figure' (capitalAllocation), two in governance, one in insiderOwnership and two in idiosyncratic[1].",
+      "fix": "Keep the disclosures that do work: governance, insiderOwnership, the one place that argues the unexplained fall, and the undated Street targets. Cut the rest or turn them into a view. Several go away with the fixes for F-2, F-4, F-10 and F-12.",
+      "status": "open"
+    },
+    {
+      "id": "F-17",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.catalysts[4] / sections.management.capitalAllocation",
+      "quote": "The $1.5 billion MiRus LLC investment carries an exclusive option to acquire the MiRus TAVR business, whose SIEGEL system is still investigational.",
+      "issue": "The catalyst points in no direction. It states a completed investment and an option, but not what event would follow or how it would move the shares. The sections give MiRus no weight in FY27 (growth.points[4]), call it \"a reasonable but unproven bet\" (capitalAllocation) and treat it as a possible source of debt (balanceCommentary). 'Reasonable' is never argued: nothing says why $1.5 billion for an approximately 34% stake and an option on an investigational product is a good use of cash in a year of slowing growth.",
+      "fix": "Make the catalyst forward-looking (for example, a decision on the option or SIEGEL data), or drop it. In capitalAllocation, either argue 'reasonable' from the page or keep only 'unproven'.",
+      "status": "open"
+    },
+    {
+      "id": "F-18",
+      "severity": "Minor",
+      "field": "sections.management.governance / sections.management.leadership",
+      "quote": "The July 29 release names Mr. Mahoney chairman as well as chief executive, so the two roles are combined",
+      "issue": "leadership has already set out Mr. Mahoney's titles from both documents. governance repeats the release's title and then makes the combined-role point twice: \"so the two roles are combined\" and \"the combined chair and chief executive role is the point we would want the full proxy to address\". The point appears three times in one section (rubric 7).",
+      "fix": "Keep the titles in leadership. In governance, refer back in words and make the combined-role point once, together with the missing lead-director information.",
+      "status": "open"
+    },
+    {
+      "id": "F-19",
+      "severity": "Minor",
+      "field": "sections.management.capitalAllocation / sections.growth.points[4]",
+      "quote": "which the 10-Q calls \"substantially complete\"",
+      "issue": "The 10-Q says the 2023 plan's activities \"were substantially complete at the end of 2025\". Without the date, the phrase reads as a current status (rubric 3). growth.points[4]'s \"now enrolling in the pivotal FARADIGM trial\" presents a July 29 release item (\"Commenced enrollment\") as current on October 6.",
+      "fix": "Add 'at the end of 2025' to the first. For the second, write 'which the July 29 release says had commenced enrollment' or similar.",
+      "status": "open"
+    },
+    {
+      "id": "F-20",
+      "severity": "Minor",
+      "field": "meta.subtitle / sections.businessMoat.moatFactors[0].body",
+      "quote": "Second-quarter 2026 results met or beat guidance, but guided growth slows and the shares sit near their 52-week low, a fall our documents do not explain",
+      "issue": "Two fields sit at their caps (rubric 10): the subtitle is 152 of 160 characters, and moatFactors[0].body is 760 of 800. That leaves the next round no room.",
+      "fix": "Shorten both. The subtitle can drop 'a fall our documents do not explain' (see F-7 and F-16). moatFactors[0] can trim one of its two 10-K quotes.",
+      "status": "open"
+    }
+  ]
+}
