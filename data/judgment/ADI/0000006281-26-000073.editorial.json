@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "8b4656049dab3a232dd2ea7f4ca537fdee92e00a0ffdfbc6020552a7216f8d34",
-  "reviewedAt": "2026-10-06T17:28:55Z",
+  "judgmentSha256": "39799fc77c07718fc7479f915d3ac9330ee1c4a41833dff1e243260c38d4f76e",
+  "reviewedAt": "2026-10-06T17:31:46Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved",
   "findings": [
     {
       "id": "F-1",
@@ -252,7 +252,8 @@
       "quote": "or if the shares rose above our target range without higher estimates.",
       "issue": "New in the rewrite: the SELL price trigger does not match the report's own calls (rubric 6). The weighted fair value is about $417 (20% x $533, 55% x $463.50, 25% x $223.47). SELL derives when expected upside reaches -5.0%, which happens at about $439, well inside the $400-$470 target range and below the 52-week high of $445.91. At $445.91 the page would derive SELL (E about -6.4%). The report says the call is 'close, and nearer to SELL than to BUY', so where it flips matters, and this trigger puts the flip roughly $30 too high. A reader at $450 would see SELL from the page's own math while the text says SELL starts above $470. finalRecommendation.body[0]'s 'the weighted value sits within the range' is right, but the upper part of the range is SELL territory.",
       "fix": "Tie the price leg of the SELL trigger to where the label actually flips, in terms the page supports. For example: 'or if the shares returned toward their 52-week high of $445.91 without higher estimates', or 'if the shares rose far enough above our weighted fair value to take expected upside below -5%'. Do not compute a new price threshold. Check that finalRecommendation.body[0]'s advice to holders still reads correctly with that trigger.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Fixed: the SELL price trigger now reads 'if the shares returned toward their 52-week high of $445.91 without higher estimates'. At that price the page derives SELL (E about -6.4%), so the trigger now matches where the label flips. finalRecommendation.body[0] still reads correctly."
     },
     {
       "id": "F-26",
@@ -261,7 +262,8 @@
       "quote": "The 10-Q gives no updated debt figure, so fiscal 2025's total debt of $8.6B is the latest shown, and we do not restate net debt for the quarter.",
       "issue": "New in the rewrite: over-attribution, a known recurring defect (rubric 2; same pattern as NET F-4). Round 1 correctly said 'The excerpt gives no updated debt figure'. The rewrite says the 10-Q itself gives none. Context marks the 10-Q as a truncated MD&A excerpt ('edgar:10-Q, 2026-08-19, truncated'), and a 10-Q carries a balance sheet. So the report states that a document lacks something when the pack holds only part of it. A milder case of the same issue is in capitalAllocation: 'adds a cost the documents do not yet quantify'. Unqualified, 'the documents' reads as all filings, while risks.idiosyncratic[3] correctly says 'the documents we draw on'.",
       "fix": "Restore 'The excerpt gives no updated debt figure' (or 'the 10-Q excerpt'). In capitalAllocation, write 'a cost the documents we draw on do not quantify', or point to Risks without the claim.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Fixed: balanceCommentary now says 'The 10-Q excerpt gives no updated debt figure', and capitalAllocation says 'a cost the documents we draw on do not quantify'."
     },
     {
       "id": "F-27",
@@ -270,7 +272,8 @@
       "quote": "a view we accept, since the U.S. balance alone exceeds the third quarter's dividend payment.",
       "issue": "New in the rewrite: the support is selective (rubric 5). The comparison chooses the smaller outflow. The quarter's dividend was $535 million, but total cash returned in the quarter was $1.7 billion (release; capitalAllocation quotes it), which the roughly $1.0 billion U.S. balance does not cover. The reading that cuts the other way is on the page and goes unmentioned.",
       "fix": "Rest the acceptance on the company's statement, and name the counterpoint: the U.S. balance covers a quarter's dividend but not a quarter of dividends plus buybacks. Otherwise drop the 'since' clause.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Fixed: the acceptance now rests on the company's statement, with the counterpoint named: 'the U.S. balance covers a quarter's dividend but not a quarter of dividends and buybacks together'."
     },
     {
       "id": "F-28",
@@ -279,7 +282,8 @@
       "quote": "If growth stalls instead, as it did after FY22, the FY24 results show how far earnings can fall, and our Bear case prices that outcome with a lower multiple as well.",
       "issue": "New in the rewrite. (1) 'A lower multiple' has no reference point, and on one natural reading it is wrong. The Bear driver says its price values FY25 adjusted EPS 'at a multiple between today's 25.7x FY27E multiple and the Bull's current-year multiple'. That multiple is lower than the 32.6x current-year multiple but higher than the 25.7x a reader has just been given in the sentence before. (2) The FY22-FY23-FY24 sequence is now told three times: here, in the Bear driver ('as FY23's did after FY22') and in scenarioCommentary ('FY22's +64.2% was followed by a stall in FY23'). The thesis can point instead (rubric 7).",
       "fix": "Make the thesis a pointer, for example: 'If fiscal 2027 growth stalls, our Bear case prices a fall like FY24's, back to the 52-week low (see Valuation).' Either drop 'with a lower multiple as well' or name the comparison ('below today's current-year multiple').",
-      "status": "open"
+      "status": "addressed",
+      "note": "Fixed: the thesis is now a pointer: 'our Bear case prices a fall like FY24's, back to the 52-week low (see Valuation)'. 'With a lower multiple as well' and the retold FY22-FY24 sequence are gone."
     },
     {
       "id": "F-29",
@@ -288,7 +292,8 @@
       "quote": "Basis: the 52-week low of $223.47, which values FY25 adjusted diluted EPS of $7.79 at a multiple between today's 25.7x FY27E multiple and the Bull's current-year multiple.",
       "issue": "New in the rewrite: the Bear's earnings cross-check has no named source. $7.79 appears nowhere else in the report, and the income table and snapshot show FY25 diluted EPS of $4.56. A reader therefore meets two FY25 EPS figures with no word on where the second comes from. scenarioCommentary says the scenarios rest on figures 'a reader can check above', which is not true of $7.79. The figure is grounded (2026 proxy, non-GAAP, 'Adjusted Diluted Earnings per Share'). House lesson: anchor Base and Bear to figures a reader can check, and say the basis.",
       "fix": "Name the source in the driver: 'FY25 adjusted diluted EPS of $7.79 (2026 proxy, non-GAAP)'. Note in a few words that it is the adjusted counterpart of the $4.56 reported figure, the same basis the valuation section assigns to consensus.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Fixed: the Bear driver now names the source and basis of $7.79: '2026 proxy, non-GAAP; the adjusted counterpart of the $4.56 reported figure, the basis consensus appears to use'. The figure and the hedge match the surface."
     },
     {
       "id": "F-30",
@@ -297,7 +302,8 @@
       "quote": "That derives HOLD, and it sits nearer to SELL than to BUY.",
       "issue": "New in the rewrite: repetition and a phrase tic (rubrics 7 and 9). 'nearer to SELL than to BUY' appears in analystCommentary (quoted) and again in scenarioCommentary ('The call is close, and nearer to SELL than to BUY'). The fourth-quarter outlook 'points' up or higher five times: twice in analystCommentary ('points to a higher fourth quarter', 'the fourth-quarter outlook points up'), once in the thesis, and twice in scenarioCommentary ('the outlook points higher', 'the outlook points up').",
       "fix": "Keep the close-call sentence in scenarioCommentary, where it is argued, and let analystCommentary point to it in other words. State the outlook direction once per field, and vary or cut the rest.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Fixed: 'nearer to SELL than to BUY' now appears only in scenarioCommentary, and analystCommentary points to it ('the scenario discussion sets out how little it would take to tip the call'). The outlook direction is stated once per field."
     },
     {
       "id": "F-31",
@@ -307,7 +313,7 @@
       "issue": "Fit (rubric 10). After the pay rewrite, the field is at 1,398 of its 1,500 characters, which leaves about one short clause for the next synthesis. scenarioCommentary (2,214 of 2,500) and incomeCommentary (2,108 of 2,500) are also close to their caps.",
       "fix": "At the next synthesis, trim the governance field, for example by shortening the related-person policy sentence. No change is needed for this round.",
       "status": "declined",
-      "note": "Deferred to the next synthesis, as the finding itself proposes; no change needed this round."
+      "note": "Deferred to the next synthesis, as the finding itself proposes; no change needed this round. Reviewer accepts the decline: governance is unchanged at 1,398 of 1,500 characters."
     }
   ]
 }
