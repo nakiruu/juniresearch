@@ -111,9 +111,13 @@ const DA = ["DepreciationDepletionAndAmortization", "DepreciationAmortizationAnd
 // AmortizationOfIntangibleAssets separately): D&A = depreciation + amortization of intangibles, see combineDa.
 const DEPRECIATION = ["Depreciation"];
 const AMORTIZATION_INTANGIBLES = ["AmortizationOfIntangibleAssets", "AmortizationOfAcquiredIntangibleAssets"];
-const INTEREST_EXPENSE = ["InterestExpense", "InterestExpenseNonoperating"];
+// InterestExpenseDebt (interest on debt) is the fallback for filers that tag no total: BWA tags only it ($25M
+// in Q2 2026) beside a net InterestIncomeExpenseNonoperatingNet, so interest coverage was null.
+const INTEREST_EXPENSE = ["InterestExpense", "InterestExpenseNonoperating", "InterestExpenseDebt"];
 const CASH_AND_ST_INVESTMENTS = ["CashCashEquivalentsAndShortTermInvestments"]; // else derived: cash + ST investments
-const CASH = ["CashAndCashEquivalentsAtCarryingValue"];
+// The cash-plus-restricted-cash total is the fallback for filers whose balance-sheet line includes restricted cash:
+// BWA tags only it ($2,313M at FY2025), so cash and net debt were null for FY2022–FY2025.
+const CASH = ["CashAndCashEquivalentsAtCarryingValue", "CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents"];
 // LLY's real companyfacts (2026-09-16 fetch) confirms ShortTermInvestments is the only STI concept it has
 // ever tagged; the others are appended for filers that use them instead. Priority order matters only when
 // two concepts both report the same period (see mergeByPriority) — a stale/unused concept here can't shadow

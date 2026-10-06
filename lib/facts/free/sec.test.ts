@@ -187,6 +187,42 @@ describe("total debt from LongTermDebtAndCapitalLeaseObligations", () => {
   });
 });
 
+// BWA-shape: cash tagged only as the cash-plus-restricted-cash total, interest only as InterestExpenseDebt.
+describe("cash and interest fallbacks (restricted-cash total, InterestExpenseDebt)", () => {
+  const fy = (val: number) => ({ start: "2025-01-01", end: "2025-12-31", val, form: "10-K", filed: "2026-02-11" });
+  const inst = (val: number) => ({ end: "2025-12-31", val, form: "10-K", filed: "2026-02-11" });
+  const base = {
+    Revenues: { units: { USD: [fy(14_316)] } },
+    NetIncomeLoss: { units: { USD: [fy(277)] } },
+    LongTermDebtNoncurrent: { units: { USD: [inst(3_894)] } },
+    LongTermDebtCurrent: { units: { USD: [inst(2)] } },
+    CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents: { units: { USD: [inst(2_313)] } },
+    InterestExpenseDebt: { units: { USD: [fy(100)] } },
+  };
+
+  it("reads cash and net debt from the restricted-cash total and interest from InterestExpenseDebt", () => {
+    const fy2025 = parseCompanyFacts({ facts: { "us-gaap": base } }).annual.find((p) => p.fiscal_year === 2025)!;
+    expect(fy2025.cash).toBe(2_313);
+    expect(fy2025.net_debt).toBe(3_894 + 2 - 2_313);
+    expect(fy2025.interest_expense).toBe(100);
+  });
+
+  it("prefers CashAndCashEquivalentsAtCarryingValue and InterestExpense when tagged", () => {
+    const facts = {
+      facts: {
+        "us-gaap": {
+          ...base,
+          CashAndCashEquivalentsAtCarryingValue: { units: { USD: [inst(2_300)] } },
+          InterestExpense: { units: { USD: [fy(110)] } },
+        },
+      },
+    };
+    const fy2025 = parseCompanyFacts(facts).annual.find((p) => p.fiscal_year === 2025)!;
+    expect(fy2025.cash).toBe(2_300);
+    expect(fy2025.interest_expense).toBe(110);
+  });
+});
+
 // ADI-shape: a fiscal year that starts in the prior calendar year (FY2026 runs 2025-11-02 to
 // 2026-10-31). Every YTD entry starts in 2025 and ends in 2026; a same-calendar-year guard dropped
 // them all, so Q2/Q3 cash flow and D&A (and therefore EBITDA) came out null.
