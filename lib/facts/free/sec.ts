@@ -136,7 +136,9 @@ const SHORT_TERM_INVESTMENTS = [
 // short-term borrowings). Treating LongTermDebt as a noncurrent fallback double-counted the current
 // portion (AEIS FY2025: $567.5M reported as $1,135.0M), and preferring LongTermDebtCurrent over
 // DebtCurrent dropped commercial paper (CSCO FY2026: $29,533M reported as $22,872M). See deriveFields.
-const LTD_NONCURRENT = ["LongTermDebtNoncurrent"];
+// LongTermDebtAndCapitalLeaseObligations is the noncurrent debt-and-finance-lease line; BSX tags its long-term
+// debt only that way ($11,137M at FY2025), so without it total debt read as current debt alone ($299M).
+const LTD_NONCURRENT = ["LongTermDebtNoncurrent", "LongTermDebtAndCapitalLeaseObligations"];
 const LTD_TOTAL = ["LongTermDebt"];
 const LTD_CURRENT = ["LongTermDebtCurrent"];
 const DEBT_CURRENT = ["DebtCurrent"];
