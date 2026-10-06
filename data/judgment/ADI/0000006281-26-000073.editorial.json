@@ -1,0 +1,319 @@
+{
+  "judgmentSha256": "39799fc77c07718fc7479f915d3ac9330ee1c4a41833dff1e243260c38d4f76e",
+  "reviewedAt": "2026-10-06T17:31:46Z",
+  "reviewer": "claude-opus-5-5",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[2].driver / sections.valuation.scenarioCommentary / sections.risks.idiosyncratic[0] / sections.executiveSummary.thesis.body",
+      "quote": "The cycle turns during fiscal 2027, as it did in FY24: earnings stall near the fiscal 2026 level instead of reaching FY27E consensus, and the market pays the lower forward multiple rather than the current-year one.",
+      "issue": "The Bear's story does not match its price (rubrics 5 and 6; same pattern as AEIS F-6). The analogy is FY24, when revenue fell 23.4% and diluted EPS fell to $3.28 from $6.55. The price instead holds earnings flat at FY26E consensus EPS of $12.89, the current record year, and applies 25.7x. That is a growth stall, not an FY24-style turn. The report then contradicts itself in three places. risks.idiosyncratic[0] calls operating leverage in reverse 'the main risk to the stock', says it 'could cut earnings just as sharply', and says 'the Bear case prices a milder version of it'. scenarioCommentary calls 'A full repeat of FY24' 'a tail outside these scenarios'. The thesis says 'a cyclical turn would take earnings and the multiple down together'. The report's main risk cannot also be a tail that no scenario prices.",
+      "fix": "Make the story and the number agree, and say it once. Option (a): describe Bear as a growth stall with a de-rating, and drop 'The cycle turns during fiscal 2027, as it did in FY24'. Argue the 25% on the stall itself. Recast risks.idiosyncratic[0] and the thesis so the earnings decline is named as a risk the scenarios leave out, and say why. Option (b): keep the cyclical-turn story and price an earnings decline on a basis a reader can check, such as a stated multiple on an EPS figure on the surface (for example FY25 adjusted diluted EPS of $7.79 from the proxy) or the 52-week low. Then re-argue the weights and re-check the label. In either case, do not tune the price or the weights to land on a label.",
+      "status": "addressed",
+      "note": "Fixed: Bear is now priced as a decline (52-week low of $223.47, cross-checked against FY25 adjusted EPS of $7.79), and the driver ties the FY23 stall to an FY24-style fall. risks.idiosyncratic[0] now says 'the Bear case prices it'. The 'tail outside these scenarios' line is gone. The label is re-derived (HOLD, E -0.8%) and the call is argued as close."
+    },
+    {
+      "id": "F-2",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "The Base case carries 50% because the near-term evidence supports consensus. The company guided fourth-quarter revenue sequentially higher, and as the growth section shows, FY26E consensus revenue matches that outlook, so the Street is not ahead of the company on fiscal 2026.",
+      "issue": "The largest weight is argued with evidence about a different year (rubric 6). The Base case is 'Fiscal 2027 delivers consensus'. The Bull case assumes the same, so 75% of the weight rests on FY27E consensus EPS of $16.35 arriving. The argument offered is that FY26E matches the fourth-quarter outlook. The report's own growth section says 'The outlook supports the near term, not fiscal 2027' and 'fiscal 2027 is where the debate sits'. The paragraph therefore argues fiscal 2026, which is not in dispute. The fiscal 2027 assumption behind three quarters of the weight goes unargued.",
+      "fix": "Argue the 50% on fiscal 2027 itself, using what the surface offers. In favour: the CFO's aim to 'carry that momentum into fiscal 2027', demand that 'continued to strengthen across our product portfolio and regions', and the fourth-quarter outlook as the exit rate. Against: FY27E consensus revenue of $18.2B needs a third straight year of growth. Say plainly that no document in the pack gives a fiscal 2027 figure, so the weight is a judgment. Keep the fiscal 2026 match only as supporting context, in one clause.",
+      "status": "addressed",
+      "note": "Fixed: the 55% Base weight is now argued on fiscal 2027. For it: the CFO quote, strengthening demand, and the fourth-quarter exit rate. Against it: FY27E revenue needs sequential growth beyond four quarters at the outlook. It says no document gives a fiscal 2027 figure, and the fiscal 2026 match is cut to one clause."
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "Adjusted diluted EPS, which excludes acquisition-related expenses, acquisition-related transaction costs and special charges, net, rose 68% to $3.45 from $2.05, and adjusted operating margin reached 50.0% from 42.2%. We treat the adjusted growth rate as the better guide to the trend.",
+      "issue": "The definition is incomplete, and the paragraph's argument depends on it (rubrics 1 and 2). The release defines adjusted diluted EPS as excluding acquisition related expenses, acquisition related transaction costs, special charges, net, 'and tax related items'. It defines tax related items as the 'Income tax effect of the non-GAAP items discussed above'. Nothing on the surface says adjusted EPS excludes the $153.8 million deferred tax expense that the paragraph blames for overstating reported growth. Yet the paragraph presents 68% as the tax-clean growth rate, which the pack does not establish. Adjusted EPS also excludes acquisition-related amortization, a separate effect from the tax item, so calling it 'the better guide' mixes two adjustments.",
+      "fix": "Give the full definition, including tax related items as the release defines them. To strip out the year-ago tax charge, use a pre-tax measure that is on the surface: operating income rose 97% to $1,613 million from $818 million (release). Then either say what adjusted EPS adds beyond that, or drop the claim that it is the better guide.",
+      "status": "addressed",
+      "note": "Fixed: the full definition now includes tax related items, and the report says adjusted EPS does not clearly remove the year-ago charge. Operating income (+97%, $1,613M vs $818M) is now the cleaner measure. Adjusted EPS is kept only for its basis link to consensus."
+    },
+    {
+      "id": "F-4",
+      "severity": "Important",
+      "field": "sections.businessMoat.moatFactors[0].body / analystCommentary",
+      "quote": "FCF margin was 33.1% in the FY24 downturn itself. Holding cash margins at that level through a down year suggests pricing and cost advantages that are hard to copy.",
+      "issue": "The factor is rated 'Strong' with no counter-case, and the report's own tables cut against it (rubric 5, and rubric 2 for the inference). The cash-flow table shows capital expenditure fell to $0.7B in FY24 from $1.3B in FY23, so much of FY24's FCF margin came from spending less, not from pricing. The series low of 28.9% came in FY23, the year capex peaked, so FCF margin tracks capex timing. Gross margin, the line that would show pricing, fell to 57.1% in FY24 from 64.0%. analystCommentary leans on this factor: 'the moat section explains why we expect cash generation to hold up better than earnings if it does'.",
+      "fix": "Name the capex cut as the counter-reading, using the table's figures, and say how much of the conclusion survives it. Either soften 'suggests pricing and cost advantages that are hard to copy' (and consider 'Moderate'), or support it with gross margin and give its FY24 fall as the cost. Align the analystCommentary pointer with whatever the factor now concludes.",
+      "status": "addressed",
+      "note": "Fixed: the factor is now 'Moderate'. It names the FY24 capex cut ($0.7B from $1.3B) and the FY23 low as the counter-reading, and gives gross margin's fall to 57.1% from 64.0%. It concludes 'real but not exceptional pricing power'. The analystCommentary pointer now matches."
+    },
+    {
+      "id": "F-5",
+      "severity": "Important",
+      "field": "sections.management.governance",
+      "quote": "The proxy says \"a significant portion of the total target compensation\" for executive officers is \"variable, performance-based incentive compensation,\" built from base salary, a variable cash incentive, time-based RSUs, relative TSR PRSUs and financial metric PRSUs; the excerpt cuts off before the target-mix figures.",
+      "issue": "This misdescribes the proxy (rubric 2). As written, the variable, performance-based compensation is 'built from' base salary and time-based RSUs. The proxy sets performance-based pay against 'only a small portion of the total target compensation provided in the form of \"fixed\" compensation', and base salary is that fixed element. Time-based RSUs vest with time, not performance. The proxy lists these items as parts of the whole target pay mix, not of its performance-based part. The paragraph goes on to conclude 'Pay design leans on performance' and later 'sensible on pay'. With the mix figures cut off, that lean is only the company's own description. The report adopts it without a counter-reading.",
+      "fix": "Write that target pay comprises base salary, a variable cash incentive, time-based RSUs, relative TSR PRSUs and financial metric PRSUs, and that the proxy describes 'a significant portion' as variable and performance-based. Attribute the lean toward performance to the proxy. Note that the excerpt gives no split and that time-based RSUs are the part not tied to performance. Soften 'sensible on pay' to match.",
+      "status": "addressed",
+      "note": "Fixed: target pay is listed as the whole mix. The performance lean is attributed to the proxy as 'the company's own account', base salary and time-based RSUs are named as the parts not tied to performance, and the conclusion reads 'by the company's account, performance-weighted on pay'."
+    },
+    {
+      "id": "F-6",
+      "severity": "Important",
+      "field": "sections.financials.balanceCommentary / sections.management.capitalAllocation",
+      "quote": "The 10-Q adds that cash, cash equivalents and short-term investments were $2.3 billion at August 1, 2026, approximately $1.0 billion of it held in the United States.",
+      "issue": "The quarter's largest balance-sheet change is shown but never read (rubric 4). The first paragraph restates four FY25 figures from the table directly above it. It then gives the August 1, 2026 cash figure with no comment, although that figure is well below the $3.7B at fiscal year-end. The third paragraph argues 'Liquidity has tightened since year-end' from the current ratio alone. capitalAllocation points back with 'cash and short-term investments have fallen since fiscal year-end, as the balance-sheet discussion shows', but the balance section never discusses the fall. The location of the cash also gets no reading: under half is held in the United States. The 10-Q says ADI does not expect repatriation restrictions or taxes to have a material adverse effect.",
+      "fix": "In balanceCommentary, read the fall from $3.7B to $2.3B as part of the tightening argument, alongside the current ratio. Say it in words; do not compute a new figure. Give the US/offshore split a one-clause reading that cites the company's repatriation statement. Trim the restated FY25 figures to the ones the argument uses. capitalAllocation's pointer can then stay.",
+      "status": "addressed",
+      "note": "Fixed: balanceCommentary now opens with the tightening, reads the fall from $3.7B to $2.3B together with the current ratio, and gives the offshore split a reading with the repatriation statement. The restated FY25 figures are trimmed. The new 'The 10-Q gives no updated debt figure' wording is a separate issue (F-26)."
+    },
+    {
+      "id": "F-7",
+      "severity": "Important",
+      "field": "sections.management.capitalAllocation / sections.risks.idiosyncratic[3]",
+      "quote": "ADI also recorded transaction costs in the quarter for the acquisition of Empower Semiconductor, Inc.",
+      "issue": "The same fact is stated twice, and the first statement reaches no view (rubrics 7 and 4). capitalAllocation drops it in as a stand-alone sentence. risks.idiosyncratic[3] opens with nearly the same sentence: 'ADI recorded transaction costs in the third quarter for the acquisition of Empower Semiconductor, Inc.' Only the risk item does anything with it.",
+      "fix": "Keep the fact and its reading in risks.idiosyncratic[3]. In capitalAllocation, either drop the sentence or make it a pointer that carries a reason. The deal's price is not stated, so its cash cost cannot yet be weighed against the returns-over-FCF trend (see Risks).",
+      "status": "addressed",
+      "note": "Fixed: capitalAllocation now points to Risks with a reason ('adds a cost the documents do not yet quantify'). The fact itself is stated once, in risks.idiosyncratic[3]. The unqualified 'the documents' is noted under F-26."
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "sections.growth.points[1] / sections.risks.systemic",
+      "quote": "This is the main structural driver the company names, but Communications is still smaller than Industrial or Automotive and rests on one spending theme.",
+      "issue": "The same claim appears in two sections, and both copies overstate the source (rubrics 7 and 2). growth[1] says Communications 'rests on one spending theme'. risks.systemic repeats it and re-introduces the 84% figure: 'The data center demand behind this year's Communications growth also depends on one spending theme' and 'would hit Communications, which grew 84% year over year in the quarter'. The MD&A says only that 'the strongest growth within Communications came from the data center sub-market'. It does not say the whole end market rests on data center. 'Structural' is the report's word, not the company's, which calls overall demand 'broad-based'.",
+      "fix": "Argue the AI concentration once, in growth[1] or in risks.systemic, and point back to it in words from the other. Match the source: Communications' growth was led by data center, which the company ties to artificial intelligence-related infrastructure investment. Drop 'structural', or mark it as the desk's own view.",
+      "status": "addressed",
+      "note": "Fixed: the AI concentration is argued once, in growth[1]. risks.systemic now points back ('The data center exposure discussed under Growth'). The wording matches the source ('the company ties it to one theme of customer investment'), and 'structural' is replaced by a view marked as the desk's own."
+    },
+    {
+      "id": "F-9",
+      "severity": "Important",
+      "field": "sections.growth.points[0] / sections.businessMoat.segments[0].body",
+      "quote": "Its counterweight is that Industrial also drove the higher distributor share of revenue, so part of this growth passed through the channel.",
+      "issue": "This repeats a claim in other words, and the counter-case it leaves is thin (rubrics 7 and 5). segments[0] already quotes ADI that the distributor share rose 'primarily due to the increase in the percentage of revenue from our Industrial end market', and risks.idiosyncratic[2] argues the channel risk. growth[0] retells the link a second time as its only counter-case, and adds nothing the risk section does not already say.",
+      "fix": "In growth[0], point to the channel risk in words ('see Risks'). Give Industrial its own counter-case from figures already on the page: for example, its share of revenue rose to 49% from 45%, which concentrates the upswing in one end market. Do not restate the distributor link.",
+      "status": "addressed",
+      "note": "Fixed: growth[0] no longer restates the distributor link. Its counter-case is now concentration (Industrial's rising share, pointing to the business section), with a pointer to Risks for the channel exposure."
+    },
+    {
+      "id": "F-10",
+      "severity": "Important",
+      "field": "sections.finalRecommendation.body[0] / analystCommentary / sections.executiveSummary.companyOverview / sections.executiveSummary.thesis.body",
+      "quote": "ADI is a strong franchise executing well, and the problem is the entry price at this point in the cycle, not the business.",
+      "issue": "The verdict is restated in other words in four places (rubric 7). The claim that the franchise is fine and the price is the problem appears in companyOverview ('That cycle, more than the quality of the franchise, is what decides the call'), in analystCommentary ('the question is how much of the next year the price already carries, not whether the upswing is real') and here. The claim that the return is too small for the risk appears in analystCommentary ('too little reward to add at this price and too little risk to sell'), in the thesis ('modest expected upside against a Bear downside large enough to keep reward/risk well short of the BUY bar') and here ('too little expected return for the cyclical risk'). finalRecommendation.body[0] adds nothing new. Also, 'not the business' sits badly with risks.idiosyncratic[0], which calls the business's operating leverage in a downturn 'the main risk to the stock'.",
+      "fix": "End companyOverview with the description and drop the verdict line. Keep the verdict in analystCommentary and the thesis. Use finalRecommendation.body[0] to say what the HOLD means in practice, for a current holder and for a new buyer, with reference to the target range, instead of re-arguing it. Replace 'not the business' with wording that admits the cyclical business risk the report itself names.",
+      "status": "addressed",
+      "note": "Fixed: companyOverview ends with the description. analystCommentary no longer has 'not whether the upswing is real'. finalRecommendation.body[0] now says what the HOLD means for a holder and for a new buyer, and names the cyclical operating leverage as the business's own risk."
+    },
+    {
+      "id": "F-11",
+      "severity": "Important",
+      "field": "sections.valuation.multiplesCommentary / sections.valuation.scenarios[1].driver / sections.valuation.scenarios[0].driver / sections.valuation.scenarioCommentary",
+      "quote": "We anchor our Base case to the median, and we note that even the Street's central case leaves only moderate upside from here.",
+      "issue": "Valuation repeats itself (rubrics 6 and 7). multiplesCommentary states the Base anchor (quoted), and the Base driver states it again ('Basis: the median Street target of $463.50'). The Bull condition appears in its driver ('That needs demand to keep strengthening into fiscal 2028') and again in scenarioCommentary ('which in turn needs the growth story to extend into fiscal 2028. Nothing in the outlook reaches that far').",
+      "fix": "State each scenario's basis only in its driver. Let multiplesCommentary describe the Street figures without announcing the Base anchor. Let scenarioCommentary argue the weights and refer to the Bull's condition in words ('the condition in the Bull driver') instead of restating it.",
+      "status": "addressed",
+      "note": "Fixed: multiplesCommentary no longer announces the Base anchor. scenarioCommentary now refers to 'the condition in its driver' and adds only a short gloss, not the full fiscal 2028 restatement."
+    },
+    {
+      "id": "F-12",
+      "severity": "Important",
+      "field": "sections.businessMoat.moatFactors[2].body / sections.financials.incomeCommentary / sections.growth.points[0]",
+      "quote": "the gross-margin gain described under Financials came from utilization of its own fixed manufacturing costs",
+      "issue": "The source's hedges are dropped in three places (house lesson: keep the source's hedges). (1) moatFactors[2] (quoted): the MD&A says the gain was 'primarily due to higher utilization of our manufacturing fixed costs as a result of increased customer demand and favorable mix of products sold into our end markets'. The report drops 'primarily' and the product-mix half of the cause, although incomeCommentary quotes it correctly. (2) incomeCommentary: 'which lifted its effective tax rate to 32.1%'. The MD&A says the year-ago rates were higher 'primarily due to' the $153.8 million expense. (3) growth[0]: 'Industrial also drove the higher distributor share of revenue'. The MD&A says 'primarily due to'.",
+      "fix": "Restore 'primarily' in each place. In moatFactors[2], add 'and favorable mix', or point back to Financials without restating the cause.",
+      "status": "addressed",
+      "note": "Fixed: 'primarily' and 'favorable mix' are restored in moatFactors[2]. incomeCommentary now quotes 'primarily due to' for the tax rate. growth[0] no longer carries the distributor link, and risks.idiosyncratic[0] keeps the hedge ('the primary driver')."
+    },
+    {
+      "id": "F-13",
+      "severity": "Important",
+      "field": "sections.executiveSummary.catalysts[3] / sections.management.capitalAllocation",
+      "quote": "Continued cash returns, led by the $1.10 quarterly dividend declared with the third-quarter results.",
+      "issue": "A past event is shown as a forward catalyst, and the report's own argument undercuts it (rubrics 3 and 7; same pattern as AEIS F-7). The dividend was declared on August 19, 2026 and was payable on September 15, 2026, both before the October 6 report date. capitalAllocation's 'payable September 15, 2026' also reads as if the date were still ahead. capitalAllocation argues that 'The pace now runs ahead of cash generation' and that buybacks are 'the lever at risk'. Listing 'Continued cash returns' as an upside catalyst therefore cuts against the section that sits behind it.",
+      "fix": "Replace the catalyst with a forward event that the sections argue, or recast it as the question the report actually raises: whether cash returns stay above free cash flow. In capitalAllocation, date the dividend as past: declared August 19, 2026 and payable on September 15, 2026.",
+      "status": "addressed",
+      "note": "Fixed: the catalyst is now the forward question the report raises, the pace of buybacks against free cash flow. capitalAllocation dates the dividend as declared August 19, 2026 and payable on September 15, 2026."
+    },
+    {
+      "id": "F-14",
+      "severity": "Important",
+      "field": "sections.businessMoat.durability / sections.businessMoat.moatFactors[3].body",
+      "quote": "Cash margins that held through FY24 and the breadth of the franchise argue for durability; the modest return on book equity keeps us from WIDE.",
+      "issue": "Business and moat repeats itself (rubric 7). moatFactors[3] already ends with 'this gap is why we stop short of WIDE', and moatFactors[0] and [1] already argue the cash margins and the breadth. The opening of durability recaps all three instead of addressing durability. Separately, 'this gap' in moatFactors[3] has no clear referent. The sentence before it says the return 'looks better' on free cash flow, so 'this gap' could mean the difference between the two measures, which is not what keeps the rating from WIDE.",
+      "fix": "Open durability with the rating, then go straight to what could erode the moat, pointing back to the factors in words. In moatFactors[3], replace 'this gap' with what is meant ('the modest return on book equity').",
+      "status": "addressed",
+      "note": "Fixed: durability opens with the rating, points to the factors in words and goes straight to China. moatFactors[3] replaces 'this gap' with 'the modest return on book equity'."
+    },
+    {
+      "id": "F-15",
+      "severity": "Important",
+      "field": "sections.businessMoat.durability / sections.risks.idiosyncratic[3] / sections.financials.cashflowCommentary",
+      "quote": "Competition is also a listed factor, as \"our ability to compete successfully in the markets in which we operate.\"",
+      "issue": "Three statements are attached to the wrong document or section (over-attribution, a known recurring defect). (1) durability (quoted): the sentence follows one sourced to the fiscal 2025 10-K, so it reads as a 10-K factor. The phrase comes from the 10-Q's (and the release's) list of forward-looking factors, and the 10-K excerpt does not carry it. (2) risks.idiosyncratic[3]: 'The 10-Q lists \"unanticipated difficulties or expenditures relating to integrating acquired businesses\" among its risk factors.' The pack carries the forward-looking-statement factor list in the 10-Q's MD&A, not its Item 1A risk factors. The other risk items get this right ('among factors that could change results'). (3) cashflowCommentary: 'it puts that free cash flow at a higher share of revenue than the 29.8% trailing net margin'. The release does not make that comparison; the 29.8% is the vendor's, and the comparison is the desk's own.",
+      "fix": "(1) Write 'The 10-Q also lists \"our ability to compete successfully in the markets in which we operate\" among the factors that could change results.' (2) Replace 'among its risk factors' with 'among the factors that could cause results to differ'. (3) Make the comparison the desk's own, for example 'That free cash flow is a higher share of revenue than the 29.8% trailing net margin'.",
+      "status": "addressed",
+      "note": "Fixed: durability attributes the competition phrase to the 10-Q's factor list. risks.idiosyncratic[3] reads 'among the factors that could cause results to differ'. cashflowCommentary now makes the comparison with the 29.8% net margin in its own voice."
+    },
+    {
+      "id": "F-16",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.thesis.body / analystCommentary",
+      "quote": "and the company guided the fourth quarter higher again.",
+      "issue": "'Again' implies an earlier upward guide that the pack does not show. The only outlook on the surface is the fourth-quarter outlook of August 19, 2026. analystCommentary has the same problem with 'improved on revenue, margins, cash flow and outlook alike': no earlier outlook appears on the page for this one to improve on. The surface supports only that the outlook is above third-quarter revenue and that the CFO called it a 'record fourth quarter outlook'.",
+      "fix": "Drop 'again'. In analystCommentary, say the outlook points above the third quarter rather than that it 'improved'.",
+      "status": "addressed",
+      "note": "Fixed: 'again' is gone from the thesis ('the company's fourth-quarter outlook points higher'). analystCommentary now says the outlook 'points to a higher fourth quarter' instead of 'improved'."
+    },
+    {
+      "id": "F-17",
+      "severity": "Minor",
+      "field": "sections.management.capitalAllocation / sections.management.governance / sections.management.insiderOwnership",
+      "quote": "For outside holders, ADI is widely held",
+      "issue": "Two phrases have become tics (rubric 9). 'outside holders' appears five times across three Management fields: once in capitalAllocation ('the right order for outside holders'), twice in governance and twice in insiderOwnership. 'We treat' opens a sentence three times: in incomeCommentary, cashflowCommentary and risks.idiosyncratic[1].",
+      "fix": "Use 'outside holders' at most once per field. Vary or cut the rest, for example 'shareholders', or make the point directly. Rephrase two of the three 'We treat' sentences.",
+      "status": "addressed",
+      "note": "Fixed: 'outside holders' now appears once each in governance and insiderOwnership, and capitalAllocation uses 'shareholders'. All three 'We treat' openers are rephrased."
+    },
+    {
+      "id": "F-18",
+      "severity": "Minor",
+      "field": "sections.management.insiderOwnership",
+      "quote": "No individual in the table reaches that threshold, including Ray Stata at 791,897 shares.",
+      "issue": "Since the lint fix removed the second '1%', 'that threshold' has no clear referent. The sentence before it is about Roche's shares acquirable within 60 days, not about the 1% line two sentences back. Ray Stata is also named without saying why. The table shows his 791,897 shares as the largest individual holding, but the excerpt gives him no title, and the report should not supply one.",
+      "fix": "Put the individual point directly after the group sentence, so the level is clear without repeating the figure (repeating it fails the lint). For example: '...less than 1% of the stock, and no individual comes close to that level; the largest individual holding in the table is Ray Stata's 791,897 shares.' Then give the Roche sentence.",
+      "status": "addressed",
+      "note": "Fixed: the individual point now follows the group sentence ('no individual comes close to that level'), and Stata is identified by his line in the table ('top the individual lines in the table'), with no title supplied."
+    },
+    {
+      "id": "F-19",
+      "severity": "Minor",
+      "field": "sections.businessMoat.segments[0].body",
+      "quote": "The 2026 proxy statement puts \"Business-to-Business Revenue\" at ~87% for fiscal 2025.",
+      "issue": "The figure is given with no reading (rubric 4). The sentence does not say what a B2B share of about 87% means for the paragraph's argument about cycle exposure, so it only restates the proxy. The field is also at 1,042 of its 1,200 characters (rubric 10).",
+      "fix": "Give the figure a one-clause reading tied to the paragraph's point about cycle exposure, or cut the sentence to free space.",
+      "status": "addressed",
+      "note": "Fixed: the B2B figure now has a reading ('so demand rests largely on business spending'), tied to the paragraph's point about cycle exposure. The field length is unchanged at 1,042 of 1,200 characters."
+    },
+    {
+      "id": "F-20",
+      "severity": "Minor",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "That is a sharp move off the low within a year.",
+      "issue": "The page's 30-day price history shows a sharper recent move that the report does not mention (house lesson: acknowledge sharp recent price moves even when no source explains them). The closes run from $373.66 on August 25 down to $354.52 on September 1, then up to $420.45 on October 6: a rise of about 19% in five weeks, after the August 19 release, with no headline captured to explain it. The move bears on the report's entry-price argument. It also means the BUY trigger in finalRecommendation.body[1], 'if the shares fell toward the bottom of the Street target range', describes roughly where the stock traded through September.",
+      "fix": "Add a sentence, in words only, saying the shares have risen sharply since early September, after the results, and that no source in the pack explains the move. Do not quote the chart's figures, which are not on the grounding surface. Consider whether the BUY trigger should name what else must be true besides a lower price.",
+      "status": "addressed",
+      "note": "Fixed: multiplesCommentary now says, in words, that the shares 'have also risen sharply since early September', with no source explaining it. The BUY trigger now requires a fall to well below $365.00, or a fiscal 2027 stall looking unlikely."
+    },
+    {
+      "id": "F-21",
+      "severity": "Minor",
+      "field": "sections.management.leadership",
+      "quote": "The better test of management is its response when demand falls, and the FY24 cut to buybacks, covered under capital allocation, is the main evidence of that response.",
+      "issue": "The test assumes that today's team made the FY24 decision. The proxy excerpt gives fiscal 2025 titles but no tenures, so the surface does not show who ran ADI or set the buyback in FY24 (recalled-executive trap: tenure comes only from the proxy).",
+      "fix": "Present FY24 as the company's record ('the company cut buybacks in FY24'), and note that the excerpt gives no tenures. Do not credit the decision to the current team.",
+      "status": "addressed",
+      "note": "Fixed: leadership now says the excerpt gives no tenures and presents FY24 as the company's record. capitalAllocation reads 'FY24 shows how the company flexes'."
+    },
+    {
+      "id": "F-22",
+      "severity": "Minor",
+      "field": "sections.risks.systemic",
+      "quote": "It also cites tensions across the Taiwan Strait, the conflict between Russia and Ukraine, and tensions in Israel and the Middle East.",
+      "issue": "The second paragraph lists 10-K risk items without saying which matter for ADI or how (rubric 4). Its only view is 'Trade policy is a live variable'. The surface already offers the link: the 10-K's list of manufacturing sites outside the United States (Ireland, the Philippines, Thailand and Malaysia) and the Section 232 investigation into imported semiconductors.",
+      "fix": "Cut the list to the items that bear on ADI and add a one-sentence reading of them, for example why the Section 232 investigation matters when much of the manufacturing is offshore. Point to the moat section for the footprint instead of restating it.",
+      "status": "addressed",
+      "note": "Fixed: the list is cut to trade policy and Taiwan. Trade policy now gets a reading (offshore manufacturing, pointing to the moat section, means measures 'could raise ADI's costs or weigh on its sales'), and the Taiwan item is quoted with its effect on ADI."
+    },
+    {
+      "id": "F-23",
+      "severity": "Minor",
+      "field": "analystCommentary",
+      "quote": "The franchise and the near-term momentum keep us from SELL.",
+      "issue": "The label is derived, not chosen. The scenarios give expected upside of +6.4%, far from the -5.0% SELL line, so SELL was never in play. The sentence reads as if the franchise argument overruled a SELL (house lesson: whatever label the rule derives is the call). What the franchise and the momentum actually do is set the scenario prices and weights.",
+      "fix": "Recast the sentence as support for the scenarios (for example, 'The franchise and the near-term momentum underpin our Base and Bull cases'), or drop the reference to SELL.",
+      "status": "addressed",
+      "note": "Fixed: now 'The franchise and the near-term momentum underpin our Base and Bull cases'. With E at -0.8%, the new closing line ('nearer to SELL than to BUY') is accurate."
+    },
+    {
+      "id": "F-24",
+      "severity": "Minor",
+      "field": "sections.businessMoat.moatFactors[2].name / sections.businessMoat.moatFactors[2].body",
+      "quote": "Owning capacity lets ADI capture margin when demand is strong.",
+      "issue": "'Owned manufacturing' and 'Owning capacity' go further than the surface. The pack shows that ADI has 'manufacturing fixed costs' and manufacturing facilities outside the United States. But the release's forward-looking statements refer to 'our hybrid manufacturing model', which suggests that not all capacity is owned. The factor's margin argument works on the fixed-cost point alone.",
+      "fix": "Rename the factor, for example 'Manufacturing footprint', and write 'its own fixed manufacturing costs' instead of 'owning capacity'. If space allows, mention the release's 'hybrid manufacturing model' wording.",
+      "status": "addressed",
+      "note": "Fixed: the factor is renamed 'Manufacturing footprint', the release's 'our hybrid manufacturing model' is quoted, and 'owning capacity' is replaced with 'ADI's own fixed manufacturing costs'."
+    },
+    {
+      "id": "F-25",
+      "severity": "Important",
+      "field": "sections.finalRecommendation.body[1]",
+      "quote": "or if the shares rose above our target range without higher estimates.",
+      "issue": "New in the rewrite: the SELL price trigger does not match the report's own calls (rubric 6). The weighted fair value is about $417 (20% x $533, 55% x $463.50, 25% x $223.47). SELL derives when expected upside reaches -5.0%, which happens at about $439, well inside the $400-$470 target range and below the 52-week high of $445.91. At $445.91 the page would derive SELL (E about -6.4%). The report says the call is 'close, and nearer to SELL than to BUY', so where it flips matters, and this trigger puts the flip roughly $30 too high. A reader at $450 would see SELL from the page's own math while the text says SELL starts above $470. finalRecommendation.body[0]'s 'the weighted value sits within the range' is right, but the upper part of the range is SELL territory.",
+      "fix": "Tie the price leg of the SELL trigger to where the label actually flips, in terms the page supports. For example: 'or if the shares returned toward their 52-week high of $445.91 without higher estimates', or 'if the shares rose far enough above our weighted fair value to take expected upside below -5%'. Do not compute a new price threshold. Check that finalRecommendation.body[0]'s advice to holders still reads correctly with that trigger.",
+      "status": "addressed",
+      "note": "Fixed: the SELL price trigger now reads 'if the shares returned toward their 52-week high of $445.91 without higher estimates'. At that price the page derives SELL (E about -6.4%), so the trigger now matches where the label flips. finalRecommendation.body[0] still reads correctly."
+    },
+    {
+      "id": "F-26",
+      "severity": "Important",
+      "field": "sections.financials.balanceCommentary / sections.management.capitalAllocation",
+      "quote": "The 10-Q gives no updated debt figure, so fiscal 2025's total debt of $8.6B is the latest shown, and we do not restate net debt for the quarter.",
+      "issue": "New in the rewrite: over-attribution, a known recurring defect (rubric 2; same pattern as NET F-4). Round 1 correctly said 'The excerpt gives no updated debt figure'. The rewrite says the 10-Q itself gives none. Context marks the 10-Q as a truncated MD&A excerpt ('edgar:10-Q, 2026-08-19, truncated'), and a 10-Q carries a balance sheet. So the report states that a document lacks something when the pack holds only part of it. A milder case of the same issue is in capitalAllocation: 'adds a cost the documents do not yet quantify'. Unqualified, 'the documents' reads as all filings, while risks.idiosyncratic[3] correctly says 'the documents we draw on'.",
+      "fix": "Restore 'The excerpt gives no updated debt figure' (or 'the 10-Q excerpt'). In capitalAllocation, write 'a cost the documents we draw on do not quantify', or point to Risks without the claim.",
+      "status": "addressed",
+      "note": "Fixed: balanceCommentary now says 'The 10-Q excerpt gives no updated debt figure', and capitalAllocation says 'a cost the documents we draw on do not quantify'."
+    },
+    {
+      "id": "F-27",
+      "severity": "Minor",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "a view we accept, since the U.S. balance alone exceeds the third quarter's dividend payment.",
+      "issue": "New in the rewrite: the support is selective (rubric 5). The comparison chooses the smaller outflow. The quarter's dividend was $535 million, but total cash returned in the quarter was $1.7 billion (release; capitalAllocation quotes it), which the roughly $1.0 billion U.S. balance does not cover. The reading that cuts the other way is on the page and goes unmentioned.",
+      "fix": "Rest the acceptance on the company's statement, and name the counterpoint: the U.S. balance covers a quarter's dividend but not a quarter of dividends plus buybacks. Otherwise drop the 'since' clause.",
+      "status": "addressed",
+      "note": "Fixed: the acceptance now rests on the company's statement, with the counterpoint named: 'the U.S. balance covers a quarter's dividend but not a quarter of dividends and buybacks together'."
+    },
+    {
+      "id": "F-28",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "If growth stalls instead, as it did after FY22, the FY24 results show how far earnings can fall, and our Bear case prices that outcome with a lower multiple as well.",
+      "issue": "New in the rewrite. (1) 'A lower multiple' has no reference point, and on one natural reading it is wrong. The Bear driver says its price values FY25 adjusted EPS 'at a multiple between today's 25.7x FY27E multiple and the Bull's current-year multiple'. That multiple is lower than the 32.6x current-year multiple but higher than the 25.7x a reader has just been given in the sentence before. (2) The FY22-FY23-FY24 sequence is now told three times: here, in the Bear driver ('as FY23's did after FY22') and in scenarioCommentary ('FY22's +64.2% was followed by a stall in FY23'). The thesis can point instead (rubric 7).",
+      "fix": "Make the thesis a pointer, for example: 'If fiscal 2027 growth stalls, our Bear case prices a fall like FY24's, back to the 52-week low (see Valuation).' Either drop 'with a lower multiple as well' or name the comparison ('below today's current-year multiple').",
+      "status": "addressed",
+      "note": "Fixed: the thesis is now a pointer: 'our Bear case prices a fall like FY24's, back to the 52-week low (see Valuation)'. 'With a lower multiple as well' and the retold FY22-FY24 sequence are gone."
+    },
+    {
+      "id": "F-29",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarios[2].driver / sections.valuation.scenarioCommentary",
+      "quote": "Basis: the 52-week low of $223.47, which values FY25 adjusted diluted EPS of $7.79 at a multiple between today's 25.7x FY27E multiple and the Bull's current-year multiple.",
+      "issue": "New in the rewrite: the Bear's earnings cross-check has no named source. $7.79 appears nowhere else in the report, and the income table and snapshot show FY25 diluted EPS of $4.56. A reader therefore meets two FY25 EPS figures with no word on where the second comes from. scenarioCommentary says the scenarios rest on figures 'a reader can check above', which is not true of $7.79. The figure is grounded (2026 proxy, non-GAAP, 'Adjusted Diluted Earnings per Share'). House lesson: anchor Base and Bear to figures a reader can check, and say the basis.",
+      "fix": "Name the source in the driver: 'FY25 adjusted diluted EPS of $7.79 (2026 proxy, non-GAAP)'. Note in a few words that it is the adjusted counterpart of the $4.56 reported figure, the same basis the valuation section assigns to consensus.",
+      "status": "addressed",
+      "note": "Fixed: the Bear driver now names the source and basis of $7.79: '2026 proxy, non-GAAP; the adjusted counterpart of the $4.56 reported figure, the basis consensus appears to use'. The figure and the hedge match the surface."
+    },
+    {
+      "id": "F-30",
+      "severity": "Minor",
+      "field": "analystCommentary / sections.valuation.scenarioCommentary / sections.executiveSummary.thesis.body",
+      "quote": "That derives HOLD, and it sits nearer to SELL than to BUY.",
+      "issue": "New in the rewrite: repetition and a phrase tic (rubrics 7 and 9). 'nearer to SELL than to BUY' appears in analystCommentary (quoted) and again in scenarioCommentary ('The call is close, and nearer to SELL than to BUY'). The fourth-quarter outlook 'points' up or higher five times: twice in analystCommentary ('points to a higher fourth quarter', 'the fourth-quarter outlook points up'), once in the thesis, and twice in scenarioCommentary ('the outlook points higher', 'the outlook points up').",
+      "fix": "Keep the close-call sentence in scenarioCommentary, where it is argued, and let analystCommentary point to it in other words. State the outlook direction once per field, and vary or cut the rest.",
+      "status": "addressed",
+      "note": "Fixed: 'nearer to SELL than to BUY' now appears only in scenarioCommentary, and analystCommentary points to it ('the scenario discussion sets out how little it would take to tip the call'). The outlook direction is stated once per field."
+    },
+    {
+      "id": "F-31",
+      "severity": "Minor",
+      "field": "sections.management.governance",
+      "quote": "For outside holders the picture is clean on related parties and, by the company's account, performance-weighted on pay, with the combined CEO and Chair role as the one structural point against.",
+      "issue": "Fit (rubric 10). After the pay rewrite, the field is at 1,398 of its 1,500 characters, which leaves about one short clause for the next synthesis. scenarioCommentary (2,214 of 2,500) and incomeCommentary (2,108 of 2,500) are also close to their caps.",
+      "fix": "At the next synthesis, trim the governance field, for example by shortening the related-person policy sentence. No change is needed for this round.",
+      "status": "declined",
+      "note": "Deferred to the next synthesis, as the finding itself proposes; no change needed this round. Reviewer accepts the decline: governance is unchanged at 1,398 of 1,500 characters."
+    }
+  ]
+}
