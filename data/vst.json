@@ -1,0 +1,716 @@
+{
+  "schemaVersion": "1.1.0",
+  "meta": {
+    "company": "Vistra Corp.",
+    "ticker": "VST",
+    "exchange": "NYSE",
+    "subtitle": "Hedges cover 2026 and most of 2027 and nuclear contracts add growth, but debt keeps rising and the Bear case is deep",
+    "reportDate": "October 6, 2026",
+    "asOf": "Oct 6, 2026",
+    "analyst": "Juniper Finance Research Desk",
+    "analystName": "Nico — Senior Analyst",
+    "fiscalYearEnd": "December 31",
+    "currency": "USD",
+    "filing": {
+      "form": "10-Q",
+      "fiscalPeriod": "fiscal Q2 2026",
+      "filedDate": "Aug 10, 2026",
+      "accession": "0001692819-26-000019"
+    }
+  },
+  "quote": {
+    "currentPrice": 160.5,
+    "marketCap": 53869449216,
+    "sharesOutstanding": 335635197.60747665,
+    "week52Low": 132.66,
+    "week52High": 217.1,
+    "dividendYield": 0.0064,
+    "history": [
+      {
+        "date": "2026-08-25",
+        "close": 139.02999877929688
+      },
+      {
+        "date": "2026-08-26",
+        "close": 140.02999877929688
+      },
+      {
+        "date": "2026-08-27",
+        "close": 139.80999755859375
+      },
+      {
+        "date": "2026-08-28",
+        "close": 137.08999633789062
+      },
+      {
+        "date": "2026-08-31",
+        "close": 137.3699951171875
+      },
+      {
+        "date": "2026-09-01",
+        "close": 138.0800018310547
+      },
+      {
+        "date": "2026-09-02",
+        "close": 143.4600067138672
+      },
+      {
+        "date": "2026-09-03",
+        "close": 144.22000122070312
+      },
+      {
+        "date": "2026-09-04",
+        "close": 149.3000030517578
+      },
+      {
+        "date": "2026-09-08",
+        "close": 151.72000122070312
+      },
+      {
+        "date": "2026-09-09",
+        "close": 151.10000610351562
+      },
+      {
+        "date": "2026-09-10",
+        "close": 147.0500030517578
+      },
+      {
+        "date": "2026-09-11",
+        "close": 148.3800048828125
+      },
+      {
+        "date": "2026-09-14",
+        "close": 140.72999572753906
+      },
+      {
+        "date": "2026-09-15",
+        "close": 141.52999877929688
+      },
+      {
+        "date": "2026-09-16",
+        "close": 140.38999938964844
+      },
+      {
+        "date": "2026-09-17",
+        "close": 143.55999755859375
+      },
+      {
+        "date": "2026-09-18",
+        "close": 140.6699981689453
+      },
+      {
+        "date": "2026-09-21",
+        "close": 140.77999877929688
+      },
+      {
+        "date": "2026-09-22",
+        "close": 140.41000366210938
+      },
+      {
+        "date": "2026-09-23",
+        "close": 137.97000122070312
+      },
+      {
+        "date": "2026-09-24",
+        "close": 137.94000244140625
+      },
+      {
+        "date": "2026-09-25",
+        "close": 138.4600067138672
+      },
+      {
+        "date": "2026-09-28",
+        "close": 138.02000427246094
+      },
+      {
+        "date": "2026-09-29",
+        "close": 140.8300018310547
+      },
+      {
+        "date": "2026-09-30",
+        "close": 138.35000610351562
+      },
+      {
+        "date": "2026-10-01",
+        "close": 139.75
+      },
+      {
+        "date": "2026-10-02",
+        "close": 140.02000427246094
+      },
+      {
+        "date": "2026-10-05",
+        "close": 144.88999938964844
+      },
+      {
+        "date": "2026-10-06",
+        "close": 160.5
+      }
+    ]
+  },
+  "rating": {
+    "label": "HOLD",
+    "tone": "secondary",
+    "targetLow": 148,
+    "targetHigh": 178,
+    "conviction": {
+      "expectedUpside": 0.05601246105919011,
+      "bearDownside": 0.3395638629283489,
+      "rewardRisk": 0.16495412844036722,
+      "derivedLabel": "HOLD"
+    },
+    "gate": {
+      "sector": "utility",
+      "ceiling": "STRONG BUY",
+      "gatedLabel": "HOLD",
+      "distress": "SAFE",
+      "piotroski": 4,
+      "accruals": "LOW",
+      "confidence": "medium",
+      "flags": []
+    },
+    "decision": {
+      "conviction": 66,
+      "tier": "moderate",
+      "proposed": "HOLD",
+      "reasons": [
+        "E/R proposed HOLD"
+      ],
+      "advisories": [],
+      "moat": null,
+      "intrinsic": null,
+      "composite": {
+        "percentile": 62.754068757359704,
+        "confidence": "high"
+      },
+      "uncertainty": {
+        "tier": "low",
+        "points": 2,
+        "drivers": [
+          "wide analyst-target dispersion (+2)"
+        ]
+      }
+    }
+  },
+  "snapshot": [
+    {
+      "label": "Current Price",
+      "value": 160.5,
+      "unit": "usd"
+    },
+    {
+      "label": "Market Cap",
+      "value": 53869449216,
+      "unit": "usdLarge",
+      "approx": true
+    },
+    {
+      "label": "52-Week Range",
+      "raw": "$132.66 – $217.10"
+    },
+    {
+      "label": "Shares Outstanding",
+      "value": 335635197.60747665,
+      "unit": "shares",
+      "approx": true
+    },
+    {
+      "label": "P/E (TTM)",
+      "value": 27.06576728499157,
+      "unit": "mult"
+    },
+    {
+      "label": "Consensus Target",
+      "value": 210.25,
+      "unit": "usd",
+      "change": 0.309968847352025
+    },
+    {
+      "label": "EV/EBITDA (TTM)",
+      "value": 13.486509550507849,
+      "unit": "mult"
+    },
+    {
+      "label": "Analyst Consensus",
+      "raw": "Strong Buy (20 B / 0 H / 1 S)"
+    },
+    {
+      "label": "FY25 Revenue",
+      "value": 17738000000,
+      "unit": "usdLarge",
+      "change": 0.02984208081746398
+    },
+    {
+      "label": "FY25 Net Income",
+      "value": 944000000,
+      "unit": "usdLarge"
+    },
+    {
+      "label": "FY25 Diluted EPS",
+      "value": 2.18,
+      "unit": "usd"
+    },
+    {
+      "label": "FY26E Revenue",
+      "value": 22484501220,
+      "unit": "usdLarge",
+      "approx": true,
+      "change": 0.26758942496335547,
+      "changeDp": 0
+    },
+    {
+      "label": "Q2'26 Revenue",
+      "value": 4017000000,
+      "unit": "usdLarge",
+      "change": -0.054823529411764715,
+      "changeDp": 0
+    },
+    {
+      "label": "Q2'26 Operating Margin",
+      "value": 0.13766492407269107,
+      "unit": "pct",
+      "dp": 0
+    },
+    {
+      "label": "Fwd P/E (FY27E)",
+      "value": 15.498052363139163,
+      "unit": "mult",
+      "approx": true
+    },
+    {
+      "label": "Dividend Yield",
+      "value": 0.0064,
+      "unit": "pct",
+      "dp": 2
+    },
+    {
+      "label": "FY25 Net Debt",
+      "value": 18058000000,
+      "unit": "usdLarge"
+    },
+    {
+      "label": "Net Debt / EBITDA (TTM)",
+      "value": 3.538319482917821,
+      "unit": "mult"
+    },
+    {
+      "label": "FY25 Capital Expenditure",
+      "value": -2752000000,
+      "unit": "usdLarge"
+    },
+    {
+      "label": "FY25 Free Cash Flow",
+      "value": 1318000000,
+      "unit": "usdLarge"
+    }
+  ],
+  "analystSentiment": {
+    "numAnalysts": 21,
+    "buy": 20,
+    "hold": 0,
+    "sell": 1,
+    "consensusRating": "Strong Buy",
+    "consensusTarget": 210.25,
+    "medianTarget": 211,
+    "highTarget": 305,
+    "lowTarget": 106,
+    "commentary": "The second quarter showed both sides of Vistra. The company's own measure, Ongoing Operations Adjusted EBITDA, grew strongly and management reaffirmed its 2026 ranges, while GAAP net income slipped because hedges that settle in later years were marked down. With expected generation for 2026 and most of 2027 already hedged, we think near-term earnings are well covered.\n\nThe open question is what the market will pay for the years after that. Vistra is funding an acquisition, a data-center investment fund and nuclear uprates from a balance sheet whose debt is still growing, and its own 10-K names slower-than-expected electricity demand as a risk to its stock price. We expect consensus 2027 earnings to arrive, but we give real weight to a de-rating if the demand story weakens.\n\nThat asymmetry sets the call at HOLD. The final recommendation gives the price and the events that would change it."
+  },
+  "sections": {
+    "executiveSummary": {
+      "companyOverview": "Vistra Corp. operates as an integrated retail electricity and power generation company in the United States, based in Irving, Texas. The company description we draw on (dated 2026-10-06) says it serves approximately 5 million customers and has generation capacity of approximately 44,000 megawatts across natural gas, nuclear, coal, solar and battery energy storage facilities. The retail side sells electricity and natural gas to residential, commercial and industrial customers; the generation side also handles wholesale energy sales, commodity risk management and fuel procurement.\n\nFY25 revenue was $17.7B, up 3.0%, and FY25 diluted EPS was $2.18. At $160.50 on 2026-10-06 the market capitalization is about $53.9B. This report covers the 10-Q for the quarter ended June 30, 2026 and the earnings release dated Aug. 7, 2026.",
+      "thesis": {
+        "label": "HOLD",
+        "body": "Most of Vistra's expected 2026 and 2027 generation is already hedged, the second quarter lifted Ongoing Operations Adjusted EBITDA by more than 30% year over year, and the company reaffirmed its 2026 ranges, so we expect FY27 consensus EPS of $10.36 to arrive. At $160.50 the stock trades at about 15.5x that figure, and our Base case, which keeps the multiple the market now pays on the current year and rolls it forward one year, reaches $174.05. The case for more is weaker than the Street's near-unanimous Buy suggests: GAAP earnings swing with hedge marks, debt is rising into a heavy spending program, and a Bear case built on the 10-K's own demand risk falls much further than the Base rises. Reward/risk misses our BUY bar, and we rate the stock HOLD."
+      },
+      "catalysts": [
+        "Closing of the Cogentrix Transaction, which received FERC approval in August 2026 and is expected to close in late 2026; the growth section sets out the terms.",
+        "Start of deliveries under the Meta nuclear PPAs, which the 10-Q anticipates for a portion of the operating energy and capacity in late 2026.",
+        "Formal guidance for 2027, when the company issues it, which would show whether the 2027 midpoint opportunity holds up as a range the company stands behind.",
+        "Completion of the remaining share repurchase authorization, which the company expects no later than year-end 2027."
+      ],
+      "risks": [
+        "Leverage is rising, and the pending Cogentrix and Helix commitments add to it; the balance-sheet discussion carries the detail.",
+        "Nuclear PTC revenue already recorded for 2024 and 2025 could change if Treasury guidance on gross receipts differs from the company's interpretation.",
+        "If electricity demand does not grow at the rate expected, the multiple has room to fall well below today's, which is the Bear case.",
+        "Unrealized hedge marks will keep GAAP earnings volatile and can obscure the trend in the business, as the second quarter showed."
+      ]
+    },
+    "financials": {
+      "income": {
+        "columns": [
+          "Metric",
+          "FY21",
+          "FY22",
+          "FY23",
+          "FY24",
+          "FY25"
+        ],
+        "rows": [
+          {
+            "label": "Revenue ($B)",
+            "values": [
+              12077000000,
+              13728000000,
+              14779000000,
+              17224000000,
+              17738000000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "YoY Growth",
+            "values": [
+              null,
+              0.13670613562970946,
+              0.07655885780885785,
+              0.165437445023344,
+              0.02984208081746398
+            ],
+            "format": "pctSigned"
+          },
+          {
+            "label": "Gross Margin",
+            "values": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "format": "pct"
+          },
+          {
+            "label": "Operating Income ($B)",
+            "values": [
+              -1515000000,
+              -1177000000,
+              2661000000,
+              4081000000,
+              1906000000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Operating Margin",
+            "values": [
+              -0.12544506085948498,
+              -0.08573717948717949,
+              0.1800527775898234,
+              0.2369368323269856,
+              0.10745292592174992
+            ],
+            "format": "pct"
+          },
+          {
+            "label": "EBITDA ($B)",
+            "values": [
+              238000000,
+              419000000,
+              4163000000,
+              5924000000,
+              3892000000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Net Income ($B)",
+            "values": [
+              -1274000000,
+              -1227000000,
+              1493000000,
+              2659000000,
+              944000000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Diluted EPS ($)*",
+            "values": [
+              -2.69,
+              -3.26,
+              3.58,
+              7,
+              2.18
+            ],
+            "format": "eps"
+          }
+        ],
+        "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
+      },
+      "incomeCommentary": "FY25 revenue rose 3.0% to $17.7B, but operating margin fell to 10.7% from 23.7% in FY24 and diluted EPS dropped to $2.18 from $7.00. The proxy statement dated March 18, 2026 says FY25 net income of $944 million included an unrealized loss from hedges expected to settle in future years of $808 million, so we do not treat FY25 EPS as the earnings base.\n\nThe second quarter repeated the pattern. Revenue fell 5.5% year over year to $4B and operating margin was 13.8%. Net income was $305 million, compared with $327 million a year earlier, and included an unrealized loss of $472 million from hedges expected to settle in future years. The release attributes the {- $22 million -} decrease \"primarily\" to an increase in unrealized mark-to-market losses of $488 million on derivative positions, \"mostly offset\" by higher realized prices and capacity revenue and three months' contribution from the plants acquired from Lotus. Ongoing Operations Adjusted EBITDA rose {+ $418 million +} to $1,767 million from $1,349 million, which the release attributes primarily to higher realized energy and capacity prices and the Lotus plants. For the six months ended June 30, 2026, net income was $1,334 million compared with $59 million a year earlier, and Ongoing Operations Adjusted EBITDA was $3,261 million compared with $2,589 million.\n\nAdjusted EBITDA is the company's non-GAAP measure, which the release defines as \"EBITDA as adjusted for unrealized gains or losses from hedging activities, transition and merger expenses, non-cash compensation expenses, nuclear decommissioning trust income, asset retirement obligation expenses, and certain other items\"; the Ongoing Operations version also excludes the Asset Closure segment. The hedge marks it removes are not noise, since they belong to positions that settle in later years. We read the business as earning more than the FY25 GAAP line shows, and the trailing operating margin of 18.5% and net margin of 11.6% reflect the stronger 2026 half-year, but the reported line will stay volatile.\n\nThe vendor's consensus revenue estimates do not state their basis, so we do not set them beside reported revenue.",
+      "balance": {
+        "columns": [
+          "Metric ($B)",
+          "FY21",
+          "FY22",
+          "FY23",
+          "FY24",
+          "FY25"
+        ],
+        "rows": [
+          {
+            "label": "Cash & ST Investments",
+            "values": [
+              1325000000,
+              455000000,
+              3485000000,
+              1188000000,
+              785000000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Total Debt",
+            "values": [
+              10731000000,
+              12621000000,
+              14402000000,
+              16298000000,
+              18843000000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Net Debt",
+            "values": [
+              9406000000,
+              12166000000,
+              10917000000,
+              15110000000,
+              18058000000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Total Equity",
+            "values": [
+              8292000000,
+              4918000000,
+              5322000000,
+              5583000000,
+              5110000000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Current Ratio",
+            "values": [
+              1.3491357179531063,
+              1.0753603560027087,
+              1.184668634836608,
+              0.9628795066413662,
+              0.7769595395293719
+            ],
+            "format": "num2"
+          }
+        ],
+        "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
+      },
+      "balanceCommentary": "Total debt has risen every year in the annual table, to $18.8B at FY25. Net debt was $18.1B at FY25, up from $10.9B at FY23, and total equity was $5.1B. The current ratio was 0.78 at FY25 and 0.97 on a trailing basis, so current liabilities exceed current assets on both measures. On the vendor's trailing figures, net debt/EBITDA is 3.5x and interest coverage is 3.1x.\n\nThe 10-Q shows the credit profile improving in 2026. S&P raised Vistra Operations' issuer credit rating to BBB- on December 2, 2025 and its Senior Unsecured Notes rating on March 20, 2026, and Fitch moved both ratings to BBB- on March 16, 2026. Those investment-grade ratings released the collateral securing the Senior Secured Notes on April 2, 2026, though the 10-Q says the release did not change their principal, maturity or interest rates. Vistra Operations also repaid $2.444 billion of Term Loan B-3 borrowings in April 2026. At June 30, 2026, total available liquidity was approximately $6,295 million, including cash and cash equivalents of $435 million. In June 2026 Permian Power entered a $583 million loan agreement with the Texas Energy Fund at a fixed interest rate, non-recourse to Vistra, with $172 million outstanding at June 30, 2026.\n\nThe FY25 figures predate the April repayment, and the excerpts we hold give no total debt for June 30, 2026, so we cannot say where net debt stands today. We read the balance sheet as adequate for the current plan with little slack: the ratings are new, current liabilities exceed current assets, and the commitments described under growth and capital allocation come on top.",
+      "cashflow": {
+        "columns": [
+          "Metric ($B)",
+          "FY21",
+          "FY22",
+          "FY23",
+          "FY24",
+          "FY25"
+        ],
+        "rows": [
+          {
+            "label": "Operating Cash Flow",
+            "values": [
+              -206000000,
+              485000000,
+              5453000000,
+              4563000000,
+              4070000000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Capital Expenditure",
+            "values": [
+              -1033000000,
+              -1301000000,
+              -1676000000,
+              -2078000000,
+              -2752000000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Share Repurchases",
+            "values": [
+              -471000000,
+              -1949000000,
+              -1245000000,
+              -1266000000,
+              -1028000000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Dividends Paid",
+            "values": [
+              -290000000,
+              -302000000,
+              -313000000,
+              -305000000,
+              -306000000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "Free Cash Flow",
+            "values": [
+              -1239000000,
+              -816000000,
+              3777000000,
+              2485000000,
+              1318000000
+            ],
+            "format": "usdB"
+          },
+          {
+            "label": "FCF Margin",
+            "values": [
+              -0.10259170323755899,
+              -0.05944055944055944,
+              0.2555653291833006,
+              0.14427542963307013,
+              0.07430375465103169
+            ],
+            "format": "pct"
+          }
+        ],
+        "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
+      },
+      "cashflowCommentary": "Operating cash flow was $4.1B in FY25, below $5.5B in FY23 and $4.6B in FY24, while capital expenditure grew every year to $2.8B. The vendor's free cash flow therefore fell to $1.3B, a 7.4% margin, from $3.8B in FY23. In FY25, share repurchases of $1.0B and dividends of $0.3B together used roughly all of that free cash flow. The trailing FCF yield is 4.2%.\n\nThe company manages to a different measure. The release defines Adjusted Free Cash Flow before Growth as \"cash from operating activities excluding changes in margin deposits and working capital and adjusted for maintenance capital expenditures, other net investment activities, and other items\", so it deducts maintenance rather than all capital spending. On Aug. 7, 2026 the company reaffirmed 2026 Ongoing Operations Adjusted FCFbG guidance of $3.925 billion to $4.725 billion. The two measures are not comparable; we use the vendor's figure for the history and treat the company's only as its own target.\n\nThe growth spending that the company's measure leaves out is still coming: Cogentrix cash consideration, the Helix commitment, Meta uprate capital from 2026 through 2034, and the Permian peakers. With FY25 free cash flow already returned to shareholders, we expect much of that spending to be funded with debt, which is why we weight the balance sheet heavily."
+    },
+    "valuation": {
+      "multiples": {
+        "columns": [
+          "Multiple (TTM)",
+          "VST"
+        ],
+        "rows": [
+          {
+            "label": "P/E",
+            "values": [
+              27.06576728499157
+            ],
+            "format": "mult"
+          },
+          {
+            "label": "P/S",
+            "values": [
+              2.8039480124921923
+            ],
+            "format": "mult"
+          },
+          {
+            "label": "EV/EBITDA",
+            "values": [
+              13.486509550507849
+            ],
+            "format": "mult"
+          },
+          {
+            "label": "Fwd P/E (NTM)",
+            "values": [
+              16.75632955994016
+            ],
+            "format": "mult"
+          }
+        ],
+        "note": "Peer multiples pending a peer data source."
+      },
+      "multiplesCommentary": "At $160.50 the stock trades at 27.1x trailing-twelve-month earnings, 16.8x on the vendor's NTM line and about 15.5x FY27 consensus EPS of $10.36. That NTM figure lines up with FY26 consensus EPS of $9.58 rather than a blended next-twelve-month figure, so we read it as a current-year multiple.\n\nThe trailing and forward multiples are not on one basis. The trailing multiple appears to rest on reported earnings, which carry unrealized hedge marks: it is far lower than FY25 diluted EPS alone would produce, which fits the much stronger first-half 2026 net income shown in the financials section. The vendor does not say whether consensus EPS is GAAP or adjusted, so we do not read the step down from the trailing to the forward multiples as earnings growth alone.\n\nEV/EBITDA is 13.5x on the vendor's trailing EBITDA. That EBITDA is not the company's measure: the vendor shows FY25 EBITDA of $3.9B, while the proxy reports 2025 Ongoing Operations Adjusted EBITDA of $5,912 million, and we use the vendor's figure for the multiple without restating it on the company's basis.\n\nThe data we hold carries no peer multiples, so we make no relative-value claim. We anchor Base to price-to-earnings on consensus EPS, the one multiple that pairs today's price with a stated forward earnings figure, and Bull and Bear to Street targets.",
+      "scenarios": [
+        {
+          "name": "Bull",
+          "driver": "Price at the Street consensus target of $210.25. Cogentrix closes in late 2026 as expected, Meta deliveries start on schedule, and 2027 Ongoing Operations Adjusted EBITDA reaches the top half of the company's $7.4 billion to $7.8 billion midpoint opportunity. The market then pays the Street's price for FY27 consensus EPS, a higher multiple than it pays today.",
+          "impliedPrice": 210.25,
+          "probability": 0.25
+        },
+        {
+          "name": "Base",
+          "driver": "16.8x, the multiple the market now pays on FY26 consensus EPS, applied to FY27 consensus EPS of $10.36. The company lands inside its 2026 guidance, the mostly hedged 2027 delivers consensus, and one year from now the stock carries today's current-year multiple on 2027 earnings. No re-rating and no contribution beyond consensus.",
+          "impliedPrice": 174.05,
+          "probability": 0.55
+        },
+        {
+          "name": "Bear",
+          "driver": "Price at the lowest Street target, $106.00. Electricity demand does not grow at the rate expected or new supply lowers wholesale prices, both 10-K risk factors; Cogentrix or the Meta deliveries slip, 2027 EPS holds near the FY26 consensus of $9.58, and the market stops paying for growth beyond the hedged years. At that price the stock would trade well below the Base case's current-year multiple even on the lower EPS, so most of the fall comes from the multiple.",
+          "impliedPrice": 106,
+          "probability": 0.2
+        }
+      ],
+      "scenarioCommentary": "The Street is close to unanimous: 20 of 21 analysts rate the stock Buy and one rates it Sell, with targets from $106.00 to $305.00 around a consensus of $210.25 and a median of $211.00. The price has also moved sharply within the past year, between a 52-week low of $132.66 and a high of $217.10, and none of the documents we draw on gives a cause.\n\nWe put 55% on Base because the year it depends on is mostly hedged, as the growth section sets out, and because the company reaffirmed its 2026 ranges in August. Bull gets 25%: the stock traded above the Bull price within the past year and the Street consensus sits there, but the 2027 figure Bull leans on is a midpoint opportunity that the release says is not guidance.\n\nBear gets 20%, argued on its own terms. The hedges protect most of 2027, so within a year the Bear runs mainly through the multiple. What supports it is the width of the past year's price range, the thinner hedge cover for 2028 and the rising debt. What keeps it below Bull is that the Bear price sits below anything the stock has traded at in the past 52 weeks.\n\nThese weights derive HOLD, with the figures in the final recommendation. Swapping the Bull and Bear weights still derives HOLD, and SELL would need a Bear weight far above Bull's. The label is more sensitive to the Bear's depth: with the Bear at the 52-week low and five points moved from Bear to Bull, the same math derives BUY. We do not use that Bear, because a return to a recent low is a move inside the past year's range, not a case with lower earnings."
+    },
+    "businessMoat": {
+      "segments": [
+        {
+          "name": "Consolidated",
+          "sharePct": 1,
+          "revenue": 17738000000,
+          "body": "The vendor's segment line carries only a consolidated FY25 total of $17.7B. The company's own release shows more: it reports Adjusted EBITDA for Retail, Texas, East, West, Corporate and Other, and Asset Closure, and the company description lists five segments. We follow the company. In the second quarter, compared with the same quarter of 2025, Adjusted EBITDA rose to $311 million from $142 million in Texas, to $642 million from $418 million in East and to $68 million from $49 million in West, while Retail was $773 million compared with $756 million. For the six months, Retail fell to $841 million from $940 million. The release explains the consolidated change, not each segment's, so we assign no segment drivers. On these figures the regional segments carried the year-over-year growth in Adjusted EBITDA and Retail did not."
+        }
+      ],
+      "segmentsBasis": "FY25 (single reportable segment) mix",
+      "geographyBasis": "FY25",
+      "geoMix": [],
+      "moatRating": "NARROW",
+      "moatFactors": [
+        {
+          "name": "Integrated retail and generation",
+          "strength": "Moderate",
+          "body": "The 10-Q says Vistra's \"integrated retail electricity and power generation operations allow us to quickly respond to electricity demand changes.\" We read owning both the customers and the plants as a partial natural hedge. The 10-K gives the counter-case: retail faces \"significant competition from other REPs\", and \"volatile power supply costs and demand for power have and could in the future adversely affect\" retail results. Retail's six-month decline, set out under segments, shows the retail side has not been immune, though the release does not give its cause. We count integration as a real but partial advantage."
+        },
+        {
+          "name": "Long-dated nuclear contracts",
+          "strength": "Building",
+          "body": "The two 20-year nuclear PPAs described under growth turn part of the nuclear fleet's output into contracted revenue, and the NRC approved the renewal of the Perry license through 2046 in July 2025. In our judgment, contracts of this length are hard to win without licensed plants already running. The limits are timing and approvals: the 10-Q says the uprate spending depends on \"regulatory approvals, engineering evaluations and capital allocation decisions\", and the AWS deliveries ramp to full capacity only by 2032."
+        },
+        {
+          "name": "Hedging program",
+          "strength": "Moderate",
+          "body": "The release says the company's \"comprehensive hedging program provides support for\" its 2026 ranges and its 2027 midpoint opportunity. We read the hedge book as the main source of Vistra's near-term earnings visibility. The 10-K sets the limit: its assets \"cannot be fully hedged\", and \"hedging transactions may not work as planned or hedge counterparties may default on their obligations.\" The marks on those hedges also run through GAAP earnings, as the financials section shows."
+        }
+      ],
+      "durability": "We rate the moat NARROW. Contracts and integration give Vistra some insulation, but the 10-K says its \"revenues, results of operations, and operating cash flows are affected by price fluctuations in the wholesale power market and other market factors beyond our control.\" It also warns that market participants may keep building or expanding generation \"despite relatively low power prices\", which could reduce wholesale prices. The contracted nuclear output covers part of the fleet; the rest of the fleet and the retail book remain exposed to the price swings the 10-K describes. The nuclear PTC, available to existing nuclear facilities from 2024 through 2032, is support with an end date. The advantages last as long as the contracts and licenses do, but the commodity exposure stays."
+    },
+    "growth": {
+      "points": [
+        "On Aug. 7, 2026 Vistra reaffirmed 2026 guidance of $6.8 billion to $7.6 billion for Ongoing Operations Adjusted EBITDA; the proxy reports $5,912 million for 2025. As of Aug. 3, 2026 it had hedged approximately 100% of expected 2026 generation volumes. With the year hedged, we expect 2026 to land inside the range, and the range's width is the main uncertainty.",
+        "The release puts the 2027 Ongoing Operations Adjusted EBITDA midpoint opportunity at $7.4 billion to $7.8 billion but says it is \"not intended to be guidance\" and rests on market curves as of October 31, 2025. Both the 2026 ranges and the 2027 figure exclude the pending Cogentrix acquisition and the Meta PPAs, \"part of which are expected to contribute to our Adjusted EBITDA in 2027.\" Hedge cover steps down from approximately 94% of expected 2027 generation to approximately 72% for 2028, so the path after 2027 is more open.",
+        "In January 2026 Vistra signed 20-year PPAs to supply Meta with 2,609 MW from its PJM nuclear plants, including uprates at Perry, Davis-Besse and Beaver Valley; full delivery of the operating energy is anticipated by year end 2027 and of the uprates by year end 2034. A 20-year PPA announced in September 2025 supplies AWS with 1,200 MW from Comanche Peak, starting in the fourth quarter of 2027. These contracts add more after 2027 than within it.",
+        "The pending Cogentrix Transaction adds 10 natural gas facilities totaling approximately 5,500 MW. Consideration is approximately $2.3 billion in cash, net of the assumption of an estimated $1.5 billion of Cogentrix debt, plus 5,000,000 Vistra shares at an agreed value of $185 per share, above today's price. The 10-K warns that Vistra \"may not realize the anticipated synergies.\" In our view the deal adds debt and shares before it adds earnings.",
+        "In July 2026 Vistra cleared 10,924 MW in the PJM capacity auction for planning year 2028-2029 at $325.00 per MW-day in every zone it reported. In Texas it plans up to 860 MW of peaking plants, anticipated online in 2028, and a repowering of Coleto Creek as a gas plant of up to 600 MW. The 10-Q says supply chain constraints led to \"the deferral or abandonment of some planned capital expenditures for our solar and battery projects.\" The capacity price supports revenue in years beyond our scenarios."
+      ]
+    },
+    "management": {
+      "leadership": "The proxy statement dated March 18, 2026 lists James A. Burke, President and Chief Executive Officer, and Kristopher E. Moldovan, Executive Vice President and Chief Financial Officer, among the 2025 named executive officers. Per the proxy, 2025 Ongoing Operations Adjusted EBITDA was $112 million above the guidance midpoint announced in November 2024, and Ongoing Operations Adjusted FCFbG was $292 million above the original guidance midpoint. The Aug. 7, 2026 release says Vistra achieved commercial availability of 97% or greater across its fleet during recent periods of extreme heat in Texas and the PJM market. The counterweight is that these beats are on adjusted measures, while FY25 GAAP net income fell, as the financials section shows. We credit management with execution against its own targets.",
+      "capitalAllocation": "Buybacks have been the main return of capital. As of Aug. 3, 2026, Vistra had executed $6.5 billion of repurchases since November 2021 and had 336 million shares outstanding, a 30% reduction from Nov. 2, 2021; $1.2 billion of authorization remained, which it expects to complete no later than year-end 2027. The dividend is small, with a yield of 0.64%.\n\nCapital is also going to plants and new ventures. Vistra acquired the Lotus plants (2,600 MW) on Oct. 22, 2025 for a base purchase price of $1.9 billion, has Cogentrix pending, and in June 2026 committed up to $1 billion to the Helix Fund, managed by affiliates of KKR: $500 million initially and $500 million more subject to power supply milestones or at its election. The release calls the full amount an initial commitment; we use the 10-Q's split. It is also selling its Casco Bay, Beaver Falls and Syracuse gas plants.\n\nWe see a company buying back stock, buying plants and investing in a fund at once while leverage rises. In our judgment Helix is the least conventional, a fund investment in data center and infrastructure assets rather than in Vistra's own fleet. We would prefer buybacks to slow until Cogentrix is absorbed.",
+      "governance": "The proxy statement dated March 18, 2026 says the Board determined Mses. Ackermann, Acosta, Crutchfield and Lagacy and Messrs. Baiera, Barbas, Helm, Pitesa, Sult and Walters to be independent; the excerpt does not give the board's full size. During 2025 the CEO and Chairman roles were separate, though the Board has no policy requiring that. Mrs. Acosta and Messrs. Barbas and Sult qualify as Audit Committee financial experts. The proxy describes a pay philosophy that \"places an emphasis on 'pay-at-risk'\", and the Annual Incentive Plan weights Adjusted EBITDA, Adjusted FCFbG and other metrics including total cost; the proxy says above-target performance on Adjusted EBITDA and Adjusted FCFbG \"contributed to strong incentive plan payouts for 2025.\" If the plan's Adjusted EBITDA follows the release definition, annual bonuses track a measure that excludes unrealized hedge results. The excerpt does not cover long-term awards or beneficial ownership, so we make no claim on insider stakes. On what it shows, the board structure is conventional, and the Audit and compensation committee members it names meet heightened independence standards."
+    },
+    "risks": {
+      "idiosyncratic": [
+        "Credit reversion. The 10-Q says the collateral release on the Senior Secured Notes \"is subject to reversion\" if the rating agencies withdraw the investment-grade ratings or downgrade them below investment grade, subject to a 60-day grace period. With debt rising and the Cogentrix cash and assumed debt still to come, a downgrade would bring the liens back and undo the main credit gain of 2026.",
+        "Nuclear PTC estimates. Vistra recognized transferable nuclear PTC revenues of $220 million in 2025 and $545 million in 2024. The 10-Q says Treasury guidance on gross receipts that differs from the company's interpretation \"could result in a material change to PTC revenues recorded in 2024 and 2025\", booked as a change in estimate when received. The size of any change is unknown.",
+        "Offtake and uprate execution. The 10-K lists the risk that \"electricity demand does not grow at the rate expected\" or that Vistra cannot execute on large load offtake opportunities, including agreements already signed. The Meta deliveries and the uprates through 2034 depend on approvals and engineering work the company does not fully control.",
+        "Operating incidents. A fire at the Moss Landing 300 MW energy storage facility on January 16, 2025 stopped operations at all facilities at the Moss Landing complex until it was contained, and a fire at the 815 MW Martin Lake Unit 1 on November 27, 2024 kept that unit out of service until February 2026. The 10-K also flags the risk of nuclear accidents."
+      ],
+      "systemic": "Wholesale power prices drive revenue, and the 10-K puts their fluctuation at the top of its market risks, followed by fuel costs. The 10-Q adds the conflict involving the United States, Israel and Iran: Vistra has no operations in the region, but prolonged instability \"could indirectly affect the Company\" through natural gas and power prices, supply chains, construction delays, inflation and capital-market volatility. Supply chain constraints and labor shortages are already raising equipment and labor costs, per the 10-Q. Regulation is the other broad exposure: the 10-K cites changes to market structure, state or federal interference in power markets, subsidized generation, and laws \"proposed or implemented under the Trump administration.\" The 10-K also says extreme weather and seasonality have hurt results before. The hedge book softens price risk for 2026 and 2027 but does not remove these exposures."
+    },
+    "finalRecommendation": {
+      "body": [
+        "We rate Vistra HOLD with a target range of $148–$178. The weighted fair value of $169.49 gives expected upside of +5.6%, and the Bear case sits 34.0% below the price, for reward/risk of 0.16×. The hedges make 2026 and 2027 earnings visible and the Base case offers modest upside, but the downside if demand disappoints is much larger. We set the range where our own scenarios change the label: below the low end they derive BUY, and above the high end they derive SELL.",
+        "Outside price, we would move toward BUY if Cogentrix closes on the stated terms and the company's 2027 guidance, when issued, sits at or above the top of its midpoint-opportunity range, because that would cut the weight we give the Bear. We would move toward SELL if a rating agency takes Vistra Operations below investment grade, or if Treasury guidance forces a material reversal of recorded PTC revenue."
+      ]
+    }
+  },
+  "disclaimer": "DISCLAIMER: This report is for informational/educational purposes only and does not constitute investment advice. All equity securities carry risk and can be volatile, and past performance is not indicative of future results. Conduct your own due diligence. The author may hold positions in securities discussed."
+}
