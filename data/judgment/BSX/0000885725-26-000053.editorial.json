@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "86ac52fb914531527a10cff99478bbc27e6fdea1ae94ff6f81544a741fbe37b2",
-  "reviewedAt": "2026-10-06T18:31:50Z",
+  "judgmentSha256": "4fe1669b7f60f716861470859ad569fc106a6ae350f9c340342ba05b6eb5d759",
+  "reviewedAt": "2026-10-06T18:34:43Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved-with-minors",
   "findings": [
     {
       "id": "F-1",
@@ -212,7 +212,8 @@
       "quote": "the company's own third-quarter outlook, a step down from the second quarter, is the evidence that they have not yet eased",
       "issue": "The rewrite ties the third-quarter outlook to the Cardiovascular pressures, but no source makes that link (rubric 2: a causal claim the pack does not establish; house lesson: do not substitute your own driver story). The July 29 release gives the third-quarter range of approximately 3 to 5 percent without a reason. The 10-Q links the Electrophysiology competition and the WATCHMAN deceleration only to second-quarter and first-half sales. The step-down could equally reflect other factors the page shows, such as Urology or currency, or factors it does not show. The link carries weight. It is the Bear's main support. The closing paragraph also uses the same outlook as the reason not to make the ten-point move that would derive BUY ('We do not make that move because the company's third-quarter outlook, cited above for the Bear, is its most recent statement on growth'). In a call this close, the deciding argument should not rest on an inference stated as fact.",
       "fix": "Hedge the link and say what the source does and does not say. For example: the third-quarter outlook steps down from the second quarter, and the release gives no reason, so it is consistent with the reported pressures persisting but does not show that they have. Then check that the Bear weight and the decision not to move toward BUY still follow from the hedged evidence. If they do, say so. If not, adjust the argument, not the weights alone.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. The Bear paragraph now says the release gives no reason for the step-down and that the outlook is consistent with, but does not show, the pressures persisting. The decision not to move toward BUY rests on the Bull needing both a beat and a re-rating, and is labelled a judgment."
     },
     {
       "id": "F-22",
@@ -221,7 +222,8 @@
       "quote": "The new global restructuring program the Board approved on July 21, 2026 may lower costs.",
       "issue": "The restructuring program reads three ways across the report. catalysts[3] lists it as a positive catalyst ('may lower costs'). capitalAllocation, its home, says 'reported charges are likely through FY27 before savings show, so we give it no credit for savings'. So the summary points one way and the section argues the other, and the catalyst gives no horizon. scenarioCommentary then drops capitalAllocation's hedge ('If the new program resembles it, reported charges are likely') and states as fact that the program 'adds reported charges that bear directly on this scenario's anchor' (house lesson: keep the source's hedges; here, the report's own hedge).",
       "fix": "Either frame catalysts[3] with the section's horizon (savings, if any, after FY27) or replace it with a catalyst the report credits. In scenarioCommentary, keep the hedge, e.g. 'is likely to add reported charges'.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. catalysts[3] now frames savings as a later catalyst after charges, matching capitalAllocation, and scenarioCommentary keeps the hedge ('is likely to add reported charges')."
     },
     {
       "id": "F-23",
@@ -230,7 +232,8 @@
       "quote": "Cardiovascular's growth drivers face increased competition.",
       "issue": "Both rewritten growth leads go beyond the 10-Q (rubric 2, minor in effect). growth.points[2] says the segment's drivers, plural, face increased competition. The 10-Q names two drivers, the coronary therapies franchise and Electrophysiology, and reports increased competition only in Electrophysiology. growth.points[3] says 'Neither paragraph in the 10-Q mentions competitive pressure, which makes them the steadier contributors for now'. That argues from silence. The 10-K excerpt says 'We encounter significant competition across our product lines', so a paragraph that does not mention competition is not evidence of less of it.",
       "fix": "In growth.points[2], say that one of the segment's two drivers, Electrophysiology, faces increased competition. In growth.points[3], drop 'which makes them the steadier contributors', or rest the point on what the 10-Q does show (their growth rates and named drivers in the quarter), without inferring steadiness from what it leaves out.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. growth.points[2] now says one of the two drivers faces increased competition, and growth.points[3] drops the argument from silence."
     },
     {
       "id": "F-24",
@@ -239,7 +242,8 @@
       "quote": "though at today's price it would also take a lower Base to reach SELL",
       "issue": "Two small problems sit in the trigger paragraph. (1) The clause overstates the page's math. Moving weight from Bull to Bear alone reaches SELL, with no change to the Base, once the shift is about 17 points (Bull near 3%, Bear near 42%). scenarioCommentary states the limit accurately ('no shift of similar size toward the Bear reaches it'), but this clause does not. (2) The ten-point sensitivity is told twice in full: scenarioCommentary ('moving about ten points from Bear to Bull would derive BUY') and body[1] ('justify moving about ten points from Bear to Bull, which narrowly derives BUY at today's price'), with analystCommentary pointing to it as well (rubric 7).",
       "fix": "Align the clause with scenarioCommentary, e.g. 'a shift of similar size toward the Bear would not reach SELL at today's price; that would take a lower Base or a much larger shift'. In body[1], keep the trigger and refer back to the valuation section's sensitivity in words instead of restating it.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. body[1] refers back to the valuation section's sensitivity, and the SELL clause now matches the math ('a shift of similar size would not reach SELL ... a lower Base or a much larger shift')."
     },
     {
       "id": "F-25",
@@ -248,7 +252,8 @@
       "quote": "Against it, Electrophysiology was still a primary growth driver in the second quarter, so the evidence so far shows slower growth rather than decline (see risks).",
       "issue": "The same reading is argued in two sections (rubric 7). idiosyncratic[0] makes it in full: 'The same 10-Q still credits Electrophysiology, led by Farapulse, as a primary driver of growth in both periods ... so the evidence shows slower growth, not decline.' scenarioCommentary adds '(see risks)' but restates the whole claim and its conclusion rather than pointing to it.",
       "fix": "In scenarioCommentary, keep only the pointer, e.g. 'Against it, the risks section reads the 10-Q as showing slower growth rather than decline'.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. scenarioCommentary now points to the risks section instead of restating the reading."
     },
     {
       "id": "F-26",
@@ -258,7 +263,7 @@
       "issue": "The rewrite pushed two fields close to their caps (rubric 10). incomeCommentary is 2,288 of 2,500 characters and capitalAllocation is 1,373 of 1,500, about 92% each, which leaves the next synthesis little room.",
       "fix": "Trim each by a sentence or two. incomeCommentary's adjusted-EPS paragraph can shorten the list of excluded items, which idiosyncratic[2] and the release excerpt already cover. capitalAllocation can drop the restatement of the diluted share counts or the 2023 plan's estimated range.",
       "status": "declined",
-      "note": "Deferred to the next synthesis; both fields are within their caps, and trimming them in the last fix round risked new findings."
+      "note": "Deferred to the next synthesis: all three fields are within their caps, and editing the judgment after the final re-check would leave it unreviewed. Reviewer's final note: neither field changed (incomeCommentary 2,288 of 2,500, capitalAllocation 1,373 of 1,500); scenarioCommentary is 2,182 of 2,500."
     }
   ]
 }
