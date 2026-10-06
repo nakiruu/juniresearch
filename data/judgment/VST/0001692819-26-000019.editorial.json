@@ -174,7 +174,8 @@
       "quote": "Consolidated",
       "issue": "The body says 'We follow the company' and discusses Retail, Texas, East and West, but the only entry keeps the vendor's title, 'Consolidated'. The body is mostly a list of figures, with a one-line view at the end.",
       "fix": "Retitle the entry (e.g. 'Segments (company basis)'), or split it into Retail and the generation segments, each with a sentence of view. The fields have room.",
-      "status": "open"
+      "status": "declined",
+      "note": "The build's segment check requires the entry to carry the fact segment's name exactly ('Consolidated'); a rename or a split into Retail and generation entries fails validation. The body now ends with a fuller view: the regional segments carried the growth, and Retail is the open question until its second-half figures."
     },
     {
       "id": "F-20",
