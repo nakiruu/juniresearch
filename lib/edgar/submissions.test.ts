@@ -85,6 +85,12 @@ describe("earnings release and latest annual discovery", () => {
     expect(exhibit99Url(1341439, "0001193125-26-387905", items)).toBe("https://www.sec.gov/Archives/edgar/data/1341439/000119312526387905/orcl-ex99_1.htm");
     expect(exhibit99Url(1, "0001-26-000001", [{ name: "k.htm" }])).toBeNull();
   });
+  it("falls back to a document named as a release when no exhibit 99 is named (BSX Q2 2026)", () => {
+    const items = [{ name: "bsx-20260729.htm" }, { name: "q22026earningsrelease.htm" }, { name: "R1.htm" }];
+    expect(exhibit99Url(885725, "0000885725-26-000051", items)).toBe("https://www.sec.gov/Archives/edgar/data/885725/000088572526000051/q22026earningsrelease.htm");
+    // A named exhibit 99 still wins over a release-named file.
+    expect(exhibit99Url(1, "0001-26-000001", [{ name: "earnings-deck.htm" }, { name: "ex99_1.htm" }])).toBe("https://www.sec.gov/Archives/edgar/data/1/000126000001/ex99_1.htm");
+  });
   it("parses items from the submissions feed", () => {
     const body = { filings: { recent: { accessionNumber: ["a"], form: ["8-K"], filingDate: ["2026-09-10"], reportDate: ["2026-09-10"], primaryDocument: ["k.htm"], items: ["2.02,9.01"] } } };
     expect(parseRecent(body as never)[0].items).toEqual(["2.02", "9.01"]);

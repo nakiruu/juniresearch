@@ -162,6 +162,31 @@ describe("YTD bucket anchoring (off-quarter ~90-day entries must not occupy the 
   });
 });
 
+// BSX-shape: long-term debt tagged only as LongTermDebtAndCapitalLeaseObligations (noncurrent), current
+// debt as DebtCurrent. Total debt must be both, not the current line alone.
+describe("total debt from LongTermDebtAndCapitalLeaseObligations", () => {
+  const fy = (val: number) => ({ start: "2025-01-01", end: "2025-12-31", val, form: "10-K", filed: "2026-02-17" });
+  const inst = (val: number) => ({ end: "2025-12-31", val, form: "10-K", filed: "2026-02-17" });
+  const facts = {
+    facts: {
+      "us-gaap": {
+        Revenues: { units: { USD: [fy(20_074)] } },
+        NetIncomeLoss: { units: { USD: [fy(2_898)] } },
+        CashAndCashEquivalentsAtCarryingValue: { units: { USD: [inst(1_965)] } },
+        LongTermDebtAndCapitalLeaseObligations: { units: { USD: [inst(11_137)] } },
+        DebtCurrent: { units: { USD: [inst(299)] } },
+      },
+    },
+  };
+
+  it("adds current debt to the noncurrent debt-and-lease line", () => {
+    const { annual } = parseCompanyFacts(facts);
+    const fy2025 = annual.find((p) => p.fiscal_year === 2025)!;
+    expect(fy2025.total_debt).toBe(11_137 + 299);
+    expect(fy2025.net_debt).toBe(11_137 + 299 - 1_965);
+  });
+});
+
 // ADI-shape: a fiscal year that starts in the prior calendar year (FY2026 runs 2025-11-02 to
 // 2026-10-31). Every YTD entry starts in 2025 and ends in 2026; a same-calendar-year guard dropped
 // them all, so Q2/Q3 cash flow and D&A (and therefore EBITDA) came out null.
