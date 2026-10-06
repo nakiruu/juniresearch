@@ -34,6 +34,12 @@ export const RunRecord = z.object({
   staleEntries: z.record(z.string(), z.object({
     fall: z.number(), share: z.number(), beta: z.number(), spyReturn: z.number(), surprisePct: z.number(), earningsDate: z.string(),
   })).optional(),
+  // Names whose rule-derived label at this run's mark differs from the one they were published with (relabel.ts) —
+  // advisory only, unconfirmed. Optional: older records, and runs without the desk rating config, lack it.
+  relabel: z.array(z.object({
+    ticker: z.string(), accession: z.string(), publishedLabel: z.string(), liveLabel: z.string(), reportLabel: z.string(),
+    price: z.number(), expectedUpside: z.number(), rewardRisk: z.number().nullable(),
+  })).optional(),
   plan: loose, orders: z.array(loose), fills: z.array(loose), notes: z.array(z.string()),
 });
 export type RunRecord = z.infer<typeof RunRecord>;

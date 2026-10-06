@@ -12,6 +12,7 @@ import { betaFor } from "../synth/moat";
 import { readFills } from "./fills";
 import { RunRecord } from "./run-record";
 import { readEarnings, type LastEarnings } from "./earnings";
+import { DeskRating } from "../synth/desk.schema";
 
 export const TRADE_DIR = join("data", "trade");
 export const FILLS_PATH = join(TRADE_DIR, "fills.jsonl");
@@ -22,6 +23,9 @@ export const CRON_LOG_PATH = join(TRADE_DIR, "cron.log");
 export const HALT_STATE_PATH = join(TRADE_DIR, "halt-state.json");
 export const SCHWAB_TOKEN_PATH = join(TRADE_DIR, "schwab-token.json");
 export const AUTH_WARN_PATH = join(TRADE_DIR, "auth-warn.json");
+/** The advisory re-label streaks (relabel.ts). */
+export const RELABEL_STATE_PATH = join(TRADE_DIR, "relabel-state.json");
+export const DESK_PATH = join("data", "desk", "desk.json");
 
 /**
  * PREVIEW_ONLY=true (also 1/yes/on): automated runs plan and post the allocation but never submit an
@@ -82,9 +86,10 @@ export function brokerBaseUrl(adapter: BrokerAdapter): string {
  * cap (liquidity bucket) and beta (a bear breach's market part, lib/trade/breach.ts — the pack's measured beta,
  * else the SIC proxy, exactly as the WACC build-up uses it; null only with no FactPack), plus each name's latest
  * earnings from data/earnings/latest.json (the stale-on-bad-news entry gate; fail-open — an unreadable file is
- * warned about and treated as none).
+ * warned about and treated as none), and the desk's label bands (the advisory re-label check; an unreadable
+ * desk.json is warned about and skips the check).
  */
-export async function loadReportsAndMeta(): Promise<{ reports: Report[]; sics: Record<string, number | null>; marketCapUsd: Record<string, number | null>; betas: Record<string, number | null>; earnings: Record<string, LastEarnings> }> {
+export async function loadReportsAndMeta(): Promise<{ reports: Report[]; sics: Record<string, number | null>; marketCapUsd: Record<string, number | null>; betas: Record<string, number | null>; earnings: Record<string, LastEarnings>; deskRating?: DeskRating }> {
   const reports: Report[] = [], sics: Record<string, number | null> = {}, marketCapUsd: Record<string, number | null> = {}, betas: Record<string, number | null> = {};
   for (const t of await listReportTickers()) {
     const r = await loadReport(t); if (!r) continue;
@@ -98,7 +103,18 @@ export async function loadReportsAndMeta(): Promise<{ reports: Report[]; sics: R
   }
   const e = readEarnings();
   if (e.warning) console.warn(e.warning);
-  return { reports, sics, marketCapUsd, betas, earnings: e.byTicker };
+  const deskRating = readDeskRating();
+  return { reports, sics, marketCapUsd, betas, earnings: e.byTicker, ...(deskRating ? { deskRating } : {}) };
+}
+
+/** The desk's label bands (desk.json "rating"); undefined, with a warning, when the file is missing or invalid. */
+export function readDeskRating(path: string = DESK_PATH): DeskRating | undefined {
+  try {
+    return DeskRating.parse(JSON.parse(readFileSync(path, "utf8")).rating);
+  } catch (err) {
+    console.warn(`re-label check skipped: ${path} unreadable (${(err as Error).message})`);
+    return undefined;
+  }
 }
 
 export function readRunRecord(runId: string): RunRecord {

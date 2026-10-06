@@ -24,6 +24,8 @@ import { currentSlot, etInstantOn, etMinutesOfDay, hhmmToMinutes } from "./clock
 import { refreshTokenHealth } from "../broker/schwab-auth";
 import { maybeWarnAuth } from "./auth-health";
 import { nextSlotRunAtET } from "./clock";
+import type { DeskRating } from "../synth/desk.schema";
+import { advanceRelabels, confirmedRelabels, readRelabelState, writeRelabelState } from "./relabel";
 
 export type CronStatus = "disabled" | "late" | "closed" | "locked" | "halted" | "preview" | "noop" | "executed";
 
@@ -36,12 +38,13 @@ export interface CronDeps {
   runId: string;
   /** Forwarded into the GuardContext built after planRun, for the paper-endpoint guard (mirrors trade-execute.ts). Irrelevant for a "fake" adapter. */
   configuredBaseUrl: string;
-  paths: { lock: string; haltState: string; log: string; fills: string; runs: string; authWarn?: string };
+  /** relabelState: the advisory re-label streaks (relabel.ts); absent → candidates are recorded but never confirmed or posted. */
+  paths: { lock: string; haltState: string; log: string; fills: string; runs: string; authWarn?: string; relabelState?: string };
   /** Schwab only: the refresh token's issue time (epoch ms, undefined if unknown) for the proactive re-auth notice. */
   refreshObtainedAt?: () => number | undefined;
   /** betas: optional (absent → the SIC proxy) — prices a held bear breach's market part (breach.ts). earnings: optional
-   *  (absent → the stale-on-bad-news entry gate bars nothing). */
-  loadInputs: () => Promise<{ reports: Report[]; sics: Record<string, number | null>; marketCapUsd: Record<string, number | null>; betas?: Record<string, number | null>; earnings?: Record<string, LastEarnings>; fills: Fill[] }>;
+   *  (absent → the stale-on-bad-news entry gate bars nothing). deskRating: optional (absent → no re-label check). */
+  loadInputs: () => Promise<{ reports: Report[]; sics: Record<string, number | null>; marketCapUsd: Record<string, number | null>; betas?: Record<string, number | null>; earnings?: Record<string, LastEarnings>; deskRating?: DeskRating; fills: Fill[] }>;
   notify: (msg: string) => void;
   /** Optional rich run summary sink (orders/fills/goal book/audit) — called on executed and noop runs. Injected like notify so cron stays pure and testable; absent → nothing extra happens. */
   notifySummary?: (s: RunSummaryInput) => void;
@@ -206,6 +209,18 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
         return { status: "halted", reason: "auth" };
       }
       throw e;
+    }
+
+    // 5a. Advisory re-label streaks (relabel.ts): extend them with this run's candidates and attach the confirmed
+    // ones for the summary / allocation post. Runs in preview too (it is not trading state); never fails a run.
+    if (paths.relabelState) {
+      try {
+        const state = advanceRelabels(readRelabelState(paths.relabelState), today, out.relabel);
+        writeRelabelState(paths.relabelState, state);
+        out = { ...out, relabelConfirmed: confirmedRelabels(state, out.relabel) };
+      } catch (e) {
+        appendLog(paths.log, `${today} ${runId} relabel-state-error ${(e as Error).message}`);
+      }
     }
 
     // 5b. Preview only: report the plan and stop before anything that could submit or change state.

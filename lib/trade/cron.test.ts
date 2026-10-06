@@ -508,3 +508,54 @@ describe("runCron", () => {
     expect(existsSync(paths.lock)).toBe(false); // released via finally even on an uncaught throw
   });
 });
+
+describe("runCron — advisory re-label streaks", () => {
+  // Published HOLD (rule and author), but at the $100 mark its scenarios derive STRONG BUY (E +21%, R 1.05).
+  // A HOLD is never bought, so the run is a noop: the flag is advisory and changes nothing.
+  const held = fixtureReport({ ticker: "NVT", label: "HOLD", conviction: 70, scenarios: [[150, 0.3], [120, 0.5], [80, 0.2]] });
+  const rating = { bearFloor: 0.15, strongBuy: { minUpside: 0.2, minRewardRisk: 1 }, buy: { minUpside: 0.1, minRewardRisk: 0.5 }, sell: { maxUpside: -0.05 }, strongSell: { maxUpside: -0.2 } };
+  const inputs = { loadInputs: async () => ({ reports: [held], sics: {}, marketCapUsd: {}, deskRating: rating, fills: [] as Fill[] }) };
+  const withState = () => { const p = mkPaths(); return { ...p, relabelState: join(p.runs, "..", "relabel-state.json") }; };
+
+  it("records the candidate and starts a streak, but posts nothing on the first day", async () => {
+    const paths = withState();
+    const summaries: { relabels?: string[] }[] = [];
+    const r = await runCron(mkDeps({ paths, notifySummary: (s) => summaries.push(s), ...inputs }));
+    expect(r).toEqual({ status: "noop" });
+    const rec = JSON.parse(readFileSync(join(paths.runs, readdirSync(paths.runs)[0]), "utf8"));
+    expect(rec.relabel).toEqual([expect.objectContaining({ ticker: "NVT", publishedLabel: "HOLD", liveLabel: "STRONG BUY", price: 100 })]);
+    expect(JSON.parse(readFileSync(paths.relabelState, "utf8"))).toEqual({ NVT: { key: "x|HOLD|STRONG BUY", days: [TODAY] } });
+    expect(summaries[0].relabels).toBeUndefined();
+  });
+
+  it("posts the name once the streak reaches three run days", async () => {
+    const paths = withState();
+    writeFileSync(paths.relabelState, JSON.stringify({ NVT: { key: "x|HOLD|STRONG BUY", days: ["2026-09-23", "2026-09-24"] } }));
+    const summaries: { relabels?: string[] }[] = [];
+    await runCron(mkDeps({ paths, notifySummary: (s) => summaries.push(s), ...inputs }));
+    expect(summaries[0].relabels).toEqual(["NVT HOLD → STRONG BUY at $100.00 · E +21.0% · R 1.05× · 3 days"]);
+  });
+
+  it("counts preview-only runs, and puts confirmed names on the allocation post", async () => {
+    const paths = withState();
+    writeFileSync(paths.relabelState, JSON.stringify({ NVT: { key: "x|HOLD|STRONG BUY", days: ["2026-09-23", "2026-09-24"] } }));
+    const posted: { relabels?: string[] }[] = [];
+    expect((await runCron(mkDeps({ paths, previewOnly: true, notifyAllocation: (a) => posted.push(a), ...inputs }))).status).toBe("preview");
+    expect(existsSync(paths.runs)).toBe(false); // preview still writes no run record
+    expect(JSON.parse(readFileSync(paths.relabelState, "utf8")).NVT.days).toHaveLength(3);
+    expect(posted[0].relabels).toEqual(["NVT HOLD → STRONG BUY at $100.00 · E +21.0% · R 1.05× · 3 days"]);
+  });
+
+  it("a corrupt state file restarts the streak instead of failing the run", async () => {
+    const paths = withState();
+    writeFileSync(paths.relabelState, "{oops");
+    expect((await runCron(mkDeps({ paths, ...inputs }))).status).toBe("noop");
+    expect(JSON.parse(readFileSync(paths.relabelState, "utf8")).NVT.days).toEqual([TODAY]);
+  });
+
+  it("without a state path or desk rating nothing is tracked, and the record has no relabel field", async () => {
+    const paths = mkPaths();
+    await runCron(mkDeps({ paths, loadInputs: async () => ({ reports: [held], sics: {}, marketCapUsd: {}, fills: [] as Fill[] }) }));
+    expect(JSON.parse(readFileSync(join(paths.runs, readdirSync(paths.runs)[0]), "utf8")).relabel).toBeUndefined();
+  });
+});

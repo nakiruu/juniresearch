@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { buildReview, executionStats, fillsNeededForLockState, type ReviewRun, type ReviewFill, type DatedOrder, type ReviewOrder } from "./trade-review";
+import { buildReview, executionStats, fillsNeededForLockState, relabelFromRuns, type ReviewRun, type ReviewFill, type DatedOrder, type ReviewOrder } from "./trade-review";
 
 const CFG = { lockBusinessDays: 5 };
 
@@ -146,5 +146,29 @@ describe("executionStats (spec #9/#10)", () => {
     const s = executionStats([{ broker: "schwab", orders: [{ ticker: "A", side: "buy", capBound: true }] }], cfg).schwab;
     expect(s.capBound).toEqual({ orders: 0, filledFrac: null });
     expect(s.latency.submitToAck.n).toBe(0);
+  });
+});
+
+describe("relabelFromRuns (advisory re-label)", () => {
+  const e = { ticker: "VST", accession: "a1", publishedLabel: "HOLD", liveLabel: "BUY", reportLabel: "HOLD", price: 145, expectedUpside: 0.169, rewardRisk: 0.63 };
+  it("rebuilds the streak from the records in run order, the last record of a day winning, and skips records without the field", () => {
+    const runs: ReviewRun[] = [
+      { runId: "2026-10-07-aa", today: "2026-10-07", relabel: [e] },
+      { runId: "2026-10-08-ff", today: "2026-10-08", relabel: [] },
+      { runId: "2026-10-08-0a", today: "2026-10-08", relabel: [e] }, // later run that day (suffixes are random)
+      { runId: "2026-10-09-aa", today: "2026-10-09" }, // an older-shape record: no check, not a run day
+      { runId: "2026-10-12-aa", today: "2026-10-12", relabel: [e] },
+    ];
+    const { state, latest } = relabelFromRuns(runs);
+    expect(state.VST.days).toEqual(["2026-10-07", "2026-10-08", "2026-10-12"]);
+    expect(latest).toEqual([e]);
+  });
+  it("a run day without the name breaks the streak", () => {
+    const { state } = relabelFromRuns([
+      { runId: "2026-10-07-aa", today: "2026-10-07", relabel: [e] },
+      { runId: "2026-10-08-aa", today: "2026-10-08", relabel: [] },
+      { runId: "2026-10-09-aa", today: "2026-10-09", relabel: [e] },
+    ]);
+    expect(state.VST.days).toEqual(["2026-10-09"]);
   });
 });
