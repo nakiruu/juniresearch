@@ -1,0 +1,299 @@
+{
+  "judgmentSha256": "ee73ac5a90086738130a60303f6d91b04ce161cef4149775150fc3d51e8a495c",
+  "reviewedAt": "2026-10-06T15:40:08Z",
+  "reviewer": "claude-opus-5-5",
+  "round": 2,
+  "verdict": "approved",
+  "findings": [
+    {
+      "id": "F-1",
+      "severity": "Critical",
+      "field": "sections.businessMoat.durability / sections.financials.incomeCommentary",
+      "quote": "the company still reports GAAP losses, and operating margins have not expanded (see Financials).",
+      "issue": "Unsupported statement of fact (rubric 2). The Facts table this sentence points to shows GAAP operating margin of -20.6% in FY22, -14.3% in FY23, -9.3% in FY24 and -9.6% in FY25. The margin narrowed sharply through FY24 and then stalled. On the non-GAAP basis, the proxy gives 14.0% for fiscal 2025 against 13.8% for fiscal 2024. Only the latest quarter's non-GAAP margin slipped, to 13.8% from 14.1%. The claim holds for the last year at most, and the NARROW rating leans on it. incomeCommentary's opener, 'Profitability has not kept pace with the top line.', has the same gap: Financials never acknowledges the multi-year margin improvement, which is the counter-reading to its own view.",
+      "fix": "Date the window and keep the improvement. For example: GAAP operating margin narrowed sharply through FY24 but stalled in fiscal 2025, and the non-GAAP margin slipped year over year in the second quarter. Make the same correction in incomeCommentary's first paragraph, in words or with the Facts-table margins. The durability argument can still rest on margins that have not expanded since fiscal 2024 and on GAAP results that remain losses.",
+      "status": "addressed",
+      "note": "Fixed. incomeCommentary now gives the multi-year path ('GAAP operating margin improved sharply over the same span, from -20.6% in FY22 to -9.3% in FY24, then stalled at -9.6% in FY25'; non-GAAP 'edged up to 14.0% in FY25'). durability now reads 'the improvement in GAAP operating margin stalled after FY24'. Both are dated and match the Facts table and the proxy."
+    },
+    {
+      "id": "F-2",
+      "severity": "Critical",
+      "field": "sections.management.capitalAllocation",
+      "quote": "In fiscal 2025 it also raised debt and largely held the proceeds as liquidity (see Balance sheet).",
+      "issue": "This states an inference as fact (rubric 2). No document in the pack describes the fiscal 2025 borrowing or how its proceeds were used. balanceCommentary correctly presents it as the author's reading: 'which suggests much of the new borrowing was kept as liquidity'. capitalAllocation drops that hedge and turns the reading into a use-of-proceeds fact.",
+      "fix": "Keep the hedge, or point back without restating. For example: 'Total debt rose in fiscal 2025, and the balance sheet suggests much of it was kept as liquidity (see Balance sheet).' Alternatively, drop the clause: the capital-allocation view does not need it.",
+      "status": "addressed",
+      "note": "Fixed. capitalAllocation now reads 'Total debt also rose in fiscal 2025 (see Balance sheet).' The use-of-proceeds claim is gone, and balanceCommentary keeps its hedged 'suggests'."
+    },
+    {
+      "id": "F-3",
+      "severity": "Important",
+      "field": "sections.executiveSummary.risks[4] / sections.businessMoat.moatFactors[3].body / sections.management.leadership",
+      "quote": "Macro pressure that the company says lengthened sales cycles and raised churn in past periods could recur (see Risks).",
+      "issue": "The source's hedges are dropped in three places (house lesson: keep the source's hedges). (1) The MD&A says these trends happened 'Potentially as a result of these various macroeconomic impacts'. This bullet has the company saying macro pressure caused them. (2) moatFactors[3]: 'the company is adding GPU servers for AI-related developer products.' The MD&A says 'We intend to continue to make substantial investments', including GPU servers. (3) leadership: Mr. Kramer 'keeps vesting his previously unvested RSU awards and Performance Options.' The proxy says he will 'be eligible to vest' them, 'subject to his continued employment with us'.",
+      "fix": "(1) 'Macro pressures that the company says may have lengthened sales cycles and raised churn in past periods could recur.' (2) 'the company intends to add GPU servers for AI-related developer products.' (3) 'remains eligible to vest his previously unvested RSU awards and Performance Options, subject to his continued employment.'",
+      "status": "addressed",
+      "note": "Fixed in all three places. risks[4] now says 'may have lengthened', and systemic now carries 'potentially as a result of macroeconomic impacts'. moatFactors[3] reads 'intends to add GPU servers'. leadership reads 'remains eligible to vest … subject to his continued employment'."
+    },
+    {
+      "id": "F-4",
+      "severity": "Important",
+      "field": "sections.growth.points[0] / sections.growth.points[3] / sections.businessMoat.segments[0].body",
+      "quote": "He also pointed to growth in total paying customers, large customers and developers, but the release gives no counts.",
+      "issue": "Over-attribution (rubric 2): these sentences say a document does not contain something, but the pack carries only a truncated excerpt of it. Context marks the earnings release 'truncated', so the report can say the excerpt gives no counts, not that the release gives none. The same applies to growth.points[3] ('the release attaches no revenue to it') and segments[0] ('The company does not break out revenue by product'). The Facts block says only that the vendor breaks out no product or geographic mix and that the company reports a single segment, so the company's disclosure practice is not on the surface. governance and moatFactors[1] already scope this correctly ('as excerpted', 'in the excerpts').",
+      "fix": "Scope each negative to what was captured. Use 'the excerpt we have gives no counts', 'the excerpt attaches no revenue to it' and 'we have no product revenue split, so we cannot tell which offering drives the acceleration.'",
+      "status": "addressed",
+      "note": "Fixed in the three named places: 'without counts in the part of the release we have', 'the release excerpt puts no revenue figure on it' and 'We have no product revenue split'. The rewrite added one new unscoped instance in incomeCommentary (F-23)."
+    },
+    {
+      "id": "F-5",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary / sections.financials.incomeCommentary / sections.growth.points[2] / sections.finalRecommendation.body[1]",
+      "quote": "The growth evidence supports it; the falling gross margin and the dip in non-GAAP operating margin cut against it.",
+      "issue": "The margin view lacks its counter-case (rubric 5). It rests on actuals only. The non-GAAP operating margin slipped to 13.8% in the second quarter, and incomeCommentary says 'neither measure of operating margin has yet shown the leverage the valuation assumes.' The company's August 6, 2026 guide, which growth.points[2] quotes, cuts the other way. For the third quarter it guides $129.0 to $130.0 million of non-GAAP income from operations on $736.0 to $737.0 million of revenue. For fiscal 2026 it guides $443.0 to $445.0 million on $2,864.0 to $2,870.0 million. Both imply a wider non-GAAP margin than the second quarter's 13.8% and fiscal 2025's 14.0%. The report never says so. That matters for the Bull weight and for the margin half of the BUY trigger in finalRecommendation.body[1], since the company's own guide already points toward that trigger.",
+      "fix": "Say once, in words and without computing a margin, that the guide has non-GAAP operating income growing much faster than revenue in the third quarter and for the year, which means a wider non-GAAP margin. Then weigh it: this is guidance, not results, and GAAP margin is not guided. Put it in growth.points[2] or scenarioCommentary. In the BUY trigger, acknowledge that the guide points toward the margin condition and that the third-quarter print will show whether it arrives.",
+      "status": "addressed",
+      "note": "Fixed. growth.points[2] now says once that operating income grows faster than revenue in both guides, 'which implies a wider non-GAAP margin', with the caveat that this is guidance and GAAP margin is not guided. incomeCommentary, scenarioCommentary and the BUY trigger point to it. The $303.9 million figure is grounded in the proxy. The caveat now recurs elsewhere (F-25, Minor)."
+    },
+    {
+      "id": "F-6",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body / sections.valuation.scenarioCommentary",
+      "quote": "Our Bear case needs only a slowdown and a re-rating toward prices the stock has seen within the last 52 weeks.",
+      "issue": "Calls coherence (rubric 6). The thesis presents the Bear as the easy path ('needs only'), and with 'That leaves the payoff lopsided' it reads as a downside skew. scenarioCommentary argues the opposite. It says the Bear 'needs two things at once', that the slowdown 'is less likely within twelve months', and that 'Both together are a real but minority outcome'. That is why the Bear gets 15%, less than the Bull's 20%. A reader cannot square a Bear that needs 'only' two things with the lowest-weighted scenario.",
+      "fix": "Make the thesis match the weights. For example: the payoff is lopsided in size, since the Bear is a larger move than the Bull, but the Bear needs both a slowdown and a deep de-rating, which we think less likely than not. Alternatively, drop the scenario conditions from the thesis and point to Valuation (see F-14).",
+      "status": "addressed",
+      "note": "Fixed. The thesis now reads 'The payoff is lopsided in size, because our Bear case is a much larger move than our Bull. We think the Bear less likely than not, though, and weight it below the Bull (see Valuation)', which matches the 15% weight and scenarioCommentary."
+    },
+    {
+      "id": "F-7",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "We do not cap it there, because the price already sits above the consensus target, so targets have not acted as a ceiling.",
+      "issue": "Two arguments do not bear on the scenarios they support (rubric 6). (1) The price is above the mean target but still well below the top target of $405.00. The price passing the consensus therefore does not show that the top of the range is no ceiling, so it does not justify a Bull above $405.00. (2) The Bear weight rests partly on 'the balance sheet makes forced funding unlikely'. The Bear is a growth slowdown plus a de-rating, not a financing event, and the balance sheet does not make a slowdown less likely (house lesson: argue a Bear weight on the Bear case itself).",
+      "fix": "(1) Rest the Bull price on its own anchor. Today's current-year multiple applied to FY27E consensus EPS is a stated, checkable assumption; say plainly that the result sits above every Street target and why you accept that, or cap it. (2) Drop the balance-sheet clause from the Bear argument, or move it to where financing risk is discussed.",
+      "status": "addressed",
+      "note": "Fixed. The Bull rests on its own multiple-times-EPS anchor, and the commentary now says plainly 'The Bull price sits above every Street target, and we accept that', with a reason tied to the 52-week range. The balance-sheet clause is gone, and the Bear weight now rests on the slowdown and the de-rating."
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "sections.finalRecommendation.body[0] / analystCommentary",
+      "quote": "The second quarter gave no reason to doubt the business, and the share price gives no reason to add to it.",
+      "issue": "The summary verdict drops the report's own counter-reading (rubric 5). analystCommentary says 'Our concern is the price, not the business', and the final recommendation says the quarter gave 'no reason to doubt the business'. Yet Financials says 'Gross margin is moving the wrong way': GAAP gross margin was 71.8% in the second quarter against 74.9% a year earlier, and the non-GAAP operating margin slipped. executiveSummary.risks[1] and risks.idiosyncratic[1] treat gross-margin erosion as a threat to the cost advantage behind the moat, and finalRecommendation.body[1] makes gross margin a condition for BUY. Those are second-quarter reasons to doubt the business.",
+      "fix": "Keep price as the main concern, but name the open business question. For example: 'The second quarter strengthened the growth case but left a gross-margin question open, and the share price gives no reason to add.' Soften analystCommentary to match, e.g. 'Our concern is mainly the price'.",
+      "status": "addressed",
+      "note": "Fixed. analystCommentary reads 'Our concern is mainly the price… The open business question is gross margin'. finalRecommendation.body[0] reads 'strengthened the growth case but left the gross-margin question open'."
+    },
+    {
+      "id": "F-9",
+      "severity": "Important",
+      "field": "sections.financials.cashflowCommentary / sections.valuation.multiplesCommentary / highlights",
+      "quote": "We use the company's figures throughout, because they match the quarterly figures in its earnings release.",
+      "issue": "The report names its chosen source and then departs from it (rubric 8). After saying it uses the company's free cash flow 'throughout', multiplesCommentary quotes 'the vendor's trailing free cash flow yield is 0.3%', and the highlights add fcfYield. That yield uses the vendor's definition: operating cash flow less capital expenditure only, the definition this paragraph has just set aside. The stated reason is also loose. The company's annual figure does not 'match' its quarterly figures; it uses the same definition.",
+      "fix": "Either say the yield uses the vendor's capex-only definition, which gives a higher free cash flow than the company's, or drop 'throughout' and say the company's figures are used for the annual and quarterly discussion. Reword the reason, e.g. 'because they use the same definition as the quarterly figures in its earnings release.'",
+      "status": "addressed",
+      "note": "Fixed. cashflowCommentary now limits the choice to 'the annual and quarterly discussion, because they are the same measure its earnings release uses for the quarter'. multiplesCommentary labels the 0.3% yield as being on the table's definition, which gives a higher free cash flow than the company's measure."
+    },
+    {
+      "id": "F-10",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body / sections.executiveSummary.risks[0] / sections.valuation.multiplesCommentary",
+      "quote": "The shares price in years of growth near today's rate, so a slowdown would likely hit the multiple as well as earnings (see Valuation).",
+      "issue": "Cross-section repetition (rubric 7). The claim that the price assumes years of growth near today's rate appears in the thesis ('forward multiples that hold only if growth stays near today's rate for years'), again in risks[0] (quoted) in the same executive summary, and a third time in multiplesCommentary ('they price in years of growth near today's rate'). risks.idiosyncratic[0] then restates the consequence in new words ('would likely cost the stock a large part of its multiple').",
+      "fix": "Argue it once, in multiplesCommentary. The thesis may state it once. Reduce risks[0] to a pointer to the growth-slowdown risk without restating the pricing claim. idiosyncratic[0] keeps the risk and its signals and refers back to Valuation for the pricing.",
+      "status": "addressed",
+      "note": "Fixed. risks[0] is now a pointer ('Revenue growth could slow, as the 10-Q warns (see Risks)'). The pricing claim appears once in the thesis and is argued in multiplesCommentary, and idiosyncratic[0] refers back ('Given the valuation (see Valuation)')."
+    },
+    {
+      "id": "F-11",
+      "severity": "Important",
+      "field": "sections.valuation.multiplesCommentary / sections.valuation.scenarioCommentary",
+      "quote": "The price has run past both the mean and the median target, so at these multiples the stock needs results to keep improving just to hold its level.",
+      "issue": "Repetition within Valuation (rubric 7). The previous paragraph of multiplesCommentary already says 'the consensus target of $338.71 is 5.4% below the price, and the median target of $355.00 is also below it'. This sentence says it again, and scenarioCommentary says it a third time ('the price already sits above the consensus target'). Likewise, multiplesCommentary's 'the mean sits below the median, so the low end of the range pulls the average down' reappears in scenarioCommentary as 'the mean is pulled down by the low end of the range'.",
+      "fix": "Make the price-versus-targets point once, in the Street paragraph of multiplesCommentary, and keep the price paragraph about the move itself. In scenarioCommentary, refer back in words instead of re-arguing the gap between the mean and the median.",
+      "status": "addressed",
+      "note": "Fixed. The second price-past-targets sentence is gone from multiplesCommentary and scenarioCommentary, and scenarioCommentary refers back to the mean/median gap with '(see above)'. A smaller restatement inside the Street paragraph is F-26 (Minor)."
+    },
+    {
+      "id": "F-12",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[1] / sections.financials.incomeCommentary / sections.businessMoat.moatFactors[0].body / sections.businessMoat.durability",
+      "quote": "If the slide continues, the cost advantage behind our NARROW moat rating weakens, and operating-margin gains would have to come from operating expenses alone",
+      "issue": "Cross-section repetition (rubric 7). The link from falling gross margin to the cost advantage is argued four times: in incomeCommentary ('a sustained slide would undercut the cost advantage the company claims'), in moatFactors[0] ('The recent slide in gross margin (see Financials) is the counter-evidence: the edge exists, but it is not widening'), in durability ('The test of durability is whether the network keeps its cost position as the company adds GPU and storage capacity, and gross margin over the next few quarters will show it') and here. executiveSummary.risks[1] also points to it.",
+      "fix": "Give the link one home, moatFactors[0] or durability. incomeCommentary reports the decline and stops there. idiosyncratic[1] keeps only what is new, namely that operating-margin gains would then depend on operating expenses and the new operating model, and points back for the moat consequence.",
+      "status": "addressed",
+      "note": "Fixed. The moat consequence now sits only in moatFactors[0] ('a continued slide would weaken it'). incomeCommentary reports the decline only, durability no longer argues it, and idiosyncratic[1] keeps the operating-expense point and points to Business and moat."
+    },
+    {
+      "id": "F-13",
+      "severity": "Important",
+      "field": "sections.executiveSummary.companyOverview / sections.executiveSummary.risks[3] / sections.executiveSummary.thesis.body",
+      "quote": "A second class of shares, Class B, carries 10 votes per share and gives insiders as a group a majority of the votes (see Management).",
+      "issue": "Repetition inside the executive summary (rubric 7). companyOverview states the insiders' voting majority, and risks[3] states it again ('Insiders as a group hold a majority of the votes through Class B stock while owning a small minority of the shares'). The GAAP-loss point is also made twice, in companyOverview ('Cloudflare earns a profit on its non-GAAP measure but reports losses under GAAP') and in the thesis opener ('generates cash but still reports GAAP losses').",
+      "fix": "Keep the voting-control point in risks[3], where it is a pointer, and cut companyOverview back to the structural fact: two share classes, with Class A listed on the NYSE. Make the GAAP/non-GAAP point in only one of its two places.",
+      "status": "addressed",
+      "note": "Fixed. companyOverview now gives only the structural fact ('the company also has Class B common stock with different voting rights'), and the voting majority sits in risks[3]. The thesis no longer repeats the GAAP-loss point."
+    },
+    {
+      "id": "F-14",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary / sections.valuation.scenarios[0].driver / sections.valuation.scenarios[2].driver / sections.executiveSummary.thesis.body",
+      "quote": "It needs growth to stay at or above the second quarter's pace and investors to keep paying today's multiple.",
+      "issue": "Scenario conditions are restated in three places (rubrics 6 and 7). The Bull's condition appears in the thesis ('Our Bull case needs investors to keep paying today's multiple a year from now'), in its driver ('A year from now, investors still pay today's 283.4x current-year multiple') and again here. This paragraph also repeats the driver's 'above the top of the Street target range'. The Bear's 52-week anchor appears in the thesis ('prices the stock has seen within the last 52 weeks'), in its driver ('next to the 52-week low of $158.83') and in scenarioCommentary ('the stock traded near the Bear price within the last 52 weeks'). The Base driver's 'Earnings growth is absorbed by de-rating' is retold as 'gives back about as much as earnings add'.",
+      "fix": "Drivers describe each scenario. scenarioCommentary argues the weights and refers to the drivers in words without retelling them. The thesis points to Valuation instead of restating the Bull and Bear conditions, which also resolves F-6.",
+      "status": "addressed",
+      "note": "Fixed. The thesis no longer restates the scenario conditions, and the Bull driver drops the target-range clause. scenarioCommentary refers to the drivers ('as its driver sets out', 'as the Bear's anchor shows') and argues the weights instead of retelling them."
+    },
+    {
+      "id": "F-15",
+      "severity": "Important",
+      "field": "sections.management.governance / sections.management.leadership",
+      "quote": "Mr. Prince and Ms. Zatlyn, the CEO and the President, are both Co-Chairs.",
+      "issue": "Repetition within Management (rubric 7). leadership already says both co-founders 'serve as Co-Chair of the Board of Directors'. governance then makes the point three times: 'chaired by two executives', the quoted sentence, and 'Combined with executive Co-Chairs'. It also retells the Kramer and Starzak offer letters that leadership has just described ('covers the new offer letters for Mr. Kramer and Ms. Starzak').",
+      "fix": "In governance, state the executive Co-Chair structure once (the first sentence already does) and refer to leadership for who holds the roles. Replace the offer-letter sentence with a view, such as whether the related-party items matter to outside holders, or drop it.",
+      "status": "addressed",
+      "note": "Fixed. governance states the executive Co-Chair structure once, with '(see Leadership)', and drops 'Combined with executive Co-Chairs'. The offer-letter retelling is replaced by a view; F-27 raises a scoping point on it."
+    },
+    {
+      "id": "F-16",
+      "severity": "Important",
+      "field": "sections.businessMoat.moatFactors[1].body / sections.businessMoat.segments[0].body",
+      "quote": "Larger customers can commit to a \"pool of funds\" that they spend across products.",
+      "issue": "Repetition within Business and moat (rubric 7). segments[0] has just said 'some larger customers commit to a \"pool of funds\" they can spend across products during the term', and moatFactors[1] repeats it nearly word for word.",
+      "fix": "Keep the description in segments[0]. In moatFactors[1], refer back in words (e.g. 'the pool-of-funds contracts described above') and use the space on why they raise switching costs.",
+      "status": "addressed",
+      "note": "Fixed. moatFactors[1] now refers back ('The pool-of-funds contracts described above') and uses the space on the switching-cost mechanism, which is grounded in the MD&A's statement that 'the funds must be utilized during the subscription period'."
+    },
+    {
+      "id": "F-17",
+      "severity": "Minor",
+      "field": "sections.financials.incomeCommentary / sections.financials.cashflowCommentary",
+      "quote": "GAAP gross margin was {- 74.5% -} in fiscal 2025, down from 77.3% in fiscal 2024, and {- 71.8% -} in the second quarter of 2026, down from 74.9% a year earlier.",
+      "issue": "Spans wrap levels rather than signed changes (rubric 9). 74.5% and 71.8% are levels; the negative is the decline. The same happens with '{+ $96.1 million +}' and '{- 13.8% -}' in incomeCommentary and with '{+ $56.4 million +}' in cashflowCommentary.",
+      "fix": "Wrap the change, e.g. '{- down from 77.3% -}', or drop the spans on levels.",
+      "status": "addressed",
+      "note": "Fixed. The spans now wrap changes: '{- down from 77.3% -}', '{- down from 74.9% -}', '{+ rose +}', '{- slipped -}' and '{- widened -}'."
+    },
+    {
+      "id": "F-18",
+      "severity": "Minor",
+      "field": "sections.valuation.multiplesCommentary / sections.financials.cashflowCommentary / sections.businessMoat.durability",
+      "quote": "We have no peer set in this pack, so we judge these levels on their own",
+      "issue": "A meta-reference has become a tic (rubric 9). 'in this pack' appears four times (cashflowCommentary, twice in multiplesCommentary, durability), and 'the excerpts' three more times (executiveSummary.risks[1], incomeCommentary, moatFactors[1]). 'Pack' is desk jargon that readers of the page will not know, and the repeated disclaimer is the desk's 'the sources do not…' tic in another form.",
+      "fix": "Say it once where it matters, such as the missing peer data, in reader terms ('the data for this report'). Elsewhere, state the fact without the disclaimer or name the document.",
+      "status": "addressed",
+      "note": "Fixed for 'pack' and 'the excerpts'. multiplesCommentary now reads 'The data for this report includes no peer set', durability drops the disclaimer, and each remaining 'excerpt' is tied to a named document. The 'Facts table' jargon is a separate point (F-28)."
+    },
+    {
+      "id": "F-19",
+      "severity": "Minor",
+      "field": "sections.growth.points[2]",
+      "quote": "For fiscal 2026 it guided revenue to $2,864.0 to $2,870.0 million non-GAAP income from operations to $443.0 to $445.0 million",
+      "issue": "Fit, with a visible cost (rubrics 9 and 10). The point uses 591 of its 600 characters, which leaves no room for the margin counter-case in F-5. A comma is also missing after '$2,870.0 million', so the guide reads as one run-on list.",
+      "fix": "Trim the point and restore the comma. For example, drop the third-quarter EPS guide of $0.34, which nothing else in the report uses, or shorten the reconciliation sentence.",
+      "status": "addressed",
+      "note": "Fixed. The run-on is gone ('and non-GAAP income from operations'). The point is now 555 of 600 characters after the EPS guide and the reconciliation sentence were dropped."
+    },
+    {
+      "id": "F-20",
+      "severity": "Minor",
+      "field": "sections.financials.incomeCommentary / sections.financials.balanceCommentary",
+      "quote": "Annual revenue growth slowed from +48.6% in FY22 to +28.8% in FY24, then steadied at +29.8% in fiscal 2025",
+      "issue": "Period labels are mixed in one sentence (rubric 9): the vendor's 'FY22' and 'FY24' sit beside the company's 'fiscal 2025'. balanceCommentary does the same, with 'from 6.78 in FY21 to 1.98 in FY25' in the same section as 'At the end of fiscal 2025'.",
+      "fix": "Use one style per paragraph, preferably the company's ('fiscal 2022').",
+      "status": "addressed",
+      "note": "Fixed to the standard the fix set: each paragraph now uses one style ('FY' in the first paragraph of incomeCommentary and the third of balanceCommentary, 'fiscal' elsewhere)."
+    },
+    {
+      "id": "F-21",
+      "severity": "Minor",
+      "field": "sections.management.insiderOwnership",
+      "quote": "Ms. Zatlyn owned 9,016,720 Class B shares, 25.5% of the class, for 13.4% of the vote.",
+      "issue": "The proxy table reports beneficial ownership, which treats options exercisable, and RSUs settling, within 60 days of April 30, 2026 as outstanding for each holder. That is why Mr. Prince's 75.7% and Ms. Zatlyn's 25.5% of Class B add up to more than the whole class. The paragraph says 'beneficially owned' once and then 'owned', 'held' and 'owns', which reads as shares in hand.",
+      "fix": "Use 'beneficially owned' throughout, or say once that the figures include options and RSUs vesting within 60 days of April 30, 2026.",
+      "status": "addressed",
+      "note": "Fixed. insiderOwnership now explains that beneficial ownership counts options and RSUs settling within 60 days, and it uses 'beneficially owned' throughout. The field is now close to its cap (F-29)."
+    },
+    {
+      "id": "F-22",
+      "severity": "Important",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "Without a stated cause, we treat the run as momentum rather than news, and it raises the bar for the quarters ahead.",
+      "issue": "This is new in the rewrite: the report now assigns a cause by default (rubrics 2 and 5; house lesson: don't substitute your own driver story). Round 1 correctly said only that nothing in the report explains the move. The rewrite reads the rise as 'momentum rather than news', which no source supports. It also sets aside the report's own evidence. Second-quarter revenue growth picked up to 36%, Current RPO grew 35%, and the August 6, 2026 guide implies a wider non-GAAP margin (growth.points[0] to [2]). That is news, and it may account for part of the move. The reading feeds a call the report itself calls close to SELL, so it matters.",
+      "fix": "Drop 'we treat the run as momentum rather than news'. Say that no captured source states the cause, and that whether the move reflects the second-quarter results or something else, the higher price raises the bar for the quarters ahead.",
+      "status": "addressed",
+      "note": "Fixed. The cause is no longer supplied: 'No captured source states the cause. Whether the move reflects the second-quarter results or something else, the higher price raises the bar for the quarters ahead.'"
+    },
+    {
+      "id": "F-23",
+      "severity": "Minor",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "Neither the release nor the MD&A excerpt gives a reason, and we do not supply one.",
+      "issue": "This is a new instance of the F-4 pattern. The MD&A is scoped as an excerpt, but 'the release' is not, and the pack carries only a truncated excerpt of the earnings release. The report can say the excerpt gives no reason, not that the release gives none.",
+      "fix": "Scope both, e.g. 'Neither the release excerpt nor the MD&A excerpt gives a reason, and we do not supply one.'",
+      "status": "addressed",
+      "note": "Fixed. It now reads 'Neither the release excerpt nor the MD&A excerpt gives a reason', so both documents are scoped to what was captured."
+    },
+    {
+      "id": "F-24",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "The FY26 guide covers only two remaining quarters and Current RPO growth supports it",
+      "issue": "The rewrite dropped the date (rubric 3). Round 1 read 'The fiscal 2026 guide from August 6, 2026 covers two remaining quarters'. Without the date, the sentence reads as of the report date, October 6, 2026. By then the third quarter has ended, leaving one unreported quarter and one quarter still to run, so the guide's open coverage reads larger than it is.",
+      "fix": "Restore the date, e.g. 'The FY26 guide, given on August 6, 2026, covered the two quarters then remaining, and Current RPO growth supports it'.",
+      "status": "addressed",
+      "note": "Fixed. The date is restored: 'The FY26 guide, given on August 6, 2026, covered the two quarters then remaining'."
+    },
+    {
+      "id": "F-25",
+      "severity": "Minor",
+      "field": "sections.finalRecommendation.body[1] / sections.valuation.scenarioCommentary / sections.financials.incomeCommentary",
+      "quote": "The guide already points toward that margin condition, and the third-quarter print will show whether it arrives.",
+      "issue": "The guidance-not-results caveat now recurs after growth.points[2] states it: in incomeCommentary ('but that is not yet in the results'), in scenarioCommentary ('That is guidance, not results') and here (rubrics 7 and 9). In this field the sentence is also circular. The BUY condition is now 'if the wider non-GAAP margin the company guides to shows up in results', so saying the guide 'points toward that margin condition' adds nothing.",
+      "fix": "Keep the caveat in growth.points[2], and elsewhere point to Growth without restating it. In body[1], keep the condition and cut the quoted sentence to the timing alone, e.g. 'The third-quarter print is the first test.'",
+      "status": "addressed",
+      "note": "Fixed. The caveat now sits only in growth.points[2]. incomeCommentary and scenarioCommentary point to Growth without restating it, and body[1] replaces the circular sentence with 'The third-quarter print is an early test.'"
+    },
+    {
+      "id": "F-26",
+      "severity": "Minor",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "The ratings say Buy; the targets say the stock is already about fully priced.",
+      "issue": "This new closing sentence restates the paragraph's opener, 'The Street is more cautious than its ratings.', in different words (rubrics 7 and 9).",
+      "fix": "Keep one of the two, or make the closer add something new, such as what the gap means for the call.",
+      "status": "addressed",
+      "note": "Fixed. The restating closer is gone, and the Street paragraph now makes its point once."
+    },
+    {
+      "id": "F-27",
+      "severity": "Minor",
+      "field": "sections.management.governance",
+      "quote": "The related-party items shown look immaterial to outside holders.",
+      "issue": "The new view goes slightly past what the page shows (rubric 2). The proxy excerpt gives Mr. Kramer's terms (a $100,000 base salary and continued vesting eligibility). It breaks off before Ms. Starzak's terms ('Pursuant to the new offer letter, Ms.'), so the page cannot show whether her offer letter is material.",
+      "fix": "Scope the view, e.g. 'Mr. Kramer's Senior Advisor terms look immaterial to outside holders; the excerpt ends before Ms. Starzak's terms.'",
+      "status": "addressed",
+      "note": "Fixed. It now reads 'Mr. Kramer's Senior Advisor terms look immaterial to outside holders; Ms. Starzak's terms fall outside the excerpt.'"
+    },
+    {
+      "id": "F-28",
+      "severity": "Minor",
+      "field": "sections.valuation.multiplesCommentary / sections.financials.cashflowCommentary / sections.businessMoat.moatFactors[0].body",
+      "quote": "its trailing free cash flow yield is 0.3% on the Facts table's definition",
+      "issue": "'Facts table' is desk jargon, like the 'pack' in F-18. The page shows these figures in its Financials tables, and nothing on it is labelled 'Facts'. The rewrite raises the count to five: three in cashflowCommentary (one new, the opener 'The Facts table and the company report…'), one new in multiplesCommentary and one in moatFactors[0].",
+      "fix": "Use terms a reader of the page knows, e.g. 'on the vendor's definition', 'the vendor's figures' or 'the financial tables above'.",
+      "status": "addressed",
+      "note": "Fixed. No 'Facts table' remains. The text uses 'the vendor's figures', 'on the vendor's definition' and 'the financial tables above'; the last is accurate, since the Financials tables render before both cashflowCommentary and the Business and moat section."
+    },
+    {
+      "id": "F-29",
+      "severity": "Minor",
+      "field": "sections.management.insiderOwnership",
+      "quote": "The proxy's ownership table is as of April 30, 2026, when 319,528,379 Class A shares and 33,937,897 Class B shares were outstanding.",
+      "issue": "Fit (rubric 10). With the beneficial-ownership sentence added, the field is at 1,434 of its 1,500 characters, leaving room for about one short sentence in any later round.",
+      "fix": "Trim to make room, e.g. drop the outstanding share counts (the class and voting percentages carry the argument) or the clause on exceptions to the joint class vote.",
+      "status": "addressed",
+      "note": "Fixed. The field is now 1,367 of 1,500 characters. The exception clause was cut to 'the two classes generally vote together', which keeps the proxy's qualification."
+    }
+  ]
+}

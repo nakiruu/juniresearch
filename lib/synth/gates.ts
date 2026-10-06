@@ -169,12 +169,15 @@ function assessDistress(f: GateFacts, sector: Sector): DistressResult {
 
   const n = f.statements.fiscalYears.length - 1;
   const nd = at(series(f.statements.balance, "netDebt"), n);
+  const debt = at(series(f.statements.balance, "totalDebt"), n);
   const cash = at(series(f.statements.balance, "cashAndInvestments"), n);
   const fcf = at(series(f.statements.cashflow, "freeCashFlow"), n);
   const ebitda = at(series(f.statements.income, "ebitda"), n);
   const { interestCoverage: ic, netDebtToEbitda: ndE, currentRatio: cr } = f.ttm;
 
-  const netDebtor = num(nd) ? nd > 0 : num(ndE) ? ndE > 0 : false;
+  // Debt against cash AND investments: the netDebt row subtracts cash only (vendor convention), which
+  // read NET (FY2025: $4.1B of cash and securities against $3.3B of convertibles) as a net debtor.
+  const netDebtor = num(debt) && num(cash) ? debt > cash : num(nd) ? nd > 0 : num(ndE) ? ndE > 0 : false;
   const runwayYears = num(fcf) && fcf < 0 && num(cash) ? cash / Math.abs(fcf) : Infinity;
 
   // Imminent solvency risk → SELL ceiling.

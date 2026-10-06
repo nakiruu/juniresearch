@@ -204,12 +204,29 @@ describe("severity tiers — synthetic", () => {
     const g = evaluateGates(
       pack({
         ttm: { interestCoverage: 0.5, currentRatio: 2.0, netDebtToEbitda: 4 },
-        balance: { netDebt: [1, 2, 3, 4, 5], currentRatio: [2, 2, 2, 2, 2], cashAndInvestments: [40, 40, 40, 40, 40] },
+        balance: {
+          totalDebt: [41, 42, 43, 44, 45],
+          netDebt: [1, 2, 3, 4, 5],
+          currentRatio: [2, 2, 2, 2, 2],
+          cashAndInvestments: [40, 40, 40, 40, 40],
+        },
         cashflow: { freeCashFlow: [2, 1, 0, -1, -2] }, // burning, but 20yr of cash
       }),
     );
     expect(g.distress.zone).toBe("WEAK");
     expect(g.ceiling).toBe("HOLD");
+  });
+
+  it("does not read a name whose cash and investments exceed its debt as a net debtor (NET-shape)", () => {
+    // NET FY2025: debt $3.3B, cash + securities $4.1B, but cash-only netDebt $2.3B; coverage -30.9x.
+    const g = evaluateGates(
+      pack({
+        ttm: { interestCoverage: -30.9, currentRatio: 1.8, netDebtToEbitda: -12.4 },
+        balance: { totalDebt: [12, 14, 13, 13, 33], cashAndInvestments: [18, 16, 17, 19, 41], netDebt: [8, 12, 12, 11, 23] },
+      }),
+    );
+    expect(g.distress.zone).toBe("SAFE");
+    expect(g.ceiling).toBe("STRONG BUY");
   });
 
   it("caps at HOLD when an industrial Piotroski score is very weak", () => {
