@@ -1,18 +1,19 @@
 {
-  "judgmentSha256": "ba7333dccc8821f7be08513a52c71698143ebc9caf076bc77c2f7f1eba1fad66",
-  "reviewedAt": "2026-10-06T11:50:21Z",
+  "judgmentSha256": "ba81181dd038c95a7381f9f0c041e1234e564a12efd0633323170435dacaaf0b",
+  "reviewedAt": "2026-10-06T11:53:53Z",
   "reviewer": "Claude Opus 5.5",
-  "round": 1,
-  "verdict": "needs-fix-round",
+  "round": 2,
+  "verdict": "approved-with-minors",
   "findings": [
     {
       "id": "F-1",
       "severity": "Critical",
       "field": "sections.financials.balanceCommentary",
       "quote": "The balance sheet carries no debt; the 10-Q shows no borrowings, so net debt is not a meaningful measure here.",
-      "issue": "Over-attribution. The 10-Q excerpt in Context (MD&A and risk factors) says nothing about borrowings or debt. The only support for no debt is the Facts balance-sheet table, where Total Debt and Net Debt show \"—\" in every year, and Net debt/EBITDA and interest coverage are also \"—\". The claim is attached to a document that does not carry it.",
+      "issue": "Over-attribution. The 10-Q excerpt in Context (MD&A and risk factors) says nothing about borrowings or debt. The only support for no debt is the Facts balance-sheet table, where Total Debt and Net Debt show \"\u2014\" in every year, and Net debt/EBITDA and interest coverage are also \"\u2014\". The claim is attached to a document that does not carry it.",
       "fix": "Attribute the no-debt reading to the data on the page, e.g. \"The balance-sheet data show no debt in any of the five years\", and drop \"the 10-Q shows no borrowings\". Keep the claim no stronger than the table supports.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Now reads \"The balance-sheet data show no debt in any of the five years\"; the 10-Q attribution is gone."
     },
     {
       "id": "F-2",
@@ -21,7 +22,8 @@
       "quote": "The vendor peer set is not a set of broadband-equipment or software businesses, so this report makes no peer-multiple comparison.",
       "issue": "Unsupported characterization. The Facts block carries no peer set at all: the Multiples heading reads \"company column; peers pending a peer data source\". The report describes the composition of a peer list the grounding surface does not show.",
       "fix": "Say only what the page shows, e.g. \"No peer multiples are available in this report's sources, so it makes no peer comparison.\"",
-      "status": "open"
+      "status": "addressed",
+      "note": "Now reads \"No peer multiples are available in this report's sources, so it makes no peer comparison.\""
     },
     {
       "id": "F-3",
@@ -30,7 +32,8 @@
       "quote": "FY25 diluted EPS was $0.26 on net income of $17.9M. Thin GAAP earnings are why the trailing multiples discussed in Valuation look high.",
       "issue": "Period mismatch, and a claim argued twice. The P/E (TTM) of 45.8x at $34.34 is not built on FY25 EPS of $0.26; the trailing window includes the stronger first half of 2026 (TTM net margin 4.6% against FY25's thinner result). Pairing the FY25 EPS with the trailing multiple misleads about which window drives it. The same point, that thin GAAP earnings inflate the trailing multiples, is then argued again in sections.valuation.multiplesCommentary (\"rest on thin GAAP earnings\").",
       "fix": "Remove the sentence linking FY25 EPS to the trailing multiples from Financials. Make the thin-earnings argument once, in Valuation, tied to the trailing window (e.g. the TTM net margin of 4.6%), not to FY25 EPS.",
-      "status": "open"
+      "status": "addressed",
+      "note": "The FY25 EPS link to the trailing multiples is removed from Financials; Valuation ties the trailing multiples to the TTM net margin of 4.6%."
     },
     {
       "id": "F-4",
@@ -39,7 +42,8 @@
       "quote": "Software and service gross margin recovering now that the dual-cloud period of the third-generation platform migration has passed (Financials).",
       "issue": "Inference stated as fact. The 10-Q says the company \"operated in a dual cloud environment to successfully support customer migrations during a portion of the respective periods\"; it does not say the migration is complete or that the dual-cloud cost has ended. Software and service gross margin was still down 200 bps year over year in the second quarter (63.0% vs 65.0%).",
       "fix": "Hedge to what the source says, e.g. \"Software and service gross margin recovering if the dual-cloud costs the company tied to the platform migration do not recur\", and note in Financials that the second-quarter margin for that line was still lower year over year.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Catalyst is hedged (\"if the dual-cloud costs ... do not recur\"), and Financials now quotes the 10-Q and notes Q2 Software and service margin of 63.0% vs 65.0%."
     },
     {
       "id": "F-5",
@@ -48,7 +52,8 @@
       "quote": "The risk is that a slower second half, which seasonal budget cycles and government programs can cause, would pull the year back toward or below it.",
       "issue": "Unsupported causal claim. The 10-Q ties seasonality to the first quarter (\"customers have in the past spent less in the first quarter as they are finalizing their annual budgets\" and winter weather). Nothing on the surface says seasonal budget cycles slow the second half; the source's pattern points the other way.",
       "fix": "Drop the seasonal cause for a second-half slowdown. If a second-half risk is kept, ground it in what the source names (e.g. government-program timing or federal shutdowns, which the risk factors say can shift purchase timing), and say it in words.",
-      "status": "open"
+      "status": "addressed",
+      "note": "The seasonal cause is gone; the second-half risk now rests on the risk-factor language about government programs and shutdowns shifting timing."
     },
     {
       "id": "F-6",
@@ -57,7 +62,8 @@
       "quote": "International revenue rebuilding as the company turns more attention abroad with its third-generation platform (Growth).",
       "issue": "Calls coherence. The Growth section it points to says international revenue fell year over year in the second quarter ($15.6M vs $22.8M per the 10-Q) and that \"We give that plan no weight until it shows up in revenue.\" Listing as a catalyst something the report explicitly gives no weight is contradictory, and \"rebuilding\" is not shown by any figure.",
       "fix": "Either remove this catalyst or reword it so it matches the Growth view (e.g. a watch item that only becomes a catalyst if international revenue turns up), and replace it with a catalyst the report actually weights.",
-      "status": "open"
+      "status": "addressed",
+      "note": "The international catalyst is replaced with RPO growth and memory costs stabilizing, both of which the report argues."
     },
     {
       "id": "F-7",
@@ -66,7 +72,8 @@
       "quote": "No captured source explains the fall. There is no earnings-call transcript and no headline in this report's sources, so we cannot say whether the market is reacting to guidance, to memory costs or to something else. We treat the unexplained decline as information in its own right and weight the Bear case heavily for it.",
       "issue": "Cross-section repetition. The same claim (the shares have roughly halved, no source explains it, so the Bear case is weighted heavily and consensus may be stale) is argued in four places: analystCommentary (quoted), thesis (\"The shares have roughly halved from their 52-week high without an explanation in any captured source, and that unexplained fall is the main reason we do not lean on those estimates\"), scenarioCommentary (\"the share price has halved without a stated cause\" and \"the market may know something the filings here do not show; the price near its 52-week low is the evidence\"), and risks.idiosyncratic[2] (\"after roughly halving from its high, and no captured source explains the move\"). The executive-summary risk pointer is fine; the others retell the argument.",
       "fix": "Argue it once, in Valuation's scenarioCommentary where it sets the Bear weight. Let analystCommentary and the thesis state the conclusion in one sentence pointing to Valuation, and cut risks.idiosyncratic[2] down to the mechanism and what would confirm it, without retelling the halving and missing-source story.",
-      "status": "open"
+      "status": "addressed",
+      "note": "analystCommentary and the thesis now point to Valuation; scenarioCommentary carries the argument; risks.idiosyncratic[2] is reframed as estimate risk with a pointer. See F-18 for a small residual inside scenarioCommentary."
     },
     {
       "id": "F-8",
@@ -75,7 +82,8 @@
       "quote": "The company lists inventory valuation and supplier purchase commitments among its critical accounting estimates, and its risk factors warn that changing customer requirements may affect the value of both. With memory prices volatile, a write-down is the balance-sheet item to monitor.",
       "issue": "Cross-section repetition. The inventory and supplier-commitment write-down risk is argued in balanceCommentary (quoted), again in risks.idiosyncratic[3] (\"Changing customer requirements may lower the value of inventory and supplier purchase commitments, per the risk factors... a write-down in cost of revenue is the item to watch\"), and a third time in cashflowCommentary (\"how much inventory the company buys ahead of memory price increases, which the risk factors flag\").",
       "fix": "Make the argument once, in Risks. In balanceCommentary and cashflowCommentary, refer back in a short clause (e.g. \"the inventory risk set out in Risks\").",
-      "status": "open"
+      "status": "addressed",
+      "note": "Risks carries the inventory argument; balanceCommentary and cashflowCommentary refer back in a clause."
     },
     {
       "id": "F-9",
@@ -84,7 +92,8 @@
       "quote": "That shift is still early: Software and service grew more slowly than Appliance in the quarter, so the mix moved toward the lower-margin line.",
       "issue": "Paraphrase repetition. The mix-shift claim appears in businessMoat.segments[0] (quoted), growth.points[1] (\"faster appliance growth can lower the blended gross margin\") and growth.points[2] (\"it grew more slowly than appliances in the second quarter, so the mix did not improve\"). Separately, the point that second-quarter growth ran ahead of the FY26E consensus pace is made in both growth.points[0] (\"Second-quarter revenue growth ran slightly ahead of that pace\") and scenarioCommentary (\"second-quarter revenue growth ran ahead of the FY26E consensus pace\").",
       "fix": "State the mix shift once (Growth is the natural home) and have the moat segment refer back in words. Make the growth-versus-consensus point once, in Growth, and have scenarioCommentary point to it.",
-      "status": "open"
+      "status": "addressed",
+      "note": "The moat segment points to Growth; the mix shift is stated once in growth.points[2]; scenarioCommentary points to Growth for the consensus pace."
     },
     {
       "id": "F-10",
@@ -93,7 +102,8 @@
       "quote": "The company pays no dividend, carries no debt and repurchased shares in FY25 with free cash flow.",
       "issue": "Cross-section repetition. The no-debt point is made in analystCommentary (\"The business is debt-free\"), thesis (\"has no debt\"), catalysts[2] (\"with no borrowings to service\"), balanceCommentary and capitalAllocation (quoted). The claim that FY25 buybacks were funded by free cash flow is made in both cashflowCommentary (\"Free cash flow covered both capital expenditure and those repurchases, so the buyback did not draw on the balance sheet\") and capitalAllocation (quoted).",
       "fix": "Establish no debt once in balanceCommentary (see F-1 for the attribution) and the FCF funding of buybacks once in cashflowCommentary. Elsewhere refer back in words or drop the clause; capitalAllocation can give the view on buybacks without restating funding and leverage.",
-      "status": "open"
+      "status": "addressed",
+      "note": "No-debt now appears only in balanceCommentary. A one-clause restatement of the FCF funding of buybacks remains in capitalAllocation; it is logged as Minor F-19."
     },
     {
       "id": "F-11",
@@ -102,7 +112,8 @@
       "quote": "We would move to SELL on a year-over-year decline in quarterly revenue or a cut to FY27E consensus EPS.",
       "issue": "Calls coherence. The scenarios already put 35% on a Bear case in which estimates are cut and EPS stalls at the FY26E level. Any cut to FY27E consensus, however small, does not by itself move the weighted fair value far enough to derive SELL under the page's rule. The trigger is looser than the calls it is meant to change.",
       "fix": "Tie the SELL trigger to the Bear path becoming the base, described in words (e.g. a cut that takes FY27E consensus EPS toward the FY26E level, or a second consecutive year-over-year gross margin decline), so that it matches the scenario structure.",
-      "status": "open"
+      "status": "addressed",
+      "note": "SELL trigger now matches the Bear path: a cut taking FY27E EPS toward the FY26E level plus another year-over-year gross margin decline."
     },
     {
       "id": "F-12",
@@ -111,7 +122,8 @@
       "quote": "Continued share repurchases funded from internal cash, with no borrowings to service (Management).",
       "issue": "\"Continued\" implies buybacks are ongoing in 2026, but the surface shows only FY25 repurchases, and capitalAllocation itself says the remaining authorization is unknown. It is unclear why repurchases of this size are a catalyst for the shares.",
       "fix": "Replace this with a catalyst the report argues, or reword it to what is shown (FY25 repurchases; future size not disclosed in the excerpt).",
-      "status": "open"
+      "status": "addressed",
+      "note": "The share-repurchase catalyst is removed; capitalAllocation says future buybacks cannot be sized."
     },
     {
       "id": "F-13",
@@ -120,7 +132,8 @@
       "quote": "The current ratio has come down from 4.24 at the end of FY25. It remains comfortable, so liquidity is not a constraint on the thesis.",
       "issue": "Judgment, not restatement. The trailing current ratio (2.83, which the page shows as a chosen highlight) is down by about a third from FY25 with no debt on the books. The prose neither gives the level nor says that the sources do not show the cause, so the reader cannot tell whether the drop matters.",
       "fix": "Give the trailing figure, say the sources do not show what drove the decline (e.g. whether it reflects inventory buying or higher current liabilities), and then give the view on liquidity.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Now gives 2.83 trailing vs 4.24, says the sources do not show the cause, and gives a view."
     },
     {
       "id": "F-14",
@@ -129,7 +142,8 @@
       "quote": "The 30 closes in the price history show the slide still running, with the shares drifting lower across the period to today's level.",
       "issue": "Overstated. The 30 closes fall from $39.80 to $34.34 overall, but the low in the window was $33.14 on September 25, and the shares have recovered a little since. \"Still running\" is not what the last weeks show.",
       "fix": "Describe the window accurately in words, e.g. the shares drifted lower through most of the period and have been flat to slightly higher off their late-September low.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Now reads \"drifted lower for most of the period, then held flat to slightly higher off a late-September low.\""
     },
     {
       "id": "F-15",
@@ -138,7 +152,8 @@
       "quote": "Total equity was 0.9 ($B) at the end of FY25.",
       "issue": "Table-unit notation in prose. The same form appears in \"Cash & ST Investments rose from 0.2 ($B) in FY23 to 0.4 ($B) in FY25\".",
       "fix": "Write the figures in prose form: \"$0.9B\", \"$0.2B\", \"$0.4B\".",
-      "status": "open"
+      "status": "addressed",
+      "note": "Figures are now written $0.9B, $0.2B and $0.4B."
     },
     {
       "id": "F-16",
@@ -147,7 +162,38 @@
       "quote": "The signal to track is appliance gross margin in the third quarter against the prior year.",
       "issue": "Voice tic. Each idiosyncratic risk ends with a what-to-watch line in the same form: \"The signal to track is\", \"The test is whether\", \"The next quarterly report is an early chance\", \"is the item to watch\". balanceCommentary adds \"the balance-sheet item to monitor\".",
       "fix": "Vary the construction or fold the watch item into the sentence that states the mechanism; keep the explicit watch line in no more than one or two places.",
-      "status": "open"
+      "status": "addressed",
+      "note": "The watch lines are varied or folded into the mechanism sentences; no repeated tic remains."
+    },
+    {
+      "id": "F-17",
+      "severity": "Minor",
+      "field": "sections.growth.points[0]; sections.risks.systemic",
+      "quote": "The risk to the second half is timing: the risk factors say government-sponsored programs and U.S. federal government shutdowns can shift when customers buy.",
+      "issue": "Introduced by the F-5 fix. The same risk-factor point is made in risks.systemic (\"Government-sponsored broadband programs and U.S. federal government shutdowns can shift the timing of customer purchases\"). The same claim now appears in two sections.",
+      "fix": "Keep the mechanism in risks.systemic and have growth.points[0] point to it in words (e.g. \"the purchase-timing risk set out in Risks\").",
+      "status": "declined",
+      "note": "Deferred to the next synthesis; round 2 is the final review round and editing the judgment now would leave it unreviewed."
+    },
+    {
+      "id": "F-18",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "On the flat side, gross margin is falling on memory costs and the share price has halved without a stated cause.",
+      "issue": "Within the same field, the second paragraph restates the point at length (\"after roughly halving from their high, and no captured source ... says whether the market is reacting\"). The unexplained fall is introduced twice in one section.",
+      "fix": "In the first paragraph, refer to it in words (e.g. \"the unexplained price fall discussed below\") and leave the full statement to the Bear-weight paragraph.",
+      "status": "declined",
+      "note": "Deferred to the next synthesis; round 2 is the final review round and editing the judgment now would leave it unreviewed."
+    },
+    {
+      "id": "F-19",
+      "severity": "Minor",
+      "field": "sections.management.capitalAllocation",
+      "quote": "The FY25 repurchases were sized within free cash flow, which we regard as disciplined.",
+      "issue": "This is the residual from F-10. That FY25 buybacks fit within free cash flow is already established in cashflowCommentary (\"Free cash flow covered both capital expenditure and those repurchases\"). This sentence restates it to reach its view.",
+      "fix": "Keep the view and point back, e.g. \"The FY25 repurchases, funded as Financials shows, were disciplined.\"",
+      "status": "declined",
+      "note": "Deferred to the next synthesis; round 2 is the final review round and editing the judgment now would leave it unreviewed."
     }
   ]
 }
