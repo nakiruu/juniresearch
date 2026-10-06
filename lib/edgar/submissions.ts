@@ -67,10 +67,15 @@ export async function fetchFilingIndex(cik: number, accession: string, contact: 
   const j = await edgarJson<{ directory: { item: { name: string }[] } }>(indexUrl(cik, accession), contact, fetchImpl);
   return j.directory.item;
 }
-/** The earnings-release exhibit: "ex99_1", "ex-99.1", or AT&T's "exhibit991"; the .1 exhibit wins when several 99s are filed. */
+/**
+ * The earnings-release exhibit: "ex99_1", "ex-99.1", or AT&T's "exhibit991"; the .1 exhibit wins when several 99s
+ * are filed. When no file is named as an exhibit 99, a document named as a release is taken instead (BSX files its
+ * Q2 2026 release as "q22026earningsrelease.htm"); the caller only asks this of an item-2.02 8-K.
+ */
 export function exhibit99Url(cik: number, accession: string, items: { name: string }[]): string | null {
   const htm = items.filter((i) => /\.htm/i.test(i.name) && /ex(?:hibit)?[-_.]?99/i.test(i.name));
-  const first = htm.find((i) => /ex(?:hibit)?[-_.]?99[-_.]?1(?!\d)/i.test(i.name)) ?? htm[0];
+  const named = htm.find((i) => /ex(?:hibit)?[-_.]?99[-_.]?1(?!\d)/i.test(i.name)) ?? htm[0];
+  const first = named ?? items.find((i) => /\.htm/i.test(i.name) && /earnings|press[-_.]?release/i.test(i.name));
   return first ? filingUrl(cik, accession, first.name) : null;
 }
 export const fetchEdgarDocument = edgarText;
