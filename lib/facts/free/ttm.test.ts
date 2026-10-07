@@ -59,6 +59,51 @@ describe("computeTtm", () => {
   });
 });
 
+describe("computeTtm requires the last four quarters to be consecutive (D-7)", () => {
+  // V-shape, captured 2026-09-21 before the non-December Q4 derivation: no September quarter at all.
+  const gapped = [
+    q({ report_date: "2025-06-30" }), q({ report_date: "2025-12-31" }),
+    q({ report_date: "2026-03-31" }), q({ report_date: "2026-06-30" }),
+  ];
+
+  it("nulls every summed metric when the four quarters span more than ~300 days", () => {
+    const t = computeTtm(gapped, { price: 100, marketCap: 4000, dividendYield: 0.01, trailingPe: 31.3 });
+    expect(t.keyMetrics.price_to_sales).toBeNull();
+    expect(t.keyMetrics.ev_to_ebitda).toBeNull();
+    expect(t.keyMetrics.free_cash_flow_yield).toBeNull();
+    expect(t.ratios.net_margin).toBeNull();
+    expect(t.ratios.gross_margin).toBeNull();
+    expect(t.ratios.operating_margin).toBeNull();
+    expect(t.ratios.net_debt_to_ebitda).toBeNull();
+    expect(t.ratios.interest_coverage).toBeNull();
+  });
+
+  it("keeps the balance-sheet ratios and falls back to Yahoo's trailing P/E", () => {
+    const t = computeTtm(gapped, { price: 100, marketCap: 4000, dividendYield: 0.01, trailingPe: 31.3 });
+    expect(t.ratios.current_ratio).toBeCloseTo(2, 6);
+    expect(t.ratios.dividend_yield).toBe(0.01);
+    expect(t.keyMetrics.pe_ratio).toBe(31.3);
+  });
+
+  it("accepts a 52/53-week filer whose four quarter ends span 250–300 days", () => {
+    const fiftyTwo = [
+      q({ report_date: "2025-09-27" }), q({ report_date: "2025-12-27" }),
+      q({ report_date: "2026-03-28" }), q({ report_date: "2026-06-27" }),
+    ];
+    const t = computeTtm(fiftyTwo, { price: 100, marketCap: 4000, dividendYield: 0.01 });
+    expect(t.ratios.net_margin).toBeCloseTo(120 / 400, 6);
+  });
+
+  it("uses the latest four by report_date even when more than four are supplied", () => {
+    const five = [q({ report_date: "2025-06-30", revenue: 999 }), ...[
+      q({ report_date: "2025-09-30" }), q({ report_date: "2025-12-31" }),
+      q({ report_date: "2026-03-31" }), q({ report_date: "2026-06-30" }),
+    ]];
+    const t = computeTtm(five, { price: 100, marketCap: 4000, dividendYield: 0.01 });
+    expect(t.keyMetrics.price_to_sales).toBeCloseTo(4000 / 400, 6); // the 999 quarter is outside the window
+  });
+});
+
 describe("computeTtm P/E fallback to Yahoo trailing P/E", () => {
   const withNullEps = [
     q({ report_date: "2025-09-30", eps_diluted: null }), q({ report_date: "2025-12-31", eps_diluted: null }),
