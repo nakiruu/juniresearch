@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "09a174c1570cdfc034e7188e18483627cca8626f1604729a146ecb6c6d70e8ea",
-  "reviewedAt": "2026-09-23T14:30:00Z",
-  "reviewer": "claude-opus-4-8",
+  "judgmentSha256": "b1771a9d29191e9192b19923f69cb600f2308dfe12b99f8ec9f0475076e8267a",
+  "reviewedAt": "2026-10-07T18:22:24Z",
+  "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "approved",
+  "verdict": "approved-with-minors",
   "findings": [
     {
       "id": "F-1",
@@ -13,7 +13,7 @@
       "issue": "The MD&A (Life Sciences Solutions, Q2) states the bioproduction business grew $196 million 'driven by higher demand from pharma and biotech customers, as well as the impact from the 2025 acquisition of the filtration and separation business' — two drivers, organic demand named first. The draft pins the whole $196 million on the acquisition and drops the organic-demand co-driver, overstating the deal's contribution. By contrast the parallel Clario claim ($441 million of clinical-research revenue) is supported because the MD&A attributes that growth 'primarily' to the acquisition; this one is not.",
       "fix": "Attribute the $196 million to both drivers, e.g. 'bioproduction grew $196 million on stronger pharma-and-biotech demand and the 2025 filtration-and-separation acquisition', or soften 'drove' to 'contributed to' so the claim matches the pack.",
       "status": "addressed",
-      "note": "Resolved. growth.points[2] now reads 'bioproduction grew $196 million on stronger pharma-and-biotech demand alongside the September 2025 filtration-and-separation acquisition' — organic demand named first, the acquisition second, matching the MD&A's two-driver wording. The parallel Clario claim is correctly qualified 'which the filing attributes primarily to the deal'."
+      "note": "Still resolved in the corrected-debt rewrite. The claim now sits in growth.points[1]: 'the filtration and separation business added to the $196 million rise in bioproduction'. 'Added to' presents the deal as one contributor, not the sole driver, which matches the MD&A."
     },
     {
       "id": "F-2",
@@ -23,7 +23,7 @@
       "issue": "The moat section restates the full per-segment revenue, growth and margin set (and the Clario $441M) already given verbatim in financials.incomeCommentary, rather than referring back in words; the segment revenues appear a third time in executiveSummary.companyOverview. Related cross-section repetition: the leverage cluster (net debt $32.9B / total debt $42.7B / interest coverage 5.6x) recurs in balanceCommentary, management.capitalAllocation, risks.idiosyncratic[4], executiveSummary.risks[4] and finalRecommendation; the valuation cluster (35.4x trailing, 26.2x forward, 52-week high $671.47, consensus $649.96 below the current price, 24 of 29 Buy) recurs across thesis, valuation.multiplesCommentary, risks.idiosyncratic[2] and finalRecommendation.",
       "fix": "In businessMoat reference the segment mix in words and keep only the margin points the moat argument needs, dropping the restated revenue/growth list. Introduce each figure once per section and refer back qualitatively; let the exec-summary risk bullets point rather than carry the same figures the body sections argue.",
       "status": "addressed",
-      "note": "Resolved. businessMoat now refers back ('set out with revenue and margins in the financials section') and ranks margins qualitatively; the per-segment revenue set (6,693/2,815/1,847/1,205) appears once, in incomeCommentary; companyOverview points rather than restating. Leverage figures (32.9B/42.7B/5.6x) now appear once each in balanceCommentary, cited in words elsewhere. Valuation cluster argued once in multiplesCommentary; thesis keeps only 35.4x as an anchor; risks.idiosyncratic[2], exec-summary risks and finalRecommendation are now qualitative pointers."
+      "note": "Still resolved. businessMoat keeps only the four segment margins its argument needs, and the revenue set appears once, in incomeCommentary. The corrected leverage figures ($39.4B, $29.5B, 3.5x, 5.6x) are stated in balanceCommentary; elsewhere only 3.5x recurs, as an exec-summary pointer. The conclusion repeats that remain are logged as F-5."
     },
     {
       "id": "F-3",
@@ -33,7 +33,77 @@
       "issue": "The $207M and $297M figures are grounded (Q2 press-release income statement), but the causal clause 'as rates and cash balances shifted' is not supported by the pack, which carries no interest-rate or period-end cash data behind the quarterly decline. It is also loose: FY25 cash and short-term investments rose ($5.6B to $10.1B), so a 'cash balances shifted' rationale cuts against the fall in interest income rather than explaining it.",
       "fix": "Drop the unsupported causal clause and state the figures plainly, e.g. 'quarterly interest income fell to $207 million from $297 million a year earlier', or attribute the decline only to what the pack supports.",
       "status": "addressed",
-      "note": "Resolved. balanceCommentary now reads 'quarterly interest income fell to $207 million from $297 million a year earlier' — the unsupported 'as rates and cash balances shifted' clause is removed; figures stated plainly and grounded in the Q2 income statement."
+      "note": "Still resolved. The sentence now reads 'interest income fell to $207 million from $297 million, so the net cost of financing rose'. There is no causal clause, and the 'net cost rose' inference follows from the grounded $401M vs $404M interest-expense figures."
+    },
+    {
+      "id": "F-4",
+      "severity": "Important",
+      "field": "sections.management.capitalAllocation",
+      "quote": "The acquisition program has lifted debt, so the discipline to judge is whether deals earn their cost while leverage stays at a level the cash flow covers.",
+      "issue": "This is a causal claim the pack does not establish, and it contradicts the report's own debt section. balanceCommentary says, correctly, that 'the page does not show the mid-2026 balance sheet or how the March 2026 Clario purchase was paid for, so we do not attribute the difference'. Nothing on the page shows the funding or the price of the filtration or Clario deals; it shows only that FY25 debt rose from $31.3B to $39.4B. The same unestablished premise ('another' implies the earlier deals were debt-funded) appears in two more places: balanceCommentary ('less room for another large debt-funded acquisition') and executiveSummary.risks[3] ('narrows room for another large debt-funded deal'). The corrected debt figures themselves are accurate and fairly framed. The problem is only this causal gloss.",
+      "fix": "Keep the claim to what the page shows. For example: 'Debt rose in FY25, a year with a large acquisition, but the page does not show how the deals were funded'. The question for investors is whether deals earn their cost while leverage stays at a level cash flow covers. In balanceCommentary and executiveSummary.risks[3], replace 'another large debt-funded acquisition/deal' with 'a large debt-funded acquisition/deal'.",
+      "status": "addressed",
+      "note": "Resolved. capitalAllocation now reads 'Debt rose in FY25, a year in which the company bought the filtration and separation business, but the page does not show how either deal was funded', which matches balanceCommentary's non-attribution. 'another large debt-funded' is gone from balanceCommentary and executiveSummary.risks[3], which now say 'a large debt-funded acquisition/deal'."
+    },
+    {
+      "id": "F-5",
+      "severity": "Important",
+      "field": "sections.finalRecommendation.body[0]",
+      "quote": "our probability-weighted value of $669.25 is close to today's price, while the Bear at $520.00 sits about a fifth below it.",
+      "issue": "The report states its conclusion three times. The weighted value and the Bear's distance from the price appear in analystCommentary ('the probability-weighted value is $669.25, close to the price, while the Bear sits about a fifth below it'), scenarioCommentary ('The probability-weighted value is $669.25 against a price of $658.92 … and the Bear sits about a fifth below the price') and here. analystCommentary ('The label is HOLD because of where the price stands, not because the business has weakened.') and finalRecommendation.body[1] ('The label is HOLD because of where the price stands now.') are near-identical sentences in two sections. The 'top of the 52-week range' point is also retold in the thesis, the Base driver, scenarioCommentary and finalRecommendation.body[0].",
+      "fix": "Argue the E/D figures once, in scenarioCommentary. analystCommentary may keep its one summary statement. In finalRecommendation, refer back in words (e.g. 'with the weighted value near the price and a real Bear below it'), drop the closing label sentence of body[1] or reword it so it does not repeat analystCommentary, and cut the 52-week-range point from at least one of the thesis or finalRecommendation.body[0].",
+      "status": "addressed",
+      "note": "Resolved. finalRecommendation.body[0] now points back in words ('the weighted value sits near the price with a real Bear below it'), and the repeated label sentence is gone from body[1]. The 52-week-range point is cut from the thesis, the Base driver and scenarioCommentary. analystCommentary keeps its single summary, as the fix allowed."
+    },
+    {
+      "id": "F-6",
+      "severity": "Minor",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "Most of the gap between the trailing and forward multiples is a difference in earnings basis rather than growth.",
+      "issue": "The page supports this reading. The 35.4x trailing P/E fits trailing GAAP EPS built from FY25 and the six-month GAAP figures, and six-month adjusted EPS of $11.47 against GAAP $9.10 accounts for most of the step from 35.4x to 26.2x. Every figure cited is on the surface. But the lead sentence states the conclusion as fact, and the caveat that matters ('the page does not label the estimates' basis') comes two sentences later. The consensus basis is inferred, not sourced.",
+      "fix": "Put the hedge in the lead sentence, e.g. 'Most of the gap appears to reflect a difference in earnings basis rather than growth', and keep the closing caveat that the page does not label the estimates' basis.",
+      "status": "addressed",
+      "note": "Resolved. The lead sentence now reads 'Most of the gap … appears to reflect a difference in earnings basis rather than growth, though the page does not label the estimates' basis'. The hedge sits with the claim, and the supporting GAAP and adjusted figures follow."
+    },
+    {
+      "id": "F-7",
+      "severity": "Minor",
+      "field": "sections.finalRecommendation.body[1]",
+      "quote": "The target range is the band in which our scenarios derive HOLD. Below the $605 target low, the same scenarios derive BUY; above the $705 target high, which is also above the 52-week high of $671.47, they derive SELL.",
+      "issue": "This is close but not exact. With a weighted value of $669.25, expected upside reaches +10% (BUY) a few dollars above the $605 target low, and reaches −5% (SELL) just under the $705 target high. The HOLD band therefore sits slightly inside the target range, not on it. The 'below' and 'above' statements are true; the first sentence overstates the match.",
+      "fix": "Say the target range 'approximately' marks the HOLD band, or note that BUY derives from a few dollars above the target low.",
+      "status": "addressed",
+      "note": "Resolved. body[1] now says the range 'approximates the band in which our scenarios derive HOLD; its ends are rounded', with BUY 'a little above the 05 target low' and SELL 'a little below the 05 target high'. This matches the page math: BUY at about 08.4 or below, SELL at about 04.5 or above."
+    },
+    {
+      "id": "F-8",
+      "severity": "Minor",
+      "field": "sections.growth.points[2]",
+      "quote": "Organic growth improved to 5% in the second quarter from 3% for the half",
+      "issue": "Voice and logic: the six-month rate includes the second quarter, so organic growth did not 'improve from' it. The thesis puts it correctly ('above the six-month rate of 3%'). Related: incomeCommentary has a comma splice that runs two claims together: 'after a flat FY24 and a 4.6% decline in FY23, FY25 operating margin, at the same level as the quarter's GAAP margin, compares with 25.6% in FY21'.",
+      "fix": "Write 'Second-quarter organic growth of 5% was above the six-month rate of 3%', or compare the quarter with the first quarter in words. Split the incomeCommentary sentence after 'FY23'.",
+      "status": "addressed",
+      "note": "Resolved. growth.points[2] now compares the quarter with the six-month rate and draws a valid inference: the quarter before must have been weaker. The incomeCommentary comma splice is split."
+    },
+    {
+      "id": "F-9",
+      "severity": "Minor",
+      "field": "sections.businessMoat.durability",
+      "quote": "FY25 operating margin of 17.4% stays well below FY21's 25.6%, so the moat has not protected peak profitability.",
+      "issue": "The FY25-against-FY21 operating-margin comparison is already made in financials.incomeCommentary ('FY25 operating margin … compares with 25.6% in FY21'). The durability paragraph restates both figures rather than referring back.",
+      "fix": "Refer back in words, e.g. 'the margin decline since FY21 set out in the financials section shows the moat has not protected peak profitability'.",
+      "status": "addressed",
+      "note": "Resolved. The FY25-vs-FY21 operating-margin comparison was removed from incomeCommentary, so it now appears once, in businessMoat.durability, where it carries the moat argument."
+    },
+    {
+      "id": "F-10",
+      "severity": "Minor",
+      "field": "sections.growth.points[2]",
+      "quote": "Organic growth of 5% in the second quarter was above the six-month rate of 3%",
+      "issue": "The F-8 rewrite introduced a near-verbatim duplicate of the thesis sentence 'Second-quarter organic growth of 5% was above the six-month rate of 3%' (executiveSummary.thesis.body). The exec-summary thesis may carry the headline figure as a pointer, and the growth point adds its own inference and judgment. The repeat is in the wording, not a re-argued claim, so it is Minor.",
+      "fix": "Open the growth point differently, e.g. 'The second quarter's organic pace implies a weaker first quarter', and refer to the 5% and 3% in words, or reword the thesis clause so the two sentences differ.",
+      "status": "declined",
+      "note": "Deferred to the next synthesis: the final re-check approved the report, and editing the judgment now would leave it unreviewed. Next pass rewords growth.points[2] so it does not echo the thesis sentence."
     }
   ]
 }
