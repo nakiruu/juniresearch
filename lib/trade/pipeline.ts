@@ -414,8 +414,13 @@ export interface SubmitAbort { reason: AbortReason; ticker: string; clientOrderI
  * mayHaveSubmitted: true from the moment a submit request is attempted until it is known that nothing was placed —
  * a guard refusal (always raised before the adapter is called) or a definitive broker reject. A submit that never
  * returned (unknown outcome, any unexpected throw) leaves it true: the order may be live at the broker.
+ * executed / fills are the live lists of what was sent and recorded so far.
  */
-export interface ExecuteProgress { mayHaveSubmitted: boolean }
+export interface ExecuteProgress {
+  mayHaveSubmitted: boolean;
+  /** Filled in as executeOrders goes (the same arrays it returns), so a caller can record a run that threw midway. */
+  executed?: ExecutedOrder[]; fills?: Fill[];
+}
 
 /** An order not sent because the submit cutoff (submitCutoffET) had passed — nothing was placed. */
 export interface SkippedCutoff { ticker: string; clientOrderId: string; detail: string }
@@ -468,8 +473,9 @@ export async function executeOrders(input: {
   const progress: ExecuteProgress = input.progress ?? { mayHaveSubmitted: false };
   // A cutoff that is NaN would never trip — refuse it before anything is sent.
   if (cutoffMs !== undefined && !Number.isFinite(cutoffMs)) throw new Error(`executeOrders: cutoffMs must be a finite epoch ms, got ${cutoffMs}`);
-  const fills: Fill[] = [];
-  const executed: ExecutedOrder[] = [];
+  // M-5: the caller's live arrays when given, so what went out survives a throw (cron writes a partial run record).
+  const fills: Fill[] = progress.fills ?? (progress.fills = []);
+  const executed: ExecutedOrder[] = progress.executed ?? (progress.executed = []);
   const skippedCash: SkippedCash[] = [];
   const rejected: RejectedOrder[] = [];
   const skippedLegs: SkippedLeg[] = [];

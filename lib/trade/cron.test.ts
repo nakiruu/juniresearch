@@ -649,6 +649,34 @@ describe("runCron", () => {
     });
   });
 
+  describe("M-5: an execute-error leaves something to audit, and the alert points at a command that works", () => {
+    it("a throw inside executeOrders (fill not recordable) writes a partial run record with the sent order; the alert names trade:audit", async () => {
+      const dir = mkdtempSync(join(tmpdir(), "cron-"));
+      const paths = { ...mkPaths(), fills: join(dir, "no-such-dir", "fills.jsonl") };
+      const notified: string[] = [];
+      const r = await runCron(mkDeps({ paths, notify: (m) => notified.push(m), loadInputs: async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] }) }));
+      expect(r).toEqual({ status: "halted", reason: "execute-error" });
+      const files = readdirSync(paths.runs);
+      expect(files).toHaveLength(1);
+      const rec = JSON.parse(readFileSync(join(paths.runs, files[0]), "utf8")) as { orders: { ticker?: string; brokerId?: string; filledQty?: number }[]; notes: string[] };
+      expect(rec.orders).toEqual([expect.objectContaining({ ticker: "NVT", brokerId: expect.stringMatching(/.+/), filledQty: expect.any(Number) })]);
+      expect(rec.notes.some((n) => /execute-error: .*ENOENT/.test(n))).toBe(true);
+      expect(notified.some((m) => /trade:audit -- --run r-cron-1/.test(m) && /trade:reconcile -- --record-missing/.test(m))).toBe(true);
+    });
+
+    it("no run record can be written: the alert says check the broker's order history and trade:reconcile, never trade:audit", async () => {
+      const d = mkdtempSync(join(tmpdir(), "cron-")); writeFileSync(join(d, "f"), "x");
+      const paths = { ...mkPaths(), runs: join(d, "f", "runs") };
+      const notified: string[] = [];
+      const r = await runCron(mkDeps({ paths, notify: (m) => notified.push(m), loadInputs: async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] }) }));
+      expect(r).toEqual({ status: "halted", reason: "execute-error" });
+      const alert = notified.find((m) => /cron halted: error after/.test(m))!;
+      expect(alert).toMatch(/order history/);
+      expect(alert).toMatch(/trade:reconcile -- --record-missing/);
+      expect(alert).not.toMatch(/trade:audit/);
+    });
+  });
+
   it("D-4: cron never deletes a lock that is no longer its own", async () => {
     const paths = mkPaths();
     const foreign = `77777 ${new Date().toISOString()} feed`;

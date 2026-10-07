@@ -20,7 +20,7 @@ import { SchwabAuthError } from "../broker/schwab-auth";
 import { turnoverBreaker, clipToTurnover, dayTurnoverUsd, readHaltState, bumpHalt, clearHalt, haltBlocked, holdLock, DEFAULT_LOCK_STALE_MS } from "./breakers";
 import { crossCheckBroker } from "./audit";
 import { allocationFromRun, summaryFromRun, type AllocationInput, type RunSummaryInput } from "./notify";
-import { writeRunRecord } from "./run-record";
+import { writeRunRecord, type RunRecord } from "./run-record";
 import { currentSlot, etInstantOn, etMinutesOfDay, hhmmToMinutes } from "./clock";
 import { refreshTokenHealth } from "../broker/schwab-auth";
 import { maybeWarnAuth } from "./auth-health";
@@ -214,6 +214,10 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
   // M-3: the reason this run already bumped the halt counter for (null = not bumped). The catch below never bumps twice.
   let bumpedFor: string | null = null;
   const haltBump = (reason: string) => { bumpHalt(paths.haltState); bumpedFor = reason; };
+  // M-5: set once step 8 starts — builds a run record from executeOrders' live progress if the run throws before
+  // (or while) writing its own, so dayTurnoverUsd and trade:audit can still see what went out.
+  let partialRecord: ((cause: string) => RunRecord) | null = null;
+  let recordWritten = false;
   try {
     // 4. Consecutive-halt breaker. A corrupt/wrong-shape state file throws (breakers.ts) — that is
     // itself a safe-halt condition (addendum), not a crash.
@@ -335,6 +339,11 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
     // counters.orders alone only counts submits that returned.
     const progress: ExecuteProgress = { mayHaveSubmitted: false };
     ordersSent = () => progress.mayHaveSubmitted || ctx.counters.orders > 0;
+    const planned = out;
+    partialRecord = (cause) => ({
+      ...planned.record, fills: (progress.fills ?? []) as unknown as Record<string, unknown>[], orders: mergeExecution(planned.record.orders, progress.executed ?? []),
+      notes: [...planned.record.notes, `execute-error: ${cause} — partial record written after the error; check the broker's order history`],
+    });
     // Submit cutoff (cfg.submitCutoffET, 15:50 ET): no order goes out at or after it, however late the
     // run started or however long earlier orders polled — never into the close. Remaining orders are
     // recorded as skipped (sells go first, so a cutoff only ever leaves cash).
@@ -352,6 +361,7 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
     if (skippedCash.length) notify(`cron: ${skippedCash.length} buy(s) skipped by the cash backstop — ${skippedCash.map((s) => s.ticker).join(", ")} (broker cash couldn't cover them; usually a funding sell that didn't fill)`);
     if (skippedCutoff.length) notify(`cron: ${skippedCutoff.length} order(s) NOT sent — the ${cfg.submitCutoffET} ET submit cutoff passed mid-run — ${skippedCutoff.map((c) => c.ticker).join(", ")} (nothing placed for them; the next run re-plans)`);
     writeRunRecord(paths.runs, rec);
+    recordWritten = true;
 
     // 9. Broker-truth cross-check (spec §4). The recorded fills must match what the broker actually
     // did; a critical discrepancy (an unrecorded or mismatched fill under-sets the lock clock and the
@@ -421,7 +431,14 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
     let counter = "";
     if (bumpedFor) counter = ` · halt counter already bumped for this run (${bumpedFor})`;
     else { try { counter = ` · halt counter now ${bumpHalt(paths.haltState).consecutive}`; } catch (be) { counter = ` · halt counter NOT bumped (${(be as Error).message})`; } }
-    try { notify(`cron halted: error after an order submit may have reached the broker — ${msg}${counter}. Check the broker's order history and run \`npm run trade:audit -- --run ${runId}\` before the next slot.`); } catch { /* never mask */ }
+    let recordNote = "";
+    if (!recordWritten && partialRecord) {
+      try { recordNote = ` A partial run record was written (${writeRunRecord(paths.runs, partialRecord(msg))}).`; recordWritten = true; } catch (we) { recordNote = ` The run record could not be written (${(we as Error).message}).`; }
+    }
+    const next = recordWritten
+      ? `Check the broker's order history, run \`npm run trade:audit -- --run ${runId}\`, and record any execution missing from fills.jsonl with \`npm run trade:reconcile -- --record-missing\` before the next slot.`
+      : `Check the broker's order history, then record any execution with \`npm run trade:reconcile -- --record-missing\` before the next slot (no run record was written, so there is nothing to audit).`;
+    try { notify(`cron halted: error after an order submit may have reached the broker — ${msg}${counter}.${recordNote} ${next}`); } catch { /* never mask */ }
     const reason = bumpedFor ?? "execute-error";
     try { appendLog(paths.log, logLine(today, runId, "halted", { reason })); } catch { /* never mask */ }
     return { status: "halted", reason };
