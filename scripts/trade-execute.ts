@@ -6,6 +6,7 @@ import { createInterface } from "node:readline/promises";
 import { resolveTradeConfig, tradeConfigFromEnv } from "../lib/trade/config";
 import { planRun, executeOrders, mergeExecution } from "../lib/trade/pipeline";
 import { crossCheckBroker } from "../lib/trade/audit";
+import { abortAlert } from "../lib/trade/cron";
 import { allocationFromRun, allocationLines, makeNotifier, summaryFromRun } from "../lib/trade/notify";
 import { newRunId, writeRunRecord } from "../lib/trade/run-record";
 import { writeLedger, ReconcileError } from "../lib/trade/ledger";
@@ -92,11 +93,8 @@ const audit = crossCheckBroker({
 for (const d of audit.discrepancies) console.error(`  [${d.severity.toUpperCase()}] ${d.code} ${d.ticker}${d.orderId ? ` (${d.orderId})` : ""} — ${d.detail}`);
 notifier.runSummary(summaryFromRun(out, "executed", fills, audit, skippedCutoff));
 if (aborted) {
-  const msg = `STOPPED: the order submit for ${aborted.ticker} has an UNKNOWN outcome (${aborted.detail}). Remaining orders were NOT sent. Check the broker's order history; if it executed, run \`npm run trade:reconcile -- --record-missing\`.`;
-  notifier.message(msg);
-  await notifier.flush();
-  console.error(msg);
-  process.exit(1);
+  const msg = abortAlert(aborted, "trade:execute");
+  notifier.message(msg); await notifier.flush(); console.error(msg); process.exit(1);
 }
 if (!audit.ok) {
   notifier.message(`Broker-truth check FAILED: ${audit.critical} critical discrepancy(ies). Investigate before the next run.`);

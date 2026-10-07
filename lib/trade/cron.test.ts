@@ -10,6 +10,7 @@ import { readFills } from "./fills";
 import { SchwabAuthError } from "../broker/schwab-auth";
 import { fixtureReport } from "../portfolio/__fixtures__/reports";
 import type { Fill } from "./fills";
+import type { BrokerOrder, SubmitOrderRequest } from "../broker/adapter";
 
 const CAL = ["2026-09-21", "2026-09-22", "2026-09-23", "2026-09-24", "2026-09-25"].map((date) => ({ date, open: "09:30", close: "16:00" }));
 const closes = (p: number) => Object.fromEntries(CAL.map((d) => [d.date, p]));
@@ -499,10 +500,13 @@ describe("runCron", () => {
     // This proves defense-in-depth: the kill switch isn't only the single step-1 read.
     const paths = mkPaths();
     const adapter = mkBroker();
-    await expect(runCron(mkDeps({
-      paths, adapter, disabled: false, env: { TRADE_DISABLED: "1" } as unknown as NodeJS.ProcessEnv,
+    const notified: string[] = [];
+    expect(await runCron(mkDeps({
+      paths, adapter, disabled: false, env: { TRADE_DISABLED: "1" } as unknown as NodeJS.ProcessEnv, notify: (m) => notified.push(m),
       loadInputs: async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] }),
-    }))).rejects.toThrow(/TRADE_DISABLED/);
+    }))).toEqual({ status: "halted", reason: "guard" });
+    expect(notified.some((m) => /guard refused NVT.*TRADE_DISABLED/.test(m))).toBe(true);
+    expect(readHaltState(paths.haltState)).toEqual({ consecutive: 0 }); // nothing reached the broker → alert-only (F-4)
     expect(readFills(paths.fills)).toEqual([]); // the guard threw before any fill was recorded
     expect(await adapter.getOrders("all")).toEqual([]); // never reached adapter.submitOrder
     expect(existsSync(paths.lock)).toBe(false); // released via finally even on an uncaught throw

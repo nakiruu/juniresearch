@@ -13,7 +13,7 @@ import type { TradeConfig } from "./config";
 import type { TradingDay } from "./calendar";
 import type { LastEarnings } from "./earnings";
 import type { Fill } from "./fills";
-import { planRun, executeOrders, mergeExecution, type PlanRunOutput } from "./pipeline";
+import { planRun, executeOrders, mergeExecution, type PlanRunOutput, type SubmitAbort } from "./pipeline";
 import { ReconcileError } from "./ledger";
 import { SchwabAuthError } from "../broker/schwab-auth";
 import { turnoverBreaker, clipToTurnover, dayTurnoverUsd, readHaltState, bumpHalt, clearHalt, haltBlocked, holdLock, DEFAULT_LOCK_STALE_MS } from "./breakers";
@@ -65,6 +65,8 @@ export interface CronDeps {
   clock?: () => number;
   /** Lookup schedule for an order submit with an unknown outcome (tests pass zeros). */
   resolveDelaysMs?: readonly number[];
+  /** Fill-poll interval for executeOrders (tests pass 0); unset → 1 s. */
+  pollMs?: number;
   /**
    * PREVIEW_ONLY: plan, post the allocation, and stop — no breakers, no submit, no run record, halt
    * counter untouched. Every read-side check before planning (kill switch, window, clock, lock,
@@ -108,6 +110,18 @@ function summaryFields(out: PlanRunOutput): LogFields {
   const cashFrac = out.ledger.nav > 0 ? out.ledger.cash / out.ledger.nav : 0;
   const capBound = out.sized.orders.filter((o) => o.capBound).length;
   return { orders: out.sized.orders.length, notionalUsd, cashFrac, capBound };
+}
+
+/** The halt alert for a run that stopped submitting (executeOrders' `aborted`). Shared with trade:execute. */
+export function abortAlert(a: SubmitAbort, source: string): string {
+  switch (a.reason) {
+    case "submit-unknown":
+      return `${source} halted: order submit for ${a.ticker} has an UNKNOWN outcome (${a.detail}). Check the broker's order history; if it executed, run \`npm run trade:reconcile -- --record-missing\`, then clear the halt state to resume.`;
+    case "poll-unavailable":
+      return `${source} halted: lost track of the ${a.ticker} order — the broker's order list could not be read (${a.detail}). It may still be working or may have filled. Remaining orders were NOT sent. Check the broker's order history; if it executed, run \`npm run trade:reconcile -- --record-missing\`, then clear the halt state to resume.`;
+    case "guard":
+      return `${source} halted: a guard refused ${a.ticker} mid-run (${a.detail}). Nothing was placed for it; remaining orders were NOT sent.`;
+  }
 }
 
 export async function runCron(deps: CronDeps): Promise<CronResult> {
@@ -304,7 +318,7 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
     const cutoffMs = etInstantOn(today, cfg.submitCutoffET);
     const t0 = Date.now();
     const submitClock = deps.clock ?? (() => nowMs + (Date.now() - t0));
-    const { fills, executed, aborted, skippedCash, rejected, skippedLegs, skippedCutoff } = await executeOrders({ adapter, sized: out.sized, ctx, runId, fillsPath: paths.fills, resolveDelaysMs: deps.resolveDelaysMs, now: submitClock, cutoffMs });
+    const { fills, executed, aborted, skippedCash, rejected, skippedLegs, skippedCutoff } = await executeOrders({ adapter, sized: out.sized, ctx, runId, fillsPath: paths.fills, resolveDelaysMs: deps.resolveDelaysMs, pollMs: deps.pollMs, now: submitClock, cutoffMs });
     const rec = {
       ...out.record, fills: fills as unknown as Record<string, unknown>[], orders: mergeExecution(out.record.orders, executed),
       notes: [...out.record.notes, ...skippedCash.map((s) => `cash skipped: ${s.ticker} — ${s.detail}`),
@@ -327,14 +341,16 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
       brokerOrders: await adapter.getOrders("all", `${today}T00:00:00Z`),
       fills,
     });
-    // 9b. A submit whose outcome is unknown stopped the run. The order may exist (and may have filled);
-    // halt so a human checks the broker. The next run's reconcile orders-check also refuses to proceed
-    // while any executed order is unrecorded, so this can't be silently traded past.
+    // 9b. The run stopped submitting: an unknown submit outcome or an order it lost track of (either may exist
+    // at the broker, and may have filled), or a guard refusal mid-run. Halt so a human checks the broker. The next
+    // run's reconcile orders-check also refuses to proceed while any executed order is unrecorded.
     if (aborted) {
-      bumpHalt(paths.haltState);
-      notify(`cron halted: order submit for ${aborted.ticker} has an UNKNOWN outcome (${aborted.detail}). Check the broker's order history; if it executed, run \`npm run trade:reconcile -- --record-missing\`, then clear the halt state to resume.`);
-      appendLog(paths.log, logLine(today, runId, "halted", { ...summaryFields(out), reason: "submit-unknown" }));
-      return { status: "halted", reason: "submit-unknown" };
+      // Phase-based (F-4): count it only if something may have reached the broker. A guard refusal of the very first
+      // order sent nothing; an unknown submit or a lost order always may have.
+      if (aborted.reason !== "guard" || ctx.counters.orders > 0) bumpHalt(paths.haltState);
+      notify(abortAlert(aborted, "cron"));
+      appendLog(paths.log, logLine(today, runId, "halted", { ...summaryFields(out), reason: aborted.reason }));
+      return { status: "halted", reason: aborted.reason };
     }
     if (!audit.ok) {
       bumpHalt(paths.haltState);
