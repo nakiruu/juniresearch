@@ -1,6 +1,6 @@
 {
-  "judgmentSha256": "b91083eb63a0dc5e64e438cb1b9e13ea7d28a3249097f30db54369b1ec5468a3",
-  "reviewedAt": "2026-10-07T15:47:49Z",
+  "judgmentSha256": "24f86080196210075835159fa8ed233003589070dacdffc1db7843652e772ffb",
+  "reviewedAt": "2026-10-07T15:53:50Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
   "verdict": "needs-fix-round",
@@ -92,8 +92,8 @@
       "quote": "Our target range of $290 to $350 brackets the base case and sits below the Street's consensus target, reflecting the commodity sensitivity and integration risk that temper an otherwise constructive demand story.",
       "issue": "Precision slip (rubric 6). The prose says the '$290 to $350' band 'sits below the Street's consensus target,' but the Street consensus target on the grounding surface is $348.55, and the band's top of $350 is $1.45 above it. The below-consensus point holds for the probability-weighted fair value (~$299) and the base case ($300) but not for the full stated band, so applying 'sits below' to the range as written is inaccurate at the top. analystCommentary and thesis correctly frame this against the fair value ('below the Street's $348.55 consensus target'); only scenarioCommentary extends the claim to the range.",
       "fix": "Attach the below-consensus claim to the base case / fair value rather than the whole band (e.g. 'the band brackets the base case, and our fair value sits below the Street's consensus target of $348.55'), or note the top of the range is essentially at consensus.",
-      "status": "open",
-      "note": "The quoted sentence is gone, but the slip moved to valuation.multiplesCommentary: 'Our range tops out near the consensus and the median rather than above them.' The $350 top is above the $348.55 consensus (below only the $350.50 median). The same range-vs-consensus point is also made in the thesis ('our target range tops out near the Street's $348.55 consensus target'); keep it there and drop the multiplesCommentary sentence."
+      "status": "addressed",
+      "note": "Fixed. The multiplesCommentary sentence is gone. The range-vs-consensus point now appears once, in the thesis: 'our target range sits below the Street's $348.55 consensus target'. That is accurate, because the new $270-$330 band lies wholly below $348.55."
     },
     {
       "id": "F-10",
@@ -102,7 +102,8 @@
       "quote": "On the figures alone, revenue has grown faster than profit since the deal closed.",
       "issue": "Contradicted by the surface (rubric 2). The deal closed January 7, 2026, and the same paragraph cites six-month GAAP net income attributable to common shareholders of $2,103 million versus $957 million, more than double. Revenue cannot have grown faster: Q2 revenue rose +23.0% and the FY26E step-up is +38%. The trailing operating margin of 14.7% is also above FY25's 12.1%. Only the second quarter shows profit lagging revenue. The same one-quarter reading is generalised in sections.executiveSummary.thesis.body ('margins on the enlarged revenue base stay thin') and sections.finalRecommendation.body[0..1] ('Margins on the larger revenue base are thin so far').",
       "fix": "Limit the claim to the second quarter, e.g. 'In the second quarter, revenue grew while profit fell; the six-month figures point the other way, and the pack does not explain either.' In the thesis and finalRecommendation.body[1], say margins were thin 'in the second quarter' rather than 'so far' or on 'the enlarged revenue base', and name the stronger six-month and trailing figures as the counter-reading.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Fixed. incomeCommentary now reads 'In the second quarter, revenue grew while profit fell' and sets the six-month net income ($2,103M vs $957M) and the trailing 14.7% margin against it. The thesis says 'second-quarter 2026 margins were thin, although the six-month and trailing figures read stronger'. finalRecommendation.body[1] confines the point to the second quarter."
     },
     {
       "id": "F-11",
@@ -111,7 +112,8 @@
       "quote": "Most output is still sold at market prices, so the fleet's earnings move with power and fuel prices (see Risks).",
       "issue": "Unsupported quantification (rubric 2). Nothing on the surface says how much output is sold at market prices versus hedged or contracted. The 10-K says earnings are exposed to 'the unhedged portion of our generation portfolio' and that wholesale generators use retail operations to hedge output, which moatFactors[2] cites. The same unsupported 'most' recurs in sections.businessMoat.durability ('most near-term earnings remain merchant, because the long-term nuclear PPAs start in 2029 and later'). This claim is the stated main reason for the NARROW rating.",
       "fix": "Use the 10-K's own framing: earnings and cash flows are exposed to spot and forward prices on the unhedged portion of the portfolio, and the new long-term nuclear PPAs do not start until 2029 through 2032. Drop 'most' in both places, or say the pack does not show the contracted share.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Fixed. moatFactors[3] uses the 10-K's framing ('exposed to commodity price risk for fuel and for the unhedged portion of its generation portfolio') and adds 'The pack does not show how much output is hedged or contracted.' durability drops 'most' and says the pack does not show the share already contracted."
     },
     {
       "id": "F-12",
@@ -120,7 +122,8 @@
       "quote": "In ERCOT the company owns the Freestone and Pin Oak Creek assets and is selling the Brazos Valley Energy Center.",
       "issue": "The 10-Q places Pin Oak Creek ('the ERCOT grid') and Brazos Valley ('in ERCOT') in ERCOT. It places the Freestone Energy Center only 'in Freestone County, Texas' and never names its market. Putting Freestone in ERCOT is an inference the source invites but does not make (rubric 2). The fact is low-stakes, but the desk rule is not to recall.",
       "fix": "Say 'In Texas the company has the Freestone Energy Center and the Pin Oak Creek Energy Center, which serves the ERCOT grid, and is selling the Brazos Valley Energy Center in ERCOT,' or drop Freestone from the ERCOT sentence.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Fixed. segments[0].body reads 'In Texas the company has the Freestone Energy Center and the Pin Oak Creek Energy Center, which serves the ERCOT grid, and is selling the Brazos Valley Energy Center in ERCOT.' The PJM reference ties to the five LS Power plants the 10-Q places in PJM."
     },
     {
       "id": "F-13",
@@ -129,7 +132,8 @@
       "quote": "Power prices soften, the 2029/2030 PJM auction clears toward the $175/MW-day floor, and Calpine proves costly and dilutive, as the 10-K warns it may. EPS stalls at the FY26E consensus of $12.13 instead of reaching the FY27E consensus",
       "issue": "The Bear's number does not match its story (rubrics 5 and 6). The story has softer power prices and a costly, dilutive Calpine, yet EPS still lands on the full FY26E consensus of $12.13, up from FY25's $7.40. The only downside priced is the missed FY27E increase plus a lower multiple. A Bear that keeps the current-year consensus whole while saying the deal disappoints is close to a formality on the earnings side. The ADI review hit the same problem: a Bear held EPS steady while its story said the cycle turns.",
       "fix": "Make the EPS basis match the story. Either price EPS below the FY26E consensus, describe the shortfall in words, and re-derive the Bear price and label from that, or narrow the story to a pure de-rating and drop 'dilutive' and the power-price softening. Then argue the 25% weight on the Bear as rewritten.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Fixed. The Bear now prices its own story: EPS 'near the trailing twelve-month level implied by the trailing P/E', short of FY26E consensus. Price over 25.7x is about $10.25, and $185 is about 18x ('high teens', below 19.9x). Weights are unchanged at 25/50/25 and argued from both sides. HOLD holds for any Bear below about $197, the whole 'high teens' band. It follows from the EPS basis, not a tuned price."
     },
     {
       "id": "F-14",
@@ -138,7 +142,8 @@
       "quote": "Consensus FY26E revenue of $35.1B, a {+ +38% +} step-up over FY25, includes Calpine from January 7, and the second-quarter revenue rise (see Financials) shows that step-up arriving",
       "issue": "Two problems. (1) Q2 revenue rose +23.0% with Calpine in the quarter, well short of the +38% full-year step-up, so the quarter does not show the step-up arriving. It is a gap the rest of the year must close (rubric 2). (2) No source says what the consensus includes; 'includes Calpine from January 7' is the author's inference. The gap also matters for the calls: the Base driver says consensus FY26E revenue of $35.1B is 'broadly met' and never names the Q2 shortfall against that pace as a counter-case (rubric 5).",
       "fix": "Say Q2 growth of +23.0% ran below the +38% step-up that consensus FY26E implies, and frame the consensus as reflecting the enlarged company without asserting its composition. Name that shortfall once, as the counter-case to the Base case's revenue assumption.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Fixed. growth.points[0] says Q2 growth of +23.0% 'ran below that pace', drops the claim about what consensus includes, and notes that first-quarter revenue is not in the pack. The Base driver names the shortfall as its counter-case ('despite the second-quarter shortfall against the full-year revenue pace (see Growth)')."
     },
     {
       "id": "F-15",
@@ -147,7 +152,8 @@
       "quote": "PJM capacity pricing supports the near-term outlook: in July 2026 the entire RTO cleared the 2028/2029 Base Residual Auction at the $325/MW-day price cap, including all submitted CEG units.",
       "issue": "Period mismatch (rubric 3/6). The MD&A presents 2028/2029 as a delivery year, so this capacity price applies from 2028 onward. That is not near-term, and it lies beyond the FY27E EPS that the scenarios price. The Base driver (sections.valuation.scenarios[1].driver) also leans on it: 'the 2028/2029 auction result at the cap supports capacity revenue' sits beside an FY27E EPS anchor. growth.points[5] calls the 2029 PPAs late, but the report treats a 2028/2029 price as near-term.",
       "fix": "Say the auction result supports capacity revenue for the 2028/2029 delivery year, after the FY27E horizon. Remove it from the Base case's support for the FY27E EPS path, or say it bears on value beyond FY27E rather than on FY27E earnings.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Fixed. growth.points[4] dates the auction to 'the 2028/2029 delivery year, after the FY27E horizon our scenarios price'. The Base driver no longer leans on it. Bull and Bear cite the 2029/2030 auction only as value beyond FY27E."
     },
     {
       "id": "F-16",
@@ -156,7 +162,8 @@
       "quote": "We would move to HOLD if the price rose toward the low end of our range without new evidence, because on these scenarios expected upside falls below the BUY threshold well before the price reaches the low end of our range",
       "issue": "The trigger is not where the page's own math flips the label (rubric 6; see the ADI F-25 lesson). With a $298.75 fair value and a $205 Bear, reward/risk falls below 0.50x at a price only a few dollars above $263.46, about a 1.5% rise. Expected upside falls below +10% at about a 3% rise. The $290 low end is far away. The sentence also names expected upside as the binding test, but reward/risk fails first. As written, a reader would expect the BUY to hold until the price nears $290, and it does not.",
       "fix": "Without quoting a computed price, say that on these scenarios a rise of a few percent from $263.46 would derive HOLD, with reward/risk falling below 0.50x first. Then drop the 'toward the low end of our range' framing.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Fixed. finalRecommendation.body[2] reads 'A fall of a few percent from the current price would derive BUY, with reward/risk the test that flips first; a rise to somewhat above our $300 Base case would derive SELL.' Checked: BUY derives at about $257.50 (R hits 0.50x; E already clears +10%), and SELL at about $309 (E -5%)."
     },
     {
       "id": "F-17",
@@ -165,7 +172,8 @@
       "quote": "Its 10-Q for the period ended June 30, 2026 describes a fleet of 55 gigawatts after the January 2026 Calpine acquisition",
       "issue": "Several cases of the same sentence or claim in two or more sections (rubric 7). (1) This sentence opener also appears in sections.executiveSummary.companyOverview ('Its 10-Q for the period ended June 30, 2026 describes a fleet of 55 gigawatts across...'). (2) 'Consensus FY26E revenue of $35.1B, a +38% step-up over FY25' is in both financials.incomeCommentary and growth.points[0]. (3) The Q2 thin-margin and net-income-fall story is told in analystCommentary, thesis.body, incomeCommentary, management.leadership, growth.points[0], scenarioCommentary and finalRecommendation.body[1]. (4) 'Bear ... below the 52-week low' appears in analystCommentary and scenarioCommentary, and 'real/genuine downside, not a formality' in scenarioCommentary and finalRecommendation.body[1]. (5) 'moderate BUY' is in analystCommentary and finalRecommendation.body[1]. (6) 'all submitted CEG units' cleared at the cap appears in segments[0].body and growth.points[4].",
       "fix": "Keep the 55 GW sentence in companyOverview only. Keep the $35.1B/+38% figure in one place, and point to it in words elsewhere. Argue the Q2 margin and net-income point in incomeCommentary, and elsewhere point to it in a clause ('see Financials'). State the 52-week-low and 'real downside' points once, in scenarioCommentary. Say 'moderate BUY' once. Drop the auction detail from segments[0].body.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Fixed for all six items. The 55 GW sentence is only in companyOverview. $35.1B/+38% is only in growth.points[0]. The Q2 story is argued in incomeCommentary, with clause pointers elsewhere. The 52-week low and 'real downside' appear only in scenarioCommentary. 'moderate BUY' is gone, and the auction detail is out of segments[0].body. The rewrite added one new repetition, logged as F-20."
     },
     {
       "id": "F-18",
@@ -174,7 +182,8 @@
       "quote": "New capacity in service, including the Pin Oak Creek Energy Center and the Pastoria Power Bank, which came online in July 2026.",
       "issue": "Both events happened before the September 22, 2026 report date: Pin Oak Creek reached commercial operation in April 2026 and the Power Bank came online in July 2026. A completed event is not a forward catalyst.",
       "fix": "Make it forward-looking, e.g. 'Earnings contribution from capacity that entered service in 2026 (Pin Oak Creek, Pastoria Power Bank) in coming quarters.'",
-      "status": "open"
+      "status": "addressed",
+      "note": "Fixed. catalysts[3] reads 'Earnings contribution in coming quarters from capacity that entered service in 2026, including the Pin Oak Creek Energy Center and the Pastoria Power Bank.'"
     },
     {
       "id": "F-19",
@@ -183,6 +192,16 @@
       "quote": "We own the shares for per-share earnings rather than revenue.",
       "issue": "Voice (rubric 9). 'We own the shares' implies the desk holds a position; the intended point is that the case rests on per-share earnings. Also, in sections.valuation.multiplesCommentary, 'Because trailing net margin is 11.1%, the sales multiple says little on its own' is a non sequitur. A positive 11.1% margin does not make P/S uninformative.",
       "fix": "Write 'The case rests on per-share earnings rather than revenue.' In multiplesCommentary, say plainly that the case is valued on earnings because consensus EPS is the quantity the scenarios price, or drop the sentence.",
+      "status": "addressed",
+      "note": "Fixed. analystCommentary reads 'The case rests on per-share earnings rather than revenue.' multiplesCommentary reads 'We value the shares on earnings rather than sales because consensus EPS is the quantity our scenarios price.'"
+    },
+    {
+      "id": "F-20",
+      "severity": "Important",
+      "field": "sections.finalRecommendation.body[0]",
+      "quote": "This replaces the BUY in our earlier report on this filing; the change comes from pricing the Bear case on its own earnings story rather than from any change in the price.",
+      "issue": "New in the rewrite: the same sentence appears in two sections (rubric 7). analystCommentary already says 'Our earlier report on this filing rated the shares BUY; the change comes from pricing the Bear case on its own earnings story, and the Valuation section shows how close the call is.' The explanation of the label change ('the change comes from pricing the Bear case on its own earnings story') is word for word in both fields.",
+      "fix": "State the BUY-to-HOLD change and its reason once, in finalRecommendation.body[0], which can keep 'rather than from any change in the price'. In analystCommentary, cut it to a pointer such as 'This replaces our earlier BUY; see Final Recommendation', or drop it.",
       "status": "open"
     }
   ]
