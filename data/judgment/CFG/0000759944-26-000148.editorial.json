@@ -1,49 +1,169 @@
 {
-  "judgmentSha256": "2b27a868d160dc93b718f0e95f63e5bc86cfc95706795c97b50b3ef8054ceba3",
-  "reviewedAt": "2026-09-23T18:05:00Z",
-  "reviewer": "Claude Opus 4.8",
+  "judgmentSha256": "0e5d668265b5da43fac4a0f46d93690d379d8b1eca714e579a16f04b2f5c433c",
+  "reviewedAt": "2026-10-07T15:54:19Z",
+  "reviewer": "Claude Opus 5.5",
   "round": 2,
-  "verdict": "approved",
+  "verdict": "approved-with-minors",
   "findings": [
     {
       "id": "F-1",
       "severity": "Important",
       "field": "sections.businessMoat.moatFactors[2].body",
       "quote": "Citizens Private Bank and Private Wealth held $65.7 billion of total client assets including $38.7 billion of assets under management at June 30, 2026.",
-      "issue": "The MD&A reports $65.7B total client assets (AUM $38.7B, transactional $27.0B) as a company-wide figure ('we had total client assets of $65.7 billion'), not the Citizens Private Bank and Private Wealth unit's book. The author's own companyOverview correctly attributes it to 'the company,' but this moat factor and growth.points[2] ('The Private Bank and Private Wealth build-out is expanding client assets, which reached $65.7 billion') re-scope the same total onto one business line the filing does not isolate. A company-wide total attached to a specific unit is a scoping/attribution error, and the internal inconsistency shows it.",
-      "fix": "Attribute $65.7B (and the $38.7B AUM) to the company as the filing does, e.g. 'Citizens reported $65.7 billion of total client assets, including $38.7 billion of AUM, at June 30, 2026,' and characterize the Private Bank/Private Wealth build-out as adding to that base without claiming it holds the whole total. Apply the same fix to growth.points[2].",
+      "issue": "The MD&A reports $65.7B total client assets (AUM $38.7B, transactional $27.0B) as a company-wide figure, not the Citizens Private Bank and Private Wealth unit's book; the moat factor and growth.points[2] re-scoped the total onto one business line.",
+      "fix": "Attribute $65.7B (and the $38.7B AUM) to the company as the filing does, and characterize the build-out as adding to that base. Apply the same fix to growth.points[2].",
       "status": "addressed",
-      "note": "moatFactors[2].body now reads 'Citizens reported $65.7 billion of total client assets, including $38.7 billion of assets under management, at June 30, 2026' and frames the build-out as 'adding to that base.' growth.points[2] now attributes the $65.7B/$38.7B to the company and calls the build-out a growth investment adding to the company's client-asset base. companyOverview stays company-wide; scoping is consistent."
+      "note": "Unchanged since the last check: moatFactors[2] does not quote the client-asset total, and growth.points[2] does not assign it to the Private Bank and Private Wealth unit."
     },
     {
       "id": "F-2",
       "severity": "Important",
       "field": "sections.executiveSummary.catalysts[1]",
       "quote": "Fee-income growth from the Private Bank and Private Wealth build-out, which drove capital markets and wealth fees and lifted noninterest income $52 million year over year in Q2'26.",
-      "issue": "Causal claim the pack does not establish. The MD&A attributes the $52M noninterest-income increase to 'growth across numerous fee categories, primarily capital markets and wealth fees' and cites the Private Bank/Private Wealth build-out only as a driver of the noninterest-expense increase (hiring). It never links the build-out to fee growth, and capital markets fees are a Commercial Banking activity, not a Private Bank/Private Wealth product. The same over-crediting appears in analystCommentary ('efficiency ratio down to 61.1% ... helped by ... the Private Bank and Private Wealth build-out'), where the build-out in fact raised expense.",
-      "fix": "State the grounded facts without the causal over-reach: noninterest income rose $52M in Q2'26, led by capital markets and wealth fees. If the build-out is named as a fee catalyst, tie it only to wealth fees (its actual product) and drop the capital-markets link. Remove or requalify the analystCommentary phrase crediting the build-out for the efficiency-ratio gain.",
+      "issue": "Causal claim the pack does not establish: the MD&A ties the build-out to the expense increase (hiring), not to fee growth, and capital markets fees are not a Private Bank/Private Wealth product. analystCommentary also credited the build-out for the efficiency-ratio gain.",
+      "fix": "State that noninterest income rose, led by capital markets and wealth fees, without crediting the build-out for it; drop the analystCommentary phrase crediting the build-out for the efficiency ratio.",
       "status": "addressed",
-      "note": "catalysts[1] now reads noninterest income rose $52M in Q2'26 'led by capital markets and wealth fees, with the Private Bank and Private Wealth build-out a longer-term contributor to wealth fees' — the capital-markets causal link is dropped and the build-out is tied only to wealth fees, as the fix directed. analystCommentary now credits the efficiency-ratio gain to 'revenue outpaced expense growth,' no longer to the build-out."
+      "note": "Unchanged since the last check: catalysts[1] makes no causal link between the build-out and Q2'26 fees, and analystCommentary does not credit the build-out for the efficiency ratio."
     },
     {
       "id": "F-3",
       "severity": "Important",
       "field": "sections.valuation.scenarioCommentary",
       "quote": "the reward-to-risk supports a BUY, with one notch of conservatism held back because the favorable rate and credit backdrop that is driving the current results can reverse.",
-      "issue": "Mischaracterizes the rating derivation. The rule allows the derived label or one notch more conservative. Here expected upside is +17.1% (below the +20% STRONG BUY threshold) and reward/risk 0.84x, so the derived label is BUY and the author chose BUY — no notch was withheld (conviction.derivedLabel and gatedLabel both 'BUY'). Telling the reader a notch of conservatism was held back implies the model signalled STRONG BUY, which it did not. The claim is repeated in finalRecommendation.body[1] ('with one notch of conservatism held back because a bank's earnings are levered to a rate and credit backdrop that can turn quickly').",
-      "fix": "Drop the 'one notch of conservatism held back' framing, or reword to reflect that BUY is the model-derived label and that caution is expressed through the probability weights and a target band set below consensus, not through a withheld rating notch. Fix both scenarioCommentary and finalRecommendation.body[1].",
+      "issue": "Mischaracterized the rating derivation: BUY is the derived label (E below +20%, R below 1.00x), so no notch was withheld. The same claim was in finalRecommendation.body[1].",
+      "fix": "Say BUY is the label the math derives and put the caution in the weights and band, not a withheld notch, in both fields.",
       "status": "addressed",
-      "note": "scenarioCommentary and finalRecommendation.body[1] now state BUY is 'the label the expected-upside and reward/risk math derives' and place caution in the probability weights and below-consensus target band, not a withheld notch. Matches the rebuilt report (derivedLabel BUY, gatedLabel BUY, E +17.1%, R 0.84x). 'One notch of conservatism held back' is gone from both fields."
+      "note": "No withheld-notch wording remains. The report derives BUY (E +15.7%, D -27.2%, R 0.58x; derivedLabel and gatedLabel BUY), and the label matches."
     },
     {
       "id": "F-4",
       "severity": "Minor",
       "field": "sections.management.governance",
       "quote": "Governance rests on the DEF 14A filed 2026-03-09.",
-      "issue": "House style calls for dates in prose form, not ISO. Every other date in the judgment (October 24, 2025; August 15, 2025; February 27, 2026) is in prose form; only this governance date uses ISO 2026-03-09.",
-      "fix": "Write the date as 'the DEF 14A filed March 9, 2026.'",
+      "issue": "ISO date in prose; house style uses prose dates.",
+      "fix": "Write 'filed March 9, 2026.'",
       "status": "addressed",
-      "note": "governance now reads 'the DEF 14A filed March 9, 2026'; no ISO-format dates remain in the judgment prose."
+      "note": "governance reads 'filed March 9, 2026'; no ISO dates in the prose."
+    },
+    {
+      "id": "F-5",
+      "severity": "Important",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "My $70 to $86 range sits below the consensus because I give a rate and credit turn more weight than the Street target implies, not because I read the current results differently.",
+      "issue": "False description of the report's own calls: the $81.29 consensus target sits inside the $70 to $86 range. Same claim in analystCommentary.",
+      "fix": "Say what is actually below consensus (Base case and weighted fair value) and that the range brackets the consensus target, in both fields.",
+      "status": "addressed",
+      "note": "multiplesCommentary now says the Base case and weighted fair value ($78; $75.50) sit below the consensus target and the $70 to $86 range brackets it. analystCommentary says the same. Both are accurate. See F-16 for a wording slip in analystCommentary."
+    },
+    {
+      "id": "F-6",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "The BUY call survives a weight test: swapping the Bull and Bear weights still derives BUY, though only just.",
+      "issue": "The report did not mention the fall from near the $75.33 52-week high to $65.26, and the label depended on the latest close.",
+      "fix": "Say in words that the shares have fallen from near the 52-week high, that no source explains it, and that the BUY label rests on the recent close.",
+      "status": "addressed",
+      "note": "scenarioCommentary now says the shares fell from near the $75.33 52-week high, a move no source explains. It says BUY derives at the September 23 close, earlier closes derive HOLD, and swapping the Bull and Bear weights derives HOLD (verified: E +9.2%). On the page's history, September 23 is the only close at or below the ~$66.17 flip. analystCommentary and finalRecommendation also say the call is close. The closeness is stated honestly."
+    },
+    {
+      "id": "F-7",
+      "severity": "Important",
+      "field": "sections.finalRecommendation.body[1]",
+      "quote": "A price near the low end of my range or higher would cut expected upside below +10.0% on these scenarios.",
+      "issue": "The trigger named the wrong test: reward/risk, not expected upside, flips the label first.",
+      "fix": "Name reward/risk as the binding test, without a computed dollar figure.",
+      "status": "addressed",
+      "note": "The trigger now reads 'A price only slightly above the current one would cut reward/risk below the BUY bar on these scenarios, before expected upside reaches the +10.0% line.' Verified on the new calls: reward/risk crosses 0.50x at about $66.17 and expected upside crosses +10% at about $68.64, so the trigger sits where the page's math flips."
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[2].driver",
+      "quote": "so earnings stay near FY25's $3.86 instead of reaching the FY26E consensus.",
+      "issue": "'Stay near' described a decline from the higher trailing level as stagnation.",
+      "fix": "Describe the Bear as earnings falling back toward the FY25 level from the higher trailing level.",
+      "status": "addressed",
+      "note": "The driver now says earnings 'fall back toward FY25's $3.86 from the higher trailing level' and cites the $2.42 first-half EPS. The $47.50 repricing is argued on the Bear's own story, with a checkable anchor: today's 12.3x current-year multiple on FY25-level EPS of $3.86, which comes to about $47.48. It is still a premium to the $38.29 TBV. The repricing moved the call toward HOLD, not toward BUY, so it is not tuned to clear the line."
+    },
+    {
+      "id": "F-9",
+      "severity": "Important",
+      "field": "sections.growth.points[3]",
+      "quote": "but its Q2'26 growth came mostly from capital markets, and mortgage banking fees fell on MSR valuation results.",
+      "issue": "Misstated the MD&A, which says 'primarily capital markets and wealth fees'.",
+      "fix": "Use the MD&A's wording.",
+      "status": "addressed",
+      "note": "growth.points[3] now reads 'came primarily from capital markets and wealth fees', as the MD&A does."
+    },
+    {
+      "id": "F-10",
+      "severity": "Important",
+      "field": "sections.financials.cashflowCommentary",
+      "quote": "Payouts below earnings leave room to keep returning capital at the current pace, which is the cash-return support the thesis relies on.",
+      "issue": "No counter-case: FY23 and FY24 dividends plus buybacks exceeded net income.",
+      "fix": "Add that reading in words and state a view.",
+      "status": "addressed",
+      "note": "The paragraph now says FY25's headroom came from the smaller buyback and that FY23 and FY24 payouts exceeded net income. It concludes that current earnings fund the FY25 pace, while returning to the FY23-FY24 buyback level would need the earnings recovery to continue."
+    },
+    {
+      "id": "F-11",
+      "severity": "Important",
+      "field": "sections.management.capitalAllocation",
+      "quote": "I read the allocation as disciplined: payouts sit below earnings and the preferred move manages the existing stack.",
+      "issue": "Repeated the cash-flow section's payouts-below-earnings conclusion.",
+      "fix": "Keep that argument in cashflowCommentary; end capitalAllocation on the buyback capacity and the preferred refinancing.",
+      "status": "addressed",
+      "note": "capitalAllocation now points to the cash-flow review in words for how payouts compare with earnings. It ends on the $775 million capacity and the preferred refinancing."
+    },
+    {
+      "id": "F-12",
+      "severity": "Important",
+      "field": "sections.executiveSummary.catalysts[0]",
+      "quote": "Net interest income: the company tied Q2'26 growth to more interest-earning assets, a higher margin, terminated swap impacts and fixed-rate asset repricing; further repricing would extend it.",
+      "issue": "The catalyst restated the income section's four-part attribution.",
+      "fix": "Cut to a pointer.",
+      "status": "addressed",
+      "note": "catalysts[0] is now a pointer: 'further fixed-rate asset repricing would extend the Q2'26 margin gain discussed in the income review.'"
+    },
+    {
+      "id": "F-13",
+      "severity": "Minor",
+      "field": "sections.management.capitalAllocation",
+      "quote": "The 2026 proxy lists FY25 pre-provision net revenue of $2,936MM.",
+      "issue": "Orphan proxy facts with no reading (PPNR in capitalAllocation; FY25 ROTCE and efficiency in incomeCommentary).",
+      "fix": "Cut PPNR or give it a reading; read the FY25 ROTCE and efficiency figures or cut them.",
+      "status": "addressed",
+      "note": "The PPNR sentence is cut. incomeCommentary now reads the FY25 proxy figures: Q2'26 beat the full-year FY25 level, so 'the gain is not just a comparison against a weak prior-year quarter.'"
+    },
+    {
+      "id": "F-14",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarios[2].driver",
+      "quote": "Lower rates or faster asset repricing compress net interest margin",
+      "issue": "Ambiguous mechanism that read as contradicting the Bull case.",
+      "fix": "Use the 10-K mechanism.",
+      "status": "addressed",
+      "note": "The driver now reads 'Lower rates, with asset yields falling faster than funding costs, compress net interest margin'."
+    },
+    {
+      "id": "F-15",
+      "severity": "Minor",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "The preferred stock refinancing under way is covered in the capital allocation review.",
+      "issue": "Dropped the source's hedge on the Series G redemption.",
+      "fix": "Write 'planned'.",
+      "status": "addressed",
+      "note": "balanceCommentary now reads 'The planned preferred stock refinancing is covered in the capital allocation review.'"
+    },
+    {
+      "id": "F-16",
+      "severity": "Minor",
+      "field": "analystCommentary",
+      "quote": "I weight a downturn at 20% with a Bear case of $47.50, which puts my Base case and probability-weighted fair value below the Street's consensus target, while my range still brackets it.",
+      "issue": "Introduced by the rewrite: the sentence makes the Bear weight and price the reason the Base case sits below consensus. The $78 Base case is set independently of the Bear, on a multiple slightly below 12.3x applied to FY27E EPS. The Bear explains only part of why the weighted fair value is below consensus. multiplesCommentary gives the accurate reason: more weight on a rate and credit turn.",
+      "fix": "Split the claim, e.g. 'I weight a downturn at 20% with a Bear case of $47.50. My Base case and probability-weighted fair value sit below the Street's consensus target, while my range still brackets it.'",
+      "status": "declined",
+      "note": "Deferred to the next synthesis: the final re-check approved the report, and editing the judgment now would leave it unreviewed. The Base case is set independently of the Bear; the next author pass splits the sentence."
     }
   ]
 }

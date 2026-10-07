@@ -4,7 +4,7 @@
     "company": "Visa Inc.",
     "ticker": "V",
     "exchange": "NYSE",
-    "subtitle": "A wide-moat payments network compounding double-digit volume into high margins and heavy buybacks — premium-priced, with interchange regulation the overhang",
+    "subtitle": "A wide-moat payments network compounding volume into cash and buybacks, priced at a premium under a live interchange overhang",
     "reportDate": "September 21, 2026",
     "asOf": "Sep 21, 2026",
     "analyst": "Juniper Finance Research Desk",
@@ -149,20 +149,20 @@
     ]
   },
   "rating": {
-    "label": "BUY",
-    "tone": "bull",
+    "label": "HOLD",
+    "tone": "secondary",
     "targetLow": 345,
     "targetHigh": 455,
     "conviction": {
-      "expectedUpside": 0.1051073881995166,
-      "bearDownside": 0.1582720139020881,
-      "rewardRisk": 0.664093326471092,
-      "derivedLabel": "BUY"
+      "expectedUpside": 0.08881587879116992,
+      "bearDownside": 0.23972956094382147,
+      "rewardRisk": 0.370483633480575,
+      "derivedLabel": "HOLD"
     },
     "gate": {
       "sector": "industrial",
       "ceiling": "STRONG BUY",
-      "gatedLabel": "BUY",
+      "gatedLabel": "HOLD",
       "distress": "SAFE",
       "piotroski": 5,
       "accruals": "LOW",
@@ -170,13 +170,15 @@
       "flags": []
     },
     "decision": {
-      "conviction": 75,
+      "conviction": 95,
       "tier": "high",
-      "proposed": "BUY",
+      "proposed": "HOLD",
       "reasons": [
-        "E/R proposed BUY"
+        "E/R proposed HOLD"
       ],
-      "advisories": [],
+      "advisories": [
+        "model vs Street expected return diverge by 33pp — informational, not scored"
+      ],
       "moat": {
         "width": "WIDE",
         "trend": "STABLE",
@@ -184,12 +186,12 @@
         "bearFloor": 0.15
       },
       "intrinsic": {
-        "marginOfSafety": -0.09782516083260717,
-        "impliedGrowth": 0.11762626736946113,
+        "marginOfSafety": -0.19793124855557542,
+        "impliedGrowth": 0.15775500146753801,
         "achievableGrowth": 0.10405613987690931
       },
       "composite": {
-        "percentile": 35.92438237599857,
+        "percentile": 32.39549698461223,
         "confidence": "high"
       },
       "uncertainty": {
@@ -236,7 +238,7 @@
     },
     {
       "label": "EV/EBITDA (TTM)",
-      "value": 24.77827682571912,
+      "value": 24.80450832775778,
       "unit": "mult"
     },
     {
@@ -309,7 +311,7 @@
     },
     {
       "label": "Net Debt / EBITDA (TTM)",
-      "value": 0.40535109983079526,
+      "value": 0.4057802244336227,
       "unit": "mult"
     }
   ],
@@ -323,26 +325,27 @@
     "medianTarget": 422,
     "highTarget": 466,
     "lowTarget": 330,
-    "commentary": "Visa is a global payments network — VisaNet connects issuers, acquirers and merchants across more than 200 countries — and it converts a steady rise in the world's card and digital spending into unusually strong economics. The model is a toll on money movement: payments volume drives service revenue, processed transactions drive data-processing revenue, and cross-border volume drives the international-transaction line. All three grew double digits in the quarter ended June 30, 2026 — nominal payments volume up 11%, processed transactions up 10%, nominal cross-border volume up 14% — lifting net revenue 14% to $11.6 billion. The profitability is high and cash-rich: a 51.8% trailing net margin and 53.9% FY25 free-cash-flow margin, which funds heavy capital return — $18.3 billion of buybacks and $4.6 billion of dividends in FY25. GAAP earnings are held down by items Visa excludes from non-GAAP: diluted EPS was $2.97 in the quarter against $3.32 on a non-GAAP basis, the gap reflecting interchange-litigation accruals among other items. At $368.29 the shares trade at 31.3x trailing and about 27.8x next-twelve-months earnings — a premium the Street is comfortable paying, with 36 of 40 analysts at Buy and a $419.36 consensus target 13.9% above the price. We rate V BUY with a $345-$455 target range and a fair value below the consensus. The discount reflects the two things a premium multiple leaves little room for: a decades-long, still-live regulatory campaign against interchange fees, and the recurring litigation those fees attract."
+    "commentary": "Visa runs VisaNet, the network that authorizes, clears and settles payments among consumers, issuers, acquirers and sellers across more than 200 countries and territories. It is paid for moving money, not for lending it. Net revenue rose {+14%+} to $11,633 million in the quarter ended June 30, 2026 and {+15%+} over the nine months, which the MD&A attributes primarily to growth in nominal cross-border volume, nominal payments volume and processed transactions, partially offset by higher client incentives. Operating expenses grew faster than revenue in that quarter, a cost trend the financials section weighs against the stronger nine-month results. Cash generation and capital return remain the core of the case. Against them stand a premium multiple and fee regulation and litigation that the risk section sets out. We rate V **HOLD** with a $345–$455 target range. Our probability-weighted fair value is $401.00, an expected upside of +8.9% from $368.29."
   },
   "sections": {
     "executiveSummary": {
-      "companyOverview": "Visa is a global payments technology company, founded in 1958 and headquartered in San Francisco, that operates VisaNet — the network authorizing, clearing and settling card and digital payments across more than 200 countries and territories. It is not a bank: it does not issue cards, lend, or set consumer rates and fees; it charges for moving money across its network. The economics are unusually strong. FY25 produced net revenue of $40.0B (up 11.3%), GAAP net income of $20.1B and $10.20 of diluted EPS, on a business that converts most of each revenue dollar to cash — a 53.9% free-cash-flow margin and $21.6B of FY25 free cash flow. Growth is broad and volume-driven: payments volume, processed transactions and cross-border volume all grew double digits in the quarter ended June 30, 2026, together lifting net revenue 14%. Capital return is a defining feature — $18.3B of buybacks and $4.6B of dividends in FY25 — and leverage is minimal, with net debt of $8.0B, roughly 0.4x EBITDA. At $368.29 the market capitalizes the franchise at about $691.4B.",
+      "companyOverview": "Visa Inc., founded in 1958 and headquartered in San Francisco, is a payments technology company. It operates VisaNet, which provides authorization, clearing and settlement, and it offers credit, debit and prepaid card products; tap to pay, tokenization and click to pay; Visa Direct for money movement; acceptance solutions; risk detection and prevention solutions; and advisory and other services. Its brands are Visa, Visa Electron, V PAY, Interlink and PLUS, and it serves consumers, sellers, financial institutions and government entities. The 10-Q is explicit that Visa is not a financial institution: it does not issue cards, extend credit or set rates and fees for account holders of Visa products.\n\nRevenue comes from four lines, reported net of client incentives. Service revenue follows payments volume, data processing revenue follows processed transactions, international transaction revenue grows with cross-border volume, and other revenue includes Advisory and Other Services. Visa reports as a single segment, so this report reads the business at the consolidated level. The fiscal year ends September 30, and FY25 net revenue was $40.0B. At $368.29 the market values the company at about $691.4B.",
       "thesis": {
-        "label": "BUY",
-        "body": "Visa is a wide-moat compounder, and the debate is whether its quality and growth are worth a premium multiple against a persistent regulatory overhang. The bull case is the machine itself: a two-sided network that gets more valuable as more issuers, merchants and transactions join it, growing volume double digits through the cycle, converting revenue to cash at high rates, and returning almost all of that cash to shareholders while barely using its balance sheet. Secular tailwinds — the shift from cash to digital, new money-movement flows, and value-added services — extend the runway. The bear case is price and regulation: at 31x trailing and about 28x next-twelve-months earnings, a great deal of good news is already in the stock, and the fees Visa's economics rest on are the target of a decades-long regulatory campaign — U.S. debit caps under Regulation II, proposals to lower them further, routing-competition legislation, and interchange caps abroad — plus the interchange litigation that produced $1.1 billion of fresh accruals in the FY26 nine-month period. Our base case is that Visa keeps compounding at a more moderate pace, regulation stays a slow overhang rather than a step-change, and the multiple holds. We rate it BUY on that base and set our fair value below the Street, because the business deserves to be owned but the premium leaves little margin for the regulatory tail."
+        "label": "HOLD",
+        "body": "Visa is a wide-moat network whose earnings compound through volume, pricing and a shrinking share count, and the question is how much of that a premium price already pays for. On the bull side, revenue has grown in every year of the five-year table, the nine months to June 2026 grew faster than FY25 did, and the business turns most of its revenue into cash that it hands back to shareholders. On the bear side, the June quarter's operating expenses outgrew revenue, trailing margins sit below their FY21–FY24 level, and the fees Visa's volume depends on are under regulatory and legal pressure in the U.S. and abroad. Our Base case is that consensus earnings arrive and the multiple eases, which puts the shares near the Street's target. Set against a Bear case that prices a fee-rule shock and a slowdown together, the expected return falls short of the BUY line, and our fair value sits below the consensus. We rate the shares HOLD: a business worth owning, at a price that already pays for most of the good outcome."
       },
       "catalysts": [
-        "Continued double-digit growth across all three volume drivers — payments volume, processed transactions and cross-border — sustaining the net-revenue growth the financials section quantifies.",
-        "A favorable revenue mix as cross-border volume outgrows domestic, developed in the growth section.",
-        "Heavy capital return: FY25 buybacks plus a growing dividend, shrinking the share count and compounding per-share value from a cash-generative business, as the cash-flow section sizes.",
-        "Value-added services and new money-movement flows extending Visa's reach beyond core card payments over time."
+        "Fiscal 2026 closes on September 30, and the year-end results test the consensus path the growth section lays out.",
+        "Repurchases under the April 2026 authorization keep reducing the share count, a lever the capital-allocation discussion weighs at today's price.",
+        "International revenue growing faster than U.S. revenue shifts the mix abroad, as the growth section details.",
+        "Other revenue, which the MD&A ties to Advisory and Other Services and select pricing modifications, adds a source of growth beyond card volume."
       ],
       "risks": [
-        "Interchange regulation: U.S. debit caps and proposals to lower them, routing-competition legislation, and interchange caps abroad target the fees Visa's economics rest on.",
-        "Litigation: the interchange multidistrict litigation keeps generating accruals and remains open, as the risk section details.",
-        "Valuation: the premium multiple leaves little room for disappointment on volume, margins, or regulation.",
-        "A consumer slowdown would slow payments and cross-border volume, the engines of revenue growth."
+        "U.S. debit interchange: a 2025 court ruling against Regulation II could, if it prevails on appeal, lead to a significantly lower debit cap.",
+        "Interchange litigation keeps generating accruals whose final cost could differ from the escrow deposits.",
+        "Costs: operating expenses and client incentives both grew faster than net revenue in the June quarter.",
+        "Valuation: at a premium multiple, a fee-rule shock combined with a slowdown would take the shares below their 52-week low, the outcome the Bear case prices.",
+        "Consumer spending and cross-border travel drive volume, and both weaken in a slowdown."
       ]
     },
     "financials": {
@@ -447,7 +450,7 @@
         ],
         "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended September 30."
       },
-      "incomeCommentary": "Visa's income statement is a study in operating leverage. Net revenue is the top line — service, data-processing and international-transaction revenue, net of the client incentives Visa pays issuers to route volume onto its network — and it rose 14% to $11.6 billion in the quarter ended June 30, 2026, and 15% across the FY26 nine-month period. Each revenue line has a volume driver: service revenue tracks nominal payments volume, data-processing revenue tracks processed transactions, and international-transaction revenue tracks nominal cross-border volume — all three volume measures growing double digits in the quarter, as the growth section details. The five-year annual line runs from $24.1B of net revenue in FY21 to $40.0B in FY25, compounding at low-double-digit rates, with net income climbing from $12.3B to $20.1B. Two things need reading carefully. First, GAAP versus non-GAAP: quarterly GAAP diluted EPS was $2.97, against non-GAAP EPS of $3.32 (up 11%), the gap driven mainly by interchange-litigation accruals and other items Visa excludes — so the GAAP figures understate the underlying earnings power, and the forward consensus estimates are on a non-GAAP basis. Second, the FY25 operating margin of 60.0% sits below FY24's 65.7%, reflecting those litigation accruals; the trailing operating margin is 61.5% and the trailing net margin 51.8%. Consensus looks for net revenue near $45.8B in FY26E and $50.8B in FY27E, with EPS of $13.23 then $15.00 — low-double-digit revenue growth compounding into mid-teens per-share growth as buybacks shrink the count.",
+      "incomeCommentary": "Net revenue has risen in every year of the five-year table, from $24.1B in FY21 to $40.0B in FY25, when it grew {+11.3%+}. Profitability did not keep pace in FY25. Operating margin sat between 64.2% and 65.7% from FY21 to FY24, then fell to 60.0% as operating income edged up to $24.0B from $23.6B. The captured excerpts give no reason for the FY25 step-down, so we assign none. On a trailing basis the operating margin is 60.7% and the net margin 50.8%, close to the FY25 level rather than back in the earlier band.\n\nThe quarter ended June 30, 2026 shows the same pressure. Net revenue rose 14%, but operating expenses rose {-19%-} to $4,756 million, which the MD&A attributes primarily to higher personnel expenses; the quarter's operating margin was 59.1%. GAAP net income grew {+7%+} to $5,628 million and diluted EPS {+10%+} to $2.97. The nine months were stronger: net revenue reached $33,764 million against operating expenses up 13%, net income rose to $17,502 million and diluted EPS rose 20% to $9.14. In both periods EPS grew faster than net income, reflecting a lower diluted share count that the repurchases discussed under capital allocation most likely explain.\n\nVisa also reports non-GAAP results: diluted EPS of $3.32 in the quarter, up 11%, and $9.79 for the nine months, up 15%. Non-GAAP operating expenses rose 17% in both periods, which the MD&A ties primarily to higher marketing and personnel expenses. The reconciliation is not in the captured excerpt, so we do not say which items separate the two bases.\n\nWe read the income statement as a strong revenue engine carrying a cost base that has lately grown faster than it. Our Base case assumes margins hold near the trailing level rather than return to the FY21–FY24 band.",
       "balance": {
         "columns": [
           "Metric ($B)",
@@ -516,7 +519,7 @@
         ],
         "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended September 30."
       },
-      "balanceCommentary": "The balance sheet is a fortress that Visa barely leans on. It carried $17.2B of cash and short-term investments and $25.2B of total debt at FY25, for net debt of $8.0B — about 0.4x EBITDA, with interest coverage of 44.7x, so debt is a financing convenience rather than a constraint. Total equity was $37.9B. The one figure that looks stretched in isolation is the current ratio, 1.08 at FY25 and 0.99 on a trailing basis, but for a payments network that collects and settles continuously and holds little inventory, a current ratio near 1 is normal operational tightness, not a liquidity problem — the business generates cash far faster than any near-term obligation comes due. The more relevant balance-sheet items are the litigation-related ones: Visa maintains a U.S. litigation escrow tied to the interchange cases, into which it deposited $875 million in the FY26 nine-month period, and it runs a multi-class share structure (Class A, B and C) connected to that litigation, exchanging classes of B and C stock during the period. Those structures are the balance-sheet footprint of the interchange overhang the risk section treats.",
+      "balanceCommentary": "At FY25 Visa held $17.2B of cash and short-term investments against $25.2B of total debt, for net debt of $8.0B, with total debt up from FY24. These are fiscal-year-end figures and predate the $3.0 billion of fixed-rate senior notes issued in February 2026, with maturities ranging between 3 and 10 years. On trailing figures, net debt/EBITDA is 0.4x and interest coverage is 34.8x, so debt service places no meaningful claim on earnings.\n\nTotal equity has stayed between $35.6B and $39.1B across the five years, even as net income ran between $12.3B and $20.1B a year. The earnings have gone out to shareholders rather than building up on the balance sheet.\n\nThe current ratio fell from 1.75 at FY21 to 1.08 at FY25 and is 0.99 on a trailing basis. The pack does not break out the current liabilities behind that decline, so we draw no conclusion on its cause. With coverage this high we treat a current ratio just under 1 as an item to monitor rather than a liquidity problem.\n\nThe balance sheet can keep funding returns and occasional acquisitions. It is a thinner cushion than the FY21 figures suggest, because debt has risen and the current ratio has tightened.",
       "cashflow": {
         "columns": [
           "Metric ($B)",
@@ -596,7 +599,7 @@
         ],
         "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended September 30."
       },
-      "cashflowCommentary": "Cash generation is the heart of the Visa story. FY25 operating cash flow was $23.1B and free cash flow $21.6B — a 53.9% free-cash-flow margin, meaning more than half of every revenue dollar became free cash — on capital expenditure of just $1.5B, because a payments network is light on physical assets. Almost all of that cash goes back to shareholders: $18.3B of share repurchases and $4.6B of dividends in FY25, together roughly the entire free cash flow. Buying back this much stock steadily shrinks the share count and is a large part of how mid-teens EPS growth is manufactured from low-double-digit revenue growth. The discipline to watch is that the same cash flow also funds the litigation escrow and the occasional tuck-in acquisition — Visa paid $1.5 billion for two Argentine payments businesses during the period — but these are small against a cash engine of this size. The capital-return commitment is the clearest signal of management's confidence in the durability of the cash flows; the question the bear case raises is whether regulation eventually thins them."
+      "cashflowCommentary": "FY25 operating cash flow was $23.1B and capital expenditure $1.5B, leaving free cash flow of $21.6B and an FCF margin of 53.9%. That margin ran between 60.2% and 61.0% from FY21 to FY23, dropped to 52.0% in FY24 and has only partly recovered. Operating cash flow fell in FY24, to $20.0B from $20.8B, while revenue grew, and no captured document explains the decline. Capital expenditure has risen each year but remains small against operating cash flow, which is what makes the model so cash-generative.\n\nCapital return has grown in every year of the table. Share repurchases rose from $8.7B in FY21 to $18.3B in FY25, and dividends from $2.8B to $4.6B. Together, FY25 buybacks and dividends exceeded FY25 free cash flow.\n\nWe read this as a very large cash engine that no longer converts at its FY21–FY23 rate and pays out everything it generates. The return program depends on cash flow staying at least this strong."
     },
     "valuation": {
       "multiples": {
@@ -615,14 +618,14 @@
           {
             "label": "P/S",
             "values": [
-              15.736779793153678
+              15.541520342384462
             ],
             "format": "mult"
           },
           {
             "label": "EV/EBITDA",
             "values": [
-              24.77827682571912
+              24.80450832775778
             ],
             "format": "mult"
           },
@@ -636,28 +639,28 @@
         ],
         "note": "Peer multiples pending a peer data source."
       },
-      "multiplesCommentary": "Visa is priced as the high-quality compounder it is. At $368.29 the shares trade at 31.3x trailing and about 27.8x next-twelve-months earnings, at 15.7x sales, and at 24.8x EV/EBITDA, with a 0.73% dividend yield — the yield is low because Visa returns far more through buybacks than dividends. These are premium multiples, and they are the crux of the call: a business growing net revenue low-double-digits with a 51.8% net margin and enormous free cash flow can justify a premium, but 28x next-twelve-months earnings already assumes years of that continuing, which leaves little room for the regulatory or litigation outcomes the risk section describes. The multiples are judged against Visa's own history — no peer column exists in this pack, so no cross-sectional comparison is made — and against the forward earnings stream, which is where a compounder's value sits. The Street is firmly constructive: 40 analysts split Buy 36, Hold 3, Sell 1, a Strong Buy consensus, around a $419.36 target (median $422.00) that sits 13.9% above the price, inside a $330.00-$466.00 range. We sit below the Street rather than with it, because at this multiple the balance of the quality already in the price against the regulatory tail warrants a wider discount than the consensus applies.",
+      "multiplesCommentary": "At $368.29 Visa trades at the vendor's 31.3x trailing P/E, 15.5x sales and 24.8x EV/EBITDA, with a trailing FCF yield of 3.0% and a dividend yield of 0.73%.\n\nTwo forward multiples appear in the pack. The 27.8x labelled next-twelve-months matches the price against FY26E EPS of $13.23, for a fiscal year that ends September 30, 2026, days after the price date, so it is in effect a current-year multiple. We use the ~24.5x on FY27E EPS of $15.00 as our forward anchor. The pack does not state whether consensus EPS is GAAP or non-GAAP, so we do not compare FY26E EPS with FY25 GAAP diluted EPS of $10.20 as if the two were on the same basis.\n\nThere is no peer column in the pack, so we judge the multiple against Visa's own economics rather than against competitors. That forward multiple is a premium. For a business with the margins and cash conversion the financials section shows, it is a defensible one, but it leaves little room for a step-change in fee regulation, the shock the Bear case prices.\n\nAnalysts are firmly positive. Of 40 covering the stock, 36 rate it Buy, 3 Hold and 1 Sell, for a Strong Buy consensus. The consensus target is $419.36 (+13.9%), the median $422.00 and the range $330.00–$466.00.",
       "scenarios": [
         {
           "name": "Bull",
-          "driver": "The compounding runs on. Payments, processed-transaction and cross-border volumes keep growing double digits, value-added services and new money-movement flows add to the mix, regulation stays a slow overhang rather than a step-change, and the buyback keeps shrinking the count. The market keeps paying a premium multiple on rising earnings, and the shares reach the upper part of the Street's range toward the $466 high target.",
+          "driver": "Volume keeps growing at double digits, the June quarter's cost growth eases, and fee regulation stays a slow overhang. Applying today's 31.3x trailing multiple to FY27E consensus EPS would put the shares near the $466.00 high Street target. We set Bull a little below it, because the regulatory cases stay open even in this outcome.",
           "impliedPrice": 450,
           "probability": 0.3
         },
         {
           "name": "Base",
-          "driver": "Growth moderates but stays healthy. Net revenue compounds low-double-digits toward the consensus path, EPS grows mid-teens as buybacks compound it, litigation accruals continue at a manageable pace, and the multiple holds roughly where it is. The shares track earnings toward the consensus target.",
+          "driver": "Consensus is delivered on both FY26E and FY27E EPS, with margins near the trailing level and litigation accruals continuing. The 27.8x current-year multiple (the one labelled next-twelve-months) holds a year out and is applied to FY27E consensus EPS, which puts the price in line with the consensus target and median.",
           "impliedPrice": 420,
           "probability": 0.5
         },
         {
           "name": "Bear",
-          "driver": "Price and regulation catch up. A regulatory step-change — lower U.S. debit caps, routing-competition legislation, or tighter caps abroad — or a heavier litigation outcome pressures the fee economics, a consumer slowdown slows volume, and the premium multiple compresses toward the market. Earnings growth decelerates and the shares de-rate toward the low end of the range near the 52-week low.",
-          "impliedPrice": 310,
+          "driver": "A regulatory step-change, such as a significantly lower U.S. debit cap after the Regulation II appeals or U.S. credit-routing legislation, or a heavier litigation outcome, arrives alongside a consumer slowdown. EPS stalls near the FY26E consensus for a year instead of rising toward FY27E, and the multiple falls from the ~24.5x forward anchor into the low twenties. The price sits below the $293.89 52-week low, which the shares reached in the past year without any of these shocks.",
+          "impliedPrice": 280,
           "probability": 0.2
         }
       ],
-      "scenarioCommentary": "Probability-weighting the three cases gives a fair value of about $407, roughly 11% above the price — a BUY, and one that sits below the consensus target. We weight the Base case at 50% because continued-but-moderating compounding is the most likely path for a dominant network at a strong point in the digital-payments shift, and split the tails toward the bull (30%) over the bear (20%): the quality, the cash generation and the buyback put a firmer floor under per-share value than the growth alone would, while the regulatory step-change is a real but lower-probability tail. The $345-$455 target range brackets the Base outcome, and its width reflects the swing factor — the pace and severity of interchange regulation, slow-moving for a decade but capable of a discontinuous change. Our fair value sits below the Street because the premium multiple already capitalizes much of the quality, leaving the regulatory and litigation risks as the asymmetric part of the story. The discipline is to own a dominant, cash-generative compounder while sizing the position for a valuation that assumes the fee economics endure largely intact."
+      "scenarioCommentary": "Weighted, the cases contribute $135.00 (Bull), $210.00 (Base) and $56.00 (Bear), for a fair value of $401.00. That is an expected upside of +8.9% against a Bear-case downside of -24.0%, a reward/risk of 0.37×, which derives HOLD.\n\nThe Bear weight is the deciding call. The case for 20%: the November 2025 10-K described a live dispute over Regulation II, with one district court vacating the debit-cap standard and another upholding the Federal Reserve's discretion, and it still described a Federal Reserve proposal issued in October 2023 only as a proposal. Interchange accruals continued through the nine months to June 2026, and the June quarter showed earnings lagging revenue without any shock. The case for less: the Bear needs a fee shock and a slowdown together, and the nine months delivered revenue growth of 15% with diluted EPS growing faster still. We keep that weight because the Regulation II outcome alone could move the fee economics, but the weight is a judgment, not a finding. That Bear weight is why our fair value sits below the consensus target. No Street target sits as low as this case; the lowest is $330.00.\n\nThe HOLD is a close call on the weights: moving roughly a third of the Bear weight to Bull derives BUY. Nor does the label rest on the September 21 close. On the 30 closes from August 7 to September 18 shown on the price chart, the same scenarios derive HOLD on all but two mid-August sessions, August 12 and August 17, which derive BUY. The shares rose in late August and then drifted back, and no captured source explains either move. The $345–$455 target range brackets the Base case."
     },
     "businessMoat": {
       "segments": [
@@ -665,7 +668,7 @@
           "name": "Consolidated",
           "sharePct": 1,
           "revenue": 40000000000,
-          "body": "Visa reports as a single business, and the pack carries no revenue-line split, so the read is at the consolidated level — but the revenue is really three toll lines on one network. Service revenue is earned on the payments volume flowing over Visa's rails; data-processing revenue is earned on the number of transactions processed; and international-transaction revenue is earned when a transaction crosses a currency border. All three are contra'd by client incentives — the payments Visa makes to issuers to keep volume on its network — which is why net revenue, not gross, is the number to watch. In the quarter net revenue grew 14% as payments volume rose 11%, processed transactions 10% and cross-border volume 14%, with foreign-exchange movement adding about a point. The single-line presentation understates a network that earns across consumer credit, debit, commercial and cross-border flows in more than 200 countries; the underlying franchise is a global processing utility with pricing power, not a single product."
+          "body": "Visa reports one segment, so the revenue lines are the useful view. In the quarter ended June 30, 2026, service revenue rose 14% to $4,922 million, data processing revenue 17% to $6,042 million, international transaction revenue 6% to $3,853 million and other revenue 45% to $1,496 million. Client incentives of $4,680 million, up 18%, are deducted to reach net revenue of $11,633 million. The MD&A gives a driver for each line: nominal payments volume for service revenue, processed transactions for data processing, nominal cross-border volume excluding transactions within Europe for international transaction revenue, and Advisory and Other Services for other revenue. International transaction revenue grew far more slowly than the cross-border volume behind it, which the MD&A ties to lower volatility of a broad range of currencies and business mix. Client incentives grew faster than net revenue, a cost the risk section takes up."
         }
       ],
       "segmentsBasis": "FY25 (single reportable segment) mix",
@@ -674,58 +677,51 @@
       "moatRating": "WIDE",
       "moatFactors": [
         {
-          "name": "Two-sided network effects",
+          "name": "Two-sided network",
           "strength": "Structural",
-          "body": "Visa sits between the issuers who put cards in consumers' hands and the merchants who accept them, and each side makes the other more valuable: more cardholders draw more merchants, and more acceptance draws more cardholders. That two-sided network is self-reinforcing and very hard to dislodge — a would-be competitor must win both sides at once, across the many countries the network spans. It is the deepest source of Visa's moat and the reason volume compounds year after year."
+          "body": "VisaNet connects issuing and acquiring financial institutions, sellers and consumers in more than 200 countries and territories, and it handled 71,662 million processed transactions in the June quarter. Each additional cardholder makes acceptance more valuable to sellers, and wider acceptance makes the cards more valuable to holders, so an entrant has to win both sides at once. The network's reach does not, however, protect the fee charged on each transaction, which regulators can act on directly."
         },
         {
-          "name": "Scale and the processing utility",
-          "strength": "Structural",
-          "body": "VisaNet processes payments at a scale few networks match, and the marginal cost of an additional transaction is tiny, so scale converts almost directly into margin — a 51.8% trailing net margin on a business that spends only $1.5B a year on capital expenditure. That cost structure lets Visa invest in security, reliability and new capabilities from a position no smaller network can match, widening the gap over time."
-        },
-        {
-          "name": "Switching costs and ubiquity",
+          "name": "Pricing power",
           "strength": "Strong",
-          "body": "Issuers, merchants and acquirers are deeply integrated into Visa's rails, rules and settlement, and the brand's near-universal acceptance makes it a default rather than a choice. Moving volume off the network is costly and risky for any single participant, which keeps the ecosystem sticky across cycles and underpins the pricing that shows up as revenue."
+          "body": "The MD&A names select pricing modifications as a driver of growth in service, data processing and other revenue, in both the June quarter and the nine months. That is evidence Visa can still raise prices on parts of its book. The power is checked on two sides: client incentives rise with payments volume, and interchange regulation, covered in the risk section, bears on the fees that make Visa products attractive to issuers."
         },
         {
-          "name": "Cross-border franchise",
+          "name": "Global reach and services",
           "strength": "Strong",
-          "body": "Cross-border transactions — international travel and e-commerce — grew at a double-digit rate in the quarter, and Visa's global reach makes it the natural rail for money crossing currency borders. Few networks can clear and settle across as many countries and currencies, so the cross-border line is both a growth engine and a piece of the moat competitors struggle to replicate."
+          "body": "Global reach lets Visa carry cross-border ecommerce and travel-related spending, and the MD&A credits value-added services and a higher cross-border transaction mix for part of the growth in data processing revenue. This part of the moat earns more in some years than others: cross-border flows are tied to travel, and international transaction revenue depends on currency volatility as well as on volume."
         }
       ],
-      "durability": "Visa's moat is wide and durable, resting on two-sided network effects, the scale of the VisaNet processing utility, deep switching costs, and a global cross-border franchise — advantages that compound rather than erode, and that have carried the business through a decade of regulatory pressure while still growing volume double digits. The threat to durability is not competitive displacement, which is remote, but regulation of the fees the network charges: interchange caps, routing mandates and litigation aim directly at the economics, not the network. So the moat around the network is about as wide as any in business, while the price of using it is contested by regulators and courts. We rate the moat WIDE — the network, scale and switching-cost advantages are structural and lasting — while noting that what the premium valuation ultimately underwrites is not the durability of the network, which is secure, but the durability of the fee economics layered on top of it."
+      "durability": "We rate the moat WIDE. The two-sided network, the pricing the MD&A describes and the global reach are structural, and revenue has grown in every year of the five-year table despite the regulatory actions the 10-K lists. We do not see a competitor displacing the network as the main threat. The threat is to the price of using it: interchange caps, routing rules and litigation act on the fees around each transaction, and the margins the financials section shows have not returned to their earlier band. The moat protects the volume; it does not guarantee the margin on that volume, and our valuation leans on both."
     },
     "growth": {
       "points": [
-        "The core engine is volume: nominal payments volume up 11%, processed transactions up 10%, and nominal cross-border volume up 14% in the quarter, together the drivers of the three revenue lines.",
-        "Cross-border volume is growing faster than domestic payments volume, supported by travel and e-commerce — a favorable mix shift toward the international-transaction line.",
-        "Operating leverage and buybacks turn low-double-digit revenue growth into mid-teens per-share growth: consensus sees EPS rising toward $13.23 in FY26E and $15.00 in FY27E as the share count falls.",
-        "Secular runway: the shift from cash to digital payments, new money-movement flows, and value-added services extend growth beyond core card volume.",
-        "The counter-case: this volume growth leans on healthy consumer spending and cross-border travel, both cyclical, and client incentives rise with volume as competition for issuer relationships continues — so a consumer slowdown or a step-up in incentives would slow the net-revenue growth the multiple is priced on."
+        "Service revenue in the June quarter rested on nominal payments volume growth of 11%, measured on the March quarter because service revenue is assessed on the prior quarter's volume. U.S. payments volume grew 8% and international payments volume 15%, both nominal; in constant dollars, Visa-wide and international growth were lower.",
+        "Processed transactions, the primary driver of data processing revenue, rose 10% in the June quarter and 9% over the nine months. Nominal cross-border volume, excluding transactions within Europe, grew 14% in the quarter.",
+        "International net revenue rose 16% to $7,223 million in the June quarter against 12% for the U.S., to $4,410 million, so the mix is shifting abroad. The constant-dollar gap noted above shows that part of that shift is currency rather than activity.",
+        "Consensus expects FY26E revenue of ~$45.8B (+14%) and FY27E revenue of $50.8B, with EPS of $13.23 and $15.00. Nine-month revenue growth is running slightly ahead of the FY26E pace, so the FY26 figure looks achievable. FY27E implies slower revenue growth, and EPS growth that year will depend on costs and repurchases.",
+        "Growth depends on the consumer. The MD&A attributes volume growth primarily to continued resilience in consumer spending and ongoing expansion in digital commerce, with ecommerce growing faster than face-to-face spend, and says the extent to which these trends support volume will depend on consumer spending levels and broader macroeconomic conditions. A slowdown would reach revenue through all three volume drivers at once."
       ]
     },
     "management": {
-      "leadership": "Ryan McInerney serves as chief executive officer and Chris Suh as chief financial officer, with Rajat Taneja as president of technology among the named executives the proxy lists. The proxy's compensation program ties pay to performance in a shareholder-aligned way: long-term equity is granted as stock options, restricted stock units and performance shares, with the performance shares vesting over a three-year period based on EPS and relative total shareholder return, and annual cash incentives tied to a scorecard of financial, business-driver, foundational and company-objective goals. That structure aligns management with per-share earnings and long-run stock performance rather than with volume or revenue alone, which is the right emphasis for a business whose value is in compounding cash earnings. The execution record — double-digit volume growth, very high margins and disciplined capital return — is the case for trusting management; the open questions are external, in the hands of regulators and courts rather than the executive team.",
-      "capitalAllocation": "Capital allocation is disciplined and overwhelmingly oriented to returning cash. Visa reinvests modestly in its own network — capital expenditure was just $1.5B in FY25 — makes occasional tuck-in acquisitions to extend geographic or product reach (a $1.5B purchase of two Argentine payments businesses during the period), and returns nearly all of its free cash flow to shareholders: $18.3B of buybacks and $4.6B of dividends in FY25. Buying back stock at scale from a business that generates cash this reliably is an accretive, defensible use of capital, and the modest leverage (net debt about 0.4x EBITDA) leaves ample room to keep doing it. The one call to watch is buyback discipline at a premium multiple — repurchasing heavily at 30x earnings is less accretive than at a lower multiple — but with organic reinvestment needs so low and returns on the network so high, returning the cash is the rational choice. The allocation is coherent and shareholder-friendly.",
-      "governance": "The captured proxy excerpt is the compensation discussion, not the board-independence disclosure, so board composition is not asserted here. What the excerpt shows is constructive: an executive pay program weighted toward long-term, at-risk equity that vests on EPS and relative total shareholder return over multi-year periods, aligning the named executives with shareholders rather than with short-term targets. Nothing in the excerpt points to a governance red flag; the main thing a holder underwrites on governance is the standard concentration of strategy in a capable executive team, against an external backdrop — regulation and litigation — that management influences but does not control.",
-      "insiderOwnership": "The proxy's compensation disclosure shows executive pay delivered substantially in equity — stock options, restricted stock units and performance shares — so leadership's incentives are tied to the share price and to multi-year EPS and relative-TSR performance rather than to salary alone. The captured excerpt does not state a single directors-and-officers-as-a-group ownership percentage, so no aggregate insider-ownership figure is asserted; the equity-heavy, performance-vesting pay structure is the alignment mechanism the disclosure makes clear."
+      "leadership": "Visa's December 2025 proxy names Ryan McInerney as Chief Executive Officer, Chris Suh as Chief Financial Officer, Rajat Taneja as President, Technology, Kelly Mahon Tullier as Vice Chair, Chief People and Corporate Affairs Officer, and Paul Fabara as Chief Risk and Client Services Officer; the pack has nothing later on the team. For fiscal 2025, 95% of the CEO's target total direct compensation was variable and at-risk, and an average of 91% for the other named executives. Performance shares vest after a three-year performance period based on EPS and relative TSR, stock options and restricted stock units vest annually over three years, and payouts are capped at 200% of target. The annual cash incentive uses a scorecard whose financial goals are Net Revenue Growth, Net Income Growth and EPS Growth, each on a \"VIP adjusted\" basis, and the proxy says actual performance exceeded the financial goals for fiscal 2025. We see the structure as well aligned with per-share value. The weak point is the adjusted basis: the excerpt does not define the adjustments, so a holder cannot tell whether litigation accruals count against management's pay.",
+      "capitalAllocation": "Repurchases dominate. In April 2026 the board authorized a $20.0 billion share repurchase program, and in the nine months to June 30, 2026 Visa bought back 50 million class A shares for $16.5 billion, already close to the full-year FY25 amount; $28.4 billion of authorization remained at June 30, 2026. In February 2026 the company paid $1.5 billion in cash for Prisma Medios de Pago S.A.U. and Newpay S.A.U. in Argentina.\n\nRepurchases are a sound use of cash for a business with low reinvestment needs. At the premium the valuation section describes, though, each dollar retires fewer shares than it would at a lower multiple, and the cash-flow discussion shows returns already exceed free cash flow. The Argentine deal carries a regulatory question: the 10-K lists Argentina among the Latin American countries that have adopted or are exploring interchange caps. The excerpt gives no return target for the deal, so we treat it as a modest bet on a market with its own fee risk.",
+      "governance": "The captured proxy excerpt, dated December 2025, is the compensation discussion only. It carries no board composition, independence or related-party disclosure, so we make no claim about the board. The share structure changed during the period: in May 2026 Visa accepted 3 million class B-1 and 120 million class B-2 shares tendered in an exchange offer and issued 61 million class B-3 and 23 million class C shares. The excerpt does not give the voting or conversion terms of these classes, so we cannot say what the exchange means for class A holders. Nothing in the captured material points to a controlling holder. For outside holders, the governance question here is less about control than about the adjusted pay metrics discussed under leadership.",
+      "insiderOwnership": "The excerpt includes no beneficial-ownership table, so we state no insider or group stake. Executives' exposure to the share price comes through the equity awards described under leadership; how many shares they hold outright is not in the pack."
     },
     "risks": {
       "idiosyncratic": [
-        "Interchange regulation is the defining structural risk. In the U.S., the Federal Reserve's Regulation II caps debit interchange, a 2025 court ruling vacated that standard as improperly set (which could lead to lower caps), and routing-competition legislation has been proposed; abroad, the EU's interchange caps, and measures in Latin America, Australia and elsewhere, do the same. These target the fees Visa's economics rest on, and a discontinuous change would strike the earnings the premium multiple capitalizes.",
-        "Interchange litigation. The long-running interchange multidistrict litigation produced $1.1 billion of additional accruals in the FY26 nine-month period, with further deposits into the litigation escrow; the ultimate cost is uncertain and could run higher or lower than the amounts set aside.",
-        "Valuation. At 31x trailing and about 28x next-twelve-months earnings, the shares price in years of continued compounding; any disappointment on volume, margins or regulation would hit a stock with little valuation cushion.",
-        "Consumer and cross-border cyclicality. Payments and cross-border volume — the growth engines — track consumer spending and international travel, both of which weaken in a downturn, and a strengthening dollar reduces the U.S.-dollar value of international volume.",
-        "Client-incentive competition. Visa pays issuers to keep volume on its network, and those incentives rise with volume and with competition; a step-up would compress net revenue even as gross volume grows."
+        "U.S. debit interchange. As of the November 2025 10-K, Federal Reserve rules capped U.S. debit interchange for large financial institutions at 21 cents plus 5 basis points per transaction, plus a possible 1-cent fraud adjustment, and an October 2023 proposal would lower it further. In August 2025 a North Dakota court vacated the cap's standard, while a Kentucky court upheld the Federal Reserve's discretion; the 10-K said affirmation could potentially mean a significantly lower cap. Visa generally does not receive interchange, but the 10-K said changes to it can substantially affect volume and net revenue. The appeal is the regulatory event our Bear case prices most directly, and affirmation would raise our Bear weight, as the final recommendation sets out.",
+        "Credit routing and caps abroad. As of the November 2025 10-K, the Credit Card Competition Act could be reintroduced; versions from 2022 and 2023 required large issuers to offer at least two unaffiliated networks for credit. An Illinois law of May 2024 restricting interchange on tax and gratuity was under legal challenge. The EU capped consumer credit and debit interchange at 30 and 20 basis points, with another impact assessment planned; Argentina, Brazil, Chile and Costa Rica had adopted or were exploring caps; and Australia's central bank had proposed lower ones. We rank U.S. credit routing first, since U.S. consumer credit carried $644 billion of nominal payments volume in the March quarter, and the Bear case prices it. The foreign caps we treat as incremental, inside the Base case.",
+        "Interchange litigation. In the nine months to June 30, 2026 Visa recorded additional accruals of $1.1 billion for claims in the interchange multidistrict litigation and deposited $875 million into the U.S. litigation escrow account. The MD&A says the additional accruals could be higher or lower than the deposits, so the final cost remains open, and these accruals reduce GAAP earnings.",
+        "Cost growth and client incentives. In the June quarter, operating expenses grew faster than net revenue, and so did client incentives, which the MD&A says rise with payments volume. If both trends persist, revenue growth will keep turning into slower earnings growth, the pattern our Bear case extends."
       ],
-      "systemic": "Visa is a leveraged bet on two things: the long shift of global spending from cash to digital rails, and the regulatory and legal treatment of the fees that shift generates. On the former, the tailwind is powerful and durable — more commerce moves electronically every year, and Visa's network captures a toll on a widening share of it, which is why volume compounds through cycles. On the latter, Visa is exposed as few companies are: its revenue is a fee on transactions, and interchange fees are among the most heavily scrutinized prices in finance, contested by regulators and central banks across the U.S., Europe, Latin America and Asia-Pacific, and litigated for years at home. Layered on that is ordinary cyclicality — consumer spending and cross-border travel rise and fall with the economy, and a stronger dollar trims international revenue. The offsetting strength is the quality of the franchise itself: a wide moat, very high margins, minimal leverage and large cash generation give Visa more resilience to absorb a shock than almost any business. The net picture is a dominant, cash-rich compounder whose network is secure but whose fee economics — and therefore its premium valuation — sit under a persistent regulatory cloud."
+      "systemic": "Visa's volume follows consumer spending and cross-border travel, and a recession would reach all of its revenue lines at once. Currency is a second channel. Exchange-rate movements added about one percentage point to net revenue growth in both the June quarter and the nine months, and the MD&A notes that exchange-rate movements and volatility have contributed to periodic variability in results and may continue to do so. The 10-K adds that regulation may increase in quantity, complexity and scope in response to heightened geopolitical tensions, with differing rules on matters such as domestic processing and localization requirements; it says complying increases costs and operational complexity and reduces revenue opportunities. Against these, debt is small relative to earnings, so a downturn would test growth and the multiple rather than solvency. We see the macro exposure as ordinary for a payments network; regulation is the larger systemic risk."
     },
     "finalRecommendation": {
       "body": [
-        "We rate Visa BUY with a $345-$455 target range and a probability-weighted fair value of about $407, roughly 11% above the $368.29 price and below the $419.36 consensus. This is a BUY on quality and durability: a wide-moat global payments network growing volume double digits, converting more than half of revenue to free cash flow, and returning nearly all of it — $18.3B of buybacks and $4.6B of dividends in FY25 — while barely using its balance sheet. Few businesses compound as reliably, and the secular shift from cash to digital extends the runway.",
-        "The discipline is in the price and the politics. At 31x trailing and about 28x next-twelve-months earnings, the multiple already capitalizes years of compounding, and the fees the whole model rests on face a decades-long regulatory campaign and continuing litigation — $1.1 billion of fresh accruals in the FY26 nine-month period. We discount for both, which is why our fair value sits below the Street even though the business is exceptional — the case turns on the fee economics enduring largely intact, not on the durability of the network, which is secure.",
-        "What would move us up: evidence that regulation stays a slow overhang while volume and cross-border growth compound, or a re-acceleration in value-added services and new flows. What would move us more cautious: a regulatory step-change on interchange, a heavier litigation outcome, or a consumer slowdown hitting volume against a premium multiple. The call is to own a dominant, cash-generative compounder while sizing the position for a valuation that assumes the tolls keep flowing largely undisturbed."
+        "**HOLD, $345–$455.** Visa is a wide-moat network growing revenue faster than it did in FY25, converting most of it to cash and returning that cash to shareholders. The weighted outcome of our scenarios falls short of the BUY line, and our fair value sits below the Street, for the reasons the valuation section gives. We would keep an existing position for the compounding and wait for a better price or a clearer regulatory outcome before adding.",
+        "**What would change the call.** On these scenarios, BUY needs a price back near the mid-August lows on the price chart, and a fall to that level without new information would call for a re-run. We would raise the Bear weight if the North Dakota ruling against Regulation II is affirmed on appeal, if U.S. credit-routing legislation advances, or if interchange accruals step up. We would cut it, which could derive BUY, if operating expense growth falls back below revenue growth, GAAP net income growth closes the gap to revenue growth, and the Regulation II dispute is resolved in the Federal Reserve's favor."
       ]
     }
   },
