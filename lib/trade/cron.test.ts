@@ -626,6 +626,29 @@ describe("runCron", () => {
     });
   });
 
+  describe("M-3: one bump per halted run; a clean run stays clean", () => {
+    it("a halt branch that bumps and then throws (notify fails) is counted once, keeping its reason", async () => {
+      const paths = mkPaths(); const adapter = mkBroker();
+      const orig = adapter.getOrders.bind(adapter);
+      adapter.getOrders = (async (status: "open" | "closed" | "all", after?: string) => {
+        if (adapter.submitCount > 0) throw new Error("Schwab GET …/orders → 503");
+        return orig(status, after);
+      }) as typeof adapter.getOrders;
+      const notify = (m: string) => { if (/broker-truth check could not read/.test(m)) throw new Error("discord down"); };
+      const r = await runCron(mkDeps({ paths, adapter, notify, loadInputs: async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] }) }));
+      expect(r).toEqual({ status: "halted", reason: "audit-unavailable" });
+      expect(readHaltState(paths.haltState)).toEqual({ consecutive: 1 });
+    });
+
+    it("after clearHalt, a failing run summary / log does not turn a clean run into a halt", async () => {
+      const paths = mkPaths(); bumpHalt(paths.haltState); // a prior halt, cleared by this clean run
+      const r = await runCron(mkDeps({ paths, notifySummary: () => { throw new Error("discord down"); }, loadInputs: async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] }) }));
+      expect(r.status).toBe("executed");
+      expect(readHaltState(paths.haltState)).toEqual({ consecutive: 0 });
+      expect(existsSync(paths.lock)).toBe(false);
+    });
+  });
+
   it("D-4: cron never deletes a lock that is no longer its own", async () => {
     const paths = mkPaths();
     const foreign = `77777 ${new Date().toISOString()} feed`;

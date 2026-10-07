@@ -211,6 +211,9 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
 
   // Phase-based halt counting (F-4): true once an order has reached the broker (set when step 8 builds ctx).
   let ordersSent = (): boolean => false;
+  // M-3: the reason this run already bumped the halt counter for (null = not bumped). The catch below never bumps twice.
+  let bumpedFor: string | null = null;
+  const haltBump = (reason: string) => { bumpHalt(paths.haltState); bumpedFor = reason; };
   try {
     // 4. Consecutive-halt breaker. A corrupt/wrong-shape state file throws (breakers.ts) — that is
     // itself a safe-halt condition (addendum), not a crash.
@@ -373,7 +376,7 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
     if (aborted) {
       // Phase-based (F-4): count it only if something may have reached the broker. A guard refusal of the very first
       // order sent nothing; an unknown submit or a lost order always may have.
-      if (aborted.reason !== "guard" || ctx.counters.orders > 0) bumpHalt(paths.haltState);
+      if (aborted.reason !== "guard" || ctx.counters.orders > 0) haltBump(aborted.reason);
       notify(abortAlert(aborted, "cron"));
       appendLog(paths.log, logLine(today, runId, "halted", { ...summaryFields(out), reason: aborted.reason }));
       return { status: "halted", reason: aborted.reason };
@@ -381,13 +384,13 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
     // 9c. The broker's orders could not be read (after retries): this run's fills are unverified. Fills and the run
     // record are already written; halt so a human runs the audit before the next slot trades on them.
     if (!audit) {
-      bumpHalt(paths.haltState);
+      haltBump("audit-unavailable");
       notify(`cron halted: the broker-truth check could not read the broker's orders (${auditReadError}). ${fills.length} fill(s) were recorded and the run record is written. Run \`npm run trade:audit -- --run ${runId}\` once the broker answers; if it is clean, clear the halt state.`);
       appendLog(paths.log, logLine(today, runId, "halted", { ...summaryFields(out), reason: "audit-unavailable" }));
       return { status: "halted", reason: "audit-unavailable" };
     }
     if (!audit.ok) {
-      bumpHalt(paths.haltState);
+      haltBump("broker-mismatch");
       notify(`cron halted: broker-truth check found ${audit.critical} critical discrepancy(ies) — ${audit.discrepancies.filter((d) => d.severity === "critical").map((d) => `${d.code} ${d.ticker}`).join(", ")}`);
       appendLog(paths.log, logLine(today, runId, "halted", { ...summaryFields(out), reason: "broker-mismatch" }));
       return { status: "halted", reason: "broker-mismatch" };
@@ -396,16 +399,18 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
     // run: never clear the halt counter over it.
     const working = executed.filter((e) => e.brokerId && !TERMINAL_STATUSES.has(e.status as BrokerOrderStatus));
     if (working.length) {
-      bumpHalt(paths.haltState);
+      haltBump("order-working");
       notify(`cron halted: ${working.length} order(s) still working at the broker after the cancel attempt — ${working.map((e) => `${out.sized.orders.find((x) => x.clientOrderId === e.clientOrderId)?.ticker ?? "?"} ${e.brokerId} (${e.status}${e.cancelError ? `; cancel failed: ${e.cancelError}` : ""})`).join(", ")}. Check the broker; a DAY order expires at the close, and the next run's reconcile halts until it is terminal and recorded.`);
       appendLog(paths.log, logLine(today, runId, "halted", { ...summaryFields(out), reason: "order-working" }));
       return { status: "halted", reason: "order-working" };
     }
     clearHalt(paths.haltState);
-    appendLog(paths.log, logLine(today, runId, "executed", { ...summaryFields(out), haltSkip: out.sized.skippedHalt.length }));
-    deps.notifySummary?.(summaryFromRun(out, "executed", fills, audit, skippedCutoff));
+    // M-3: the run is clean from here; a failure to log or post its summary must not re-halt it.
+    const bestEffort = (f: () => void) => { try { f(); } catch (e) { console.error(`cron: post-run report failed — ${e instanceof Error ? e.message : String(e)}`); } };
+    bestEffort(() => appendLog(paths.log, logLine(today, runId, "executed", { ...summaryFields(out), haltSkip: out.sized.skippedHalt.length })));
+    bestEffort(() => deps.notifySummary?.(summaryFromRun(out, "executed", fills, audit!, skippedCutoff)));
     if (out.sized.skippedHalt.length) {
-      notify(`cron: ${out.sized.skippedHalt.length} order(s) skipped by the per-ticker halt — ${out.sized.skippedHalt.map((h) => `${h.ticker} (${h.reason})`).join(", ")}`);
+      bestEffort(() => notify(`cron: ${out.sized.skippedHalt.length} order(s) skipped by the per-ticker halt — ${out.sized.skippedHalt.map((h) => `${h.ticker} (${h.reason})`).join(", ")}`));
     }
     return { status: "executed", orders: out.sized.orders.length, fills: fills.length };
   } catch (e) {
@@ -414,10 +419,12 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
     if (!ordersSent()) throw e;
     const msg = e instanceof Error ? e.message : String(e);
     let counter = "";
-    try { counter = ` · halt counter now ${bumpHalt(paths.haltState).consecutive}`; } catch (be) { counter = ` · halt counter NOT bumped (${(be as Error).message})`; }
+    if (bumpedFor) counter = ` · halt counter already bumped for this run (${bumpedFor})`;
+    else { try { counter = ` · halt counter now ${bumpHalt(paths.haltState).consecutive}`; } catch (be) { counter = ` · halt counter NOT bumped (${(be as Error).message})`; } }
     try { notify(`cron halted: error after an order submit may have reached the broker — ${msg}${counter}. Check the broker's order history and run \`npm run trade:audit -- --run ${runId}\` before the next slot.`); } catch { /* never mask */ }
-    try { appendLog(paths.log, logLine(today, runId, "halted", { reason: "execute-error" })); } catch { /* never mask */ }
-    return { status: "halted", reason: "execute-error" };
+    const reason = bumpedFor ?? "execute-error";
+    try { appendLog(paths.log, logLine(today, runId, "halted", { reason })); } catch { /* never mask */ }
+    return { status: "halted", reason };
   } finally {
     lock.release();
   }
