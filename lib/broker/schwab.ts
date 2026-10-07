@@ -16,7 +16,7 @@ import { SCHWAB_HOST } from "./guards";
 import { nyseTradingDays } from "../trade/nyse-calendar";
 import { etMinutesOfDay, etWallToUtc, hhmmToMinutes, todayET } from "../trade/clock";
 import { ensureAccessToken, type SchwabTokenStore } from "./schwab-auth";
-import { AmbiguousOrderError, BrokerTimeoutError, OrderRejectedError, DEFAULT_TIMEOUTS, SubmitOutcomeUnknownError, fetchWithTimeout, withReadRetry } from "./http";
+import { AmbiguousOrderError, BrokerHttpError, BrokerTimeoutError, OrderRejectedError, DEFAULT_TIMEOUTS, SubmitOutcomeUnknownError, fetchWithTimeout, parseRetryAfter, withReadRetry, type RetryPolicy } from "./http";
 import { mapWithConcurrency } from "../concurrency";
 
 /** Max concurrent per-symbol price-history reads (well inside Schwab's ~120 req/min market-data limit). */
@@ -28,6 +28,10 @@ export interface SchwabOptions {
   tokenStore: SchwabTokenStore; clientId: string; clientSecret: string; accountHash: string;
   traderBase?: string; dataBase?: string; fetchImpl?: typeof fetch; nowMs?: () => number;
   timeouts?: { readMs?: number; submitMs?: number }; retryDelaysMs?: readonly number[];
+  /** 429/5xx retry schedule for reads and cancels (default DEFAULT_HTTP_RETRY) and the Retry-After cap. Never used for a submit. */
+  httpRetryDelaysMs?: readonly number[]; maxRetryAfterMs?: number;
+  /** Injected wait for retries (tests record it instead of sleeping). */
+  sleep?: (ms: number) => Promise<void>;
 }
 
 const num = z.union([z.number(), z.string()]).transform((v) => { const n = Number(v); if (!Number.isFinite(n)) throw new Error(`not a number: ${v}`); return n; });
@@ -97,8 +101,11 @@ export class SchwabBroker implements BrokerAdapter {
     this.now = opts.nowMs ?? Date.now;
     this.readMs = opts.timeouts?.readMs ?? DEFAULT_TIMEOUTS.readMs;
     this.submitMs = opts.timeouts?.submitMs ?? DEFAULT_TIMEOUTS.submitMs;
+    this.sleep = opts.sleep ?? ((ms) => new Promise((r) => setTimeout(r, ms)));
+    this.retryPolicy = { httpDelaysMs: opts.httpRetryDelaysMs, maxRetryAfterMs: opts.maxRetryAfterMs };
   }
   private readonly readMs: number; private readonly submitMs: number;
+  private readonly sleep: (ms: number) => Promise<void>; private readonly retryPolicy: RetryPolicy;
   /** The live base the guard checks against — always the Schwab host. */
   get baseUrl(): string { return this.trader; }
 
@@ -117,10 +124,13 @@ export class SchwabBroker implements BrokerAdapter {
     }
     return `Bearer ${await this.tokenInFlight}`;
   }
-  /** An idempotent GET: bounded, retried on transient failure. */
+  /** An idempotent GET: bounded, retried on timeout/network failure and on HTTP 429/5xx (Retry-After-aware). */
   private async get<T>(schema: z.ZodType<T>, url: string): Promise<T> {
-    const res = await withReadRetry(async () => fetchWithTimeout(this.fetchImpl, url, { headers: { Authorization: await this.authHeader(), accept: "application/json" } }, this.readMs, "read"), this.opts.retryDelaysMs);
-    if (!res.ok) throw new Error(`Schwab GET ${url} → ${res.status}: ${res.text.slice(0, 300)}`);
+    const res = await withReadRetry(async () => {
+      const r = await fetchWithTimeout(this.fetchImpl, url, { headers: { Authorization: await this.authHeader(), accept: "application/json" } }, this.readMs, "read");
+      if (!r.ok) throw new BrokerHttpError(r.status, `Schwab GET ${url} → ${r.status}: ${r.text.slice(0, 300)}`, parseRetryAfter(r.headers.get("retry-after"), this.now()));
+      return r;
+    }, this.opts.retryDelaysMs, this.sleep, undefined, this.retryPolicy);
     return schema.parse(JSON.parse(res.text));
   }
   private stamp(o: BrokerOrder): BrokerOrder { return { ...o, clientOrderId: this.cidByBrokerId.get(o.id) ?? o.clientOrderId }; }
@@ -291,8 +301,11 @@ export class SchwabBroker implements BrokerAdapter {
     this.cidByBrokerId.set(matches[0].orderId, req.clientOrderId);
     return this.stamp(this.toOrder(matches[0]));
   }
+  /** DELETE is idempotent (a repeat finds the order already gone: 404, or a definitive 4xx), so it retries like a read. */
   async cancelOrder(id: string): Promise<void> {
-    const res = await fetchWithTimeout(this.fetchImpl, `${this.trader}/accounts/${this.opts.accountHash}/orders/${id}`, { method: "DELETE", headers: { Authorization: await this.authHeader() } }, this.readMs, "read");
-    if (!res.ok && res.status !== 404) throw new Error(`Schwab DELETE order ${id} → ${res.status}`);
+    await withReadRetry(async () => {
+      const res = await fetchWithTimeout(this.fetchImpl, `${this.trader}/accounts/${this.opts.accountHash}/orders/${id}`, { method: "DELETE", headers: { Authorization: await this.authHeader() } }, this.readMs, "read");
+      if (!res.ok && res.status !== 404) throw new BrokerHttpError(res.status, `Schwab DELETE order ${id} → ${res.status}`, parseRetryAfter(res.headers.get("retry-after"), this.now()));
+    }, this.opts.retryDelaysMs, this.sleep, undefined, this.retryPolicy);
   }
 }

@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { mkdtempSync } from "node:fs";
+import { mkdtempSync, readdirSync, statSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { BrokerTimeoutError } from "./http";
 import { refreshTokenHealth, currentRefreshObtainedAt, SchwabTokenStore, ensureAccessToken, exchangeCode, parseAuthCode, buildAuthorizeUrl, SchwabAuthError, TOKEN_ENDPOINT, refreshFingerprint, refreshSeedFromEnv, type SchwabTokens, type RefreshSeed } from "./schwab-auth";
 
@@ -239,5 +239,18 @@ describe("exchangeCode / helpers", () => {
     const u = buildAuthorizeUrl("cid", "https://127.0.0.1");
     expect(u).toContain("client_id=cid");
     expect(u).toContain("redirect_uri=https%3A%2F%2F127.0.0.1");
+  });
+});
+
+describe("SchwabTokenStore.write (A-3)", () => {
+  const pathOf = (s: SchwabTokenStore) => (s as unknown as { path: string }).path;
+  it("round-trips and leaves no temp file next to the token", () => {
+    const store = tmpStore(); store.write(seed({ refreshToken: "R9" }));
+    expect(store.read()!.refreshToken).toBe("R9");
+    expect(readdirSync(dirname(pathOf(store)))).toEqual(["token.json"]);
+  });
+  it.skipIf(process.platform === "win32")("the token file is owner-only (0600)", () => {
+    const store = tmpStore(); store.write(seed());
+    expect(statSync(pathOf(store)).mode & 0o777).toBe(0o600);
   });
 });

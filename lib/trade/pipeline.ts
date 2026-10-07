@@ -6,7 +6,7 @@ import type { Report } from "../report.schema";
 import { buildSignal, type Signal } from "../portfolio/signal";
 import type { BrokerAdapter, BrokerOrderStatus } from "../broker/adapter";
 import { TERMINAL_STATUSES } from "../broker/adapter";
-import { CashBackstopError, guardedSubmit, type GuardContext } from "../broker/guards";
+import { CashBackstopError, GuardError, guardedSubmit, type GuardContext } from "../broker/guards";
 import { OrderRejectedError, SubmitOutcomeUnknownError } from "../broker/http";
 import { allInOrder, mapWithConcurrency } from "../concurrency";
 import type { BrokerOrder, SubmitOrderRequest } from "../broker/adapter";
@@ -208,7 +208,7 @@ export async function planRun(input: PlanRunInput): Promise<PlanRunOutput> {
   const ledger = reconcile({ asOf: today, account, positions, fills, brokerOrders, lockWindowStart });
   const todayDate = new Date(today + "T00:00:00Z");
   const signals = reports.map((r) => buildSignal(r, marks[r.meta.ticker], sics[r.meta.ticker] ?? null, todayDate, cfg));
-  const locks = locksFor(fills, calendar, cfg.lockBusinessDays);
+  const locks = locksFor(fills, calendar, cfg.lockBusinessDays, today);
   // Bear breaches (docs/engine.md §4.2): a held name past its bear case is held, frozen or exited by the cause of
   // its fall. spyDecisionMark MUST read SPY from the same source and date as the decision marks above — the market
   // move has to be measured on the stock's own clock. In a live run that is SPY's own live mark (the same trade →
@@ -389,6 +389,12 @@ export interface ExecutedOrder {
   filledQty: number; filledAvgPrice: number | null; submittedAt: string | null;
   /** Local timestamps (ISO): just before the submit request, when it returned, when the order was seen terminal. */
   submitStartAt?: string; submitAckAt?: string; terminalAt?: string | null;
+  /** Fill polls whose order-list read failed (each treated as "status unknown, keep the last state"). Absent = none. */
+  pollErrors?: number;
+  /** The cancel of a still-working order failed AND the order was never seen terminal afterwards. */
+  cancelError?: string;
+  /** The cancel call errored but the order then settled — informational only (F-6). */
+  cancelNote?: string;
 }
 
 /** A buy the broker's cash could not cover at submit time — never sent. */
@@ -399,8 +405,22 @@ export interface RejectedOrder { ticker: string; clientOrderId: string; detail: 
 /** A hybrid market remainder not sent because its whole-share limit leg filled nothing (the price ran past the cap). */
 export interface SkippedLeg { ticker: string; clientOrderId: string; detail: string }
 
-/** Why a run stopped submitting: a submit whose outcome could not be established. */
-export interface SubmitAbort { ticker: string; clientOrderId: string; detail: string }
+/** Why a run stopped submitting: an unknown submit outcome, an order the run lost track of, or a guard refusal mid-run. */
+export type AbortReason = "submit-unknown" | "poll-unavailable" | "guard";
+export interface SubmitAbort { reason: AbortReason; ticker: string; clientOrderId: string; detail: string }
+
+/**
+ * Live progress of executeOrders, readable by the caller even when executeOrders (or the caller, afterwards) throws.
+ * mayHaveSubmitted: true from the moment a submit request is attempted until it is known that nothing was placed —
+ * a guard refusal (always raised before the adapter is called) or a definitive broker reject. A submit that never
+ * returned (unknown outcome, any unexpected throw) leaves it true: the order may be live at the broker.
+ * executed / fills are the live lists of what was sent and recorded so far.
+ */
+export interface ExecuteProgress {
+  mayHaveSubmitted: boolean;
+  /** Filled in as executeOrders goes (the same arrays it returns), so a caller can record a run that threw midway. */
+  executed?: ExecutedOrder[]; fills?: Fill[];
+}
 
 /** An order not sent because the submit cutoff (submitCutoffET) had passed — nothing was placed. */
 export interface SkippedCutoff { ticker: string; clientOrderId: string; detail: string }
@@ -434,6 +454,12 @@ export async function executeOrders(input: {
    * is terminal on the first poll. A market order gets marketPolls before the same cancel.
    */
   iocPolls?: number; marketPolls?: number;
+  /** Each poll loop (window, then settle after the cancel) stops after this many failed reads in a row (default 3)… */
+  pollErrorLimit?: number;
+  /** …or after this much wall clock on `now` (default 60 s). The cancel is always attempted after the window. */
+  pollBudgetMs?: number;
+  /** Caller-owned progress (see ExecuteProgress); cron reads it to count a halt even when something throws. */
+  progress?: ExecuteProgress;
   /**
    * Submit cutoff, absolute epoch ms (callers: today's cfg.submitCutoffET via etInstantOn). Checked
    * against now() before EVERY submit; once reached nothing more is sent and every remaining order comes
@@ -443,11 +469,13 @@ export async function executeOrders(input: {
    */
   cutoffMs?: number;
 }): Promise<{ fills: Fill[]; executed: ExecutedOrder[]; aborted?: SubmitAbort; skippedCash: SkippedCash[]; rejected: RejectedOrder[]; skippedLegs: SkippedLeg[]; skippedCutoff: SkippedCutoff[] }> {
-  const { adapter, sized, ctx, runId, fillsPath, pollMs = 1000, now = Date.now, resolveDelaysMs = [2_000, 5_000, 10_000], iocPolls = 8, marketPolls = 30, cutoffMs } = input;
+  const { adapter, sized, ctx, runId, fillsPath, pollMs = 1000, now = Date.now, resolveDelaysMs = [2_000, 5_000, 10_000], iocPolls = 8, marketPolls = 30, cutoffMs, pollErrorLimit = 3, pollBudgetMs = 60_000 } = input;
+  const progress: ExecuteProgress = input.progress ?? { mayHaveSubmitted: false };
   // A cutoff that is NaN would never trip — refuse it before anything is sent.
   if (cutoffMs !== undefined && !Number.isFinite(cutoffMs)) throw new Error(`executeOrders: cutoffMs must be a finite epoch ms, got ${cutoffMs}`);
-  const fills: Fill[] = [];
-  const executed: ExecutedOrder[] = [];
+  // M-5: the caller's live arrays when given, so what went out survives a throw (cron writes a partial run record).
+  const fills: Fill[] = progress.fills ?? (progress.fills = []);
+  const executed: ExecutedOrder[] = progress.executed ?? (progress.executed = []);
   const skippedCash: SkippedCash[] = [];
   const rejected: RejectedOrder[] = [];
   const skippedLegs: SkippedLeg[] = [];
@@ -479,22 +507,30 @@ export async function executeOrders(input: {
       estNotionalUsd: o.qty * o.limitPrice };
     let order: BrokerOrder;
     const submitStartAt = new Date(now()).toISOString();
+    // I-1: from here this order may reach the broker. Only a GuardError (raised by assertOrderAllowed before the
+    // adapter is called) or a definitive OrderRejectedError proves it did not; every other outcome keeps the flag.
+    const priorMayHaveSubmitted = progress.mayHaveSubmitted;
+    progress.mayHaveSubmitted = true;
     try {
       order = await guardedSubmit(adapter, req, ctx);
     } catch (e) {
+      if (e instanceof GuardError || e instanceof OrderRejectedError) progress.mayHaveSubmitted = priorMayHaveSubmitted;
       if (e instanceof CashBackstopError) { skippedCash.push({ ticker: o.ticker, clientOrderId: o.clientOrderId, detail: e.message }); continue; } // never sent
       if (e instanceof OrderRejectedError) { // definitively refused — nothing placed; record it and carry on
         rejected.push({ ticker: o.ticker, clientOrderId: o.clientOrderId, detail: e.detail });
         executed.push({ clientOrderId: o.clientOrderId, brokerId: "", status: "rejected", filledQty: 0, filledAvgPrice: null, submittedAt: null, submitStartAt });
         continue;
       }
+      // Any other guard refusal mid-run (kill switch, a lock, the ban, a run cap): nothing was placed for this order.
+      // Stop like an unknown submit, so the caller records the run, audits what did go out, and halts (F-7).
+      if (e instanceof GuardError) return { fills, executed, skippedCash, rejected, skippedLegs, skippedCutoff, aborted: { reason: "guard", ticker: o.ticker, clientOrderId: o.clientOrderId, detail: e.message } };
       if (!(e instanceof SubmitOutcomeUnknownError)) throw e;
       // The order may exist. Find it; NEVER resend it (a double fill, or a fill we can't record, is worse than a miss).
       const found = await resolveUnknownSubmit(adapter, req, e.submitStartAt, resolveDelaysMs);
       if (!found.order) {
         executed.push({ clientOrderId: o.clientOrderId, brokerId: "", status: "unknown", filledQty: 0, filledAvgPrice: null, submittedAt: e.submitStartAt, submitStartAt });
         // Stop the run: every later order would be planned against a book we can't vouch for.
-        return { fills, executed, skippedCash, rejected, skippedLegs, skippedCutoff, aborted: { ticker: o.ticker, clientOrderId: o.clientOrderId, detail: `${e.message}; lookup: ${found.detail}` } };
+        return { fills, executed, skippedCash, rejected, skippedLegs, skippedCutoff, aborted: { reason: "submit-unknown", ticker: o.ticker, clientOrderId: o.clientOrderId, detail: `${e.message}; lookup: ${found.detail}` } };
       }
       order = found.order;
       ctx.counters.orders += 1; // it did go out — count it against the run caps as guardedSubmit would have
@@ -502,34 +538,64 @@ export async function executeOrders(input: {
       if (o.side === "buy") ctx.counters.buyNotionalUsd += Math.abs(req.estNotionalUsd);
     }
     const submitAckAt = new Date(now()).toISOString();
-    const poll = async () => {
+    let pollErrors = 0;
+    let cancelError: string | undefined;
+    /** One fill poll; false when the order-list read failed (status unknown — the last known state is kept). */
+    const poll = async (): Promise<boolean> => {
       await sleep(pollMs);
       const id = order.id;
-      order = (await adapter.getOrders("all", pollAfter)).find((x) => x.id === id || x.clientOrderId === o.clientOrderId) ?? order;
+      try {
+        order = (await adapter.getOrders("all", pollAfter)).find((x) => x.id === id || x.clientOrderId === o.clientOrderId) ?? order;
+        return true;
+      } catch {
+        pollErrors++;
+        return false;
+      }
     };
-    const window = o.type === "limit" && o.timeInForce === "ioc" ? iocPolls : marketPolls;
-    for (let i = 0; i < window && !TERMINAL_STATUSES.has(order.status); i++) await poll();
-    if (!TERMINAL_STATUSES.has(order.status)) {
-      // Emulated IOC / stuck market order: cancel whatever is still working, then wait for the broker to
-      // settle it (a partial fill before the cancel is kept and recorded). A cancel that fails is not fatal:
-      // an order still working at the next run makes reconcile halt, so it cannot be traded past silently.
-      try { await adapter.cancelOrder(order.id); } catch { /* reported via the non-terminal status below */ }
-      for (let i = 0; i < 30 && !TERMINAL_STATUSES.has(order.status); i++) await poll();
+    /** Poll up to n times until terminal; stop early after pollErrorLimit failed reads in a row or pollBudgetMs of wall clock. */
+    const pollUntilTerminal = async (n: number) => {
+      const deadline = now() + pollBudgetMs;
+      let streak = 0;
+      for (let k = 0; k < n && !TERMINAL_STATUSES.has(order.status) && streak < pollErrorLimit && now() < deadline; k++) {
+        streak = (await poll()) ? 0 : streak + 1;
+      }
+    };
+    try {
+      await pollUntilTerminal(o.type === "limit" && o.timeInForce === "ioc" ? iocPolls : marketPolls);
+      if (!TERMINAL_STATUSES.has(order.status)) {
+        // Emulated IOC / stuck market order: cancel whatever is still working — always, even when reads are failing —
+        // then wait for the broker to settle it (a partial fill before the cancel is kept and recorded).
+        try { await adapter.cancelOrder(order.id); } catch (e) { cancelError = e instanceof Error ? e.message : String(e); }
+        await pollUntilTerminal(30);
+      }
+      const terminal = TERMINAL_STATUSES.has(order.status);
+      const cancelFields = cancelError ? (terminal ? { cancelNote: `cancel reply error; order terminal — ${cancelError}` } : { cancelError }) : {};
+      executed.push({ clientOrderId: o.clientOrderId, brokerId: order.id, status: order.status, filledQty: order.filledQty, filledAvgPrice: order.filledAvgPrice, submittedAt: order.submittedAt, submitStartAt, submitAckAt,
+        terminalAt: terminal ? new Date(now()).toISOString() : null, ...(pollErrors ? { pollErrors } : {}), ...cancelFields });
+      // True up the cash backstop: a buy reserved qty × limit at submit; it actually spent filledQty × avg
+      // (an IOC that didn't fill releases its reservation). A sell raises cash only for what filled. A
+      // working order that never went terminal keeps its full reservation (conservative).
+      const spent = order.filledQty * (order.filledAvgPrice ?? 0);
+      if (o.side === "buy" && terminal) ctx.counters.buyNotionalUsd += spent - Math.abs(req.estNotionalUsd);
+      if (o.side === "sell") ctx.counters.sellProceedsUsd += spent;
+      if (order.filledQty > 0 && order.filledAvgPrice != null && order.filledAt) {
+        const fill: Fill = { ticker: o.ticker, side: o.side, qty: order.filledQty, price: order.filledAvgPrice, filledAt: order.filledAt, tradingDate: fillTradingDate(order.filledAt), orderId: order.id, runId };
+        appendFill(fillsPath, fill);
+        fills.push(fill);
+      }
+      if (o.leg === "whole") wholeFilled.set(`${o.side}|${o.ticker}`, order.filledQty);
+      // F-1: not known to be finished, and the broker's order list could not be read — it may still be working or
+      // have filled. Stop sending; the caller records the run, audits and halts.
+      if (!terminal && pollErrors > 0) {
+        return { fills, executed, skippedCash, rejected, skippedLegs, skippedCutoff, aborted: { reason: "poll-unavailable", ticker: o.ticker, clientOrderId: o.clientOrderId,
+          detail: `order ${order.id} last seen ${order.status}; ${pollErrors} order-list read(s) failed${cancelError ? `; cancel failed: ${cancelError}` : ""}` } };
+      }
+    } catch (e) {
+      // Nothing above should throw now (poll and cancel failures are caught); if anything does — a disk error
+      // recording a fill, a bug — never leave this order working at the broker: cancel it, best effort, then re-throw.
+      if (!TERMINAL_STATUSES.has(order.status)) { try { await adapter.cancelOrder(order.id); } catch { /* best effort */ } }
+      throw e;
     }
-    const terminalAt = TERMINAL_STATUSES.has(order.status) ? new Date(now()).toISOString() : null;
-    executed.push({ clientOrderId: o.clientOrderId, brokerId: order.id, status: order.status, filledQty: order.filledQty, filledAvgPrice: order.filledAvgPrice, submittedAt: order.submittedAt, submitStartAt, submitAckAt, terminalAt });
-    // True up the cash backstop: a buy reserved qty × limit at submit; it actually spent filledQty × avg
-    // (an IOC that didn't fill releases its reservation). A sell raises cash only for what filled. A
-    // working order that never went terminal keeps its full reservation (conservative).
-    const spent = order.filledQty * (order.filledAvgPrice ?? 0);
-    if (o.side === "buy" && TERMINAL_STATUSES.has(order.status)) ctx.counters.buyNotionalUsd += spent - Math.abs(req.estNotionalUsd);
-    if (o.side === "sell") ctx.counters.sellProceedsUsd += spent;
-    if (order.filledQty > 0 && order.filledAvgPrice != null && order.filledAt) {
-      const fill: Fill = { ticker: o.ticker, side: o.side, qty: order.filledQty, price: order.filledAvgPrice, filledAt: order.filledAt, tradingDate: fillTradingDate(order.filledAt), orderId: order.id, runId };
-      appendFill(fillsPath, fill);
-      fills.push(fill);
-    }
-    if (o.leg === "whole") wholeFilled.set(`${o.side}|${o.ticker}`, order.filledQty);
   }
   return { fills, executed, skippedCash, rejected, skippedLegs, skippedCutoff };
 }
@@ -543,6 +609,7 @@ export function mergeExecution(orders: Record<string, unknown>[], executed: Exec
       ...o, brokerId: e.brokerId, status: e.status, submittedAt: e.submittedAt,
       filledQty: e.filledQty, filledAvgPrice: e.filledAvgPrice,
       submitStartAt: e.submitStartAt ?? null, submitAckAt: e.submitAckAt ?? null, terminalAt: e.terminalAt ?? null,
+      ...(e.pollErrors ? { pollErrors: e.pollErrors } : {}), ...(e.cancelError ? { cancelError: e.cancelError } : {}), ...(e.cancelNote ? { cancelNote: e.cancelNote } : {}),
     } : o;
   });
 }

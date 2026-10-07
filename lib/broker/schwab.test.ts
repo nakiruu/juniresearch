@@ -289,3 +289,45 @@ describe("SchwabBroker — concurrent reads (latency)", () => {
     await expect(mk(fetchImpl).getLastClose(["AAA", "BBB", "CCC"], "2026-09-25")).rejects.toThrow(/no daily candle for BBB/);
   });
 });
+
+describe("SchwabBroker — 429/5xx on reads are retried, never on submit (T-8)", () => {
+  const acct = () => json({ securitiesAccount: { currentBalances: { liquidationValue: 100000, cashBalance: 5, buyingPower: 5 }, positions: [] } });
+  const mkS = (fetchImpl: typeof fetch, slept: number[]) => new SchwabBroker({ tokenStore: seededStore(), clientId: "cid", clientSecret: "s", accountHash: HASH, fetchImpl, nowMs: () => NOW, sleep: async (ms) => { slept.push(ms); } });
+
+  it("a 429 with Retry-After waits that long and retries, then succeeds", async () => {
+    const slept: number[] = []; let n = 0;
+    const f = (async () => (n++ === 0 ? new Response("rate limited", { status: 429, headers: { "Retry-After": "3" } }) : acct())) as unknown as typeof fetch;
+    expect((await mkS(f, slept).getAccount()).cash).toBe(5);
+    expect(n).toBe(2); expect(slept).toEqual([3_000]);
+  });
+  it("a 429 that never clears gives up after 3 retries, with the same message as before", async () => {
+    const slept: number[] = []; let n = 0;
+    const f = (async () => { n++; return new Response("rate limited", { status: 429 }); }) as unknown as typeof fetch;
+    await expect(mkS(f, slept).getAccount()).rejects.toThrow(/Schwab GET .*accounts.* → 429: rate limited/);
+    expect(n).toBe(4); expect(slept).toEqual([2_000, 5_000, 10_000]);
+  });
+  it("a 503 on pricehistory is retried", async () => {
+    const slept: number[] = []; let n = 0;
+    const f = (async () => (n++ === 0 ? new Response("", { status: 503 }) : json({ candles: [{ close: 101, datetime: Date.parse("2026-09-25T20:00:00Z") }] }))) as unknown as typeof fetch;
+    expect(await mkS(f, slept).getLastClose(["NEE"], "2026-09-25")).toEqual({ NEE: 101 });
+    expect(slept).toEqual([2_000]);
+  });
+  it("a 400 on a read is not retried", async () => {
+    const slept: number[] = []; let n = 0;
+    const f = (async () => { n++; return new Response("bad", { status: 400 }); }) as unknown as typeof fetch;
+    await expect(mkS(f, slept).getAccount()).rejects.toThrow(/→ 400/);
+    expect(n).toBe(1); expect(slept).toEqual([]);
+  });
+  it("a 429 on submit is OrderRejected and POSTed exactly once (no submit retry)", async () => {
+    const slept: number[] = []; const posts: string[] = [];
+    const f = (async (url: string, init: RequestInit = {}) => { if ((init.method ?? "GET") === "POST") { posts.push(url); return new Response("rate limited", { status: 429, headers: { "Retry-After": "1" } }); } return acct(); }) as unknown as typeof fetch;
+    await expect(mkS(f, slept).submitOrder({ symbol: "NEE", side: "sell", qty: 1, limitPrice: 75, timeInForce: "ioc", clientOrderId: "c1", estNotionalUsd: 75 })).rejects.toMatchObject({ name: "OrderRejectedError" });
+    expect(posts).toHaveLength(1); expect(slept).toEqual([]);
+  });
+  it("cancelOrder retries a 429 (a DELETE is idempotent) and tolerates a 404", async () => {
+    const slept: number[] = []; const dels: number[] = [];
+    const f = (async () => { dels.push(1); return dels.length === 1 ? new Response("", { status: 429 }) : new Response(null, { status: 404 }); }) as unknown as typeof fetch;
+    await expect(mkS(f, slept).cancelOrder("1001")).resolves.toBeUndefined();
+    expect(dels).toHaveLength(2); expect(slept).toEqual([2_000]);
+  });
+});

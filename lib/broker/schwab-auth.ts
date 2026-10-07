@@ -13,8 +13,8 @@
  */
 import { z } from "zod";
 import { createHash } from "node:crypto";
-import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
-import { dirname } from "node:path";
+import { existsSync, readFileSync } from "node:fs";
+import { writeFileAtomic } from "../atomic-write";
 import { DEFAULT_TIMEOUTS, fetchWithTimeout, isTransientToken, withReadRetry } from "./http";
 
 export const TOKEN_ENDPOINT = "https://api.schwabapi.com/v1/oauth/token";
@@ -51,9 +51,9 @@ export class SchwabTokenStore {
     if (!existsSync(this.path)) return null;
     try { return JSON.parse(readFileSync(this.path, "utf8")) as SchwabTokens; } catch { return null; }
   }
+  /** Atomic (a crash can't lose a rotated refresh token) and owner-only: 0600 file, 0700 if the directory is created here. */
   write(t: SchwabTokens): void {
-    mkdirSync(dirname(this.path), { recursive: true });
-    writeFileSync(this.path, JSON.stringify(t, null, 2) + "\n");
+    writeFileAtomic(this.path, JSON.stringify(t, null, 2) + "\n", { mode: 0o600, dirMode: 0o700 });
   }
 }
 

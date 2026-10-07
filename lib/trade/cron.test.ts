@@ -2,14 +2,16 @@ import { describe, it, expect } from "vitest";
 import { mkdtempSync, mkdirSync, existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { runCron, type CronDeps } from "./cron";
+import { runCron, reportUnexpectedCronError, type CronDeps } from "./cron";
 import { FakeBroker } from "../broker/fake";
 import { resolveTradeConfig } from "./config";
 import { readHaltState, bumpHalt } from "./breakers";
 import { readFills } from "./fills";
 import { SchwabAuthError } from "../broker/schwab-auth";
+import { SubmitOutcomeUnknownError } from "../broker/http";
 import { fixtureReport } from "../portfolio/__fixtures__/reports";
 import type { Fill } from "./fills";
+import type { BrokerOrder, SubmitOrderRequest } from "../broker/adapter";
 
 const CAL = ["2026-09-21", "2026-09-22", "2026-09-23", "2026-09-24", "2026-09-25"].map((date) => ({ date, open: "09:30", close: "16:00" }));
 const closes = (p: number) => Object.fromEntries(CAL.map((d) => [d.date, p]));
@@ -499,13 +501,188 @@ describe("runCron", () => {
     // This proves defense-in-depth: the kill switch isn't only the single step-1 read.
     const paths = mkPaths();
     const adapter = mkBroker();
-    await expect(runCron(mkDeps({
-      paths, adapter, disabled: false, env: { TRADE_DISABLED: "1" } as unknown as NodeJS.ProcessEnv,
+    const notified: string[] = [];
+    expect(await runCron(mkDeps({
+      paths, adapter, disabled: false, env: { TRADE_DISABLED: "1" } as unknown as NodeJS.ProcessEnv, notify: (m) => notified.push(m),
       loadInputs: async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] }),
-    }))).rejects.toThrow(/TRADE_DISABLED/);
+    }))).toEqual({ status: "halted", reason: "guard" });
+    expect(notified.some((m) => /guard refused NVT.*TRADE_DISABLED/.test(m))).toBe(true);
+    expect(readHaltState(paths.haltState)).toEqual({ consecutive: 0 }); // nothing reached the broker → alert-only (F-4)
     expect(readFills(paths.fills)).toEqual([]); // the guard threw before any fill was recorded
     expect(await adapter.getOrders("all")).toEqual([]); // never reached adapter.submitOrder
     expect(existsSync(paths.lock)).toBe(false); // released via finally even on an uncaught throw
+  });
+
+  it("F-10: a held lock is alerted (the slot is skipped) and left untouched", async () => {
+    const paths = mkPaths(); const notified: string[] = [];
+    writeFileSync(paths.lock, `12345 ${new Date().toISOString()}`);
+    expect(await runCron(mkDeps({ paths, notify: (m) => notified.push(m) }))).toEqual({ status: "locked" });
+    expect(notified).toEqual([expect.stringMatching(/holds the run lock \(12345 /)]);
+  });
+
+  it("F-1: an order the run lost track of halts (poll-unavailable): record written, counter bumped, no 'UNKNOWN outcome' wording", async () => {
+    class LostBroker extends FakeBroker {
+      private placed: BrokerOrder[] = [];
+      async submitOrder(req: SubmitOrderRequest): Promise<BrokerOrder> {
+        this.submitCount++;
+        const o: BrokerOrder = { id: `l-${this.placed.length + 1}`, clientOrderId: req.clientOrderId, symbol: req.symbol, side: req.side, status: "new", qty: req.qty ?? null, notional: null, filledQty: 0, filledAvgPrice: null, filledAt: null, submittedAt: `${TODAY}T19:15:00Z` };
+        this.placed.push(o); return o;
+      }
+      async getOrders(): Promise<BrokerOrder[]> { if (this.submitCount > 0) throw new Error("Schwab GET …/orders → 503"); return [...this.placed]; }
+      async cancelOrder(): Promise<void> { /* accepted; we never see the outcome */ }
+    }
+    const paths = mkPaths(); const notified: string[] = [];
+    const adapter = new LostBroker({ calendar: CAL, closes: { NVT: closes(100) }, equity: 10_000, cash: 10_000, isOpen: true, today: TODAY });
+    const r = await runCron(mkDeps({ paths, adapter, pollMs: 0, notify: (m) => notified.push(m), loadInputs: async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] }) }));
+    expect(r).toEqual({ status: "halted", reason: "poll-unavailable" });
+    expect(readHaltState(paths.haltState)).toEqual({ consecutive: 1 });
+    expect(notified.some((m) => /lost track of the NVT order/.test(m))).toBe(true);
+    expect(notified.some((m) => /UNKNOWN outcome/.test(m))).toBe(false);
+    expect(readdirSync(paths.runs)).toHaveLength(1);
+    expect(existsSync(paths.lock)).toBe(false);
+  });
+
+  it("T-8: the broker-truth read fails after execution → halted (audit-unavailable), counter bumped, alert names the run, fills + record kept", async () => {
+    const paths = mkPaths(); const adapter = mkBroker();
+    const orig = adapter.getOrders.bind(adapter);
+    adapter.getOrders = (async (status: "open" | "closed" | "all", after?: string) => {
+      if (adapter.submitCount > 0) throw new Error("Schwab GET …/orders → 429: rate limited");
+      return orig(status, after);
+    }) as typeof adapter.getOrders;
+    const notified: string[] = [];
+    const r = await runCron(mkDeps({ paths, adapter, notify: (m) => notified.push(m), loadInputs: async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] }) }));
+    expect(r).toEqual({ status: "halted", reason: "audit-unavailable" });
+    expect(readHaltState(paths.haltState)).toEqual({ consecutive: 1 });
+    expect(readFills(paths.fills).length).toBeGreaterThan(0);
+    expect(readdirSync(paths.runs)).toHaveLength(1);
+    expect(notified.some((m) => /broker-truth check could not read/.test(m) && /trade:audit -- --run r-cron-1/.test(m))).toBe(true);
+    expect(existsSync(paths.lock)).toBe(false);
+  });
+
+  it("F-1: an order still working after a failed cancel (reads fine) halts (order-working) — never 'executed', never clearHalt", async () => {
+    class StuckBroker extends FakeBroker {
+      private stuck: BrokerOrder[] = [];
+      async submitOrder(req: SubmitOrderRequest): Promise<BrokerOrder> {
+        this.submitCount++;
+        const o: BrokerOrder = { id: `s-${this.stuck.length + 1}`, clientOrderId: req.clientOrderId, symbol: req.symbol, side: req.side, status: "new", qty: req.qty ?? null, notional: null, filledQty: 0, filledAvgPrice: null, filledAt: null, submittedAt: `${TODAY}T19:15:00Z` };
+        this.stuck.push(o); return o;
+      }
+      async getOrders(): Promise<BrokerOrder[]> { return [...this.stuck]; }
+      async cancelOrder(): Promise<void> { throw new Error("Schwab DELETE order → 503"); }
+    }
+    const paths = mkPaths(); bumpHalt(paths.haltState); // a prior halt must NOT be cleared by this run
+    const adapter = new StuckBroker({ calendar: CAL, closes: { NVT: closes(100) }, equity: 10_000, cash: 10_000, isOpen: true, today: TODAY });
+    const notified: string[] = [];
+    const r = await runCron(mkDeps({ paths, adapter, pollMs: 0, notify: (m) => notified.push(m), loadInputs: async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] }) }));
+    expect(r).toEqual({ status: "halted", reason: "order-working" });
+    expect(readHaltState(paths.haltState)).toEqual({ consecutive: 2 });
+    expect(notified.some((m) => /still working at the broker/.test(m) && /NVT/.test(m))).toBe(true);
+    const [rec] = readdirSync(paths.runs);
+    expect(readFileSync(join(paths.runs, rec), "utf8")).toMatch(/"cancelError": "Schwab DELETE order → 503"/);
+  });
+
+  it("F-4: an error after an order reached the broker is caught: halted (execute-error), counter bumped, alerted, lock released", async () => {
+    const dir = mkdtempSync(join(tmpdir(), "cron-"));
+    const paths = { ...mkPaths(), fills: join(dir, "no-such-dir", "fills.jsonl") }; // appendFill fails AFTER the fill
+    const notified: string[] = [];
+    const r = await runCron(mkDeps({ paths, notify: (m) => notified.push(m), loadInputs: async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] }) }));
+    expect(r).toEqual({ status: "halted", reason: "execute-error" });
+    expect(readHaltState(paths.haltState)).toEqual({ consecutive: 1 });
+    expect(notified.some((m) => /error after an order submit may have reached the broker/.test(m) && /ENOENT/.test(m))).toBe(true);
+    expect(existsSync(paths.lock)).toBe(false);
+  });
+
+  it("F-4: an error before any order went out is re-thrown and does not touch the counter", async () => {
+    const paths = mkPaths();
+    await expect(runCron(mkDeps({ paths, loadInputs: async () => { throw new Error("disk gone"); } }))).rejects.toThrow(/disk gone/);
+    expect(readHaltState(paths.haltState)).toEqual({ consecutive: 0 });
+    expect(existsSync(paths.lock)).toBe(false);
+  });
+
+  describe("I-1: a submit that may have reached the broker counts as sent, even if it never returned", () => {
+    /** The submit's outcome is unknown and the lookup finds nothing: the order may be live at the broker. */
+    class LostSubmitBroker extends FakeBroker {
+      async submitOrder(req: SubmitOrderRequest): Promise<BrokerOrder> { throw new SubmitOutcomeUnknownError(req.clientOrderId, req.symbol, `${TODAY}T19:15:00Z`, "Schwab POST order → 502"); }
+      async findSubmitted(): Promise<BrokerOrder | null> { return null; }
+    }
+    /** runs/ under a FILE: dayTurnoverUsd sees no dir (0), but writeRunRecord's mkdir fails after execution. */
+    const unwritableRuns = () => { const d = mkdtempSync(join(tmpdir(), "cron-")); writeFileSync(join(d, "f"), "x"); return { ...mkPaths(), runs: join(d, "f", "runs") }; };
+
+    it("unknown submit, empty lookup, then writeRunRecord throws → halted (execute-error), counter bumped once, never 'nothing was sent'", async () => {
+      const paths = unwritableRuns(); const notified: string[] = [];
+      const adapter = new LostSubmitBroker({ calendar: CAL, closes: { NVT: closes(100) }, equity: 10_000, cash: 10_000, isOpen: true, today: TODAY });
+      const r = await runCron(mkDeps({ paths, adapter, resolveDelaysMs: [0], pollMs: 0, notify: (m) => notified.push(m), loadInputs: async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] }) }));
+      expect(r).toEqual({ status: "halted", reason: "execute-error" });
+      expect(readHaltState(paths.haltState)).toEqual({ consecutive: 1 });
+      expect(notified.some((m) => /error after an order submit may have reached the broker/.test(m) && /ENOTDIR|ENOENT|EEXIST/.test(m))).toBe(true);
+      expect(existsSync(paths.lock)).toBe(false);
+    });
+
+    it("a guard refusal of the very first order sent nothing: a later throw stays pre-trade (re-thrown, counter untouched)", async () => {
+      const paths = unwritableRuns(); const adapter = mkBroker();
+      await expect(runCron(mkDeps({ paths, adapter, env: { TRADE_DISABLED: "1" } as unknown as NodeJS.ProcessEnv, loadInputs: async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] }) }))).rejects.toThrow();
+      expect(readHaltState(paths.haltState)).toEqual({ consecutive: 0 });
+      expect(adapter.submitCount).toBe(0);
+    });
+  });
+
+  describe("M-3: one bump per halted run; a clean run stays clean", () => {
+    it("a halt branch that bumps and then throws (notify fails) is counted once, keeping its reason", async () => {
+      const paths = mkPaths(); const adapter = mkBroker();
+      const orig = adapter.getOrders.bind(adapter);
+      adapter.getOrders = (async (status: "open" | "closed" | "all", after?: string) => {
+        if (adapter.submitCount > 0) throw new Error("Schwab GET …/orders → 503");
+        return orig(status, after);
+      }) as typeof adapter.getOrders;
+      const notify = (m: string) => { if (/broker-truth check could not read/.test(m)) throw new Error("discord down"); };
+      const r = await runCron(mkDeps({ paths, adapter, notify, loadInputs: async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] }) }));
+      expect(r).toEqual({ status: "halted", reason: "audit-unavailable" });
+      expect(readHaltState(paths.haltState)).toEqual({ consecutive: 1 });
+    });
+
+    it("after clearHalt, a failing run summary / log does not turn a clean run into a halt", async () => {
+      const paths = mkPaths(); bumpHalt(paths.haltState); // a prior halt, cleared by this clean run
+      const r = await runCron(mkDeps({ paths, notifySummary: () => { throw new Error("discord down"); }, loadInputs: async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] }) }));
+      expect(r.status).toBe("executed");
+      expect(readHaltState(paths.haltState)).toEqual({ consecutive: 0 });
+      expect(existsSync(paths.lock)).toBe(false);
+    });
+  });
+
+  describe("M-5: an execute-error leaves something to audit, and the alert points at a command that works", () => {
+    it("a throw inside executeOrders (fill not recordable) writes a partial run record with the sent order; the alert names trade:audit", async () => {
+      const dir = mkdtempSync(join(tmpdir(), "cron-"));
+      const paths = { ...mkPaths(), fills: join(dir, "no-such-dir", "fills.jsonl") };
+      const notified: string[] = [];
+      const r = await runCron(mkDeps({ paths, notify: (m) => notified.push(m), loadInputs: async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] }) }));
+      expect(r).toEqual({ status: "halted", reason: "execute-error" });
+      const files = readdirSync(paths.runs);
+      expect(files).toHaveLength(1);
+      const rec = JSON.parse(readFileSync(join(paths.runs, files[0]), "utf8")) as { orders: { ticker?: string; brokerId?: string; filledQty?: number }[]; notes: string[] };
+      expect(rec.orders).toEqual([expect.objectContaining({ ticker: "NVT", brokerId: expect.stringMatching(/.+/), filledQty: expect.any(Number) })]);
+      expect(rec.notes.some((n) => /execute-error: .*ENOENT/.test(n))).toBe(true);
+      expect(notified.some((m) => /trade:audit -- --run r-cron-1/.test(m) && /trade:reconcile -- --record-missing/.test(m))).toBe(true);
+    });
+
+    it("no run record can be written: the alert says check the broker's order history and trade:reconcile, never trade:audit", async () => {
+      const d = mkdtempSync(join(tmpdir(), "cron-")); writeFileSync(join(d, "f"), "x");
+      const paths = { ...mkPaths(), runs: join(d, "f", "runs") };
+      const notified: string[] = [];
+      const r = await runCron(mkDeps({ paths, notify: (m) => notified.push(m), loadInputs: async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] }) }));
+      expect(r).toEqual({ status: "halted", reason: "execute-error" });
+      const alert = notified.find((m) => /cron halted: error after/.test(m))!;
+      expect(alert).toMatch(/order history/);
+      expect(alert).toMatch(/trade:reconcile -- --record-missing/);
+      expect(alert).not.toMatch(/trade:audit/);
+    });
+  });
+
+  it("D-4: cron never deletes a lock that is no longer its own", async () => {
+    const paths = mkPaths();
+    const foreign = `77777 ${new Date().toISOString()} feed`;
+    const r = await runCron(mkDeps({ paths, loadInputs: async () => { writeFileSync(paths.lock, foreign); return { reports: [], sics: {}, marketCapUsd: {}, fills: [] }; } }));
+    expect(r.status).toBe("noop");
+    expect(readFileSync(paths.lock, "utf8")).toBe(foreign);
   });
 });
 
@@ -557,5 +734,21 @@ describe("runCron — advisory re-label streaks", () => {
     const paths = mkPaths();
     await runCron(mkDeps({ paths, loadInputs: async () => ({ reports: [held], sics: {}, marketCapUsd: {}, fills: [] as Fill[] }) }));
     expect(JSON.parse(readFileSync(join(paths.runs, readdirSync(paths.runs)[0]), "utf8")).relabel).toBeUndefined();
+  });
+});
+
+describe("reportUnexpectedCronError (T-4, F-4: alert-only)", () => {
+  it("alerts with the source and message, says nothing was sent, and never touches a counter", () => {
+    const msgs: string[] = [];
+    reportUnexpectedCronError(new Error("Schwab GET … → 503"), { source: "scheduler", notify: (m) => msgs.push(m) });
+    expect(msgs).toEqual([expect.stringMatching(/^scheduler: run stopped before any order was sent — Schwab GET … → 503\./)]);
+  });
+  it("a SchwabAuthError reads as a re-auth instruction", () => {
+    const msgs: string[] = [];
+    reportUnexpectedCronError(new SchwabAuthError("No Schwab tokens. Run: npm run trade:auth"), { source: "scheduler", notify: (m) => msgs.push(m) });
+    expect(msgs[0]).toMatch(/^scheduler: Schwab re-auth needed — No Schwab tokens/);
+  });
+  it("never throws, even when notify throws", () => {
+    expect(() => reportUnexpectedCronError(new Error("x"), { source: "s", notify: () => { throw new Error("discord down"); } })).not.toThrow();
   });
 });

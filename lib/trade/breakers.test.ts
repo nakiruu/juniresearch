@@ -1,9 +1,9 @@
 import { describe, it, expect } from "vitest";
-import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, utimesSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { Worker } from "node:worker_threads";
-import { turnoverBreaker, clipToTurnover, dayTurnoverUsd, readHaltState, bumpHalt, clearHalt, haltBlocked, acquireLock, releaseLock } from "./breakers";
+import { turnoverBreaker, clipToTurnover, dayTurnoverUsd, readHaltState, bumpHalt, clearHalt, haltBlocked, acquireLock, releaseLock, holdLock, acquireManualRun, manualPlanTooOld, MANUAL_PLAN_MAX_AGE_MS } from "./breakers";
 import { DEFAULT_TRADE_CONFIG as C } from "./config";
 
 describe("turnover breaker", () => {
@@ -275,4 +275,73 @@ describe("acquireLock stale-lock recovery", () => {
     expect(iterations).toBeGreaterThan(0); // sanity: the stress loop actually ran
     expect(enoentErrors).toEqual([]);
   }, 10_000);
+});
+
+describe("holdLock — ownership (D-4) and mtime staleness (F-10)", () => {
+  const lockPath = () => join(mkdtempSync(join(tmpdir(), "own-")), "cron.lock");
+  it("holds, reports ownership, and releases its own lock", () => {
+    const p = lockPath(); const h = holdLock(p)!;
+    expect(h.stillOurs()).toBe(true);
+    h.release();
+    expect(existsSync(p)).toBe(false);
+  });
+  it("never releases a lock someone else now holds (e.g. reclaimed as stale)", () => {
+    const p = lockPath(); const h = holdLock(p)!;
+    writeFileSync(p, `99999 ${new Date().toISOString()} beef`);
+    expect(h.stillOurs()).toBe(false);
+    h.release(); h.release();
+    expect(readFileSync(p, "utf8")).toMatch(/^99999 /);
+  });
+  it("two holders in one process get different bodies", () => {
+    const p1 = lockPath(), p2 = lockPath();
+    expect(holdLock(p1)!.body).not.toBe(holdLock(p2)!.body);
+  });
+  it("an unparseable lock body is judged by its mtime: fresh → held, older than the threshold → reclaimed", () => {
+    const p = lockPath();
+    writeFileSync(p, "garbage");
+    expect(holdLock(p)).toBeNull();
+    const old = new Date(Date.now() - 2 * 60 * 60_000);
+    utimesSync(p, old, old);
+    expect(holdLock(p)).not.toBeNull();
+  });
+});
+
+describe("acquireManualRun (T-5, F-3)", () => {
+  const P = () => { const d = mkdtempSync(join(tmpdir(), "manual-")); return { lock: join(d, "cron.lock"), haltState: join(d, "halt.json") }; };
+
+  it("takes the run lock, owns it, and releases it", () => {
+    const p = P(); const g = acquireManualRun(p, C);
+    expect(g.ok).toBe(true);
+    if (g.ok) { expect(g.stillOurs()).toBe(true); g.release(); }
+    expect(existsSync(p.lock)).toBe(false);
+  });
+  it("refuses while another run holds a fresh lock, and leaves that lock alone", () => {
+    const p = P(); expect(acquireLock(p.lock)).toBe(true);
+    const before = readFileSync(p.lock, "utf8");
+    expect(acquireManualRun(p, C)).toEqual({ ok: false, reason: expect.stringMatching(/holds the run lock/) });
+    expect(readFileSync(p.lock, "utf8")).toBe(before);
+  });
+  it("refuses while the consecutive-halt breaker is tripped, releases its lock, and never touches the counter", () => {
+    const p = P();
+    for (let i = 0; i < C.consecutiveHaltLimit; i++) bumpHalt(p.haltState);
+    expect(acquireManualRun(p, C)).toEqual({ ok: false, reason: expect.stringMatching(/consecutive halted run/) });
+    expect(existsSync(p.lock)).toBe(false);
+    expect(readHaltState(p.haltState)).toEqual({ consecutive: C.consecutiveHaltLimit });
+  });
+  it("refuses on an unreadable halt file", () => {
+    const p = P(); writeFileSync(p.haltState, "garbage");
+    expect(acquireManualRun(p, C)).toEqual({ ok: false, reason: expect.stringMatching(/halt state is unreadable/) });
+    expect(existsSync(p.lock)).toBe(false);
+  });
+  it("after a stale reclaim the manual run sees it no longer owns the lock and never deletes the new holder's", () => {
+    const p = P(); const g = acquireManualRun(p, C);
+    writeFileSync(p.lock, `99999 ${new Date().toISOString()} cafe`); // cron reclaimed it
+    if (g.ok) { expect(g.stillOurs()).toBe(false); g.release(); }
+    expect(readFileSync(p.lock, "utf8")).toMatch(/^99999 /);
+  });
+  it("a plan older than 10 minutes is too old to submit", () => {
+    expect(MANUAL_PLAN_MAX_AGE_MS).toBe(600_000);
+    expect(manualPlanTooOld(0, 600_000)).toBe(false);
+    expect(manualPlanTooOld(0, 600_001)).toBe(true);
+  });
 });

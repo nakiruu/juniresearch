@@ -1,7 +1,8 @@
 import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 
-const exclude = ["**/node_modules/**", ".next/**", ".worktrees/**"];
+// .claude/** holds harness worktrees (full repo copies); without this the suite runs their stale tests too.
+const exclude = ["**/node_modules/**", ".next/**", ".worktrees/**", ".claude/**"];
 
 export default defineConfig({
   plugins: [react()],

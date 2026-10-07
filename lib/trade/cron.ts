@@ -4,22 +4,23 @@
  * clock-check, an exclusive run-lock, the consecutive-halt / reconcile / turnover breakers, the
  * run-record, a one-line run log, and halt-only notify. No plan/size/execute logic lives here.
  */
-import { appendFileSync, existsSync, mkdirSync } from "node:fs";
+import { appendFileSync, existsSync, mkdirSync, readFileSync } from "node:fs";
 import { dirname } from "node:path";
 import type { Report } from "../report.schema";
 import type { BrokerAdapter } from "../broker/adapter";
+import { TERMINAL_STATUSES, type BrokerOrderStatus } from "../broker/adapter";
 import type { GuardContext } from "../broker/guards";
 import type { TradeConfig } from "./config";
 import type { TradingDay } from "./calendar";
 import type { LastEarnings } from "./earnings";
 import type { Fill } from "./fills";
-import { planRun, executeOrders, mergeExecution, type PlanRunOutput } from "./pipeline";
+import { planRun, executeOrders, mergeExecution, type ExecuteProgress, type PlanRunOutput, type SubmitAbort } from "./pipeline";
 import { ReconcileError } from "./ledger";
 import { SchwabAuthError } from "../broker/schwab-auth";
-import { turnoverBreaker, clipToTurnover, dayTurnoverUsd, readHaltState, bumpHalt, clearHalt, haltBlocked, acquireLock, releaseLock, DEFAULT_LOCK_STALE_MS } from "./breakers";
+import { turnoverBreaker, clipToTurnover, dayTurnoverUsd, readHaltState, bumpHalt, clearHalt, haltBlocked, holdLock, DEFAULT_LOCK_STALE_MS } from "./breakers";
 import { crossCheckBroker } from "./audit";
 import { allocationFromRun, summaryFromRun, type AllocationInput, type RunSummaryInput } from "./notify";
-import { writeRunRecord } from "./run-record";
+import { writeRunRecord, type RunRecord } from "./run-record";
 import { currentSlot, etInstantOn, etMinutesOfDay, hhmmToMinutes } from "./clock";
 import { refreshTokenHealth } from "../broker/schwab-auth";
 import { maybeWarnAuth } from "./auth-health";
@@ -65,6 +66,8 @@ export interface CronDeps {
   clock?: () => number;
   /** Lookup schedule for an order submit with an unknown outcome (tests pass zeros). */
   resolveDelaysMs?: readonly number[];
+  /** Fill-poll interval for executeOrders (tests pass 0); unset → 1 s. */
+  pollMs?: number;
   /**
    * PREVIEW_ONLY: plan, post the allocation, and stop — no breakers, no submit, no run record, halt
    * counter untouched. Every read-side check before planning (kill switch, window, clock, lock,
@@ -108,6 +111,31 @@ function summaryFields(out: PlanRunOutput): LogFields {
   const cashFrac = out.ledger.nav > 0 ? out.ledger.cash / out.ledger.nav : 0;
   const capBound = out.sized.orders.filter((o) => o.capBound).length;
   return { orders: out.sized.orders.length, notionalUsd, cashFrac, capBound };
+}
+
+/**
+ * An error that escaped runCron (the in-app scheduler or the trade:cron CLI). runCron catches everything that happens
+ * after an order reached the broker (it halts with "execute-error"), so anything escaping happened before any order
+ * was sent: alert only — pre-trade trouble (a read outage, a token to renew) must not block tomorrow's run. Never throws.
+ */
+export function reportUnexpectedCronError(e: unknown, o: { source: string; notify: (m: string) => void }): void {
+  const msg = e instanceof Error ? e.message : String(e);
+  const text = e instanceof SchwabAuthError
+    ? `${o.source}: Schwab re-auth needed — ${msg}. Nothing was sent this slot.`
+    : `${o.source}: run stopped before any order was sent — ${msg}. Nothing was traded this slot; check cron.log. The next slot runs as usual.`;
+  try { o.notify(text); } catch { /* an alert must never mask the error */ }
+}
+
+/** The halt alert for a run that stopped submitting (executeOrders' `aborted`). Shared with trade:execute. */
+export function abortAlert(a: SubmitAbort, source: string): string {
+  switch (a.reason) {
+    case "submit-unknown":
+      return `${source} halted: order submit for ${a.ticker} has an UNKNOWN outcome (${a.detail}). Check the broker's order history; if it executed, run \`npm run trade:reconcile -- --record-missing\`, then clear the halt state to resume.`;
+    case "poll-unavailable":
+      return `${source} halted: lost track of the ${a.ticker} order — the broker's order list could not be read (${a.detail}). It may still be working or may have filled. Remaining orders were NOT sent. Check the broker's order history; if it executed, run \`npm run trade:reconcile -- --record-missing\`, then clear the halt state to resume.`;
+    case "guard":
+      return `${source} halted: a guard refused ${a.ticker} mid-run (${a.detail}). Nothing was placed for it; remaining orders were NOT sent.`;
+  }
 }
 
 export async function runCron(deps: CronDeps): Promise<CronResult> {
@@ -165,8 +193,15 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
   // reach acquireLock, combined with acquireLock succeeding, means the lock we just took was
   // reclaimed from a stale one (a hard-killed/hung prior run whose `finally` never released it) —
   // not merely lock-file-didn't-exist-yet; note that in the log so it's visible in cron.log.
+  // The lock is held through a handle that releases it only while it is still ours (D-4): a run that outlived the
+  // stale threshold may have had it reclaimed, and must not delete the new holder's lock. A held lock is alerted
+  // (F-10): the slot is skipped, and a manual trade:execute left open holds it until it exits.
   const lockAlreadyPresent = existsSync(paths.lock);
-  if (!acquireLock(paths.lock, DEFAULT_LOCK_STALE_MS)) {
+  const lock = holdLock(paths.lock, DEFAULT_LOCK_STALE_MS);
+  if (!lock) {
+    let holder = "";
+    try { holder = readFileSync(paths.lock, "utf8").trim(); } catch { /* released meanwhile */ }
+    notify(`cron: skipped — another trade run holds the run lock (${holder || "holder unknown"}). Nothing was sent this slot; a manual trade:execute holds it until it exits.`);
     appendLog(paths.log, logLine(today, runId, "locked"));
     return { status: "locked" };
   }
@@ -174,6 +209,15 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
     appendLog(paths.log, `${today} ${runId} lock-reclaimed-stale`);
   }
 
+  // Phase-based halt counting (F-4): true once an order has reached the broker (set when step 8 builds ctx).
+  let ordersSent = (): boolean => false;
+  // M-3: the reason this run already bumped the halt counter for (null = not bumped). The catch below never bumps twice.
+  let bumpedFor: string | null = null;
+  const haltBump = (reason: string) => { bumpHalt(paths.haltState); bumpedFor = reason; };
+  // M-5: set once step 8 starts — builds a run record from executeOrders' live progress if the run throws before
+  // (or while) writing its own, so dayTurnoverUsd and trade:audit can still see what went out.
+  let partialRecord: ((cause: string) => RunRecord) | null = null;
+  let recordWritten = false;
   try {
     // 4. Consecutive-halt breaker. A corrupt/wrong-shape state file throws (breakers.ts) — that is
     // itself a safe-halt condition (addendum), not a crash.
@@ -291,13 +335,22 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
       brokerKind: adapter.kind, configuredBaseUrl, locks: out.locks, today, nav: out.ledger.nav, cfg,
       env, cashUsd: out.ledger.cash, counters: { orders: 0, notionalUsd: 0, buyNotionalUsd: 0, sellProceedsUsd: 0 },
     };
+    // I-1: "sent" = a submit may have reached the broker, including one that never returned (unknown outcome).
+    // counters.orders alone only counts submits that returned.
+    const progress: ExecuteProgress = { mayHaveSubmitted: false };
+    ordersSent = () => progress.mayHaveSubmitted || ctx.counters.orders > 0;
+    const planned = out;
+    partialRecord = (cause) => ({
+      ...planned.record, fills: (progress.fills ?? []) as unknown as Record<string, unknown>[], orders: mergeExecution(planned.record.orders, progress.executed ?? []),
+      notes: [...planned.record.notes, `execute-error: ${cause} — partial record written after the error; check the broker's order history`],
+    });
     // Submit cutoff (cfg.submitCutoffET, 15:50 ET): no order goes out at or after it, however late the
     // run started or however long earlier orders polled — never into the close. Remaining orders are
     // recorded as skipped (sells go first, so a cutoff only ever leaves cash).
     const cutoffMs = etInstantOn(today, cfg.submitCutoffET);
     const t0 = Date.now();
     const submitClock = deps.clock ?? (() => nowMs + (Date.now() - t0));
-    const { fills, executed, aborted, skippedCash, rejected, skippedLegs, skippedCutoff } = await executeOrders({ adapter, sized: out.sized, ctx, runId, fillsPath: paths.fills, resolveDelaysMs: deps.resolveDelaysMs, now: submitClock, cutoffMs });
+    const { fills, executed, aborted, skippedCash, rejected, skippedLegs, skippedCutoff } = await executeOrders({ adapter, sized: out.sized, ctx, runId, fillsPath: paths.fills, resolveDelaysMs: deps.resolveDelaysMs, pollMs: deps.pollMs, now: submitClock, cutoffMs, progress });
     const rec = {
       ...out.record, fills: fills as unknown as Record<string, unknown>[], orders: mergeExecution(out.record.orders, executed),
       notes: [...out.record.notes, ...skippedCash.map((s) => `cash skipped: ${s.ticker} — ${s.detail}`),
@@ -308,6 +361,7 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
     if (skippedCash.length) notify(`cron: ${skippedCash.length} buy(s) skipped by the cash backstop — ${skippedCash.map((s) => s.ticker).join(", ")} (broker cash couldn't cover them; usually a funding sell that didn't fill)`);
     if (skippedCutoff.length) notify(`cron: ${skippedCutoff.length} order(s) NOT sent — the ${cfg.submitCutoffET} ET submit cutoff passed mid-run — ${skippedCutoff.map((c) => c.ticker).join(", ")} (nothing placed for them; the next run re-plans)`);
     writeRunRecord(paths.runs, rec);
+    recordWritten = true;
 
     // 9. Broker-truth cross-check (spec §4). The recorded fills must match what the broker actually
     // did; a critical discrepancy (an unrecorded or mismatched fill under-sets the lock clock and the
@@ -315,34 +369,80 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
     // clears the consecutive-halt counter.
     // Audit only what was actually sent (a cash-skipped buy never reached the broker).
     const brokerIdByCid = new Map(executed.filter((e) => e.status !== "rejected").map((e) => [e.clientOrderId, e.brokerId || undefined])); // a rejected order never reached the book
-    const audit = crossCheckBroker({
-      expected: out.sized.orders.filter((o) => brokerIdByCid.has(o.clientOrderId)).map((o) => ({ clientOrderId: o.clientOrderId, ticker: o.ticker, side: o.side, brokerId: brokerIdByCid.get(o.clientOrderId) })),
-      brokerOrders: await adapter.getOrders("all", `${today}T00:00:00Z`),
-      fills,
-    });
-    // 9b. A submit whose outcome is unknown stopped the run. The order may exist (and may have filled);
-    // halt so a human checks the broker. The next run's reconcile orders-check also refuses to proceed
-    // while any executed order is unrecorded, so this can't be silently traded past.
+    let audit: ReturnType<typeof crossCheckBroker> | null = null;
+    let auditReadError = "";
+    try {
+      audit = crossCheckBroker({
+        expected: out.sized.orders.filter((o) => brokerIdByCid.has(o.clientOrderId)).map((o) => ({ clientOrderId: o.clientOrderId, ticker: o.ticker, side: o.side, brokerId: brokerIdByCid.get(o.clientOrderId) })),
+        brokerOrders: await adapter.getOrders("all", `${today}T00:00:00Z`),
+        fills,
+      });
+    } catch (e) {
+      auditReadError = e instanceof Error ? e.message : String(e);
+    }
+    // 9b. The run stopped submitting: an unknown submit outcome or an order it lost track of (either may exist
+    // at the broker, and may have filled), or a guard refusal mid-run. Halt so a human checks the broker. The next
+    // run's reconcile orders-check also refuses to proceed while any executed order is unrecorded.
     if (aborted) {
-      bumpHalt(paths.haltState);
-      notify(`cron halted: order submit for ${aborted.ticker} has an UNKNOWN outcome (${aborted.detail}). Check the broker's order history; if it executed, run \`npm run trade:reconcile -- --record-missing\`, then clear the halt state to resume.`);
-      appendLog(paths.log, logLine(today, runId, "halted", { ...summaryFields(out), reason: "submit-unknown" }));
-      return { status: "halted", reason: "submit-unknown" };
+      // Phase-based (F-4): count it only if something may have reached the broker. A guard refusal of the very first
+      // order sent nothing; an unknown submit or a lost order always may have.
+      if (aborted.reason !== "guard" || ctx.counters.orders > 0) haltBump(aborted.reason);
+      notify(abortAlert(aborted, "cron"));
+      appendLog(paths.log, logLine(today, runId, "halted", { ...summaryFields(out), reason: aborted.reason }));
+      return { status: "halted", reason: aborted.reason };
+    }
+    // 9c. The broker's orders could not be read (after retries): this run's fills are unverified. Fills and the run
+    // record are already written; halt so a human runs the audit before the next slot trades on them.
+    if (!audit) {
+      haltBump("audit-unavailable");
+      notify(`cron halted: the broker-truth check could not read the broker's orders (${auditReadError}). ${fills.length} fill(s) were recorded and the run record is written. Run \`npm run trade:audit -- --run ${runId}\` once the broker answers; if it is clean, clear the halt state.`);
+      appendLog(paths.log, logLine(today, runId, "halted", { ...summaryFields(out), reason: "audit-unavailable" }));
+      return { status: "halted", reason: "audit-unavailable" };
     }
     if (!audit.ok) {
-      bumpHalt(paths.haltState);
+      haltBump("broker-mismatch");
       notify(`cron halted: broker-truth check found ${audit.critical} critical discrepancy(ies) — ${audit.discrepancies.filter((d) => d.severity === "critical").map((d) => `${d.code} ${d.ticker}`).join(", ")}`);
       appendLog(paths.log, logLine(today, runId, "halted", { ...summaryFields(out), reason: "broker-mismatch" }));
       return { status: "halted", reason: "broker-mismatch" };
     }
+    // 9d. An order still working after its cancel (the audit passes a working order with 0 filled) is not a clean
+    // run: never clear the halt counter over it.
+    const working = executed.filter((e) => e.brokerId && !TERMINAL_STATUSES.has(e.status as BrokerOrderStatus));
+    if (working.length) {
+      haltBump("order-working");
+      notify(`cron halted: ${working.length} order(s) still working at the broker after the cancel attempt — ${working.map((e) => `${out.sized.orders.find((x) => x.clientOrderId === e.clientOrderId)?.ticker ?? "?"} ${e.brokerId} (${e.status}${e.cancelError ? `; cancel failed: ${e.cancelError}` : ""})`).join(", ")}. Check the broker; a DAY order expires at the close, and the next run's reconcile halts until it is terminal and recorded.`);
+      appendLog(paths.log, logLine(today, runId, "halted", { ...summaryFields(out), reason: "order-working" }));
+      return { status: "halted", reason: "order-working" };
+    }
     clearHalt(paths.haltState);
-    appendLog(paths.log, logLine(today, runId, "executed", { ...summaryFields(out), haltSkip: out.sized.skippedHalt.length }));
-    deps.notifySummary?.(summaryFromRun(out, "executed", fills, audit, skippedCutoff));
+    // M-3: the run is clean from here; a failure to log or post its summary must not re-halt it.
+    const bestEffort = (f: () => void) => { try { f(); } catch (e) { console.error(`cron: post-run report failed — ${e instanceof Error ? e.message : String(e)}`); } };
+    bestEffort(() => appendLog(paths.log, logLine(today, runId, "executed", { ...summaryFields(out), haltSkip: out.sized.skippedHalt.length })));
+    bestEffort(() => deps.notifySummary?.(summaryFromRun(out, "executed", fills, audit!, skippedCutoff)));
     if (out.sized.skippedHalt.length) {
-      notify(`cron: ${out.sized.skippedHalt.length} order(s) skipped by the per-ticker halt — ${out.sized.skippedHalt.map((h) => `${h.ticker} (${h.reason})`).join(", ")}`);
+      bestEffort(() => notify(`cron: ${out.sized.skippedHalt.length} order(s) skipped by the per-ticker halt — ${out.sized.skippedHalt.map((h) => `${h.ticker} (${h.reason})`).join(", ")}`));
     }
     return { status: "executed", orders: out.sized.orders.length, fills: fills.length };
+  } catch (e) {
+    // Phase-based (F-4): before any order reached the broker, the caller alerts (alert-only). After, this is a
+    // halted run — count it, alert, and never let it escape (the scheduler would otherwise treat it as pre-trade).
+    if (!ordersSent()) throw e;
+    const msg = e instanceof Error ? e.message : String(e);
+    let counter = "";
+    if (bumpedFor) counter = ` · halt counter already bumped for this run (${bumpedFor})`;
+    else { try { counter = ` · halt counter now ${bumpHalt(paths.haltState).consecutive}`; } catch (be) { counter = ` · halt counter NOT bumped (${(be as Error).message})`; } }
+    let recordNote = "";
+    if (!recordWritten && partialRecord) {
+      try { recordNote = ` A partial run record was written (${writeRunRecord(paths.runs, partialRecord(msg))}).`; recordWritten = true; } catch (we) { recordNote = ` The run record could not be written (${(we as Error).message}).`; }
+    }
+    const next = recordWritten
+      ? `Check the broker's order history, run \`npm run trade:audit -- --run ${runId}\`, and record any execution missing from fills.jsonl with \`npm run trade:reconcile -- --record-missing\` before the next slot.`
+      : `Check the broker's order history, then record any execution with \`npm run trade:reconcile -- --record-missing\` before the next slot (no run record was written, so there is nothing to audit).`;
+    try { notify(`cron halted: error after an order submit may have reached the broker — ${msg}${counter}.${recordNote} ${next}`); } catch { /* never mask */ }
+    const reason = bumpedFor ?? "execute-error";
+    try { appendLog(paths.log, logLine(today, runId, "halted", { reason })); } catch { /* never mask */ }
+    return { status: "halted", reason };
   } finally {
-    releaseLock(paths.lock);
+    lock.release();
   }
 }

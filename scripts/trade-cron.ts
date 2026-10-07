@@ -9,7 +9,7 @@
  */
 import { appendFileSync, mkdirSync } from "node:fs";
 import { dirname } from "node:path";
-import { runCron, type CronResult } from "../lib/trade/cron";
+import { runCron, reportUnexpectedCronError, type CronResult } from "../lib/trade/cron";
 import { resolveTradeConfig, tradeConfigFromEnv } from "../lib/trade/config";
 import { newRunId } from "../lib/trade/run-record";
 import { makeNotifier } from "../lib/trade/notify";
@@ -96,7 +96,7 @@ try {
   // are ordinary outcomes, as are "preview" (PREVIEW_ONLY) and "late" (a scheduled run that started after the fire window). An unexpected throw (caught below) is the only other non-zero case.
   process.exit(result.status === "halted" ? 1 : 0);
 } catch (err) {
-  notifier.message(`trade:cron: unexpected error — ${err instanceof Error ? err.message : String(err)}`);
+  reportUnexpectedCronError(err, { source: "trade:cron", notify: notifier.message });
   await notifier.flush();
   console.error(`trade:cron: unexpected error — ${err instanceof Error ? (err.stack ?? err.message) : String(err)}`);
   process.exit(1);

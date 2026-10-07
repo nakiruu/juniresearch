@@ -72,6 +72,13 @@ describe("planRun", () => {
     await planRun({ adapter: b, reports: [nvt], sics: {}, marketCapUsd: {}, fills: [], today: "2026-09-25", cfg, runId: "r" });
     expect(after).toBe(`${CAL[0].date}T00:00:00Z`); // the fixture calendar is shorter than lockBusinessDays + 1 → clamps to its first day
   });
+  it("T-1: an old fill (before the 90-day calendar) no longer throws, and sets no lock", async () => {
+    const b = new FakeBroker({ calendar: CAL, closes: { NVT: closes(100) }, equity: 10_000, cash: 10_000, isOpen: true, today: "2026-09-25" });
+    const old = { ticker: "ZZZ", side: "buy" as const, qty: 1, price: 10, filledAt: "2026-06-15T19:30:00Z", tradingDate: "2026-06-15", orderId: "old-1", runId: "old" };
+    const out = await planRun({ adapter: b, reports: [nvt], sics: {}, marketCapUsd: {}, fills: [old], today: "2026-09-25", cfg, runId: "r1" });
+    expect(out.locks).toEqual({ buyLockUntil: {}, sellLockUntil: {} });
+    expect(out.plan.trades).toEqual([expect.objectContaining({ ticker: "NVT", reason: "ENTER" })]);
+  });
 });
 
 describe("executeOrders", () => {
@@ -407,5 +414,124 @@ describe("executeOrders — submit cutoff (submitCutoffET)", () => {
     const { b, ctx, fillsPath } = await setup();
     await expect(executeOrders({ adapter: b, sized: plan(), ctx, runId: "r", fillsPath, pollMs: 0, cutoffMs: NaN })).rejects.toThrow(/cutoffMs must be a finite epoch ms/);
     expect(b.submitCount).toBe(0);
+  });
+});
+
+describe("executeOrders — bounded polls, lost orders, guard aborts (T-2, F-1, F-2, F-6, F-7)", () => {
+  const D = "2026-09-25";
+  const mk = (o: Partial<OrderRequest> & Pick<OrderRequest, "ticker" | "side" | "qty" | "limitPrice">): OrderRequest => ({
+    sector: "0", kind: "qty", type: "limit", timeInForce: "ioc", tier: 1, capBound: false, anchorReason: "ok",
+    clientOrderId: `c-${o.ticker}-${o.side}`, reason: "ENTER", deltaUsd: o.qty * o.limitPrice, estCostUsd: 0, bucket: "large", ...o,
+  });
+  const ctxFor = (over: Partial<GuardContext> = {}): GuardContext => ({ brokerKind: "fake", configuredBaseUrl: "memory://", locks: { buyLockUntil: {}, sellLockUntil: {} }, today: D, nav: 100_000, cashUsd: 50_000, cfg, env: {} as NodeJS.ProcessEnv, counters: { orders: 0, notionalUsd: 0, buyNotionalUsd: 0, sellProceedsUsd: 0 }, ...over });
+  const sized = (orders: OrderRequest[]): SizedOrders => ({ orders, skippedDust: [], skippedHalt: [] });
+  const fillsPath = () => join(mkdtempSync(join(tmpdir(), "poll-")), "fills.jsonl");
+  const two = () => sized([mk({ ticker: "AAA", side: "buy", qty: 10, limitPrice: 100.5 }), mk({ ticker: "BBB", side: "buy", qty: 10, limitPrice: 100.5 })]);
+
+  /** Schwab-like: orders rest until cancelled. The first `pollFailures` getOrders calls throw (Infinity = always). */
+  class FlakyPollBroker extends FakeBroker {
+    cancels: string[] = []; submits: string[] = []; polls = 0;
+    private resting = new Map<string, BrokerOrder>();
+    constructor(private readonly o: { pollFailures: number; cancelFails?: boolean; cancelThenThrow?: boolean; partialOnCancel?: number; workingPartial?: boolean }) {
+      super({ calendar: CAL, closes: { AAA: { [D]: 100 }, BBB: { [D]: 100 } }, equity: 50_000, cash: 50_000, isOpen: true, today: D });
+    }
+    async submitOrder(req: SubmitOrderRequest): Promise<BrokerOrder> {
+      this.submits.push(req.symbol);
+      const base: BrokerOrder = { id: `r-${this.resting.size + 1}`, clientOrderId: req.clientOrderId, symbol: req.symbol, side: req.side, status: "new", qty: req.qty ?? null, notional: null, filledQty: 0, filledAvgPrice: null, filledAt: null, submittedAt: `${D}T19:15:00Z` };
+      const o = this.o.workingPartial ? { ...base, status: "partially_filled" as const, filledQty: 3, filledAvgPrice: 100, filledAt: `${D}T19:15:01Z` } : base;
+      this.resting.set(o.id, o);
+      return o;
+    }
+    async getOrders(): Promise<BrokerOrder[]> {
+      this.polls++;
+      if (this.o.pollFailures-- > 0) throw new Error("Schwab GET …/orders → 429: rate limited");
+      return [...this.resting.values()];
+    }
+    async cancelOrder(id: string): Promise<void> {
+      this.cancels.push(id);
+      if (this.o.cancelFails) throw new Error("Schwab DELETE order → 503");
+      const o = this.resting.get(id)!; const q = this.o.partialOnCancel ?? 0;
+      this.resting.set(id, { ...o, status: "canceled", filledQty: q, filledAvgPrice: q ? 100 : null, filledAt: q ? `${D}T19:15:09Z` : null });
+      if (this.o.cancelThenThrow) throw new Error("Schwab DELETE order → 502 (reply lost)");
+    }
+  }
+
+  it("transient poll errors, then the order is seen terminal: partial fill recorded, the run carries on", async () => {
+    const b = new FlakyPollBroker({ pollFailures: 3, partialOnCancel: 3 });
+    const r = await executeOrders({ adapter: b, sized: two(), ctx: ctxFor(), runId: "r", fillsPath: fillsPath(), pollMs: 0, iocPolls: 2 });
+    expect(r.aborted).toBeUndefined();
+    expect(b.submits).toEqual(["AAA", "BBB"]);
+    expect(r.executed[0]).toMatchObject({ status: "canceled", filledQty: 3, pollErrors: 3 });
+    expect(r.fills.map((f) => [f.ticker, f.qty])).toEqual([["AAA", 3], ["BBB", 3]]);
+  });
+
+  it("F-1/F-2: every read fails → each loop stops after 3 errors, the cancel is still sent, and the run STOPS (poll-unavailable) keeping the full buy reservation", async () => {
+    const b = new FlakyPollBroker({ pollFailures: Infinity });
+    const ctx = ctxFor();
+    const r = await executeOrders({ adapter: b, sized: two(), ctx, runId: "r", fillsPath: fillsPath(), pollMs: 0 }); // default iocPolls 8
+    expect(b.polls).toBe(6);                 // 3 in the window, 3 in the settle loop — not 8 + 30
+    expect(b.cancels).toEqual(["r-1"]);
+    expect(b.submits).toEqual(["AAA"]);      // BBB never sent
+    expect(r.aborted).toMatchObject({ reason: "poll-unavailable", ticker: "AAA" });
+    expect(r.aborted!.detail).not.toMatch(/unknown outcome/i);
+    expect(r.executed[0]).toMatchObject({ status: "new", terminalAt: null, pollErrors: 6 });
+    expect(ctx.counters.buyNotionalUsd).toBeCloseTo(1_005, 6);
+  });
+
+  it("F-1: reads and cancel both fail → poll-unavailable, with the cancel failure kept on the order", async () => {
+    const b = new FlakyPollBroker({ pollFailures: Infinity, cancelFails: true });
+    const r = await executeOrders({ adapter: b, sized: two(), ctx: ctxFor(), runId: "r", fillsPath: fillsPath(), pollMs: 0 });
+    expect(r.aborted).toMatchObject({ reason: "poll-unavailable" });
+    expect(r.aborted!.detail).toMatch(/cancel failed: .*503/);
+    expect(r.executed[0].cancelError).toMatch(/503/);
+  });
+
+  it("F-2: the wall-clock budget ends the window early (on the injected clock)", async () => {
+    const b = new FlakyPollBroker({ pollFailures: 0 });
+    let t = Date.parse(`${D}T19:15:00Z`);
+    const r = await executeOrders({ adapter: b, sized: sized([mk({ ticker: "AAA", side: "buy", qty: 10, limitPrice: 100.5 })]), ctx: ctxFor(), runId: "r", fillsPath: fillsPath(), pollMs: 0, now: () => (t += 25_000) });
+    expect(b.polls).toBe(3); // 2 window polls inside 60 s at 25 s a tick, then 1 settle poll that sees it canceled
+    expect(b.cancels).toEqual(["r-1"]);
+    expect(r.executed[0]).toMatchObject({ status: "canceled" });
+  });
+
+  it("F-6: a cancel whose reply errored but whose order then settled is a note, not a cancel failure", async () => {
+    const b = new FlakyPollBroker({ pollFailures: 0, cancelThenThrow: true });
+    const r = await executeOrders({ adapter: b, sized: sized([mk({ ticker: "AAA", side: "buy", qty: 10, limitPrice: 100.5 })]), ctx: ctxFor(), runId: "r", fillsPath: fillsPath(), pollMs: 0, iocPolls: 1 });
+    expect(r.aborted).toBeUndefined();
+    expect(r.executed[0].cancelError).toBeUndefined();
+    expect(r.executed[0].cancelNote).toMatch(/^cancel reply error; order terminal — .*502/);
+  });
+
+  it("an error escaping after submit (fill not recordable) cancels the still-working order before re-throwing", async () => {
+    const b = new FlakyPollBroker({ pollFailures: 0, cancelFails: true, workingPartial: true });
+    const badFills = join(mkdtempSync(join(tmpdir(), "poll-")), "no-such-dir", "fills.jsonl");
+    await expect(executeOrders({ adapter: b, sized: sized([mk({ ticker: "AAA", side: "buy", qty: 10, limitPrice: 100.5 })]), ctx: ctxFor(), runId: "r", fillsPath: badFills, pollMs: 0, iocPolls: 1 })).rejects.toThrow(/ENOENT/);
+    expect(b.cancels).toEqual(["r-1", "r-1"]); // the loop's cancel, then the escape's best-effort cancel
+  });
+
+  it("F-7: a guard refusal mid-run stops the run (reason guard) with partial results — nothing placed for that order", async () => {
+    const b = new FakeBroker({ calendar: CAL, closes: { AAA: { [D]: 100 }, BBB: { [D]: 100 } }, equity: 50_000, cash: 50_000, isOpen: true, today: D });
+    const ctx = ctxFor({ cfg: { ...cfg, maxOrdersPerRun: 1 } });
+    const r = await executeOrders({ adapter: b, sized: two(), ctx, runId: "r", fillsPath: fillsPath(), pollMs: 0 });
+    expect(r.aborted).toMatchObject({ reason: "guard", ticker: "BBB", detail: expect.stringMatching(/maxOrdersPerRun/) });
+    expect(r.executed.map((e) => e.clientOrderId)).toEqual(["c-AAA-buy"]);
+    expect(b.submitCount).toBe(1);
+  });
+
+  it("F-7: a cash-backstop refusal is still a skip, not an abort", async () => {
+    const b = new FakeBroker({ calendar: CAL, closes: { AAA: { [D]: 100 } }, equity: 50_000, cash: 50_000, isOpen: true, today: D });
+    const r = await executeOrders({ adapter: b, sized: sized([mk({ ticker: "AAA", side: "buy", qty: 10, limitPrice: 100.5 })]), ctx: ctxFor({ cashUsd: 0 }), runId: "r", fillsPath: fillsPath(), pollMs: 0 });
+    expect(r.aborted).toBeUndefined();
+    expect(r.skippedCash).toHaveLength(1);
+  });
+
+  it("mergeExecution carries pollErrors / cancelError / cancelNote only when present", () => {
+    const [a, c] = mergeExecution([{ clientOrderId: "a" }, { clientOrderId: "c" }], [
+      { clientOrderId: "a", brokerId: "1", status: "filled", filledQty: 1, filledAvgPrice: 1, submittedAt: null },
+      { clientOrderId: "c", brokerId: "2", status: "new", filledQty: 0, filledAvgPrice: null, submittedAt: null, pollErrors: 4, cancelError: "503", cancelNote: "n" },
+    ]) as Record<string, unknown>[];
+    expect(a).not.toHaveProperty("pollErrors"); expect(a).not.toHaveProperty("cancelNote");
+    expect(c).toMatchObject({ pollErrors: 4, cancelError: "503", cancelNote: "n" });
   });
 });

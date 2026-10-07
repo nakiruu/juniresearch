@@ -1,8 +1,8 @@
 /** run-record.ts — the point-in-time record of one run (spec §14); the backtest's replay input. */
 import { z } from "zod";
 import { randomBytes } from "node:crypto";
-import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { writeFileAtomic } from "../atomic-write";
 import type { TradingDay } from "./calendar";
 
 const loose = z.record(z.string(), z.unknown());
@@ -49,8 +49,7 @@ export function newRunId(today: TradingDay): string {
 }
 
 export function writeRunRecord(dir: string, rec: RunRecord): string {
-  mkdirSync(dir, { recursive: true });
   const path = join(dir, `${rec.runId}.json`);
-  writeFileSync(path, JSON.stringify(RunRecord.parse(rec), null, 2) + "\n");
+  writeFileAtomic(path, JSON.stringify(RunRecord.parse(rec), null, 2) + "\n");
   return path;
 }

@@ -10,7 +10,8 @@
  *
  * Minimums: ENTER ≥ minEnterUsd; ADD/TRIM ≥ max(minTradeUsd, minTradeNavFrac × NAV), because every
  * fill starts a 5-business-day both-sides lock on the ticker; EXIT has no floor. An EXIT sells the
- * exact broker qty. clientOrderId is deterministic per (run, ticker, side, day, leg).
+ * broker qty (floored to 4 dp in fractional mode — the most Schwab takes); a sell quantity never exceeds
+ * the position. clientOrderId is deterministic per (run, ticker, side, day, leg).
  */
 import { createHash } from "node:crypto";
 import type { TradePlan, TradeReason } from "./rebalance";
@@ -53,7 +54,7 @@ const round4 = (x: number) => Math.round(x * 1e4) / 1e4;
 /** Why a market leg may not be sent: it needs a valid quote, captured within the bucket's freshness window, no wider than marketMaxSpread. */
 export function marketLegBlock(diag: LimitDiagnostics | undefined, bucket: LiquidityBucket, cfg: TradeConfig): string | null {
   if (!diag || diag.relSpread == null || diag.quoteAgeMs == null) return "no_quote";
-  if (diag.quoteAgeMs > cfg.maxStaleMin[bucket] * 60_000) return "stale_quote";
+  if (Math.abs(diag.quoteAgeMs) > cfg.maxStaleMin[bucket] * 60_000) return "stale_quote"; // either side: a future stamp is not fresh
   if (diag.relSpread > cfg.marketMaxSpread[bucket]) return "wide_spread";
   return null;
 }
@@ -102,8 +103,8 @@ export function tradesToOrders(input: {
       if (!pos || pos.qty <= 0) throw new Error(`tradesToOrders: sell of ${t.ticker} with no position`);
       // sizeMult is a BUY-only multiplier (computeLimit sets it to 1 for every sell, tier 3 included) —
       // a sell's qty is never scaled by it. Key off r.sizeMult (not r.reason) if that ever changes.
-      qty = t.reason === "EXIT" ? pos.qty
-        : Math.min(pos.qty, cfg.fractionalShares ? floor4(-deltaUsd / mark) : Math.round(-deltaUsd / mark));
+      qty = t.reason === "EXIT" ? (cfg.fractionalShares ? floor4(pos.qty) : pos.qty)
+        : cfg.fractionalShares ? floor4(Math.min(pos.qty, -deltaUsd / mark)) : Math.min(pos.qty, Math.round(-deltaUsd / mark));
     } else {
       // Buys always carry deltaUsd >= 0 (emitTrades' ENTER/ADD deltas are positive and buyScale keeps
       // them non-negative), and the floor above already dropped a malformed negative one. Sized at the
@@ -121,7 +122,7 @@ export function tradesToOrders(input: {
     // Hybrid split.
     const block = marketLegBlock(r.diag, bucket, cfg);
     const whole = Math.floor(qty + 1e-9);
-    const frac = round4(qty - whole);
+    const frac = t.side === "sell" ? floor4(qty - whole) : round4(qty - whole); // a sell never rounds up past what is held
     const market = (q: number, leg?: "frac"): OrderRequest => ({ ...common, ...(leg ? { clientOrderId: clientOrderId(runId, t.ticker, t.side, plan.today, leg), leg } : {}), side: t.side, kind: "qty", qty: q, type: "market", timeInForce: "day", ...limitFields });
     // A market BUY below the broker's $1 fractional minimum is refused; a fractional SELL of any size is accepted.
     const marketable = (q: number) => q > 0 && (t.side === "sell" || q * r.L! >= cfg.minEnterUsd);
