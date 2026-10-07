@@ -172,3 +172,33 @@ export function holdLock(path: string, staleMs: number = DEFAULT_LOCK_STALE_MS):
   const stillOurs = () => { try { return body !== "" && readFileSync(path, "utf8") === body; } catch { return false; } };
   return { body, stillOurs, release: () => { if (stillOurs()) { try { rmSync(path); } catch { /* already gone */ } } } };
 }
+
+export type ManualRunGate = { ok: true; release: () => void; stillOurs: () => boolean } | { ok: false; reason: string };
+
+/**
+ * The manual `trade:execute` gate: hold the SAME exclusive run-lock as cron from before planning (a plan made before
+ * a scheduled run traded and submitted after it would double-trade), then refuse while the consecutive-halt breaker
+ * is tripped or unreadable. Read-only on the counter. The caller re-checks `stillOurs()` just before submitting.
+ */
+export function acquireManualRun(paths: { lock: string; haltState: string }, cfg: TradeConfig, staleMs: number = DEFAULT_LOCK_STALE_MS): ManualRunGate {
+  const lock = holdLock(paths.lock, staleMs);
+  if (!lock) return { ok: false, reason: `another trade run holds the run lock (${paths.lock}) — wait for it to finish (a lock older than ${Math.round(staleMs / 60_000)} min is reclaimed)` };
+  let state: HaltState;
+  try {
+    state = readHaltState(paths.haltState);
+  } catch (e) {
+    lock.release();
+    return { ok: false, reason: `halt state is unreadable — ${(e as Error).message}` };
+  }
+  if (haltBlocked(state, cfg)) {
+    lock.release();
+    return { ok: false, reason: `${state.consecutive} consecutive halted run(s) (limit ${cfg.consecutiveHaltLimit}) — investigate, then clear the halt state to resume` };
+  }
+  return { ok: true, release: lock.release, stillOurs: lock.stillOurs };
+}
+
+/** A manual plan answered later than this is refused: the market and the book have moved on (F-3). */
+export const MANUAL_PLAN_MAX_AGE_MS = 10 * 60_000;
+export function manualPlanTooOld(plannedAtMs: number, nowMs: number, maxAgeMs: number = MANUAL_PLAN_MAX_AGE_MS): boolean {
+  return nowMs - plannedAtMs > maxAgeMs;
+}

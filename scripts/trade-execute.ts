@@ -12,20 +12,34 @@ import { allocationFromRun, allocationLines, makeNotifier, summaryFromRun } from
 import { newRunId, writeRunRecord } from "../lib/trade/run-record";
 import { writeLedger, ReconcileError } from "../lib/trade/ledger";
 import { SchwabAuthError } from "../lib/broker/schwab-auth";
-import { has, isPreviewOnly, loadReportsAndMeta, makeBroker, brokerBaseUrl, readFills, FILLS_PATH, LEDGER_PATH, RUNS_DIR } from "./_trade-common";
+import { has, isPreviewOnly, loadReportsAndMeta, makeBroker, brokerBaseUrl, readFills, CRON_LOCK_PATH, FILLS_PATH, HALT_STATE_PATH, LEDGER_PATH, RUNS_DIR } from "./_trade-common";
 import { etInstantOn, todayET } from "../lib/trade/clock";
+import { acquireManualRun, manualPlanTooOld, MANUAL_PLAN_MAX_AGE_MS, type ManualRunGate } from "../lib/trade/breakers";
 
 const args = process.argv.slice(2);
 // --preview, or PREVIEW_ONLY=true in the environment: plan + post the allocation, never submit.
 const preview = has(args, "--preview") || isPreviewOnly();
 if (process.env.TRADE_DISABLED === "1" && !preview) { console.error("TRADE_DISABLED=1 — refusing to submit (use --preview to plan only)."); process.exit(2); }
 const cfg = resolveTradeConfig(tradeConfigFromEnv());
+const notifier = makeNotifier({ webhookUrl: process.env.DISCORD_WEBHOOK_URL });
+// A run that may submit holds cron's run-lock from BEFORE planning (no overlap with the scheduler, no double-submit)
+// and refuses while the consecutive-halt breaker is tripped. Released on every exit path; a preview takes no lock.
+let gate: Extract<ManualRunGate, { ok: true }> | null = null;
+if (!preview) {
+  const g = acquireManualRun({ lock: CRON_LOCK_PATH, haltState: HALT_STATE_PATH }, cfg);
+  if (!g.ok) {
+    const msg = `trade:execute refused — ${g.reason}`;
+    console.error(msg); notifier.message(msg); await notifier.flush(); process.exit(2);
+  }
+  gate = g;
+  process.once("exit", g.release);
+  for (const [sig, code] of [["SIGINT", 130], ["SIGTERM", 143], ["SIGHUP", 129]] as const) process.once(sig, () => { g.release(); process.exit(code); });
+}
 const today = todayET();
 const adapter = makeBroker();
 const baseUrl = brokerBaseUrl(adapter);
 const mode = adapter.kind === "schwab" ? ">>> LIVE — Charles Schwab (real money) <<<" : "paper — Alpaca (test)";
 console.log(`Broker: ${adapter.kind}  ${mode}`);
-const notifier = makeNotifier({ webhookUrl: process.env.DISCORD_WEBHOOK_URL });
 let marketOpen: boolean;
 try {
   marketOpen = (await adapter.getClock()).isOpen;
@@ -46,6 +60,7 @@ try {
   }
   throw e;
 }
+const plannedAtMs = Date.now();
 writeLedger(LEDGER_PATH, out.ledger);
 
 /** Print the allocation and post it (every run, whatever happens next). */
@@ -67,6 +82,12 @@ if (!has(args, "--yes")) {
 }
 await sendAllocation(`submitting ${out.sized.orders.length} order(s)`);
 // Submit cutoff (cfg.submitCutoffET, 15:50 ET): nothing is sent at or after it, even mid-run — never into the close.
+// F-3: submit only on a fresh plan, under a lock that is still ours (a prompt left open can outlive both).
+if (gate) {
+  const refuse = async (msg: string) => { console.error(msg); notifier.message(msg); await notifier.flush(); process.exit(2); };
+  if (manualPlanTooOld(plannedAtMs, Date.now())) await refuse(`trade:execute refused — the plan is ${Math.round((Date.now() - plannedAtMs) / 60_000)} min old (limit ${MANUAL_PLAN_MAX_AGE_MS / 60_000}). Nothing was sent; re-run trade:execute for a fresh plan.`);
+  if (!gate.stillOurs()) await refuse(`trade:execute refused — the run lock (${CRON_LOCK_PATH}) is no longer this run's (it was reclaimed by another run). Nothing was sent.`);
+}
 const cutoffMs = etInstantOn(today, cfg.submitCutoffET);
 const { fills, executed, aborted, skippedCash, rejected, skippedLegs, skippedCutoff } = await executeOrders({ adapter, sized: out.sized, ctx: { brokerKind: adapter.kind, configuredBaseUrl: baseUrl, locks: out.locks, today, nav: out.ledger.nav, cashUsd: out.ledger.cash, cfg, env: process.env, counters: { orders: 0, notionalUsd: 0, buyNotionalUsd: 0, sellProceedsUsd: 0 } }, runId, fillsPath: FILLS_PATH, cutoffMs });
 out.record.fills = fills as unknown as Record<string, unknown>[];
