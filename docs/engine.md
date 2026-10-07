@@ -334,7 +334,7 @@ lock window (`lockBusinessDays + 1` trading days back) and requires every execut
 `fills.jsonl` for its full quantity, joined on the **broker order id**. That catches what the position
 check can't: a missed *sell* (which would leave `buyLockUntil` unset), an extra buy of a name already held,
 a crash between submit and fill recording, a fill after the poll window, and manual trades in the account.
-Any working (non-terminal) order also halts — this engine only sends IOC. The halt repeats on every run
+Any working (non-terminal) order also halts. Every order the engine sends ends inside its own run — an IOC on Alpaca; on Schwab a DAY limit or market order that the run cancels if it is still working (§5.1) — so a working order at the next run means a cancel failed or something else is trading the account. The halt repeats on every run
 until the fills are recorded, so a broker-truth CRITICAL (§6.2) can no longer be followed by a trade
 against an under-set lock. To record real executions from broker truth:
 `npm run trade:reconcile -- --record-missing` (appends them with `runId: "manual"`, printing each).
@@ -481,6 +481,8 @@ fill populates `buyLockUntil`. **Same-side adds are not locked** (topping up a p
 ICE ban is re-enforced here and at the broker guard (buys refused; a disposing *sell* of a banned name is
 allowed).
 
+**Old fills.** `planRun` loads the calendar from today − 90 calendar days, and `fills.jsonl` is append-only. A fill dated before the loaded calendar is skipped: assuming the calendar has no gaps (every trading day in its range), such a fill's lock ends at or before the calendar's n-th day, long past (90 days hold ≥ 56 trading days; n = 5). `locksFor` checks this and throws rather than skip when today is fewer than n trading days into the calendar. A lock that is still active is computed exactly as before.
+
 > 🚫 **Not an option — per-lot locking.** The lock is whole-ticker by rule: the owner's trading
 > restrictions apply to the whole name, so one fill freezes the ticker. Per-lot locking (trimming an old lot
 > while a fresh lot is locked) would break those rules and must not be added.
@@ -497,13 +499,14 @@ API **does** take fractional quantities, but only on MARKET orders (≥ $1 for a
 
 ```
 qty       = floor4( deltaUsd · sizeMult / L )     buys  (sizeMult from tier-3, §5.3)
-          = full broker position qty                EXIT (no dust left behind)
-          = min( position qty, floor4( −deltaUsd / mark ) )   TRIM
+          = broker position qty, floor4 in fractional mode   EXIT (leaves < 0.0001 sh at most)
+          = floor4( min( position qty, −deltaUsd / mark ) )   TRIM
 order     = one MARKET order of qty                 if qty·L < marketOnlyBelowUsd ($200)
           = LIMIT floor(qty) (IOC, τ-capped) + MARKET remainder     otherwise
 market leg needs a fresh quote (bucket maxStaleMin) with spread ≤ marketMaxSpread (1% / 1% / 2.5%);
            otherwise only the whole-share limit is sent (a held sell remainder is reported)
 market BUY leg < $1 is dropped (broker minimum); a market remainder is sent only if its limit leg filled
+sell remainder = floor4( qty − floor(qty) ), so whole + remainder never exceeds the position
 skip (skippedDust) if  |deltaUsd| < floor:  ENTER $1 · ADD/TRIM max($1, 0.5% NAV) · EXIT none
                        (ADD/TRIM floor from env: TRADE_MIN_USD, TRADE_MIN_NAV_PCT)
 skip (skippedHalt)  if  computeLimit returns halt (no price / gap), or nothing sendable without a market leg
@@ -514,11 +517,7 @@ run almost entirely on market orders and larger ones mostly on τ-capped limits.
 because **every fill starts the 5-business-day, both-sides lock**: a trivial rebalance must not freeze a
 ticker. `fractionalShares: false` restores the old whole-share-limit behaviour (`minOrderUsd` $25).
 
-**IOC on Schwab is emulated.** Schwab has no `IMMEDIATE_OR_CANCEL` duration (400 "Invalid value"; only
-DAY / GOOD_TILL_CANCEL / FILL_OR_KILL). An "ioc" limit goes in as DAY; `executeOrders` polls `iocPolls`
-(8 × 1 s), cancels the unfilled rest, and waits for the broker to settle it (a partial fill is kept). A
-market order gets `marketPolls` (30) before the same cancel. A definitive reject (4xx, or an order the
-adapter refuses to send) is recorded as `rejected` and the run continues.
+**IOC on Schwab is emulated.** Schwab has no `IMMEDIATE_OR_CANCEL` duration (400 "Invalid value"; only DAY / GOOD_TILL_CANCEL / FILL_OR_KILL). An "ioc" limit goes in as DAY; `executeOrders` polls `iocPolls` (8 × 1 s), cancels the unfilled rest, and waits for the broker to settle it (a partial fill is kept). A market order gets `marketPolls` (30) before the same cancel. Each poll loop stops early after 3 failed order-list reads in a row or 60 s of wall clock, and the cancel is always sent. If an order is still not known to be finished and its reads failed, the run stops (`poll-unavailable`): cron records the run, audits and halts. An order the broker reports still working after its cancel halts the run too (`order-working`). A guard refusal mid-run (kill switch, a lock, the ban, a run cap) stops the run as `guard`; a cash-backstop refusal is still just a skip. A definitive reject (4xx, or an order the adapter refuses to send) is recorded as `rejected` and the run continues.
 
 `deltaUsd = round2(deltaWeight · NAV)`. **Decisions use the run's live price** (`markMode:"live"`, the
 15:10 ET run — §7): per ticker the fresh last trade, else the fresh quote mid, else the settled prior-day
@@ -608,17 +607,26 @@ bucket, and latency percentiles — the evidence a τ_max change must wait for (
 ### 6.1 Run breakers  (`lib/trade/breakers.ts`, `guards.ts`)
 
 ```
-turnover breaker      Σ|qty·limitPrice| > maxRunTurnoverFrac (0.15) · NAV     → halt, submit nothing   [cron only]
+turnover breaker      Σ|qty·limitPrice| > maxRunTurnoverFrac (0.15) · NAV     → halt, submit nothing   [cron; OFF unless TURNOVER_BREAKER=1]
 consecutive-halt      ≥ consecutiveHaltLimit (3) halted runs in a row         → block further runs
 reconcile-halt        unexplained broker position, or an executed order in    → halt (repeats until recorded)
                       the lock window missing from fills.jsonl
 submit-unknown        an order submit whose outcome couldn't be established → stop sending, halt
 submit cutoff         now ≥ submitCutoffET (15:50 ET) before a submit        → send nothing more, record the rest
+poll-unavailable      an order not known finished and its order-list reads failed → stop sending, halt
+guard (mid-run)       a guard refuses an order after the run started           → stop sending, halt (counted only if an order already went out)
+audit-unavailable     the post-execution broker-orders read fails              → halt + alert (fills/record kept)
+order-working         an order still working after its cancel                  → halt (never cleared as "executed")
+execute-error         an error after an order reached the broker               → halt + alert (counted)
+pre-trade error       anything failing before any order is sent                → alert only (not counted)
+manual run gate       trade:execute (not --preview) holds cron's run-lock      → refuse if held / halted; re-check ownership + plan age (≤ 10 min) before submit
 notional guard        Σ|estNotionalUsd| > maxNotionalFrac (1.0) · NAV         → refuse (per-submit)     [guards]
 order-count guard     > maxOrdersPerRun (40)                                  → refuse
 kill switch           TRADE_DISABLED=1                                        → refuse everything
 endpoint guard        broker-aware: alpaca-paper ⇒ paper host, schwab ⇒ schwab host
 ```
+
+The turnover breaker is off in production (owner, 2026-10-01): a scheduled run trades the whole plan unless `TURNOVER_BREAKER` is set; the per-order guards (locks, ban, cash backstop, order-count and notional caps) always apply.
 
 **Turnover clip (`turnoverClipBuyOnly`, default on).** When the breaker trips on a **buy-only** plan
 (every order a buy — ENTER *or* ADD, no sells — e.g. building the book from cash and topping up
@@ -668,8 +676,7 @@ REJECTED          broker refused the order               → warn
 MISSING_SUBMISSION expected order absent at broker        → warn
 ```
 
-A CRITICAL fails `trade:execute` (non-zero exit) and, in `trade:cron`, halts with `reason:"broker-mismatch"`
-+ notify. Run it read-only any time with `npm run trade:audit [-- --run <id>]`.
+A CRITICAL fails `trade:execute` (non-zero exit) and, in `trade:cron`, halts with `reason:"broker-mismatch"` + notify. If the broker's orders cannot be read for the check (after retries), cron halts with `reason:"audit-unavailable"` and `trade:execute` exits non-zero, both with an alert naming the run. Run it read-only any time with `npm run trade:audit [-- --run <id>]`.
 
 ### 6.3 What the run persists / reports
 
@@ -707,7 +714,7 @@ unreadable state file or `desk.json` skips the check; it never fails a run.
   size → (submit + poll fills). `trade:cron` (`lib/trade/cron.ts`) wraps it: kill-switch → clock →
   run-lock → consecutive/reconcile/turnover breakers → execute → broker-truth audit → notify.
 - **Brokers** (`lib/broker/`): chosen by `BROKER` env via `makeBroker()` — `alpaca-paper` (default, the
-  test rig) or `schwab` (LIVE). Both implement one 11-method `BrokerAdapter`; the pure core never names a
+  test rig) or `schwab` (LIVE). Both implement one `BrokerAdapter` (12 methods plus the optional batched `getLatestSnapshots`); the pure core never names a
   broker. `schwab` is live-by-selection (no paper exists); the guard requires the Schwab host, breakers
   become the only guardrails, and the 7-day OAuth refresh surfaces as `halted(auth)` + alert (`trade:auth`
   to renew). Schwab credentials can also come from env (`SCHWAB_REFRESH_TOKEN`, optional
@@ -715,6 +722,7 @@ unreadable state file or `desk.json` skips the check; it never fails a run.
   refresh token is tried first and `data/trade/schwab-token.json` is the fallback when it is out of date
   (a stale or rotated-away env token is remembered by fingerprint and never retried). Marks come from the broker (live trade / quote mid for the 15:10 decision, with the settled prior close
   as fallback and as the execution reference; live trade/quote for fill anchors).
+- **Rate limits and retries (`lib/broker/http.ts`).** Reads (GET) and the Schwab cancel (DELETE, idempotent) retry a timeout or network error twice (1 s, 3 s) and, independently, an HTTP 429 or 5xx three times (2 s, 5 s, 10 s, or the server's Retry-After when longer, capped at 15 s) — about 110 s worst case per call. Other 4xx are final. An order submit is never retried: a 429 on submit is a definitive reject (nothing placed, the run continues) and a 5xx or timeout is an unknown outcome resolved by looking the order up.
 - **Scheduler:** the in-app scheduler is the automation. `instrumentation.ts` → `lib/trade/scheduler.ts`,
   armed at server start when `.env.local` sets `TRADE_SCHEDULER_ENABLED=1` (the Docker `trader` service loads it).
   - It fires `runCron` at each `cronTimesET` slot (15:10 ET), ET-explicit, on NYSE trading days only, and DST-correct
@@ -727,6 +735,9 @@ unreadable state file or `desk.json` skips the check; it never fails a run.
   - Broker from `.env.local`.
   - `scripts/register-trade-cron.ps1` / `.sh` (OS-level Task Scheduler / systemd timers that read the same
     `cronTimesET`) are **legacy** and not used by the deployment. Run one scheduler, never both.
+  - An error that escapes a scheduled run is alerted (Discord). It is never counted: anything after an order reached the broker is caught inside runCron and halts there. The scheduler then re-arms as before, and it arms once per process.
+  - A run that finds the run-lock held posts an alert and skips the slot. A run releases the lock only while it is still its own, and a lock whose body cannot be parsed counts as stale once its file is older than 60 min.
+  - A manual `trade:execute` (not `--preview`) holds the run-lock from before planning until it exits (SIGINT/SIGTERM/SIGHUP included). Before submitting it re-checks that the lock is still its own and that the plan is at most 10 min old. A manual run left open across 15:10 makes that day's scheduled run skip, with an alert.
 - **Rollout gate:** Phase 0 (fake dry-run) → Phase 1 (paper smoke: ≥10 runs, exact reconciliation, zero
   lock/ban violations) → Phase 2 (paper event-driven, 4 weeks clean + weekly review). Merge to `main` only
   after that.
@@ -780,7 +791,7 @@ the engine keeps exactly **one** decision a day and makes it at **15:10 ET on li
   decision's own trade/quote snapshot is reused as the execution anchor (one read per ticker per run).
   The snapshot is **batched** when the broker supports it (`getLatestSnapshots`: one Schwab `/quotes` or Alpaca
   `/v2/stocks/snapshots` request per 200 tickers). Without batching, ~90 per-ticker reads on top of the settled
-  closes would run into the broker's market-data rate limit; a 429 is not retried. If the batch fails, every
+  closes would run into the broker's market-data rate limit; a 429 is retried with backoff (above, about 110 s worst case per call), which slows a run but does not fail it. If the batch fails, every
   name decides on its settled close (recorded). The run never falls back to per-ticker reads.
   Outside today's session — `trade:plan --date`, pre/post-market, a holiday — the run marks settled, exactly
   as before.
