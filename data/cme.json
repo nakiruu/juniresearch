@@ -4,7 +4,7 @@
     "company": "CME Group Inc.",
     "ticker": "CME",
     "exchange": "NASDAQGS",
-    "subtitle": "A wide-moat, capital-light derivatives exchange at a full valuation, with trading volumes cyclically softening",
+    "subtitle": "A wide-moat derivatives exchange with low, steady leverage, priced near fair value as second-quarter volumes cool",
     "reportDate": "September 20, 2026",
     "asOf": "Sep 20, 2026",
     "analyst": "Juniper Finance Research Desk",
@@ -151,12 +151,12 @@
   "rating": {
     "label": "HOLD",
     "tone": "secondary",
-    "targetLow": 255,
-    "targetHigh": 310,
+    "targetLow": 250,
+    "targetHigh": 300,
     "conviction": {
-      "expectedUpside": 0.014455997971088097,
+      "expectedUpside": 0.004492590848157674,
       "bearDownside": 0.1666968588094634,
-      "rewardRisk": 0.0867202782003918,
+      "rewardRisk": 0.026950662899369697,
       "derivedLabel": "HOLD"
     },
     "gate": {
@@ -164,19 +164,21 @@
       "ceiling": "STRONG BUY",
       "gatedLabel": "HOLD",
       "distress": "SAFE",
-      "piotroski": 7,
+      "piotroski": 6,
       "accruals": "LOW",
       "confidence": "medium",
       "flags": []
     },
     "decision": {
-      "conviction": 85,
+      "conviction": 95,
       "tier": "high",
       "proposed": "HOLD",
       "reasons": [
         "E/R proposed HOLD"
       ],
-      "advisories": [],
+      "advisories": [
+        "model vs Street expected return diverge by 62pp — informational, not scored"
+      ],
       "moat": {
         "width": "WIDE",
         "trend": "STABLE",
@@ -184,12 +186,12 @@
         "bearFloor": 0.15
       },
       "intrinsic": {
-        "marginOfSafety": 1.0788033727980446,
-        "impliedGrowth": 0.06966524123286477,
-        "achievableGrowth": 0.165176873499437
+        "marginOfSafety": 0.7830935830543191,
+        "impliedGrowth": 0.015276800742924812,
+        "achievableGrowth": 0.15
       },
       "composite": {
-        "percentile": 49.18857166678149,
+        "percentile": 50.199023902437226,
         "confidence": "high"
       },
       "uncertainty": {
@@ -236,6 +238,7 @@
     },
     {
       "label": "EV/EBITDA (TTM)",
+      "value": 22.249944144662578,
       "unit": "mult"
     },
     {
@@ -292,11 +295,6 @@
       "dp": 2
     },
     {
-      "label": "FY25 Capital Expenditure",
-      "value": -83500000,
-      "unit": "usdLarge"
-    },
-    {
       "label": "FY25 Free Cash Flow",
       "value": 4193600000,
       "unit": "usdLarge"
@@ -307,10 +305,14 @@
       "unit": "usdLarge"
     },
     {
-      "label": "FCF Yield (TTM)",
-      "value": 0.04244642093084538,
-      "unit": "pct",
-      "dp": 1
+      "label": "FY25 Total Debt",
+      "value": 3422300000,
+      "unit": "usdLarge"
+    },
+    {
+      "label": "Net Debt / EBITDA (TTM)",
+      "value": 0.28330492906310173,
+      "unit": "mult"
     }
   ],
   "analystSentiment": {
@@ -323,26 +325,26 @@
     "medianTarget": 285,
     "highTarget": 330,
     "lowTarget": 230,
-    "commentary": "CME Group runs the exchanges and clearing house where the world hedges interest rates, equity indexes, energy, metals, agriculture, and foreign exchange — the futures and options complex built on CME, CBOT, NYMEX, and COMEX. It is an exceptional business model: a roughly 65% operating margin, almost no capital intensity ($83.5M of FY25 capex against $4.28B of operating cash flow), a balance sheet that carries almost no net debt, and a policy of paying nearly all of its earnings back to shareholders. The moat — the self-reinforcing liquidity in its benchmark contracts and the capital efficiency of cross-margining them at a single clearing house — is about as wide as they come. The problem is not the business; it is the price and the moment. At $276.01 the shares trade at 23.4x trailing and about 21.4x FY27E earnings, the Street's $283.60 consensus target is just 2.7% above the price, and the ratings are genuinely split — 7 Buy, 6 Hold, 3 Sell. And the core of the business just slowed: second-quarter clearing and transaction fees fell 3% and total contract volume 1% as the market volatility that had run high earlier in the year subsided, so total revenue grew only 1%. We rate CME HOLD with a $255-$310 target range and a probability-weighted fair value close to today's price. This is a HOLD on a superb franchise fully priced, held through a cyclical air pocket in volumes: own it for the quality and the cash return, but there is little margin of safety here and the near-term earnings track market volatility more than anything management controls."
+    "commentary": "CME Group runs the futures and options exchanges of CME, CBOT, NYMEX and COMEX and the clearing house behind them, and it turns that position into exceptional economics: a 64.9% operating margin in FY25, $83.5M of capital expenditure against $4.3B of operating cash flow, and $3.9B of dividends paid out of $4.2B of free cash flow. Leverage is low, at 0.3x net debt/EBITDA on a trailing basis. The second quarter is the reason for caution. Total revenue rose 1%, clearing and transaction fees fell 3% and the average rate per contract fell 2% as, in the company's account, market volatility subsided after a very volatile start to the year. At $276.01 the shares trade at 23.4x trailing earnings, with a split Street (7 Buy, 6 Hold, 3 Sell) and a $283.60 consensus target. We rate CME HOLD with a $250-$300 target range. Our Base follows the Street's median target on consensus earnings; the Bull adds an earnings beat at an unchanged multiple, and the Bear has earnings stall while the multiple falls. Weighted 20/55/25, the scenarios give a fair value of $277.25 and an expected upside of 0.4% against a bear-case downside of 16.7%. The franchise is not in question; the price already pays for it, and near-term earnings follow market volatility the company does not control."
   },
   "sections": {
     "executiveSummary": {
-      "companyOverview": "CME Group, founded in 1898 and headquartered in Chicago, operates contract markets for futures and options across interest rates, equity indexes, foreign exchange, energy, agriculture, and metals, and runs the clearing house that settles and guarantees those trades. Revenue comes in three lines: clearing and transaction fees, the volume-driven core; market data and information services, a smaller and recurring stream; and other. The economics are exceptional — FY25 revenue of $6.5B at a 64.9% operating margin, net income of $4.1B, $11.16 of diluted EPS — and the model is capital-light, converting most of its operating income into free cash flow because it owns markets and software rather than heavy assets. The company reports as a single segment and manages the business as one. It runs a conservative balance sheet with minimal net debt and hands its surplus cash back to shareholders, as the cash-flow discussion sets out. The one variable the model cannot control is volume, and the latest quarter is where that shows.",
+      "companyOverview": "CME Group, founded in 1898 and headquartered in Chicago, operates contract markets for futures and options on interest rates, equity indexes, foreign exchange, energy, agricultural commodities and metals, and runs the clearing house that clears, settles and guarantees those contracts. It also runs cash markets in fixed income through BrokerTec and in foreign exchange through EBS. The company was known as Chicago Mercantile Exchange Holdings Inc. until July 2007. Revenue comes in three lines: clearing and transaction fees, which follow trading volume; market data and information services; and other. FY25 revenue was $6.5B at a 64.9% operating margin, with net income of $4.1B and diluted EPS of $11.16. The company reports a single segment and bills a substantial portion of its clearing and transaction fees to clearing firms. The business needs little capital and returns most of its cash to shareholders. The one input the model cannot set is trading volume, and the second quarter of 2026 is where that showed.",
       "thesis": {
         "label": "HOLD",
-        "body": "CME owns a wide moat and a full valuation, and the swing factor in between is trading volume, which the company does not control. The quality is not in question: the liquidity in CME's benchmark contracts is self-reinforcing, cross-margining those contracts at one clearing house is a real capital-efficiency switching cost, the operating margin sits near 65%, and the business needs almost no capital to run, so its cash flows through to shareholders rather than into reinvestment. The catch is that the price already reflects all of that — 23.4x trailing earnings, a Street target 2.7% above the price, and a split ratings board — while the engine that drives the multiple is cyclical. The core clearing business slowed in the second quarter — clearing fees, total volume, and the average rate per contract all fell, as the volatility that had run high earlier in the year subsided; management said as much. Our base case is that volumes hold near this level and grow modestly, the dividend compounds, and the shares track earnings rather than re-rate. The bull case needs volatility and volumes to reaccelerate; the bear case needs the volume softness to deepen. Neither is in management's hands, which is the whole reason we hold rather than buy at this price."
+        "body": "CME pairs a wide moat with a price that already reflects it, and the swing factor between the two is trading volume, which the company does not control. The liquidity in its benchmark contracts and the margin offsets of clearing them at one house keep customers in place, and the cost base is light enough that most revenue reaches shareholders. The second quarter showed the other side: volume and clearing fees slipped as volatility subsided, and consensus for FY26 needs a second-half pickup the quarter did not show. Our Base follows the Street's median and the weights lean slightly to the Bear, as the valuation section argues. The Bull needs the volatility of early 2026 to return; the Bear needs the second quarter's calm to last into 2027. Leverage is low and is not part of the debate. We hold because the weighted value sits close to the price."
       },
       "catalysts": [
-        "A return of market volatility — a rate-cut cycle, a geopolitical shock, an equity drawdown — lifts hedging volume, and CME's revenue is directly geared to it.",
-        "Market data keeps outgrowing the trading business — the more stable revenue stream detailed under growth.",
-        "New products and venues are optional upside the growth section takes up.",
-        "Capital return: CME distributes the bulk of its free cash flow through dividends, and continued buybacks alongside them support per-share value."
+        "A return of the volatility behind the record first-quarter trading the company reported would lift volume, the line revenue is most geared to.",
+        "Market data keeps growing faster than the trading business, a stream that does not depend on volume; the growth section takes it up.",
+        "New products and venues are a further source of growth, which the growth section takes up.",
+        "Capital return continues through dividends and buybacks, as the cash-flow discussion sets out."
       ],
       "risks": [
-        "Volume dependence: revenue tracks market volatility, and the latest quarter shows volumes softening as volatility normalizes.",
-        "Rate-per-contract erosion: the average fee per contract keeps slipping on product mix and volume incentives, a slow pressure independent of volume.",
-        "Valuation: at a premium multiple with a Street target barely above the price, the shares leave little cushion.",
-        "Regulation and competition: a financial-transaction tax, higher clearing-capital requirements, or new entrants could each pressure the model over time."
+        "Volume dependence: revenue follows market volatility, and the second quarter showed volume and clearing fees falling as volatility subsided.",
+        "Rate per contract: the average fee fell in the quarter for mix reasons the risk section sets out.",
+        "Valuation: with a consensus target 2.7% above the price, the shares carry little margin of safety.",
+        "Regulation: changes to tax or clearing-capital rules could raise costs for CME or its customers, as the risk section sets out."
       ]
     },
     "financials": {
@@ -447,7 +449,7 @@
         ],
         "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
       },
-      "incomeCommentary": "CME's income statement is a study in operating leverage on a light cost base. Revenue grew from $4.7B in FY21 to $6.5B in FY25 (up 6.4% in the latest year), operating income from $2.6B to $4.2B, and net income from $2.6B to $4.1B, lifting diluted EPS from $7.29 to $11.16. The operating margin has climbed toward 65% because the cost base grows far more slowly than revenue — the marginal trade costs the exchange almost nothing to clear. There is no gross-profit line here, and that is correct for an exchange: it has no cost of goods, so operating margin (64.9% in FY25) carries profitability rather than a gross margin. One earnings contributor sits below the operating line and is easy to miss: non-operating income was $220.6 million in the quarter, up 10%, largely investment income earned on the cash and collateral the clearing house holds, plus equity in the net earnings of unconsolidated subsidiaries — a real and growing piece of the bottom line, and one that rises with interest rates. The latest quarter is where the cyclicality shows. Total revenue of $1,706.2 million was up just 1% year over year, because clearing and transaction fees — the core line — fell 3% to $1,352.5 million while market data grew 20% to $238.1 million. Net income of $1,041.8 million ($2.88 per share) was up 2%. The first-half figure flatters the trend: six-month revenue was up 8%, but that was front-loaded into a volatile first quarter, and the second quarter is the cleaner read on where run-rate volumes sit now.",
+      "incomeCommentary": "Revenue grew from $4.7B in FY21 to $6.5B in FY25, up 6.4% in the latest year, while operating income rose from $2.6B to $4.2B and diluted EPS from $7.29 to $11.16. The operating margin widened from 56.4% to 64.9% over the period because costs grew more slowly than revenue. An exchange has no cost of goods, so the gross-margin line is blank and operating margin carries the profitability read. The second quarter of 2026 is the cleaner read on the current run-rate. Total revenue of $1,706.2 million was up 1% year over year: clearing and transaction fees fell 3% to $1,352.5 million, market data and information services rose 20% to $238.1 million, and other revenue rose 9%. The average rate per contract fell to $0.678 from $0.690. Total expenses rose 6%, with technology at $83.3 million against $70.9 million and licensing and other fee agreements at $109.1 million against $96.2 million, so the quarter's operating margin fell from 66.7% a year earlier to the same level as the FY25 full-year margin. Below the operating line, non-operating income was $220.6 million, up 10%; it nets $1,429.7 million of investment income against $1,263.2 million of other non-operating expense and adds $97.7 million of equity in the earnings of unconsolidated subsidiaries. A lower effective tax rate, 21.5% against 22.9%, helped net income rise 2% to $1,041.8 million and diluted EPS to $2.88 from $2.81. The first half looks stronger because of the first quarter: six-month revenue rose 8%, diluted EPS rose 12% to $6.06 and the operating margin was 67.4%. The second quarter, with costs rising faster than revenue, is a reminder that the first half's pace leaned on an unusually volatile first quarter.",
       "balance": {
         "columns": [
           "Metric ($B)",
@@ -472,22 +474,22 @@
           {
             "label": "Total Debt",
             "values": [
-              749400000,
-              16000000,
-              0,
-              749800000,
-              0
+              3445100000,
+              3438400000,
+              3425400000,
+              3428000000,
+              3422300000
             ],
             "format": "usdB"
           },
           {
             "label": "Net Debt",
             "values": [
-              -2085500000,
-              -2704100000,
-              -2912000000,
-              -2142600000,
-              -4416900000
+              610200000,
+              718300000,
+              513400000,
+              535600000,
+              -994600000
             ],
             "format": "usdB"
           },
@@ -516,7 +518,7 @@
         ],
         "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
       },
-      "balanceCommentary": "The balance sheet is conservative and, in one respect, misleading at a glance. CME carries hundreds of billions of dollars of performance bonds and guaranty-fund contributions — the collateral market participants post to clear their positions — as offsetting assets and liabilities, which gross up the balance sheet and pin the current ratio near 1.0 (1.02 on a trailing basis). That collateral is not CME's capital; it belongs to the clearing members. Stripping it out, the company's own balance sheet is lightly levered: at June 30, 2026 it held $2.3 billion of cash against $3.4 billion of debt, a trivial net position for a business that generates billions of dollars of operating cash flow a year, and the five-year series shows it running at or near net cash throughout. Total equity of roughly $28.7B is dominated by goodwill and indefinite-lived trading-product intangibles — the accumulated value of the exchange franchise and its benchmark rights rather than tangible assets — so book value is a poor guide to the economics here. There is no leverage story to tell and no refinancing risk of note; the balance sheet is a source of stability, not a swing factor, and the leverage ratios elsewhere in this report read as not-meaningful for that reason.",
+      "balanceCommentary": "CME's debt has been flat. Total debt was $3.4B in every year from FY21 to FY25, and long-term debt was $3,424.2 million at June 30, 2026. Against it, cash and short-term investments ran between $2.8B and $3.0B in FY21 to FY24, leaving net debt of $0.5B to $0.7B, before rising to $4.5B in FY25 and leaving net cash of about $1.0B at that year-end. Cash and cash equivalents then fell from $4,416.9 million at December 31, 2025 to $2,144.2 million at June 30, 2026, for the reasons the cash-flow discussion sets out. The earnings release puts cash at $2.3 billion, a broader figure that includes $200 million deposited with Fixed Income Clearing Corporation and held in other current assets; we use the release figure, which it sets against $3.4 billion of debt, so CME was again a net debtor at mid-year. On a trailing basis net debt/EBITDA reads 0.3x, a low but real figure. The pack leaves interest coverage blank; the income statement shows $43.6 million of interest and other borrowing costs in the second quarter against $1,107.1 million of operating income, so servicing the debt is not a constraint. The balance sheet also carries $158,110.7 million of performance bonds and guaranty fund contributions on both sides, which is why the current ratio sits near 1.0 (1.02 on a trailing basis); that collateral is posted by clearing members and is not CME's own capital. Shareholders' equity of $26,520.4 million at June 30, 2026 is smaller than the $17,175.3 million of trading-product intangibles and $10,505.8 million of goodwill combined, so book value says little about the economics. Leverage is low and stable, and the swing between net debt and net cash reflects how much cash the company holds before paying it out, not new borrowing. An earlier version of this report understated CME's debt; the figures here are corrected.",
       "cashflow": {
         "columns": [
           "Metric ($B)",
@@ -596,7 +598,7 @@
         ],
         "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
       },
-      "cashflowCommentary": "Cash generation is the cleanest part of the story. Operating cash flow rose from $2.4B in FY21 to $4.28B in FY25, and free cash flow tracked it almost one-for-one — $4.19B in FY25 — because capital expenditure is negligible for an exchange, just $83.5 million in FY25. That is the mechanical advantage of the model: revenue converts to cash at a rate a capital-intensive business cannot match. What CME does with the cash defines it. Dividends paid rose every year to $3.9B in FY25 — close to the full year's free cash flow — so the company returns nearly all of the cash it generates, and that $3.9B total is a larger payout than the 1.88% headline yield implies. In the second quarter alone CME paid $468 million of dividends and repurchased $695 million of stock. The discipline is coherent: a business that needs almost no reinvestment capital and carries almost no net debt should, and does, hand the cash back. The risk in the model is not the cash conversion, which is excellent; it is the volume that feeds it, which the cash-flow statement cannot smooth."
+      "cashflowCommentary": "Operating cash flow rose from $2.4B in FY21 to $4.3B in FY25, and free cash flow tracked it, reaching $4.2B in FY25 at a 64.3% FCF margin, because capital expenditure was only $83.5M in FY25. Dividends paid rose every year, from $2.2B in FY21 to $3.9B in FY25, so the company paid out most of each year's free cash flow as dividends. The vendor table shows no share-repurchase line, while the earnings release reports $695 million of repurchases and about $468 million of dividends in the second quarter of 2026; we use the release. First-half 2026 operating cash flow was $2,207.0 million, up 1%. Distributions in the first half ran well ahead of earnings: shareholders' equity fell from $28,728.2 million at December 31, 2025 to the June 30 level the balance-sheet discussion gives despite $2,196.1 million of first-half net income, and that drawdown is what took the balance sheet from net cash back to net debt. The pack itemizes only the second quarter's dividends and buybacks. The policy is coherent for a business that needs little reinvestment: debt has stayed flat while the surplus goes out. The cost is a thinner cash cushion than at the FY25 year-end, which matters only if volume and cash generation fall together."
     },
     "valuation": {
       "multiples": {
@@ -622,7 +624,7 @@
           {
             "label": "EV/EBITDA",
             "values": [
-              null
+              22.249944144662578
             ],
             "format": "mult"
           },
@@ -636,28 +638,28 @@
         ],
         "note": "Peer multiples pending a peer data source."
       },
-      "multiplesCommentary": "CME trades like the quality compounder it is, which is the valuation problem. At $276.01 the shares change hands at 23.4x trailing and about 21.4x FY27E earnings, and at 14.7x sales — multiples that price in the durability of the franchise and leave little room for the cyclical softness now showing in volumes. EV/EBITDA is not shown here because the exchange's depreciation is immaterial and the net-cash-adjacent balance sheet makes an enterprise-value multiple less meaningful than the earnings and cash multiples; those tell the story on their own. The forward multiple is not demanding against a business this durable, but it is not cheap either, and the near-term earnings that support it depend on trading volume that just declined. The Street reflects exactly this tension. It is not a one-way book: 16 analysts split Buy 7, Hold 6, Sell 3, a genuinely mixed board around a consensus target of $283.60 (median $285.00) that sits just 2.7% above the price, inside a $230.00-$330.00 range. That a stock this high-quality carries three outright Sells and a target barely above the price is the signal — the market is paying a full price for the franchise and is divided on whether the volume cycle justifies it here. No peer column exists in this pack, so every multiple is judged against CME's own history rather than against other exchanges.",
+      "multiplesCommentary": "At $276.01 CME trades at 23.4x trailing earnings, 14.7x sales and 22.2x EV/EBITDA on a trailing basis. EV/EBITDA sits close to the P/E for two reasons: net debt is small, so enterprise value is close to the market capitalization of about $99.2B, and net income is close to EBITDA, because the non-operating investment income itemized in the financials offsets depreciation and tax. Two forward multiples appear in the pack. The snapshot shows about 21.4x on FY27E EPS of $12.93; the multiples block shows 22.5x labelled NTM, which lines up with the FY26E estimate of $12.25, so we read it as a current-year multiple. When we value the shares a year out on next year's earnings, the like-for-like reference is that NTM multiple, and all three scenarios are measured against it. The dividend yield is 1.88% and the trailing FCF yield 4.2%. The Street is divided: 16 analysts split Buy 7, Hold 6 and Sell 3 for a consensus Hold, with a consensus target of $283.60, a median of $285.00 and a range of $230.00-$330.00. The price sits near the middle of a 52-week range of $218.31-$329.16, well below the high, and the width of that range shows how far the shares have moved within a year. No peer column exists in this pack, so the multiples are judged against CME's own earnings path rather than against other exchanges. On that path, the multiples are full but not stretched for a franchise growing earnings at the mid-single-digit pace FY27E consensus implies.",
       "scenarios": [
         {
           "name": "Bull",
-          "driver": "Volatility and volumes reaccelerate. A rate-cut cycle, a geopolitical shock, or an equity drawdown lifts hedging activity across the interest-rate and equity-index complexes, the rate per contract stabilizes as mix improves, market-data growth continues, and non-operating income rises with rates. Earnings beat the FY27E path, and the market keeps paying a premium multiple for the quality and the capital return. The shares re-rate toward the top of the Street's range near the $330 high target and the 52-week high.",
-          "impliedPrice": 320,
-          "probability": 0.25
+          "driver": "Volatility returns at something like the early-2026 level, when the company reported record first-quarter trading and first-half EPS rose 12%. Volume and market data run ahead of plan, and FY27 EPS lands close to a tenth above the consensus. We hold today's 22.5x current-year multiple rather than raise it, because a beat driven by volatility is cyclical and gives the market no reason to pay more per dollar of earnings. That gives $315, below both the top of the Street's target range, $330.00, and the 52-week high of $329.16.",
+          "impliedPrice": 315,
+          "probability": 0.2
         },
         {
           "name": "Base",
-          "driver": "Volumes hold near the current level and grow modestly. Revenue and earnings advance in the mid-single digits toward the FY27E consensus, market data keeps outgrowing the trading lines, the multiple holds near its current premium, and the dividend compounds. The shares track earnings toward the consensus target rather than re-rating in either direction.",
+          "driver": "Second-half volume runs between the first quarter's surge and the second quarter's calm, enough for EPS to reach consensus of $12.25 for FY26E and $12.93 for FY27E, with market data still growing. A year out the multiple on FY27E earnings slips slightly below today's current-year multiple, because growth slows to the mid-single digits. That gives $285.00, the Street's median target. Holding today's multiple would put the Base a little higher without changing the label.",
           "impliedPrice": 285,
-          "probability": 0.5
+          "probability": 0.55
         },
         {
           "name": "Bear",
-          "driver": "The volume softness deepens. Volatility stays low, interest-rate and energy volumes keep declining as they did in the quarter, the rate per contract erodes further on competition and incentives, and the premium multiple de-rates toward a level that reflects a low-growth cycle. The dividend and the moat cushion the downside, but the shares fall toward the low end of the Street's range near the $230 low target and the 52-week low.",
+          "driver": "The second quarter's calm lasts into 2027: volatility stays low, interest-rate and energy volume keep falling, and the rate per contract keeps slipping. FY26 EPS ends a little below the FY26E consensus and does not grow in FY27. With growth gone, the multiple on that EPS falls to the high teens, well below today's current-year multiple, as investors stop paying for growth. That gives $230.00, the bottom of the Street's target range, still above the 52-week low of $218.31.",
           "impliedPrice": 230,
           "probability": 0.25
         }
       ],
-      "scenarioCommentary": "Probability-weighting the three cases gives a fair value of about $280, essentially the current price — the arithmetic behind a HOLD, and a fair value that sits just below the consensus target. We weight the Base case at 50% because a mature, wide-moat franchise trading volumes that hold near a recently-reset level is the most likely path, and split the tails evenly at 25% each. The bull and bear are close to symmetric here for a specific reason: the swing variable is market volatility, which is genuinely two-sided and outside anyone's control, so we do not tilt the distribution. The $255-$310 target range brackets the Base outcome and reflects that the moat and the capital return put a firmer floor under this equity than most — the bear case still assumes a dividend-paying franchise, not a broken one — while the full valuation caps the upside. For a holder, the quality and the cash return justify staying; for a new buyer, CME is a company worth owning at a price that offers a better entry than today's, most likely on a volume-driven pullback rather than on anything wrong with the business."
+      "scenarioCommentary": "All three scenarios value the shares a year out as a P/E on next year's earnings, measured against today's current-year multiple: the Bull holds that multiple on EPS above consensus, the Base trims it slightly on consensus EPS, and the Bear cuts it to the high teens on flat EPS. Two of the three prices coincide with Street targets, the Base with the median and the Bear with the bottom of the range, so the weighted value largely re-weights the Street's own view and lands close to its consensus. We weight the Base at 55% because consensus already assumes slower growth for FY27E, and the second quarter, though softer than a year earlier, still produced average daily volume of 29.8 million contracts, which the company ranks third among its quarters. The Bear gets 25% against the Bull's 20% because the latest quarter sits closer to the Bear's premise than to the Bull's; the tilt is small because volatility is two-sided and the first quarter showed how quickly it can return. The scenarios give a weighted fair value of $277.25, an expected upside of 0.4% and a bear-case downside of 16.7%, for a reward/risk of 0.03x. That is a HOLD, and it is not close: swapping the Bull and Bear weights still derives HOLD, and SELL would need the Bear to carry about half the weight. The $250-$300 target range brackets the Base."
     },
     "businessMoat": {
       "segments": [
@@ -665,7 +667,7 @@
           "name": "Consolidated",
           "sharePct": 1,
           "revenue": 6520600000,
-          "body": "CME reports as a single segment, but the revenue splits three ways and the quarter showed each moving differently. Clearing and transaction fees, the volume-driven core, fell as total contract volume declined 1% and the average rate per contract fell 2% to $0.678. Underneath that the product complexes diverged: interest-rate average daily volume fell 6% and energy fell 13%, while equity indexes rose 13% and agriculture rose 6% — a reminder that CME is diversified across asset classes even though rates are its core complex. Market data, the third line, rose in the quarter. The single-segment presentation understates that internal diversification, which is part of what makes the franchise resilient: no one product or asset class determines the result, even when the core complex has a soft quarter."
+          "body": "CME reports a single segment, but its product complexes moved in different directions in the second quarter of 2026. Aggregate average daily volume fell 1% to 29,843 thousand contracts. Interest rates, at 14,532 thousand contracts a day, fell 6% and energy fell 13%, which the company tied to more certainty about Federal Reserve policy and to price stabilization in energy. Equity indexes rose by as much as energy fell and agricultural commodities also gained, while foreign exchange fell 10% and metals were flat. Electronic trading was 94% of volume. The single segment therefore hides real diversification: no one complex decides the result, though interest rates carry more volume than any other complex, and a soft quarter in rates and energy was partly cushioned by gains elsewhere."
         }
       ],
       "segmentsBasis": "FY25 (single reportable segment) mix",
@@ -676,56 +678,56 @@
         {
           "name": "Liquidity network effect",
           "strength": "Wide",
-          "body": "A futures market is only useful if it is liquid, and liquidity concentrates: traders go to the venue with the deepest order book and the most open interest, which deepens it further. CME's benchmark contracts across interest rates, equity indexes, and energy carry that self-reinforcing liquidity, which is very hard to dislodge once it forms: a competitor cannot win the trade without first winning the liquidity, and the liquidity does not move without the trade. That circularity, built over decades, is the moat."
+          "body": "A futures market is useful only if it is liquid, and liquidity draws more of itself. The FY25 10-K, filed February 26, 2026, describes the reverse loop: a reduction in trading volume could make its markets less attractive as a source of liquidity, which could lead to a further loss of volume. The same loop protects the incumbent. A competitor must win liquidity before it can win trades, and CME's benchmark products across all major asset classes give it that position across the board."
         },
         {
           "name": "Cross-margined clearing",
           "strength": "Wide",
-          "body": "CME clears what it trades, and clearing correlated positions — rates against equities, futures against options — at one clearing house lets participants offset margin across them, a capital-efficiency benefit they lose if they move any single product elsewhere. That cross-margining is a real switching cost layered on top of the liquidity, and it makes the open interest sticky in a way a pure trading venue's is not. It is also why the clearing house, not just the exchange, is central to the franchise."
+          "body": "CME clears what it trades, and clearing correlated positions at one house lets participants offset margin. The company says it provided more than $95 billion in daily margin efficiencies in the second quarter of 2026. A participant who moves one product elsewhere gives up part of that saving, which makes open interest sticky in a way a trading venue alone could not achieve."
         },
         {
-          "name": "Benchmark and regulatory status",
+          "name": "Regulatory status",
           "strength": "Wide",
-          "body": "CME's contracts are the benchmarks the market prices off and regulators recognize, and its exchanges and clearing house operate inside a heavy regulatory framework that raises the barrier to any new entrant. Building a competing regulated exchange and clearing house, then attracting liquidity away from an incumbent benchmark, is a capital- and time-intensive undertaking, and the barrier compounds with the liquidity advantage above. The same regulation that protects the position also constrains it, which the risk section takes up."
+          "body": "CME's exchanges and clearing house operate as designated contract markets and a derivatives clearing organization under a regime the 10-K describes as imposing significant costs and competitive burdens. That cost raises the bar for any new entrant, which would also need to draw liquidity away from established benchmarks. The same regulation can constrain CME, which the risk section takes up."
         },
         {
           "name": "Capital-light economics",
           "strength": "Structural",
-          "body": "The model needs almost no capital to run — capital spending is a small fraction of cash flow — so incremental volume drops through to cash at a very high rate, and the balance sheet stays conservative while the surplus goes to shareholders. That economic structure is itself an advantage: it funds continuous investment in technology and new products out of a fraction of cash flow, and leaves the rest for shareholders."
+          "body": "The model needs little capital, so most incremental revenue reaches cash. That lets CME fund technology and new products from a small share of cash flow and still pay most of it out, an advantage over any rival that must invest heavily to compete for the same liquidity."
         }
       ],
-      "durability": "CME's moat is wide and durable. The liquidity network effect and the cross-margined clearing are structural advantages that compound rather than erode, and the benchmark and regulatory status raise the barrier to entry higher still. The qualifier on durability is not competitive erosion — an established liquidity pool is inherently hard to dislodge — but the two forces the franchise cannot fully control: regulation and the volume cycle. A financial-transaction tax or a rise in required clearing capital could impair the economics from outside, and trading volume rises and falls with market volatility regardless of how strong the moat is, as the latest quarter shows. Longer term, new venues, 24-hour and crypto markets, and shifts in how risk is hedged are worth watching as open questions. We rate the moat WIDE with high confidence; what the premium multiple assumes is not that the moat holds — it will — but that volumes and the earnings they drive keep growing into it, which is the part that is cyclical."
+      "durability": "We rate the moat WIDE with high confidence. Liquidity and cross-margining reinforce each other, and the regulatory barrier sits on top of both. The limits on durability come from outside the competitive position: regulation, which the risk section takes up, and volume, which rises and falls with market volatility however strong the moat is. Longer term, the open questions are new venues and products and how the shift of infrastructure to Google Cloud performs. What the price assumes is not only that the moat holds, which we expect, but that volume keeps growing into it, and that part is cyclical."
     },
     "growth": {
       "points": [
-        "Growth here is cyclical, not secular: revenue has compounded steadily over five years, but the latest quarter grew just 1% as volumes normalized, so the rate depends on where market volatility sits rather than on a secular driver.",
-        "Consensus models a return to mid-single-digit growth — roughly $7.0B of revenue in FY26E and $7.4B in FY27E, with EPS of $12.25 then $12.93 — assuming volumes recover from the second-quarter softness rather than deteriorate further.",
-        "Market data is the higher-quality growth line: it grew even as trading volume fell, a recurring, subscription-like revenue stream independent of trading volume.",
-        "New avenues are optional upside, not yet in the numbers: event contracts, the FutureSports sports-index futures partnership, and the migration to Google Cloud (which also carries duplicative transition costs) could extend growth beyond the mature core complexes.",
-        "Non-operating investment income, discussed in the financials section, swings with the level of interest rates — a second-order driver that adds in a high-rate environment and would subtract in a falling one."
+        "Consensus sees FY26E revenue of about $7B (+8%) and EPS of $12.25, then FY27E revenue of $7.4B and EPS of $12.93, a slowdown to mid-single-digit growth in the second year. FY26E needs the second half to grow faster than the second quarter did, so the estimate leans on volume recovering rather than holding at second-quarter levels.",
+        "Market data is the steadiest growth line. It rose 18% in the first six months of 2026 even as trading volume softened in the second quarter, and the second-quarter gain was faster still.",
+        "Retail adoption of micro contracts is a source of volume: the company credits precious-metals micro contracts among its retail client base with sustaining metals volume growth after demand eased in gold. Those contracts carry a lower fee, as the risk section explains, so this growth adds less revenue than the volume suggests.",
+        "New products are optional upside not yet in the figures: Single-Stock futures, 1-Ounce Gold contracts available 24/7, U.S. Treasury clearing, Compute futures, and sports-index futures with FutureSports.",
+        "The move to Google Cloud is a cost question as much as a growth one: the July 22, 2026 earnings release flags variable costs and duplicative on-premise and cloud costs during the transition, and the technology expense growth noted in the financials is the place it would show."
       ]
     },
     "management": {
-      "leadership": "Terrence A. Duffy serves as chairman and chief executive officer, with Lynne C. Fitzpatrick as president and chief financial officer; the named-executive group also includes the heads of commodities markets, commercial, and information. The leadership has run the franchise through multiple volatility cycles and kept the model disciplined — a high operating margin, minimal capex, and a high-payout policy — which is the right posture for a mature, cash-generative business. The clearest read on execution is that the quality of the model held up in a soft volume quarter: operating margin stayed near 65% and cash conversion stayed high even as clearing fees fell, because the cost base does not swell when volume does. The forward questions are the ones management cannot fully answer on a call — where market volatility goes, and whether new products and the Google Cloud migration open growth beyond the core — so we weight execution on the base business, which is strong, more heavily than on the initiatives, which are unproven.",
-      "capitalAllocation": "Capital allocation is straightforward and shareholder-friendly, which suits a business that needs almost no reinvestment capital. CME funds its modest capex and technology spending out of a fraction of cash flow and returns essentially the rest: dividends that consume nearly all of its free cash flow, plus buybacks — the second-quarter dividends and repurchases the cash-flow discussion above sets out, against the full year's total dividends noted there. The balance sheet is kept conservative alongside it, the minimal net-debt position noted earlier a trivial one for this cash flow. The one judgment call worth watching is the balance between dividends and buybacks: a maximal payout lifts the current return but leaves less dry powder for acquisitions or a downturn, which is a deliberate choice for a franchise this stable rather than a risk.",
-      "governance": "A DEF 14A proxy grounds the governance view. The board requires a majority of independent directors and fully independent audit, compensation, and nominating committees, and the compensation program drew about 87% support at the last say-on-pay vote, with 2025 bonuses paid at 114.3% of the target cash-earnings goal and long-term awards tied to relative total shareholder return and net-income-margin performance over multi-year periods. One governance feature is specific to CME's history and worth noting: some directors are members of CME's exchanges, and the members of CME retain the right to elect six of the directors — a legacy of the exchange's mutual origins that the nominating committee reviews for independence, since member directors trade on and pay fees to the exchange in the ordinary course. It is not a red flag, but it is an unusual structure a shareholder should understand. The chairman-and-CEO roles are combined in Mr. Duffy, the common structure some investors prefer to see split.",
-      "insiderOwnership": "The proxy excerpt captured here covers board independence, the member-director election right, and the compensation framework, but does not quantify director or officer share ownership, so no insider-ownership percentage is asserted."
+      "leadership": "The March 2026 proxy names Terrence A. Duffy as Chairman and Chief Executive Officer and Lynne C. Fitzpatrick as President and Chief Financial Officer, with titles as of December 31, 2025; the July 22, 2026 earnings release still identifies Terry Duffy as Chairman and Chief Executive Officer. The other named executive officers were Derek L. Sammann, Global Head of Commodities Markets, Julie M. Winkler, Chief Commercial Officer, and Sunil K. Cutinho, Chief Information Officer. On execution, the core business is run well: margins stayed high through a soft volume quarter. The weaker sign is cost growth outpacing revenue in the second quarter, and the initiatives management promotes, from new contracts to the cloud migration, are not yet visible in revenue. We weight the base business, which is strong, above the initiatives, which are unproven.",
+      "capitalAllocation": "Capital allocation is simple. The record shows flat debt, little spending on capital projects, and the rest paid out through dividends and buybacks, as the cash-flow discussion details. For a business with this cash conversion and low leverage, that is the right default. The first-half 2026 payout the cash-flow discussion describes leaves less cushion if a low-volatility stretch lasts, though it is not a strain at current leverage. Among the factors the company lists in its July 22, 2026 earnings release is its ability to continue to generate funds and manage its indebtedness; nothing in the pack suggests pressure there.",
+      "governance": "The governance view rests on the DEF 14A filed March 23, 2026. The board requires a majority of independent directors and fully independent audit, compensation, and nominating and governance committees, under categorical standards the company says conform to and exceed Nasdaq's. At the 2025 annual meeting approximately 87% of shareholders voted for the advisory resolution on executive pay. 2025 bonuses reflected cash earnings at about 114.3% of the target goal, performance shares from the September 2022 award vested at 200.0% of target in March 2026, and the September 2025 grants tie half of the performance shares to total shareholder return relative to the S&P 500 and half to absolute net income margin over 2026-2028. Two features concentrate influence: the chairman and chief executive roles are combined, and members of CME, some of whom sit on the board, can elect six directors. The independent majority and independent committees are the counterweight, and the nominating and governance committee reviews member directors' trading for independence, so we see a structure holders should understand rather than a red flag. The pay outcomes look aligned with results: net income grew in FY25, as the financials show, and the net-income-margin metric rewards protecting the margin this thesis rests on.",
+      "insiderOwnership": "The proxy excerpt in the pack covers board independence, the member-director election right and the compensation framework, but it does not quantify director or officer share ownership, so we assert no insider-ownership figure."
     },
     "risks": {
       "idiosyncratic": [
-        "Volume dependence is the primary risk, and it is already showing. Revenue tracks trading volume, which tracks market volatility; the second quarter's volume and clearing-fee declines, noted above, came as volatility subsided from an elevated first quarter, and management said so directly. A sustained low-volatility environment would pressure the core revenue line while the cost base stays put, and it is the configuration the bear case turns on. What we watch is total contract volume and the interest-rate complex, the softest in the quarter.",
-        "Rate-per-contract erosion is a slower, structural pressure independent of volume. The average fee per contract slipped in the quarter on shifts in product mix, trading venue, and volume-based incentives, and a continued decline would lower revenue even if volumes held. It is worth watching alongside volume because the two can move against each other.",
-        "Concentration in interest-rate products cuts both ways. Rates are CME's core complex and the source of much of its growth in volatile years, so a prolonged period of stable rates and low rate-volatility — the environment that softened the quarter — removes the single most important driver, even as the other complexes diversify the result.",
-        "Regulation is a standing threat to the model. The 10-K flags the risk that new rules require more capital to be set aside for the guaranty fund, and that a financial-transaction tax could make trading more costly and reduce volume; either would pressure the economics from outside the company's control. Heavy regulation is also the barrier that protects the franchise, so the exposure is two-edged.",
-        "Clearing and counterparty risk is the tail. CME guarantees the cleared trades, so a clearing-member default in a severe market dislocation is a low-probability, high-severity exposure, mutualized through the guaranty fund and the collateral members post. It has not been a problem in practice, but it is the risk that distinguishes an exchange-plus-clearing-house from a pure exchange."
+        "Volume dependence is the main risk and is already visible. Revenue follows volume, and volume follows market volatility; the second-quarter declines came, in the company's account, as volatility subsided from an elevated first quarter. A long low-volatility stretch would press on the core revenue line while costs keep rising, which is the Bear case.",
+        "The average rate per contract fell in the second quarter and the first half. The company attributes the drop largely to more micro-contract volume in equities, energy and metals and a higher share of member trading, partly offset by fee increases that took effect on April 1, 2026. If those mix shifts continue, revenue can fall even when volume holds.",
+        "One clearing firm accounted for at least 10% of clearing and transaction fees in the first six months of 2026. The company believes the customer portion of a departing firm's activity would likely move to another clearing firm, which is a reasonable view for a market where the liquidity sits with the exchange, but a firm's own trading would not necessarily follow.",
+        "Regulation is a standing risk. The FY25 10-K flags possible transaction taxes, rules that could require more of the company's funds for the guaranty fund, and litigation over the legal status of event contracts, with that litigation's status as of the filing. Either of the first two would raise costs for CME or its customers and could reduce volume. Heavy regulation also protects the franchise, so the exposure cuts both ways.",
+        "Clearing carries a tail risk. CME guarantees cleared contracts, and among the factors listed in its July 22, 2026 earnings release are the ability of its credit and liquidity risk management to protect it from the credit risks of clearing firms and other counterparties, and to meet margin and liquidity needs in the BrokerTec matched principal business. The probability is low but the severity would be high."
       ],
-      "systemic": "CME's systemic exposure is unusual because it runs partly counter to the market. Volatility is the friend of a derivatives exchange — periods of heightened uncertainty raise hedging and speculative volume — so a shock that hurts most companies can help CME, and the geopolitically-driven volatility spike earlier this year is a recent example. But the relationship is not linear: the 10-K notes that after a material market disturbance, extreme uncertainty can itself reduce volume, and a prolonged calm is simply bad for the business, as the second quarter showed. The other macro links run through interest rates twice over: rate volatility drives the core trading complex, and the level of rates drives the non-operating investment income CME earns on the collateral it holds, so a falling-rate environment would soften both. Regulation and a possible transaction tax are the policy overhang, and the migration of trading and clearing infrastructure to third-party cloud providers introduces an operational-resilience dependence the filing flags. These are the exposures of owning the plumbing of the derivatives market: mostly stabilizing, occasionally two-edged, and tied to volatility and rates more than to the ordinary economic cycle."
+      "systemic": "CME's link to the market cycle is unusual. The 10-K notes that periods of heightened uncertainty have tended to increase trading volume through hedging and speculation, so a shock that hurts most companies can help CME, as the first quarter of 2026 showed. The relationship is not simple: the same filing warns that after a material market disturbance, extreme uncertainty may persist and reduce volume, and a long calm is plainly bad for the business. Interest rates matter in two ways. Uncertainty about Federal Reserve policy drives the interest-rate complex, which the company said softened in the second quarter as that uncertainty eased, and the earnings release lists variances in earnings on the cash and collateral its clearing house holds among the factors that might affect results. Policy risk sits on top: beyond the tax and capital rules the risk list covers, the release also names a possible repeal of the 60/40 tax treatment of futures, and the cloud migration adds a dependence on third-party technology providers. Most of these exposures are stabilizing, and several cut both ways."
     },
     "finalRecommendation": {
       "body": [
-        "We rate CME Group HOLD with a $255-$310 target range and a probability-weighted fair value of about $280, essentially the current $276.01 price and just below the $283.60 consensus. This is a HOLD on a franchise of rare quality at a full price. The moat is genuine and wide — self-reinforcing liquidity in benchmark contracts, cross-margined clearing, and benchmark-and-regulatory status — the economics are exceptional (a roughly 65% operating margin, negligible capex, near-total free-cash-flow conversion), the balance sheet is conservative, and the company channels its earnings to shareholders through dividends and buybacks. None of that is in doubt.",
-        "What holds us at HOLD is the price against the moment. At 23.4x trailing and about 21.4x FY27E earnings, with a Street target 2.7% above the price and a ratings board split 7 Buy / 6 Hold / 3 Sell, the valuation already pays for the quality — while the engine that drives it just slowed, with the second-quarter softness in clearing fees, volume, and the rate per contract set out above as volatility normalized. That softness is cyclical, not structural, and it turns on market volatility that no one controls, which is precisely why we neither chase it up nor call it down.",
-        "For existing holders, the quality and the cash return justify staying the course. For new money, CME is a company worth owning at a better entry — most likely on a volume-driven pullback rather than on anything wrong with the business. What would move us to buy: a valuation reset toward the low end of the band, or evidence that volumes and the rate per contract are re-accelerating together. What would move us more cautious: a deepening of the volume decline, a further slide in the rate per contract, or a regulatory change — a transaction tax or higher clearing-capital requirement — that impairs the economics from outside."
+        "We rate CME Group HOLD with a $250-$300 target range. The scenarios give a weighted fair value of $277.25 against the $276.01 price, an expected upside of 0.4% and a bear-case downside of 16.7%. The franchise is of high quality: liquidity in benchmark contracts, cross-margined clearing and a regulated position support a wide moat, the operating margin is near 65% and capital needs are small. Leverage stays low, as the balance-sheet discussion sets out.",
+        "The HOLD comes from the price against the moment. The valuation already pays for the quality, the Street is split, and the second quarter showed volume, clearing fees and the rate per contract all softening as volatility eased, while consensus for FY26 still needs a second-half pickup. As the valuation section sets out, the Base tracks the Street's median target and the weighting tilts a little toward the Bear.",
+        "On the same scenarios, the page's math would derive BUY a little above the low end of our range and SELL a little below its top. Beyond price, we would turn more positive if volume and the rate per contract recover together and EPS runs ahead of the FY26E consensus. We would turn more cautious if third-quarter results extend the second quarter's declines, the rate per contract keeps falling despite the April fee increases, or a transaction tax or higher guaranty-fund requirement advances."
       ]
     }
   },

@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "b3a28740759299ecc20a23d5365c4561b030f17453b5ebc832119338443c1666",
-  "reviewedAt": "2026-10-02T17:53:35Z",
+  "judgmentSha256": "a876cd24fa5c1d0fe2ca992e4a6f21216af30aff6ecb7b0fb99bcd320c6bc710",
+  "reviewedAt": "2026-10-07T17:10:06Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "approved-with-minors",
+  "verdict": "approved",
   "findings": [
     {
       "id": "F-1",
@@ -53,7 +53,7 @@
       "issue": "The Base implied price of $175 is not anchored to anything on the surface. The driver says consensus holds and the multiple stays near current levels, but at the current 18.6x NTM or ~17.4x FY27E multiple on the FY27E consensus EPS of $9.02 the price would sit well below $175; reaching $175 needs either a higher multiple or EPS above consensus, which contradicts the driver. scenarioCommentary ('assumes earnings compound with rate base and the multiple stays roughly where it is') repeats the same unanchored description.",
       "fix": "State the anchor in words: which earnings figure on the surface (FY26E $8.46, FY27E $9.02, or guidance $8.40 - $8.50) and which multiple on the surface produce the Base price, or adjust the Base price so that 'consensus holds, multiple unchanged' actually produces it.",
       "status": "addressed",
-      "note": "The Base driver now states its anchor (18.6x NTM on FY27E $9.02). The anchor itself introduces a new defect, raised as F-14."
+      "note": "The Base driver states its anchor: today's 18.7x trailing multiple held on FY27E consensus EPS of $9.02, which a year out are trailing earnings. That is a held multiple on one basis, not a mixed basis; the mislabelled alternative in scenarioCommentary is F-19."
     },
     {
       "id": "F-6",
@@ -73,7 +73,7 @@
       "issue": "The same Mid-Tex concentration claim is made twice: growth.points[2] says Mid-Tex is carrying the growth, and risks.idiosyncratic[1] says 'Mid-Tex's quarterly gain exceeded the distribution segment's total increase'. Both tell the same story (division gains concentrated in Mid-Tex) from the same table. Similarly, 'reaffirmed fiscal 2026 guidance' appears in analystCommentary, management.leadership ('has reaffirmed fiscal 2026 guidance through the third quarter') and finalRecommendation.body[0] ('management has held its fiscal 2026 guidance'); 'through the third quarter' also implies repeated reaffirmations the pack does not show (only the August 5, 2026 release is captured).",
       "fix": "Keep the Mid-Tex figures in one section (risks.idiosyncratic[1] reads them as concentration, which is the more useful framing) and let growth refer to it in words. State the guidance reaffirmation once (analystCommentary) and drop 'through the third quarter'.",
       "status": "addressed",
-      "note": "growth.points[2] points to the risks section for Mid-Tex; the guidance reaffirmation appears once, in analystCommentary, and through the third quarter is gone."
+      "note": "growth.points[2] points to the risks section for Mid-Tex and 'through the third quarter' is gone. The reaffirmation is stated in analystCommentary and used as evidence in growth.points[3] and multiplesCommentary; its retelling in scenarioCommentary is covered under F-15."
     },
     {
       "id": "F-8",
@@ -132,8 +132,8 @@
       "quote": "Atmos Energy's fiscal third quarter kept the regulated growth model on plan.",
       "issue": "The page header and snapshot label the period Q2'26 / fiscal Q2 2026 (vendor naming), while the commentary opens with 'fiscal third quarter'. The reconciliation is stated only later, in financials.incomeCommentary, so the reader meets the mismatch first.",
       "fix": "Move the one-line reconciliation (the vendor series labels this quarter Q2'26; we use the company's naming) to the first mention in analystCommentary and drop it from incomeCommentary, so it is said once.",
-      "status": "open",
-      "note": "Still open after the F-18 edit: analystCommentary still opens with 'fiscal third quarter' while the page header reads fiscal Q2 2026, and the vendor-label reconciliation sits only in financials.incomeCommentary, so the reader meets the mismatch before the explanation."
+      "status": "addressed",
+      "note": "analystCommentary now gives the reconciliation at first mention (the quarter ended June 30, 2026 is the fiscal third quarter; the third-party series labels it Q2'26; the report uses the company's naming), and incomeCommentary no longer repeats it."
     },
     {
       "id": "F-14",
@@ -143,7 +143,7 @@
       "issue": "Source disagreement handled silently, and the Base anchor is not what it says it is (rubric 6 and 8). multiplesCommentary lists 18.6x forward (NTM) and ~17.4x FY27E side by side without saying they disagree, although at October 2, 2026 the next twelve months and fiscal 2027 cover nearly the same window. At $157.07 the stock already trades at ~17.4x the $9.02 FY27E figure, so putting 18.6x on $9.02 is not an unchanged multiple; it builds in a re-rating from the FY27E multiple to the NTM one. The vendor NTM figure looks as if it rests on earnings nearer FY26E $8.46. That also undercuts scenarioCommentary ('The Bull case needs both rate wins and a re-rating'), because the Base case already contains one.",
       "fix": "In multiplesCommentary, say once that the two forward multiples disagree and which one the desk uses. Then either describe the Base case honestly, as the NTM multiple applied to FY27E consensus (a modest re-rating against the FY27E multiple), and adjust the Bull/Base asymmetry argument in scenarioCommentary, or anchor the Base case on the ~17.4x FY27E multiple and reset the Base price and band to match. Do not write a new computed multiple or EPS figure.",
       "status": "addressed",
-      "note": "multiplesCommentary now says once that the NTM and FY27E multiples disagree and which one the desk uses; the Base driver describes 18.6x on FY27E $9.02 as a modest re-rating (Base $168, inside the $150-$185 band), and scenarioCommentary's Bull/Base asymmetry now accounts for the re-rating already in the Base case."
+      "note": "multiplesCommentary says once that the 18.6x NTM and ~17.4x FY27E multiples disagree and which one it uses. The Base no longer puts 18.6x on FY27E; it holds the 18.7x trailing multiple on FY27E a year out, so it builds in no re-rating. The mislabelled alternative in scenarioCommentary is F-19."
     },
     {
       "id": "F-15",
@@ -153,7 +153,7 @@
       "issue": "The rewrite for F-4 turned the rating rationale into a claim the report now makes in paraphrase in at least five places (rubric 7): analystCommentary ('Our probability-weighted value sits only modestly above the price, while our Bear case sits well below it'), thesis.body ('our Bear case sits well below the current price. Expected upside is positive but too small for that risk'), multiplesCommentary ('the HOLD rests on positive but modest expected upside set against a deep Bear-case downside'), scenarioCommentary (quoted) and finalRecommendation.body[0] ('a probability-weighted value only modestly above the price and a Bear case well below the 52-week low'), plus meta.subtitle. None of them gives the figures the page renders (expected upside, Bear-case downside, reward/risk), so the claim is made in words five times and never with numbers. Within valuation, the Street-range-above-price point also appears twice (multiplesCommentary and scenarioCommentary), and 'a lower entry price' in scenarioCommentary repeats finalRecommendation.body[1] ('a price closer to our Bear case').",
       "fix": "Argue the verdict once, in scenarioCommentary, with the page's own expected upside, Bear-case downside and reward/risk. Let analystCommentary and finalRecommendation.body[0] point to it in a clause, cut the thesis to one clause, and delete the restatement from multiplesCommentary. Keep the Street-range point in multiplesCommentary only, and the entry-price condition in finalRecommendation only.",
       "status": "addressed",
-      "note": "The verdict is argued once, in scenarioCommentary, with the page's figures (fair value $164, +4.4% expected upside, 17.2% Bear-case downside, 0.26x reward/risk, which match the rendered conviction). analystCommentary and finalRecommendation.body[0] point to it, the thesis is one clause, the Street range appears only in multiplesCommentary and the entry-price condition only in finalRecommendation."
+      "note": "scenarioCommentary now points back to 'the Street and guidance evidence in the multiples paragraph' and no longer restates the Street-target or reaffirmed-guidance points. The unexplained fall is told once, in multiplesCommentary. The verdict is argued once, with the page figures."
     },
     {
       "id": "F-16",
@@ -184,6 +184,66 @@
       "fix": "Argue from the figures on the surface without comparing a level to a change. The listed operating drivers (+$21.0 million, +$3.9 million, -$20.0 million, -$9.4 million) net to less than nothing, yet operating income rose 14.3 percent, so most of the rise sits outside the listed drivers, and the legislation is the one other item the MD&A names. Say that the legislation took effect during the prior-year quarter, so the 10-Q does not show how much of the $17.8 million is incremental. Do not write the computed net figure, and keep one unit (millions) within the sentence.",
       "status": "addressed",
       "note": "The level-versus-change comparison and the $13,615 thousand figure are gone. The paragraph now argues from the listed drivers (rate adjustments largely absorbed by depreciation and property taxes, customer growth short of employee costs), says in the desk's own voice that most of the rise sits outside them with the legislation as the one other item the MD&A names, and the counter-case states that the legislation took effect in the prior-year comparison quarter, so the 10-Q does not show how much of the operating-expense benefit is incremental. No computed net figure and no mixed units."
+    },
+    {
+      "id": "F-19",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "Holding today's forward multiple on FY27E instead would return about today's price and leave expected upside near zero, still HOLD.",
+      "issue": "Mixed basis, and it mislabels the alternative (rubric 1 and 6; learnings section 13). The paragraph's own framework prices FY27 earnings a year out on a trailing multiple, and a year out FY27E is trailing earnings, so the held like-for-like multiple is today's 18.7x trailing, which the Base already uses. Putting ~17.4x on FY27E is not holding a multiple. It is today's price divided by FY27E, so it returns today's price at any price (the circular CSTM anchor), and on the trailing framework it is a de-rating to the Bear's own multiple. Calling it 'holding' makes the Base's held multiple look like a re-rating. The arithmetic (expected upside near zero, still HOLD) is right; the label is wrong. The anchor argument also runs one way: it argues the upside alternative (median target) from both sides but gives no reason why the multiple should stop falling rather than keep sliding.",
+      "fix": "Relabel the alternative honestly. For example: 'Pricing FY27E at the ~17.4x it trades on today would be a de-rating a year out, to the Bear's multiple; it returns about today's price and expected upside near zero, still HOLD.' Then add one sentence on why the desk does not assume the de-rating continues, pointing back to the evidence in multiplesCommentary rather than retelling it. Keep 'the anchor decides how close the call is'. Do not write a new computed multiple or price.",
+      "status": "addressed",
+      "note": "Relabelled: pricing FY27E at today's forward multiple is now called a de-rating a year out, to the Bear's multiple. The paragraph says why the Base does not assume the de-rating continues (earnings meet consensus, and the evidence in the multiples paragraph shows no earnings deterioration) and leaves a further cut to the Bear. The anchor is argued from both sides."
+    },
+    {
+      "id": "F-20",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[2].driver",
+      "quote": "On those trailing earnings the shares carry the ~17.4x they trade at on FY27E today, below the Base's multiple, which gives about $130.",
+      "issue": "The Bear stays inside the one framework (trailing multiple a year out), but its step down from 18.7x to ~17.4x is asserted, not argued (rubric 6; learnings section 13: a downgrade from an unargued anchor is a finding). The driver gives reasons for the EPS reset (Texas benefit ends, disallowances, dilution) and none for the multiple. ~17.4x is today's forward multiple used as a trailing multiple, and 'the ~17.4x they trade at on FY27E today' reads like a held multiple when it is a de-rating. The step down carries weight. Reviewer arithmetic, not for the page: at the Base's 18.7x, $7.46 gives about $139.50, roughly 11% below the price and inside the 15% Bear floor. So the de-rating supplies part of the Bear's depth and the 0.27x reward/risk. The label does not hinge on it (HOLD either way). This is not double-counted leverage.",
+      "fix": "Add one clause, from the page, on why the market would pay less for these earnings a year out in this scenario. For example, a disallowance would weaken the timely-recovery case the capital plan assumes (risks.idiosyncratic[0]), on top of a slide from the $192.51 high that no source explains. Say plainly that it is a de-rating from today's trailing multiple. Do not write the computed figures above. If no page-based reason holds, rebuild the Bear on another anchor a reader can check rather than borrowing the forward multiple.",
+      "status": "addressed",
+      "note": "Addressed on the page. The cut now rests on the Bear's own story, with surface evidence: a disallowance hits the timely recovery the MD&A names as a primary driver, and the Bear breaks the FY21-FY25 run of EPS gains. The cut is modest and is the only lower P/E on the surface. Trailing at today's forward multiple means no growth premium, which fits a broken run. At 18.7x the Bear would sit inside the 15% floor, but this story would carry a cut anyway, so it is not a picked multiple."
+    },
+    {
+      "id": "F-21",
+      "severity": "Important",
+      "field": "sections.finalRecommendation.body[1]",
+      "quote": "or if the shares rallied past the $167.00 lowest Street target without higher earnings expectations, since our scenarios derive SELL before the price reaches the $183.00 median.",
+      "issue": "The SELL price trigger sits below where the page's own math flips the label (rubric 6; learnings section 9, ADI F-25). With the weighted fair value at $164.40, SELL (E <= -5.0%) derives only above about $173 (reviewer arithmetic: 164.40 / 0.95). Between $167.00 and about $173 the scenarios still derive HOLD, so 'move to SELL if the shares rallied past the $167.00 lowest Street target' is wrong. The second clause (SELL before the $183.00 median) is right. The BUY price trigger checks out: BUY derives just under the $150 target low.",
+      "fix": "Place the trigger in words between the two page anchors. For example: 'or if the shares rallied most of the way from the $167.00 lowest Street target toward the $183.00 median without higher earnings expectations; our scenarios derive SELL between those two prices.' Do not write the computed flip price.",
+      "status": "addressed",
+      "note": "The SELL trigger now sits between the $167.00 lowest Street target and the $183.00 median. That matches the page math: at a weighted value of $164.40, SELL derives at about $173."
+    },
+    {
+      "id": "F-22",
+      "severity": "Minor",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "The trigger is liquidity, not leverage: a current ratio below one (0.81 on a trailing basis, 0.77 at FY25 year-end), negative FY25 free cash flow (set out in the cash flow section), and FY25 year-end cash of $0.2B, which covers less than a year of that gap.",
+      "issue": "Both claims in the paragraph hold. The page renders the gate as 'advisory, not applied', so it does not set or cap the label. Reading it as not a solvency signal is the desk's judgment, and its two reasons are accurate: the trigger is the liquidity test, and that cash test leaves out the undrawn facilities and equity forwards. Two loose points. (1) The gate reads only the trailing current ratio (0.81) with FY25 free cash flow and FY25 cash, so 0.77 is not part of the trigger. (2) 'because a regulated utility runs negative free cash flow while it builds rate base' is a sector generalization the page does not carry. The surface supports it for Atmos Energy: negative free cash flow in four of five years, the MD&A's significant capital expenditures 'for the foreseeable future', and capital-markets access named as a primary driver. The liquidity figures date from June 30, 2026, while the test uses FY25 year-end cash.",
+      "fix": "Drop 0.77 from the trigger list, or give it separately as the year-end figure. Ground the reason in the company: 'because Atmos Energy runs negative free cash flow while it builds rate base, as its capital plan implies', and keep the cash-test point as it is.",
+      "status": "addressed",
+      "note": "0.77 is dropped from the trigger, which now reads the trailing current ratio of 0.81. The reason is grounded in Atmos Energy's own capital plan, and the liquidity figures are dated June 30, 2026. Both gate claims (advisory; not read as a solvency signal) are accurate."
+    },
+    {
+      "id": "F-23",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.companyOverview",
+      "quote": "because gas costs pass through to customers without markup under purchased gas cost adjustment mechanisms",
+      "issue": "Source hedges dropped or paraphrases widened in five places. (1) Here: the MD&A says the company is 'generally able' to pass gas costs through. (2) growth.points[0], 'That spending becomes rate base': the MD&A says the costs are believed recoverable but 'full recovery is not assured'. (3) businessMoat.durability, 'most of it is safety and reliability work that the company says it is accelerating': the 10-K says it is 'accelerating the replacement of pipeline infrastructure'. (4) risks.idiosyncratic[2], 'and would damage the regulatory goodwill the rate mechanisms depend on': a desk inference stated as fact. (5) executiveSummary.risks[3], 'a loss of customer confidence beyond insurance limits': the insurance limit applies to losses, not to customer confidence.",
+      "fix": "Restore the hedges: 'generally pass through'; 'that spending is meant to become rate base, though the MD&A says full recovery is not assured'; 'the company says it is accelerating the replacement of pipeline infrastructure'; 'could damage'; 'liability, fines and costs beyond insurance limits, and a loss of customer confidence'.",
+      "status": "addressed",
+      "note": "All five fixed: 'generally able' to pass through gas costs; 'meant to become rate base … full recovery is not assured'; 'accelerating the replacement of pipeline infrastructure'; 'could damage'; and the insurance-limit wording in executiveSummary.risks[3]."
+    },
+    {
+      "id": "F-24",
+      "severity": "Minor",
+      "field": "analystCommentary",
+      "quote": "Our Base case credits a year of consensus earnings growth at today's trailing multiple",
+      "issue": "Verbal tic (rubric 9). 'A year of consensus (earnings) growth' appears six times: meta.subtitle, analystCommentary, thesis.body ('earns only a year of consensus growth unless the shares re-rate'), the Base driver, scenarioCommentary ('credits a year of consensus growth without assuming a recovery') and finalRecommendation.body[0] ('the shares offer about a year of consensus growth'). Each use is a pointer, but the phrase repeats past the point of notice.",
+      "fix": "Keep the phrase in the Base driver and scenarioCommentary, where the anchor is argued. Reword the summary layers (thesis, analystCommentary, finalRecommendation) so each points to the valuation section in different words, or cut the clause where the sentence stands without it.",
+      "status": "addressed",
+      "note": "'A year of consensus growth' now appears only in the Base driver and scenarioCommentary, where the anchor is argued. The subtitle, analystCommentary, thesis and finalRecommendation point to the valuation section in other words."
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
-  "judgmentSha256": "f027c150be8c143dc9ea927588a9257b7b8bb1dfa22d829ab5d8b91009cb2799",
-  "reviewedAt": "2026-09-20T23:10:00Z",
-  "reviewer": "claude-opus-4-8",
+  "judgmentSha256": "7ba6def4609b6c9d6a243f5814061f03dcd7c4492e8ee799db2115e0da146211",
+  "reviewedAt": "2026-10-07T17:15:23Z",
+  "reviewer": "claude-opus-5-5",
   "round": 2,
   "verdict": "approved-with-minors",
   "findings": [
@@ -13,7 +13,7 @@
       "issue": "Round 1: the equity earnings were characterised as coming from \"CME's index joint venture,\" a fact not on the grounding surface.",
       "fix": "Drop the \"index joint venture\" characterisation; describe the line as the pack does.",
       "status": "addressed",
-      "note": "Re-verified against f027c150: reads \"plus equity in the net earnings of unconsolidated subsidiaries,\" matching the income-statement label (Q2 $97.7M); \"index joint venture\" grep=0. Holds."
+      "note": "Re-verified against 7ba6def4: incomeCommentary still reads \"adds $97.7 million of equity in the earnings of unconsolidated subsidiaries\"; no joint-venture characterisation. Holds."
     },
     {
       "id": "F-2",
@@ -23,7 +23,7 @@
       "issue": "Round 1: equity was attributed to the goodwill/intangibles \"from the CBOT, NYMEX, and NEX acquisitions\"; \"NEX\" and the acquisition attribution appear nowhere in the pack.",
       "fix": "Remove the specific acquisition attribution; say only what the balance sheet supports.",
       "status": "addressed",
-      "note": "Re-verified against f027c150: CBOT/NYMEX/NEX attribution absent (NEX grep=0). Names only \"goodwill and indefinite-lived trading-product intangibles,\" matching the balance sheet (Goodwill $10,505.8M; Intangibles - trading products $17,175.3M). Holds."
+      "note": "Re-verified against 7ba6def4: no acquisition attribution (NEX grep=0); equity is set only against the balance-sheet intangibles and goodwill. Holds."
     },
     {
       "id": "F-3",
@@ -33,155 +33,297 @@
       "issue": "Round 1: the volume tailwind was attributed to \"2024 and 2025,\" but \"2024\" appears nowhere in the pack, and analystCommentary used the causal \"drove the last two years.\"",
       "fix": "Re-anchor to the periods the MD&A supports (high volatility in 2025 and early 2026) and drop 2024 and the \"last two years\" framing.",
       "status": "addressed",
-      "note": "Re-verified against f027c150: \"2024\"=0 and \"last two years\"=0. Thesis and analystCommentary anchor to volatility that \"had run high earlier in the year\" subsiding, which the MD&A supports. Holds."
+      "note": "Re-verified against 7ba6def4: no 2024 or \"last two years\"; volatility is anchored to early 2026 and its second-quarter easing, as the MD&A says. Holds."
     },
     {
       "id": "F-4",
       "severity": "Important",
       "field": "sections.businessMoat.moatFactors[0].body",
       "quote": "a competitor cannot win the trade without first winning the liquidity, and the liquidity does not move without the trade",
-      "issue": "Round 1: the moat rested on a specific competitor track record (\"competitors have repeatedly failed to pull it away by launching rival contracts,\" and in durability \"rivals have tried and mostly failed\") the pack does not carry.",
+      "issue": "Round 1: the moat rested on a specific competitor track record the pack does not carry.",
       "fix": "Make the network-effect and switching-cost argument structurally without asserting a specific competitor track record.",
       "status": "addressed",
-      "note": "Re-verified against f027c150: moatFactors[0] argues the liquidity circularity structurally; durability says an established liquidity pool is \"inherently hard to dislodge.\" No specific competitor track-record claim remains. Holds."
+      "note": "Re-verified against 7ba6def4: moatFactors[0] argues the liquidity loop structurally from the dated FY25 10-K; no competitor track record. Holds."
     },
     {
       "id": "F-5",
       "severity": "Important",
       "field": "sections.management.capitalAllocation",
       "quote": "the second-quarter dividends and repurchases the cash-flow discussion above sets out",
-      "issue": "Round 1: several numeric clusters were restated in full across sections rather than introduced once and referred back in words — (1) Q2 $468M dividends / $695M buybacks; (2) the Q2 decline triplet (clearing fees -3%, volume -1%, rate -2%); (3) market data +20% / $238.1M; (4) $2.3B cash / $3.4B debt.",
+      "issue": "Round 1: several numeric clusters were restated in full across sections rather than introduced once and referred back in words.",
       "fix": "Introduce each cluster once in the section that argues it and refer back in words elsewhere.",
       "status": "addressed",
-      "note": "Re-verified against f027c150: Q2 $468M/$695M once each, rate $0.678 once, $238.1M once, $2.3B/$3.4B once; capitalAllocation refers back in words (\"the second-quarter dividends and repurchases the cash-flow discussion above sets out\"). Holds."
+      "note": "Re-verified against 7ba6def4: $468M/$695M, $0.678, $238.1M and $2.3B each appear once. Holds."
     },
     {
       "id": "F-6",
       "severity": "Minor",
       "field": "sections.executiveSummary.companyOverview",
       "quote": "clearing and transaction fees, the volume-driven core; market data and information services, a smaller and recurring stream; and other",
-      "issue": "Round 1: the 79% and 14% revenue-mix shares were computed from Q2'26 line items and do not appear on the grounding surface, which carries only the FY25 single-segment \"Consolidated: 100%\" basis.",
+      "issue": "Round 1: derived 79% and 14% revenue-mix shares were not on the grounding surface.",
       "fix": "Drop the derived percentages or lean on the dollar lines the pack supports.",
       "status": "addressed",
-      "note": "Re-verified against f027c150: derived 79%/14% shares absent (grep=0); the three revenue lines are named without percentages. Holds."
+      "note": "Re-verified against 7ba6def4: no derived revenue-mix shares. Holds."
     },
     {
       "id": "F-7",
       "severity": "Minor",
       "field": "analystCommentary",
       "quote": "It is an exceptional business model",
-      "issue": "Round 1: unearned superlatives and a repeated tic — \"one of the finest business models in finance,\" \"one of the finest franchises in finance,\" \"one of the most durable moats in finance,\" alongside \"about as wide as they come.\"",
-      "fix": "Let the numbers carry the quality; cut the \"finest/widest/most durable in finance\" superlatives or reduce to one, varied instance.",
+      "issue": "Round 1: unearned superlatives and a repeated \"finest ... in finance\" tic.",
+      "fix": "Cut the superlatives or reduce to one, varied instance.",
       "status": "addressed",
-      "note": "Re-verified against f027c150: \"finest ... in finance\" tic absent (\"finest\"=0); a single \"about as wide as they come\" remains. Holds. (A separate, remaining \"exceptional\" tic is raised anew as F-17.)"
+      "note": "Re-verified against 7ba6def4: no \"finest\" or \"as wide as\". Holds."
     },
     {
       "id": "F-8",
       "severity": "Minor",
       "field": "sections.risks.systemic",
       "quote": "These are the exposures of owning the plumbing of the derivatives market: mostly stabilizing, occasionally two-edged, and tied to volatility and rates more than to the ordinary economic cycle.",
-      "issue": "Round 1: two fields sat close to their caps with little room for the next round — businessMoat.segments[0].body at 1,082/1,200 (90%) and risks.systemic at 1,331/1,500 (89%).",
+      "issue": "Round 1: two fields sat close to their caps.",
       "fix": "Trim each toward roughly 80% of cap.",
       "status": "addressed",
-      "note": "Re-measured in f027c150: businessMoat.segments[0].body 806/1,200 (67%); risks.systemic 1,242/1,500 (83%). Both inside cap with room."
+      "note": "Re-measured in 7ba6def4: segments[0].body 790/1,200, risks.systemic 1,100/1,500. Holds. (Two other fields now near cap are noted in F-31.)"
     },
     {
       "id": "F-9",
       "severity": "Critical",
       "field": "sections.financials.cashflowCommentary",
       "quote": "a modest regular quarterly dividend plus a large variable annual dividend sized to sweep out the year's excess capital",
-      "issue": "The grounding surface carries no \"variable annual dividend\" policy: the pack's only dividend facts are the 1.88% yield, FY25 Dividends Paid of $3.9B, and the Q2 dividend of ~$468M. The specific policy mechanism was recalled from outside the pack and asserted in five places: companyOverview, cashflowCommentary, capitalAllocation, valuation.scenarios[Base].driver and finalRecommendation[0].",
-      "fix": "Drop the \"variable annual dividend / sized to sweep out excess capital\" characterisation. State only what the pack supports and refer back in words rather than repeating the unsupported policy label.",
+      "issue": "Round 1: a \"variable annual dividend\" policy was recalled from outside the pack.",
+      "fix": "Drop the policy characterisation and state only what the pack supports.",
       "status": "addressed",
-      "note": "Re-verified against f027c150: \"variable annual\"=0, \"sweep\"=0, \"excess capital\"=0. Affected fields state only supported dividend facts (FY25 dividends $3.9B close to full-year FCF; Q2 $468M/$695M). Holds."
+      "note": "Re-verified against 7ba6def4: no variable-dividend policy language; dividends described from the table and the release. Holds."
     },
     {
       "id": "F-10",
       "severity": "Minor",
       "field": "sections.businessMoat.moatFactors[2].body",
       "quote": "is a capital- and time-intensive undertaking that has rarely succeeded",
-      "issue": "\"has rarely succeeded\" asserts a competitive track record the pack does not carry: the surface lists competition and new entrants only as a forward risk and provides no evidence on the historical success or failure rate of firms building competing regulated exchanges.",
-      "fix": "Drop \"that has rarely succeeded\" and rest the barrier on the structural point which the network-effect logic already supports.",
+      "issue": "Round 1: \"has rarely succeeded\" asserted a competitive track record the pack does not carry.",
+      "fix": "Drop it and rest the barrier on the structural point.",
       "status": "addressed",
-      "note": "Re-verified against f027c150: \"rarely succeeded\"=0; moatFactors[2] rests on the structural barrier (\"a capital- and time-intensive undertaking, and the barrier compounds with the liquidity advantage above\"). Holds."
+      "note": "Re-verified against 7ba6def4: \"rarely succeeded\"=0. Holds."
     },
     {
       "id": "F-11",
       "severity": "Minor",
       "field": "sections.businessMoat.segments[0].body",
       "quote": "is the higher-quality half of the revenue base",
-      "issue": "Market data is $238.1M of $1,706.2M total revenue (about 14%), and the same paragraph says the revenue \"splits three ways,\" so calling market data \"half\" overstates its size and reintroduces the size implication F-6 removed.",
-      "fix": "Call market data the higher-quality, recurring portion of the revenue base rather than \"half.\"",
+      "issue": "Round 1: market data, about 14% of revenue, was called \"half\" of the revenue base.",
+      "fix": "Call it the recurring portion rather than \"half.\"",
       "status": "addressed",
-      "note": "Re-verified against f027c150: \"half\" overstatement gone; businessMoat.segments[0] now reads only \"Market data, the third line, rose in the quarter.\" Holds (and the residual paraphrase raised as F-15 is now also resolved)."
+      "note": "Re-verified against 7ba6def4: no \"half of the revenue base\". Holds."
     },
     {
       "id": "F-12",
       "severity": "Important",
       "field": "sections.executiveSummary.companyOverview",
       "quote": "FY25 dividends were $3.9B, close to the full year's free cash flow and a larger payout than the 1.88% headline yield implies",
-      "issue": "The same dividend claim was made near-verbatim in two sections. cashflowCommentary repeated the clauses \"close to the full year's free cash flow\" and \"a larger payout than the 1.88% headline yield implies\" word-for-word (each phrase appeared twice), and \"$3.9B\" was stated a third time in capitalAllocation, breaking the introduce-once / refer-back rule and the no-sentence-in-two-sections rule.",
-      "fix": "Argue the claim once, in cashflowCommentary. Reduce companyOverview to a brief pointer without the \"close to full-year FCF / understates the 1.88% yield\" clauses, and in capitalAllocation refer to the full-year total in words rather than restating \"$3.9B.\"",
+      "issue": "Round 1: the same dividend claim was made near-verbatim in companyOverview and cashflowCommentary.",
+      "fix": "Argue it once in cashflowCommentary and point to it elsewhere.",
       "status": "addressed",
-      "note": "Re-verified against f027c150: companyOverview is a pointer (\"hands its surplus cash back to shareholders, as the cash-flow discussion sets out\"); \"close to the full year's free cash flow\" and \"larger payout than the 1.88% headline yield implies\" each occur once; \"$3.9B\" only in cashflowCommentary; capitalAllocation refers back in words. Holds."
+      "note": "Re-verified against 7ba6def4: companyOverview points (\"returns most of its cash to shareholders\"); cashflowCommentary argues the payout. Holds."
     },
     {
       "id": "F-13",
       "severity": "Minor",
       "field": "sections.executiveSummary.companyOverview",
       "quote": "returns nearly all of its earnings to shareholders",
-      "issue": "The capital-return characterisation \"returns/pays nearly all its earnings/cash/free cash flow\" recurs as a near-identical descriptor in roughly nine places: analystCommentary (\"a policy of paying nearly all of its earnings back to shareholders\"), companyOverview (\"returns nearly all of its earnings to shareholders\"), thesis (\"so it can return nearly all of its earnings\"), executiveSummary.catalysts[3] (\"pays out nearly all of its free cash flow through dividends\"), businessMoat.moatFactors[3] (\"returns nearly all its earnings\"), management.leadership (\"a payout policy that returns nearly all the cash\"), management.capitalAllocation (\"dividends that consume nearly all of its free cash flow\"), financials.cashflowCommentary (\"returns nearly all of the cash it generates\") and finalRecommendation.body[0] (\"returns nearly all its earnings through dividends and buybacks\"). It is a tic repeated past the point of notice (rubric item 9).",
-      "fix": "Argue the payout where it belongs (cashflowCommentary) and point to it from companyOverview, then vary the register in the remaining sections — reference the payout via the dividend yield, the dividend-plus-buyback split, or the payout discipline — so the identical \"nearly all its earnings/cash\" phrasing does not recur in almost every section.",
-      "status": "open",
-      "note": "Still open in f027c150 and unchanged from last round. The \"nearly all of [X]\" skeleton persists in the same three fields flagged before: analystCommentary (\"paying nearly all of its earnings back to shareholders\"), financials.cashflowCommentary (\"returns nearly all of the cash it generates\"), management.capitalAllocation (\"consume nearly all of its free cash flow\") — \"nearly all\" grep=3. Argue it once in cashflowCommentary and vary the other two."
+      "issue": "Round 1: the \"returns nearly all of its earnings/cash\" descriptor recurred as a tic in about nine places.",
+      "fix": "Argue the payout once and vary the register elsewhere.",
+      "status": "addressed",
+      "note": "Re-verified against 7ba6def4: \"nearly all\"=0; payout wording varies. Holds."
     },
     {
       "id": "F-14",
       "severity": "Important",
       "field": "sections.growth.points[4]",
       "quote": "Non-operating income — investment income on the collateral the clearing house holds — grew 10% in the quarter and rises with interest rates, a second-order earnings driver that is easy to overlook and that cuts the other way if rates fall.",
-      "issue": "The non-operating-income point is paraphrased across two body sections. financials.incomeCommentary already introduces and characterises it: \"non-operating income was $220.6 million in the quarter, up 10%, largely investment income earned on the cash and collateral the clearing house holds ... a real and growing piece of the bottom line, and one that rises with interest rates,\" and calls it \"easy to miss.\" growth.points[4] restates the same figure (grew 10% in the quarter) and the same characterisation (investment income on the collateral the clearing house holds; rises with interest rates; easy to overlook) rather than referring back in words — the same claim made twice in different words in two sections (rubric item 7).",
-      "fix": "Argue the non-operating-income line once, in incomeCommentary. In growth.points[4] drop the restated \"grew 10% in the quarter\" and the duplicated \"investment income on the collateral / rises with interest rates / easy to overlook\" characterisation and refer back in words, keeping only the forward, two-sided angle unique to the growth point.",
+      "issue": "Round 1: the non-operating-income point was paraphrased across incomeCommentary and growth.",
+      "fix": "Argue it once in incomeCommentary and refer back in words.",
       "status": "addressed",
-      "note": "Re-verified against f027c150: growth.points[4] now reads \"Non-operating investment income, discussed in the financials section, swings with the level of interest rates — a second-order driver that adds in a high-rate environment and would subtract in a falling one.\" The \"10% in the quarter\" figure and \"collateral/easy to overlook\" characterisation are dropped and referred back in words; argued once in incomeCommentary. Holds."
+      "note": "Re-verified against 7ba6def4: no non-operating-income growth point; incomeCommentary itemizes it once and multiplesCommentary refers back in words. Holds."
     },
     {
       "id": "F-15",
       "severity": "Important",
       "field": "sections.growth.points[2]",
       "quote": "Market data is the higher-quality growth line: it grew even as trading volume fell, a recurring, subscription-like revenue stream independent of trading volume.",
-      "issue": "The market-data characterisation — higher-quality/more-stable, grew even as trading fell, recurring/subscription-like — is made three times as a paraphrase: this growth point; businessMoat.segments[0].body (\"Market data, the recurring subscription-like line, grew even as trading slowed and is a higher-quality part of the revenue base\"); and executiveSummary.catalysts[1] (\"information-services revenue rose 20% in the quarter even as clearing fees fell, a more stable, higher-quality revenue stream\"). growth.points[2] and businessMoat.segments[0] are near-verbatim paraphrases of one another — the same claim made twice in different words in two body sections. \"grew even as trading\" appears in both (grep = 2). Rubric item 7.",
-      "fix": "Argue the market-data characterisation once. Its 20% growth and $238.1M already live in incomeCommentary and its recurring, higher-quality nature in businessMoat.segments[0]. Reduce growth.points[2] to the forward, growth-specific angle and refer back in words, dropping the duplicated \"grew even as trading fell / recurring, subscription-like / higher-quality\" clause.",
+      "issue": "Round 1: the market-data characterisation was made three times as a paraphrase.",
+      "fix": "Argue it once and point to it elsewhere.",
       "status": "addressed",
-      "note": "Re-verified against f027c150: the characterisation is now argued once, in growth.points[2]. businessMoat.segments[0].body no longer carries it (reads only \"Market data, the third line, rose in the quarter\"), and catalysts[1] is now a pointer (\"the more stable revenue stream detailed under growth\"). \"grew even as trading\" grep=1. Resolved."
+      "note": "Re-verified against 7ba6def4: market data argued once in growth.points[1]; catalysts[1] points. Holds."
     },
     {
       "id": "F-16",
       "severity": "Important",
       "field": "sections.executiveSummary.catalysts[2]",
-      "quote": "New products and venues — event contracts, the FutureSports sports-index futures partnership, and the migration to Google Cloud — could open growth beyond the mature core complexes.",
-      "issue": "This catalyst and growth.points[3] are near-duplicate sentences: both list the identical three items (event contracts, the FutureSports sports-index futures partnership, the migration to Google Cloud) and both close \"beyond the mature core complexes\" (\"could open growth\" here vs \"could extend growth\" there). The clause \"beyond the mature core complexes\" appears in both (grep = 2, confirmed in the built report). An executive-summary catalyst is meant to point; here it restates its own section almost word-for-word rather than pointing to it. Rubric item 7.",
-      "fix": "Make catalysts[2] a brief pointer — name the new-products/new-venues theme and point to the growth section — without repeating the full three-item list and the \"beyond the mature core complexes\" clause. Let growth.points[3] carry the list and the argument.",
+      "quote": "New products the company lists, including Single-Stock futures, 1-Ounce Gold contracts and U.S. Treasury clearing, are optional upside not yet visible in the figures.",
+      "issue": "The same defect has come back in this rewrite. catalysts[2] again restates its growth point instead of pointing to it. It lists the same products as growth.points[3] (Single-Stock futures, 1-Ounce Gold contracts, U.S. Treasury clearing), and both use the same predicate: \"optional upside not yet visible in the figures\" here, and \"New products are optional upside not yet in the figures\" in growth.points[3]. \"optional upside\" grep=2. An executive-summary catalyst should point. Rubric item 7.",
+      "fix": "Make catalysts[2] a pointer. Name the new-products theme and point to the growth section, without the product list and without the \"optional upside not yet in the figures\" judgment. Let growth.points[3] keep the list and the argument.",
       "status": "addressed",
-      "note": "Re-verified against f027c150: catalysts[2] is now a brief pointer (\"New products and venues are optional upside the growth section takes up\"), with no three-item list; growth.points[3] carries the list and the argument. \"beyond the mature core complexes\" grep=1. Resolved."
+      "note": "Re-verified against 7ba6def4: catalysts[2] is now a pointer (\"New products and venues are a further source of growth, which the growth section takes up.\"); the list and \"optional upside\" live only in growth.points[3] (grep=1). Resolved."
     },
     {
       "id": "F-17",
       "severity": "Minor",
       "field": "sections.executiveSummary.companyOverview",
       "quote": "The economics are exceptional",
-      "issue": "\"exceptional\" recurs three times as a quality descriptor — analystCommentary (\"It is an exceptional business model\"), companyOverview (\"The economics are exceptional\") and finalRecommendation.body[0] (\"the economics are exceptional\") — and the phrase \"the economics are exceptional\" appears near-verbatim in two sections (companyOverview and finalRecommendation.body[0]). \"exceptional\" grep=3. Rubric item 9 (a superlative descriptor repeated past the point of notice) and item 7 (the same characterisation restated in two sections).",
-      "fix": "Keep one \"exceptional\" and let the 64.9% operating margin and ~64% FCF margin carry the quality in the other two — describe the economics via the margin and cash-conversion figures rather than repeating the word.",
-      "status": "open"
+      "issue": "Round 2: \"exceptional\" recurred three times, near-verbatim in two sections.",
+      "fix": "Keep one instance and let the margin and cash-conversion figures carry the quality.",
+      "status": "addressed",
+      "note": "Re-verified against 7ba6def4: \"exceptional\"=1. Holds."
     },
     {
       "id": "F-18",
       "severity": "Minor",
       "field": "sections.executiveSummary.catalysts[0]",
       "quote": "A return of market volatility — a rate-cut cycle, a geopolitical shock, an equity drawdown — lifts hedging volume, and CME's revenue is directly geared to it.",
-      "issue": "catalysts[0] and valuation.scenarios[0].driver (Bull) share the same enumerated trigger list and predicate: \"a rate-cut cycle, a geopolitical shock, [an/or an] equity drawdown ... lifts hedging.\" Each of \"rate-cut cycle,\" \"geopolitical shock,\" \"equity drawdown\" and \"lifts hedging\" appears in both (grep = 2). An executive-summary catalyst is meant to point; here it restates the Bull scenario's distinctive trigger list rather than pointing to it — the same defect shape as F-16. Rubric item 7.",
-      "fix": "Reduce catalysts[0] to a pointer — name the \"return of volatility lifts hedging volume\" driver to which CME's revenue is geared and point to the Bull case in the valuation section — without repeating the three-item trigger list, and let scenarios[0].driver carry the enumerated triggers.",
-      "status": "open"
+      "issue": "Round 2: catalysts[0] restated the Bull scenario's three-item trigger list.",
+      "fix": "Reduce catalysts[0] to a pointer.",
+      "status": "addressed",
+      "note": "Re-verified against 7ba6def4: catalysts[0] remains a one-sentence pointer with no trigger list. Holds."
+    },
+    {
+      "id": "F-19",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[1].driver",
+      "quote": "Volume stays near second-quarter levels with normal swings, market data keeps growing, and EPS reaches consensus of $12.25 for FY26E and $12.93 for FY27E.",
+      "issue": "The Base story contradicts the report's own reading of consensus, and it overlaps the Bear. (1) growth.points[0] says \"FY26E needs the second half to grow faster than the second quarter did, so the estimate leans on volume recovering rather than holding at second-quarter levels\". The thesis says consensus \"needs a second-half pickup the quarter did not show\". Yet the Base holds volume at second-quarter levels and still reaches consensus. (2) The Bear's premise is \"The second quarter's conditions persist into 2027\". The weighting argument says \"The second quarter looks more like the Bear's starting point\". So second-quarter conditions are both the Base and the Bear. (3) scenarioCommentary says the first half's 12% EPS gain \"gives FY26E some cushion even if the second quarter's pace persists\". Reviewer arithmetic (not for the page): $6.06 in the first half leaves about $6.19 needed in the second half. That is roughly 8% above the second half of 2025 ($11.16 − $5.43). The second quarter grew EPS 2%, so at that pace FY26 falls short of consensus. The cushion does not reach consensus.",
+      "fix": "Make the Base's volume premise consistent with consensus EPS. Either have the Base assume the second-half recovery that growth.points[0] says consensus needs, or keep second-quarter volume and stop claiming consensus EPS. Separate the Base premise clearly from the Bear's \"second quarter persists\" premise. Reword or drop the \"some cushion even if the second quarter's pace persists\" clause so it does not imply that consensus is met at the second-quarter pace. Put none of the reviewer arithmetic on the page.",
+      "status": "addressed",
+      "note": "Re-verified against 7ba6def4: the Base now assumes second-half volume between the first-quarter surge and the second-quarter calm, consistent with growth.points[0]; only the Bear carries the second quarter's calm lasting. The cushion clause is gone. Resolved."
+    },
+    {
+      "id": "F-20",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "with each price set at a Street target a reader can check and argued on its own earnings and multiple",
+      "issue": "Only the Base is argued on earnings and a multiple; the Bull and Bear are the Street's extremes adopted as given. The Base works: $285.00 on FY27E $12.93 is slightly below 22.5x, tied to the slowdown to mid-single-digit growth. The Bull and Bear state no EPS level and no multiple. Each lists directional words and checks against a different reference: the Bull against the 23.4x trailing P/E (\"richer than today's trailing one\"), the Base against the 22.5x NTM, the Bear against the 21.4x FY27E. That breaks \"one framework\" and the like-for-like reference multiplesCommentary sets (the NTM multiple). The Bull also asks for a re-rating on a volatility-driven beat, which durability calls cyclical. Nothing argues why the market would pay more for it. No evidence is offered for why the extremes of 16 analysts' targets are this report's Bull and Bear. Because all three prices are Street figures, the fair value mostly re-weights the Street's own range, and E (+1.5%) lands near the consensus target's +2.7%. The \"not close\" claim does check out: swapping Bull and Bear weights gives E ≈ +3.3%, and SELL needs a Base near $252 or a Bear weight above 40%.",
+      "fix": "Pick one of two routes. (a) Give the Bull and Bear their own earnings and multiple in words, against the single like-for-like reference (the current-year multiple read from the NTM row). For example: Bear EPS near the FY26E level at a multiple in the high teens; Bull EPS well above FY27E at a multiple above today's current-year multiple. Argue why a volatility-driven beat would earn a re-rating. (b) Say plainly that the Bull and Bear are the Street's extreme targets, used as reader-checkable bounds. Say why they are plausible ends; the 52-week range is the evidence already on the page. Note that the weighted value therefore stays close to the Street's own view. Either way, change \"argued on its own earnings and multiple\" here and in analystCommentary so it describes what the drivers do. Keep \"not close\"; it is accurate.",
+      "status": "addressed",
+      "note": "Re-verified against 7ba6def4: every scenario is set against the 22.5x current-year reference (Bull holds it, Base trims it, Bear high teens), each with an EPS basis in words. scenarioCommentary says plainly that Base and Bear coincide with Street targets and that the value largely re-weights the Street view. Arithmetic checks: Base about 22.0x on $12.93; Bear about 19x on EPS a little under $12.25. Resolved."
+    },
+    {
+      "id": "F-21",
+      "severity": "Important",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "it sits close to the P/E because net debt is small next to a market capitalization of about $99.2B",
+      "issue": "The causal explanation is incomplete enough to mislead. Small net debt makes enterprise value close to market cap, but that alone does not bring EV/EBITDA (22.2x) close to the P/E (23.4x). For a typical debt-free company, EV/EBITDA sits well below P/E, because EBITDA is well above net income. Here the two multiples are close mainly because EBITDA and net income are close: FY25 EBITDA $4.3B against net income $4.1B. The large non-operating investment income that incomeCommentary itemizes offsets D&A and tax. The pack shows both of those facts; it does not support the \"because\" as written. Rated Important, not Critical: the figures are right and the cited fact is real, but the reasoning credits the wrong driver.",
+      "fix": "Give both reasons in words: net debt is small, so enterprise value is close to market capitalization; and net income is close to EBITDA, because non-operating investment income (see the financials section) offsets depreciation and tax. Or drop the causal clause.",
+      "status": "addressed",
+      "note": "Re-verified against 7ba6def4: multiplesCommentary gives both reasons (small net debt; net income close to EBITDA because non-operating investment income offsets depreciation and tax). Resolved."
+    },
+    {
+      "id": "F-22",
+      "severity": "Important",
+      "field": "sections.finalRecommendation.body[0]",
+      "quote": "CME carries a steady $3.4B of debt, was a small net debtor in four of the last five year-ends and again at June 30, 2026, and its leverage is low at 0.3x net debt/EBITDA.",
+      "issue": "The corrected leverage is honest and accurate everywhere ($3.4B in each of FY21–FY25, net debt FY21–FY24, net cash about $1.0B only at the FY25 year-end, net debt again by June 30, 2026 on the release's $2.3B cash, 0.3x TTM), but it is told in full several times. analystCommentary gives the whole story with figures. balanceCommentary argues it. finalRecommendation.body[0] retells it with $3.4B, \"four of the last five year-ends\", June 30 and 0.3x. multiplesCommentary restates \"$3.4B of debt\". The first-half shift from net cash to net debt is also claimed three times in financials and management: \"The net-cash position did not last\" (balanceCommentary), \"that drawdown is what took the balance sheet from net cash back to net debt\" (cashflowCommentary), and \"the year-end cash pile was paid down to below the debt balance\" (capitalAllocation). Rubric item 7. Separately, \"keep debt at a fixed level\" in capitalAllocation reads as a stated policy, but the pack only shows debt was flat.",
+      "fix": "Argue the leverage series once, in balanceCommentary. Pick one home for the first-half shift to net debt (cashflowCommentary has the mechanism) and point to it in words elsewhere. Cut finalRecommendation.body[0] to a pointer (e.g. \"leverage stays low, as the balance-sheet discussion sets out\"), and drop the $3.4B figure from multiplesCommentary. In capitalAllocation, describe flat debt as what the record shows, not as a policy.",
+      "status": "addressed",
+      "note": "Re-verified against 7ba6def4: leverage argued once in balanceCommentary; analystCommentary keeps only 0.3x, finalRecommendation.body[0] points back, multiplesCommentary drops $3.4B, capitalAllocation says \"The record shows flat debt\". Still honest: $3.4B FY21-FY25, net debt FY21-FY24, net cash about $1.0B only at FY25 year-end, net debtor again at mid-year. Resolved."
+    },
+    {
+      "id": "F-23",
+      "severity": "Important",
+      "field": "sections.finalRecommendation.body[1]",
+      "quote": "We set the Base on the Street's median target, a slight de-rating from today's forward multiple, and give the Bear more weight than the Bull because the second quarter resembles the Bear's starting point.",
+      "issue": "The Base anchor and the weighting rationale are each argued in several places, which rubric item 6 forbids. The Base as the Street median with a slightly lower forward multiple a year out appears in analystCommentary (\"Our Base of $285.00 is the Street's median target, which on FY27E EPS of $12.93 means a slightly lower forward multiple a year out\"), thesis (\"a slightly lower forward multiple a year out, which lands on the Street's median target\"), scenarios[1].driver, and here. The reason for weighting the Bear above the Bull (the second quarter resembles the Bear's starting point) appears in scenarioCommentary and here.",
+      "fix": "Argue the Base anchor in scenarios[1].driver and the weights in scenarioCommentary, once each. Make finalRecommendation.body[1] and the thesis point to them in words (\"our Base follows the Street's median, and the weights lean slightly to the Bear, as the valuation section argues\"). analystCommentary can keep a one-clause summary without the $12.93 multiple mechanics.",
+      "status": "addressed",
+      "note": "Re-verified against 7ba6def4: the Base anchor lives in scenarios[1].driver and the weights in scenarioCommentary; thesis and finalRecommendation.body[1] point back; analystCommentary keeps a one-clause summary. Resolved."
+    },
+    {
+      "id": "F-24",
+      "severity": "Important",
+      "field": "sections.businessMoat.durability",
+      "quote": "regulation that adds a transaction tax or requires more guaranty-fund capital could impair the economics",
+      "issue": "The regulatory exposure is argued in three body sections. risks.idiosyncratic[3] argues it (\"The 10-K flags possible transaction taxes, rules that could require more of the company's funds for the guaranty fund, and litigation over the legal status of event contracts\"). durability retells the transaction-tax and guaranty-fund pair and lists \"the legal status of event contracts\" again. risks.systemic repeats \"a possible transaction tax\". Event-contract litigation also appears in growth.points[3]. Each is the same claim in different words in another section (rubric item 7). moatFactors[2] already shows the right pattern: \"which the risk section takes up\".",
+      "fix": "Argue the transaction tax, guaranty fund and event-contract litigation once, in risks.idiosyncratic[3]. In durability, point to the risk section in words without the pair. In systemic, keep only what is new there (the 60/40 treatment) and point back for the transaction tax. In growth.points[3], drop the litigation sentence or reduce it to a pointer.",
+      "status": "addressed",
+      "note": "Re-verified against 7ba6def4: regulation is argued once in risks.idiosyncratic[3]; durability and moatFactors[2] point to the risk section; systemic adds only the 60/40 item; growth.points[3] drops the litigation sentence. Resolved."
+    },
+    {
+      "id": "F-25",
+      "severity": "Important",
+      "field": "sections.growth.points[2]",
+      "quote": "The company credits precious-metals micro contracts among its retail clients with sustaining metals volume, but micro contracts also lowered the average rate per contract, so volume growth from that source adds less revenue per contract.",
+      "issue": "Two claims are each argued in two body sections. (1) Micro contracts lowering the rate per contract: here, in risks.idiosyncratic[1] (\"The company attributes the drop largely to more micro-contract volume... If those mix shifts continue, revenue can fall even when volume holds\"), and again in the Bear driver (\"micro-contract growth keeps pulling the rate per contract down\"). (2) Clearing-firm concentration: companyOverview says \"one firm represented at least 10% of those fees in the first six months of 2026\", and risks.idiosyncratic[2] says \"One clearing firm accounted for at least 10% of clearing and transaction fees in the first six months of 2026\". Customer concentration is one of the desk's most repeated offenders. Rubric item 7.",
+      "fix": "Argue the micro-contract rate effect once, in risks.idiosyncratic[1]. Keep growth.points[2] to the retail-adoption angle that is new to it, and point back for the rate effect. State the concentration once, in risks.idiosyncratic[2], and drop the sentence from companyOverview or make it a pointer.",
+      "status": "addressed",
+      "note": "Re-verified against 7ba6def4: growth.points[2] points to the risk section for the fee effect; the 10% concentration appears only in risks.idiosyncratic[2]. Resolved."
+    },
+    {
+      "id": "F-26",
+      "severity": "Minor",
+      "field": "sections.finalRecommendation.body[2]",
+      "quote": "On the same scenarios, the page's math would derive BUY at or below the low end of our range and SELL at or above its top.",
+      "issue": "The flip points sit inside the range, not at its ends. On the $280.25 weighted value, SELL (E ≤ −5%) derives from about $295, below the $300 top. BUY (E ≥ +10%, R ≥ 0.5×) derives from about $255, above the $250 low. As worded, a reader would take $296–$300 for HOLD territory, which the page would label SELL. The desk's rule is that a price trigger sits where the page's own math flips the label. Reviewer arithmetic only; do not put these figures on the page.",
+      "fix": "Say in words that the page would derive SELL a little below the top of the range and BUY a little above its low end, without computing new figures.",
+      "status": "addressed",
+      "note": "Re-verified against 7ba6def4: now \"BUY a little above the low end of our range and SELL a little below its top\", matching the page math on the new $277.25 value (SELL from about $292, BUY from about $252). Resolved."
+    },
+    {
+      "id": "F-27",
+      "severity": "Minor",
+      "field": "sections.risks.idiosyncratic[4]",
+      "quote": "and to meet margin and liquidity needs in the BrokerTec matched principal business, among its risk factors",
+      "issue": "Two items are attributed to the wrong list. The clearing credit and liquidity item here, and \"its ability to continue to generate funds and manage its indebtedness\" in management.capitalAllocation (\"The company's own list of risk factors includes...\"), come from the cautionary forward-looking factors in the July 22, 2026 earnings release (\"Among the factors that might affect our performance...\"). The 10-K Risk Factors excerpt in Context does not carry them.",
+      "fix": "Attribute both to the factors the company lists in its July 22, 2026 earnings release, not to its \"risk factors\".",
+      "status": "addressed",
+      "note": "Re-verified against 7ba6def4: idiosyncratic[4], capitalAllocation and systemic attribute these factors to the July 22, 2026 earnings release. Resolved."
+    },
+    {
+      "id": "F-28",
+      "severity": "Minor",
+      "field": "analystCommentary",
+      "quote": "The re-captured balance sheet corrects one part of the earlier picture.",
+      "issue": "This is pipeline language in reader-facing prose. \"re-captured\", \"the earlier picture\", \"With $3.4B of debt now captured\" (multiplesCommentary) and \"The corrected balance sheet does not change that\" (finalRecommendation.body[0]) all refer to the desk's data capture and a prior version, which this page does not show the reader. \"now captured\" also implies the EV multiple was not meaningful before, which the page does not explain.",
+      "fix": "If the re-publish needs a disclosure, write one plain sentence: an earlier version of this report understated debt, and the figures here are corrected. Otherwise describe the balance sheet as it is and drop \"re-captured\", \"earlier picture\", \"now captured\" and \"corrected\".",
+      "status": "addressed",
+      "note": "Re-verified against 7ba6def4: re-captured/now captured/earlier picture=0. What remains is one plain correction notice at the end of balanceCommentary. It suits the reader: an earlier version was published, and the notice says what was wrong (debt understated) in reader terms with no pipeline jargon. Resolved."
+    },
+    {
+      "id": "F-29",
+      "severity": "Minor",
+      "field": "sections.management.governance",
+      "quote": "The chairman and chief executive roles are combined.",
+      "issue": "The paragraph ends on a fact with no reading. The pay items (87% say-on-pay support, 114.3% of the cash-earnings goal, 200.0% vesting of the 2022 performance shares) are also listed without a view on what they mean for outside holders. The only judgment in the paragraph is on the member-director structure. Rubric item 4.",
+      "fix": "Add a short reading for the holder. For example, say whether a combined chair and CEO alongside six member-elected directors concentrates oversight, and whether the pay outcomes look aligned with results. Or fold the combined-role fact into the existing member-director view.",
+      "status": "addressed",
+      "note": "Re-verified against 7ba6def4: governance now reads the combined chair/CEO and member-elected directors against the independent majority and committees, and gives a view on pay alignment. Resolved."
+    },
+    {
+      "id": "F-30",
+      "severity": "Minor",
+      "field": "sections.risks.idiosyncratic[3]",
+      "quote": "The 10-K flags possible transaction taxes, rules that could require more of the company's funds for the guaranty fund, and litigation over the legal status of event contracts.",
+      "issue": "The 10-K is cited throughout (\"The 10-K describes\", \"the 10-K describes\", \"The 10-K notes\", \"The 10-K flags\") but never dated. It was filed February 26, 2026, about five months before the quarter it sits beside. Its age matters most for the event-contract litigation, whose status may have moved since.",
+      "fix": "Date the 10-K once, where it is first cited (e.g. \"the FY25 10-K, filed February 26, 2026\"), and note that the litigation status is as of that filing.",
+      "status": "addressed",
+      "note": "Re-verified against 7ba6def4: moatFactors[0] dates \"The FY25 10-K, filed February 26, 2026\" and idiosyncratic[3] gives the litigation status as of the filing. Resolved."
+    },
+    {
+      "id": "F-31",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarios[0].driver",
+      "quote": "FY27 EPS lands close to a tenth above the consensus. We hold today's 22.5x current-year multiple rather than raise it",
+      "issue": "A reader who checks the Bull gets a different price. A tenth above the $12.93 FY27E consensus at 22.5x gives about $320, not $315; $315 implies a beat of about 8%. The gap is small (about 0.4 points of expected upside) and does not change the label, but the driver invites a check that does not land on the stated price. Fit: this driver is 530/600 characters and management.governance is 1,314/1,500, both near their caps.",
+      "fix": "Describe the beat as a little less than a tenth (for example a high-single-digit beat), or set the price to match the stated beat, without writing the computed figure. Trim this driver and governance a little to leave room.",
+      "status": "declined",
+      "note": "Deferred to the next synthesis: the final re-check approved the report, and editing the judgment now would leave it unreviewed. Next pass words the Bull as a beat of under a tenth so it matches $315."
+    },
+    {
+      "id": "F-32",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "That is a HOLD, and it is not close: swapping the Bull and Bear weights still derives HOLD, and SELL would need the Bear to carry about half the weight.",
+      "issue": "The weight tests are right: a Bull/Bear swap gives about +2.0%, and SELL needs the Bear at roughly 43% to 52%, depending on where the weight comes from. But \"not close\" tests only the weights. With expected upside now +0.4%, the label sits much nearer SELL than BUY. The page derives SELL at a price only about 6% above $276.01, well inside the 52-week range, and finalRecommendation.body[2] says this only as \"a little below its top\". A Base about two turns lower on the multiple (about 20x on FY27E) would also derive SELL. Reviewer arithmetic only.",
+      "fix": "Qualify the claim in words: not close on the weights, but nearer SELL than BUY, so a modest rise in the price or a somewhat lower Base multiple would derive SELL.",
+      "status": "declined",
+      "note": "Deferred to the next synthesis: the final re-check approved the report, and editing the judgment now would leave it unreviewed. Next pass qualifies \"not close\": true on the weights, but at E near zero a modestly higher price or a lower Base multiple derives SELL."
     }
   ]
 }
