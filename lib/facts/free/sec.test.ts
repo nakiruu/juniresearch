@@ -309,6 +309,23 @@ describe("total debt — concepts and rules added 2026-10-07 (D-1)", () => {
     expect(parseCompanyFacts(facts).annual.find((p) => p.fiscal_year === 2024)!.total_debt).toBe(45_127);
   });
 
+  it("SCHW FY2022 column: ShortTermBorrowings 17,050 already holds the FHLB advances; they are not added again (37,878)", () => {
+    // SCHW's FY2022 10-K (0000316709-23-000009) tags "Short-term borrowings" 17,050; its FY2023 10-K (0000316709-24-000018)
+    // recasts the same column as OtherShortTermBorrowings 4,650 + AdvancesFromFederalHomeLoanBanks 12,400 (= 17,050).
+    // Total debt is 17,050 + 20,828 = 37,878, not 17,050 + 12,400 + 20,828 = 50,278.
+    const facts = { facts: { "us-gaap": {
+      Revenues: { units: { USD: [{ start: "2022-01-01", end: "2022-12-31", val: 900, form: "10-K", filed: "2023-02-23" }] } },
+      NetIncomeLoss: { units: { USD: [{ start: "2022-01-01", end: "2022-12-31", val: 90, form: "10-K", filed: "2023-02-23" }] } },
+      LongTermDebtAndCapitalLeaseObligations: { units: { USD: [inst(20_828, "2022-12-31")] } },
+      LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities: { units: { USD: [inst(20_828, "2022-12-31")] } },
+      ShortTermBorrowings: { units: { USD: [inst(17_050, "2022-12-31")] } },
+      OtherShortTermBorrowings: { units: { USD: [inst(4_650, "2022-12-31")] } },
+      CommercialPaper: { units: { USD: [inst(250, "2022-12-31")] } },
+      AdvancesFromFederalHomeLoanBanks: { units: { USD: [inst(12_400, "2022-12-31")] } },
+    } } };
+    expect(parseCompanyFacts(facts).annual.find((p) => p.fiscal_year === 2022)!.total_debt).toBe(37_878);
+  });
+
   it("FHLB advances are never added on a LongTermDebt / DebtCurrent path (a bank's borrowings total there can hold them)", () => {
     // CFG-style: LongTermDebt is the long-term borrowings total; an FHLB note figure beside it must not be re-added.
     expect(fy2025({
