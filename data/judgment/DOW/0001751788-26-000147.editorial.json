@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "78e3a9c90e9fd770df362025483f7d2e596c220c60f9b8e123fbad795d287233",
-  "reviewedAt": "2026-09-24T03:20:00Z",
-  "reviewer": "Claude Opus 4.8",
+  "judgmentSha256": "c46219985862dbe331ae20d0a16acaa9e0e8e32bf40988d370a10ec3e2f5dc8f",
+  "reviewedAt": "2026-10-07T16:45:01Z",
+  "reviewer": "Claude Opus 5.5",
   "round": 2,
-  "verdict": "approved-with-minors",
+  "verdict": "approved",
   "findings": [
     {
       "id": "F-1",
@@ -13,7 +13,7 @@
       "issue": "\"Two years of losses\" (FY24 and FY25) is contradicted by the income statement on the same page: FY24 operating income was +$1.2B and FY24 net income +$1.1B (+$1.57 diluted EPS) — FY24 was profitable, not a loss year. Only FY25 was a net/operating loss. The same error recurs at sections.risks.idiosyncratic[3]: \"current leverage and net-debt/EBITDA cannot be verified from this report after two loss-making years.\" (FY24 did have marginally negative FCF of -$26M, but that is negative cash flow, not a loss.) The mischaracterization overstates the depth and duration of the downturn.",
       "fix": "Recast to what the surface supports: FY23 total/net debt predate FY24-FY25 of weak-to-negative free cash flow (FY24 roughly breakeven at -$26M, FY25 -$1.4B) and the FY25 net loss. Do not call FY24 a loss year. Apply the same correction to the idiosyncratic-risk bullet (\"after a loss-making FY25 and two years of negative free cash flow\").",
       "status": "addressed",
-      "note": "Resolved. balanceCommentary now reads \"the FY23 figures predate FY24 and FY25, years of weak-to-negative free cash flow and, in FY25, a net loss that would have drawn on the balance sheet\" — FY24 is no longer called a loss year and the characterisation matches the surface (FY24 FCF ~breakeven/-0.1%). idiosyncratic[3] now reads \"after a loss-making FY25 and two years of negative free cash flow.\" No residual \"two years of losses\"/\"two loss-making years\" phrasing anywhere in the draft."
+      "note": "Still resolved in the republish. The FY23-predates passage is gone because the corrected pack now carries FY24 and FY25 debt. No \"two years of losses\" or \"two loss-making years\" wording remains, and FY24 is described as \"roughly breakeven\" free cash flow."
     },
     {
       "id": "F-2",
@@ -23,7 +23,7 @@
       "issue": "The \"about 23%\" downside belongs to the $22 Bear implied price ((28.65-22)/28.65 = 23.2%, the page's bearDownside), not to the $20.65 52-week low, which is ~27.9% below $28.65. As written the clause reads as though $20.65 is 23% below the price. scenarioCommentary states the relationship correctly (\"our Bear implied price of $22 about 23% below the current price\"), so the driver is the loose one.",
       "fix": "Attach the 23% to the $22 bear implied price, e.g. \"the shares retest toward the 52-week low of $20.65; our $22 bear case is about 23% below the $28.65 price,\" so the percentage matches the calls math.",
       "status": "addressed",
-      "note": "Resolved. scenarios[2].driver now reads \"the shares retest toward the 52-week low of $20.65, with our $22 bear case about 23% below the $28.65 price\" — the 23% is attached to the $22 bear implied price ((28.65-22)/28.65 = 23.2%), and $20.65 is stated without a percentage. Consistent with scenarioCommentary, analystCommentary and finalRecommendation, which all tie the 23% to the $22 bear case."
+      "note": "Superseded. The Bear is now $20.65, the 52-week low itself, and the page's -27.9% bear-case downside matches (1 - 20.65/28.65 = 27.9%). No 23% figure remains anywhere in the judgment."
     },
     {
       "id": "F-3",
@@ -33,7 +33,7 @@
       "issue": "Cross-section numeric repetition. The Q2'26 operating-cash-flow pair ($1,324M, up $1,794M YoY) is introduced in cashflowCommentary (\"Cash provided by operating activities was $1,324 million in Q2'26, up $1,794 million year-over-year from -$470 million\") and re-quoted verbatim here. The FY25 free-cash-flow / dividend pair (-$1.4B FCF vs $1.5B dividends) is likewise re-quoted numerically across cashflowCommentary, capitalAllocation and finalRecommendation. The rubric asks that each figure be introduced once and referred back to in words.",
       "fix": "In capitalAllocation, refer back in words (e.g. \"operating cash flow turned sharply positive in the quarter\") rather than re-quoting $1,324M/$1,794M, and carry the -$1.4B/$1.5B pair with numbers in one section, in words elsewhere.",
       "status": "addressed",
-      "note": "Resolved for the named pairs. The Q2'26 OCF pair ($1,324M / up $1,794M) now carries numbers only in cashflowCommentary; capitalAllocation refers back in words (\"operating cash flow turned sharply positive year-over-year\"). The FY25 -$1.4B FCF / $1.5B dividend pair now carries numbers only in cashflowCommentary and appears in words elsewhere (capitalAllocation, finalRecommendation, idiosyncratic[0]). A smaller residual $253M/$0.00 repeat is raised separately as F-4."
+      "note": "Resolved. capitalAllocation now says \"In FY25 Dow paid a reduced dividend\". The $1.5B/$2.0B pair has numbers only in cashflowCommentary."
     },
     {
       "id": "F-4",
@@ -42,7 +42,88 @@
       "quote": "repurchased no stock (FY25 repurchases $0.00), so the payout ran ahead of internally generated cash",
       "issue": "Residual cross-section numeric repetition of the same shape F-3 fixed, left in the newly-revised capitalAllocation. The FY25 buyback figure \"(FY25 repurchases $0.00)\" appears verbatim in both cashflowCommentary (\"suspended buybacks (FY25 repurchases $0.00)\") and capitalAllocation. The Q2'26 dividend \"$253 million\" is quoted with numbers in both cashflowCommentary (\"Dividends in the quarter were $253 million\") and capitalAllocation (\"paid $253 million in Q2'26\"). Under the rubric each figure should carry numbers once and be referred back to in words; the identical \"(FY25 repurchases $0.00)\" parenthetical is also the mechanical same-token case.",
       "fix": "Keep each figure numeric in one section — the $0.00 buybacks and the $253M quarterly dividend in cashflowCommentary — and refer back in words in capitalAllocation (e.g. \"with buybacks suspended and the quarterly dividend still paid\"), so no figure is re-quoted numerically across the two sections.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Resolved. \"$0.00\" now appears only in cashflowCommentary, and capitalAllocation says \"repurchased no stock\" in words. \"$253 million\" now appears only in capitalAllocation. The remaining dividend-pair repeat is tracked under F-3."
+    },
+    {
+      "id": "F-5",
+      "severity": "Important",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "For an industrial company that zone caps the published label at HOLD, whatever the scenarios derive.",
+      "issue": "The gate does not cap the published label. scripts/synth-build.ts calls decide() with SAFE_DEFAULTS (enforceGate false). Even with enforcement on, decide() caps only at high gate confidence, and gates.ts sets confidence to low for any WEAK zone. The HOLD ceiling is stored as rating.gate.gatedLabel and is advisory: an earlier build of this draft printed \"gate ceiling HOLD (weak-balance-sheet) — advisory, not applied\" against a composed BUY. So finalRecommendation.body[1] is wrong on the page's math: at $26 the scenarios derive BUY (E +12.0%, R 0.58x), and BUY could be published. The lift condition is also misstated. WEAK clears when coverage reaches 1x and leverage falls to 6x, not when coverage \"turns positive\". The rest of the gate explanation is accurate (see F-9 for DISTRESS). The cap claim appears four times: here; analystCommentary (\"caps the label at HOLD\"); finalRecommendation.body[0] (\"would cap the label at HOLD in any case\"); and body[1] (\"the gate would still hold the label at HOLD until trailing interest coverage turns positive and leverage falls; an upgrade needs both\"). Catalysts[2] (\"turn positive and begin to lift the WEAK gate\") carries the same threshold error.",
+      "fix": "Explain the gate once, here. It sets an advisory HOLD ceiling and marks the balance sheet as too weak to support a buy-side call, but it does not change the published label, which follows the scenarios. In analystCommentary and body[0], drop the cap wording and keep \"the scenarios derive HOLD on their own\". In body[1], say the scenarios would derive BUY at or below the target low and the WEAK gate would remain a reason for caution until trailing earnings cover interest and leverage falls back. Do not present \"an upgrade needs both\" as a rule. In catalysts[2], replace \"turn positive\" with \"recover enough to cover interest\", without adding a number.",
+      "status": "addressed",
+      "note": "Resolved. Every claim that the gate caps the label is gone. balanceCommentary now explains the gate once: an advisory HOLD ceiling that the portfolio acts on, with the published label following the scenarios. That matches synth-build (SAFE_DEFAULTS) and eligibility.ts. finalRecommendation.body[1] now says a price at or below the target low derives BUY (correct: E +12.0%, R 0.58x). catalysts[2] says earnings \"recover enough to cover interest\"."
+    },
+    {
+      "id": "F-6",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "We reject that: the market already pays more than that for FY27E today, and no source supports a de-rating.",
+      "issue": "The rejection uses the basis that docs/10022026learning.md section 13 (USFD F-15) rules out. When the Base values the shares a year out on FY27E, today's forward multiple (12.0x, a current-year multiple on FY26E) is the like-for-like reference. A year out, FY27 is the current year, so 16.1x on it raises the current-year multiple from 12.0x. That makes 12.0x the held multiple, not a de-rating. multiplesCommentary makes the same inversion: \"so that FY27E multiple is the like-for-like reference\" and \"because we hold today's multiple rather than assume a higher one\". The rejection is also circular: the market pays 16.1x for FY27 today because FY27 is a year further out. Both robustness claims hold on the page's math. A Street-median Base ($34.00) gives E +10.9% and R 0.39x, so HOLD. A 12.0x Base ($21.36) gives E -11.1%, so SELL. Shifting ten points of weight gives +7.8% or -4.6%. But a Base below about $24.87 (about 14.0x FY27E) derives SELL, so a basis midway between the two multiples sits at the line. \"The Street's median target reflects that view\" gives analysts a rationale that no source states.",
+      "fix": "Drop \"like-for-like reference\", \"de-rating\" and \"rather than assume a higher one\". Say the Base assumes that a year out the market pays the multiple it pays for FY27 today, which is above today's current-year multiple. Argue that from both sides with the reasons already on the page. Say that holding today's current-year multiple derives SELL, that a basis between the two sits near the SELL line, and so the call is close to SELL. Write \"is consistent with that view\" instead of \"reflects\". HOLD can stand if it is argued this way. This is not a request to change the label.",
+      "status": "addressed",
+      "note": "Resolved. The Base is now described as raising today’s 12.0x current-year multiple and is argued from both sides; \"like-for-like\" and \"de-rating\" are gone. The report says the call is close to SELL and that a basis halfway between the two multiples sits at the SELL line (14.05x gives $25.01, E -4.8%; correct). \"is consistent with that view\" replaces \"reflects\". Scenarios are unchanged."
+    },
+    {
+      "id": "F-7",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[2]",
+      "quote": "The program targets at least $2 billion of near-term Operating EBITDA improvement but delivered $190 million in the six months to June 2026",
+      "issue": "This repeats growth.points[2] nearly word for word: \"Transform to Outperform targets at least $2 billion of near-term Operating EBITDA improvement, but delivered $190 million in the six months to June 2026\". It is the same claim with the same two figures in two sections.",
+      "fix": "Keep the $2 billion / $190 million pair in growth.points[2]. In the risk, point back in words (\"most of the targeted improvement is still ahead\") and keep what is new there: delivery depends on a CEO who took over on July 1, 2026.",
+      "status": "addressed",
+      "note": "Resolved. idiosyncratic[2] now points back to Growth in words (\"Most of the program’s targeted improvement is still ahead\") and adds new material: the CEO handover, and Q2’26 restructuring charges that include severance tied to the program, which the 10-Q supports."
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "sections.businessMoat.durability",
+      "quote": "the Alberta net-zero cracker project is meant to extend the cost and emissions position",
+      "issue": "The 10-K excerpt calls the Alberta facility \"a key element for the Company to achieve its 2030 greenhouse gas emissions reduction commitment\". No source says it is meant to extend the cost position. That purpose is the author's inference, and it supports the moat argument the paragraph is making.",
+      "fix": "Tie the project to what the 10-K says, e.g. \"the Alberta net-zero cracker project is meant to deliver the company's 2030 emissions-reduction commitment, though the 10-K lists its cost and timing among the risks\". Drop \"cost\" as a stated purpose.",
+      "status": "addressed",
+      "note": "Resolved. durability now follows the 10-K: the project is \"a key element in achieving the company’s 2030 greenhouse gas emissions reduction commitment\", and its cost and timing are listed among the risks. The cost-position purpose is gone."
+    },
+    {
+      "id": "F-9",
+      "severity": "Minor",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "Near-term liquidity is adequate. The current ratio was 1.97 at FY25 and 1.75 on trailing figures, and the gate does not read DISTRESS.",
+      "issue": "The sentence reads as though the current ratio keeps the gate out of DISTRESS. In gates.ts the current-ratio test reads DISTRESS only when the ratio is below 1 and there is under a year of cash, so it is not close. The near test is coverage: a net debtor with coverage under 1x reads DISTRESS if cash covers under two years of negative FCF. Dow meets two of its three conditions. It misses DISTRESS only because FY25 cash and investments ($3.8B) cover about 2.7 years of FY25's -$1.4B free cash flow. That is the cushion to watch.",
+      "fix": "Add in words that FY25 cash and short-term investments cover the FY25 free-cash-flow shortfall more than twice over, which keeps the gate out of DISTRESS. Keep the current-ratio sentence as context. Add no new number.",
+      "status": "addressed",
+      "note": "Resolved. balanceCommentary now says the gate does not read DISTRESS because FY25 cash and short-term investments covered the FY25 free-cash-flow shortfall more than twice over (3.8/1.4, about 2.7 years, against the two-year test). It also says what would turn the zone to DISTRESS. The current ratio is kept as context."
+    },
+    {
+      "id": "F-10",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.catalysts[3]",
+      "quote": "A one-time cash receipt: on July 15, 2026 Dow received a Canada Revenue Agency refund of approximately $318 million (US) tied to withholding taxes on the Nova judgment.",
+      "issue": "The refund arrived on July 15, 2026, more than two months before the September 23 price date. A known past receipt is not a catalyst, and cashflowCommentary already treats it as one-time cash that does not bear on FY27 dividend cover.",
+      "fix": "Drop it from catalysts (three would remain), or replace it with a forward pointer, such as whether Q3'26 results show Q2'26 pricing holding. Leave the refund in cashflowCommentary.",
+      "status": "addressed",
+      "note": "Resolved. The Canada Revenue Agency refund was dropped from catalysts, leaving three, and it remains in cashflowCommentary as a one-time receipt."
+    },
+    {
+      "id": "F-11",
+      "severity": "Minor",
+      "field": "sections.management.leadership",
+      "quote": "Carter presented the Q2'26 results in July and raised expected Transform to Outperform benefits for 2026 by approximately $200 million.",
+      "issue": "The pack has the July 23, 2026 release, which quotes Carter. No call transcript was captured, so \"presented the Q2'26 results\" is inferred.",
+      "fix": "Attribute it to the release, e.g. \"In the July 23, 2026 results release, Carter said Dow now expects approximately $200 million more in Transform to Outperform benefits this year.\"",
+      "status": "addressed",
+      "note": "Resolved. It now reads \"In the July 23, 2026 results release, Carter said Dow now expects approximately $200 million more in Transform to Outperform benefits this year\", which matches the release."
+    },
+    {
+      "id": "F-12",
+      "severity": "Minor",
+      "field": "sections.management.leadership",
+      "quote": "Headcount fell from approximately 34,600 at year-end 2025 to approximately 32,800 at June 30, 2026, in line with the restructuring underway.",
+      "issue": "The headcount pair also appears in executiveSummary.companyOverview (\"Headcount was approximately 34,600 at year-end 2025 and approximately 32,800 at June 30, 2026\"). The phrase \"in line with the restructuring underway\" ties the drop to the restructuring, which no source does.",
+      "fix": "Keep the figures in one section and refer back in words in the other. If the link to restructuring stays, hedge it or tie it to the severance costs the 10-Q books under Transform to Outperform.",
+      "status": "addressed",
+      "note": "Resolved. The headcount pair now appears only in companyOverview, and the unsourced link to the restructuring is gone."
     }
   ]
 }

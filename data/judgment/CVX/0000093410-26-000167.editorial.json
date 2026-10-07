@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "a6b4ab7e0378b16784761ca627c1172afe45df0e335a6be586e29c3630836dea",
-  "reviewedAt": "2026-09-23T13:20:00Z",
-  "reviewer": "claude-opus-4-8",
+  "judgmentSha256": "d6f2da41707251ac56da99da00a6e0cd5720faf194c57da4116b7fbf063fc4d7",
+  "reviewedAt": "2026-10-07T16:45:51Z",
+  "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "approved",
+  "verdict": "approved-with-minors",
   "findings": [
     {
       "id": "F-1",
@@ -13,7 +13,7 @@
       "issue": "\"gas-fired generation\" is not on the grounding surface. The press release and MD&A describe a 20-year power purchase agreement to provide approximately 2.67 gigawatts of \"behind-the-meter dedicated electricity capacity\" / \"behind-the-meter power\" for a Microsoft data center in West Texas. Neither the release, the MD&A, the risk factors nor the tearsheet states the generation is gas-fired. The fuel type has been supplied from outside the pack, an inference the source invites (Chevron is a gas producer) but does not make.",
       "fix": "Drop the fuel-type attribution and describe only what the pack supports, e.g. \"a 20-year power purchase agreement with Microsoft for roughly 2.67 gigawatts of behind-the-meter power for a West Texas data center, a new demand outlet beyond traditional fuel markets.\" Do not characterise the generation source unless the pack states it.",
       "status": "addressed",
-      "note": "Rewritten to \"agreed to develop a West Texas power facility providing approximately 2.67 gigawatts of behind-the-meter dedicated electricity capacity to a Microsoft data center.\" No fuel type appears anywhere in the report (confirmed across growth.points and the catalyst); every retained detail is grounded in the press release."
+      "note": "Re-checked on the republished judgment: growth.points[3] and the catalyst describe a 20-year power purchase agreement and a West Texas facility providing about 2.67 gigawatts of behind-the-meter dedicated capacity. No fuel type appears anywhere in the report."
     },
     {
       "id": "F-2",
@@ -23,7 +23,7 @@
       "issue": "The specific priority ordering is not established anywhere on the grounding surface. The proxy states only that management aims at \"securing the dividend and a strong balance sheet in downside environments\" and \"Generating surplus cash flow in upside oil-price environments\"; no source ranks buybacks above debt reduction or above investment. The ordering is an unsupported characterisation of company policy (and ranking investment last for a company whose FY25 capex was $17.3B is questionable on the pack's own figures).",
       "fix": "Either ground the ordering in a quoted priority statement from the pack, or replace it with what the surface supports (the proxy's dividend-and-balance-sheet framing plus the observed FY25 outlays: dividends $12.8B, buybacks $12.1B, capex $17.3B) without asserting a ranked hierarchy.",
       "status": "addressed",
-      "note": "Replaced with the proxy's own framing (\"securing the dividend and a strong balance sheet in downside environments and generating surplus cash flow in upside oil-price environments, rather than a fixed ranking of uses\") plus the grounded FY25 outlays (capex $17.3B, dividends $12.8B, buybacks $12.1B). No ranked hierarchy is asserted."
+      "note": "Re-checked: capitalAllocation opens with the proxy's own two-sided framing and asserts no ranked hierarchy. A residual shorthand later in the field is raised separately as F-18 (Minor)."
     },
     {
       "id": "F-3",
@@ -33,7 +33,7 @@
       "issue": "Each figure is individually grounded ($3.3B FY25 total debt from the Facts balance sheet; the $8.4B Q2'26 reduction from the press release), but as presented they are internally inconsistent: Q2'26 (ended June 30, 2026) follows FY25 (ended Dec 31, 2025), and a $3.3B balance cannot be reduced by $8.4B. The report never reconciles this — total debt must have risen materially between year-end and Q2'26 (the FMP/tearsheet FY25 figure and Chevron's own disclosure do not square). The same $3.3B FY25 figure is reused in capitalAllocation and businessMoat.moatFactors, propagating the tension. Rubric 8 requires the report to flag the source tension once and say which it used.",
       "fix": "Reconcile the two in prose: note that total debt rose after year-end (e.g., Hess-related financing) so the $8.4B Q2'26 reduction is measured off a higher base, or flag the disagreement between the FY25 tearsheet total-debt figure and Chevron's disclosed quarterly reduction and state which is used. Do not present $3.3B FY25 and an $8.4B later reduction side by side as if coherent.",
       "status": "addressed",
-      "note": "balanceCommentary now flags the tension once: it notes the release reports the $8.4B reduction, that this is \"a cut larger than that year-end balance, which the pack does not reconcile,\" that total debt must have risen after year-end to an undisclosed base, and that \"we do not string the year-end figure and the quarterly reduction into one series\" — relying on the reported 0.6x/0.8x ratios for the current position. capitalAllocation and moatFactors now say only \"a multi-year reduction in gross debt,\" no longer propagating a one-series reading."
+      "note": "The corrected series removes the conflict: FY25 total debt is now $40.8B (net debt $33.5B), so the release's $8.4B Q2'26 reduction sits on a larger base and needs no reconciliation note. balanceCommentary walks the series correctly (FY21 $31.4B to FY23 $20.8B, then FY24 $24.5B and FY25 $40.8B), says the pack does not show how much came with Hess, and dates the Q1'26 comparison ratios."
     },
     {
       "id": "F-4",
@@ -43,7 +43,7 @@
       "issue": "The growth points restate executive-summary catalysts in different words rather than arguing the mechanism behind them. Three of five overlap: this cost-program point paraphrases the catalyst \"Cost program: Chevron captured $3 billion of annual run-rate structural cost reductions ahead of schedule\"; growth[1] Hess synergies paraphrases the catalyst \"Hess integration: management reported $1.5 billion of annual run-rate synergies\"; and growth[3] Microsoft power paraphrases the catalyst \"New demand channel: a signed 20-year power purchase agreement with Microsoft.\" Rubric 7: catalysts point, the section behind them argues; the same claim should not appear twice in two places.",
       "fix": "Have the growth section add mechanism and what-to-watch (e.g., how the cost run-rate flows to per-barrel breakeven, the synergy capture path, the PPA's contracted volume/term economics) rather than re-listing the catalysts, or trim the duplicated growth points so each claim is made once.",
       "status": "addressed",
-      "note": "Each growth point now carries a mechanism and a what-to-watch rather than a restatement: the cost point links the run-rate to Brent breakeven and flags delivery of the remaining savings; the Hess point argues run-rate durability as integration costs roll off; the PPA point frames 20-year contracted demand economics vs spot exposure. New production-growth and Iraq HoA points were added. The overlap with the catalysts is now pointer-vs-argument as the rubric intends."
+      "note": "Re-checked: each growth point now argues a mechanism and a view (synergy upside largely captured; cost savings as breakeven support; the PPA as optionality; the Iraq agreements carry no weight). The catalysts point. An attribution inside growth.points[2] is raised separately as F-14."
     },
     {
       "id": "F-5",
@@ -53,7 +53,7 @@
       "issue": "The source-disagreement disclosure itself is correct and well handled, but \"I use the MD&A figure\" switches to the first-person singular while the rest of the report speaks in the first-person plural (\"we lean on earnings and cash-flow multiples\", \"We weight the Base case\", \"We rate Chevron HOLD\", \"Our probability-weighted fair value\"). Rubric 9: no tic or inconsistency repeated past notice; one voice per report.",
       "fix": "Change to the report's plural voice, e.g. \"we use the MD&A figure,\" for consistency.",
       "status": "addressed",
-      "note": "Now reads \"we use the MD&A figure,\" consistent with the report's plural voice."
+      "note": "Re-checked: incomeCommentary reads \"we use the MD&A figure\" and states the $1.5B / $1.4B disagreement once."
     },
     {
       "id": "F-6",
@@ -63,7 +63,7 @@
       "issue": "\"close to net-cash\" (echoed as \"a near-net-cash balance sheet\" in finalRecommendation.body[1]) overstates what the surface shows. Q2'26 net debt-to-CFFO is +0.6x, i.e. positive net debt, not net cash. The pack's actual net-cash periods are FY22 (net debt -$13.0B) and FY23 (-$6.0B), which balanceCommentary itself correctly distinguishes as \"the prior cycle.\" Calling the current quarter close to net-cash blurs that distinction.",
       "fix": "Describe the current position by what the pack supports, e.g. \"low leverage, with net debt-to-CFFO of 0.6x,\" and reserve the net-cash language for the FY22/FY23 figures. Align the finalRecommendation phrasing likewise.",
       "status": "addressed",
-      "note": "thesis now reads \"the balance sheet carries low leverage, at net debt-to-CFFO of 0.6x\"; finalRecommendation now says \"that low leverage.\" balanceCommentary explicitly states the current quarter \"carries modestly positive net debt, not net cash,\" reserving net-cash language for FY22/FY23."
+      "note": "Re-checked: no net-cash language remains. balanceCommentary states Chevron \"carried net debt, not net cash, in every year of the series\", which matches the corrected Facts (net debt positive FY21-FY25). A residual low-vs-moderate leverage tension is raised as F-16 (Minor)."
     },
     {
       "id": "F-7",
@@ -73,7 +73,157 @@
       "issue": "\"one of its stronger quarters in years\" is a comparative superlative the pack cannot verify. The Facts carry only an annual series (FY21-FY25) plus Q2'25, Q1'26 and Q2'26; there is no multi-year quarterly net-income series on the grounding surface to establish that this quarter ranks among the strongest \"in years.\" Rubric 9: check the series supports a superlative before using it.",
       "fix": "State the fact without the unverifiable ranking, e.g. \"Chevron's second quarter of 2026 was strong: net income rose to $12.1 billion ($6.11 per diluted share) from $2.5 billion ($1.45) a year earlier,\" or support the claim with a quarterly series if one is added.",
       "status": "addressed",
-      "note": "Now reads \"Chevron's second quarter of 2026 was strong:\" with the ranking removed; the same phrasing carries through the analystSentiment.commentary mirror."
+      "note": "Re-checked: analystCommentary opens \"Chevron's second quarter of 2026 was strong.\" with no ranking."
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "The Base assumes earnings in the year after FY27 hold near FY27E consensus, and that assumption decides the label. For it: FY27E already takes a step down from FY26E, and the Hess volumes, the structural savings and production growth in the Permian Basin and Gulf of America support earnings at any given price.",
+      "issue": "The Base is price over FY27E times FY27E, so it equals today's price by construction ($205 vs $204.88). The learnings (section 13) allow this only if the held multiple is argued from both sides and the report says the anchor decides the label. The report does say so, but the For side does not engage the driver. The FY26E-to-FY27E step-down, and any further one, is price-driven: the report defines its own Bull and Bear by Brent, and this paragraph cites the June 2026 price decline for the Bear. Volumes and savings \"at any given price\" are already in FY27E, so they do not argue that FY28 holds flat. The Base driver also names no Brent level, so the reader cannot see what oil price flat earnings need. Only a downward alternative is tested: 12.7x on FY27E gives about $172 and SELL. The page also carries an anchor that does not depend on the price, the $222.17 consensus target. Used as the Base at these weights it gives a fair value near $209 and HOLD. Every anchor on the page derives HOLD or SELL and none derives BUY, and the report should say so instead of resting the call on one price-derived anchor.",
+      "fix": "Keep the held-multiple Base only with a For side that argues the price path: say in words where the flat-FY28 Base sits between the Bull's $92 and the Bear's $68 Brent, and why that level holds a year out. State plainly that this Base equals today's price by construction. Next to the existing 12.7x test (SELL), add one sentence saying the consensus target as an independent anchor keeps HOLD, so the label is HOLD or SELL on every anchor on the page and never BUY. Describe the result in words without computing new figures. Alternatively, re-anchor the Base to a page figure that does not depend on the price and accept the label that follows.",
+      "status": "addressed",
+      "note": "Addressed. The circularity is stated plainly in three places: the Base driver (\"today's price by construction\"), scenarioCommentary and analystCommentary. The commentary says the label comes from the Bear-versus-Bull asymmetry and the weights. The Base now names its oil assumption (Brent between $68 and $92, nearer the upper end, held a year). The for side engages the price path; the against side cites the MD&A's June decline and FY27E above FY23-FY25. Anchors are tested both ways, and I verified each: consensus target HOLD, Street high HOLD, 12.7x SELL, none BUY."
+    },
+    {
+      "id": "F-9",
+      "severity": "Important",
+      "field": "analystCommentary",
+      "quote": "The label rests on one assumption about earnings beyond FY27, argued in the valuation section, and on the pullback from the 52-week high: most mid-September closes would have derived SELL on the same scenarios, and no source in the pack explains the rise or the fall since.",
+      "issue": "The Base is today's price by construction, and Bull and Bear apply the same price-derived multiple, so the method places the scenarios at about 1.19x, 1.00x and 0.72x the price. That gives E of about -2.3% at any close, and the label does not depend on the pullback. The sentence is true only if the dollar scenarios stay frozen at $245/$205/$147. On that basis seven of the nine closes from September 9 to 17 sit above the page's $211.05 SELL line. But the same method run at the September 15 close of $217.77 would have re-anchored the Base to that close and derived the same HOLD. The VST lesson, that a label depends on the day's close, applies when the Base is anchored independently of the price. Here it is not. Telling the reader the HOLD reflects the pullback presents a mechanical result as a reading of the price. The frozen-scenario price triggers in finalRecommendation.body[1] are correct for the page's math and are not part of this finding.",
+      "fix": "Replace the clause with what the label rests on. The Base equals the price by construction, so the call comes from the Bear's larger downside against the Bull, the weights and the FY28 assumption. Drop \"and on the pullback from the 52-week high ... the fall since\", or point to the final recommendation's price triggers in a few words.",
+      "status": "addressed",
+      "note": "Addressed. The pullback clause is gone. analystCommentary now says the Base equals the price by construction and that the call comes from a Bear downside deeper than the Bull upside. finalRecommendation.body[1] marks its price triggers as holding \"With the scenario prices held at their published dollar values\", which matches the page's math."
+    },
+    {
+      "id": "F-10",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "All three scenarios value the shares a year from now at the year-ahead multiple and differ only in year-ahead EPS.",
+      "issue": "The page's own multiples show the market paying different multiples for different earnings levels. At the same price it pays 12.7x on FY26E's $16.19 and 15.1x on FY27E's $13.57, and 19.7x on lower trailing earnings. The Bull applies 15.1x to $16.19 for $245. At the 12.7x the market pays on that EPS level today, the Bull would be about $206, and the weighted value derives SELL (E about -6.9%). With E 2.9 points from the SELL line, the Bull multiple alone can flip the label. The Bull's story gives a reason the year-ahead multiple could apply: if FY26E-level earnings prove repeatable, the step-down that the 12.7x discounts disappears. The report never makes that argument. It also leaves the Bear's mirror question open: after a price fall, would the market pay more or less than 15.1x on $9.72? The Bull landing at the $245 top of the Street range and the Bear at about the $146.49 52-week low are cross-checks a reader can verify, and they support the choice. The report mentions them only in passing, not as evidence for it. A constant multiple is defensible, but here it is unargued and the label is sensitive to it.",
+      "fix": "In scenarioCommentary, add one or two sentences on why one multiple fits a cyclical here. The Bull's repeatability removes the step-down the 12.7x discounts, and the Bull and Bear land on the Street high and the 52-week low. Name the counter-reading, that today the market pays only 12.7x on FY26E-level earnings, and say in words that it would derive SELL. Fold this into the existing close-call sentences rather than adding a new paragraph.",
+      "status": "addressed",
+      "note": "Addressed. scenarioCommentary argues the single multiple: the Bull's repeatability removes the step-down the 12.7x discounts, and the Bull and Bear land on the Street high and the 52-week low. It names the 12.7x counter-reading and says it derives SELL, and it gives the other direction: a higher Bear multiple keeps HOLD. I verified both: the Bull at 12.7x gives E about -6.9% (SELL); any Bear up to the Base price keeps E below +5% (HOLD)."
+    },
+    {
+      "id": "F-11",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "The Q2'26 result rested on the Hess volumes, higher U.S. production and a high Brent price, and management delivered its Hess synergy and structural cost targets early.",
+      "issue": "This replaces the company's explanation with a narrower one. The release attributes the higher reported earnings to \"reliable operations with higher commodity prices, higher margins on refined product sales, and impacts from higher sales volumes,\" including favorable timing effects. Downstream earnings rose from $737M to $4.9B, about 43% of the rise in total segment earnings, on \"higher margins on refined product sales.\" The thesis leaves that out. So do meta.subtitle (\"Hess and a $104 Brent quarter drove a strong Q2'26\") and analystCommentary (\"rose to $12.1 billion ... as production rose 20 percent with the Hess assets and Brent averaged $104 per barrel against $68\"). The omission matters to the call, because the Bull and Bear are defined by Brent alone.",
+      "fix": "In the thesis, subtitle and analystCommentary, name higher refined-product margins next to prices and volumes, following the release's wording. incomeCommentary already has it right, so the summaries can point to it in words. Optionally say in the Base or Bear that refining margins and the timing effects are not modelled separately.",
+      "status": "addressed",
+      "note": "Addressed. The subtitle, analystCommentary and thesis now name higher margins on refined product sales alongside commodity prices and volumes, as the release does. scenarioCommentary notes that refining margins and timing effects sit inside each scenario's EPS. The subtitle's length is raised separately as F-21."
+    },
+    {
+      "id": "F-12",
+      "severity": "Important",
+      "field": "sections.financials.cashflowCommentary",
+      "quote": "The release reports cash flow from operations of $22.6 billion in Q2'26 and $25.1 billion for the six months to June 30 against $13.8 billion a year earlier, which it attributes to U.S. production with higher commodity prices, increased cash distributions from Tengizchevroil LLP and favorable working capital effects.",
+      "issue": "The release gives this explanation for the quarter: \"Cash flow from operations in the second quarter of 2026 was higher than a year ago due to record U.S. production with higher commodity prices, increased cash distributions from Tengizchevroil LLP, and favorable working capital effects.\" The sentence attaches it to the six-month comparison ($25.1B vs $13.8B), which the release does not explain. The quarter's year-ago figure ($8.6B for Q2'25) is on the surface.",
+      "fix": "Attach the explanation to the quarter: \"$22.6 billion in Q2'26 against $8.6 billion a year earlier, which the release attributes to ...\". Give the six-month figures separately with no attribution, or drop them.",
+      "status": "addressed",
+      "note": "Addressed. The release's explanation is now attached to Q2'26 against $8.6 billion a year earlier. The six-month figures follow with no attribution."
+    },
+    {
+      "id": "F-13",
+      "severity": "Important",
+      "field": "sections.executiveSummary.risks[1]",
+      "quote": "Earnings step-down: consensus EPS falls from FY26E to FY27E, and a further decline beyond that would move our call toward SELL.",
+      "issue": "House rule: state upgrade and downgrade triggers once, in the final recommendation. The FY28 SELL trigger appears as a trigger in executiveSummary.risks[1] (this quote), in risks.idiosyncratic[1] (\"a further step down is the main route to a SELL, as the valuation section sets out\") and in finalRecommendation.body[1] (\"We would also move to SELL if consensus earnings beyond FY27 fall clearly below FY27E\"). scenarioCommentary argues the same assumption, and analystCommentary points to it. That is the same claim in five places.",
+      "fix": "Keep the trigger only in finalRecommendation.body[1] and the argument only in scenarioCommentary. In both risk lists, describe the risk of a further earnings step-down without stating its effect on the call. A pointer in words to the valuation section is enough.",
+      "status": "addressed",
+      "note": "Addressed. Both risk lists now describe the step-down risk and point to the valuation section without stating its effect on the call. The SELL trigger appears only in finalRecommendation.body[1]."
+    },
+    {
+      "id": "F-14",
+      "severity": "Important",
+      "field": "sections.growth.points[2]",
+      "quote": "Lower structural cost reduces the oil price at which Chevron covers its dividend and capital program, which management links to lowering its Brent breakeven into the next decade.",
+      "issue": "This is over-attribution. The proxy lists \"Growing earnings and free cash flow while lowering Brent breakeven price into the next decade\" as one of management's objectives. Neither the proxy, the MD&A nor the release links the structural cost program to the breakeven aim. The release describes the program as decreases in operating expenses \"expected to be sustainable compared with 2024 levels.\" The link is an inference the source invites but does not make. The economic logic in the first half of the sentence is fine as the report's own view.",
+      "fix": "Keep the cost-to-breakeven logic as our own view and attribute only what the proxy says, e.g. \"... capital program; the 2026 proxy lists lowering the Brent breakeven price into the next decade among management's objectives.\" Do not say management links the two.",
+      "status": "addressed",
+      "note": "Addressed. The cost-to-breakeven logic is labelled \"our own reading\", and the proxy is cited only for listing the Brent-breakeven objective."
+    },
+    {
+      "id": "F-15",
+      "severity": "Minor",
+      "field": "sections.growth.points[2]",
+      "quote": "The top half of the range is the incremental upside from here, and it is modest relative to the earnings swing from price.",
+      "issue": "Chevron has captured $3B against a $3-4 billion target, so it sits at the bottom of the range. The upside from here is the rest of the range, not its top half.",
+      "fix": "Say \"The rest of the $3-4 billion range is the incremental upside from here\", or \"the upper end of the range\".",
+      "status": "addressed",
+      "note": "Addressed. It now reads \"The rest of that range is the incremental upside from here.\""
+    },
+    {
+      "id": "F-16",
+      "severity": "Minor",
+      "field": "sections.businessMoat.moatFactors[2].body",
+      "quote": "Cash-flow-based leverage is low at the latest quarter, which lets Chevron keep investing and paying its dividend through a downturn.",
+      "issue": "balanceCommentary concludes \"leverage is moderate rather than low\" and says the test comes if prices fall. Here leverage is \"low\" and supports investing \"through a downturn\". The two readings rest on different bases, the strong-quarter CFFO ratios against the FY25 balance sheet, and the reader is not told which one the report holds.",
+      "fix": "Align with the financials view, e.g. \"Cash-flow-based leverage is low at the latest quarter's strong cash flow, but moderate on the FY25 balance sheet, as set out in the financials.\" Then keep the existing \"moderate rather than strong\" conclusion.",
+      "status": "addressed",
+      "note": "Addressed. It now reads \"low on the latest quarter's strong cash flow but moderate on the FY25 balance sheet, as set out in the financials\", which matches balanceCommentary."
+    },
+    {
+      "id": "F-17",
+      "severity": "Minor",
+      "field": "sections.management.leadership",
+      "quote": "R. Clay Neff, President, Upstream, a new named executive officer for 2025 after the board approved officer-title changes on December 3, 2025.",
+      "issue": "The proxy footnote states two separate facts: the board approved title changes on December 3, 2025, and \"Mr. Neff is a new NEO for 2025.\" It does not link Neff's NEO status to the title change. \"after\" implies a sequence or cause the source does not give.",
+      "fix": "Separate the facts, e.g. \"... and R. Clay Neff, President, Upstream, a new named executive officer for 2025. The board approved changes to certain officer titles on December 3, 2025.\" Or drop the title-change clause.",
+      "status": "addressed",
+      "note": "Addressed. Neff's NEO status and the December 3, 2025 title change are now separate sentences with no causal link."
+    },
+    {
+      "id": "F-18",
+      "severity": "Minor",
+      "field": "sections.management.capitalAllocation",
+      "quote": "so the buyback is the flexible item if prices fall, while the proxy names securing the dividend as the priority in downside environments.",
+      "issue": "The proxy's phrase is \"securing the dividend and a strong balance sheet in downside environments\". It pairs the dividend with the balance sheet and does not call either \"the priority\". Dropping the balance-sheet half matters here, because the sentence is arguing about what gives way between buybacks and debt.",
+      "fix": "Quote the full phrase: \"while the proxy names securing the dividend and a strong balance sheet as the aims in downside environments.\"",
+      "status": "addressed",
+      "note": "Addressed. It now quotes \"securing the dividend and a strong balance sheet as the aims in downside environments\"."
+    },
+    {
+      "id": "F-19",
+      "severity": "Minor",
+      "field": "sections.finalRecommendation.body[1]",
+      "quote": "We would move toward BUY if prices ease without the year-ahead EPS falling, which would show that Hess volumes and the structural savings have lifted the earnings base.",
+      "issue": "The previous sentence is about share-price levels, so \"prices ease\" reads as the share price easing. The trigger means oil prices.",
+      "fix": "Say \"if oil prices ease without the year-ahead EPS falling\".",
+      "status": "addressed",
+      "note": "Addressed. It now reads \"if oil prices ease\"."
+    },
+    {
+      "id": "F-20",
+      "severity": "Minor",
+      "field": "sections.businessMoat.segments[0].body",
+      "quote": "The pack shows one consolidated revenue line, but Chevron runs and reports two businesses.",
+      "issue": "The source note (one consolidated revenue line in the pack, two reported segments in the filing) is already made in executiveSummary.companyOverview (\"The data pack shows revenue as one consolidated line, ... while the 10-Q reports earnings for the Upstream and Downstream segments; we follow the filing's segment view\"). Rubric 8: a source disagreement is stated once. The repeat here is short.",
+      "fix": "Open the segment body with the two businesses directly, e.g. \"Chevron runs and reports two businesses, as the overview notes.\" Drop the repeated pack-versus-filing contrast.",
+      "status": "addressed",
+      "note": "Addressed. The segment body opens \"Chevron runs and reports two businesses, as the overview notes.\" The pack-versus-filing contrast is stated once, in companyOverview."
+    },
+    {
+      "id": "F-21",
+      "severity": "Minor",
+      "field": "meta.subtitle",
+      "quote": "Integrated energy major; prices, refining margins and Hess volumes drove a strong Q2'26, but consensus EPS steps down in FY27 and the shares sit near their high",
+      "issue": "The rewrite brought the subtitle to exactly 160 characters, the schema cap. Rubric 10 asks fields to sit inside their caps with room to spare.",
+      "fix": "Trim a few words, e.g. drop \"Integrated energy major; \" or shorten \"the shares sit near their high\" to \"shares near their high\".",
+      "status": "declined",
+      "note": "Deferred to the next synthesis: the final re-check approved the report, and editing the judgment now would leave it unreviewed. The subtitle is within the 160-character cap; the next pass shortens it."
+    },
+    {
+      "id": "F-22",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "The one price-independent anchor, the consensus target, keeps HOLD if used as the Base, as does a Base at the Street high.",
+      "issue": "The consensus target is not the only anchor on the page that is independent of the price. The Street high in the same sentence, the Street median and the 52-week range are too. The conclusion holds either way (I verified that each derives HOLD as a Base), but \"the one\" is inaccurate.",
+      "fix": "Say \"The Street anchors, the consensus target and the Street high, are independent of the price and keep HOLD if used as the Base.\"",
+      "status": "declined",
+      "note": "Deferred to the next synthesis: the final re-check approved the report, and editing the judgment now would leave it unreviewed. The conclusion is unaffected because every price-independent anchor also derives HOLD; the next pass names them all."
     }
   ]
 }
