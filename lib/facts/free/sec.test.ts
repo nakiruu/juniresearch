@@ -771,9 +771,16 @@ describe("deriveTotalDebt", () => {
     expect(deriveTotalDebt({ ...none, ltdTotal: 1_000e6, shortTermBorrowings: 50e6 }, lt)).toBe(1_050e6);
   });
 
-  it("falls back to current debt alone, and is null when nothing is tagged", () => {
+  it("falls back to current debt alone; a zero current-only figure is null in a filer with long-term tags elsewhere, 0 otherwise", () => {
+    const noLt = { filerTagsLongTerm: false };
     expect(deriveTotalDebt({ ...none, ltdCurrent: 100e6, shortTermBorrowings: 50e6 }, lt)).toBe(150e6);
     expect(deriveTotalDebt(none, lt)).toBeNull();
+    expect(deriveTotalDebt({ ...none, ltdCurrent: 0 }, lt)).toBeNull(); // gap (CME FY2023 before UnsecuredLongTermDebt)
+    expect(deriveTotalDebt({ ...none, ltdCurrent: 0, shortTermBorrowings: 0 }, lt)).toBeNull();
+    expect(deriveTotalDebt({ ...none, debtCurrent: 0 }, lt)).toBeNull();
+    expect(deriveTotalDebt({ ...none, ltdCurrent: 0 }, noLt)).toBe(0); // honest zero (DSP-shape)
+    expect(deriveTotalDebt({ ...none, debtCurrent: 0 }, noLt)).toBe(0);
+    expect(deriveTotalDebt(none, noLt)).toBeNull(); // nothing tagged is still null, not 0
   });
 
   it("falls back to convertible notes when no long-term debt concept is tagged", () => {
