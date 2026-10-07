@@ -110,7 +110,7 @@
         "key": "cashAndInvestments",
         "label": "Cash & ST Investments",
         "values": [
-          null,
+          176000000,
           223000000,
           141000000,
           120000000
@@ -121,9 +121,9 @@
         "label": "Total Debt",
         "values": [
           null,
-          41000000,
-          39000000,
-          39000000
+          1929000000,
+          1918000000,
+          1944000000
         ]
       },
       {
@@ -131,9 +131,9 @@
         "label": "Net Debt",
         "values": [
           null,
-          -182000000,
-          -102000000,
-          -81000000
+          1706000000,
+          1777000000,
+          1824000000
         ]
       },
       {
@@ -589,7 +589,7 @@
     {
       "field": "shibuiCheck",
       "source": "shibui",
-      "capturedAt": "2026-10-03T04:32:59.534Z",
+      "capturedAt": "2026-10-07T15:18:36.130Z",
       "endpoint": "stock_data_query: close + valuation.market_cap on/before 2026-09-29; fundamentals_quarterly (4 quarters to 2026-06-30): shares_outstanding, revenue, Σfree_cash_flow, Σstock_based_compensation"
     }
   ],
