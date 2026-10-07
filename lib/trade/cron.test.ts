@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { mkdtempSync, mkdirSync, existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { runCron, type CronDeps } from "./cron";
+import { runCron, reportUnexpectedCronError, type CronDeps } from "./cron";
 import { FakeBroker } from "../broker/fake";
 import { resolveTradeConfig } from "./config";
 import { readHaltState, bumpHalt } from "./breakers";
@@ -655,5 +655,21 @@ describe("runCron — advisory re-label streaks", () => {
     const paths = mkPaths();
     await runCron(mkDeps({ paths, loadInputs: async () => ({ reports: [held], sics: {}, marketCapUsd: {}, fills: [] as Fill[] }) }));
     expect(JSON.parse(readFileSync(join(paths.runs, readdirSync(paths.runs)[0]), "utf8")).relabel).toBeUndefined();
+  });
+});
+
+describe("reportUnexpectedCronError (T-4, F-4: alert-only)", () => {
+  it("alerts with the source and message, says nothing was sent, and never touches a counter", () => {
+    const msgs: string[] = [];
+    reportUnexpectedCronError(new Error("Schwab GET … → 503"), { source: "scheduler", notify: (m) => msgs.push(m) });
+    expect(msgs).toEqual([expect.stringMatching(/^scheduler: run stopped before any order was sent — Schwab GET … → 503\./)]);
+  });
+  it("a SchwabAuthError reads as a re-auth instruction", () => {
+    const msgs: string[] = [];
+    reportUnexpectedCronError(new SchwabAuthError("No Schwab tokens. Run: npm run trade:auth"), { source: "scheduler", notify: (m) => msgs.push(m) });
+    expect(msgs[0]).toMatch(/^scheduler: Schwab re-auth needed — No Schwab tokens/);
+  });
+  it("never throws, even when notify throws", () => {
+    expect(() => reportUnexpectedCronError(new Error("x"), { source: "s", notify: () => { throw new Error("discord down"); } })).not.toThrow();
   });
 });

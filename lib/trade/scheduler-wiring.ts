@@ -7,10 +7,10 @@
  */
 import { appendFileSync, mkdirSync } from "node:fs";
 import { dirname } from "node:path";
-import { runCron, type CronResult } from "./cron";
+import { runCron, reportUnexpectedCronError, type CronDeps, type CronResult } from "./cron";
 import { resolveTradeConfig, tradeConfigFromEnv } from "./config";
 import { newRunId } from "./run-record";
-import { makeNotifier } from "./notify";
+import { makeNotifier, type TradeNotifier } from "./notify";
 import type { BrokerAdapter } from "../broker/adapter";
 import {
   makeBroker, brokerBaseUrl, loadReportsAndMeta, readFills,
@@ -35,37 +35,51 @@ function unreachableAdapter(): BrokerAdapter {
   } as unknown as BrokerAdapter;
 }
 
-export function buildSchedulerDeps(env: NodeJS.ProcessEnv = process.env): SchedulerDeps {
+export interface SchedulerWiringOptions {
+  /** Tests inject a recording notifier; default: Discord webhook (if set) + the run log. */
+  notifier?: TradeNotifier;
+  /** Tests point every run path at a temp dir; default: the data/trade constants. */
+  paths?: Partial<CronDeps["paths"]>;
+}
+
+export function buildSchedulerDeps(env: NodeJS.ProcessEnv = process.env, opts: SchedulerWiringOptions = {}): SchedulerDeps {
   const cfg = resolveTradeConfig(tradeConfigFromEnv(env));
   const broker = env.BROKER ?? "alpaca-paper";
   const disabled = env.TRADE_DISABLED === "1";
-  const notifier = makeNotifier({
+  const paths: CronDeps["paths"] = { lock: CRON_LOCK_PATH, haltState: HALT_STATE_PATH, log: CRON_LOG_PATH, fills: FILLS_PATH, runs: RUNS_DIR, authWarn: AUTH_WARN_PATH, relabelState: RELABEL_STATE_PATH, ...opts.paths };
+  const notifier = opts.notifier ?? makeNotifier({
     webhookUrl: env.DISCORD_WEBHOOK_URL,
     onLog: (msg: string) => {
       const line = `[${new Date().toISOString()}] ${msg}`;
-      mkdirSync(dirname(CRON_LOG_PATH), { recursive: true });
-      appendFileSync(CRON_LOG_PATH, line + "\n");
+      mkdirSync(dirname(paths.log), { recursive: true });
+      appendFileSync(paths.log, line + "\n");
       console.error(line);
     },
   });
 
   // Lazily build the adapter per fire so a token refreshed between runs is picked up.
   const runOnce = async (): Promise<CronResult> => {
-    const adapter = disabled ? unreachableAdapter() : makeBroker(env);
-    const configuredBaseUrl = disabled ? "" : brokerBaseUrl(adapter);
-    const nowMs = Date.now();
-    const today = todayET(nowMs); // one clock read for both, and the ET trading date (not UTC)
-    const result = await runCron({
-      adapter, cfg, today, nowMs, runId: newRunId(today), configuredBaseUrl,
-      paths: { lock: CRON_LOCK_PATH, haltState: HALT_STATE_PATH, log: CRON_LOG_PATH, fills: FILLS_PATH, runs: RUNS_DIR, authWarn: AUTH_WARN_PATH, relabelState: RELABEL_STATE_PATH },
-      refreshObtainedAt: disabled ? undefined : schwabRefreshObtainedAt(env),
-      clock: Date.now,
-      loadInputs: async () => { const m = await loadReportsAndMeta(); return { ...m, fills: readFills(FILLS_PATH) }; },
-      notify: notifier.message, notifySummary: notifier.runSummary, disabled, env,
-      previewOnly: isPreviewOnly(env), turnoverBreaker: isTurnoverBreakerOn(env), notifyAllocation: notifier.allocation,
-    });
-    await notifier.flush();
-    return result;
+    try {
+      const adapter = disabled ? unreachableAdapter() : makeBroker(env);
+      const configuredBaseUrl = disabled ? "" : brokerBaseUrl(adapter);
+      const nowMs = Date.now();
+      const today = todayET(nowMs); // one clock read for both, and the ET trading date (not UTC)
+      const result = await runCron({
+        adapter, cfg, today, nowMs, runId: newRunId(today), configuredBaseUrl, paths,
+        refreshObtainedAt: disabled ? undefined : schwabRefreshObtainedAt(env),
+        clock: Date.now,
+        loadInputs: async () => { const m = await loadReportsAndMeta(); return { ...m, fills: readFills(paths.fills) }; },
+        notify: notifier.message, notifySummary: notifier.runSummary, disabled, env,
+        previewOnly: isPreviewOnly(env), turnoverBreaker: isTurnoverBreakerOn(env), notifyAllocation: notifier.allocation,
+      });
+      await notifier.flush();
+      return result;
+    } catch (e) {
+      // Alert like trade:cron's CLI, then re-throw so startScheduler keeps its path: log, status "error", re-arm.
+      reportUnexpectedCronError(e, { source: "scheduler", notify: notifier.message });
+      try { await notifier.flush(); } catch { /* the alert path must never mask the original error */ }
+      throw e;
+    }
   };
 
   const marketOpenNow = async (): Promise<boolean> => {

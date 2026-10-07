@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { existsSync } from "node:fs";
 import * as runtime from "./runtime";
+import { SchwabAuthError } from "../broker/schwab-auth";
 
 describe("lib/trade/runtime", () => {
   it("exposes the data/trade path constants", () => {
@@ -23,6 +24,12 @@ describe("lib/trade/runtime", () => {
     const env = { BROKER: "schwab", SCHWAB_CLIENT_ID: "c", SCHWAB_CLIENT_SECRET: "s", SCHWAB_REFRESH_TOKEN: "R" } as unknown as NodeJS.ProcessEnv;
     if (existsSync(runtime.SCHWAB_TOKEN_PATH)) return; // a real linked account on this machine supplies the hash
     expect(() => runtime.makeBroker(env)).toThrowError(/SCHWAB_ACCOUNT_HASH/);
+  });
+
+  it("F-4: an unlinked Schwab account is a SchwabAuthError (re-auth), not a plain error", () => {
+    if (existsSync(runtime.SCHWAB_TOKEN_PATH)) return; // a real linked account on this machine supplies the hash
+    const env = { BROKER: "schwab", SCHWAB_CLIENT_ID: "x", SCHWAB_CLIENT_SECRET: "y", SCHWAB_REFRESH_TOKEN: "r" } as unknown as NodeJS.ProcessEnv;
+    expect(() => runtime.makeBroker(env)).toThrow(SchwabAuthError);
   });
 
   it("makeBroker rejects an unknown broker", () => {

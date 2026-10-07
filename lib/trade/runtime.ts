@@ -6,7 +6,7 @@ import type { Report } from "../report.schema";
 import type { BrokerAdapter } from "../broker/adapter";
 import { AlpacaPaperBroker } from "../broker/alpaca";
 import { SchwabBroker } from "../broker/schwab";
-import { SchwabTokenStore, currentRefreshObtainedAt, refreshSeedFromEnv } from "../broker/schwab-auth";
+import { SchwabAuthError, SchwabTokenStore, currentRefreshObtainedAt, refreshSeedFromEnv } from "../broker/schwab-auth";
 import { SCHWAB_HOST } from "../broker/guards";
 import { betaFor } from "../synth/moat";
 import { readFills } from "./fills";
@@ -68,8 +68,8 @@ export function makeBroker(env: NodeJS.ProcessEnv = process.env): BrokerAdapter 
     // container) run without the token file; when both exist, env is tried first and the file is the fallback.
     const tokenStore = new SchwabTokenStore(SCHWAB_TOKEN_PATH, refreshSeedFromEnv(env));
     const accountHash = env.SCHWAB_ACCOUNT_HASH?.trim() || tokenStore.read()?.accountHash;
-    if (!accountHash) throw new Error("Schwab account not linked. Run: npm run trade:auth (or set SCHWAB_ACCOUNT_HASH)");
-    if (!tokenStore.envSeed && !tokenStore.read()) throw new Error("No Schwab tokens. Run: npm run trade:auth (or set SCHWAB_REFRESH_TOKEN)");
+    if (!accountHash) throw new SchwabAuthError("Schwab account not linked. Run: npm run trade:auth (or set SCHWAB_ACCOUNT_HASH)");
+    if (!tokenStore.envSeed && !tokenStore.read()) throw new SchwabAuthError("No Schwab tokens. Run: npm run trade:auth (or set SCHWAB_REFRESH_TOKEN)");
     return new SchwabBroker({ tokenStore, clientId, clientSecret, accountHash });
   }
   throw new Error(`BROKER=${broker} is not a known broker (expected "alpaca-paper" or "schwab")`);

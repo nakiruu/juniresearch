@@ -113,6 +113,19 @@ function summaryFields(out: PlanRunOutput): LogFields {
   return { orders: out.sized.orders.length, notionalUsd, cashFrac, capBound };
 }
 
+/**
+ * An error that escaped runCron (the in-app scheduler or the trade:cron CLI). runCron catches everything that happens
+ * after an order reached the broker (it halts with "execute-error"), so anything escaping happened before any order
+ * was sent: alert only — pre-trade trouble (a read outage, a token to renew) must not block tomorrow's run. Never throws.
+ */
+export function reportUnexpectedCronError(e: unknown, o: { source: string; notify: (m: string) => void }): void {
+  const msg = e instanceof Error ? e.message : String(e);
+  const text = e instanceof SchwabAuthError
+    ? `${o.source}: Schwab re-auth needed — ${msg}. Nothing was sent this slot.`
+    : `${o.source}: run stopped before any order was sent — ${msg}. Nothing was traded this slot; check cron.log. The next slot runs as usual.`;
+  try { o.notify(text); } catch { /* an alert must never mask the error */ }
+}
+
 /** The halt alert for a run that stopped submitting (executeOrders' `aborted`). Shared with trade:execute. */
 export function abortAlert(a: SubmitAbort, source: string): string {
   switch (a.reason) {
