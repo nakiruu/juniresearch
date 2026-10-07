@@ -281,3 +281,16 @@ export function stampShibuiCheck<T extends CheckStampable>(pack: T, check: Shibu
   });
   return pack;
 }
+
+/** An owner-accepted `fail`: the pack was verified against the filing and kept. Stamped by facts:crosscheck --accept. */
+export interface CrosscheckOverride { field: CrossCheckField; reason: string; verifiedAgainst: string; capturedAt: string }
+
+/** Add or replace the override for one field (mutates and returns the pack); provenance carries a matching row. */
+export function stampCrosscheckOverride<T extends CheckStampable & { crosscheckOverrides?: CrosscheckOverride[] }>(pack: T, o: CrosscheckOverride): T {
+  if (!o.reason.trim() || !o.verifiedAgainst.trim()) throw new Error("an override needs a non-empty --reason and --verified-against");
+  pack.crosscheckOverrides = [...(pack.crosscheckOverrides ?? []).filter((x) => x.field !== o.field), o];
+  const field = `crosscheckOverrides.${o.field}`;
+  if (pack.provenance) pack.provenance = pack.provenance.filter((p) => p.field !== field);
+  pack.provenance?.push({ field, source: "edgar", capturedAt: o.capturedAt, endpoint: `accepted Shibui fail on ${o.field}: ${o.reason} (verified against ${o.verifiedAgainst})` });
+  return pack;
+}

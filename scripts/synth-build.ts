@@ -7,7 +7,7 @@ import { Judgment } from "../lib/synth/judgment.schema";
 import { mergeReport } from "../lib/synth/merge";
 import { evaluateGates, gateAdvisory } from "../lib/synth/gates";
 import { moatRead, moatApplicable, costOfEquity } from "../lib/synth/moat";
-import { intrinsicRead, dcfApplicable, inputCheckReason, compactNumber, type IntrinsicFacts } from "../lib/synth/intrinsic";
+import { intrinsicRead, dcfApplicable, inputCheckReason, type IntrinsicFacts } from "../lib/synth/intrinsic";
 import { compositeScore } from "../lib/synth/composite";
 import { decide, SAFE_DEFAULTS } from "../lib/synth/decide";
 import { computeConviction, scenarioDispersion } from "../lib/synth/conviction";
@@ -20,6 +20,7 @@ import { validateReport, type ValidationIssue } from "../lib/validate";
 import { lintJudgment, type LintIssue } from "../lib/synth/lint";
 import { issueLine, writeErrorsFile } from "../lib/synth/errors-file";
 import { loadEditorialReview, reviewStatus, editorialGateMessage, openFindings } from "../lib/synth/editorial";
+import { crosscheckGate } from "../lib/synth/crosscheck-gate";
 
 const args = process.argv.slice(2);
 const dateFlag = args.indexOf("--date");
@@ -83,19 +84,15 @@ const uncertainty = uncertaintyTier({
 const sigmaScen = scenarioDispersion(judgment.sections.valuation.scenarios, pack.quote.price);
 const dec = decide({ conviction, gate, moat, intrinsic, composite, market: { targetDispersion, divergence }, uncertainty: { tier: uncertainty.tier, scenarioDispersion: sigmaScen }, published: judgment.rating.label }, desk.rating, SAFE_DEFAULTS);
 const gateWarning = gateAdvisory(judgment.rating.label, gate);
-// Independent input check (Shibui): any warn/fail diff is surfaced so the author/reviewer see it; a
-// fail on market cap, shares or TTM FCF also abstains the reverse DCF (lib/synth/intrinsic.ts).
+// Independent input check (Shibui): a `fail` without an accepted override refuses the build (D-27); warns and
+// accepted fails are surfaced so author and reviewer see them. A guarded-input fail still abstains the reverse DCF.
 const packFacts: IntrinsicFacts = pack;
-const sc = packFacts.shibuiCheck;
-const scOff = sc?.diffs.filter((d) => d.level !== "ok") ?? [];
-const shibuiWarning = scOff.length
-  ? `input check (Shibui, ${sc!.asOf}): ` +
-    scOff.map((d) => `${d.level === "fail" ? "FAIL" : "warn"} ${d.field} ${compactNumber(d.pack)} vs ${compactNumber(d.shibui)} (${(Math.abs(d.relDiff) * 100).toFixed(0)}%)`).join("; ") +
-    (inputCheckReason(packFacts) && dcfApplicable(pack).reason === inputCheckReason(packFacts) ? " — reverse DCF abstained" : "")
-  : null;
+const cg = crosscheckGate(pack);
+const dcfAbstained = !!inputCheckReason(packFacts) && dcfApplicable(pack).reason === inputCheckReason(packFacts);
+const shibuiWarnings = cg.warnings.map((w, i) => (i === 0 && dcfAbstained ? `${w} — reverse DCF abstained` : w));
 extraWarnings = [
   ...(gateWarning ? [gateWarning] : []),
-  ...(shibuiWarning ? [shibuiWarning] : []),
+  ...shibuiWarnings,
   `decision: composed ${dec.label} · conviction ${dec.conviction} ${dec.tier} · uncertainty ${uncertainty.tier}`,
   ...dec.advisories.map((s) => `  ${s}`),
 ];
@@ -115,6 +112,8 @@ const issues = [...validateReport(valid), ...validateJudgment(judgment, facts, p
 const lint = lintJudgment(judgment, desk, { currentPrice: pack.quote.price });
 const errors = [...issues, ...lint.filter((i) => i.severity === "error")];
 const warnings = lint.filter((i) => i.severity === "warning");
+// A data verdict, not an authoring error: no flag skips it (--skip-review only covers the editorial gate).
+if (cg.blocked) fail(cg.errors.map((m) => ({ field: "shibuiCheck", message: m, value: null })), warnings, "input check");
 if (errors.length) fail(errors, warnings, "validate");
 
 const review = (() => {
