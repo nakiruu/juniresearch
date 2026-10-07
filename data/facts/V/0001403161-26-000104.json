@@ -246,7 +246,7 @@
     "netDebtToEbitda": 0.4057802244336227,
     "interestCoverage": 34.78865979381443,
     "currentRatio": 0.9852226141672228,
-    "fcfYield": 0.030640234520029768
+    "fcfYield": 0.030391467923973826
   },
   "estimates": {
     "nextFY": {
@@ -596,13 +596,13 @@
     {
       "field": "ttm.fcfYield",
       "source": "edgar",
-      "endpoint": "derived: TTM (operating cash flow − capex; last FY + YTD − prior YTD) to 2026-03-31 / market cap, SEC companyfacts",
-      "capturedAt": "2026-10-03T04:35:58.054Z"
+      "endpoint": "derived: TTM (operating cash flow − capex; last FY + YTD − prior YTD) to 2026-06-30 / market cap, SEC companyfacts merged with the filing's inline XBRL (as facts:free builds; offline re-run 2026-10-07)",
+      "capturedAt": "2026-10-07T15:34:44.338Z"
     },
     {
       "field": "shibuiCheck",
       "source": "shibui",
-      "capturedAt": "2026-10-07T15:16:47.456Z",
+      "capturedAt": "2026-10-07T15:34:52.968Z",
       "endpoint": "stock_data_query: close + valuation.market_cap on/before 2026-09-21; fundamentals_quarterly (4 quarters to 2026-06-30): shares_outstanding, revenue, Σfree_cash_flow, Σstock_based_compensation"
     }
   ],
@@ -659,9 +659,9 @@
       },
       {
         "field": "fcfTtm",
-        "pack": 21185000000,
+        "pack": 21013000000,
         "shibui": 21013000000,
-        "relDiff": 0.0082,
+        "relDiff": 0,
         "level": "ok"
       }
     ],
