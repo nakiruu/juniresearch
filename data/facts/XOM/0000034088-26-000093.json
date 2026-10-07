@@ -37,7 +37,7 @@
         "key": "revenue",
         "label": "Revenue",
         "values": [
-          276692000000,
+          285640000000,
           413680000000,
           344582000000,
           349585000000,
@@ -116,22 +116,22 @@
         "key": "totalDebt",
         "label": "Total Debt",
         "values": [
-          4000000000,
-          255000000,
-          4084000000,
-          4892000000,
-          9259000000
+          47704000000,
+          41193000000,
+          41573000000,
+          41710000000,
+          43537000000
         ]
       },
       {
         "key": "netDebt",
         "label": "Net Debt",
         "values": [
-          -2802000000,
-          -29385000000,
-          -27455000000,
-          -18137000000,
-          -1422000000
+          40902000000,
+          11553000000,
+          10034000000,
+          18681000000,
+          32856000000
         ]
       },
       {
@@ -588,7 +588,7 @@
     {
       "field": "shibuiCheck",
       "source": "shibui",
-      "capturedAt": "2026-10-03T04:32:59.534Z",
+      "capturedAt": "2026-10-07T15:17:11.324Z",
       "endpoint": "stock_data_query: close + valuation.market_cap on/before 2026-09-24; fundamentals_quarterly (4 quarters to 2026-06-30): shares_outstanding, revenue, Σfree_cash_flow, Σstock_based_compensation"
     }
   ],
