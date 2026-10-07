@@ -1,7 +1,7 @@
 {
-  "judgmentSha256": "5c00887cf22433da3bdebf96ec8e64523d47bb3f0e6aaa5c8fa4f576ee2b1eec",
-  "reviewedAt": "2026-09-23T21:40:00Z",
-  "reviewer": "claude-opus-4-8",
+  "judgmentSha256": "9bf4cd8833aa516fdfc30980ca603fbe51ce7754e77c93be3642db59f708bfd4",
+  "reviewedAt": "2026-10-07T16:46:31Z",
+  "reviewer": "claude-opus-5-5",
   "round": 2,
   "verdict": "approved-with-minors",
   "findings": [
@@ -13,7 +13,7 @@
       "issue": "The peerless-peer trap. The grounding surface names no peer set: the prompt's Multiples block is a company-only column marked 'peers pending a peer data source,' and the report's own multiples table repeats 'Peer multiples pending a peer data source.' Naming 'BP, Shell, Chevron, TotalEnergies, Equinor, and Suncor' as the comparable set — and asserting it 'is genuinely comparable' — is a statement of fact the surface does not support. Four of the six (Shell, TotalEnergies, Equinor, Suncor) appear nowhere in the pack.",
       "fix": "Drop the invented peer list. Say plainly that no peer multiples were captured, so the valuation anchors on ExxonMobil's own history and on the Street's targets. If a peer group must be characterised, describe it generically (large integrated oil majors) without naming specific companies the pack does not carry.",
       "status": "addressed",
-      "note": "Fixed. multiplesCommentary now reads 'No peer multiples were captured in this pack, so we do not benchmark the company against other large integrated oil majors and instead anchor on its own history and on the Street.' The named peer list is gone and the group is described generically."
+      "note": "Still fixed. multiplesCommentary still reads 'No peer multiples were captured, so we do not benchmark ExxonMobil against other integrated majors.' No peer is named anywhere."
     },
     {
       "id": "F-2",
@@ -23,7 +23,7 @@
       "issue": "Two claims the surface does not make. The company description says only that the company 'changed its name to ExxonMobil Holdings Corporation in July 2026'; it does not state the rename was 'part of a corporate reorganization,' nor that 'its financial history is that of the operating company.' Both are inferences the pack invites (the 'Holdings' form, the proposed Texas Redomiciliation) but does not establish.",
       "fix": "State only what the description supports — the name change to ExxonMobil Holdings Corporation in July 2026 — and drop 'as part of a corporate reorganization' and the accounting-continuity clause, or replace them with a hedge that the pack does not describe the corporate structure behind the rename.",
       "status": "addressed",
-      "note": "Fixed. companyOverview now reads 'changed its name from Exxon Mobil Corporation to ExxonMobil Holdings Corporation in July 2026; the pack does not describe the corporate structure behind the rename.' The 'corporate reorganization' and operating-company continuity claims are removed and replaced with the hedge the fix requested."
+      "note": "Still fixed. companyOverview keeps the hedge 'the pack does not describe the corporate structure behind the rename.'"
     },
     {
       "id": "F-3",
@@ -33,7 +33,7 @@
       "issue": "Unsupported causal decomposition. The pack gives no price/volume breakdown of the FY26E revenue estimate, so 'driven mainly by price and margin rather than volume' is not established. It is also muddled: refining margins lift earnings, not revenue, and the MD&A says crude prices 'remained within the 10-year historical range,' so neither price nor margin is shown to drive the top line. analystCommentary's parallel 'That surge is largely price- and margin-led' is defensible for earnings but not when applied to revenue growth here.",
       "fix": "Either attribute the FY26E revenue step-up to the elevated-margin / supply-disruption environment the MD&A describes without asserting a price-vs-volume split, or drop 'driven mainly by price and margin rather than volume.' Keep the margin-led framing to the earnings discussion, where the MD&A supports it.",
       "status": "addressed",
-      "note": "Fixed. growth.points[1] now reads 'up {+ +24% +} on FY25's $332.2B, against the supply-disrupted market conditions the 10-Q describes for the period' — the price/volume split is gone, and analystCommentary no longer applies a 'price- and margin-led' decomposition to revenue."
+      "note": "Still fixed. growth.points[1] says the pack does not split the rise into price and volume, and now points to the Scenarios section for how much is cyclical."
     },
     {
       "id": "F-4",
@@ -43,7 +43,7 @@
       "issue": "The same claims are argued in full across sections instead of exec-summary items pointing while the sections argue. (1) 'dividends of $17.2B ... second among S&P 500 companies per Bloomberg' appears in analystCommentary, catalysts[3] and capitalAllocation. (2) 'Structural cost savings of $16.3B ... additional $1.2B in the first six months of 2026' appears in catalysts[2], moatFactors 'Structural cost discipline' and growth.points[2]. (3) The leading earnings/cash-flow CAGR proxy footnote appears in businessMoat.durability and again in management.leadership. (4) The probability weighting and 'expected upside low-single-digit / unfavourable reward-risk / Bear at $130 ~a fifth below' are stated in scenarioCommentary and restated in finalRecommendation.body[1].",
       "fix": "Introduce each figure once and refer back in words. Make the exec-summary catalysts one- to two-sentence pointers (e.g., 'sector-leading dividend; see Capital allocation') and let the body carry the detail. State the scenario weights and the reward/risk verdict once (scenarioCommentary) and have finalRecommendation reference the conclusion rather than repeat the numbers.",
       "status": "addressed",
-      "note": "Fixed on all four counts. (1) The $17.2B / S&P-500-ranking detail now lives only in capitalAllocation; catalysts[3] and analystCommentary are pointers. (2) The $16.3B / $1.2B figures now appear only in moatFactors; catalysts[2] and growth.points[2] point to it. (3) The CAGR footnote now appears only in management.leadership; durability no longer carries it. (4) Scenario weights and the reward/risk verdict are stated once in scenarioCommentary; finalRecommendation.body[1] references 'the Scenarios section' without repeating the numbers."
+      "note": "Still fixed on all four original counts. The weights appear only in scenarioCommentary; finalRecommendation points to it."
     },
     {
       "id": "F-5",
@@ -52,8 +52,108 @@
       "quote": "The 10-Q attributes Q2'26 conditions to Middle East supply disruptions and global refining capacity reductions that pushed industry refining margins sharply above their 10-year historical range.",
       "issue": "Voice tic: the near-verbatim phrase 'refining margins sharply above their 10-year (historical) range' recurs about eight times — analystCommentary, thesis, catalysts[0], executiveSummary.risks[0], incomeCommentary, valuation.scenarioCommentary, risks.idiosyncratic[0] and finalRecommendation.body[0]. The underlying fact legitimately anchors the thesis, but repeating the identical wording this often reads as a tic rather than a referred-back point.",
       "fix": "Keep the full phrasing where the point is first argued (thesis or incomeCommentary) and vary the reference elsewhere ('the above-range refining margins,' 'today's elevated margins,' 'the same margin strength'), so the phrase is not repeated verbatim past the point of notice.",
-      "status": "open",
-      "note": "Still open. The phrase 'refining margins sharply above their 10-year (historical) range' remains verbatim in all eight originally flagged fields — analystCommentary, thesis.body, catalysts[0], executiveSummary.risks[0], incomeCommentary, scenarioCommentary, risks.idiosyncratic[0] and finalRecommendation.body[0]. The wording was not varied; the scenario drivers vary it but those were never among the flagged occurrences."
+      "status": "addressed",
+      "note": "Fixed. 'refining margins sharply above their 10-year historical range' now appears once, in thesis.body. The other fields refer to 'the refining and gas conditions' or point to the thesis. The 'outside their historical range' successor tic is gone."
+    },
+    {
+      "id": "F-6",
+      "severity": "Critical",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "For holding today's current-year multiple a year out: the market already discounts earnings it treats as elevated, and a year from now the consensus path still points down, so the same discount should apply to FY27E.",
+      "issue": "The main argument for the anchor that decides the label rests on a fact the pack does not hold. The Estimates block stops at FY27E ($10.84). There is no FY28E, so nothing on the surface shows where the consensus path points 'a year from now', when FY27 is the current year. The page shows only that FY27E sits below FY26E, which is today's path, not next year's. Stated as fact, this is an inference the source does not support. It also carries the SELL: the report says the call 'is close on this one input'.",
+      "fix": "Delete 'a year from now the consensus path still points down' or replace it with what the page shows: FY27E sits below FY26E, and the 10-Q calls the gas disruption ongoing. Say plainly that the pack carries no estimate beyond FY27E, so whether the market will still discount FY27E earnings as elevated a year out is the judgment the label rests on. Then argue that judgment from page evidence; see F-8.",
+      "status": "addressed",
+      "note": "Fixed. The 'consensus path still points down' premise is deleted. scenarioCommentary now says 'the pack has no estimate beyond FY27E, so whether the market will still discount FY27E a year out is a judgment, not a finding.'"
+    },
+    {
+      "id": "F-7",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[0].driver + scenarios[2].driver + finalRecommendation.body[1]",
+      "quote": "The market keeps paying the ~14.9x it pays today on FY27E, now on the FY26E level of earnings, which gives $175.82, close to the 52-week high of $176.41. We assume no higher multiple on earnings the 10-Q ties to conditions outside their historical range.",
+      "issue": "The three scenarios use three different multiple rules, and the Base, which decides the label, uses the lowest. Base: 13.7x on year-out current-year EPS. Bull: ~14.9x on year-out current-year EPS. That is the multiple scenarioCommentary rejects for the Base, so 'no higher multiple' is false on the page's own basis. finalRecommendation.body[1] values the same outcome (FY27E lifted to $11.80) at 'about today's price', which is the 13.7x rule, not the Bull's $175.82. Bear: $110.39 is about 16.5x FY25 EPS, above the Base's 13.7x, yet the driver says 'The fall comes from earnings, not from a lower multiple'. On the Base's rule the Bear would sit near $92. House learnings section 13 says to compare multiples on one basis. The error does not run one way. A consistent 13.7x rule gives a weighted value near $140 (E about -13%, a firmer SELL). A consistent ~14.9x rule puts the Base near $161.52 and E about -4% (HOLD).",
+      "fix": "Apply one multiple rule to all three scenarios, or argue in each driver why that scenario earns a different multiple. If the Bear's higher multiple on lower earnings is deliberate (trough earnings earn a higher multiple), that is the counter-argument to the Base anchor: either apply it to the Base as well or explain why it holds at FY25-level earnings but not at FY27E. Drop 'We assume no higher multiple' if the Bull keeps ~14.9x, and make finalRecommendation.body[1] value the $11.80 outcome the way the Bull does. Do not quote the reviewer's computed prices. Describe each basis in words, and treat whatever label then derives as the call.",
+      "status": "addressed",
+      "note": "Fixed. One rule now covers all three cases: the lower current-year multiple only for earnings the market expects to keep falling, and at least the FY27E multiple otherwise. Bull and Base both use ~14.9x; the Bear sits above it and below the trailing P/E. finalRecommendation.body[1] no longer prices the $11.80 outcome at 13.7x. Checked: $175.82, $161.52, $154.87, E -3.9%."
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "We hold the current-year multiple because the 10-Q describes the conditions behind the earnings as outside their historical range; that is a judgment, and the call is close on this one input.",
+      "issue": "The rewrite follows the form of the section-13 rule: it says the anchor decides the label and names both sides. It does not weigh them fairly, so the SELL rests on a one-sided anchor. (1) The rebuttal repeats the 'for' case instead of answering the counter. The counter says falling cyclical earnings earn a higher multiple. The Base driver itself has margins easing and the disruption partly unwinding, so FY27E is less elevated than FY26E, which is the case where the counter predicts a higher multiple. The prose never addresses this. (2) The page's strongest evidence for the counter goes unweighed: its own Bear prices lower earnings above 13.7x (F-7), and the 20.7x trailing P/E is named but not answered. (3) The 13.7x Base is today's price scaled by consensus's FY26E-to-FY27E EPS decline, so the SELL follows from that decline alone. The page never says so in words. The only page evidence for the 'for' side is the FY27E-below-FY26E path and the 10-Q's out-of-range conditions. Its third leg is F-6.",
+      "fix": "Answer the counter on its own terms with page evidence. For example: why FY27E, which still sits well above FY23-FY25 EPS, would still be discounted as elevated a year out, given that the 10-Q calls the gas disruption ongoing. Weigh what cuts the other way: the Bear's own multiple, the 20.7x trailing P/E, the in-range crude (F-11), the intrinsic read (F-10), and a Street with no Sell ratings whose lowest target ($142.00) sits above our $134 low. Say in words that the Base is today's price moved by the consensus EPS decline. If the case for 13.7x cannot be made from page evidence, re-anchor. Whatever label then derives is the call; a one-notch-conservative label is allowed only if the report says so.",
+      "status": "addressed",
+      "note": "Fixed. scenarioCommentary states the case for the lower multiple, says it is today's price moved down by the consensus EPS decline and derives SELL, then answers it with four page items and calls the choice a judgment. The Base driver says it equals the price by construction. Residual weaknesses in the reasoning are Minors F-13 and F-14."
+    },
+    {
+      "id": "F-9",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "The weights matter less: only a shift of more than ten points from Bear to Bull derives HOLD.",
+      "issue": "The page's own numbers contradict this. Each point moved from Bear to Bull adds about $0.65 to the weighted value. The SELL line at $161.23 sits near a weighted value of $153.17 (E -5.0%). A nine-point shift (Bull 34%, Bear 11%) gives about $153.60, E -4.7%, which derives HOLD; ten points gives E -4.3%. The label is more fragile on the weights than the sentence says, on a call the page already calls close. Also, only the Bear's 20% weight has a stated reason. The Bull's 25% is given but never argued.",
+      "fix": "Say that a shift of under ten points from Bear to Bull derives HOLD, in words with no new figure, and that the call is close on the weights as well as on the multiple. Give the Bull's weight a reason drawn from the Bull case itself.",
+      "status": "addressed",
+      "note": "Fixed. 'moving a few points from Bull to Bear derives SELL' is accurate: three points gives E of about -5.2%. The Bull's 25% now has its own reason."
+    },
+    {
+      "id": "F-10",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "The weighted fair value of $147.71 sits below the $161.23 price, the Bear sits about a third below it, and the page derives SELL.",
+      "issue": "The page's Fundamental Read scorecard (rendered from rating.decision) shows the intrinsic read as 'MoS +23%'. The reverse-DCF base case sits about 23% above the price, with market-implied starting growth slightly negative against achievable growth near 4%. It appears beside a SELL and 'Conviction 95, high confidence'. The judgment never mentions the disagreement, so a reader sees two of the page's own value reads pointing opposite ways with no explanation, on a call the page says turns on one input. That is counter-evidence the prose should name. Note: the margin-of-safety figure is not on the author's prompt surface, so it cannot be quoted.",
+      "fix": "In scenarioCommentary, say in words that the page's mechanical intrinsic read sits above the price. Then say why the report does not follow it. For example: it capitalizes trailing free cash flow (the 4.6% FCF yield), which already includes the first half of 2026, and grows it at a multi-year revenue trend rather than the falling consensus earnings path. If the author cannot rebut it, weigh it as part of the counter-case to the Base anchor (F-8). Do not quote the +23% figure.",
+      "status": "addressed",
+      "note": "Fixed. scenarioCommentary names the page's mechanical intrinsic read in words, as a reverse DCF on trailing free cash flow that puts value above the price. It quotes no figure."
+    },
+    {
+      "id": "F-11",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body + analystCommentary + financials.incomeCommentary",
+      "quote": "Our thesis is that ExxonMobil's 2026 earnings rest on conditions the company itself places outside their historical range, and that the share price already pays for them.",
+      "issue": "The same 10-Q overview says 'Average crude oil prices remained within the 10-year historical range (2010-2019)'. The report quotes every out-of-range condition (refining margins above, gas above its average, chemicals below) but never the in-range one, though Upstream takes most of the cash capex (segments body). That is the reading that cuts the other way. The conditions the 10-Q places out of range are refining and gas, not crude. This bears on how much of FY26E is 'elevated', on the Bear's full return to FY25's $6.70, and on the Base-multiple argument. Also, the pack has no earnings-driver breakdown. 'Earnings rest on' these conditions is an inference: the 10-Q describes market conditions, not how much of earnings they produced.",
+      "fix": "State once, in thesis or incomeCommentary, that the 10-Q puts average crude prices within their 10-year range while refining margins sat sharply above theirs and gas above its average. Narrow the thesis to those conditions. Hedge the link to earnings (e.g. 'the 10-Q frames the quarter around...'), since the pack has no driver breakdown. Carry the point into the Bear and the Base-anchor argument, where it limits how much of FY26E can unwind.",
+      "status": "addressed",
+      "note": "Fixed. thesis.body says the 10-Q places average crude prices within their 10-year range, narrows the out-of-range conditions to refining and gas, and hedges the link to earnings. The point is carried into the Base argument. Residual causal wording elsewhere is Minor F-15."
+    },
+    {
+      "id": "F-12",
+      "severity": "Important",
+      "field": "businessMoat.moatFactors[1] + risks.idiosyncratic[0,1,3] + businessMoat.durability + risks.systemic + growth.points[4] + management.capitalAllocation + financials",
+      "quote": "Commodity sensitivity in both directions. The 10-K states that a material decline in oil or natural gas prices could have a material adverse effect, especially in Upstream, while a material increase could hurt Energy Products, Chemical Products and Specialty Products.",
+      "issue": "The same claim is made twice in different sections, in different words. (1) The 10-K's two-way commodity sentence appears in moatFactors 'Integration' and again in risks.idiosyncratic[1], which only restates it and reaches no view. (2) The long-run threats from energy efficiency, alternative energy and consumer preferences appear in durability and again in risks.systemic. (3) Lower-emission ventures depending on policy and technology appear in durability and growth.points[4]. (4) 'If margins revert, buybacks slow or net debt keeps rising' appears in capitalAllocation and again in risks.idiosyncratic[3]. (5) 'Capex rose every year from FY21's $12.1B' appears in cashflowCommentary and capitalAllocation. (6) 'The consensus path assumes most of it holds into FY27E' (incomeCommentary) is restated as 'The FY27E estimate assumes most of the 2026 strength holds' in risks.idiosyncratic[0].",
+      "fix": "Argue each claim once and point back in words elsewhere. Keep the 10-K commodity sentence in Risks and have the Integration factor refer to it, or turn risks.idiosyncratic[1] into a view. Keep the long-run demand threats in risks.systemic and the policy dependence in growth.points[4], and trim durability to a pointer. Keep the buyback/net-debt view in capitalAllocation. Keep the capex trend in cashflowCommentary. Keep the 'most of the strength holds' claim in one place.",
+      "status": "addressed",
+      "note": "Fixed on all six counts. Integration and durability now point to Risks and Growth. risks.idiosyncratic[1] reaches a view. The buyback/net-debt risk item is gone. Capital allocation points to the Cash flow commentary for capex, and risks.idiosyncratic[0] points to Financials."
+    },
+    {
+      "id": "F-13",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarios[1].driver",
+      "quote": "The pack holds no estimate beyond FY27E, so we assume no further fall is priced, and the market pays a year out the ~14.9x it pays today for the same estimate.",
+      "issue": "The Base assumption is drawn from the absence of data. That is the mirror image of F-6: missing FY28E supports neither 'the path still points down' nor 'no further fall is priced'. The same driver also has the disruption 'not fully unwound' a year out, so some fade could still lie ahead. Under the commentary's own rule, that argues for the lower multiple. scenarioCommentary does call this a judgment, so the page as a whole is honest, but this 'so' reads as if the gap justified the assumption.",
+      "fix": "Separate the two clauses, for example: 'The pack holds no estimate beyond FY27E. We assume the market prices no further fall, which is the judgment the Scenarios commentary argues.' Optionally acknowledge that the unwound part of the disruption is what the case for the lower multiple rests on.",
+      "status": "declined",
+      "note": "Deferred to the next synthesis: the final re-check approved the report, and editing the judgment now would leave it unreviewed. Next pass states the no-further-fall assumption as a judgment, not as drawn from the missing FY28E estimate, and reconciles it with the not-fully-unwound disruption."
+    },
+    {
+      "id": "F-14",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "The Base itself has margins easing, so FY27E is less elevated than FY26E, which is when a cyclical earns a higher multiple.",
+      "issue": "Three of the four reasons for ~14.9x are stated more firmly than the page supports. (1) 'which is when a cyclical earns a higher multiple' is a general market claim, stated as a rule; the previous draft hedged it ('often'). (2) The intrinsic read is used as support without saying it capitalizes trailing free cash flow, which includes the first half of 2026, the strength the thesis calls partly cyclical. (3) 'its lowest target sits above the low end of our range' compares the Street with a bound the author set, and says little about the Base multiple. The case is still two-sided and is labelled a judgment, so none of this changes the call.",
+      "fix": "Hedge reason (1) ('often earns'). Add a clause to reason (4) noting that the trailing cash flow includes the 2026 strength. Recast reason (3) as the Street having no Sell ratings, or drop the comparison with the range low.",
+      "status": "declined",
+      "note": "Deferred to the next synthesis: the final re-check approved the report, and editing the judgment now would leave it unreviewed. Next pass hedges the cyclical-multiple claim, says the intrinsic read rests on trailing FCF including H1 2026, and compares Street targets with the price rather than the range low."
+    },
+    {
+      "id": "F-15",
+      "severity": "Minor",
+      "field": "meta.subtitle + risks.idiosyncratic[0]",
+      "quote": "Integrated energy major and a net debtor; 2026 estimates lifted by refining and gas strength, with the shares near their 52-week high",
+      "issue": "The subtitle ('estimates lifted by refining and gas strength') and risks.idiosyncratic[0] ('The refining and gas conditions behind the 2026 step-up') state a causal link that the rewritten thesis says the pack cannot establish: 'The pack has no breakdown of earnings by driver, so we cannot say how much of the step-up those conditions produced.' The 10-Q frames the quarter around these conditions but does not attribute the estimates to them.",
+      "fix": "Match the thesis hedge, for example '2026 estimates up sharply amid refining and gas strength' in the subtitle and 'The refining and gas conditions the 10-Q describes can reverse within a year' in the risk item.",
+      "status": "declined",
+      "note": "Deferred to the next synthesis: the final re-check approved the report, and editing the judgment now would leave it unreviewed. Next pass aligns the subtitle and risks.idiosyncratic[0] with the thesis, which says the pack cannot establish that refining and gas caused the gain."
     }
   ]
 }
