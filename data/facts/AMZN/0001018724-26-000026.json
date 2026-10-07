@@ -597,6 +597,12 @@
       "source": "shibui",
       "capturedAt": "2026-10-03T04:32:59.534Z",
       "endpoint": "stock_data_query: close + valuation.market_cap on/before 2026-09-24; fundamentals_quarterly (4 quarters to 2026-06-30): shares_outstanding, revenue, Σfree_cash_flow, Σstock_based_compensation"
+    },
+    {
+      "field": "crosscheckOverrides.fcfTtm",
+      "source": "edgar",
+      "capturedAt": "2026-10-07T10:55:52.827Z",
+      "endpoint": "accepted Shibui fail on fcfTtm: Definitional: ours deducts gross purchases of property and equipment (173,028M); Shibui and Amazon's release net 4,021M of proceeds from sales and incentives, giving -7,604M vs our -11,625M on the same OCF of 161,403M (verified against 10-Q 0001018724-26-000026 iXBRL TTM 2025-07-01 to 2026-06-30: NetCashProvidedByUsedInOperatingActivities 161,403M; PaymentsToAcquireProductiveAssets 173,028M; amzn:ProceedsFromPropertyPlantAndEquipmentSalesAndIncentives 4,021M; 8-K ex-99 'Free cash flow -- TTM $(7,604)M')"
     }
   ],
   "sbc": [
@@ -666,5 +672,13 @@
       }
     ],
     "source": "shibui"
-  }
+  },
+  "crosscheckOverrides": [
+    {
+      "field": "fcfTtm",
+      "reason": "Definitional: ours deducts gross purchases of property and equipment (173,028M); Shibui and Amazon's release net 4,021M of proceeds from sales and incentives, giving -7,604M vs our -11,625M on the same OCF of 161,403M",
+      "verifiedAgainst": "10-Q 0001018724-26-000026 iXBRL TTM 2025-07-01 to 2026-06-30: NetCashProvidedByUsedInOperatingActivities 161,403M; PaymentsToAcquireProductiveAssets 173,028M; amzn:ProceedsFromPropertyPlantAndEquipmentSalesAndIncentives 4,021M; 8-K ex-99 'Free cash flow -- TTM $(7,604)M'",
+      "capturedAt": "2026-10-07T10:55:52.827Z"
+    }
+  ]
 }

@@ -604,6 +604,12 @@
       "source": "shibui",
       "capturedAt": "2026-10-03T04:32:59.534Z",
       "endpoint": "stock_data_query: close + valuation.market_cap on/before 2026-09-22; fundamentals_quarterly (4 quarters to n/a): shares_outstanding, revenue, Σfree_cash_flow, Σstock_based_compensation"
+    },
+    {
+      "field": "crosscheckOverrides.marketCap",
+      "source": "edgar",
+      "capturedAt": "2026-10-07T10:55:53.435Z",
+      "endpoint": "accepted Shibui fail on marketCap: Shibui error: at the same $263.46 close on 2026-09-22 its market cap implies 201.6M shares and its CEG.NASDAQ row has no fundamentals_quarterly rows; ours is the 10-Q cover share count times price (verified against 10-Q 0001868275-26-000104 cover dei:EntityCommonStockSharesOutstanding 354,307,379 at 2026-07-31 (balance sheet 355M at 2026-06-30, 312M at 2025-12-31 pre-Calpine); 354,307,379 x $263.46 = $93.35B; Shibui crosscheck-backfill-2026-10-03 row n_quarters 0)"
     }
   ],
   "beta": {
@@ -645,5 +651,13 @@
       }
     ],
     "source": "shibui"
-  }
+  },
+  "crosscheckOverrides": [
+    {
+      "field": "marketCap",
+      "reason": "Shibui error: at the same $263.46 close on 2026-09-22 its market cap implies 201.6M shares and its CEG.NASDAQ row has no fundamentals_quarterly rows; ours is the 10-Q cover share count times price",
+      "verifiedAgainst": "10-Q 0001868275-26-000104 cover dei:EntityCommonStockSharesOutstanding 354,307,379 at 2026-07-31 (balance sheet 355M at 2026-06-30, 312M at 2025-12-31 pre-Calpine); 354,307,379 x $263.46 = $93.35B; Shibui crosscheck-backfill-2026-10-03 row n_quarters 0",
+      "capturedAt": "2026-10-07T10:55:53.435Z"
+    }
+  ]
 }
