@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "d26ba4db5d52ace7c2ffc0aeb621d2b87f66efb8cb9875394e9630285c0022a2",
-  "reviewedAt": "2026-10-07T15:55:22Z",
+  "judgmentSha256": "7c1dc723155f4e7270f0b770a6d26e5fe88a7e5c29eba4c3b305fc651484dd3c",
+  "reviewedAt": "2026-10-07T15:56:59Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved",
   "findings": [
     {
       "id": "F-1",
@@ -162,7 +162,8 @@
       "quote": "The HOLD is not a close call on the weights. A modest shift from Bear to Bull leaves reward/risk short of the BUY threshold; it takes moving roughly a third of the Bear weight to Bull to derive BUY.",
       "issue": "The page's own numbers contradict the framing. Moving about 7 points of weight from Bear to Bull (Bear 20% to roughly 13%, Bull 30% to roughly 37%) lifts R from 0.37x to 0.50x and E to about +12%, which derives BUY. The sentence's own \"a third of the Bear weight\" is that same 7 points. A label that flips on a 7-point move is close on the weights; BSX, which flipped on about ten points, was called close. The deciding 20% also rests partly on \"a slowdown arriving in the same period is plausible rather than remote\". No captured source supports that. The MD&A instead credits \"continued resilience in consumer spending\". Item 6, and the desk rule: if a call is close, say so.",
       "fix": "Replace \"The HOLD is not a close call on the weights. A modest shift ... leaves reward/risk short\" with an honest statement: the HOLD is close on the weights, because moving about a third of the Bear weight to Bull derives BUY, and the 20% is a judgment, not a finding. Present the slowdown leg as the desk's judgment, not as evidence. Keep the separate, correct point that the label does not rest on the September 21 close. Do not change prices or weights.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. scenarioCommentary now reads \"The HOLD is a close call on the weights: moving roughly a third of the Bear weight to Bull derives BUY\", which matches the page math (about 7 points). The unsourced slowdown clause (\"plausible rather than remote\") is gone, and the weight is labelled \"a judgment, not a finding\". Prices and weights are unchanged (450/420/280 at 30/50/20); the label is still HOLD at E +8.9%, D -24.0%, R 0.37x."
     },
     {
       "id": "F-17",
@@ -171,7 +172,8 @@
       "quote": "the lowest Street target sits well above a case this severe, so the Street is not pricing it.",
       "issue": "The pack carries only the Street's target range, median, mean and rating counts. It does not carry the analysts' scenarios or their weights. A single 12-month target can already weight a bear outcome below it, so the fact that the $330.00 low target sits above $280 does not show that \"the Street is not pricing it\". This is an inference the source does not make (item 2), and it carries the explanation for why the fair value sits below consensus.",
       "fix": "State the fact without the inference, e.g. \"no Street target sits as low as this case; the lowest is $330.00\". Rest the below-consensus fair value on the desk's own 20% Bear weight, which the paragraph already argues.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. The inference is gone: \"No Street target sits as low as this case; the lowest is $330.00.\" The below-consensus fair value now rests on the desk's own Bear weight. The lint flags $330.00 as restated from multiplesCommentary; that came from the fix this finding proposed, so it is accepted and not raised as a new finding."
     }
   ]
 }
