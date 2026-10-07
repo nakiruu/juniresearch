@@ -7,6 +7,7 @@
 import { readFileSync } from "node:fs";
 import { evaluateGates, type GateFacts } from "../lib/synth/gates";
 import { crosscheckGate } from "../lib/synth/crosscheck-gate";
+import type { ShibuiCheck, CrosscheckOverride } from "../lib/facts/shibui-check";
 
 const [a, b] = process.argv.slice(2);
 if (!a || !b) { console.error("usage: node --import tsx scripts/facts-pack-diff.ts <before.json> <after.json>"); process.exit(2); }
@@ -16,7 +17,8 @@ type Pack = GateFacts & {
   latestQuarter: Record<string, unknown> | null;
   ttm: Record<string, number | null>;
   statements: { fiscalYears: string[]; balance: Row[]; income: Row[]; cashflow: Row[] };
-  shibuiCheck?: { diffs: { field: string; level: string; pack: number; shibui: number; relDiff: number }[] };
+  shibuiCheck?: ShibuiCheck;
+  crosscheckOverrides?: CrosscheckOverride[];
 };
 const before = JSON.parse(readFileSync(a, "utf8")) as Pack, after = JSON.parse(readFileSync(b, "utf8")) as Pack;
 const m = (x: number | null | undefined) => (x == null ? "—" : Math.abs(x) >= 1e6 ? `${(x / 1e6).toFixed(0)}M` : String(Math.round(x * 1000) / 1000));

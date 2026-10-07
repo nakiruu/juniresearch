@@ -59,7 +59,7 @@ describe("buildTearsheetFiles → real mappers (shape parity)", () => {
     // round-trip is exact only after the same filter.
     expect(back.yahoo.estimates).toEqual(yahoo.estimates.filter((e) => e.sales != null || e.eps != null));
     const again = buildTearsheetFiles({ cik: ts.company_overview.cik, sec, yahoo: back.yahoo, ttm, capturedAt: back.capturedAt });
-    const strip = (t: unknown) => { const { fundamentals: _f, ...rest } = t as Record<string, unknown>; return rest; };
+    const strip = (t: unknown) => { const rest = { ...(t as Record<string, unknown>) }; delete rest.fundamentals; return rest; };
     expect(JSON.stringify(strip(again.tearsheetAnnual))).toBe(JSON.stringify(strip(files.tearsheetAnnual)));
   });
 });
