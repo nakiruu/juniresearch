@@ -132,9 +132,9 @@
         "values": [
           14672000000,
           15422000000,
-          62000000,
-          null,
-          null
+          15086000000,
+          16343000000,
+          18161000000
         ]
       },
       {
@@ -143,9 +143,9 @@
         "values": [
           11684000000,
           11536000000,
-          -2925000000,
-          null,
-          null
+          12099000000,
+          14154000000,
+          14345000000
         ]
       },
       {
@@ -239,12 +239,12 @@
   "ttm": {
     "pe": -15.65573770491803,
     "ps": 0.5008606822043128,
-    "evToEbitda": 9.245,
+    "evToEbitda": 22.31173684318766,
     "grossMargin": 0.09888913090829884,
     "operatingMargin": -0.029598973837701784,
     "netMargin": -0.031293109707398535,
-    "netDebtToEbitda": null,
-    "interestCoverage": null,
+    "netDebtToEbitda": 9.011568123393316,
+    "interestCoverage": -1.4073647871116226,
     "currentRatio": 1.7493085240130752,
     "fcfYield": -0.011210403432514818
   },
@@ -594,12 +594,6 @@
       "capturedAt": "2026-09-23T22:13:27.681Z"
     },
     {
-      "field": "ttm.evToEbitda",
-      "source": "yahoo",
-      "endpoint": "quoteSummary.defaultKeyStatistics.enterpriseToEbitda",
-      "capturedAt": "2026-10-02T00:13:25.081Z"
-    },
-    {
       "field": "beta",
       "source": "shibui",
       "capturedAt": "2026-10-03T03:46:39.826Z",
@@ -620,7 +614,7 @@
     {
       "field": "shibuiCheck",
       "source": "shibui",
-      "capturedAt": "2026-10-03T04:32:59.534Z",
+      "capturedAt": "2026-10-07T15:17:58.857Z",
       "endpoint": "stock_data_query: close + valuation.market_cap on/before 2026-09-23; fundamentals_quarterly (4 quarters to 2026-06-30): shares_outstanding, revenue, Σfree_cash_flow, Σstock_based_compensation"
     }
   ],
