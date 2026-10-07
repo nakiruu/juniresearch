@@ -238,13 +238,13 @@
   },
   "ttm": {
     "pe": 31.34383,
-    "ps": 15.736779793153678,
-    "evToEbitda": 24.77827682571912,
+    "ps": 15.541520342384462,
+    "evToEbitda": 24.80450832775778,
     "grossMargin": null,
-    "operatingMargin": 0.6150992352512746,
-    "netMargin": 0.5183448652585579,
-    "netDebtToEbitda": 0.40535109983079526,
-    "interestCoverage": 44.66942148760331,
+    "operatingMargin": 0.6068153209854342,
+    "netMargin": 0.5078223341125697,
+    "netDebtToEbitda": 0.4057802244336227,
+    "interestCoverage": 34.78865979381443,
     "currentRatio": 0.9852226141672228,
     "fcfYield": 0.030640234520029768
   },
@@ -602,7 +602,7 @@
     {
       "field": "shibuiCheck",
       "source": "shibui",
-      "capturedAt": "2026-10-03T04:32:59.534Z",
+      "capturedAt": "2026-10-07T15:16:47.456Z",
       "endpoint": "stock_data_query: close + valuation.market_cap on/before 2026-09-21; fundamentals_quarterly (4 quarters to 2026-06-30): shares_outstanding, revenue, Σfree_cash_flow, Σstock_based_compensation"
     }
   ],
