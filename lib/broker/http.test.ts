@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { fetchWithTimeout, withReadRetry, isTransientToken, BrokerTimeoutError } from "./http";
+import { fetchWithTimeout, withReadRetry, isTransientToken, isTransientRead, BrokerTimeoutError, BrokerHttpError, parseRetryAfter } from "./http";
 
 /** Honors the abort signal like real fetch does. */
 const hangUntilAborted = ((_url: string, init: RequestInit) => new Promise<Response>((_, reject) => {
@@ -55,5 +55,51 @@ describe("withReadRetry", () => {
     n = 0;
     expect(await withReadRetry(tokenTimeout, [1, 1], noSleep, isTransientToken)).toBe("tok");
     expect(isTransientToken(new BrokerTimeoutError("submit", "u", 1))).toBe(false);
+  });
+});
+
+describe("parseRetryAfter", () => {
+  const NOW = Date.parse("2026-10-07T19:15:00Z");
+  it("reads delta-seconds", () => { expect(parseRetryAfter("3", NOW)).toBe(3_000); expect(parseRetryAfter("0", NOW)).toBe(0); });
+  it("reads an HTTP-date, never negative", () => {
+    expect(parseRetryAfter("Wed, 07 Oct 2026 19:15:04 GMT", NOW)).toBe(4_000);
+    expect(parseRetryAfter("Wed, 07 Oct 2026 19:14:00 GMT", NOW)).toBe(0);
+  });
+  it("is null when absent or unparseable", () => { expect(parseRetryAfter(null, NOW)).toBeNull(); expect(parseRetryAfter("soon", NOW)).toBeNull(); expect(parseRetryAfter(" ", NOW)).toBeNull(); });
+});
+
+describe("withReadRetry — HTTP 429/5xx (T-8)", () => {
+  const rec = () => { const slept: number[] = []; return { slept, sleep: async (ms: number) => { slept.push(ms); } }; };
+  const POLICY = { httpDelaysMs: [2_000, 5_000, 10_000], maxRetryAfterMs: 15_000 };
+  it("isTransientRead: 429 and 5xx are transient; other 4xx are not", () => {
+    expect(isTransientRead(new BrokerHttpError(429, "x"))).toBe(true);
+    expect(isTransientRead(new BrokerHttpError(503, "x"))).toBe(true);
+    for (const s of [400, 401, 403, 404]) expect(isTransientRead(new BrokerHttpError(s, "x"))).toBe(false);
+  });
+  it("retries a 429 on the HTTP schedule, honouring a longer Retry-After, then succeeds", async () => {
+    const { slept, sleep } = rec(); let n = 0;
+    const v = await withReadRetry(async () => { if (n++ < 2) throw new BrokerHttpError(429, "rl", n === 1 ? 4_000 : null); return "ok"; }, [1, 1], sleep, undefined, POLICY);
+    expect(v).toBe("ok");
+    expect(slept).toEqual([4_000, 5_000]);
+  });
+  it("clamps a huge Retry-After to the cap and gives up after the HTTP budget", async () => {
+    const { slept, sleep } = rec(); let n = 0;
+    await expect(withReadRetry(async () => { n++; throw new BrokerHttpError(429, "rl", 120_000); }, [1, 1], sleep, undefined, POLICY)).rejects.toMatchObject({ name: "BrokerHttpError", status: 429 });
+    expect(n).toBe(4); expect(slept).toEqual([15_000, 15_000, 15_000]);
+  });
+  it("never retries a non-transient 4xx", async () => {
+    const { slept, sleep } = rec(); let n = 0;
+    await expect(withReadRetry(async () => { n++; throw new BrokerHttpError(400, "bad"); }, [1, 1], sleep)).rejects.toMatchObject({ status: 400 });
+    expect(n).toBe(1); expect(slept).toEqual([]);
+  });
+  it("timeouts and HTTP errors have independent budgets (worst case = both exhausted)", async () => {
+    const { slept, sleep } = rec(); let n = 0;
+    await expect(withReadRetry(async () => {
+      n++;
+      // HTTP first, so the 3-retry HTTP budget is still open when the 2-retry timeout budget runs out.
+      throw n % 2 ? new BrokerHttpError(503, "down") : new BrokerTimeoutError("read", "u", 1);
+    }, [1_000, 3_000], sleep, undefined, POLICY)).rejects.toThrow();
+    expect(n).toBe(6); // 1 + 2 timeout retries + 3 HTTP retries
+    expect(slept).toEqual([2_000, 1_000, 5_000, 3_000, 10_000]);
   });
 });
