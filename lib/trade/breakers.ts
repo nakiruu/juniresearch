@@ -123,34 +123,73 @@ export const DEFAULT_LOCK_STALE_MS = 60 * 60_000; // 60 min
  */
 const lockBody = () => `${process.pid} ${new Date().toISOString()} ${randomBytes(4).toString("hex")}`;
 
-export function acquireLock(path: string, staleMs: number = DEFAULT_LOCK_STALE_MS): boolean {
+/** A reclaim takes milliseconds; a `.reclaim` mutex older than this was left by a reclaimer that died mid-way. */
+const RECLAIM_MUTEX_STALE_MS = 60_000;
+
+function takeReclaimMutex(mutex: string): boolean {
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      writeFileSync(mutex, lockBody(), { flag: "wx" });
+      return true;
+    } catch (err) {
+      if ((err as NodeJS.ErrnoException).code !== "EEXIST") throw err;
+      let ageMs: number;
+      try { ageMs = Date.now() - statSync(mutex).mtimeMs; } catch { continue; } // released meanwhile: try once more
+      if (attempt > 0 || ageMs <= RECLAIM_MUTEX_STALE_MS) return false; // another reclaim is in progress
+      rmSync(mutex, { force: true }); // abandoned by a crashed reclaimer
+    }
+  }
+  return false;
+}
+
+/**
+ * acquireLock, returning the exact body written (null = held). Holders keep this body rather than reading the file
+ * back, so a lock overwritten in between is never mistaken for their own (review M-1).
+ *
+ * A stale lock is reclaimed only under a `${path}.reclaim` wx mutex, and only if the lock still holds exactly the
+ * body that was judged stale: two reclaimers can no longer both win (one deleting the other's fresh lock).
+ */
+function acquireLockBody(path: string, staleMs: number): string | null {
   mkdirSync(dirname(path), { recursive: true });
+  const body = lockBody();
   try {
-    writeFileSync(path, lockBody(), { flag: "wx" });
-    return true;
+    writeFileSync(path, body, { flag: "wx" });
+    return body;
   } catch (err) {
     if ((err as NodeJS.ErrnoException).code !== "EEXIST") throw err;
     let existing: string;
     try {
       existing = readFileSync(path, "utf8");
     } catch {
-      return false; // lock vanished between our EEXIST and this read — report held, don't guess
+      return null; // lock vanished between our EEXIST and this read — report held, don't guess
     }
     let lockMs = Date.parse(existing.split(" ")[1] ?? "");
     // An unparseable body (garbage, a torn write) is judged by the file's age instead of being held forever.
-    if (!Number.isFinite(lockMs)) { try { lockMs = statSync(path).mtimeMs; } catch { return false; } }
-    if (Date.now() - lockMs <= staleMs) return false;
+    if (!Number.isFinite(lockMs)) { try { lockMs = statSync(path).mtimeMs; } catch { return null; } }
+    if (Date.now() - lockMs <= staleMs) return null;
+    const mutex = `${path}.reclaim`;
+    if (!takeReclaimMutex(mutex)) return null;
     try {
-      // force:true — a concurrent reclaimer (or the original owner's releaseLock) may have
-      // already removed this file; an ENOENT here must not escape as an uncaught throw.
+      let current: string | null = null;
+      try { current = readFileSync(path, "utf8"); } catch { /* gone (released): free to take */ }
+      if (current !== null && current !== existing) return null; // reclaimed, or released and re-taken, meanwhile
+      // force:true — the original owner's release may have already removed this file; an ENOENT here must not
+      // escape as an uncaught throw.
       rmSync(path, { force: true });
-      writeFileSync(path, lockBody(), { flag: "wx" });
-      return true;
+      const mine = lockBody();
+      writeFileSync(path, mine, { flag: "wx" });
+      return mine;
     } catch (err2) {
-      if ((err2 as NodeJS.ErrnoException).code === "EEXIST") return false; // lost the race to reclaim
+      if ((err2 as NodeJS.ErrnoException).code === "EEXIST") return null; // lost the race to a plain acquire
       throw err2;
+    } finally {
+      rmSync(mutex, { force: true });
     }
   }
+}
+
+export function acquireLock(path: string, staleMs: number = DEFAULT_LOCK_STALE_MS): boolean {
+  return acquireLockBody(path, staleMs) !== null;
 }
 
 export function releaseLock(path: string): void {
@@ -165,10 +204,9 @@ export interface LockHandle { readonly body: string; stillOurs(): boolean; relea
  * re-check before it submits. null = held by someone else.
  */
 export function holdLock(path: string, staleMs: number = DEFAULT_LOCK_STALE_MS): LockHandle | null {
-  if (!acquireLock(path, staleMs)) return null;
-  let body = "";
-  try { body = readFileSync(path, "utf8"); } catch { /* vanished: never ours to release */ }
-  const stillOurs = () => { try { return body !== "" && readFileSync(path, "utf8") === body; } catch { return false; } };
+  const body = acquireLockBody(path, staleMs);
+  if (body === null) return null;
+  const stillOurs = () => { try { return readFileSync(path, "utf8") === body; } catch { return false; } };
   return { body, stillOurs, release: () => { if (stillOurs()) { try { rmSync(path); } catch { /* already gone */ } } } };
 }
 
