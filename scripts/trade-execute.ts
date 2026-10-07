@@ -7,6 +7,7 @@ import { resolveTradeConfig, tradeConfigFromEnv } from "../lib/trade/config";
 import { planRun, executeOrders, mergeExecution } from "../lib/trade/pipeline";
 import { crossCheckBroker } from "../lib/trade/audit";
 import { abortAlert } from "../lib/trade/cron";
+import { TERMINAL_STATUSES, type BrokerOrderStatus } from "../lib/broker/adapter";
 import { allocationFromRun, allocationLines, makeNotifier, summaryFromRun } from "../lib/trade/notify";
 import { newRunId, writeRunRecord } from "../lib/trade/run-record";
 import { writeLedger, ReconcileError } from "../lib/trade/ledger";
@@ -85,22 +86,26 @@ console.log(`Submitted ${executed.length} of ${out.sized.orders.length} order(s)
 // exits non-zero so the operator investigates before the next run.
 // A rejected order never reached the broker's book — nothing to cross-check.
 const brokerIdByCid = new Map(executed.filter((e) => e.status !== "rejected").map((e) => [e.clientOrderId, e.brokerId || undefined]));
-const audit = crossCheckBroker({
-  expected: out.sized.orders.filter((o) => brokerIdByCid.has(o.clientOrderId)).map((o) => ({ clientOrderId: o.clientOrderId, ticker: o.ticker, side: o.side, brokerId: brokerIdByCid.get(o.clientOrderId) })),
-  brokerOrders: await adapter.getOrders("all", `${today}T00:00:00Z`),
-  fills,
-});
-for (const d of audit.discrepancies) console.error(`  [${d.severity.toUpperCase()}] ${d.code} ${d.ticker}${d.orderId ? ` (${d.orderId})` : ""} — ${d.detail}`);
-notifier.runSummary(summaryFromRun(out, "executed", fills, audit, skippedCutoff));
-if (aborted) {
-  const msg = abortAlert(aborted, "trade:execute");
-  notifier.message(msg); await notifier.flush(); console.error(msg); process.exit(1);
+let audit: ReturnType<typeof crossCheckBroker> | null = null;
+let auditReadError = "";
+try {
+  audit = crossCheckBroker({
+    expected: out.sized.orders.filter((o) => brokerIdByCid.has(o.clientOrderId)).map((o) => ({ clientOrderId: o.clientOrderId, ticker: o.ticker, side: o.side, brokerId: brokerIdByCid.get(o.clientOrderId) })),
+    brokerOrders: await adapter.getOrders("all", `${today}T00:00:00Z`),
+    fills,
+  });
+} catch (e) {
+  auditReadError = e instanceof Error ? e.message : String(e);
 }
-if (!audit.ok) {
-  notifier.message(`Broker-truth check FAILED: ${audit.critical} critical discrepancy(ies). Investigate before the next run.`);
-  await notifier.flush();
-  console.error(`Broker-truth check FAILED: ${audit.critical} critical discrepancy(ies). Investigate before the next run.`);
-  process.exit(1);
+if (audit) {
+  for (const d of audit.discrepancies) console.error(`  [${d.severity.toUpperCase()}] ${d.code} ${d.ticker}${d.orderId ? ` (${d.orderId})` : ""} — ${d.detail}`);
+  notifier.runSummary(summaryFromRun(out, "executed", fills, audit, skippedCutoff));
 }
-console.log(`Broker-truth check ${audit.warn ? `OK with ${audit.warn} warning(s)` : "clean"}.`);
+const stop = async (msg: string) => { notifier.message(msg); await notifier.flush(); console.error(msg); process.exit(1); };
+if (aborted) await stop(abortAlert(aborted, "trade:execute"));
+if (!audit) await stop(`trade:execute: the broker-truth check could not read the broker's orders (${auditReadError}). ${fills.length} fill(s) recorded; run record ${path}. Run \`npm run trade:audit -- --run ${runId}\` before the next run.`);
+if (!audit!.ok) await stop(`Broker-truth check FAILED: ${audit!.critical} critical discrepancy(ies). Investigate before the next run.`);
+const stillWorking = executed.filter((e) => e.brokerId && !TERMINAL_STATUSES.has(e.status as BrokerOrderStatus));
+if (stillWorking.length) await stop(`trade:execute: ${stillWorking.length} order(s) still working at the broker after the cancel attempt — ${stillWorking.map((e) => `${e.brokerId} (${e.status}${e.cancelError ? `; cancel failed: ${e.cancelError}` : ""})`).join(", ")}. Check the broker before the next run.`);
+console.log(`Broker-truth check ${audit!.warn ? `OK with ${audit!.warn} warning(s)` : "clean"}.`);
 await notifier.flush();

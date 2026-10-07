@@ -519,6 +519,85 @@ describe("runCron", () => {
     expect(notified).toEqual([expect.stringMatching(/holds the run lock \(12345 /)]);
   });
 
+  it("F-1: an order the run lost track of halts (poll-unavailable): record written, counter bumped, no 'UNKNOWN outcome' wording", async () => {
+    class LostBroker extends FakeBroker {
+      private placed: BrokerOrder[] = [];
+      async submitOrder(req: SubmitOrderRequest): Promise<BrokerOrder> {
+        this.submitCount++;
+        const o: BrokerOrder = { id: `l-${this.placed.length + 1}`, clientOrderId: req.clientOrderId, symbol: req.symbol, side: req.side, status: "new", qty: req.qty ?? null, notional: null, filledQty: 0, filledAvgPrice: null, filledAt: null, submittedAt: `${TODAY}T19:15:00Z` };
+        this.placed.push(o); return o;
+      }
+      async getOrders(): Promise<BrokerOrder[]> { if (this.submitCount > 0) throw new Error("Schwab GET …/orders → 503"); return [...this.placed]; }
+      async cancelOrder(): Promise<void> { /* accepted; we never see the outcome */ }
+    }
+    const paths = mkPaths(); const notified: string[] = [];
+    const adapter = new LostBroker({ calendar: CAL, closes: { NVT: closes(100) }, equity: 10_000, cash: 10_000, isOpen: true, today: TODAY });
+    const r = await runCron(mkDeps({ paths, adapter, pollMs: 0, notify: (m) => notified.push(m), loadInputs: async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] }) }));
+    expect(r).toEqual({ status: "halted", reason: "poll-unavailable" });
+    expect(readHaltState(paths.haltState)).toEqual({ consecutive: 1 });
+    expect(notified.some((m) => /lost track of the NVT order/.test(m))).toBe(true);
+    expect(notified.some((m) => /UNKNOWN outcome/.test(m))).toBe(false);
+    expect(readdirSync(paths.runs)).toHaveLength(1);
+    expect(existsSync(paths.lock)).toBe(false);
+  });
+
+  it("T-8: the broker-truth read fails after execution → halted (audit-unavailable), counter bumped, alert names the run, fills + record kept", async () => {
+    const paths = mkPaths(); const adapter = mkBroker();
+    const orig = adapter.getOrders.bind(adapter);
+    adapter.getOrders = (async (status: "open" | "closed" | "all", after?: string) => {
+      if (adapter.submitCount > 0) throw new Error("Schwab GET …/orders → 429: rate limited");
+      return orig(status, after);
+    }) as typeof adapter.getOrders;
+    const notified: string[] = [];
+    const r = await runCron(mkDeps({ paths, adapter, notify: (m) => notified.push(m), loadInputs: async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] }) }));
+    expect(r).toEqual({ status: "halted", reason: "audit-unavailable" });
+    expect(readHaltState(paths.haltState)).toEqual({ consecutive: 1 });
+    expect(readFills(paths.fills).length).toBeGreaterThan(0);
+    expect(readdirSync(paths.runs)).toHaveLength(1);
+    expect(notified.some((m) => /broker-truth check could not read/.test(m) && /trade:audit -- --run r-cron-1/.test(m))).toBe(true);
+    expect(existsSync(paths.lock)).toBe(false);
+  });
+
+  it("F-1: an order still working after a failed cancel (reads fine) halts (order-working) — never 'executed', never clearHalt", async () => {
+    class StuckBroker extends FakeBroker {
+      private stuck: BrokerOrder[] = [];
+      async submitOrder(req: SubmitOrderRequest): Promise<BrokerOrder> {
+        this.submitCount++;
+        const o: BrokerOrder = { id: `s-${this.stuck.length + 1}`, clientOrderId: req.clientOrderId, symbol: req.symbol, side: req.side, status: "new", qty: req.qty ?? null, notional: null, filledQty: 0, filledAvgPrice: null, filledAt: null, submittedAt: `${TODAY}T19:15:00Z` };
+        this.stuck.push(o); return o;
+      }
+      async getOrders(): Promise<BrokerOrder[]> { return [...this.stuck]; }
+      async cancelOrder(): Promise<void> { throw new Error("Schwab DELETE order → 503"); }
+    }
+    const paths = mkPaths(); bumpHalt(paths.haltState); // a prior halt must NOT be cleared by this run
+    const adapter = new StuckBroker({ calendar: CAL, closes: { NVT: closes(100) }, equity: 10_000, cash: 10_000, isOpen: true, today: TODAY });
+    const notified: string[] = [];
+    const r = await runCron(mkDeps({ paths, adapter, pollMs: 0, notify: (m) => notified.push(m), loadInputs: async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] }) }));
+    expect(r).toEqual({ status: "halted", reason: "order-working" });
+    expect(readHaltState(paths.haltState)).toEqual({ consecutive: 2 });
+    expect(notified.some((m) => /still working at the broker/.test(m) && /NVT/.test(m))).toBe(true);
+    const [rec] = readdirSync(paths.runs);
+    expect(readFileSync(join(paths.runs, rec), "utf8")).toMatch(/"cancelError": "Schwab DELETE order → 503"/);
+  });
+
+  it("F-4: an error after an order reached the broker is caught: halted (execute-error), counter bumped, alerted, lock released", async () => {
+    const dir = mkdtempSync(join(tmpdir(), "cron-"));
+    const paths = { ...mkPaths(), fills: join(dir, "no-such-dir", "fills.jsonl") }; // appendFill fails AFTER the fill
+    const notified: string[] = [];
+    const r = await runCron(mkDeps({ paths, notify: (m) => notified.push(m), loadInputs: async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] }) }));
+    expect(r).toEqual({ status: "halted", reason: "execute-error" });
+    expect(readHaltState(paths.haltState)).toEqual({ consecutive: 1 });
+    expect(notified.some((m) => /error after orders were sent/.test(m) && /ENOENT/.test(m))).toBe(true);
+    expect(existsSync(paths.lock)).toBe(false);
+  });
+
+  it("F-4: an error before any order went out is re-thrown and does not touch the counter", async () => {
+    const paths = mkPaths();
+    await expect(runCron(mkDeps({ paths, loadInputs: async () => { throw new Error("disk gone"); } }))).rejects.toThrow(/disk gone/);
+    expect(readHaltState(paths.haltState)).toEqual({ consecutive: 0 });
+    expect(existsSync(paths.lock)).toBe(false);
+  });
+
   it("D-4: cron never deletes a lock that is no longer its own", async () => {
     const paths = mkPaths();
     const foreign = `77777 ${new Date().toISOString()} feed`;
