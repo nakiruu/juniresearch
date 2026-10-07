@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "c725780d57682d2d1f949db916231ffbe490918cb11180d4bb8cea0e87dfd15d",
-  "reviewedAt": "2026-09-28T20:15:00Z",
-  "reviewer": "Claude Opus 4.8",
+  "judgmentSha256": "2f0b8aa8dd55be96a7f2d42940bcd66a1303dc61b0c3ec329c17bfb0006ea23e",
+  "reviewedAt": "2026-10-07T16:22:07Z",
+  "reviewer": "Claude Opus 5.5",
   "round": 2,
-  "verdict": "approved",
+  "verdict": "approved-with-minors",
   "findings": [
     {
       "id": "F-1",
@@ -13,7 +13,7 @@
       "issue": "The executive-summary catalysts/risks are supposed to point while the later sections argue; instead several body-section lines restate the exact same claims in barely-changed words. Catalyst 5 ('Healthcare and hospitality volumes grew 3.5% and 4.4% in Q2'26, diversifying growth beyond restaurants.') is reproduced almost verbatim by growth.points[3] ('...broadening growth beyond restaurants.'). Catalyst 1 (independent channel grew ahead of total 1.9%) is re-told by growth.points[0] ('Independent-restaurant case volume grew 5.1% in Q2'26, the priority channel...'). Executive-summary risks[1]/[2]/[3] (net margins near 2%; low switching costs; net debt $5.2B leverage) are each re-stated by risks.idiosyncratic[1]/[2]/[3] with the same figures and no added mechanism.",
       "fix": "Keep the figure in one place. Let the executive-summary catalysts/risks be one-line pointers and make growth.points and risks.idiosyncratic argue the mechanism and what-to-watch without repeating the same number and framing. Cut the near-duplicate healthcare/hospitality line from growth.points and differentiate the independent-channel and margin/leverage lines so each section adds something new.",
       "status": "addressed",
-      "note": "Fixed. growth.points[0] and [3] no longer repeat the 5.1% or 3.5%/4.4% figures (now forward-looking mix points), and executive-summary risks[0]-[3] are rewritten as short figure-free pointers while risks.idiosyncratic keeps the figures and mechanism. No section now restates the same figure and framing."
+      "note": "Still addressed in the rewrite. The healthcare/hospitality line is gone from growth.points, growth.points[0] uses the organic 5.0%/1.7% figures with a forward test, and exec-summary risks are pointers. The new leverage repetition introduced by this republish is a separate defect, logged as F-10."
     },
     {
       "id": "F-2",
@@ -23,7 +23,7 @@
       "issue": "The buyback/capex story is told nearly verbatim in two sections. financials.cashflowCommentary reads 'it bought back $926 million of stock in FY25 and approximately $500 million in the first half of FY26, with $640 million of authorization remaining' and management.capitalAllocation repeats the same $926M / ~$500M / $640M / $410M cluster in the same shape. This is the cross-section paraphrase repetition the rubric flags — one figure's story retold in two places.",
       "fix": "Introduce the FY25 $926M buyback, ~$500M H1'26, $640M remaining and $410M capex once (cashflowCommentary is the natural home) and, in capitalAllocation, refer back in words and focus on the allocation judgment (dividend-free, buyback-over-debt, funded from FCF/EBITDA) rather than restating the same dollar figures.",
       "status": "addressed",
-      "note": "Fixed. cashflowCommentary now says the company 'directs its free cash flow to buybacks, detailed in capital allocation below' and drops the buyback cluster; the $926M/~$500M/$640M figures now appear once (capitalAllocation) and the $410M capex once (cashflowCommentary)."
+      "note": "Still addressed. The buyback figures ($926M, ~$500M, $374M, $640M) appear only in capitalAllocation and the $410M capex only in cashflowCommentary, which points forward in words."
     },
     {
       "id": "F-3",
@@ -33,7 +33,7 @@
       "issue": "The claim that the $4.78 and $5.55 consensus EPS estimates are 'struck on that adjusted basis' is not on the grounding surface. The Estimates block gives the two EPS figures only as 'consensus means' with no statement of whether they are GAAP or adjusted; the report asserts the adjusted basis as fact and then makes a causal claim ('which is why they sit well above the trailing GAAP figure'). This is an inference the surface invites but does not make, and the same characterization carries into valuation.multiplesCommentary ('on adjusted consensus earnings').",
       "fix": "State it without asserting the unproven basis — e.g. note that consensus FY26E/FY27E EPS of $4.78/$5.55 sit well above trailing GAAP diluted EPS of $2.94, consistent with the company's guidance for 18-24% Adjusted Diluted EPS growth, without declaring that the consensus figures are computed on an adjusted basis. Soften multiplesCommentary similarly.",
       "status": "addressed",
-      "note": "Fixed. incomeCommentary now states the estimates 'are not directly comparable to trailing GAAP diluted EPS' without asserting they are struck on an adjusted basis, and multiplesCommentary changed from 'on adjusted consensus earnings' to 'on consensus earnings estimates,' attributing the adjusted emphasis to the company."
+      "note": "Still addressed. The rewrite says the basis of the estimates is not stated and uses them as given; it no longer asserts an adjusted basis. The caveat now appears twice (income and multiples); see F-13."
     },
     {
       "id": "F-4",
@@ -43,7 +43,7 @@
       "issue": "'The Facts block' is internal pipeline machinery, not something a reader of the published report should see. The prose exposes the desk's data-plumbing rather than making the point in reader-facing terms.",
       "fix": "Reframe without naming the internal source, e.g. 'A gross total-debt figure is not disclosed in the available data, but the Q2'26 press release reports net debt of $5.2 billion...'.",
       "status": "addressed",
-      "note": "Fixed. Reworded to 'The summary financials do not break out a total-debt line, but the Q2'26 press release reports net debt of $5.2 billion' — no internal-machinery reference."
+      "note": "The quoted sentence is gone; the summary data now carry a total-debt line. A similar internal term ('the pack') appears elsewhere in the rewrite; logged as F-13."
     },
     {
       "id": "F-5",
@@ -53,7 +53,147 @@
       "issue": "The 2026 proxy states the 96% approval was received 'last year' (i.e., the 2025 Say-on-Pay vote), but the report presents it undated, reading as a current-year result. A governance vote carries its period; here the age is not shown.",
       "fix": "Date the figure — e.g. 'the most recent Say-on-Pay vote (2025, per the 2026 proxy) received 96% support' — so the reader knows it is a prior-year result.",
       "status": "addressed",
-      "note": "Fixed. Now reads 'the Say-on-Pay vote received 96% support at the prior year's annual meeting,' dating the result."
+      "note": "Still addressed: 'Per the 2026 proxy, Say-on-Pay received 96% approval in the prior year's vote'."
+    },
+    {
+      "id": "F-6",
+      "severity": "Important",
+      "field": "analystCommentary",
+      "quote": "What changed is the balance-sheet read. The corrected summary data carry a total-debt line: $5.2 billion at FY25, up from $4.7 billion at FY23, with cash and short-term investments rounding to $0.0 billion. Net debt is 3.0x trailing EBITDA on the page's measure, against the 2.6x the company reports on Adjusted EBITDA. With no cash buffer behind that debt, a stall in earnings would hit the equity harder, and the Bear is priced on that story.",
+      "issue": "The report's central new argument, which it uses to explain the BUY-to-HOLD move and the depth of the Bear, does not hold on its own figures. What transmits an earnings stall to the equity is net debt, and balanceCommentary itself says 'The two net-debt figures agree': the company's $5.2 billion net debt was already the figure the earlier version used. Gross debt equal to net debt with near-zero cash changes nothing in that sensitivity; holders absorb the same hit whether $5.2 billion of net debt comes with cash or without it. Low cash is a liquidity point (the page shows a 1.14 current ratio), not added leverage. The 3.0x vs 2.6x gap is a denominator difference the report explains, not new debt. The same 'no cash buffer/cushion' reasoning is repeated as the justification for the Bear in thesis.body, balanceCommentary ('The exposure is the combination of a profit stall with no cash buffer, and that is how the Bear is priced'), scenarios[2].driver, scenarioCommentary ('equity holders absorb the hit with no cash cushion, which is why the Bear sits at the 52-week low') and finalRecommendation.body[0].",
+      "fix": "Argue leverage through net debt and the page's 3.0x ratio on unadjusted EBITDA, once, in balanceCommentary. Treat near-zero cash as a separate liquidity observation with its own (smaller) weight, and drop the claim that it deepens the equity downside. In analystCommentary, say plainly what changed: the corrected data add a stricter leverage measure (3.0x on EBITDA vs the company's 2.6x on Adjusted EBITDA) and confirm the same net-debt level; do not imply new debt was found. Re-check the Bear (F-7) once this reasoning is removed, and let the label be whatever the rule derives.",
+      "status": "addressed",
+      "note": "Addressed. analystCommentary now says no new debt was found and the correction changes how leverage is measured; balanceCommentary treats low cash as a separate liquidity point that does not add to net debt. The Bear no longer rests on a cash-buffer argument."
+    },
+    {
+      "id": "F-7",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[2].driver",
+      "quote": "A consumer pullback cuts food-away-from-home volumes, cost deflation or a pass-through lag squeezes the thin margin, and EPS stalls near the FY26E $4.78 instead of growing into FY27. With net debt at 3.0x trailing EBITDA and no cash buffer, the multiple on that stalled figure compresses to below 15x. Implied $70, at the $69.88 52-week low and above the $65.00 lowest analyst target.",
+      "issue": "The Bear is not priced on its own story, and its depth looks set by a price anchor rather than argued. (1) The story says volumes are cut and margins squeezed, but the EPS it prices still reaches the FY26E consensus of $4.78, which itself embeds growth well above FY25; the whole downside therefore comes from the multiple, not from the earnings the story describes. (2) The multiple is described only as 'below 15x', and the price is placed 'at the $69.88 52-week low'; the multiple is effectively reverse-engineered from that low. (3) The only stated reason for a sub-15x multiple, beyond the stall, is 'no cash buffer', which F-6 shows adds nothing to equity sensitivity. The coordinator notes this Bear moved from $76 to $70 in this rewrite. On the page's own math, a $76 Bear at the same 25/55/20 weights derives BUY (E about 13.5%, R about 0.72x), so this unargued $6 is what decides the label. A downgrade driven by an anchor rather than by evidence is the same defect as an inflated BUY.",
+      "fix": "Make the Bear's EPS and story agree. Either (a) keep the story of a consumer pullback and margin squeeze and anchor to an EPS below FY26E that is on the page (e.g. FY25 Adjusted Diluted EPS of $3.98 from the proxy) at a multiple argued in words, or (b) describe the Bear honestly as earnings that stop growing after FY26 plus a lower multiple, and argue that multiple from page figures (the market's current ~16.9x on FY27E, the 3.0x net debt/EBITDA, the low margin), not from zero cash or the 52-week low. Do not tune the Bear to land on either side of the 0.50x line; whatever price the argued Bear gives, state the derived label and, if close, say so.",
+      "status": "addressed",
+      "note": "Addressed in part. The Bear story (volumes flatten, FY27 EPS stalls at FY26E $4.78) now matches its EPS, and it is no longer pinned to the 52-week low. The argument for the 15x multiple is still weak and on a mismatched basis; logged as F-15 and F-16."
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[1].driver",
+      "quote": "Volume and margin gains continue at a slower pace and FY27 EPS meets consensus. We apply about 20x to FY27E EPS: above today's ~16.9x, because no reported figure changed in the September fall",
+      "issue": "The Base is anchored, but by construction it says nothing about whether the shares are mispriced. Today's 19.6x NTM multiple is the current price divided by FY26E EPS, so 19.6x on FY27E $5.55 is just today's close rolled forward by one year of consensus EPS growth: the Base equals the close times about 1.16 at any price. Its multiple is the post-decline multiple, and multiplesCommentary concedes 'the Base inherits that move rather than any change in the reported numbers' after a fall no source explains (from about $108 in late August). The report never argues why the multiple the market set after an unexplained drop is the right one a year out, while the Bull says the multiple 're-rates above today's forward level'. With the call this close (R 0.48x vs 0.50x), an anchor that tracks the day's price sets the label mechanically rather than from the author's view of value. Note also that the 'Moving five points of weight' and price-sensitivity discussion in scenarioCommentary holds the Base fixed even though its construction would move with the price.",
+      "fix": "State a view of the multiple a year out and argue it from page figures: say why today's 19.6x (or a different figure such as one between the ~16.9x FY27E market multiple and the multiple at which the shares traded in late August) is what a slower-growth, 3.0x-levered, low-margin distributor deserves. If the author believes today's multiple is right, say so and give the reason (e.g. the leverage and the first-half pace, once F-9 is addressed), rather than inheriting it. Then let the label be what derives.",
+      "status": "addressed",
+      "note": "Addressed. The Base now holds today's 19.6x forward multiple and says so plainly (\"the upside is one year of consensus earnings growth at an unchanged multiple, not a re-rating\"), with reasons on both sides. The \"no reported figure changed\" argument is gone, and multiplesCommentary assumes the fall neither reverses nor deepens."
+    },
+    {
+      "id": "F-9",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "For the 26 weeks ended June 27, 2026, Adjusted EBITDA rose from $937 million to $1,017 million, a pace just below the low end of the full-year Adjusted EBITDA guidance set out next",
+      "issue": "The first-half 'gap' to guidance is used as a counterweight without netting the 53rd week the report itself cites. Guidance of 9% to 13% Adjusted EBITDA growth includes a 53rd week the company expects to add approximately 1%, and the report notes that week falls outside the half-year comparison, so it lands in the second half. A first-half pace just below 9% is therefore consistent with the low end once the extra week is counted, and the CEO calls the results 'in line with our long-range plan'. Yet the report treats the gap as evidence against the stock in thesis.body ('a first-half Adjusted EBITDA pace that trails the low end of full-year guidance'), scenarioCommentary (against a higher Bull weight: 'first-half Adjusted EBITDA growth ran below the guidance range'), growth.points[1] ('the first-half pace is the open test') and catalysts[1]. It also makes the BUY trigger in finalRecommendation.body[1] (FY26 Adjusted EBITDA growth inside 9% to 13%) close to a trigger the current pace plus the extra week already meets.",
+      "fix": "Say once, in incomeCommentary and in words (no new figure), that the 53rd week falls in the second half and is expected to add about the size of the first-half shortfall, so the half-year pace is roughly consistent with the low end of guidance. Then remove the half-year gap as an argument against the Bull weight and as a thesis counterweight, or restate it as 'on track for the low end, not the midpoint'. Set a BUY trigger the current trajectory does not already deliver (e.g. FY26 Adjusted EBITDA growth toward the midpoint of guidance, or stated against the underlying pace excluding the extra week).",
+      "status": "addressed",
+      "note": "Addressed. incomeCommentary says the 53rd week is about the size of the half-year shortfall, so FY26 is on track for the low end; the gap is no longer used against the Bull weight; triggers now use the low end with the extra week included (HOLD) and the midpoint (Bull)."
+    },
+    {
+      "id": "F-10",
+      "severity": "Important",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "That interest coverage is serviceable while EBITDA grows. The exposure is the combination of a profit stall with no cash buffer, and that is how the Bear is priced.",
+      "issue": "The leverage/profit-stall story is told in nine places rather than argued once: analystCommentary ('With no cash buffer behind that debt, a stall in earnings would hit the equity harder, and the Bear is priced on that story'), thesis.body ('the Bear is deep because leverage sits on a balance sheet with almost no cash'), executiveSummary.risks[1] ('little room to absorb a profit shock'), balanceCommentary (quoted), cashflowCommentary ('free cash flow has gone to buybacks rather than debt reduction') and capitalAllocation ('so no free cash flow went to debt reduction'; 'an uncomfortable one if they stall'), scenarios[2].driver, scenarioCommentary ('the debt load means equity holders absorb the hit with no cash cushion') and finalRecommendation.body[0]. A second, smaller cluster repeats the thin-margin point: executiveSummary.risks[2], businessMoat.durability ('leaves little room for error'), risks.idiosyncratic[1] ('small cost moves reach earnings quickly') and risks.systemic ('reaches earnings quickly').",
+      "fix": "Argue leverage once in balanceCommentary (after fixing F-6) and the buyback-over-debt choice once in capitalAllocation; let cashflowCommentary point to it without restating the conclusion. The executive summary, thesis, Bear driver, scenarioCommentary and final recommendation should refer back in words (e.g. 'the leverage set out in the balance sheet section') rather than retelling the mechanism. Keep the thin-margin mechanism in risks.idiosyncratic[1] and cut the paraphrases in durability and systemic.",
+      "status": "addressed",
+      "note": "Addressed. Leverage is argued once in balanceCommentary; the exec risk, Base and Bear drivers and capitalAllocation point back in words; the thin-margin mechanism stays in risks.idiosyncratic[1]. A residual two-place paraphrase is logged as Minor F-17."
+    },
+    {
+      "id": "F-11",
+      "severity": "Important",
+      "field": "sections.finalRecommendation.body[1]",
+      "quote": "On unchanged scenarios, BUY derives at any close slightly below today's $93.72, and SELL derives only near the $111.42 52-week high.",
+      "issue": "The rating mechanics are restated across sections. The price-sensitivity point appears in scenarioCommentary ('so would a close only slightly below the current price on these scenarios... closes near the 52-week high would derive SELL') and again here in different words. The E/R-versus-threshold derivation is told four times: analystCommentary ('a reward/risk of 0.48x, just under the 0.50x a BUY needs'), thesis.body ('Expected upside of 12.2% clears the BUY bar; reward/risk of 0.48x narrowly misses it'), scenarioCommentary ('Expected upside clears the +10.0% BUY threshold, but reward/risk falls just short of 0.50x') and finalRecommendation.body[0] ('reward/risk lands at 0.48x, just short of a BUY'). 'The call is close' appears in both analystCommentary and scenarioCommentary, and scenarioCommentary's last sentence restates the Base driver's position below the consensus target.",
+      "fix": "State the derivation and the price sensitivity once, in scenarioCommentary. analystCommentary and finalRecommendation can give the label, range, fair value and the fact that it is close, pointing to the valuation section; thesis.body should end on the investment view, not the threshold arithmetic. Cut the duplicate Base-vs-consensus sentence from scenarioCommentary.",
+      "status": "addressed",
+      "note": "Addressed. The derivation and price sensitivity appear once, in scenarioCommentary; analystCommentary, thesis and finalRecommendation point to it; \"the call is close\" appears once. Checked: closes from September 14 on derive BUY, earlier ones HOLD, none inside the range derives SELL."
+    },
+    {
+      "id": "F-12",
+      "severity": "Minor",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "The page's price history shows a sharp fall after the August 6 results: the shares traded near the top of that range in late August and dropped to around today's level by mid-September",
+      "issue": "'A sharp fall after the August 6 results' invites a reader to tie the decline to the results, which the report then says no source explains. The page's history starts on August 17, the shares held about $107 to $110 through late August, and the fall came in September, a month after the release.",
+      "fix": "Date the fall to September without linking it to the results, e.g. 'The page's price history shows a sharp fall in September: the shares traded near the top of that range in late August...'.",
+      "status": "addressed",
+      "note": "Addressed: now \"a sharp fall in September\", with no link to the results."
+    },
+    {
+      "id": "F-13",
+      "severity": "Minor",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "may also reflect a basis difference between the GAAP history and the estimates, which the pack does not label. The pack carries no peer multiples",
+      "issue": "'The pack' is internal pipeline language (the same defect as F-4 in an earlier round); it appears here twice, in 'No source in the pack explains the decline', and in incomeCommentary ('the pack does not state the basis of those estimates'). The basis caveat on consensus EPS is also made twice, in incomeCommentary and multiplesCommentary.",
+      "fix": "Use reader-facing wording ('the consensus data do not state their basis', 'no peer multiples are available', 'no source we have explains the decline') and make the basis caveat once, in incomeCommentary, with multiplesCommentary pointing back in words.",
+      "status": "addressed",
+      "note": "Addressed. \"The pack\" is gone (\"no source we have\", \"no peer multiples are available\"), and the basis caveat is made once in incomeCommentary, with multiplesCommentary pointing back."
+    },
+    {
+      "id": "F-14",
+      "severity": "Minor",
+      "field": "sections.management.capitalAllocation",
+      "quote": "Per the proxy, the FY25 annual incentive plan weighted Adjusted EBITDA at 70%, distribution cost per case at 15% and \"IND Market Share\" at 15%.",
+      "issue": "The incentive-plan weights are a pay fact placed in capital allocation, while governance carries the pay argument ('the main pay metric rewards a measure that sits above GAAP earnings') and relies on this figure from another section. The sentence ends capitalAllocation without a view.",
+      "fix": "Move the AIP weights into governance, next to the sentence that reads them, and end capitalAllocation on its buyback-versus-debt judgment.",
+      "status": "addressed",
+      "note": "Addressed. The AIP weights now sit in governance next to the sentence that reads them; capitalAllocation ends on its buyback-versus-debt view."
+    },
+    {
+      "id": "F-15",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[1].driver",
+      "quote": "We apply about 20x to FY27E EPS: above today's ~16.9x, because no reported figure changed in the September fall, but below the late-August level, because consensus growth slows after FY26",
+      "issue": "The multiples are compared on two different bases, and the BUY case rests on the mismatch. The report values the shares \"a year out\" on FY27E EPS. A year out, FY27 is the next-twelve-month year, so the like-for-like comparator is today's 19.6x NTM, not today's ~16.9x on FY27E. On that basis the Base's ~20x is roughly today's multiple held, not a partial recovery. The driver mixes bases in one sentence: \"above today's ~16.9x\" uses FY27E, while \"below the late-August level\" holds only on an NTM basis. On FY27E the late-August closes ($107 to $110) were about 19.3x to 19.8x, below 20x, and the $111 Base sits above every close in the page's history. The same mismatch drives thesis.body (\"The shares trade at ~16.9x FY27E consensus EPS, below the multiple we argue the business can hold a year out\") and finalRecommendation.body[0]. It also understates the Bear: its 15x is described as a discount to 16.9x, but it is about a quarter below today's 19.6x NTM.",
+      "fix": "Put every multiple on one basis. Describe the Base as roughly today's 19.6x forward multiple held a year out and applied to FY27E, which is a defensible anchor, and say so. Present its upside as one year of consensus earnings growth at an unchanged multiple, not as a re-rating. Remove the \"trades below the multiple we argue the business can hold\" framing from thesis.body and finalRecommendation.body[0]. Describe the Bull's late-August multiple and the Bear's 15x against today's 19.6x on the same basis. Then let the label be what the rule derives.",
+      "status": "addressed",
+      "note": "Addressed. multiplesCommentary sets today's next-twelve-month 19.6x as the like-for-like reference for every scenario. Bull (late-August forward level), Base (19.6x held) and Bear (14x, \"between a quarter and a third below today's forward multiple\") are all stated against it. ~16.9x FY27E now appears only as a fact, and the re-rating framing is gone from thesis and finalRecommendation."
+    },
+    {
+      "id": "F-16",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "For our multiple: the Bear already removes a full year of earnings growth, FY26 is half reported with guidance reaffirmed, and the business still generates free cash flow it can use to buy back stock or reduce debt.",
+      "issue": "The report rightly names the Bear multiple as the deciding input; the line is near 14.5x, and at 14x the label derives HOLD. But two of its three reasons for 15x are about the EPS input, not the multiple. \"Removes a full year of earnings growth\" is the Bear's premise, and a no-growth outcome is a reason for a lower multiple, so it cuts against 15x. \"FY26 is half reported with guidance reaffirmed\" supports holding EPS at $4.78, which the Bear already does. Only the free-cash-flow point bears on the multiple. On the other side, the 52-week low cited is page evidence of the stock trading in that range within the year. The deciding split is thus argued from one side only, and a BUY that rests on it has the same weakness F-7 named in the HOLD.",
+      "fix": "Argue 15x versus 14x only on evidence that bears on the multiple. Candidates on the page: the 4.7% trailing FCF yield and the buyback capacity it funds, the 4.1x interest coverage, the 3.0x leverage, the low operating margin and the 52-week low. Drop the two EPS points from the multiple argument. If the evidence does not favor 15x over the lower figure, say the split is a coin-flip and that the label sits on it, or take the lower multiple. Do not settle the multiple by which side of 0.50x it lands on.",
+      "status": "addressed",
+      "note": "Addressed. The 14x-vs-15x split is argued both ways from evidence that bears on the multiple (4.7% FCF yield and 4.1x coverage for; leverage, 3.0% margin, buyback room, 52-week low against) and called \"a judgment, not a finding\". Checked: ~15x Bear derives BUY (R 0.54x), a Base one turn higher derives BUY (R 0.52x), and only the September 15 close ($92.01, R 0.50x) derives BUY. SELL needs about $110, near the 52-week high."
+    },
+    {
+      "id": "F-17",
+      "severity": "Minor",
+      "field": "analystCommentary",
+      "quote": "No new debt was found; the correction changes how leverage is measured, not how much there is.",
+      "issue": "The point is made twice in different words: here and in balanceCommentary (\"The two net-debt figures agree: the corrected data add a total-debt line, not new debt\"). The 3.0x-versus-2.6x comparison also appears in both.",
+      "fix": "Keep the explanation in balanceCommentary. Let analystCommentary say in one clause that the republish adds a stricter leverage measure, and point to the balance sheet section.",
+      "status": "addressed",
+      "note": "Addressed. The \"not new debt\" paraphrase is cut from balanceCommentary (\"The two net-debt figures agree\"), leaving the explanation in one place."
+    },
+    {
+      "id": "F-18",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "management's stated aim of holding net leverage at 2.6x would leave less room for buybacks as EBITDA fell",
+      "issue": "The CFO described a result, not a target: \"repurchased approximately $500 million of shares, while maintaining our net leverage at 2.6 times.\" Calling it a \"stated aim\" attaches a policy to the release that it does not state. This sentence is one of the arguments in the deciding Bear-multiple split.",
+      "fix": "Use the company's phrasing and make the point conditional, e.g. \"if management keeps net leverage near the 2.6x the CFO said it was maintaining, falling EBITDA would leave less room for buybacks\".",
+      "status": "declined",
+      "note": "Deferred to the next synthesis: the final re-check approved the report, and editing the judgment now would leave it unreviewed. Next pass quotes the CFO (\"maintaining our net leverage at 2.6 times\") as a result, not a target, and makes the buyback point conditional."
+    },
+    {
+      "id": "F-19",
+      "severity": "Minor",
+      "field": "sections.finalRecommendation.body[0]",
+      "quote": "holding today's forward multiple yields one year of consensus earnings growth, and an earnings stall at a lower multiple would cost more",
+      "issue": "This paraphrases thesis.body (\"Our Base holds today's 19.6x forward multiple, so its upside is one year of consensus earnings growth. An earnings stall at a lower multiple would cost more than that\"), and the Base driver makes the same point a third time.",
+      "fix": "Keep the argument in the thesis and the Base driver. Let finalRecommendation.body[0] state the call and point to the valuation section without retelling the mechanism.",
+      "status": "declined",
+      "note": "Deferred to the next synthesis: the final re-check approved the report, and editing the judgment now would leave it unreviewed. Next pass keeps the one-year-of-growth point in the Base driver only."
     }
   ]
 }
