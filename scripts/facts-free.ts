@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, readFileSync } from "node:fs";
+import { mkdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { requireContact } from "./_env";
 import { resolveCik } from "../lib/edgar/tickers";
@@ -8,7 +8,7 @@ import { parseFilingXbrl, mergeFilingFacts, type CompanyFactsLike } from "../lib
 import { ANNUAL_PRIMARY_FILE } from "../lib/facts/manifest";
 import { fetchQuoteSummary, parseQuoteSummary } from "../lib/facts/free/yahoo";
 import { computeTtm } from "../lib/facts/free/ttm";
-import { buildTearsheetFiles, writeTearsheetFiles, yahooFromTearsheet } from "../lib/facts/free/emit";
+import { buildTearsheetFiles, writeTearsheetFiles, yahooFromTearsheet, keepQuoteTearsheet } from "../lib/facts/free/emit";
 
 // --keep-quote: regenerate only the SEC-derived statements and TTM rows, keeping the quote (price, market cap,
 // asOf, targets, estimates, ratings) already in the capture's tearsheet. A same-date republish on corrected
@@ -38,10 +38,10 @@ const cik = watch?.cik ?? (await resolveCik(ticker, contact)).cik;
 // Yahoo's quoteSummary needs nothing from SEC: start its (three-request crumb) flow now so it overlaps
 // the companyfacts download and parsing below. A failure is surfaced by the await further down,
 // exactly where it used to be thrown; if the SEC step fails first, the Yahoo result is unused.
-const existingTearsheet = join(dir, "bigdata-tearsheet-annual.json");
+let keptTearsheet: unknown = null;
 let yrawPending: Promise<unknown> | null = null;
 if (keepQuote) {
-  if (!existsSync(existingTearsheet)) { console.error(`--keep-quote needs an existing ${existingTearsheet}`); process.exit(2); }
+  try { keptTearsheet = keepQuoteTearsheet(dir); } catch (e) { console.error((e as Error).message); process.exit(2); }
 } else {
   yrawPending = fetchQuoteSummary(ticker);
   yrawPending.catch(() => {}); // no unhandled rejection while SEC work is in progress
@@ -91,7 +91,7 @@ try {
 if (sec.annual.length < 3) { console.error(`Only ${sec.annual.length} annual periods from SEC for ${ticker}; need ≥3.`); process.exit(1); }
 const latestFY = sec.annual.at(-1)!.fiscal_year;
 
-const kept = keepQuote ? yahooFromTearsheet(JSON.parse(readFileSync(existingTearsheet, "utf8"))) : null;
+const kept = keepQuote ? yahooFromTearsheet(keptTearsheet) : null;
 const yahoo = kept ? kept.yahoo : parseQuoteSummary(await yrawPending!, { latestFY }); // throws loudly on crumb/HTTP failure
 const capturedAt = kept ? kept.capturedAt : new Date().toISOString();
 const ttm = computeTtm(sec.quarter, { price: yahoo.price, marketCap: yahoo.marketCap, dividendYield: yahoo.dividendYield, trailingPe: yahoo.trailingPe });

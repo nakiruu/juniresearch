@@ -9,12 +9,12 @@
  * docs/superpowers/specs/2026-09-16-sec-yahoo-free-factsource-design.md
  * ("Emit shapes") for the contract this file implements.
  */
-import { writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import type { SecPeriod } from "./sec";
 import type { YahooData, YahooEstimate } from "./yahoo";
 import type { TtmRows } from "./ttm";
-import { FREE_CAPTURE_MARKER } from "../capture-source";
+import { FREE_CAPTURE_MARKER, detectCaptureSource } from "../capture-source";
 
 export interface EmitInput {
   cik: number;
@@ -134,6 +134,10 @@ export function buildTearsheetFiles(input: EmitInput): TearsheetFiles {
       current_market: {
         year_low: yahoo.week52Low,
         year_high: yahoo.week52High,
+        // Yahoo's own trailing P/E, kept apart from key_metrics.pe_ratio (which is the SEC-derived figure when the
+        // quarterly EPS summed) so a --keep-quote re-run reads back the true fallback. Not in company_overview:
+        // capture-source.ts recognises unmarked free captures by that block's exact key set.
+        trailing_pe: yahoo.trailingPe,
       },
     },
     analyst_data: {
@@ -177,19 +181,22 @@ export function buildTearsheetFiles(input: EmitInput): TearsheetFiles {
 
 /**
  * Inverse of the Yahoo blocks buildTearsheetFiles writes, so a re-capture can keep the pack's quote
- * (facts:free --keep-quote). `trailingPe` comes from key_metrics[0].pe_ratio (a fallback only — computeTtm
- * prefers the SEC EPS sum) and `dividendYield` from ratios[0].dividend_yield; estimate years whose sales and
- * eps were both null were dropped on the way out and stay dropped.
+ * (facts:free --keep-quote). `trailingPe` is Yahoo's own figure (price_performance.current_market.trailing_pe);
+ * a tearsheet written before that field existed falls back to key_metrics[0].pe_ratio, which is Yahoo's P/E only
+ * when the old run could not sum the quarterly EPS (V) and the old SEC-derived P/E otherwise — the Phase 2
+ * pack diff prints ttm.pe before and after so a carried figure is visible. `dividendYield` comes from
+ * ratios[0].dividend_yield; estimate years whose sales and eps were both null were dropped on the way out and
+ * stay dropped.
  */
 export function yahooFromTearsheet(t: unknown): { yahoo: YahooData; capturedAt: string } {
   const ts = t as {
     company_overview: Record<string, unknown>;
-    price_performance: { current_market: Record<string, number> };
+    price_performance: { current_market: Record<string, number | null | undefined> };
     analyst_data: { price_targets: Record<string, number>; ratings: Record<string, unknown> };
     estimates: { records: { metric: "SALES" | "EPS"; fiscal_year: number; estimate_mean: number }[] };
     fundamentals: { key_metrics: Record<string, unknown>[]; ratios: Record<string, unknown>[] };
   };
-  const ov = ts.company_overview, pt = ts.analyst_data.price_targets, r = ts.analyst_data.ratings;
+  const ov = ts.company_overview, cm = ts.price_performance.current_market, pt = ts.analyst_data.price_targets, r = ts.analyst_data.ratings;
   const byYear = new Map<number, YahooEstimate>();
   for (const e of ts.estimates.records) {
     const row = byYear.get(e.fiscal_year) ?? { fiscal_year: e.fiscal_year, sales: null, eps: null };
@@ -202,14 +209,26 @@ export function yahooFromTearsheet(t: unknown): { yahoo: YahooData; capturedAt: 
     yahoo: {
       price: ov.price as number, marketCap: ov.market_cap as number, companyName: ov.company_name as string,
       exchange: ov.exchange as string, description: ov.description as string,
-      week52Low: ts.price_performance.current_market.year_low, week52High: ts.price_performance.current_market.year_high,
+      week52Low: cm.year_low as number, week52High: cm.year_high as number,
       dividendYield: num(ts.fundamentals.ratios[0]?.dividend_yield) ?? 0,
       targets: { consensus: pt.target_consensus, median: pt.target_median, high: pt.target_high, low: pt.target_low },
-      trailingPe: num(ts.fundamentals.key_metrics[0]?.pe_ratio),
+      trailingPe: "trailing_pe" in cm ? num(cm.trailing_pe) : num(ts.fundamentals.key_metrics[0]?.pe_ratio),
       ratings: { strong_buy: r.strong_buy as number, buy: r.buy as number, hold: r.hold as number, sell: r.sell as number, strong_sell: r.strong_sell as number, consensus: r.consensus as string },
       estimates: [...byYear.values()].sort((a, b) => a.fiscal_year - b.fiscal_year),
     },
   };
+}
+
+/**
+ * The tearsheet a --keep-quote re-run may read its quote from: the capture must exist and have been written by
+ * facts:free. A Bigdata capture (data/raw is provenance) is refused rather than overwritten with a mis-read quote.
+ */
+export function keepQuoteTearsheet(dir: string): unknown {
+  const file = join(dir, TEARSHEET_FILE);
+  if (!existsSync(file)) throw new Error(`--keep-quote needs an existing ${file}`);
+  const source = detectCaptureSource(dir);
+  if (source !== "free") throw new Error(`--keep-quote refused: ${dir} was written by Bigdata, not facts:free; a quote cannot be kept from it`);
+  return JSON.parse(readFileSync(file, "utf8")) as unknown;
 }
 
 export function writeTearsheetFiles(dir: string, files: TearsheetFiles): void {

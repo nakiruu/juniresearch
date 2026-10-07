@@ -45,15 +45,18 @@ for (const t of tickers) {
     const row = (key: string): (number | null)[] => pack?.statements.balance.find((r: { key: string }) => r.key === key)?.values ?? [];
     const years: string[] = pack?.statements.fiscalYears ?? [];
     // EVERY fiscal-year column (review F-10), not only the latest: the 10-K iXBRL carries two balance-sheet years and
-    // the 10-Q one; a column the iXBRL does not cover prints "n/a" and is not counted as a mismatch. The 10-K's income
-    // statement covers THREE years, so the third-oldest FY row exists with no balance sheet behind it: a row with
-    // neither a debt figure nor current liabilities (a bank has no current liabilities, so its debt must read) is
-    // uncovered, not a mismatch.
+    // the 10-Q one; a column the iXBRL does not cover prints "n/a" and is not counted as a mismatch. The 10-K's income,
+    // cash-flow and equity statements cover THREE years, so the third-oldest FY row exists (with cash and equity) and
+    // no balance sheet behind it. "Has a balance sheet" is therefore keyed on the dates the filer tags total Assets —
+    // every filer, banks included, tags it on the face of each balance sheet — never on the debt figure itself, so a
+    // debt that regresses to null in a covered year still counts as a mismatch.
+    const gaapAll = (facts.facts?.["us-gaap"] ?? {}) as Record<string, { units?: { USD?: { end: string; start?: string }[] } }>;
+    const balanceSheetEnds = new Set((gaapAll.Assets?.units?.USD ?? []).filter((e) => !e.start).map((e) => e.end));
     years.forEach((fyLabel, i) => {
       const year = Number("20" + fyLabel.slice(2));
       const fy = sec.annual.find((p) => p.fiscal_year === year);
       const packDebt = row("totalDebt")[i] ?? null, packCash = row("cashAndInvestments")[i] ?? null;
-      if (!fy || (fy.total_debt == null && fy.total_current_liabilities == null)) {
+      if (!fy || !balanceSheetEnds.has(fy.report_date)) {
         console.log(`   ${t} ${fyLabel}: iXBRL n/a | pack totalDebt=${packDebt} cash+inv=${packCash}`);
         return;
       }

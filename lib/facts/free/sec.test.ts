@@ -254,7 +254,8 @@ describe("total debt — concepts and rules added 2026-10-07 (D-1)", () => {
     parseCompanyFacts({ facts: { "us-gaap": { ...base, ...gaap } } }).annual.find((p) => p.fiscal_year === 2025)!;
 
   it("CVX-10-K-shape: the noncurrent lease line equals the including-current line → all-in; add short-term borrowings only, never DebtCurrent", () => {
-    // CVX FY2025 10-K (0000093410-26-000167): balance sheet "Short-term debt 977" + "Long-term debt 39,781".
+    // CVX FY2025 10-K (captured as edgar-10k-primary.html under the Q2'26 10-Q 0000093410-26-000167): balance sheet
+    // "Short-term debt 977" + "Long-term debt 39,781".
     const p = fy2025({
       LongTermDebtAndCapitalLeaseObligations: { units: { USD: [inst(39_781)] } },
       LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities: { units: { USD: [inst(39_781)] } },
