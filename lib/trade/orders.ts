@@ -53,7 +53,7 @@ const round4 = (x: number) => Math.round(x * 1e4) / 1e4;
 /** Why a market leg may not be sent: it needs a valid quote, captured within the bucket's freshness window, no wider than marketMaxSpread. */
 export function marketLegBlock(diag: LimitDiagnostics | undefined, bucket: LiquidityBucket, cfg: TradeConfig): string | null {
   if (!diag || diag.relSpread == null || diag.quoteAgeMs == null) return "no_quote";
-  if (diag.quoteAgeMs > cfg.maxStaleMin[bucket] * 60_000) return "stale_quote";
+  if (Math.abs(diag.quoteAgeMs) > cfg.maxStaleMin[bucket] * 60_000) return "stale_quote"; // either side: a future stamp is not fresh
   if (diag.relSpread > cfg.marketMaxSpread[bucket]) return "wide_spread";
   return null;
 }

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { tradesToOrders, clientOrderId } from "./orders";
+import { tradesToOrders, clientOrderId, marketLegBlock } from "./orders";
 import { DEFAULT_TRADE_CONFIG as cfg } from "./config";
 import type { TradePlan, Trade } from "./rebalance";
 import type { Mkt } from "./limit";
@@ -163,5 +163,13 @@ describe("tradesToOrders — hybrid (whole-share limit + fractional market remai
     const { orders } = tradesToOrders({ ...hb, plan: plan([trade({ ticker: "B", deltaWeight: 0.010085 })]) });
     expect(orders).toEqual([expect.objectContaining({ ticker: "B", type: "limit", qty: 5, limitPrice: 201.6 })]);
     expect(orders[0].leg).toBeUndefined();
+  });
+});
+
+describe("marketLegBlock — a future-stamped quote is stale (T-11)", () => {
+  const diag = (quoteAgeMs: number) => ({ relSpread: 0.0004, tauWanted: 0.0015, bid: 49.99, ask: 50.01, quoteAgeMs, tradeAgeMs: 0 });
+  it("blocks a quote 10 min in the future, allows a few seconds of skew", () => {
+    expect(marketLegBlock(diag(-10 * 60_000), "large", cfg)).toBe("stale_quote");
+    expect(marketLegBlock(diag(-5_000), "large", cfg)).toBeNull();
   });
 });

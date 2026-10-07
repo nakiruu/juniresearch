@@ -69,13 +69,16 @@ export interface LimitDiagnostics {
   quoteAgeMs: number | null; tradeAgeMs: number | null;
 }
 
+/** Fresh = within staleMs of the capture instant on EITHER side (a far-future stamp is no fresher than a stale one), as liveMark. */
+const fresh = (tsMs: number, nowMs: number, staleMs: number) => Number.isFinite(tsMs) && Math.abs(nowMs - tsMs) <= staleMs;
+
 const lastFresh = (m: Mkt, nowMs: number, staleMs: number) =>
-  !!m.lastTrade && m.lastTrade.price > 0 && nowMs - m.lastTrade.tsMs <= staleMs;
+  !!m.lastTrade && m.lastTrade.price > 0 && fresh(m.lastTrade.tsMs, nowMs, staleMs);
 
 function anchor(m: Mkt, nowMs: number, staleMs: number, side: "buy" | "sell"): { pRef: number; tier: 1 | 2 | 3 } | null {
   if (lastFresh(m, nowMs, staleMs)) return { pRef: m.lastTrade!.price, tier: 1 };
   const q = quoteMetrics(m.quote);
-  if (m.quote && q.valid && nowMs - m.quote.tsMs <= staleMs) return { pRef: side === "buy" ? m.quote.ask : m.quote.bid, tier: 2 };
+  if (m.quote && q.valid && fresh(m.quote.tsMs, nowMs, staleMs)) return { pRef: side === "buy" ? m.quote.ask : m.quote.bid, tier: 2 };
   if (m.close > 0) return { pRef: m.close, tier: 3 };
   return null;
 }

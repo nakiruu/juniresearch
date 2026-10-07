@@ -97,3 +97,17 @@ describe("computeLimit diagnostics (spec #9)", () => {
     expect(r.diag).toMatchObject({ relSpread: null, bid: null, ask: null, quoteAgeMs: null });
   });
 });
+
+describe("freshness is two-sided (T-11)", () => {
+  const NOW = 1_700_000_000_000;
+  const base = { side: "buy" as const, marketCapUsd: 50e9, nowMs: NOW, cfg: C }; // large bucket: maxStaleMin 5
+  it("a trade stamped 30 s in the future (clock skew) is still tier 1", () => {
+    expect(computeLimit({ ...base, mkt: { lastTrade: { price: 50, tsMs: NOW + 30_000 }, quote: null, close: 50 } }).tier).toBe(1);
+  });
+  it("a trade stamped 10 min in the future is not fresh: tier 3 at the close", () => {
+    expect(computeLimit({ ...base, mkt: { lastTrade: { price: 51, tsMs: NOW + 10 * 60_000 }, quote: null, close: 50 } })).toMatchObject({ tier: 3, pRef: 50 });
+  });
+  it("a quote stamped 10 min in the future is not fresh either", () => {
+    expect(computeLimit({ ...base, mkt: { lastTrade: null, quote: { bid: 49.9, ask: 50.1, tsMs: NOW + 10 * 60_000 }, close: 50 } }).tier).toBe(3);
+  });
+});
