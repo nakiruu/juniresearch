@@ -13,6 +13,13 @@
     731257000,
     731257000
   ],
+  "sbc": [
+    11255000,
+    10743000,
+    10178000,
+    10709000,
+    12731000
+  ],
   "filing": {
     "form": "10-Q",
     "accession": "0000731802-26-000102",
@@ -123,22 +130,22 @@
         "key": "totalDebt",
         "label": "Total Debt",
         "values": [
-          0,
-          184967000,
-          241933000,
-          0,
-          null
+          7330657000,
+          8147071000,
+          6797634000,
+          7785297000,
+          8918944000
         ]
       },
       {
         "key": "netDebt",
         "label": "Net Debt",
         "values": [
-          -116723000,
-          133413000,
-          226529000,
-          -307340000,
-          null
+          7213934000,
+          8095517000,
+          6782230000,
+          7477957000,
+          8716257000
         ]
       },
       {
@@ -232,11 +239,11 @@
   "ttm": {
     "pe": 18.74343675417661,
     "ps": 5.393252899202402,
-    "evToEbitda": 13.805,
+    "evToEbitda": 13.967422116938186,
     "grossMargin": null,
     "operatingMargin": 0.36969570007351377,
     "netMargin": 0.2849610059969205,
-    "netDebtToEbitda": null,
+    "netDebtToEbitda": 3.746753941862059,
     "interestCoverage": 12.769085549863147,
     "currentRatio": 0.8137406980684514,
     "fcfYield": -0.07611424421149286
@@ -587,12 +594,6 @@
       "capturedAt": "2026-10-02T16:03:17.300Z"
     },
     {
-      "field": "ttm.evToEbitda",
-      "source": "yahoo",
-      "endpoint": "quoteSummary.defaultKeyStatistics.enterpriseToEbitda",
-      "capturedAt": "2026-10-02T16:03:43.166Z"
-    },
-    {
       "field": "beta",
       "source": "shibui",
       "capturedAt": "2026-10-03T03:46:39.826Z",
@@ -607,16 +608,9 @@
     {
       "field": "shibuiCheck",
       "source": "shibui",
-      "capturedAt": "2026-10-03T04:32:59.534Z",
+      "capturedAt": "2026-10-07T15:18:45.430Z",
       "endpoint": "stock_data_query: close + valuation.market_cap on/before 2026-10-02; fundamentals_quarterly (4 quarters to 2026-06-30): shares_outstanding, revenue, Σfree_cash_flow, Σstock_based_compensation"
     }
-  ],
-  "sbc": [
-    11255000,
-    10743000,
-    10178000,
-    10709000,
-    12731000
   ],
   "beta": {
     "value": 0.388,
