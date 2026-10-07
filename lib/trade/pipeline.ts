@@ -409,6 +409,14 @@ export interface SkippedLeg { ticker: string; clientOrderId: string; detail: str
 export type AbortReason = "submit-unknown" | "poll-unavailable" | "guard";
 export interface SubmitAbort { reason: AbortReason; ticker: string; clientOrderId: string; detail: string }
 
+/**
+ * Live progress of executeOrders, readable by the caller even when executeOrders (or the caller, afterwards) throws.
+ * mayHaveSubmitted: true from the moment a submit request is attempted until it is known that nothing was placed —
+ * a guard refusal (always raised before the adapter is called) or a definitive broker reject. A submit that never
+ * returned (unknown outcome, any unexpected throw) leaves it true: the order may be live at the broker.
+ */
+export interface ExecuteProgress { mayHaveSubmitted: boolean }
+
 /** An order not sent because the submit cutoff (submitCutoffET) had passed — nothing was placed. */
 export interface SkippedCutoff { ticker: string; clientOrderId: string; detail: string }
 
@@ -445,6 +453,8 @@ export async function executeOrders(input: {
   pollErrorLimit?: number;
   /** …or after this much wall clock on `now` (default 60 s). The cancel is always attempted after the window. */
   pollBudgetMs?: number;
+  /** Caller-owned progress (see ExecuteProgress); cron reads it to count a halt even when something throws. */
+  progress?: ExecuteProgress;
   /**
    * Submit cutoff, absolute epoch ms (callers: today's cfg.submitCutoffET via etInstantOn). Checked
    * against now() before EVERY submit; once reached nothing more is sent and every remaining order comes
@@ -455,6 +465,7 @@ export async function executeOrders(input: {
   cutoffMs?: number;
 }): Promise<{ fills: Fill[]; executed: ExecutedOrder[]; aborted?: SubmitAbort; skippedCash: SkippedCash[]; rejected: RejectedOrder[]; skippedLegs: SkippedLeg[]; skippedCutoff: SkippedCutoff[] }> {
   const { adapter, sized, ctx, runId, fillsPath, pollMs = 1000, now = Date.now, resolveDelaysMs = [2_000, 5_000, 10_000], iocPolls = 8, marketPolls = 30, cutoffMs, pollErrorLimit = 3, pollBudgetMs = 60_000 } = input;
+  const progress: ExecuteProgress = input.progress ?? { mayHaveSubmitted: false };
   // A cutoff that is NaN would never trip — refuse it before anything is sent.
   if (cutoffMs !== undefined && !Number.isFinite(cutoffMs)) throw new Error(`executeOrders: cutoffMs must be a finite epoch ms, got ${cutoffMs}`);
   const fills: Fill[] = [];
@@ -490,9 +501,14 @@ export async function executeOrders(input: {
       estNotionalUsd: o.qty * o.limitPrice };
     let order: BrokerOrder;
     const submitStartAt = new Date(now()).toISOString();
+    // I-1: from here this order may reach the broker. Only a GuardError (raised by assertOrderAllowed before the
+    // adapter is called) or a definitive OrderRejectedError proves it did not; every other outcome keeps the flag.
+    const priorMayHaveSubmitted = progress.mayHaveSubmitted;
+    progress.mayHaveSubmitted = true;
     try {
       order = await guardedSubmit(adapter, req, ctx);
     } catch (e) {
+      if (e instanceof GuardError || e instanceof OrderRejectedError) progress.mayHaveSubmitted = priorMayHaveSubmitted;
       if (e instanceof CashBackstopError) { skippedCash.push({ ticker: o.ticker, clientOrderId: o.clientOrderId, detail: e.message }); continue; } // never sent
       if (e instanceof OrderRejectedError) { // definitively refused — nothing placed; record it and carry on
         rejected.push({ ticker: o.ticker, clientOrderId: o.clientOrderId, detail: e.detail });

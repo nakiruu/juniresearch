@@ -14,7 +14,7 @@ import type { TradeConfig } from "./config";
 import type { TradingDay } from "./calendar";
 import type { LastEarnings } from "./earnings";
 import type { Fill } from "./fills";
-import { planRun, executeOrders, mergeExecution, type PlanRunOutput, type SubmitAbort } from "./pipeline";
+import { planRun, executeOrders, mergeExecution, type ExecuteProgress, type PlanRunOutput, type SubmitAbort } from "./pipeline";
 import { ReconcileError } from "./ledger";
 import { SchwabAuthError } from "../broker/schwab-auth";
 import { turnoverBreaker, clipToTurnover, dayTurnoverUsd, readHaltState, bumpHalt, clearHalt, haltBlocked, holdLock, DEFAULT_LOCK_STALE_MS } from "./breakers";
@@ -328,14 +328,17 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
       brokerKind: adapter.kind, configuredBaseUrl, locks: out.locks, today, nav: out.ledger.nav, cfg,
       env, cashUsd: out.ledger.cash, counters: { orders: 0, notionalUsd: 0, buyNotionalUsd: 0, sellProceedsUsd: 0 },
     };
-    ordersSent = () => ctx.counters.orders > 0;
+    // I-1: "sent" = a submit may have reached the broker, including one that never returned (unknown outcome).
+    // counters.orders alone only counts submits that returned.
+    const progress: ExecuteProgress = { mayHaveSubmitted: false };
+    ordersSent = () => progress.mayHaveSubmitted || ctx.counters.orders > 0;
     // Submit cutoff (cfg.submitCutoffET, 15:50 ET): no order goes out at or after it, however late the
     // run started or however long earlier orders polled — never into the close. Remaining orders are
     // recorded as skipped (sells go first, so a cutoff only ever leaves cash).
     const cutoffMs = etInstantOn(today, cfg.submitCutoffET);
     const t0 = Date.now();
     const submitClock = deps.clock ?? (() => nowMs + (Date.now() - t0));
-    const { fills, executed, aborted, skippedCash, rejected, skippedLegs, skippedCutoff } = await executeOrders({ adapter, sized: out.sized, ctx, runId, fillsPath: paths.fills, resolveDelaysMs: deps.resolveDelaysMs, pollMs: deps.pollMs, now: submitClock, cutoffMs });
+    const { fills, executed, aborted, skippedCash, rejected, skippedLegs, skippedCutoff } = await executeOrders({ adapter, sized: out.sized, ctx, runId, fillsPath: paths.fills, resolveDelaysMs: deps.resolveDelaysMs, pollMs: deps.pollMs, now: submitClock, cutoffMs, progress });
     const rec = {
       ...out.record, fills: fills as unknown as Record<string, unknown>[], orders: mergeExecution(out.record.orders, executed),
       notes: [...out.record.notes, ...skippedCash.map((s) => `cash skipped: ${s.ticker} — ${s.detail}`),
@@ -412,7 +415,7 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
     const msg = e instanceof Error ? e.message : String(e);
     let counter = "";
     try { counter = ` · halt counter now ${bumpHalt(paths.haltState).consecutive}`; } catch (be) { counter = ` · halt counter NOT bumped (${(be as Error).message})`; }
-    try { notify(`cron halted: error after orders were sent — ${msg}${counter}. Check the broker's order history and run \`npm run trade:audit -- --run ${runId}\` before the next slot.`); } catch { /* never mask */ }
+    try { notify(`cron halted: error after an order submit may have reached the broker — ${msg}${counter}. Check the broker's order history and run \`npm run trade:audit -- --run ${runId}\` before the next slot.`); } catch { /* never mask */ }
     try { appendLog(paths.log, logLine(today, runId, "halted", { reason: "execute-error" })); } catch { /* never mask */ }
     return { status: "halted", reason: "execute-error" };
   } finally {

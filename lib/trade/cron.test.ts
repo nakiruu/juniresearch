@@ -8,6 +8,7 @@ import { resolveTradeConfig } from "./config";
 import { readHaltState, bumpHalt } from "./breakers";
 import { readFills } from "./fills";
 import { SchwabAuthError } from "../broker/schwab-auth";
+import { SubmitOutcomeUnknownError } from "../broker/http";
 import { fixtureReport } from "../portfolio/__fixtures__/reports";
 import type { Fill } from "./fills";
 import type { BrokerOrder, SubmitOrderRequest } from "../broker/adapter";
@@ -587,7 +588,7 @@ describe("runCron", () => {
     const r = await runCron(mkDeps({ paths, notify: (m) => notified.push(m), loadInputs: async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] }) }));
     expect(r).toEqual({ status: "halted", reason: "execute-error" });
     expect(readHaltState(paths.haltState)).toEqual({ consecutive: 1 });
-    expect(notified.some((m) => /error after orders were sent/.test(m) && /ENOENT/.test(m))).toBe(true);
+    expect(notified.some((m) => /error after an order submit may have reached the broker/.test(m) && /ENOENT/.test(m))).toBe(true);
     expect(existsSync(paths.lock)).toBe(false);
   });
 
@@ -596,6 +597,33 @@ describe("runCron", () => {
     await expect(runCron(mkDeps({ paths, loadInputs: async () => { throw new Error("disk gone"); } }))).rejects.toThrow(/disk gone/);
     expect(readHaltState(paths.haltState)).toEqual({ consecutive: 0 });
     expect(existsSync(paths.lock)).toBe(false);
+  });
+
+  describe("I-1: a submit that may have reached the broker counts as sent, even if it never returned", () => {
+    /** The submit's outcome is unknown and the lookup finds nothing: the order may be live at the broker. */
+    class LostSubmitBroker extends FakeBroker {
+      async submitOrder(req: SubmitOrderRequest): Promise<BrokerOrder> { throw new SubmitOutcomeUnknownError(req.clientOrderId, req.symbol, `${TODAY}T19:15:00Z`, "Schwab POST order → 502"); }
+      async findSubmitted(): Promise<BrokerOrder | null> { return null; }
+    }
+    /** runs/ under a FILE: dayTurnoverUsd sees no dir (0), but writeRunRecord's mkdir fails after execution. */
+    const unwritableRuns = () => { const d = mkdtempSync(join(tmpdir(), "cron-")); writeFileSync(join(d, "f"), "x"); return { ...mkPaths(), runs: join(d, "f", "runs") }; };
+
+    it("unknown submit, empty lookup, then writeRunRecord throws → halted (execute-error), counter bumped once, never 'nothing was sent'", async () => {
+      const paths = unwritableRuns(); const notified: string[] = [];
+      const adapter = new LostSubmitBroker({ calendar: CAL, closes: { NVT: closes(100) }, equity: 10_000, cash: 10_000, isOpen: true, today: TODAY });
+      const r = await runCron(mkDeps({ paths, adapter, resolveDelaysMs: [0], pollMs: 0, notify: (m) => notified.push(m), loadInputs: async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] }) }));
+      expect(r).toEqual({ status: "halted", reason: "execute-error" });
+      expect(readHaltState(paths.haltState)).toEqual({ consecutive: 1 });
+      expect(notified.some((m) => /error after an order submit may have reached the broker/.test(m) && /ENOTDIR|ENOENT|EEXIST/.test(m))).toBe(true);
+      expect(existsSync(paths.lock)).toBe(false);
+    });
+
+    it("a guard refusal of the very first order sent nothing: a later throw stays pre-trade (re-thrown, counter untouched)", async () => {
+      const paths = unwritableRuns(); const adapter = mkBroker();
+      await expect(runCron(mkDeps({ paths, adapter, env: { TRADE_DISABLED: "1" } as unknown as NodeJS.ProcessEnv, loadInputs: async () => ({ reports: [nvt], sics: {}, marketCapUsd: {}, fills: [] }) }))).rejects.toThrow();
+      expect(readHaltState(paths.haltState)).toEqual({ consecutive: 0 });
+      expect(adapter.submitCount).toBe(0);
+    });
   });
 
   it("D-4: cron never deletes a lock that is no longer its own", async () => {
