@@ -20,9 +20,10 @@ export function shouldArm(env: NodeJS.ProcessEnv): boolean {
  * scheduler.ts — stateful section: persisted lastFiredDay, the in-memory status singleton read by
  * a later status route, and startScheduler with an injected timer/clock for deterministic tests.
  */
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { existsSync, readFileSync } from "node:fs";
+import { join } from "node:path";
 import type { TradeConfig } from "./config";
+import { writeFileAtomic } from "../atomic-write";
 import { TRADE_DIR, latestRunRecord, schwabRefreshObtainedAt, isPreviewOnly, isTurnoverBreakerOn } from "./runtime";
 import { resolveTradeConfig } from "./config";
 import type { CronResult } from "./cron";
@@ -50,9 +51,7 @@ export function slotAlreadyFired(st: SchedulerFileState, nowMs: number, slots: r
   return st.lastFiredDay === etDateString(nowMs) && (st.lastFiredSlot ?? slots[0]) === slot;
 }
 export function writeSchedulerState(s: SchedulerFileState, dir: string = TRADE_DIR): void {
-  const p = STATE_FILE(dir);
-  mkdirSync(dirname(p), { recursive: true });
-  writeFileSync(p, JSON.stringify(s, null, 2) + "\n");
+  writeFileAtomic(STATE_FILE(dir), JSON.stringify(s, null, 2) + "\n");
 }
 
 export interface SchedulerStatus {

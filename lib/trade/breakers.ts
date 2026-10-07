@@ -6,6 +6,7 @@
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { randomBytes } from "node:crypto";
+import { writeFileAtomic } from "../atomic-write";
 import { dirname, join } from "node:path";
 import type { TradeConfig } from "./config";
 
@@ -87,14 +88,12 @@ export function readHaltState(path: string): HaltState {
 
 export function bumpHalt(path: string): HaltState {
   const s: HaltState = { consecutive: readHaltState(path).consecutive + 1 };
-  mkdirSync(dirname(path), { recursive: true });
-  writeFileSync(path, JSON.stringify(s));
+  writeFileAtomic(path, JSON.stringify(s));
   return s;
 }
 
 export function clearHalt(path: string): void {
-  mkdirSync(dirname(path), { recursive: true });
-  writeFileSync(path, JSON.stringify({ consecutive: 0 } satisfies HaltState));
+  writeFileAtomic(path, JSON.stringify({ consecutive: 0 } satisfies HaltState));
 }
 
 export function haltBlocked(state: HaltState, cfg: TradeConfig): boolean {
