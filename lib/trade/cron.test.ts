@@ -507,6 +507,21 @@ describe("runCron", () => {
     expect(await adapter.getOrders("all")).toEqual([]); // never reached adapter.submitOrder
     expect(existsSync(paths.lock)).toBe(false); // released via finally even on an uncaught throw
   });
+
+  it("F-10: a held lock is alerted (the slot is skipped) and left untouched", async () => {
+    const paths = mkPaths(); const notified: string[] = [];
+    writeFileSync(paths.lock, `12345 ${new Date().toISOString()}`);
+    expect(await runCron(mkDeps({ paths, notify: (m) => notified.push(m) }))).toEqual({ status: "locked" });
+    expect(notified).toEqual([expect.stringMatching(/holds the run lock \(12345 /)]);
+  });
+
+  it("D-4: cron never deletes a lock that is no longer its own", async () => {
+    const paths = mkPaths();
+    const foreign = `77777 ${new Date().toISOString()} feed`;
+    const r = await runCron(mkDeps({ paths, loadInputs: async () => { writeFileSync(paths.lock, foreign); return { reports: [], sics: {}, marketCapUsd: {}, fills: [] }; } }));
+    expect(r.status).toBe("noop");
+    expect(readFileSync(paths.lock, "utf8")).toBe(foreign);
+  });
 });
 
 describe("runCron — advisory re-label streaks", () => {

@@ -4,7 +4,8 @@
  * fs-state style matches fills.ts/ledger.ts: reads try/catch to a safe default for an absent
  * file, writes mkdir the parent first (state dirs are created on demand, same as ledger.ts).
  */
-import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { randomBytes } from "node:crypto";
 import { dirname, join } from "node:path";
 import type { TradeConfig } from "./config";
 
@@ -116,14 +117,17 @@ export const DEFAULT_LOCK_STALE_MS = 60 * 60_000; // 60 min
  * Stale-lock recovery: on EEXIST, read the existing lock's own `${pid} ${ISO timestamp}` body. If
  * its timestamp is older than `staleMs`, the lock is treated as abandoned (the process that held
  * it was killed or hung past the scheduler's time limit, so its `finally`-release never ran) —
- * remove it and re-acquire. A timestamp that is still fresh, or that can't be parsed at all
- * (unexpected/garbage content), is treated conservatively as still held: return false. No
- * PID-liveness check — cross-platform fiddly, and the timestamp threshold is enough.
+ * remove it and re-acquire. A timestamp that is still fresh is held: return false. A body that can't be
+ * parsed at all (garbage, a torn write) is judged by the lock file's mtime against the same threshold.
+ * The body carries a random token as a third field (`${pid} ${ISO} ${hex}`) so holdLock can tell its own
+ * lock from a reclaimer's. No PID-liveness check — cross-platform fiddly, and the threshold is enough.
  */
+const lockBody = () => `${process.pid} ${new Date().toISOString()} ${randomBytes(4).toString("hex")}`;
+
 export function acquireLock(path: string, staleMs: number = DEFAULT_LOCK_STALE_MS): boolean {
   mkdirSync(dirname(path), { recursive: true });
   try {
-    writeFileSync(path, `${process.pid} ${new Date().toISOString()}`, { flag: "wx" });
+    writeFileSync(path, lockBody(), { flag: "wx" });
     return true;
   } catch (err) {
     if ((err as NodeJS.ErrnoException).code !== "EEXIST") throw err;
@@ -133,13 +137,15 @@ export function acquireLock(path: string, staleMs: number = DEFAULT_LOCK_STALE_M
     } catch {
       return false; // lock vanished between our EEXIST and this read — report held, don't guess
     }
-    const lockMs = Date.parse(existing.split(" ")[1] ?? "");
-    if (!Number.isFinite(lockMs) || Date.now() - lockMs <= staleMs) return false;
+    let lockMs = Date.parse(existing.split(" ")[1] ?? "");
+    // An unparseable body (garbage, a torn write) is judged by the file's age instead of being held forever.
+    if (!Number.isFinite(lockMs)) { try { lockMs = statSync(path).mtimeMs; } catch { return false; } }
+    if (Date.now() - lockMs <= staleMs) return false;
     try {
       // force:true — a concurrent reclaimer (or the original owner's releaseLock) may have
       // already removed this file; an ENOENT here must not escape as an uncaught throw.
       rmSync(path, { force: true });
-      writeFileSync(path, `${process.pid} ${new Date().toISOString()}`, { flag: "wx" });
+      writeFileSync(path, lockBody(), { flag: "wx" });
       return true;
     } catch (err2) {
       if ((err2 as NodeJS.ErrnoException).code === "EEXIST") return false; // lost the race to reclaim
@@ -150,4 +156,19 @@ export function acquireLock(path: string, staleMs: number = DEFAULT_LOCK_STALE_M
 
 export function releaseLock(path: string): void {
   try { rmSync(path); } catch { /* already gone */ }
+}
+
+export interface LockHandle { readonly body: string; stillOurs(): boolean; release(): void }
+
+/**
+ * acquireLock plus ownership: remembers the exact body it wrote, so `release` removes the lock only while it is
+ * still ours (a run that outlived staleMs may have had it reclaimed), and `stillOurs` lets a long manual run
+ * re-check before it submits. null = held by someone else.
+ */
+export function holdLock(path: string, staleMs: number = DEFAULT_LOCK_STALE_MS): LockHandle | null {
+  if (!acquireLock(path, staleMs)) return null;
+  let body = "";
+  try { body = readFileSync(path, "utf8"); } catch { /* vanished: never ours to release */ }
+  const stillOurs = () => { try { return body !== "" && readFileSync(path, "utf8") === body; } catch { return false; } };
+  return { body, stillOurs, release: () => { if (stillOurs()) { try { rmSync(path); } catch { /* already gone */ } } } };
 }

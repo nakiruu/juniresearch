@@ -4,7 +4,7 @@
  * clock-check, an exclusive run-lock, the consecutive-halt / reconcile / turnover breakers, the
  * run-record, a one-line run log, and halt-only notify. No plan/size/execute logic lives here.
  */
-import { appendFileSync, existsSync, mkdirSync } from "node:fs";
+import { appendFileSync, existsSync, mkdirSync, readFileSync } from "node:fs";
 import { dirname } from "node:path";
 import type { Report } from "../report.schema";
 import type { BrokerAdapter } from "../broker/adapter";
@@ -16,7 +16,7 @@ import type { Fill } from "./fills";
 import { planRun, executeOrders, mergeExecution, type PlanRunOutput } from "./pipeline";
 import { ReconcileError } from "./ledger";
 import { SchwabAuthError } from "../broker/schwab-auth";
-import { turnoverBreaker, clipToTurnover, dayTurnoverUsd, readHaltState, bumpHalt, clearHalt, haltBlocked, acquireLock, releaseLock, DEFAULT_LOCK_STALE_MS } from "./breakers";
+import { turnoverBreaker, clipToTurnover, dayTurnoverUsd, readHaltState, bumpHalt, clearHalt, haltBlocked, holdLock, DEFAULT_LOCK_STALE_MS } from "./breakers";
 import { crossCheckBroker } from "./audit";
 import { allocationFromRun, summaryFromRun, type AllocationInput, type RunSummaryInput } from "./notify";
 import { writeRunRecord } from "./run-record";
@@ -165,8 +165,15 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
   // reach acquireLock, combined with acquireLock succeeding, means the lock we just took was
   // reclaimed from a stale one (a hard-killed/hung prior run whose `finally` never released it) —
   // not merely lock-file-didn't-exist-yet; note that in the log so it's visible in cron.log.
+  // The lock is held through a handle that releases it only while it is still ours (D-4): a run that outlived the
+  // stale threshold may have had it reclaimed, and must not delete the new holder's lock. A held lock is alerted
+  // (F-10): the slot is skipped, and a manual trade:execute left open holds it until it exits.
   const lockAlreadyPresent = existsSync(paths.lock);
-  if (!acquireLock(paths.lock, DEFAULT_LOCK_STALE_MS)) {
+  const lock = holdLock(paths.lock, DEFAULT_LOCK_STALE_MS);
+  if (!lock) {
+    let holder = "";
+    try { holder = readFileSync(paths.lock, "utf8").trim(); } catch { /* released meanwhile */ }
+    notify(`cron: skipped — another trade run holds the run lock (${holder || "holder unknown"}). Nothing was sent this slot; a manual trade:execute holds it until it exits.`);
     appendLog(paths.log, logLine(today, runId, "locked"));
     return { status: "locked" };
   }
@@ -343,6 +350,6 @@ export async function runCron(deps: CronDeps): Promise<CronResult> {
     }
     return { status: "executed", orders: out.sized.orders.length, fills: fills.length };
   } finally {
-    releaseLock(paths.lock);
+    lock.release();
   }
 }
