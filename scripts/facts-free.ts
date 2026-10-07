@@ -2,7 +2,8 @@ import { existsSync, mkdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { requireContact } from "./_env";
 import { resolveCik } from "../lib/edgar/tickers";
-import { fetchCompanyFacts, parseCompanyFacts } from "../lib/facts/free/sec";
+import { parseCompanyFacts } from "../lib/facts/free/sec";
+import { loadOrFetchCompanyFacts } from "../lib/facts/free/companyfacts-cache";
 import { parseFilingXbrl, mergeFilingFacts, type CompanyFactsLike } from "../lib/facts/free/filing-xbrl";
 import { ANNUAL_PRIMARY_FILE } from "../lib/facts/manifest";
 import { fetchQuoteSummary, parseQuoteSummary } from "../lib/facts/free/yahoo";
@@ -12,13 +13,16 @@ import { buildTearsheetFiles, writeTearsheetFiles, yahooFromTearsheet } from "..
 // --keep-quote: regenerate only the SEC-derived statements and TTM rows, keeping the quote (price, market cap,
 // asOf, targets, estimates, ratings) already in the capture's tearsheet. A same-date republish on corrected
 // inputs must not move E/D/R for price reasons (FOUR/DSP precedent, 2026-10-03).
+// --refetch: ignore the capture's saved sec-companyfacts.json.gz and download companyfacts again (D-9).
 const args = process.argv.slice(2);
 const keepQuote = args.includes("--keep-quote");
+const refetch = args.includes("--refetch");
 const [tickerArg, accession] = args.filter((a) => !a.startsWith("--"));
-if (!tickerArg || !accession) { console.error("usage: npm run facts:free -- <TICKER> <ACCESSION> [--keep-quote]"); process.exit(2); }
+if (!tickerArg || !accession) { console.error("usage: npm run facts:free -- <TICKER> <ACCESSION> [--keep-quote] [--refetch]"); process.exit(2); }
 const ticker = tickerArg.toUpperCase();
 const contact = requireContact();
 const dir = join("data", "raw", ticker, accession);
+mkdirSync(dir, { recursive: true });
 
 // Prefer the curated watchlist CIK over SEC's ticker map. After a corporate
 // reorganization the ticker map can point at a brand-new holding-company CIK whose
@@ -45,7 +49,7 @@ if (keepQuote) {
 
 let sec: ReturnType<typeof parseCompanyFacts>;
 try {
-  const facts = (await fetchCompanyFacts(cik, contact)) as CompanyFactsLike;
+  const facts = (await loadOrFetchCompanyFacts(dir, cik, contact, { refetch })) as CompanyFactsLike;
 
   // SEC's aggregated companyfacts API can lag a just-filed 10-Q/10-K by days or weeks. The
   // filing's own PRIMARY document (captured by facts:prepare as edgar-primary.html) is itself
@@ -93,6 +97,5 @@ const capturedAt = kept ? kept.capturedAt : new Date().toISOString();
 const ttm = computeTtm(sec.quarter, { price: yahoo.price, marketCap: yahoo.marketCap, dividendYield: yahoo.dividendYield, trailingPe: yahoo.trailingPe });
 
 const files = buildTearsheetFiles({ cik, sec, yahoo, ttm, capturedAt });
-mkdirSync(dir, { recursive: true });
 writeTearsheetFiles(dir, files);
 console.log(`Wrote 3 free tearsheet files + free-capture.json marker to ${dir}\n  ${yahoo.companyName} · price ${yahoo.price} · ${sec.annual.length} FY · ${sec.quarter.length} quarters · target ${yahoo.targets.consensus}${keepQuote ? ` · quote kept from ${capturedAt}` : ""}`);
