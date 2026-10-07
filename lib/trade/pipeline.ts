@@ -208,7 +208,7 @@ export async function planRun(input: PlanRunInput): Promise<PlanRunOutput> {
   const ledger = reconcile({ asOf: today, account, positions, fills, brokerOrders, lockWindowStart });
   const todayDate = new Date(today + "T00:00:00Z");
   const signals = reports.map((r) => buildSignal(r, marks[r.meta.ticker], sics[r.meta.ticker] ?? null, todayDate, cfg));
-  const locks = locksFor(fills, calendar, cfg.lockBusinessDays);
+  const locks = locksFor(fills, calendar, cfg.lockBusinessDays, today);
   // Bear breaches (docs/engine.md §4.2): a held name past its bear case is held, frozen or exited by the cause of
   // its fall. spyDecisionMark MUST read SPY from the same source and date as the decision marks above — the market
   // move has to be measured on the stock's own clock. In a live run that is SPY's own live mark (the same trade →

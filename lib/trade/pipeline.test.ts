@@ -72,6 +72,13 @@ describe("planRun", () => {
     await planRun({ adapter: b, reports: [nvt], sics: {}, marketCapUsd: {}, fills: [], today: "2026-09-25", cfg, runId: "r" });
     expect(after).toBe(`${CAL[0].date}T00:00:00Z`); // the fixture calendar is shorter than lockBusinessDays + 1 → clamps to its first day
   });
+  it("T-1: an old fill (before the 90-day calendar) no longer throws, and sets no lock", async () => {
+    const b = new FakeBroker({ calendar: CAL, closes: { NVT: closes(100) }, equity: 10_000, cash: 10_000, isOpen: true, today: "2026-09-25" });
+    const old = { ticker: "ZZZ", side: "buy" as const, qty: 1, price: 10, filledAt: "2026-06-15T19:30:00Z", tradingDate: "2026-06-15", orderId: "old-1", runId: "old" };
+    const out = await planRun({ adapter: b, reports: [nvt], sics: {}, marketCapUsd: {}, fills: [old], today: "2026-09-25", cfg, runId: "r1" });
+    expect(out.locks).toEqual({ buyLockUntil: {}, sellLockUntil: {} });
+    expect(out.plan.trades).toEqual([expect.objectContaining({ ticker: "NVT", reason: "ENTER" })]);
+  });
 });
 
 describe("executeOrders", () => {
