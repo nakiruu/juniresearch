@@ -1,4 +1,4 @@
-import { mkdirSync, readFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { requireContact } from "./_env";
 import { resolveCik } from "../lib/edgar/tickers";
@@ -7,12 +7,18 @@ import { parseFilingXbrl, mergeFilingFacts, type CompanyFactsLike } from "../lib
 import { ANNUAL_PRIMARY_FILE } from "../lib/facts/manifest";
 import { fetchQuoteSummary, parseQuoteSummary } from "../lib/facts/free/yahoo";
 import { computeTtm } from "../lib/facts/free/ttm";
-import { buildTearsheetFiles, writeTearsheetFiles } from "../lib/facts/free/emit";
+import { buildTearsheetFiles, writeTearsheetFiles, yahooFromTearsheet } from "../lib/facts/free/emit";
 
-const [tickerArg, accession] = process.argv.slice(2);
-if (!tickerArg || !accession) { console.error("usage: npm run facts:free -- <TICKER> <ACCESSION>"); process.exit(2); }
+// --keep-quote: regenerate only the SEC-derived statements and TTM rows, keeping the quote (price, market cap,
+// asOf, targets, estimates, ratings) already in the capture's tearsheet. A same-date republish on corrected
+// inputs must not move E/D/R for price reasons (FOUR/DSP precedent, 2026-10-03).
+const args = process.argv.slice(2);
+const keepQuote = args.includes("--keep-quote");
+const [tickerArg, accession] = args.filter((a) => !a.startsWith("--"));
+if (!tickerArg || !accession) { console.error("usage: npm run facts:free -- <TICKER> <ACCESSION> [--keep-quote]"); process.exit(2); }
 const ticker = tickerArg.toUpperCase();
 const contact = requireContact();
+const dir = join("data", "raw", ticker, accession);
 
 // Prefer the curated watchlist CIK over SEC's ticker map. After a corporate
 // reorganization the ticker map can point at a brand-new holding-company CIK whose
@@ -28,8 +34,14 @@ const cik = watch?.cik ?? (await resolveCik(ticker, contact)).cik;
 // Yahoo's quoteSummary needs nothing from SEC: start its (three-request crumb) flow now so it overlaps
 // the companyfacts download and parsing below. A failure is surfaced by the await further down,
 // exactly where it used to be thrown; if the SEC step fails first, the Yahoo result is unused.
-const yrawPending = fetchQuoteSummary(ticker);
-yrawPending.catch(() => {}); // no unhandled rejection while SEC work is in progress
+const existingTearsheet = join(dir, "bigdata-tearsheet-annual.json");
+let yrawPending: Promise<unknown> | null = null;
+if (keepQuote) {
+  if (!existsSync(existingTearsheet)) { console.error(`--keep-quote needs an existing ${existingTearsheet}`); process.exit(2); }
+} else {
+  yrawPending = fetchQuoteSummary(ticker);
+  yrawPending.catch(() => {}); // no unhandled rejection while SEC work is in progress
+}
 
 let sec: ReturnType<typeof parseCompanyFacts>;
 try {
@@ -39,7 +51,7 @@ try {
   // filing's own PRIMARY document (captured by facts:prepare as edgar-primary.html) is itself
   // inline XBRL, so when it's present we parse its consolidated us-gaap facts and merge them in
   // — a graceful no-op when the file or its filing metadata is absent, or has no iXBRL facts.
-  const captureDir = join("data", "raw", ticker, accession);
+  const captureDir = dir;
   let merged = facts;
   try {
     const html = readFileSync(join(captureDir, "edgar-primary.html"), "utf8");
@@ -75,12 +87,12 @@ try {
 if (sec.annual.length < 3) { console.error(`Only ${sec.annual.length} annual periods from SEC for ${ticker}; need ≥3.`); process.exit(1); }
 const latestFY = sec.annual.at(-1)!.fiscal_year;
 
-const yraw = await yrawPending;                        // throws loudly on crumb/HTTP failure
-const yahoo = parseQuoteSummary(yraw, { latestFY });
+const kept = keepQuote ? yahooFromTearsheet(JSON.parse(readFileSync(existingTearsheet, "utf8"))) : null;
+const yahoo = kept ? kept.yahoo : parseQuoteSummary(await yrawPending!, { latestFY }); // throws loudly on crumb/HTTP failure
+const capturedAt = kept ? kept.capturedAt : new Date().toISOString();
 const ttm = computeTtm(sec.quarter, { price: yahoo.price, marketCap: yahoo.marketCap, dividendYield: yahoo.dividendYield, trailingPe: yahoo.trailingPe });
 
-const dir = join("data", "raw", ticker, accession);
-const files = buildTearsheetFiles({ cik, sec, yahoo, ttm, capturedAt: new Date().toISOString() });
+const files = buildTearsheetFiles({ cik, sec, yahoo, ttm, capturedAt });
 mkdirSync(dir, { recursive: true });
 writeTearsheetFiles(dir, files);
-console.log(`Wrote 3 free tearsheet files + free-capture.json marker to ${dir}\n  ${yahoo.companyName} · price ${yahoo.price} · ${sec.annual.length} FY · ${sec.quarter.length} quarters · target ${yahoo.targets.consensus}`);
+console.log(`Wrote 3 free tearsheet files + free-capture.json marker to ${dir}\n  ${yahoo.companyName} · price ${yahoo.price} · ${sec.annual.length} FY · ${sec.quarter.length} quarters · target ${yahoo.targets.consensus}${keepQuote ? ` · quote kept from ${capturedAt}` : ""}`);

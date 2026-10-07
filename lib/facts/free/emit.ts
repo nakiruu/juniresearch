@@ -175,6 +175,43 @@ export function buildTearsheetFiles(input: EmitInput): TearsheetFiles {
   return { tearsheetAnnual, statementsAnnual, statementsQuarter, marker };
 }
 
+/**
+ * Inverse of the Yahoo blocks buildTearsheetFiles writes, so a re-capture can keep the pack's quote
+ * (facts:free --keep-quote). `trailingPe` comes from key_metrics[0].pe_ratio (a fallback only — computeTtm
+ * prefers the SEC EPS sum) and `dividendYield` from ratios[0].dividend_yield; estimate years whose sales and
+ * eps were both null were dropped on the way out and stay dropped.
+ */
+export function yahooFromTearsheet(t: unknown): { yahoo: YahooData; capturedAt: string } {
+  const ts = t as {
+    company_overview: Record<string, unknown>;
+    price_performance: { current_market: Record<string, number> };
+    analyst_data: { price_targets: Record<string, number>; ratings: Record<string, unknown> };
+    estimates: { records: { metric: "SALES" | "EPS"; fiscal_year: number; estimate_mean: number }[] };
+    fundamentals: { key_metrics: Record<string, unknown>[]; ratios: Record<string, unknown>[] };
+  };
+  const ov = ts.company_overview, pt = ts.analyst_data.price_targets, r = ts.analyst_data.ratings;
+  const byYear = new Map<number, YahooEstimate>();
+  for (const e of ts.estimates.records) {
+    const row = byYear.get(e.fiscal_year) ?? { fiscal_year: e.fiscal_year, sales: null, eps: null };
+    if (e.metric === "SALES") row.sales = e.estimate_mean; else row.eps = e.estimate_mean;
+    byYear.set(e.fiscal_year, row);
+  }
+  const num = (x: unknown) => (typeof x === "number" ? x : null);
+  return {
+    capturedAt: String(ov.timestamp),
+    yahoo: {
+      price: ov.price as number, marketCap: ov.market_cap as number, companyName: ov.company_name as string,
+      exchange: ov.exchange as string, description: ov.description as string,
+      week52Low: ts.price_performance.current_market.year_low, week52High: ts.price_performance.current_market.year_high,
+      dividendYield: num(ts.fundamentals.ratios[0]?.dividend_yield) ?? 0,
+      targets: { consensus: pt.target_consensus, median: pt.target_median, high: pt.target_high, low: pt.target_low },
+      trailingPe: num(ts.fundamentals.key_metrics[0]?.pe_ratio),
+      ratings: { strong_buy: r.strong_buy as number, buy: r.buy as number, hold: r.hold as number, sell: r.sell as number, strong_sell: r.strong_sell as number, consensus: r.consensus as string },
+      estimates: [...byYear.values()].sort((a, b) => a.fiscal_year - b.fiscal_year),
+    },
+  };
+}
+
 export function writeTearsheetFiles(dir: string, files: TearsheetFiles): void {
   writeFileSync(join(dir, TEARSHEET_FILE), JSON.stringify(files.tearsheetAnnual));
   writeFileSync(join(dir, ANNUAL_FILE), JSON.stringify(files.statementsAnnual));

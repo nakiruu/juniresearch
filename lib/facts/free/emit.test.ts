@@ -5,7 +5,7 @@ import { join } from "node:path";
 import { parseCompanyFacts } from "./sec";
 import { parseQuoteSummary } from "./yahoo";
 import { computeTtm } from "./ttm";
-import { buildTearsheetFiles, writeTearsheetFiles } from "./emit";
+import { buildTearsheetFiles, writeTearsheetFiles, yahooFromTearsheet } from "./emit";
 import { mapStatements } from "../map/statements";
 import { mapQuote } from "../map/quote";
 import { mapAnalysts } from "../map/analysts";
@@ -44,5 +44,22 @@ describe("buildTearsheetFiles → real mappers (shape parity)", () => {
     const a = mapAnalysts(dir, sec.annual.at(-1)!.fiscal_year);
     expect(a.analysts.consensusTarget).toBeGreaterThan(0);
     expect(a.estimates.nextFY.label).toMatch(/^FY\d\dE$/);
+  });
+
+  it("yahooFromTearsheet round-trips the Yahoo blocks of the emitted tearsheet (facts:free --keep-quote)", () => {
+    const ts = files.tearsheetAnnual as { company_overview: { cik: number; timestamp: string } };
+    const back = yahooFromTearsheet(files.tearsheetAnnual);
+    expect(back.capturedAt).toBe(ts.company_overview.timestamp);
+    expect(back.yahoo.price).toBe(yahoo.price);
+    expect(back.yahoo.marketCap).toBe(yahoo.marketCap);
+    expect(back.yahoo.targets).toEqual(yahoo.targets);
+    expect(back.yahoo.ratings).toEqual(yahoo.ratings);
+    expect(back.yahoo.dividendYield).toBe(yahoo.dividendYield);
+    // parseQuoteSummary keeps estimate years whose sales and eps are both null; estimateRecords drops them, so the
+    // round-trip is exact only after the same filter.
+    expect(back.yahoo.estimates).toEqual(yahoo.estimates.filter((e) => e.sales != null || e.eps != null));
+    const again = buildTearsheetFiles({ cik: ts.company_overview.cik, sec, yahoo: back.yahoo, ttm, capturedAt: back.capturedAt });
+    const strip = (t: unknown) => { const { fundamentals: _f, ...rest } = t as Record<string, unknown>; return rest; };
+    expect(JSON.stringify(strip(again.tearsheetAnnual))).toBe(JSON.stringify(strip(files.tearsheetAnnual)));
   });
 });
