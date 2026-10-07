@@ -231,11 +231,134 @@ describe("deriveTotalDebt with the debt-and-lease line", () => {
   const none = {
     ltdNoncurrent: null, ltdTotal: null, ltdLeaseNoncurrent: null, ltdCurrent: null,
     debtCurrent: null, shortTermBorrowings: null, convertibleNoncurrent: null, convertibleCurrent: null,
+    ltdLeaseTotal: null, combinedTotal: null, unsecuredLtd: null,
   };
+  const lt = { filerTagsLongTerm: true };
   it("uses it only after LongTermDebtNoncurrent and LongTermDebt", () => {
-    expect(deriveTotalDebt({ ...none, ltdLeaseNoncurrent: 15_842, ltdCurrent: 1_201, shortTermBorrowings: 1_800 })).toBe(18_843);
-    expect(deriveTotalDebt({ ...none, ltdTotal: 17_043, ltdLeaseNoncurrent: 15_842, ltdCurrent: 1_201, shortTermBorrowings: 1_800 })).toBe(18_843);
-    expect(deriveTotalDebt({ ...none, ltdNoncurrent: 15_000, ltdLeaseNoncurrent: 15_842, debtCurrent: 500 })).toBe(15_500);
+    expect(deriveTotalDebt({ ...none, ltdLeaseNoncurrent: 15_842, ltdCurrent: 1_201, shortTermBorrowings: 1_800 }, lt)).toBe(18_843);
+    expect(deriveTotalDebt({ ...none, ltdTotal: 17_043, ltdLeaseNoncurrent: 15_842, ltdCurrent: 1_201, shortTermBorrowings: 1_800 }, lt)).toBe(18_843);
+    expect(deriveTotalDebt({ ...none, ltdNoncurrent: 15_000, ltdLeaseNoncurrent: 15_842, debtCurrent: 500 }, lt)).toBe(15_500);
+  });
+});
+
+// Audit 2026-10-06 (D-1) and review F-1/F-2/F-4: filers that tag total debt under concepts no list held, two that
+// were OVERSTATED by a double-add, and the zero-vs-gap rule. Values in $M from the captured filings' inline XBRL
+// (data/raw/<T>/<ACC>/edgar-10k-primary.html); every expectation is the balance-sheet total debt the 10-K prints,
+// or — where a balance-sheet line sits under a concept no list holds — the total of the concepts read, with the
+// unlisted line named.
+describe("total debt — concepts and rules added 2026-10-07 (D-1)", () => {
+  const fy = (val: number) => ({ start: "2025-01-01", end: "2025-12-31", val, form: "10-K", filed: "2026-02-20" });
+  const inst = (val: number, end = "2025-12-31") => ({ end, val, form: "10-K", filed: "2026-02-20" });
+  const base = { Revenues: { units: { USD: [fy(1_000)] } }, NetIncomeLoss: { units: { USD: [fy(100)] } } };
+  const fy2025 = (gaap: Record<string, unknown>) =>
+    parseCompanyFacts({ facts: { "us-gaap": { ...base, ...gaap } } }).annual.find((p) => p.fiscal_year === 2025)!;
+
+  it("CVX-10-K-shape: the noncurrent lease line equals the including-current line → all-in; add short-term borrowings only, never DebtCurrent", () => {
+    // CVX FY2025 10-K (0000093410-26-000167): balance sheet "Short-term debt 977" + "Long-term debt 39,781".
+    const p = fy2025({
+      LongTermDebtAndCapitalLeaseObligations: { units: { USD: [inst(39_781)] } },
+      LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities: { units: { USD: [inst(39_781)] } },
+      DebtCurrent: { units: { USD: [inst(10_918)] } }, // note subtotal before the $9,941M reclassification — must NOT be added
+      LongTermDebtCurrent: { units: { USD: [inst(2_345)] } },
+      CommercialPaper: { units: { USD: [inst(4_642)] } }, // inside the lease line; ShortTermBorrowings outranks it per period
+      ShortTermBorrowings: { units: { USD: [inst(977)] } },
+    });
+    expect(p.total_debt).toBe(40_758);
+  });
+
+  it("CVX FY2024 column: the same rule with that year's values (20,135 = 20,135; short-term 4,406)", () => {
+    const facts = { facts: { "us-gaap": {
+      Revenues: { units: { USD: [{ start: "2024-01-01", end: "2024-12-31", val: 900, form: "10-K", filed: "2025-02-20" }] } },
+      NetIncomeLoss: { units: { USD: [{ start: "2024-01-01", end: "2024-12-31", val: 90, form: "10-K", filed: "2025-02-20" }] } },
+      LongTermDebtAndCapitalLeaseObligations: { units: { USD: [inst(20_135, "2024-12-31")] } },
+      LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities: { units: { USD: [inst(20_135, "2024-12-31")] } },
+      DebtCurrent: { units: { USD: [inst(12_656, "2024-12-31")] } },
+      LongTermDebtCurrent: { units: { USD: [inst(4_012, "2024-12-31")] } },
+      CommercialPaper: { units: { USD: [inst(5_386, "2024-12-31")] } },
+      ShortTermBorrowings: { units: { USD: [inst(4_406, "2024-12-31")] } },
+    } } };
+    expect(parseCompanyFacts(facts).annual.find((p) => p.fiscal_year === 2024)!.total_debt).toBe(24_541);
+  });
+
+  it("SCHW-shape (held): the same equal-value pattern, 22,199 = 22,199, with OtherShortTermBorrowings as the short-term line", () => {
+    // SCHW FY2025 10-K (0000316709-26-000031) balance sheet: Other short-term borrowings 6,913 + Federal Home Loan Bank
+    // borrowings 1,850 (us-gaap:AdvancesFromFederalHomeLoanBanks — unlisted, bank-wide; not added without its own fixture)
+    // + Long-term debt 22,199 = 30,962. The $1.9B commercial paper is a note figure INSIDE other short-term borrowings
+    // ("other short-term borrowings (e.g., commercial paper, …)"), so it must not be added on top.
+    const p = fy2025({
+      LongTermDebtAndCapitalLeaseObligations: { units: { USD: [inst(22_199)] } },
+      LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities: { units: { USD: [inst(22_199)] } },
+      OtherShortTermBorrowings: { units: { USD: [inst(6_913)] } },
+      CommercialPaper: { units: { USD: [inst(1_900)] } },
+    });
+    expect(p.total_debt).toBe(29_112); // 30,962 less the unlisted FHLB line
+  });
+
+  it("RTX-shape: the including-current line DIFFERS from the noncurrent lease line, so the noncurrent line + all current debt is used", () => {
+    // RTX FY2025 10-K (0000101829-26-000027): LongTermDebtAndCapitalLeaseObligations 34,288; …IncludingCurrentMaturities
+    // 37,700; …Current 3,412; ShortTermBorrowings 204. Balance sheet: 34,288 + 3,412 + 204 = 37,904.
+    const p = fy2025({
+      LongTermDebtAndCapitalLeaseObligations: { units: { USD: [inst(34_288)] } },
+      LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities: { units: { USD: [inst(37_700)] } },
+      LongTermDebtAndCapitalLeaseObligationsCurrent: { units: { USD: [inst(3_412)] } },
+      ShortTermBorrowings: { units: { USD: [inst(204)] } },
+      OtherLongTermDebt: { units: { USD: [inst(146)] } }, // a note component, unread
+    });
+    expect(p.total_debt).toBe(37_904);
+  });
+
+  it("GE-shape: DebtLongtermAndShorttermCombinedAmount is the whole figure (nothing added)", () => {
+    const p = fy2025({
+      DebtLongtermAndShorttermCombinedAmount: { units: { USD: [inst(20_494)] } },
+      ShortTermBorrowings: { units: { USD: [inst(1_000)] } }, // already inside the combined amount
+    });
+    expect(p.total_debt).toBe(20_494);
+  });
+
+  it("CME-shape: UnsecuredLongTermDebt + a zero LongTermDebtCurrent", () => {
+    const p = fy2025({
+      UnsecuredLongTermDebt: { units: { USD: [inst(3_422)] } },
+      LongTermDebtCurrent: { units: { USD: [inst(0)] } },
+    });
+    expect(p.total_debt).toBe(3_422);
+  });
+
+  it("gap-shape: a zero current-only period is null when the filer tags a long-term concept in another period", () => {
+    const facts = { facts: { "us-gaap": {
+      Revenues: { units: { USD: [fy(1_000), { start: "2024-01-01", end: "2024-12-31", val: 900, form: "10-K", filed: "2025-02-20" }] } },
+      NetIncomeLoss: { units: { USD: [fy(100), { start: "2024-01-01", end: "2024-12-31", val: 90, form: "10-K", filed: "2025-02-20" }] } },
+      LongTermDebtNoncurrent: { units: { USD: [inst(500)] } }, // FY2025 only
+      LongTermDebtCurrent: { units: { USD: [inst(0, "2024-12-31"), inst(0)] } }, // both years
+    } } };
+    const { annual } = parseCompanyFacts(facts);
+    expect(annual.find((p) => p.fiscal_year === 2024)!.total_debt).toBeNull(); // a gap, not a zero
+    expect(annual.find((p) => p.fiscal_year === 2025)!.total_debt).toBe(500);
+  });
+
+  it("DSP-shape: a filer that never tags a long-term concept keeps its honest zero (DSP FY22–FY25, PLTR, RDVT, LASR, AMSC)", () => {
+    const p = fy2025({
+      LongTermDebtCurrent: { units: { USD: [inst(0)] } },
+      CashAndCashEquivalentsAtCarryingValue: { units: { USD: [inst(250)] } },
+    });
+    expect(p.total_debt).toBe(0);
+    expect(p.net_debt).toBe(-250);
+  });
+
+  it("existing shapes are unchanged: BSX, VST, AEIS, CSCO, NET", () => {
+    const none = {
+      ltdNoncurrent: null, ltdTotal: null, ltdLeaseNoncurrent: null, ltdCurrent: null, debtCurrent: null,
+      shortTermBorrowings: null, convertibleNoncurrent: null, convertibleCurrent: null,
+      ltdLeaseTotal: null, combinedTotal: null, unsecuredLtd: null,
+    };
+    const lt = { filerTagsLongTerm: true };
+    expect(deriveTotalDebt({ ...none, ltdLeaseNoncurrent: 11_137, debtCurrent: 299 }, lt)).toBe(11_436); // BSX
+    expect(deriveTotalDebt({ ...none, ltdTotal: 17_043, ltdLeaseNoncurrent: 15_842, ltdCurrent: 1_201, shortTermBorrowings: 1_800 }, lt)).toBe(18_843); // VST
+    expect(deriveTotalDebt({ ...none, ltdTotal: 567.5, ltdCurrent: 567.5 }, lt)).toBe(567.5); // AEIS
+    expect(deriveTotalDebt({ ...none, ltdNoncurrent: 19_372, ltdTotal: 22_872, ltdCurrent: 3_500, debtCurrent: 10_161 }, lt)).toBe(29_533); // CSCO
+    expect(deriveTotalDebt({ ...none, convertibleNoncurrent: 1_974.12, convertibleCurrent: 1_291.281 }, lt)).toBe(3_265.401); // NET
+    expect(deriveTotalDebt({ ...none, ltdCurrent: 100, shortTermBorrowings: 50 }, lt)).toBe(150); // non-zero current-only stays
+    expect(deriveTotalDebt({ ...none, ltdCurrent: 0 }, lt)).toBeNull(); // zero current-only in a filer with long-term tags → gap
+    expect(deriveTotalDebt({ ...none, ltdCurrent: 0 }, { filerTagsLongTerm: false })).toBe(0); // honest zero
   });
 });
 
@@ -596,41 +719,45 @@ describe("deriveTotalDebt", () => {
     shortTermBorrowings: null,
     convertibleNoncurrent: null,
     convertibleCurrent: null,
+    ltdLeaseTotal: null,
+    combinedTotal: null,
+    unsecuredLtd: null,
   };
+  const lt = { filerTagsLongTerm: true };
 
   it("adds all current debt (DebtCurrent, commercial paper included) to noncurrent long-term debt", () => {
     // CSCO FY2026 10-K: LongTermDebtNoncurrent $19,372M; DebtCurrent $10,161M (commercial paper +
     // $3,500M LongTermDebtCurrent). Preferring LongTermDebtCurrent dropped the commercial paper.
     expect(
-      deriveTotalDebt({ ...none, ltdNoncurrent: 19_372e6, ltdTotal: 22_872e6, ltdCurrent: 3_500e6, debtCurrent: 10_161e6 }),
+      deriveTotalDebt({ ...none, ltdNoncurrent: 19_372e6, ltdTotal: 22_872e6, ltdCurrent: 3_500e6, debtCurrent: 10_161e6 }, lt),
     ).toBe(29_533e6);
   });
 
   it("does not add the current portion on top of LongTermDebt when no noncurrent line is tagged", () => {
     // AEIS 2025-12-31: LongTermDebt $567.5M and LongTermDebtCurrent $567.5M are the same notes.
-    expect(deriveTotalDebt({ ...none, ltdTotal: 567.5e6, ltdCurrent: 567.5e6 })).toBe(567.5e6);
+    expect(deriveTotalDebt({ ...none, ltdTotal: 567.5e6, ltdCurrent: 567.5e6 }, lt)).toBe(567.5e6);
   });
 
   it("adds non-long-term current debt to LongTermDebt", () => {
-    expect(deriveTotalDebt({ ...none, ltdTotal: 1_000e6, ltdCurrent: 100e6, debtCurrent: 300e6 })).toBe(1_200e6);
-    expect(deriveTotalDebt({ ...none, ltdTotal: 1_000e6, shortTermBorrowings: 50e6 })).toBe(1_050e6);
+    expect(deriveTotalDebt({ ...none, ltdTotal: 1_000e6, ltdCurrent: 100e6, debtCurrent: 300e6 }, lt)).toBe(1_200e6);
+    expect(deriveTotalDebt({ ...none, ltdTotal: 1_000e6, shortTermBorrowings: 50e6 }, lt)).toBe(1_050e6);
   });
 
   it("falls back to current debt alone, and is null when nothing is tagged", () => {
-    expect(deriveTotalDebt({ ...none, ltdCurrent: 100e6, shortTermBorrowings: 50e6 })).toBe(150e6);
-    expect(deriveTotalDebt(none)).toBeNull();
+    expect(deriveTotalDebt({ ...none, ltdCurrent: 100e6, shortTermBorrowings: 50e6 }, lt)).toBe(150e6);
+    expect(deriveTotalDebt(none, lt)).toBeNull();
   });
 
   it("falls back to convertible notes when no long-term debt concept is tagged", () => {
     // NET 2025-12-31: ConvertibleDebtNoncurrent $1,974.1M + ConvertibleDebtCurrent $1,291.3M, nothing else.
-    expect(deriveTotalDebt({ ...none, convertibleNoncurrent: 1_974.12e6, convertibleCurrent: 1_291.281e6 })).toBe(3_265.401e6);
-    expect(deriveTotalDebt({ ...none, convertibleCurrent: 12.117e6 })).toBe(12.117e6);
+    expect(deriveTotalDebt({ ...none, convertibleNoncurrent: 1_974.12e6, convertibleCurrent: 1_291.281e6 }, lt)).toBe(3_265.401e6);
+    expect(deriveTotalDebt({ ...none, convertibleCurrent: 12.117e6 }, lt)).toBe(12.117e6);
     // DebtCurrent, when tagged, already holds the current convertibles.
-    expect(deriveTotalDebt({ ...none, convertibleNoncurrent: 1_000e6, convertibleCurrent: 200e6, debtCurrent: 250e6 })).toBe(1_250e6);
+    expect(deriveTotalDebt({ ...none, convertibleNoncurrent: 1_000e6, convertibleCurrent: 200e6, debtCurrent: 250e6 }, lt)).toBe(1_250e6);
   });
 
   it("ignores convertible concepts when a long-term debt concept reports the period", () => {
-    expect(deriveTotalDebt({ ...none, ltdNoncurrent: 1_000e6, convertibleNoncurrent: 400e6, convertibleCurrent: 50e6 })).toBe(1_000e6);
-    expect(deriveTotalDebt({ ...none, ltdTotal: 1_000e6, convertibleNoncurrent: 400e6 })).toBe(1_000e6);
+    expect(deriveTotalDebt({ ...none, ltdNoncurrent: 1_000e6, convertibleNoncurrent: 400e6, convertibleCurrent: 50e6 }, lt)).toBe(1_000e6);
+    expect(deriveTotalDebt({ ...none, ltdTotal: 1_000e6, convertibleNoncurrent: 400e6 }, lt)).toBe(1_000e6);
   });
 });
