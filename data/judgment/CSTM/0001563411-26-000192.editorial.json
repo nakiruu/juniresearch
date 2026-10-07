@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "0db479ca0e202bcd7007f681ec69463b62f5778e87c6dc727a92266430dcdbc7",
-  "reviewedAt": "2026-09-29T23:07:55Z",
-  "reviewer": "Claude Opus 4.8",
+  "judgmentSha256": "cb788f7809fded205f32e9f1993855246c25eea21451d85a0f8e8a312376c9c7",
+  "reviewedAt": "2026-10-07T16:12:19Z",
+  "reviewer": "Claude Opus 5.5",
   "round": 2,
-  "verdict": "approved",
+  "verdict": "needs-fix-round",
   "findings": [
     {
       "id": "F-1",
@@ -13,7 +13,7 @@
       "issue": "Two sources on the grounding surface disagree on FY25 figures and the report silently picks the vendor number without saying so. FY25 free cash flow is $159M in the Facts highlight (fcfLatestFY) but the proxy states 'Free Cash Flow of $178 million'; the report uses $159M with no note of the difference. The same silent pick recurs for FY25 net income: the Facts block and incomeCommentary/companyOverview use $273M ('net income of $273 million'), while the proxy states 'net income of $275 million'. Rubric item 8 requires the disagreement be flagged once with the chosen figure named.",
       "fix": "Add one clause noting the vendor/proxy split and stating which figure is used, e.g. 'free cash flow of $159 million on the vendor pack (the proxy reports $178 million)'. Do the same once for the $273M vs $275M net-income difference. Say it once; do not repeat the reconciliation in another section.",
       "status": "addressed",
-      "note": "The material $19M FCF split is now disclosed once in cashflowCommentary ($159M vendor / $178M proxy). The residual $273M vs $275M net-income difference remains silent but is immaterial (a ~0.7%, definitional/rounding-level gap) and does not warrant a further round."
+      "note": "Rewrite still discloses the $159M vendor / $178M proxy FCF split once and names the figure used. The $273M vs $275M net-income gap stays silent; it is immaterial, as noted last round."
     },
     {
       "id": "F-2",
@@ -23,7 +23,7 @@
       "issue": "Cross-section repetition (rubric item 7): the same claims are retold with the same figures across sections rather than pointed to once and argued once. The peak-earnings story (31% revenue on price, volumes down 1%, EPS $3.66 to $2.41) appears in analystCommentary, executiveSummary.thesis, executiveSummary.risks[1], financials.incomeCommentary, this idiosyncratic risk, and finalRecommendation.body[1]. The '2.5x leverage' figure recurs in executiveSummary.catalysts[2], financials.balanceCommentary, management.capitalAllocation, risks.idiosyncratic[1] and finalRecommendation. The 'A&T volumes up 21%' figure recurs in catalysts[0], incomeCommentary, growth.points[0] and finalRecommendation.",
       "fix": "Let the executive-summary catalysts/risks be one-line pointers and carry each figure's argument in exactly one later section, referring back in words elsewhere. Introduce 31%/-1%/EPS-fade, the 2.5x leverage and the +21% A&T volume once each in their home section (income, balance, growth respectively) and drop the numeric restatements in the other sections.",
       "status": "addressed",
-      "note": "Peak-earnings numbers now argued only in incomeCommentary; thesis, exec risk and this idiosyncratic risk reduced to word-level pointers with no figures. A&T +21% dropped from growth.points[0]; the 2.5x number dropped from catalysts[2]. The 31%, +21% and 2.5x figures still recur in the summary/conclusion bookends (analystCommentary, finalRecommendation) and the 2.5x in balance/capitalAllocation/risks, but each is now a distinct pointer-or-conclusion use rather than the story retold, which is within editorial tolerance."
+      "note": "In the rewrite the 31%, the +21% A&T volume and the 2.5x leverage each appear only in their home section (income, income, balance). The peak-earnings story no longer repeats. The debt-magnifies-losses story now repeats instead; see F-10."
     },
     {
       "id": "F-3",
@@ -33,7 +33,7 @@
       "issue": "'roughly $2 billion of net debt' is a computed figure that does not appear on the grounding surface, and it directly contradicts the surface's netDebtLatestFY of -$81M (net cash). The reconciliation of the mapping gap is sound analysis (2.5x on $846M EBITDA cannot coexist with net cash), but the specific $2bn magnitude is derived arithmetic presented as an implied fact rather than sourced.",
       "fix": "Keep the qualitative reconciliation but avoid stating a specific derived dollar figure: e.g. 'the 2.5x leverage against $846M Adjusted EBITDA implies substantial net debt, not the net-cash position the mapped pack shows.' If a magnitude is kept, mark it explicitly as our own estimate.",
       "status": "addressed",
-      "note": "The computed '$2 billion' is gone; the reconciliation now reads 'implies substantial net debt, not the net-cash position the pack shows', keeping the sound qualitative read without an ungrounded figure."
+      "note": "Moot on corrected inputs: the pack now shows FY25 net debt of $1.8B, and the report quotes that figure directly with no derived magnitude."
     },
     {
       "id": "F-4",
@@ -43,7 +43,7 @@
       "issue": "The MD&A gives the Q2'26 volume bridge as P&ARP -4%, AS&I stable, A&T +21%. Only one segment declined; AS&I was stable, not down. 'declines in the packaging and automotive segments' (plural) mischaracterizes the split. The executive-summary risk bullet gets this right ('packaging and automotive rolled products down'), so the two are inconsistent.",
       "fix": "Attribute the decline to P&ARP only, e.g. 'offset by a 4% volume decline in Packaging & Automotive Rolled Products, with Automotive Structures & Industry stable.'",
       "status": "addressed",
-      "note": "Rewritten to the exact correct bridge: A&T +21%, P&ARP -4%, AS&I stable."
+      "note": "Bridge still reads correctly: A&T +21%, P&ARP down 4%, AS&I stable."
     },
     {
       "id": "F-5",
@@ -53,7 +53,97 @@
       "issue": "This sentence recites the proxy's NYSE independence-test framework without reading it for the investor (rubric item 4). The surrounding paragraph already reaches the usable view (majority-independent board, CEO and two subsidiary employees not independent); the test recital adds no judgment and spends length that could go to what the independence structure means for a shareholder with no controlling holder.",
       "fix": "Cut the framework recital and, if room allows, add the read: no controlling shareholder is disclosed and the board is majority-independent under NYSE standards, so governance is not a specific standalone risk here.",
       "status": "addressed",
-      "note": "The NYSE-test recital sentence is removed and replaced with a reader-facing read (majority-independent, no controlling shareholder, CEO transition as the live context)."
+      "note": "Governance now dates the December 31, 2025 determination, counts nine independent directors against three who are not, and reaches a view for outside holders."
+    },
+    {
+      "id": "F-6",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[1].driver",
+      "quote": "Consensus proves right: EPS steps down to the FY27E $2.41, aerospace growth offsets softer packaging and automotive volumes, and the shares keep today's FY27E multiple on that figure.",
+      "issue": "Circular Base. 'Today's FY27E multiple' (10.2x) is the current price divided by $2.41, so applying it back to $2.41 returns the price ($24.58 vs $24.59) by construction. The Base has zero upside at any price and states no view of value a year out. With half the weight on it, E can come only from Bull vs Bear, which all but rules out BUY. The page presents this identity as a finding: thesis 'today's price already pays for the earnings consensus expects', analystCommentary 'already trade at 10.2x that lower figure', finalRecommendation.body[0] 'the price already reflects the FY27E consensus at today's multiple'. scenarioCommentary admits the Base 'inherits that slide', which undoes its claim that closes through September 9 'would have derived SELL': built the same way then, the Base would have tracked that close and derived HOLD. Nothing on the page argues 10.2x is fair for FY27E. The Bull applies the same 10.2x to $3.66, which the market prices today at 6.7x, a re-rating its driver does not name.",
+      "fix": "Either (a) argue from page evidence why 10.2x FY27E is the multiple the shares deserve a year out (FY22-FY24 earnings swing, leverage, the 6.7x current-year multiple, the Street range), and say plainly that this Base equals today's price by construction, so the label rests on the Bull/Bear split; or (b) re-anchor the Base to a basis independent of today's price and state it. Reword the thesis, analystCommentary and finalRecommendation.body[0] so 'the price already pays for consensus' is not offered as evidence. Drop or qualify the 'would have derived SELL' sentence. Name the Bull's re-rating, or anchor the Bull to the Street range it already cites. Whatever label then derives is the call; do not tune the Base toward either side of a line.",
+      "status": "open"
+    },
+    {
+      "id": "F-7",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[2].driver",
+      "quote": "With net debt unchanged, the lower earnings fall entirely on the equity, and the shares revisit their $14.39 52-week low, a price they traded at within the past year; that low is the implied price.",
+      "issue": "The Bear is deeper than its story. The story is EPS falling toward FY25's $1.92. At the report's own 10.2x that is about $19.6, roughly 20% below the price, which already clears the 15% floor. $14.39 implies about 7.5x, a further de-rating of about a quarter that the driver neither states nor argues. The mechanism given for the extra depth, net debt, is already inside EPS, which is struck after finance costs, so 'the lower earnings fall entirely on the equity' counts leverage twice. Debt would enter the arithmetic only on an EV/EBITDA basis, which multiplesCommentary calls fairer but the scenarios do not use. The same double count is the stated reason for the depth in analystCommentary ('That debt is why our Bear is deep'), risks.idiosyncratic[1], finalRecommendation.body[0] and meta.subtitle. Label effect: with a story-consistent Bear, R is about 0.38, still HOLD. A Base only about 5% above the price would then derive BUY, so the HOLD's margin rests on this unargued de-rating.",
+      "fix": "Either argue the de-rating on the Bear case itself from page evidence (the FY22-FY24 earnings fall, earnings volatility) and say the implied price assumes a lower multiple than today's, or anchor the Bear to the stated multiple on the Bear EPS. Drop the claim that debt deepens a P/E-based Bear, or rebuild the Bear on an enterprise-value basis where net debt is actually subtracted. Bring analystCommentary, risks.idiosyncratic[1], finalRecommendation.body[0] and the subtitle into line. Describe any implied multiple in words; do not quote a computed one.",
+      "status": "open"
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "Our weighted fair value sits below the whole range because we price a Bear the Street targets do not reach.",
+      "issue": "Wrong cause. Even with the Bear set equal to the Base, the weighted value would be about $27.8, still well below the $33.05 low Street target. The fair value sits below the range because of the 50%-weighted Base at today's price, about a quarter under the lowest Street target. The sentence credits the gap to the Bear and leaves the real driver unstated.",
+      "fix": "State the actual reason: our Base takes consensus FY27E EPS at today's multiple, while every Street target sits well above that price. Add a view on why the report does not follow the Street. Make this consistent with however F-6 is resolved.",
+      "status": "open"
+    },
+    {
+      "id": "F-9",
+      "severity": "Important",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "Because net debt was flat from FY24 to FY25 on the pack's figures, the reduction in that ratio came from higher earnings rather than a smaller debt balance.",
+      "issue": "This is a causal inference the sources do not make. Net debt reads $1.8B at FY24 and FY25 only at $0.1B rounding. The same paragraph says the proxy excerpt does not define the ratio, and no FY24 Adjusted EBITDA is on the page, so the split between earnings and debt cannot be established. management.capitalAllocation repeats the shape: 'Buybacks absorbed most of FY25's free cash flow, which is why net debt did not fall.' The buybacks ($115M of $159M) are on the page, but nothing shows they are why net debt was flat; other uses of cash and currency effects on debt are not shown. The downstream point, that a ratio lifted by earnings will rise if earnings fall, stands without the causal claim.",
+      "fix": "Hedge both. For example: 'on the pack's rounded figures net debt was about flat, which suggests the lower ratio owes more to earnings than to repayment', and 'buybacks absorbed most of FY25's free cash flow, and net debt did not fall'.",
+      "status": "open"
+    },
+    {
+      "id": "F-10",
+      "severity": "Important",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "with net debt more than half the market value of the equity, shareholders carry that swing",
+      "issue": "The claim that debt magnifies an earnings fall for shareholders is made in eight fields: analystCommentary ('more than half the market value of its equity, so a shortfall in earnings would fall harder on the shares'), executiveSummary.thesis ('turns that into a deep loss for shareholders'), executiveSummary.risks[1] ('magnifies any fall in earnings for shareholders'), this sentence, scenarios[2].driver ('the lower earnings fall entirely on the equity'), risks.idiosyncratic[1] ('turns any earnings shortfall into a larger loss for shareholders'), risks.systemic ('the debt makes the equity more sensitive') and finalRecommendation.body[0] ('the debt makes the Bear deep'). 'More than half the market value' of the equity is introduced in both analystCommentary and balanceCommentary.",
+      "fix": "Argue the mechanism once, in balanceCommentary. Elsewhere point back in words ('the leverage described in the balance section') without restating it. Cut the systemic clause. Either drop risks.idiosyncratic[1] or keep it as a bare pointer distinct from executiveSummary.risks[1]. Resolve F-7 first, since several of these sentences carry the Bear-depth claim.",
+      "status": "open"
+    },
+    {
+      "id": "F-11",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.catalysts[2]",
+      "quote": "Buybacks: the company repurchased $115 million of stock in FY25 and another $20 million in Q2'26.",
+      "issue": "Buybacks are listed as a catalyst, but management.capitalAllocation argues against them: buying back stock before an expected earnings step-down 'leaves the debt in place for the downturn'. The two reads conflict, and capitalAllocation restates the same two figures.",
+      "fix": "Drop buybacks from the catalysts, or reframe them so they do not contradict the capital-allocation view. Keep the $115 million and $20 million figures in capitalAllocation only.",
+      "status": "open"
+    },
+    {
+      "id": "F-12",
+      "severity": "Minor",
+      "field": "sections.risks.idiosyncratic[0]",
+      "quote": "the 10-Q notes that a narrower scrap spread could have an unfavorable impact on results",
+      "issue": "Near-verbatim sentences recur across sections. Scrap spread: businessMoat.moatFactors[1] has 'the 10-Q notes that a narrower scrap spread could have an unfavorable impact'. Lower-cost producers: moatFactors[3] and risks.idiosyncratic[2] both have 'producers with a lower cost basis may have an advantage'. Energy: executiveSummary.risks[4] and risks.systemic both have 'has caused, and may continue to result in, higher fuel and energy prices'. CEO transition: management.leadership ('say little yet about the new leadership's effect') and risks.idiosyncratic[4] ('the new team has not yet run the business through a weaker market').",
+      "fix": "Give each claim one home: scrap spread and lower-cost producers in the risks section, with the moat factors pointing back in words. Make the energy point in systemic and leave the executive risk as a short pointer. Put the CEO-transition read in leadership or in risks, not both.",
+      "status": "open"
+    },
+    {
+      "id": "F-13",
+      "severity": "Minor",
+      "field": "sections.businessMoat.segments[0].body",
+      "quote": "The mix makes aerospace the profit engine at a quarter of revenue.",
+      "issue": "In Q2'26, P&ARP supplied 53% of segment Adjusted EBITDA against A&T's 44%. A&T is the highest-margin segment, not the main source of profit. 'Aerospace' also stands in for a segment that includes transportation, industry and defense.",
+      "fix": "Say what the shares show, e.g. 'the mix makes Aerospace & Transportation the highest-margin segment, though Packaging & Automotive Rolled Products still supplies more of segment Adjusted EBITDA.'",
+      "status": "open"
+    },
+    {
+      "id": "F-14",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.risks[3]",
+      "quote": "the Midwest premium rose 154% in Q2'26 after the Section 232 tariff announcements",
+      "issue": "The 154% compares the average premium in the three months ended June 30, 2026 with the same quarter of 2025. 'Rose 154% in Q2'26' reads as a move within the quarter. risks.idiosyncratic[3] has the same problem: 'the average all-in U.S. aluminum price up 77% in Q2'26'.",
+      "fix": "Say 'year over year' in both places, e.g. 'the average Midwest premium in Q2'26 was 154% above a year earlier'.",
+      "status": "open"
+    },
+    {
+      "id": "F-15",
+      "severity": "Minor",
+      "field": "sections.growth.points[3]",
+      "quote": "so the Street models no top-line growth after this year",
+      "issue": "FY26E and FY27E revenue both appear only as about $9B, rounded to the billion, so the page cannot show zero growth; it shows roughly flat revenue. growth.points[4] has a related problem: 'Group volume growth is concentrated in the segment that is a quarter of revenue' describes group volumes as growing, but they fell 1% in Q2'26 and in the first half. It also restates incomeCommentary's conclusion that growth is mostly price.",
+      "fix": "Write 'consensus revenue is roughly flat at about $9 billion in both years'. Reword points[4] as 'volume growth is confined to Aerospace & Transportation, while group volumes fell', or drop it in favor of a pointer to the income section.",
+      "status": "open"
     }
   ]
 }
