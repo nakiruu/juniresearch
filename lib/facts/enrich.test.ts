@@ -281,4 +281,8 @@ describe("ttmCapex — tagged software / lease equipment join the PP&E capex", (
     const b = body({ PaymentsToAcquireProductiveAssets: leg(20, 12, 10), PaymentsToDevelopSoftware: leg(8, 5, 4) });
     expect(ttmCapex(b, "2025-12-31")).toBe(22);
   });
+  it("reads machinery-and-equipment capex only when no higher-priority capex concept has the TTM (DOW, 2026-10-07)", () => {
+    expect(ttmCapex(body({ PaymentsToAcquireMachineryAndEquipment: leg(20, 12, 10) }), "2025-12-31")).toBe(22);
+    expect(ttmCapex(body({ PaymentsToAcquirePropertyPlantAndEquipment: leg(30, 15, 12), PaymentsToAcquireMachineryAndEquipment: leg(20, 12, 10) }), "2025-12-31")).toBe(33);
+  });
 });

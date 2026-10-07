@@ -27,7 +27,9 @@ its rank.
    every error; the rest of the prompt is byte-for-byte the one you already read,
    so do not re-read the full `.prompt.md`. Rewrite the **whole** judgment file and
    return to step 3. Stop after the third failed build and report the residual
-   errors verbatim.
+   errors verbatim. A build that fails at `input check` (a Shibui FAIL) is not an
+   authoring error: stop and report it; the pack must be re-captured or the fail
+   accepted before any judgment is written.
 5. On a build that fails **only** at the editorial gate with "missing" or "stale":
    build once with `npm run synth:build -- <TICKER> <ACCESSION> --skip-review` so
    the lint and grounding pass and `data/<ticker>.json` exists for the reviewer —

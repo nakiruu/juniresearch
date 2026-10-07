@@ -3,3 +3,6 @@ data/raw/** -text
 
 # Shell scripts must stay LF — a CRLF shebang breaks on Linux ("bad interpreter").
 *.sh text eol=lf
+
+# Persisted SEC companyfacts responses (facts:free, D-9) are binary.
+*.json.gz binary

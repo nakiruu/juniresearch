@@ -707,6 +707,12 @@
       "source": "shibui",
       "capturedAt": "2026-10-03T04:32:59.534Z",
       "endpoint": "stock_data_query: close + valuation.market_cap on/before 2026-09-14; fundamentals_quarterly (4 quarters to 2026-06-30): shares_outstanding, revenue, Σfree_cash_flow, Σstock_based_compensation"
+    },
+    {
+      "field": "crosscheckOverrides.revenueQuarter",
+      "source": "edgar",
+      "capturedAt": "2026-10-07T10:55:51.011Z",
+      "endpoint": "accepted Shibui fail on revenueQuarter: Definitional: Bigdata/FMP revenue is gross of interest expense (interest income 33,832 + noninterest income 15,561 = 49,393); Shibui's 31,558 is revenue net of interest expense, which the report already uses in prose (verified against 10-Q 0000070858-26-000394 iXBRL Q2'26: InterestAndDividendIncomeOperating 33,832M + NoninterestIncome 15,561M = 49,393M; us-gaap:Revenues (net of interest expense) 31,558M; 8-K ex-99 'Revenue, net of interest expense, of $31.6B')"
     }
   ],
   "beta": {
@@ -769,5 +775,13 @@
       }
     ],
     "source": "shibui"
-  }
+  },
+  "crosscheckOverrides": [
+    {
+      "field": "revenueQuarter",
+      "reason": "Definitional: Bigdata/FMP revenue is gross of interest expense (interest income 33,832 + noninterest income 15,561 = 49,393); Shibui's 31,558 is revenue net of interest expense, which the report already uses in prose",
+      "verifiedAgainst": "10-Q 0000070858-26-000394 iXBRL Q2'26: InterestAndDividendIncomeOperating 33,832M + NoninterestIncome 15,561M = 49,393M; us-gaap:Revenues (net of interest expense) 31,558M; 8-K ex-99 'Revenue, net of interest expense, of $31.6B'",
+      "capturedAt": "2026-10-07T10:55:51.011Z"
+    }
+  ]
 }

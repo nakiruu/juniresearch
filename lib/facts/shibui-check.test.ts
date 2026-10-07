@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
   CROSSCHECK_OK, CROSSCHECK_WARN, buildShibuiCheck, crossCheckLevel, crossCheckQuery, parseCrossCheckResponse,
-  stampShibuiCheck, type CrossCheckable,
+  stampShibuiCheck, stampCrosscheckOverride, type CrossCheckable,
 } from "./shibui-check";
 
 // INTU's row as Shibui returned it (quote date 2026-10-01, quarter ending 2026-07-31).
@@ -120,5 +120,20 @@ describe("stampShibuiCheck", () => {
       expect.objectContaining({ source: "shibui", capturedAt: "t2" }),
     ]);
     expect(pack.provenance).toHaveLength(2);
+  });
+});
+
+describe("stampCrosscheckOverride", () => {
+  it("records the override once per field and a provenance row", () => {
+    const pack = { provenance: [] as { field: string; source: string; endpoint: string; capturedAt: string }[] };
+    stampCrosscheckOverride(pack, { field: "fcfTtm", reason: "r1", verifiedAgainst: "10-Q", capturedAt: "2026-10-07T00:00:00.000Z" });
+    stampCrosscheckOverride(pack, { field: "fcfTtm", reason: "r2", verifiedAgainst: "10-Q", capturedAt: "2026-10-07T00:00:00.000Z" });
+    const overrides = (pack as { crosscheckOverrides?: { reason: string }[] }).crosscheckOverrides;
+    expect(overrides).toHaveLength(1);
+    expect(overrides![0].reason).toBe("r2");
+    expect(pack.provenance.filter((p) => p.field === "crosscheckOverrides.fcfTtm")).toHaveLength(1);
+  });
+  it("refuses an empty reason", () => {
+    expect(() => stampCrosscheckOverride({}, { field: "price", reason: " ", verifiedAgainst: "x", capturedAt: "2026-10-07T00:00:00.000Z" })).toThrow(/non-empty/);
   });
 });

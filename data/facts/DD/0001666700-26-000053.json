@@ -608,6 +608,12 @@
       "source": "shibui",
       "capturedAt": "2026-10-03T04:32:59.534Z",
       "endpoint": "stock_data_query: close + valuation.market_cap on/before 2026-09-24; fundamentals_quarterly (4 quarters to 2026-06-30): shares_outstanding, revenue, Σfree_cash_flow, Σstock_based_compensation"
+    },
+    {
+      "field": "crosscheckOverrides.fcfTtm",
+      "source": "edgar",
+      "capturedAt": "2026-10-07T10:55:52.214Z",
+      "endpoint": "accepted Shibui fail on fcfTtm: Basis difference: ours is continuing-operations FCF as the filing and release present it (OCF 1,041M less capex 339M = 702M); Shibui's four quarters straddle the 2025-11-01 Qnity separation and include pre-spin cash flows (verified against 10-K FY25 + 10-Q 0001666700-26-000053 iXBRL: NetCashProvidedByUsedInOperatingActivitiesContinuingOperations 560-151+632 = 1,041M; PaymentsToAcquireProductiveAssets 333-172+178 = 339M; 8-K ex-99 'cash flows are presented on a continuing operations basis')"
     }
   ],
   "sbc": [
@@ -677,5 +683,13 @@
       }
     ],
     "source": "shibui"
-  }
+  },
+  "crosscheckOverrides": [
+    {
+      "field": "fcfTtm",
+      "reason": "Basis difference: ours is continuing-operations FCF as the filing and release present it (OCF 1,041M less capex 339M = 702M); Shibui's four quarters straddle the 2025-11-01 Qnity separation and include pre-spin cash flows",
+      "verifiedAgainst": "10-K FY25 + 10-Q 0001666700-26-000053 iXBRL: NetCashProvidedByUsedInOperatingActivitiesContinuingOperations 560-151+632 = 1,041M; PaymentsToAcquireProductiveAssets 333-172+178 = 339M; 8-K ex-99 'cash flows are presented on a continuing operations basis'",
+      "capturedAt": "2026-10-07T10:55:52.214Z"
+    }
+  ]
 }

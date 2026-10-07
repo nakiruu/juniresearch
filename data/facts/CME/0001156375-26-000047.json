@@ -130,22 +130,22 @@
         "key": "totalDebt",
         "label": "Total Debt",
         "values": [
-          749400000,
-          16000000,
-          0,
-          749800000,
-          0
+          3445100000,
+          3438400000,
+          3425400000,
+          3428000000,
+          3422300000
         ]
       },
       {
         "key": "netDebt",
         "label": "Net Debt",
         "values": [
-          -2085500000,
-          -2704100000,
-          -2912000000,
-          -2142600000,
-          -4416900000
+          610200000,
+          718300000,
+          513400000,
+          535600000,
+          -994600000
         ]
       },
       {
@@ -239,11 +239,11 @@
   "ttm": {
     "pe": 23.410517387616625,
     "ps": 14.6542646310132,
-    "evToEbitda": 20.313,
+    "evToEbitda": 22.249944144662578,
     "grossMargin": null,
     "operatingMargin": 0.6510055222514248,
-    "netMargin": null,
-    "netDebtToEbitda": null,
+    "netMargin": 0.6329917609189971,
+    "netDebtToEbitda": 0.28330492906310173,
     "interestCoverage": null,
     "currentRatio": 1.0183584272161887,
     "fcfYield": 0.04244642093084538
@@ -594,12 +594,6 @@
       "capturedAt": "2026-09-20T16:25:27.088Z"
     },
     {
-      "field": "ttm.evToEbitda",
-      "source": "yahoo",
-      "endpoint": "quoteSummary.defaultKeyStatistics.enterpriseToEbitda",
-      "capturedAt": "2026-10-02T00:13:21.118Z"
-    },
-    {
       "field": "beta",
       "source": "shibui",
       "capturedAt": "2026-10-03T03:46:39.826Z",
@@ -608,7 +602,7 @@
     {
       "field": "shibuiCheck",
       "source": "shibui",
-      "capturedAt": "2026-10-03T04:32:59.534Z",
+      "capturedAt": "2026-10-07T15:18:13.479Z",
       "endpoint": "stock_data_query: close + valuation.market_cap on/before 2026-09-20; fundamentals_quarterly (4 quarters to 2026-06-30): shares_outstanding, revenue, Σfree_cash_flow, Σstock_based_compensation"
     }
   ],

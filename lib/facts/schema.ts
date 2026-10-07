@@ -72,6 +72,11 @@ export const FactPack = z.object({
     })),
     source: z.literal("shibui"),
   }).optional(),
+  // Owner-accepted Shibui `fail`s (lib/synth/crosscheck-gate.ts): the pack was verified against the filing and kept.
+  crosscheckOverrides: z.array(z.object({
+    field: z.enum(["price", "marketCap", "sharesOutstanding", "revenueQuarter", "fcfTtm"]),
+    reason: z.string().min(1), verifiedAgainst: z.string().min(1), capturedAt: z.string(),
+  })).optional(),
   filing: z.object({
     form: z.enum(["10-Q", "10-K"]),
     accession: z.string(),

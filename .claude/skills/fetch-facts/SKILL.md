@@ -56,6 +56,13 @@ If the accession is unknown, run `npm run detect` first and use what it prints.
    `npm run facts:crosscheck -- <TICKER> <ACCESSION> --apply` and report its output verbatim.
    A WARN/FAIL line is a finding to report (a vendor input disagrees with Shibui), not
    something to fix by hand; a ticker Shibui does not cover simply gets no diffs.
+   A FAIL is now a build blocker: `synth:build` refuses the pack until the fail is either
+   fixed in the pack (re-capture, concept fix) or accepted with
+   `npm run facts:crosscheck -- <T> <ACC> --accept <field> --reason "<why the pack is right>" --verified-against "<filing>"`.
+   Only the owner or the orchestrator accepts a fail, never the author, and only after
+   reading the filing's own figure. On a pack re-captured with `facts:free --keep-quote`,
+   re-apply the saved response with `--apply --from data/raw/_shibui/<batch>.json` (same
+   quote date, so the row still matches).
 
 ## Rules
 

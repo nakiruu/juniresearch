@@ -44,22 +44,22 @@
         "key": "revenue",
         "label": "Revenue",
         "values": [
-          155606000000,
-          235717000000,
-          196913000000,
-          193414000000,
-          184432000000
+          162465000000,
+          246252000000,
+          200949000000,
+          202792000000,
+          189031000000
         ]
       },
       {
         "key": "grossProfit",
         "label": "Gross Profit",
         "values": [
-          63357000000,
-          90301000000,
-          77717000000,
-          74208000000,
-          76218000000
+          70216000000,
+          100836000000,
+          81753000000,
+          83586000000,
+          80817000000
         ]
       },
       {
@@ -115,30 +115,30 @@
           5675000000,
           17901000000,
           8223000000,
-          null,
-          null
+          8262000000,
+          7285000000
         ]
       },
       {
         "key": "totalDebt",
         "label": "Total Debt",
         "values": [
-          30878000000,
-          4658000000,
-          2179000000,
-          8418000000,
-          3322000000
+          31369000000,
+          23339000000,
+          20836000000,
+          24541000000,
+          40758000000
         ]
       },
       {
         "key": "netDebt",
         "label": "Net Debt",
         "values": [
-          25238000000,
-          -13020000000,
-          -5999000000,
-          null,
-          null
+          25729000000,
+          5661000000,
+          12658000000,
+          16279000000,
+          33473000000
         ]
       },
       {
@@ -225,17 +225,17 @@
   "latestQuarter": {
     "label": "Q2'26",
     "periodEnd": "2026-06-30",
-    "revenue": 67199000000,
+    "revenue": 70055000000,
     "operatingMargin": null,
-    "revenueYoY": 0.5143436619718309
+    "revenueYoY": 0.5629601534960511
   },
   "ttm": {
     "pe": 19.7,
-    "ps": 1.9255970891807332,
+    "ps": 1.8670046784136467,
     "evToEbitda": 8.694,
-    "grossMargin": 0.4364551940242728,
+    "grossMargin": 0.45360283562744763,
     "operatingMargin": null,
-    "netMargin": 0.09865795286304986,
+    "netMargin": 0.09565597112342691,
     "netDebtToEbitda": null,
     "interestCoverage": null,
     "currentRatio": 1.252159730893708,
@@ -270,7 +270,7 @@
     "items": [
       {
         "name": "Consolidated",
-        "revenue": 184432000000,
+        "revenue": 189031000000,
         "share": 1
       }
     ]
@@ -601,7 +601,7 @@
     {
       "field": "shibuiCheck",
       "source": "shibui",
-      "capturedAt": "2026-10-03T04:32:59.534Z",
+      "capturedAt": "2026-10-07T15:17:23.433Z",
       "endpoint": "stock_data_query: close + valuation.market_cap on/before 2026-09-23; fundamentals_quarterly (4 quarters to 2026-06-30): shares_outstanding, revenue, Σfree_cash_flow, Σstock_based_compensation"
     }
   ],
@@ -651,9 +651,9 @@
       },
       {
         "field": "revenueQuarter",
-        "pack": 67199000000,
+        "pack": 70055000000,
         "shibui": 70055000000,
-        "relDiff": 0.0408,
+        "relDiff": 0,
         "level": "ok"
       },
       {

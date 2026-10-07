@@ -134,7 +134,7 @@
           31914000000,
           43827000000,
           41261000000,
-          204000000
+          37904000000
         ]
       },
       {
@@ -145,7 +145,7 @@
           25694000000,
           37240000000,
           35683000000,
-          -7231000000
+          30469000000
         ]
       },
       {
@@ -239,11 +239,11 @@
   "ttm": {
     "pe": 34,
     "ps": 2.783732894802139,
-    "evToEbitda": 16.943434710379577,
+    "evToEbitda": 19.43950457937521,
     "grossMargin": null,
     "operatingMargin": 0.11213903743315508,
     "netMargin": 0.08275935828877005,
-    "netDebtToEbitda": -0.5425596237823312,
+    "netDebtToEbitda": 1.953510245213302,
     "interestCoverage": null,
     "currentRatio": 1.01054628824413,
     "fcfYield": 0.04382604388079103
@@ -602,7 +602,7 @@
     {
       "field": "shibuiCheck",
       "source": "shibui",
-      "capturedAt": "2026-10-03T04:32:59.534Z",
+      "capturedAt": "2026-10-07T15:17:00.901Z",
       "endpoint": "stock_data_query: close + valuation.market_cap on/before 2026-09-23; fundamentals_quarterly (4 quarters to 2026-06-30): shares_outstanding, revenue, Σfree_cash_flow, Σstock_based_compensation"
     }
   ],

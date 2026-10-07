@@ -124,33 +124,33 @@
         "key": "cashAndInvestments",
         "label": "Cash & ST Investments",
         "values": [
-          null,
-          null,
-          null,
-          null,
-          null
+          15770000000,
+          15810000000,
+          15204000000,
+          13619000000,
+          12392000000
         ]
       },
       {
         "key": "totalDebt",
         "label": "Total Debt",
         "values": [
-          4361000000,
-          3739000000,
-          21970000000,
-          21312000000,
-          22180000000
+          35185000000,
+          24059000000,
+          20525000000,
+          19273000000,
+          20494000000
         ]
       },
       {
         "key": "netDebt",
         "label": "Net Debt",
         "values": [
-          null,
-          null,
-          null,
-          null,
-          null
+          19415000000,
+          8249000000,
+          5321000000,
+          5654000000,
+          8102000000
         ]
       },
       {
@@ -244,11 +244,11 @@
   "ttm": {
     "pe": 36.753828032979975,
     "ps": 6.393637440973182,
-    "evToEbitda": 29.142,
+    "evToEbitda": 33.13858660202663,
     "grossMargin": null,
     "operatingMargin": 0.18130652869386626,
     "netMargin": 0.17717919349105415,
-    "netDebtToEbitda": null,
+    "netDebtToEbitda": 0.9747665408305186,
     "interestCoverage": null,
     "currentRatio": 0.9818698985901558,
     "fcfYield": 0.025932708602089266
@@ -581,12 +581,6 @@
       "capturedAt": "2026-10-02T16:00:04.994Z"
     },
     {
-      "field": "ttm.evToEbitda",
-      "source": "yahoo",
-      "endpoint": "quoteSummary.defaultKeyStatistics.enterpriseToEbitda",
-      "capturedAt": "2026-10-02T16:00:33.989Z"
-    },
-    {
       "field": "beta",
       "source": "shibui",
       "capturedAt": "2026-10-03T03:46:39.826Z",
@@ -599,21 +593,9 @@
       "endpoint": "companyconcept us-gaap/AllocatedShareBasedCompensationExpense (FY21, FY22, FY23, FY24, FY25)"
     },
     {
-      "field": "statements.cashflow.capex",
-      "source": "edgar",
-      "capturedAt": "2026-10-03T05:24:02.422Z",
-      "endpoint": "capex incl. CAPEX_EXTRA: companyfacts PaymentsForSoftware added to the PP&E capex (and deducted from freeCashFlow) per fiscal year: FY21 111.0M, FY22 113.0M, FY23 0.0M, FY24 0.0M, FY25 0.0M"
-    },
-    {
-      "field": "ttm.fcfYield",
-      "source": "edgar",
-      "capturedAt": "2026-10-03T05:24:02.422Z",
-      "endpoint": "TTM to 2026-06-30 (last FY + YTD − prior YTD): operating cash flow − (PP&E + PaymentsForSoftware) / quote.marketCap, SEC companyfacts"
-    },
-    {
       "field": "shibuiCheck",
       "source": "shibui",
-      "capturedAt": "2026-10-03T04:32:59.534Z",
+      "capturedAt": "2026-10-07T15:18:55.885Z",
       "endpoint": "stock_data_query: close + valuation.market_cap on/before 2026-10-02; fundamentals_quarterly (4 quarters to 2026-06-30): shares_outstanding, revenue, Σfree_cash_flow, Σstock_based_compensation"
     }
   ],

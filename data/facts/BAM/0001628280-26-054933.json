@@ -572,6 +572,12 @@
       "source": "shibui",
       "capturedAt": "2026-10-03T04:32:59.534Z",
       "endpoint": "stock_data_query: close + valuation.market_cap on/before 2026-09-23; fundamentals_quarterly (4 quarters to 2026-06-30): shares_outstanding, revenue, Σfree_cash_flow, Σstock_based_compensation"
+    },
+    {
+      "field": "crosscheckOverrides.fcfTtm",
+      "source": "edgar",
+      "capturedAt": "2026-10-07T10:55:51.615Z",
+      "endpoint": "accepted Shibui fail on fcfTtm: Shibui mapping error: its free_cash_flow for BAM equals TTM net cash from investing activities (-232M); ours is TTM operating cash flow 2,341M less PP&E payments 22M = 2,319M (verified against 10-K 0001628280-26-013098 FY25 + 10-Q 0001628280-26-054933 H1'26/H1'25 iXBRL: NetCashProvidedByUsedInOperatingActivities 2,101-643+883 = 2,341M; PaymentsToAcquireOtherPropertyPlantAndEquipment 9-3+16 = 22M; NetCashProvidedByUsedInInvestingActivities -339+255-148 = -232M (= Shibui))"
     }
   ],
   "beta": {
@@ -634,5 +640,13 @@
       }
     ],
     "source": "shibui"
-  }
+  },
+  "crosscheckOverrides": [
+    {
+      "field": "fcfTtm",
+      "reason": "Shibui mapping error: its free_cash_flow for BAM equals TTM net cash from investing activities (-232M); ours is TTM operating cash flow 2,341M less PP&E payments 22M = 2,319M",
+      "verifiedAgainst": "10-K 0001628280-26-013098 FY25 + 10-Q 0001628280-26-054933 H1'26/H1'25 iXBRL: NetCashProvidedByUsedInOperatingActivities 2,101-643+883 = 2,341M; PaymentsToAcquireOtherPropertyPlantAndEquipment 9-3+16 = 22M; NetCashProvidedByUsedInInvestingActivities -339+255-148 = -232M (= Shibui)",
+      "capturedAt": "2026-10-07T10:55:51.615Z"
+    }
+  ]
 }

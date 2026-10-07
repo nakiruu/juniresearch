@@ -154,12 +154,42 @@ const LTD_LEASE_NONCURRENT = ["LongTermDebtAndCapitalLeaseObligations"];
 const LTD_TOTAL = ["LongTermDebt"];
 const LTD_CURRENT = ["LongTermDebtCurrent", "LongTermDebtAndCapitalLeaseObligationsCurrent"];
 const DEBT_CURRENT = ["DebtCurrent"];
-const SHORT_TERM_BORROWINGS = ["ShortTermBorrowings", "CommercialPaper"];
+// OtherShortTermBorrowings is SCHW's balance-sheet short-term line ($6,913M at FY2025); its $1.9B commercial paper is a
+// note figure inside it, so the line outranks CommercialPaper for the period and is never added to it.
+// ShortTermBankLoansAndNotesPayable is DOW's "Notes payable" face line ($90M at FY2025; gross debt 18,161). It is
+// lowest priority because CVX tags it ($96M) as a note component of its "Short-term debt" ShortTermBorrowings 977.
+const SHORT_TERM_BORROWINGS = ["ShortTermBorrowings", "OtherShortTermBorrowings", "CommercialPaper", "ShortTermBankLoansAndNotesPayable"];
+// FHLB advances are their own face line at SCHW ($1,850M at FY2025, beside other short-term borrowings and long-term
+// debt) and EWBC ($3,000M, beside a $35.6M debt-and-lease line). They are ADDED, not merged with short-term
+// borrowings, and only on the debt-and-lease-line paths with no DebtCurrent (rules 0, 3, 4): a bank's LongTermDebt /
+// DebtCurrent borrowings total can already hold its FHLB advances (CFG's long-term borrowings). Nor are they added
+// when the plain ShortTermBorrowings concept reports the period: SCHW's FY2022 10-K tags "Short-term borrowings"
+// 17,050, which its FY2023 10-K recasts as other short-term borrowings 4,650 + FHLB 12,400.
+const FHLB_ADVANCES = ["AdvancesFromFederalHomeLoanBanks"];
+const SHORT_TERM_BORROWINGS_TOTAL = ["ShortTermBorrowings"];
 // Convertible notes tagged apart from long-term debt. Read only when no long-term debt concept reports the
 // period (see deriveTotalDebt), since filers that do tag LongTermDebt* often tag these as a subset of it.
 // NET FY2025: ConvertibleDebtNoncurrent $1,974.1M + ConvertibleDebtCurrent $1,291.3M, and no other debt.
 const CONVERTIBLE_NONCURRENT = ["ConvertibleDebtNoncurrent", "ConvertibleLongTermNotesPayable"];
 const CONVERTIBLE_CURRENT = ["ConvertibleDebtCurrent", "ConvertibleNotesPayableCurrent"];
+// Audit 2026-10-06 (D-1) and review 2026-10-07: total-debt concepts no list held. Each is read only when no
+// higher-priority concept reports the period (see deriveTotalDebt), so the seven packs verified before this change
+// (BSX, NET, ADI, VST, CSCO, AEIS, CALX) are untouched — scripts/debt-sweep.ts proves it offline.
+//   - LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities already holds its current portion. CVX and
+//     SCHW tag it AND LongTermDebtAndCapitalLeaseObligations at the SAME value (one balance-sheet line tagged
+//     twice: CVX FY2025 39,781 = 39,781, FY2024 20,135 = 20,135; SCHW 22,199 = 22,199), beside a DebtCurrent that
+//     is a note subtotal before reclassification (CVX 10,918). Adding DebtCurrent there overstates by 24–34%; only
+//     short-term borrowings / commercial paper may be added. When the two lease lines differ (RTX FY2025: 34,288
+//     vs 37,700), the noncurrent line + all current debt is the right read, as today (37,904).
+//   - DebtLongtermAndShorttermCombinedAmount is the whole figure, long and short (GE FY2025 10-K $20,494M).
+//   - UnsecuredLongTermDebt is CME's only long-term line ($3,422M at FY2025).
+// DebtInstrumentCarryingAmount was considered and DROPPED (review F-5): it is a note-level, often subset figure
+// (CVX 30,922; SCHW 22,237) with no filer that needs it. UnsecuredDebt likewise waits for a fixture.
+// ShortTermBankLoansAndNotesPayable (DOW: 90) and AdvancesFromFederalHomeLoanBanks (SCHW: 1,850, a bank-wide
+// concept) are also unlisted. Add either only with a fixture.
+const LTD_LEASE_TOTAL = ["LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities"];
+const DEBT_COMBINED_TOTAL = ["DebtLongtermAndShorttermCombinedAmount"];
+const UNSECURED_LTD = ["UnsecuredLongTermDebt"];
 const TOTAL_EQUITY = ["StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest", "StockholdersEquity"];
 const CURRENT_ASSETS = ["AssetsCurrent"];
 const CURRENT_LIABILITIES = ["LiabilitiesCurrent"];
@@ -167,7 +197,11 @@ export const OCF = ["NetCashProvidedByUsedInOperatingActivities", "NetCashProvid
 // LLY tags neither of the spec's two concepts for its current capex line; it uses "other
 // property, plant and equipment" instead. Appended at lowest priority — per-period merging
 // (see mergeByPriority) means this is only reached for periods neither spec concept covers.
-export const CAPEX_RAW = ["PaymentsToAcquirePropertyPlantAndEquipment", "PaymentsToAcquireProductiveAssets", "PaymentsToAcquireOtherPropertyPlantAndEquipment"];
+// PaymentsToAcquireMachineryAndEquipment is lowest priority: DOW tags every capex period through Q1'26 both as it and as
+// PaymentsToAcquireProductiveAssets at the same value, and its Q2'26 10-Q only as it ($632M), which left the June quarter
+// and the TTM FCF null (2026-10-07). Selection is per period by priority, never summed, so where any concept above
+// reports the period (a subset beside total PP&E, or DOW's twin all-in line) it is not read.
+export const CAPEX_RAW = ["PaymentsToAcquirePropertyPlantAndEquipment", "PaymentsToAcquireProductiveAssets", "PaymentsToAcquireOtherPropertyPlantAndEquipment", "PaymentsToAcquireMachineryAndEquipment"];
 /** The all-in concept: PP&E plus intangibles/software. When it is the period's capex base, nothing is added. */
 export const CAPEX_ALL_IN = "PaymentsToAcquireProductiveAssets";
 /**
@@ -457,6 +491,11 @@ interface RawValues {
   shortTermBorrowings: number | null;
   convertibleNoncurrent: number | null;
   convertibleCurrent: number | null;
+  ltdLeaseTotal: number | null;
+  combinedTotal: number | null;
+  unsecuredLtd: number | null;
+  fhlbAdvances: number | null;
+  shortTermBorrowingsTotal: number | null;
   totalEquity: number | null;
   currentAssets: number | null;
   currentLiabilities: number | null;
@@ -469,33 +508,57 @@ interface RawValues {
 type DerivedFields = Omit<SecPeriod, "fiscal_period" | "fiscal_year" | "report_date">;
 
 /**
- * Total debt for one period. Noncurrent long-term debt + all current debt when the noncurrent line is
- * tagged; otherwise the long-term total (which already holds its current portion) + only the current
- * debt that is not long-term (DebtCurrent − LongTermDebtCurrent when both exist, else short-term
- * borrowings / commercial paper); otherwise the noncurrent debt-and-lease line + all current debt. A filer
- * with none of those falls back to its convertible notes: noncurrent convertibles + all current debt (else
- * current convertibles). Null when no debt concept reports the period.
+ * Total debt for one period, by the first concept group that reports it:
+ *   0. both lease lines (noncurrent and including-current) report the period with the SAME value → that value is
+ *      the all-in balance-sheet line (CVX, SCHW); add only short-term borrowings / commercial paper, never DebtCurrent;
+ *   1. LongTermDebtNoncurrent + all current debt;
+ *   1b. the two FACE lines, LongTermDebtAndCapitalLeaseObligations (noncurrent) + DebtCurrent, when both report:
+ *      their sum is the balance-sheet total (TMO FY2025: 35,852 + 3,533 = 39,385; GE: 18,808 + 1,686 = 20,494),
+ *      and it outranks the note's LongTermDebt, which includes the current maturities but not finance leases
+ *      (TMO 39,172 — 213 short of the balance sheet, or 42,705 if DebtCurrent were re-added);
+ *   2. LongTermDebt (already holds its current portion) + non-long-term current debt only;
+ *   3. LongTermDebtAndCapitalLeaseObligations (noncurrent) + all current debt (RTX, BSX);
+ *   4. …IncludingCurrentMaturities alone when it is the only lease line (holds its current portion) + non-long-term current debt only;
+ *   5. DebtLongtermAndShorttermCombinedAmount alone (it is the whole figure);
+ *   6. UnsecuredLongTermDebt + all current debt;
+ *   7. convertible notes: noncurrent convertibles + all current debt (else current convertibles);
+ *   8. current debt alone. A zero current-only figure is null when the filer tags a long-term concept in some
+ *      other period of the series (a gap in the tags, e.g. CME FY2023 before UnsecuredLongTermDebt is read); a
+ *      filer that never tags a long-term concept (DSP, PLTR, RDVT, LASR, AMSC) keeps its honest 0.
+ * FHLB advances (a bank's own face line) are added on rules 0, 3 and 4 only, where neither DebtCurrent nor the
+ * plain ShortTermBorrowings concept reports (either can already hold them).
+ * Null when no debt concept reports the period.
  */
 export function deriveTotalDebt(
   r: Pick<
     RawValues,
-    "ltdNoncurrent" | "ltdTotal" | "ltdLeaseNoncurrent" | "ltdCurrent" | "debtCurrent" | "shortTermBorrowings" | "convertibleNoncurrent" | "convertibleCurrent"
-  >,
+    | "ltdNoncurrent" | "ltdTotal" | "ltdLeaseNoncurrent" | "ltdCurrent" | "debtCurrent" | "shortTermBorrowings"
+    | "convertibleNoncurrent" | "convertibleCurrent" | "ltdLeaseTotal" | "combinedTotal" | "unsecuredLtd"
+  > & Partial<Pick<RawValues, "fhlbAdvances" | "shortTermBorrowingsTotal">>,
+  opts: { filerTagsLongTerm: boolean },
 ): number | null {
   const otherCurrent =
     r.debtCurrent != null && r.ltdCurrent != null ? r.debtCurrent - r.ltdCurrent : r.shortTermBorrowings;
   const allCurrent =
     r.debtCurrent ??
     (r.ltdCurrent == null && r.shortTermBorrowings == null ? null : (r.ltdCurrent ?? 0) + (r.shortTermBorrowings ?? 0));
+  const fhlb = r.debtCurrent == null && r.shortTermBorrowingsTotal == null ? (r.fhlbAdvances ?? 0) : 0;
+  if (r.ltdLeaseTotal != null && r.ltdLeaseNoncurrent != null && r.ltdLeaseTotal === r.ltdLeaseNoncurrent)
+    return r.ltdLeaseTotal + (r.shortTermBorrowings ?? 0) + fhlb;
   if (r.ltdNoncurrent != null) return r.ltdNoncurrent + (allCurrent ?? 0);
+  if (r.ltdLeaseNoncurrent != null && r.debtCurrent != null) return r.ltdLeaseNoncurrent + r.debtCurrent;
   if (r.ltdTotal != null) return r.ltdTotal + (otherCurrent ?? 0);
-  if (r.ltdLeaseNoncurrent != null) return r.ltdLeaseNoncurrent + (allCurrent ?? 0);
+  if (r.ltdLeaseNoncurrent != null) return r.ltdLeaseNoncurrent + (allCurrent ?? 0) + fhlb;
+  if (r.ltdLeaseTotal != null) return r.ltdLeaseTotal + (otherCurrent ?? 0) + fhlb;
+  if (r.combinedTotal != null) return r.combinedTotal;
+  if (r.unsecuredLtd != null) return r.unsecuredLtd + (allCurrent ?? 0);
   const current = allCurrent ?? r.convertibleCurrent;
   if (r.convertibleNoncurrent != null) return r.convertibleNoncurrent + (current ?? 0);
-  return current;
+  if (current == null) return null;
+  return current === 0 && opts.filerTagsLongTerm ? null : current;
 }
 
-function deriveFields(r: RawValues): DerivedFields {
+function deriveFields(r: RawValues, opts: { filerTagsLongTerm: boolean }): DerivedFields {
   const grossProfit = r.grossProfitDirect ?? (r.revenue != null && r.cogs != null ? r.revenue - r.cogs : null);
   const operatingIncome = r.operatingIncomeDirect ?? (r.pretax != null && r.nonoperating != null ? r.pretax - r.nonoperating : null);
   const ebitda = operatingIncome != null && r.da != null ? operatingIncome + r.da : null;
@@ -506,7 +569,7 @@ function deriveFields(r: RawValues): DerivedFields {
   // never null merely because the STI leg wasn't separately disclosed for that period.
   const cashAndShortTermInvestments =
     r.cashAndStDirect ?? (r.cash != null ? r.cash + (r.shortTermInvestments ?? 0) : null);
-  const totalDebt = deriveTotalDebt(r);
+  const totalDebt = deriveTotalDebt(r, opts);
   const netDebt = totalDebt != null && r.cash != null ? totalDebt - r.cash : null;
   const capex = r.capexRaw != null ? -r.capexRaw : null;
   const commonStockRepurchased = r.buybacksRaw != null ? -r.buybacksRaw : null;
@@ -620,6 +683,15 @@ export function parseCompanyFacts(facts: unknown): { annual: SecPeriod[]; quarte
   const shortTermBorrowings = instantSeries(facts, SHORT_TERM_BORROWINGS);
   const convertibleNoncurrent = instantSeries(facts, CONVERTIBLE_NONCURRENT);
   const convertibleCurrent = instantSeries(facts, CONVERTIBLE_CURRENT);
+  const ltdLeaseTotal = instantSeries(facts, LTD_LEASE_TOTAL);
+  const combinedTotal = instantSeries(facts, DEBT_COMBINED_TOTAL);
+  const unsecuredLtd = instantSeries(facts, UNSECURED_LTD);
+  const fhlbAdvances = instantSeries(facts, FHLB_ADVANCES);
+  const shortTermBorrowingsTotal = instantSeries(facts, SHORT_TERM_BORROWINGS_TOTAL);
+  // Does the filer tag ANY long-term debt concept anywhere in its history? Decides whether a zero current-only
+  // period is a gap (null) or an honest zero (see deriveTotalDebt rule 8). Modelled on combineDa's tagsAmortization.
+  const filerTagsLongTerm = [ltdNoncurrent, ltdTotal, ltdLeaseNoncurrent, ltdLeaseTotal, combinedTotal, unsecuredLtd, convertibleNoncurrent]
+    .some((s) => s.annual.size > 0 || s.quarter.size > 0);
   const totalEquity = instantSeries(facts, TOTAL_EQUITY);
   const currentAssets = instantSeries(facts, CURRENT_ASSETS);
   const currentLiabilities = instantSeries(facts, CURRENT_LIABILITIES);
@@ -653,6 +725,11 @@ export function parseCompanyFacts(facts: unknown): { annual: SecPeriod[]; quarte
     shortTermBorrowings: at(shortTermBorrowings[side] as Map<K, UnitEntry>, key),
     convertibleNoncurrent: at(convertibleNoncurrent[side] as Map<K, UnitEntry>, key),
     convertibleCurrent: at(convertibleCurrent[side] as Map<K, UnitEntry>, key),
+    ltdLeaseTotal: at(ltdLeaseTotal[side] as Map<K, UnitEntry>, key),
+    combinedTotal: at(combinedTotal[side] as Map<K, UnitEntry>, key),
+    unsecuredLtd: at(unsecuredLtd[side] as Map<K, UnitEntry>, key),
+    fhlbAdvances: at(fhlbAdvances[side] as Map<K, UnitEntry>, key),
+    shortTermBorrowingsTotal: at(shortTermBorrowingsTotal[side] as Map<K, UnitEntry>, key),
     totalEquity: at(totalEquity[side] as Map<K, UnitEntry>, key),
     currentAssets: at(currentAssets[side] as Map<K, UnitEntry>, key),
     currentLiabilities: at(currentLiabilities[side] as Map<K, UnitEntry>, key),
@@ -668,7 +745,7 @@ export function parseCompanyFacts(facts: unknown): { annual: SecPeriod[]; quarte
     fiscal_period: "FY",
     fiscal_year: year,
     report_date: revenue.annual.get(year)!.end,
-    ...deriveFields(rawAt(year, "annual")),
+    ...deriveFields(rawAt(year, "annual"), { filerTagsLongTerm }),
   }));
   // Real quarterly rows (Q1-Q3 only — Q4 is never separately filed), anchored
   // on the quarters the revenue concept reports.
@@ -679,7 +756,7 @@ export function parseCompanyFacts(facts: unknown): { annual: SecPeriod[]; quarte
       fiscal_period: `Q${quarterOf(end)}`,
       fiscal_year: yearOf(end),
       report_date: end,
-      ...deriveFields(rawAt(key, "quarter")),
+      ...deriveFields(rawAt(key, "quarter"), { filerTagsLongTerm }),
     };
   });
 

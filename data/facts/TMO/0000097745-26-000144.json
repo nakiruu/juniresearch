@@ -84,11 +84,11 @@
         "key": "ebitda",
         "label": "EBITDA",
         "values": [
-          null,
-          null,
-          null,
-          null,
-          null
+          12620000000,
+          11774000000,
+          10265000000,
+          10445000000,
+          10526000000
         ]
       },
       {
@@ -130,22 +130,22 @@
         "key": "totalDebt",
         "label": "Total Debt",
         "values": [
-          37207000000,
-          39857000000,
-          38336000000,
-          33286000000,
-          42705000000
+          34870000000,
+          34488000000,
+          34917000000,
+          31275000000,
+          39385000000
         ]
       },
       {
         "key": "netDebt",
         "label": "Net Debt",
         "values": [
-          32730000000,
-          31333000000,
-          30259000000,
-          29277000000,
-          32853000000
+          30393000000,
+          25964000000,
+          26840000000,
+          27266000000,
+          29533000000
         ]
       },
       {
@@ -239,11 +239,11 @@
   "ttm": {
     "pe": 35.44486282947822,
     "ps": 5.257982585635359,
-    "evToEbitda": 25.725794271489132,
+    "evToEbitda": 25.445916937674752,
     "grossMargin": null,
     "operatingMargin": 0.17580283149171272,
     "netMargin": 0.15035825276243095,
-    "netDebtToEbitda": null,
+    "netDebtToEbitda": 3.471182465951114,
     "interestCoverage": 5.552828902522154,
     "currentRatio": 1.5505342093038688,
     "fcfYield": 0.030036873226826587
@@ -594,12 +594,6 @@
       "capturedAt": "2026-09-23T18:55:22.898Z"
     },
     {
-      "field": "ttm.evToEbitda",
-      "source": "edgar",
-      "endpoint": "derived: (market cap + net debt) / TTM EBITDA (operating income + D&A), SEC companyfacts",
-      "capturedAt": "2026-10-02T00:13:41.878Z"
-    },
-    {
       "field": "beta",
       "source": "shibui",
       "capturedAt": "2026-10-03T03:46:39.826Z",
@@ -608,7 +602,7 @@
     {
       "field": "shibuiCheck",
       "source": "shibui",
-      "capturedAt": "2026-10-03T04:32:59.534Z",
+      "capturedAt": "2026-10-07T15:19:14.864Z",
       "endpoint": "stock_data_query: close + valuation.market_cap on/before 2026-09-23; fundamentals_quarterly (4 quarters to 2026-06-27): shares_outstanding, revenue, Σfree_cash_flow, Σstock_based_compensation"
     }
   ],

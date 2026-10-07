@@ -35,6 +35,8 @@ export const PRESS_RELEASE_MISSING_FILE = "edgar-press-release.missing";
 export const ANNUAL_PRIMARY_FILE = "edgar-10k-primary.html";
 /** The latest definitive proxy statement (DEF 14A) filed on or before the filing — the governance source (see OPTIONAL_FILES). */
 export const PROXY_FILE = "edgar-proxy.html";
+/** The SEC companyfacts response facts:free built from, gzipped, so a rebuild is reproducible offline (D-9; see lib/facts/free/companyfacts-cache.ts). */
+export const COMPANYFACTS_FILE = "sec-companyfacts.json.gz";
 export const CODE_FETCHED_FILES = ["edgar-filing.json", "edgar-primary.html", "yahoo-history.json", PRESS_RELEASE_FILE] as const;
 /** Captured only when relevant (a 10-Q's prior 10-K); read when present but never required by `--check`. */
 export const OPTIONAL_FILES = [ANNUAL_PRIMARY_FILE, PROXY_FILE] as const;
