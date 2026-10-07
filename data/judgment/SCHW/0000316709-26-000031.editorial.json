@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "abe1ec049ba9a3108b3a9fa15a6f313e01a61cb1667dd24be5790ac092b3864b",
-  "reviewedAt": "2026-09-23T17:50:00Z",
-  "reviewer": "Claude Opus 4.8 (desk orchestrator; inline review — subagent runner stalled)",
+  "judgmentSha256": "adbde29cfe7c4592380943e8d1573939533880525b9460564c626f45cbaf20d7",
+  "reviewedAt": "2026-10-07T17:15:52Z",
+  "reviewer": "Claude Opus 5.5",
   "round": 2,
-  "verdict": "approved",
+  "verdict": "approved-with-minors",
   "findings": [
     {
       "id": "F-1",
@@ -13,7 +13,7 @@
       "issue": "Cross-section repetition of headline metrics and the rate narrative. Core net new assets $119.8B/+49% was stated in full in analystCommentary, thesis.body and growth.points[0]. Client assets $13.08T recurred in analystCommentary, companyOverview, moatFactors, growth.points[1] and finalRecommendation. ROTCE 44% recurred in analystCommentary, incomeCommentary, thesis.body, leadership and finalRecommendation. The 2022-2023 cash-sorting mechanism was argued in full in analystCommentary, risks.idiosyncratic[0], durability, scenarioCommentary and finalRecommendation.",
       "fix": "Introduce each headline metric once in its home section and refer back in words; keep the cash-sorting mechanism in one home (risks.idiosyncratic[0]).",
       "status": "addressed",
-      "note": "Addressed. thesis.body rewritten to point to Growth for core NNA and to the financials for the revenue-line growth, and no longer restates ROTCE 44%. businessMoat.durability now points to Risks for the 2022-2023 cash-sorting episode and drops the 9.0%/9.9% restatement. finalRecommendation.body[0] drops 'ROTCE of 44% annualized' for 'high returns on tangible equity'. Each headline metric now has one home; the residual figure-repeat-unit lint warnings are non-blocking cross-subsection notes, not this finding."
+      "note": "Still addressed. Each headline metric keeps one home; the cash-sorting mechanism lives in risks.idiosyncratic[0] with pointers elsewhere."
     },
     {
       "id": "F-2",
@@ -23,7 +23,7 @@
       "issue": "A {+ +} bullish span wrapped a valuation multiple, not a signed change or explicit positive/negative (rubric item 9).",
       "fix": "Remove the span.",
       "status": "addressed",
-      "note": "Addressed. The span is gone; thesis.body now reads 'about 12.8x FY27E earnings' unmarked."
+      "note": "Still addressed. The judgment carries no {+ +} or {- -} spans."
     },
     {
       "id": "F-3",
@@ -33,7 +33,117 @@
       "issue": "ISO-form dates in prose ('2026-06-30' in analystCommentary; 'DEF 14A, filed 2026-04-06' in management.governance); rubric item 9 wants prose-form dates.",
       "fix": "Write 'June 30, 2026' and 'filed April 6, 2026'.",
       "status": "addressed",
-      "note": "Addressed. analystCommentary now reads 'the period ended June 30, 2026' and governance 'DEF 14A, filed April 6, 2026'. No ISO dates remain in prose."
+      "note": "Still addressed. No ISO dates remain in the prose."
+    },
+    {
+      "id": "F-4",
+      "severity": "Important",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "We hold the multiple, and that choice decides the label.",
+      "issue": "The Base anchor is laid out from both sides but decided without a reason. Rolling today's current-year multiple onto FY27E is a sound convention, and the paragraph explains it well. The case for holding 15.4x, though, is mostly current-quarter quality: ROTCE of 44% and the 51.9% pre-tax margin are already in today's 15.4x. Only the $125.45 consensus target points forward. The case against includes the one point that bears directly on the roll-forward. Consensus EPS growth from FY26E to FY27E is slower than from FY25 to FY26E, so a year from now the current-year multiple will be pricing slower growth than today's 15.4x prices. The paragraph lists that point and then holds the multiple anyway without rebutting it. A label-deciding anchor that is listed from both sides but not weighed is still unargued (house lesson: argue the deciding split from both sides; AMSC F-24).",
+      "fix": "Add the deciding argument in words: say why the multiple holds even though FY27E growth is slower, using page evidence such as asset gathering, the 5.8% annualized organic growth rate or the consensus target, and say why that outweighs the slower growth and the Q2 activity base. If it cannot be argued, set the Base at a multiple the page supports and publish whatever label derives. Say the call is close once, here or in scenarioCommentary, not in both places (see F-10).",
+      "status": "addressed",
+      "note": "Addressed. multiplesCommentary now names the slower FY26E-to-FY27E growth as the case for a lower multiple, gives three reasons for holding 15.4x (organic growth and share count, the multiple already at the low of the recent range, the consensus target), and says the slower growth is why it does not raise the multiple. One reason overstates what its figures show (new F-13, Minor)."
+    },
+    {
+      "id": "F-5",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[2].driver",
+      "quote": "The multiple holds at the Base level, so the downside comes from earnings; we make no further cut for borrowings, which a P/E-based price already nets out.",
+      "issue": "The Bear's earnings leg fits its own story: $4.65 sits about as far below FY26E as FY23's $2.54 sat below FY22's $3.50. The multiple leg is asserted, not argued. The story combines falling rates or cash sorting with an equity drawdown that cuts fees, margin lending and trading, yet it keeps 15.4x, a multiple the market pays today for the EPS growth from FY25 to FY26E. A market-wide drawdown usually compresses multiples, and the 10-K says unrealized losses can reduce market or client confidence. The other side (multiples on depressed earnings can hold or expand when the franchise keeps growing) is not made either. This choice decides the label as much as the Base multiple does. On the page's math, a Bear multiple of about 15.1x or lower derives HOLD. At the 12.8x the page shows on FY27E, the Bear is about $59.5 and R about 0.31x. So 'Holding the Base multiple is the judgment that decides the call' (analystCommentary) is incomplete.",
+      "fix": "Argue the Bear multiple from both sides with page figures: why it would or would not hold through a drawdown and cash-sorting year. Anchor it to a stated basis a reader can check, for example today's 12.8x on FY27E or the 52-week low as a reference point, or keep 15.4x with a reason. State in analystCommentary and scenarioCommentary that the Bear multiple, as well as the Base multiple, decides the label. Publish whatever label derives.",
+      "status": "addressed",
+      "note": "Addressed. scenarioCommentary argues the Bear multiple both ways (drawdown and the 10-K confidence channel against looking through one depressed year on an intact asset base), names it as a deciding input, and notes correctly that a lower Bear multiple deepens HOLD without changing the label. The Bear driver points to the argument."
+    },
+    {
+      "id": "F-6",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "but the second quarter shows none of its conditions yet, with the federal funds target unchanged through June, net interest margin rising and sweep cash up $24.2 billion from the prior quarter-end, so we set the weight below that one-in-four rate",
+      "issue": "The Bear weight is argued only on evidence that points one way, and 'none of its conditions' is not supported. (a) risks.idiosyncratic[0] reads client cash falling to 9.0% of client assets from 9.9% as 'the risk remains live', which contradicts 'none of its conditions'. (b) The earnings release attributes the $24.2 billion sweep-cash rise partly to 'typical 2Q tax seasonality', and the report omits that. (c) Other short-term borrowings rose 64% year over year to $13.9 billion. The report itself ties the FY23 debt peak to the 10-K's higher-cost funding, yet it does not weigh this. (d) An unchanged federal funds target through June says nothing about the year the Bear covers. Meanwhile the same paragraph argues against the Bull ('needs a re-rating the market has not granted this year') and still gives it the same 20% as the Bear. Moving five points from Bull to Bear would put the Bear at the author's own one-in-four rate, and that split derives HOLD.",
+      "fix": "Weigh the Bear on both sides. Name the countersigns: the falling client-cash share, the seasonal part of the sweep-cash rise, and the rise in short-term borrowings, which may instead reflect loan and margin growth if a source says so. Then state why the weight sits where it does. If the evidence does not support a weight below the one-in-four base rate, or a Bull weight equal to the Bear's, change the split and publish the derived label. Label the split a judgment and say it is close.",
+      "status": "addressed",
+      "note": "Addressed. The 25% Bear weight now rests on the one-in-four base rate, with evidence weighed both ways: NIM and fed funds for less; the falling client-cash share, the seasonal sweep-cash rise and the 64% rise in short-term borrowings (hedged with may) for more. The Bull/Bear split is argued, called a judgment, and the BUY-deriving shift is stated. It reads as argued, not tuned: R is 0.44x, not hugging a line."
+    },
+    {
+      "id": "F-7",
+      "severity": "Important",
+      "field": "sections.finalRecommendation.body[2]",
+      "quote": "On the page's own math, a close only slightly above $100.21 pulls reward/risk under 0.50x and derives HOLD",
+      "issue": "The BUY exists only on the report-day close, and the report does not say so. In the page's price history every close from August 11 to September 21 sits between about $104.6 and $113.7. The stock then falls to about $100.2 on September 23, about 6% below the September 21 close (there is no September 22 row). On the page's scenarios HOLD derives above about $100.76, so every earlier close on the page would derive HOLD. multiplesCommentary also describes the gap to the 52-week high as compression 'over the year', although the page shows the stock near $113.65 on August 24. This is the VST/EVER lesson. When the label depends on the day's close, the commentary must say so and acknowledge a sharp recent move even when no source explains it. This matters more because Schwab is a held position.",
+      "fix": "Say in words, once (finalRecommendation or scenarioCommentary), that the shares fell sharply in the sessions before the report date with no source explaining the move, that each earlier close in the month on the page would derive HOLD on the same scenarios, and that the BUY rests on this close. Reword the multiplesCommentary sentence so it does not imply the de-rating was gradual. Before building, confirm the September 23 close against the official close.",
+      "status": "addressed",
+      "note": "Addressed. multiplesCommentary states the late-August level near the high and the sharp fall into the report date with no source explaining it; scenarioCommentary says every earlier close would also derive HOLD. I checked this: HOLD holds from about $99.1 to $118.8, and every close on the page is in that band."
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "meta.subtitle",
+      "quote": "FY25 borrowings below cash.",
+      "issue": "The corrected figures are right. $31.0B = $22.2B long-term debt + $6.9B other short-term borrowings + $1.9B FHLB at year-end, and net debt of -$15.1B matches the Facts. balanceCommentary correctly frames borrowings as funding and the leverage ratio as the test. The subtitle and finalRecommendation.body[0] ('the corrected FY25 balance sheet shows borrowings below cash and short-term investments') then cite the net-cash comparison as a strength, and balanceCommentary calls it 'the net-cash reading'. For a deposit-funded bank and broker, the $46.0B of cash sits against $249.7B of bank deposits and $124.0B of payables to brokerage clients, not only against borrowings. Net debt is no more a solvency measure here than net debt/EBITDA, which the report blanks for that reason. The reading is also stale. At June 30, 2026, cash and cash equivalents were $40.6B and other short-term borrowings $13.9B. The report gives the June borrowings without the June cash, so the reader cannot see that the year-end cushion narrowed. 'Corrected' also appears three times (analystCommentary, balanceCommentary, finalRecommendation.body[0]).",
+      "fix": "Drop 'borrowings below cash' from the subtitle and from finalRecommendation.body[0]. In balanceCommentary, give the FY25 series once, say that net debt does not measure solvency for this balance sheet, and put the June 30 cash figure beside the June borrowings so the change since year-end is visible in words. Keep the Tier 1 leverage ratio as the capital test. Mention the series correction once, in balanceCommentary.",
+      "status": "addressed",
+      "note": "Addressed. The subtitle and finalRecommendation drop the net-cash claim. balanceCommentary says net debt does not measure solvency because cash sits against far larger deposits and client payables, and adds June cash of $40.6B beside the June borrowings. Corrected now appears once. Figures unchanged and correct."
+    },
+    {
+      "id": "F-9",
+      "severity": "Important",
+      "field": "sections.finalRecommendation.body[2]",
+      "quote": "We would move to HOLD on a quarter in which core net new assets or net interest margin fall from second-quarter levels, since either would undercut the consensus EPS the Base relies on.",
+      "issue": "The latest quarter would itself have met the core-NNA trigger. First-half core net new assets were $259.8 billion and Q2 was $119.8 billion, so Q1 was larger than Q2: core NNA fell sequentially in the quarter the report treats as strong. Q2 also included a record June. A trigger that ordinary quarter-to-quarter variation trips does not test the thesis, and the trigger does not say whether 'fall' means sequential or year over year (house lesson: never state a trigger the current data already meets; THG).",
+      "fix": "Restate the HOLD trigger as something the Base actually needs and the latest data has not already met. Examples: core net new assets falling year over year, net interest margin giving back the quarter's expansion, or client cash continuing to fall as a share of client assets. Say whether each comparison is sequential or year over year.",
+      "status": "addressed",
+      "note": "Addressed. The triggers now name a year-over-year client-cash test and a sequential NIM test, neither met by current data, plus a core-NNA year-over-year downgrade test (currently +49%). The price triggers check out: about 1% lower derives BUY, and SELL needs about $118.8."
+    },
+    {
+      "id": "F-10",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "The call is close: reward/risk sits just above the 0.50x BUY line, so the Base multiple decides it.",
+      "issue": "This rewrite repeats several claims across sections. (a) The 'narrow BUY decided by the Base multiple' claim appears in meta.subtitle, analystCommentary ('Holding the Base multiple is the judgment that decides the call'), thesis.body ('the call rests on whether today's forward multiple holds'), multiplesCommentary ('that choice decides the label'), scenarioCommentary (quoted), and finalRecommendation.body[1] ('It holds because we keep today's 15.4x...'). That is twice within Valuation alone. (b) FY25 repurchases of $7.3 billion and dividends of $2.3 billion are given in full in both cashflowCommentary and capitalAllocation. (c) The 51.9% pre-tax margin is used in thesis.body, incomeCommentary and multiplesCommentary. (d) EPS falling from $3.50 to $2.54 in FY23 is given in incomeCommentary and again in the Bear driver.",
+      "fix": "Argue the close call once, in scenarioCommentary. Keep one short pointer in the summary fields and in finalRecommendation. Keep the FY25 capital-return figures in capitalAllocation and refer to them in words in cashflowCommentary. Introduce the 51.9% margin once, in incomeCommentary. Let the Bear driver say 'an FY23-style fall' without restating the EPS figures.",
+      "status": "addressed",
+      "note": "Addressed. The close call is argued once, in scenarioCommentary; other fields point to it. cashflowCommentary points to Management for FY25 capital return, 51.9% sits only in incomeCommentary, and the Bear driver says an FY23-style fall without restating the EPS."
+    },
+    {
+      "id": "F-11",
+      "severity": "Minor",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "The case for holding the current-year multiple: return on tangible common equity of 44%",
+      "issue": "Voice and judgment. The colon-labelled 'The case for...:' / 'The case against:' construction is the label tic the desk flags ('The counter-case:', 'Our view:'). The paragraph also ends on an orphan fact with no view: 'The dividend yield is 1.28%.'",
+      "fix": "Write the two sides as ordinary sentences. Either tie the dividend yield to a view, for example on capital return, or drop it from this paragraph.",
+      "status": "addressed",
+      "note": "Addressed. The case for/against labels are now ordinary sentences and the orphan dividend-yield sentence is gone."
+    },
+    {
+      "id": "F-12",
+      "severity": "Minor",
+      "field": "sections.management.leadership",
+      "quote": "Walter W. Bettinger II and Charles R. Schwab are Co-Chairmen of the Board, and Jonathan M. Craig is Managing Director and Head of Investor Services.",
+      "issue": "These titles come from the proxy's NEO table and are dated December 31, 2025. Unlike the CEO and CFO titles in the previous sentence, the July 2026 release does not confirm them, yet they are stated in the present tense with no date.",
+      "fix": "Carry the date: 'per the proxy, as of December 31, 2025, ...'.",
+      "status": "addressed",
+      "note": "Addressed. leadership now reads per the same proxy, as of December 31, 2025, with past-tense titles; governance dates the Co-Chairmen at the proxy date."
+    },
+    {
+      "id": "F-13",
+      "severity": "Minor",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "The growth behind FY27E does not need a repeat of the quarter's activity: June's annualized organic growth rate of 5.8% and a diluted share count down 5% year-over-year support EPS growth on their own.",
+      "issue": "This overstates what the two figures show. Consensus FY27E EPS of $7.83 against FY26E's $6.49 is a step of about a fifth. A 5.8% organic asset growth rate and a 5% lower share count together cover only about half of that, so they support some EPS growth, not the FY27E figure on their own. Two related phrases also assume consensus FY26E was unchanged over the past month, which the pack does not show: 'the shares traded at a higher current-year multiple only weeks ago' in scenarioCommentary, and 'The current-year multiple sits at the low end of where the stock traded in the weeks before the report date' here. The label is not affected.",
+      "fix": "Say the two figures support part of the FY27E growth without a repeat of the quarter's activity. Describe the recent move as a higher price on the same estimate basis, not as a higher multiple, or note that the pack carries no estimate history.",
+      "status": "declined",
+      "note": "Deferred to the next synthesis: the final re-check approved the report, and editing the judgment now would leave it unreviewed. Next pass says organic growth and the lower share count cover only part of the FY26E-to-FY27E step, and drops the phrases that assume FY26E consensus did not move over the month."
+    },
+    {
+      "id": "F-14",
+      "severity": "Minor",
+      "field": "sections.finalRecommendation.body[2]",
+      "quote": "SELL derives only on a close well above the 52-week high, where expected upside falls below -5.0%.",
+      "issue": "On the page's math, SELL derives at a close of about $118.8. That is only a few percent above the $114.53 high, so 'well above' overstates the distance.",
+      "fix": "Write 'above the 52-week high' or 'a few percent above the 52-week high'.",
+      "status": "declined",
+      "note": "Deferred to the next synthesis: the final re-check approved the report, and editing the judgment now would leave it unreviewed. Next pass says SELL derives a few percent above the 52-week high, not well above it."
     }
   ]
 }
