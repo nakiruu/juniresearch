@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "e8ec1e8ed3088106afa0a610a40b7be7dd38e286cf3aca0b40509d36869e3eea",
-  "reviewedAt": "2026-10-07T16:10:58Z",
+  "judgmentSha256": "db3c6574acb0f75ece38263947ddd451eb4f00e999fb8c7579bcb17595836cf3",
+  "reviewedAt": "2026-10-07T16:18:48Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved",
   "findings": [
     {
       "id": "F-1",
@@ -13,7 +13,7 @@
       "issue": "The 14.5% revenue growth and 11.4% operating margin are the vendor's LATEST-QUARTER (Q2'26) figures in the Facts 'Trailing twelve months' block ('Latest quarter Q2'26 ... operating margin 11.4%, revenue +14.5% YoY'), not trailing-twelve-month figures. The pack's actual TTM operating margin is 11.2%, so calling 11.4% the 'trailing-twelve-month detail' is a wrong-period attribution that also conflicts with the real TTM value. Separately, 14% (press-release rounding) and 14.5% (vendor) describe the SAME quantity, Q2'26 revenue YoY, so framing them as 'year over year' vs 'trailing-twelve-month view' mislabels a source/rounding difference as two periods.",
       "fix": "Relabel 14.5% and 11.4% as the vendor's latest-quarter Q2'26 figures, not TTM. If reconciling the press release's rounded 14% with the vendor's 14.5% (and 11% vs 11.4%), state it once as a source/rounding difference for the same Q2'26 quantity, and reserve 'trailing-twelve-month' for the pack's actual TTM figures (operating margin 11.2%).",
       "status": "addressed",
-      "note": "Still addressed in this rewrite. incomeCommentary states the 14% vs 14.5% source difference once and says which it uses; 'The Q2'26 operating margin was 11.4%, against 11.2% on the trailing twelve months' labels both periods correctly against the Facts TTM block."
+      "note": "Still addressed. The 14% vs 14.5% source difference is stated once, and the Q2 11.4% and TTM 11.2% margins carry the right periods."
     },
     {
       "id": "F-2",
@@ -22,8 +22,8 @@
       "quote": "Defense demand is supported by a proposed $1.5 trillion FY2027 defense budget and the July 2025 Act's $24.4B Golden Dome and $25.4B munitions and supply-chain provisions.",
       "issue": "growth.points repeat the executive-summary catalysts almost verbatim rather than arguing behind them. growth.points[3] restates catalysts[1] ('the proposed $1.5 trillion FY2027 defense budget and the July 2025 Act's $24.4B Golden Dome and $25.4B munitions provisions point to demand for RTX missiles and munitions'), and growth.points[0] ('Backlog of $289B, up 22% ... splits into $170B commercial and $119B defense and underpins the raised full-year outlook') restates catalysts[0] ('the commercial and defense backlog, split $170B and $119B, underpins the raised full-year sales and EPS outlook'). Same figures, same claim, no added mechanism. Rubric item 7: catalysts should point; the section behind them should argue.",
       "fix": "Let the exec-summary catalysts point, and have the growth section add mechanism / what-to-watch instead of re-listing the figures — e.g., how the $289B backlog converts to the 8-9% organic guide, or which RTX awards map to Golden Dome and munitions funding — rather than repeating $289B/$170B/$119B and $1.5T/$24.4B/$25.4B.",
-      "status": "open",
-      "note": "Reopened: the rewrite brought the paraphrase back. catalysts[0] 'Backlog conversion: ... supports the raised 2026 outlook as programs ship' and growth.points[0] 'Backlog conversion is the growth engine: ... ships over multi-year ... cycles and underpins the raised organic-growth outlook' make one claim under one label. catalysts[2] ('any material impact will depend on actual awards, award timelines...') and growth.points[4] ('awards, timing and appropriations decide how much of it becomes revenue') repeat the same hedge. Keep each claim in one place."
+      "status": "addressed",
+      "note": "Addressed. catalysts[0] now points to the backlog and defers to the growth section. growth.points[0] argues the mechanism (backlog +22% against sales +14%, so coverage is building) with a watch item. The awards hedge now sits only in catalysts[2]; growth.points[3] maps the funding to Raytheon instead of repeating it."
     },
     {
       "id": "F-3",
@@ -33,7 +33,7 @@
       "issue": "The phrase 'margin expansion across all three segments' (or 'across all three') recurs six times: thesis.body, catalysts[2] ('operating-margin gains across all three segments'), growth.points[4], businessMoat.segments[0].body ('with margin expansion across all three'), management.leadership, and finalRecommendation.body[0]. A tic repeated past the point of notice (rubric item 9).",
       "fix": "Keep the phrase once (it is Calio's framing) and refer back in words elsewhere — e.g., cite the specific segment ROS moves (Collins +50bps, P&W +190bps, Raytheon +110bps) or 'the same broad-based margin gain' — so it is not repeated verbatim across six fields.",
       "status": "addressed",
-      "note": "The verbatim phrase now appears once ('margin expansion in all three segments', in management.leadership as Calio's description). The underlying claim still recurs in paraphrase (thesis, catalysts[3], scenarioCommentary 'rose in every segment'); that is folded into F-11 rather than kept open here."
+      "note": "Still addressed. The margin-rise claim now sits once, in the segment detail ('return on sales rose in all three year over year'), and elsewhere is only pointed to."
     },
     {
       "id": "F-4",
@@ -43,7 +43,7 @@
       "issue": "The proxy date is written in ISO form (2026-03-09) in prose. Rubric item 9 requires dates in prose form, not ISO.",
       "fix": "Write 'dated March 9, 2026.'",
       "status": "addressed",
-      "note": "Still addressed: 'dated March 9, 2026'. No ISO dates in prose anywhere in the judgment."
+      "note": "Still addressed; no ISO dates in prose."
     },
     {
       "id": "F-5",
@@ -53,7 +53,7 @@
       "issue": "The top of the target range ($255) is above the $234.41 consensus target (and above the $240 median), so the range does not sit 'below the consensus target' — only the Base case ($218) and the range midpoint ($230) do. The finalRecommendation states it correctly ('Our Base case of $218 sits below the $234.41 consensus target').",
       "fix": "Say the Base case (or the range midpoint) sits below consensus while the full range brackets it, or drop the 'below the consensus target' clause, keeping it consistent with the finalRecommendation phrasing.",
       "status": "addressed",
-      "note": "Addressed under the new calls: scenarioCommentary now reads 'Our $190-$230 target range brackets the $210 Base case', with no consensus comparison on the range; $190 < $210 < $230 holds."
+      "note": "Still addressed: $190 < $210 Base < $230."
     },
     {
       "id": "F-6",
@@ -62,7 +62,8 @@
       "quote": "FY25 net debt $30.5B at 2.0x EBITDA",
       "issue": "The 2.0x on the surface is the Trailing-twelve-months ratio ('Net debt/EBITDA 2.0x'), not an FY25 ratio, but four fields pin it to the FY25 net debt figure. The subtitle presents it as FY25 leverage, and analystCommentary writes 'FY25 net debt of $30.5B, 2.0x trailing EBITDA'. balanceCommentary then puts it next to FY25 EBITDA ('On the trailing twelve months, net debt is 2.0x EBITDA, and FY25 EBITDA was $13.7B'). A reader who divides the page's own $30.5B by $13.7B gets about 2.2x and sees a contradiction the page does not explain. The pipeline builds the TTM ratio, and EV, from the latest-quarter balance sheet, not FY25. multiplesCommentary also asserts 'EV/EBITDA includes the FY25 net debt'; the surface does not say which net debt EV uses.",
       "fix": "Call 2.0x the trailing-twelve-month net debt to EBITDA wherever it appears, and do not attach it to the FY25 $30.5B figure (subtitle: e.g. 'FY25 net debt $30.5B; 2.0x trailing EBITDA'). In balanceCommentary, either drop the FY25 EBITDA figure from the leverage sentence or say in words that the ratio on FY25 EBITDA is somewhat higher than the trailing figure. In multiplesCommentary write 'EV/EBITDA includes net debt', without 'FY25'.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. The subtitle and analystCommentary now label 2.0x as trailing and keep it separate from FY25 net debt. balanceCommentary says the trailing ratio is not an FY25 figure and, in words, that FY25 net debt on FY25 EBITDA is somewhat above two times. multiplesCommentary says only that EV/EBITDA includes net debt."
     },
     {
       "id": "F-7",
@@ -71,7 +72,8 @@
       "quote": "We weight the Base case at 55%, the Bull at 25% and the Bear at 20%. The weighted values are $60.00, $115.50 and $30.00",
       "issue": "The weights are listed Base, Bull, Bear, but the weighted values are listed Bull, Base, Bear. Read in order, the sentence gives the Base $60.00 and the Bull $115.50. In fact the Base is $115.50 (0.55 × $210) and the Bull is $60.00 (0.25 × $240). Each weighted value is attached to the wrong scenario (rubric item 1).",
       "fix": "List the weights and values in the same order, or name each one: 'Bull 25% ($60.00), Base 55% ($115.50), Bear 20% ($30.00)'.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. Each weighted value is now named with its scenario: Bull 25% ($60.00), Base 55% ($115.50), Bear 20% ($31.00). $206.50, +6.9%, -19.7% and 0.35x all match the page."
     },
     {
       "id": "F-8",
@@ -80,7 +82,8 @@
       "quote": "The Powder Metal Matter, tariffs and fixed-price cost pressure give the downside more room than the upside.",
       "issue": "The page's calls show the opposite. The Bull at $240 sits +24.3% above $193.12, further away than the Bear at $150 (-22.3%). The Bull also carries more weight (25%) than the Bear (20%). The expected upside of +6.4% is positive, which says the weighted distribution leans up, not down. The thesis states an asymmetry that the scenarios do not contain (rubric item 6).",
       "fix": "Restate the thesis so it matches the calls. For example: the named risks make a real downside of similar size to the upside, while the Base adds little beyond earnings growth. Alternatively, rework the scenarios if the author really believes the downside is larger.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. The thesis now says the Bull and Bear sit at broadly similar distances, with the Bull somewhat further and more likely. That matches +24.3% at 25% against -19.7% at 20%."
     },
     {
       "id": "F-9",
@@ -89,7 +92,8 @@
       "quote": "The case against is that reaching the consensus target within a year needs the multiple to expand from today's level while net debt is 2.0x EBITDA and consensus FY26E EPS already sits near the top of the raised outlook. We hold the multiple rather than expand it.",
       "issue": "Coordinator check: the Base anchor. 26.7x x FY27E $7.85 = $210. It is checkable and does not reproduce today's price; it returns consensus FY26E-to-FY27E EPS growth (about +8.7%). But it does so by construction at any price, so on its own the Base can never clear the 10% BUY bar, and the label rests on how the multiple choice is argued. That argument is weak. Leverage is no reason the multiple cannot rise. The price history shows closes near $224-$225 in mid-August, about 31x FY26E at the same leverage, so 2.0x did not hold the multiple at 26.7x. FY26E near the top of the outlook bears on EPS, not the multiple. Not engaged: 26.7x is the product of the six-week fall that finalRecommendation says no source explains. Holding it carries that move into the Base. The anchor is legitimate, but the label flip needs a case built on evidence.",
       "fix": "Keep the constant-multiple Base if the author believes it, but argue it on the evidence. (1) Say plainly that the anchor returns only consensus EPS growth, which sits below the BUY bar, so the anchor choice decides the label. (2) Drop the net-debt reason, or show why leverage caps the multiple when the same leverage carried a higher multiple six weeks earlier. (3) Say whether holding the post-decline 26.7x is a view that the unexplained de-rating sticks, and why, rather than a default. If the evidence does not support holding it, re-anchor the Base and let the derived label stand.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed, judged on whether the anchor is argued both ways and its role stated. scenarioCommentary says outright that the anchor decides the label and returns only consensus EPS growth, below the BUY bar at any price. It drops the net-debt reason and argues the case for holding the post-decline multiple (an unexplained fall, slowing FY27 growth) and against it (the mid-August closes on the same results and outlook, Street targets). It calls the choice a judgment. The weight-sensitivity figure in that passage is wrong; see F-15."
     },
     {
       "id": "F-10",
@@ -98,7 +102,8 @@
       "quote": "A cost shock: the Powder Metal Matter, tariffs and fixed-price overruns pull EPS back to the original 2026 outlook of $6.70-$6.90, and the forward multiple compresses to the low twenties. With net debt ahead of the equity, the share price falls below the 52-week low of $155.64.",
       "issue": "Coordinator check: Bear depth. The Bear is priced on a different year than the Base. The Base applies its multiple to FY27E EPS a year out. The Bear applies roughly 22x to the original 2026 EPS outlook ($150 / ~$6.80). Read a year out on the Base's basis, that means FY27 EPS stalls at the original 2026 guide, about 13% below FY27E. That is a deeper story than 'pull EPS back to the original 2026 outlook', and the driver neither says nor argues it. Applying the guide cut in proportion to FY27E at ~22x gives roughly $164, about -15%, which still derives HOLD (E about +7.9%). So the label does not depend on Bear depth, but the Bear is deeper than its stated story. The net-debt clause also double-counts: a P/E-based price is already an equity value, so leverage does not push it lower.",
       "fix": "State which year's EPS the Bear prices. If it is FY27, say that the shock leaves FY27 earnings at the original 2026 outlook (no growth into FY27) and argue why, or set the Bear on FY27E cut by the shock at the low-twenties multiple. Drop 'With net debt ahead of the equity', or tie it to an EV-based anchor if the author switches to one. Re-check the weights and the 15% floor after any change.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. The Bear now prices FY27 explicitly: EPS stalls at FY26E $7.24 at a low-twenties multiple ($155, about 21.4x). The depth matches its story, and the D of -19.7% clears the 15% floor. The net-debt clause is gone."
     },
     {
       "id": "F-11",
@@ -107,7 +112,8 @@
       "quote": "Capital-return policy: an executive order may limit distributions and share repurchases during periods of defense-contractor underperformance.",
       "issue": "Several risk claims are made two or three times in nearly the same words (rubric item 7). (a) The executive-order sentence appears in executiveSummary.risks[3], risks.idiosyncratic[3] and management.capitalAllocation. (b) The Powder Metal finding ('2023 ... accelerated inspection of the PW1100 GTF fleet that powers the A320neo family') is in both executiveSummary.risks[2] and risks.idiosyncratic[0]. (c) The IEEPA refund and June 2 appeal are in catalysts[4] and risks.idiosyncratic[2]. (d) Supply-chain disruptions 'to continue' are in executiveSummary.risks[4] and risks.systemic. (e) The Q2'26 margin rise in all three segments recurs in the thesis, catalysts[3], management.leadership and scenarioCommentary. (f) '180,000 employees and 2025 sales of more than $88 billion' is in both companyOverview and moatFactors[3].",
       "fix": "Make the executive-summary risks one-line pointers that name the risk without restating the fact. Keep the full statement in risks.idiosyncratic or risks.systemic. In capitalAllocation, refer back to the risk section in words. Keep the IEEPA refund in one place, and the margin-rise claim in the segment detail. Elsewhere, refer back in words.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. The executive-summary risks are now one-line pointers. The executive order is stated in full only in risks.idiosyncratic[3]; capitalAllocation points to it. The IEEPA refund is now only in risks.idiosyncratic[2]. moatFactors[3] points to the overview for scale, and durability points to the risk section."
     },
     {
       "id": "F-12",
@@ -116,7 +122,8 @@
       "quote": "At 26.7x forward earnings and 19.4x EV/EBITDA, with net debt at 2.0x EBITDA, the shares already price that execution",
       "issue": "The same valuation claim, with the same three figures, is argued in four places. The thesis has 'The shares trade at 26.7x forward earnings and 19.4x EV/EBITDA, with net debt at 2.0x EBITDA, so the next year's return rests on earnings growth rather than a re-rating'. finalRecommendation.body[0] has the quoted sentence. analystCommentary has 'the price already reflects most of it'. multiplesCommentary has 'the raised outlook is already in the price, and returns from here depend on earnings rather than on the multiple'. 2.0x appears in seven fields and 19.4x in five (analystCommentary, thesis, balanceCommentary, multiplesCommentary, finalRecommendation.body[0]). The 4.4% FCF yield is introduced in both cashflowCommentary and multiplesCommentary.",
       "fix": "Argue the 'priced in, returns track earnings' claim once, in valuation. The thesis and finalRecommendation should point to it in words rather than repeat the 26.7x / 19.4x / 2.0x cluster. Keep 2.0x in balanceCommentary (and the analystCommentary summary if wanted); elsewhere say 'moderate leverage'. Keep the FCF yield in one financial section.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. The thesis and finalRecommendation.body[0] point to the valuation section instead of repeating the multiples. 2.0x now appears only in the subtitle, analystCommentary and balanceCommentary; 19.4x only in multiplesCommentary; the 4.4% FCF yield only in cashflowCommentary."
     },
     {
       "id": "F-13",
@@ -125,7 +132,8 @@
       "quote": "The trailing multiple is on GAAP EPS, which in Q2'26 included $0.27 of acquisition accounting adjustments",
       "issue": "The surface gives 'P/E (TTM): 34.0x' with no statement of its EPS basis. That the trailing multiple is on GAAP EPS is an inference stated as fact. The following clause is hedged ('may be'), but this premise is not.",
       "fix": "Hedge the premise, e.g. 'The trailing multiple appears to be on reported (GAAP) earnings', or drop the basis argument.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed: 'The trailing multiple appears to be on reported (GAAP) earnings'."
     },
     {
       "id": "F-14",
@@ -134,7 +142,28 @@
       "quote": "the July 4, 2025 Act provides $24.4 billion for the Golden Dome for America project and $25.4 billion for munitions and supply chain resiliency; the MD&A says any material impact will depend on actual awards, award timelines, mission priorities and future budget determinations.",
       "issue": "The MD&A attaches the 'will depend on actual awards, award timelines, mission priorities, and future budget determinations' hedge to the Golden Dome Executive Order and its funding. For the $25.4 billion munitions provision, the MD&A instead says RTX 'is strategically situated to play a key role'. Writing 'any material impact' after both figures attaches the hedge to a provision the source did not apply it to.",
       "fix": "Attach the hedge to Golden Dome only (e.g. 'the MD&A says the Golden Dome impact will depend on ...'), or quote each provision's own MD&A wording.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. The awards hedge is attached to Golden Dome only. The $25.4 billion munitions provision carries the MD&A's own 'strategically situated to play a key role' wording."
+    },
+    {
+      "id": "F-15",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "so with this anchor the label stays HOLD unless the Bull weight rises to near two-fifths at the Bear's expense",
+      "issue": "The page's own math flips the label at about one-third, not near two-fifths. With Base fixed at 55% and weight moved from Bear to Bull, Bull 32% / Bear 13% gives a weighted value of about $212.45. At $193.12 that is E of about +10.0%, D of -19.7% and R of about 0.51x, which derives BUY. At Bull 31% / Bear 14% the label is still HOLD. Moving weight from Base instead would need a Bull near 45%, so 'near two-fifths' is wrong on either route. This misstates how close the call is, and the report itself says the anchor and the weights are the deciding judgment (rubric item 6; cf. the desk lesson that a stated trigger must sit where the page's math flips the label).",
+      "fix": "Say the label stays HOLD unless the Bull weight rises to about one-third at the Bear's expense (Bear to about one-eighth). Or state the sensitivity in words without a fraction you cannot back, e.g. 'a shift of about seven points of weight from Bear to Bull would derive BUY'. Check it against the page's E and R before rebuilding.",
+      "status": "addressed",
+      "note": "Addressed. Now reads 'unless about seven points of weight move from the Bear to the Bull, taking the Bull to about one-third'. That matches the page's math: Bull 32% / Base 55% / Bear 13% gives about $212.45, E of about +10.0% and R of about 0.51x, so BUY; 31% / 14% stays HOLD."
+    },
+    {
+      "id": "F-16",
+      "severity": "Minor",
+      "field": "sections.finalRecommendation.body[1]",
+      "quote": "a pullback of a few percent from today's price would derive BUY, with the expected-upside test binding first",
+      "issue": "As the price falls, the reward/risk test clears first (at about $189) and the expected-upside test clears last (at about $188). The expected-upside test is the binding one, but 'binding first' reads as if it clears first.",
+      "fix": "Write 'with the expected-upside test the binding one' or 'with the expected-upside test the last to clear'.",
+      "status": "addressed",
+      "note": "Addressed. Now reads 'the reward/risk test clears first, and the expected-upside test, which binds, clears a little lower'. That is correct: R clears at about $189.3 and E at about $187.7."
     }
   ]
 }
