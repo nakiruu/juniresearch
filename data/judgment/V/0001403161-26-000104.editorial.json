@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "17352f7509eb56750e38ac8eedb10fc151640c2b66e593b2d237639792187493",
-  "reviewedAt": "2026-09-21T05:30:00Z",
-  "reviewer": "claude-opus-4-8",
+  "judgmentSha256": "d26ba4db5d52ace7c2ffc0aeb621d2b87f66efb8cb9875394e9630285c0022a2",
+  "reviewedAt": "2026-10-07T15:55:22Z",
+  "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "approved-with-minors",
+  "verdict": "needs-fix-round",
   "findings": [
     {
       "id": "F-1",
@@ -13,7 +13,7 @@
       "issue": "The grounding surface describes Visa only as \"a global payments technology company\" operating VisaNet across more than 200 countries and territories (company description, MD&A). It nowhere states that Visa is one of only two dominant networks. The duopoly / market-structure claim is recalled from outside the pack, and it is load-bearing — it underwrites the wide-moat and premium-multiple framing that runs through the report.",
       "fix": "Soften to what the surface supports: describe VisaNet's scale (200+ countries, the double-digit volumes) or call it \"one of the world's largest global payments networks\" without asserting a two-player market structure the pack does not establish.",
       "status": "addressed",
-      "note": "Still addressed at this round's judgment. analystCommentary opens \"Visa is a global payments network — VisaNet connects issuers, acquirers and merchants across more than 200 countries.\" 0 occurrences of \"two dominant\"/\"duopoly\"; the four residual uses of \"dominant\" are soft characterizations of a WIDE-moat network supported by disclosed scale, not a market-structure assertion."
+      "note": "Still addressed in the rewritten judgment. analystCommentary opens \"Visa runs VisaNet, the network that authorizes, clears and settles payments ... across more than 200 countries and territories.\" No occurrence of \"dominant\", \"duopoly\" or any market-structure claim anywhere in the judgment."
     },
     {
       "id": "F-2",
@@ -23,7 +23,7 @@
       "issue": "House style makes the executive-summary catalysts and risks pointers while the later sections carry the figures, but these bullets restate what the sections argue. Catalyst[0] repeats the 11%/10%/14% volume triple that growth.points[0] states almost verbatim (\"nominal payments volume up 11%, processed transactions up 10%, and nominal cross-border volume up 14% in the quarter\"), and which companyOverview and the moat segment also give; catalyst[1] repeats the cross-border travel/e-commerce point of growth.points[1]; risks[1] repeats the \"$1.1B of additional accruals in the FY26 nine-month period\" that risks.idiosyncratic[1] argues.",
       "fix": "Turn the bullets into pointers — state the direction and defer the numbers (\"double-digit growth across all three volume measures — see Growth\"; \"open interchange litigation — see Risks\") — and let each figure appear once, in the section that argues it.",
       "status": "addressed",
-      "note": "Still addressed. catalysts[0] reads \"Continued double-digit growth across all three volume drivers ... the financials section quantifies\" (no 11/10/14); catalysts[1] defers to the growth section; risks[1] reads \"the interchange multidistrict litigation keeps generating accruals and remains open, as the risk section details\" (no $1.1B). The catalysts[2] residual flagged as F-6 is now also fixed."
+      "note": "Still addressed. All four catalysts and five risks are figure-free one-sentence pointers (e.g. catalysts[0] \"the year-end results test the consensus path the growth section lays out\"; risks[1] \"Interchange litigation keeps generating accruals whose final cost could differ from the escrow deposits\"). The 11/10/14 volume figures and the $1.1 billion accrual appear only in growth and risks.idiosyncratic[2]."
     },
     {
       "id": "F-3",
@@ -33,7 +33,7 @@
       "issue": "The prose \"forward earnings\" multiple (27.8x, the NTM / FY26E figure) is not the \"Fwd P/E (FY27E)\" of ~24.5x shown on the snapshot card the reader sees. Both are grounded (Multiples: Fwd P/E NTM 27.8x; Snapshot: Fwd P/E FY27E ~24.5x), but they are never reconciled, and \"about 28x forward\" recurs in the thesis, risks and final recommendation. A reader comparing the prose to the snapshot sees two different \"forward\" P/Es.",
       "fix": "State the basis where the multiple is used, e.g. \"about 27.8x next-twelve-months earnings (24.5x on FY27 estimates),\" so the prose and the snapshot card agree on what \"forward\" means.",
       "status": "addressed",
-      "note": "Addressed. The 27.8x figure is labeled \"next-twelve-months earnings\" everywhere it appears (6 times across the judgment); \"forward\" no longer attaches to a specific multiple. The built report's snapshot (data/v.json) renders no FY27E forward-P/E row at all, so the reader never sees a competing 24.5x \"forward\" figure next to the prose's 27.8x NTM."
+      "note": "Addressed. The Base driver now reads \"The 27.8x current-year multiple (the one labelled next-twelve-months) holds a year out and is applied to FY27E consensus EPS\"; the thesis says only \"the multiple eases\"; \"forward\" is reserved for the ~24.5x anchor in multiplesCommentary and the Bear driver."
     },
     {
       "id": "F-4",
@@ -43,7 +43,7 @@
       "issue": "House style bars hype and asks the numbers to carry the weight; \"extraordinary and hard to overstate\" editorializes on top of the 51.8% margin figure it introduces. \"extraordinary/extraordinarily\" then recurs as a tic — thesis \"converting revenue to cash at extraordinary rates,\" moat factor \"extraordinarily hard to dislodge,\" risks.systemic \"extraordinary margins\" — alongside \"some of the best economics in business\" and the moat factor's \"a scale few systems on earth match.\"",
       "fix": "Cut the editorial intensifiers and let the margin and free-cash-flow figures stand on their own; vary or drop the repeated \"extraordinary.\"",
       "status": "addressed",
-      "note": "Still addressed. \"extraordinary/extraordinarily\" appears 0 times (now \"high and cash-rich,\" \"at high rates,\" \"very hard to dislodge,\" \"very high margins\"); \"best economics in business\" is gone and \"a scale few systems on earth match\" is now \"a scale few networks match.\""
+      "note": "Still addressed. \"extraordinary\", \"hard to overstate\", \"best economics\" and \"few systems on earth\" all appear 0 times in the rewritten judgment; the strongest remaining wording is \"very large cash engine\" in cashflowCommentary, which the FY25 figures support."
     },
     {
       "id": "F-5",
@@ -52,8 +52,8 @@
       "quote": "A wide-moat payments network compounding double-digit volume into high margins and heavy buybacks — premium-priced, with interchange regulation the overhang",
       "issue": "meta.subtitle is 156/160 characters (98% of cap) and sections.executiveSummary.thesis.body is 1399/1500 (93%), leaving almost no room for the next round to edit. Item 10 asks fields to sit inside their caps with room to spare.",
       "fix": "Trim the subtitle (e.g. drop \"heavy\" or compress the clause after the dash) and tighten the thesis so each has editing headroom.",
-      "status": "open",
-      "note": "Still open. In this round's judgment the subtitle is unchanged at 156/160 and the thesis body unchanged at 1401/1500; neither field was trimmed, so there is still no editing headroom. Drop a word from the subtitle (e.g. \"heavy\") and tighten the thesis."
+      "status": "addressed",
+      "note": "Addressed. The subtitle is now 125/160 characters and the thesis body 919/1500; every other field also sits well inside its cap."
     },
     {
       "id": "F-6",
@@ -63,7 +63,7 @@
       "issue": "House style makes executive-summary catalysts pointers while the sections carry the figures. F-2 converted catalysts[0], catalysts[1] and risks[1] to pointers, but this bullet still carries the hard \"$18.3B of FY25 buybacks\" figure. That same FY25 buyback figure already appears in companyOverview (the same executive-summary block), is argued in cashflowCommentary and capitalAllocation, and is recapped in finalRecommendation[0] — five appearances of $18.3B, one of them inside a pointer bullet that should defer the number.",
       "fix": "Make the bullet a pointer that names the direction and defers the figure — e.g. \"Heavy capital return — nearly all free cash flow returned through buybacks and a growing dividend; see Cash Flow and Capital Allocation\" — leaving $18.3B to the sections that argue it.",
       "status": "addressed",
-      "note": "Addressed. catalysts[2] no longer carries the $18.3B figure; it now reads \"Heavy capital return: FY25 buybacks plus a growing dividend, shrinking the share count and compounding per-share value from a cash-generative business, as the cash-flow section sizes\" — a pointer that defers the number to the cash-flow and capital-allocation sections that argue it."
+      "note": "Still addressed. $18.3B now appears once, in cashflowCommentary. The buyback catalyst (now catalysts[1]) reads \"Repurchases under the April 2026 authorization keep reducing the share count, a lever the capital-allocation discussion weighs at today's price\", which is a figure-free pointer."
     },
     {
       "id": "F-7",
@@ -73,7 +73,7 @@
       "issue": "\"industry-leading margins\" is an unearned superlative. The pack carries no peer or industry margin data, and the valuation section states this explicitly: \"no peer column exists in this pack, so no cross-sectional comparison is made.\" Asserting that Visa's margins lead the industry both lacks support on the grounding surface and contradicts the report's own stated discipline. House style: before writing a superlative, check the source supports it; here it does not.",
       "fix": "Drop the comparative superlative and let the disclosed figure carry it — e.g. \"double-digit volume growth, a 51.8% net margin and disciplined capital return\" — or write \"very high margins\" without the industry-leadership claim.",
       "status": "addressed",
-      "note": "Addressed. management.leadership now reads \"double-digit volume growth, very high margins and disciplined capital return\"; the unearned \"industry-leading margins\" superlative is gone (0 occurrences of \"industry-leading\" in the judgment)."
+      "note": "Still addressed. \"industry-leading\" appears 0 times. management.leadership now covers the proxy-named officers and pay design only, and multiplesCommentary says \"There is no peer column in the pack, so we judge the multiple against Visa's own economics rather than against competitors.\""
     },
     {
       "id": "F-8",
@@ -83,7 +83,95 @@
       "issue": "The interchange-litigation accrual the pack discloses is a nine-month figure ($1.1 billion for the nine months ended June 30, 2026), and the non-GAAP reconciliation \"tables below\" that would itemize the quarterly adjustment were not captured. Attributing the specific quarterly GAAP-vs-non-GAAP EPS gap ($2.97 vs $3.32, a ~$668M net-income add-back) to interchange-litigation accruals is an inference the filing invites but does not establish for the quarter. incomeCommentary hedges it (\"driven mainly by interchange-litigation accruals and other items Visa excludes\"); analystCommentary states it flatly.",
       "fix": "Hedge the quarterly attribution the way incomeCommentary does, or pin the litigation-accrual cause to the nine-month level where the disclosed $1.1B belongs, describing the quarterly gap as the non-GAAP items Visa excludes.",
       "status": "addressed",
-      "note": "Addressed. analystCommentary now hedges the quarterly gap — \"the gap reflecting interchange-litigation accruals among other items\" — matching incomeCommentary's \"driven mainly by interchange-litigation accruals and other items Visa excludes.\" The flat causal attribution to interchange-litigation accruals is gone."
+      "note": "Addressed more fully than asked. analystCommentary no longer discusses the GAAP/non-GAAP gap, and incomeCommentary now says \"The reconciliation is not in the captured excerpt, so we do not say which items separate the two bases.\" The $1.1 billion accrual is kept at the nine-month level in risks.idiosyncratic[2]."
+    },
+    {
+      "id": "F-9",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[2].driver",
+      "quote": "A regulatory step-change, such as a significantly lower U.S. debit cap after the Regulation II appeals or credit-routing legislation, or a heavier litigation outcome, arrives alongside a consumer slowdown. EPS falls short of the FY26E $13.23 and the market pays about today's ~24.5x FY27E multiple on that lower base.",
+      "issue": "The Bear story outruns its price. It combines a regulatory or litigation shock with a consumer slowdown. Yet it prices that combination at no de-rating: ~24.5x is the multiple the valuation section names as its own \"forward anchor\". It also takes only a small EPS shortfall, since $310 at ~24.5x implies EPS just under FY26E. The result, -15.8%, sits barely past the 15% floor. It also sits above the $293.89 52-week low, a price the shares reached in the past year with none of these shocks. A bear that holds today's multiple through a fee-rule step-change is a formality (items 5 and 6). It also sets the 20% Bear weight that keeps E above +10%.",
+      "fix": "Price the story you tell. Give the Bear a lower multiple than today's forward anchor, a deeper EPS hit, or both, and anchor each to a figure on the page in words (e.g. the $293.89 52-week low or the $330.00 lowest Street target). Alternatively, narrow the story to the single shock that $310 actually prices and re-argue the 20% weight on that narrower case. Re-derive the label afterwards and take whatever it gives; do not re-tune Bull or Base to keep the BUY.",
+      "status": "addressed",
+      "note": "Addressed. Bear is $280: \"EPS stalls near the FY26E consensus for a year instead of rising toward FY27E, and the multiple falls from the ~24.5x forward anchor into the low twenties\", below the $293.89 52-week low. The price matches its story (about 21x on FY26E consensus) and the 20% weight is argued on the Bear case itself in scenarioCommentary. The label re-derived to HOLD (E +8.9%, D -24.0%, R 0.37x), and Bull and Base were not re-tuned."
+    },
+    {
+      "id": "F-10",
+      "severity": "Important",
+      "field": "sections.finalRecommendation.body[1], sections.valuation.scenarioCommentary",
+      "quote": "On these scenarios, a close only a few dollars above $368.29 derives HOLD, and the shares traded as high as $385.57 in the past year, so a move back toward that level would call for a re-run.",
+      "issue": "The label rests on the price-date close. The BUY flips to HOLD just below $370, less than $2 above $368.29. On the page's own price chart, 15 of the 30 closes from August 7 to September 18 sit above that line: every close from August 21 to September 4, and September 11 to 16. On those closes the same scenarios derive HOLD. The prose presents the flip as a future risk (\"a move back toward that level\") and never says the label depends on today's close or what the recent closes would derive. It also does not say that the BUY rests on the shares having drifted down from the late-August level that no source explains. This is the pattern the desk recorded for VST: when the label depends on the day's close, the commentary must say so.",
+      "fix": "Say it once, in scenarioCommentary or finalRecommendation[1]. The BUY rests on the September 21 price. On most closes from late August to mid-September, shown on the price chart, the same scenarios derive HOLD. No captured source explains the late-August rise or the later drift. Describe this in words and dates, not a computed break-even price. Leave the existing re-run trigger as the pointer.",
+      "status": "addressed",
+      "note": "Addressed and verified. Against the 30 closes in data/v.json (August 7 to September 18), the same scenarios derive BUY only on August 12 ($359.42) and August 17 ($358.84) and HOLD on the other 28, as scenarioCommentary says. The prose says the label does not rest on the September 21 close, that no source explains the late-August rise or later drift, and finalRecommendation[1] puts the BUY price \"near the mid-August lows\"."
+    },
+    {
+      "id": "F-11",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary, sections.risks.idiosyncratic[1]",
+      "quote": "the regulatory threats in the 10-K have moved slowly, with a Federal Reserve proposal outstanding since October 2023",
+      "issue": "The 10-K excerpt was filed November 6, 2025, eleven months before the report. It says only that the Federal Reserve \"issued a proposal for comment\" in October 2023. \"Outstanding since October 2023\" asserts that the proposal is still pending today, which the pack cannot show, and it uses that status to argue the Bull-over-Bear split. The same problem appears in risks.idiosyncratic[1], which states 10-K statuses in the present tense with no date: the Illinois law \"remains under legal challenge\", \"the European Commission plans another impact assessment\" and the Reserve Bank of Australia \"has proposed reducing its existing ones\". idiosyncratic[0] dates its facts (\"As of the FY25 10-K, filed in November 2025\"), but [1] is a separate bullet and the reader cannot carry the date across. Item 3: nothing a year old is presented as current.",
+      "fix": "In scenarioCommentary, write \"a Federal Reserve proposal issued in October 2023, which the November 2025 10-K still described only as a proposal\", or drop \"outstanding\". In idiosyncratic[1], date the statuses once, e.g. \"As of the November 2025 10-K, ...\", and put them in the past tense.",
+      "status": "addressed",
+      "note": "Addressed. scenarioCommentary now says \"the November 2025 10-K ... still described a Federal Reserve proposal issued in October 2023 only as a proposal\". risks.idiosyncratic[0] and [1] each open \"As of the November 2025 10-K\" and put the statuses in the past tense (\"was under legal challenge\", \"had proposed lower ones\")."
+    },
+    {
+      "id": "F-12",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[0], sections.risks.idiosyncratic[1]",
+      "quote": "Argentina, Brazil, Chile and Costa Rica have adopted or are exploring caps, and the Reserve Bank of Australia has proposed reducing its existing ones.",
+      "issue": "These two risk bullets restate the 10-K and stop without reaching a view. idiosyncratic[1] is a list of five regulatory items: the CCCA, Illinois, the EU IFR, Latin America and the RBA. It never says which one matters most to Visa, which the Bear case prices and which is a tail. idiosyncratic[0] ends on the 10-K's own sentence (\"the 10-K says changes to those fees can substantially affect its payments volume and net revenue\") rather than the desk's read. idiosyncratic[2] and [3] each close with a judgment (\"the final cost remains open\"; \"the pattern our Bear case extends\"). Item 4: each paragraph must reach a view the reader can act on.",
+      "fix": "Close each bullet with one sentence of the desk's view. In [0], say whether the Regulation II appeal is what the Bear case prices and what affirmation would mean for the call (point to finalRecommendation rather than restating the trigger). In [1], rank the items, e.g. U.S. credit routing as the one that could reach the largest share of volume, and the foreign caps as incremental, and say which of them the scenarios weigh.",
+      "status": "addressed",
+      "note": "Addressed. idiosyncratic[0] closes \"The appeal is the regulatory event our Bear case prices most directly, and affirmation would raise our Bear weight\". idiosyncratic[1] ranks U.S. credit routing first on the grounded $644 billion March-quarter U.S. consumer credit volume, says the Bear prices it, and treats the foreign caps as incremental, inside the Base."
+    },
+    {
+      "id": "F-13",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body, sections.valuation.multiplesCommentary, sections.finalRecommendation.body[0], analystCommentary, sections.executiveSummary.risks[3]",
+      "quote": "our fair value sits below the consensus because we give a regulatory step-change real weight",
+      "issue": "Two conclusions are argued over and over instead of once with pointers. (a) The reason the fair value sits below the Street appears three times: thesis \"because we give a regulatory step-change real weight\"; multiplesCommentary \"it leaves little room for a step-change in fee regulation, which is why our fair value sits below the Street\"; finalRecommendation[0] \"discount it for the fee regulation and litigation under the whole model, which is why our fair value is below the Street\". (b) The BUY is called narrow in five places: analystCommentary \"a narrow BUY that sits just above the line\"; thesis \"clears the BUY line, but only just\"; executiveSummary.risks[3] \"the BUY sits just above the line\"; finalRecommendation[0] \"The BUY is narrow\"; and scenarioCommentary \"the call is close\". Item 7: the same claim made twice in different words, in two places.",
+      "fix": "Argue each once. Put the below-Street reasoning in the valuation section, where the Bear weight is argued, and have the thesis and finalRecommendation[0] state the result without repeating the \"because\". Keep the narrow-BUY argument in scenarioCommentary and finalRecommendation[1]. Elsewhere use at most one short pointer, and drop it from either analystCommentary or the thesis.",
+      "status": "addressed",
+      "note": "Addressed. The below-Street reason is argued once, in scenarioCommentary (\"That Bear weight is why our fair value sits below the consensus target\"). The thesis states the result, multiplesCommentary points to \"the shock the Bear case prices\", and finalRecommendation[0] defers (\"for the reasons the valuation section gives\"). The narrow-BUY refrain is gone with the HOLD."
+    },
+    {
+      "id": "F-14",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarios[1].driver, sections.valuation.scenarios[2].driver, sections.growth.points[2]",
+      "quote": "The price is close to the 27.8x forward multiple applied to that FY27E figure, and in line with the $419.36 consensus target and the $422.00 median.",
+      "issue": "Several figures are reintroduced within the same section. The $419.36 consensus target and the $422.00 median are already given in multiplesCommentary. FY27E EPS of $15.00 and FY26E EPS of $13.23 are each restated across multiplesCommentary and the three scenario drivers; the lint warns on both. In the growth section, points[0] already says \"in constant dollars, Visa-wide and international growth were lower\", and points[2] reruns that point (\"Because international volume grew more slowly in constant dollars than in nominal terms\").",
+      "fix": "In the scenario drivers, refer back in words (\"the consensus target and median\", \"the FY27E consensus EPS\") rather than restating the figures. In the growth section, keep the constant-dollar observation in one point and have the other refer to it.",
+      "status": "addressed",
+      "note": "Addressed. The scenario drivers now refer to \"FY27E consensus EPS\", \"the FY26E consensus\" and \"the consensus target and median\" in words; $419.36, $422.00, $15.00 and $13.23 no longer recur there. growth.points[2] points back (\"The constant-dollar gap noted above\")."
+    },
+    {
+      "id": "F-15",
+      "severity": "Minor",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "In both periods EPS grew faster than net income, the effect of the repurchases the cash-flow discussion sizes.",
+      "issue": "This is a flat causal attribution. Diluted EPS outgrowing net income means the diluted share count fell. The pack shows repurchases (50 million class A shares in the nine months), but it also shows a May 2026 class B-1/B-2 exchange into class B-3 and C shares, whose conversion terms the report itself says it cannot see. The repurchases are the likely main cause, but the pack does not isolate them. The pointer is also off: the nine-month repurchases are sized in management.capitalAllocation, while cashflowCommentary covers only FY25.",
+      "fix": "Hedge it, e.g. \"reflecting a lower share count, which the repurchases discussed under capital allocation largely explain\", and point to capitalAllocation rather than the cash-flow discussion.",
+      "status": "addressed",
+      "note": "Addressed. incomeCommentary now reads \"reflecting a lower diluted share count that the repurchases discussed under capital allocation most likely explain\": the claim is hedged and points to the right section."
+    },
+    {
+      "id": "F-16",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "The HOLD is not a close call on the weights. A modest shift from Bear to Bull leaves reward/risk short of the BUY threshold; it takes moving roughly a third of the Bear weight to Bull to derive BUY.",
+      "issue": "The page's own numbers contradict the framing. Moving about 7 points of weight from Bear to Bull (Bear 20% to roughly 13%, Bull 30% to roughly 37%) lifts R from 0.37x to 0.50x and E to about +12%, which derives BUY. The sentence's own \"a third of the Bear weight\" is that same 7 points. A label that flips on a 7-point move is close on the weights; BSX, which flipped on about ten points, was called close. The deciding 20% also rests partly on \"a slowdown arriving in the same period is plausible rather than remote\". No captured source supports that. The MD&A instead credits \"continued resilience in consumer spending\". Item 6, and the desk rule: if a call is close, say so.",
+      "fix": "Replace \"The HOLD is not a close call on the weights. A modest shift ... leaves reward/risk short\" with an honest statement: the HOLD is close on the weights, because moving about a third of the Bear weight to Bull derives BUY, and the 20% is a judgment, not a finding. Present the slowdown leg as the desk's judgment, not as evidence. Keep the separate, correct point that the label does not rest on the September 21 close. Do not change prices or weights.",
+      "status": "open"
+    },
+    {
+      "id": "F-17",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "the lowest Street target sits well above a case this severe, so the Street is not pricing it.",
+      "issue": "The pack carries only the Street's target range, median, mean and rating counts. It does not carry the analysts' scenarios or their weights. A single 12-month target can already weight a bear outcome below it, so the fact that the $330.00 low target sits above $280 does not show that \"the Street is not pricing it\". This is an inference the source does not make (item 2), and it carries the explanation for why the fair value sits below consensus.",
+      "fix": "State the fact without the inference, e.g. \"no Street target sits as low as this case; the lowest is $330.00\". Rest the below-consensus fair value on the desk's own 20% Bear weight, which the paragraph already argues.",
+      "status": "open"
     }
   ]
 }
