@@ -164,6 +164,29 @@ describe("tradesToOrders — hybrid (whole-share limit + fractional market remai
     expect(orders).toEqual([expect.objectContaining({ ticker: "B", type: "limit", qty: 5, limitPrice: 201.6 })]);
     expect(orders[0].leg).toBeUndefined();
   });
+  it("T-19: a sub-$200 EXIT of a 5-dp position is one market sell floored to 4 dp (Schwab refuses more decimals)", () => {
+    // 2.9999 × L 49.88 ≈ $150 < marketOnlyBelowUsd ($200) → one market order. Before: 2.99996 sent raw → refused locally.
+    const { orders } = tradesToOrders({ ...hb, positions: { A: { qty: 2.99996, marketValue: 150 } },
+      plan: plan([trade({ side: "sell", reason: "EXIT", currentWeight: 0.0015, targetWeight: 0, deltaWeight: -0.0015 })]) });
+    expect(orders.map((o) => [o.type, o.qty])).toEqual([["market", 2.9999]]);
+  });
+  it("T-19: a large EXIT of a 5-dp position splits into whole shares + a floored remainder that never exceeds the position", () => {
+    const { orders } = tradesToOrders({ ...hb, positions: { A: { qty: 40.99996, marketValue: 2050 } },
+      plan: plan([trade({ side: "sell", reason: "EXIT", currentWeight: 0.0205, targetWeight: 0, deltaWeight: -0.0205 })]) });
+    expect(orders.map((o) => [o.type, o.qty])).toEqual([["limit", 40], ["market", 0.9999]]);
+    expect(orders.reduce((a, o) => a + o.qty, 0)).toBeLessThanOrEqual(40.99996);
+  });
+  it("F-9: a TRIM capped at a 5-dp position is floored too", () => {
+    // $1,000 / $50 = 20 sh wanted > 2.99996 held → capped, then floored.
+    const { orders } = tradesToOrders({ ...hb, positions: { A: { qty: 2.99996, marketValue: 150 } },
+      plan: plan([trade({ side: "sell", reason: "TRIM", currentWeight: 0.0015, targetWeight: 0.0005, deltaWeight: -0.01 })]) });
+    expect(orders.map((o) => o.qty)).toEqual([2.9999]);
+  });
+  it("T-19 guard: a 4-dp position (everything the engine buys) gives the same orders as before", () => {
+    const { orders } = tradesToOrders({ ...hb, positions: { A: { qty: 33.4, marketValue: 1670 } },
+      plan: plan([trade({ side: "sell", reason: "EXIT", currentWeight: 0.0167, targetWeight: 0, deltaWeight: -0.0167 })]) });
+    expect(orders.map((o) => [o.type, o.qty])).toEqual([["limit", 33], ["market", 0.4]]);
+  });
 });
 
 describe("marketLegBlock — a future-stamped quote is stale (T-11)", () => {
