@@ -197,7 +197,11 @@ export const OCF = ["NetCashProvidedByUsedInOperatingActivities", "NetCashProvid
 // LLY tags neither of the spec's two concepts for its current capex line; it uses "other
 // property, plant and equipment" instead. Appended at lowest priority — per-period merging
 // (see mergeByPriority) means this is only reached for periods neither spec concept covers.
-export const CAPEX_RAW = ["PaymentsToAcquirePropertyPlantAndEquipment", "PaymentsToAcquireProductiveAssets", "PaymentsToAcquireOtherPropertyPlantAndEquipment"];
+// PaymentsToAcquireMachineryAndEquipment is lowest priority: DOW tags every capex period through Q1'26 both as it and as
+// PaymentsToAcquireProductiveAssets at the same value, and its Q2'26 10-Q only as it ($632M), which left the June quarter
+// and the TTM FCF null (2026-10-07). Selection is per period by priority, never summed, so where any concept above
+// reports the period (a subset beside total PP&E, or DOW's twin all-in line) it is not read.
+export const CAPEX_RAW = ["PaymentsToAcquirePropertyPlantAndEquipment", "PaymentsToAcquireProductiveAssets", "PaymentsToAcquireOtherPropertyPlantAndEquipment", "PaymentsToAcquireMachineryAndEquipment"];
 /** The all-in concept: PP&E plus intangibles/software. When it is the period's capex base, nothing is added. */
 export const CAPEX_ALL_IN = "PaymentsToAcquireProductiveAssets";
 /**

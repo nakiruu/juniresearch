@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { parseCompanyFacts, combineCapex, deriveTotalDebt, CAPEX_RAW, type SecPeriod } from "./sec";
+import { computeTtm } from "./ttm";
 
 const facts = JSON.parse(readFileSync("lib/facts/free/__fixtures__/lly-companyfacts.json", "utf8"));
 
@@ -862,5 +863,61 @@ describe("deriveTotalDebt", () => {
   it("ignores convertible concepts when a long-term debt concept reports the period", () => {
     expect(deriveTotalDebt({ ...none, ltdNoncurrent: 1_000e6, convertibleNoncurrent: 400e6, convertibleCurrent: 50e6 }, lt)).toBe(1_000e6);
     expect(deriveTotalDebt({ ...none, ltdTotal: 1_000e6, convertibleNoncurrent: 400e6 }, lt)).toBe(1_000e6);
+  });
+});
+
+// DOW (0001751788-26-000147): every capex period through Q1'26 is tagged twice at the same value, as
+// PaymentsToAcquireProductiveAssets and PaymentsToAcquireMachineryAndEquipment; the Q2'26 10-Q tags capex only as
+// PaymentsToAcquireMachineryAndEquipment, so the June quarter's capex — and the whole TTM FCF — read null.
+// Values in $M from the saved companyfacts and the 10-Q iXBRL; TTM to 2026-06-30: OCF 3,866, capex 2,267, FCF 1,599.
+describe("capex — PaymentsToAcquireMachineryAndEquipment is the lowest-priority base (DOW, 2026-10-07)", () => {
+  const d = (start: string, end: string, val: number, form: "10-Q" | "10-K", filed: string) => ({ start, end, val, form, filed });
+  const Q1_25 = "2025-04-25", Q2_25 = "2025-07-25", Q3_25 = "2025-10-24", K25 = "2026-02-06", Q1_26 = "2026-04-24", Q2_26 = "2026-07-24";
+  const capexYtd = [
+    d("2025-01-01", "2025-03-31", 685, "10-Q", Q1_25), d("2025-01-01", "2025-06-30", 1_347, "10-Q", Q2_25),
+    d("2025-01-01", "2025-09-30", 1_911, "10-Q", Q3_25), d("2025-01-01", "2025-12-31", 2_479, "10-K", K25),
+    d("2026-01-01", "2026-03-31", 503, "10-Q", Q1_26),
+  ];
+  const qRev = (start: string, end: string, filed: string) => d(start, end, 10_000, "10-Q", filed);
+  const dowFacts = { facts: { "us-gaap": {
+    Revenues: { units: { USD: [
+      qRev("2025-01-01", "2025-03-31", Q1_25), qRev("2025-04-01", "2025-06-30", Q2_25), qRev("2025-07-01", "2025-09-30", Q3_25),
+      d("2025-01-01", "2025-12-31", 40_000, "10-K", K25), qRev("2026-01-01", "2026-03-31", Q1_26), qRev("2026-04-01", "2026-06-30", Q2_26),
+    ] } },
+    NetIncomeLoss: { units: { USD: [d("2025-01-01", "2025-12-31", -1_000, "10-K", K25)] } },
+    NetCashProvidedByUsedInOperatingActivities: { units: { USD: [
+      d("2025-01-01", "2025-03-31", 91, "10-Q", Q1_25), d("2025-01-01", "2025-06-30", -379, "10-Q", Q2_25),
+      d("2025-01-01", "2025-09-30", 748, "10-Q", Q3_25), d("2025-01-01", "2025-12-31", 1_032, "10-K", K25),
+      d("2026-01-01", "2026-03-31", 1_124, "10-Q", Q1_26), d("2026-01-01", "2026-06-30", 2_455, "10-Q", Q2_26),
+    ] } },
+    PaymentsToAcquireProductiveAssets: { units: { USD: capexYtd } },
+    PaymentsToAcquireMachineryAndEquipment: { units: { USD: [
+      ...capexYtd, d("2026-01-01", "2026-06-30", 1_135, "10-Q", Q2_26), d("2026-04-01", "2026-06-30", 632, "10-Q", Q2_26),
+    ] } },
+  } } };
+
+  it("fills the June-2026 quarter only MachineryAndEquipment tags, so TTM FCF reads 3,866 − 2,267 = 1,599", () => {
+    const { quarter } = parseCompanyFacts(dowFacts);
+    const last4 = quarter.slice(-4);
+    expect(last4.map((q) => q.report_date)).toEqual(["2025-09-30", "2025-12-31", "2026-03-31", "2026-06-30"]);
+    expect(last4.map((q) => q.capex)).toEqual([-564, -568, -503, -632]);
+    expect(last4.reduce((a, q) => a + q.operating_cash_flow!, 0)).toBe(3_866);
+    const ttm = computeTtm(quarter, { price: 1, marketCap: 1_000_000, dividendYield: 0 });
+    expect((ttm.keyMetrics.free_cash_flow_yield as number) * 1_000_000).toBeCloseTo(1_599, 6);
+  });
+
+  it("never adds to, or replaces, a higher-priority capex concept that reports the same period", () => {
+    const fyCapex = (gaap: Record<string, unknown>) => parseCompanyFacts({ facts: { "us-gaap": {
+      Revenues: { units: { USD: [d("2025-01-01", "2025-12-31", 1_000, "10-K", K25)] } },
+      NetIncomeLoss: { units: { USD: [d("2025-01-01", "2025-12-31", 100, "10-K", K25)] } },
+      ...gaap,
+    } } }).annual[0].capex;
+    const me = { PaymentsToAcquireMachineryAndEquipment: { units: { USD: [d("2025-01-01", "2025-12-31", 60, "10-K", K25)] } } };
+    const other = (c: string) => ({ [c]: { units: { USD: [d("2025-01-01", "2025-12-31", 100, "10-K", K25)] } } });
+    expect(fyCapex({ ...me, ...other("PaymentsToAcquirePropertyPlantAndEquipment") })).toBe(-100); // a subset beside total PP&E: not added
+    expect(fyCapex({ ...me, ...other("PaymentsToAcquireProductiveAssets") })).toBe(-100); // beside the all-in line: the all-in line, once
+    expect(fyCapex({ ...me, ...other("PaymentsToAcquireOtherPropertyPlantAndEquipment") })).toBe(-100);
+    expect(fyCapex(me)).toBe(-60); // alone, it is the period's capex
+    expect(CAPEX_RAW.at(-1)).toBe("PaymentsToAcquireMachineryAndEquipment");
   });
 });
