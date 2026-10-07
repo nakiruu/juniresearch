@@ -154,9 +154,16 @@ const LTD_LEASE_NONCURRENT = ["LongTermDebtAndCapitalLeaseObligations"];
 const LTD_TOTAL = ["LongTermDebt"];
 const LTD_CURRENT = ["LongTermDebtCurrent", "LongTermDebtAndCapitalLeaseObligationsCurrent"];
 const DEBT_CURRENT = ["DebtCurrent"];
-// OtherShortTermBorrowings is SCHW's only balance-sheet short-term line ($6,913M at FY2025); its $1.9B commercial
-// paper is a note figure inside it, so the line outranks CommercialPaper for the period and is never added to it.
-const SHORT_TERM_BORROWINGS = ["ShortTermBorrowings", "OtherShortTermBorrowings", "CommercialPaper"];
+// OtherShortTermBorrowings is SCHW's balance-sheet short-term line ($6,913M at FY2025); its $1.9B commercial paper is a
+// note figure inside it, so the line outranks CommercialPaper for the period and is never added to it.
+// ShortTermBankLoansAndNotesPayable is DOW's "Notes payable" face line ($90M at FY2025; gross debt 18,161). It is
+// lowest priority because CVX tags it ($96M) as a note component of its "Short-term debt" ShortTermBorrowings 977.
+const SHORT_TERM_BORROWINGS = ["ShortTermBorrowings", "OtherShortTermBorrowings", "CommercialPaper", "ShortTermBankLoansAndNotesPayable"];
+// FHLB advances are their own face line at SCHW ($1,850M at FY2025, beside other short-term borrowings and long-term
+// debt) and EWBC ($3,000M, beside a $35.6M debt-and-lease line). They are ADDED, not merged with short-term
+// borrowings, and only on the debt-and-lease-line paths with no DebtCurrent (rules 0, 3, 4): a bank's LongTermDebt /
+// DebtCurrent borrowings total can already hold its FHLB advances (CFG's long-term borrowings).
+const FHLB_ADVANCES = ["AdvancesFromFederalHomeLoanBanks"];
 // Convertible notes tagged apart from long-term debt. Read only when no long-term debt concept reports the
 // period (see deriveTotalDebt), since filers that do tag LongTermDebt* often tag these as a subset of it.
 // NET FY2025: ConvertibleDebtNoncurrent $1,974.1M + ConvertibleDebtCurrent $1,291.3M, and no other debt.
@@ -480,6 +487,7 @@ interface RawValues {
   ltdLeaseTotal: number | null;
   combinedTotal: number | null;
   unsecuredLtd: number | null;
+  fhlbAdvances: number | null;
   totalEquity: number | null;
   currentAssets: number | null;
   currentLiabilities: number | null;
@@ -509,6 +517,7 @@ type DerivedFields = Omit<SecPeriod, "fiscal_period" | "fiscal_year" | "report_d
  *   8. current debt alone. A zero current-only figure is null when the filer tags a long-term concept in some
  *      other period of the series (a gap in the tags, e.g. CME FY2023 before UnsecuredLongTermDebt is read); a
  *      filer that never tags a long-term concept (DSP, PLTR, RDVT, LASR, AMSC) keeps its honest 0.
+ * FHLB advances (a bank's own face line) are added on rules 0, 3 and 4 only, where no DebtCurrent reports.
  * Null when no debt concept reports the period.
  */
 export function deriveTotalDebt(
@@ -516,7 +525,7 @@ export function deriveTotalDebt(
     RawValues,
     | "ltdNoncurrent" | "ltdTotal" | "ltdLeaseNoncurrent" | "ltdCurrent" | "debtCurrent" | "shortTermBorrowings"
     | "convertibleNoncurrent" | "convertibleCurrent" | "ltdLeaseTotal" | "combinedTotal" | "unsecuredLtd"
-  >,
+  > & Partial<Pick<RawValues, "fhlbAdvances">>,
   opts: { filerTagsLongTerm: boolean },
 ): number | null {
   const otherCurrent =
@@ -524,13 +533,14 @@ export function deriveTotalDebt(
   const allCurrent =
     r.debtCurrent ??
     (r.ltdCurrent == null && r.shortTermBorrowings == null ? null : (r.ltdCurrent ?? 0) + (r.shortTermBorrowings ?? 0));
+  const fhlb = r.debtCurrent == null ? (r.fhlbAdvances ?? 0) : 0;
   if (r.ltdLeaseTotal != null && r.ltdLeaseNoncurrent != null && r.ltdLeaseTotal === r.ltdLeaseNoncurrent)
-    return r.ltdLeaseTotal + (r.shortTermBorrowings ?? 0);
+    return r.ltdLeaseTotal + (r.shortTermBorrowings ?? 0) + fhlb;
   if (r.ltdNoncurrent != null) return r.ltdNoncurrent + (allCurrent ?? 0);
   if (r.ltdLeaseNoncurrent != null && r.debtCurrent != null) return r.ltdLeaseNoncurrent + r.debtCurrent;
   if (r.ltdTotal != null) return r.ltdTotal + (otherCurrent ?? 0);
-  if (r.ltdLeaseNoncurrent != null) return r.ltdLeaseNoncurrent + (allCurrent ?? 0);
-  if (r.ltdLeaseTotal != null) return r.ltdLeaseTotal + (otherCurrent ?? 0);
+  if (r.ltdLeaseNoncurrent != null) return r.ltdLeaseNoncurrent + (allCurrent ?? 0) + fhlb;
+  if (r.ltdLeaseTotal != null) return r.ltdLeaseTotal + (otherCurrent ?? 0) + fhlb;
   if (r.combinedTotal != null) return r.combinedTotal;
   if (r.unsecuredLtd != null) return r.unsecuredLtd + (allCurrent ?? 0);
   const current = allCurrent ?? r.convertibleCurrent;
@@ -667,6 +677,7 @@ export function parseCompanyFacts(facts: unknown): { annual: SecPeriod[]; quarte
   const ltdLeaseTotal = instantSeries(facts, LTD_LEASE_TOTAL);
   const combinedTotal = instantSeries(facts, DEBT_COMBINED_TOTAL);
   const unsecuredLtd = instantSeries(facts, UNSECURED_LTD);
+  const fhlbAdvances = instantSeries(facts, FHLB_ADVANCES);
   // Does the filer tag ANY long-term debt concept anywhere in its history? Decides whether a zero current-only
   // period is a gap (null) or an honest zero (see deriveTotalDebt rule 8). Modelled on combineDa's tagsAmortization.
   const filerTagsLongTerm = [ltdNoncurrent, ltdTotal, ltdLeaseNoncurrent, ltdLeaseTotal, combinedTotal, unsecuredLtd, convertibleNoncurrent]
@@ -707,6 +718,7 @@ export function parseCompanyFacts(facts: unknown): { annual: SecPeriod[]; quarte
     ltdLeaseTotal: at(ltdLeaseTotal[side] as Map<K, UnitEntry>, key),
     combinedTotal: at(combinedTotal[side] as Map<K, UnitEntry>, key),
     unsecuredLtd: at(unsecuredLtd[side] as Map<K, UnitEntry>, key),
+    fhlbAdvances: at(fhlbAdvances[side] as Map<K, UnitEntry>, key),
     totalEquity: at(totalEquity[side] as Map<K, UnitEntry>, key),
     currentAssets: at(currentAssets[side] as Map<K, UnitEntry>, key),
     currentLiabilities: at(currentLiabilities[side] as Map<K, UnitEntry>, key),
