@@ -130,22 +130,22 @@
         "key": "totalDebt",
         "label": "Total Debt",
         "values": [
-          null,
-          null,
-          null,
-          null,
-          null
+          5748000000,
+          4854000000,
+          4674000000,
+          4928000000,
+          5200000000
         ]
       },
       {
         "key": "netDebt",
         "label": "Net Debt",
         "values": [
-          null,
-          null,
-          null,
-          null,
-          null
+          4920000000,
+          4643000000,
+          4405000000,
+          4869000000,
+          5159000000
         ]
       },
       {
@@ -239,11 +239,11 @@
   "ttm": {
     "pe": 28.836923076923078,
     "ps": 0.5051831651757905,
-    "evToEbitda": 14.396,
+    "evToEbitda": 14.680228355247982,
     "grossMargin": 0.17554132509406226,
     "operatingMargin": 0.031445443899035704,
     "netMargin": 0.01813968554556101,
-    "netDebtToEbitda": null,
+    "netDebtToEbitda": 2.9878892733564015,
     "interestCoverage": 4.124183006535947,
     "currentRatio": 1.1370493479928407,
     "fcfYield": 0.04665956028213477
@@ -594,27 +594,15 @@
       "capturedAt": "2026-09-28T22:17:42.248Z"
     },
     {
-      "field": "ttm.evToEbitda",
-      "source": "yahoo",
-      "endpoint": "quoteSummary.defaultKeyStatistics.enterpriseToEbitda",
-      "capturedAt": "2026-10-02T00:13:43.950Z"
-    },
-    {
       "field": "beta",
       "source": "shibui",
       "capturedAt": "2026-10-03T03:46:39.826Z",
       "endpoint": "stock_data_query: 2y weekly log returns vs SPY (cov/var) → Blume-adjusted, clamped [0.3, 2.5]"
     },
     {
-      "field": "ttm.fcfYield",
-      "source": "edgar",
-      "endpoint": "derived: TTM (operating cash flow − capex; last FY + YTD − prior YTD) to 2026-06-27 / market cap, SEC companyfacts",
-      "capturedAt": "2026-10-03T04:35:57.608Z"
-    },
-    {
       "field": "shibuiCheck",
       "source": "shibui",
-      "capturedAt": "2026-10-03T04:32:59.534Z",
+      "capturedAt": "2026-10-07T15:18:25.209Z",
       "endpoint": "stock_data_query: close + valuation.market_cap on/before 2026-09-28; fundamentals_quarterly (4 quarters to 2026-06-27): shares_outstanding, revenue, Σfree_cash_flow, Σstock_based_compensation"
     }
   ],
