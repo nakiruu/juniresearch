@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "24f86080196210075835159fa8ed233003589070dacdffc1db7843652e772ffb",
-  "reviewedAt": "2026-10-07T15:53:50Z",
+  "judgmentSha256": "0623519158e00106a342e22e8c54439eb9f8b25b5321052f4aabf178467098b4",
+  "reviewedAt": "2026-10-07T15:55:06Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved",
   "findings": [
     {
       "id": "F-1",
@@ -202,7 +202,8 @@
       "quote": "This replaces the BUY in our earlier report on this filing; the change comes from pricing the Bear case on its own earnings story rather than from any change in the price.",
       "issue": "New in the rewrite: the same sentence appears in two sections (rubric 7). analystCommentary already says 'Our earlier report on this filing rated the shares BUY; the change comes from pricing the Bear case on its own earnings story, and the Valuation section shows how close the call is.' The explanation of the label change ('the change comes from pricing the Bear case on its own earnings story') is word for word in both fields.",
       "fix": "State the BUY-to-HOLD change and its reason once, in finalRecommendation.body[0], which can keep 'rather than from any change in the price'. In analystCommentary, cut it to a pointer such as 'This replaces our earlier BUY; see Final Recommendation', or drop it.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Fixed. analystCommentary now points instead of restating: 'The label differs from our earlier report on this filing for the reason given in the Final Recommendation, and the Valuation section shows how close the call is.' The reason now appears only in finalRecommendation.body[0]. Swapping the old sentence back into the file reproduces the previous judgment hash (24f86080...), which confirms this is the only change."
     }
   ]
 }
