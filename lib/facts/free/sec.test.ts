@@ -315,6 +315,34 @@ describe("total debt — concepts and rules added 2026-10-07 (D-1)", () => {
     expect(p.total_debt).toBe(20_494);
   });
 
+  it("TMO-shape: the two face lines (noncurrent debt-and-lease + DebtCurrent) are the balance-sheet total; LongTermDebt is not re-added", () => {
+    // TMO FY2025 10-K (0000097745-26-000144) balance sheet: "Short-term obligations and current maturities of long-term
+    // obligations 3,533" + "Long-term obligations 35,852" = 39,385. The note's LongTermDebt 39,172 already includes the
+    // current maturities and excludes the $213M finance leases; the pack captured on the pre-2026-10-06 code read
+    // 39,172 + 3,533 = 42,705. TMO tags no LongTermDebtCurrent or ShortTermBorrowings.
+    const p = fy2025({
+      LongTermDebt: { units: { USD: [inst(39_172)] } },
+      DebtCurrent: { units: { USD: [inst(3_533)] } },
+      LongTermDebtAndCapitalLeaseObligations: { units: { USD: [inst(35_852)] } },
+      DebtInstrumentCarryingAmount: { units: { USD: [inst(39_459)] } }, // note-level, unread
+    });
+    expect(p.total_debt).toBe(39_385);
+  });
+
+  it("GE-shape (10-K): every path agrees with the combined amount; nothing is double-added", () => {
+    // GE FY2025 10-K (0000040545-26-000049): LongTermDebt 20,469; DebtCurrent 1,686; LongTermDebtAndCapitalLeaseObligations
+    // 18,808; ShortTermBorrowings 25; DebtLongtermAndShorttermCombinedAmount 20,494 (= 18,808 + 1,686). The pack captured
+    // on the pre-2026-10-06 code read LongTermDebt as a noncurrent line: 20,469 + 1,686 + 25 = 22,180.
+    const p = fy2025({
+      LongTermDebt: { units: { USD: [inst(20_469)] } },
+      DebtCurrent: { units: { USD: [inst(1_686)] } },
+      LongTermDebtAndCapitalLeaseObligations: { units: { USD: [inst(18_808)] } },
+      ShortTermBorrowings: { units: { USD: [inst(25)] } },
+      DebtLongtermAndShorttermCombinedAmount: { units: { USD: [inst(20_494)] } },
+    });
+    expect(p.total_debt).toBe(20_494);
+  });
+
   it("CME-shape: UnsecuredLongTermDebt + a zero LongTermDebtCurrent", () => {
     const p = fy2025({
       UnsecuredLongTermDebt: { units: { USD: [inst(3_422)] } },

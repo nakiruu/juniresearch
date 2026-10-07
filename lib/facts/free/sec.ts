@@ -496,6 +496,10 @@ type DerivedFields = Omit<SecPeriod, "fiscal_period" | "fiscal_year" | "report_d
  *   0. both lease lines (noncurrent and including-current) report the period with the SAME value → that value is
  *      the all-in balance-sheet line (CVX, SCHW); add only short-term borrowings / commercial paper, never DebtCurrent;
  *   1. LongTermDebtNoncurrent + all current debt;
+ *   1b. the two FACE lines, LongTermDebtAndCapitalLeaseObligations (noncurrent) + DebtCurrent, when both report:
+ *      their sum is the balance-sheet total (TMO FY2025: 35,852 + 3,533 = 39,385; GE: 18,808 + 1,686 = 20,494),
+ *      and it outranks the note's LongTermDebt, which includes the current maturities but not finance leases
+ *      (TMO 39,172 — 213 short of the balance sheet, or 42,705 if DebtCurrent were re-added);
  *   2. LongTermDebt (already holds its current portion) + non-long-term current debt only;
  *   3. LongTermDebtAndCapitalLeaseObligations (noncurrent) + all current debt (RTX, BSX);
  *   4. …IncludingCurrentMaturities alone when it is the only lease line (holds its current portion) + non-long-term current debt only;
@@ -523,6 +527,7 @@ export function deriveTotalDebt(
   if (r.ltdLeaseTotal != null && r.ltdLeaseNoncurrent != null && r.ltdLeaseTotal === r.ltdLeaseNoncurrent)
     return r.ltdLeaseTotal + (r.shortTermBorrowings ?? 0);
   if (r.ltdNoncurrent != null) return r.ltdNoncurrent + (allCurrent ?? 0);
+  if (r.ltdLeaseNoncurrent != null && r.debtCurrent != null) return r.ltdLeaseNoncurrent + r.debtCurrent;
   if (r.ltdTotal != null) return r.ltdTotal + (otherCurrent ?? 0);
   if (r.ltdLeaseNoncurrent != null) return r.ltdLeaseNoncurrent + (allCurrent ?? 0);
   if (r.ltdLeaseTotal != null) return r.ltdLeaseTotal + (otherCurrent ?? 0);
