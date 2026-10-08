@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "f735f083fee046a071104ed49a4b34c5c4a01e1a374de18d50e642836538f6a7",
-  "reviewedAt": "2026-10-08T14:52:29Z",
+  "judgmentSha256": "70f201e9ae85f5a11691d100dfc1c8bce4f663c4aa707e5f6343a957ad32358c",
+  "reviewedAt": "2026-10-08T14:56:57Z",
   "reviewer": "Claude Opus 5.5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved",
   "findings": [
     {
       "id": "F-1",
@@ -208,7 +208,8 @@
       "quote": "Profitability turned in 2026.",
       "issue": "This reads as a first, and the series on the page does not show one. In the Facts income statement, FY24 net income is 0.0 ($B), unsigned, while every loss year reads -0.0 or below (FY25 -0.0, FY21 to FY23 -0.2). So FY24 was not a loss year at the net income line. The six-month figures support a turn against the prior-year period, not a turn to profitability for the first time. The 10-K summary's \"history of net losses\" does not make 2026 the first profitable period either.",
       "fix": "Make the comparison the source makes: net income turned positive in the six months ended June 30, 2026, against a loss in the same period of 2025. Do not imply a first. Do not add a FY24 figure; the surface shows it only as 0.0.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Now: \"Net income turned positive in the six months ended June 30, 2026, against a loss in the same period of 2025\". No first is implied."
     },
     {
       "id": "F-23",
@@ -217,7 +218,8 @@
       "quote": "and far below today's current-year multiple because growth is slowing",
       "issue": "Calls coherence: the multiples are compared on different bases. The 36x is applied to FY27E EPS ($0.50). Today's current-year multiple (61.3x) is on FY26E EPS ($0.27). Because FY27E EPS is much higher than FY26E, any FY27E multiple sits far below a FY26E one. That says nothing about slowing growth. On a like-for-like basis the Base price of $18 is above today's $16.55, so on FY26E EPS it implies a higher multiple than 61.3x, not a lower one. The Bull driver has the same mixed basis (scenarios[0].driver: \"but still below today's current-year multiple\"), and the $23 Bull is even further above today's multiple on FY26E EPS.",
       "fix": "Compare each assumed multiple only with today's FY27E multiple (~33.1x), which is the like-for-like reference, and argue the premium on that basis. Drop the comparison with the 61.3x current-year multiple from both drivers, and drop the claim that slowing growth explains the gap.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Both drivers now compare only with today's FY27E multiple, and multiplesCommentary names it as the scenarios' reference. The comparison with the current-year multiple is gone."
     },
     {
       "id": "F-24",
@@ -226,7 +228,8 @@
       "quote": "We do not set the Bear lower because the cash generation and blank debt rows set out under Financials do not depend on the disputed share count.",
       "issue": "This does not follow. The aggregate cash and free cash flow do not depend on the share count, but the Bear is a per-share price. The Bear driver builds it from FY25 revenue \"on the vendor share count\", and multiplesCommentary says the proxy reports a much larger share count. Per-share cash, and the support it gives a $12 floor, shrinks as the share count grows. Of the three scenarios, only the Bear converts an aggregate into a price through the vendor share count; Bull and Base use per-share consensus EPS. So the scenario that sets D, and therefore R, is the one most exposed to the caveat the report raises. analystCommentary leans on the same floor (\"cash generation and a balance sheet that shows no debt limit how far a reasonable bear case can go\").",
       "fix": "Say plainly that the Bear, unlike Bull and Base, is converted to a price on the vendor share count, and that on the proxy count it would be lower. Then argue the 30% weight and the $12 floor with that sensitivity acknowledged, rather than claiming the floor's support is independent of the share count. Keep the full share-count statement in multiplesCommentary, and point to it in words.",
-      "status": "open"
+      "status": "addressed",
+      "note": "scenarioCommentary now says the Bear alone is converted on the vendor share count, would be deeper on the proxy count, and that R would then move further from the BUY line. analystCommentary no longer claims the floor."
     },
     {
       "id": "F-25",
@@ -235,7 +238,8 @@
       "quote": "Base carries 45% because revenue for the six months ended June 30, 2026 leaves the FY26 consensus within reach (see Growth).",
       "issue": "The weights read this evidence one way only. growth.points[2] shows the year to date leaves the second half needing growth \"well below the pace of the year to date\" to reach FY26E. That shows consensus is easy to reach. It does not show that growth will slow to the consensus path, which is what the Base (\"Revenue lands near the FY26E consensus as growth slows\") assumes. The same figure is evidence for the Bull condition (\"Revenue growth holds near the Q2'26 pace instead of slowing to consensus\"), yet the Bull paragraph says only that Bull needs growth above a consensus path. Nothing on the page explains why second-half growth would fall to the pace consensus implies. The only slowdown evidence given is Q2'26 at 17% against FY25's +23.3%. The label survives a shift of weight toward Bull, but the stated reasons for the 45/25 split do not support it.",
       "fix": "Argue the Base and Bull weights on evidence about the second-half pace: what on the surface points to a slowdown toward the consensus path, and what points against it, including the year-to-date figure. Name that figure as the reading that cuts toward Bull. If the weights stay, say why. If the evidence does not support them, change them and let the derived label follow.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Weights are now 30/40/30 and argued on the second-half pace both ways: the year-to-date figure is named as cutting toward Bull, and the easing between FY25, Q2 and the half supports Base. The page derives 7.70, +6.9%, -27.5%, 0.25x, HOLD; the triggers in finalRecommendation.body[1] still hold."
     },
     {
       "id": "F-26",
@@ -244,7 +248,8 @@
       "quote": "the 10-K ties the FY24 revenue decrease primarily to the August 2023 Block Amendment, it still names Block among a small number of significant customers, and Revenue Share rates rise as customers' volumes grow",
       "issue": "Paraphrase repetition. This sentence re-sources three claims that other sections already carry. The Block Amendment attribution of the FY24 decline is in incomeCommentary. The 10-K concentration statement is in risks.idiosyncratic[0]. The Revenue Share mechanism is in growth.points[1], and here it loses the source's hedge (\"Generally\"). Separately, \"Block has already obtained reduced pricing once\" appears verbatim in analystCommentary and finalRecommendation.body[0], and risks.idiosyncratic[0] makes the same point (\"this risk has already played out once\"). That is three tellings of the precedent claim, four counting \"the downside has precedent\" in this field.",
       "fix": "Argue the Bear weight with pointers in words (\"the Block precedent set out under Risks and the Revenue Share step-up under Growth\") rather than re-sourcing the 10-K and MD&A here. Keep \"generally\" wherever the mechanism is stated. Leave the precedent sentence in one summary location, analystCommentary or finalRecommendation.body[0], and phrase the other differently or as a pointer.",
-      "status": "open"
+      "status": "addressed",
+      "note": "scenarioCommentary now points to Risks and Growth in words; \"generally\" is restored in executiveSummary.risks[1]; the precedent sentence is left only in finalRecommendation.body[0]."
     },
     {
       "id": "F-27",
@@ -253,7 +258,8 @@
       "quote": "Trailing P/E is 183.9x and EV/EBITDA is 62.9x because trailing GAAP earnings are barely positive.",
       "issue": "EBITDA is not GAAP earnings, and on the Facts block the TTM operating margin is -1.9%. Only the net margin (1.5%) is barely positive. The explanation fits the P/E but not the EV/EBITDA.",
       "fix": "Explain the P/E by the thin TTM net margin, and say EV/EBITDA is high because trailing EBITDA is small, without calling it GAAP earnings.",
-      "status": "open"
+      "status": "addressed",
+      "note": "P/E is now explained by the 1.5% TTM net margin, and EV/EBITDA by small trailing EBITDA."
     },
     {
       "id": "F-28",
@@ -262,7 +268,8 @@
       "quote": "For Class A investors, that means limited practical leverage on contested matters.",
       "issue": "Repeats the conclusion already drawn earlier in the same field (\"outside holders would have to vote largely together to outvote him on a contested matter\") and in governance (\"Class A holders' ability to shape contested decisions is limited, as the ownership figures below show\").",
       "fix": "Keep the reading once, in insiderOwnership, where the figures are. Cut the closing sentence, or end the governance paragraph on the board structure and point to the figures without the conclusion.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Governance ends on a pointer; the leverage reading appears once, in insiderOwnership."
     }
   ]
 }
