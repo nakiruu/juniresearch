@@ -10,7 +10,7 @@
  * overwrite guard keep the brief bound to the prompt and report it points at.
  */
 import { z } from "zod";
-import { EditorialReviewShape, ReviewInputsStamp, type EditorialReview } from "./editorial.schema";
+import { EditorialReviewShape, ReviewInputsStamp, readInputsStamp, type EditorialReview } from "./editorial.schema";
 import { judgmentSha256 } from "./editorial";
 import { FactPack } from "../facts/schema";
 import { projectReportFacts, type ReportFacts } from "../facts/project";
@@ -19,7 +19,7 @@ import type { Desk } from "./desk.schema";
 import { groundingSurface, groundJudgment } from "./validate-judgment";
 import { weakLine } from "./grounding";
 import { renderCalls, renderFactsBlock, renderContextBlock } from "./prompt";
-import { canon, inputsLine, reviewInputs, type Component, type ReviewInputs } from "./review-inputs";
+import { canon, changedComponents, inputsLine, reviewInputs, type Component, type ReviewInputs } from "./review-inputs";
 
 /**
  * The figures the build could check only by digits or without a sign, and the assumed whole-number multiples (D2): the
@@ -122,6 +122,7 @@ export function renderReviewBrief(input: {
 const COPIED_SHA = /^"judgmentSha256": "([0-9a-f]{64})",\r?$/m;
 const LEGACY_SHA = /`judgmentSha256` must be exactly `([0-9a-f]{64})`/;
 const COPIED_INPUTS = /^"inputs": (\{[^\r\n]*\})\r?$/m;
+const PREVIOUS_FINDINGS = /^# Previous findings\r?\n[\s\S]*?^```json\r?\n([\s\S]*?)\r?\n```\r?$/m;
 
 /** The two values a brief told its reviewer to copy; null for a brief rendered before the copy block existed. */
 export function briefCopyBlock(text: string): { judgmentSha256: string; inputs: ReviewInputs } | null {
@@ -134,14 +135,16 @@ export function briefCopyBlock(text: string): { judgmentSha256: string; inputs: 
 }
 
 /**
- * May synth:review-brief overwrite the existing brief? Not when its inputs differ from today's (a brief rendered before
- * inputs existed counts as different) while no findings file newer than it answers its judgment: a reviewer may still be
- * reading it, and swapping the brief under that reviewer would launder the old review onto the new inputs.
+ * May synth:review-brief overwrite the existing brief? Not when its inputs differ from today's while no findings file
+ * answers it: a reviewer may still be reading it, and swapping the brief under that reviewer would launder the old review
+ * onto the new inputs. "Answers" is decided by content: the findings file's judgmentSha256 and inputs stamp are the two
+ * values the brief's copy block told the reviewer to copy (an mtime can be touched). Only a brief rendered before the
+ * copy block existed falls back to a findings file for its judgment that is newer than it.
  */
 export function briefOverwriteGuard(input: {
   existingBriefText: string | null;
   currentInputs: ReviewInputs;
-  findings: { judgmentSha256: string } | null;
+  findings: { judgmentSha256: string; inputs?: unknown } | null;
   briefMtime: number | null;
   findingsMtime: number | null;
   briefPath?: string;
@@ -150,9 +153,23 @@ export function briefOverwriteGuard(input: {
   if (text == null) return { ok: true };
   const copied = briefCopyBlock(text);
   if (copied && inputsLine(copied.inputs) === inputsLine(currentInputs)) return { ok: true };
-  const briefSha = (COPIED_SHA.exec(text) ?? LEGACY_SHA.exec(text))?.[1];
-  const answered = findings != null && briefSha != null && findings.judgmentSha256 === briefSha
-    && findingsMtime != null && briefMtime != null && findingsMtime > briefMtime;
+  let answered: boolean;
+  if (copied) {
+    const read = findings ? readInputsStamp(findings) : null;
+    // The previous review the brief carried is not an answer to it, however well it matches (or however recently touched).
+    const prev = PREVIOUS_FINDINGS.exec(text)?.[1];
+    const isPrevious = (() => {
+      if (!findings || prev == null) return false;
+      const rest = Object.fromEntries(Object.entries(findings).filter(([k]) => k !== "judgmentSha256" && k !== "inputs"));
+      try { return canon(rest) === canon(JSON.parse(prev)); } catch { return false; }
+    })();
+    answered = !isPrevious && findings?.judgmentSha256 === copied.judgmentSha256 && read != null && "stamp" in read
+      && read.stamp.scheme === copied.inputs.scheme && changedComponents(read.stamp, copied.inputs).length === 0;
+  } else {
+    const briefSha = LEGACY_SHA.exec(text)?.[1];
+    answered = findings != null && briefSha != null && findings.judgmentSha256 === briefSha
+      && findingsMtime != null && briefMtime != null && findingsMtime > briefMtime;
+  }
   if (answered) return { ok: true };
   return { ok: false, message: `${briefPath} was rendered for other inputs and no newer findings file answers it: a reviewer may be reading the brief for the old inputs; stop that reviewer, then delete \`${briefPath}\` and re-render` };
 }

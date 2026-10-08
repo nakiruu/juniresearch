@@ -284,12 +284,28 @@ describe("briefOverwriteGuard", () => {
   const old: ReviewInputs = { ...inputs, facts: "9".repeat(64) };
   const existing = brief({ inputs: old });
   const sha = judgmentSha256(judgmentText);
-  const findings = (judgment = sha) => ({ judgmentSha256: judgment });
+  const findings = (judgment = sha, stamp?: unknown) => ({ judgmentSha256: judgment, ...(stamp ? { inputs: stamp } : {}) });
   it("allows when no brief exists", () => expect(briefOverwriteGuard({ existingBriefText: null, currentInputs: inputs, findings: null, briefMtime: null, findingsMtime: null }).ok).toBe(true));
   it("allows when the inputs are equal", () => expect(briefOverwriteGuard({ existingBriefText: brief(), currentInputs: inputs, findings: null, briefMtime: 2, findingsMtime: null }).ok).toBe(true));
-  it("allows when a newer findings file for the brief's judgment exists", () =>
-    expect(briefOverwriteGuard({ existingBriefText: existing, currentInputs: inputs, findings: findings(), briefMtime: 1, findingsMtime: 2 }).ok).toBe(true));
-  it("refuses when the inputs differ and no newer findings file for its judgment exists", () => {
+  it("allows when the findings file answers this brief: its stamp and judgment are the brief's copy block, whatever the mtimes", () => {
+    for (const [bm, fm] of [[1, 2], [2, 1], [null, null]] as const)
+      expect(briefOverwriteGuard({ existingBriefText: existing, currentInputs: inputs, findings: findings(sha, { ...old, source: undefined }), briefMtime: bm, findingsMtime: fm }).ok).toBe(true);
+  });
+  it("refuses old findings stamped with other inputs, even with a newer mtime (a touched file answers nothing)", () => {
+    const other = { ...old, facts: "a".repeat(64) };
+    for (const f of [findings(sha, other), findings(sha), findings(sha, "junk"), findings("c".repeat(64), old)])
+      expect(briefOverwriteGuard({ existingBriefText: existing, currentInputs: inputs, findings: f, briefMtime: 1, findingsMtime: 2 }).ok).toBe(false);
+  });
+  it("refuses when the findings file is the previous review the brief itself carried, matching stamp or not (the NVDA touch repro)", () => {
+    // a re-check brief rendered on top of a review that already answers its judgment and inputs
+    const prev = EditorialReview.parse({ ...previousReview, judgmentSha256: sha, inputs: { ...old, source: "backfill:abc1234" } });
+    const recheck = brief({ inputs: old, previousReview: prev, round: 2 });
+    expect(briefOverwriteGuard({ existingBriefText: recheck, currentInputs: inputs, findings: prev, briefMtime: 1, findingsMtime: 2 }).ok).toBe(false);
+    // a reviewer's new findings for this brief (new reviewedAt, the copied stamp) answer it
+    const answer = EditorialReview.parse({ ...prev, reviewedAt: "2026-10-08T12:00:00Z", inputs: old });
+    expect(briefOverwriteGuard({ existingBriefText: recheck, currentInputs: inputs, findings: answer, briefMtime: 2, findingsMtime: 1 }).ok).toBe(true);
+  });
+  it("refuses when the inputs differ and no findings file answers it", () => {
     for (const [f, fm] of [[null, null], [findings(), 0.5], [findings("c".repeat(64)), 2]] as const) {
       const r = briefOverwriteGuard({ existingBriefText: existing, currentInputs: inputs, findings: f, briefMtime: 1, findingsMtime: fm, briefPath: "x/brief.md" });
       expect(r.ok).toBe(false);
