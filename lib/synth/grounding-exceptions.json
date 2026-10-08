@@ -1,5 +1,5 @@
 {
-  "note": "Owner-approved grounding exceptions for published reports (plan 2026-10-07 §5, decision D1). Shrink-only: grounding-exceptions.test.ts pins every key. synth:build applies this file only when it is byte-equal to main's copy, and an entry only while its judgment and rendered surface are unchanged. Each fix round (plan §6.1) removes its entries; delete the file when it is empty.",
+  "note": "Owner-approved grounding exceptions for published reports (plan 2026-10-07 §5, decision D1). Shrink-only: grounding-exceptions.test.ts pins every key. synth:build applies this file only when it is byte-equal to both refs/heads/main's and refs/remotes/origin/main's copies, and an entry only while its judgment and rendered surface are unchanged. Any renderer wording change lapses every entry; re-key in the same commit, listing old key -> new key, with unchanged judgment SHAs. Each fix round (plan §6.1) removes its entries; delete the file when it is empty.",
   "entries": [
     {
       "ticker": "CSTM",

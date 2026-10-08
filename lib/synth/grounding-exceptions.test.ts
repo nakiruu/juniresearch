@@ -143,8 +143,36 @@ const FROZEN_KEYS = new Set([
   "NVDA|0001045810-26-000075|96408ee70d2f07ad2d7ca8f9a3c669ce75c10b016dc4b32bb6e19a06a18d1395|18749fbef886bfd281a1d2695e3ad678c3a6d0571a84a5a780ec401e33c00b40|grounding|sections.financials.balanceCommentary|400 times",
 ]);
 
+/**
+ * The judgment each entry was approved against, one line per entry. A re-key (a renderer wording change moved every
+ * surface hash) edits only the surface hash inside FROZEN_KEYS; this list never changes except to shrink with a fix round.
+ */
+const FROZEN_JUDGMENTS = [
+  "CSTM|4142e25fe8ad5fb216dfdac560d6e91e946e0f71950cfce5b99fd17185d8ed0f",
+  "LH|68ac4715cee0131281b68b90640a6e844ad9d267ac0264f8bd963123d46a169c",
+  "LH|68ac4715cee0131281b68b90640a6e844ad9d267ac0264f8bd963123d46a169c",
+  "LLY|9f262de96beee34bd73e30500e22606e7435611b3b72f4a020599812e9d8163f",
+  "LLY|9f262de96beee34bd73e30500e22606e7435611b3b72f4a020599812e9d8163f",
+  "MDU|7dfd54a98b8a6084de33ea3accb8decd8cda867f205f87df68d838f2d2cde2d1",
+  "MDU|7dfd54a98b8a6084de33ea3accb8decd8cda867f205f87df68d838f2d2cde2d1",
+  "NVDA|96408ee70d2f07ad2d7ca8f9a3c669ce75c10b016dc4b32bb6e19a06a18d1395",
+];
+const judgmentOf = (key: string) => { const [ticker, , judgment] = key.split("|"); return `${ticker}|${judgment}`; };
+const sorted = (xs: string[]) => [...xs].sort();
+
 describe("the committed exception file", () => {
   const file = GroundingExceptionsFile.parse(JSON.parse(readFileSync("lib/synth/grounding-exceptions.json", "utf8")));
+  it("pins keys whose judgment hashes are exactly the approved ones: a re-key may move a surface hash, never a judgment", () => {
+    expect(sorted([...FROZEN_KEYS].map(judgmentOf))).toEqual(sorted(FROZEN_JUDGMENTS));
+  });
+  it("holds entries whose judgment hashes are a sub-multiset of the approved ones", () => {
+    const left = [...FROZEN_JUDGMENTS];
+    for (const e of file.entries) {
+      const at = left.indexOf(`${e.ticker}|${e.judgmentSha256}`);
+      expect(at, exceptionKey(e)).toBeGreaterThanOrEqual(0);
+      left.splice(at, 1);
+    }
+  });
   it("holds only pinned entries: adding one is a reviewed code change", () => {
     expect(file.entries.map(exceptionKey).filter((k) => !FROZEN_KEYS.has(k))).toEqual([]);
   });

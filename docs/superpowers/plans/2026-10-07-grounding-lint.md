@@ -441,6 +441,8 @@ Run after Task 10's merge, in this order, one report at a time, with the house p
 
 **A fixed report's exception entries are removed from the JSON and from `FROZEN_KEYS` in the same merge**, so the file only shrinks. It is deleted, with `scripts/lib/grounding-legacy.ts`, when empty.
 
+**Renderer wording changes lapse every entry** (review C-8). `surfaceSha256` covers the rendered Facts, Calls, judgment and Context text, so any wording change in a renderer moves every entry's surface hash, even one with no figure in it (it happened once, in Task 9's Calls sentence). The commit that makes such a change re-keys in the same commit: `grounding:sweep --propose-exceptions` must return the same entries; the commit message lists old key → new key one for one; every judgment SHA stays unchanged (the pin test checks the judgment-SHA multiset against `FROZEN_JUDGMENTS`).
+
 | Order | Report | Why queued | What the fix round must do |
 |---|---|---|---|
 | 1 | **BAM** (held) | pack drift (cc1e51e): 22 misses at HEAD | re-ground the FCF and revenue prose on the corrected pack |
@@ -466,7 +468,7 @@ The queue holds **20 reports**: 5 with entries, 5 silently drifted, and 10 with 
   Add (D2): "A multiple or margin you assume, and that is not on the surface, is your judgment: state its basis in the same sentence; the build lists each one for the reviewer."
 - **Review brief (`review-brief.ts:46`)** — rewritten without the overclaim (R-4).
 
-  "Its **Facts**, **Calls** and **Context** blocks, with the report's own calls, are the grounding surface. The build rejects a figure that matches nothing on it. Where the surface states a unit, scale or sign (Facts, Calls, typed Context figures), the build checks them. A Context statement-table cell carries no unit, so a figure matching one is checked by digits only, and Context signs are not checked. The section below lists every figure grounded that weakly; check its unit, scale, sign and attribution first. Which quantity and which period a figure is attached to (rubric item 1) is always yours."
+  "Its **Facts**, **Calls** and **Context** blocks, with the report's own calls, are the grounding surface. The build rejects a figure that matches nothing on it. Where the surface states a unit, scale or sign (Facts, Calls, typed Context figures), the build checks them. A Context statement-table cell carries no unit, so a figure matching one is checked by digits only, and an unsigned Context figure cannot check a sign. The section below lists every figure grounded that weakly; check its unit, scale, sign and attribution first. Which quantity and which period a figure is attached to (rubric item 1) is always yours."
 
   It then renders a `# Weakly grounded figures` section (§4.6) and an `# Assumed figures` section (D2).
 - **Docs:**

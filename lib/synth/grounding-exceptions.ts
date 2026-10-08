@@ -12,6 +12,11 @@
  *     figures before a reviewed merge and push;
  *   - grounding-exceptions.test.ts pins every entry's key to a literal list, so adding one is a reviewed code change.
  * The fix queue removes entries as reports are re-synthesized; the file is deleted when it is empty.
+ *
+ * Re-keying: the surface hash covers the rendered text, so ANY wording change in renderFactsBlock, renderCalls,
+ * renderJudgmentBlock or renderContextBlock lapses every entry, even a change with no figure in it. The commit that makes
+ * such a change re-keys in the same commit: it runs `grounding:sweep --propose-exceptions`, lists old key → new key one
+ * for one in its message, and keeps every judgment SHA unchanged (the pin test checks the judgment-SHA multiset).
  */
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
