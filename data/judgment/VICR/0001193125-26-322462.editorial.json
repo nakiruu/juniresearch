@@ -1,8 +1,13 @@
 {
-  "judgmentSha256": "f5d4d52ecbdf5cc9e5413d737f218acc475486349a5a905028e19cde6c5a29d1",
-  "inputs": {"scheme":1,"facts":"e01c7031366ceb910e04d7a895486686d93e3a2e466edb7c38629ddf70901125","calls":"652ab6e8d7a3925f2a5cd0ac2f1331a34831ddc06ba00db697e59a58e6cebb0c","context":"e89f80516c2923b8fb5e49d0de33983dca5f579ac655556434568c4f5f0c32c5","source":"backfill:e48da28"},
-  "reviewedAt": "2026-09-23T07:35:00Z",
-  "reviewer": "claude-opus-4-8",
+  "judgmentSha256": "6321caf2dfbe6c1e70650b3a148073a5067f582c1e29160e16ad30e0d154dcc2",
+  "inputs": {
+    "scheme": 1,
+    "facts": "a697dee24fc4511fe68d0da81eb1bd1de5e77a1dfdec5012009010dbd215ecda",
+    "calls": "652ab6e8d7a3925f2a5cd0ac2f1331a34831ddc06ba00db697e59a58e6cebb0c",
+    "context": "e89f80516c2923b8fb5e49d0de33983dca5f579ac655556434568c4f5f0c32c5"
+  },
+  "reviewedAt": "2026-10-08T20:18:01Z",
+  "reviewer": "claude-opus-5-5",
   "round": 2,
   "verdict": "approved",
   "findings": [
@@ -14,7 +19,7 @@
       "issue": "The $45.0M patent litigation settlement was recognized entirely in Q2 2025 (the press-release income statement shows it in both the quarter-ended and six-months-ended June 30, 2025 columns). The TTM window here ends 2026-06-30, so it spans Q3 2025 through Q2 2026 and excludes Q2 2025. The settlement therefore is not in the TTM net income and cannot have lifted the TTM net margin. This is a causal claim the grounding surface does not support and in fact contradicts on timing. Only the tax benefits (Q1 and Q2 2026, both inside the window) belong in the attribution.",
       "fix": "Drop 'the settlement' from the TTM attribution. The net margin's excess over operating margin reflects the 2026 share-based-compensation tax benefits and other income, both inside the trailing-twelve-month window; the Q2'25 settlement falls outside it. Reserve the settlement caveat for FY25 / year-ago-quarter comparisons, where it belongs.",
       "status": "addressed",
-      "note": "Fixed. The TTM sentence now reads the net margin sits above the operating margin 'because of the 2026 share-based-compensation tax benefits and other income, both of which fall inside the trailing window, and not because of the 2025 settlement, which does not.' The settlement is no longer attributed to the TTM; the FactPack income statement confirms the $45.0M sits only in the Q2'25 / six-months-'25 columns, outside the window."
+      "note": "Still fixed in the rewrite: the TTM sentence attributes the net-margin gap to the 2026 tax benefits and other income inside the window and says the 2025 settlement falls outside it."
     },
     {
       "id": "F-2",
@@ -24,7 +29,7 @@
       "issue": "The FY25 gross margin of 63.6% embeds the one-time $45.0M patent litigation settlement, which was booked in the gross-margin line in Q2'25 (Q2'25 reported gross margin $92,128K = ~$47,128K product gross profit + $45,000K settlement). That single item added roughly 11 points to the full-year figure; without it FY25 gross margin is near the low-50s, consistent with FY24's 51.2%. The report itself strips the settlement out when discussing the year-ago quarter but here holds up the settlement-inflated 63.6% as an organic recovery target, which overstates achievable margin. The clean TTM gross margin on the surface is 56.6% — already below Q2'26's 58.0%. Same overstated target recurs in sections.executiveSummary.catalysts[3] ('Further gross-margin recovery toward the FY25 level of 63.6%').",
       "fix": "Anchor the recovery target to an organic level (e.g. the TTM 56.6% or the Q2'26 58.0%), or explicitly note that FY25's 63.6% was lifted by the $45.0M settlement and is not a clean run-rate. Apply the same correction to catalysts[3].",
       "status": "addressed",
-      "note": "Fixed. growth.points[4] now anchors the organic target to the second-quarter run-rate, which sits above the TTM 56.6%, and states the FY25 63.6% headline 'was inflated by a one-time litigation settlement and is not a clean baseline.' catalysts[3] no longer cites the 63.6% FY25 level; it now reads 'Further gross-margin recovery as volume and product mix improve off the current quarterly run-rate.'"
+      "note": "Still fixed: growth.points[4] says the FY25 margin is not a baseline because it included the settlement, and no catalyst targets the FY25 level."
     },
     {
       "id": "F-3",
@@ -34,7 +39,7 @@
       "issue": "Sourced figures are restated across sections instead of being introduced once and referred back to in words, against house style ('No sentence appears in two sections'; exec-summary items point, later sections argue). Near-verbatim duplications: this systemic sentence repeats executiveSummary.risks[2] ('Trade exposure: roughly half of revenue is earned outside the United States, at 50.8% in 2025'); and executiveSummary.risks[3] ('$45.0 million patent litigation settlement, and royalty revenue is lumpy') is repeated almost word-for-word in risks.idiosyncratic[3]. All four executiveSummary.catalysts are restated with little added mechanism as growth.points (second-fab catalyst[1] vs growth.points[2]; gross-margin catalyst[3] vs growth.points[4]; IP-licensing catalyst[2] vs growth.points[1]; order-book catalyst[0] vs growth.points[0]). Export ~46.0% appears in companyOverview and businessMoat.segments[0]; FY25 FCF $119.2M and buybacks $35.2M appear in both cashflowCommentary and management.capitalAllocation; 86.0x and Advanced Products +45.0% and backlog ~$380M/+145% each recur numerically in three-plus sections.",
       "fix": "Introduce each sourced figure once, then refer back in words ('the export share noted above', 'the trailing multiple'). Make the growth points argue mechanism and what-to-watch rather than restate the catalyst pointers, and de-duplicate the near-identical risk sentences between the executive summary and the risks section.",
       "status": "addressed",
-      "note": "Fixed. The 50.8% export figure now appears once (systemic); exec risks[2] is a figure-free pointer. 46.0% export, FY25 FCF $119.2M/buybacks $35.2M, 86.0x, +45.0% and backlog ~$380M/+145% each now appear once and are referred back in words (capitalAllocation 'detailed in the cash-flow section'; idiosyncratic[1] 'the premium multiple discussed in the valuation section'). Catalysts are now short pointers; growth.points add mechanism and a what-to-watch, and the comparability risk is a pointer-plus-argument pair, not a verbatim repeat."
+      "note": "Still fixed: 50.8% appears only in systemic, 46.0% only in the segment body, FY25 FCF and buybacks only in cashflowCommentary, and the catalysts and executive-summary risks are figure-free pointers."
     },
     {
       "id": "F-4",
@@ -44,7 +49,177 @@
       "issue": "In the desk's own voice the subtitle calls Vicor a 'Modular-power leader'. The grounding surface supports only the narrower, company-stated claim of 'a leadership position in the emerging market segment for powering high-performance processors used for acceleration of ... artificial intelligence' (MD&A). Generalizing that self-stated AI-segment leadership into an unqualified 'modular-power leader' is an unearned superlative in the report's voice.",
       "fix": "Narrow the claim (e.g. 'AI power-delivery leader' or 'modular-power specialist') so the subtitle matches what the source actually supports, or attribute the leadership claim to the company.",
       "status": "addressed",
-      "note": "Fixed. Subtitle now reads 'AI datacenter power-delivery specialist; strong Q2 execution and rising royalties against a rich multiple' — 'specialist' replaces the unearned 'Modular-power leader' superlative and matches the company's self-stated AI-segment framing."
+      "note": "Still fixed: the subtitle now reads 'AI power-delivery specialist; a strong second quarter and a growing backlog, but a deep Bear case holds the call at HOLD', with no superlative."
+    },
+    {
+      "id": "F-5",
+      "severity": "Critical",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "A trailing EV/EBITDA figure is not carried in the pack, so we do not quote one.",
+      "issue": "This is the change in the inputs. The rebuilt Facts now carry trailing EV/EBITDA: the Snapshot lists 'EV/EBITDA (TTM): 120.1x' and the Multiples block lists 'EV/EBITDA: 120.1x', and the rebuilt report renders it in its snapshot and multiples table. The sentence now makes a statement about the pack that the surface contradicts, beside a page cell that shows the figure.",
+      "fix": "Replace the sentence: quote the trailing EV/EBITDA of 120.1x once in this paragraph, with the 86.0x P/E and 26.1x sales, and say what it adds to the valuation argument (it is the richest of the trailing multiples). Do not repeat the figure in another section.",
+      "status": "addressed",
+      "note": "Fixed. multiplesCommentary now quotes 120.1x EV/EBITDA once, beside 86.0x and 26.1x. It explains, correctly, that the figure is highest because trailing net income (lifted by tax benefits and other income) runs above operating profit. The figure appears in no other section."
+    },
+    {
+      "id": "F-6",
+      "severity": "Critical",
+      "field": "sections.financials.cashflowCommentary",
+      "quote": "The trailing free-cash-flow yield is only 0.4%, a direct consequence of the current valuation rather than of weak cash generation.",
+      "issue": "Unsupported causal claim that the page's own figures contradict. At the ~$12.4B market cap, FY25 free cash flow of $119.2M would be a yield of roughly 1%, so a trailing 0.4% also reflects much lower trailing free cash flow, not only the price. The trailing window includes the first half of 2026, which this same paragraph describes: $3.9M used in operations in Q1 (after the $28.6M litigation-award payment) and $34.0M from operations in Q2, against capital expenditures of $12.4M and $11.2M. Cash generation in the window is weaker than in FY25.",
+      "fix": "Say the low trailing yield reflects both the valuation and weaker trailing cash generation, and point in words to the first-quarter operating outflow after the litigation-award payment and the higher capital spending already quoted. Do not compute a trailing free-cash-flow figure; none is on the surface.",
+      "status": "addressed",
+      "note": "Fixed. The paragraph now says the 0.4% 'reflects both the valuation and weaker cash generation inside the trailing window'. It points in words to the outflow after the award payment and to capex running above the year-ago pace, with no computed trailing FCF figure."
+    },
+    {
+      "id": "F-7",
+      "severity": "Critical",
+      "field": "sections.businessMoat.durability",
+      "quote": "Competition in AI power delivery is intensifying as alternative approaches such as point-of-load regulators and integrated voltage regulators evolve.",
+      "issue": "No source on the surface says competition in AI power delivery is intensifying. The only mention of PoL regulators and IVRs is the CEO's July 21, 2026 press-release comment, which frames them the other way: the industry's move to PoL regulators 'merely trades off one handicap (low current density) for another (low current gain)', and 'Feeding IVRs with a current multiplier is an incremental opportunity for Vicor.' The report states as fact a trend the pack does not establish and reverses the only source's framing. The risk factors mention competitors' price reductions only generically, which the same paragraph already cites.",
+      "fix": "Drop the claim, or present it as the desk's risk view in words (alternative architectures could compete), attribute the PoL/IVR point to the CEO's July 21, 2026 comment with his framing (IVRs as an incremental opportunity), and say the pack carries no evidence on competitors' share or pricing. The Bear driver may keep competition as a scenario.",
+      "status": "addressed",
+      "note": "Fixed. durability now attributes the PoL/IVR point to the CEO's July 21, 2026 comment, quotes his framing ('merely trades off one handicap'; 'an incremental opportunity for Vicor') and labels it the company's view. It gives the desk's risk view in words and says the pack has no evidence on competitors, so it does not call competition intensifying."
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "sections.growth.points[0]",
+      "quote": "Advanced Products revenue grew 45.0% sequentially in the second quarter, and twelve-month backlog reached about $380 million, up 145% from a year ago. The mechanism is design wins for on-board and in-rack power delivery converting into repeatable, high-volume orders",
+      "issue": "The MD&A attributes the 45.0% rise to 'improved market demand and higher royalty revenue'. The report substitutes its own driver (design wins converting into repeatable orders) and leaves out royalties, which the press-release income statement shows at $30,426K in Q2'26 against $10,353K a year earlier. Royalties carry no cost line in that statement, so they also lift the Q2 gross margin: growth.points[4] calls the 58.0% second-quarter run-rate 'the organic target' without saying it leans on royalty revenue that risks.idiosyncratic[3] calls uneven. growth.points[1]'s mechanism ('royalty income scales with customers' unit volumes rather than with Vicor's own factory output') is not stated in any source.",
+      "fix": "Use the company's explanation for the +45.0% (demand and higher royalty revenue) and quote the royalty revenue line once. In growth.points[4], say the second-quarter margin run-rate depends partly on royalty revenue that may not recur at the same level, and drop 'organic'. In growth.points[1], drop the unit-volume mechanism or describe only what the income statement shows.",
+      "status": "addressed",
+      "note": "Fixed. points[0] uses the MD&A's explanation and quotes royalty revenue of $30,426 thousand vs $10,353 thousand from the right columns of a statement labelled in thousands. points[1] describes only what the statement shows (no cost line for royalties). points[4] drops 'organic' and notes the dependence on royalties. The repetition this rewrite introduced is raised as F-18."
+    },
+    {
+      "id": "F-9",
+      "severity": "Important",
+      "field": "sections.growth.points[2]",
+      "quote": "Capacity is the binding near-term constraint. Management says its existing fab is nearing full utilization and it is taking steps toward a second fab for high current-density second-generation VPD parts; until that capacity arrives, revenue growth is limited by what the current line can build.",
+      "issue": "The source is the CEO's July 21, 2026 comment: demand 'is absorbing increased capacity within our first ChiP fab. As we get closer to full capacity utilization, we are taking steps toward a second fab'. Getting closer to full utilization is not a binding constraint, and no source says shipments or revenue growth are limited by capacity now. executiveSummary.catalysts[1] repeats the overstatement ('relieve the capacity constraint now limiting shipments'). The comment is also undated in both places.",
+      "fix": "Keep the source's hedge and date it: the CEO said in July 2026 that the first fab is getting closer to full utilization and that the company is taking steps toward a second fab. Present capacity as a constraint that could bind if demand keeps rising, not as one that binds today, and reword catalysts[1] the same way.",
+      "status": "addressed",
+      "note": "Fixed. points[2] now reads 'Capacity could become a constraint if demand keeps rising', dates and quotes the CEO's July 21, 2026 comment, and says no source shows shipments limited by capacity today. catalysts[1] now reads 'would add capacity if demand keeps rising'."
+    },
+    {
+      "id": "F-10",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios",
+      "quote": "Backlog converts steadily and margins hold near current levels, but growth decelerates from the second quarter's pace and the multiple drifts lower as the AI-capacity build matures.",
+      "issue": "None of the three implied prices states its basis. Base $360 and Bear $190 carry no multiple, EPS or Street figure a reader can check; Bull $450 equals the top of the Street target range ($450.00) but does not say so. multiplesCommentary says 'we anchor valuation on the company's own history and on the Street', but the page carries no history of the stock's own multiple and no scenario names a Street figure. The Bear's 'premium multiple compresses toward the broad market' names no market multiple, and $190 is still a high multiple of every EPS on the page (FY25 $2.61, FY26E $3.73, FY27E $5.62), so the words and the price do not obviously match. 'Drifts lower' likewise has no stated starting point or EPS year.",
+      "fix": "For each scenario, state the multiple, the EPS (or Street figure) and the year it applies to, using page figures, and check that 'drifts lower' and 'toward the broad market' hold on the same EPS basis as today's 71.9x NTM and 47.7x FY27E. Remove 'the company's own history' from multiplesCommentary unless a historical figure is on the surface. Choose the anchors on the merits; the label is whatever the rule then derives.",
+      "status": "addressed",
+      "note": "Fixed for the anchors. The Bull names the Street-high $450.00. The Base applies 60x to FY27E $5.62 and argues the step down from today's 71.9x current-year multiple; the 71.9x is correctly read as price over FY26E, with the source disagreement stated. The Bear states 40x on EPS near FY26E $3.73. 'Own history' is gone. The Bear's comparison basis is inconsistent; that is raised separately as F-17."
+    },
+    {
+      "id": "F-11",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "We weight the Base case at 45%, the Bull at 30%, and the Bear at 25%.",
+      "issue": "The weights are stated but not argued: nothing says why the Bull is more likely than the Bear, or what in the data supports 25% for a concentration-driven de-rating. The only reasoning ('the expected reward and the downside are close to balanced') describes the output, not the inputs. The page's own reward/risk of 0.97x sits just below the 1.00x STRONG BUY line, so the Bull/Bear split is what separates BUY from STRONG BUY and needs an argument from both sides.",
+      "fix": "Argue each weight once on the Bull and Bear cases themselves, using figures already on the page (the backlog growth, the Q2 margin recovery, customer concentration, the FY24 operating loss, the share price's range), and say plainly that the call sits close to the STRONG BUY line and that BUY is the derived label. Do not restate the weights in another section.",
+      "status": "addressed",
+      "note": "Fixed. The 25/50/25 weights are argued once, for and against each tail, on page evidence. The paragraph says HOLD is derived (E +18.7%, D -44.4%, R 0.42x, all matching the page) and that the call is close, and it tests both directions. I re-ran every sensitivity it quotes and each derives the label it claims. (One phrase in this paragraph is raised as F-19.)"
+    },
+    {
+      "id": "F-12",
+      "severity": "Important",
+      "field": "analystCommentary",
+      "quote": "After rising from a 52-week low of $47.56, the shares carry a premium multiple that already discounts years of the growth consensus models.",
+      "issue": "The report cites the 52-week low but never the 52-week high of $382.65 (Facts Snapshot and Quote). At $268.34 the shares sit well below that high, a sharp move the report neither acknowledges nor reads. It cuts both ways: it belongs in the counter-case for a customer-concentrated name, and it bears on how much de-rating the Bear and Base already assume. No source in the pack explains the decline, and the report should say so rather than stay silent.",
+      "fix": "Give the full 52-week range once (the valuation section is the natural place), say the price sits well below the high and that no source in the pack explains the fall, and say what that means for the Base and Bear cases. Point back to it in words elsewhere.",
+      "status": "addressed",
+      "note": "Fixed. multiplesCommentary gives the full $47.56–$382.65 range once, says no source explains the fall and reads it both ways for the scenarios. analystCommentary only points to it."
+    },
+    {
+      "id": "F-13",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "the shares carry a premium multiple that already discounts years of the growth consensus models",
+      "issue": "Repetition. This clause appears verbatim in both analystCommentary and thesis.body. The self-funding claim is made four times: analystCommentary ('lets the company fund a planned capacity expansion from internal resources'), balanceCommentary ('lets the company fund its planned capacity expansion from internal resources without raising external capital'), capitalAllocation ('it can self-fund the expansion') and finalRecommendation.body[0] ('funds the capacity expansion'). Customer concentration is argued in risks.idiosyncratic[0], moatFactors[3], durability and capitalAllocation, with 'disproportionately' in executiveSummary.risks[1], idiosyncratic[0] and moatFactors[3]. Tariff exposure is argued in both idiosyncratic[4] and systemic. capitalAllocation re-judges the buybacks as 'modest relative to that cash generation', already said in cashflowCommentary.",
+      "fix": "Reword the thesis clause or point back to the commentary. Argue self-funding once (balanceCommentary) and point to it in words elsewhere; argue concentration once (risks.idiosyncratic[0]) and have the moat, durability and capital-allocation text point back; put tariff exposure in one place; keep the buyback view in one section.",
+      "status": "addressed",
+      "note": "Fixed. The duplicated clause is gone. Self-funding is argued only in balanceCommentary, and capitalAllocation points back. Concentration is argued in idiosyncratic[0], and durability and capitalAllocation point back. Tariffs appear only in systemic, and the buyback view only in cashflowCommentary."
+    },
+    {
+      "id": "F-14",
+      "severity": "Important",
+      "field": "sections.management.governance",
+      "quote": "Vicor holds its say-on-pay advisory vote every three years, most recently in 2023, when shareholders approved the executive compensation program.",
+      "issue": "The April 30, 2026 proxy says that 'at the Annual Meeting, Stockholders will have the opportunity to vote, on an advisory basis, on the compensation of our Named Executive Officers' (Proposal Two). 'Most recently in 2023' was true only before that meeting; the report is dated September 23, 2026, and the 2026 result is not in the pack. The sentence presents a pre-meeting fact as current.",
+      "fix": "Say the 2023 vote approved pay, and that the April 30, 2026 proxy put a new say-on-pay vote to the 2026 Annual Meeting whose result is not in the pack.",
+      "status": "addressed",
+      "note": "Fixed. governance says the 2023 vote approved pay and that the 2026 proxy put a new vote to the 2026 Annual Meeting, whose result is not in the pack."
+    },
+    {
+      "id": "F-15",
+      "severity": "Important",
+      "field": "sections.management.governance",
+      "quote": "receiving a monthly fee plus an incentive fee equal to 3% of royalties on certain license agreements he negotiates, capped at $1,000,000.",
+      "issue": "The proxy says the aggregate incentive fees are 'limited to $1,000,000, although this amount may be increased by mutual agreement in certain circumstances, including the negotiation of additional license agreements by Mr. D'Amico.' 'Capped' drops that hedge, and the dropped part is the one that matters for the report's own point: the limit can rise as licensing expands. The paragraph also gives no sense of scale, though the proxy shows 2025 license-based incentive fees of $21,596 within $2,073,076 of total compensation and reimbursement, which a reader needs to weigh 'ongoing scrutiny'.",
+      "fix": "Keep the proxy's wording (limited to $1,000,000, which may be increased by mutual agreement, including when he negotiates additional license agreements) and give the view in proportion, using the proxy's 2025 figures and dating them.",
+      "status": "addressed",
+      "note": "Fixed. governance keeps the proxy's hedge ('limited to $1,000,000 ... may be increased by mutual agreement'). It gives the 2025 incentive fees of $21,596 out of $2,073,076, correctly saying most of the total was option-exercise income, and reaches a proportionate view."
+    },
+    {
+      "id": "F-16",
+      "severity": "Minor",
+      "field": "sections.businessMoat.moatFactors[1]",
+      "quote": "Its second-generation VPD roadmap targets the current-density and power-delivery-network limits that constrain GPUs, TPUs, and wafer-scale engines.",
+      "issue": "This restates the CEO's July 21, 2026 press-release comment ('With its 2nd Gen VPD IP, Vicor is uniquely equipped to overcome the power system challenges standing in the way of future advances in TPUs, GPUs and Wafer Scale Engines') in the desk's own voice, undated and unattributed, and it is part of the basis for rating this factor 'Strong'.",
+      "fix": "Attribute the sentence to the CEO's July 21, 2026 comment and say it is the company's own claim.",
+      "status": "addressed",
+      "note": "Fixed. moatFactors[1] attributes the claim to the CEO's July 21, 2026 comment and calls both claims the company's own. The factor is now rated Moderate, based on the backlog and the growth figures."
+    },
+    {
+      "id": "F-17",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[2].driver",
+      "quote": "With growth stalled, the stock loses the 47.7x it now pays on FY27E; we apply 40x, a multiple that still credits the IP, the licensing stream and the cash balance.",
+      "issue": "The Bear compares multiples on two different bases. Its own premise is that EPS a year out stays near $3.73 rather than reaching FY27E $5.62. multiplesCommentary sets the rule: the like-for-like reference for a multiple paid a year out is today's current-year multiple (71.9x), not the 47.7x on FY27E. On that rule the Bear cuts the multiple from about 71.9x to 40x, close to halving it, not from 47.7x to 40x. The 47.7x is today's price over an FY27E EPS that the Bear assumes is never delivered. The framing makes the de-rating look modest, and it carries the call: scenarioCommentary says the Bear multiple is one of the two judgments the HOLD rests on.",
+      "fix": "Compare the Bear's multiple with today's 71.9x current-year multiple, the basis multiplesCommentary sets. Then argue on the merits, from both sides, why that size of de-rating on stalled earnings is the right Bear; the 'still credits the IP, licensing and cash' reasoning is a start. Choose the multiple on the merits rather than by where the label lands; the label is whatever the rule then derives. Keep the comparison in scenarioCommentary on the same basis.",
+      "status": "addressed",
+      "note": "Fixed. The Bear now compares its 40x with today's 71.9x current-year multiple, the basis multiplesCommentary sets, and calls it a cut of a little under half (correct). scenarioCommentary argues the multiple from both sides: a deeper cut (the 52-week low, the FY24 loss) and a shallower one (earnings stall rather than fall; IP, licensing and cash remain). It says the call rests on this judgment."
+    },
+    {
+      "id": "F-18",
+      "severity": "Important",
+      "field": "sections.growth.points[4]",
+      "quote": "but that run-rate depends partly on royalty revenue that may not recur at the same level",
+      "issue": "Repetition introduced by the rewrite. The rewrite makes the same claim, that royalty revenue may not recur at the second quarter's level, three times in two sections: growth.points[1] ('royalties depend on negotiated agreements and need not recur at the second quarter's level'), growth.points[4] (quoted) and risks.idiosyncratic[3] ('royalty revenue lifted both second-quarter growth and margin and may not recur at that level'). The Base driver ('royalty revenue is uneven') and executiveSummary.risks[2] are pointers and are fine.",
+      "fix": "Argue the non-recurrence once, in risks.idiosyncratic[3] or in growth.points[1], and have the other places point back in words (e.g. 'the royalty caveat above'). growth.points[4] can keep the margin point and refer to the caveat without restating it.",
+      "status": "addressed",
+      "note": "Fixed. growth.points[1] makes the royalty-recurrence argument once. growth.points[4] ('carries the royalty caveat above') and risks.idiosyncratic[3] ('subject to the recurrence caveat in the growth section') now point back in words."
+    },
+    {
+      "id": "F-19",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "Against it, the backlog consists of orders scheduled to ship within twelve months, which makes a near-term stall less likely than it was in FY24.",
+      "issue": "The pack has no FY24 backlog figure, so 'less likely than it was in FY24' compares with a level the page does not show. The only earlier backlog on the surface is the year-ago quarter's $155 million.",
+      "fix": "Compare with the year-ago quarter's backlog that the growth section already gives (in words), or drop the FY24 comparison.",
+      "status": "addressed",
+      "note": "Fixed. The FY24 comparison is gone; the sentence now says the backlog of orders scheduled within twelve months 'gives near-term visibility the Bear has to overcome'."
+    },
+    {
+      "id": "F-20",
+      "severity": "Minor",
+      "field": "sections.risks.idiosyncratic[4]",
+      "quote": "the MD&A says supply disruptions have in the past reduced revenue, gross margin, operating profit and cash flow.",
+      "issue": "The claim is attached to the wrong subject. The MD&A says it was the steps taken to mitigate supply-chain disruptions (moving outsourced steps in-house, paying higher prices, expediting at a premium) that 'reduced our revenue, gross margin, operating profit and cash flow'. For the disruptions themselves it says only that they 'have in the past negatively impacted ... our operating results'.",
+      "fix": "Say that disruptions have in the past hurt operating results, and that the MD&A says the mitigation steps themselves reduced revenue, gross margin, operating profit and cash flow.",
+      "status": "addressed",
+      "note": "Fixed. idiosyncratic[4] now says disruptions have in the past negatively impacted operating results, and that the mitigation steps (moving steps in-house, expediting at a cost premium) have at times reduced revenue, gross margin, operating profit and cash flow, matching the MD&A."
+    },
+    {
+      "id": "F-21",
+      "severity": "Minor",
+      "field": "sections.management.leadership",
+      "quote": "The record under this team includes both the FY24 operating loss and the FY25 recovery shown in the financials section.",
+      "issue": "The proxy names the named executive officers for 2025 only; the pack does not say who held these roles in FY24 or how long they have served. Crediting the FY24 loss to 'this team' implies a tenure the surface does not give. The earlier line that the CEO is 'the company's main public voice on technology strategy' is likewise an inference from a single press release.",
+      "fix": "Tie the record to the company rather than to the team, or say the pack gives no tenures. Describe the CEO's July 2026 comments as his comments without generalizing his role.",
+      "status": "addressed",
+      "note": "Fixed. leadership no longer credits FY24 to 'this team' and says the pack gives no tenures; the 'main public voice' line is gone."
     }
   ]
 }
