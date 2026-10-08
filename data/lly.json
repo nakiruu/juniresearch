@@ -170,13 +170,15 @@
       "flags": []
     },
     "decision": {
-      "conviction": 63,
-      "tier": "moderate",
+      "conviction": 73,
+      "tier": "high",
       "proposed": "BUY",
       "reasons": [
         "E/R proposed BUY"
       ],
-      "advisories": [],
+      "advisories": [
+        "model vs Street expected return diverge by 54pp — informational, not scored"
+      ],
       "moat": {
         "width": "WIDE",
         "trend": "WIDENING",
@@ -184,8 +186,8 @@
         "bearFloor": 0.15
       },
       "intrinsic": {
-        "marginOfSafety": -0.3515399113462515,
-        "impliedGrowth": 0.15862644735122589,
+        "marginOfSafety": -0.4253760352850233,
+        "impliedGrowth": 0.23837474678670872,
         "achievableGrowth": 0.10325030654895762
       },
       "composite": {
@@ -328,7 +330,7 @@
   },
   "sections": {
     "executiveSummary": {
-      "companyOverview": "Eli Lilly and Company, founded in 1876 and headquartered in Indianapolis, discovers, manufactures, and markets pharmaceuticals across cardiometabolic health, oncology, immunology, and neuroscience. Its growth is dominated by the incretin franchise — Mounjaro for type 2 diabetes and Zepbound for obesity — which management reports accounted for 65% of revenue in the six months ended June 30, 2026, alongside an established base of diabetes, cancer, autoimmune, and Alzheimer's medicines. The financial trajectory is unusual for a company this size: revenue climbed from $28.3B in FY21 to $65.2B in FY25, a 44.7% gain in the latest year, while gross margin expanded to 83.0% and net income reached $20.6B ($22.95 diluted EPS). The company is investing heavily behind the demand — a multi-site U.S. and international manufacturing build-out and steady business development — and the market has rewarded it, carrying the shares from a 52-week low of $712.05 to $1,141.32 and a market capitalization above $1T. The question for an investor is whether the growth and the pipeline justify a valuation that already discounts years of compounding.",
+      "companyOverview": "Eli Lilly and Company, founded in 1876 and headquartered in Indianapolis, discovers, manufactures, and markets pharmaceuticals across cardiometabolic health, oncology, immunology, and neuroscience. Its growth is dominated by the incretin franchise — Mounjaro for type 2 diabetes and Zepbound for obesity — which management reports accounted for 65% of revenue in the six months ended June 30, 2026, alongside an established base of diabetes, cancer, autoimmune, and Alzheimer's medicines. The financial trajectory is unusual for a company this size: revenue climbed from $28.3B in FY21 to $65.2B in FY25, a 44.7% gain in the latest year, while gross margin expanded to 83.0% and net income reached $20.6B ($22.95 diluted EPS). The company is investing heavily behind the demand — a multi-site U.S. and international manufacturing build-out and steady business development — and the market has rewarded it, carrying the shares from a 52-week low of $712.05 to $1,141.32 and a market capitalization of $1.02T. The question for an investor is whether the growth and the pipeline justify a valuation that already discounts years of compounding.",
       "thesis": {
         "label": "BUY",
         "body": "Lilly's thesis is a race between two clocks. One is compounding: the obesity and diabetes market is expanding, Lilly leads it, and a next wave — oral orforglipron and injectable retatrutide — is advancing through Phase 3 to extend the franchise, with oncology, immunology, and neuroscience adding breadth. The other is the de-rating clock: at 38.3x trailing earnings the shares price sustained hypergrowth, and drug-price negotiation, generic entry, and any deceleration would compress the multiple faster than earnings can grow into it. We think the compounding clock wins over a multi-year horizon because the pipeline is deep and the forward multiple (about 24.1x FY27E) is not demanding for the growth — but the margin of safety at today's price is thin, so this is a BUY on quality, not on cheapness."
@@ -597,7 +599,7 @@
         ],
         "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
       },
-      "cashflowCommentary": "Cash generation is strong but is being consumed by investment. Operating cash flow reached $16.8B in FY25, but capital expenditure of $7.8B — up sharply as the manufacturing expansion accelerated — left free cash flow of $9.0B, a 13.8% margin and a trailing free-cash-flow yield of only 1.8% against the $1T market capitalization. Free cash flow dipped to $0.8B as recently as FY23 during the heaviest investment, a reminder that the capex cycle can swing the figure materially. The company still returns cash: FY25 dividends were $5.4B and buybacks $4.1B, and management added $1.5B of dividends and $1.6B of repurchases in the second quarter. The low free-cash-flow yield is the price of building capacity ahead of demand; it should improve as the plants ramp, but for now shareholders are paid modestly in cash and are being asked to underwrite reinvestment."
+      "cashflowCommentary": "Cash generation is strong but is being consumed by investment. Operating cash flow reached $16.8B in FY25, but capital expenditure of $7.8B — up sharply as the manufacturing expansion accelerated — left free cash flow of $9.0B, a 13.8% margin and a trailing free-cash-flow yield of only 1.8% against the $1.02T market capitalization. Free cash flow dipped to $0.8B as recently as FY23 during the heaviest investment, a reminder that the capex cycle can swing the figure materially. The company still returns cash: FY25 dividends were $5.4B and buybacks $4.1B, and management added $1.5B of dividends and $1.6B of repurchases in the second quarter. The low free-cash-flow yield is the price of building capacity ahead of demand; it should improve as the plants ramp, but for now shareholders are paid modestly in cash and are being asked to underwrite reinvestment."
     },
     "valuation": {
       "multiples": {
