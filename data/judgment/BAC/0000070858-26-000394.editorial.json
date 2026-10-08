@@ -1,8 +1,13 @@
 {
-  "judgmentSha256": "821f0c16fb3b9039445444d71d9aa257f7db0f96f7b0ad25ecd13b2223d1eb2f",
-  "inputs": {"scheme":1,"facts":"414ae95d55caa62c0c1f383549c47779b49205dedb910d211cc2d123f25c39f7","calls":"836eba1c36e68c57170dfac2caad63417b23494c3df2bf589594329a4dcc15df","context":"6521139e1b7e051abfc53e21b444d06837ec2bb83a3d0c4c93a27043f09c1261","source":"backfill:1c779be"},
-  "reviewedAt": "2026-09-15T11:41:56Z",
-  "reviewer": "claude-opus-5",
+  "judgmentSha256": "573a5a815aea8b67b3a8e90e8ef1f21de81b2edd7e0502d300fff72a7527b7d4",
+  "inputs": {
+    "scheme": 1,
+    "facts": "414ae95d55caa62c0c1f383549c47779b49205dedb910d211cc2d123f25c39f7",
+    "calls": "652ab6e8d7a3925f2a5cd0ac2f1331a34831ddc06ba00db697e59a58e6cebb0c",
+    "context": "6521139e1b7e051abfc53e21b444d06837ec2bb83a3d0c4c93a27043f09c1261"
+  },
+  "reviewedAt": "2026-10-08T19:32:24Z",
+  "reviewer": "claude-opus-5-5",
   "round": 2,
   "verdict": "approved",
   "findings": [
@@ -14,7 +19,7 @@
       "issue": "The two documents are swapped. \"private credit\" appears nowhere in the 10-K risk-factor excerpt; the phrase \"a deterioration in private credit markets\" is in the 10-Q forward-looking list. \"digital asset\" appears nowhere in the 10-Q excerpt; \"the impact of the volatility of digital assets on the broader market\" is in the 10-K Market risk factor. Each fact is attributed to the document that does not carry it.",
       "fix": "Attribute private credit deterioration to the 10-Q forward-looking statement and digital-asset volatility to the February 2026 10-K, or drop both and name only the items each document actually carries (10-K: interest rates, inflation, Federal Reserve policy, debt ceiling, tariffs, bank and nonbank failures; 10-Q: non-U.S. sovereign debt, private credit markets).",
       "status": "addressed",
-      "note": "Corrected and verified against the FactPack: digital assets now sit with the 10-K, sovereign debt and \"a deterioration in private credit markets\" with the 10-Q's forward-looking statement. Unchanged in this edit."
+      "note": "Holds in the rewrite: risks.systemic gives digital assets to the February 2026 10-K and sovereign debt and \"a deterioration in private credit markets\" to the 10-Q's forward-looking statement."
     },
     {
       "id": "F-2",
@@ -24,7 +29,7 @@
       "issue": "\"a level the company answered with\" is a causal claim the proxy does not make. The proxy says \"During 2025, we reached out to 74 institutional shareholders ... and held a total of 52 meetings with 31 shareholders\" as part of a year-round practice covering the whole of 2025, not a response to a vote taken at the annual meeting. It separately says only that \"Following our 2025 annual meeting, we continued our long-standing practice of engaging with our shareholders.\"",
       "fix": "Separate the two facts: report the 73.6% vote, then report the 2025 engagement programme as the company's stated year-round practice (\"During 2025 the company reached out to 74 institutional shareholders ... and held 52 meetings with 31\"), without making the vote its cause.",
       "status": "addressed",
-      "note": "The causality is gone: the vote is reported on its own, then \"The proxy describes a year-round engagement practice: during 2025 the company reached out to 74 institutional shareholders ...\" Still correct after this edit, which trimmed the trailing Lozano detail for fit."
+      "note": "Holds: governance reports the 73.6% vote, then the 2025 outreach (74 holders, 52 meetings with 31) as a separate fact, with no causal link between them."
     },
     {
       "id": "F-3",
@@ -34,7 +39,7 @@
       "issue": "The proxy attributes the enhanced PRSU standards to something else: \"The increased performance standards and introduction of upside payout opportunity reflect the company's and Board's focus on long-term Responsible Growth ... as discussed with our investors during our 2025 Investor Day.\" What the proxy does say the vote informed is the opposite decision, \"to maintain a generally consistent executive compensation design.\" The same unsupported causality recurs in sections.risks.idiosyncratic[4] (\"the proxy's response was to tighten the performance standards on the 2025 performance-year equity grant\").",
       "fix": "State the two facts as the proxy states them: the vote and the engagement informed the decision to keep the design generally consistent; the tightened 100% standard and 150% maximum are attributed by the proxy to long-term Responsible Growth and Investor Day discussion. Fix both places, or mark the inference as the desk's own reading rather than the proxy's.",
       "status": "addressed",
-      "note": "Both places fixed and unchanged in this edit. Governance attributes the tightening to \"the focus on long-term Responsible Growth discussed at the 2025 Investor Day\" and marks the weak-vote reading as \"Our own reading\"; risks.idiosyncratic[4] says the proxy attributes it \"to Investor Day and long-term Responsible Growth rather than to the vote.\""
+      "note": "Holds: governance ties the vote and engagement to the decision to keep the design generally consistent, and the tighter PRSU standard and 150% maximum to Responsible Growth and the 2025 Investor Day. The old risks.idiosyncratic[4] sentence is gone."
     },
     {
       "id": "F-4",
@@ -44,7 +49,7 @@
       "issue": "The pack carries no market-share data for sales and trading: no wallet share, no peer revenue, no league-table position. A streak of growth is consistent with a rising market and is not evidence of share. The report contradicts itself on this point in segments[2], which says \"a jump of that size in fees is a market condition, not a share gain the pack can verify.\"",
       "fix": "Drop \"as well as cycle\" or rewrite to what the streak does support, the consistency of the franchise across several market conditions, and hold the same line as the Global Banking paragraph on share claims the pack cannot verify.",
       "status": "addressed",
-      "note": "Now reads \"which shows a franchise that has held up across several market conditions; whether it has gained share the pack cannot say\", consistent with the Global Banking paragraph. Unchanged in this edit."
+      "note": "Holds: segments[3] reads \"which shows a franchise that has grown through several market conditions; whether it gained share the pack cannot say\"."
     },
     {
       "id": "F-5",
@@ -54,7 +59,7 @@
       "issue": "Net interest yield is the wrong quantity for the sentence. The 10-Q reports it as net interest income on a fully taxable-equivalent basis over average earning assets, so it is already net of funding cost. It is not \"the yield on the other side of the balance sheet\" and cannot be set against the 48 basis points paid on consumer deposits as if the two were an asset yield and a liability cost. Read as the prose reads it, a 2.08% asset yield against a 0.48% deposit cost, the figure is attached to a quantity the pack does not contain.",
       "fix": "Either describe 2.08% as what it is, the spread earned on average earning assets after funding cost, and argue the deposit-beta risk against that spread, or drop the asset-yield framing and say the margin available to absorb a rise in deposit costs is 2.08 percentage points of net interest yield.",
       "status": "addressed",
-      "note": "Now defines the quantity correctly: \"the net interest yield of 2.08 percent, the spread earned on average earning assets after funding cost; if deposit betas rise faster than asset yields reprice, that spread is where the damage shows.\" Unchanged in this edit."
+      "note": "Holds: moatFactors[0] calls 2.08 percent the net interest yield and argues deposit costs against asset repricing, with no asset-yield framing."
     },
     {
       "id": "F-6",
@@ -64,7 +69,7 @@
       "issue": "\"below-market\" is a comparison to a figure that is not on the grounding surface. The Facts block carries no index multiple, no sector multiple and no peer multiple, and the report's own valuation section says \"peer multiples are pending a peer data source.\" The claim carries the BUY, so it should not rest on a number the reader cannot see.",
       "fix": "Compare 12.8x NTM to something the page carries: the 13.5x trailing multiple, the ~11.3x on FY27E, or the multiple implied by the $66.00 consensus target. Otherwise state that no market or peer multiple was captured and argue the multiple against the 17.0% return on tangible equity instead.",
       "status": "addressed",
-      "note": "Anchored to figures on the page: \"the shares trade below their 13.5x trailing multiple and a little above the ~11.3x the current price implies on FY27E\". Both comparisons check out. finalRecommendation.body[0] now refers back to the same comparison in words without the figure."
+      "note": "Holds: no below-market claim; analystCommentary sets the Base at today's forward multiple against the price."
     },
     {
       "id": "F-7",
@@ -74,7 +79,7 @@
       "issue": "The period is not named and the natural reading is wrong. The clause sits inside a year-over-year frame, but the release says \"Net charge-offs of $1.4 billion decreased from $1.5 billion in 2Q25 and were relatively flat to 1Q26\": flat only against the March quarter, down against the year-ago quarter. The report gets it right in sections.risks.idiosyncratic[2] (\"flat to the March quarter and below a year earlier\"), which makes the thesis sentence the odd one out.",
       "fix": "Name the period: net charge-offs of $1.4 billion were flat to the March quarter and down from $1.5 billion a year earlier.",
       "status": "addressed",
-      "note": "Now reads \"net charge-offs were flat to the March quarter and down from $1.5 billion a year earlier\", matching the release and the risk section. Unchanged in this edit."
+      "note": "Holds: thesis.body says only that provision fell from a year earlier; risks.idiosyncratic[2] dates net charge-offs against the March quarter and a year earlier."
     },
     {
       "id": "F-8",
@@ -84,7 +89,7 @@
       "issue": "Stated as fact, but nothing on the grounding surface says what basis the consensus revenue line uses. The Estimates block gives \"FY26E revenue $124B\" with no basis note, and the snapshot renders \"FY26E Revenue ~$124B (-35%)\" without one. The same assertion carries the whole translation argument in analystCommentary (\"describe a change of basis, not a collapse\") and is repeated again in growth.points[4] (\"on the bank's net basis\").",
       "fix": "Mark it as the desk's inference and give the reader the ground for it, that the six months to June produced revenue net of interest expense of $61,830 million, a run-rate consistent with ~$124B, rather than asserting the vendor's basis. Make the hedge once and refer back to it in the other two places.",
       "status": "addressed",
-      "note": "Hedged and grounded: \"Consensus FY26E revenue of ~$124B carries no basis note; our reading is that it sits on the bank's net basis, because the six months to June produced $61,830 million ...\". analystCommentary and growth.points[4] refer back rather than re-asserting. Unchanged in this edit."
+      "note": "Holds: incomeCommentary marks the net basis of the ~$124B consensus as the desk's reading, gives its ground and keeps FY27E inside the same \"if so\"."
     },
     {
       "id": "F-9",
@@ -94,7 +99,7 @@
       "issue": "Two sources disagree on the same quantity for the same period and the report never says so. The snapshot the reader sees carries \"Q2'26 Revenue $49.4B (+6%)\" and \"Q2'26 Operating Margin 23%\"; every prose reference gives $31.6 billion and +15%. The report names the annual basis mismatch (FY25 $191.6B, FY26E ~$124B) but never the quarterly one sitting directly above the prose, so the reader is left with two unreconciled revenue figures for the June quarter.",
       "fix": "Say once, in the income commentary, that the snapshot's Q2'26 revenue of $49.4B (+6%) is the vendor's gross-of-interest-expense figure while the 10-Q and release report $31,558 million net of interest expense (+15%), and that the report uses the latter throughout.",
       "status": "addressed",
-      "note": "Named once, where asked: \"the snapshot's Q2'26 revenue of $49.4B (+6%) is the vendor's gross figure, while the 10-Q and the release report revenue net of interest expense of $31.6 billion, up 15%, and the report uses the latter throughout.\" This edit also aligned the rounding to $31.6 billion, closing F-30."
+      "note": "Holds: incomeCommentary names the snapshot's $49.4B (+6%) as gross once and uses the net $31.6 billion."
     },
     {
       "id": "F-10",
@@ -104,7 +109,7 @@
       "issue": "The published page contradicts the sentence. The judgment's highlights array is [\"buybacksLatestFY\", \"dividendsLatestFY\"], and the prompt defines both as rows of the vendor's Cash flow table (FY25 Share Repurchases -$24.1B and FY25 Dividends Paid -$9.6B). Both now render as the last two snapshot cells in data/bac.json. Two cash-flow cells were chosen, in the same paragraph that praises those exact rows as \"the capital-return rows.\"",
       "fix": "Reword to what was actually done: no free-cash-flow or capex cell was chosen because those rows are template artefacts, and the two capital-return rows were chosen because they carry information. Keep the highlights array as it is.",
       "status": "addressed",
-      "note": "True against the page: \"no free-cash-flow or capital-expenditure cell appears in the snapshot; the two capital-return rows do, because they carry information.\" Re-confirmed against the rebuilt data/bac.json, whose snapshot still ends on FY25 Share Repurchases and FY25 Dividends Paid."
+      "note": "Holds: cashflowCommentary credits the capital-return rows, and the highlights remain buybacksLatestFY and dividendsLatestFY."
     },
     {
       "id": "F-11",
@@ -114,7 +119,7 @@
       "issue": "The mechanism and the commentary disagree. The Facts block gives Fwd P/E (FY27E) of ~11.3x at today's price, so applying the 12.8x NTM multiple to FY27E EPS is a re-rating of roughly a turn and a half on that year's earnings. sections.valuation.scenarioCommentary then says \"The Base case is consensus delivered with no re-rating\", which cannot also be true of the same case.",
       "fix": "Pick one. Either describe the Base case as the shares holding ~11.3x on FY27E and reconcile that with the $67 implied price, or keep the 12.8x-on-FY27E mechanism and say in the commentary that the Base case carries a modest re-rating on the forward year.",
       "status": "addressed",
-      "note": "scenarioCommentary says \"consensus delivered with a modest re-rating on the forward year, from the multiple the current price implies on FY27E to today's NTM multiple\", which matches the driver. Unchanged in this edit; the calls still resolve to a weighted $66.00, +10.98%, inside the BUY envelope."
+      "note": "Holds in the new form: the Base driver and multiplesCommentary both say the Base holds today's NTM multiple a year out on FY27E; multiplesCommentary argues that anchor from both sides and says it decides the label."
     },
     {
       "id": "F-12",
@@ -124,7 +129,7 @@
       "issue": "The paragraph reaches no view. Every figure in it is taken straight from Table 1 of the 10-Q and every one is given again, with the same framing and more argument, in financials.incomeCommentary and financials.balanceCommentary. Nothing here tells the reader what the shape of the balance sheet or the near-even split between the two revenue lines means for this bank.",
       "fix": "Replace the list with the reading: a bank whose revenue is split almost evenly between net interest income and fees, with $2.03 trillion of deposits funding $1.22 trillion of loans, is a different animal from a spread lender, and that is what makes the vendor's template unusable. Leave the line-by-line figures to the financials section.",
       "status": "addressed",
-      "note": "Rewritten to a view: the near-even revenue split and deposits funding loans now carry the point that \"a bank earning half its revenue from fees ... is a different animal from a spread lender\". Unchanged in this edit."
+      "note": "Holds: companyOverview's last paragraph reads the even revenue split as earnings resting equally on the rate cycle and on fees."
     },
     {
       "id": "F-13",
@@ -134,7 +139,7 @@
       "issue": "The three holdings are listed and never read. The paragraph draws its conclusion about insiders only (\"economically meaningful to the executives but immaterial to control\"), leaving the one holding that is unlike the others, a 7.9% position of 568,070,012 shares held by a named non-index holder alongside two index managers, without a word about what it lets that holder do that an index position does not, or what its presence means for the board and for the capital-return policy the report praises elsewhere.",
       "fix": "Read the 7.9% for the holder: an index manager at 9.1% votes a policy, while a 7.9% concentrated holder is a single voice large enough to be heard on capital return and succession. Then draw the insider conclusion.",
       "status": "addressed",
-      "note": "Read for the holder: \"The two index managers vote a policy; that holder is a single concentrated voice large enough to be heard on capital return and succession, and the capital-return discipline this report credits to the Board is exercised with that holder present.\" Unchanged in this edit."
+      "note": "insiderOwnership now reads the 7.9% Berkshire Hathaway holding for outside holders, \"a holder of that size can be heard on capital return and succession in a way a diversified manager usually is not\", marks it as the desk's reading and says the pack carries no statement of the holder's intentions."
     },
     {
       "id": "F-14",
@@ -144,7 +149,7 @@
       "issue": "Two problems in one bullet. \"the market underrates\" is a claim about market expectations, and the pack carries nothing on what the market prices into net interest income: no NII consensus, no rate-path survey, only a $66.00 price target and 54 ratings. Separately the growth section is one-sided: of six points only points[3] names the reading that cuts the other way, and points 1, 2, 3, 5 and 6 carry no counter at all.",
       "fix": "Drop \"the market underrates\" or ground it in something on the page. Add a counter sentence to at least the net interest income and loan-growth points: the 10-K's lower-rates-lower-NII mechanism, and loan growth concentrated in commercial lending at this point in the credit cycle.",
       "status": "addressed",
-      "note": "\"the market underrates\" is gone and counters sit on points 0, 1, 2 and 3. The two surviving instances of the same construction, raised as F-28, are now also gone, so no claim about what the market prices remains anywhere in the judgment."
+      "note": "Holds: no claim about what the market underrates, and growth points 0-3 carry counters."
     },
     {
       "id": "F-15",
@@ -154,7 +159,7 @@
       "issue": "The same paraphrase appears in four sections: thesis.body (quoted), valuation.scenarioCommentary (\"the fee lines it depends on are at levels management calls exceptional\"), risks.idiosyncratic[1] (\"management calls the markets quarter exceptional\") and finalRecommendation.body[1] (\"at levels management itself describes as exceptional\"). It is the same claim in four different sets of words, which is exactly the paraphrase the mechanical lint cannot catch.",
       "fix": "Make the point once where it does the most work, in the risk section, and refer back in words elsewhere (\"the fee risk set out in the risk section\"). If the company's own word is the point, quote it once from the release and drop the other three.",
       "status": "addressed",
-      "note": "Re-counted after this edit: \"exceptional\" appears in exactly one field, risks.idiosyncratic[1], which is where the fix asked for it."
+      "note": "\"exceptional\" now appears once, in risks.idiosyncratic[1], attributed to the CEO in the release; thesis.body, multiplesCommentary and scenarioCommentary refer to the fee lines in other words."
     },
     {
       "id": "F-16",
@@ -164,7 +169,7 @@
       "issue": "The 33%/50% pair is introduced six times: analystCommentary (quoted), executiveSummary.risks[1] (\"sales and trading rose 33% and investment banking fees 50% in the quarter\"), valuation.scenarios[2].driver (\"fall back from the quarter's 33% and 50% growth rates\"), businessMoat.segments[2] and segments[3] (where they belong), growth.points[3] (\"investment banking fees up 50% to $2.1 billion and sales and trading up 33%\") and risks.idiosyncratic[1]. The executive-summary bullet is meant to point at the risk section and instead carries the same two figures.",
       "fix": "Introduce each figure once in the segment that owns it, once in the risk section that argues from it, and once in the Bear driver. Turn the executive-summary bullet and the growth point into pointers in words (\"the two fee lines that grew fastest in the quarter; the risk section carries the figures\").",
       "status": "addressed",
-      "note": "Still confined to the four places the fix allowed: segments[2], segments[3], risks.idiosyncratic[1] and the Bear driver. The executive-summary bullet and growth.points[3] point in words."
+      "note": "Holds: 33% and 50% sit only in segments[3] and segments[2]."
     },
     {
       "id": "F-17",
@@ -174,7 +179,7 @@
       "issue": "The same 10-K sentence is paraphrased in three places: analystCommentary (\"lower policy rates, which the February 2026 10-K says would lower net interest income\"), this bullet, and risks.idiosyncratic[0] (\"The February 2026 10-K states that lower interest rates would typically result in lower revenue through lower net interest income\"). A pointer bullet that restates the source it is pointing at has stopped pointing.",
       "fix": "Keep the full statement in risks.idiosyncratic[0]. Cut the bullet to the pointer (\"Rate cuts: the risk section carries the 10-K's mechanism and the offset management cites\") and, in analystCommentary, refer to it in words rather than re-sourcing it.",
       "status": "addressed",
-      "note": "The 10-K is sourced once, in risks.idiosyncratic[0]. The bullet remains a bare pointer and analystCommentary refers to it in words. Unchanged in this edit."
+      "note": "All five executive-summary risks are now one-line pointers: risks[0] no longer cites the 10-K, risks[3] no longer lists the matters, and risks[4] states the vote outcome rather than the governance judgment."
     },
     {
       "id": "F-18",
@@ -184,7 +189,7 @@
       "issue": "Near-verbatim repetition of financials.cashflowCommentary: \"$8.0 billion returned, of which $2.0 billion through common dividends and $6.0 billion in repurchases.\" The same split reappears in executiveSummary.catalysts[1] ($6.0 billion of second-quarter repurchases), businessMoat.moatFactors[2] (\"the bank returned $8.0 billion in the quarter\"), analystCommentary and finalRecommendation.body[0]: five fields for one three-part figure. The FY25/FY24 repurchase series ($24.1B from $13.1B) is likewise given in both cashflowCommentary and capitalAllocation.",
       "fix": "Introduce the $8.0bn / $2.0bn / $6.0bn split once, in capitalAllocation where the judgment about payout mix lives, and refer back in words everywhere else (\"the quarter's capital return, set out in the management section\"). Leave the five-year repurchase series to the cash-flow commentary.",
       "status": "addressed",
-      "note": "The split is stated once, in capitalAllocation, and the five-year series only in cashflowCommentary. This edit also removed the repeated pointer clause the earlier fix introduced, so the four referring fields now refer back in ordinary words. See F-29."
+      "note": "Holds: the $8.0/$2.0/$6.0 billion split appears only in capitalAllocation, and the repurchase series only in cashflowCommentary."
     },
     {
       "id": "F-19",
@@ -194,7 +199,7 @@
       "issue": "The bullet says the growth section carries the arithmetic and then carries it: all three guidance figures appear here and again in growth.points[0], which adds only the Investor Day 200-to-300 range. catalysts[3] does the same to growth.points[2], giving \"average commercial loans up $75 billion to $733 billion\" before the growth point gives \"commercial loans up 11% to $733 billion.\" The split the house style asks for, bullets point and sections argue, is inverted in both.",
       "fix": "Cut catalysts[0] to the pointer (\"Full-year operating leverage guidance was raised mid-year; the growth section carries the figures and what they imply for 2027\") and catalysts[3] likewise, and let growth.points[0] and points[2] carry the numbers.",
       "status": "addressed",
-      "note": "Both bullets carry no figures and growth.points[0] and points[2] carry the guidance and loan arithmetic. Unchanged in substance by this edit."
+      "note": "Holds: no catalyst carries figures."
     },
     {
       "id": "F-20",
@@ -204,7 +209,7 @@
       "issue": "The Bear probability is argued in prose twice. sections.valuation.scenarioCommentary already states and argues it (\"The Bear case carries the same weight because the two things that produced the quarter, markets activity and repricing net interest income, are the two things a rate cycle can take away together\"). Restating the weight in the final recommendation is the third place the reader meets the same 25%, after the scenario array itself.",
       "fix": "State and argue each probability once, in scenarioCommentary. In the final recommendation refer to \"the Bear case set out in the valuation section\" without repeating the weight.",
       "status": "addressed",
-      "note": "The final recommendation now reads \"the Bear case is what that looks like\", with no weight. Each probability is stated and argued once, in scenarioCommentary."
+      "note": "Weights are stated and argued once, in scenarioCommentary; finalRecommendation names no weight."
     },
     {
       "id": "F-21",
@@ -214,7 +219,7 @@
       "issue": "The proxy does not say all three are met. It states the three requirements, then states one finding: that all directors and nominees are independent except Mr. Moynihan. It never names the Enterprise Risk Committee chair and never says that chair is independent, so the sentence characterises the document as carrying a conclusion it does not carry.",
       "fix": "Report what the proxy reports: the three requirements, and the Board's determination that every director and nominee other than Mr. Moynihan is independent. If you want to conclude the ERC-chair standard is met, mark it as the desk's inference from that determination.",
       "status": "addressed",
-      "note": "Separates requirements from finding: \"The proxy sets out three independence requirements ... and it reports one determination: that every director and nominee other than Mr. Moynihan is independent.\" Unchanged in this edit."
+      "note": "leadership reports only the Board's determination that every director and nominee other than Mr. Moynihan is independent; no ERC-chair claim."
     },
     {
       "id": "F-22",
@@ -224,7 +229,7 @@
       "issue": "The pack contains one observation, the release's \"tangible book value per common share rose 7% to $29.37\", a single year-over-year move. \"compounding ... at 7% a year\" turns one change into a rate, an inference the source invites but does not make; the Facts block carries no tangible book value series to support a compounding rate.",
       "fix": "Say what the release says, that tangible book value per share rose 7% over the year to $29.37, and make the compounding claim only if it is framed as the desk's expectation rather than as a property of the bank.",
       "status": "addressed",
-      "note": "Reads \"whose tangible book value per share rose 7% over the year to $29.37\", which is what the release says. Unchanged in this edit."
+      "note": "Holds: balanceCommentary says tangible book value per common share rose 7% to $29.37; no compounding rate."
     },
     {
       "id": "F-23",
@@ -234,7 +239,7 @@
       "issue": "\"The counter is ...\" opens the closing sentence of all eight business-moat fields: segments[0] through segments[3] and moatFactors[0] through moatFactors[3]. The counter-case is required, but eight identical hinges in one section read as a form filled in rather than a view held, and the tic is repeated well past the point of notice.",
       "fix": "Vary the hinge and let some counters arrive inside the argument rather than bolted to the end: \"the card book cuts the other way\", \"set against that\", or simply a sentence that opens on the offsetting fact.",
       "status": "addressed",
-      "note": "All eight hinges differ and none uses \"The counter is\". Unchanged in this edit."
+      "note": "Holds: the seven moat closers all use different hinges and none uses \"The counter is\"."
     },
     {
       "id": "F-24",
@@ -244,7 +249,7 @@
       "issue": "The vendor-translation frame is itself a tic. \"the vendor\" or \"the vendor's\" appears in ten fields: analystCommentary, companyOverview, all three financials fields, multiplesCommentary and all four moat segments. The dismissal formula repeats with it (\"we set them aside\" here, \"we set it aside\" in cashflowCommentary), and three of the four segment paragraphs open by restating the vendor's FY25 share before reaching the quarter.",
       "fix": "Make the basis argument once, in incomeCommentary, and refer back to it in words. Let the segment paragraphs open on the segment rather than on its share of a vendor mix, and vary or drop the \"we set it aside\" formula.",
       "status": "addressed",
-      "note": "\"vendor\" sits in six fields rather than ten, all four segment paragraphs open on the segment, both \"we set it aside\" formulas are gone, and incomeCommentary marks itself as the one place the translation is made."
+      "note": "Holds: \"vendor\" is confined to the template-row discussions; no dismissal formula."
     },
     {
       "id": "F-25",
@@ -254,7 +259,7 @@
       "issue": "Fit leaves the next round nowhere to go. risks.idiosyncratic[3] is 770 of 800 characters (96%) and risks.idiosyncratic[2] is 720 of 800 (90%), so neither can absorb the period and sourcing corrections this review asks for. thesis.body at 1,336 of 1,500 (89%) and meta.subtitle at 141 of 160 (88%) are close behind.",
       "fix": "Trim the litigation bullet to the three or four matters that carry the argument and cut the credit bullet's figure list, so each sits nearer two-thirds of its cap before the fix round adds to it.",
       "status": "addressed",
-      "note": "No field now exceeds 90% of its cap. The two bullets named are 81% and 78%, thesis.body is 87%, the subtitle 75%, and governance came back from 95% to 86%. The trims that bought the room (the Lozano engagement detail, the CRE driver and the consumer-card improvement in the credit bullet) are supporting colour, not claims the report argues from, so nothing material was cut."
+      "note": "Re-measured after the targeted fix: the fullest field is scenarioCommentary at 2,023 of 2,500 (81%); risks.idiosyncratic[2] is 583 of 800, governance 1,121 of 1,500, the Bull driver 411 of 600 and the subtitle 90 of 160."
     },
     {
       "id": "F-26",
@@ -264,7 +269,7 @@
       "issue": "The ranking carries no period. The release footnotes it to \"Federal Financial Institutions Examination Council (FFIEC) Call Reports, 1Q26\", a quarter older than the period the paragraph describes, which is the kind of age that changes what a ranking means. A related slip in executiveSummary.thesis.body: \"average deposits of $2.02 trillion grew for a twelfth consecutive quarter\" drops the \"sequential\" the release attaches (\"12th consecutive quarter of sequential average growth\"), which growth.points[2] keeps for the loan streak.",
       "fix": "Date the ranking: first in U.S. consumer deposits on first-quarter 2026 FFIEC call-report data. Restore \"sequential\" to the deposit streak so the two streak claims are stated on the same basis.",
       "status": "addressed",
-      "note": "The ranking is dated \"on first-quarter 2026 FFIEC call-report data\", and the thesis and moatFactors[0] both say sequential growth. Unchanged in this edit."
+      "note": "Holds: the ranking is dated to first-quarter 2026 FFIEC data and moatFactors[0] says sequential average growth."
     },
     {
       "id": "F-27",
@@ -274,7 +279,7 @@
       "issue": "Three small departures from the proxy's wording, all in the governance and ownership paragraphs. The policy does not cover \"any transaction above $120,000\": it covers transactions expected to exceed $120,000 where \"our company is a participant, and a related person has or will have a direct or indirect material interest\", and the Board has determined certain types need no review at all. The proxy says the change \"Provided the opportunity to earn up to 150% maximum payout\", not \"an upside to 150% of target\". And insiderOwnership calls the holders \"two institutions and one individual\" where the proxy's row is the combined filer \"Warren E. Buffett/Berkshire Hathaway Inc.\"",
       "fix": "Carry the proxy's qualifiers: transactions above $120,000 in which a related person has a direct or indirect material interest, with stated exemptions; \"up to 150% maximum payout\"; and describe the 7.9% holder as the proxy names it rather than as an individual.",
       "status": "addressed",
-      "note": "All three carry the proxy's wording: the material-interest qualifier and \"with stated exemptions\", \"the opportunity to earn up to 150% maximum payout\", and \"as the proxy names the filer\". Survived this edit's trim of the governance field."
+      "note": "governance now carries the proxy's qualifiers: transactions expected to exceed $120,000 \"in which the company is a participant and a related person has a direct or indirect material interest\", committee approval or ratification, and the Board's exempted types."
     },
     {
       "id": "F-28",
@@ -284,7 +289,7 @@
       "issue": "The same construction F-14 removed from growth.points[1] survives in two fields, unchanged. Here the report asserts what the market discounts; in finalRecommendation.body[0] it asserts \"the multiple does not price the operating-leverage guidance\", which is the recommendation's central claim. The grounding surface carries nothing about what the market prices into either the fee lines or the guidance: the Street view block gives 54 ratings, a $66.00 consensus target, a median and a range, and no decomposition. The second of the two is the firmer claim and the one that carries the BUY.",
       "fix": "Ground both in what the page shows or recast them as the desk's own reading. The Street data supports something concrete: consensus sits at $66.00 while the guidance the growth section sets out runs above the Investor Day range, so the desk's view is that the guidance is not in the consensus number. Say that, rather than asserting what the market discounts or fails to price.",
       "status": "addressed",
-      "note": "Both are gone. The thesis now says \"The cyclical pieces, trading and investment banking, sit on top of ...\", making the cyclicality the desk's own reading, and finalRecommendation.body[0] replaces the pricing claim with two facts from the page: \"the shares trade below their trailing multiple, the operating-leverage guidance was raised mid-year\". A scan finds no remaining claim about what the market discounts, underrates or fails to price."
+      "note": "No claim about what the price discounts remains: the subtitle, thesis.body and finalRecommendation.body[0] now set consensus at today's multiple against the price, which the calls support."
     },
     {
       "id": "F-29",
@@ -294,7 +299,7 @@
       "issue": "The cross-reference has become the prose's default ending. Some form of \"the X section carries / sets out / argues it\" now appears in 21 fields and 25 times: \"the risk section\" in ten fields, \"set out in the management section\" verbatim in five (analystCommentary, catalysts[1], cashflowCommentary, moatFactors[2], finalRecommendation.body[0]), \"the financials section\" in four. Three of those five carry the identical clause \"the quarter's capital return, set out in the management section\". The pointers are correct and they fixed the repeated figures, but a device used this often stops being a pointer and becomes a tic, and in the executive summary five of five catalysts and four of five risks now end on one.",
       "fix": "Keep the pointer where a reader would otherwise hunt for a figure, and elsewhere refer back in ordinary words: \"after returning close to the quarter's earnings\", \"the fee cycle\", \"the rate mechanism\". Vary the wording where the pointer stays, and let at least some executive-summary bullets end on their own claim.",
       "status": "addressed",
-      "note": "Down from 21 fields and 25 occurrences to 10 and 12. \"set out in the management section\" is gone entirely, replaced by ordinary words (\"the quarter's capital return was followed by\", \"left the ratio unchanged\", \"ran close to the period's earnings\"). In the executive summary one of five catalysts and two of five risks now end on a pointer, and the ones that remain are where a reader would otherwise hunt for a figure."
+      "note": "Pointers are down to three (analystCommentary, growth.points[2], the valuation hand-off in scenarioCommentary); no executive-summary bullet ends on one."
     },
     {
       "id": "F-30",
@@ -304,7 +309,7 @@
       "issue": "A side-effect of the F-9 fix: the quarter's revenue is now introduced twice in one section, in two roundings. The first paragraph reconciles the bases with \"$31,558 million net of interest expense, up 15%\"; the second opens the quarter walk-through with \"$31.6 billion\" and the +15% moved to the first mention. Both figures are on the grounding surface and the second adds the year-ago base, so nothing is mis-sourced, but the reader meets the same quantity twice in one section without a back-reference in words.",
       "fix": "Let the reconciliation paragraph own the figure and open the walk-through on the comparison it adds: \"Against $27.4 billion a year earlier, net interest income was $16.0 billion ...\", or keep $31.6 billion in the walk-through and give the reconciliation only the vendor's $49.4B and the basis point.",
       "status": "addressed",
-      "note": "The duplication and the rounding mismatch are both gone: $31.6 billion now appears once in the section, in the reconciliation paragraph, and the two roundings were aligned. The walk-through sentence left behind by the cut is raised separately as F-31."
+      "note": "$31.6 billion appears once in incomeCommentary, in one rounding."
     },
     {
       "id": "F-31",
@@ -314,7 +319,97 @@
       "issue": "The F-30 fix removed the figure but left the sentence. The paragraph announces \"the second quarter of 2026 reads as follows\" and then opens on the one item with no value: revenue is said to be \"up from $27.4 billion\" without saying up to what, while every sibling clause in the list carries its figure ($16.0 billion, $15,561 million, $18.6 billion, $1.4 billion, $11.6 billion, $9.1 billion, $1.21). The reader has to carry $31.6 billion forward from the previous paragraph. Confirmed present in the rebuilt data/bac.json, so it reaches the page.",
       "fix": "Give the clause its own subject rather than a dangling comparison: open the walk-through on what the comparison adds, \"Against $27.4 billion a year earlier, net interest income was $16.0 billion, up 9% ...\", and drop the orphaned revenue clause, or restore the figure and let the reconciliation paragraph cite only the vendor's $49.4B.",
       "status": "addressed",
-      "note": "The orphaned clause is gone and the year-earlier base moved up into the reconciliation sentence: \"the 10-Q and the release report revenue net of interest expense of $31.6 billion, up 15% from $27.4 billion a year earlier\". Both figures check out against the release and 10-Q Table 1, in the same rounding and period. The walk-through now opens on net interest income and every item in it carries its figure. Confirmed gone from the rebuilt data/bac.json, and $31.6 billion still appears only once in the section, so F-30 also holds."
+      "note": "The walk-through opens on net interest yield and every item in it carries its figure."
+    },
+    {
+      "id": "F-32",
+      "severity": "Important",
+      "field": "sections.finalRecommendation.body[1]",
+      "quote": "We read the shares as fairly priced for the consensus path, a step below the Street's consensus Buy.",
+      "issue": "The report's own calls contradict this. The Base is the consensus path (\"Consensus is met: EPS of $4.64 in FY26E and $5.26 in FY27E\") at today's NTM multiple, and it implies $67.33, above both the $59.47 price and the $66.00 consensus target. On the page's own math, consensus delivered is worth more than the price, so the shares are not fairly priced for the consensus path. The HOLD comes from the Bear case and the reward/risk test, as scenarioCommentary shows (\"reward/risk short of the 0.50×\"), not from the price already matching consensus. The same contradiction sits in meta.subtitle (\"the price already discounts consensus growth\"), thesis.body (\"the price already discounts the consensus path\") and finalRecommendation.body[0] (\"the price already discounts consensus EPS growth into FY27E\").",
+      "fix": "Say what the calls show: consensus delivered at today's multiple is worth the Base's $67.33, near the Street's $66.00, and the label is HOLD because the Bear downside against that upside fails the reward/risk bar. Recast the subtitle, the thesis and both final-recommendation paragraphs to that reasoning.",
+      "status": "addressed",
+      "note": "Reconciled in all three places: analystCommentary and finalRecommendation.body[0] now say the close call \"turns on both the Base multiple and the Bear weight\", and multiplesCommentary says \"the Base multiple is one of the two inputs the label turns on, with the Bear weight\". This matches the sensitivities in scenarioCommentary. No sentence now says that either input alone decides the label."
+    },
+    {
+      "id": "F-33",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[0].driver",
+      "quote": "Operating leverage lands at or above the top of the 300-400 basis point range guided for 2026 and stays positive into 2027, fees hold near the June-quarter level and credit costs stay near the $1.4 billion quarterly run-rate, so FY27E consensus EPS is met.",
+      "issue": "The Bull's earnings story beats the Base's on every driver, yet it lands on the same EPS: both price FY27E consensus of $5.26 ($73.64 at 14x, $67.33 at 12.8x), and the Base driver also says \"Consensus is met\". Either the Bull story implies EPS above consensus, which the Bull does not price, or consensus already assumes top-of-range operating leverage and June-quarter fees, in which case that story belongs in the Base and the Bull is a re-rating-only case. As written the scenarios differ only by 1.2 turns of multiple while their stories differ on earnings. With the call close to BUY, how the Bull is built bears on the label, in either direction.",
+      "fix": "Make the Bull's EPS follow its story, anchored to a figure on the page with its basis stated, or describe the Bull honestly as consensus EPS with a higher multiple and argue the multiple. Either way, say in the Base what consensus requires, so the two scenarios differ in what happens and not only in the multiple.",
+      "status": "addressed",
+      "note": "The Bull now says it \"does not assume EPS above consensus; it assumes the market pays more for it\", with 14x based on a step above the trailing multiple, and the Base driver states what consensus needs in 2027."
+    },
+    {
+      "id": "F-34",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "The Base gets most of the weight because six-month diluted EPS of $2.31 is already about half the FY26E consensus, so the near-term path is largely in hand.",
+      "issue": "The evidence is about a year that no scenario prices. Base and Bull value FY27E EPS, and the Bear values a year-ahead EPS back at FY25's $3.82. First-half 2026 EPS bears on FY26E and says nothing about whether $5.26 arrives in FY27E, so it cannot carry the Base's 55%. The desk's lesson applies: a weight must be argued on the scenario it weights.",
+      "fix": "Argue the Base weight on evidence about FY27E that is on the page: the raised operating-leverage expectation and the Investor Day aim below it, loan and deposit growth, and the rate mechanism against them. Say what 2027 must deliver for consensus to hold. Keep the first-half EPS point, if at all, as evidence about 2026 only.",
+      "status": "addressed",
+      "note": "The weights are now argued on 2027: consensus needing positive operating leverage, loan growth and pipelines for the Base, set against the rate mechanism that \"works on 2027 net interest income whatever 2026 delivered\". Two slips in that paragraph are raised under F-39."
+    },
+    {
+      "id": "F-35",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[2]",
+      "quote": "The card book's falling risk-adjusted margin is the early signal to watch, and a modest reserve release in a quarter of loan growth leaves less built ahead of a turn.",
+      "issue": "The call says \"Consumer card charge-offs and delinquencies improved both year-over-year and quarter-over-quarter.\" With card losses improving, the slip in the risk-adjusted margin from 7.1% to 6.5% is not a credit signal on this evidence, and the pack gives no cause for it. Calling it the early credit signal is an inference the surface contradicts, and the report omits the card-credit improvement that cuts the other way. businessMoat.segments[0].body uses the same framing as its counter-case: \"The card book cuts the other way: the risk-adjusted margin slipped to 6.5% from 7.1% a year earlier\".",
+      "fix": "Report the card-credit improvement the call gives. Describe the risk-adjusted-margin decline as a fall in what the card book earns after losses, with no cause in the pack, or drop it as a credit signal. Name a credit signal the page supports instead, such as the \"isolated corporate and commercial lending losses\" the call mentions.",
+      "status": "addressed",
+      "note": "risks.idiosyncratic[2] reports the improvement in card charge-offs and delinquencies and names the call's \"isolated corporate and commercial lending losses\" as the signal; segments[0] defines risk-adjusted margin and says the pack gives no cause for its decline."
+    },
+    {
+      "id": "F-36",
+      "severity": "Important",
+      "field": "sections.businessMoat.durability",
+      "quote": "each of the four segments grew revenue and net income on its own account in the quarter",
+      "issue": "Several claims are made again and again in different words. (a) Every segment grew: meta.subtitle, scenarioCommentary (\"every segment grew\"), moatFactors[1] (\"lets every segment add operating leverage\"), durability (quoted), leadership (\"every segment grew revenue and net income\") and finalRecommendation.body[0] (\"every segment growing revenue and net income\"), six fields. (b) The lines reverse together: analystCommentary (\"give back the past year's gains together\"), companyOverview (\"how both hold up together\"), scenarioCommentary (\"all three earnings lines to turn at once\"), systemic (\"hits all three earnings lines at once\") and finalRecommendation.body[1] (\"can reverse together\"). (c) The streaks: segments[3] (\"has grown through several market conditions\") and durability (\"has compounded through several conditions\"), both in one section, plus leadership. (d) moatFactors[0] (\"Low-cost, growing deposits fund the loan book with room to spare\") and durability (\"low-cost and growing deposits funding a loan book with room to spare\"), one sentence twice in one section.",
+      "fix": "Make each claim once, where it is argued: (a) in leadership or a segment paragraph, (b) in systemic or scenarioCommentary, (c) in segments[3], (d) in moatFactors[0]. Elsewhere, refer back in words or cut.",
+      "status": "addressed",
+      "note": "The HOLD rationale is now argued once, in scenarioCommentary. analystCommentary and finalRecommendation.body[0] point to the valuation section, the thesis states the conclusion in one clause, and the subtitle no longer restates it."
+    },
+    {
+      "id": "F-37",
+      "severity": "Important",
+      "field": "sections.executiveSummary.catalysts[1]",
+      "quote": "Capital return: the Board raised the quarterly dividend 14 percent to $0.32 on July 23, 2026, payable September 25, 2026; the capital-allocation section covers repurchases.",
+      "issue": "The bullet carries the dividend figures that analystCommentary (\"on July 23, 2026 the Board raised the quarterly dividend to $0.32\") and capitalAllocation (\"The quarterly dividend goes to $0.32 ... an increase of 14 percent\") also give: three places. The same happens elsewhere. Asset management fees \"up 19% to $4.4 billion\", and the market-valuation caveat with them, appear in segments[1] and growth.points[3]. One figure appears twice under two descriptions: \"~6K net new $500K+ relationships\" (moatFactors[2], per the release) and \"approximately 6,000 net new affluent households\" (growth.points[5], per the call). The 69 million clients appear in companyOverview and moatFactors[1], and the $4.9 trillion client balances in companyOverview and segments[1]. Consensus EPS of $4.64/$5.26 appears in thesis.body, the Base driver and growth.points[4], and that bullet adds nothing else.",
+      "fix": "Turn catalysts[1] into a pointer in words. Keep each figure in the section that argues from it and refer back elsewhere. Give growth.points[4] a view or drop it, and use one description of the ~6K figure.",
+      "status": "addressed",
+      "note": "catalysts[1] carries no figures and analystCommentary no dividend. Asset management fees, the ~6K relationships, the 69 million clients and the $4.9 trillion each appear once, and growth.points[4] is gone."
+    },
+    {
+      "id": "F-38",
+      "severity": "Important",
+      "field": "sections.executiveSummary.catalysts[3]",
+      "quote": "AI-enabled tools that management says are now embedded across operations and client-facing teams; any benefit would show in the expense line, and the pack does not separate it yet.",
+      "issue": "Two departures from the call. It says the tools are \"now more embedded in workflows across operations, risk, finance, technology, and our client-facing teams\"; \"more embedded\" describes a degree, and the bullet drops the qualifier. And \"any benefit would show in the expense line\" is contradicted by the call, which says AI \"plays a role, I think, in two ways. The first one is on the revenue side\", naming investment banking and Global Markets financing of AI-related capital investment. The call also describes AI tools that help bankers \"identify relevant client opportunities\".",
+      "fix": "Keep the call's \"more embedded\". Say that management describes AI benefits on both the revenue side and the expense side, and that the pack quantifies neither.",
+      "status": "addressed",
+      "note": "catalysts[3] keeps \"now more embedded in workflows\" and says management describes benefits on both the revenue side and the expense side, with neither quantified."
+    },
+    {
+      "id": "F-39",
+      "severity": "Minor",
+      "field": "sections.management.capitalAllocation",
+      "quote": "the 10-Q lists stress capital buffer requirements, total loss-absorbing capacity requirements and the GSIB surcharge among uncertainties outside the bank's control",
+      "issue": "Several wording slips go beyond the source. (1) The 10-Q lists \"the impact of adverse changes to\" these requirements among its uncertainties and says only that its risks \"are often beyond the Corporation's control\". It does not single these out, and executiveSummary.risks[3] goes further (\"capital rules the Board does not control\"). (2) risks[1] and risks.idiosyncratic[1] say trading and investment banking \"led\" the quarter's growth, but the call says growth was \"led by NII, investment banking, wealth management fees, and sales and trading revenue\". (3) segments[1] opens \"GWIM showed the clearest margin gain in the quarter\", a cross-segment ranking the pack does not give on one basis. (4) moatFactors[2] has \"Consumer Banking, GWIM and Global Banking feed each other\", while the call names markets, Global Banking and GWIM. (5) growth.points[2] says commercial lending is \"where the risk section looks for the next credit losses\", but the risk section looks to the card book and reports commercial criticized exposures falling.",
+      "fix": "Carry the source's own wording in each place, and make growth.points[2]'s counter point to what the risk section actually argues, or argue it there.",
+      "status": "addressed",
+      "note": "All three fixed: catalysts[2] keeps the CEO's \"near-term\", scenarioCommentary no longer uses pipelines as 2027 evidence and marks \"in our reading consensus needs positive operating leverage in 2027\", and the claim about how the Street weighs downside is gone."
+    },
+    {
+      "id": "F-40",
+      "severity": "Minor",
+      "field": "sections.risks.idiosyncratic[2]",
+      "quote": "reservable criticized commercial exposures fell approximately $2.3 billion to roughly $22 billion",
+      "issue": "Periods and dates are missing. (1) The call gives this as a decline \"from Q1\", but the sentence before it compares with both the March quarter and a year earlier, so the reader cannot tell which. (2) incomeCommentary's \"Net interest yield on a fully taxable-equivalent basis rose 14 bps to 2.08 percent\" omits that the comparison is year over year. (3) insiderOwnership says \"Three holders were above 5% at that date\", but the proxy dates the table to March 13, 2026 \"except to the extent indicated otherwise in the footnotes\". The footnotes for those holders are not captured, so the holdings may carry an earlier date. (4) risks.systemic gives the research team's forecasts as \"The backdrop the call describes\" without dating the July 14, 2026 call, two months before the report's price date.",
+      "fix": "Add \"from the March quarter\" and \"year over year\". Hedge the 5% holders' date (\"as reported in the March 2026 proxy\"). Date the macro forecasts to the July 14, 2026 call.",
+      "status": "addressed",
+      "note": "All four fixed: \"from the March quarter\", \"rose 14 bps year over year\", the ownership table dated with its footnote caveat and \"As reported in the proxy\", and \"on the July 14, 2026 call\"."
     }
   ]
 }
