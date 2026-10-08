@@ -72,7 +72,7 @@ describe("the inputs stamp", () => {
   });
   it("a good stamp reads as a stamp, with or without a source", () => {
     expect(read(stamp)).toEqual({ stamp });
-    for (const source of ["backfill:7ce1382", "rekey:" + "f".repeat(40), "owner-accept:pre-rating"])
+    for (const source of ["backfill:7ce1382", "rekey:" + "f".repeat(40), "owner-accept:pre-rating", "rekey:abc1234+owner-accept"])
       expect(read({ ...stamp, source })).toEqual({ stamp: { ...stamp, source } });
     expect(ReviewInputsStamp.safeParse({ ...stamp, source: "backfill:XYZ" }).success).toBe(false);
   });

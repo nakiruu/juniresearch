@@ -5,7 +5,8 @@
  * `rekey:<sha>`) only when the derived label is unchanged and the judgment still passes validate's rating checks and
  * Calls grounding under the new rule; a label alone is not enough (a raised bear floor keeps every label but fails 23
  * published judgments). Every other report goes to re-review. A stamp from another rule, or one already stale on facts
- * or context, is left alone. Plan: 2026-10-08-review-fingerprint.md, Task 6.
+ * or context, or on the judgment, is left alone. An owner-accepted pre-rating review keeps its marker, as
+ * `rekey:<sha>+owner-accept`. Plan: 2026-10-08-review-fingerprint.md, Task 6.
  */
 import type { FactPack } from "../facts/schema";
 import type { ReportFacts } from "../facts/project";
@@ -15,15 +16,21 @@ import type { ReviewInputsStamp } from "./editorial.schema";
 import { computeConviction, deriveLabel } from "./conviction";
 import { ratingIssues, groundJudgment, groundingSurface } from "./validate-judgment";
 import { reviewInputs, inputsLine } from "./review-inputs";
+import { judgmentSha256 } from "./editorial";
+
+const OWNER_ACCEPT = "owner-accept:pre-rating";
 
 export type RekeyResult =
-  | { action: "restamp"; stamp: ReviewInputsStamp }
+  | { action: "restamp"; stamp: ReviewInputsStamp; ownerAccepted: boolean }
   | { action: "reReview"; reason: string }
   | { action: "untouched"; reason: string };
 
 export function rekeyCalls(input: {
   stamp: ReviewInputsStamp;
   judgment: Judgment;
+  /** The judgment file's text, and the judgmentSha256 the review recorded: a review stale on the judgment is left alone. */
+  judgmentText: string;
+  reviewJudgmentSha256: string;
   pack: FactPack;
   facts: ReportFacts;
   desk: Desk;
@@ -31,7 +38,8 @@ export function rekeyCalls(input: {
   newRating: DeskRating;
   rekeySha: string;
 }): RekeyResult {
-  const { stamp, judgment, pack, facts, desk, oldRating, newRating, rekeySha } = input;
+  const { stamp, judgment, judgmentText, reviewJudgmentSha256, pack, facts, desk, oldRating, newRating, rekeySha } = input;
+  if (judgmentSha256(judgmentText) !== reviewJudgmentSha256) return { action: "untouched", reason: "stale on judgment" };
   const before = reviewInputs(pack, { rating: oldRating }, facts), after = reviewInputs(pack, { rating: newRating }, facts);
   if (stamp.calls !== before.calls) return { action: "untouched", reason: "not this change" };
   if (stamp.facts !== before.facts || stamp.context !== before.context) return { action: "untouched", reason: "already stale on facts or context" };
@@ -47,7 +55,9 @@ export function rekeyCalls(input: {
   const old = new Set(missesUnder(oldRating).map(missKey));
   const lost = missesUnder(newRating).filter((m) => !old.has(missKey(m)));
   if (lost.length) return { action: "reReview", reason: `grounding: ${lost.map((m) => `${m.field} "${m.token.raw}"`).join("; ")}` };
-  return { action: "restamp", stamp: { ...stamp, calls: after.calls, source: `rekey:${rekeySha}` } };
+  // An owner-accepted pre-rating review keeps its marker: the acceptance must stay visible to any audit.
+  const ownerAccepted = stamp.source === OWNER_ACCEPT || !!stamp.source?.endsWith("+owner-accept");
+  return { action: "restamp", ownerAccepted, stamp: { ...stamp, calls: after.calls, source: `rekey:${rekeySha}${ownerAccepted ? "+owner-accept" : ""}` } };
 }
 
 const INPUTS_OBJECT = /"inputs"\s*:\s*\{[^{}]*\}/g;

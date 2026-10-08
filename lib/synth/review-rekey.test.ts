@@ -9,6 +9,8 @@ import { computeConviction, deriveLabel } from "@/lib/synth/conviction";
 import { groundJudgment, groundingSurface } from "@/lib/synth/validate-judgment";
 import { reviewInputs, sha256, canon } from "@/lib/synth/review-inputs";
 import { rekeyCalls, replaceInputsText } from "@/lib/synth/review-rekey";
+import { judgmentSha256 } from "@/lib/synth/editorial";
+import type { ReviewInputsStamp } from "@/lib/synth/editorial.schema";
 
 const FIX = "lib/__fixtures__/review-inputs";
 const desk = Desk.parse(JSON.parse(readFileSync(`${FIX}/desk.json`, "utf8")));
@@ -19,15 +21,17 @@ const load = (t: string) => {
 };
 const SHA = "abc1234";
 const stampFor = (t: ReturnType<typeof load>, rating: DeskRating) => ({ ...reviewInputs(t.pack, { rating }, t.facts), source: "backfill:7ce1382" });
-const run = (t: ReturnType<typeof load>, oldRating: DeskRating, newRating: DeskRating, stamp = stampFor(t, oldRating)) =>
-  rekeyCalls({ stamp, judgment: t.judgment, pack: t.pack, facts: t.facts, desk, oldRating, newRating, rekeySha: SHA });
+const run = (t: ReturnType<typeof load>, oldRating: DeskRating, newRating: DeskRating, stamp: ReviewInputsStamp = stampFor(t, oldRating), reviewSha?: string) => {
+  const judgmentText = JSON.stringify(t.judgment);
+  return rekeyCalls({ stamp, judgment: t.judgment, judgmentText, reviewJudgmentSha256: reviewSha ?? judgmentSha256(judgmentText), pack: t.pack, facts: t.facts, desk, oldRating, newRating, rekeySha: SHA });
+};
 
 describe("rekeyCalls", () => {
   const avgo = load("AVGO");
   it("restamps calls with the rekey source when the label holds and validate passes", () => {
     const newRating = { ...desk.rating, strongSell: { maxUpside: -0.25 } };
     const r = run(avgo, desk.rating, newRating);
-    expect(r).toEqual({ action: "restamp", stamp: { ...stampFor(avgo, desk.rating), calls: sha256(canon(newRating)), source: `rekey:${SHA}` } });
+    expect(r).toEqual({ action: "restamp", ownerAccepted: false, stamp: { ...stampFor(avgo, desk.rating), calls: sha256(canon(newRating)), source: `rekey:${SHA}` } });
   });
 
   it("sends a label that flips at a threshold to re-review", () => {
@@ -77,6 +81,22 @@ describe("rekeyCalls", () => {
     const r = run(x, oldRating, newRating);
     expect(r).toMatchObject({ action: "reReview" });
     expect(r.action === "reReview" && r.reason).toMatch(/grounding: .*23\.7%/);
+  });
+
+  it("leaves a review that is already stale on the judgment untouched", () => {
+    const newRating = { ...desk.rating, strongSell: { maxUpside: -0.25 } };
+    expect(run(avgo, desk.rating, newRating, undefined, "d".repeat(64))).toEqual({ action: "untouched", reason: "stale on judgment" });
+  });
+
+  it("keeps an owner-accept marker through a re-key, as rekey:<sha>+owner-accept, and says so", () => {
+    const newRating = { ...desk.rating, strongSell: { maxUpside: -0.25 } };
+    const accepted = { ...stampFor(avgo, desk.rating), source: "owner-accept:pre-rating" };
+    const r = run(avgo, desk.rating, newRating, accepted);
+    expect(r).toMatchObject({ action: "restamp", ownerAccepted: true, stamp: { calls: sha256(canon(newRating)), source: `rekey:${SHA}+owner-accept` } });
+    // a second re-key keeps it
+    const again = run(avgo, newRating, desk.rating, r.action === "restamp" ? r.stamp : accepted);
+    expect(again).toMatchObject({ action: "restamp", ownerAccepted: true, stamp: { source: `rekey:${SHA}+owner-accept` } });
+    expect(run(avgo, desk.rating, newRating)).toMatchObject({ action: "restamp", ownerAccepted: false });
   });
 
   it("leaves a stamp from another rule, or one already stale on facts or context, untouched", () => {

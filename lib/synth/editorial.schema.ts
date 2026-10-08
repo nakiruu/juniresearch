@@ -27,13 +27,16 @@ export type EditorialFinding = z.infer<typeof EditorialFinding>;
 
 const SHA256 = z.string().regex(/^[0-9a-f]{64}$/);
 
-/** The inputs the review read. `source` is an audit trail (absent: the reviewer copied it) and is never compared. */
+/**
+ * The inputs the review read. `source` is an audit trail (absent: the reviewer copied it) and is never compared;
+ * `rekey:<sha>+owner-accept` is an owner-accepted pre-rating review carried across a desk.rating change.
+ */
 export const ReviewInputsStamp = z.strictObject({
   scheme: z.literal(1),
   facts: SHA256,
   calls: SHA256,
   context: SHA256,
-  source: z.string().regex(/^((backfill|rekey):[0-9a-f]{7,40}|owner-accept:pre-rating)$/).optional(),
+  source: z.string().regex(/^((backfill|rekey):[0-9a-f]{7,40}|owner-accept:pre-rating|rekey:[0-9a-f]{7,40}\+owner-accept)$/).optional(),
 });
 export type ReviewInputsStamp = z.infer<typeof ReviewInputsStamp>;
 
