@@ -87,6 +87,10 @@ export function reviewVerdict(
   return { status: openFindings(review).length > 0 ? "open" : "clean" };
 }
 
+/** One short label for listings (grounding:sweep): `stale (facts)`, `unstamped (missing)`, `clean`, … */
+export const verdictLabel = (v: ReviewVerdict): string =>
+  v.changed ? `${v.status} (${v.changed.join(", ")})` : v.unstamped ? `${v.status} (${v.unstamped})` : v.status;
+
 export function reviewVerdictMessage(v: ReviewVerdict, openCount: number): string {
   if (v.status === "stale" && v.changed && !v.changed.includes("judgment"))
     return `the review predates the current inputs (${v.changed.join(", ")} changed) — rebuild with --skip-review, re-render the brief (it will be a full brief) and re-run the review${v.hint ? ` — ${v.hint}` : ""}`;

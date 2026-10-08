@@ -3,7 +3,7 @@ import { mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { EditorialReview } from "@/lib/synth/editorial.schema";
-import { judgmentSha256, loadEditorialReview, openFindings, reviewStatus, editorialGateMessage, renderEditorialFindings, malformedReviewMessage, reviewVerdict, reviewVerdictMessage } from "@/lib/synth/editorial";
+import { judgmentSha256, loadEditorialReview, openFindings, reviewStatus, editorialGateMessage, renderEditorialFindings, malformedReviewMessage, reviewVerdict, reviewVerdictMessage, verdictLabel } from "@/lib/synth/editorial";
 import { LEGACY_ENVELOPE_CALLS, type ReviewInputs } from "@/lib/synth/review-inputs";
 
 const TEXT = '{\n  "rating": { "label": "BUY" }\n}\n';
@@ -147,6 +147,17 @@ describe("reviewVerdict", () => {
   it("names the retired envelope for a legacy calls stamp", () =>
     expect(reviewVerdict(TEXT, stamped({ ...cur, calls: LEGACY_ENVELOPE_CALLS, source: "backfill:abc1234" }), at, req)).toMatchObject({ status: "stale", changed: ["calls"], hint: expect.stringMatching(/pre-rating envelope/) }));
   it("leaves reviewStatus as it was", () => expect(reviewStatus(TEXT, review())).toBe("clean"));
+});
+
+describe("verdictLabel", () => {
+  it("is the status, with what moved or why it is unstamped", () => {
+    expect(verdictLabel({ status: "clean" })).toBe("clean");
+    expect(verdictLabel({ status: "open" })).toBe("open");
+    expect(verdictLabel({ status: "missing" })).toBe("missing");
+    expect(verdictLabel({ status: "stale", changed: ["facts", "calls"] })).toBe("stale (facts, calls)");
+    expect(verdictLabel({ status: "stale", changed: ["judgment"] })).toBe("stale (judgment)");
+    expect(verdictLabel({ status: "unstamped", unstamped: "missing" })).toBe("unstamped (missing)");
+  });
 });
 
 describe("reviewVerdictMessage", () => {
