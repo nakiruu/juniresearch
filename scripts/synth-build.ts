@@ -1,4 +1,3 @@
-import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { FactPack } from "../lib/facts/schema";
@@ -22,7 +21,8 @@ import { validateReport, type ValidationIssue } from "../lib/validate";
 import { lintJudgment, type LintIssue } from "../lib/synth/lint";
 import { issueLine, writeErrorsFile } from "../lib/synth/errors-file";
 import { loadEditorialReview, reviewVerdict, reviewVerdictMessage, openFindings, judgmentSha256 } from "../lib/synth/editorial";
-import { reviewInputs, inputsUnder, type ReviewInputs } from "../lib/synth/review-inputs";
+import { reviewInputs, inputsUnder } from "../lib/synth/review-inputs";
+import { briefCopyBlock } from "../lib/synth/review-brief";
 import { loadExceptions, gitReaders, applyExceptions, surfaceSha256, EXCEPTIONS_PATH } from "../lib/synth/grounding-exceptions";
 import { crosscheckGate } from "../lib/synth/crosscheck-gate";
 
@@ -144,17 +144,10 @@ const review = (() => {
 // The review binds to the judgment text and to the inputs it read (facts, calls, context; review-inputs.ts).
 const inputs = reviewInputs(pack, desk, facts);
 const current = (scheme: number) => (scheme === inputs.scheme ? inputs : inputsUnder(scheme, pack, desk, facts));
-// Diagnostic only: the inputs at the findings file's last commit, so a stale verdict can say "likely mis-copied".
-const atReviewCommit = (): ReviewInputs | undefined => {
-  try {
-    const git = (...a: string[]) => execFileSync("git", a, { encoding: "utf8", maxBuffer: 1 << 28, stdio: ["ignore", "pipe", "ignore"] });
-    const c = git("log", "-1", "--format=%h", "--", editorialPath.replace(/\\/g, "/")).trim();
-    if (!c) return undefined;
-    return reviewInputs(FactPack.parse(JSON.parse(git("show", `${c}:data/facts/${ticker}/${accession}.json`))), Desk.parse(JSON.parse(git("show", `${c}:data/desk/desk.json`))));
-  } catch { return undefined; }
-};
-let verdict = reviewVerdict(judgmentText, review, current, { requireInputs: true });
-if (verdict.status === "stale" && !verdict.changed?.includes("judgment")) verdict = reviewVerdict(judgmentText, review, current, { requireInputs: true, atReviewCommit: atReviewCommit() });
+// Diagnostic only: what the existing brief told the reviewer to copy (null for a legacy brief), for the stale hint.
+const briefPath = join("data", "judgment", ticker, `${accession}.review-brief.md`);
+const brief = existsSync(briefPath) ? briefCopyBlock(readFileSync(briefPath, "utf8")) : null;
+const verdict = reviewVerdict(judgmentText, review, current, { requireInputs: true, brief });
 const status = verdict.status;
 if (status !== "clean" && !skipReview)
   fail([{ field: editorialPath, message: reviewVerdictMessage(verdict, review ? openFindings(review).length : 0), value: status }], warnings, "editorial");

@@ -135,14 +135,28 @@ describe("reviewVerdict", () => {
     reviewVerdict(TEXT, stamped(cur), (s) => { schemes.push(s); return cur; }, req);
     expect(schemes).toEqual([1]);
   });
-  it("adds the mis-copy hint only when the caller passes the inputs recomputed at the review commit", () => {
+  describe("the hint, anchored on the brief's copy block", () => {
+    const sha = judgmentSha256(TEXT);
     const bad = stamped({ ...cur, facts: "9".repeat(64) });
-    expect(reviewVerdict(TEXT, bad, at, req).hint).toBeUndefined();
-    expect(reviewVerdict(TEXT, bad, at, { ...req, atReviewCommit: cur }).hint).toMatch(/mis-copied; continue the reviewer to re-copy/);
-    // the stamp equals what the review commit saw: a real change, no hint
-    expect(reviewVerdict(TEXT, bad, at, { ...req, atReviewCommit: { ...cur, facts: "9".repeat(64) } }).hint).toBeUndefined();
-    // a reconstructed stamp was never copied, so it cannot be mis-copied
-    expect(reviewVerdict(TEXT, stamped({ ...cur, facts: "9".repeat(64), source: "backfill:abc1234" }), at, { ...req, atReviewCommit: cur }).hint).toBeUndefined();
+    const hint = (r: ReturnType<typeof review>, brief: { judgmentSha256: string; inputs: ReviewInputs } | null | undefined) =>
+      reviewVerdict(TEXT, r, at, { ...req, brief }).hint;
+    it("gives none without a brief, or for a legacy brief (null)", () => {
+      expect(hint(bad, undefined)).toBeUndefined();
+      expect(hint(bad, null)).toBeUndefined();
+    });
+    it("says mis-copied when the brief told the reviewer to copy today's inputs and the stamp differs", () =>
+      expect(hint(bad, { judgmentSha256: sha, inputs: cur })).toMatch(/differs from the brief's copy block.*mis-copied; continue the reviewer to re-copy/));
+    it("never suggests re-copying when the brief's inputs differ from today's: it says re-review", () => {
+      for (const s of [bad, stamped({ ...cur, facts: "8".repeat(64) })]) {
+        const h = hint(s, { judgmentSha256: sha, inputs: { ...cur, facts: "9".repeat(64) } });
+        expect(h).toMatch(/re-render the brief and re-review/);
+        expect(h).not.toMatch(/re-copy/);
+      }
+    });
+    it("gives none for a brief of another judgment, or a stamp nobody copied", () => {
+      expect(hint(bad, { judgmentSha256: "c".repeat(64), inputs: cur })).toBeUndefined();
+      expect(hint(stamped({ ...cur, facts: "9".repeat(64), source: "backfill:abc1234" }), { judgmentSha256: sha, inputs: cur })).toBeUndefined();
+    });
   });
   it("names the retired envelope for a legacy calls stamp", () =>
     expect(reviewVerdict(TEXT, stamped({ ...cur, calls: LEGACY_ENVELOPE_CALLS, source: "backfill:abc1234" }), at, req)).toMatchObject({ status: "stale", changed: ["calls"], hint: expect.stringMatching(/pre-rating envelope/) }));

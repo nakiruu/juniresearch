@@ -59,26 +59,29 @@ export interface ReviewVerdict {
 
 /**
  * Judgment, then the stamp, then the inputs, then the findings. `current` gives the current inputs under a scheme, so a
- * review is compared on the picks its reviewer saw. `atReviewCommit` (the inputs recomputed from git at the findings
- * file's last commit) only adds the mis-copy hint, and only to a stamp the reviewer copied.
+ * review is compared on the picks its reviewer saw. `brief` (the copy block of the existing review brief; null for a
+ * legacy brief) only adds a hint, and only to a stamp the reviewer copied: re-copy when the brief asked for today's
+ * inputs and the stamp differs from it, re-review when the brief itself was for other inputs.
  */
 export function reviewVerdict(
   judgmentText: string,
   review: EditorialReview | null,
   current: (scheme: number) => ReviewInputs,
-  opts: { requireInputs: boolean; atReviewCommit?: ReviewInputs },
+  opts: { requireInputs: boolean; brief?: { judgmentSha256: string; inputs: ReviewInputs } | null },
 ): ReviewVerdict {
   if (!review) return { status: "missing" };
   if (review.judgmentSha256 !== judgmentSha256(judgmentText)) return { status: "stale", changed: ["judgment"] };
   const read = readInputsStamp(review);
   if ("stamp" in read) {
     const { stamp } = read;
-    const changed = changedComponents(stamp, current(stamp.scheme));
+    const now = current(stamp.scheme);
+    const changed = changedComponents(stamp, now);
     if (changed.length) {
-      const at = opts.atReviewCommit;
+      const b = !stamp.source && opts.brief?.judgmentSha256 === review.judgmentSha256 ? opts.brief.inputs : null;
       const hint = stamp.calls === LEGACY_ENVELOPE_CALLS ? "the review read the pre-rating envelope, retired in 02d1335"
-        : !stamp.source && at && changed.some((k) => stamp[k] !== at[k]) ? "if nothing changed, the inputs were likely mis-copied; continue the reviewer to re-copy them"
-          : undefined;
+        : !b ? undefined
+          : changedComponents(b, now).length ? "the brief was rendered for other inputs than today's: re-render the brief and re-review"
+            : "the stamp differs from the brief's copy block, which carries today's inputs: likely mis-copied; continue the reviewer to re-copy it";
       return { status: "stale", changed, ...(hint ? { hint } : {}) };
     }
   } else if (opts.requireInputs) {
