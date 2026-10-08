@@ -338,11 +338,79 @@ function grounds(p0: NumberToken, entries: readonly GroundingEntry[], pol: Groun
   return { ok: r.cls !== "none", ...r };
 }
 
+/* ---------------------------------------------------------------- diagnostics ---------------------------------------------------------------- */
+
+export type MissReason = "sign" | "finer" | "rounding" | "short-cell" | "unit" | "none";
+export type Weakness = "bare-cell" | "money-cell-scale-up" | "unsigned-context";
+
+/** Why a figure missed: the first single relaxation under which it would ground. */
+function explain(p: NumberToken, entries: readonly GroundingEntry[]): { reason: MissReason; by?: GroundingEntry } {
+  let g = grounds(p, entries, { ...POLICY, checkSign: false });
+  if (g.ok) return { reason: "sign", by: g.by };
+  // finer than the surface: the prose rounded to a non-zero entry's resolution equals the entry
+  for (const e of entries) {
+    if (isBareCell(e) && p.kind !== "plain") continue;
+    if (!(e.kind === p.kind || p.kind === "plain") || (p.kind === "money" && e.currency !== p.currency)) continue;
+    if (e.abs !== 0 && p.resolution < e.resolution * (1 - 1e-9) && roundAt(p.abs, e.resolution) === roundAt(e.abs, e.resolution)) return { reason: "finer", by: e };
+  }
+  g = grounds(p, entries, { ...POLICY, surfCoarsenSig: 1, ctxCoarsenSig: 1 });
+  if (g.ok) return { reason: "rounding", by: g.by };
+  g = grounds(p, entries, { ...POLICY, wildMinSig: 1, wildMinSigPct: 1, perShareNoScaleUp: false });
+  if (g.ok) return { reason: "short-cell", by: g.by };
+  // the same written digits at the same precision under another unit or scale, on a typed entry (a bare cell has no unit to differ);
+  // across kinds only for a specific figure (≥ 3 significant digits), never a coincidental "14"
+  for (const e of entries) {
+    if (isBareCell(e) || e.precision !== p.precision || !near(Math.abs(e.value), Math.abs(p.value))) continue;
+    if ((e.kind === p.kind && e.scale !== p.scale) || (e.kind !== p.kind && p.kind !== "plain" && p.sig >= 3)) return { reason: "unit", by: e };
+  }
+  return { reason: "none" };
+}
+
+/** A grounded figure is weak when it grounds only through a path that cannot check its unit, scale or sign. */
+function weakness(p: NumberToken, entries: readonly GroundingEntry[]): Weakness | null {
+  if (!grounds(p, entries, POLICY).ok) return null;
+  const noBare = entries.filter((e) => !(isBareCell(e) && !(p.kind === "plain" && p.scale === 1)));
+  if (!grounds(p, noBare, POLICY).ok) return "bare-cell";
+  const noScaleUp = noBare.filter((e) => !(e.source === "context" && e.kind === "money" && e.scale === 1 && p.scale !== 1));
+  if (!grounds(p, noScaleUp, POLICY).ok) return "money-cell-scale-up";
+  if (p.sign !== 0 && !grounds(p, noScaleUp.filter((e) => !(e.source === "context" && e.sign === 0)), POLICY).ok) return "unsigned-context";
+  return null;
+}
+
 /** Every figure on the grounding surface, typed. */
 export class GroundingIndex {
   constructor(readonly entries: readonly GroundingEntry[]) {}
   /** Whether a prose figure grounds, how, and against which entry. */
   lookup(t: NumberToken): Grounding { return grounds(t, this.entries, POLICY); }
+  explain(t: NumberToken): { reason: MissReason; by?: GroundingEntry } { return explain(t, this.entries); }
+  weakness(t: NumberToken): Weakness | null { return weakness(t, this.entries); }
+}
+
+export interface GroundingMiss extends ValidationIssue { token: NumberToken; reason: MissReason; by?: GroundingEntry }
+export interface WeakGrounding { field: string; raw: string; weakness: Weakness; by?: GroundingEntry }
+
+const SOURCE_NAME: Record<GroundingSource, string> = { facts: "Facts", calls: "Calls", judgment: "judgment", context: "Context" };
+const shown = (e: GroundingEntry) => `${SOURCE_NAME[e.source]} "${e.raw.replace(/\s+/g, " ")}"`;
+function reasonText(reason: MissReason, by?: GroundingEntry): string {
+  switch (reason) {
+    case "sign": return `the surface shows it with the opposite sign: ${shown(by!)}`;
+    case "finer": return `more precise than the surface shows: ${shown(by!)}`;
+    case "rounding": return `rounding ${shown(by!)} this far is not allowed — quote it as shown or in words`;
+    case "short-cell": return "a table cell this short cannot vouch for a scaled figure — quote it with the table's unit or in words";
+    case "unit": return `the surface shows these digits with another unit or scale: ${shown(by!)}`;
+    case "none": return "no figure of this kind on the surface matches it";
+  }
+}
+
+/** Grounded figures that only a unit-less cell, a scaled-up money cell or unsigned context vouches for — the reviewer checks these first. */
+export function weakGroundings(obj: unknown, index: GroundingIndex): WeakGrounding[] {
+  const out: WeakGrounding[] = [];
+  for (const { path, text } of stringLeaves(obj))
+    for (const tok of numericTokens(text)) {
+      const w = index.weakness(tok);
+      if (w) out.push({ field: path, raw: tok.raw, weakness: w, by: index.lookup(tok).by });
+    }
+  return out;
 }
 
 export function buildGroundingIndex(s: GroundingSurface): GroundingIndex {
@@ -411,11 +479,21 @@ export function buildAllowedIndex(pack: FactPack, extraText: string[]): AllowedI
   return index;
 }
 
-export function checkGrounding(obj: unknown, index: AllowedIndex): ValidationIssue[] {
+/** Each prose figure that grounds against nothing on the surface, with the reason it missed. */
+export function checkGrounding(obj: unknown, index: GroundingIndex): GroundingMiss[];
+export function checkGrounding(obj: unknown, index: AllowedIndex): ValidationIssue[];
+export function checkGrounding(obj: unknown, index: AllowedIndex | GroundingIndex): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
   for (const { path, text } of stringLeaves(obj))
-    for (const tok of numericTokens(text))
-      if (!index.has(tok))
-        issues.push({ field: path, message: `"${tok.raw}" is not in the facts or the captured context`, value: tok.raw });
+    for (const tok of numericTokens(text)) {
+      const prefix = `"${tok.raw}" is not in the facts or the captured context`;
+      if (index instanceof AllowedIndex) {
+        if (!index.has(tok)) issues.push({ field: path, message: prefix, value: tok.raw });
+        continue;
+      }
+      if (index.lookup(tok).ok) continue;
+      const { reason, by } = index.explain(tok);
+      issues.push({ field: path, message: `${prefix} — ${reasonText(reason, by)}`, value: tok.raw, token: tok, reason, by } as GroundingMiss);
+    }
   return issues;
 }

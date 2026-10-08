@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { numericTokens, buildAllowedIndex, checkGrounding, AllowedIndex, buildGroundingIndex, type GroundingSurface } from "@/lib/synth/grounding";
+import { numericTokens, buildAllowedIndex, checkGrounding, AllowedIndex, buildGroundingIndex, weakGroundings, type GroundingIndex, type GroundingSurface } from "@/lib/synth/grounding";
 import { stringLeaves } from "@/lib/synth/walk";
 import { FactPack } from "@/lib/facts/schema";
 import { projectReportFacts } from "@/lib/facts/project";
@@ -394,6 +394,54 @@ describe("matching by kind, magnitude, sign and resolution", () => {
     it("every sign, per-share and unit probe fails", () => {
       expect(passes(["-23.9%", "+$6.3B of buybacks", "4.77x", "44.9%", "$44.9", "$509.61 million", "$1,722.2B"], full)).toEqual([]);
     });
+  });
+});
+
+describe("why a figure missed, and which figures ground only weakly", () => {
+  type Src = { ctx?: string; facts?: string; judgment?: string; table?: [string, number] };
+  const index = (s: Src) => buildGroundingIndex({
+    tables: s.table ? [{ title: "t", columns: ["", "FY25"], rows: [{ label: "r", values: [s.table[1]], format: s.table[0] }] } as never] : [],
+    factsBlock: s.facts ?? "", callsBlock: "", judgmentBlock: s.judgment ?? "", contextBlock: s.ctx ?? "" });
+  const reasonOf = (prose: string, idx: GroundingIndex) => {
+    const misses = checkGrounding({ p: prose }, idx);
+    expect(misses).toHaveLength(1);
+    return misses[0].reason;
+  };
+  it.each<[string, Src, string]>([
+    ["$13,952", { ctx: "revenue of $13,952 million" }, "unit"],                   // LH: the unit was dropped
+    ["$4.66B", { table: ["usdB", 4.66e9] }, "finer"],                             // ICE: Facts shows 4.7
+    ["-23.9%", { table: ["pctSigned", 0.239] }, "sign"],
+    ["0.6x", { judgment: "Reward/risk 0.57×" }, "rounding"],
+    ["$0.4M", { ctx: "Other income (loss)\n(.4)\n", table: ["usdB", 4e7] }, "short-cell"],   // MDU: not "finer" than a 0.0 cell
+    ["14x", { ctx: "a charge of $14 million" }, "none"],                         // across kinds only with 3+ significant digits
+  ])("%s → %s", (prose, s, want) => expect(reasonOf(prose, index(s))).toBe(want));
+  it("$17.9B on the AVGO surface → none", () => expect(reasonOf("Revenue of $17.9B", buildGroundingIndex(surfaceOf(pack)))).toBe("none"));
+  it("keeps the old message prefix, names the field and adds the reason", () => {
+    const [miss] = checkGrounding({ sections: { thesis: { body: "Revenue of $4.66B" } } }, index({ table: ["usdB", 4.66e9] }));
+    expect(miss.field).toBe("sections.thesis.body");
+    expect(miss.value).toBe("$4.66B");
+    expect(miss.message).toMatch(/^"\$4\.66B" is not in the facts or the captured context — more precise than the surface shows: Facts "4\.7"$/);
+  });
+  it("words each reason", () => {
+    const msg = (prose: string, s: Src) => checkGrounding({ p: prose }, index(s))[0].message;
+    expect(msg("-23.9%", { table: ["pctSigned", 0.239] })).toContain("the surface shows it with the opposite sign: Facts \"+23.9%\"");
+    expect(msg("0.6x", { judgment: "Reward/risk 0.57×" })).toContain("rounding judgment \"0.57×\" this far is not allowed — quote it as shown or in words");
+    expect(msg("$0.4M", { ctx: "Other\n(.4)\n" })).toContain("a table cell this short cannot vouch for a scaled figure — quote it with the table's unit or in words");
+    expect(msg("$13,952", { ctx: "revenue of $13,952 million" })).toContain("the surface shows these digits with another unit or scale: Context \"$13,952 million\"");
+    expect(msg("14x", { ctx: "a charge of $14 million" })).toContain("no figure of this kind on the surface matches it");
+  });
+
+  const weak = (prose: string, s: Src) => index(s).weakness(numericTokens(prose)[0]);
+  it("names the weak path a figure grounds through", () => {
+    expect(weak("$15,955 million", { ctx: "Operating income\n15,955\n" })).toBe("bare-cell");
+    expect(weak("$15,955 million", { ctx: "Operating income\n$\n15,955\n" })).toBe("money-cell-scale-up");
+    expect(weak("-12%", { ctx: "sales moved 12% in the quarter" })).toBe("unsigned-context");
+    expect(weak("$63.9B", { facts: "- FY25 Revenue: $63.9B (+23.9%)" })).toBeNull();
+  });
+  it("lists every weakly grounded figure with its field", () => {
+    const idx = index({ ctx: "Operating income\n15,955\nsales moved 12%" });
+    expect(weakGroundings({ a: "Income of $15,955 million.", b: ["Sales fell -12% and 12%."] }, idx).map((w) => [w.field, w.raw, w.weakness]))
+      .toEqual([["a", "$15,955 million", "bare-cell"], ["b[0]", "-12%", "unsigned-context"]]);
   });
 });
 
