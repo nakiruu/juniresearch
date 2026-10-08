@@ -117,6 +117,10 @@ export function numericTokens(text: string, mode: "prose" | "index" = "prose"): 
     let raw = whole, start = m.index;
     if (open && !close) { raw = raw.slice(1); start += 1; }
     if (close && !open) raw = raw.replace(/\)(?=[^)]*$)/, "");
+    // "40%-50%", "1.5x-2.0x": a hyphen straight after a % or a multiple is a range dash, as an en dash would be, not a minus
+    const prev = out.at(-1);
+    const rangeDash = !open && sign1 === "-" && !!prev && prev.end === m.index && (prev.kind === "pct" || prev.kind === "mult");
+    if (rangeDash) { raw = raw.slice(1); start += 1; }
     const scaleS = scaleRaw?.replace(/^[ -]/, "");
     // "February 17, 2026 point to" is a year, not 2,026 points; "met 4 times" is a count, not a multiple;
     // a hyphenated unit word is a unit only as "-percentage-point" ("a 10-point plan" is not 10 points)
@@ -130,7 +134,7 @@ export function numericTokens(text: string, mode: "prose" | "index" = "prose"): 
     const end = m.index + whole.length - dropped;
     const bare = !cur && !frac && !scaleS && !unit;
     const why = bare ? allowed(text, start, end, int) : false;
-    const sgnS = sign1 || sign2;
+    const sgnS = (rangeDash ? "" : sign1) || sign2;
     // sign: explicit +/- (before or after the currency), or "(12.3)%"; "($24.99)" in prose is a parenthetical
     const sign: -1 | 0 | 1 = /[-−]/.test(sgnS) ? -1 : sgnS === "+" ? 1 : paren && unit?.trim() === "%" ? -1 : 0;
     const scale = scaleS ? SCALE[scaleS.toLowerCase()] : 1;

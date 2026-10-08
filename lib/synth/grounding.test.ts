@@ -170,6 +170,20 @@ describe("numericTokens v2", () => {
     kinds("$45 and $1.2 billion", [["$45", "money", 45], ["$1.2 billion", "money", 1.2e9]]);      // "and" joins only after "between"
     kinds("fiscal year 2027 to $1.225 billion", [["$1.225 billion", "money", 1.225e9]]);           // a year never joins a range
     raws("10-25 units", ["25"]);
+    it("reads a hyphen straight after a % or a multiple as a range dash, exactly like an en dash (review C-4)", () => {
+      const shape = (text: string) => numericTokens(text).map((t) => [t.raw, t.kind, t.sign, t.abs]);
+      expect(shape("growth of 40%-50%")).toEqual([["40%", "pct", 0, 40], ["50%", "pct", 0, 50]]);
+      expect(shape("growth of 40%-50%")).toEqual(shape("growth of 40%–50%"));
+      expect(shape("margins of 5%-7%")).toEqual(shape("margins of 5%–7%"));
+      expect(shape("leverage of 1.5x-2.0x")).toEqual([["1.5x", "mult", 0, 1.5], ["2.0x", "mult", 0, 2]]);
+      expect(shape("0.50×-0.70×")).toEqual(shape("0.50×–0.70×"));
+    });
+    it("keeps a minus that follows no figure, or follows a space", () => {
+      expect(numericTokens("-50%").map((t) => t.sign)).toEqual([-1]);
+      expect(numericTokens("fell -50% then rose").map((t) => t.sign)).toEqual([-1]);
+      expect(numericTokens("from 5% to -3%").map((t) => t.sign)).toEqual([0, -1]);
+      expect(numericTokens("+5%/-3%").map((t) => t.sign)).toEqual([1, -1]);
+    });
   });
   describe("trailing zeros", () => {
     const tz = (text: string, want: number) => it(`${JSON.stringify(text)} has tz ${want}`, () => expect(numericTokens(text).map((t) => t.tz)).toEqual([want]));
