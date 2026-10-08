@@ -1,8 +1,13 @@
 {
-  "judgmentSha256": "453ff7a6586b05fdab08c76c42a50f70c5f9a2754191b4a8d8f2ae16a23a7562",
-  "inputs": {"scheme":1,"facts":"49e67698db7ccaac85e4acc8f1e869ac8f950e746806ec5c678b421672d92ed8","calls":"652ab6e8d7a3925f2a5cd0ac2f1331a34831ddc06ba00db697e59a58e6cebb0c","context":"ee1f99bd89015f3720a81c9a9dca1cb070c1369468376c62421c73a9bf85513c","source":"backfill:e48da28"},
-  "reviewedAt": "2026-09-23T06:42:22Z",
-  "reviewer": "Claude Opus 4.8",
+  "judgmentSha256": "2fb49bb39c3925fd77ab11872e3751d960b1dd5f962ed5984c0c640ccb114849",
+  "inputs": {
+    "scheme": 1,
+    "facts": "e1d6d5efa0628df3e3aca7d2854adea5f9ee0e0c939bfbaad7609b40d84afb59",
+    "calls": "652ab6e8d7a3925f2a5cd0ac2f1331a34831ddc06ba00db697e59a58e6cebb0c",
+    "context": "ee1f99bd89015f3720a81c9a9dca1cb070c1369468376c62421c73a9bf85513c"
+  },
+  "reviewedAt": "2026-10-08T20:06:22Z",
+  "reviewer": "Claude Opus 5.5",
   "round": 2,
   "verdict": "approved",
   "findings": [
@@ -14,7 +19,7 @@
       "issue": "The prose correctly dated the reported quarter but the built report labelled it 'Q3'26' (snapshot rows and filing badge), colliding with catalysts[1] third-quarter guidance of $945-975M, so a reader saw two revenue figures both tagged Q3.",
       "fix": "Add one clause anchoring the quarter ended July 4, 2026 as the company's second fiscal quarter (2Q 2026) so the guidance reads as the following quarter, and flag the vendor 'Q3'26' snapshot/badge mislabel to the desk.",
       "status": "addressed",
-      "note": "Fixed. incomeCommentary now opens 'Revenue in Vishay's second fiscal quarter, ended July 4, 2026' and reconciles the feed once ('the data feed labels it Q3, and we follow the company'). analystCommentary and catalysts[1] now say 'second fiscal quarter' / 'next quarter.' The rendered snapshot rows and filing badge in data/vsh.json still show the vendor Q3 label, but that is a build/desk artifact outside the judgment, now reconciled in prose."
+      "note": "Still fixed on the current inputs. incomeCommentary opens 'Revenue in Vishay's second fiscal quarter, ended July 4, 2026' and reconciles the feed's Q3 label once; the Facts block still labels the quarter Q3'26 (ended 2026-07-04), so the reconciliation remains needed and accurate."
     },
     {
       "id": "F-2",
@@ -24,7 +29,7 @@
       "issue": "Unsupported characterisation. The grounding surface describes the Itzehoe facility only as a 12-inch wafer fab being built adjacent to an existing 8-inch fab; neither the Facts nor Context state what it will produce, so 'aimed at higher-value power semiconductors' is an inference the pack does not make.",
       "fix": "Drop the product claim and state only what the surface supports (a new 12-inch wafer fab in Itzehoe, Germany), or requalify to what is grounded.",
       "status": "addressed",
-      "note": "Fixed. growth.points[1] now reads '...with the new German 12-inch wafer fab adding internal capacity.' The 'higher-value power semiconductors' product claim is removed. Other references (cashflowCommentary, moatFactors[2], risks.idiosyncratic[1]) describe only a 12-inch wafer fab in Itzehoe/Germany and do not reintroduce any product characterisation."
+      "note": "Still fixed. growth.points[1] reads '...with the new German 12-inch wafer fab adding internal capacity.' No other field reintroduces a product claim for the fab."
     },
     {
       "id": "F-3",
@@ -34,7 +39,7 @@
       "issue": "Imprecise and internally inconsistent. The income table shows FY22 gross margin of 30.3% (low-30s), which the durability section itself quotes, so 'high-20s ... in 2021 and 2022' understates the 2022 figure and clashes with the moat section.",
       "fix": "Refer to the peak years accurately, e.g. 'toward the high-20s to low-30s reached in 2021 and 2022', or cite the 2022 peak of 30.3% as the upper reference.",
       "status": "addressed",
-      "note": "Fixed. scenarios[0].driver now reads 'gross margin moves back toward its 2021 and 2022 highs.' The 'high-20s' characterisation is gone; the phrasing is consistent with the income table (FY21 27.4%, FY22 30.3%) and the durability section's 30.3% in 2022."
+      "note": "Still fixed. The driver reads 'gross margin moves back toward its 2021 and 2022 highs,' consistent with the unchanged income table (FY21 27.4%, FY22 30.3%)."
     },
     {
       "id": "F-4",
@@ -44,7 +49,7 @@
       "issue": "Only one immediately-preceding quarter (ended April 4, 2026, -$46.9M) was negative; the other negative value on the surface is the year-ago quarter, not the quarter before April, so 'after two negative quarters' implies a consecutive streak the surface does not establish.",
       "fix": "State only what the quarterly series supports, e.g. 'after the prior quarter's -$46.9 million outflow', or generalise to the FY25 negative free-cash run.",
       "status": "addressed",
-      "note": "Fixed. cashflowCommentary now reads 'free cash turned positive in the latest quarter, reversing the prior quarter's outflow, as earnings improved and spending moderated.' This matches the quarterly free-cash series (latest +$10.3M, prior -$46.9M) without implying a two-quarter consecutive streak."
+      "note": "Still fixed. cashflowCommentary reads 'reversing the prior quarter's outflow,' which matches the MD&A free-cash table (latest quarter $10,313 thousand, prior quarter $(46,926) thousand)."
     },
     {
       "id": "F-5",
@@ -54,7 +59,7 @@
       "issue": "Span misuse in two places. House style limits {+ +} to signed changes or explicit positives; wrapping the depressed year-ago base of $0.01 in a bullish span styles a weak comparison figure as a positive.",
       "fix": "Keep the bullish span on the improved figure ({+ $0.19 +}) and leave the prior-year $0.01 unmarked in both fields.",
       "status": "addressed",
-      "note": "Fixed in both fields. analystCommentary now 'Diluted EPS was {+ $0.19 +} against $0.01 a year earlier'; incomeCommentary now 'diluted EPS was {+ $0.19 +} against $0.01 a year ago.' The year-ago $0.01 is unmarked in both places."
+      "note": "Still fixed in both fields; the year-ago $0.01 is unmarked."
     },
     {
       "id": "F-6",
@@ -64,7 +69,17 @@
       "issue": "Repetition across sections. balanceCommentary already introduced the raise with the same 17.25 million share figure and the same dilution point, and the risks bullet restated it in different words rather than referring back.",
       "fix": "Refer back to the July raise in words and make a distinct point, or drop the restated 17.25 million figure already established in balanceCommentary.",
       "status": "addressed",
-      "note": "Fixed. The July-raise/17.25M dilution bullet is removed from risks.idiosyncratic (the four bullets are now cyclicality, capacity execution, tariff/trade uncertainty, and a grounded restructuring bullet). The equity raise and its dilution are now stated once, in balanceCommentary."
+      "note": "Still fixed. The dilution bullet is gone; the raise and its dilution are stated once, in balanceCommentary."
+    },
+    {
+      "id": "F-7",
+      "severity": "Important",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "Price-to-sales is 1.5x, and EV/EBITDA is not meaningful on depressed trailing EBITDA.",
+      "issue": "The rebuilt Facts now carry a trailing EV/EBITDA of 17.4x (Snapshot 'EV/EBITDA (TTM): 17.4x' and the Multiples row 'EV/EBITDA: 17.4x'), and data/vsh.json renders 17.446 in both the snapshot and the multiples table. The sentence was written when that cell was blank; it now contradicts a figure printed on the same page. The claim is also unsupported on the new surface: the 'near-zero denominator' reasoning the paragraph applies to the 174.4x P/E does not carry over, because 17.4x is an ordinary multiple, not one inflated by a vanishing denominator. The gap between 174.4x trailing earnings and 17.4x trailing EBITDA is itself informative (earnings are thin after depreciation, interest and tax, while EBITDA is not), and the paragraph skips it.",
+      "fix": "Quote the trailing EV/EBITDA of 17.4x and read it for the holder: say what it shows next to the 174.4x trailing P/E, and that trailing EBITDA still sits near the cycle trough (FY24 and FY25 EBITDA of $0.2 billion and $0.3 billion against $0.6 to $0.8 billion in FY21 to FY23), and reach a view on what the multiple means. Do not compute a forward EV/EBITDA, and keep the rest of the paragraph unchanged.",
+      "status": "addressed",
+      "note": "Fixed. multiplesCommentary now quotes trailing EV/EBITDA of 17.4x, explains the gap to the 174.4x P/E in words, places the EBITDA base near the cycle low with figures that match the income table (FY24 0.2, FY25 0.3 vs FY21-FY23 0.6-0.8, in billions), and reaches a view: a multiple on trough EBITDA, neither cheap nor dear, that compresses with the same recovery the forward P/E prices. No new figure is computed and nothing repeats another section."
     }
   ]
 }

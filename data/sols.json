@@ -170,13 +170,15 @@
       "flags": []
     },
     "decision": {
-      "conviction": 67,
-      "tier": "moderate",
+      "conviction": 77,
+      "tier": "high",
       "proposed": "BUY",
       "reasons": [
         "E/R proposed BUY"
       ],
-      "advisories": [],
+      "advisories": [
+        "model vs Street expected return diverge by 98pp — informational, not scored"
+      ],
       "moat": {
         "width": "NONE",
         "trend": "STABLE",
@@ -184,9 +186,9 @@
         "bearFloor": 0.3
       },
       "intrinsic": {
-        "marginOfSafety": -0.8823109682810307,
-        "impliedGrowth": 0.16905513010769802,
-        "achievableGrowth": -0.1
+        "marginOfSafety": -0.6969079624173778,
+        "impliedGrowth": 0.33521228102142764,
+        "achievableGrowth": 0.031963808075847755
       },
       "composite": {
         "percentile": 28.324802552519333,
@@ -236,6 +238,7 @@
     },
     {
       "label": "EV/EBITDA (TTM)",
+      "value": 12.028,
       "unit": "mult"
     },
     {
@@ -332,7 +335,7 @@
       },
       "catalysts": [
         "Element Solutions acquisition: the $10.00-cash-plus-0.500-share deal, expected to close in the first half of 2027, would scale the platform, and its financing and integration terms are the dominant swing factor for the equity.",
-        "Continued double-digit organic growth: management guided third-quarter net sales to $990–$1,030 million, and holding that pace would extend the run.",
+        "Sustained growth: second-quarter sales growth reached double digits, led by volume, as the thesis notes; separately, management guided third-quarter net sales to $990–$1,030 million, and that quarter is the next test of whether the acceleration holds.",
         "Further guidance raises: management lifted full-year 2026 net sales to $4,125–$4,185 million and adjusted diluted EPS to $2.75–$2.95, and additional raises would support the re-rating.",
         "Growth concentrated in the higher-margin RAS segment: Nuclear net sales rose 27% and Healthcare Packaging 24% in Q2'26, the lines best placed to support the blended margin."
       ],
@@ -576,7 +579,7 @@
           {
             "label": "EV/EBITDA",
             "values": [
-              null
+              12.028
             ],
             "format": "mult"
           },
@@ -590,7 +593,7 @@
         ],
         "note": "Peer multiples pending a peer data source."
       },
-      "multiplesCommentary": "On trailing GAAP figures Solstice looks expensive: 43.9x trailing-twelve-month earnings and 2.2x sales, with EV/EBITDA not available from the vendor because no clean EBITDA line is provided. That trailing-twelve-month multiple is elevated because the earnings window now carries the post-spin interest and separation costs that also held FY25 GAAP EPS to $1.49; it is not a claim on the shares' earning power once those costs roll off. Forward multiples tell a different story: the shares trade at 20.1x NTM consensus earnings and about 17.2x FY27E EPS of $3.37, and consensus FY26E EPS of $2.88 sits inside the company's own raised adjusted-EPS guidance of $2.75–$2.95. Q2'26 adjusted diluted EPS was $0.88 against $0.75 reported, illustrating the gap between GAAP and the numbers the Street capitalizes. At the current $57.98, those forward multiples are undemanding for a business that reported a 25.3% adjusted EBITDA margin in Q2'26 and raised its full-year guide to $1,035–$1,055 million of adjusted EBITDA, alongside double-digit organic growth — which is what underpins the Street's Strong Buy stance and $80.25 consensus target. The valuation risk is that GAAP earnings, not adjusted, are what ultimately service the added debt.",
+      "multiplesCommentary": "On its trailing GAAP P/E Solstice looks expensive at 43.9x trailing-twelve-month earnings, with the shares at 2.2x sales. That P/E is elevated because the earnings window now carries the post-spin interest and separation costs that also held FY25 GAAP EPS to $1.49; it is not a claim on the shares' earning power once those costs roll off. The enterprise multiple points the same way: trailing EV/EBITDA is 12.0x, a measure taken before interest that counts the spin debt in enterprise value rather than through the interest charge, and it reads far less stretched than the P/E. Forward multiples tell a different story: the shares trade at 20.1x NTM consensus earnings and about 17.2x FY27E EPS of $3.37, and consensus FY26E EPS of $2.88 sits inside the company's own raised adjusted-EPS guidance of $2.75–$2.95. Q2'26 adjusted diluted EPS was $0.88 against $0.75 reported, illustrating the gap between GAAP and the numbers the Street capitalizes. At the current $57.98, those forward multiples are undemanding for a business that reported a 25.3% adjusted EBITDA margin in Q2'26 and raised its full-year guide to $1,035–$1,055 million of adjusted EBITDA, alongside double-digit organic growth — which is what underpins the Street's Strong Buy stance and $80.25 consensus target. The valuation risk is that GAAP earnings, not adjusted earnings or EBITDA, are what ultimately service the added debt.",
       "scenarios": [
         {
           "name": "Bull",
