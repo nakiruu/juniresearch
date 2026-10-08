@@ -176,7 +176,9 @@
       "reasons": [
         "E/R proposed HOLD"
       ],
-      "advisories": [],
+      "advisories": [
+        "model vs Street expected return diverge by 54pp — informational, not scored"
+      ],
       "moat": {
         "width": "NARROW",
         "trend": "ERODING",
@@ -184,8 +186,8 @@
         "bearFloor": 0.35
       },
       "intrinsic": {
-        "marginOfSafety": 0.03767263891937844,
-        "impliedGrowth": -0.05100754725431528,
+        "marginOfSafety": 0.257165059799463,
+        "impliedGrowth": -0.16236449535159747,
         "achievableGrowth": -0.01602988054801424
       },
       "composite": {

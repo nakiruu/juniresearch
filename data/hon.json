@@ -170,13 +170,16 @@
       "flags": []
     },
     "decision": {
-      "conviction": 52,
-      "tier": "moderate",
+      "conviction": 82,
+      "tier": "high",
       "proposed": "BUY",
       "reasons": [
         "E/R proposed BUY"
       ],
-      "advisories": [],
+      "advisories": [
+        "DCF margin of safety disagrees with expected upside, but within model error (range straddles 0) — not penalised",
+        "model vs Street expected return diverge by 34pp — informational, not scored"
+      ],
       "moat": {
         "width": "WIDE",
         "trend": "ERODING",
@@ -184,8 +187,8 @@
         "bearFloor": 0.35
       },
       "intrinsic": {
-        "marginOfSafety": -0.22795477289056232,
-        "impliedGrowth": 0.028298335010074616,
+        "marginOfSafety": -0.0891228654069226,
+        "impliedGrowth": -0.023071392949153578,
         "achievableGrowth": 0.011936996384882326
       },
       "composite": {
