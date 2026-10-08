@@ -47,11 +47,177 @@ describe("numericTokens", () => {
   });
   it("checks both ends of a hyphenated range", () => {
     expect(numericTokens("up 40-50% next year").map((t) => t.raw)).toEqual(["40", "50%"]);
-    expect(numericTokens("300-400 basis points").map((t) => t.raw)).toEqual(["300", "400"]);
+    expect(numericTokens("300-400 basis points").map((t) => t.raw)).toEqual(["300", "400 basis points"]);
+    expect(numericTokens("300-400 basis points").map((t) => t.kind)).toEqual(["bp", "bp"]);
   });
   it("keeps the high end of a small range even though it looks like a day", () => {
     expect(numericTokens("up 20-30% next year").map((t) => t.raw)).toEqual(["20", "30%"]);
     expect(numericTokens("10-25 units of growth").map((t) => t.raw)).toEqual(["25"]);
+  });
+});
+
+describe("numericTokens v2", () => {
+  type Want = { raw: string; kind: string; currency?: string | null; abs: number; sign?: number; resolution: number; tz?: number; band?: number };
+  const one = (text: string, want: Want) => it(`${JSON.stringify(text)} → ${want.raw}`, () => {
+    const got = numericTokens(text);
+    expect(got).toHaveLength(1);
+    const t = got[0];
+    expect({ raw: t.raw, kind: t.kind }).toEqual({ raw: want.raw, kind: want.kind });
+    expect(t.abs).toBeCloseTo(want.abs, 9);
+    expect(t.resolution).toBeCloseTo(want.resolution, 12);
+    expect(t.currency).toBe(want.currency === undefined ? (want.kind === "money" ? "$" : null) : want.currency);
+    expect(t.sign).toBe(want.sign ?? 0);
+    if (want.tz != null) expect(t.tz).toBe(want.tz);
+    expect(t.band).toBe(want.band);
+  });
+  const none = (text: string) => it(`${JSON.stringify(text)} → no token`, () => expect(numericTokens(text)).toEqual([]));
+  const raws = (text: string, want: string[]) => it(`${JSON.stringify(text)} → ${JSON.stringify(want)}`, () => expect(numericTokens(text).map((t) => t.raw)).toEqual(want));
+
+  describe("scales", () => {
+    one("$1.5bn", { raw: "$1.5bn", kind: "money", abs: 1.5e9, resolution: 1e8 });
+    one("$5mn", { raw: "$5mn", kind: "money", abs: 5e6, resolution: 1e6 });
+    one("$5mm", { raw: "$5mm", kind: "money", abs: 5e6, resolution: 1e6 });
+    one("$500K", { raw: "$500K", kind: "money", abs: 5e5, resolution: 1e3, tz: 2 });
+    one("$5m", { raw: "$5m", kind: "money", abs: 5e6, resolution: 1e6 });
+    one("$1.2b", { raw: "$1.2b", kind: "money", abs: 1.2e9, resolution: 1e8 });
+    one("$12.3k", { raw: "$12.3k", kind: "money", abs: 12300, resolution: 100 });
+    one("12.3k employees", { raw: "12.3", kind: "plain", abs: 12.3, resolution: 0.1 });    // lowercase k/m/b scale only after a currency
+    one("a $63.9-billion top line", { raw: "$63.9-billion", kind: "money", abs: 63.9e9, resolution: 1e8 });
+  });
+  describe("signs", () => {
+    one("(12.3)%", { raw: "(12.3)%", kind: "pct", abs: 12.3, sign: -1, resolution: 0.1 });
+    one("FY27E ($24.99)", { raw: "($24.99)", kind: "money", abs: 24.99, resolution: 0.01 });  // a prose parenthetical, not a negative
+    one("($1.45) loss", { raw: "($1.45)", kind: "money", abs: 1.45, resolution: 0.01 });
+    one("$-0.08", { raw: "$-0.08", kind: "money", abs: 0.08, sign: -1, resolution: 0.01 });
+    one("-$0.08", { raw: "-$0.08", kind: "money", abs: 0.08, sign: -1, resolution: 0.01 });
+    one("−$1.3B", { raw: "−$1.3B", kind: "money", abs: 1.3e9, sign: -1, resolution: 1e8 });
+    it("applies the sign to value and magnitude", () => {
+      const [t] = numericTokens("-$1.3B");
+      expect([t.value, t.magnitude]).toEqual([-1.3, -1.3e9]);
+    });
+  });
+  describe("units", () => {
+    one("40 bps", { raw: "40 bps", kind: "bp", abs: 0.4, resolution: 0.01, tz: 1 });
+    one("150bp", { raw: "150bp", kind: "bp", abs: 1.5, resolution: 0.01 });
+    one("5.4 points", { raw: "5.4 points", kind: "pp", abs: 5.4, resolution: 0.1 });
+    one("0.5 point", { raw: "0.5 point", kind: "pp", abs: 0.5, resolution: 0.1 });
+    one("0.5\npt", { raw: "0.5\npt", kind: "pp", abs: 0.5, resolution: 0.1 });
+    one("(0.7)\npts", { raw: "(0.7)\npts", kind: "pp", abs: 0.7, resolution: 0.1 });
+    one("a 3.1-percentage-point gain", { raw: "3.1-percentage-point", kind: "pp", abs: 3.1, resolution: 0.1 });
+    one("0.50×", { raw: "0.50×", kind: "mult", abs: 0.5, resolution: 0.01 });
+    one("2.6 times", { raw: "2.6 times", kind: "mult", abs: 2.6, resolution: 0.1 });
+    one("about 2.6X leverage", { raw: "2.6X", kind: "mult", abs: 2.6, resolution: 0.1 });
+    none("met 4 times");
+    one("over 400 times", { raw: "400 times", kind: "mult", abs: 400, resolution: 1 });
+    none("a 10-point plan");                                                          // a hyphenated unit word counts only as "-percentage-point"
+  });
+  describe("currencies", () => {
+    one("€12", { raw: "€12", kind: "money", currency: "€", abs: 12, resolution: 1 });
+    one("£5", { raw: "£5", kind: "money", currency: "£", abs: 5, resolution: 1 });
+    one("US$5", { raw: "US$5", kind: "money", currency: "$", abs: 5, resolution: 1 });
+    one("a C$5.2 billion deal", { raw: "C$5.2 billion", kind: "money", currency: "C$", abs: 5.2e9, resolution: 1e8 });
+    one("HK$12 per share", { raw: "HK$12", kind: "money", currency: "HK$", abs: 12, resolution: 1 });
+    one("¥120 billion of sales", { raw: "¥120 billion", kind: "money", currency: "¥", abs: 120e9, resolution: 1e9 });
+  });
+  describe("layout", () => {
+    one("$ 15,952", { raw: "$ 15,952", kind: "money", abs: 15952, resolution: 1 });
+    one("$\n15,952", { raw: "$\n15,952", kind: "money", abs: 15952, resolution: 1 });
+    one("13.3\n%", { raw: "13.3\n%", kind: "pct", abs: 13.3, resolution: 0.1 });
+    one("0.2 %", { raw: "0.2 %", kind: "pct", abs: 0.2, resolution: 0.1 });
+    one("$\n.07", { raw: "$\n.07", kind: "money", abs: 0.07, resolution: 0.01 });
+    one("(.4)", { raw: "(.4)", kind: "plain", abs: 0.4, resolution: 0.1 });
+  });
+  describe("words", () => {
+    one("20 percent", { raw: "20 percent", kind: "pct", abs: 20, resolution: 1, tz: 1 });
+    one("2.3 per cent", { raw: "2.3 per cent", kind: "pct", abs: 2.3, resolution: 0.1 });
+    none("February 17, 2026 point to");
+  });
+  describe("bands", () => {
+    one("low $190s", { raw: "$190s", kind: "money", abs: 190, resolution: 1, band: 10 });
+    one("$3s", { raw: "$3s", kind: "money", abs: 3, resolution: 1, band: 1 });
+    one("mid-80s", { raw: "80s", kind: "plain", abs: 80, resolution: 1, band: 10 });
+    none("the 1990s");
+  });
+  describe("ranges", () => {
+    const kinds = (text: string, want: [string, string, number][]) => it(`${JSON.stringify(text)} → ${JSON.stringify(want)}`, () => {
+      const got = numericTokens(text);
+      expect(got.map((t) => [t.raw, t.kind])).toEqual(want.map(([r, k]) => [r, k]));
+      got.forEach((t, i) => expect(t.abs).toBeCloseTo(want[i][2], 6));
+    });
+    kinds("40-50%", [["40", "pct", 40], ["50%", "pct", 50]]);
+    kinds("5 to 7 percent", [["5", "pct", 5], ["7 percent", "pct", 7]]);
+    kinds("$350–600", [["$350", "money", 350], ["600", "money", 600]]);
+    kinds("$1.2–1.5 billion", [["$1.2", "money", 1.2e9], ["1.5 billion", "money", 1.5e9]]);
+    kinds("$1.750 to $1.810 billion", [["$1.750", "money", 1.75e9], ["$1.810 billion", "money", 1.81e9]]);
+    kinds("$415 to $455 million", [["$415", "money", 415e6], ["$455 million", "money", 455e6]]);
+    kinds("between $8.15 and $8.25 billion", [["$8.15", "money", 8.15e9], ["$8.25 billion", "money", 8.25e9]]);
+    kinds("between 5 and 7 percent", [["5", "pct", 5], ["7 percent", "pct", 7]]);
+    kinds("$45 and $1.2 billion", [["$45", "money", 45], ["$1.2 billion", "money", 1.2e9]]);      // "and" joins only after "between"
+    kinds("fiscal year 2027 to $1.225 billion", [["$1.225 billion", "money", 1.225e9]]);           // a year never joins a range
+    raws("10-25 units", ["25"]);
+  });
+  describe("trailing zeros", () => {
+    const tz = (text: string, want: number) => it(`${JSON.stringify(text)} has tz ${want}`, () => expect(numericTokens(text).map((t) => t.tz)).toEqual([want]));
+    tz("$500 million", 2);
+    tz("50 bps", 1);
+    tz("$63,900 million", 2);
+    tz("40%", 1);
+    tz("$4.50", 0);                                                                    // decimals are significant
+    it("counts significant digits as written", () => expect(numericTokens("$500 million")[0].sig).toBe(3));
+  });
+  // A documented quirk: "B" after a bare number is a scale, so a rating count reads as billions.
+  one("54 B", { raw: "54 B", kind: "plain", abs: 54e9, resolution: 1e9 });
+  it("records each token's offset in the text", () => {
+    const text = "up 8% to $1.2B";
+    expect(numericTokens(text).map((t) => text.slice(t.index, t.end))).toEqual(["8%", "$1.2B"]);
+  });
+
+  // The reviewer's formats.ts cases (Appendix B): raw:kind, ×scale when not 1, and the sign when written.
+  describe("formats.ts cases", () => {
+    const show = (text: string) => numericTokens(text).map((t) => `${t.raw}:${t.kind}${t.scale !== 1 ? "×" + t.scale : ""}${t.sign ? (t.sign > 0 ? "+" : "-") : ""}`);
+    const CASES: [string, string[]][] = [
+      ["a market value of $1.72 trillion", ["$1.72 trillion:money×1000000000000"]],
+      ["capex of $500 million", ["$500 million:money×1000000"]],
+      ["capex of $0.5 billion", ["$0.5 billion:money×1000000000"]],
+      ["about $1.5 billion of revenue", ["$1.5 billion:money×1000000000"]],
+      ["FCF of $1.2bn", ["$1.2bn:money×1000000000"]],
+      ["FCF of 1.2bn", ["1.2bn:plain×1000000000"]],
+      ["FCF of $1.2b", ["$1.2b:money×1000000000"]],
+      ["a $5m charge", ["$5m:money×1000000"]],
+      ["fees of $12.3K", ["$12.3K:money×1000"]],
+      ["about 12.3k employees", ["12.3:plain"]],
+      ["a $63.9-billion top line", ["$63.9-billion:money×1000000000"]],
+      ["growth of (0.5)%", ["(0.5)%:pct-"]],
+      ["growth of -0.5%", ["-0.5%:pct-"]],
+      ["margin up 50 bps", ["50 bps:bp"]],
+      ["a €12.3 million fine", ["€12.3 million:money×1000000"]],
+      ["a $40–47 target", ["$40:money", "47:money"]],
+      ["a 40-47 target", ["40:plain", "47:plain"]],
+      ["leverage of 2–3x", ["2:mult", "3x:mult"]],
+      ["EPS of ($0.12)", ["($0.12):money"]],
+      ["EPS of $(0.12)", ["0.12:plain"]],
+      ["net debt of −$1.3B", ["−$1.3B:money×1000000000-"]],
+      ["net debt of -$1.3 billion", ["-$1.3 billion:money×1000000000-"]],
+      ["net cash of $1.3B", ["$1.3B:money×1000000000"]],
+      ["a C$5.2 billion deal", ["C$5.2 billion:money×1000000000"]],
+      ["HK$12 per share", ["HK$12:money"]],
+      ["¥120 billion of sales", ["¥120 billion:money×1000000000"]],
+      ["1.2 turns of leverage", ["1.2:plain"]],
+      ["about 2.6X leverage", ["2.6X:mult"]],
+      ["a 3.1-percentage-point gain", ["3.1-percentage-point:pp"]],
+      ["the +10% bar", ["+10%:pct+"]],
+      ["one-third of revenue", []],
+      ["$63.9 billion of revenue", ["$63.9 billion:money×1000000000"]],
+      ["$63,900 million of revenue", ["$63,900 million:money×1000000"]],
+      ["63.9 billion dollars", ["63.9 billion:plain×1000000000"]],
+      ["USD 63.9 billion", ["63.9 billion:plain×1000000000"]],
+      ["about $64 billion", ["$64 billion:money×1000000000"]],
+      ["over $60 billion", ["$60 billion:money×1000000000"]],
+      ["a 45% margin", ["45%:pct"]],
+      ["capex of $1.4 billion", ["$1.4 billion:money×1000000000"]],
+      ["capex of $1.41 billion", ["$1.41 billion:money×1000000000"]],
+    ];
+    for (const [text, want] of CASES) it(JSON.stringify(text), () => expect(show(text)).toEqual(want));
   });
 });
 

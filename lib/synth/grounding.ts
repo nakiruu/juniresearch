@@ -10,56 +10,153 @@ import type { FactPack } from "../facts/schema";
 import type { ValidationIssue } from "../validate";
 import { stringLeaves } from "./walk";
 
+export type NumberKind = "money" | "pct" | "mult" | "pp" | "bp" | "plain";
+
 export interface NumberToken {
   raw: string;
   value: number;      // as written, sign applied: "$29.6B" → 29.6
-  magnitude: number;  // with the multiplier: "$29.6B" → 2.96e10; "86%" → 86
+  magnitude: number;  // with the scale, sign applied: "$29.6B" → 2.96e10; "86%" → 86; "40 bps" → 0.4 (bp in points)
   precision: number;  // decimals written
-  kind: "money" | "pct" | "mult" | "plain";
+  kind: NumberKind;
+  currency: string | null; // money only: "$" (also US$), "C$", "A$", "HK$", "€", "£", "¥"
+  sign: -1 | 0 | 1;   // the sign written ("+", "-", "−", "(12.3)%"); 0 when none is
+  abs: number;        // |magnitude|
+  scale: number;      // the suffix's multiplier: "B" → 1e9
+  resolution: number; // 10^-precision × scale (bp in points)
+  sig: number;        // significant digits written
+  tz: number;         // an integer's trailing zeros: "$500 million" → 2
+  band?: number;      // "$190s" → 10: the band [abs, abs + band)
+  index: number;      // offsets of the token in the text
+  end: number;
 }
 
-const MULT: Record<string, number> = { k: 1e3, m: 1e6, b: 1e9, t: 1e12, thousand: 1e3, million: 1e6, billion: 1e9, trillion: 1e12 };
+type Draft = Omit<NumberToken, "value" | "magnitude"> & { num: number; allow?: "small" | "other" };
 
-// Lookbehind: not preceded by letter, straight or curly apostrophe, $, digit, or period. Prevents Q3'26 → "26" leak.
-// Capture groups: (1) sign [+\-−], (2) $, (3) integer with thousands-separators or bare, (4) decimals,
-// (5) scaled unit (K/M/B/T or spelled-out), (6) percent sign, (7) x multiplier.
-const TOKEN = /(?<![A-Za-z'’$\d.])([+\-−]?)(\$?)(\d{1,3}(?:,\d{3})+|\d+)(\.\d+)?(?:\s?(K|M|B|T|thousand|million|billion|trillion)(?![A-Za-z])|(%)|(x)(?![A-Za-z]))?/g;
+const SCALE: Record<string, number> = { k: 1e3, thousand: 1e3, m: 1e6, mn: 1e6, mm: 1e6, million: 1e6, b: 1e9, bn: 1e9, billion: 1e9, t: 1e12, tn: 1e12, trillion: 1e12 };
+const CURRENCY: Record<string, string> = { "US$": "$", "$": "$", "C$": "C$", "A$": "A$", "HK$": "HK$", "€": "€", "£": "£", "¥": "¥" };
+
+// Lookbehind: not preceded by a letter, an apostrophe, a currency, a digit or a period (Q3'26 must not leak "26").
+// Groups: (1) "(" (2) sign (3) currency (4) sign after the currency ("$-0.08") (5) integer (6) decimals
+// (7) leading-dot decimals (".07") (8) ")" (9) scale (10) "%"/x/× (11) unit-word separator (12) unit word (13) decade "s".
+// Lowercase k/m/b are a scale only straight after a currency ("$5m"); "12.3k" stays 12.3.
+const TOKEN = new RegExp(
+  String.raw`(?<![A-Za-z'’$€£¥\d.])(\()?([+\-−]?)(US\$|C\$|A\$|HK\$|\$|€|£|¥)?(?:(?<=[$€£¥])[ \n])?([+\-−]?)(?:(\d{1,3}(?:,\d{3})+|\d+)(\.\d+)?|(?<=[$\s(])(\.\d+))(\))?` +
+  String.raw`(?:((?:[ -]?(?:thousand|million|billion|trillion))|(?: ?(?:K|M|B|T|bn|mn|mm|tn))|(?:(?<=[$€£¥][ \n]?[+\-−]?[\d.,]+) ?(?:k|m|b)))(?![A-Za-z]))?` +
+  String.raw`(?:([ \n]?%|[xX](?![A-Za-z])|×)|([\s-]?)(percentage[ -]points?|percent|per cent|ppts?|pp|pts?|points?|bps|bp|basis points?|times)(?![A-Za-z])|(s)(?![A-Za-z]))?`, "g");
 const YEAR = /^(199\d|20[0-3]\d|2040)$/;
-const MONTH_BEFORE = /(^|[^A-Za-z])(Jan(uary)?|Feb(ruary)?|Mar(ch)?|Apr(il)?|May|June?|July?|Aug(ust)?|Sept?(ember)?|Oct(ober)?|Nov(ember)?|Dec(ember)?)\.? $/i;
+const MONTH = "(Jan(uary)?|Feb(ruary)?|Mar(ch)?|Apr(il)?|May|June?|July?|Aug(ust)?|Sept?(ember)?|Oct(ober)?|Nov(ember)?|Dec(ember)?)";
+const MONTH_BEFORE = new RegExp(`(^|[^A-Za-z])${MONTH}\\.? $`, "i");
 
-/** Figures that never need grounding: small counts, years, fiscal/quarter labels, dates, form names, ratios like 10:1, period phrases like 52-week. */
-function allowListed(m: RegExpExecArray, text: string): boolean {
-  const [whole, , dollar, int, frac, suffix, pctSign, xSign] = m;
-  const bare = !dollar && !frac && !suffix && !pctSign && !xSign;
-  const n = Number(int.replace(/,/g, ""));
-  const before = text.slice(Math.max(0, m.index - 3), m.index);
-  const after = text.slice(m.index + whole.length, m.index + whole.length + 8);
-  if (/(^|[^A-Za-z])(Q|FY)$/.test(before) || /^'?\d{2}\b/.test(after) && /Q$/.test(before)) return true; // Q3'26, FY24, FY2026
-  if (bare && n <= 12) return true;
-  if (bare && YEAR.test(int)) return true;
-  if (bare && /^-[QK]\b/.test(after)) return true;                          // 10-Q, 10-K
-  if (bare && /^:\d/.test(after)) return true;                              // 10:1
-  if (bare && /^-(week|month|day|year|quarter)s?\b/i.test(after)) return true; // 52-week, 12-month, 90-day, 5-year
-  if (/^,? ?(19|20)\d\d\b/.test(after)) return true;         // "August 30, 2026", "30 2026"
-  if (bare && n >= 1 && n <= 31 && /(19|20)\d\d-(\d{1,2}-)?$/.test(text.slice(Math.max(0, m.index - 8), m.index))) return true; // ISO date component, e.g. 2026-08-30
-  if (bare && n >= 1 && n <= 31 && MONTH_BEFORE.test(text.slice(Math.max(0, m.index - 12), m.index))) return true; // yearless month-name date, e.g. "December 31", "Sept. 30"
-  return false;
+function unitKind(u: string | undefined): NumberKind | null {
+  if (!u) return null;
+  const s = u.trim().toLowerCase();
+  if (s === "%" || s === "percent" || s === "per cent") return "pct";
+  if (s === "x" || s === "×" || s === "times") return "mult";
+  if (/^percentage[ -]point/.test(s) || s === "pp" || s.startsWith("ppt") || s === "pts" || s === "pt" || s.startsWith("point")) return "pp";
+  if (s === "bps" || s === "bp" || s.startsWith("basis point")) return "bp";
+  return null;
 }
 
-export function numericTokens(text: string): NumberToken[] {
-  const out: NumberToken[] = [];
+/**
+ * Bare integers that never need grounding: small counts, years, fiscal/quarter labels, dates, form names,
+ * ratios like 10:1, period phrases like 52-week. "small" (≤ 12) is a prose-only rule — the index keeps small
+ * numbers — and the only kind a range may revive ("5 to 7 percent"); "other" never joins a range.
+ */
+function allowed(text: string, start: number, end: number, int: string): false | "small" | "other" {
+  const n = Number(int.replace(/,/g, ""));
+  const before3 = text.slice(Math.max(0, start - 3), start);
+  const before12 = text.slice(Math.max(0, start - 12), start);
+  const after = text.slice(end, end + 12);
+  if (/(^|[^A-Za-z])(Q|FY)$/.test(before3) || (/^'?\d{2}\b/.test(after) && /Q$/.test(before3))) return "other"; // Q3'26, FY24
+  if (YEAR.test(int)) return "other";
+  if (/^-[QK]\b/.test(after)) return "other";                                         // 10-Q, 10-K
+  if (/^:\d/.test(after)) return "other";                                             // 10:1
+  if (/^-(week|month|day|year|quarter)s?\b/i.test(after)) return "other";             // 52-week
+  if (/^,? ?(19|20)\d\d\b/.test(after)) return "other";                               // August 30, 2026
+  if (n >= 1 && n <= 31 && /(19|20)\d\d-(\d{1,2}-)?$/.test(text.slice(Math.max(0, start - 8), start))) return "other"; // 2026-08-30
+  if (n >= 1 && n <= 31 && MONTH_BEFORE.test(before12)) return "other";               // December 31
+  return n <= 12 ? "small" : false;
+}
+
+const sigDigits = (int: string, frac: string) => Math.max(1, (int.replace(/,/g, "") + frac.replace(".", "")).replace(/^0+/, "").length);
+const bpNorm = (kind: NumberKind) => (kind === "bp" ? 0.01 : 1);
+
+/**
+ * Every figure in the text, typed: kind, currency, absolute magnitude after the scale, the sign written,
+ * resolution and significant digits. "index" mode (source text) keeps small counts; "prose" drops them.
+ */
+export function numericTokens(text: string, mode: "prose" | "index" = "prose"): NumberToken[] {
+  const out: Draft[] = [];
   TOKEN.lastIndex = 0;
   let m: RegExpExecArray | null;
   while ((m = TOKEN.exec(text))) {
-    const [raw, sign, dollar, int, frac = "", suffix, pctSign, xSign] = m;
-    if (allowListed(m, text)) continue;
-    const abs = Number(int.replace(/,/g, "") + frac);
-    const value = /[-−]/.test(sign) ? -abs : abs;
-    const mult = suffix ? MULT[suffix.toLowerCase()] : 1;
-    const kind: NumberToken["kind"] = dollar ? "money" : pctSign ? "pct" : xSign ? "mult" : "plain";
-    out.push({ raw: raw.trim(), value, magnitude: value * mult, precision: frac ? frac.length - 1 : 0, kind });
+    const [whole, open, sign1, cur, sign2, intRaw, fracRaw, dotFrac, close, scaleRaw, unitA, unitSep, unitWRaw, decade] = m;
+    const int = intRaw ?? "0";
+    const frac = fracRaw ?? dotFrac ?? "";
+    let unitW: string | undefined = unitWRaw;
+    const paren = !!open && !!close;
+    let raw = whole, start = m.index;
+    if (open && !close) { raw = raw.slice(1); start += 1; }
+    if (close && !open) raw = raw.replace(/\)(?=[^)]*$)/, "");
+    const scaleS = scaleRaw?.replace(/^[ -]/, "");
+    // "February 17, 2026 point to" is a year, not 2,026 points; "met 4 times" is a count, not a multiple;
+    // a hyphenated unit word is a unit only as "-percentage-point" ("a 10-point plan" is not 10 points)
+    if (unitW && !frac && !cur && !scaleS && (YEAR.test(int) || (unitW === "times" && Number(int) <= 12))) unitW = undefined;
+    if (unitW && unitSep === "-" && !/^percentage/i.test(unitW)) unitW = undefined;
+    const dropped = unitWRaw && !unitW ? (unitSep ?? "").length + unitWRaw.length : 0;
+    if (dropped) raw = raw.slice(0, raw.length - dropped);
+    const unit = unitA ?? unitW;
+    let kind: NumberKind = cur ? "money" : unitKind(unit) ?? "plain";
+    if (cur && unitKind(unit) === "pct") kind = "pct";
+    const end = m.index + whole.length - dropped;
+    const bare = !cur && !frac && !scaleS && !unit;
+    const why = bare ? allowed(text, start, end, int) : false;
+    const sgnS = sign1 || sign2;
+    // sign: explicit +/- (before or after the currency), or "(12.3)%"; "($24.99)" in prose is a parenthetical
+    const sign: -1 | 0 | 1 = /[-−]/.test(sgnS) ? -1 : sgnS === "+" ? 1 : paren && unit?.trim() === "%" ? -1 : 0;
+    const scale = scaleS ? SCALE[scaleS.toLowerCase()] : 1;
+    const precision = frac ? frac.length - 1 : 0;
+    // an integer's trailing zeros are ambiguous ("$500 million" may mean ±$0.5M or ±$50M); the matcher tries both readings
+    const tz = frac ? 0 : (int.replace(/,/g, "").match(/[1-9](0+)$/)?.[1].length ?? 0);
+    const num = Number(int.replace(/,/g, "") + frac);
+    const t: Draft = { raw: raw.trim(), index: start, end, kind, currency: kind === "money" ? CURRENCY[cur ?? "$"] : null, num,
+      abs: num * scale * bpNorm(kind), sign, precision, scale, tz, resolution: Math.pow(10, -precision) * scale * bpNorm(kind), sig: sigDigits(int, frac) };
+    if (decade && !frac && !scaleS && !unit) {
+      if (YEAR.test(int)) t.allow = "other";                                          // the 1990s
+      else t.band = Math.pow(10, (int.match(/0*$/)?.[0].length ?? 0)) * scale;       // $190s → [190, 200)
+    }
+    if (why && !(why === "small" && mode === "index") && !t.band) t.allow = why;
+    out.push(t);
   }
-  return out;
+  inherit(text, out);
+  return out.filter((t) => !t.allow).map((d) => {
+    const { num, ...t } = d;
+    delete t.allow;
+    const s = t.sign < 0 ? -1 : 1;
+    return { ...t, value: s * num, magnitude: s * t.abs };
+  });
+}
+
+/** "40-50%", "$1.2–1.5B", "5 to 7 percent", "$350–600", "$415 to $455 million": a bare end inherits the other end's unit, scale and currency. */
+function inherit(text: string, ts: Draft[]): void {
+  for (let i = 0; i + 1 < ts.length; i++) {
+    const a = ts[i], b = ts[i + 1];
+    const gap = text.slice(a.end, b.index);
+    // "and" joins a range only after "between": "between $8.15 and $8.25 billion"
+    const between = /^ and $/.test(gap) && /\bbetween $/i.test(text.slice(Math.max(0, a.index - 8), a.index));
+    if (!/^\s?(?:[-–—]|to)\s?$/.test(gap) && !between) continue;
+    if (a.allow === "other" || b.allow === "other") continue;          // a year, date, form or label never joins a range
+    const aBare = a.kind === "plain" && a.scale === 1, bBare = b.kind === "plain" && b.scale === 1;
+    const set = (t: Draft, kind: NumberKind, currency: string | null, scale: number) => {
+      t.kind = kind; t.currency = currency; t.scale = scale;
+      t.abs = t.num * scale * bpNorm(kind); t.resolution = Math.pow(10, -t.precision) * scale * bpNorm(kind); delete t.allow;
+    };
+    if (aBare && b.kind !== "plain") set(a, b.kind, b.currency, b.scale);                                        // 40-50%, 300-400 basis points
+    else if (aBare && !bBare && b.kind === "plain") set(a, "plain", null, b.scale);                              // 1.2-1.5 million
+    else if (a.kind === "money" && bBare && !b.allow && /^\s?[-–—]\s?$/.test(gap)) set(b, "money", a.currency, 1); // $350–600
+    else if (a.kind === "money" && a.scale === 1 && b.kind === "plain" && b.scale !== 1) { set(a, "money", a.currency, b.scale); set(b, "money", a.currency, b.scale); } // $1.2–1.5B
+    else if (a.kind === "money" && a.scale === 1 && b.kind === "money" && b.scale !== 1) set(a, "money", a.currency, b.scale); // $1.750 to $1.810 billion
+  }
 }
 
 const roundTo = (x: number, dp: number) => Number(x.toFixed(dp));
