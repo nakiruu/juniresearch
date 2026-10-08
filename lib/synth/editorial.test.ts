@@ -3,7 +3,8 @@ import { mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { EditorialReview } from "@/lib/synth/editorial.schema";
-import { judgmentSha256, loadEditorialReview, openFindings, reviewStatus, editorialGateMessage, renderEditorialFindings, malformedReviewMessage } from "@/lib/synth/editorial";
+import { judgmentSha256, loadEditorialReview, openFindings, reviewStatus, editorialGateMessage, renderEditorialFindings, malformedReviewMessage, reviewVerdict, reviewVerdictMessage } from "@/lib/synth/editorial";
+import { LEGACY_ENVELOPE_CALLS, type ReviewInputs } from "@/lib/synth/review-inputs";
 
 const TEXT = '{\n  "rating": { "label": "BUY" }\n}\n';
 const finding = (over: Record<string, unknown> = {}) => ({
@@ -98,4 +99,77 @@ describe("renderEditorialFindings", () => {
     expect(text).toContain("opus");
   });
   it("says so when nothing is open", () => expect(renderEditorialFindings(review({ findings: [], verdict: "approved" }))).toMatch(/no open findings/i));
+});
+
+describe("reviewVerdict", () => {
+  const cur: ReviewInputs = { scheme: 1, facts: "1".repeat(64), calls: "2".repeat(64), context: "3".repeat(64) };
+  const stamped = (inputs: unknown, over: Record<string, unknown> = {}) => review({ inputs, ...over });
+  const at = () => cur;
+  const req = { requireInputs: true };
+  it("is missing with no file", () => expect(reviewVerdict(TEXT, null, at, req)).toEqual({ status: "missing" }));
+  it("puts the judgment first: a stale judgment wins over unstamped and stale inputs", () => {
+    expect(reviewVerdict(TEXT + "x", review(), at, req)).toEqual({ status: "stale", changed: ["judgment"] });
+    expect(reviewVerdict(TEXT + "x", stamped({ ...cur, facts: "9".repeat(64) }), at, req)).toEqual({ status: "stale", changed: ["judgment"] });
+  });
+  it("is unstamped when the stamp is missing or malformed and inputs are required", () => {
+    expect(reviewVerdict(TEXT, review(), at, req)).toMatchObject({ status: "unstamped", unstamped: "missing" });
+    expect(reviewVerdict(TEXT, stamped({ ...cur, facts: "x" }), at, req)).toMatchObject({ status: "unstamped", unstamped: expect.stringMatching(/^mis-copied: facts/) });
+  });
+  it("puts unstamped before open findings", () =>
+    expect(reviewVerdict(TEXT, review({ findings: [finding({ severity: "Critical" })], verdict: "needs-fix-round" }), at, req).status).toBe("unstamped"));
+  it("treats an unstamped review as today's status when inputs are not required", () => {
+    expect(reviewVerdict(TEXT, review(), at, { requireInputs: false })).toEqual({ status: "clean" });
+    expect(reviewVerdict(TEXT, stamped("junk"), at, { requireInputs: false })).toEqual({ status: "clean" });
+  });
+  it("is stale on inputs and names the components that moved", () => {
+    expect(reviewVerdict(TEXT, stamped({ ...cur, facts: "9".repeat(64) }), at, req)).toEqual({ status: "stale", changed: ["facts"] });
+    expect(reviewVerdict(TEXT, stamped({ ...cur, calls: "9".repeat(64), context: "8".repeat(64) }), at, req)).toEqual({ status: "stale", changed: ["calls", "context"] });
+  });
+  it("puts stale inputs before open findings, and is open or clean once the inputs match", () => {
+    expect(reviewVerdict(TEXT, stamped({ ...cur, facts: "9".repeat(64) }, { findings: [finding({ severity: "Critical" })], verdict: "needs-fix-round" }), at, req).status).toBe("stale");
+    expect(reviewVerdict(TEXT, stamped(cur, { findings: [finding({ severity: "Critical" })], verdict: "needs-fix-round" }), at, req)).toEqual({ status: "open" });
+    expect(reviewVerdict(TEXT, stamped({ ...cur, source: "backfill:abc1234" }), at, req)).toEqual({ status: "clean" });
+  });
+  it("recomputes under the stamp's scheme", () => {
+    const schemes: number[] = [];
+    reviewVerdict(TEXT, stamped(cur), (s) => { schemes.push(s); return cur; }, req);
+    expect(schemes).toEqual([1]);
+  });
+  it("adds the mis-copy hint only when the caller passes the inputs recomputed at the review commit", () => {
+    const bad = stamped({ ...cur, facts: "9".repeat(64) });
+    expect(reviewVerdict(TEXT, bad, at, req).hint).toBeUndefined();
+    expect(reviewVerdict(TEXT, bad, at, { ...req, atReviewCommit: cur }).hint).toMatch(/mis-copied; continue the reviewer to re-copy/);
+    // the stamp equals what the review commit saw: a real change, no hint
+    expect(reviewVerdict(TEXT, bad, at, { ...req, atReviewCommit: { ...cur, facts: "9".repeat(64) } }).hint).toBeUndefined();
+    // a reconstructed stamp was never copied, so it cannot be mis-copied
+    expect(reviewVerdict(TEXT, stamped({ ...cur, facts: "9".repeat(64), source: "backfill:abc1234" }), at, { ...req, atReviewCommit: cur }).hint).toBeUndefined();
+  });
+  it("names the retired envelope for a legacy calls stamp", () =>
+    expect(reviewVerdict(TEXT, stamped({ ...cur, calls: LEGACY_ENVELOPE_CALLS, source: "backfill:abc1234" }), at, req)).toMatchObject({ status: "stale", changed: ["calls"], hint: expect.stringMatching(/pre-rating envelope/) }));
+  it("leaves reviewStatus as it was", () => expect(reviewStatus(TEXT, review())).toBe("clean"));
+});
+
+describe("reviewVerdictMessage", () => {
+  it("keeps the judgment, missing and open messages", () => {
+    expect(reviewVerdictMessage({ status: "stale", changed: ["judgment"] }, 0)).toBe(editorialGateMessage("stale", 0));
+    expect(reviewVerdictMessage({ status: "missing" }, 0)).toBe(editorialGateMessage("missing", 0));
+    expect(reviewVerdictMessage({ status: "open" }, 2)).toBe(editorialGateMessage("open", 2));
+  });
+  it("names the inputs that changed and what to run", () => {
+    const m = reviewVerdictMessage({ status: "stale", changed: ["facts"] }, 0);
+    expect(m).toBe("the review predates the current inputs (facts changed) — rebuild with --skip-review, re-render the brief (it will be a full brief) and re-run the review");
+    expect(reviewVerdictMessage({ status: "stale", changed: ["calls", "context"], hint: "HINT" }, 0)).toMatch(/\(calls, context changed\).* — HINT$/);
+  });
+  it("tells an unstamped review to continue the same reviewer, distinguishing missing from mis-copied, and never has the orchestrator copy", () => {
+    const missing = reviewVerdictMessage({ status: "unstamped", unstamped: "missing" }, 0);
+    const bad = reviewVerdictMessage({ status: "unstamped", unstamped: "mis-copied: facts: Invalid string" }, 0);
+    expect(missing).toMatch(/no valid `inputs` \(missing\)/);
+    expect(bad).toMatch(/no valid `inputs` \(mis-copied: facts: Invalid string\)/);
+    for (const m of [missing, bad]) {
+      expect(m).toMatch(/continue the same reviewer to re-copy it from the `Inputs fingerprint` line of prompt\.md/);
+      expect(m).toMatch(/re-render the brief and re-run the review/);
+      expect(m).toMatch(/never copy or edit `inputs` on the reviewer's behalf/i);
+      expect(m).not.toMatch(/orchestrator (should )?(re-)?cop/i);
+    }
+  });
 });

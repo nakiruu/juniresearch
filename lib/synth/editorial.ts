@@ -5,12 +5,16 @@
  * endings so the same file hashes the same on Windows and in CI. Everything else
  * here is a pure reading of the review: which findings still block, what the gate
  * should say, and how the open ones render into the author's next prompt.
+ * reviewVerdict adds the inputs the reviewer read (review-inputs.ts): a review is
+ * stale when the judgment or any input component moved, and unstamped when its
+ * copy of the inputs is missing or mis-copied.
  */
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 // `EditorialReview` is exported twice from editorial.schema.ts — as the parsing const and as the
 // inferred type — so this one import binds both, and no alias is needed.
-import { EditorialReview, type EditorialFinding } from "./editorial.schema";
+import { EditorialReview, readInputsStamp, type EditorialFinding } from "./editorial.schema";
+import { changedComponents, LEGACY_ENVELOPE_CALLS, type Component, type ReviewInputs } from "./review-inputs";
 
 export function judgmentSha256(text: string): string {
   return createHash("sha256").update(text.replace(/\r\n/g, "\n"), "utf8").digest("hex");
@@ -40,6 +44,55 @@ export function editorialGateMessage(status: ReviewStatus, openCount: number): s
   if (status === "stale") return "the review predates the current judgment — re-run the review";
   if (status === "open") return `${openCount} Critical/Important finding(s) open — run synth:prompt --with-review`;
   return "the editorial review is clean";
+}
+
+export type ReviewVerdictStatus = ReviewStatus | "unstamped";
+export interface ReviewVerdict {
+  status: ReviewVerdictStatus;
+  /** What moved on a stale verdict: the judgment, or the input components. */
+  changed?: ("judgment" | Component)[];
+  /** Why an unstamped verdict has no usable stamp: `missing`, or `mis-copied: <zod message>`. */
+  unstamped?: string;
+  /** Diagnostic only; it never decides the status. */
+  hint?: string;
+}
+
+/**
+ * Judgment, then the stamp, then the inputs, then the findings. `current` gives the current inputs under a scheme, so a
+ * review is compared on the picks its reviewer saw. `atReviewCommit` (the inputs recomputed from git at the findings
+ * file's last commit) only adds the mis-copy hint, and only to a stamp the reviewer copied.
+ */
+export function reviewVerdict(
+  judgmentText: string,
+  review: EditorialReview | null,
+  current: (scheme: number) => ReviewInputs,
+  opts: { requireInputs: boolean; atReviewCommit?: ReviewInputs },
+): ReviewVerdict {
+  if (!review) return { status: "missing" };
+  if (review.judgmentSha256 !== judgmentSha256(judgmentText)) return { status: "stale", changed: ["judgment"] };
+  const read = readInputsStamp(review);
+  if ("stamp" in read) {
+    const { stamp } = read;
+    const changed = changedComponents(stamp, current(stamp.scheme));
+    if (changed.length) {
+      const at = opts.atReviewCommit;
+      const hint = stamp.calls === LEGACY_ENVELOPE_CALLS ? "the review read the pre-rating envelope, retired in 02d1335"
+        : !stamp.source && at && changed.some((k) => stamp[k] !== at[k]) ? "if nothing changed, the inputs were likely mis-copied; continue the reviewer to re-copy them"
+          : undefined;
+      return { status: "stale", changed, ...(hint ? { hint } : {}) };
+    }
+  } else if (opts.requireInputs) {
+    return { status: "unstamped", unstamped: "missing" in read ? "missing" : `mis-copied: ${read.malformed}` };
+  }
+  return { status: openFindings(review).length > 0 ? "open" : "clean" };
+}
+
+export function reviewVerdictMessage(v: ReviewVerdict, openCount: number): string {
+  if (v.status === "stale" && v.changed && !v.changed.includes("judgment"))
+    return `the review predates the current inputs (${v.changed.join(", ")} changed) — rebuild with --skip-review, re-render the brief (it will be a full brief) and re-run the review${v.hint ? ` — ${v.hint}` : ""}`;
+  if (v.status === "unstamped")
+    return `the findings file has no valid \`inputs\` (${v.unstamped ?? "missing"}) — continue the same reviewer to re-copy it from the \`Inputs fingerprint\` line of prompt.md (also in the brief's Output section); if the inputs changed since its brief, re-render the brief and re-run the review. Never copy or edit \`inputs\` on the reviewer's behalf`;
+  return editorialGateMessage(v.status, openCount);
 }
 
 /**
