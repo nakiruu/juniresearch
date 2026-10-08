@@ -4,7 +4,7 @@
     "company": "Caterpillar Inc.",
     "ticker": "CAT",
     "exchange": "NYSE",
-    "subtitle": "A $20 billion quarter and data-center power demand against a full 35.0x trailing multiple",
+    "subtitle": "A $20 billion quarter and data-center power demand against a full 35.0x trailing multiple and thinner free cash flow",
     "reportDate": "September 24, 2026",
     "asOf": "Sep 24, 2026",
     "analyst": "Juniper Finance Research Desk",
@@ -149,20 +149,20 @@
     ]
   },
   "rating": {
-    "label": "BUY",
-    "tone": "bull",
-    "targetLow": 850,
-    "targetHigh": 1050,
+    "label": "HOLD",
+    "tone": "secondary",
+    "targetLow": 840,
+    "targetHigh": 970,
     "conviction": {
-      "expectedUpside": 0.12066205265880159,
-      "bearDownside": 0.21184207285534837,
-      "rewardRisk": 0.5695849319846534,
-      "derivedLabel": "BUY"
+      "expectedUpside": 0.09036723233417909,
+      "bearDownside": 0.23031452427280114,
+      "rewardRisk": 0.3923644529996798,
+      "derivedLabel": "HOLD"
     },
     "gate": {
       "sector": "industrial",
       "ceiling": "STRONG BUY",
-      "gatedLabel": "BUY",
+      "gatedLabel": "HOLD",
       "distress": "SAFE",
       "piotroski": 5,
       "accruals": "LOW",
@@ -170,13 +170,15 @@
       "flags": []
     },
     "decision": {
-      "conviction": 45,
-      "tier": "moderate",
-      "proposed": "BUY",
+      "conviction": 90,
+      "tier": "high",
+      "proposed": "HOLD",
       "reasons": [
-        "E/R proposed BUY"
+        "E/R proposed HOLD"
       ],
-      "advisories": [],
+      "advisories": [
+        "model vs Street expected return diverge by 57pp — informational, not scored"
+      ],
       "moat": {
         "width": "WIDE",
         "trend": "ERODING",
@@ -184,9 +186,9 @@
         "bearFloor": 0.35
       },
       "intrinsic": {
-        "marginOfSafety": -0.2003854945965735,
-        "impliedGrowth": 0.1288659790521397,
-        "achievableGrowth": 0.0993739700520786
+        "marginOfSafety": -0.4075672019603528,
+        "impliedGrowth": 0.2531057007769474,
+        "achievableGrowth": 0.12062253340225504
       },
       "composite": {
         "percentile": 55.53196191476145,
@@ -236,6 +238,7 @@
     },
     {
       "label": "EV/EBITDA (TTM)",
+      "value": 25.786,
       "unit": "mult"
     },
     {
@@ -293,12 +296,12 @@
     },
     {
       "label": "FY25 Free Cash Flow",
-      "value": 8918000000,
+      "value": 7453000000,
       "unit": "usdLarge"
     },
     {
-      "label": "FY25 Net Debt",
-      "value": 26230000000,
+      "label": "FY25 Capital Expenditure",
+      "value": -4286000000,
       "unit": "usdLarge"
     },
     {
@@ -308,7 +311,7 @@
     },
     {
       "label": "FCF Yield (TTM)",
-      "value": 0.028660587454405393,
+      "value": 0.024095468645066564,
       "unit": "pct",
       "dp": 1
     }
@@ -323,13 +326,13 @@
     "medianTarget": 980.5,
     "highTarget": 1225,
     "lowTarget": 575,
-    "commentary": "We rate Caterpillar BUY with an $850 to $1,050 target range against a current price of $812.02. The case rests on a broad cyclical upturn: second-quarter 2026 sales and revenues reached $20.543 billion, {+ up 24 percent +} from $16.569 billion a year earlier, and operating profit margin widened to 20.9 percent from 17.3 percent. Management now guides to mid-to-high-teens sales growth for full-year 2026, and consensus places FY26E revenue near $79.2 billion. The counter-case is valuation and cycle risk: the shares trade at 35.0x trailing earnings, and demand for Caterpillar's equipment is cyclical, so a rollover in mining and construction capital spending would compress both earnings and the multiple. Our probability-weighted fair value sits modestly above the current price and the reward/risk is balanced rather than compelling, which is why the rating stops at BUY."
+    "commentary": "We rate Caterpillar HOLD with an $840 to $970 target range against a current price of $812.02. The operating case is strong: second-quarter 2026 sales and revenues reached $20.543 billion, {+ up 24 percent +} from $16.569 billion a year earlier, and operating profit margin widened to 20.9 percent from 17.3 percent. Management now guides to mid-to-high-teens sales growth for full-year 2026, and consensus places FY26E revenue near $79.2 billion. The restraint is price and cash: the shares trade at 35.0x trailing earnings, and free cash flow {- fell -} in FY25 as capital expenditure rose, so the stock offers little cash support at this level. Our probability-weighted fair value sits modestly above the current price, for an expected upside of 9.0 percent against a bear-case downside of 23.0 percent. That derives HOLD, just short of the BUY line; the call is close and turns on the multiple we assume for the Base case."
   },
   "sections": {
     "executiveSummary": {
       "companyOverview": "Caterpillar Inc. manufactures construction and mining equipment, off-highway diesel and natural gas engines, industrial gas turbines, and diesel-electric locomotives, selling in the United States and internationally. Its three primary segments are Construction Industries, Resource Industries, and Power & Energy, alongside a Financial Products segment and an All Other segment. Financial Products provides operating and finance leases, installment sale contracts, wholesale financing, and insurance, so consolidated revenue and debt include a captive-finance business. The company was incorporated in 1925 and is headquartered in Irving, Texas. The vendor treats Caterpillar as a single consolidated segment, with FY25 revenue of $67.6 billion; the segment detail in this report is drawn from the filing's own disclosures.",
       "thesis": {
-        "label": "BUY",
+        "label": "HOLD",
         "body": "Caterpillar is in a synchronized upcycle, with second-quarter 2026 sales higher across all three primary segments and data-center demand lifting its power business. Sales and revenues {+ rose 24 percent +} to $20.543 billion, driven by $3.1 billion of higher sales volume and $595 million of favorable price realization. Separately, quarterly profit {+ rose 65 percent +} to $3.593 billion, which the MD&A attributes mainly to the profit impact of higher sales volume. The bull case is that this demand persists through 2026 and 2027 as the company expands capacity. The bear case is that the shares already discount much of it at a full trailing multiple, and a cyclical downturn in mining or construction would cut earnings and the multiple at once."
       },
       "catalysts": [
@@ -342,6 +345,7 @@
       "risks": [
         "Cyclicality: demand for Caterpillar's products is cyclical and can be significantly reduced in periods of lower government and business investment, per the 2025 Form 10-K risk factors.",
         "Valuation: the shares trade at a full multiple on both trailing and forward earnings, leaving little room for disappointment.",
+        "Cash conversion: FY25 free cash flow fell as capital expenditure rose, and shareholder returns ran ahead of it.",
         "Tariffs: the company expects around $2.2 billion of 2026 tariff costs, including roughly $600 million in the third quarter of 2026.",
         "Commodity dependence: Resource Industries demand tracks copper, gold, and other commodity prices, which can move abruptly."
       ]
@@ -542,11 +546,11 @@
           {
             "label": "Capital Expenditure",
             "values": [
-              -1093000000,
-              -1296000000,
-              -1597000000,
-              -1988000000,
-              -2821000000
+              -2472000000,
+              -2599000000,
+              -3092000000,
+              -3215000000,
+              -4286000000
             ],
             "format": "usdB"
           },
@@ -575,29 +579,29 @@
           {
             "label": "Free Cash Flow",
             "values": [
-              6105000000,
-              6470000000,
-              11288000000,
-              10047000000,
-              8918000000
+              4726000000,
+              5167000000,
+              9793000000,
+              8820000000,
+              7453000000
             ],
             "format": "usdB"
           },
           {
             "label": "FCF Margin",
             "values": [
-              0.11977398913107454,
-              0.1088730711629394,
-              0.16832687145839548,
-              0.15502476507892424,
-              0.13194454718963144
+              0.09271938945674991,
+              0.08694701061806923,
+              0.14603340292275574,
+              0.136092209415359,
+              0.11026942253917058
             ],
             "format": "pct"
           }
         ],
         "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
       },
-      "cashflowCommentary": "Operating cash flow was $11.7 billion in FY25, down from $12.0 billion in FY24, and free cash flow was $8.9 billion at a 13.2 percent margin. Capital expenditure has been rising, reaching $2.8 billion in FY25, and management guides to about $3.5 billion in 2026 as it funds capacity expansion. Caterpillar returned cash aggressively: FY25 share repurchases were $5.2 billion and dividends $2.7 billion. In the second quarter of 2026 it deployed $1.5 billion on repurchases and $0.7 billion on dividends, and enterprise operating cash flow was $6.2 billion for the six months ended June 30, 2026. The dividend yields 0.81 percent at the current price, so the return of capital comes mostly through buybacks."
+      "cashflowCommentary": "Operating cash flow was $11.7 billion in FY25, down from $12.0 billion in FY24, while capital expenditure rose to $4.3 billion from $3.2 billion. Free cash flow therefore {- fell to $7.5 billion from $8.8 billion -}, and FCF margin narrowed to 11.0 percent from 13.6 percent. Most of that decline came from higher capital spending rather than from the small dip in operating cash flow, and capital expenditure has risen in every year shown since FY21. Management guides to capital expenditures of approximately $3.5 billion in 2026, which is below the FY25 figure in the pack; the sources do not reconcile the two, so we do not read the guide as a cut in spending. FY25 share repurchases were $5.2 billion and dividends $2.7 billion. In the second quarter of 2026 the company deployed $1.5 billion on repurchases and $0.7 billion on dividends, and enterprise operating cash flow was $6.2 billion for the six months ended June 30, 2026. The dividend yields 0.81 percent at the current price, so the return of capital comes mostly through buybacks."
     },
     "valuation": {
       "multiples": {
@@ -623,7 +627,7 @@
           {
             "label": "EV/EBITDA",
             "values": [
-              null
+              25.786
             ],
             "format": "mult"
           },
@@ -637,28 +641,28 @@
         ],
         "note": "Peer multiples pending a peer data source."
       },
-      "multiplesCommentary": "At $812.02 the shares trade at 35.0x trailing earnings, 5.0x sales, and 29.9x next-twelve-month earnings; on FY27E EPS of $32.38 the forward multiple is about 25.1x. The trailing multiple is full for a company whose earnings are cyclical and fell in FY25. The vendor does not supply an EV/EBITDA multiple, and no peer multiples were provided, so the comparison here is against Caterpillar's own history and forward estimates rather than a peer set. Market capitalization is about $373.3 billion on roughly 459.67 million shares. Consensus sits at a $975.61 target, up 20.1 percent, with a median of $980.50 and a range of $575.00 to $1,225.00; the 28 analysts split 14 Buy, 12 Hold, and 2 Sell for a Buy consensus.",
+      "multiplesCommentary": "At $812.02 the shares trade at 35.0x trailing earnings, 5.0x sales, 25.8x trailing EV/EBITDA, and 29.9x the vendor's next-twelve-month earnings. That multiple matches the current price over the FY26E consensus EPS of $27.19, so we treat it as a current-year multiple; on FY27E EPS of $32.38 the multiple is about 25.1x. The trailing multiple is full for a company whose earnings are cyclical and fell in FY25, and a trailing FCF yield of 2.4 percent gives the price little cash support. No peer multiples were provided, so the comparison here is against Caterpillar's own forward estimates rather than a peer set. Market capitalization is about $373.3 billion on roughly 459.67 million shares. The shares sit well below the 52-week high of $1,073.46, and no source in the pack explains the decline from that high. Consensus sits at a $975.61 target, up 20.1 percent, with a median of $980.50 and a range of $575.00 to $1,225.00; the 28 analysts split 14 Buy, 12 Hold, and 2 Sell for a Buy consensus.",
       "scenarios": [
         {
           "name": "Bull",
-          "driver": "Demand stays strong through 2027: sales grow in the mid-to-high teens in 2026 and keep expanding into 2027, data-center power demand keeps the power business growing, and margins hold near the second quarter's 20.9 percent. The market keeps paying a premium multiple, carrying the shares toward the 52-week high of $1,073.46.",
-          "impliedPrice": 1075,
+          "driver": "Demand stays strong through 2027: sales grow in the mid-to-high teens in 2026, data-center power demand keeps Power Generation growing, margins hold near the second quarter's 20.9 percent, and estimates keep rising. We value FY27E EPS of $32.38 at about 33x, between today's 29.9x current-year and 35.0x trailing multiples, on the basis that the market keeps paying for growth it sees extending. That returns the shares to around the 52-week high of $1,073.46.",
+          "impliedPrice": 1070,
           "probability": 0.3
         },
         {
           "name": "Base",
-          "driver": "The upcycle continues but decelerates: full-year 2026 revenue lands near the $79.2 billion consensus and FY27E reaches $88.1 billion, EPS builds toward $32.38, and the forward multiple eases toward the mid-twenties as growth normalizes. This tracks close to the $975.61 consensus target.",
-          "impliedPrice": 950,
+          "driver": "The upcycle continues but decelerates: full-year 2026 revenue lands near the $79.2 billion consensus, FY27E revenue reaches $88.1 billion, and EPS reaches the FY27E consensus. A year out FY27 is the current year, and we value it at about 28x, a step below today's current-year multiple, on the basis that the market pays somewhat less once revenue growth slows from the 2026 pace and the cycle matures.",
+          "impliedPrice": 907,
           "probability": 0.45
         },
         {
           "name": "Bear",
-          "driver": "A cyclical downturn arrives: mining and construction capital spending rolls over, volume and price reverse, and earnings fall from the 2026 pace as unfavorable manufacturing costs and roughly $2.2 billion of 2026 tariff costs weigh on margins. The 35.0x trailing multiple compresses as the market re-rates a cyclical peak, taking the shares more than 20 percent below the current price.",
-          "impliedPrice": 640,
+          "driver": "A cyclical downturn arrives: mining and construction capital spending rolls over, volume growth stalls and price realization fades, and unfavorable manufacturing costs and roughly $2.2 billion of 2026 tariff costs weigh on margins, so FY27 earnings stall near the FY26E consensus of $27.19 instead of reaching the FY27E consensus. We value that at about 23x, below the 25.1x the market pays today on FY27E EPS, on the basis that a market that sees the cycle turning stops paying for growth.",
+          "impliedPrice": 625,
           "probability": 0.25
         }
       ],
-      "scenarioCommentary": "We weight the Base case at 45 percent, the Bull at 30 percent, and the Bear at 25 percent. That produces a probability-weighted fair value modestly above the current price, an expected upside in the low double digits, and a bear-case downside of about 21 percent, for a reward/risk near 0.6 times. The Bear implied price of $640 sits well below the current price, reflecting genuine cyclical risk rather than a token downside. Our $850 to $1,050 target range brackets the Base case, and its low sits above the current price so the page's upside line stays positive. The rating is BUY: the expected upside clears the threshold, but the balanced reward/risk and a full multiple keep it short of a stronger call."
+      "scenarioCommentary": "We weight the Base case at 45 percent, the Bull at 30 percent, and the Bear at 25 percent. The Bull carries more weight than the Bear because order rates are strong and the backlog is growing across all three primary segments; the Bear keeps a quarter of the weight because the cycle, not the franchise, sets the earnings level, as the risk discussion argues. All three cases value a year-out current-year EPS, so their multiples compare directly with today's current-year multiple. The weights produce a probability-weighted fair value modestly above the current price, an expected upside of 9.0 percent, a bear-case downside of 23.0 percent, and a reward/risk of 0.39 times, which derives HOLD. The call is close, and it rests on the Base multiple. Holding today's current-year multiple a year out would put the Base near the consensus target and derive BUY. We do not hold it: FY27E revenue growth is slower than the FY26E pace, the second half of 2026 brings cost and dealer-inventory headwinds, and FY25 free cash flow fell as capital spending rose. A deeper downturn that takes earnings back toward FY25's $18.81 would be a tail outside the Bear, not a reason to raise its weight. Our $840 to $970 target range brackets the Base case."
     },
     "businessMoat": {
       "segments": [
@@ -703,12 +707,12 @@
         "Power Generation is a key growth driver within the power business, on data-center demand for reciprocating engines and turbines tied to cloud computing and generative AI.",
         "Management guides to mid-to-high-teens sales growth for full-year 2026 and expects higher sales and revenues in the second half following the typical seasonal trend.",
         "Consensus models FY26E revenue of about $79.2 billion and FY27E of $88.1 billion, with EPS rising from $27.19 to $32.38.",
-        "Capacity expansion is underway, with 2026 capital expenditure guided to about $3.5 billion to lift throughput in the second half."
+        "Capacity expansion is progressing, and management expects to increase throughput in the second half of 2026."
       ]
     },
     "management": {
-      "leadership": "Joe Creed is Chairman and CEO. On the second-quarter 2026 results he said it was the first time in company history that Caterpillar generated over $20 billion in sales and revenues in a single quarter, and pointed to strong order rates and a growing backlog across all three primary segments. The proxy statement identifies Mr. Creed and Mr. Umpleby as the two directors the board did not determine to be independent, consistent with the company's guideline that no more than two non-independent directors may serve at any time.",
-      "capitalAllocation": "Capital allocation leans on buybacks over dividends, and the mix has been affordable: free cash flow has comfortably covered the combined repurchases and dividends detailed above. The question is durability. The 2026 capital-expenditure step-up to fund capacity expansion will claim a larger share of operating cash flow, which should slow the buyback pace even if demand holds. The dividend is small as a share of the payout, so most of the return flexes with buybacks; in a downturn management can throttle repurchases quickly, which protects the balance sheet but means the shareholder return is not a floor. Free cash flow fell in FY25 as earnings dipped, a reminder that the capacity to return cash tracks the cycle.",
+      "leadership": "Joe Creed is Chairman and CEO. In the August 4, 2026 earnings release he called the quarter's more than $20 billion in sales and revenues a milestone in company history, and pointed to strong order rates and a growing backlog across all three primary segments.",
+      "capitalAllocation": "Capital allocation leans on buybacks over dividends, and on the corrected cash-flow figures the payout ran ahead of free cash flow: FY25 repurchases and dividends together exceeded the year's free cash flow, as they did in FY24, and net debt rose in FY25, as the balance-sheet discussion shows. The payout has therefore not been covered by free cash flow alone, which matters more now that capital spending absorbs a larger share of operating cash flow than it did in FY23. The dividend is small relative to buybacks, so most of the return flexes with repurchases; in a downturn management can throttle them quickly, which protects the balance sheet but means the shareholder return is not a floor. The FY25 decline in free cash flow described above is a reminder that the capacity to return cash depends on the cycle and on how much the company reinvests.",
       "governance": "Governance rests on the 2026 proxy statement. The board's guidelines cap non-independent directors at two, and for 2025 the board determined every director independent except Mr. Umpleby and Mr. Creed. Related-party transactions expected to exceed $120,000 in a calendar year must be approved in advance by the NGC. The proxy discloses two family-employment matters: Mr. Creed's brother-in-law received $183,089 under a separation agreement after his employment ceased in February 2025, and Mr. Jason Kaiser's brother-in-law, a manager in product support, earned about $210,000 in fiscal 2025 in line with employees of similar title. Both are small relative to the company and were handled under the stated policy.",
       "insiderOwnership": "The proxy excerpt in the pack covers director independence and related-party transactions but does not quantify insider or institutional ownership, so no ownership figure is stated here."
     },
@@ -723,8 +727,8 @@
     },
     "finalRecommendation": {
       "body": [
-        "Caterpillar earns a BUY, with the target range set at $850 to $1,050 while the shares trade at $812.02. The case is the confirmed upcycle behind the second-quarter surge: broad growth across the primary segments, sharply higher margins and earnings, mid-to-high-teens full-year guidance, and data-center power demand.",
-        "The restraint is valuation and cyclicality. At a full multiple on both trailing and forward earnings the shares price in much of the upcycle, FY25 showed how fast margins can compress, and the 2025 Form 10-K is explicit that demand is cyclical. Our bear case sits more than 20 percent below the current price and the reward/risk is balanced, which is why the rating is BUY rather than a stronger call. Investors should size the position for a cyclical name trading near a full multiple."
+        "Caterpillar earns a HOLD, with the target range set at $840 to $970 while the shares trade at $812.02. The operating case is real: broad growth across the primary segments behind the second-quarter surge, sharply higher margins and earnings, mid-to-high-teens full-year guidance, and data-center power demand.",
+        "The restraint is price, cash, and the cycle. At a full multiple on both trailing and current-year earnings the shares price in much of the upcycle, free cash flow fell in FY25 as capital spending rose, and the 2025 Form 10-K is explicit that demand is cyclical. The scenarios derive HOLD just below the BUY line, and the deciding judgment is the Base multiple set out in the valuation section. We would revisit the rating toward BUY if FY27 consensus EPS rises above $32.38 while order rates and the backlog hold, and toward SELL if the second-half headwinds turn into falling FY27 estimates."
       ]
     }
   },
