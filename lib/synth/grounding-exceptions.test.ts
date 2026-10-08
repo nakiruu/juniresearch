@@ -129,17 +129,12 @@ describe("only the copy merged to main and pushed to origin/main applies", () =>
 });
 
 /**
- * Shrink-only. These are the owner-approved entries left of the 8 in plan 2026-10-07 §5 (CSTM fixed 2026-10-08): LH ×2, LLY ×2, MDU ×2, NVDA. A fix round
+ * Shrink-only. These are the owner-approved entries left of the 8 in plan 2026-10-07 §5 (CSTM, LLY, MDU and NVDA fixed 2026-10-08): LH ×2. A fix round
  * removes its keys here and its entries from the JSON in the same merge; nothing is ever added.
  */
 const FROZEN_KEYS = new Set([
   "LH|0000920148-26-000175|68ac4715cee0131281b68b90640a6e844ad9d267ac0264f8bd963123d46a169c|91b392e467c90dc3289cac71072d746c77ac9c697d3d898da5c2af408d9e184d|grounding|sections.executiveSummary.catalysts[2]|$8.73 billion",
   "LH|0000920148-26-000175|68ac4715cee0131281b68b90640a6e844ad9d267ac0264f8bd963123d46a169c|91b392e467c90dc3289cac71072d746c77ac9c697d3d898da5c2af408d9e184d|grounding|sections.growth.points[0]|$13,952",
-  "LLY|0000059478-26-000081|9f262de96beee34bd73e30500e22606e7435611b3b72f4a020599812e9d8163f|37fad26e9ea859ef73851d4007d35e4320d11b48e661131cb29f87ce6dc101eb|grounding|sections.executiveSummary.companyOverview|$1T",
-  "LLY|0000059478-26-000081|9f262de96beee34bd73e30500e22606e7435611b3b72f4a020599812e9d8163f|37fad26e9ea859ef73851d4007d35e4320d11b48e661131cb29f87ce6dc101eb|grounding|sections.financials.cashflowCommentary|$1T",
-  "MDU|0000067716-26-000072|7dfd54a98b8a6084de33ea3accb8decd8cda867f205f87df68d838f2d2cde2d1|6eb7245db8f546013a9926149015c1f5ec5a1618d6e4d3635b0ab6959d5b5fdb|grounding|analystCommentary|$0.4M",
-  "MDU|0000067716-26-000072|7dfd54a98b8a6084de33ea3accb8decd8cda867f205f87df68d838f2d2cde2d1|6eb7245db8f546013a9926149015c1f5ec5a1618d6e4d3635b0ab6959d5b5fdb|grounding|sections.financials.incomeCommentary|$0.4M",
-  "NVDA|0001045810-26-000075|96408ee70d2f07ad2d7ca8f9a3c669ce75c10b016dc4b32bb6e19a06a18d1395|18749fbef886bfd281a1d2695e3ad678c3a6d0571a84a5a780ec401e33c00b40|grounding|sections.financials.balanceCommentary|400 times",
 ]);
 
 /**
@@ -149,11 +144,6 @@ const FROZEN_KEYS = new Set([
 const FROZEN_JUDGMENTS = [
   "LH|68ac4715cee0131281b68b90640a6e844ad9d267ac0264f8bd963123d46a169c",
   "LH|68ac4715cee0131281b68b90640a6e844ad9d267ac0264f8bd963123d46a169c",
-  "LLY|9f262de96beee34bd73e30500e22606e7435611b3b72f4a020599812e9d8163f",
-  "LLY|9f262de96beee34bd73e30500e22606e7435611b3b72f4a020599812e9d8163f",
-  "MDU|7dfd54a98b8a6084de33ea3accb8decd8cda867f205f87df68d838f2d2cde2d1",
-  "MDU|7dfd54a98b8a6084de33ea3accb8decd8cda867f205f87df68d838f2d2cde2d1",
-  "NVDA|96408ee70d2f07ad2d7ca8f9a3c669ce75c10b016dc4b32bb6e19a06a18d1395",
 ];
 const judgmentOf = (key: string) => { const [ticker, , judgment] = key.split("|"); return `${ticker}|${judgment}`; };
 const sorted = (xs: string[]) => [...xs].sort();

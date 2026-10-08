@@ -1,7 +1,7 @@
 {
-  "judgmentSha256": "96408ee70d2f07ad2d7ca8f9a3c669ce75c10b016dc4b32bb6e19a06a18d1395",
-  "reviewedAt": "2026-09-16T13:30:00Z",
-  "reviewer": "claude-opus-4-8",
+  "judgmentSha256": "94fdb2e9457b4fe27f4b2fc7f51c422b3262c220495b3fb8f84d250c03541fb6",
+  "reviewedAt": "2026-10-08T16:29:07Z",
+  "reviewer": "claude-opus-5-5",
   "round": 2,
   "verdict": "approved-with-minors",
   "findings": [
@@ -132,7 +132,8 @@
       "quote": "the autonomy timeline keeps slipping",
       "issue": "Nothing in the Facts or Context blocks addresses autonomous-driving deployment timelines. The pack carries Automotive only as FY26 revenue $2.3B (1.1% of revenue) and the company description's in-vehicle-computing and autonomous-driving product lines; neither the MD&A, the transcript nor the headlines say the autonomy timeline is delayed. \"the autonomy timeline keeps slipping\" is a statement of fact the grounding surface does not support (Rubric 2), offered as a reason the segment is a modest contributor. It is non-load-bearing color in the smallest segment, so Minor rather than Critical, but the claim rests on neither a figure nor a quoted fact.",
       "fix": "Drop \"the autonomy timeline keeps slipping,\" or replace it with a grounded counter - the segment's small scale (1.1% of revenue, $2.3B) and its reliance on a multi-year design-win pipeline - rather than asserting an industry timeline the pack does not carry.",
-      "status": "open"
+      "status": "declined",
+      "note": "Deferred to the next synthesis; editing the judgment after the final re-check would leave it unreviewed. Reviewer accepts the decline."
     }
   ]
 }

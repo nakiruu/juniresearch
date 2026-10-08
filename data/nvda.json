@@ -170,13 +170,15 @@
       "flags": []
     },
     "decision": {
-      "conviction": 59,
+      "conviction": 69,
       "tier": "moderate",
       "proposed": "BUY",
       "reasons": [
         "E/R proposed BUY"
       ],
-      "advisories": [],
+      "advisories": [
+        "model vs Street expected return diverge by 110pp — informational, not scored"
+      ],
       "moat": {
         "width": "WIDE",
         "trend": "STABLE",
@@ -184,9 +186,9 @@
         "bearFloor": 0.15
       },
       "intrinsic": {
-        "marginOfSafety": -0.10832438459066296,
-        "impliedGrowth": 0.21629830825532215,
-        "achievableGrowth": 0.2
+        "marginOfSafety": -0.5395664793383071,
+        "impliedGrowth": 0.3594924839794106,
+        "achievableGrowth": 0.15
       },
       "composite": {
         "percentile": 80.13257526902376,
@@ -517,7 +519,7 @@
         ],
         "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended late January."
       },
-      "balanceCommentary": "The balance sheet is a fortress. NVIDIA holds far more cash and investments than debt, and the trailing current ratio is 4.59 with interest coverage over 400 times, so financial risk is essentially nil. The company is so cash-generative that it can fund its own growth, return tens of billions to shareholders, and still build a larger cash pile.\n\nThe only caveat is what NVIDIA does with this strength rather than the strength itself; the cash-flow section takes up how much of its resources now go to supporting the AI ecosystem. On the balance sheet alone, there is little to worry about, which gives management the freedom to invest through a cycle.",
+      "balanceCommentary": "The balance sheet is a fortress. NVIDIA holds far more cash and investments than debt, and the trailing current ratio is 4.59 and trailing interest coverage is 426.7x, so financial risk is essentially nil. The company is so cash-generative that it can fund its own growth, return tens of billions to shareholders, and still build a larger cash pile.\n\nThe only caveat is what NVIDIA does with this strength rather than the strength itself; the cash-flow section takes up how much of its resources now go to supporting the AI ecosystem. On the balance sheet alone, there is little to worry about, which gives management the freedom to invest through a cycle.",
       "cashflow": {
         "columns": [
           "Metric ($B)",
