@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "f30e8ba051357588390e7e851eaca62c99525302189977206bddf17e704584a8",
-  "reviewedAt": "2026-10-08T14:19:46Z",
+  "judgmentSha256": "5421daa043e2a69060bb2005bb22ae222f37ce9de68c3a1f9b61bda75ad5e1b4",
+  "reviewedAt": "2026-10-08T14:24:10Z",
   "reviewer": "Claude Opus 5.5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved",
   "findings": [
     {
       "id": "F-1",
@@ -13,7 +13,7 @@
       "issue": "Cross-section repetition (rubric item 7). The same Q2'26 growth figures are retold with full numbers in three or more places rather than pointed to once. Q2'26 revenue $980.6M / +47.6% and operating margin 31.0% vs 24.8% appear in analystCommentary, executiveSummary.thesis, financials.incomeCommentary AND here in finalRecommendation. Enterprise data +164.3% Q2'26 appears in executiveSummary.catalysts[0], risks.idiosyncratic[2] AND here. The valuation multiples 82.5x / 49.3x likewise recur in analystCommentary, thesis, valuation.multiplesCommentary and finalRecommendation. A figure should be introduced once in the section that argues it and referred back in words elsewhere; the final recommendation should conclude, not re-state the figures a fourth time.",
       "fix": "Keep each figure in the one section that argues it (revenue/margin in incomeCommentary; 164.3% in the idiosyncratic-risk argument or a catalyst pointer, not both plus the summary; multiples in multiplesCommentary). In finalRecommendation and analystCommentary, refer back in words (\"the Q2 acceleration\", \"the premium multiple\") instead of repeating the quantities.",
       "status": "addressed",
-      "note": "Still addressed in the rewrite. finalRecommendation restates no Q2'26 operating figures. 164.3% now appears only in businessMoat.segments[0]; the catalysts and risks refer to it in words. 82.5x appears only in multiplesCommentary."
+      "note": "Still addressed. finalRecommendation and analystCommentary refer to the Q2 2026 results in words. 164.3% appears only in businessMoat.segments[0]."
     },
     {
       "id": "F-2",
@@ -22,8 +22,8 @@
       "quote": "The Board raised the quarterly dividend 28% to $2.00 per share, or $8.00 annually, in February 2026, after declaring $6.24 per share in FY25.",
       "issue": "Cross-section repetition (rubric item 7) of capital-return and capacity figures. The February 2026 dividend raise (28% to $2.00 quarterly / $8.00 annually) is told in full three times: executiveSummary.catalysts[2], financials.cashflowCommentary and here in management.capitalAllocation. The \"returned 72% of free cash flow over the past three years\" claim appears in both catalysts[3] and capitalAllocation. FY25 capex of $172 million appears in cashflowCommentary, businessMoat.moatFactors (Fabless capital efficiency) and capitalAllocation. Consensus revenue of ~$4.1B FY26E and $5.3B FY27E appears in catalysts[1], valuation.multiplesCommentary, growth.points[0] and the scenarios. Each is the same claim made in two or three argument sections in different words.",
       "fix": "Assign each figure a single home: the dividend raise and the 72% return to capitalAllocation, capex to cashflowCommentary, consensus revenue to multiplesCommentary or growth (not both). Make the catalyst a one-line pointer without the full figure, and have the other sections refer back in words.",
-      "status": "open",
-      "note": "Dividend, 72% and capex are fixed. Consensus revenue has come back: catalysts[2] \"FY26E revenue of about $4.1 billion and FY27E of $5.3 billion, if met, support the Base\" repeats growth.points[0]. FY26E growth of \"about 48%\" is in growth.points[0], scenarios[1].driver and scenarioCommentary (\"near 48% again\"). Make catalysts[2] a pointer in words. Keep 48% in growth.points[0] and the Base driver. scenarioCommentary should refer back in words (\"near that pace again\")."
+      "status": "addressed",
+      "note": "Addressed. catalysts[2] now points to Growth. Consensus revenue figures appear only in growth.points[0], and \"about 48%\" only there and in the Base driver. scenarioCommentary refers back with \"near that pace again\"."
     },
     {
       "id": "F-3",
@@ -33,7 +33,7 @@
       "issue": "The \"20%-to-30% range\" characterization is not supported by the FCF-margin series on the grounding surface. The cash-flow table shows FCF margins of 18.7% (FY21), 10.5% (FY22), 31.9% (FY23), 29.1% (FY24) and 23.9% (FY25) — three of the five years fall outside the stated 20%-to-30% band, and FY22 (10.5%) is well below it. cashflowCommentary correctly says FY25's 23.9% is \"within the range of FY21 through FY25\", so this tighter range claim is the imprecise one.",
       "fix": "Drop the specific band or widen it to match the series (e.g. \"free-cash-flow margins that have run from the low-double-digits to the low-thirties\"), or simply state FY25's 23.9% FCF margin without implying a stable 20-30% range.",
       "status": "addressed",
-      "note": "Still addressed. The factor now gives no FCF-margin band and reads \"capital expenditure small against revenue in every year shown\", which the cash-flow table supports."
+      "note": "Still addressed. No FCF-margin band; the factor says only that capital expenditure is small against revenue in every year, which the table supports."
     },
     {
       "id": "F-4",
@@ -42,7 +42,8 @@
       "quote": "Concentration: most revenue comes from customers in Asia and from a limited number of customers, as set out under Risks.",
       "issue": "Unsupported claim (rubric item 2). As written, \"most revenue\" applies to both clauses, so the sentence says most revenue comes from a limited number of customers. The 10-K risk summary says only \"our dependency on a limited number of customers for a significant portion of our revenue\". A significant portion is not most, and the surface gives no customer-concentration figure. The Asia clause is supported (92% of FY25 revenue). moatFactors[2] and risks.idiosyncratic[0] word the customer point correctly.",
       "fix": "Separate the two clauses and keep the source's wording. For example: \"Concentration: most revenue comes from customers in Asia, and the 10-K cites dependence on a limited number of customers for a significant portion of revenue, as set out under Risks.\"",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. The clauses are now separate: \"most revenue comes from customers in Asia, and the 10-K cites dependence on a limited number of customers for a significant portion of revenue\", which matches the 10-K wording."
     },
     {
       "id": "F-5",
@@ -51,7 +52,8 @@
       "quote": "Today's growth comes mostly from enterprise data and communications, so durability depends on other end markets carrying growth if AI demand digests.",
       "issue": "Cross-section repetition (rubric item 7). The claim that growth is concentrated in the two data-infrastructure end markets, so an AI pause would hurt, is argued in four places: businessMoat.segments[0] (\"the growth now comes mostly from two data-infrastructure markets\"), here in durability, risks.idiosyncratic[1] (\"the Q2'26 expansion came mostly from enterprise data ... a pause in AI and server demand would hit results harder than the six-market spread suggests\") and growth.points[4] (\"in Q2'26, growth outside enterprise data and communications was slower\"). catalysts[1] also calls communications \"a second data-infrastructure source of growth\". These are one claim in different words.",
       "fix": "Argue the consequence once, in risks.idiosyncratic[1]. Leave the end-market facts in segments[0] without the closing summary sentence, or keep that sentence and drop the restatement elsewhere. In durability and growth.points[4], refer back in words (e.g. \"given the end-market concentration set out under Risks\") rather than restating it.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. The summary sentence in segments[0] is gone. Durability, growth.points[4] and moatFactors[2] point to Risks, and only idiosyncratic[1] argues the consequence. ED plus communications account for most of the Q2 2026 increase."
     },
     {
       "id": "F-6",
@@ -60,7 +62,8 @@
       "quote": "Cyclicality: customers can cancel or reschedule orders without significant penalty, and the company calls its industry cyclical.",
       "issue": "Cross-section repetition (rubric item 7). The order-cancellation fact appears three times: here, in businessMoat.durability (\"customers can cancel or reschedule orders without significant penalty\") and in risks.idiosyncratic[2], which is its argument home. moatFactors[0] already points to it correctly (\"given the order terms set out under Risks\"). The cyclical-industry statement appears both here and in risks.systemic. The 10-Q trade-restriction statement appears in both scenarioCommentary and risks.systemic. The valuation risk is a pointer in both executiveSummary.risks[0] and risks.idiosyncratic[3] (\"leave little room for a growth miss\" / \"a modest growth miss could move the shares\"), and neither argues it.",
       "fix": "Make executiveSummary.risks[3] a pointer (e.g. \"Cyclicality: order terms and an industry the company calls cyclical, as set out under Risks\"). In durability, point back the way moatFactors[0] does. In scenarioCommentary, refer to the trade statement in words (\"the 10-Q's trade statement noted under Risks\"). Drop risks.idiosyncratic[3], or have it argue something the valuation section does not.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. executiveSummary.risks[3] is a pointer, and durability no longer restates the order terms. scenarioCommentary refers to the trade statement in words, and the duplicate valuation risk is gone from idiosyncratic."
     },
     {
       "id": "F-7",
@@ -69,7 +72,8 @@
       "quote": "the label depends on whether the current-year multiple compresses as growth slows, which we judge more likely than not but close.",
       "issue": "Repetition (rubric item 7). This is nearly the thesis sentence: \"The label turns on whether the current-year multiple compresses as growth slows, and we judge that more likely than not.\" The same point appears twice more: analystCommentary (\"The call is close: if the market keeps paying today's current-year multiple a year from now, the same scenarios derive BUY\") and scenarioCommentary, which argues it (\"If the market still pays today's current-year multiple a year out, these scenarios derive BUY\"). finalRecommendation.body[1] then makes it the fundamental trigger. The full E/D/R set (9.9%, 28.9%, 0.34x) is likewise restated in analystCommentary, thesis, scenarioCommentary and finalRecommendation.body[0].",
       "fix": "Keep the argument in scenarioCommentary and the trigger in finalRecommendation.body[1]. Remove the deciding-multiple sentence from either the thesis or finalRecommendation.body[0]; finalRecommendation.body[0] can conclude without it, since body[1] already states the trigger. Drop the E/D/R figures from the thesis, which can say in words that the expected upside does not cover the Bear.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. The thesis states the deciding-multiple point in words, without the E/D/R figures. finalRecommendation.body[0] concludes and body[1] carries the trigger. analystCommentary points to valuation and the final recommendation."
     },
     {
       "id": "F-8",
@@ -78,7 +82,8 @@
       "quote": "against FY24's $1,592.1 million and $32.60, figures the company restated in February 2026.",
       "issue": "Repetition (rubric item 7, minor). The February 2026 restatement of FY24 net income and EPS appears here and again in management.governance (\"the proxy says FY24 GAAP net income and diluted EPS were restated in February 2026\"). Governance is its home.",
       "fix": "In incomeCommentary, point to governance in words (\"figures since restated, as discussed under governance\"), or drop the clause there.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. incomeCommentary now reads \"figures since restated, as discussed under governance\"."
     },
     {
       "id": "F-9",
@@ -87,7 +92,8 @@
       "quote": "Capital expenditure stays small against revenue, as a fabless model should, at $0.2 billion in each of FY24 and FY25.",
       "issue": "Same figure twice in one section (rubric item 7, minor). FY25 capex is given earlier in this paragraph as \"$174.9 million\" and again here as \"$0.2 billion\". The reader sees two scales for one quantity.",
       "fix": "Drop the second figure and keep the point, e.g. \"Capital expenditure stays small against revenue in both FY24 and FY25, as a fabless model should.\"",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. The second capex figure is gone: \"Capital expenditure stays small against revenue in both FY24 and FY25, as a fabless model should.\""
     }
   ]
 }
