@@ -6,6 +6,7 @@ import { Desk } from "../lib/synth/desk.schema";
 import { renderPrompt, promptTail } from "../lib/synth/prompt";
 import { parseErrorsFile } from "../lib/synth/errors-file";
 import { loadEditorialReview, openFindings } from "../lib/synth/editorial";
+import { reviewInputs } from "../lib/synth/review-inputs";
 
 const args = process.argv.slice(2);
 const [tickerArg, accession] = args.filter((a) => !a.startsWith("--"));
@@ -31,7 +32,9 @@ const tailOpts = {
   priorWarnings: prior.warnings.length ? prior.warnings : undefined,
   editorial,
 };
-const prompt = renderPrompt(pack, projectReportFacts(pack), desk, { ...tailOpts, judgmentPath });
+const facts = projectReportFacts(pack);
+// The line the editorial reviewer copies into its findings file (review-inputs.ts).
+const prompt = renderPrompt(pack, facts, desk, { ...tailOpts, judgmentPath, inputs: reviewInputs(pack, desk, facts) });
 const out = join(dir, `${accession}.prompt.md`);
 writeFileSync(out, prompt);
 

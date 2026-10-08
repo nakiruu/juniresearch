@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { z } from "zod";
-import { EditorialReview, EditorialReviewShape, EditorialFinding } from "@/lib/synth/editorial.schema";
+import { EditorialReview, EditorialReviewShape, EditorialFinding, ReviewInputsStamp, readInputsStamp } from "@/lib/synth/editorial.schema";
 
 const finding = (over: Partial<z.input<typeof EditorialFinding>> = {}) => ({
   id: "F-1", severity: "Minor" as const, field: "sections.management.governance",
@@ -40,5 +40,40 @@ describe("EditorialReview", () => {
     const schema = z.toJSONSchema(EditorialReviewShape) as Record<string, unknown>;
     expect(JSON.stringify(schema)).toContain("judgmentSha256");
     expect(JSON.stringify(schema)).toContain("needs-fix-round");
+  });
+  it("lists inputs as required in the reviewer's JSON Schema", () => {
+    const schema = z.toJSONSchema(EditorialReviewShape) as { required: string[]; properties: Record<string, unknown> };
+    expect(schema.required).toContain("inputs");
+    expect(Object.keys(schema.properties).indexOf("inputs")).toBe(Object.keys(schema.properties).indexOf("judgmentSha256") + 1);
+  });
+});
+
+describe("the inputs stamp", () => {
+  const stamp = { scheme: 1, facts: "a".repeat(64), calls: "b".repeat(64), context: "c".repeat(64) };
+  const read = (inputs: unknown) => readInputsStamp(EditorialReview.parse(inputs === undefined ? review() : { ...review(), inputs }));
+  it("a file with no inputs parses, and reads as missing", () => {
+    expect(EditorialReview.safeParse(review()).success).toBe(true);
+    expect(read(undefined)).toEqual({ missing: true });
+  });
+  it("a malformed stamp parses as a file but reads as malformed, with the zod message", () => {
+    const cases: [unknown, RegExp][] = [
+      [{ ...stamp, facts: "nope" }, /facts/],
+      [{ ...stamp, scheme: 2 }, /scheme/],
+      [{ ...stamp, extra: 1 }, /extra/],
+      [{ ...stamp, source: "copied" }, /source/],
+      ["not an object", /object/i],
+    ];
+    for (const [inputs, re] of cases) {
+      expect(EditorialReview.safeParse({ ...review(), inputs }).success).toBe(true);
+      const r = read(inputs);
+      expect(r).toHaveProperty("malformed");
+      expect((r as { malformed: string }).malformed).toMatch(re);
+    }
+  });
+  it("a good stamp reads as a stamp, with or without a source", () => {
+    expect(read(stamp)).toEqual({ stamp });
+    for (const source of ["backfill:7ce1382", "rekey:" + "f".repeat(40), "owner-accept:pre-rating", "rekey:abc1234+owner-accept"])
+      expect(read({ ...stamp, source })).toEqual({ stamp: { ...stamp, source } });
+    expect(ReviewInputsStamp.safeParse({ ...stamp, source: "backfill:XYZ" }).success).toBe(false);
   });
 });

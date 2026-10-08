@@ -6,6 +6,9 @@ import { Desk } from "@/lib/synth/desk.schema";
 import { renderFactsBlock, renderContextBlock, renderPrompt, renderCalls, renderTraps, promptTail } from "@/lib/synth/prompt";
 import { EditorialReview } from "@/lib/synth/editorial.schema";
 import { buildGroundingIndex, checkGrounding } from "@/lib/synth/grounding";
+import { reviewInputs, inputsLine } from "@/lib/synth/review-inputs";
+import { groundingSurface } from "@/lib/synth/validate-judgment";
+import { Judgment } from "@/lib/synth/judgment.schema";
 
 const pack = FactPack.parse(JSON.parse(readFileSync("data/facts/AVGO/0001730168-26-000080.json", "utf8")));
 const facts = projectReportFacts(pack);
@@ -176,6 +179,28 @@ describe("renderPrompt", () => {
     // (Task 5), which for AVGO alone runs to ~15,000 characters. Raised again from 90000: the
     // token-lean pass added the "# Known traps" section (~1.5K chars) between contract and calls.
     expect(a.length).toBeLessThan(95000);
+  });
+});
+
+describe("the inputs fingerprint in the prompt", () => {
+  const p = renderPrompt(pack, facts, desk);
+  const line = `Inputs fingerprint: ${inputsLine(reviewInputs(pack, desk))}`;
+  it("prints the reviewer's inputs line, equal to reviewInputs, in its own section just before # Output", () => {
+    expect(p).toContain(`# Inputs fingerprint\n\n`);
+    expect(p.split("\n")).toContain(line);
+    expect(p.indexOf("# Inputs fingerprint")).toBeGreaterThan(p.indexOf("# Context"));
+    expect(p.indexOf("# Inputs fingerprint")).toBeLessThan(p.indexOf("# Output"));
+    expect(p.slice(p.indexOf("# Inputs fingerprint"), p.indexOf("# Output"))).toContain(line);
+  });
+  it("takes the inputs it is given", () => {
+    const given = { scheme: 1 as const, facts: "1".repeat(64), calls: "2".repeat(64), context: "3".repeat(64) };
+    expect(renderPrompt(pack, facts, desk, { inputs: given })).toContain(`Inputs fingerprint: ${inputsLine(given)}`);
+  });
+  it("sits outside the Facts, Calls and Context blocks, so the grounding surface is unchanged", () => {
+    const j = Judgment.parse(JSON.parse(readFileSync("data/judgment/AVGO/0001730168-26-000080.json", "utf8")));
+    const s = groundingSurface(j, facts, pack, desk);
+    for (const b of [s.factsBlock, s.callsBlock, s.contextBlock, s.judgmentBlock]) expect(b).not.toContain("Inputs fingerprint");
+    expect(p).toContain(`# Calls\n\n${s.callsBlock}\n\n# Facts\n\n${s.factsBlock}\n\n# Context\n\n${s.contextBlock}\n\n# Inputs fingerprint`);
   });
 });
 

@@ -20,7 +20,9 @@ import { Report } from "../lib/report.schema";
 import { validateReport, type ValidationIssue } from "../lib/validate";
 import { lintJudgment, type LintIssue } from "../lib/synth/lint";
 import { issueLine, writeErrorsFile } from "../lib/synth/errors-file";
-import { loadEditorialReview, reviewStatus, editorialGateMessage, openFindings, judgmentSha256 } from "../lib/synth/editorial";
+import { loadEditorialReview, reviewVerdict, reviewVerdictMessage, openFindings, judgmentSha256 } from "../lib/synth/editorial";
+import { reviewInputs, inputsUnder } from "../lib/synth/review-inputs";
+import { briefCopyBlock } from "../lib/synth/review-brief";
 import { loadExceptions, gitReaders, applyExceptions, surfaceSha256, EXCEPTIONS_PATH } from "../lib/synth/grounding-exceptions";
 import { crosscheckGate } from "../lib/synth/crosscheck-gate";
 
@@ -139,10 +141,17 @@ const review = (() => {
   try { return loadEditorialReview(editorialPath); }
   catch (e) { return fail([{ field: editorialPath, message: `malformed editorial review: ${(e as Error).message}`, value: null }], warnings, "editorial"); }
 })();
-const status = reviewStatus(judgmentText, review);
+// The review binds to the judgment text and to the inputs it read (facts, calls, context; review-inputs.ts).
+const inputs = reviewInputs(pack, desk, facts);
+const current = (scheme: number) => (scheme === inputs.scheme ? inputs : inputsUnder(scheme, pack, desk, facts));
+// Diagnostic only: what the existing brief told the reviewer to copy (null for a legacy brief), for the stale hint.
+const briefPath = join("data", "judgment", ticker, `${accession}.review-brief.md`);
+const brief = existsSync(briefPath) ? briefCopyBlock(readFileSync(briefPath, "utf8")) : null;
+const verdict = reviewVerdict(judgmentText, review, current, { requireInputs: true, brief });
+const status = verdict.status;
 if (status !== "clean" && !skipReview)
-  fail([{ field: editorialPath, message: editorialGateMessage(status, review ? openFindings(review).length : 0), value: status }], warnings, "editorial");
-if (status !== "clean") console.warn(`editorial review skipped: ${status}`);
+  fail([{ field: editorialPath, message: reviewVerdictMessage(verdict, review ? openFindings(review).length : 0), value: status }], warnings, "editorial");
+if (status !== "clean") console.warn(`editorial review skipped: ${status}${verdict.changed ? ` (${verdict.changed.join(", ")})` : verdict.unstamped ? ` (${verdict.unstamped})` : ""}`);
 
 // The fundamental gate is advisory here: it never blocks the build, but a rating above its ceiling
 // (and the composed decision) is surfaced and fed back into the next prompt via the errors file.

@@ -4,17 +4,22 @@
  * It mirrors renderPrompt: pure, deterministic, and the reviewer's whole brief.
  * On a re-check the previous findings go in verbatim, because the reviewer's
  * first job in round two is to verdict its own round-one findings before it
- * looks for anything new.
+ * looks for anything new — less the two hash fields, so the only hashes in the
+ * brief are the current ones the reviewer copies (plan 2026-10-08, S-3). An
+ * inputs change since that round forces the cold read. The preflight and the
+ * overwrite guard keep the brief bound to the prompt and report it points at.
  */
 import { z } from "zod";
-import { EditorialReviewShape, type EditorialReview } from "./editorial.schema";
+import { EditorialReviewShape, ReviewInputsStamp, readInputsStamp, type EditorialReview } from "./editorial.schema";
 import { judgmentSha256 } from "./editorial";
 import { FactPack } from "../facts/schema";
-import { projectReportFacts } from "../facts/project";
+import { projectReportFacts, type ReportFacts } from "../facts/project";
 import { Judgment } from "./judgment.schema";
 import type { Desk } from "./desk.schema";
 import { groundingSurface, groundJudgment } from "./validate-judgment";
 import { weakLine } from "./grounding";
+import { renderCalls, renderFactsBlock, renderContextBlock } from "./prompt";
+import { canon, changedComponents, inputsLine, reviewInputs, type Component, type ReviewInputs } from "./review-inputs";
 
 /**
  * The figures the build could check only by digits or without a sign, and the assumed whole-number multiples (D2): the
@@ -56,17 +61,30 @@ export function renderReviewBrief(input: {
   weak?: readonly string[];
   /** Whole-number multiples nowhere on the surface, passed as assumed-figure warnings (decision D2); omitted → no section. */
   assumed?: readonly string[];
+  /** The current inputs (review-inputs.ts), which the reviewer copies next to judgmentSha256. */
+  inputs: ReviewInputs;
+  /** On a re-check: the components that moved since the previous review's stamp, or "unstamped" when it has none. */
+  inputsChanged?: Component[] | "unstamped";
 }): string {
-  const { ticker, accession, judgmentText, previousReview, round, rubric, paths, recurringTraps = [], fullBrief = false, weak, assumed } = input;
+  const { ticker, accession, judgmentText, previousReview, round, rubric, paths, recurringTraps = [], fullBrief = false, weak, assumed, inputs, inputsChanged = [] } = input;
   const sha = judgmentSha256(judgmentText);
+  const inputsMoved = inputsChanged === "unstamped" || inputsChanged.length > 0;
   // A re-check by the same, still-warm reviewer: it already holds the author's brief (the grounding
   // surface, proxy included) and the rubric from the previous round, and only the report and judgment
   // changed. Then the brief points at just those two, saving the ~40K-token re-read of prompt + rubric.
-  // fullBrief forces the cold read for the fallback case where a fresh reviewer picks up round 2.
-  const recheck = previousReview != null && !fullBrief;
+  // fullBrief forces the cold read for the fallback case where a fresh reviewer picks up round 2, and so
+  // does any change in the inputs: the surface the warm reviewer holds is no longer the current one.
+  const recheck = previousReview != null && !fullBrief && !inputsMoved;
   const parts = [
     `# Role\n\nYou are the editorial reviewer for the Juniper Finance Research Desk, reading the ${ticker} report built from filing ${accession}. This is round ${round}. You did not write it and you are not fixing it: you find defects against the rubric and write them to a findings file. Do not edit the judgment, the report, the facts or any other file — the findings file is your only output.`,
   ];
+  if (previousReview && inputsMoved) {
+    const n = previousReview.round;
+    const BLOCK: Record<Component, string> = { facts: "**Facts**", calls: "**Calls**", context: "**Context**" };
+    parts.push(inputsChanged === "unstamped"
+      ? `# What changed since round ${n}\n\nThe round-${n} findings file carries no valid inputs stamp, so what that review read cannot be compared with today's inputs. Read this brief cold, as a first pass, and re-verdict the previous findings against the current surface.`
+      : `# What changed since round ${n}\n\nThe inputs the round-${n} review read have changed: ${inputsChanged.join(", ")}. Before you re-verdict anything, re-read the ${inputsChanged.map((c) => BLOCK[c]).join(" and ")} block${inputsChanged.length > 1 ? "s" : ""} of \`${paths.prompt}\` and the matching parts of the rebuilt report \`${paths.report}\`: a finding that held on the old inputs may not hold now, and the new figures may carry defects of their own.`);
+  }
   if (!recheck) {
     parts.push(
       `# What to read\n\n- \`${paths.report}\` — the built report, what the reader sees.\n- \`${paths.prompt}\` — the author's brief. Its **Facts**, **Calls** and **Context** blocks, with the report's own calls, are the grounding surface. The build rejects a figure that matches nothing on it. Where the surface states a unit, scale or sign (Facts, Calls, typed Context figures), the build checks them. A Context statement-table cell carries no unit, so a figure matching one is checked by digits only, and an unsigned Context figure cannot check a sign. The section below lists every figure grounded that weakly; check its unit, scale, sign and attribution first. Which quantity and which period a figure is attached to (rubric item 1) is always yours. Its Context **Proxy statement** section is the authoritative source for every governance, pay, ownership and related-party claim; when it reads "(not captured)", no such claim is supported. You do not need the raw FactPack — everything you check is on this surface.\n- \`${paths.judgment}\` — the judgment the author wrote, and the field paths your findings must name.\n- \`${paths.rubric}\` — the rubric, reproduced below so you need not open it.`,
@@ -89,12 +107,158 @@ export function renderReviewBrief(input: {
     parts.push(`# Assumed figures\n\n${assumed.length
       ? `No figure on the surface comes near these whole-number multiples: they are the author's valuation assumptions, and the build passes them as warnings. Each must state its basis in the same sentence; a bare assumption is a finding.\n${assumed.map((a) => `- ${a}`).join("\n")}`
       : "None."}`);
-  if (previousReview)
+  if (previousReview) {
+    const rest = Object.fromEntries(Object.entries(previousReview).filter(([k]) => k !== "judgmentSha256" && k !== "inputs"));
     parts.push(
-      `# Previous findings\n\nBelow is your previous findings file verbatim. Verdict every finding in it — set \`status\` to \`addressed\` when the rewrite fixed it, or leave it \`open\` and add a \`note\` saying what is still wrong — **before you add any new finding**. Keep the ids you already issued; number new findings after the highest one.\n\n\`\`\`json\n${JSON.stringify(previousReview, null, 2)}\n\`\`\``,
+      `# Previous findings\n\nBelow is your previous findings file verbatim (hash fields omitted; take them from Output). Verdict every finding in it — set \`status\` to \`addressed\` when the rewrite fixed it, or leave it \`open\` and add a \`note\` saying what is still wrong — **before you add any new finding**. Keep the ids you already issued; number new findings after the highest one.\n\n\`\`\`json\n${JSON.stringify(rest, null, 2)}\n\`\`\``,
     );
+  }
   parts.push(
-    `# Output\n\nWrite one JSON object matching this schema, and nothing else, to \`${paths.findings}\`.\n\n- \`judgmentSha256\` must be exactly \`${sha}\` — the hash of the judgment you just read.\n- \`round\` is ${round}.\n- \`reviewer\` is your model name.\n- \`reviewedAt\` is the current UTC time in ISO 8601 (\`2026-09-14T10:00:00Z\`).\n- \`verdict\` is \`approved\` when nothing is open, \`approved-with-minors\` when only Minors are open, \`needs-fix-round\` when any Critical or Important is open.\n- Every new finding has \`status: "open"\`. A Critical or Important may never be \`declined\`.\n\n\`\`\`json\n${JSON.stringify(z.toJSONSchema(EditorialReviewShape), null, 2)}\n\`\`\``,
+    `# Output\n\n## Copy these two values exactly\n\n\`\`\`json\n"judgmentSha256": "${sha}",\n"inputs": ${inputsLine(inputs)}\n\`\`\`\n\n\`judgmentSha256\` is the hash of the judgment you just read. \`inputs\` identifies the Facts, Calls and Context you read: copy it from the \`Inputs fingerprint\` line of \`${paths.prompt}\`, and check that it equals the value above. If the two differ, stop: write no findings file, and report the mismatch.\n\nWrite one JSON object matching this schema, and nothing else, to \`${paths.findings}\`.\n\n- \`judgmentSha256\` must be exactly \`${sha}\` — the hash of the judgment you just read.\n- \`inputs\` is the value above, copied exactly, right after \`judgmentSha256\`; leave out \`source\`.\n- \`round\` is ${round}.\n- \`reviewer\` is your model name.\n- \`reviewedAt\` is the current UTC time in ISO 8601 (\`2026-09-14T10:00:00Z\`).\n- \`verdict\` is \`approved\` when nothing is open, \`approved-with-minors\` when only Minors are open, \`needs-fix-round\` when any Critical or Important is open.\n- Every new finding has \`status: "open"\`. A Critical or Important may never be \`declined\`.\n\n\`\`\`json\n${JSON.stringify(z.toJSONSchema(EditorialReviewShape), null, 2)}\n\`\`\``,
   );
   return parts.join("\n\n") + "\n";
+}
+
+const COPIED_SHA = /^"judgmentSha256": "([0-9a-f]{64})",\r?$/m;
+const LEGACY_SHA = /`judgmentSha256` must be exactly `([0-9a-f]{64})`/;
+const COPIED_INPUTS = /^"inputs": (\{[^\r\n]*\})\r?$/m;
+const PREVIOUS_FINDINGS = /^# Previous findings\r?\n[\s\S]*?^```json\r?\n([\s\S]*?)\r?\n```\r?$/m;
+
+/** The two values a brief told its reviewer to copy; null for a brief rendered before the copy block existed. */
+export function briefCopyBlock(text: string): { judgmentSha256: string; inputs: ReviewInputs } | null {
+  const sha = COPIED_SHA.exec(text)?.[1], raw = COPIED_INPUTS.exec(text)?.[1];
+  if (!sha || !raw) return null;
+  let parsed: unknown;
+  try { parsed = JSON.parse(raw); } catch { return null; }
+  const s = ReviewInputsStamp.safeParse(parsed);
+  return s.success && !s.data.source ? { judgmentSha256: sha, inputs: { scheme: s.data.scheme, facts: s.data.facts, calls: s.data.calls, context: s.data.context } } : null;
+}
+
+/**
+ * May synth:review-brief overwrite the existing brief? Not when its inputs differ from today's while no findings file
+ * answers it: a reviewer may still be reading it, and swapping the brief under that reviewer would launder the old review
+ * onto the new inputs. "Answers" is decided by content: the findings file's judgmentSha256 and inputs stamp are the two
+ * values the brief's copy block told the reviewer to copy (an mtime can be touched). Only a brief rendered before the
+ * copy block existed falls back to a findings file for its judgment that is newer than it.
+ */
+export function briefOverwriteGuard(input: {
+  existingBriefText: string | null;
+  currentInputs: ReviewInputs;
+  findings: { judgmentSha256: string; inputs?: unknown } | null;
+  briefMtime: number | null;
+  findingsMtime: number | null;
+  briefPath?: string;
+}): { ok: true } | { ok: false; message: string } {
+  const { existingBriefText: text, currentInputs, findings, briefMtime, findingsMtime, briefPath = "the review brief" } = input;
+  if (text == null) return { ok: true };
+  const copied = briefCopyBlock(text);
+  if (copied && inputsLine(copied.inputs) === inputsLine(currentInputs)) return { ok: true };
+  let answered: boolean;
+  if (copied) {
+    const read = findings ? readInputsStamp(findings) : null;
+    // The previous review the brief carried is not an answer to it, however well it matches (or however recently touched).
+    const prev = PREVIOUS_FINDINGS.exec(text)?.[1];
+    const isPrevious = (() => {
+      if (!findings || prev == null) return false;
+      const rest = Object.fromEntries(Object.entries(findings).filter(([k]) => k !== "judgmentSha256" && k !== "inputs"));
+      try { return canon(rest) === canon(JSON.parse(prev)); } catch { return false; }
+    })();
+    answered = !isPrevious && findings?.judgmentSha256 === copied.judgmentSha256 && read != null && "stamp" in read
+      && read.stamp.scheme === copied.inputs.scheme && changedComponents(read.stamp, copied.inputs).length === 0;
+  } else {
+    const briefSha = LEGACY_SHA.exec(text)?.[1];
+    answered = findings != null && briefSha != null && findings.judgmentSha256 === briefSha
+      && findingsMtime != null && briefMtime != null && findingsMtime > briefMtime;
+  }
+  if (answered) return { ok: true };
+  return { ok: false, message: `${briefPath} was rendered for other inputs and no findings file answers it: a reviewer may be reading the brief for the old inputs; stop that reviewer, then delete \`${briefPath}\` and re-render` };
+}
+
+type Json = Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any -- a report read from disk
+
+/**
+ * The parts of a built report (data/<t>.json) that do not carry today's projection of the pack: the snapshot prefix, each
+ * appended highlight cell against the cell of the same label, the three tables' columns and rows, the company multiples,
+ * the segments as a set, and the quote with its closes.
+ */
+export function reportMismatch(report: Json, facts: ReportFacts): string[] {
+  const tbl = (t: Json | undefined) => (t ? { columns: t.columns, rows: t.rows } : undefined);
+  const segs = (xs: Json[] | undefined) => xs?.map((x) => ({ name: x.name, sharePct: x.sharePct, revenue: x.revenue })).sort((a, b) => String(a.name).localeCompare(String(b.name)));
+  const f = facts.sections;
+  const parts: Record<string, [unknown, unknown]> = {
+    snapshot: [report.snapshot?.slice(0, facts.snapshot.length), facts.snapshot],
+    income: [tbl(report.sections?.financials?.income), f.financials.income],
+    balance: [tbl(report.sections?.financials?.balance), f.financials.balance],
+    cashflow: [tbl(report.sections?.financials?.cashflow), f.financials.cashflow],
+    multiples: [report.sections?.valuation?.multiples?.rows?.map((r: Json) => ({ label: r.label, value: r.values?.[0] })), f.valuation.multiplesCompanyColumn.map((m) => ({ label: m.label, value: m.value }))],
+    segments: [segs(report.sections?.businessMoat?.segments), segs(f.businessMoat.segments)],
+    quote: [report.quote, facts.quote],
+  };
+  const out = Object.entries(parts).filter(([, [a, b]]) => canon(a ?? null) !== canon(b)).map(([k]) => k);
+  const cells = Object.values(facts.highlightCells);
+  const appended: Json[] = Array.isArray(report.snapshot) ? report.snapshot.slice(facts.snapshot.length) : [];
+  if (appended.some((c) => { const h = cells.find((x) => x?.label === c?.label); return !h || canon(h) !== canon(c); })) out.push("highlight cells");
+  return out;
+}
+
+const SECTION_HEADS = ["# Calls", "# Facts", "# Context", "# Inputs fingerprint", "# Output"] as const;
+
+/**
+ * The prompt's Calls, Facts, Context and Inputs fingerprint sections, extracted by their headings: each heading must
+ * appear exactly once, in renderPrompt's order, so a prompt with an old and a new copy of a block (concatenated, or
+ * appended after # Output) is refused rather than matched by substring. Also every `Inputs fingerprint:` line anywhere.
+ */
+export function promptSections(text: string): { calls: string; facts: string; context: string; inputs: string; inputsLines: string[] } | { error: string } {
+  const lines = text.replace(/\r\n/g, "\n").split("\n");
+  const at: number[] = [];
+  for (const h of SECTION_HEADS) {
+    const hits = lines.flatMap((l, i) => (l === h ? [i] : []));
+    if (hits.length !== 1) return { error: `has ${hits.length} "${h}" headings, not one` };
+    at.push(hits[0]);
+  }
+  if (at.some((x, i) => i > 0 && x <= at[i - 1])) return { error: `has its sections out of order (${SECTION_HEADS.join(", ")})` };
+  // a section is the text between "<heading>\n\n" and "\n\n<next heading>"
+  const body = (i: number) => lines.slice(at[i] + 2, at[i + 1] - 1).join("\n");
+  return { calls: body(0), facts: body(1), context: body(2), inputs: body(3), inputsLines: lines.filter((l) => l.startsWith("Inputs fingerprint:")) };
+}
+
+/**
+ * Before a brief goes out: prompt.md carries today's Calls, Facts and Context blocks verbatim and today's inputs line, and
+ * the report names this accession and carries today's projection. Then what the reviewer reads is what `inputs` describes.
+ */
+export function briefPreflight(input: {
+  promptText: string | null;
+  report: Json | null;
+  facts: ReportFacts;
+  pack: FactPack;
+  desk: Pick<Desk, "rating">;
+  accession: string;
+}): { ok: true } | { ok: false; errors: string[] } {
+  const { promptText, report, facts, pack, desk, accession } = input;
+  const reprompt = `re-run npm run synth:prompt -- ${pack.ticker} ${accession}`;
+  const rebuild = `re-run npm run synth:build -- ${pack.ticker} ${accession} --skip-review`;
+  const errors: string[] = [];
+  if (promptText == null) errors.push(`prompt.md is missing — ${reprompt}`);
+  else {
+    const p = promptSections(promptText);
+    if ("error" in p) errors.push(`prompt.md ${p.error} — ${reprompt}`);
+    else {
+      const line = `Inputs fingerprint: ${inputsLine(reviewInputs(pack, desk, facts))}`;
+      const stale = [
+        ...(p.calls === renderCalls(desk.rating) ? [] : ["Calls block"]),
+        ...(p.facts === renderFactsBlock(facts, pack) ? [] : ["Facts block"]),
+        ...(p.context === renderContextBlock(pack) ? [] : ["Context block"]),
+        ...(p.inputsLines.length === 1 && p.inputs.split("\n").includes(line) && p.inputsLines[0] === line ? [] : ["Inputs fingerprint line"]),
+      ];
+      if (stale.length) errors.push(`prompt.md does not carry today's ${stale.join(", ")} — ${reprompt}`);
+    }
+  }
+  const reportPath = `data/${pack.ticker.toLowerCase()}.json`;
+  if (report == null) errors.push(`${reportPath} is missing — ${rebuild}`);
+  else if (report.meta?.filing?.accession !== accession) errors.push(`${reportPath} is the report for ${String(report.meta?.filing?.accession)}, not ${accession} — ${rebuild}`);
+  else {
+    const m = reportMismatch(report, facts);
+    if (m.length) errors.push(`${reportPath} does not carry today's pack (${m.join(", ")} differ) — ${rebuild}`);
+  }
+  return errors.length ? { ok: false, errors } : { ok: true };
 }
