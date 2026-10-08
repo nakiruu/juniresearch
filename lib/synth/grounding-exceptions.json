@@ -2,18 +2,6 @@
   "note": "Owner-approved grounding exceptions for published reports (plan 2026-10-07 §5, decision D1). Shrink-only: grounding-exceptions.test.ts pins every key. synth:build applies this file only when it is byte-equal to both refs/heads/main's and refs/remotes/origin/main's copies, and an entry only while its judgment and rendered surface are unchanged. Any renderer wording change lapses every entry; re-key in the same commit, listing old key -> new key, with unchanged judgment SHAs. Each fix round (plan §6.1) removes its entries; delete the file when it is empty.",
   "entries": [
     {
-      "ticker": "CSTM",
-      "accession": "0001563411-26-000192",
-      "judgmentSha256": "4142e25fe8ad5fb216dfdac560d6e91e946e0f71950cfce5b99fd17185d8ed0f",
-      "surfaceSha256": "1ad3e984b191e520878efc4680d4ef89b37583e80f3aceaaa06ffa50390b4ccd",
-      "check": "grounding",
-      "field": "sections.financials.incomeCommentary",
-      "raw": "$4 million",
-      "class": "false-positive",
-      "reason": "shredded table cell \"4\\n%\" (the prior-year $4M)",
-      "approvedAt": "2026-10-08"
-    },
-    {
       "ticker": "LH",
       "accession": "0000920148-26-000175",
       "judgmentSha256": "68ac4715cee0131281b68b90640a6e844ad9d267ac0264f8bd963123d46a169c",
