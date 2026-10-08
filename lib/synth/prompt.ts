@@ -16,6 +16,7 @@ import { formatSnapshot, formatCell, compactUSD, compactNum, usd, pct, mult, num
 import type { FinancialTable } from "../report.schema";
 import type { EditorialReview } from "./editorial.schema";
 import { renderEditorialFindings } from "./editorial";
+import { reviewInputs, inputsLine, type ReviewInputs } from "./review-inputs";
 
 const table = (title: string, t: FinancialTable): string => {
   const head = `| ${t.columns.join(" | ")} |\n| ${t.columns.map(() => "---").join(" | ")} |`;
@@ -155,10 +156,11 @@ export function renderPrompt(
   pack: FactPack,
   facts: ReportFacts,
   desk: Desk,
-  opts: { priorErrors?: string[]; priorWarnings?: string[]; judgmentPath?: string; editorial?: EditorialReview } = {},
+  opts: { priorErrors?: string[]; priorWarnings?: string[]; judgmentPath?: string; editorial?: EditorialReview; inputs?: ReviewInputs } = {},
 ): string {
   const path = opts.judgmentPath ?? `data/judgment/${pack.ticker}/${pack.filing.accession}.json`;
   const traps = renderTraps(desk.recurringTraps);
+  const inputs = opts.inputs ?? reviewInputs(pack, desk, facts);
   const parts = [
     `# Role\n\nYou are ${desk.analystName} at ${desk.analyst}, writing the judgment half of an equity research report on ${pack.company} (${pack.ticker}) following its ${pack.filing.form} for the period ended ${pack.filing.periodEnd}. House style:\n${desk.styleRules.map((r) => `- ${r}`).join("\n")}`,
     `# Authoring contract\n\n${CONTRACT}`,
@@ -166,6 +168,8 @@ export function renderPrompt(
     `# Calls\n\n${renderCalls(desk.rating)}`,
     `# Facts\n\n${renderFactsBlock(facts, pack)}`,
     `# Context\n\n${renderContextBlock(pack)}`,
+    // Outside the three blocks above, so the grounding surface never sees it. The editorial reviewer copies it.
+    `# Inputs fingerprint\n\nFor the editorial reviewer, which copies this line into its findings file. It is not a figure; do not quote it.\n\nInputs fingerprint: ${inputsLine(inputs)}`,
     `# Output\n\nWrite one JSON object matching this schema, and nothing else, to \`${path}\`. Return the complete object every time.\n\n\`\`\`json\n${JSON.stringify(judgmentJsonSchema(), null, 2)}\n\`\`\``,
   ];
   const tail = promptTail(opts);

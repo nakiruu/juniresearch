@@ -76,6 +76,9 @@ export function reviewInputs(pack: FactPack, desk: Pick<Desk, "rating">, facts: 
   };
 }
 
+/** The one-line JSON the reviewer copies: prompt.md's `Inputs fingerprint:` line and the brief's copy block print this. */
+export const inputsLine = (i: ReviewInputs) => JSON.stringify({ scheme: i.scheme, facts: i.facts, calls: i.calls, context: i.context });
+
 /** The current inputs under the scheme a review recorded, so an old review keeps comparing on what its reviewer saw. */
 export function inputsUnder(scheme: number, pack: FactPack, desk: Pick<Desk, "rating">, facts?: ReportFacts): ReviewInputs {
   if (scheme === 1) return reviewInputs(pack, desk, facts);
