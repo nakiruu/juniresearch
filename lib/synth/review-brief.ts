@@ -10,7 +10,7 @@
  * overwrite guard keep the brief bound to the prompt and report it points at.
  */
 import { z } from "zod";
-import { EditorialReviewShape, type EditorialReview } from "./editorial.schema";
+import { EditorialReviewShape, ReviewInputsStamp, type EditorialReview } from "./editorial.schema";
 import { judgmentSha256 } from "./editorial";
 import { FactPack } from "../facts/schema";
 import { projectReportFacts, type ReportFacts } from "../facts/project";
@@ -119,9 +119,19 @@ export function renderReviewBrief(input: {
   return parts.join("\n\n") + "\n";
 }
 
-const COPIED_SHA = /^"judgmentSha256": "([0-9a-f]{64})",$/m;
+const COPIED_SHA = /^"judgmentSha256": "([0-9a-f]{64})",\r?$/m;
 const LEGACY_SHA = /`judgmentSha256` must be exactly `([0-9a-f]{64})`/;
-const COPIED_INPUTS = /^"inputs": (\{.*\})$/m;
+const COPIED_INPUTS = /^"inputs": (\{[^\r\n]*\})\r?$/m;
+
+/** The two values a brief told its reviewer to copy; null for a brief rendered before the copy block existed. */
+export function briefCopyBlock(text: string): { judgmentSha256: string; inputs: ReviewInputs } | null {
+  const sha = COPIED_SHA.exec(text)?.[1], raw = COPIED_INPUTS.exec(text)?.[1];
+  if (!sha || !raw) return null;
+  let parsed: unknown;
+  try { parsed = JSON.parse(raw); } catch { return null; }
+  const s = ReviewInputsStamp.safeParse(parsed);
+  return s.success && !s.data.source ? { judgmentSha256: sha, inputs: { scheme: s.data.scheme, facts: s.data.facts, calls: s.data.calls, context: s.data.context } } : null;
+}
 
 /**
  * May synth:review-brief overwrite the existing brief? Not when its inputs differ from today's (a brief rendered before
@@ -138,7 +148,8 @@ export function briefOverwriteGuard(input: {
 }): { ok: true } | { ok: false; message: string } {
   const { existingBriefText: text, currentInputs, findings, briefMtime, findingsMtime, briefPath = "the review brief" } = input;
   if (text == null) return { ok: true };
-  if (COPIED_INPUTS.exec(text)?.[1] === inputsLine(currentInputs)) return { ok: true };
+  const copied = briefCopyBlock(text);
+  if (copied && inputsLine(copied.inputs) === inputsLine(currentInputs)) return { ok: true };
   const briefSha = (COPIED_SHA.exec(text) ?? LEGACY_SHA.exec(text))?.[1];
   const answered = findings != null && briefSha != null && findings.judgmentSha256 === briefSha
     && findingsMtime != null && briefMtime != null && findingsMtime > briefMtime;

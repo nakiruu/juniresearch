@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { EditorialReview } from "@/lib/synth/editorial.schema";
 import { judgmentSha256 } from "@/lib/synth/editorial";
-import { renderReviewBrief, briefGroundingLists, briefOverwriteGuard, briefPreflight } from "@/lib/synth/review-brief";
+import { renderReviewBrief, briefGroundingLists, briefOverwriteGuard, briefPreflight, briefCopyBlock } from "@/lib/synth/review-brief";
 import { Desk } from "@/lib/synth/desk.schema";
 import { FactPack } from "@/lib/facts/schema";
 import { projectReportFacts } from "@/lib/facts/project";
@@ -295,6 +295,12 @@ describe("briefOverwriteGuard", () => {
       expect(r.ok).toBe(false);
       expect(!r.ok && r.message).toMatch(/a reviewer may be reading the brief for the old inputs; stop that reviewer, then delete `x\/brief\.md` and re-render/);
     }
+  });
+  it("reads the copy block of a brief with CRLF line endings", () => {
+    const crlf = brief().replace(/\n/g, "\r\n");
+    expect(briefCopyBlock(crlf)).toEqual({ judgmentSha256: sha, inputs });
+    expect(briefOverwriteGuard({ existingBriefText: crlf, currentInputs: inputs, findings: null, briefMtime: 2, findingsMtime: null }).ok).toBe(true);
+    expect(briefCopyBlock(existing.replace(/\n/g, "\r\n"))).toEqual({ judgmentSha256: sha, inputs: old });
   });
   it("treats a brief without a copy block (rendered before inputs existed) as old inputs", () => {
     const legacy = existing.replace(/^"inputs": .*$/m, "");
