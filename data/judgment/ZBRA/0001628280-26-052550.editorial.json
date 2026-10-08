@@ -1,7 +1,7 @@
 {
-  "judgmentSha256": "70b098d7c76a39a366d7302711c2105c0fabd59b976933ea15044f1d6ef196de",
-  "reviewedAt": "2026-09-24T15:35:18Z",
-  "reviewer": "claude-opus-4-8",
+  "judgmentSha256": "4697d9d5e9a60f68ce90ba83dcba6830fd66881b8c7f2e7e01df97d732009792",
+  "reviewedAt": "2026-10-08T16:23:24Z",
+  "reviewer": "claude-opus-5-5",
   "round": 2,
   "verdict": "approved",
   "findings": [
@@ -13,7 +13,7 @@
       "issue": "The characterisation is contradicted by the figures on the page. The analyst target range is $350.00 to $455.00 (midpoint ~$402.50) and the current price is $367.54, which is only ~$17.50 above the low and ~$35 below the midpoint — it sits in the lower portion of the range, not near the middle. This mis-placement props up the HOLD rationale, since a price near the low end of the target range would imply more upside to targets, cutting the other way.",
       "fix": "Replace 'near the middle of the analyst target range' with the accurate placement (near the low end / lower third of the $350–$455 range), or drop the range-position clause and rest the HOLD on the consensus target being modestly above (+11.9%) plus the transitory-tailwind argument already made.",
       "status": "addressed",
-      "note": "Fixed. The 'near the middle of the analyst target range' clause is gone; it now reads 'the shares already sit below the Street's consensus and median targets, so even allowing for that we land one notch below at HOLD' — accurate ($367.54 is below both $411.45 and $420.00) and the reasoning acknowledges the implied upside rather than masking it."
+      "note": "Rewritten surface: the range-position clause is gone. analystCommentary now says 'even the lowest target sits only a little below today's price' ($350.00 vs $367.54), which is accurate, and rests the HOLD on the one-time items and modest FY27 EPS growth."
     },
     {
       "id": "F-2",
@@ -23,7 +23,7 @@
       "issue": "Silent source disagreement (rubric 8). The prose uses the filing's +20.4% YoY for the reported quarter, but the page's own snapshot/Facts show the same quarter's revenue growth as +18% ('Q3'26 Revenue: $1.6B (+18%)', and TTM block 'revenue +18.0% YoY'). The vendor also labels the July 4, 2026 quarter 'Q3'26' while the filing calls it the second quarter — the calendar-vs-fiscal mapping that produced the wrong label also produced the wrong YoY. The reader sees +18% in the snapshot and +20.4% in the prose with no reconciliation.",
       "fix": "Add one sentence noting the vendor snapshot computes the quarter's growth at +18% off a mismapped prior period, that the filing reports +20.4% (net sales $1,557M vs $1,293M), and that the report uses the filing figure — consistent with the desk's keep-and-disclose handling of the non-December-FYE quarter-mapping issue.",
       "status": "addressed",
-      "note": "Fixed. incomeCommentary now discloses it once: 'The page snapshot renders the same quarter as about +18% and labels it Q3'26, reflecting a calendar-quarter mapping; we use the filing's own second-quarter figures throughout.' States which figure is used and why — exactly the keep-and-disclose handling."
+      "note": "Disclosed once in incomeCommentary: 'The page's vendor rows label this quarter Q3'26 and show revenue growth of +18.0%; we use the filing's 20.4% throughout.' States which figure is used; not repeated elsewhere."
     },
     {
       "id": "F-3",
@@ -33,7 +33,7 @@
       "issue": "Cross-section repetition (rubric 7): the same figures carry their story in multiple sections in near-identical words. (a) The organic '9.2% in the quarter and 6.8% year to date' is stated in incomeCommentary and repeated almost verbatim in this growth point (and again as '9.2% organic' in thesis, idiosyncratic risk 1, scenarioCommentary and finalRecommendation). (b) Buybacks '$568 million ... $268 million in the quarter ... after $587M in FY25' appear near-verbatim in cashflowCommentary and capitalAllocation. (c) FY26 guidance '14% to 16% ... $20.75 to $21.25 ... FCF above $1 billion' recurs across catalysts, growth point 1 and the Base scenario. (d) Consensus target/median/range ($411.45 / $420.00 / $350–455) appears in both analystCommentary and multiplesCommentary.",
       "fix": "Introduce each figure once in its home section and refer back in words elsewhere. Keep the organic 9.2%/6.8% detail in incomeCommentary and have the growth point point to it (e.g., 'organic growth remains the swing factor, well below the reported rate') without re-quoting; likewise cite the buyback and guidance figures once and refer back; drop the target/median/range restatement in multiplesCommentary since analystCommentary already gives it.",
       "status": "addressed",
-      "note": "Fixed. (a) 9.2%/6.8% now stated once in incomeCommentary; growth point, idiosyncratic risk, scenarioCommentary and finalRec refer to 'high-single-digit'/'below the reported rate' in words. (b) Buyback figures now only in capitalAllocation; cashflowCommentary and catalyst refer in words. (c) Guidance figures now only in growth point 1; catalyst and Base scenario refer in words. (d) multiplesCommentary now says 'Wall Street's price targets sit modestly above the current price', no restatement."
+      "note": "On the rewritten surface: 9.2%/6.8% sit in incomeCommentary (thesis gives 9.2% as the summary); $568M only in cashflowCommentary, capitalAllocation points back; guidance ranges only in growth point 1; target/median/range only in analystCommentary. New paraphrase repetition is filed as F-7."
     },
     {
       "id": "F-4",
@@ -43,7 +43,7 @@
       "issue": "Mild unsupported characterisation (rubric 2). The pack establishes that Elo (Elo Touch) was acquired 9/30/25 for ~$1.3B and is included in the CF segment, but it does not state Elo's product line; that Elo is specifically an 'interactive touchscreen and point-of-sale' business is inferred from the name and CF's category list rather than stated. The same characterisation recurs in catalysts ('adds interactive touchscreen and point-of-sale scale').",
       "fix": "Either attribute the product framing to Zebra's own CF category description, or hedge it (e.g., 'Elo Touch, which the company folds into its Connected Frontline point-of-sale and touchscreen offerings'), so the specific product claim is not presented as a captured fact.",
       "status": "addressed",
-      "note": "Fixed. companyOverview now reads 'adding to the Connected Frontline segment' and the catalyst 'adds scale to the Connected Frontline segment' — the specific product-line claim is removed; CF inclusion is grounded in the MD&A."
+      "note": "companyOverview now says only that the 10-Q excludes Elo from CF's organic growth, 'so the business sits in that segment'. No Elo product-line claim remains anywhere in the judgment."
     },
     {
       "id": "F-5",
@@ -53,7 +53,47 @@
       "issue": "Calls-coherence nit (rubric 6). The stated mechanism does not produce the Base implied price: 17.5x on the guided FY26 non-GAAP EPS (~$21) is ~$368 (roughly the current price), and 17.5x on FY27 EPS $22.20 is ~$389 — neither reaches the $405 Base implied price, which corresponds to ~19x FY26E. The real anchor is 'close to the consensus target' ($411.45); the '17.5x' clause reads as inconsistent with the $405 output.",
       "fix": "Anchor the Base explicitly to the consensus target in words, or reconcile the multiple (e.g., note a modest re-rating to ~19x, or price off FY27 EPS) so the stated multiple and the $405 implied price agree.",
       "status": "addressed",
-      "note": "Fixed. The Base driver drops the specific '17.5x' and now reads 'The stock holds near the consensus target as the market keeps paying a mid-to-high-teens forward multiple on a modestly rising earnings base' — anchored to the consensus target, and the looser multiple is consistent with the $405 implied price."
+      "note": "Base is now 17.5x on the $22.20 FY27 consensus = $388.50, matching impliedPrice. scenarioCommentary argues the anchor from both sides and shows the label holds at the consensus-target and FY27E-multiple alternatives (checked: E +5.3% and -0.7%, both HOLD)."
+    },
+    {
+      "id": "F-6",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[2].driver",
+      "quote": "Organic demand stalls as customers hold back hardware spending, the recovery is not replaced, and FY27 EPS stays at the low end of this year's non-GAAP guide, $20.75, instead of reaching consensus.",
+      "issue": "The Bear's EPS does not follow its own story (rubric 5/6). The report says FY26 non-GAAP earnings keep the one-time tariff recovery (incomeCommentary: 'the non-GAAP measures appear to keep the recovery in'; multiplesCommentary: 'FY26 earnings include the one-time tariff recovery'). The $20.75 guide low therefore includes the recovery. A Bear in which organic demand stalls and 'the recovery is not replaced' yet FY27 EPS equals this year's recovery-inclusive EPS implies the underlying business grows earnings enough to fill the gap, which contradicts 'stalls'. Nearly all the Bear's depth then rests on the assumed 13x, whose basis says only that it is below 16.6x, not why it sits that far below.",
+      "fix": "Make the Bear's earnings follow its story. Either name in the driver what offsets the lost recovery in a stall, using page items (the roughly $35 million of expected annualized savings, a lower share count from buybacks), and say plainly that the Bear holds earnings flat; or set the Bear's earnings below this year's level on a basis a reader can check. Argue the multiple's level on the Bear case itself, not only its direction. Re-run E, D and R and update scenarioCommentary and finalRecommendation if they move.",
+      "status": "addressed",
+      "note": "Bear driver now says earnings stay flat and names what fills the recovery gap (the Productivity Plan savings and a lower share count), admitting neither can be sized. scenarioCommentary argues the 13x level on the Bear case itself (no growth, debt and thin liquidity, a higher FCF yield) from both sides. Checked: 15x gives E +5.0% and 11x gives E -0.7%, both HOLD as stated."
+    },
+    {
+      "id": "F-7",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body / sections.businessMoat.durability / sections.risks.idiosyncratic[0] / sections.risks.idiosyncratic[4] (others named in issue)",
+      "quote": "Gross margin gained {+ 540 bps +}, which management attributes primarily to IEEPA tariff recoveries and favorable currency; the recovery is a one-time benefit of about $73 million, most of it not yet received in cash at quarter end.",
+      "issue": "Paraphrase repetition across sections (rubric 7). (a) The margin attribution to tariff recoveries and currency is told in the thesis (quoted), incomeCommentary ('which management attributes primarily to the IEEPA tariff recoveries and favorable currency'), durability ('By management's own account, this year's margin gain rests on the tariff recovery and currency') and idiosyncratic risk 1 ('rested primarily on about $73 million ... and on favorable currency'); the $73 million and the cash-received point appear in both thesis and idiosyncratic risk 1. (b) Price realization offsetting memory costs is told in incomeCommentary, durability and systemic. (c) Elo lapping: growth point 3 ('Elo stops lifting reported growth once it passes twelve months') and idiosyncratic risk 5 ('once Elo laps, reported growth would slow toward the organic rate') argue the same claim. (d) Buybacks exceeding free cash flow is stated in cashflowCommentary, balanceCommentary and capitalAllocation.",
+      "fix": "Give each claim one home and point back in words elsewhere. Keep the attribution and the $73 million/$14 million detail in incomeCommentary and idiosyncratic risk 1 respectively; let the thesis summarise in words without the attribution clause, and let durability refer back ('the margin gain discussed in Financials'). State the memory offset once (incomeCommentary) and refer to it in durability as evidence. Keep Elo lapping in growth point 3 and make idiosyncratic risk 5 a pointer or fold it in. State buybacks-over-FCF once (cashflowCommentary) and refer back from balance and capital allocation.",
+      "status": "addressed",
+      "note": "Thesis now points to Financials without the attribution or the $73M; durability refers back for both the margin gain and the memory offset; idiosyncratic risk 1 points to Financials; the Elo-lapping risk is removed (growth point 3 holds it); balanceCommentary no longer restates buybacks over FCF, and capitalAllocation points to cash flow."
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "sections.management.capitalAllocation",
+      "quote": "buybacks exceeded free cash flow while total debt rose, and repurchases near the 52-week high buy fewer shares per dollar than those made lower in the range.",
+      "issue": "Unsupported implication (rubric 2). The sentence offers this clause as evidence that the year-to-date buybacks were 'more aggressive than balanced', so a reader takes it to mean the first-half repurchases were made near the 52-week high. Nothing on the surface shows when in the six months the $568 million was spent or at what prices; the page's price history starts on August 12, 2026, after the quarter ended. The clause is true only as a general statement about buying at today's price.",
+      "fix": "Drop the clause, or reframe it as forward-looking and tied to the current price (e.g., further repurchases at today's price, near the 52-week high, buy fewer shares per dollar), so it no longer implies a timing for the year-to-date purchases.",
+      "status": "addressed",
+      "note": "The clause about repurchases near the 52-week high is gone; capitalAllocation now rests the 'more aggressive than balanced' reading only on buybacks outrunning FCF while debt rose."
+    },
+    {
+      "id": "F-9",
+      "severity": "Minor",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "The trailing figure is GAAP over the last four reported quarters, not FY25",
+      "issue": "Over-assertion of the trailing P/E's basis. The surface labels it only 'P/E (TTM): 33.6x'; that it is on GAAP earnings is the author's inference (a reasonable one: it cannot be FY25 GAAP EPS of $8.18, and second-quarter non-GAAP EPS alone was $6.35). The window point is right; the basis is stated as fact.",
+      "fix": "Hedge the basis: e.g., 'The trailing figure covers the last four reported quarters, not FY25, and appears to be on GAAP earnings'.",
+      "status": "addressed",
+      "note": "Hedged: 'covers the last four reported quarters, not FY25, and appears to be on GAAP earnings'."
     }
   ]
 }

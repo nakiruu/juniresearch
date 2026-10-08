@@ -4,12 +4,12 @@
     "company": "Zebra Technologies Corporation",
     "ticker": "ZBRA",
     "exchange": "NASDAQGS",
-    "subtitle": "AIDC leader raises its 2026 outlook, but tariff and currency tailwinds are transitory and the shares sit near a 52-week high.",
+    "subtitle": "Reported growth runs well ahead of organic demand, a one-time tariff refund lifts margins, and the shares sit near their 52-week high.",
     "reportDate": "September 24, 2026",
     "asOf": "Sep 24, 2026",
     "analyst": "Juniper Finance Research Desk",
     "analystName": "Nico — Senior Analyst",
-    "fiscalYearEnd": "December (52/53-week fiscal year)",
+    "fiscalYearEnd": "December 31",
     "currency": "USD",
     "filing": {
       "form": "10-Q",
@@ -151,12 +151,12 @@
   "rating": {
     "label": "HOLD",
     "tone": "secondary",
-    "targetLow": 355,
-    "targetHigh": 445,
+    "targetLow": 340,
+    "targetHigh": 395,
     "conviction": {
-      "expectedUpside": 0.06316405240317247,
-      "bearDownside": 0.21640115907328558,
-      "rewardRisk": 0.29188407619287093,
+      "expectedUpside": 0.021501353612580987,
+      "bearDownside": 0.2660562939583986,
+      "rewardRisk": 0.0808150534335527,
       "derivedLabel": "HOLD"
     },
     "gate": {
@@ -170,13 +170,15 @@
       "flags": []
     },
     "decision": {
-      "conviction": 86,
+      "conviction": 96,
       "tier": "high",
       "proposed": "HOLD",
       "reasons": [
         "E/R proposed HOLD"
       ],
-      "advisories": [],
+      "advisories": [
+        "model vs Street expected return diverge by 63pp — informational, not scored"
+      ],
       "moat": {
         "width": "NARROW",
         "trend": "STABLE",
@@ -184,12 +186,12 @@
         "bearFloor": 0.2
       },
       "intrinsic": {
-        "marginOfSafety": -0.613557068465661,
-        "impliedGrowth": 0.09024633684225136,
+        "marginOfSafety": -0.6168942968434288,
+        "impliedGrowth": 0.16930190205605944,
         "achievableGrowth": -0.010424905565866505
       },
       "composite": {
-        "percentile": 70.00812660905113,
+        "percentile": 70.00812660905112,
         "confidence": "high"
       },
       "uncertainty": {
@@ -234,6 +236,7 @@
     },
     {
       "label": "EV/EBITDA (TTM)",
+      "value": 17.371,
       "unit": "mult"
     },
     {
@@ -319,28 +322,28 @@
     "medianTarget": 420,
     "highTarget": 455,
     "lowTarget": 350,
-    "commentary": "Coverage is constructive but not unanimous: of 16 analysts, 10 rate Zebra Buy, 6 Hold and none Sell, for a consensus Buy. The consensus price target is $411.45, about 11.9% above the current $367.54, with a median of $420.00 and a range of $350.00 to $455.00. The Street's optimism rests on the raised full-year outlook and the gross-margin expansion shown this quarter. Our reading is more cautious: much of the reported upside is transitory, organic growth is high-single-digit, and the shares already sit below the Street's consensus and median targets, so even allowing for that we land one notch below at HOLD."
+    "commentary": "Coverage leans positive: of 16 analysts, 10 rate Zebra Buy, 6 Hold and none Sell, for a consensus Buy. The consensus target is $411.45, 11.9% above the current $367.54, with a median of $420.00 and a range of $350.00 to $455.00, so even the lowest target sits only a little below today's price. We are more cautious than the Street, for the reasons set out in the thesis. We use the top of the Street's range as our Bull case rather than as a central estimate, and our scenarios, set out in the valuation section, derive HOLD."
   },
   "sections": {
     "executiveSummary": {
-      "companyOverview": "Zebra Technologies Corporation is a global leader in the Automatic Identification and Data Capture ('AIDC') industry, which spans mobile computing, barcode scanning and imaging, RFID, thermal barcode printing and related supplies, real-time location systems and workflow software. The company was founded in 1969 and is headquartered in Lincolnshire, Illinois. It sells through a direct sales force and a network of channel partners into retail and e-commerce, manufacturing, transportation and logistics, healthcare and the public sector. As of the quarter ended July 4, 2026, Zebra reports in two segments: Connected Frontline ('CF'), which brings together mobile computing, point-of-sale, self-service kiosks and workflow software, and Asset Visibility & Automation ('AVA'), which covers thermal printing and supplies, data capture, fixed industrial scanning, machine vision, RFID and real-time location systems. On September 30, 2025 the company acquired Elo Holdings, Inc. ('Elo') for approximately $1.3 billion, adding to the Connected Frontline segment.",
+      "companyOverview": "Zebra Technologies Corporation describes itself as a global leader in the Automatic Identification and Data Capture ('AIDC') industry: mobile computing, data capture, RFID, thermal barcode printing and related workflow products, software and services. Founded in 1969 and headquartered in Lincolnshire, Illinois, it sells through a direct sales force and a network of channel partners to retail and e-commerce, manufacturing, transportation and logistics, healthcare, public sector and other customers. It reports two segments. Connected Frontline ('CF') covers mobile computing, point of sale, self-service kiosks and interactive touchscreen displays, workflow optimization software and related services. Asset Visibility & Automation ('AVA') covers thermal barcode printing and supplies, data capture, fixed industrial scanning, machine vision, RFID, real-time location systems and related services. On September 30, 2025 the company acquired Elo Holdings, Inc. ('Elo') for approximately $1.3 billion; the 10-Q excludes Elo from CF's organic growth, so the business sits in that segment. The fiscal year ends December 31, and the quarter covered here, ended July 4, 2026, is the company's second quarter of 2026.",
       "thesis": {
         "label": "HOLD",
-        "body": "Zebra is a quality AIDC franchise whose reported results are running ahead of its underlying demand. Net sales in the quarter ended July 4, 2026 rose {+ 20.4% +} to $1,557 million and gross margin expanded {+ 540 bps +} to 53.0%, but the margin gain leaned on roughly $73 million of IEEPA import-tariff recoveries and favorable foreign currency, and organic net sales grew a more modest 9.2%. About 8 points of guided full-year growth come from acquisitions, dispositions and currency rather than the base business. At $367.54, near the top of a 52-week range of $199.05 to $386.23, the stock trades at about 17.5x forward earnings. That is a fair multiple for a mid-single-digit organic grower, but it leaves little room for error if the enterprise-hardware cycle turns, as it did in FY23."
+        "body": "Zebra's second quarter, ended July 4, 2026, looks stronger than its underlying demand. Net sales rose {+ 20.4% +} to $1,557 million, but organic growth, which strips out currency and acquisitions, was 9.2%. Gross margin gained {+ 540 bps +}, much of it from a one-time tariff recovery that will not repeat (see Financials). At $367.54, near the top of a 52-week range of $199.05 to $386.23, the shares trade at 17.5x this year's consensus earnings. We judge that multiple fair for the organic growth the company is showing, and our scenarios derive HOLD."
       },
       "catalysts": [
-        "Raised outlook: management lifted its full-year 2026 sales-growth, margin and free-cash-flow targets.",
-        "Margin momentum: adjusted EBITDA margin reached 27.7% in the quarter and is guided to 23.5% to 24.0% for the full year.",
-        "Elo integration: the $1.3 billion Elo acquisition adds scale to the Connected Frontline segment.",
-        "Automation demand: management ties growth to automation and 'Physical AI' adoption across frontline operations.",
-        "Capital return: the company keeps returning cash through buybacks and pays no dividend."
+        "Raised outlook: the August 4, 2026 release raised full-year guidance; the growth section sets out the ranges.",
+        "Organic momentum: second-quarter organic growth outpaced the opening quarter's, and AVA grew faster organically than CF.",
+        "Cash generation: management guides full-year free cash flow above $1 billion, which funds buybacks and debt service.",
+        "Restructuring savings: the substantially completed 2025 Productivity Plan is expected to deliver annualized cost savings.",
+        "Automation demand: management ties its outlook to trends in automation and Physical AI."
       ],
       "risks": [
-        "Transitory tailwinds: tariff recoveries and favorable currency lifted quarterly margins and will not recur at that scale.",
-        "Cyclicality: AIDC hardware demand tracks enterprise capital spending, which turned down in FY23.",
-        "Inorganic mix: roughly 8 points of guided full-year growth come from acquisitions and currency, not organic demand.",
-        "Leverage: total debt reached $2,776 million as of July 4, 2026 after the Elo deal, and the current ratio is 0.52.",
-        "Valuation: near a 52-week high, the shares already discount continued execution."
+        "One-time margin support: the tariff recovery does not repeat, and the third-quarter guide already points to a lower adjusted EBITDA margin.",
+        "Inorganic growth: a large share of guided full-year growth comes from acquisitions, dispositions and currency, and the boost from Elo ends once the deal has been owned for twelve months.",
+        "Cyclicality: Zebra's revenue fell sharply in FY23, and a repeat would take earnings well below consensus.",
+        "Leverage and liquidity: total debt has risen since the FY25 year-end and the current ratio sits below one.",
+        "Valuation: near its 52-week high, the share price leaves little room for a miss."
       ]
     },
     "financials": {
@@ -443,9 +446,9 @@
             "format": "eps"
           }
         ],
-        "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December (52/53-week fiscal year)."
+        "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
       },
-      "incomeCommentary": "Net sales in the quarter ended July 4, 2026 were $1,557 million, {+ up 20.4% +} from $1,293 million a year earlier, with growth in both segments and across all regions. The page snapshot renders the same quarter as about +18% and labels it Q3'26, reflecting a calendar-quarter mapping; we use the filing's own second-quarter figures throughout. Tangible product sales led at $1,316 million, {+ up 24.7% +}, while services and software were $241 million. Gross margin rose to 53.0% from 47.6%, an increase of {+ 540 bps +}, which management attributes primarily to IEEPA tariff recoveries and favorable foreign currency; adjusted gross margin was 53.3%. Operating income was $321 million, {+ up 75.4% +} from $183 million, and diluted EPS was $4.85 versus $2.19. Non-GAAP diluted EPS was $6.35 against $3.61. The headline overstates the trend: consolidated organic net sales, which strip out currency and the Elo acquisition, grew 9.2% in the quarter and 6.8% year to date. The longer record is uneven — revenue fell {- -20.7% -} in FY23 before recovering to $5.4B in FY25 at an 8.3% growth rate — a reminder that this is a cyclical enterprise-hardware business rather than a steady compounder.",
+      "incomeCommentary": "In the second quarter, ended July 4, 2026, net sales were $1,557 million against $1,293 million a year earlier, with growth in both segments and, in management's words, improved demand in all regions. The page's vendor rows label this quarter Q3'26 and show revenue growth of +18.0%; we use the filing's 20.4% throughout. Tangible products drove the gain at $1,316 million, {+ up 24.7% +}, while services and software grew 1.3% to $241 million. Excluding currency, acquisitions and dispositions, organic growth was 9.2% in the quarter and 6.8% for the six months, so the second quarter ran faster than the opening quarter. Gross margin rose to 53.0% from 47.6%, which management attributes primarily to the IEEPA tariff recoveries and favorable currency; it adds that price realization fully offset higher memory costs. Adjusted gross margin rose by the same 540 bps, so the non-GAAP measures appear to keep the recovery in. Operating expenses rose to $504 million from $433 million, mainly because of Elo, including intangible amortization, and higher employee-related costs, by the company's account; as a share of sales they fell to 32.4% from 33.5%. Operating income rose {+ 75.4% +} to $321 million, and diluted EPS was $4.85 against $2.19; non-GAAP EPS was $6.35 against $3.61. The annual record is why we discount the quarter: revenue growth was {- -20.7% -} in FY23 and diluted EPS fell to $5.72, before FY25 revenue of $5.4B, up 8.3%, and diluted EPS of $8.18.",
       "balance": {
         "columns": [
           "Metric ($B)",
@@ -512,9 +515,9 @@
             "format": "num2"
           }
         ],
-        "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December (52/53-week fiscal year)."
+        "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
       },
-      "balanceCommentary": "As of July 4, 2026, Zebra held cash and cash equivalents of $157 million against total debt of $2,776 million, so the balance sheet carries meaningful net leverage. Debt has climbed from $2.5B at the FY25 year-end, reflecting the September 30, 2025 Elo acquisition for approximately $1.3 billion, and management notes higher interest expense on higher average debt balances. FY25 net debt was $2.4B against total equity of $3.6B. Liquidity is thin on the current ratio, which stood at 0.52 on a trailing basis and has been below 1.0 in three of the last five fiscal years, so the company relies on its cash generation and revolving capacity rather than a large cash cushion. The Elo deal also added goodwill and intangibles that the FY2025 Form 10-K identifies as at risk of impairment if the acquired business underperforms.",
+      "balanceCommentary": "At July 4, 2026, Zebra held cash and cash equivalents of $157 million against total debt of $2,776 million. At the FY25 year-end debt was $2.5B and net debt $2.4B, against total equity of $3.6B. The filings give no reason for this year's rise in debt, though management notes higher interest expense on higher average debt balances. The page leaves TTM net debt/EBITDA and interest coverage blank, so we do not size the leverage against earnings. Liquidity is thin: the trailing current ratio is 0.52 against 0.97 at the FY25 year-end, and it was below one in three of the last five fiscal years. We judge the balance sheet serviceable while free cash flow holds near guided levels, but it is the weak point if demand turns.",
       "cashflow": {
         "columns": [
           "Metric ($B)",
@@ -592,9 +595,9 @@
             "format": "pct"
           }
         ],
-        "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December (52/53-week fiscal year)."
+        "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
       },
-      "cashflowCommentary": "Cash generation is the strongest part of the story. Over the six months ended July 4, 2026, operating cash flow was $387 million and capital expenditure just $26 million, leaving free cash flow of $361 million. The model is capital-light — FY25 capital expenditure was $86 million, under 2% of sales — and FY25 free cash flow was $831M. Cash returns run entirely through buybacks rather than a dividend, funded by that free cash flow. The cash line is not immune to the cycle: operating cash flow fell to roughly break-even in FY23 and free cash flow that year was negative, so the guided full-year figure assumes the current demand environment holds."
+      "cashflowCommentary": "Cash generation supports the equity story. In the first six months of 2026, operating cash flow was $387 million and capital expenditure $26 million, leaving free cash flow of $361 million, while the company repurchased $568 million of stock. FY25 free cash flow was $831M, a 15.4% margin, and capital spending has been small in every year shown. Management expects full-year 2026 free cash flow above $1 billion. Two cautions temper that. Buybacks at the year-to-date pace would need cash from later in the year or more borrowing, since they exceeded free cash flow. And the cash line has broken before: FY23 operating cash flow was about nil and the FCF margin was {- -2.0% -}. We treat the guided figure as achievable on current demand, not as a floor."
     },
     "valuation": {
       "multiples": {
@@ -620,7 +623,7 @@
           {
             "label": "EV/EBITDA",
             "values": [
-              null
+              17.371
             ],
             "format": "mult"
           },
@@ -634,28 +637,28 @@
         ],
         "note": "Peer multiples pending a peer data source."
       },
-      "multiplesCommentary": "On trailing GAAP earnings the stock looks expensive at 33.6x, but that multiple is distorted by a depressed earnings base — diluted EPS was $8.18 in FY25 after a weaker prior stretch. The forward picture is more reasonable: shares trade at about 17.5x next-twelve-month earnings and roughly 16.6x FY27 consensus EPS of $22.20, with price-to-sales at 3.0x; an EV/EBITDA multiple is not available in the pack. Wall Street's price targets sit modestly above the current price. The forward multiple is defensible for a business guiding low-double-digit total and mid-single-digit organic growth, but it does not embed a margin reset if the tariff and currency tailwinds fade or the hardware cycle softens.",
+      "multiplesCommentary": "The page shows a trailing P/E of 33.6x, a TTM EV/EBITDA of 17.4x, a P/S of 3.0x, and forward P/Es of 17.5x (labelled NTM) and about 16.6x on FY27E. The NTM figure equals the current price over the FY26E consensus EPS of $21.04, so we treat it as this year's multiple and use it as the like-for-like reference. The gap to the trailing multiple is partly basis and partly growth. The trailing figure covers the last four reported quarters, not FY25, and appears to be on GAAP earnings; the FY26E consensus sits inside the company's non-GAAP EPS guide (see Growth), so we read it as non-GAAP; and second-quarter non-GAAP EPS ran well above GAAP (see Financials). Two points weigh against this year's multiple. FY26 earnings include the one-time tariff recovery, which the non-GAAP measures appear to keep, so the multiple on recurring earnings is somewhat higher than it looks. And the shares have risen from a 52-week low of $199.05 to near the high. In its favor, the TTM FCF yield of 5.2% and the guided free cash flow (see cash flow) give the multiple cash support. The page has no peer multiples and no history of Zebra's own multiple, so we cannot call this year's multiple a premium or a discount to anything; we judge it fair for the organic growth on show.",
       "scenarios": [
         {
           "name": "Bull",
-          "driver": "Automation and 'Physical AI' demand broadens, organic growth re-accelerates into double digits, Elo proves accretive, and adjusted EBITDA margin holds near the top of the 23.5% to 24.0% guided range. The market pays roughly 20x a rising earnings base as the cyclical discount fades.",
-          "impliedPrice": 465,
+          "driver": "Organic growth holds at or above the second quarter's pace, Elo delivers the growth and cost synergies the company is seeking, and margins hold up as the tariff recovery laps. Anchor: the top of the Street's target range, $455.00, which we take as the value a market paying for sustained growth could reach a year out.",
+          "impliedPrice": 455,
           "probability": 0.25
         },
         {
           "name": "Base",
-          "driver": "Zebra executes to its raised full-year guidance, but organic growth stays mid-single-digit and the one-time tariff and currency benefits do not repeat. The stock holds near the consensus target as the market keeps paying a mid-to-high-teens forward multiple on a modestly rising earnings base.",
-          "impliedPrice": 405,
+          "driver": "Zebra delivers roughly its raised guidance, the tariff recovery does not repeat, and FY27 EPS reaches the $22.20 consensus. The market keeps paying today's current-year multiple of 17.5x on that year-ahead figure, giving $388.50: today's anchor plus one year of consensus growth, argued from both sides in the commentary.",
+          "impliedPrice": 388.5,
           "probability": 0.5
         },
         {
           "name": "Bear",
-          "driver": "The enterprise-hardware cycle turns as it did in FY23, when revenue fell -20.7%. Organic demand stalls, the tariff and currency tailwinds reverse, and the multiple compresses toward 13x a flat earnings base. Elevated debt and a 0.52 current ratio amplify the derating.",
-          "impliedPrice": 288,
+          "driver": "Organic demand stalls as customers hold back hardware spending, and the tariff recovery does not repeat. FY27 EPS stays flat at the low end of this year's non-GAAP guide, $20.75, instead of reaching consensus: we judge that the 2025 Productivity Plan's expected savings and a lower share count after this year's buybacks roughly fill the gap the recovery leaves, though the page does not let us size either exactly. The multiple falls to 13x on that EPS, giving $269.75; the commentary argues the level.",
+          "impliedPrice": 269.75,
           "probability": 0.25
         }
       ],
-      "scenarioCommentary": "The three scenarios weight to a fair value only modestly above today's price, so the expected upside is limited while the bear case carries real downside — a reward/risk that does not clear our BUY threshold. The Base case assumes Zebra delivers its own guidance without help from the tariff refund or currency, the most likely path given a raised outlook but decelerating organic growth. The Bull case requires the cyclical discount to lift and organic growth to re-accelerate, neither of which is visible in the current organic rate. The Bear case is anchored to the company's own FY23 experience, when revenue fell more than a fifth, and is deepened by the thinner balance sheet after Elo. The probability-weighted fair value sits inside our $355 to $445 target band and near the Base implied price."
+      "scenarioCommentary": "We weight the scenarios 25% Bull, 50% Base and 25% Bear, for a weighted fair value of $375.44, expected upside of +2.2%, bear-case downside of -26.6% and reward/risk of 0.08×. The label derives HOLD.\n\nThe Base multiple is the main judgment, argued in the multiples commentary. We hold this year's multiple a year out, but the anchor does not decide the label. A Base at the Street's consensus target of $411.45 still derives HOLD, and so does a Base at the page's FY27E multiple, which equals today's price. SELL would need a Base multiple well below that FY27E multiple, and BUY a Base above the top of the Street's range.\n\nThe Bear multiple is our assumption, and its level rests on the Bear case itself. With earnings flat across two years, nothing in the price pays for growth, while the debt and thin liquidity described in Financials stay in place. If free cash flow stayed near this year's level, that multiple would put the free-cash-flow yield well above today's, which we think a levered hardware maker with no growth needs to offer. The level cuts both ways. If guided free cash flow held through a stall, a higher multiple would be defensible; if the stall became an FY23-style fall, that multiple on flat earnings would be too generous. A Bear multiple two turns higher or lower leaves the label at HOLD.\n\nThe weights rest on each case's own evidence. The Bull weight rests on the second quarter's organic acceleration, AVA's faster organic growth and the raised outlook. The Bear weight rests on the third-quarter guide for a lower adjusted EBITDA margin (see Growth), a FY27 consensus that already shows only modest EPS growth, leaving little cushion before a stall, and the FY2025 Form 10-K's warning that Elo may not deliver its expected synergies. We see neither side as more likely. Moving ten points of weight from Bear to Bull, or from Bull to Bear, keeps the label at HOLD."
     },
     "businessMoat": {
       "segments": [
@@ -663,7 +666,7 @@
           "name": "Consolidated",
           "sharePct": 1,
           "revenue": 5396000000,
-          "body": "The vendor data rolls Zebra's two divisions into a single consolidated line, but the filing breaks them out. Connected Frontline — mobile computing, point-of-sale, kiosks and workflow software — posted net sales of $903 million in the quarter ended July 4, 2026, {+ up 25.9% +} from $717 million, though excluding currency and the Elo acquisition its organic growth was 7.5%. Asset Visibility & Automation — thermal printing and supplies, data capture, fixed industrial scanning, machine vision, RFID and real-time location systems — posted $654 million, up from $576 million, with faster organic growth of 11.4%. Both divisions grew across all regions, led by North America at $774 million. The mix pairs cyclical hardware with a recurring supplies-and-services stream that steadies revenue when equipment demand slows."
+          "body": "The pack's segment table shows one consolidated line, but the 10-Q reports two segments; we follow the 10-Q. In the second quarter, Connected Frontline net sales were $903 million, {+ up 25.9% +} from $717 million, which the company puts down mainly to Elo, higher mobile-computer sales and currency; organic growth was 7.5%. CF gross margin rose to 51.2% from 47.3%, with unfavorable business mix partly offsetting the drivers set out in Financials. Asset Visibility & Automation net sales were $654 million against $576 million, with organic growth of 11.4%, the faster of the two segments. By region, North America contributed $774 million, {+ up 21.3% +}, and Asia-Pacific grew {+ 23.1% +}."
         }
       ],
       "segmentsBasis": "FY25 (single reportable segment) mix",
@@ -672,51 +675,52 @@
       "moatRating": "NARROW",
       "moatFactors": [
         {
-          "name": "Scale and installed base",
+          "name": "Portfolio breadth and scale",
           "strength": "Solid",
-          "body": "Zebra describes itself as a global leader in AIDC, and its installed base of mobile computers, scanners and printers across retail, logistics, manufacturing and healthcare creates a large replacement and attach-rate opportunity. Scale supports the research budget — research and development was $159 million in the quarter — needed to keep the hardware and software portfolio current."
+          "body": "Zebra describes itself as a global leader in AIDC and sells hardware, supplies, software and services across retail, logistics, manufacturing and healthcare. Research and development of $159 million in the quarter, 10.2% of net sales, funds that breadth. The pack carries no market-share data, so the leadership claim is the company's own."
         },
         {
-          "name": "Switching costs",
+          "name": "Workflow embedding",
           "strength": "Moderate",
-          "body": "Enterprise AIDC deployments are embedded in customer workflows and increasingly paired with cloud software subscriptions, which raises the cost of switching vendors mid-cycle. Services and software revenue of $241 million in the quarter reflects that ongoing attachment."
+          "body": "The company says its products help customers digitize and automate workflows from factory production to the hospital patient journey. In our judgment that makes switching vendors costly mid-deployment. The recurring part of the relationship, services and software, barely grew in the quarter, so the attachment is not yet showing up as faster recurring revenue."
         },
         {
-          "name": "Distribution and supplies",
+          "name": "Channel and supplies",
           "strength": "Moderate",
-          "body": "Sales run through a direct force plus a broad channel-partner network, and a recurring supplies stream — thermal labels, ribbons, RFID tags and consumables — pulls through with the installed base and is harder for a competitor to displace than a single hardware bid."
+          "body": "Sales run through a direct sales force and a network of channel partners, and consumables such as labels, ribbons and RFID tags are sold alongside the printers. We think that pull-through is harder for a rival to displace than a single hardware bid, but the pack gives no supplies revenue to test it."
         }
       ],
-      "durability": "Zebra's moat is real but narrow. The installed base, channel network and recurring supplies-and-services revenue give the franchise staying power and some insulation when hardware demand softens. Against that, AIDC is a cyclical, competitive hardware market: revenue contracted in the FY23 downturn, and the current results are flattered by tariff recoveries, currency and the Elo acquisition rather than a durable step-change in organic demand. Automation and 'Physical AI' adoption are genuine secular tailwinds, but they have not yet shown up as double-digit organic growth. The durability case rests on Zebra defending share and converting automation demand into organic growth, not on pricing power strong enough to override the cycle."
+      "durability": "We rate the moat narrow. Breadth, workflow embedding and the channel give the franchise staying power, but the numbers show little protection: revenue fell sharply in FY23 (see Financials), and the operating margin was 13.0% in FY25 against 17.4% in FY21. This year's margin gain, discussed in Financials, is largely one-time; the memory-cost offset noted there is the better evidence of pricing power. Durability depends on Zebra turning automation demand into organic growth above this year's rate. We would revisit the rating if that showed up in faster services and software growth."
     },
     "growth": {
       "points": [
-        "Management raised full-year 2026 guidance to net sales growth of 14% to 16% and non-GAAP diluted EPS of $20.75 to $21.25, with free cash flow above $1 billion.",
-        "Third-quarter guidance is for net sales growth of 17% to 20%, including about 10.5 points from acquisitions, dispositions and currency, and non-GAAP EPS of $4.70 to $4.90.",
-        "Organic growth is the swing factor, running in the high-single digits and below the reported rate in both the quarter and year to date.",
-        "The Elo acquisition, closed September 30, 2025 for about $1.3 billion, expands the Connected Frontline segment and lifts reported growth for twelve months.",
-        "Consensus expects revenue of $6.6B and EPS of $22.20 in FY27, up from an estimated $6.2B and $21.04 in FY26."
+        "Full-year 2026 guidance, raised on August 4, 2026, calls for sales growth of 14% to 16%, including about 8 points from acquisitions, dispositions and currency, an adjusted EBITDA margin of 23.5% to 24.0% and non-GAAP EPS of $20.75 to $21.25. The FY26E consensus sits inside that EPS range.",
+        "Third-quarter guidance calls for sales growth of 17% to 20%, including about 10.5 points from acquisitions, dispositions and currency, an adjusted EBITDA margin of about 22% and non-GAAP EPS of $4.70 to $4.90. That margin is well below the second quarter's 27.7%, which included the tariff recovery; the release does not explain the step-down.",
+        "Elo stops lifting reported growth once it passes twelve months after its September 30, 2025 acquisition date, when the 10-Q's organic measure stops excluding it, so the acquisition gap between reported and organic growth should narrow.",
+        "Consensus expects FY27 revenue of $6.6B against $6.2B for FY26, with EPS only modestly higher (see Valuation). We read that as a year in which the one-time recovery no longer adds to earnings; no source gives the Street's reasons.",
+        "The 2025 Productivity Plan is substantially complete, with cumulative one-time charges of $37 million and expected net annualized pre-tax savings of about $35 million.",
+        "Management ties its outlook to automation and Physical AI and cites progress on productivity and memory supply; the pack gives no figures for either, so we treat them as direction, not evidence."
       ]
     },
     "management": {
-      "leadership": "William Burns is Chief Executive Officer and Nathan Winters is Chief Financial Officer, both named in the quarterly release. The broader named-executive group as of December 31, 2025 included Richard Hudson as Chief Revenue Officer and Cristen Kogl as Chief Legal Officer, General Counsel and Corporate Secretary. The team saw turnover into 2026: the former Chief Product and Solutions Officer resigned in November 2025, and the former Chief People Officer stepped down at the end of 2025 and moved to a senior advisory role ahead of a planned May 2026 retirement. Anders Gustafsson, the former CEO, has served as Chair of the Board since 2024.",
-      "capitalAllocation": "Capital allocation tilts to buybacks and M&A rather than dividends. Zebra pays no dividend and repurchased $568 million of stock year to date through the most recent quarter, including $268 million in the quarter, after $587M in FY25. Beyond buybacks, the $1.3 billion Elo acquisition in September 2025 was the main capital outlay, lifting total debt to $2,776 million as of July 4, 2026. With guided free cash flow above $1 billion for 2026 and a capital-light model — FY25 capital expenditure was $86 million — the company has the cash flow to service that debt and keep buying back stock, but the 0.52 current ratio leaves less cushion for a downturn than the free-cash-flow headline suggests.",
-      "governance": "Governance is conventional and shareholder-tested. Under Nasdaq rules a majority of directors must be independent, and in February 2026 the Board determined every director was independent except Chair Anders Gustafsson, the former CEO, and CEO William Burns. Because the Chair is not independent, the Board maintains a Lead Independent Director, Michael Smith, who has served in that role since 2024 and as a director since 1991. The 2025 say-on-pay vote drew 94.2% support, and the company maintains related-party, anti-hedging, clawback and interlocking-directorate policies. Corporate Governance Guidelines cap outside public-company board seats at four for non-employee directors."
+      "leadership": "William Burns is Chief Executive Officer and Nathan Winters is Chief Financial Officer; both are quoted in the August 4, 2026 earnings release. The 2026 proxy statement, dated April 3, 2026, lists the other 2025 named executive officers as Richard Hudson, Chief Revenue Officer, and Cristen Kogl, Chief Legal Officer, General Counsel and Corporate Secretary. Two named officers left their roles around the end of 2025: Joseph White, former Chief Product and Solutions Officer, resigned in November 2025, and Jeffrey Schmitz stepped down as Chief People Officer effective December 31, 2025 to serve as Senior Advisor to the CEO until a retirement the proxy planned for May 2026. The excerpt names no successors, so we cannot judge the depth of the team behind the top two.",
+      "capitalAllocation": "Capital goes to buybacks and acquisitions; Zebra pays no dividend. Repurchases were $587M in FY25 and continued at a faster pace in the six months to July 4, 2026, and the Elo purchase was the main recent outlay. The CFO calls this a balanced approach that lets Zebra invest for growth while returning cash. We read the year to date as more aggressive than balanced, because buybacks outran free cash flow (see cash flow) while total debt rose (see Financials). The FY2025 Form 10-K, filed in February 2026, also notes that acquisitions could dilute stockholder value. Per the proxy, the annual cash incentive now weights adjusted EBITDA and net sales at 40% each, which ties much of annual pay to scale and profit.",
+      "governance": "Per the 2026 proxy, the Board determined in February 2026 that every director was independent under Nasdaq rules except Chair Anders Gustafsson, Zebra's former CEO, and CEO William Burns. Mr. Gustafsson has been Chair since 2024 after serving as Executive Chair from 2023 to 2024. Because the Chair is not independent, the independent directors appoint a Lead Independent Director: Michael Smith, in that role since 2024, a director since 1991 and independent Chair from 2007 to 2023. Say-on-pay drew 94.2% support in 2025, and late-2025 outreach reached holders of 58% of the stock. A clawback policy has applied to Section 16 officers since March 2020. We see no governance flag in the excerpt, though a former CEO as Chair leaves the independent check concentrated in one long-serving lead director.",
+      "insiderOwnership": "The proxy excerpt in the pack carries no beneficial-ownership table, so we make no claim about insider stakes. The securities-trading policy bars directors and executive officers from hedging, short sales, margin accounts and pledging Zebra stock as collateral."
     },
     "risks": {
       "idiosyncratic": [
-        "Transitory earnings support: the quarter included roughly $73 million of IEEPA tariff recoveries and favorable currency that lifted gross margin 540 bps; these benefits are one-time and mask a high-single-digit organic rate.",
-        "Cyclicality: AIDC hardware demand tracks enterprise capital spending, and Zebra's own revenue fell in the FY23 downturn, so a slowdown could reverse both the growth and the margin gains quickly.",
-        "Integration and impairment: the $1.3 billion Elo acquisition added goodwill and intangibles that the FY2025 Form 10-K identifies as at risk of impairment if the business underperforms, and integration could divert management attention.",
-        "Balance-sheet thinness: total debt of $2,776 million and a 0.52 current ratio, together with rising interest expense, reduce flexibility if cash flow weakens.",
-        "Reported-versus-organic gap: with about 8 points of guided full-year growth from acquisitions and currency, headline momentum could fade as the Elo contribution laps and currency normalizes."
+        "Tariff refund: the quarter's gross margin included about $73 million of expected IEEPA tariff refunds (see Financials), of which $14 million had been received in cash. The rest depends on the U.S. Customs and Border Protection process, and the benefit will not recur.",
+        "Integration and impairment: the FY2025 Form 10-K warns that Zebra may not integrate Elo or realize the expected growth and cost synergies, and that the added goodwill and intangibles could become impaired. The deal represented approximately 9% of Zebra's market capitalization when it closed.",
+        "Cyclicality: FY23 shows how quickly the business can contract (see Financials). A repeat is the tail outside our Bear case, and it would take earnings well below the FY27 consensus.",
+        "Liquidity and debt: with a current ratio below one and debt rising this year (see Financials), a downturn would leave less room to keep buying back stock. The earnings release itself says that, because of its debt, interest rates and financial market conditions may adversely affect results."
       ],
-      "systemic": "Zebra is exposed to the broad enterprise technology spending cycle, and demand across retail, logistics, manufacturing and healthcare moves with global industrial activity. As a global company that manufactures through a contract supply chain, it is sensitive to foreign-currency swings, tariffs and trade policy — the same IEEPA tariff regime that produced this quarter's refund created the original cost — and to component costs, including memory, which management says it mitigated through price realization. Geopolitical disruption, including the conflicts and China-Taiwan tensions named in the Form 10-K, could pressure both supply and demand. None of these is unique to Zebra, but each can move a cyclical hardware franchise more than a diversified software peer."
+      "systemic": "Zebra is exposed to the broad enterprise spending cycle, and demand across retail, logistics, manufacturing and healthcare moves with economic activity. As a global company that relies on contract manufacturing and a global supply chain, it is sensitive to currency swings, tariffs and trade policy; the same IEEPA tariffs that produced this quarter's expected refund created the original cost. Component costs, including memory, matter too. The FY2025 Form 10-K names the war between Russia and Ukraine, conflicts in the Middle East region and the risk of increased tensions between China and Taiwan as geopolitical risks that could limit sales, and inflation as a source of higher costs and reduced or cancelled orders. None of these is unique to Zebra, but each can move a hardware-led business with thin liquidity."
     },
     "finalRecommendation": {
       "body": [
-        "We rate Zebra HOLD. This is a well-run AIDC leader with expanding margins, a raised 2026 outlook and strong free cash flow, but the quarter's headline strength leans on tariff recoveries, currency and the Elo acquisition rather than organic demand, which grew a steadier high-single-digit rate. At $367.54, near the top of its 52-week range and about 17.5x forward earnings, the shares already price continued execution.",
-        "The setup is balanced rather than compelling: our probability-weighted fair value sits only modestly above the current price and inside a $355 to $445 target band, while the bear case — anchored to Zebra's own FY23 revenue decline — carries more than 20% downside. That asymmetry keeps us from the Buy case the Street holds. What to watch is organic growth: a sustained move above the current high-single-digit rate would justify a higher multiple, while a slip back toward the mid-single digits, paired with the fading tariff and currency benefits, would expose the valuation."
+        "We rate Zebra HOLD with a target range of $340 to $395. The reported quarter overstates underlying demand, and today's multiple already prices the raised outlook, so our weighted fair value of $375.44 sits close to the price, for expected upside of +2.2%.",
+        "On these scenarios the label would move to BUY at or below our target low and to SELL just above our target high. The scenarios themselves would change on evidence: signs that FY27 earnings will stall at this year's level would raise the Bear weight, and second-half organic growth at or above the second quarter's pace without the tariff recovery would raise the Bull weight."
       ]
     }
   },

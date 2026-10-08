@@ -129,11 +129,10 @@ describe("only the copy merged to main and pushed to origin/main applies", () =>
 });
 
 /**
- * Shrink-only. These are the 8 owner-approved entries (plan 2026-10-07 §5): CSTM, LH ×2, LLY ×2, MDU ×2, NVDA. A fix round
+ * Shrink-only. These are the owner-approved entries left of the 8 in plan 2026-10-07 §5 (CSTM fixed 2026-10-08): LH ×2, LLY ×2, MDU ×2, NVDA. A fix round
  * removes its keys here and its entries from the JSON in the same merge; nothing is ever added.
  */
 const FROZEN_KEYS = new Set([
-  "CSTM|0001563411-26-000192|4142e25fe8ad5fb216dfdac560d6e91e946e0f71950cfce5b99fd17185d8ed0f|1ad3e984b191e520878efc4680d4ef89b37583e80f3aceaaa06ffa50390b4ccd|grounding|sections.financials.incomeCommentary|$4 million",
   "LH|0000920148-26-000175|68ac4715cee0131281b68b90640a6e844ad9d267ac0264f8bd963123d46a169c|91b392e467c90dc3289cac71072d746c77ac9c697d3d898da5c2af408d9e184d|grounding|sections.executiveSummary.catalysts[2]|$8.73 billion",
   "LH|0000920148-26-000175|68ac4715cee0131281b68b90640a6e844ad9d267ac0264f8bd963123d46a169c|91b392e467c90dc3289cac71072d746c77ac9c697d3d898da5c2af408d9e184d|grounding|sections.growth.points[0]|$13,952",
   "LLY|0000059478-26-000081|9f262de96beee34bd73e30500e22606e7435611b3b72f4a020599812e9d8163f|37fad26e9ea859ef73851d4007d35e4320d11b48e661131cb29f87ce6dc101eb|grounding|sections.executiveSummary.companyOverview|$1T",
@@ -148,7 +147,6 @@ const FROZEN_KEYS = new Set([
  * surface hash) edits only the surface hash inside FROZEN_KEYS; this list never changes except to shrink with a fix round.
  */
 const FROZEN_JUDGMENTS = [
-  "CSTM|4142e25fe8ad5fb216dfdac560d6e91e946e0f71950cfce5b99fd17185d8ed0f",
   "LH|68ac4715cee0131281b68b90640a6e844ad9d267ac0264f8bd963123d46a169c",
   "LH|68ac4715cee0131281b68b90640a6e844ad9d267ac0264f8bd963123d46a169c",
   "LLY|9f262de96beee34bd73e30500e22606e7435611b3b72f4a020599812e9d8163f",
