@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "66c5e1b4c67a54b8d89fb026e35bc1ed34b6e53e525584f93c9413e21624b6bf",
-  "reviewedAt": "2026-10-08T12:52:19Z",
+  "judgmentSha256": "9413b7120012ccb484adbb783c450af7cd65cbe71f6bcf5d4c87efd4f0bff1aa",
+  "reviewedAt": "2026-10-08T12:58:24Z",
   "reviewer": "Claude Opus 5.5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved-with-minors",
   "findings": [
     {
       "id": "F-1",
@@ -72,7 +72,8 @@
       "quote": "The investment case rests on a top line that is accelerating. FY25 revenue rose {+ +21.0% +} to $4.8B, and Q2'26 revenue grew {+ +60.8% +} year over year, well ahead of the {+ +26% +} consensus expects for FY26E. At $46.01, near the 52-week low, the shares trade at about 21.2x consensus FY27E EPS, so the price asks little of that growth.",
       "issue": "The thesis is a paraphrase of analystCommentary, sentence for sentence. Both give FY25 revenue +21.0% to $4.8B, Q2'26 +60.8%, $46.01 near the 52-week low at about 21.2x FY27E, earnings slower than revenue, the dividend above FCF for three years, the organic share unknown, and a close call that rests on holding today's multiple a year out. The same claims recur elsewhere. (1) 'Revenue is the stronger half of the story' (analystCommentary) comes back as 'Our read is that the top line is the stronger half of the story' (incomeCommentary). (2) 'Earnings slower than revenue' is in analystCommentary ('Earnings have moved more slowly'), the thesis, and twice inside incomeCommentary ('grew more slowly than revenue', 'earnings have risen at a steadier pace'). (3) 'The call is close' is said in analystCommentary ('we flag it as a close call', 'but only just'), the thesis, scenarioCommentary and finalRecommendation.body[1] ('The call is close, and we say so'). Item 7: the same claim in different words, in several places.",
       "fix": "Make analystCommentary and the thesis do different jobs. For example, keep the figures and the close-call caveat in analystCommentary, and let the thesis state the investment case in words, pointing to the sections for the figures. In incomeCommentary, make the revenue-versus-earnings point once. State that the call is close once in full (scenarioCommentary, where the mechanism is argued). Elsewhere point to it in words rather than repeating it.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Fixed. The thesis now makes the case in words and points to the sections for figures. analystCommentary keeps the figures. incomeCommentary makes the revenue-versus-earnings point once, in its closing sentence. The close call is argued only in scenarioCommentary; analystCommentary, the thesis and finalRecommendation.body[1] now point to it."
     },
     {
       "id": "F-8",
@@ -81,7 +82,8 @@
       "quote": "and the market pays 28x for it, a modest premium to the trailing multiple that the revenue acceleration would justify.",
       "issue": "Two multiples are compared on mixed bases. (1) The Bull's 28x is applied to FY27E EPS a year out. The like-for-like reference is today's 25.1x on FY26E, which multiplesCommentary itself sets up. On that basis, 28x is a re-rating of about three turns, not a 'modest premium' to the 26.6x trailing P/E. (2) scenarioCommentary argues the Base partly on the claim that 'the Base multiple sits below the trailing one'. But the Base 25x is, by the report's own construction, today's current-year multiple carried forward, so on one basis it equals today's multiple; it does not sit below it. The comparison with a trailing multiple makes the Bull look smaller than it is and gives the Base a support that does not hold. Item 6. The desk has met this before (USFD F-15).",
       "fix": "Restate the Bull's 28x against today's 25.1x current-year multiple, and argue it as the re-rating it is, with its basis in the same sentence. Remove 'the Base multiple sits below the trailing one' from the case for holding the multiple, or restate it on one basis. Then check that the case for the Base still stands on the remaining argument.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Fixed. The Bull now states 28x as \"a re-rating of about three turns above today's current-year multiple\", with its basis in the same sentence. The Base is \"today's current-year multiple carried forward\", and the Bear's 20x is set against the same basis. scenarioCommentary drops the trailing comparison and argues the Base on visible growth (Q2'26 against FY26E, and EPS rising into FY27E)."
     },
     {
       "id": "F-9",
@@ -90,7 +92,8 @@
       "quote": "Capital expenditure is negligible, so the business needs little for physical investment and instead commits Brookfield capital alongside its clients in the funds it manages.",
       "issue": "The MD&A says only that the company aligns interests with clients 'by investing Brookfield capital alongside them'. It does not say that this is BAM's own cash, or that it is a use of cash in place of capex. The pack's cash-flow table has no investing or co-investment line, so the 'so ... instead' framing presents an inference as a BAM capital-allocation fact (item 2). The same MD&A sentence is already used in management.leadership ('alignment of interests by investing Brookfield capital alongside its clients'), so it also repeats across the section (item 7).",
       "fix": "Remove the causal link and do not present co-investment as a use of BAM's cash. If the point is kept, attribute it to the MD&A in the company's own words, once, in either leadership or capitalAllocation, and say that the pack shows no amount for it.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Fixed. capitalAllocation drops the \"so ... instead\" inference and says the pack shows no investing or co-investment line. The MD&A co-investment sentence now appears once, in leadership, attributed and with \"the pack shows no amount for that investment\"."
     },
     {
       "id": "F-10",
@@ -99,7 +102,8 @@
       "quote": "Leading global alternative asset manager with over $1 trillion of AUM",
       "issue": "'Leading' is the company's own description of itself. companyOverview attributes it correctly ('describes itself as a leading global alternative asset manager'). The subtitle and analystCommentary ('BAM is a leading global alternative asset manager across infrastructure...') state it in the desk's own voice. Separately, two framing tics recur: 'Our read is that' (incomeCommentary) and 'Our view is that' (capitalAllocation). Item 9.",
       "fix": "Drop 'leading' from the subtitle and from analystCommentary, or attribute it to the company. Let the closing sentences of incomeCommentary and capitalAllocation state the view directly, without the 'Our read/view is that' lead-in.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Fixed. The subtitle drops \"Leading\", analystCommentary attributes it (\"describes itself as a leading global alternative asset manager\"), and the \"Our read/view is that\" lead-ins are gone."
     },
     {
       "id": "F-11",
@@ -108,7 +112,8 @@
       "quote": "Fee-Bearing Capital keeps compounding across the five platforms",
       "issue": "'Keeps compounding' assumes a past trend. The pack gives Fee-Bearing Capital at a single date (June 30, 2026) and no series, so it does not show that the figure has been compounding. Item 2, in its mildest form, because it sits inside a scenario.",
       "fix": "Say 'Fee-Bearing Capital grows across the five platforms', or similar, without implying a trend the page does not show.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Fixed. The driver now reads \"Fee-Bearing Capital grows across the five platforms\"."
     },
     {
       "id": "F-12",
@@ -117,7 +122,18 @@
       "quote": "The company frames its own performance through Fee-Bearing Capital, Fee Revenues, Fee-Related Earnings and Distributable Earnings, and the pack gives values only for Fee-Bearing Capital by platform.",
       "issue": "The four non-GAAP measures are listed twice: here, and in companyOverview ('Management evaluates performance with non-GAAP measures it defines itself, including Fee-Bearing Capital, Fee Revenues, Fee-Related Earnings and Distributable Earnings'). Both versions widen the subject. The MD&A says the company uses these measures to evaluate 'these product offerings and our investment strategies', not its own overall performance. Items 7 and 9.",
       "fix": "Name the four measures once, in companyOverview, with the MD&A's subject (product offerings and investment strategies). In incomeCommentary, refer to them in words ('the company's own non-GAAP measures') and keep the distinct point that the pack gives values only for Fee-Bearing Capital.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Fixed. companyOverview names the four measures once, with the MD&A's subject (\"its product offerings and investment strategies\"). incomeCommentary refers to them in words (\"the company's own non-GAAP measures\") and keeps the Fee-Bearing-Capital-only point."
+    },
+    {
+      "id": "F-13",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "The Bull is a true re-rating, not a modest premium, and we weight it no higher than the Bear for that reason.",
+      "issue": "This sentence rebuts wording (\"a modest premium\") that no longer appears anywhere on the page, so a reader sees an answer to an argument nobody made. It also repeats the Bull driver, which already calls the 28x \"a re-rating of about three turns above today's current-year multiple\". Items 7 and 9.",
+      "fix": "Cut \"not a modest premium\" and the restated re-rating. Keep only the weighting reason, e.g. \"Because the Bull needs a re-rating, we weight it no higher than the Bear.\"",
+      "status": "declined",
+      "note": "Deferred to the next synthesis; editing the judgment after the final re-check would leave it unreviewed. Reviewer accepts the decline: the sentence is redundant, not wrong."
     }
   ]
 }
