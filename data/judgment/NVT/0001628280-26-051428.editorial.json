@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "f48247cfb904f7900d96e1d1c582130a19b7c6963678921d19289c5b76ef5990",
-  "reviewedAt": "2026-10-08T15:14:21Z",
+  "judgmentSha256": "d985f57a08c130e51575a769a53749028d1b57bb68a3710675a77c498d90be32",
+  "reviewedAt": "2026-10-08T15:21:20Z",
   "reviewer": "Claude Opus 5.5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved-with-minors",
   "findings": [
     {
       "id": "F-1",
@@ -13,7 +13,7 @@
       "issue": "The FCF-margin fall from 18.9% (FY24) to 9.6% (FY25) is given a specific cause — \"as working capital absorbed cash during rapid growth\" — that the grounding surface does not establish. The Facts block carries no working-capital line: it shows operating cash flow falling to $0.5B from $0.6B, capex of $93.3M and FCF of $0.4B, but nothing that attributes the decline to working capital. Rubric item 2 treats a causal claim the pack does not establish as Critical.",
       "fix": "Drop the causal clause. State the FCF-margin fall as reported and, if a driver is wanted, attribute only what the pack shows (operating cash flow eased to $0.5B from $0.6B against $93.3M of capex). Do not assert a working-capital cause absent supporting data.",
       "status": "addressed",
-      "note": "Re-check on the rewritten judgment: cashflowCommentary gives the fall with \"after $93.3 million of capital expenditure\" and no working-capital cause. Still resolved. The basis question the rewrite raises is a new finding, F-6."
+      "note": "Re-check on this rewrite: no working-capital cause anywhere. cashflowCommentary now says the table's decline \"may reflect a basis difference the page cannot resolve, so we do not treat it as an operating decline.\" Still resolved."
     },
     {
       "id": "F-2",
@@ -23,7 +23,7 @@
       "issue": "The Base implied price is $190, but 25.1x on FY27E EPS of $6.48 is about $163 (roughly the current $162.85), not $190; reaching $190 would need about 29.3x on FY27E EPS. The stated anchor — multiple easing to 25.1x on $6.48 — produces essentially the current price, so it does not support the $190 Base. The same inconsistent anchor recurs in analystCommentary and finalRecommendation.body[1]. Rubric item 6: the base case must be anchored to something on the surface and be consistent with the price it produces.",
       "fix": "Make the arithmetic tie. Either state the multiple that yields $190 on FY27E EPS $6.48 (~29x) and explain why the multiple settles there rather than at 25.1x, or re-anchor the Base to a later EPS, or lower the Base toward the ~$163 the 25.1x anchor implies. Apply the correction in all three places (Base driver, analystCommentary, finalRecommendation).",
       "status": "addressed",
-      "note": "Re-check: the Base is now 28x on FY27E EPS of $6.48 = $181.44, which ties. The basis is given in the sentence (a modest compression from the 31.7x current-year multiple) and argued from both sides, and scenarioCommentary says the anchor decides the label. Resolved."
+      "note": "Re-check: the Base is unchanged at 28x × $6.48 = $181.44, with its basis in the sentence and argued both ways. It ties and still sits inside the $160–$205 range. Still resolved."
     },
     {
       "id": "F-3",
@@ -33,7 +33,7 @@
       "issue": "The FY25 capital-return and FCF figures were stated in full in both cashflowCommentary and capitalAllocation, and again in executiveSummary.catalysts[4]. Rubric item 7 (paraphrase repetition across sections).",
       "fix": "Introduce the FY25 capital-return and FCF figures once (in cashflowCommentary) and, in capitalAllocation, refer back in words while reserving the section for the allocation judgment.",
       "status": "addressed",
-      "note": "Re-check: capitalAllocation refers back in words (\"the FY25 buybacks and dividends discussed under cash flow\") and carries no figures. The figures appear once, in cashflowCommentary. Resolved."
+      "note": "Re-check: capitalAllocation still refers back in words (\"the FY25 buybacks and dividends discussed under cash flow\") and carries no figures. Still resolved."
     },
     {
       "id": "F-4",
@@ -43,7 +43,7 @@
       "issue": "The Q2 headline and its organic/acquisition/currency split were restated numerically in five fields, and 44.4x in six.",
       "fix": "Keep the full Q2 decomposition in one place and refer back in words elsewhere; state 44.4x once.",
       "status": "addressed",
-      "note": "Re-check: $1,471.3 million and 52.8% now appear once (incomeCommentary). The 46.9/5.4/0.5 split appears once (growth.points[0]). analystCommentary and thesis say it in words (\"about half\", \"mostly organic\"). 44.4x appears only in multiplesCommentary. Resolved."
+      "note": "Re-check: $1,471.3 million and 52.8% appear once (incomeCommentary), the split once (growth.points[0]) and 44.4x once (multiplesCommentary). Still resolved."
     },
     {
       "id": "F-5",
@@ -52,7 +52,8 @@
       "quote": "The Thermal Management sale and the Electrical Products Group purchase, both described in the overview, shifted nVent toward infrastructure.",
       "issue": "The surface supports this for the purchase only. The MD&A says the Electrical Products Group serves \"primarily ... the infrastructure vertical\". Nothing on the page says what Thermal Management sold or which verticals it served, so the claim that the sale moved the mix toward infrastructure is an inference the source does not make (rubric item 2). The proxy describes the pair only as continuing \"our portfolio transformation to a higher-growth electrical company\".",
       "fix": "Credit the infrastructure shift to the Electrical Products Group purchase alone. For the pair, use the proxy's own words (the March 2026 proxy calls 2025 a continuation of its \"portfolio transformation to a higher-growth electrical company\"). Make no claim about what Thermal Management served.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Re-check: capitalAllocation now quotes the March 2026 proxy's \"portfolio transformation to a higher-growth electrical company\". It ties only the Electrical Products Group to infrastructure, citing the 10-Q (\"primarily the infrastructure vertical, including power utilities and data centers\"), and makes no claim about Thermal Management. Resolved."
     },
     {
       "id": "F-6",
@@ -61,7 +62,8 @@
       "quote": "The page does not reconcile the two sources, and we use the statement table.",
       "issue": "The two disagreements get opposite treatment for the same reason. On EPS, incomeCommentary prefers the proxy because \"The table is not on the proxy's continuing-operations basis\". The proxy says the same of its cash-flow figures (\"Results referenced in this section are on a continuing operations basis\"). Yet cash flow takes the table with no reason given. The table's FY25 fall is then used as evidence: scenarioCommentary counts \"a lower FY25 free-cash-flow margin\" on the Bear side; executiveSummary.risks[3] makes it a headline risk; cashflowCommentary and capitalAllocation say returns exceeded \"the table's free cash flow\", which reverses on the proxy's $561 million. The page cannot show whether the fall is an operating decline or a basis difference. In management.leadership, \"The proxy's account of 2025 cash-flow growth rests on a basis the statement table does not match\" asserts a basis mismatch that cashflowCommentary says it cannot establish, and reads as a charge against management (rubric items 8 and 6).",
       "fix": "Use one basis rule for both disagreements and give the reason once, in cashflowCommentary. If the table stays the cash-flow source, say the FY25 decline may reflect a basis difference the page cannot resolve. Then stop treating it as established. Take the FY25 FCF-margin fall out of the Bear-weight argument in scenarioCommentary, or argue there why it still counts. Make executiveSummary.risks[3] a pointer to the unresolved disagreement. Qualify or drop the \"exceeded the table's free cash flow\" comparisons. Drop the leadership sentence, or reduce it to a pointer that makes no basis claim.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Re-check: cashflowCommentary states one rule (use the source that states a continuing-operations basis) once, and incomeCommentary points to it. The table's decline is no longer treated as operating. The FCF-margin fall is out of scenarioCommentary. risks[3] is now a pointer. Returns are compared with the company's own Free Cash Flow measure. The leadership sentence is gone. Resolved."
     },
     {
       "id": "F-7",
@@ -70,7 +72,8 @@
       "quote": "The multiple falls to 25x, about the 25.1x the price now puts on FY27E earnings, because earnings that stop growing would not keep today's current-year multiple.",
       "issue": "The stated reason explains why the Bear multiple falls below 31.7x, but not why it stops at 25x. Its anchor, 25.1x, is today's price over FY27E consensus EPS. That ratio exists only because the market expects EPS to grow from $5.14 to $6.48. The Bear borrows it for a story in which that growth \"does not arrive\" and gross margin keeps falling. So the Bear multiple is tied to today's price and the growth case, not to its own story. The desk has flagged Bears that do not follow their stories before (V, CEG). This is rubric item 5 (a bear scenario must be a real scenario) and item 6 (an anchor a reader can check that fits the case).",
       "fix": "Argue the Bear multiple from the Bear's own story and from both sides: why would earnings that have stopped growing still command a multiple near 25x, and what argues for lower? Otherwise, choose a basis on the page that fits a no-growth case and state it in the same sentence. If the Bear price moves, re-derive E, D and R and re-check every sensitivity statement in scenarioCommentary and finalRecommendation.body[1]. A move in either direction is acceptable if it is argued.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Re-check: the Bear is now 20x × $5.14 = $102.80, argued from both sides: below 25.1x because the case removes the growth, above a lower level because the business stays profitable and the stall is cyclical. It is checked against the 52-week range. I re-derived E +3.3%, D −36.9% and R 0.09× (matching data/nvt.json) and every sensitivity in scenarioCommentary; all hold. Resolved."
     },
     {
       "id": "F-8",
@@ -79,7 +82,8 @@
       "quote": "The pack carries no peer multiples and no history of nVent's own multiple, so we do not call the current-year multiple a premium or a discount to anything; we judge it against growth. Consensus EPS rises between the two years while the revenue step narrows (see Growth).",
       "issue": "The section promises to judge the 31.7x current-year multiple against growth, then never does. It notes that EPS rises and the revenue step narrows, and stops. The HOLD rests on that judgment, and it is asserted elsewhere without argument: analystCommentary says \"The shares already trade at a rich multiple of current-year consensus earnings\" and the thesis says \"the price already pays a rich multiple on current-year consensus earnings\". The valuation section, where the argument belongs, reaches no view on whether the multiple is rich (rubric item 4).",
       "fix": "Finish the comparison in multiplesCommentary, in words and without computing a new figure. Set the 31.7x current-year multiple against the consensus EPS step from $5.14 (FY26E) to $6.48 (FY27E) and the narrowing revenue step, then say whether that makes the multiple rich and why. Give the reading that cuts the other way. If the section cannot support \"rich\", soften the word in analystCommentary and the thesis to match what it does support.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Re-check: multiplesCommentary now judges the multiple against EPS growth (roughly a quarter, in words). It gives the counter-reading: EPS grows faster than revenue, and first-half sales growth ran above the full-year consensus. It concludes \"full rather than stretched\". \"Rich\" is gone from analystCommentary and the thesis now says \"full\". Resolved."
     },
     {
       "id": "F-9",
@@ -88,6 +92,25 @@
       "quote": "Further acquisitions are among management's 2026 objectives.",
       "issue": "Several claims are argued in more than one body section (rubric item 7). (1) The 2026 objective of acquisitions appears in growth.points[4], management.capitalAllocation (\"Management's 2026 objectives pair deploying capital strategically ... with acquisitions\") and this risk item, plus catalysts[3]. (2) The causes of the gross-margin fall (inflation, unfavorable mix, capacity investment) are listed in thesis.body, incomeCommentary, executiveSummary.risks[2] and businessMoat.moatFactors[3]; the SG&A-leverage and restructuring mechanism appears in thesis.body, incomeCommentary and catalysts[2]. (3) The tariff reimbursements offset by other tariffs appear in incomeCommentary and risks.idiosyncratic[1] (\"so they gave no net relief\"). (4) The valuation risk appears twice in near-identical words, in executiveSummary.risks[0] and risks.idiosyncratic[3]. (5) Within the moat section, price competition in downturns appears in moatFactors[0] and durability, lower-cost rivals in moatFactors[2] and durability, and integration risk in durability and risks.idiosyncratic[2].",
       "fix": "Argue each claim once and point back in words elsewhere. Keep the acquisitions objective in capitalAllocation, and in growth and risks refer back to it. Keep the gross-margin causes and the SG&A mechanism in incomeCommentary only; the thesis and executive-summary items should say \"gross margin fell\" without the cause list. Keep the tariff point in one place. Either give risks.idiosyncratic[3] content the executive-summary risk lacks or fold it. Keep the moat factors on their own evidence and let durability weigh them without restating them.",
+      "status": "addressed",
+      "note": "Re-check, all five clusters: (1) acquisitions are argued only in capitalAllocation; growth.points[4] and risks[2] point to it, and catalysts[3] is gone. (2) The cause list and the SG&A mechanism appear only in incomeCommentary. (3) The tariff point appears once. (4) The duplicate valuation risk is gone. (5) Price competition and integration risk no longer repeat in the moat section. A new near-duplicate is F-10. Resolved."
+    },
+    {
+      "id": "F-10",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.risks[0]",
+      "quote": "Valuation: the shares pay a full multiple for growth that consensus expects to slow.",
+      "issue": "The rewrite made this risk nearly word-for-word the thesis sentence \"And the price pays a full multiple for growth that consensus expects to slow.\" (executiveSummary.thesis.body). The same sentence now reads twice within the executive summary (rubric item 7).",
+      "fix": "Make the risk a pointer that adds something the thesis lacks. One option is to point to the Bear case's stall and the depth of its downside without repeating the thesis wording. The other is to reword the thesis sentence so the two do not echo.",
+      "status": "open"
+    },
+    {
+      "id": "F-11",
+      "severity": "Minor",
+      "field": "sections.finalRecommendation.body[1]",
+      "quote": "we would move to BUY only if later quarters show organic growth near the second-quarter pace after the acquisition comparison has gone and gross margin stabilizes, because that would both support holding today's current-year multiple and lower the weight we put on a stall.",
+      "issue": "On the page's own math the deep Bear sets the BUY bar through reward/risk, as scenarioCommentary says. Holding the Base at today's current-year multiple and moving ten points of weight from Bear to Bull, together, still leave reward/risk below the 0.50× BUY bar. So the trigger as written may not derive BUY unless the weight shift is larger than the sensitivities the report tests, or the Bear itself becomes shallower. A reader who checks the trigger against scenarioCommentary could conclude it does not flip the label (rubric item 6, at Minor because the size of the weight change is left open).",
+      "fix": "Say what the upgrade would require on the page's terms, in words: either the evidence would also have to make the stall shallower (raising the Bear), or it would have to cut the Bear weight by more than the tested sensitivities. Alternatively, call the trigger a move toward BUY rather than a guaranteed flip, as the SELL trigger already does.",
       "status": "open"
     }
   ]
