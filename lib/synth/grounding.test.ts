@@ -1,10 +1,25 @@
 import { describe, it, expect } from "vitest";
-import { numericTokens, buildAllowedIndex, checkGrounding, AllowedIndex } from "@/lib/synth/grounding";
+import { numericTokens, buildAllowedIndex, checkGrounding, AllowedIndex, buildGroundingIndex, type GroundingSurface } from "@/lib/synth/grounding";
 import { stringLeaves } from "@/lib/synth/walk";
 import { FactPack } from "@/lib/facts/schema";
+import { projectReportFacts } from "@/lib/facts/project";
+import { Judgment } from "@/lib/synth/judgment.schema";
+import { Desk } from "@/lib/synth/desk.schema";
+import { renderFactsBlock, renderContextBlock, renderCalls } from "@/lib/synth/prompt";
+import { renderJudgmentBlock } from "@/lib/synth/validate-judgment";
+import { formatCell } from "@/lib/format";
+import goldenJudgment from "@/lib/__fixtures__/avgo-golden-judgment.json";
 import { readFileSync } from "node:fs";
 
 const pack = FactPack.parse(JSON.parse(readFileSync("data/facts/AVGO/0001730168-26-000080.json", "utf8")));
+const desk = Desk.parse(JSON.parse(readFileSync("data/desk/desk.json", "utf8")));
+const golden = Judgment.parse(goldenJudgment);
+/** The AVGO pack and the golden judgment as the author's prompt renders them. */
+const surfaceOf = (p: FactPack, extraContext = ""): GroundingSurface => {
+  const facts = projectReportFacts(p), f = facts.sections.financials;
+  return { tables: [f.income, f.balance, f.cashflow], factsBlock: renderFactsBlock(facts, p), callsBlock: renderCalls(desk.rating),
+    judgmentBlock: renderJudgmentBlock(golden, p.quote.price), contextBlock: renderContextBlock(p) + extraContext };
+};
 
 describe("numericTokens", () => {
   const cases: [string, { raw: string; magnitude: number; kind: string }[]][] = [
@@ -236,6 +251,53 @@ describe("numericTokens v2", () => {
       ["capex of $1.41 billion", ["$1.41 billion:money×1000000000"]],
     ];
     for (const [text, want] of CASES) it(JSON.stringify(text), () => expect(show(text)).toEqual(want));
+  });
+});
+
+describe("the surface index (AVGO pack, golden judgment)", () => {
+  const surface = surfaceOf(pack, "\n### Synthetic table\nAcquisitions\n11.2\n%\nOther (14,632) and a share of <1\n");
+  const { entries } = buildGroundingIndex(surface);
+  const near = (a: number, b: number) => Math.abs(a - b) <= 1e-9 * Math.max(1, Math.abs(a), Math.abs(b));
+  const facts = (raw: string) => entries.filter((e) => e.source === "facts" && e.raw === raw);
+
+  it("types a statement-table cell by its row format", () => {
+    const rev = entries.find((e) => e.source === "facts" && e.raw === "63.9" && e.kind === "money")!;
+    expect(rev).toMatchObject({ kind: "money", currency: "$", sign: 1, precision: 1 });
+    expect(rev.abs).toBeCloseTo(63.9e9, 0);
+    expect(rev.resolution).toBeCloseTo(1e8, 0);
+    const capex = facts("-0.6").find((e) => e.kind === "money")!;
+    expect(capex.sign).toBe(-1);
+    expect(capex.abs).toBeCloseTo(0.6e9, 0);
+    expect(facts("1.71").map((e) => [e.kind, e.precision])).toContainEqual(["plain", 2]);              // current ratio, num2
+    expect(facts("+23.9%").map((e) => [e.kind, e.sign, e.abs])).toContainEqual(["pct", 1, 23.9]);       // YoY, pctSigned
+  });
+  it("restores the precision compactUSD and compactNum trim", () => {
+    const infra = entries.find((e) => e.source === "facts" && e.raw === "$27B")!;
+    expect([infra.precision, infra.resolution]).toEqual([1, 1e8]);
+    expect(entries.find((e) => e.source === "facts" && e.raw === "$1.72T")!.precision).toBe(2);
+    const shares = entries.find((e) => e.source === "facts" && e.raw === "4.77B")!;
+    expect([shares.kind, shares.precision]).toEqual(["plain", 2]);
+  });
+  it("indexes the Calls thresholds", () => {
+    for (const raw of ["0.50×", "+10.0%", "-5.0%", "15.0%"]) expect(entries.filter((e) => e.raw === raw).map((e) => e.source), raw).toContain("calls");
+  });
+  it("indexes the judgment block, with × as a multiplier", () => {
+    expect(entries.find((e) => e.source === "judgment" && e.raw === "1.98×")).toMatchObject({ kind: "mult", abs: 1.98 });
+  });
+  it("indexes context layouts: a money cell, a %-cell also bare, a parenthesized cell unsigned, <1", () => {
+    const ctx = entries.filter((e) => e.source === "context");
+    expect(ctx.find((e) => e.raw === "$\n15,955")).toMatchObject({ kind: "money", scale: 1, abs: 15955 });
+    expect(ctx.filter((e) => e.raw === "11.2\n%").map((e) => e.kind).sort()).toEqual(["pct", "plain"]);
+    expect(ctx.find((e) => e.raw === "(14,632)")).toMatchObject({ kind: "plain", sign: 0, abs: 14632 });
+    expect(ctx.find((e) => e.raw === "1" && e.kind === "plain")).toBeDefined();
+  });
+  it("yields exactly one entry per numeric statement-table cell, digits as formatCell renders them", () => {
+    const cells = surface.tables.flatMap((t) => t.rows.flatMap((r) => r.values.filter((v): v is number => typeof v === "number").map((v) => formatCell(v, r.format))));
+    expect(entries.slice(0, cells.length).map((e) => e.raw)).toEqual(cells);
+  });
+  it("does not index raw pack numbers the prompt never renders", () => {
+    const withPeer = { ...pack, peers: [{ ...pack.peers[0], pe: 123.4 }, ...pack.peers.slice(1)] };
+    expect(buildGroundingIndex(surfaceOf(withPeer)).entries.some((e) => near(e.abs, 123.4))).toBe(false);
   });
 });
 

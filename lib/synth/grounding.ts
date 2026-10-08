@@ -8,6 +8,8 @@
  */
 import type { FactPack } from "../facts/schema";
 import type { ValidationIssue } from "../validate";
+import type { FinancialTable } from "../report.schema";
+import { formatCell, type CellFormat } from "../format";
 import { stringLeaves } from "./walk";
 
 export type NumberKind = "money" | "pct" | "mult" | "pp" | "bp" | "plain";
@@ -171,6 +173,84 @@ function inherit(text: string, ts: Draft[]): void {
     else if (a.kind === "money" && a.scale === 1 && b.kind === "money" && b.scale !== 1) set(a, "money", a.currency, b.scale); // $1.750 to $1.810 billion
   }
 }
+
+/* ------------------------------------------------------------- the surface index ------------------------------------------------------------- */
+
+export type GroundingSource = "facts" | "calls" | "judgment" | "context";
+export interface GroundingEntry extends NumberToken { source: GroundingSource }
+
+/** What the author's prompt shows: the Facts block and the statement tables it renders, the Calls, the report's own calls, the Context. */
+export interface GroundingSurface {
+  tables: FinancialTable[];
+  factsBlock: string;
+  callsBlock: string;
+  judgmentBlock: string;
+  contextBlock: string;
+}
+
+const TABLE_KIND: Record<CellFormat, { kind: NumberKind; scale: number }> = {
+  usdB: { kind: "money", scale: 1e9 }, usdT: { kind: "money", scale: 1e12 }, pct: { kind: "pct", scale: 1 }, pctSigned: { kind: "pct", scale: 1 },
+  mult: { kind: "mult", scale: 1 }, eps: { kind: "money", scale: 1 }, num2: { kind: "plain", scale: 1 }, num1: { kind: "plain", scale: 1 },
+  usd0: { kind: "money", scale: 1 }, usd2: { kind: "money", scale: 1 },
+};
+
+/** Statement-table cells: unit and scale come from the row's format, the digits from formatCell — exactly the cell the author sees. */
+function tableEntries(tables: FinancialTable[]): GroundingEntry[] {
+  const out: GroundingEntry[] = [];
+  for (const t of tables) for (const r of t.rows) for (const v of r.values) {
+    if (v == null) continue;
+    if (typeof v === "string") { for (const tk of numericTokens(v, "index")) out.push({ ...tk, source: "facts", sign: tk.sign || 1 }); continue; }
+    const s = formatCell(v, r.format);
+    const { kind, scale } = TABLE_KIND[r.format];
+    const mm = s.match(/^[+\-−]?\$?([\d,]+)(\.\d+)?/);
+    if (!mm) continue;
+    const precision = mm[2] ? mm[2].length - 1 : 0;
+    const num = Number(mm[1].replace(/,/g, "") + (mm[2] ?? ""));
+    const sign = v < 0 ? -1 : 1;
+    out.push({ raw: s, index: 0, end: 0, kind, currency: kind === "money" ? "$" : null, value: sign * num, magnitude: sign * num * scale, abs: num * scale, sign,
+      precision, scale, resolution: Math.pow(10, -precision) * scale, sig: sigDigits(mm[1], mm[2] ?? ""),
+      tz: mm[2] ? 0 : (mm[1].replace(/,/g, "").match(/[1-9](0+)$/)?.[1].length ?? 0), source: "facts" });
+  }
+  return out;
+}
+
+/** Facts-block lines outside the tables. compactUSD/compactNum trim trailing zeros ("$27B" is 27.0 at 1 dp), so restore the formatter's precision. */
+function factsLineEntries(factsBlock: string): GroundingEntry[] {
+  const out: GroundingEntry[] = [];
+  for (const line of factsBlock.split("\n")) {
+    if (line.startsWith("|")) continue;
+    for (const t of numericTokens(line, "index")) {
+      const precision = t.scale >= 1e6 ? Math.max(t.precision, t.kind === "money" ? (t.scale === 1e12 ? 2 : 1) : 2) : t.precision;
+      out.push({ ...t, precision, resolution: t.scale >= 1e6 ? Math.pow(10, -precision) * t.scale : t.resolution, source: "facts", sign: t.sign || 1 });
+    }
+  }
+  return out;
+}
+
+/** Calls and judgment blocks are structured (sign known); context text is not (an unsigned "12%" may be a decline). */
+function textEntries(text: string, source: GroundingSource): GroundingEntry[] {
+  const out: GroundingEntry[] = [];
+  for (const t of numericTokens(text, "index")) {
+    out.push({ ...t, source, sign: source === "context" ? t.sign : (t.sign || 1) });
+    // a "%" on the next line of a shredded table may belong to a column header, so the cell is also indexed bare
+    if (source === "context" && t.kind === "pct" && /\n%$/.test(t.raw) && t.scale === 1) out.push({ ...t, kind: "plain", source });
+  }
+  return out;
+}
+
+/** Every figure on the grounding surface, typed. */
+export class GroundingIndex {
+  constructor(readonly entries: readonly GroundingEntry[]) {}
+}
+
+export function buildGroundingIndex(s: GroundingSurface): GroundingIndex {
+  return new GroundingIndex([
+    ...tableEntries(s.tables), ...factsLineEntries(s.factsBlock),
+    ...textEntries(s.callsBlock, "calls"), ...textEntries(s.judgmentBlock, "judgment"), ...textEntries(s.contextBlock, "context"),
+  ]);
+}
+
+/* ---------------------------------------------------------- the FactPack index (old) ---------------------------------------------------------- */
 
 const roundTo = (x: number, dp: number) => Number(x.toFixed(dp));
 
