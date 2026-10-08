@@ -3,6 +3,9 @@ import { readFileSync } from "node:fs";
 import { FactPack } from "@/lib/facts/schema";
 import { Desk } from "@/lib/synth/desk.schema";
 import { canon, reviewInputs, inputsUnder, changedComponents, LEGACY_ENVELOPE_CALLS } from "@/lib/synth/review-inputs";
+import { projectReportFacts } from "@/lib/facts/project";
+import { HIGHLIGHT_KEYS } from "@/lib/facts/highlights";
+import { renderFactsBlock, renderContextBlock, renderCalls } from "@/lib/synth/prompt";
 
 const FIX = "lib/__fixtures__/review-inputs";
 const loadPack = (t: string) => FactPack.parse(JSON.parse(readFileSync(`${FIX}/${t}.pack.json`, "utf8")));
@@ -74,4 +77,144 @@ describe("scheme-1 pins", () => {
     },
   };
   for (const t of TICKERS) it(`${t}`, () => expect(reviewInputs(loadPack(t), desk)).toEqual({ scheme: 1, ...PINS[t] }));
+});
+
+// ---- Completeness: every field the renderers read moves its component (Task 2). Over-sensitivity is allowed.
+
+type Path = (string | number)[];
+const GAP = "renderer reads a field the fingerprint does not cover: add it under a new scheme (see review-inputs.ts header)";
+function leaves(o: unknown, path: Path = [], out: { path: Path; value: unknown }[] = []) {
+  if (o !== null && typeof o === "object") {
+    if (Array.isArray(o)) o.forEach((v, i) => leaves(v, [...path, i], out));
+    else for (const [k, v] of Object.entries(o)) leaves(v, [...path, k], out);
+  } else out.push({ path, value: o });
+  return out;
+}
+type Tree = Record<string | number, unknown>;
+const getAt = (o: unknown, path: Path) => path.reduce<unknown>((x, k) => (x == null ? undefined : (x as Tree)[k]), o);
+const setAt = (o: unknown, path: Path, v: unknown) => {
+  const parent = getAt(o, path.slice(0, -1)) as Tree;
+  if (v === undefined) delete parent[path.at(-1)!]; else parent[path.at(-1)!] = v;
+};
+const bump = (v: unknown): unknown =>
+  typeof v === "number" ? (v === 0 ? 1.5 : v * 1.37 + 0.11)
+    : typeof v === "string" ? (/^\d{4}-\d{2}-\d{2}/.test(v) ? "2001-02-03" : v + " Zq")
+      : typeof v === "boolean" ? !v : v === null ? 7.25 : v;
+
+/** Rendered blocks and components for a pack; null when the projection rejects the mutated pack. */
+function observe(p: FactPack) {
+  try {
+    const f = projectReportFacts(p);
+    const i = reviewInputs(p, desk, f);
+    return { factsBlock: renderFactsBlock(f, p), contextBlock: renderContextBlock(p), facts: i.facts, context: i.context };
+  } catch { return null; }
+}
+/** The gaps between two packs: a rendered block that moved while its component did not. */
+function gaps(a: FactPack, b: FactPack, label: string): string[] {
+  const x = observe(a), y = observe(b);
+  if (!x || !y) return [];
+  const out: string[] = [];
+  if (x.factsBlock !== y.factsBlock && x.facts === y.facts) out.push(`facts ${label}`);
+  if (x.contextBlock !== y.contextBlock && x.context === y.context) out.push(`context ${label}`);
+  return out;
+}
+
+describe("completeness (a): every present pack leaf", () => {
+  for (const t of TICKERS)
+    it(`${t}: a mutated leaf that moves the Facts or Context block moves its component`, () => {
+      const pack = loadPack(t);
+      const ls = leaves(pack).filter((l) => l.path[0] !== "history" || (l.path[1] as number) < 3);
+      const found: string[] = [];
+      let tested = 0;
+      for (const l of ls) {
+        const p = structuredClone(pack);
+        setAt(p, l.path, bump(l.value));
+        if (observe(p)) tested++;
+        found.push(...gaps(pack, p, l.path.join(".")));
+      }
+      expect(tested).toBeGreaterThan(ls.length * 0.9);
+      expect(found, GAP).toEqual([]);
+    });
+
+  it("every desk.rating leaf that moves the Calls block moves calls", () => {
+    const pack = loadPack("AVGO");
+    const base = reviewInputs(pack, desk).calls;
+    const found: string[] = [];
+    for (const l of leaves(desk.rating)) {
+      const rating = structuredClone(desk.rating);
+      setAt(rating, l.path, bump(l.value));
+      if (renderCalls(rating) !== renderCalls(desk.rating) && reviewInputs(pack, { rating }).calls === base) found.push(`calls rating.${l.path.join(".")}`);
+    }
+    expect(found, GAP).toEqual([]);
+  });
+});
+
+describe("completeness (b): every optional or nullable field, absent and present", () => {
+  // The maximal pack: AVGO with every optional or nullable field the schema allows populated.
+  const maximal = loadPack("AVGO");
+  const ex = (s: string) => ({ text: `${s} excerpt text`, source: `edgar:${s}`, url: `https://example.test/${s}`, asOf: "2026-08-02", truncated: true });
+  const c = maximal.context;
+  c.description = { ...c.description, url: "https://example.test/description", truncated: true };
+  const NULLABLE_EXCERPTS = ["mdaExcerpt", "riskFactorsExcerpt", "pressRelease", "proxyStatement", "transcriptHighlights"] as const;
+  for (const k of NULLABLE_EXCERPTS) c[k] = { ...(c[k] ?? ex(k)), url: c[k]?.url ?? `https://example.test/${k}`, truncated: true };
+  c.riskFactorsSource ??= "10-K";
+  if (!c.headlines.length) c.headlines = [ex("h1"), ex("h2")];
+  maximal.quote.sharesSource = "cover";
+  for (const k of Object.keys(maximal.ttm) as (keyof FactPack["ttm"])[]) maximal.ttm[k] ??= 1.25;
+  maximal.latestQuarter.operatingMargin ??= 0.2;
+  maximal.latestQuarter.revenueYoY ??= 0.1;
+  for (const k of ["nextFY", "followingFY"] as const) { maximal.estimates[k].revenue ??= 1e11; maximal.estimates[k].eps ??= 10; }
+  for (const s of ["income", "balance", "cashflow"] as const) for (const r of maximal.statements[s]) r.values = r.values.map((v) => v ?? 1.5e9);
+  if (!maximal.segments.items.length) maximal.segments.items = [{ name: "A", revenue: 6e10, share: 0.6 }, { name: "B", revenue: 4e10, share: 0.4 }];
+  if (!maximal.geoMix.items.length) maximal.geoMix.items = [{ region: "Americas", share: 0.7 }, { region: "Asia", share: 0.3 }];
+  maximal.goodwillRestated ??= ["FY24"];
+  maximal.crosscheckOverrides ??= [{ field: "price", reason: "verified", verifiedAgainst: "10-Q", capturedAt: "2026-08-02" }];
+
+  // Each field with its absent form; the minimal twin applies every one (children before their parents).
+  const fields: { path: Path; absent: unknown }[] = [
+    ...["description", ...NULLABLE_EXCERPTS].flatMap((k) => [
+      { path: ["context", k, "truncated"], absent: undefined }, { path: ["context", k, "url"], absent: undefined },
+    ]),
+    ...NULLABLE_EXCERPTS.map((k) => ({ path: ["context", k], absent: null })),
+    { path: ["context", "riskFactorsSource"], absent: null },
+    { path: ["context", "headlines"], absent: [] },
+    { path: ["quote", "sharesSource"], absent: "derived" },
+    ...Object.keys(maximal.ttm).map((k) => ({ path: ["ttm", k], absent: null })),
+    { path: ["latestQuarter", "operatingMargin"], absent: null }, { path: ["latestQuarter", "revenueYoY"], absent: null },
+    ...["nextFY", "followingFY"].flatMap((k) => [{ path: ["estimates", k, "revenue"], absent: null }, { path: ["estimates", k, "eps"], absent: null }]),
+    ...(["income", "balance", "cashflow"] as const).flatMap((s) => maximal.statements[s].flatMap((r, i) => [
+      ...r.values.map((_, j) => ({ path: ["statements", s, i, "values", j], absent: null })),
+      { path: ["statements", s, i, "values"], absent: r.values.map(() => null) },
+    ])),
+    { path: ["segments", "items"], absent: [] }, { path: ["geoMix", "items"], absent: [] }, { path: ["peers"], absent: [] },
+    ...["sic", "sicDescription", "goodwill", "goodwillRestated", "sbc", "beta", "shibuiCheck", "crosscheckOverrides"].map((k) => ({ path: [k], absent: undefined })),
+  ];
+  const minimal = structuredClone(maximal);
+  for (const f of fields) if (getAt(minimal, f.path.slice(0, -1)) != null) setAt(minimal, f.path, structuredClone(f.absent));
+
+  it("the maximal pack populates every highlight key, and both twins parse", () => {
+    expect(Object.keys(projectReportFacts(maximal).highlightCells).sort()).toEqual([...HIGHLIGHT_KEYS].sort());
+    expect(FactPack.safeParse(maximal).success).toBe(true);
+    expect(FactPack.safeParse(minimal).success).toBe(true);
+    expect(observe(minimal)).not.toBeNull();
+  });
+
+  it("absent → present on the minimal pack, and present → absent on the maximal one, moves the component wherever the render moves", () => {
+    const found: string[] = [];
+    let tested = 0;
+    for (const f of fields) {
+      const label = f.path.join(".");
+      if (getAt(minimal, f.path.slice(0, -1)) != null) {
+        const p = structuredClone(minimal);
+        setAt(p, f.path, structuredClone(getAt(maximal, f.path)));
+        if (observe(p)) tested++;
+        found.push(...gaps(minimal, p, `${label} (absent→present)`));
+      }
+      const q = structuredClone(maximal);
+      setAt(q, f.path, structuredClone(f.absent));
+      found.push(...gaps(maximal, q, `${label} (present→absent)`));
+    }
+    expect(tested).toBeGreaterThan(fields.length / 2);
+    expect(found, GAP).toEqual([]);
+  });
 });
