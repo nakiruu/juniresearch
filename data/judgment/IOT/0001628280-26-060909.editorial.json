@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "4018012c9fdc1e29ac347a3df7c4aed6f1230437321fcb6942d0bc80f13faf6a",
-  "reviewedAt": "2026-09-24T19:30:00Z",
-  "reviewer": "Claude Opus 4.8",
+  "judgmentSha256": "a62589944bb19824b42809f6232bfabb53f7ef6280f3e0f62678fc64a72c97e2",
+  "reviewedAt": "2026-10-08T15:15:40Z",
+  "reviewer": "Claude Opus 5.5",
   "round": 2,
-  "verdict": "approved",
+  "verdict": "needs-fix-round",
   "findings": [
     {
       "id": "F-1",
@@ -13,7 +13,7 @@
       "issue": "This macro list — inflationary pressure, foreign-currency fluctuations, elevated hardware-component costs and tariff/trade policies — and the public-sector budget-appropriations point come from the 10-Q MD&A (its \"Macroeconomic Trends\" and Revenue sections in Context), not the 10-K risk-factors excerpt. The 10-K excerpt in the pack carries only the growth-rate-decline, history-of-losses and new-use-case risks. Attaching these facts to \"the 10-K\" attaches them to a source that did not carry them (over-attribution).",
       "fix": "Attribute the macro-exposure list and the public-sector budget-cycle point to the 10-Q MD&A, where the pack carries them, or drop the source label and state the exposures plainly. Reserve \"the 10-K\" for the growth-decline and expansion risks it actually contains.",
       "status": "addressed",
-      "note": "Rewrite changed \"The 10-K flags\" to \"The filing flags,\" correctly tying the macro list to the 10-Q MD&A; public-sector customers \"subject to annual budget appropriations\" is now the filing's point too. Attribution correct."
+      "note": "Re-checked on the rewrite: the macro list is now attributed to the MD&A (\"The MD&A says unfavorable economic conditions ... It lists inflationary pressure ...\"), and the 10-K is cited only for listing macroeconomic factors among reasons growth could decline, which its excerpt carries."
     },
     {
       "id": "F-2",
@@ -23,7 +23,7 @@
       "issue": "FY2028 revenue of $2.45B is not on the grounding surface. The Facts Estimates block gives \"FY28E revenue $2.5B,\" and the report's own calls carry no FY2028 revenue figure; $2.45B is a more precise number than the surface supports and differs from the grounded $2.5B. (FY2027 $2.05B is grounded by the report's FY27E Revenue call of $2,045,465,180, and the $0.77/$0.95 EPS pair is grounded.)",
       "fix": "Quote FY2028 estimated revenue as $2.5B, exactly as the Facts block gives it, or omit the figure. Do not introduce a $2.45B that appears nowhere on the surface.",
       "status": "addressed",
-      "note": "Growth point now reads \"FY2027 revenue of $2B and FY2028 revenue of $2.5B,\" matching the Facts Estimates block exactly."
+      "note": "Re-checked: growth.points[4] reads \"FY2027 revenue at $2B, up 26%, and FY2028 revenue at $2.5B\", matching the Facts Estimates block."
     },
     {
       "id": "F-3",
@@ -33,7 +33,7 @@
       "issue": "This identical clause appears in two sections: the executive-summary thesis (\"Annual recurring revenue reached $2,124,742 thousand from $1,640,113 thousand, gross margin is 76.7%, and free cash flow is now positive\") and again here in the growth points. The rubric requires no sentence appear in two sections — the exec summary should point and the growth section argue, not restate the same figure in the same words.",
       "fix": "State the ARR figure once, in the growth section where it belongs, and refer back to it in words in the thesis (e.g., recurring revenue keeps compounding) rather than repeating \"$2,124,742 thousand from $1,640,113 thousand\" verbatim.",
       "status": "addressed",
-      "note": "Growth point now reads \"annual recurring revenue kept compounding at a similar pace\" (with customers 3,605 from 2,771); the verbatim ARR clause survives only once, in the thesis."
+      "note": "Re-checked: the ARR figures now appear once, in growth.points[0]; the thesis carries no ARR figure and points to the financials section."
     },
     {
       "id": "F-4",
@@ -43,7 +43,7 @@
       "issue": "The same claim — consensus $52.16 (+34.1%), median $53.00, range $39.00–$60.00, shares near the low end — is made in analystCommentary (\"The consensus price target is $52.16, about 34.1% above the current $38.90, with a median of $53.00 and a range of $39.00 to $60.00 — the shares sit near the low end of that range\") and again here, only reworded. That is a paraphrase repetition across two blocks.",
       "fix": "Give the full consensus-target spread once (analystCommentary), and in the valuation section refer to it in words while adding the valuation argument — what the forward multiple should be — rather than restating the target, median, range and near-low-end position a second time.",
       "status": "addressed",
-      "note": "multiplesCommentary now reads \"Analysts' price targets sit above the current price and leave the stock near the bottom of their spread\"; the full spread appears once, in analystCommentary."
+      "note": "Re-checked: the target spread appears once, in analystCommentary; multiplesCommentary no longer restates it."
     },
     {
       "id": "F-5",
@@ -52,8 +52,8 @@
       "quote": "stock-based compensation, which financed the growth that produced the $1,619.1 million accumulated deficit and continues to dilute shareholders as the company scales.",
       "issue": "The SBC-funded-the-accumulated-deficit-and-dilutes-shareholders narrative is retold in three sections in different words: cashflowCommentary (\"a large share of reported profitability rests on the gap between cash flow and GAAP created by stock-based compensation... dilutes shareholders even as it flatters the cash line\"), capitalAllocation (this quote), and risks.idiosyncratic (\"the equity-funded model produced a $1,619.1 million accumulated deficit, and ongoing SBC dilutes holders while flattering cash relative to GAAP earnings\"), with the $1,619.1M figure also in balanceCommentary and the exec-summary risks. One story is argued repeatedly.",
       "fix": "Make the SBC-dilution / accumulated-deficit argument once, with capitalAllocation the natural home, state the $1,619.1M figure once outside the exec-summary pointer, and refer back in words in cashflow and risks rather than re-arguing the flatters-cash-versus-GAAP point in each.",
-      "status": "addressed",
-      "note": "$1,619.1M removed from balanceCommentary (now \"a large accumulated deficit\") and from risks.idiosyncratic; the figure now appears once outside the exec pointer, in capitalAllocation. cashflow and risks refer to SBC in words. This follows the prescribed fix; residual overlap is section-appropriate (cash quality / trajectory / dilution risk)."
+      "status": "open",
+      "note": "Recurs in the rewrite. The same SBC claim (10-K says it will be significant; no figure on the page to size it) is made in exec risks[3], cashflowCommentary (\"that the 10-K says will be significant ... but no SBC figure is on the page to size it\"), capitalAllocation (\"a significant amount of stock-based compensation ... the page carries no figure to size it\") and risks.idiosyncratic[3] (\"has no figure on the page\"). Argue it once in capitalAllocation; the others point back in words."
     },
     {
       "id": "F-6",
@@ -63,7 +63,7 @@
       "issue": "The section asserts founder control from the multi-class structure but leaves the on-surface control figures unread. The proxy in Context supplies the quantities that make the point actionable: Class B carries ten votes per share, Sanjit Biswas holds 39.6% of total voting power and John Bicket 38.4%, and all directors and officers as a group hold 77.5% of total voting power. Rubric item 4 asks that a control figure be read for the holder — what a 77.5% voting bloc lets insiders do that an ordinary float would not — rather than characterised generically.",
       "fix": "Quote the insider/founder voting power (e.g., insiders ~77.5% of the vote via ten-votes-per-share Class B; Biswas ~39.6%) and read it for the holder — public shareholders cannot outvote the founders on any matter put to a vote — so the paragraph reaches an actionable governance view instead of a general caution.",
       "status": "addressed",
-      "note": "New insiderOwnership field quotes the dual-class figures (370,981,108 Class A vs 211,728,974 super-voting Class B; Biswas 99,968,305 Class B / 39.6% voting power; Bicket 95,533,040 / 38.4%; together a controlling majority) and reads them for the holder (\"public Class A holders... limited ability to sway board or governance outcomes\"); governance now points to it. All figures verified against the proxy."
+      "note": "Re-checked: insiderOwnership quotes the April 15, 2026 share counts, Biswas 39.6%, Bicket 38.4%, the group's 77.5% of the vote and Baillie Gifford's 15.5% of Class A vs 2.3% of the vote, and reads them for outside holders. All figures match the proxy table."
     },
     {
       "id": "F-7",
@@ -73,7 +73,7 @@
       "issue": "The income series on the page shows year-over-year growth for four fiscal years only (FY23 +52.3%, FY24 +43.7%, FY25 +33.3%, FY26 +29.6%); FY22's YoY cell is blank. Four data points give three consecutive decelerations, not four, so the series does not show four straight years of deceleration.",
       "fix": "Say growth has fallen each year across the four years shown, or \"three straight years of deceleration,\" to match what the series demonstrates.",
       "status": "addressed",
-      "note": "thesis now reads \"revenue growth has slowed for three straight years,\" matching the three consecutive decelerations the series shows."
+      "note": "Re-checked: the claim is now \"annual revenue growth has slowed in each year shown\" (exec risks[1]) and \"from 52.3% in FY2023 to 29.6% in FY2026\" (incomeCommentary), which the series supports."
     },
     {
       "id": "F-8",
@@ -83,7 +83,88 @@
       "issue": "Flagging the period label is the right call — the snapshot's \"Q3'26\" and meta \"fiscal Q3 2026\" are a calendar-mapping artifact for a company whose fiscal year ends the Saturday closest to Feb 1. But the MD&A excerpt in Context does not literally label the period \"the second quarter of fiscal 2027\"; it says \"the three months ended August 1, 2026\" and that \"fiscal years 2027 and 2026 each consist of 52 weeks.\" \"The filing calls this\" over-attributes a verbatim label the excerpt does not show.",
       "fix": "Keep the label clarification, but phrase it as the period ended August 1, 2026 falling in the second quarter of fiscal 2027, rather than \"the filing calls this,\" unless the 10-Q body beyond the excerpt is confirmed to use that exact designation.",
       "status": "addressed",
-      "note": "incomeCommentary now states \"this is the three months ended August 1, 2026, Samsara's second quarter of fiscal 2027\" as the desk's own characterization, no longer attributing the verbatim label to the filing."
+      "note": "Re-checked: \"That quarter is the second quarter of Samsara's fiscal 2027; the page's snapshot labels it \\\"Q3'26\\\" on a calendar mapping, so we refer to it by its end date\" is the desk's own characterization, not attributed to the filing."
+    },
+    {
+      "id": "F-9",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic",
+      "quote": "The MD&A expects each operating expense line to increase in absolute dollars",
+      "issue": "Two risk bullets retell claims the financials and management sections already argue. idiosyncratic[1]: \"with the trailing operating margin barely positive and most trailing net income coming from below the operating line\" repeats incomeCommentary (\"so most trailing profit comes from below the operating line\") and exec risks[2]; and this quote repeats capitalAllocation (\"the MD&A says the company expects research and development, sales and marketing, and general and administrative expenses to increase in absolute dollars for the foreseeable future\"). idiosyncratic[2]: \"the MD&A says cost of revenue may increase as a result of higher market prices for hardware components\" repeats incomeCommentary (\"the MD&A says cost of revenue may increase with higher market prices for hardware components\"), and the hardware-cost exposure is listed a third time in risks.systemic. idiosyncratic[2] also hardens the source's \"may\" into \"higher device prices would weigh on margins\".",
+      "fix": "Keep each MD&A statement in one place and have the risk bullets point back in words (\"the thin operating profit set out in the financials section\", \"the hardware-cost exposure noted there\"), adding only what is new to the risk: the mechanism and what would show it happening. Keep the source's hedge (\"may\").",
+      "status": "open"
+    },
+    {
+      "id": "F-10",
+      "severity": "Important",
+      "field": "sections.businessMoat.segments[0].body",
+      "quote": "the company has increased its focus on Applications for equipment, sites and frontline workers",
+      "issue": "Two business facts are stated twice. This clause appears word for word in the segments body (\"The 10-K says ... and that the company has increased its focus on Applications for equipment, sites and frontline workers\") and in growth.points[5] (\"the 10-K says the company has increased its focus on Applications for equipment, sites and frontline workers\"). Separately, the contract terms are given in the executive-summary companyOverview (\"Subscription contracts typically have an initial term of three to five years and are generally non-cancelable and non-refundable\") and restated in moatFactors[0] (\"Contracts typically run three to five years and are generally non-cancelable\"), where they are the argument.",
+      "fix": "State the shift beyond fleets once (growth.points[5], which carries the uncertainty), and have the segments body point back in words. Give the contract terms once, in the switching-costs factor where they carry the argument; the overview can say the company sells multi-year subscriptions without restating the terms.",
+      "status": "open"
+    },
+    {
+      "id": "F-11",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "and consensus expects slower growth again in FY2027",
+      "issue": "The consensus slowdown is stated here and again in growth.points[4] (\"Consensus has FY2027 revenue at $2B, up 26%, and FY2028 revenue at $2.5B, so the Street models continued but slower growth\"). The same claim made in two sections in different words.",
+      "fix": "End the income paragraph on the historical series and leave the consensus outlook to the growth section, which carries the figures.",
+      "status": "open"
+    },
+    {
+      "id": "F-12",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[2].driver",
+      "quote": "Anchor: 35x FY2028 EPS that comes in no higher than the FY2027 consensus of $0.77, a multiple we assume for a stock the market no longer prices for its current growth rate. Growth slows faster than consensus expects and operating margin stalls near breakeven.",
+      "issue": "The Bear's story and its anchor describe different outcomes. The story is a GAAP operating margin that \"stalls near breakeven\", but the price is built on $0.77 of EPS, the FY2027 consensus that multiplesCommentary itself says is \"far above\" a \"trailing operating margin barely above zero\" and may not be on a GAAP basis. A company whose operating margin stalls near breakeven would not earn the consensus EPS, so the price does not follow the story (the V/CEG pattern). The 35x also has no checkable basis: \"a stock the market no longer prices for its current growth rate\" names a direction, not a level, and the sentence does not tie it to anything on the page (today's 50.5x current-year or 41.0x FY2028 multiple, or the 52-week range). The scenarioCommentary then argues the 25% Bear weight partly on \"the operating margin is barely positive\", the same GAAP-basis evidence the anchor does not price.",
+      "fix": "Make the Bear's story and its anchor describe one outcome on one earnings basis. For example, consensus-basis EPS stops growing after FY2027 as growth slows faster, with the GAAP-margin language dropped or reframed. Or, if the story is a stalled GAAP margin, do not price it on consensus EPS. State the basis for the multiple from figures on the page, and re-check that the weights still say what you believe. Accuracy runs both ways: re-anchor because the story requires it, not to move the label in either direction.",
+      "status": "open"
+    },
+    {
+      "id": "F-13",
+      "severity": "Important",
+      "field": "sections.growth.points",
+      "quote": "Revenue for the six months ended August 1, 2026 was $987.3 million, against $758.4 million a year earlier.",
+      "issue": "Two growth points list figures without reading them. points[3] (this quote) restates six-month revenue and reaches no view: it does not say whether the half-year pace matches, leads or lags the quarter's 29.9% or the full-year trend. points[0] gives the August ARR level and the company's definition but does not say what the level means for the reader. For example, it does not say what ARR at that level, above the FY2026 revenue line, implies for ratably recognized revenue, or how it bears on the slowdown the rest of the section describes. Rubric item 4: a paragraph that only lists facts is a finding however accurate it is.",
+      "fix": "Have each point reach a view in words, without computing a new figure. For example, say the first-half pace is similar to the quarter's, or what the ARR level supports and what it does not (it is not a forecast, as the company says). Alternatively, fold points[3] into the ARR or consensus point, or drop it.",
+      "status": "open"
+    },
+    {
+      "id": "F-14",
+      "severity": "Minor",
+      "field": "sections.financials.cashflowCommentary",
+      "quote": "The page shows no dividends and no buybacks in FY2025 or FY2026.",
+      "issue": "The Share Repurchases cells for FY2025 and FY2026 are dashes. balanceCommentary reads a dash as \"no figure was captured\" for debt and so declines to call the company debt-free. Reading the same dash as zero buybacks here is inconsistent. The 0.00% dividend yield supports no dividends, but nothing on the surface supports zero buybacks. capitalAllocation repeats the reading: \"The cash flow section shows no dividends and no buybacks in the last two fiscal years\".",
+      "fix": "Treat the dash the way the balance-sheet paragraph does. Say the page carries no buyback figure for FY2025 or FY2026, and keep the dividend point on the 0.00% yield. capitalAllocation's \"With no buyback on the page to offset it\" already has the right shape.",
+      "status": "open"
+    },
+    {
+      "id": "F-15",
+      "severity": "Minor",
+      "field": "sections.finalRecommendation.body[0]",
+      "quote": "our scenarios weight to a fair value of $41.36, an expected upside of 6.3% against a bear-case downside of 30.7%",
+      "issue": "This clause repeats scenarioCommentary's opening almost word for word (\"The scenarios weight to a fair value of $41.36, an expected upside of 6.3% against a bear-case downside of 30.7%\"). No sentence should appear in two sections.",
+      "fix": "Keep the full statistics in one place. The final recommendation can give the fair value and refer to the expected return and downside in words, or scenarioCommentary can drop the restated clause.",
+      "status": "open"
+    },
+    {
+      "id": "F-16",
+      "severity": "Minor",
+      "field": "sections.finalRecommendation.body[1]",
+      "quote": "The target range is the band in which these scenarios derive HOLD.",
+      "issue": "On these scenarios the HOLD band sits slightly inside $36–$44 at both ends. A price a little above the $36 target low still derives BUY, because reward/risk is still above 0.50× there, and a price a little below the $44 target high already derives SELL. The next two sentences (BUY at or below the low, SELL at or above the high) are true. But \"the band in which these scenarios derive HOLD\" and \"Between those prices, the label moves only if new evidence moves the multiple or the weights\" overstate the match.",
+      "fix": "Say the range approximately brackets the band in which the scenarios derive HOLD, or describe it in a way that holds at both ends. Do not move the targets or the scenarios to make the sentence exact.",
+      "status": "open"
+    },
+    {
+      "id": "F-17",
+      "severity": "Minor",
+      "field": "sections.businessMoat.durability",
+      "quote": "the page carries no retention, net-expansion or competitor figure",
+      "issue": "\"The page\" is a verbal tic. It appears 26 times across the judgment: \"the page carries no\" six times, \"on the page\" seven times, \"the page does not\" four times, plus \"the page gives no\", \"the page shows\" and \"the page breaks out\". Examples are analystCommentary (\"The page carries no analyst rationale\"), companyOverview, incomeCommentary, balanceCommentary, cashflowCommentary, multiplesCommentary, the segments body, moatFactors[0] and [2], durability, capitalAllocation and risks.idiosyncratic[3]. The house list of tics to avoid includes the repeated \"the sources do not…\", and this is the same habit.",
+      "fix": "Keep the data-gap caveat where it carries the argument (debt dashes, SBC, the estimates basis) and state it once. Elsewhere, drop it or vary it (\"no retention figure is available\", \"we have no...\"), so that a reader notices the caveats that matter.",
+      "status": "open"
     }
   ]
 }
