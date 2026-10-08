@@ -18,7 +18,7 @@ import { reviewInputs } from "../lib/synth/review-inputs";
 import { planBackfill, parseBackfillArgs, BACKFILL_USAGE, type BackfillGit, type FindingsFile } from "../lib/synth/review-backfill";
 
 /** Set once, in the switch-over commit, to that commit's parent; never edited on its own. null: dry run only. */
-export const BACKFILL_CUTOFF: string | null = null;
+export const BACKFILL_CUTOFF: string | null = "4322742b1a049d0be8046457ee6db9b6913283c6";
 
 const parsed = parseBackfillArgs(process.argv.slice(2));
 if ("error" in parsed) { console.error(`${parsed.error}\n${BACKFILL_USAGE}`); process.exit(2); }

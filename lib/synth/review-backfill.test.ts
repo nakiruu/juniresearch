@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
 import { FactPack } from "@/lib/facts/schema";
 import { Desk } from "@/lib/synth/desk.schema";
 import { judgmentSha256 } from "@/lib/synth/editorial";
@@ -128,6 +129,17 @@ describe("planBackfill", () => {
       expect(p.files[0].outcome).toMatchObject({ kind: "refused", reason: expect.stringMatching(/not ruled on/) });
       expect(p.refused).toBeDefined();
     });
+  });
+});
+
+describe("BACKFILL_CUTOFF in scripts/backfill-review-inputs.ts", () => {
+  // Read from source: the script runs on import. Set in the switch-over commit to its parent; never edited on its own.
+  const src = readFileSync("scripts/backfill-review-inputs.ts", "utf8");
+  const m = /^export const BACKFILL_CUTOFF: string \| null = (.+);$/m.exec(src);
+  it("is a 40-hex SHA, so --apply is enabled from the switch-over on", () => expect(m?.[1]).toMatch(/^"[0-9a-f]{40}"$/));
+  it("is an ancestor of HEAD", () => {
+    const sha = JSON.parse(m![1]) as string;
+    expect(() => execFileSync("git", ["merge-base", "--is-ancestor", sha, "HEAD"], { stdio: "ignore" })).not.toThrow();
   });
 });
 

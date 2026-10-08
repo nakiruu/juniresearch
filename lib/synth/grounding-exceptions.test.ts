@@ -191,4 +191,11 @@ describe("synth:build stage order", () => {
     expect(at("exceptions")).toBeGreaterThan(at("input check"));
     expect(at("validate")).toBeGreaterThan(at("exceptions"));
   });
+  it("runs the editorial gate after validate, on the inputs the reviewer read", () => {
+    const src = readFileSync("scripts/synth-build.ts", "utf8");
+    const at = (stage: string) => src.indexOf(`"${stage}")`);
+    expect(at("editorial")).toBeGreaterThan(at("validate"));
+    expect(src).toMatch(/reviewVerdict\([^)]*requireInputs: true/);
+    expect(src).not.toMatch(/\breviewStatus\(/);
+  });
 });
