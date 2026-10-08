@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "c948afedab92aa0d02960638abaa5b51dcc0749b5fb2d6a5549bade881f2fa5e",
-  "reviewedAt": "2026-09-23T15:20:00Z",
-  "reviewer": "Claude Opus 4.8",
+  "judgmentSha256": "66c5e1b4c67a54b8d89fb026e35bc1ed34b6e53e525584f93c9413e21624b6bf",
+  "reviewedAt": "2026-10-08T12:52:19Z",
+  "reviewer": "Claude Opus 5.5",
   "round": 2,
-  "verdict": "approved",
+  "verdict": "needs-fix-round",
   "findings": [
     {
       "id": "F-1",
@@ -13,7 +13,7 @@
       "issue": "The distribution-coverage claim (FY25 dividends of $2.8B running ahead of net income $2.4B and FCF $2.1B) is argued in full in three separate sections with the same figures: here in capitalAllocation, in financials.cashflowCommentary ('the FY25 distribution ... exceeded both net income of $2.4B and free cash flow'), and in risks.idiosyncratic[0] ('FY25 dividends paid of $2.8B ran ahead of both net income of $2.4B and free cash flow of $2.1B'). It is also stated in the thesis and in exec risks[0]. Item 7: the same claim is made in different words in multiple places, which is paraphrase repetition beyond the exec-summary pointer.",
       "fix": "Argue the payout-coverage mechanism in full in one home section (cashflowCommentary is the natural place, since it already carries 'coverage of the distribution is the item to watch'), and in capitalAllocation and risks.idiosyncratic refer back to it in words rather than re-stating the $2.8B / $2.4B / $2.1B triplet and the 'runs ahead of FCF' mechanism a second and third time.",
       "status": "addressed",
-      "note": "Fixed. The $2.8B/$2.4B/$2.1B coverage triplet now appears in full only in cashflowCommentary. capitalAllocation now says 'the payout has run ahead of free cash flow, as set out under cash flow'; risks.idiosyncratic[0] says 'as detailed under cash flow'; the thesis dropped the payout-coverage claim; exec risks[1] is a one-line pointer. No second/third restatement of the triplet remains."
+      "note": "Re-checked on the corrected-input draft. The dividend figures now appear only in cashflowCommentary; capitalAllocation ('set out under cash flow') and risks.idiosyncratic[0] ('as detailed under cash flow') point back. The thesis again names the payout gap, but only as a figure-free pointer; the wider summary repetition is raised as F-7."
     },
     {
       "id": "F-2",
@@ -23,7 +23,7 @@
       "issue": "The risks.idiosyncratic bullets restate points already argued in their home sections, in different words: [1] internal-control exclusion duplicates balanceCommentary ('per the 10-K, the results of the asset management business are consolidated into BAM but were excluded from management's evaluation of internal control ... as a result of the 2025 Arrangement'); [2] non-standard metrics duplicates businessMoat.durability ('some of its metrics are non-standard and based on its own methodologies, which limits comparability'); [4] controlled structure / non-U.S. directors duplicates management.governance ('some of BAM's officers and directors are not U.S. residents ... which could make service of process ... difficult'). Separately, management.insiderOwnership restates governance's controlling-parent point ('subsidiary of Brookfield Corporation ... controlling relationship above the Class A float'). Item 7 paraphrase repetition.",
       "fix": "Keep each argument in one section and make the risks.idiosyncratic bullets true pointers, or cut the duplicate. Argue internal-control once (balance or risks, not both), non-standard metrics once (durability or risks), and the controlled/non-U.S.-directors structure once (governance or risks). In insiderOwnership, point back to governance for the controlling-parent fact rather than repeating it.",
       "status": "addressed",
-      "note": "Fixed. balanceCommentary no longer carries the internal-control exclusion (now only risks.idiosyncratic[1]); durability no longer carries the non-standard-metrics line (now only risks.idiosyncratic[2]); the controlled/non-U.S.-directors bullet was removed from risks, leaving that point only in governance; insiderOwnership now points back — 'the controlling-parent relationship noted under governance' — rather than restating it."
+      "note": "Still fixed. Internal control is argued only in risks.idiosyncratic[1] (exec risks[2] and finalRecommendation point to it); non-standard metrics only in risks.idiosyncratic[2]; the non-U.S. directors point only in governance; insiderOwnership points back to governance."
     },
     {
       "id": "F-3",
@@ -33,7 +33,7 @@
       "issue": "The client/professional/office headcount roster is restated as a near-identical set of facts across four sections: this moatFactors 'Client and distribution reach' body; management.leadership ('over 5,800 investment and asset management professionals and employees, including over 300 client service professionals, across 32 global offices, plus a dedicated team of roughly 150 focused on the private wealth channel'); executiveSummary.companyOverview ('over 5,800 investment and asset management professionals and employees across 32 global offices'); and growth.points[3] ('a dedicated team of roughly 150 people ... beyond the 2,500 institutional clients'). Item 7: the same descriptive roster appears in different words in several places.",
       "fix": "Introduce the headcount roster (2,500 institutional / ~69,000 total clients, 5,800 professionals, 32 offices, ~150 private-wealth team) once, then refer back in words. Let each later section make its own distinct point (moat = distribution reach as a barrier; leadership = org depth; growth = the private-wealth channel opening a new pool) without re-listing the same figures.",
       "status": "addressed",
-      "note": "Fixed. The roster is now introduced once, in companyOverview. The moatFactors 'Client and distribution reach' body carries no figures and argues distribution reach as a barrier; leadership speaks of 'a deep bench ... across a wide global office network' in words; the growth private-wealth point drops the 150/2,500 figures and makes the new-pool point. No re-listing of the same headcount figures remains."
+      "note": "Still fixed. The roster appears only in companyOverview; the moat factor, leadership and growth.points[4] make their own points in words with no headcount figures."
     },
     {
       "id": "F-4",
@@ -43,7 +43,7 @@
       "issue": "The +54% FY26E revenue step-up to $6.1B is used as the growth anchor (growth.points[0]), a catalyst (via the EPS path), and the base-case anchor ('Revenue advances toward the consensus FY26E figure of about $6.1B') without naming the reading that cuts the other way, which is already on the page: Q2'26 revenue was about $1B and grew only +12.5% year over year, a run-rate far below a +54% full-year jump. Item 5: the growth judgment leans bullish on a figure whose counter-case (the current quarterly trend) is available on the surface but never stated or reconciled.",
       "fix": "Add one sentence in the growth section (or the base-case driver) acknowledging that the consensus +54% FY26E step-up sits well above the +12.5% latest-quarter revenue trend, and say why the report still leans on it (or flag the gap as a risk to the base case). Use figures already on the page; do not compute new ones.",
       "status": "addressed",
-      "note": "Fixed. growth.points[1] now names the counter-case: 'That step-up runs well above the +12.5% year-over-year growth in Q2'26 revenue of about $1B, so the full-year jump leans on a re-acceleration or on consolidation effects the latest quarter does not yet show; we treat that gap as the main risk to the base case.' The thesis echoes it ('the FY26E step-up ... is large relative to recent quarterly trends'). Figures already on the page; none computed."
+      "note": "Superseded by the corrected inputs: FY25 revenue is now $4.8B, FY26E is +26%, and Q2'26 grew +60.8%, so the old gap no longer exists. The new counter-case, that the pack cannot separate organic growth from consolidation and the Oaktree Acquisition, is named in growth.points[2] and in the thesis."
     },
     {
       "id": "F-5",
@@ -53,7 +53,7 @@
       "issue": "The 74.8% figure is the TTM net margin (the pack lists it under 'Trailing twelve months: Net margin 74.8%'), but here it is placed in apposition to FY25 net income of $2.4B on FY25 revenue of $3.9B, which reads as the FY25 margin. FY25 net income divided by FY25 revenue is about 61%, not 74.8%, so the juxtaposition attaches a trailing-period figure to a full-year quantity and invites the reader to a wrong ratio. Item 1: a figure presented against the wrong period. incomeCommentary states it cleanly ('the trailing net margin is 74.8%') and is the model.",
       "fix": "Separate the trailing net margin from the FY25 revenue/net-income line, as incomeCommentary does, e.g. state FY25 revenue and net income, then note the trailing net margin of 74.8% as a distinct TTM statistic, so the two periods are not conflated.",
       "status": "addressed",
-      "note": "Fixed. analystCommentary now reads: 'FY25 revenue rose +16.7% to $3.9B and net income reached $2.4B. The trailing net margin is 74.8%, reflecting an asset-light, fee-driven model.' The 74.8% is a standalone sentence labelled 'trailing', no longer in apposition to the FY25 revenue/net-income figures, so the two periods are not conflated."
+      "note": "On the corrected pack the sentence reads 'FY25 net income reached $2.4B and the trailing net margin is 53.4%'. The margin is a separate clause labelled 'trailing', not set in apposition to FY25, and it is close to the FY25 ratio, so the reader is not led to a wrong figure."
     },
     {
       "id": "F-6",
@@ -63,7 +63,61 @@
       "issue": "The bearish span wraps a whole clause, including the neutral figure '$2.4B', rather than a signed change or an explicit negative token. House style: use {- -} only around signed changes or explicit positives/negatives, never around a whole sentence or clause. Item 9 (Voice).",
       "fix": "Tighten the span to the negative element only (or drop the span and let the sentence carry the point), and keep the neutral figure $2.4B outside the marker.",
       "status": "addressed",
-      "note": "Fixed. The {- -} span was dropped; the clause now reads plainly 'the FY25 distribution outran both net income of $2.4B and free cash flow.' The only remaining bearish span in the judgment wraps the signed change '{- -17.4% -}' in scenarioCommentary, which is a valid use."
+      "note": "Still fixed. Every span in the draft wraps a signed figure only: -2.0%, +21.0%, +60.8%, +26% and -20.5%."
+    },
+    {
+      "id": "F-7",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "The investment case rests on a top line that is accelerating. FY25 revenue rose {+ +21.0% +} to $4.8B, and Q2'26 revenue grew {+ +60.8% +} year over year, well ahead of the {+ +26% +} consensus expects for FY26E. At $46.01, near the 52-week low, the shares trade at about 21.2x consensus FY27E EPS, so the price asks little of that growth.",
+      "issue": "The thesis is a paraphrase of analystCommentary, sentence for sentence. Both give FY25 revenue +21.0% to $4.8B, Q2'26 +60.8%, $46.01 near the 52-week low at about 21.2x FY27E, earnings slower than revenue, the dividend above FCF for three years, the organic share unknown, and a close call that rests on holding today's multiple a year out. The same claims recur elsewhere. (1) 'Revenue is the stronger half of the story' (analystCommentary) comes back as 'Our read is that the top line is the stronger half of the story' (incomeCommentary). (2) 'Earnings slower than revenue' is in analystCommentary ('Earnings have moved more slowly'), the thesis, and twice inside incomeCommentary ('grew more slowly than revenue', 'earnings have risen at a steadier pace'). (3) 'The call is close' is said in analystCommentary ('we flag it as a close call', 'but only just'), the thesis, scenarioCommentary and finalRecommendation.body[1] ('The call is close, and we say so'). Item 7: the same claim in different words, in several places.",
+      "fix": "Make analystCommentary and the thesis do different jobs. For example, keep the figures and the close-call caveat in analystCommentary, and let the thesis state the investment case in words, pointing to the sections for the figures. In incomeCommentary, make the revenue-versus-earnings point once. State that the call is close once in full (scenarioCommentary, where the mechanism is argued). Elsewhere point to it in words rather than repeating it.",
+      "status": "open"
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[0].driver",
+      "quote": "and the market pays 28x for it, a modest premium to the trailing multiple that the revenue acceleration would justify.",
+      "issue": "Two multiples are compared on mixed bases. (1) The Bull's 28x is applied to FY27E EPS a year out. The like-for-like reference is today's 25.1x on FY26E, which multiplesCommentary itself sets up. On that basis, 28x is a re-rating of about three turns, not a 'modest premium' to the 26.6x trailing P/E. (2) scenarioCommentary argues the Base partly on the claim that 'the Base multiple sits below the trailing one'. But the Base 25x is, by the report's own construction, today's current-year multiple carried forward, so on one basis it equals today's multiple; it does not sit below it. The comparison with a trailing multiple makes the Bull look smaller than it is and gives the Base a support that does not hold. Item 6. The desk has met this before (USFD F-15).",
+      "fix": "Restate the Bull's 28x against today's 25.1x current-year multiple, and argue it as the re-rating it is, with its basis in the same sentence. Remove 'the Base multiple sits below the trailing one' from the case for holding the multiple, or restate it on one basis. Then check that the case for the Base still stands on the remaining argument.",
+      "status": "open"
+    },
+    {
+      "id": "F-9",
+      "severity": "Important",
+      "field": "sections.management.capitalAllocation",
+      "quote": "Capital expenditure is negligible, so the business needs little for physical investment and instead commits Brookfield capital alongside its clients in the funds it manages.",
+      "issue": "The MD&A says only that the company aligns interests with clients 'by investing Brookfield capital alongside them'. It does not say that this is BAM's own cash, or that it is a use of cash in place of capex. The pack's cash-flow table has no investing or co-investment line, so the 'so ... instead' framing presents an inference as a BAM capital-allocation fact (item 2). The same MD&A sentence is already used in management.leadership ('alignment of interests by investing Brookfield capital alongside its clients'), so it also repeats across the section (item 7).",
+      "fix": "Remove the causal link and do not present co-investment as a use of BAM's cash. If the point is kept, attribute it to the MD&A in the company's own words, once, in either leadership or capitalAllocation, and say that the pack shows no amount for it.",
+      "status": "open"
+    },
+    {
+      "id": "F-10",
+      "severity": "Minor",
+      "field": "meta.subtitle",
+      "quote": "Leading global alternative asset manager with over $1 trillion of AUM",
+      "issue": "'Leading' is the company's own description of itself. companyOverview attributes it correctly ('describes itself as a leading global alternative asset manager'). The subtitle and analystCommentary ('BAM is a leading global alternative asset manager across infrastructure...') state it in the desk's own voice. Separately, two framing tics recur: 'Our read is that' (incomeCommentary) and 'Our view is that' (capitalAllocation). Item 9.",
+      "fix": "Drop 'leading' from the subtitle and from analystCommentary, or attribute it to the company. Let the closing sentences of incomeCommentary and capitalAllocation state the view directly, without the 'Our read/view is that' lead-in.",
+      "status": "open"
+    },
+    {
+      "id": "F-11",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarios[0].driver",
+      "quote": "Fee-Bearing Capital keeps compounding across the five platforms",
+      "issue": "'Keeps compounding' assumes a past trend. The pack gives Fee-Bearing Capital at a single date (June 30, 2026) and no series, so it does not show that the figure has been compounding. Item 2, in its mildest form, because it sits inside a scenario.",
+      "fix": "Say 'Fee-Bearing Capital grows across the five platforms', or similar, without implying a trend the page does not show.",
+      "status": "open"
+    },
+    {
+      "id": "F-12",
+      "severity": "Minor",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "The company frames its own performance through Fee-Bearing Capital, Fee Revenues, Fee-Related Earnings and Distributable Earnings, and the pack gives values only for Fee-Bearing Capital by platform.",
+      "issue": "The four non-GAAP measures are listed twice: here, and in companyOverview ('Management evaluates performance with non-GAAP measures it defines itself, including Fee-Bearing Capital, Fee Revenues, Fee-Related Earnings and Distributable Earnings'). Both versions widen the subject. The MD&A says the company uses these measures to evaluate 'these product offerings and our investment strategies', not its own overall performance. Items 7 and 9.",
+      "fix": "Name the four measures once, in companyOverview, with the MD&A's subject (product offerings and investment strategies). In incomeCommentary, refer to them in words ('the company's own non-GAAP measures') and keep the distinct point that the pack gives values only for Fee-Bearing Capital.",
+      "status": "open"
     }
   ]
 }
