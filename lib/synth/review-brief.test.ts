@@ -343,6 +343,34 @@ describe("briefPreflight", () => {
     expect(!r.ok && r.errors.join("\n")).toMatch(/Inputs fingerprint.*synth:prompt/);
     expect(run({ promptText: null }).ok).toBe(false);
   });
+  describe("compares sections, not substrings", () => {
+    const moved = structuredClone(pack); moved.ttm.netMargin = (moved.ttm.netMargin ?? 0) + 0.05;
+    const movedFacts = projectReportFacts(moved);
+    const oldPrompt = renderPrompt(pack, facts, desk), newPrompt = renderPrompt(moved, movedFacts, desk);
+    const movedReport = JSON.parse(JSON.stringify(mergeReport(movedFacts, { ...judgment, highlights: Object.keys(movedFacts.highlightCells).slice(0, 2) as Judgment["highlights"] }, desk, "2026-10-08")));
+    const runMoved = (p: string) => briefPreflight({ promptText: p, report: movedReport, facts: movedFacts, pack: moved, desk, accession });
+    it("passes the fresh prompt, also with CRLF line endings", () => {
+      expect(runMoved(newPrompt)).toEqual({ ok: true });
+      expect(runMoved(newPrompt.replace(/\n/g, "\r\n"))).toEqual({ ok: true });
+    });
+    it("refuses the old and new prompts concatenated", () => {
+      for (const p of [oldPrompt + "\n" + newPrompt, newPrompt + "\n" + oldPrompt]) {
+        const r = runMoved(p);
+        expect(r.ok).toBe(false);
+        expect(!r.ok && r.errors.join("\n")).toMatch(/synth:prompt/);
+      }
+    });
+    it("refuses new blocks and a new inputs line appended after # Output", () => {
+      const tail = "\n\n# Calls\n\n" + newPrompt.split("# Calls\n\n")[1].split("# Output")[0];
+      const stripped = oldPrompt.replace(/^Inputs fingerprint: .*\n/m, "");
+      for (const p of [oldPrompt + tail, stripped + tail]) expect(runMoved(p).ok).toBe(false);
+    });
+    it("refuses an inputs line outside its section, or a second one", () => {
+      const line = newPrompt.match(/^Inputs fingerprint: .*$/m)![0];
+      expect(runMoved(newPrompt.replace(line + "\n", "") + line + "\n").ok).toBe(false);
+      expect(runMoved(newPrompt.replace("# Output\n", `# Output\n\n${line}\n`)).ok).toBe(false);
+    });
+  });
   it("refuses a report with an old multiples row, a changed close or another accession, naming synth:build --skip-review", () => {
     const mult = structuredClone(report); mult.sections.valuation.multiples.rows[0].values[0] += 1;
     const close = structuredClone(report); close.quote.history[close.quote.history.length - 1].close += 1;

@@ -43,7 +43,7 @@ its rank.
    `<ACCESSION>.prompt.md` and `data/<ticker>.json` carry today's inputs: run what it
    names (`synth:prompt`, or `synth:build --skip-review`) and render it again. It also
    refuses to overwrite a brief that a reviewer may still be reading (one rendered for
-   other inputs that no newer findings file answers): stop that reviewer, delete the
+   other inputs that no findings file answers): stop that reviewer, delete the
    brief it names, and re-render. Hand the printed brief
    to a reviewer that is never this session and never the author:
    - **Round 1** (the brief prints "round 1"): dispatch a **fresh** subagent — the

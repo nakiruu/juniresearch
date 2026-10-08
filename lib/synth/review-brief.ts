@@ -171,7 +171,7 @@ export function briefOverwriteGuard(input: {
       && findingsMtime != null && briefMtime != null && findingsMtime > briefMtime;
   }
   if (answered) return { ok: true };
-  return { ok: false, message: `${briefPath} was rendered for other inputs and no newer findings file answers it: a reviewer may be reading the brief for the old inputs; stop that reviewer, then delete \`${briefPath}\` and re-render` };
+  return { ok: false, message: `${briefPath} was rendered for other inputs and no findings file answers it: a reviewer may be reading the brief for the old inputs; stop that reviewer, then delete \`${briefPath}\` and re-render` };
 }
 
 type Json = Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any -- a report read from disk
@@ -201,6 +201,27 @@ export function reportMismatch(report: Json, facts: ReportFacts): string[] {
   return out;
 }
 
+const SECTION_HEADS = ["# Calls", "# Facts", "# Context", "# Inputs fingerprint", "# Output"] as const;
+
+/**
+ * The prompt's Calls, Facts, Context and Inputs fingerprint sections, extracted by their headings: each heading must
+ * appear exactly once, in renderPrompt's order, so a prompt with an old and a new copy of a block (concatenated, or
+ * appended after # Output) is refused rather than matched by substring. Also every `Inputs fingerprint:` line anywhere.
+ */
+export function promptSections(text: string): { calls: string; facts: string; context: string; inputs: string; inputsLines: string[] } | { error: string } {
+  const lines = text.replace(/\r\n/g, "\n").split("\n");
+  const at: number[] = [];
+  for (const h of SECTION_HEADS) {
+    const hits = lines.flatMap((l, i) => (l === h ? [i] : []));
+    if (hits.length !== 1) return { error: `has ${hits.length} "${h}" headings, not one` };
+    at.push(hits[0]);
+  }
+  if (at.some((x, i) => i > 0 && x <= at[i - 1])) return { error: `has its sections out of order (${SECTION_HEADS.join(", ")})` };
+  // a section is the text between "<heading>\n\n" and "\n\n<next heading>"
+  const body = (i: number) => lines.slice(at[i] + 2, at[i + 1] - 1).join("\n");
+  return { calls: body(0), facts: body(1), context: body(2), inputs: body(3), inputsLines: lines.filter((l) => l.startsWith("Inputs fingerprint:")) };
+}
+
 /**
  * Before a brief goes out: prompt.md carries today's Calls, Facts and Context blocks verbatim and today's inputs line, and
  * the report names this accession and carries today's projection. Then what the reviewer reads is what `inputs` describes.
@@ -219,12 +240,18 @@ export function briefPreflight(input: {
   const errors: string[] = [];
   if (promptText == null) errors.push(`prompt.md is missing — ${reprompt}`);
   else {
-    const stale = [
-      ...([["Calls block", renderCalls(desk.rating)], ["Facts block", renderFactsBlock(facts, pack)], ["Context block", renderContextBlock(pack)]] as const)
-        .filter(([, block]) => !promptText.includes(block)).map(([name]) => name),
-      ...(promptText.split(/\r?\n/).includes(`Inputs fingerprint: ${inputsLine(reviewInputs(pack, desk, facts))}`) ? [] : ["Inputs fingerprint line"]),
-    ];
-    if (stale.length) errors.push(`prompt.md does not carry today's ${stale.join(", ")} — ${reprompt}`);
+    const p = promptSections(promptText);
+    if ("error" in p) errors.push(`prompt.md ${p.error} — ${reprompt}`);
+    else {
+      const line = `Inputs fingerprint: ${inputsLine(reviewInputs(pack, desk, facts))}`;
+      const stale = [
+        ...(p.calls === renderCalls(desk.rating) ? [] : ["Calls block"]),
+        ...(p.facts === renderFactsBlock(facts, pack) ? [] : ["Facts block"]),
+        ...(p.context === renderContextBlock(pack) ? [] : ["Context block"]),
+        ...(p.inputsLines.length === 1 && p.inputs.split("\n").includes(line) && p.inputsLines[0] === line ? [] : ["Inputs fingerprint line"]),
+      ];
+      if (stale.length) errors.push(`prompt.md does not carry today's ${stale.join(", ")} — ${reprompt}`);
+    }
   }
   const reportPath = `data/${pack.ticker.toLowerCase()}.json`;
   if (report == null) errors.push(`${reportPath} is missing — ${rebuild}`);
