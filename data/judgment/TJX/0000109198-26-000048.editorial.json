@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "ab4e0857ead8815e487f17676719c20d12aeaa39e020c71a6af414036b14214f",
-  "reviewedAt": "2026-10-08T16:19:20Z",
+  "judgmentSha256": "09aa02bfa392b769134476a43473f49415e65d480f4361df7caa13b65529a0e4",
+  "reviewedAt": "2026-10-08T16:24:00Z",
   "reviewer": "Claude Opus 5.5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved-with-minors",
   "findings": [
     {
       "id": "F-1",
@@ -13,7 +13,7 @@
       "issue": "The gross-margin widening (28.5% FY22 to 31.0% FY26) is reintroduced with the numbers restated in four sections: thesis, financials.incomeCommentary (\"gross margin widened from 28.5% to 31.0%\"), businessMoat.moatFactors[Value gap] (\"a widening gross margin, from 28.5% in FY22 to 31.0% in FY26\") and growth.points (\"gross margin has risen to 31.0% in FY26 from 28.5% in FY22\"). The same restate-the-figure pattern affects three more clusters: the raised 7,500-store target with the +300/+200 split (analystCommentary, thesis, catalysts, businessMoat.segments, growth.points, capitalAllocation, finalRecommendation); the FY26 capital-returns figures ($4.3B returned, $1.3B in Q2, $2.5B repurchases, $1.8B dividends) across thesis, cashflowCommentary, capitalAllocation and finalRecommendation; and the consensus $169.80 / +29.0% across analystCommentary, catalysts, multiplesCommentary, scenarioCommentary and finalRecommendation. Rubric 7 asks that each figure be introduced once and referred back to in words.",
       "fix": "Introduce each figure once in its home section and refer back in words elsewhere (e.g. \"the same gross-margin gain\", \"the raised store target\", \"the returns noted above\", \"the consensus target\") instead of restating the numbers each time.",
       "status": "addressed",
-      "note": "Still addressed in the rewrite. Gross-margin figures sit only in incomeCommentary (durability says it in words); the +300/+200 split only in segments, 7,500 in catalysts, growth and the Bull driver; FY26 returns figures only in cashflowCommentary, Q2's $1.3B only in capitalAllocation; the $169.80 consensus only in the valuation section."
+      "note": "Still addressed. Gross-margin figures sit only in incomeCommentary (durability uses words); the +300/+200 split only in segments; FY26 returns figures only in cashflowCommentary, Q2's $1.3B only in capitalAllocation; the $169.80 consensus only in the valuation section."
     },
     {
       "id": "F-2",
@@ -23,7 +23,7 @@
       "issue": "The target high of $180 sits above the $169.80 consensus, so describing the $150 to $180 range as \"below the $169.80 consensus\" is internally inconsistent (rubric 6, calls coherence). Only the Base ($158) and the band midpoint ($165) are below consensus; the top is roughly 6% above it. scenarioCommentary carries the same loose framing: \"the target range of $150 to $180 is set below the street to respect the non-recurring share of recent margin gains.\"",
       "fix": "Attach the conservative framing to the base/midpoint, e.g. \"our Base at $158 and the band midpoint sit below the $169.80 consensus, while the $180 top allows modest upside beyond it,\" so the stated band stays consistent with the consensus anchor.",
       "status": "addressed",
-      "note": "Superseded by the rewrite: the range is now $135 to $150, wholly below the consensus target, and neither finalRecommendation nor scenarioCommentary frames the band against consensus. The range brackets the $143.01 Base and the $142.58 weighted value."
+      "note": "Superseded: the range is now $135 to $148, wholly below consensus, and no section frames the band against consensus. It brackets the $143.01 Base and the $141.23 weighted value."
     },
     {
       "id": "F-3",
@@ -33,7 +33,7 @@
       "issue": "The net-debt series on the page does not deepen steadily: net cash was $2.9B in FY22 (net debt -2.9), fell to $2.1B in FY23 (-2.1), then -2.7 (FY24), -2.5 (FY25) and -3.4 (FY26). The endpoint is deeper than the start, but \"deepened across the past five years\" overstates the consistency of a series that wobbled in the middle years (rubric 2/9).",
       "fix": "State that the balance sheet ended FY26 at its deepest net-cash position of the five years (-$3.4B), rather than implying a steady year-by-year deepening.",
       "status": "addressed",
-      "note": "Now reads \"Net debt has stayed negative in all five years shown, moving between -$2.1 billion in FY23 and the FY26 level.\" No steady-deepening claim remains."
+      "note": "Reads \"Net debt has stayed negative in all five years shown, moving between -$2.1 billion in FY23 and the FY26 level.\""
     },
     {
       "id": "F-4",
@@ -43,7 +43,7 @@
       "issue": "The proxy states the related-party amounts were \"consistent with other Associates at their levels and responsibilities.\" \"Consistent with peers\" in an executive-pay context can read as market or peer-company benchmarking rather than same-level colleagues; here the source's phrasing is the point (rubric 9).",
       "fix": "Use the proxy's wording — \"consistent with other Associates at their levels and responsibilities\" — in place of \"consistent with peers.\"",
       "status": "addressed",
-      "note": "Now reads \"The proxy says their pay was consistent with other Associates at their levels and responsibilities.\""
+      "note": "Uses the proxy's phrasing: \"consistent with other Associates at their levels and responsibilities.\""
     },
     {
       "id": "F-5",
@@ -52,7 +52,8 @@
       "quote": "The latest quarter added to that pattern: comps rose in both apparel and home",
       "issue": "The 10-Q does not say apparel comps rose in the second quarter of fiscal 2027. It says only that \"Home comp sales growth ... outperformed apparel comp sales growth\" for the quarter and the six months, which ranks the two categories without giving apparel's sign. The \"strength in both our apparel and home categories\" wording is the proxy's, and it describes FY26, not the latest quarter. This is an inference the source invites but does not make (rubric 2).",
       "fix": "Say what the 10-Q says: comps rose 4% in the quarter, with home comps ahead of apparel. If the both-categories point matters, attribute it to the April 2026 proxy and date it to FY26.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Thesis now reads \"In the latest quarter comps rose, with home ahead of apparel\", which matches the 10-Q."
     },
     {
       "id": "F-6",
@@ -61,7 +62,8 @@
       "quote": "it stays below Bull because nothing on the page yet shows comps slowing",
       "issue": "The page shows a sequential step-down. Comps rose 4% in the second quarter against 5% for the six months, so the second quarter ran below the first, and net sales rose 5% in the quarter against 7% for the six months (currency explains part of the sales gap, but comps are constant-currency). The quarter's comp only matched the prior year's second quarter (4% both years). The report never mentions this, and the Bear weight is held below Bull on a claim the page contradicts (rubric 5/6). The catalyst \"Comp momentum: comps rose in the latest quarter and the six months\" also skips it.",
       "fix": "State once, in Growth or Financials, that the quarter's comp ran below the six-month pace while matching the prior year's second quarter. Do not compute a first-quarter figure. Then re-argue the Bull-versus-Bear weighting from both sides with that in view, keep or change the weights on that argument, and drop \"momentum\" from the catalyst unless it is argued.",
-      "status": "open"
+      "status": "addressed",
+      "note": "growth.points[0] now states the step-down and the match with the prior year's quarter, without a computed Q1 figure. The \"Comp momentum\" catalyst is gone and an executive-summary risk points to Growth. scenarioCommentary re-argues Bull and Bear at 20% each, giving the reasons on both sides (one quarter, matched the prior year, and the Bear needs earnings to fall back)."
     },
     {
       "id": "F-7",
@@ -70,7 +72,8 @@
       "quote": "We assume 22x, below today's current-year multiple because growth has reversed, but not far below the 22.7x the market pays on FY28E because the store base and the net-cash balance sheet are intact, for $107.14.",
       "issue": "The depth of the Bear de-rating is argued against an off-basis comparator. The Bear applies 22x to the year-out earnings ($4.87), and multiplesCommentary itself names today's 24.7x current-year multiple as \"the like-for-like reference\". 22.7x is today's price over FY28E EPS, two years out. Measured against it, 22x looks like a small trim; against the like-for-like 24.7x (or the 24.4x trailing), it is a cut of nearly three turns for a story in which earnings fall. Because the comparison is off-basis, the reader cannot judge whether 22x is a reasonable or a generous multiple for a growth reversal (rubric 6; desk lesson on comparing multiples on one basis).",
       "fix": "Argue the 22x against the 24.7x current-year multiple (or the 24.4x trailing), say in words how far below it sits, and argue from both sides why that depth fits a story in which EPS falls back to the FY26 level. Keep the multiple, or change it, on that argument rather than on the FY28E comparison.",
-      "status": "open"
+      "status": "addressed",
+      "note": "The Bear now places 22x \"nearly three turns below today's current-year multiple and below the 24.4x trailing multiple, because growth has reversed\". It then argues both sides: a deeper cut would fit a lasting reversal, and the author stops there because stores keep opening and earnings fall only to a level TJX already earned. The off-basis FY28E comparison is gone."
     },
     {
       "id": "F-8",
@@ -79,7 +82,8 @@
       "quote": "the company does not say how much of the gain came from refunds rather than markon",
       "issue": "The refund caveats are argued in several places in different words (rubric 7). The refunds-versus-markon split appears in the thesis and again in incomeCommentary (\"The MD&A does not split the cost-of-sales improvement between refunds and markon, so the page cannot show how much of the margin gain will last\"). The no-receivable caveat (further refunds may not equal what was paid) is restated in analystCommentary (\"has booked no receivable for further refunds\"), catalysts[0] (\"any further refund is unrecorded\"), risks.idiosyncratic[0] (\"TJX has recorded no receivable for further IEEPA refunds, and it says any further refunds may not equal the full amount\") and scenarioCommentary (\"the company says further refunds may not equal what it paid and it has recorded no receivable\").",
       "fix": "Keep the split caveat in incomeCommentary and the receivable caveat in risks.idiosyncratic[0]. Elsewhere, point back in words: the thesis can say the margin gain carried a refund benefit of unknown size (see Financials), and scenarioCommentary can give \"the refund uncertainty (see Risks)\" as the reason for the Bull weight. The analystCommentary and the catalyst can keep one short clause each.",
-      "status": "open"
+      "status": "addressed",
+      "note": "The split caveat now lives only in incomeCommentary; the thesis says \"a refund benefit of unknown size (see Financials)\". The receivable caveat lives in risks.idiosyncratic[0]. scenarioCommentary says \"the refund upside is uncertain (see Risks)\", the catalyst keeps one clause, and analystCommentary drops the receivable."
     },
     {
       "id": "F-9",
@@ -88,7 +92,8 @@
       "quote": "Consensus expects FY27E revenue of about $64 billion (+6%) and FY28E revenue of $68 billion.",
       "issue": "This point only restates the Facts block's estimates, and the section as a whole lists facts without reaching a view (rubric 4). Points 0 to 2 give comp drivers, store growth and consensus revenue side by side, but nothing says whether roughly 3% store growth plus mid-single-digit comps supports the consensus path that the Base adopts (FY28E EPS met). The only counter-case is that e-commerce is small (rubric 5).",
       "fix": "Make the growth section argue. Say in words whether store growth and the comp pace on the page cover the consensus revenue growth the Base relies on, and name the reading that cuts the other way. That could be the quarter's step-down from the six-month pace (see F-6), which this section could hold, or the one-point currency drag. Merge or drop the bare consensus restatement.",
-      "status": "open"
+      "status": "addressed",
+      "note": "growth.points[2] now argues that store growth and comps are consistent with the consensus path the Base adopts. It names two counter-readings (the comp step-down and the one-point currency drag) and ties further slowing to the Bear."
     },
     {
       "id": "F-10",
@@ -97,7 +102,8 @@
       "quote": "the store wage and payroll costs that lifted the SG&A ratio",
       "issue": "The company attributes the higher SG&A ratio to two drivers: \"incremental compensation expense accruals related to tariff refunds\" and \"incremental store wage and payroll costs\". The risk line credits the whole lift to wages, which overstates the recurring part of the increase. The executive-summary risk (\"helped lift\") and incomeCommentary have it right.",
       "fix": "Say \"the store wage and payroll costs that, with the refund-related accruals, lifted the SG&A ratio\", or say that wages \"helped lift\" it.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Now reads \"the store wage and payroll costs that, with the refund-related accruals, lifted the SG&A ratio\"."
     },
     {
       "id": "F-11",
@@ -106,7 +112,8 @@
       "quote": "The weighted fair value of $142.58 gives an expected upside of +8.4% against a bear-case downside of -18.6% (reward/risk 0.45×), just short of the BUY line.",
       "issue": "This sentence restates scenarioCommentary's \"The weighted fair value is $142.58, an expected upside of +8.4% against a bear-case downside of -18.6%, for a reward/risk of 0.45×. That derives HOLD, short of the +10.0% BUY line.\" The close-to-BUY point is also made five times: meta.subtitle (\"a HOLD that sits close to BUY\"), analystCommentary (\"lands just short of the BUY line, so the call is close\"), thesis (\"nets to a HOLD that sits close to BUY\"), scenarioCommentary (\"The call is close on the upside\") and here. Rubric 7/9: same sentence in two sections, tic past the point of notice.",
       "fix": "Keep the full arithmetic and the sensitivity in scenarioCommentary. In finalRecommendation, give the label and point back (\"the weighted value above sits short of the BUY line\"). Make the close-call point in the subtitle and in valuation, and in words at most once elsewhere.",
-      "status": "open"
+      "status": "addressed",
+      "note": "finalRecommendation now points back (\"the weighted value set out under Valuation sits short of the BUY line\"), and the E/D/R arithmetic appears only in scenarioCommentary. The thesis no longer repeats the close call. The remaining mentions (subtitle, analystCommentary, scenarioCommentary) are within the fix."
     },
     {
       "id": "F-12",
@@ -115,7 +122,8 @@
       "quote": "We anchor to the 52-week high because the market paid that price within the past year.",
       "issue": "The Bull price is a checkable figure, but the driver never says what $170 asks of earnings or the multiple. On FY28E consensus EPS it would need a multiple well above today's 24.7x current-year multiple. The market paid $170 when trailing earnings were lower, so the anchor does not show that the Bull story (comps, markon, further refunds) earns that price a year out.",
       "fix": "Add in words what the Bull needs: earnings above consensus from the refunds and markon, a re-rating above today's current-year multiple, or both. Say why that is plausible, so the reader can see the 25% weight is buying both.",
-      "status": "open"
+      "status": "addressed",
+      "note": "The Bull now says earnings run above FY28E consensus and that $170 \"needs a multiple well above today's current-year multiple, so the Bull needs both the earnings beat and a re-rating\". scenarioCommentary uses that as the reason to hold the Bull at 20%."
     },
     {
       "id": "F-13",
@@ -124,7 +132,8 @@
       "quote": "were up 2% at the end of the second quarter of fiscal 2027, below the quarter's sales growth",
       "issue": "This compares a per-store inventory measure with total net sales growth (+5%), which includes about 3% store growth. The like-for-like comparison is the 4% comp. The conclusion survives, but the stated basis overstates the gap. moatFactors[2] repeats the same comparison (\"Per-store inventories growing more slowly than sales\").",
       "fix": "Compare the 2% per-store inventory rise with the quarter's 4% comp, and let moatFactors[2] point back in words.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Now \"below the comp growth reported for the quarter\", and moatFactors[2] points back (\"The latest per-store inventory reading under Financials fits that discipline\")."
     },
     {
       "id": "F-14",
@@ -133,7 +142,8 @@
       "quote": "Debt has not been needed to fund the payout (see the balance sheet).",
       "issue": "capitalAllocation points back twice to one conclusion that cashflowCommentary already states (\"which FY26 free cash flow covered, so the payout did not need new borrowing\"): \"FY26 returns fit within free cash flow (see Financials)\" and this sentence. Separately, e-commerce at about 2% of net sales is stated in both companyOverview and growth.points[3].",
       "fix": "Keep one pointer in capitalAllocation and use the space for the allocation view. Give the 2% e-commerce figure in one place and refer to it in words in the other.",
-      "status": "open"
+      "status": "addressed",
+      "note": "capitalAllocation keeps one pointer and adds a view on room for further buybacks, noting that the excerpt gives no authorization. The 2% e-commerce figure now appears only in companyOverview."
     },
     {
       "id": "F-15",
@@ -142,7 +152,8 @@
       "quote": "Consumer demand is the channel through which these would reach TJX",
       "issue": "Two sentences earlier, the same paragraph quotes the MD&A listing direct imports, indirect imports, vendor and competitor pricing, tariff pass-throughs and retaliatory tariffs alongside consumer demand. Calling demand \"the channel\" contradicts that and the company's own framing.",
       "fix": "Call consumer demand one channel, or the channel the comp drivers expose most directly, alongside the cost channels the MD&A lists.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Now reads \"Consumer demand is one channel, alongside the cost channels the MD&A lists, and the one the comp drivers expose most directly\"."
     },
     {
       "id": "F-16",
@@ -151,6 +162,16 @@
       "quote": "we would raise the Base if the second half of fiscal 2027 shows the pre-tax margin holding without new refunds",
       "issue": "\"Holding\" has no level or basis. It could mean the quarter's 13.3% (which carried the refund benefit), the six-month 12.7%, or year-over-year expansion against the prior second half. A reader cannot tell when the trigger is met.",
       "fix": "Name the comparison in words, for example the pre-tax margin rising year over year in the second half without refund income. Keep it one trigger.",
+      "status": "addressed",
+      "note": "Now reads \"if the pre-tax margin rises year over year in the second half of fiscal 2027 without refund income\", which a reader can check."
+    },
+    {
+      "id": "F-17",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "or a Base multiple a little under one turn higher, derives BUY",
+      "issue": "On the page's own math this sensitivity runs the wrong way. One full turn higher (25.7x on the $5.79 FY28E EPS) still leaves expected upside just under +10.0%, so it still derives HOLD; BUY needs slightly more than one turn. The weight sensitivities in the same sentence (ten points derives BUY, five does not) are correct, as are the price triggers in finalRecommendation.",
+      "fix": "Say \"a Base multiple about one turn higher\" or \"a little over one turn higher\", or drop the multiple sensitivity and keep the weight sensitivity alone. Do not change the Base.",
       "status": "open"
     }
   ]
