@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "2a658e4cfe112c9443e7e96eb37a0341ce4353cc27aaa3416a64f94558452f73",
-  "reviewedAt": "2026-10-08T14:48:03Z",
+  "judgmentSha256": "1797da26d737106971fd4bc609d8b02ec6e0f76fd79a196ea95338585fce92aa",
+  "reviewedAt": "2026-10-08T14:53:05Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved",
   "findings": [
     {
       "id": "F-1",
@@ -156,8 +156,7 @@
       "quote": "The business is growing, profitable and free of debt, but the price already reflects most of that.",
       "issue": "Cross-section repetition (paraphrase). The 'good business, full price' verdict is restated in meta.subtitle, analystCommentary ('We like the business; we do not find the price attractive enough to buy'), executiveSummary.thesis.body ('The business case is good... The valuation case is weaker... already discount most of the outcome') and here. The upgrade conditions are also given twice: thesis.body ('We would need either a lower entry price or evidence that the offering proceeds are being deployed into value-creating acquisitions to move to BUY') and finalRecommendation.body[1] ('We would move to BUY on a meaningfully lower share price, or on evidence that the offering proceeds are being invested at attractive returns').",
       "fix": "Keep the verdict in the thesis and state the upgrade and downgrade conditions once, in finalRecommendation. Rewrite analystCommentary's closing line and finalRecommendation.body[0] so they add something (for example, the specific price or evidence that would change the call) rather than repeat the thesis.",
-      "status": "open",
-      "note": "The rewrite brought the restatement back. finalRecommendation.body[0] now reads 'The business is growing and widening its margins, but the price already reflects consensus delivery.', which repeats thesis.body ('The price already discounts consensus delivery') and meta.subtitle. The margin-widened-every-year claim is also made in analystCommentary, thesis.body, incomeCommentary and management.leadership. Cut body[0]'s second sentence or make it add something new; leave the margin trend to incomeCommentary."
+      "status": "addressed"
     },
     {
       "id": "F-18",
@@ -211,7 +210,7 @@
       "quote": "The case against it is the FY27E earnings slowdown: a market that looks a year ahead may not pay today's current-year multiple for that rate of EPS growth.",
       "issue": "Repetition within Valuation (paraphrase). The FY26E-to-FY27E EPS slowdown is argued as the case against today's multiple twice: multiplesCommentary ('That slowdown in per-share earnings is the main argument against paying today's multiple a year out') and here. The Bear driver then retells it a third time ('the slower FY27E EPS growth in consensus becomes the market's focus'), and scenarioCommentary adds 'its trigger is already in consensus'. Separately, the Base-matches-the-Street point is made in both the Base driver ('The result lands close to the $84.50 consensus target, which serves as a separate check on the anchor') and scenarioCommentary ('the Street's consensus target lands in the same place').",
       "fix": "In multiplesCommentary, give the figures (consensus EPS rising at a single-digit rate while revenue grows at a double-digit rate) and stop there. Argue what the slowdown means for the multiple once, in scenarioCommentary. Let the Bear driver name the path without re-arguing it. Make the Base-versus-consensus-target check once, in either the Base driver or scenarioCommentary.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-24",
@@ -220,7 +219,7 @@
       "quote": "We judge the business on reported profit, and Valuation sets out what that means for the multiple.",
       "issue": "Calls coherence. Valuation does not do what this pointer promises. multiplesCommentary says the basis of FY26E consensus EPS 'is not stated' and points to the Q2 gap between GAAP diluted EPS of $0.34 and adjusted diluted EPS of $0.50. It then values all three scenarios on consensus EPS and never says what reported profit means for those multiples. So 'we judge the business on reported profit' sits beside a valuation that may rest on adjusted earnings. The adjusted-versus-reported counter-case that F-10 asked for is left hanging, because it no longer reaches a view on price.",
       "fix": "Once, in multiplesCommentary, say in words what the possible basis gap means for the scenarios. If consensus is on the adjusted basis, the scenario prices imply a higher multiple of reported earnings than the 47.9x, 55x and 30x shown. Then reword incomeCommentary's last sentence so it points to that statement. Do not compute a new figure.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-25",
@@ -229,7 +228,7 @@
       "quote": "a level we set as still a premium for a business with contracted revenue whose per-share earnings growth has slowed",
       "issue": "Unanchored basis for the assumed 30x. 'Still a premium' needs a reference, such as a market, peer or historical multiple, and the surface has none. The prompt says peers are pending, and no index or own-history multiple is given. The lowest multiple on the page is the ~45.2x on FY27E. So the stated basis of the Bear multiple is a comparison to something the reader cannot check. That is the assumed-multiple trap from the desk's BSX lesson.",
       "fix": "Drop 'still a premium'. State 30x as the author's assumption and give its reasoning in terms on the page: it is about a third below today's 47.9x current-year multiple and leaves the price between the bottom of the Street range and the 52-week low. Name the reason for the size of the de-rating, such as the consensus EPS slowdown or the starting point near the 52-week high. Say that the multiple is a judgment, not an observed level.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-26",
@@ -238,7 +237,7 @@
       "quote": "That is well short of the BUY threshold, and from the starting multiple the downside in Bear outweighs the upside in Bull.",
       "issue": "The result is measured only against BUY. An expected upside of -2.0% sits much nearer the -5.0% SELL line than the +10.0% BUY line. The weight-sensitivity test ('Swapping the two weights would leave the label at HOLD') runs only in the BUY direction. A modest further shift of weight from Bull to Bear, which the paragraph argues for, would derive SELL. The paragraph's own 'a lower Base multiple would push the result toward SELL' does not say how close that is. The desk rule for a close call is to say it is close and argue the deciding split from both sides.",
       "fix": "Say plainly that the call sits nearer SELL than BUY. Test the Bull/Bear split in the SELL direction as well as the BUY direction, and argue in words why the Bear weight stops where it does. Keep the label the scenarios derive. Do not tune the weights to move away from the line.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-27",
@@ -247,7 +246,7 @@
       "quote": "Growth and margins keep rising",
       "issue": "Unsupported characterization. Growth is not rising. FY25 revenue growth of 20.0% was below FY24's 24.9%. Consensus has 18% for FY26E and slower again for FY27E, and the report's own growth.points[1] says 'The path the Street models is deceleration, not acceleration.' Only the Q2 2026 rate of 23% sits above FY25. The headline contradicts the Growth section.",
       "fix": "Say 'Revenue and margins keep rising' or similar. Do not describe the growth rate as rising.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-28",
@@ -256,7 +255,7 @@
       "quote": "Capital spending is a real call on cash here, and the table shows it in every year.",
       "issue": "The cash-flow table shows capital expenditure as -0.0 ($B) in every year. A reader cannot see from it that capex is a real call on cash in any year. Only FY25 (-$11.2M, against FCF of $18.2M) carries a magnitude on the page.",
       "fix": "Rest the claim on FY25, where the figures are on the page, and drop 'the table shows it in every year'.",
-      "status": "open"
+      "status": "addressed"
     }
   ]
 }
