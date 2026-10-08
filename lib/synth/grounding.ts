@@ -238,9 +238,111 @@ function textEntries(text: string, source: GroundingSource): GroundingEntry[] {
   return out;
 }
 
+/* ------------------------------------------------------------------ matching ------------------------------------------------------------------ */
+
+export interface GroundingPolicy {
+  ctxCoarsenSig: number;       // a prose figure may round a context figure only if it keeps ≥ this many significant digits
+  surfCoarsenSig: number;      // ... a Facts/Calls/judgment figure: ≥ min(this, the source's own significant digits)
+  wildMinSig: number;          // a bare context cell grounds a money or scaled figure only with ≥ this many significant digits
+  wildMinSigPct: number;       // ... a % or points figure (single-digit change cells: "(4)", "<1", "0.5")
+  checkSign: boolean;
+  ppFromPct: boolean;          // "46.9 points" of growth grounded by a context "46.9%"
+  multFromRatio: boolean;      // "17.26x current ratio" grounded by the Facts' "17.26"
+  bands: boolean;              // "$190s"
+  multWild: boolean;           // may a multiple ground against a bare context cell? (no: multiples are not table cells)
+  moneyCellMinSig: number;     // a scaled money figure grounds against an unscaled "$ 5" table cell only with ≥ this many significant digits
+  secondReadingMinSig: number; // the trailing-zeros-insignificant reading only matches entries with ≥ this many significant digits
+  bpFromPct: boolean;          // may basis points ground against a % level? (no: "540 bps" is a change, not a 5.4% level)
+  perShareNoScaleUp: boolean;  // a 2-decimal context money cell ("$4.56", per-share-shaped) is never scaled up to millions or billions
+}
+
+/** The measured policy (plan 2026-10-07 §2–4). Not configurable: a looser policy is a reviewed code change. */
+export const POLICY: Readonly<GroundingPolicy> = Object.freeze({
+  ctxCoarsenSig: 3, surfCoarsenSig: 2, wildMinSig: 2, wildMinSigPct: 1, checkSign: true, ppFromPct: true, multFromRatio: true, bands: true,
+  multWild: false, moneyCellMinSig: 1, secondReadingMinSig: 2, bpFromPct: false, perShareNoScaleUp: true,
+});
+
+export type MatchClass = "exact" | "lossless" | "coarse" | "band" | "none";
+export interface Grounding { ok: boolean; cls: MatchClass; by?: GroundingEntry }
+
+const near = (a: number, b: number) => Math.abs(a - b) <= 1e-9 * Math.max(1, Math.abs(a), Math.abs(b));
+const roundAt = (x: number, res: number) => Math.round(x / res + 1e-9 * Math.max(1, Math.abs(x / res)));
+const isBareCell = (e: GroundingEntry) => e.source === "context" && e.kind === "plain" && e.scale === 1;
+
+function kindOk(p: NumberToken, e: GroundingEntry, pol: GroundingPolicy): boolean {
+  switch (p.kind) {
+    case "plain": return true;                                                        // a unitless prose number: any kind, by magnitude
+    case "money": return (e.kind === "money" && e.currency === p.currency) || (e.source === "context" && e.kind === "plain" && e.scale >= 1e6); // never a Facts share count
+    case "pct": return e.kind === "pct";
+    case "mult": return e.kind === "mult" || (pol.multFromRatio && e.source === "facts" && e.kind === "plain" && e.precision > 0);
+    case "pp": return e.kind === "pp" || e.kind === "bp" || (pol.ppFromPct && e.kind === "pct");
+    case "bp": return e.kind === "pp" || e.kind === "bp" || (pol.bpFromPct && e.kind === "pct");
+  }
+}
+
+/** Compare magnitudes under the resolution rule: never finer than the source; a lossy rounding keeps enough significant digits. */
+function compare(p: NumberToken, eAbs: number, eRes: number, eSig: number, source: GroundingSource, pol: GroundingPolicy): MatchClass {
+  if (p.band != null) return eAbs >= p.abs - 1e-9 && eAbs < p.abs + p.band - 1e-9 ? "band" : "none";
+  if (p.resolution < eRes * (1 - 1e-9)) return "none";
+  if (near(p.resolution, eRes)) return roundAt(p.abs, p.resolution) === roundAt(eAbs, p.resolution) ? "exact" : "none";
+  if (roundAt(eAbs, p.resolution) !== roundAt(p.abs, p.resolution)) return "none";
+  if (near(roundAt(eAbs, p.resolution) * p.resolution, eAbs)) return "lossless";       // "$495.00" → "$495", "$1,148 million" → "$1.148 billion"
+  const floor = source === "context" ? pol.ctxCoarsenSig : Math.min(pol.surfCoarsenSig, eSig);
+  return p.sig >= floor ? "coarse" : "none";
+}
+
+const RANK: Record<MatchClass, number> = { exact: 4, lossless: 3, band: 2, coarse: 1, none: 0 };
+const best = (cs: MatchClass[]) => cs.reduce((a, c) => (RANK[c] > RANK[a] ? c : a), "none" as MatchClass);
+
+function matchOne(p: NumberToken, e: GroundingEntry, pol: GroundingPolicy): MatchClass {
+  if (p.band != null && !pol.bands) return "none";
+  if (pol.checkSign && p.sign !== 0 && e.sign !== 0 && p.sign !== e.sign) return "none";
+  // A bare context cell ("15,955" under "(in millions)", "27.3" under "Percent change"): unit and scale sit in a header the
+  // tokenizer cannot see, so it grounds a prose figure of any kind at any table scale — if the prose figure is specific enough.
+  if (isBareCell(e)) {
+    if (p.kind === "plain" && p.scale === 1) return compare(p, e.abs, e.resolution, e.sig, e.source, pol);
+    if (p.kind === "mult" && !pol.multWild) return "none";
+    const floor = p.kind === "pct" || p.kind === "pp" || p.kind === "bp" ? pol.wildMinSigPct : pol.wildMinSig;
+    if (p.sig < floor && p.band == null) return "none";
+    const scales = p.kind === "money" || p.kind === "plain" ? [1, 1e3, 1e6, 1e9] : p.kind === "bp" ? [0.01] : [1];
+    return best(scales.map((s) => compare(p, e.abs * s, e.resolution * s, e.sig, e.source, pol)));
+  }
+  // An unscaled money cell in context ("$\n15,955"): known kind, scale from a header.
+  if (e.source === "context" && e.kind === "money" && e.scale === 1 && p.kind === "money" && e.currency === p.currency) {
+    if (pol.perShareNoScaleUp && e.precision === 2 && p.scale !== 1) return compare(p, e.abs, e.resolution, e.sig, e.source, pol);
+    if (p.scale === 1 || p.sig >= pol.moneyCellMinSig) return best([1, 1e3, 1e6, 1e9].map((s) => compare(p, e.abs * s, e.resolution * s, e.sig, e.source, pol)));
+    return compare(p, e.abs, e.resolution, e.sig, e.source, pol);
+  }
+  if (!kindOk(p, e, pol)) return "none";
+  return compare(p, e.abs, e.resolution, e.sig, e.source, pol);
+}
+
+/** The readings of a prose figure: as written, and — for an integer with trailing zeros — with them insignificant. */
+function readings(p: NumberToken): NumberToken[] {
+  if (!p.tz || p.band != null) return [p];
+  return [p, { ...p, resolution: p.resolution * Math.pow(10, p.tz), sig: Math.max(1, p.sig - p.tz) }];
+}
+
+function grounds(p0: NumberToken, entries: readonly GroundingEntry[], pol: GroundingPolicy): Grounding {
+  let r: { cls: MatchClass; by?: GroundingEntry } = { cls: "none" };
+  readings(p0).forEach((p, i) => {
+    for (const e of entries) {
+      // the second reading only matches an entry with ≥ 2 significant digits: a 1-digit $B Facts cell ("0.3")
+      // would otherwise vouch for every "$300 million"
+      if (i === 1 && e.sig < pol.secondReadingMinSig) continue;
+      const c = matchOne(p, e, pol);
+      if (RANK[c] > RANK[r.cls]) r = { cls: c, by: e };
+      if (r.cls === "exact") break;
+    }
+  });
+  return { ok: r.cls !== "none", ...r };
+}
+
 /** Every figure on the grounding surface, typed. */
 export class GroundingIndex {
   constructor(readonly entries: readonly GroundingEntry[]) {}
+  /** Whether a prose figure grounds, how, and against which entry. */
+  lookup(t: NumberToken): Grounding { return grounds(t, this.entries, POLICY); }
 }
 
 export function buildGroundingIndex(s: GroundingSurface): GroundingIndex {

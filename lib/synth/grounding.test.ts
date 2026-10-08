@@ -301,6 +301,102 @@ describe("the surface index (AVGO pack, golden judgment)", () => {
   });
 });
 
+describe("matching by kind, magnitude, sign and resolution", () => {
+  type Src = { ctx?: string; facts?: string; judgment?: string; table?: [string, number] };
+  const index = (s: Src) => buildGroundingIndex({
+    tables: s.table ? [{ title: "t", columns: ["", "FY25"], rows: [{ label: "r", values: [s.table[1]], format: s.table[0] }] } as never] : [],
+    factsBlock: s.facts ?? "", callsBlock: "", judgmentBlock: s.judgment ?? "", contextBlock: s.ctx ?? "" });
+  const grounds = (prose: string, s: Src) => {
+    const toks = numericTokens(prose);
+    expect(toks.length, prose).toBeGreaterThan(0);
+    const idx = index(s);
+    return toks.every((t) => idx.lookup(t).ok);
+  };
+  const pass = (prose: string, s: Src) => it(`${prose} grounds against ${JSON.stringify(s)}`, () => expect(grounds(prose, s)).toBe(true));
+  const fail = (prose: string, s: Src) => it(`${prose} does not ground against ${JSON.stringify(s)}`, () => expect(grounds(prose, s)).toBe(false));
+
+  describe("kind", () => {
+    fail("$6", { facts: "- 60 analysts: Buy 54 · Hold 6" });
+    pass("25", { facts: "- Operating margin 25%" });
+    fail("$4.77B", { facts: "- shares 4.77B (cover page)" });                       // never a Facts share count
+    pass("$15.95 billion", { ctx: "revenue of 15.95 billion" });
+    pass("17.26x", { facts: "- Current ratio 17.26" });
+    pass("46.9 points", { ctx: "grew 46.9%" });
+    fail("540 bps", { ctx: "a margin of 5.4%" });                                    // a change is not a level
+    fail("5.4%", { ctx: "up 5.4 points" });
+  });
+  describe("sign", () => {
+    fail("-23.9%", { table: ["pctSigned", 0.239] });
+    pass("fell 12%", { table: ["pctSigned", -0.12] });
+    pass("-12%", { ctx: "sales moved 12% in the quarter" });                       // context carries no sign unless written
+  });
+  describe("resolution", () => {
+    fail("$4.66B", { table: ["usdB", 4.66e9] });
+    fail("$63,887 million", { facts: "- FY25 Revenue: $63.9B" });
+    pass("$64B", { facts: "- FY25 Revenue: $63.9B" });
+    fail("$0.1T", { facts: "- FY25 Revenue: $63.9B" });
+    fail("5%", { table: ["pct", 0.047] });
+    pass("$495", { facts: "- 52-week $289.96–$495.00" });
+    fail("$60 billion", { table: ["usdB", 63.9e9] });
+  });
+  describe("two readings of trailing zeros", () => {
+    pass("$63,900 million", { table: ["usdB", 63.9e9] });
+    pass("$500 million", { ctx: "revenue of $0.50 billion" });
+    pass("50 bps", { ctx: "up 0.50 percentage points" });
+    pass("40%", { table: ["pct", 0.401] });
+    pass("$250", { judgment: "Base: $490.00 × 50% = $245.00" });
+    // the second reading never matches a 1-significant-digit entry
+    fail("$500 million", { table: ["usdB", 5e8] });
+    fail("$300 million", { table: ["usdB", 3e8] });
+    fail("50 bps", { ctx: "up 0.5 percentage points" });
+  });
+  describe("context rounding keeps three significant digits", () => {
+    pass("$29.37", { ctx: "a price of $29.3711" });
+    fail("13%", { ctx: "a margin of 13.3%" });
+    fail("45%", { ctx: "a margin of 45.3%" });
+    pass("45%", { table: ["pct", 0.453] });
+    pass("$1.41 billion", { ctx: "capex of $1,412 million" });
+    fail("$1.4 billion", { ctx: "capex of $1,412 million" });
+  });
+  describe("a bare context cell", () => {
+    pass("$15,955 million", { ctx: "Operating income\n15,955\n" });
+    pass("16%", { ctx: "Percent change\n16\n" });
+    fail("$4 million", { ctx: "Other\n4\n" });
+    fail("22x", { ctx: "Other\n22\n" });                                           // a multiple never uses the bare cell
+    pass("40 bps", { ctx: "Margin change\n40\n" });
+  });
+  describe("an unscaled context money cell", () => {
+    pass("$15,955 million", { ctx: "Operating income\n$\n15,955\n" });
+    pass("$3 million", { ctx: "Other\n$\n3\n" });
+    fail("$4.56 billion", { ctx: "Diluted EPS\n$\n4.56\n" });                       // a 2-decimal cell is per-share-shaped
+  });
+  describe("bands", () => {
+    pass("low $190s", { facts: "- Price $193.00" });
+    fail("low $190s", { facts: "- Price $205" });
+  });
+
+  describe("AVGO batteries on the golden surface", () => {
+    const passes = (probes: string[], s: GroundingSurface) => {
+      const idx = buildGroundingIndex(s);
+      return probes.filter((p) => numericTokens(p).length > 0 && numericTokens(p).every((t) => idx.lookup(t).ok));
+    };
+    const full = surfaceOf(pack), noContext = { ...full, contextBlock: "" };
+    it("S-1, context stripped: only $250 passes (a 2-digit rounding of the golden's $245.00 weighted Base)", () => {
+      expect(passes(["$63.9 million", "$63.9M", "$63.9K", "$63.9T", "63.9 thousand", "63.9%", "63.9x", "$63.9", "477%", "$477", "477x", "4.77%", "600%", "$6", "250%", "$250"], noContext)).toEqual(["$250"]);
+    });
+    it("S-2's odd-decimal and unit-edge probes all fail", () => {
+      expect(passes(["0.1%", "0.3%", "0.9%", "4.2x", "7.3x", "9.9x", "12.4x", "15.5x", "25.1x", "$0.01", "$1.00", "$2.50", "$7.77", "1,000", "2,500", "33.3", "40 bps", "150bp", "63.9 percent", "$3.3B", "12.5%"], full)).toEqual([]);
+    });
+    it("every control passes", () => {
+      const controls = ["$63.9B", "$64B", "$4.77", "2.50", "44.9x", "86%", "+85.5%", "$509.61", "$510", "$1.72T", "67.8%", "-$623M", "$11.63", "0.70%", "$21.7 billion", "221%", "Buy 54 and Hold 6 among 60 analysts"];
+      expect(passes(controls, full)).toEqual(controls);
+    });
+    it("every sign, per-share and unit probe fails", () => {
+      expect(passes(["-23.9%", "+$6.3B of buybacks", "4.77x", "44.9%", "$44.9", "$509.61 million", "$1,722.2B"], full)).toEqual([]);
+    });
+  });
+});
+
 describe("the allowed index on the AVGO FactPack", () => {
   const index = buildAllowedIndex(pack, []);
   const ok = (s: string) => checkGrounding({ p: s }, index);
