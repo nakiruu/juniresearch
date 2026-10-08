@@ -196,13 +196,15 @@ npm run synth:prompt -- AVGO 0001730168-26-000080 --with-errors    # re-prompt w
                                                                    # (either re-prompt flag also writes <acc>.prompt.delta.md)
 npm run synth:build  -- AVGO 0001730168-26-000080 --skip-review    # local experiments only; prints a warning
 npm run grounding:sweep -- AVGO                                    # read-only: would a republish pass grounding? (no args: every published report)
+node --import tsx scripts/rekey-review-calls.ts --from <old> --to <new>   # with every desk.rating change: re-key review stamps (dry run; --apply)
 ```
 
 More flags:
 - `synth:build --date YYYY-MM-DD` sets the report date (default today).
 - `synth:review-brief --full-brief` sends a round-2 reviewer the full brief instead of the delta.
 - `grounding:sweep --pack-at report` checks the packs as committed with each report (what the reviewer
-  approved) instead of today's; every run also reports build-time vs HEAD drift. Run it before any republish.
+  approved) instead of today's; every run also reports build-time vs HEAD drift and lists `staleReviews`
+  (reviews the editorial gate would refuse today). Run it before any republish.
 - `screen -- --query [TICKER ...]` screens named tickers (default: the watchlist); `--query --published`
   screens every published report; `--calibrate <saved.json>` checks the likely-HOLD flag against published
   ratings; `--as-of YYYY-MM-DD` bounds the query's dates.
@@ -216,8 +218,21 @@ assumed-figure warning, not an error), the owner-approved **grounding exceptions
 (`lib/synth/grounding-exceptions.json`, applied only as merged to `main` and pushed), **desk lint**
 (`lib/synth/lint/` — figure/sentence repeats, span scope, hype, unattributed superlatives; errors fail the
 build, warnings print), and the **editorial gate** — a fresh reviewer writes `…editorial.json` and the
-build refuses to write the report until that file matches the judgment's SHA-256 with no Critical or
-Important finding open (two rounds max; Minors may stay open).
+build refuses to write the report until that file matches the judgment's SHA-256 **and the inputs the
+reviewer read**, with no Critical or Important finding open (two rounds max; Minors may stay open).
+
+The inputs are three hashes of the data behind the reviewer's surface (`lib/synth/review-inputs.ts`):
+`facts` (the Facts block and the report's closes), `calls` (`desk.rating`) and `context` (the excerpts).
+`prompt.md` prints them as an `Inputs fingerprint` line, and the brief's Output section prints them next to
+`judgmentSha256`; the reviewer copies both. The brief refuses until `prompt.md` and `data/<t>.json` carry
+today's inputs, never overwrites a brief a reviewer may still be reading, and forces the full brief (with a
+"What changed since round N" section) when the inputs moved since the last round. The gate reports
+`stale (judgment)`, `stale (facts | calls | context)` — rebuild with `--skip-review`, re-render the brief and
+re-run the review — or `unstamped` (no valid `inputs`: continue the same reviewer to re-copy it; nobody
+else edits `inputs`). A `desk.rating` change ships with `scripts/rekey-review-calls.ts` as an approved data
+commit: it restamps only reviews whose derived label holds and that still pass validate under the new rule,
+and lists the rest for re-review. Reviews before the switch-over were stamped from git at their review
+commit by `scripts/backfill-review-inputs.ts`.
 
 ### The rating stack (what turns a report into a buy)
 

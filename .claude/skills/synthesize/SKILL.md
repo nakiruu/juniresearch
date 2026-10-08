@@ -34,12 +34,17 @@ its rank.
    errors verbatim. A build that fails at `input check` (a Shibui FAIL) is not an
    authoring error: stop and report it; the pack must be re-captured or the fail
    accepted before any judgment is written.
-5. On a build that fails **only** at the editorial gate with "missing" or "stale":
+5. On a build that fails **only** at the editorial gate with "missing", "stale" or "unstamped":
    build once with `npm run synth:build -- <TICKER> <ACCESSION> --skip-review` so
    the lint and grounding pass and `data/<ticker>.json` exists for the reviewer —
    nothing is published behind the flag; the gated build at the end of this step
    (step 5, without the flag) is the publish. Then
-   `npm run synth:review-brief -- <TICKER> <ACCESSION>` and hand the printed brief
+   `npm run synth:review-brief -- <TICKER> <ACCESSION>`. The brief refuses until
+   `<ACCESSION>.prompt.md` and `data/<ticker>.json` carry today's inputs: run what it
+   names (`synth:prompt`, or `synth:build --skip-review`) and render it again. It also
+   refuses to overwrite a brief that a reviewer may still be reading (one rendered for
+   other inputs that no newer findings file answers): stop that reviewer, delete the
+   brief it names, and re-render. Hand the printed brief
    to a reviewer that is never this session and never the author:
    - **Round 1** (the brief prints "round 1"): dispatch a **fresh** subagent — the
      model named by `desk.review.model` in `data/desk/desk.json` (default Opus) —
@@ -52,7 +57,22 @@ its rank.
      does not re-read them. If that subagent is gone, re-render with
      `npm run synth:review-brief -- <TICKER> <ACCESSION> --full-brief` and dispatch
      a fresh one.
-   Wait for the findings file, then run `npm run synth:build -- <TICKER> <ACCESSION>` again.
+   - **Inputs changed** (the brief prints "full brief — inputs changed: …" or
+     "previous review unstamped"): the pack, the desk's Calls or the Context moved
+     since the last round, so the brief is a forced full brief with a "What changed
+     since round N" section. Hand it to the same reviewer if it is still alive,
+     otherwise to a fresh one.
+   The reviewer copies two values into the findings file: `judgmentSha256`, and
+   `inputs` from the `Inputs fingerprint` line of `prompt.md` (the brief's Output
+   section prints both). Wait for the findings file, then run
+   `npm run synth:build -- <TICKER> <ACCESSION>` again. The gate names what moved:
+   - `stale (judgment)`: the judgment changed since the review; re-check (step 6).
+   - `stale (facts | calls | context)`: the review predates the current inputs;
+     rebuild with `--skip-review`, re-render the brief (it will be a full brief) and
+     re-run the review.
+   - `unstamped`: the findings file has no valid `inputs` (missing, or mis-copied);
+     continue the same reviewer to re-copy it from the `Inputs fingerprint` line.
+     If the inputs changed since its brief, re-render the brief and re-run the review.
 6. When the gate reports open findings:
    `npm run synth:prompt -- <TICKER> <ACCESSION> --with-review`, read **only the
    printed delta file** (`<ACCESSION>.prompt.delta.md`) — it holds every open
@@ -68,6 +88,10 @@ its rank.
 
 - The prompt is the only brief. It contains the facts you may quote, the context you may draw on, the contract, and the schema. Do not read the FactPack, the raw captures, or other reports.
 - Never edit anything except the judgment file. Never edit the errors file, the prompt file, the facts, or `data/<ticker>.json`.
+- Never write or edit `judgmentSha256` or `inputs` in a findings file on the reviewer's behalf: only the reviewer
+  copies them, from the text it read. A `desk.rating` change ships with
+  `node --import tsx scripts/rekey-review-calls.ts --from <old desk commit> --to <new desk commit>` (dry run, then
+  `--apply`) as an approved data commit that lists its re-review reports.
 - Every figure you write must appear in the prompt's Facts or Context block, in the same form. If a claim needs a number the prompt does not contain, make the claim without the number.
 - The reviewer is never you and never the author. Dispatch round 1 as a fresh
   subagent with no context but the brief path, and **keep it** for the round-2
