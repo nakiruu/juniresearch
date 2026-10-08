@@ -144,8 +144,20 @@ describe("reviewVerdict", () => {
       expect(hint(bad, undefined)).toBeUndefined();
       expect(hint(bad, null)).toBeUndefined();
     });
-    it("says mis-copied when the brief told the reviewer to copy today's inputs and the stamp differs", () =>
-      expect(hint(bad, { judgmentSha256: sha, inputs: cur })).toMatch(/differs from the brief's copy block.*mis-copied; continue the reviewer to re-copy/));
+    it("never asserts a mis-copy when a well-formed stamp differs from a brief carrying today's inputs: it says re-review", () => {
+      const h = hint(bad, { judgmentSha256: sha, inputs: cur });
+      expect(h).toMatch(/differs from the brief's copy block.*mis-copied, or reviewed before this brief was rendered: re-review rather than re-copy/);
+      expect(h).not.toMatch(/likely mis-copied|continue the reviewer/);
+    });
+    it("does not launder: stamped B and answered, inputs move to C, the brief is re-rendered to C, a gated build runs before the new findings", () => {
+      const B = { ...cur, facts: "b".repeat(64) }, C = cur;
+      const answered = stamped(B);                                   // the round's review, copied from the brief at B
+      const v = reviewVerdict(TEXT, answered, () => C, { ...req, brief: { judgmentSha256: sha, inputs: C } }); // brief now at C
+      expect(v).toMatchObject({ status: "stale", changed: ["facts"] });
+      const m = reviewVerdictMessage(v, 0);
+      expect(m).toMatch(/re-review rather than re-copy/);
+      expect(m).not.toMatch(/likely mis-copied|continue the (same )?reviewer/);
+    });
     it("never suggests re-copying when the brief's inputs differ from today's: it says re-review", () => {
       for (const s of [bad, stamped({ ...cur, facts: "8".repeat(64) })]) {
         const h = hint(s, { judgmentSha256: sha, inputs: { ...cur, facts: "9".repeat(64) } });

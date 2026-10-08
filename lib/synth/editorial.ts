@@ -60,8 +60,9 @@ export interface ReviewVerdict {
 /**
  * Judgment, then the stamp, then the inputs, then the findings. `current` gives the current inputs under a scheme, so a
  * review is compared on the picks its reviewer saw. `brief` (the copy block of the existing review brief; null for a
- * legacy brief) only adds a hint, and only to a stamp the reviewer copied: re-copy when the brief asked for today's
- * inputs and the stamp differs from it, re-review when the brief itself was for other inputs.
+ * legacy brief) only adds a hint, and only to a stamp the reviewer copied. Both hints say re-review: a well-formed stamp
+ * that differs from a brief carrying today's inputs may be a typo or a review of an earlier brief, so re-copying could
+ * launder it; only a stamp that does not parse (unstamped) is sent back to the reviewer to re-copy.
  */
 export function reviewVerdict(
   judgmentText: string,
@@ -81,7 +82,8 @@ export function reviewVerdict(
       const hint = stamp.calls === LEGACY_ENVELOPE_CALLS ? "the review read the pre-rating envelope, retired in 02d1335"
         : !b ? undefined
           : changedComponents(b, now).length ? "the brief was rendered for other inputs than today's: re-render the brief and re-review"
-            : "the stamp differs from the brief's copy block, which carries today's inputs: likely mis-copied; continue the reviewer to re-copy it";
+            // A well-formed stamp that differs is ambiguous: a typo, or a review of an earlier brief. Never ask for a re-copy.
+            : "the stamp differs from the brief's copy block, which carries today's inputs: mis-copied, or reviewed before this brief was rendered: re-review rather than re-copy";
       return { status: "stale", changed, ...(hint ? { hint } : {}) };
     }
   } else if (opts.requireInputs) {
