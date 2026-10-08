@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "30733c1af49685782f21b1bbc6a4d0ab94c0fc92bea6143e0d47465dd52bf513",
-  "reviewedAt": "2026-10-08T15:19:53Z",
+  "judgmentSha256": "d85d4f439e338d91981b3a0bb5f6a8957c244953d9ef069acdcb06f7de66a832",
+  "reviewedAt": "2026-10-08T15:58:55Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved",
   "findings": [
     {
       "id": "F-1",
@@ -13,7 +13,7 @@
       "issue": "Cross-section figure repetition breaches house style (\"No sentence appears in two sections\"; introduce each figure once, refer back in words). Three near-verbatim duplications: (1) the Google Cloud Q2'26 segment operating income $8,814M vs $2,826M appears here in growth.points[0] AND in businessMoat.segments[0].body (\"segment operating income of $8,814 million against $2,826 million a year earlier\"), each with the same \"as enterprises adopt/bought AI infrastructure and platform\" clause; (2) the forward path $498.5B FY26E / $613.7B FY27E / FY27E EPS $14.91 appears in growth.points[2] AND in financials.incomeCommentary; (3) the $98.0 billion one-time equity gain is quoted as a hard figure in both financials.incomeCommentary and valuation.multiplesCommentary.",
       "fix": "Give each figure one home and refer back in words elsewhere. Keep the Cloud segment-income figures in the moat section and have growth.points[0] point to it (e.g. \"cloud swung to the segment profit the moat section quantifies\"); keep the FY26E/FY27E estimates in incomeCommentary and have growth refer to \"the consensus path the financials section lays out\"; in multiplesCommentary refer back to \"the one-time equity gain quantified in the financials section\" rather than re-stating $98.0 billion.",
       "status": "addressed",
-      "note": "Still addressed in the rewritten judgment. Cloud segment income ($8,814M/$2,826M) appears only in businessMoat.segments[0]; growth.points[0] gives revenue and growth contribution only. Forward revenue sits in growth.points[3] and FY26E/FY27E EPS in valuation, each once. $98.0 billion appears only in incomeCommentary; multiplesCommentary refers back in words."
+      "note": "Still addressed in this rewrite. Cloud segment income appears only in businessMoat.segments[0]. Forward revenue is in growth.points[3] and FY26E/FY27E EPS in valuation, each once. $98.0 billion appears only in incomeCommentary."
     },
     {
       "id": "F-2",
@@ -23,7 +23,7 @@
       "issue": "The sourced fact is period- and label-specific: the 10-K risk factor states \"We generated more than 70% of total revenues from online advertising in 2025.\" Here (and in risks.idiosyncratic[0], \"Google advertising is more than 70% of total revenue\") it is presented in the present tense with no period and relabelled \"Google advertising.\" On the Q2'26 supplemental table Google advertising was $81,629M of $119,796M, ~68%, so the un-dated present-tense form slightly overstates the current quarter. companyOverview handles it correctly (\"More than 70% of 2025 revenue came from online advertising\").",
       "fix": "Stamp the period and match the source label as companyOverview does: \"more than 70% of 2025 revenue came from online advertising\" (or \"in 2025\"), rather than an undated present-tense \"Google advertising is more than 70% of total revenue.\"",
       "status": "addressed",
-      "note": "Still addressed. The 70% figure appears only in companyOverview, attributed to the 10-K filed February 5, 2026 and dated to 2025. moatFactors[0] uses the Q2'26 $81,629 million Google advertising figure with no percentage."
+      "note": "Still addressed. The 70% figure appears only in companyOverview, attributed to the 10-K filed February 5, 2026 and dated to 2025."
     },
     {
       "id": "F-3",
@@ -33,7 +33,7 @@
       "issue": "34% is the single latest quarter's (Q2'26) operating margin; presenting it as the run-rate the business \"actually runs at\" cherry-picks the highest recent reading. The grounding surface also carries a TTM operating margin of 33.1% and FY25 of 32.0%, both lower, so \"actually runs at\" overstates the durable margin.",
       "fix": "Either label 34% as the latest-quarter margin, or use the on-surface TTM operating margin (33.1%) when characterising the level the business runs at, so the run-rate claim is not anchored on a single peak quarter.",
       "status": "addressed",
-      "note": "Still addressed. multiplesCommentary no longer characterises a run-rate margin. The only 34% in the report is in incomeCommentary, labelled as the quarter ended June 30, 2026."
+      "note": "Still addressed. multiplesCommentary carries no run-rate margin claim; the 34% sits only in incomeCommentary, labelled to the quarter ended June 30, 2026."
     },
     {
       "id": "F-4",
@@ -42,7 +42,8 @@
       "quote": "Our fair value is below the Street's consensus target because our Base assumes the market holds, rather than raises, the forward multiple it pays today.",
       "issue": "The valuation section gives three accounts of the Base multiple that do not agree. multiplesCommentary says \"We therefore cannot tell whether the multiple our Base assumes is a held multiple or a re-rating\". This closing sentence says the Base holds it. scenarios[1].driver gets 28x as \"what today's 23.6x one-year-forward multiple becomes a year from now if earnings then grow by about a fifth\". On the same FY27E basis, 28x is above today's 23.6x, so it counts as a hold only if the following year's EPS grows by about a fifth. The page has no estimate past FY27E. The support offered (\"slower than the FY27E revenue growth consensus expects\") compares a different year and a different line. The 28x-vs-27x paragraph argues whether the market \"keeps today's one-year-forward rating\" but never names this growth assumption, and that assumption is what decides the label. The driver also calls 23.6x \"one-year-forward\" while multiplesCommentary calls 17.0x the \"next-twelve-months\" measure, which blurs the two. The Street comparison also appears three times in valuation (multiplesCommentary, Base driver, this sentence).",
       "fix": "Use one account of the Base multiple in all three places. In scenarioCommentary, say plainly that 28x builds in about a fifth of growth in the following year's earnings, which no figure on the page supports. Argue that assumption from both sides with figures already on the page: FY27E EPS is below FY26E only because of the 2026 gains, and margins are widening, but depreciation is rising with the build-out. Replace the closing sentence with one that matches multiplesCommentary: whether the Base holds the multiple depends on that growth assumption. Compare the fair value with the Street target once in valuation.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. The three accounts now agree. multiplesCommentary says the page cannot tell a re-rating from paying for post-FY27E growth. The Base driver gives 28x a checkable basis (just below the multiple the $430.00 median target implies) and calls it a held multiple only if post-FY27E growth is paid for. scenarioCommentary names the roughly-a-fifth growth assumption, says no figure supports it, argues both sides and says the label depends on it. The holds-rather-than-raises sentence is gone, and the Street comparison now appears once."
     },
     {
       "id": "F-5",
@@ -51,7 +52,8 @@
       "quote": "So far the reported figures show Search revenue growing (growth section), which is why that threat sits in our Bear case rather than our Base.",
       "issue": "The same 10-K passage and the same conclusion are argued in two sections. durability quotes \"AI is quickly reshaping the advertising industry, including how ads are delivered online, and that there is no assurance it will adapt effectively and competitively\" and ends with the sentence quoted here. risks.idiosyncratic[0] quotes the same 10-K sentence nearly word for word and ends \"The reported Search growth shows no such effect yet, which is why this risk drives our Bear case rather than our Base.\" scenarioCommentary makes the same point a third time for the Bear weight (\"Search is growing, not shrinking\"), and that is its natural home. The 10-K cloud passage is also quoted twice: moatFactors[2] has \"competitors are rapidly developing and deploying cloud-based services and capacity\" and risks.systemic repeats \"competitors are rapidly developing and deploying cloud-based services and capacity\".",
       "fix": "Quote the AI warning once, in risks.idiosyncratic[0], and keep the Bear-not-Base reasoning in scenarioCommentary. In durability, point back in words (for example, \"the AI risk the risks section quotes\") and use the space for the durability view itself. Quote the cloud-competition passage in one of moatFactors[2] or risks.systemic, and have the other point to it.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. The 10-K AI warning is quoted only in risks.idiosyncratic[0], with no Bear-not-Base line. durability points to the risks section, and the Bear-weight reasoning stays in scenarioCommentary. The cloud-competition passage is quoted only in moatFactors[2]; risks.systemic points to the moat section."
     },
     {
       "id": "F-6",
@@ -60,7 +62,8 @@
       "quote": "Growth at this pace is costing more. Operating expenses grew faster than revenue in the quarter, Other Bets and the central AI research line both lost more than a year earlier, and capital spending absorbed the FY25 rise in operating cash flow. Advertising also stays tied to the economy, which the company names as a driver of advertiser spending.",
       "issue": "Every clause in this bullet restates a claim another section already argues. \"Operating expenses grew faster than revenue\" repeats incomeCommentary (\"Operating expenses rose 27%, faster than revenue\"). The Other Bets and Alphabet-level losses repeat businessMoat.segments[0]. \"capital spending absorbed the FY25 rise in operating cash flow\" repeats cashflowCommentary (\"absorbed nearly all of that year's increase in operating cash flow\"), which risks.idiosyncratic[2] also repeats (\"With capex already absorbing the growth in operating cash flow\"). The advertising-and-economy sentence repeats risks.systemic. The bullet adds no growth-specific view.",
       "fix": "Turn this into a one-line counter-case that points back in words (for example, that the cost of this growth shows up in the margin, segment and cash-flow discussions elsewhere), or replace it with a growth-specific counter-point built from figures already in the growth section, such as Google Network declining while Search grows. Drop the capex clause from risks.idiosyncratic[2] too, or have it point to the cash-flow section.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. growth.points[4] is now a growth-specific counter-point (Google Network down to $7,303 million from $7,354 million while Search grew) plus a one-line pointer. risks.idiosyncratic[2] points to the cash-flow section instead of restating the capex claim."
     },
     {
       "id": "F-7",
@@ -69,7 +72,8 @@
       "quote": "The question is per share, because the build-out is now partly paid for with new shares and with preferred stock that is mandatory convertible.",
       "issue": "The per-share dilution argument appears in three sections. balanceCommentary ends with this sentence. capitalAllocation ends \"Per-share value now depends on earnings growth outrunning new issuance rather than on buybacks shrinking the count\" and restates the share-count rise the balance sheet already gives (\"so the share count rose between December 31 and June 30 rather than fell\"). risks.idiosyncratic[3] argues it again (\"If returns on the AI assets arrive late, per-share earnings grow more slowly than the business\"). businessMoat.durability adds a fourth version (\"capital spending on a scale the company is partly funding with new equity and debt\").",
       "fix": "Make the per-share argument once, in capitalAllocation, where the view on issuance versus buybacks belongs. End balanceCommentary on solvency and the funding facts. Keep risks.idiosyncratic[3] to the risk itself (late returns, further equity) and point back to capitalAllocation. Cut the funding clause in durability to a pointer.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. The per-share argument appears only in capitalAllocation, which no longer restates the share count. balanceCommentary ends on solvency. risks.idiosyncratic[3] states the risk and points back. durability points to the cash-flow section."
     },
     {
       "id": "F-8",
@@ -78,7 +82,8 @@
       "quote": "A lower Base multiple, a heavier Bear weight or a slightly higher price each turns it into a HOLD, as the valuation section shows.",
       "issue": "The same sentence appears in two sections. executiveSummary.risks[3] reads \"A narrow call: a lower Base multiple, a heavier Bear weight or a slightly higher price turns BUY into HOLD, as the valuation section shows.\" analystCommentary gives the same three-way list (\"how small a change in that multiple, in the Bear weight or in the price turns it into a HOLD\"). With the thesis's \"clears the BUY line by a thin margin\", the narrow-call point is made four times before the reader reaches the scenarios.",
       "fix": "Keep the three-way list once. The final recommendation is the natural place for it. Cut executiveSummary.risks[3] and analystCommentary to a short pointer, for example \"the call is narrow; the valuation section shows what flips it\", without repeating the list.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. The three-way sensitivity list appears only in finalRecommendation.body[0]. analystCommentary now says only that the call is narrow and the valuation section shows what flips it, and the duplicate executive-summary risk is removed."
     },
     {
       "id": "F-9",
@@ -87,7 +92,8 @@
       "quote": "Reported earnings also now depend on equity markets: the second-quarter gain came primarily from net unrealized gains on equity securities, so a broad fall in the value of those holdings could turn the same line into losses.",
       "issue": "This repeats the cause and the conclusion that incomeCommentary already gives (\"which the company attributes primarily to net unrealized gains on equity securities\" ... \"Unrealized gains need not recur and can turn into losses\"). analystCommentary gives the same attribution a third time. The systemic section is a fair place to name the equity-market exposure, but restating both the attribution and the reversal is the same claim made twice.",
       "fix": "Name the exposure in one clause and point back, for example \"reported earnings now move with the equity holdings behind the second-quarter gain (financials section)\", without restating the attribution or the turn-into-losses point.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. risks.systemic now reads \"Reported earnings now also move with the equity holdings behind the second-quarter gain (financials section)\", with no restated attribution or reversal."
     },
     {
       "id": "F-10",
@@ -96,7 +102,8 @@
       "quote": "The vendor data carry one consolidated line; the July 22, 2026 earnings release gives segment operating income for the quarter ended June 30, 2026.",
       "issue": "The disagreement between the vendor's single consolidated line and the release's segments is stated twice. companyOverview already says \"The vendor data behind this report carry a single consolidated line, so segment figures come from the company's July 22, 2026 earnings release.\" Under rubric item 8, a disagreement is stated once.",
       "fix": "State it once. The segment card is where the reader meets the \"Consolidated\" label, so keep it here and remove the sentence from companyOverview. Or keep it in companyOverview and open the segment body with the release figures, dated, and no restatement.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. The vendor-versus-release segment disagreement is stated once, in businessMoat.segments[0]; companyOverview no longer repeats it."
     },
     {
       "id": "F-11",
@@ -105,7 +112,8 @@
       "quote": "The rising central cost pays for the frontier models that, in the company's words, serve all of its businesses.",
       "issue": "The phrase is presented as the company's words, but the MD&A says \"developing the frontier models that serve our businesses\". \"All\" is the author's addition inside an attributed phrase. moatFactors[2] repeats the same widening (\"Alphabet funds frontier-model research centrally for all its businesses\").",
       "fix": "Quote the company exactly (\"frontier models that serve our businesses\") or drop \"in the company's words\". Remove \"all\" in moatFactors[2] as well.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. The segment body now quotes the MD&A exactly ('the frontier models that serve our businesses'), and moatFactors[2] reads \"for its businesses\"."
     },
     {
       "id": "F-12",
@@ -114,7 +122,8 @@
       "quote": "a richer multiple than today's 23.6x on FY27E, or both.",
       "issue": "23.6x is introduced in multiplesCommentary and then restated in both the Bull and Base drivers. The build lint flags the repeat within scenarioDrivers.",
       "fix": "In the Bull driver, refer back in words (for example, \"a richer multiple than today's on FY27E\"). Keep the figure in the Base driver, where it anchors the 28x.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. The Bull driver now reads \"a richer multiple than today's on FY27E\"; 23.6x stays in multiplesCommentary and the Base driver, and the lint repeat warning is gone."
     }
   ]
 }
