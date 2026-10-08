@@ -112,3 +112,33 @@ describe("renderReviewBrief", () => {
     expect(brief({ previousReview, round: 2 })).toBe(brief({ previousReview, round: 2 }));
   });
 });
+
+describe("what the brief says the grounding check enforces", () => {
+  const weak = ['sections.financials.incomeCommentary: "$15,955 million" grounds only through a unit-less table cell: Context "15,955"'];
+  const assumed = ['sections.valuation.scenarios[2].driver: "14x"'];
+  const text = brief({ weak, assumed });
+  it("names Facts, Calls and Context as the surface and does not overclaim the check", () => {
+    expect(text).toContain("Its **Facts**, **Calls** and **Context** blocks, with the report's own calls, are the grounding surface.");
+    expect(text).toContain("checked by digits only");
+    expect(text).toContain("Context signs are not checked");
+    expect(text).toContain("(rubric item 1) is always yours");
+    expect(text).not.toContain("checks each figure's unit, scale, sign and precision");
+  });
+  it("lists the weakly grounded figures to check first", () => {
+    expect(text).toContain("# Weakly grounded figures — check unit, scale, sign and attribution first");
+    expect(text).toContain(`- ${weak[0]}`);
+  });
+  it("lists the assumed figures (D2)", () => {
+    expect(text).toContain("# Assumed figures");
+    expect(text).toContain(`- ${assumed[0]}`);
+    expect(text.indexOf("# Weakly grounded figures")).toBeLessThan(text.indexOf("# Output"));
+  });
+  it("says so when there are none, and carries both lists on a warm re-check too", () => {
+    const empty = brief({ weak: [], assumed: [] });
+    expect(empty).toMatch(/# Weakly grounded figures[^\n]*\n\nNone/);
+    expect(empty).toMatch(/# Assumed figures\n\nNone/);
+    const recheck = brief({ previousReview, round: 2, weak, assumed });
+    expect(recheck).toContain(`- ${weak[0]}`);
+    expect(recheck).toContain(`- ${assumed[0]}`);
+  });
+});

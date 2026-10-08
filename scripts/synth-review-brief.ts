@@ -3,6 +3,11 @@ import { join } from "node:path";
 import { loadEditorialReview, malformedReviewMessage } from "../lib/synth/editorial";
 import { renderReviewBrief } from "../lib/synth/review-brief";
 import { Desk } from "../lib/synth/desk.schema";
+import { FactPack } from "../lib/facts/schema";
+import { projectReportFacts } from "../lib/facts/project";
+import { Judgment } from "../lib/synth/judgment.schema";
+import { groundingSurface, groundJudgment } from "../lib/synth/validate-judgment";
+import { weakLine } from "../lib/synth/grounding";
 
 const args = process.argv.slice(2);
 const [tickerArg, accession] = args.filter((a) => !a.startsWith("--"));
@@ -31,7 +36,18 @@ const previousReview = (() => {
 })();
 const round = previousReview ? (Math.min(previousReview.round + 1, 2) as 1 | 2) : 1;
 
-const brief = renderReviewBrief({ ticker, accession, judgmentText, previousReview, round, rubric, paths, recurringTraps: desk.recurringTraps, fullBrief });
+// The figures the build could check only by digits or without a sign, and the assumed multiples and margins (D2):
+// the reviewer checks these first. A judgment that does not parse gets neither list; its build fails anyway.
+const grounding = (() => {
+  const j = Judgment.safeParse(JSON.parse(judgmentText));
+  if (!j.success) return null;
+  const pack = FactPack.parse(JSON.parse(read(join("data", "facts", ticker, `${accession}.json`))));
+  const g = groundJudgment(j.data, groundingSurface(j.data, projectReportFacts(pack), pack, desk));
+  return { weak: g.weak.map(weakLine), assumed: g.assumed.map((w) => `${w.field}: "${String(w.value)}"`) };
+})();
+
+const brief = renderReviewBrief({ ticker, accession, judgmentText, previousReview, round, rubric, paths, recurringTraps: desk.recurringTraps, fullBrief,
+  weak: grounding?.weak, assumed: grounding?.assumed });
 const out = join(dir, `${accession}.review-brief.md`);
 writeFileSync(out, brief);
 const mode = previousReview ? (fullBrief ? ", re-check (full brief)" : ", re-check (delta — warm reviewer)") : "";

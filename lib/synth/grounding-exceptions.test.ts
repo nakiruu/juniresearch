@@ -107,14 +107,14 @@ describe("only the copy merged to main applies", () => {
  * removes its keys here and its entries from the JSON in the same merge; nothing is ever added.
  */
 const FROZEN_KEYS = new Set([
-  "CSTM|0001563411-26-000192|4142e25fe8ad5fb216dfdac560d6e91e946e0f71950cfce5b99fd17185d8ed0f|07bab4b3d97c5006a973b8176c390bbe708fb3971495fceaaa85ec94bb18e321|grounding|sections.financials.incomeCommentary|$4 million",
-  "LH|0000920148-26-000175|68ac4715cee0131281b68b90640a6e844ad9d267ac0264f8bd963123d46a169c|4f8f3a20c77cdb0ca6406d8eb3e46bea45c649ab6e731dd69668f793efe6e6b8|grounding|sections.executiveSummary.catalysts[2]|$8.73 billion",
-  "LH|0000920148-26-000175|68ac4715cee0131281b68b90640a6e844ad9d267ac0264f8bd963123d46a169c|4f8f3a20c77cdb0ca6406d8eb3e46bea45c649ab6e731dd69668f793efe6e6b8|grounding|sections.growth.points[0]|$13,952",
-  "LLY|0000059478-26-000081|9f262de96beee34bd73e30500e22606e7435611b3b72f4a020599812e9d8163f|eca263e3cfc4130f85040f6b628da52f0221a6bc666847a93dea6416ffcb88c2|grounding|sections.executiveSummary.companyOverview|$1T",
-  "LLY|0000059478-26-000081|9f262de96beee34bd73e30500e22606e7435611b3b72f4a020599812e9d8163f|eca263e3cfc4130f85040f6b628da52f0221a6bc666847a93dea6416ffcb88c2|grounding|sections.financials.cashflowCommentary|$1T",
-  "MDU|0000067716-26-000072|7dfd54a98b8a6084de33ea3accb8decd8cda867f205f87df68d838f2d2cde2d1|bb2f5af9c93ba87e36dc98a77d7db5a64032004c634eb25a97182bace0e29e6e|grounding|analystCommentary|$0.4M",
-  "MDU|0000067716-26-000072|7dfd54a98b8a6084de33ea3accb8decd8cda867f205f87df68d838f2d2cde2d1|bb2f5af9c93ba87e36dc98a77d7db5a64032004c634eb25a97182bace0e29e6e|grounding|sections.financials.incomeCommentary|$0.4M",
-  "NVDA|0001045810-26-000075|96408ee70d2f07ad2d7ca8f9a3c669ce75c10b016dc4b32bb6e19a06a18d1395|c6adc13483e4ec0073b60cca80c5141d2f0593258ab8cc667b527817baff14b3|grounding|sections.financials.balanceCommentary|400 times",
+  "CSTM|0001563411-26-000192|4142e25fe8ad5fb216dfdac560d6e91e946e0f71950cfce5b99fd17185d8ed0f|1ad3e984b191e520878efc4680d4ef89b37583e80f3aceaaa06ffa50390b4ccd|grounding|sections.financials.incomeCommentary|$4 million",
+  "LH|0000920148-26-000175|68ac4715cee0131281b68b90640a6e844ad9d267ac0264f8bd963123d46a169c|91b392e467c90dc3289cac71072d746c77ac9c697d3d898da5c2af408d9e184d|grounding|sections.executiveSummary.catalysts[2]|$8.73 billion",
+  "LH|0000920148-26-000175|68ac4715cee0131281b68b90640a6e844ad9d267ac0264f8bd963123d46a169c|91b392e467c90dc3289cac71072d746c77ac9c697d3d898da5c2af408d9e184d|grounding|sections.growth.points[0]|$13,952",
+  "LLY|0000059478-26-000081|9f262de96beee34bd73e30500e22606e7435611b3b72f4a020599812e9d8163f|37fad26e9ea859ef73851d4007d35e4320d11b48e661131cb29f87ce6dc101eb|grounding|sections.executiveSummary.companyOverview|$1T",
+  "LLY|0000059478-26-000081|9f262de96beee34bd73e30500e22606e7435611b3b72f4a020599812e9d8163f|37fad26e9ea859ef73851d4007d35e4320d11b48e661131cb29f87ce6dc101eb|grounding|sections.financials.cashflowCommentary|$1T",
+  "MDU|0000067716-26-000072|7dfd54a98b8a6084de33ea3accb8decd8cda867f205f87df68d838f2d2cde2d1|6eb7245db8f546013a9926149015c1f5ec5a1618d6e4d3635b0ab6959d5b5fdb|grounding|analystCommentary|$0.4M",
+  "MDU|0000067716-26-000072|7dfd54a98b8a6084de33ea3accb8decd8cda867f205f87df68d838f2d2cde2d1|6eb7245db8f546013a9926149015c1f5ec5a1618d6e4d3635b0ab6959d5b5fdb|grounding|sections.financials.incomeCommentary|$0.4M",
+  "NVDA|0001045810-26-000075|96408ee70d2f07ad2d7ca8f9a3c669ce75c10b016dc4b32bb6e19a06a18d1395|18749fbef886bfd281a1d2695e3ad678c3a6d0571a84a5a780ec401e33c00b40|grounding|sections.financials.balanceCommentary|400 times",
 ]);
 
 describe("the committed exception file", () => {

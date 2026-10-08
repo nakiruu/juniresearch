@@ -116,6 +116,26 @@ describe("renderCalls", () => {
   it("is what renderPrompt puts under # Calls", () => {
     expect(renderPrompt(pack, facts, desk)).toContain(`# Calls\n\n${renderCalls(desk.rating)}`);
   });
+  it("says its own thresholds are quotable", () => {
+    expect(renderCalls(desk.rating)).toContain("the thresholds in this Calls section are quotable too");
+  });
+});
+
+describe("the authoring contract on figures", () => {
+  const contract = renderPrompt(pack, facts, desk).split("# Authoring contract\n\n")[1].split("\n\n#")[0];
+  const quoting = contract.split("\n").filter((l) => /^- (Quote figures|A multiple or margin you assume)/.test(l));
+  it("says exactly what grounding enforces: the same unit and scale, never finer than shown", () => {
+    expect(contract).toContain("never more precise than shown");
+    expect(contract).toContain('write "$N,NNN million", never "$N,NNN"');
+    expect(contract).toContain("Facts, Calls or Context blocks");
+  });
+  it("asks for an assumed multiple or margin to state its basis (D2)", () => {
+    expect(contract).toContain("A multiple or margin you assume, and that is not on the surface, is your judgment: state its basis in the same sentence");
+  });
+  it("uses placeholders only — no real figure an author could copy (R-9)", () => {
+    expect(quoting.length).toBeGreaterThanOrEqual(2);
+    for (const l of quoting) expect(l, l).not.toMatch(/\d/);
+  });
 });
 
 describe("renderPrompt", () => {
