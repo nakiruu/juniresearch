@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { numericTokens, buildAllowedIndex, checkGrounding, AllowedIndex, buildGroundingIndex, weakGroundings, type GroundingIndex, type GroundingSurface } from "@/lib/synth/grounding";
+import { numericTokens, checkGrounding, buildGroundingIndex, weakGroundings, type GroundingIndex, type GroundingSurface } from "@/lib/synth/grounding";
 import { stringLeaves } from "@/lib/synth/walk";
 import { FactPack } from "@/lib/facts/schema";
 import { projectReportFacts } from "@/lib/facts/project";
@@ -445,31 +445,29 @@ describe("why a figure missed, and which figures ground only weakly", () => {
   });
 });
 
-describe("the allowed index on the AVGO FactPack", () => {
-  const index = buildAllowedIndex(pack, []);
+describe("the surface index on the AVGO FactPack", () => {
+  const index = buildGroundingIndex(surfaceOf(pack));
   const ok = (s: string) => checkGrounding({ p: s }, index);
-  it("accepts figures that round from FactPack values at their own precision", () => {
+  const noContext = { ...pack, context: { description: { ...pack.context.description, text: "" }, mdaExcerpt: null, riskFactorsExcerpt: null, riskFactorsSource: null, pressRelease: null, proxyStatement: null, transcriptHighlights: null, headlines: [] } };
+  it("accepts figures quoted from the Facts block at its own precision", () => {
     expect(ok("Revenue of $29.6B rose 86% YoY; FY25 revenue was $63.9B; EPS of $4.77")).toEqual([]);
   });
-  it("accepts figures that round from FactPack values at a coarser precision", () => {
+  it("accepts figures quoted from the Facts block and the multiples", () => {
     expect(ok("consensus target $509.61, market cap ~$1.72T, P/E of 44.9x")).toEqual([]);
   });
   it("accepts a figure only because the transcript contains it", () => {
-    // "$16.7 billion" would also round from FY22 operating cash flow (16.736B) — a numeric index cannot attribute,
-    // so the transcript-only case uses guided Q4 AI revenue, which no FactPack number rounds to.
     expect(ok("management guided Q4 AI revenue to $21.7 billion")).toEqual([]);
-    const noContext = { ...pack, context: { description: { ...pack.context.description, text: "" }, mdaExcerpt: null, riskFactorsExcerpt: null, riskFactorsSource: null, pressRelease: null, proxyStatement: null, transcriptHighlights: null, headlines: [] } };
-    expect(buildAllowedIndex(noContext, []).has(numericTokens("$21.7 billion")[0])).toBe(false);
+    expect(checkGrounding({ p: "$21.7 billion" }, buildGroundingIndex(surfaceOf(noContext)))).toHaveLength(1);
   });
-  it("rejects a figure that is nowhere in the facts or the context, naming the field and the token", () => {
+  it("rejects a figure that is nowhere on the surface, naming the field and the token", () => {
     const issues = checkGrounding({ sections: { thesis: { body: "Revenue of $17.9B" } } }, index);
     expect(issues).toHaveLength(1);
     expect(issues[0].field).toBe("sections.thesis.body");
     expect(issues[0].message).toMatch(/\$17\.9B.*not in the facts or the captured context/);
   });
-  it("indexes extra text, such as the rendered facts block", () => {
-    const withExtra = buildAllowedIndex(pack, ["Custom metric 123.4x"]);
-    expect(checkGrounding({ p: "at 123.4x on our metric" }, withExtra)).toEqual([]);
+  it("indexes the judgment block", () => {
+    const withCall = buildGroundingIndex({ ...surfaceOf(pack), judgmentBlock: "Custom metric 123.4x" });
+    expect(checkGrounding({ p: "at 123.4x on our metric" }, withCall)).toEqual([]);
     expect(checkGrounding({ p: "at 123.4x on our metric" }, index)).toHaveLength(1);
   });
 });
@@ -478,13 +476,11 @@ describe("the press release is indexed for grounding (ORCL pack)", () => {
   const orclPack = FactPack.parse(JSON.parse(readFileSync("data/facts/ORCL/0001193125-26-389274.json", "utf8")));
   it("accepts a figure that appears only in the press-release excerpt (RPO, quoted nowhere else)", () => {
     expect(orclPack.context.pressRelease?.text).toContain("$664 billion");
-    const index = buildAllowedIndex(orclPack, []);
-    expect(checkGrounding({ p: "RPO grew to $664 billion" }, index)).toEqual([]);
+    expect(checkGrounding({ p: "RPO grew to $664 billion" }, buildGroundingIndex(surfaceOf(orclPack)))).toEqual([]);
   });
   it("rejects that same figure when the pack has no press release", () => {
     const noPressRelease = { ...orclPack, context: { ...orclPack.context, pressRelease: null } };
-    const index = buildAllowedIndex(noPressRelease, []);
-    expect(checkGrounding({ p: "RPO grew to $664 billion" }, index)).toHaveLength(1);
+    expect(checkGrounding({ p: "RPO grew to $664 billion" }, buildGroundingIndex(surfaceOf(noPressRelease)))).toHaveLength(1);
   });
 });
 
@@ -500,31 +496,28 @@ describe("the proxy statement is indexed for grounding", () => {
   const orclPack = FactPack.parse(JSON.parse(readFileSync("data/facts/ORCL/0001193125-26-389274.json", "utf8")));
   const proxyStatement = { text: "Compensation discussion and analysis:\nThe CEO's total compensation was $138,713,110 for fiscal 2025.", source: "edgar:DEF 14A", asOf: "2025-09-26" };
   it("accepts a figure that appears only in the proxy excerpt", () => {
-    const index = buildAllowedIndex({ ...orclPack, context: { ...orclPack.context, proxyStatement } }, []);
+    const index = buildGroundingIndex(surfaceOf({ ...orclPack, context: { ...orclPack.context, proxyStatement } }));
     expect(checkGrounding({ p: "total compensation of $138,713,110" }, index)).toEqual([]);
   });
   it("rejects it when the pack carries no proxy", () => {
-    const index = buildAllowedIndex({ ...orclPack, context: { ...orclPack.context, proxyStatement: null } }, []);
+    const index = buildGroundingIndex(surfaceOf({ ...orclPack, context: { ...orclPack.context, proxyStatement: null } }));
     expect(checkGrounding({ p: "total compensation of $138,713,110" }, index)).toHaveLength(1);
   });
 });
 
-describe("AllowedIndex lookup cache", () => {
-  it("matches at the figure's own precision and sees values added after a lookup", () => {
-    const index = new AllowedIndex();
-    const [twoDp] = numericTokens("margin of 12.35%");
-    const [oneDp] = numericTokens("margin of 7.1%");
-    expect(index.has(twoDp)).toBe(false);          // empty index
-    index.add(12.3449);
-    expect(index.has(twoDp)).toBe(false);          // 12.3449 rounds to 12.34 at 2dp
-    index.add(12.3456);                            // added after the 2dp lookup was cached
-    expect(index.has(twoDp)).toBe(true);
-    expect(index.has(oneDp)).toBe(false);
-    index.add(Number.NaN);                         // non-finite values are ignored
-    expect(index.has(oneDp)).toBe(false);
-    index.add(7.08);                               // rounds to 7.1 at the token's 1dp
-    expect(index.has(oneDp)).toBe(true);
-    const [negative] = numericTokens("fell -7.1%"); // a signed token also matches on its absolute value
-    expect(index.has(negative)).toBe(true);
+describe("resolution on the surface index", () => {
+  const surface = (s: Partial<GroundingSurface>): GroundingSurface => ({ tables: [], factsBlock: "", callsBlock: "", judgmentBlock: "", contextBlock: "", ...s });
+  const grounds = (prose: string, s: Partial<GroundingSurface>) => checkGrounding({ p: prose }, buildGroundingIndex(surface(s))).length === 0;
+  it("matches a context figure at its own precision, or rounded to three significant digits, never further", () => {
+    expect(grounds("12.35%", { contextBlock: "a margin of 12.35%" })).toBe(true);
+    expect(grounds("12.4%", { contextBlock: "a margin of 12.35%" })).toBe(true);
+    expect(grounds("12%", { contextBlock: "a margin of 12.35%" })).toBe(false);
+  });
+  it("lets a Facts figure round to two significant digits but holds context to three", () => {
+    expect(grounds("7.1%", { contextBlock: "Change\n7.08\n" })).toBe(false);
+    expect(grounds("7.1%", { factsBlock: "- FCF yield 7.08%" })).toBe(true);
+  });
+  it("matches a signed figure against the unsigned value it rounds", () => {
+    expect(grounds("fell -7.1%", { contextBlock: "a decline of 7.1%" })).toBe(true);
   });
 });

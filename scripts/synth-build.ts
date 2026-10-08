@@ -14,7 +14,8 @@ import { computeConviction, scenarioDispersion } from "../lib/synth/conviction";
 import { MACRO } from "../lib/synth/macro";
 import { classifySector } from "../lib/synth/gates";
 import { uncertaintyTier, segmentHHI } from "../lib/synth/uncertainty";
-import { validateJudgment } from "../lib/synth/validate-judgment";
+import { validateJudgmentDetailed } from "../lib/synth/validate-judgment";
+import { weakLine } from "../lib/synth/grounding";
 import { Report } from "../lib/report.schema";
 import { validateReport, type ValidationIssue } from "../lib/validate";
 import { lintJudgment, type LintIssue } from "../lib/synth/lint";
@@ -42,10 +43,12 @@ const judgmentText = read(judgmentPath);
 // They are surfaced even when the build fails validation, so the author sees the fundamental read
 // and the next --with-errors render carries it (7.md I8).
 let extraWarnings: string[] = [];
+// Weakly grounded figures, for the review brief (the author's prompt never reads them back).
+let weakLines: string[] = [];
 const fail = (issues: (ValidationIssue | LintIssue)[], warnings: LintIssue[], stage: string): never => {
   const errorLines = issues.map(issueLine);
   const warningLines = [...warnings.map(issueLine), ...extraWarnings];
-  writeErrorsFile(errorsPath, errorLines, warningLines);
+  writeErrorsFile(errorsPath, errorLines, warningLines, weakLines);
   console.error(`${stage}: ${issues.length} issue(s) — written to ${errorsPath}\n` + errorLines.map((l) => `  - ${l}`).join("\n"));
   if (warningLines.length) console.warn(`  ${warningLines.length} warning(s):\n` + warningLines.map((l) => `  - ${l}`).join("\n"));
   process.exit(1);
@@ -108,10 +111,12 @@ const decisionBlock = {
 const report = mergeReport(facts, judgment, desk, buildDate, gate, decisionBlock);
 const rp = Report.safeParse(report);
 const valid = rp.success ? rp.data : fail(rp.error.issues.map((i) => ({ field: i.path.join("."), message: i.message, value: null })), [], "Report.parse");
-const issues = [...validateReport(valid), ...validateJudgment(judgment, facts, pack, desk)];
+const vj = validateJudgmentDetailed(judgment, facts, pack, desk);
+weakLines = vj.weak.map(weakLine);
+const issues = [...validateReport(valid), ...vj.errors];
 const lint = lintJudgment(judgment, desk, { currentPrice: pack.quote.price });
 const errors = [...issues, ...lint.filter((i) => i.severity === "error")];
-const warnings = lint.filter((i) => i.severity === "warning");
+const warnings = [...vj.warnings, ...lint.filter((i) => i.severity === "warning")];
 // A data verdict, not an authoring error: no flag skips it (--skip-review only covers the editorial gate).
 if (cg.blocked) fail(cg.errors.map((m) => ({ field: "shibuiCheck", message: m, value: null })), warnings, "input check");
 if (errors.length) fail(errors, warnings, "validate");
@@ -131,7 +136,7 @@ const warningLines = [...warnings.map(issueLine), ...extraWarnings];
 
 const out = join("data", `${ticker.toLowerCase()}.json`);
 writeFileSync(out, JSON.stringify(valid, null, 2) + "\n");
-if (warningLines.length) writeErrorsFile(errorsPath, [], warningLines);
+if (warningLines.length || weakLines.length) writeErrorsFile(errorsPath, [], warningLines, weakLines);
 else if (existsSync(errorsPath)) rmSync(errorsPath);
 console.log(`Wrote ${out}\n  ${valid.meta.company} · ${valid.rating.label} ${valid.rating.targetLow}–${valid.rating.targetHigh} · report date ${valid.meta.reportDate} · ${valid.quote.history?.length ?? 0} closes · gate ${gate.sector}/${valid.rating.gate?.gatedLabel ?? "—"} · conviction ${dec.conviction} ${dec.tier}`);
 if (warningLines.length)

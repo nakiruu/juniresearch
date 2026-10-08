@@ -1,12 +1,16 @@
 /**
  * grounding.ts — "do not invent numbers", as a check rather than a promise.
  * ---------------------------------------------------------------------------
- * numericTokens() pulls every figure out of prose. buildAllowedIndex() collects
- * every number a report may legitimately contain: FactPack values at their
- * display scalings, the rendered facts block, and the captured context text.
- * checkGrounding() reports each prose figure that matches nothing.
+ * numericTokens() pulls every figure out of prose, typed: kind, currency,
+ * magnitude after the scale, the sign written, resolution and significant
+ * digits. buildGroundingIndex() types every figure on the surface the author
+ * sees — the rendered Facts block (its tables by row format), the Calls, the
+ * report's own calls and the Context — and no raw FactPack number. A prose
+ * figure grounds only against an entry of a compatible kind, magnitude, sign
+ * and precision. checkGrounding() reports each figure that matches nothing,
+ * with the reason; weakGroundings() lists those only a unit-less context cell,
+ * a rescaled money cell or unsigned context vouches for.
  */
-import type { FactPack } from "../facts/schema";
 import type { ValidationIssue } from "../validate";
 import type { FinancialTable } from "../report.schema";
 import { formatCell, type CellFormat } from "../format";
@@ -386,6 +390,15 @@ export class GroundingIndex {
   weakness(t: NumberToken): Weakness | null { return weakness(t, this.entries); }
 }
 
+export function buildGroundingIndex(s: GroundingSurface): GroundingIndex {
+  return new GroundingIndex([
+    ...tableEntries(s.tables), ...factsLineEntries(s.factsBlock),
+    ...textEntries(s.callsBlock, "calls"), ...textEntries(s.judgmentBlock, "judgment"), ...textEntries(s.contextBlock, "context"),
+  ]);
+}
+
+/* ------------------------------------------------------------------ checks ------------------------------------------------------------------ */
+
 export interface GroundingMiss extends ValidationIssue { token: NumberToken; reason: MissReason; by?: GroundingEntry }
 export interface WeakGrounding { field: string; raw: string; weakness: Weakness; by?: GroundingEntry }
 
@@ -413,87 +426,20 @@ export function weakGroundings(obj: unknown, index: GroundingIndex): WeakGroundi
   return out;
 }
 
-export function buildGroundingIndex(s: GroundingSurface): GroundingIndex {
-  return new GroundingIndex([
-    ...tableEntries(s.tables), ...factsLineEntries(s.factsBlock),
-    ...textEntries(s.callsBlock, "calls"), ...textEntries(s.judgmentBlock, "judgment"), ...textEntries(s.contextBlock, "context"),
-  ]);
-}
-
-/* ---------------------------------------------------------- the FactPack index (old) ---------------------------------------------------------- */
-
-const roundTo = (x: number, dp: number) => Number(x.toFixed(dp));
-
-export class AllowedIndex {
-  private values: number[] = [];
-  /** precision → every indexed value rounded to it; built on first lookup at that precision, kept current by add(). */
-  private rounded = new Map<number, Set<number>>();
-  add(v: number): void {
-    if (!Number.isFinite(v)) return;
-    this.values.push(v);
-    for (const [dp, set] of this.rounded) set.add(roundTo(v, dp));
-  }
-  addToken(t: NumberToken): void { this.add(t.value); this.add(t.magnitude); this.add(Math.abs(t.value)); this.add(Math.abs(t.magnitude)); }
-  /**
-   * A prose figure is grounded if some indexed value rounds to it at the figure's own precision.
-   * No relative tolerance: a 0.5% band let unrelated numbers vouch for each other (EPS 1.23 ×100 for "123.4x").
-   * Rounded values are finite, so Set membership is exactly the `===` comparison it replaces.
-   */
-  has(t: NumberToken): boolean {
-    if (!this.values.length) return false;
-    const dp = t.precision;
-    let set = this.rounded.get(dp);
-    if (!set) {
-      set = new Set(this.values.map((v) => roundTo(v, dp)));
-      this.rounded.set(dp, set);
-    }
-    const targets = [t.value, t.magnitude, Math.abs(t.value), Math.abs(t.magnitude)];
-    return targets.some((x) => set.has(roundTo(x, dp)));
-  }
-}
-
-/** Every number in the FactPack, at the scalings the page and the prose use. */
-function factNumbers(pack: FactPack): number[] {
-  const out: number[] = [];
-  const visit = (v: unknown): void => {
-    if (typeof v === "number") out.push(v);
-    else if (Array.isArray(v)) v.forEach(visit);
-    else if (v && typeof v === "object") Object.values(v).forEach(visit);
-  };
-  visit({ quote: pack.quote, statements: pack.statements, latestQuarter: pack.latestQuarter, ttm: pack.ttm,
-          estimates: pack.estimates, analysts: pack.analysts, segments: pack.segments, geoMix: pack.geoMix, peers: pack.peers });
-  return out;
-}
-
-export function buildAllowedIndex(pack: FactPack, extraText: string[]): AllowedIndex {
-  const index = new AllowedIndex();
-  for (const n of factNumbers(pack)) {
-    index.add(n);
-    if (Math.abs(n) >= 1e6) for (const d of [1e3, 1e6, 1e9, 1e12]) index.add(n / d);
-    if (Math.abs(n) < 50) index.add(n * 100);            // ratios as percentages
-  }
-  const c = pack.context;
-  const texts = [c.description.text, c.mdaExcerpt?.text, c.riskFactorsExcerpt?.text, c.pressRelease?.text, c.proxyStatement?.text, c.transcriptHighlights?.text,
-                 ...c.headlines.map((h) => h.text), ...extraText].filter((t): t is string => typeof t === "string");
-  for (const t of texts) for (const tok of numericTokens(t)) index.addToken(tok);
-  return index;
-}
+const WEAK_PATH: Record<Weakness, string> = {
+  "bare-cell": "a unit-less table cell", "money-cell-scale-up": "a money cell read at another scale", "unsigned-context": "an unsigned context figure",
+};
+/** One line of the errors file's weak block and the review brief's list. */
+export const weakLine = (w: WeakGrounding) => `${w.field}: "${w.raw.replace(/\s+/g, " ")}" grounds only through ${WEAK_PATH[w.weakness]}${w.by ? `: ${shown(w.by)}` : ""}`;
 
 /** Each prose figure that grounds against nothing on the surface, with the reason it missed. */
-export function checkGrounding(obj: unknown, index: GroundingIndex): GroundingMiss[];
-export function checkGrounding(obj: unknown, index: AllowedIndex): ValidationIssue[];
-export function checkGrounding(obj: unknown, index: AllowedIndex | GroundingIndex): ValidationIssue[] {
-  const issues: ValidationIssue[] = [];
+export function checkGrounding(obj: unknown, index: GroundingIndex): GroundingMiss[] {
+  const misses: GroundingMiss[] = [];
   for (const { path, text } of stringLeaves(obj))
     for (const tok of numericTokens(text)) {
-      const prefix = `"${tok.raw}" is not in the facts or the captured context`;
-      if (index instanceof AllowedIndex) {
-        if (!index.has(tok)) issues.push({ field: path, message: prefix, value: tok.raw });
-        continue;
-      }
       if (index.lookup(tok).ok) continue;
       const { reason, by } = index.explain(tok);
-      issues.push({ field: path, message: `${prefix} — ${reasonText(reason, by)}`, value: tok.raw, token: tok, reason, by } as GroundingMiss);
+      misses.push({ field: path, message: `"${tok.raw}" is not in the facts or the captured context — ${reasonText(reason, by)}`, value: tok.raw, token: tok, reason, by });
     }
-  return issues;
+  return misses;
 }
