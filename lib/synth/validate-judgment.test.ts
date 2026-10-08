@@ -3,7 +3,8 @@ import { readFileSync } from "node:fs";
 import { FactPack } from "@/lib/facts/schema";
 import { projectReportFacts } from "@/lib/facts/project";
 import { Judgment } from "@/lib/synth/judgment.schema";
-import { validateJudgment, ratingIssues, markdownIssues, segmentIssues, highlightIssues, renderJudgmentBlock } from "@/lib/synth/validate-judgment";
+import { validateJudgment, validateJudgmentDetailed, groundingSurface, groundJudgment, ratingIssues, markdownIssues, segmentIssues, highlightIssues, renderJudgmentBlock } from "@/lib/synth/validate-judgment";
+import { renderFactsBlock, renderContextBlock, renderCalls } from "@/lib/synth/prompt";
 import type { HighlightKey } from "@/lib/facts/highlights";
 import goldenJudgment from "@/lib/__fixtures__/avgo-golden-judgment.json";
 import { Desk, DESK_RATING_DEFAULTS } from "@/lib/synth/desk.schema";
@@ -193,16 +194,21 @@ describe("validateJudgment on the golden judgment", () => {
     const issues = validateJudgment(golden, facts, pack, desk);
     expect(issues.filter((i) => !/not in the facts/.test(i.message))).toEqual([]);
     const misses = issues.map((i) => `${i.field}: ${i.value}`).sort();
-    // Calibration record: re-calibrated 2026-09-13 after the transcript cap rose to 16,000. The AVGO
-    // transcript excerpt now reaches the passage "...revenue, which grew 221% year-on-year..." and its
-    // surrounding paragraph ("...up over 3.5x year-on-year and represented 73% of AI revenue... AI
-    // networking revenue was up over 2.5x year-on-year"), which grounds +221%/221%, 2.5x, 3.5x and 73%
-    // (all four occurrences, across catalysts, thesis, risks, and finalRecommendation). Each figure
-    // remaining below was confirmed genuinely absent from data/facts/AVGO/0001730168-26-000080.json
-    // (its numeric fields and its context excerpts).
+    // Calibration record: re-calibrated 2026-10-07 for the typed surface index (grounding-lint plan §2.6).
+    // The index holds what the author sees, typed by kind, scale, sign and precision, so:
+    //   - "$1.4B" ×2 rounds the context's "1,395" (millions) further than the 3-digit context floor allows;
+    //   - "0.68x" is finer than the Facts' "0.7x" (the unrendered 0.68 used to ground it);
+    //   - "100T Tomahawk" / "200T" is 100 *terabit*, which the tokenizer reads as a trillion scale (a
+    //     single-letter suffix before a product name; it does not occur in the published corpus).
+    // Earlier record (2026-09-13): the transcript excerpt grounds +221%/221%, 2.5x, 3.5x and 73%.
     expect(misses).toEqual([
+      "sections.executiveSummary.catalysts[3]: 100T",
+      "sections.executiveSummary.catalysts[3]: 200T",
       "sections.financials.balanceCommentary: $1.4B",
+      "sections.financials.balanceCommentary: 0.68x",
       "sections.financials.cashflowCommentary: $1.4B",
+      "sections.growth.points[2]: 100T",
+      "sections.growth.points[2]: 200T",
     ]);
   });
   it("also runs the highlight checks", () => {
@@ -212,5 +218,59 @@ describe("validateJudgment on the golden judgment", () => {
   });
   it("derives STRONG BUY for the golden (E +34.0%, D 17.1%, R 1.98; bear $300 clears the $307.69 floor) and accepts its one-notch-conservative BUY", () => {
     expect(validateJudgment(golden, facts, pack, desk).filter((i) => i.field === "rating.label")).toEqual([]);
+  });
+});
+
+describe("the grounding surface", () => {
+  it("is the prompt's Facts, Calls, judgment and Context blocks, with the statement tables", () => {
+    const s = groundingSurface(golden, facts, pack, desk);
+    expect(s.callsBlock).toBe(renderCalls(desk.rating));
+    expect(s.factsBlock).toBe(renderFactsBlock(facts, pack));
+    expect(s.judgmentBlock).toBe(renderJudgmentBlock(golden, pack.quote.price));
+    expect(s.contextBlock).toBe(renderContextBlock(pack));
+    expect(s.tables).toEqual([facts.sections.financials.income, facts.sections.financials.balance, facts.sections.financials.cashflow]);
+  });
+  it("grounds a quoted Calls threshold", () => {
+    const j = structuredClone(golden); j.sections.valuation.scenarioCommentary = "Reward/risk clears the 0.50× BUY bar.";
+    expect(validateJudgment(j, facts, pack, desk).filter((i) => i.value === "0.50×")).toEqual([]);
+  });
+});
+
+describe("validateJudgmentDetailed", () => {
+  it("returns errors, warnings and the weakly grounded figures; validateJudgment is its errors", () => {
+    const v = validateJudgmentDetailed(golden, facts, pack, desk);
+    expect(Object.keys(v).sort()).toEqual(["errors", "warnings", "weak"]);
+    expect(validateJudgment(golden, facts, pack, desk)).toEqual(v.errors);
+    expect(v.weak.every((w) => typeof w.field === "string" && ["bare-cell", "money-cell-scale-up", "unsigned-context"].includes(w.weakness))).toBe(true);
+  });
+  it("warns, not fails, on a whole-number multiple with no near miss on the surface (D2), wherever it sits", () => {
+    const j = structuredClone(golden);
+    j.sections.executiveSummary.thesis.body = "At 13x on our own earnings view the shares are not cheap.";
+    j.sections.valuation.scenarios[0].driver = "The multiple holds at 13x.";
+    const v = validateJudgmentDetailed(j, facts, pack, desk);
+    expect(v.errors.filter((i) => i.value === "13x")).toEqual([]);
+    const assumed = v.warnings.filter((w) => w.value === "13x");
+    expect(assumed.map((w) => [w.rule, w.severity, w.field])).toEqual([
+      ["grounding-assumed", "warning", "sections.executiveSummary.thesis.body"],
+      ["grounding-assumed", "warning", "sections.valuation.scenarios[0].driver"],
+    ]);
+    expect(assumed[0].message).toContain("assumed figure — not on the surface; argue its basis in the sentence");
+  });
+  it("keeps every percentage and every multiple with a decimal an error, even with no near miss (D2 revised, review C-1)", () => {
+    const j = structuredClone(golden);
+    j.sections.executiveSummary.thesis.body = "Margin of 74.8%, growth of +16.7%, a 17.9x multiple and an assumed 14x exit.";
+    const empty = { tables: [], factsBlock: "", callsBlock: "", judgmentBlock: "", contextBlock: "" };
+    const g = groundJudgment(j, empty);
+    const at = (v: string) => [g.errors.some((m) => m.field === "sections.executiveSummary.thesis.body" && m.value === v), g.assumed.some((w) => w.value === v)];
+    expect(at("74.8%")).toEqual([true, false]);
+    expect(at("+16.7%")).toEqual([true, false]);
+    expect(at("17.9x")).toEqual([true, false]);
+    expect(at("14x")).toEqual([false, true]);
+  });
+  it("keeps a rounding miss in a scenario driver an error", () => {
+    const j = structuredClone(golden); j.sections.valuation.scenarios[0].driver = "The ratio settles near 2x.";
+    const v = validateJudgmentDetailed(j, facts, pack, desk);
+    expect(v.errors.filter((i) => i.value === "2x").map((i) => i.field)).toEqual(["sections.valuation.scenarios[0].driver"]);
+    expect(v.warnings.filter((w) => w.value === "2x")).toEqual([]);
   });
 });

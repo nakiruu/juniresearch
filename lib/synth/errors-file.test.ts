@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { issueLine, renderErrorsFile, parseErrorsFile, WARNINGS_HEADING } from "@/lib/synth/errors-file";
+import { issueLine, renderErrorsFile, parseErrorsFile, WARNINGS_HEADING, WEAK_HEADING } from "@/lib/synth/errors-file";
+import { promptTail } from "@/lib/synth/prompt";
 
 describe("issueLine", () => {
   it("renders a plain validation issue as the loop always has", () => {
@@ -32,10 +33,31 @@ describe("the errors file", () => {
   });
   it("round-trips", () => {
     for (const pair of [[errors, warnings], [errors, []], [[], warnings], [[], []]] as [string[], string[]][])
-      expect(parseErrorsFile(renderErrorsFile(pair[0], pair[1]))).toEqual({ errors: pair[0], warnings: pair[1] });
+      expect(parseErrorsFile(renderErrorsFile(pair[0], pair[1]))).toEqual({ errors: pair[0], warnings: pair[1], weak: [] });
   });
   it("reads a pre-3b errors file (no warnings block) as all errors", () => {
     expect(parseErrorsFile("rating.label: bad (received 1)\nsections.growth.points[0]: worse (received 2)\n"))
-      .toEqual({ errors: ["rating.label: bad (received 1)", "sections.growth.points[0]: worse (received 2)"], warnings: [] });
+      .toEqual({ errors: ["rating.label: bad (received 1)", "sections.growth.points[0]: worse (received 2)"], warnings: [], weak: [] });
+  });
+});
+
+describe("the weakly grounded block", () => {
+  const errors = ["rating.label: bad (received 1)"];
+  const warnings = ['warn: lint/tic: b: "leg" appears 11 times (received "leg")'];
+  const weak = ['sections.financials.incomeCommentary: "$15,955 million" grounds only through a unit-less table cell: Context "15,955"'];
+  it("follows the warnings under its own heading", () => {
+    expect(renderErrorsFile(errors, warnings, weak)).toBe(`${errors[0]}\n\n${WARNINGS_HEADING}\n${warnings[0]}\n\n${WEAK_HEADING}\n${weak[0]}\n`);
+    expect(renderErrorsFile([], [], weak)).toBe(`${WEAK_HEADING}\n${weak[0]}\n`);
+  });
+  it("round-trips", () => {
+    for (const [e, w] of [[errors, warnings], [[], warnings], [errors, []], [[], []]] as [string[], string[]][])
+      expect(parseErrorsFile(renderErrorsFile(e, w, weak))).toEqual({ errors: e, warnings: w, weak });
+  });
+  it("never reaches the author's prompt", () => {
+    const prior = parseErrorsFile(renderErrorsFile(errors, warnings, weak));
+    const tail = promptTail({ priorErrors: prior.errors, priorWarnings: prior.warnings });
+    expect(tail).toContain(errors[0]);
+    expect(tail).not.toContain("$15,955 million");
+    expect(tail).not.toContain(WEAK_HEADING);
   });
 });

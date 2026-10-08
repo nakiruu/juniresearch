@@ -1,0 +1,101 @@
+{
+  "note": "Owner-approved grounding exceptions for published reports (plan 2026-10-07 §5, decision D1). Shrink-only: grounding-exceptions.test.ts pins every key. synth:build applies this file only when it is byte-equal to both refs/heads/main's and refs/remotes/origin/main's copies, and an entry only while its judgment and rendered surface are unchanged. Any renderer wording change lapses every entry; re-key in the same commit, listing old key -> new key, with unchanged judgment SHAs. Each fix round (plan §6.1) removes its entries; delete the file when it is empty.",
+  "entries": [
+    {
+      "ticker": "CSTM",
+      "accession": "0001563411-26-000192",
+      "judgmentSha256": "4142e25fe8ad5fb216dfdac560d6e91e946e0f71950cfce5b99fd17185d8ed0f",
+      "surfaceSha256": "1ad3e984b191e520878efc4680d4ef89b37583e80f3aceaaa06ffa50390b4ccd",
+      "check": "grounding",
+      "field": "sections.financials.incomeCommentary",
+      "raw": "$4 million",
+      "class": "false-positive",
+      "reason": "shredded table cell \"4\\n%\" (the prior-year $4M)",
+      "approvedAt": "2026-10-08"
+    },
+    {
+      "ticker": "LH",
+      "accession": "0000920148-26-000175",
+      "judgmentSha256": "68ac4715cee0131281b68b90640a6e844ad9d267ac0264f8bd963123d46a169c",
+      "surfaceSha256": "91b392e467c90dc3289cac71072d746c77ac9c697d3d898da5c2af408d9e184d",
+      "check": "grounding",
+      "field": "sections.executiveSummary.catalysts[2]",
+      "raw": "$8.73 billion",
+      "class": "false-positive",
+      "reason": "2-decimal cell in an \"(in billions)\" table; the per-share rule M1′ blocks it",
+      "approvedAt": "2026-10-08"
+    },
+    {
+      "ticker": "LH",
+      "accession": "0000920148-26-000175",
+      "judgmentSha256": "68ac4715cee0131281b68b90640a6e844ad9d267ac0264f8bd963123d46a169c",
+      "surfaceSha256": "91b392e467c90dc3289cac71072d746c77ac9c697d3d898da5c2af408d9e184d",
+      "check": "grounding",
+      "field": "sections.growth.points[0]",
+      "raw": "$13,952",
+      "class": "true-positive",
+      "reason": "the unit was dropped: the source reads \"$13,952 million\"; fix at next synthesis",
+      "approvedAt": "2026-10-08"
+    },
+    {
+      "ticker": "LLY",
+      "accession": "0000059478-26-000081",
+      "judgmentSha256": "9f262de96beee34bd73e30500e22606e7435611b3b72f4a020599812e9d8163f",
+      "surfaceSha256": "37fad26e9ea859ef73851d4007d35e4320d11b48e661131cb29f87ce6dc101eb",
+      "check": "grounding",
+      "field": "sections.executiveSummary.companyOverview",
+      "raw": "$1T",
+      "class": "policy",
+      "reason": "1-digit rounding of $1.02T",
+      "approvedAt": "2026-10-08"
+    },
+    {
+      "ticker": "LLY",
+      "accession": "0000059478-26-000081",
+      "judgmentSha256": "9f262de96beee34bd73e30500e22606e7435611b3b72f4a020599812e9d8163f",
+      "surfaceSha256": "37fad26e9ea859ef73851d4007d35e4320d11b48e661131cb29f87ce6dc101eb",
+      "check": "grounding",
+      "field": "sections.financials.cashflowCommentary",
+      "raw": "$1T",
+      "class": "policy",
+      "reason": "1-digit rounding of $1.02T",
+      "approvedAt": "2026-10-08"
+    },
+    {
+      "ticker": "MDU",
+      "accession": "0000067716-26-000072",
+      "judgmentSha256": "7dfd54a98b8a6084de33ea3accb8decd8cda867f205f87df68d838f2d2cde2d1",
+      "surfaceSha256": "6eb7245db8f546013a9926149015c1f5ec5a1618d6e4d3635b0ab6959d5b5fdb",
+      "check": "grounding",
+      "field": "analystCommentary",
+      "raw": "$0.4M",
+      "class": "false-positive",
+      "reason": "single-digit table cell (.4) (in millions)",
+      "approvedAt": "2026-10-08"
+    },
+    {
+      "ticker": "MDU",
+      "accession": "0000067716-26-000072",
+      "judgmentSha256": "7dfd54a98b8a6084de33ea3accb8decd8cda867f205f87df68d838f2d2cde2d1",
+      "surfaceSha256": "6eb7245db8f546013a9926149015c1f5ec5a1618d6e4d3635b0ab6959d5b5fdb",
+      "check": "grounding",
+      "field": "sections.financials.incomeCommentary",
+      "raw": "$0.4M",
+      "class": "false-positive",
+      "reason": "single-digit table cell (.4) (in millions)",
+      "approvedAt": "2026-10-08"
+    },
+    {
+      "ticker": "NVDA",
+      "accession": "0001045810-26-000075",
+      "judgmentSha256": "96408ee70d2f07ad2d7ca8f9a3c669ce75c10b016dc4b32bb6e19a06a18d1395",
+      "surfaceSha256": "18749fbef886bfd281a1d2695e3ad678c3a6d0571a84a5a780ec401e33c00b40",
+      "check": "grounding",
+      "field": "sections.financials.balanceCommentary",
+      "raw": "400 times",
+      "class": "policy",
+      "reason": "1-digit bound of 426.7x",
+      "approvedAt": "2026-10-08"
+    }
+  ]
+}

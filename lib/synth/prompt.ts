@@ -3,7 +3,8 @@
  * ---------------------------------------------------------------------------
  * Facts are rendered through lib/format.ts exactly as the page will show them,
  * so the model can quote them without arithmetic and the grounding index (built
- * from the same strings) accepts every quoted figure. Context is verbatim.
+ * from these same rendered blocks, Calls included) accepts every quoted figure.
+ * Context is verbatim.
  * Pure: same inputs, same text.
  */
 import type { FactPack } from "../facts/schema";
@@ -97,7 +98,8 @@ export function renderContextBlock(pack: FactPack): string {
 
 const CONTRACT = `- Write Markdown using only: **bold**, "### " or "#### " at the start of a block, "- " list lines, blank lines between paragraphs, and {+ text +} / {- text -} for bullish / bearish spans. No HTML, no links, no images, no tables, and never nest markers (no **{+ +}**).
 - Numeric fields (targets, implied prices, probabilities) are plain numbers; probabilities are ratios (0.30, not 30 or "30%").
-- Quote figures exactly as they appear in the Facts or Context blocks below — the same rounding, the same unit. Never compute a new figure, never recall one from memory. A figure that appears in neither block fails validation.
+- Quote figures as they appear in the Facts, Calls or Context blocks below, in the same unit and scale, and never more precise than shown. You may drop trailing zeros, or round to fewer digits while keeping at least two significant digits of a Facts figure and three of a Context figure ($NN.NB may become $NNB, but $N.NB stays $N.NB; a Context figure N.N% stays N.N%). A statement-table cell keeps its table's unit: write "$N,NNN million", never "$N,NNN". Never compute a new figure, never recall one from memory; a figure that appears in none of these blocks fails validation.
+- A whole-number valuation multiple you assume (Nx) that is not on the surface is your judgment: state its basis in the same sentence; the build lists each one for the reviewer. Every other figure (a margin, a growth rate, a multiple with a decimal, an amount) must come from the surface.
 - Do not write null anywhere; omit an optional field instead.
 - Keep every field within its schema bounds; the page has a fixed shape.
 - Order your thinking as the schema orders the fields: rating and scenarios first, then the prose that argues for them.
@@ -111,7 +113,7 @@ export function renderCalls(cfg: DeskRating): string {
 - Rating: the page derives a label from two numbers you set through the scenarios — expected upside E (probability-weighted fair value vs the current price) and bear-case downside D (Bear implied price vs the current price), with reward/risk R = E ÷ D. STRONG BUY needs E ≥ ${up(cfg.strongBuy.minUpside)} and R ≥ ${rewardRiskText(cfg.strongBuy.minRewardRisk)}; BUY needs E ≥ ${up(cfg.buy.minUpside)} and R ≥ ${rewardRiskText(cfg.buy.minRewardRisk)}; SELL is E ≤ ${up(cfg.sell.maxUpside)}; STRONG SELL is E ≤ ${up(cfg.strongSell.maxUpside)}; anything else is HOLD. Your label must be the derived label or one notch more conservative (STRONG BUY→BUY, BUY→HOLD, SELL→HOLD, STRONG SELL→SELL); a more aggressive label fails.
 - Bear case: the Bear implied price must sit at least ${pct(cfg.bearFloor)} below the current price — a bear scenario is a real scenario, not a formality.
 - On a BUY, a target low below the current price makes the page's upside line read negative; the lint warns so you can raise it or address it in the prose.
-- Numbers you may quote from your own calls: the target range and its upside range, each scenario's weighted value, the weighted fair value, and the expected upside, bear-case downside and reward/risk — the page renders these.
+- Numbers you may quote from your own calls: the target range and its upside range, each scenario's weighted value, the weighted fair value, and the expected upside, bear-case downside and reward/risk — the page renders these; the thresholds in this Calls section are quotable too.
 - Scenario probabilities are quotable as percentages (e.g. 48%).
 - \`highlights\`: up to four keys from the "Highlight cells you may add" list below, no repeats; the code computes the values, you only choose which keys to append.`;
 }

@@ -9,6 +9,28 @@
 import { z } from "zod";
 import { EditorialReviewShape, type EditorialReview } from "./editorial.schema";
 import { judgmentSha256 } from "./editorial";
+import { FactPack } from "../facts/schema";
+import { projectReportFacts } from "../facts/project";
+import { Judgment } from "./judgment.schema";
+import type { Desk } from "./desk.schema";
+import { groundingSurface, groundJudgment } from "./validate-judgment";
+import { weakLine } from "./grounding";
+
+/**
+ * The figures the build could check only by digits or without a sign, and the assumed whole-number multiples (D2): the
+ * reviewer checks these first. A judgment or pack that does not parse yields a warning instead; the brief is then
+ * rendered without the two lists (the build fails on such a judgment anyway).
+ */
+export function briefGroundingLists(judgmentText: string, packText: string | null, desk: Desk): { weak: string[]; assumed: string[] } | { warning: string } {
+  const firstLine = (e: unknown) => (e as Error).message.split("\n")[0];
+  let j: Judgment;
+  try { j = Judgment.parse(JSON.parse(judgmentText)); } catch (e) { return { warning: `the judgment does not parse (${firstLine(e)})` }; }
+  if (packText == null) return { warning: "the pack is missing" };
+  let pack: FactPack;
+  try { pack = FactPack.parse(JSON.parse(packText)); } catch (e) { return { warning: `the pack does not parse (${firstLine(e)})` }; }
+  const g = groundJudgment(j, groundingSurface(j, projectReportFacts(pack), pack, desk));
+  return { weak: g.weak.map(weakLine), assumed: g.assumed.map((w) => `${w.field}: "${String(w.value)}"`) };
+}
 
 export interface ReviewBriefPaths {
   report: string;
@@ -30,8 +52,12 @@ export function renderReviewBrief(input: {
   recurringTraps?: readonly string[];
   /** Force the full cold brief even on a re-check — for when a fresh reviewer, not the round-1 one, reads round 2. */
   fullBrief?: boolean;
+  /** Figures the build grounded only by digits or without a sign (grounding.ts weakLine); omitted → no section. */
+  weak?: readonly string[];
+  /** Whole-number multiples nowhere on the surface, passed as assumed-figure warnings (decision D2); omitted → no section. */
+  assumed?: readonly string[];
 }): string {
-  const { ticker, accession, judgmentText, previousReview, round, rubric, paths, recurringTraps = [], fullBrief = false } = input;
+  const { ticker, accession, judgmentText, previousReview, round, rubric, paths, recurringTraps = [], fullBrief = false, weak, assumed } = input;
   const sha = judgmentSha256(judgmentText);
   // A re-check by the same, still-warm reviewer: it already holds the author's brief (the grounding
   // surface, proxy included) and the rubric from the previous round, and only the report and judgment
@@ -43,7 +69,7 @@ export function renderReviewBrief(input: {
   ];
   if (!recheck) {
     parts.push(
-      `# What to read\n\n- \`${paths.report}\` — the built report, what the reader sees.\n- \`${paths.prompt}\` — the author's brief. Its **Facts** and **Context** blocks are the grounding surface: a figure in the prose must appear there or in the report's own calls. Its Context **Proxy statement** section is the authoritative source for every governance, pay, ownership and related-party claim; when it reads "(not captured)", no such claim is supported. You do not need the raw FactPack — everything you check is on this surface.\n- \`${paths.judgment}\` — the judgment the author wrote, and the field paths your findings must name.\n- \`${paths.rubric}\` — the rubric, reproduced below so you need not open it.`,
+      `# What to read\n\n- \`${paths.report}\` — the built report, what the reader sees.\n- \`${paths.prompt}\` — the author's brief. Its **Facts**, **Calls** and **Context** blocks, with the report's own calls, are the grounding surface. The build rejects a figure that matches nothing on it. Where the surface states a unit, scale or sign (Facts, Calls, typed Context figures), the build checks them. A Context statement-table cell carries no unit, so a figure matching one is checked by digits only, and an unsigned Context figure cannot check a sign. The section below lists every figure grounded that weakly; check its unit, scale, sign and attribution first. Which quantity and which period a figure is attached to (rubric item 1) is always yours. Its Context **Proxy statement** section is the authoritative source for every governance, pay, ownership and related-party claim; when it reads "(not captured)", no such claim is supported. You do not need the raw FactPack — everything you check is on this surface.\n- \`${paths.judgment}\` — the judgment the author wrote, and the field paths your findings must name.\n- \`${paths.rubric}\` — the rubric, reproduced below so you need not open it.`,
     );
     if (recurringTraps.length)
       parts.push(
@@ -55,6 +81,14 @@ export function renderReviewBrief(input: {
       `# What changed — read only these\n\nYou reviewed round ${round - 1} of this report. You already hold the author's brief — the \`${paths.prompt}\` grounding surface, its Context **Proxy statement** section included — and the rubric, and neither changed. The author rewrote the judgment to address your findings. Read only:\n- \`${paths.report}\` — the rebuilt report.\n- \`${paths.judgment}\` — the rewritten judgment (the field paths your findings name).\n\nJudge against the same rubric and the same grounding surface as round ${round - 1}. Re-verdict every previous finding below first, then look only for defects the rewrite introduced.`,
     );
   }
+  if (weak)
+    parts.push(`# Weakly grounded figures — check unit, scale, sign and attribution first\n\n${weak.length
+      ? `Each of these grounds only through a unit-less Context table cell, a Context money cell read at another scale, or an unsigned Context figure, so the build could not check the unit, scale or sign.\n${weak.map((w) => `- ${w}`).join("\n")}`
+      : "None: every figure grounds on an entry whose unit, scale and sign the build checks."}`);
+  if (assumed)
+    parts.push(`# Assumed figures\n\n${assumed.length
+      ? `No figure on the surface comes near these whole-number multiples: they are the author's valuation assumptions, and the build passes them as warnings. Each must state its basis in the same sentence; a bare assumption is a finding.\n${assumed.map((a) => `- ${a}`).join("\n")}`
+      : "None."}`);
   if (previousReview)
     parts.push(
       `# Previous findings\n\nBelow is your previous findings file verbatim. Verdict every finding in it — set \`status\` to \`addressed\` when the rewrite fixed it, or leave it \`open\` and add a \`note\` saying what is still wrong — **before you add any new finding**. Keep the ids you already issued; number new findings after the highest one.\n\n\`\`\`json\n${JSON.stringify(previousReview, null, 2)}\n\`\`\``,

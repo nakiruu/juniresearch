@@ -195,18 +195,25 @@ npm run synth:prompt -- AVGO 0001730168-26-000080 --with-review    # re-prompt t
 npm run synth:prompt -- AVGO 0001730168-26-000080 --with-errors    # re-prompt with the last build's errors (<acc>.errors.txt)
                                                                    # (either re-prompt flag also writes <acc>.prompt.delta.md)
 npm run synth:build  -- AVGO 0001730168-26-000080 --skip-review    # local experiments only; prints a warning
+npm run grounding:sweep -- AVGO                                    # read-only: would a republish pass grounding? (no args: every published report)
 ```
 
 More flags:
 - `synth:build --date YYYY-MM-DD` sets the report date (default today).
 - `synth:review-brief --full-brief` sends a round-2 reviewer the full brief instead of the delta.
+- `grounding:sweep --pack-at report` checks the packs as committed with each report (what the reviewer
+  approved) instead of today's; every run also reports build-time vs HEAD drift. Run it before any republish.
 - `screen -- --query [TICKER ...]` screens named tickers (default: the watchlist); `--query --published`
   screens every published report; `--calibrate <saved.json>` checks the likely-HOLD flag against published
   ratings; `--as-of YYYY-MM-DD` bounds the query's dates.
 
 `synth:build` runs, in order: `Judgment.parse`, `Report.parse`, `validateReport`, `validateJudgment`
 (rating consistency vs the **derived label**, bear-case floor), **grounding** (every figure in the prose
-must exist in the FactPack / captured context / the report's own derived values), **desk lint**
+must match a figure in the rendered Facts block, the Calls thresholds, the report's own calls or the Context
+excerpts, with a compatible unit and no finer precision; Context table cells match by digits, and figures
+grounded only that way are listed for the reviewer; a multiple or margin found nowhere on the surface is an
+assumed-figure warning, not an error), the owner-approved **grounding exceptions** for published reports
+(`lib/synth/grounding-exceptions.json`, applied only as merged to `main` and pushed), **desk lint**
 (`lib/synth/lint/` — figure/sentence repeats, span scope, hype, unattributed superlatives; errors fail the
 build, warnings print), and the **editorial gate** — a fresh reviewer writes `…editorial.json` and the
 build refuses to write the report until that file matches the judgment's SHA-256 with no Critical or

@@ -21,7 +21,11 @@ its rank.
 
 1. `npm run synth:prompt -- <TICKER> <ACCESSION>` — prints the prompt path and the judgment path.
 2. Read the prompt file in full. Write the complete judgment object it asks for to the judgment path (valid JSON, nothing else in the file).
-3. `npm run synth:build -- <TICKER> <ACCESSION>`.
+3. `npm run synth:build -- <TICKER> <ACCESSION>`. Before any republish of a published report (a
+   `synth:build --date` on corrected inputs, or a re-run on today's pack), first run
+   `npm run grounding:sweep -- <TICKER>`: it re-runs the grounding check read-only and lists every figure that
+   would fail `validate`, with the reason. A figure it lists needs a fix round; never edit a reviewed judgment
+   just to make the sweep pass.
 4. If it fails: `npm run synth:prompt -- <TICKER> <ACCESSION> --with-errors`, then
    read **only the printed delta file** (`<ACCESSION>.prompt.delta.md`) — it holds
    every error; the rest of the prompt is byte-for-byte the one you already read,

@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { loadEditorialReview, malformedReviewMessage } from "../lib/synth/editorial";
-import { renderReviewBrief } from "../lib/synth/review-brief";
+import { renderReviewBrief, briefGroundingLists } from "../lib/synth/review-brief";
 import { Desk } from "../lib/synth/desk.schema";
 
 const args = process.argv.slice(2);
@@ -31,7 +31,14 @@ const previousReview = (() => {
 })();
 const round = previousReview ? (Math.min(previousReview.round + 1, 2) as 1 | 2) : 1;
 
-const brief = renderReviewBrief({ ticker, accession, judgmentText, previousReview, round, rubric, paths, recurringTraps: desk.recurringTraps, fullBrief });
+// The weak and assumed lists for the reviewer; on a judgment or pack that does not parse, the brief goes out without them.
+const packPath = join("data", "facts", ticker, `${accession}.json`);
+const lists = briefGroundingLists(judgmentText, existsSync(packPath) ? readFileSync(packPath, "utf8") : null, desk);
+if ("warning" in lists) console.warn(`grounding lists omitted from the brief: ${lists.warning}`);
+const grounding = "warning" in lists ? null : lists;
+
+const brief = renderReviewBrief({ ticker, accession, judgmentText, previousReview, round, rubric, paths, recurringTraps: desk.recurringTraps, fullBrief,
+  weak: grounding?.weak, assumed: grounding?.assumed });
 const out = join(dir, `${accession}.review-brief.md`);
 writeFileSync(out, brief);
 const mode = previousReview ? (fullBrief ? ", re-check (full brief)" : ", re-check (delta — warm reviewer)") : "";

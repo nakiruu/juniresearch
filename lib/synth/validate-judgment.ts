@@ -3,9 +3,10 @@
  * -----------------------------------------------------------------------------
  * Rating consistency (the label must equal the derived label or sit one notch
  * more conservative; the bear case must clear the desk floor), grounding
- * (every figure in the prose exists in the facts or context), the Markdown
- * subset, and segment/moat naming. Every issue names field and value; the
- * list is the re-prompt payload.
+ * (every figure in the prose matches a figure on the rendered surface, with a
+ * compatible unit and no finer precision), the Markdown subset, and
+ * segment/moat naming. Every issue names field and value; the list is the
+ * re-prompt payload.
  */
 import type { FactPack } from "../facts/schema";
 import type { ReportFacts } from "../facts/project";
@@ -14,8 +15,9 @@ import { computeScenarios, pct, usd, upside, upsideRangeText, rewardRiskText } f
 import type { Judgment } from "./judgment.schema";
 import type { Desk, DeskRating } from "./desk.schema";
 import { computeConviction, deriveLabel, conservativeNotch } from "./conviction";
-import { buildAllowedIndex, checkGrounding } from "./grounding";
-import { renderFactsBlock } from "./prompt";
+import { buildGroundingIndex, checkGrounding, weakGroundings, type GroundingMiss, type GroundingSurface, type WeakGrounding } from "./grounding";
+import { renderFactsBlock, renderContextBlock, renderCalls } from "./prompt";
+import type { LintIssue } from "./lint";
 import { stringLeaves } from "./walk";
 
 /** The label must be the derived label or one notch more conservative; the bear must sit below the desk floor. */
@@ -117,13 +119,54 @@ export function renderJudgmentBlock(j: Judgment, currentPrice: number): string {
   ].join("\n");
 }
 
+/** The grounding surface: exactly the blocks the author's prompt renders, plus the report's own calls. */
+export function groundingSurface(j: Judgment, facts: ReportFacts, pack: FactPack, desk: Desk): GroundingSurface {
+  const f = facts.sections.financials;
+  return {
+    tables: [f.income, f.balance, f.cashflow],
+    factsBlock: renderFactsBlock(facts, pack),
+    callsBlock: renderCalls(desk.rating),
+    judgmentBlock: renderJudgmentBlock(j, pack.quote.price),
+    contextBlock: renderContextBlock(pack),
+  };
+}
+
+/**
+ * A whole-number multiple ("14x") that nothing on the surface comes near is the author's valuation assumption, not a
+ * misquote (decision D2, revised after code review C-1). Every percentage and every figure with a decimal must come from
+ * the surface: downgrading those let invented margins and growth rates through.
+ */
+export const isAssumedFigure = (m: GroundingMiss) => m.reason === "none" && m.token.kind === "mult" && m.token.precision === 0;
+
+/** Grounding misses split into errors and assumed-figure warnings, plus the figures that ground only weakly. */
+export function groundJudgment(j: Judgment, surface: GroundingSurface): { errors: GroundingMiss[]; assumed: LintIssue[]; weak: WeakGrounding[] } {
+  const index = buildGroundingIndex(surface);
+  const misses = checkGrounding(j, index);
+  return {
+    errors: misses.filter((m) => !isAssumedFigure(m)),
+    assumed: misses.filter(isAssumedFigure).map((m) => ({
+      rule: "grounding-assumed", severity: "warning" as const, field: m.field, value: m.value,
+      message: `"${m.token.raw}" is an assumed figure — not on the surface; argue its basis in the sentence`,
+    })),
+    weak: weakGroundings(j, index),
+  };
+}
+
+export function validateJudgmentDetailed(j: Judgment, facts: ReportFacts, pack: FactPack, desk: Desk): { errors: ValidationIssue[]; warnings: LintIssue[]; weak: WeakGrounding[] } {
+  const g = groundJudgment(j, groundingSurface(j, facts, pack, desk));
+  return {
+    errors: [
+      ...ratingIssues(j, pack.quote.price, desk.rating),
+      ...segmentIssues(j, facts),
+      ...highlightIssues(j, facts),
+      ...markdownIssues(j),
+      ...g.errors.map(({ field, message, value }) => ({ field, message, value })),
+    ],
+    warnings: g.assumed,
+    weak: g.weak,
+  };
+}
+
 export function validateJudgment(j: Judgment, facts: ReportFacts, pack: FactPack, desk: Desk): ValidationIssue[] {
-  const index = buildAllowedIndex(pack, [renderFactsBlock(facts, pack), renderJudgmentBlock(j, pack.quote.price)]);
-  return [
-    ...ratingIssues(j, pack.quote.price, desk.rating),
-    ...segmentIssues(j, facts),
-    ...highlightIssues(j, facts),
-    ...markdownIssues(j),
-    ...checkGrounding(j, index),
-  ];
+  return validateJudgmentDetailed(j, facts, pack, desk).errors;
 }

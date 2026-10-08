@@ -2,7 +2,8 @@ import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { EditorialReview } from "@/lib/synth/editorial.schema";
 import { judgmentSha256 } from "@/lib/synth/editorial";
-import { renderReviewBrief } from "@/lib/synth/review-brief";
+import { renderReviewBrief, briefGroundingLists } from "@/lib/synth/review-brief";
+import { Desk } from "@/lib/synth/desk.schema";
 
 const ticker = "AVGO";
 const accession = "0001730168-26-000080";
@@ -110,5 +111,54 @@ describe("renderReviewBrief", () => {
   it("is deterministic", () => {
     expect(brief()).toBe(brief());
     expect(brief({ previousReview, round: 2 })).toBe(brief({ previousReview, round: 2 }));
+  });
+});
+
+describe("briefGroundingLists", () => {
+  const desk = Desk.parse(JSON.parse(readFileSync("data/desk/desk.json", "utf8")));
+  const packText = readFileSync(`data/facts/${ticker}/${accession}.json`, "utf8");
+  it("computes the weak and assumed lists from the judgment and the pack", () => {
+    const r = briefGroundingLists(judgmentText, packText, desk);
+    expect("weak" in r && Array.isArray(r.weak) && Array.isArray(r.assumed)).toBe(true);
+  });
+  it.each<[string, string, string | null, RegExp]>([
+    ["a judgment that is not JSON", "{ not json", packText, /judgment/],
+    ["a judgment that fails the schema", "{}", packText, /judgment/],
+    ["a missing pack", judgmentText, null, /pack/],
+    ["a pack that is not JSON", judgmentText, "{ nope", /pack/],
+  ])("returns a warning, not a throw, for %s", (_name, j, p, why) => {
+    const r = briefGroundingLists(j, p, desk);
+    expect("warning" in r && r.warning).toMatch(why);
+  });
+});
+
+describe("what the brief says the grounding check enforces", () => {
+  const weak = ['sections.financials.incomeCommentary: "$15,955 million" grounds only through a unit-less table cell: Context "15,955"'];
+  const assumed = ['sections.valuation.scenarios[2].driver: "14x"'];
+  const text = brief({ weak, assumed });
+  it("names Facts, Calls and Context as the surface and does not overclaim the check", () => {
+    expect(text).toContain("Its **Facts**, **Calls** and **Context** blocks, with the report's own calls, are the grounding surface.");
+    expect(text).toContain("checked by digits only");
+    expect(text).toContain("an unsigned Context figure cannot check a sign");
+    expect(text).not.toContain("Context signs are not checked");   // a sign written in Context is checked (review C-7)
+    expect(text).toContain("(rubric item 1) is always yours");
+    expect(text).not.toContain("checks each figure's unit, scale, sign and precision");
+  });
+  it("lists the weakly grounded figures to check first", () => {
+    expect(text).toContain("# Weakly grounded figures — check unit, scale, sign and attribution first");
+    expect(text).toContain(`- ${weak[0]}`);
+  });
+  it("lists the assumed figures (D2)", () => {
+    expect(text).toContain("# Assumed figures");
+    expect(text).toContain(`- ${assumed[0]}`);
+    expect(text.indexOf("# Weakly grounded figures")).toBeLessThan(text.indexOf("# Output"));
+  });
+  it("says so when there are none, and carries both lists on a warm re-check too", () => {
+    const empty = brief({ weak: [], assumed: [] });
+    expect(empty).toMatch(/# Weakly grounded figures[^\n]*\n\nNone/);
+    expect(empty).toMatch(/# Assumed figures\n\nNone/);
+    const recheck = brief({ previousReview, round: 2, weak, assumed });
+    expect(recheck).toContain(`- ${weak[0]}`);
+    expect(recheck).toContain(`- ${assumed[0]}`);
   });
 });

@@ -147,6 +147,24 @@ describe("figure-repeat — what neither tier touches", () => {
     expect(issues.map((i) => [i.rule, i.value])).toEqual([["figure-repeat-unit", "$205"]]);
   });
 
+  it("keys a figure with its unit word, so a repeated \"8 points\" or \"40 bps\" is caught", () => {
+    for (const [first, again] of [["About 8 points of guided growth come from acquisitions.", "Roughly 8 points of guided growth is bought, not built."],
+      ["Margin rose 40 bps on mix.", "A further 40 bps of margin depends on pricing."]]) {
+      const issues = figureRepeat([unit("executiveSummary", [
+        ["sections.executiveSummary.thesis.body", first],
+        ["sections.executiveSummary.risks[2]", again],
+      ])]);
+      expect(issues.map((i) => [i.rule, i.severity, i.value])).toEqual([["figure-repeat", "error", first.includes("bps") ? "40 bps" : "8 points"]]);
+    }
+  });
+
+  it("does not read a hyphenated \"10-point plan\" as a figure", () => {
+    expect(figureRepeat([unit("executiveSummary", [
+      ["sections.executiveSummary.thesis.body", "Management laid out a 10-point plan."],
+      ["sections.executiveSummary.risks[0]", "The 10-point plan may slip."],
+    ])])).toEqual([]);
+  });
+
   it("says nothing about a unit with no leaves or no figures", () => {
     expect(figureRepeat([unit("risks", []), unit("growth", [["sections.growth.points[0]", "The mix keeps shifting."]])])).toEqual([]);
   });
