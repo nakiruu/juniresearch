@@ -170,8 +170,8 @@
       "flags": []
     },
     "decision": {
-      "conviction": 65,
-      "tier": "moderate",
+      "conviction": 85,
+      "tier": "high",
       "proposed": "BUY",
       "reasons": [
         "E/R proposed BUY"
@@ -183,20 +183,17 @@
         "contingent": false,
         "bearFloor": 0.2
       },
-      "intrinsic": {
-        "marginOfSafety": -0.7534524732262732,
-        "impliedGrowth": 0.39679647249121286,
-        "achievableGrowth": 0.2
-      },
+      "intrinsic": null,
       "composite": {
         "percentile": 80.93781558429723,
         "confidence": "low"
       },
       "uncertainty": {
         "tier": "low",
-        "points": 1,
+        "points": 2,
         "drivers": [
-          "wide analyst-target dispersion (+1)"
+          "wide analyst-target dispersion (+1)",
+          "layers abstained / thin data (+1)"
         ]
       }
     }
@@ -236,6 +233,7 @@
     },
     {
       "label": "EV/EBITDA (TTM)",
+      "value": 120.06,
       "unit": "mult"
     },
     {
@@ -620,7 +618,7 @@
           {
             "label": "EV/EBITDA",
             "values": [
-              null
+              120.06
             ],
             "format": "mult"
           },

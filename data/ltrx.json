@@ -170,7 +170,7 @@
       "flags": []
     },
     "decision": {
-      "conviction": 49,
+      "conviction": 69,
       "tier": "moderate",
       "proposed": "STRONG BUY",
       "reasons": [
@@ -185,20 +185,17 @@
         "contingent": false,
         "bearFloor": 0.35
       },
-      "intrinsic": {
-        "marginOfSafety": -0.6955150432040929,
-        "impliedGrowth": 0.1153955718166223,
-        "achievableGrowth": -0.017328501784638184
-      },
+      "intrinsic": null,
       "composite": {
         "percentile": 59.5253610806248,
         "confidence": "low"
       },
       "uncertainty": {
         "tier": "low",
-        "points": 1,
+        "points": 2,
         "drivers": [
-          "wide analyst-target dispersion (+1)"
+          "wide analyst-target dispersion (+1)",
+          "layers abstained / thin data (+1)"
         ]
       }
     }
