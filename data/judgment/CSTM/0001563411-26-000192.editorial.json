@@ -1,6 +1,6 @@
 {
-  "judgmentSha256": "4142e25fe8ad5fb216dfdac560d6e91e946e0f71950cfce5b99fd17185d8ed0f",
-  "reviewedAt": "2026-10-07T16:19:08Z",
+  "judgmentSha256": "765acb494d10d6d85de06c00d408fa742b70f88ff58c95ccfd9c4f6fe1685f60",
+  "reviewedAt": "2026-10-08T16:06:28Z",
   "reviewer": "Claude Opus 5.5",
   "round": 2,
   "verdict": "approved",
@@ -43,7 +43,7 @@
       "issue": "The MD&A gives the Q2'26 volume bridge as P&ARP -4%, AS&I stable, A&T +21%. Only one segment declined; AS&I was stable, not down. 'declines in the packaging and automotive segments' (plural) mischaracterizes the split. The executive-summary risk bullet gets this right ('packaging and automotive rolled products down'), so the two are inconsistent.",
       "fix": "Attribute the decline to P&ARP only, e.g. 'offset by a 4% volume decline in Packaging & Automotive Rolled Products, with Automotive Structures & Industry stable.'",
       "status": "addressed",
-      "note": "Bridge still reads correctly: A&T +21%, P&ARP down 4%, AS&I stable."
+      "note": "Bridge still reads correctly: A&T +21%, P&ARP down 4%, AS&I stable. Delta re-check: 'from a small gain a year earlier' matches the 10-Q table (Q2'25 other gains and losses 4, a gain, against $2,103 million revenue), adds no figure and keeps the year-over-year basis."
     },
     {
       "id": "F-5",
@@ -153,7 +153,7 @@
       "issue": "FY26E and FY27E revenue both appear only as about $9B, rounded to the billion, so the page cannot show zero growth; it shows roughly flat revenue. growth.points[4] has a related problem: 'Group volume growth is concentrated in the segment that is a quarter of revenue' describes group volumes as growing, but they fell 1% in Q2'26 and in the first half. It also restates incomeCommentary's conclusion that growth is mostly price.",
       "fix": "Write 'consensus revenue is roughly flat at about $9 billion in both years'. Reword points[4] as 'volume growth is confined to Aerospace & Transportation, while group volumes fell', or drop it in favor of a pointer to the income section.",
       "status": "addressed",
-      "note": "Now 'roughly flat at about  billion', and points[4] says group volumes fell."
+      "note": "Now 'roughly flat at about $9 billion', and points[4] says group volumes fell."
     }
   ]
 }
