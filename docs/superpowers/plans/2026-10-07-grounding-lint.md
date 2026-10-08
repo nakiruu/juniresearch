@@ -420,6 +420,7 @@ An entry matches only on (accession, judgmentSha256, surfaceSha256, check, field
 
 - **D1 · Rollout: the exception file**, keyed to judgment and surface hashes and applied only when byte-equal to `main` (§5). The excepted reports are **actively fixed**, not left waiting (§6.1).
 - **D2 · Misses with no near-miss: warning.** A `mult` or `pct` miss whose `explain()` reason is **none** becomes an assumed-figure warning, wherever it sits: "assumed figure — not on the surface; argue its basis in the sentence". The review brief lists each one.
+  - *Revised after code review C-1: whole-number multiples only.* Only a `mult` miss with precision 0 and reason **none** is a warning; every `%` and every figure with a decimal stays an error (the `pct` downgrade let invented margins through).
   - Today that is PLOW `11x`, USFD `14x` ×2 and ZBRA `13x` (4 warnings, 3 reports).
   - Every sign, finer, rounding, short-cell or unit miss stays an error, including CAT and GOOGL's 1-digit R roundings, MPWR "above 30%" and ZBRA "roughly 20x".
   - Build-time result: **17 errors in 13 reports + 4 warnings**.

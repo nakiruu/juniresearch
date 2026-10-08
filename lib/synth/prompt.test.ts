@@ -123,14 +123,15 @@ describe("renderCalls", () => {
 
 describe("the authoring contract on figures", () => {
   const contract = renderPrompt(pack, facts, desk).split("# Authoring contract\n\n")[1].split("\n\n#")[0];
-  const quoting = contract.split("\n").filter((l) => /^- (Quote figures|A multiple or margin you assume)/.test(l));
+  const quoting = contract.split("\n").filter((l) => /^- (Quote figures|A whole-number valuation multiple you assume)/.test(l));
   it("says exactly what grounding enforces: the same unit and scale, never finer than shown", () => {
     expect(contract).toContain("never more precise than shown");
     expect(contract).toContain('write "$N,NNN million", never "$N,NNN"');
     expect(contract).toContain("Facts, Calls or Context blocks");
   });
-  it("asks for an assumed multiple or margin to state its basis (D2)", () => {
-    expect(contract).toContain("A multiple or margin you assume, and that is not on the surface, is your judgment: state its basis in the same sentence");
+  it("lets only an assumed whole-number multiple stand on its stated basis (D2, revised after review C-1)", () => {
+    expect(contract).toContain("A whole-number valuation multiple you assume (Nx) that is not on the surface is your judgment: state its basis in the same sentence");
+    expect(contract).toContain("Every other figure (a margin, a growth rate, a multiple with a decimal, an amount) must come from the surface.");
   });
   it("uses placeholders only — no real figure an author could copy (R-9)", () => {
     expect(quoting.length).toBeGreaterThanOrEqual(2);

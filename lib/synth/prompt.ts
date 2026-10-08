@@ -99,7 +99,7 @@ export function renderContextBlock(pack: FactPack): string {
 const CONTRACT = `- Write Markdown using only: **bold**, "### " or "#### " at the start of a block, "- " list lines, blank lines between paragraphs, and {+ text +} / {- text -} for bullish / bearish spans. No HTML, no links, no images, no tables, and never nest markers (no **{+ +}**).
 - Numeric fields (targets, implied prices, probabilities) are plain numbers; probabilities are ratios (0.30, not 30 or "30%").
 - Quote figures as they appear in the Facts, Calls or Context blocks below, in the same unit and scale, and never more precise than shown. You may drop trailing zeros, or round to fewer digits while keeping at least two significant digits of a Facts figure and three of a Context figure ($X.YB may become $XB; a Context figure X.Y% stays X.Y%). A statement-table cell keeps its table's unit: write "$N,NNN million", never "$N,NNN". Never compute a new figure, never recall one from memory; a figure that appears in none of these blocks fails validation.
-- A multiple or margin you assume, and that is not on the surface, is your judgment: state its basis in the same sentence; the build lists each one for the reviewer.
+- A whole-number valuation multiple you assume (Nx) that is not on the surface is your judgment: state its basis in the same sentence; the build lists each one for the reviewer. Every other figure (a margin, a growth rate, a multiple with a decimal, an amount) must come from the surface.
 - Do not write null anywhere; omit an optional field instead.
 - Keep every field within its schema bounds; the page has a fixed shape.
 - Order your thinking as the schema orders the fields: rating and scenarios first, then the prose that argues for them.

@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { FactPack } from "@/lib/facts/schema";
 import { projectReportFacts } from "@/lib/facts/project";
 import { Judgment } from "@/lib/synth/judgment.schema";
-import { validateJudgment, validateJudgmentDetailed, groundingSurface, ratingIssues, markdownIssues, segmentIssues, highlightIssues, renderJudgmentBlock } from "@/lib/synth/validate-judgment";
+import { validateJudgment, validateJudgmentDetailed, groundingSurface, groundJudgment, ratingIssues, markdownIssues, segmentIssues, highlightIssues, renderJudgmentBlock } from "@/lib/synth/validate-judgment";
 import { renderFactsBlock, renderContextBlock, renderCalls } from "@/lib/synth/prompt";
 import type { HighlightKey } from "@/lib/facts/highlights";
 import goldenJudgment from "@/lib/__fixtures__/avgo-golden-judgment.json";
@@ -243,18 +243,29 @@ describe("validateJudgmentDetailed", () => {
     expect(validateJudgment(golden, facts, pack, desk)).toEqual(v.errors);
     expect(v.weak.every((w) => typeof w.field === "string" && ["bare-cell", "money-cell-scale-up", "unsigned-context"].includes(w.weakness))).toBe(true);
   });
-  it("warns, not fails, on a multiple or margin with no near miss on the surface (D2), wherever it sits", () => {
+  it("warns, not fails, on a whole-number multiple with no near miss on the surface (D2), wherever it sits", () => {
     const j = structuredClone(golden);
-    j.sections.executiveSummary.thesis.body = "At 37.3x on our own earnings view the shares are not cheap.";
-    j.sections.valuation.scenarios[0].driver = "The multiple holds at 37.3x.";
+    j.sections.executiveSummary.thesis.body = "At 13x on our own earnings view the shares are not cheap.";
+    j.sections.valuation.scenarios[0].driver = "The multiple holds at 13x.";
     const v = validateJudgmentDetailed(j, facts, pack, desk);
-    expect(v.errors.filter((i) => i.value === "37.3x")).toEqual([]);
-    const assumed = v.warnings.filter((w) => w.value === "37.3x");
+    expect(v.errors.filter((i) => i.value === "13x")).toEqual([]);
+    const assumed = v.warnings.filter((w) => w.value === "13x");
     expect(assumed.map((w) => [w.rule, w.severity, w.field])).toEqual([
       ["grounding-assumed", "warning", "sections.executiveSummary.thesis.body"],
       ["grounding-assumed", "warning", "sections.valuation.scenarios[0].driver"],
     ]);
     expect(assumed[0].message).toContain("assumed figure — not on the surface; argue its basis in the sentence");
+  });
+  it("keeps every percentage and every multiple with a decimal an error, even with no near miss (D2 revised, review C-1)", () => {
+    const j = structuredClone(golden);
+    j.sections.executiveSummary.thesis.body = "Margin of 74.8%, growth of +16.7%, a 17.9x multiple and an assumed 14x exit.";
+    const empty = { tables: [], factsBlock: "", callsBlock: "", judgmentBlock: "", contextBlock: "" };
+    const g = groundJudgment(j, empty);
+    const at = (v: string) => [g.errors.some((m) => m.field === "sections.executiveSummary.thesis.body" && m.value === v), g.assumed.some((w) => w.value === v)];
+    expect(at("74.8%")).toEqual([true, false]);
+    expect(at("+16.7%")).toEqual([true, false]);
+    expect(at("17.9x")).toEqual([true, false]);
+    expect(at("14x")).toEqual([false, true]);
   });
   it("keeps a rounding miss in a scenario driver an error", () => {
     const j = structuredClone(golden); j.sections.valuation.scenarios[0].driver = "The ratio settles near 2x.";

@@ -131,8 +131,12 @@ export function groundingSurface(j: Judgment, facts: ReportFacts, pack: FactPack
   };
 }
 
-/** A multiple or margin that nothing on the surface comes near is the author's assumption, not a misquote (decision D2). */
-export const isAssumedFigure = (m: GroundingMiss) => m.reason === "none" && (m.token.kind === "mult" || m.token.kind === "pct");
+/**
+ * A whole-number multiple ("14x") that nothing on the surface comes near is the author's valuation assumption, not a
+ * misquote (decision D2, revised after code review C-1). Every percentage and every figure with a decimal must come from
+ * the surface: downgrading those let invented margins and growth rates through.
+ */
+export const isAssumedFigure = (m: GroundingMiss) => m.reason === "none" && m.token.kind === "mult" && m.token.precision === 0;
 
 /** Grounding misses split into errors and assumed-figure warnings, plus the figures that ground only weakly. */
 export function groundJudgment(j: Judgment, surface: GroundingSurface): { errors: GroundingMiss[]; assumed: LintIssue[]; weak: WeakGrounding[] } {

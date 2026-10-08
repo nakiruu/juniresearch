@@ -32,7 +32,7 @@ export function renderReviewBrief(input: {
   fullBrief?: boolean;
   /** Figures the build grounded only by digits or without a sign (grounding.ts weakLine); omitted → no section. */
   weak?: readonly string[];
-  /** Multiples and margins nowhere on the surface, passed as assumed-figure warnings (decision D2); omitted → no section. */
+  /** Whole-number multiples nowhere on the surface, passed as assumed-figure warnings (decision D2); omitted → no section. */
   assumed?: readonly string[];
 }): string {
   const { ticker, accession, judgmentText, previousReview, round, rubric, paths, recurringTraps = [], fullBrief = false, weak, assumed } = input;
@@ -65,7 +65,7 @@ export function renderReviewBrief(input: {
       : "None: every figure grounds on an entry whose unit, scale and sign the build checks."}`);
   if (assumed)
     parts.push(`# Assumed figures\n\n${assumed.length
-      ? `No figure on the surface comes near these multiples and margins: they are the author's assumptions, and the build passes them as warnings. Each must state its basis in the same sentence; a bare assumption is a finding.\n${assumed.map((a) => `- ${a}`).join("\n")}`
+      ? `No figure on the surface comes near these whole-number multiples: they are the author's valuation assumptions, and the build passes them as warnings. Each must state its basis in the same sentence; a bare assumption is a finding.\n${assumed.map((a) => `- ${a}`).join("\n")}`
       : "None."}`);
   if (previousReview)
     parts.push(
