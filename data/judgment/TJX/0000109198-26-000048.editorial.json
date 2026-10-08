@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "09aa02bfa392b769134476a43473f49415e65d480f4361df7caa13b65529a0e4",
-  "reviewedAt": "2026-10-08T16:24:00Z",
+  "judgmentSha256": "99b14eedda0997bdd7d825daacd00558baaf9de169007362a2a2aa0a0ae33ac8",
+  "reviewedAt": "2026-10-08T16:25:44Z",
   "reviewer": "Claude Opus 5.5",
   "round": 2,
-  "verdict": "approved-with-minors",
+  "verdict": "approved",
   "findings": [
     {
       "id": "F-1",
@@ -172,7 +172,8 @@
       "quote": "or a Base multiple a little under one turn higher, derives BUY",
       "issue": "On the page's own math this sensitivity runs the wrong way. One full turn higher (25.7x on the $5.79 FY28E EPS) still leaves expected upside just under +10.0%, so it still derives HOLD; BUY needs slightly more than one turn. The weight sensitivities in the same sentence (ten points derives BUY, five does not) are correct, as are the price triggers in finalRecommendation.",
       "fix": "Say \"a Base multiple about one turn higher\" or \"a little over one turn higher\", or drop the multiple sensitivity and keep the weight sensitivity alone. Do not change the Base.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Now reads \"a Base multiple just over one turn higher, derives BUY\". That matches the page's math: one full turn leaves upside just under +10.0%, slightly more crosses it, and reward/risk stays above 0.50×. Comparing the commits, this phrase is the only change to the judgment, and the rebuilt report's calls are unchanged."
     }
   ]
 }
