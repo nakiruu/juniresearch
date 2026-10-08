@@ -136,7 +136,8 @@ describe("BACKFILL_CUTOFF in scripts/backfill-review-inputs.ts", () => {
   // Read from source: the script runs on import. Set in the switch-over commit to its parent; never edited on its own.
   const src = readFileSync("scripts/backfill-review-inputs.ts", "utf8");
   const m = /^export const BACKFILL_CUTOFF: string \| null = (.+);$/m.exec(src);
-  it("is a 40-hex SHA, so --apply is enabled from the switch-over on", () => expect(m?.[1]).toMatch(/^"[0-9a-f]{40}"$/));
+  it("is the switch-over's parent, pinned literally", () => expect(m?.[1]).toBe('"4322742b1a049d0be8046457ee6db9b6913283c6"'));
+  // Needs a full (non-shallow) clone: a shallow CI checkout lacks the commit and this test fails.
   it("is an ancestor of HEAD", () => {
     const sha = JSON.parse(m![1]) as string;
     expect(() => execFileSync("git", ["merge-base", "--is-ancestor", sha, "HEAD"], { stdio: "ignore" })).not.toThrow();
