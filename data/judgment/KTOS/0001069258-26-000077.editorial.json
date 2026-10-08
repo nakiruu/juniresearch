@@ -1,8 +1,13 @@
 {
-  "judgmentSha256": "e024299a7bb12173dd309b693c6f4667602447784a1cd643e07de9a662fa4e63",
-  "inputs": {"scheme":1,"facts":"5759d7a3121d17e7b67908eb232afec85266e52ab1f5e59dcce2c4276d476300","calls":"836eba1c36e68c57170dfac2caad63417b23494c3df2bf589594329a4dcc15df","context":"ac896aa4ec191a83e8aec1cf45723cd5f98c742dc1f110670e1afd78e1f55ca1","source":"backfill:e1c6b41"},
-  "reviewedAt": "2026-09-16T00:20:00Z",
-  "reviewer": "Claude Opus 4.8",
+  "judgmentSha256": "c2ff49f1664638b2f07d7050ca4130167539f31aaaf0ee2e78d19093b29cff8f",
+  "inputs": {
+    "scheme": 1,
+    "facts": "5759d7a3121d17e7b67908eb232afec85266e52ab1f5e59dcce2c4276d476300",
+    "calls": "652ab6e8d7a3925f2a5cd0ac2f1331a34831ddc06ba00db697e59a58e6cebb0c",
+    "context": "ac896aa4ec191a83e8aec1cf45723cd5f98c742dc1f110670e1afd78e1f55ca1"
+  },
+  "reviewedAt": "2026-10-08T19:28:06Z",
+  "reviewer": "Claude Opus 5.5",
   "round": 2,
   "verdict": "approved-with-minors",
   "findings": [
@@ -14,7 +19,7 @@
       "issue": "The 22.0% organic growth and $379.7 million are Q2'26 figures, but the 1.4 to 1.0 book-to-bill is the KGS last-twelve-month ratio. The press release states the KGS book-to-bill for the second quarter of 2026 was 1.1 to 1.0 and 1.4 to 1.0 only for the last twelve months ended June 28, 2026. Bundled into a quarter-focused clause with no LTM qualifier, the 1.4 reads as the quarter's book-to-bill — the wrong period; the quarterly figure is 1.1. The author labels the consolidated LTM 1.3 correctly in analystCommentary and thesis.body, which makes this unqualified 1.4 inconsistent.",
       "fix": "Add the last-twelve-month qualifier to the 1.4 (e.g. 'a 1.4 to 1.0 last-twelve-month book-to-bill'), or use the Q2 KGS book-to-bill of 1.1 to 1.0, so the period matches the surrounding quarterly figures.",
       "status": "addressed",
-      "note": "Round 2: the point now reads 'up 22.0% organically to $379.7 million, and its last-twelve-month book-to-bill is 1.4 to 1.0'. The LTM qualifier is present and matches the press release's KGS LTM ratio; the quarter figures are no longer bundled with an unqualified 1.4."
+      "note": "Rewrite (HOLD draft): the KGS point is now growth.points[1] and reads 'Government Solutions revenue was $379.7 million in the June quarter, up 22.0% organically, led by ...'. No KGS book-to-bill appears; the only book-to-bill is the consolidated last-twelve-month 1.3 to 1, labelled as such in growth.points[0]."
     },
     {
       "id": "F-2",
@@ -24,7 +29,7 @@
       "issue": "This restates, in different words, the rating-change triggers already given in sections.valuation.scenarioCommentary ('A move to STRONG BUY would need free cash flow to turn positive on schedule and the hypersonics and engine ramps to show up in the reported numbers, not just the backlog. A move to HOLD would follow a cut to organic growth or margin guidance, a further slip in the free-cash-flow timeline, or an appropriations breakdown that pushes orders out of the model.'). The same claim appears twice across two sections — a paraphrase repetition the lint will not catch.",
       "fix": "State the STRONG BUY / HOLD triggers once — keep them in valuation.scenarioCommentary where they are argued — and have the final recommendation refer back to them in words, or drop the duplicate.",
       "status": "addressed",
-      "note": "Round 2: finalRecommendation.body[2] now reads 'The conditions that would move the rating up to STRONG BUY or down to HOLD are set out in the valuation section; in short, the rating rises when the cash flow turns as promised and the programs reach reported earnings, and it falls if the growth, margin or funding story cracks.' It points to the valuation section and summarizes in words; the full triggers remain once in scenarioCommentary."
+      "note": "Rewrite: the BUY and SELL triggers now sit only in finalRecommendation.body[2] (FY2027 guidance supporting today's current-year multiple; a price at the target low; FY27 expectations falling to the FY26E level). scenarioCommentary gives the sensitivity of the label, not triggers. The remaining overlap between finalRecommendation.body[1] and scenarioCommentary is raised in F-17/F-18."
     },
     {
       "id": "F-3",
@@ -34,7 +39,7 @@
       "issue": "The headline multiple pair (277.0x P/E, 64.9x EV/EBITDA) is restated in full figures in at least four places — executiveSummary.thesis.body, valuation.multiplesCommentary, risks.idiosyncratic[0] and finalRecommendation.body[1] — rather than introduced once and referred back to in words. Two further clusters repeat the same way: the funding backdrop ($156 billion / near $1 trillion / $1.5 trillion) in executiveSummary.companyOverview, growth.points[4] and risks.systemic; and the bookings/backlog/pipeline cluster (1.3 book-to-bill, $2.084 billion backlog, $15.0 billion pipeline) in thesis.body, businessMoat.moatFactors[0] and growth.points[0].",
       "fix": "Introduce each figure cluster once, in the section that argues it (multiples in valuation, funding in systemic risk, backlog/pipeline in growth), and refer back to it in words elsewhere instead of restating the numbers.",
       "status": "addressed",
-      "note": "Round 2: each cluster now appears once in its home section and is referred to in words elsewhere. 277.0x and 64.9x appear only in valuation.multiplesCommentary; $156 billion and $2.084 billion each appear once (systemic and growth respectively); the risk/thesis/final sections now say 'the trailing and EBITDA multiples the valuation section sets out' and 'the bookings, backlog and pipeline the growth section lays out'. (A parallel unfixed cluster is raised as F-8.)"
+      "note": "Rewrite: 277.0x, 64.9x and 5.9x appear only in valuation.multiplesCommentary; $156 billion and about $1 trillion only in risks.systemic; the $1.5 trillion request only in growth.points[5]; the 1.3 book-to-bill, $2.084 billion backlog and $15.0 billion pipeline only in growth.points[0]. risks.idiosyncratic[0] no longer quotes multiples. Other restated clusters in the rewrite are raised as F-12 to F-14."
     },
     {
       "id": "F-4",
@@ -44,7 +49,7 @@
       "issue": "Two sources in the pack disagree on the raised FY26 organic growth guidance: the 8-K earnings press release (ex-99.1) says '18 Percent to 23 Percent' (twice), while the Quartr transcript says '19%-23%'. The report uses 18% to 23% here and in analystCommentary and companyOverview without noting the disagreement or stating which source it relied on. The rubric requires the report to flag the disagreement once and name the figure it used.",
       "fix": "Add a one-line note that the press release gives 18-23% and the transcript 19-23%, and state that the report relies on the press release figure (the formal guidance).",
       "status": "addressed",
-      "note": "Round 2: thesis.body now flags it once — 'organic growth guided to 18% to 23% for 2026 (the formal press-release range; the earnings-call transcript gives 19% to 23%, and we rely on the press-release figure)'. Disagreement stated once and the chosen source named."
+      "note": "Rewrite: growth.points[4] flags it once: 'That is the press-release range; the call transcript's range starts a point higher, and the call also referred to a previously reported 15%-20%. We use the press release.' The 18% to 23% range appears nowhere else, and the transcript's 'previously reported' 15%-20% is described accurately."
     },
     {
       "id": "F-5",
@@ -54,7 +59,7 @@
       "issue": "The claim that the framework 'says less about the cash generation' is contradicted by the only governance source. The proxy CD&A lists the 2025 goals as 'organic revenue growth, increased Adjusted EBITDA and margin expansion, with a careful balance of our goals to increase operating cash flow generation' — operating cash flow generation is explicitly one of the balanced goals. Separately, the excerpt gives the goals the Compensation Committee considered but not the incentive-plan metrics or weights (the section itself notes the pay tables are not carried), so 'ties incentives to' these three metrics is an inference beyond what the excerpt supports.",
       "fix": "Acknowledge that operating cash flow generation is named among the proxy's stated goals, or drop the 'says less about cash generation' characterization; and soften 'ties incentives to' to reflect that the excerpt gives goals, not the incentive metrics.",
       "status": "addressed",
-      "note": "Round 2: governance now reads 'goals balanced across organic revenue growth, increased adjusted EBITDA and margin expansion together with increasing operating cash flow generation ... cash generation included' and 'The excerpt gives the goals the compensation committee weighed rather than the incentive-plan metrics and weights ... so we make no claim on how pay is structured'. Both the contradiction and the over-inference are corrected."
+      "note": "Rewrite: governance reads 'The compensation discussion describes 2025 goals spanning organic revenue growth, adjusted EBITDA, margin expansion and operating cash flow. The excerpt does not give the incentive weights or pay amounts, so we draw no conclusion on pay.' Matches the CD&A excerpt. (A separate governance defect is raised as F-16.)"
     },
     {
       "id": "F-6",
@@ -64,7 +69,7 @@
       "issue": "$58.50 versus the $47.62 price is +22.85%, a low-twenties rather than mid-twenties percentage; 'mid-twenties' nudges the reader toward the +25% STRONG BUY threshold the report deliberately does not claim. The phrase recurs in valuation.scenarioCommentary ('a mid-twenties percentage above the price') and finalRecommendation.body[0].",
       "fix": "Call it 'a low-twenties percentage' or 'roughly 23% above the price' consistently in all three places.",
       "status": "addressed",
-      "note": "Round 2: all three locations now read 'low-twenties'; 'mid-twenties' no longer appears anywhere in the judgment."
+      "note": "Rewrite: the weighted value is now $54.10 and the upside is quoted as +13.6% from the calls (scenarioCommentary, finalRecommendation.body[0]); 'mid-twenties' and 'low-twenties' appear nowhere. Checked: 0.25 x 74 + 0.5 x 56.5 + 0.25 x 29.4 = 54.10; E +13.6%, D -38.3%, R 0.36x, derived HOLD, matching data/ktos.json."
     },
     {
       "id": "F-7",
@@ -74,7 +79,7 @@
       "issue": "On the call management called the satellite C2 / space domain awareness business 'our company's largest' and 'rapidly growing' — not 'fastest-growing'. Management applied 'largest and fastest-growing' to the engine business and 'one of the fastest-growing' to the industrial gas turbine business, not to space. Attributing 'among its fastest-growing' to space as something 'management calls' is a slight embellishment of the source.",
       "fix": "Use management's actual phrasing for space ('largest' and 'rapidly growing'), or drop 'among its fastest-growing'.",
       "status": "addressed",
-      "note": "Round 2: segments[1].body now reads 'one management calls its largest and describes as rapidly growing', matching the transcript ('our company's largest, is also rapidly growing'). The 'fastest-growing' embellishment is removed."
+      "note": "Rewrite: segments[1].body reads 'management calls its satellite command-and-control and space domain awareness business the company's largest and says it is growing rapidly', matching the transcript."
     },
     {
       "id": "F-8",
@@ -84,7 +89,7 @@
       "issue": "The defect F-3 fixed for the multiples, funding and backlog clusters recurs unfixed in the cash-flow and earnings figures. The 2026 free-cash-flow use of $85 million to $105 million is restated in full in four places (analystCommentary, executiveSummary.thesis.body, financials.cashflowCommentary, risks.idiosyncratic[1]); FY25 free cash flow of -$137.4M in three (analystCommentary, cashflowCommentary, idiosyncratic[1]); total forecasted investments of $250 million to $275 million in three (cashflowCommentary, management.capitalAllocation, idiosyncratic[1]); and FY25 net income of $22M in four (analystCommentary, thesis.body, financials.incomeCommentary, finalRecommendation.body[1]). Each is restated in full across argument sections rather than introduced once and referred back to in words — inconsistent with the F-3 fixes applied to the very same sections (idiosyncratic[0] and thesis.body now point to the valuation section in words).",
       "fix": "Introduce each figure once in its home section — net income $22M in incomeCommentary; the FCF use, FY25 FCF and total investments in cashflowCommentary — and refer back to them in words in thesis.body, capitalAllocation and idiosyncratic[1], as the round-1 fix already does for the multiples, funding and backlog clusters.",
       "status": "addressed",
-      "note": "Round 2: fixed. The 2026 FCF use of $85M-$105M, FY25 free cash flow of -$137.4M and total investments of $250M-$275M now appear only in financials.cashflowCommentary, and FY25 net income of $22M only in financials.incomeCommentary (verified by search: each string occurs once). analystCommentary, thesis.body, management.capitalAllocation and risks.idiosyncratic[1] now refer to those sections in words ('the further use guided for 2026', 'the total investment envelope', 'earns almost nothing today')."
+      "note": "Rewrite: -$137.4M, $85 million to $105 million and $250 million to $275 million appear only in financials.cashflowCommentary, and $22M only in financials.incomeCommentary. risks.idiosyncratic[1] now reads 'Investment is expected to continue into 2027 ... would draw down the net cash the balance-sheet section describes', a pointer in words."
     },
     {
       "id": "F-9",
@@ -94,7 +99,7 @@
       "issue": "The clause ties 'nearly double' to the consensus it has just cited — FY25 revenue of $1.3B growing to FY27E of $2.2B. That is +69%, not nearly double; a doubling would be about $2.6B, and no revenue figure beyond FY27E's $2.2B is on the grounding surface to justify 'nearly double over a few years'. Given the report's own precision standard (see F-6), 'nearly double' overstates the growth the estimates on the page actually show.",
       "fix": "Say 'up about 70% from FY25' or 'roughly two-thirds higher than FY25 by FY27E', consistent with the $1.3B-to-$2.2B consensus already quoted.",
       "status": "addressed",
-      "note": "Round 2: multiplesCommentary now reads 'the market is paying for a revenue base it expects to grow by roughly two-thirds from FY25 to FY27E', consistent with the $1.3B-to-$2.2B consensus (+69%). 'nearly double' no longer appears. (The reused 'roughly two-thirds' phrasing is now raised as a Minor tic in F-11.)"
+      "note": "Rewrite: 'nearly double' is gone. multiplesCommentary now says 'consensus EPS rises by about a third from FY26E to FY27E on revenue reaching $2.2B'; $0.84 to $1.13 supports 'about a third'."
     },
     {
       "id": "F-10",
@@ -104,7 +109,7 @@
       "issue": "The transcript supports the headcount and the access ('Kratos has over 700 employees in Israel, and we are working on and have access to certain of the highest technology, battle-proven systems in the world') but does not describe the Israel workforce as 'cleared' (holding security clearances); the word 'cleared' appears nowhere in the FactPack. The clearance discussion in the pack (10-K risk factors, MD&A) concerns U.S. National Security clearances, not the Israeli staff. 'Cleared' is an added characterization the surface does not support, sitting inside a moat factor titled 'Specialized facilities and clearances'.",
       "fix": "Drop 'cleared' (e.g. 'more than 700 employees in Israel with access to battle-proven systems'), or make the clearance point only where the pack supports it (U.S. National Security clearances).",
       "status": "addressed",
-      "note": "Round 2: moatFactors[2].body now reads 'plus more than 700 employees in Israel with access to battle-proven systems'. 'cleared' is removed and the word appears nowhere in the judgment."
+      "note": "Rewrite: moatFactors[2].body no longer mentions Israel; its clearance point ('hiring and retaining skilled and cleared staff is already hurting execution') is attributed to the MD&A, which says hiring and retaining employees requiring National Security clearances is adversely impacting execution. Supported."
     },
     {
       "id": "F-11",
@@ -113,7 +118,138 @@
       "quote": "priced for it even after a fall by two-thirds",
       "issue": "The phrase 'roughly two-thirds' (here 'a fall by two-thirds') is a recurring tic. It describes the share-price fall from the 52-week high in four places — meta.subtitle, analystCommentary ('down by roughly two-thirds from the top'), executiveSummary.thesis.body ('fallen by roughly two-thirds from its 52-week high') and finalRecommendation.body[0] ('fallen by roughly two-thirds from its high') — and the identical phrase is then reused for a different, opposite-direction quantity in valuation.multiplesCommentary ('grow by roughly two-thirds from FY25 to FY27E'), so the same wording carries both a roughly 65% price fall and a roughly 69% revenue rise. Rubric item 9: no tic repeated past the point of notice.",
       "fix": "Vary the wording: state the roughly two-thirds price fall once where it is argued (thesis.body) and refer back to it in words elsewhere (e.g. 'the drawdown noted above'); and use a distinct phrase for the FY25-to-FY27E revenue growth in multiplesCommentary (e.g. 'up about 70%') so the same phrase does not stand for both a fall and a rise.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Rewrite: 'two-thirds' appears nowhere in the judgment, and the subtitle is new. The price fall is now stated with the 52-week figures instead; its repetition across sections is raised as F-12."
+    },
+    {
+      "id": "F-12",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[0]",
+      "quote": "The shares have already fallen from a 52-week high of $134.00 to near the $43.09 low.",
+      "issue": "The unexplained share-price fall, a repeat offender in the desk learnings, is told with its figures in two sections and argued again in a third. analystCommentary: 'The shares are $47.62 as of September 15, near the 52-week low of $43.09 and far below the $134.00 high, and no source in the pack explains the fall.' risks.idiosyncratic[0] repeats both 52-week figures and 'No source in the pack explains either move'. valuation.scenarioCommentary adds 'the fall to near the 52-week low is a market signal no source explains', and multiplesCommentary quotes the $134.00 high a third time. executiveSummary.risks[4] is a pointer and is fine. Rubric 7: the same claim in different words in several places.",
+      "fix": "Argue the fall once, in risks.idiosyncratic[0], with the 52-week figures and the price-history reading. In analystCommentary, describe the shares' position in words without the 52-week figures and without retelling that no source explains it. In scenarioCommentary and multiplesCommentary, refer back to the risk section in words (e.g. 'the unexplained fall the risk section describes') rather than restating it.",
+      "status": "addressed",
+      "note": "Round 2 re-check: addressed. The 52-week figures (34.00, 3.09) now appear only in risks.idiosyncratic[0], which argues the fall. analystCommentary says in words that the shares sit near the bottom of their range. scenarioCommentary ('the fall the risk section describes') and multiplesCommentary ('which the risk section describes') point back in words, and executiveSummary.risks[4] stays a pointer."
+    },
+    {
+      "id": "F-13",
+      "severity": "Important",
+      "field": "sections.businessMoat.moatFactors[3].body",
+      "quote": "The April 2026 proxy says Kratos cannot pass inflation on to customers under its fixed-price contracts until those long-term contracts are renegotiated.",
+      "issue": "The same proxy fact is cited and argued in two sections: here, and in risks.idiosyncratic[2] ('The April 2026 proxy says about 70% of contracts were fixed-price in 2025, so inflation stays with Kratos until long-term contracts are renegotiated.'). executiveSummary.thesis.body states it a third time as an argument ('most of its contracts are fixed-price, so cost inflation stays with Kratos'), not as a pointer. Cross-section repetition (rubric 7); the desk learnings name this kind of repeat as the most common review cost.",
+      "fix": "Make the fixed-price/inflation argument once, in risks.idiosyncratic[2], where the 70% figure and the MD&A labor-margin point sit. In moatFactors[3], keep the pricing-power conclusion but refer back in words (e.g. 'the fixed-price exposure the risk section describes'). In thesis.body, shorten it to a pointer.",
+      "status": "addressed",
+      "note": "Round 2 re-check: addressed. The fixed-price/inflation argument, with the proxy's 70% and the MD&A labor point, now sits only in risks.idiosyncratic[2]. moatFactors[3] reads 'The fixed-price exposure the risk section describes ...', and thesis.body reads 'Its fixed-price exposure, which the risk section sets out, adds cost risk'. Both are pointers."
+    },
+    {
+      "id": "F-14",
+      "severity": "Important",
+      "field": "sections.businessMoat.segments[0].body",
+      "quote": "Product was 65.2% of FY25 revenue, $877.8M.",
+      "issue": "Several figures are restated in full across sections instead of being introduced once. (1) The Product/Service split (65.2%, $877.8M; 34.8%, $469M) appears in executiveSummary.companyOverview and again in businessMoat.segments[0] and [1]. (2) The engine 'average selling price of about $50,000' appears in segments[0] and growth.points[3]. (3) analystCommentary restates the June-quarter revenue ('$458.8 million, up 30.5% and 19.1% organically') that financials.incomeCommentary argues, and the FY26 revenue guidance ('$1.750 to $1.810 billion') that growth.points[4] argues. (4) The June-quarter beat of the company's own estimates is made as a claim four times: incomeCommentary, scenarioCommentary ('the June quarter beat the company's own estimates'), management.leadership ('a June quarter above the company's own estimates') and finalRecommendation.body[0] ('the June quarter beat the company's own estimates').",
+      "fix": "Give each figure one home. The revenue split goes in businessMoat.segments, and companyOverview says in words that the pack splits revenue by type. The $50,000 ASP goes in growth.points[3], and segments[0] names the engines without the price. The June-quarter revenue goes in incomeCommentary and the guidance range in growth.points[4]; analystCommentary describes both in words. Argue the beat once, in incomeCommentary, and let the other sections refer to it without restating it.",
+      "status": "addressed",
+      "note": "Round 2 re-check: addressed. The Product/Service figures now appear only in businessMoat.segments, and companyOverview describes the split in words. The 0,000 ASP is only in growth.points[3]. analystCommentary describes Q2 revenue and the raised guidance in words. The beat is argued once in incomeCommentary; scenarioCommentary and leadership refer to it, and finalRecommendation.body[0] drops it."
+    },
+    {
+      "id": "F-15",
+      "severity": "Important",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "Guidance points to a slow climb at the operating line.",
+      "issue": "On an annual basis the surface does not support a climb. The Facts give an FY25 operating margin of 2.1% on $1.3B of revenue and a trailing operating margin of 1.5%. The FY26 guide in the same paragraph, operating income of $16 million to $22 million on revenue of $1.750 to $1.810 billion, implies a GAAP operating margin below both, even though the adjusted EBITDA margin is guided up about 100 bps. The only climb on the page is sequential: from the June quarter's $1.6 million operating loss to the $1 million to $4 million the guidance table gives for Q3. The paragraph does not say it means sequential. The closing sentence also leaves open 'whether those steps reach GAAP operating income', when the 2026 guide already shows they do not this year. A reader would take away that GAAP operating income rises in 2026, the opposite of what the guidance implies. The point bears directly on the thesis that the earnings in the forward multiples are far above anything the GAAP line has shown.",
+      "fix": "Say in words, without printing a computed margin, that the FY26 operating-income guide implies a lower GAAP operating margin than FY25's 2.1% even as the adjusted EBITDA margin is guided up. That way the gap between adjusted and GAAP profit widens in 2026 rather than closing. If the sequential climb is the point, name it explicitly with the Q3 guide. Then restate the open question for 2027, and give no cause for the gap that no source states.",
+      "status": "addressed",
+      "note": "Round 2 re-check: addressed. incomeCommentary now says the guidance widens the gap between adjusted and GAAP profit, and that the FY26 operating-income guide implies a GAAP operating margin below FY25's, with no computed figure. It names the sequential improvement explicitly with the Q3 guide of  million to  million (the Context $M table, Q3 column) and moves the open question to 2027."
+    },
+    {
+      "id": "F-16",
+      "severity": "Important",
+      "field": "sections.management.governance",
+      "quote": "On this excerpt, governance is conventional, with a majority-independent board.",
+      "issue": "The section lists the related-party carve-out ('for transactions with suppliers or customers in which an officer or director holds a controlling interest, the audit committee has delegated approval to the CEO, subject to quarterly ratification by the committee') and then calls governance 'conventional' without reading the carve-out for the holder. Under it, the CEO, a non-independent director, approves deals with companies an officer or director controls, and the independent committee sees them only after the fact. That is the one non-standard feature the excerpt shows. Rubric 4: a governance fact listed but not read for what it lets insiders do, and a conclusion that does not weigh it.",
+      "fix": "Say what the carve-out means for outside holders. The independent check on these deals comes after approval rather than before, and the proxy reports no related-party transactions requiring disclosure for fiscal 2025, which limits the practical concern on this excerpt. Then reach a view that accounts for it, e.g. 'conventional apart from the delegated approval', rather than an unqualified 'conventional'.",
+      "status": "addressed",
+      "note": "Round 2 re-check: addressed. governance now reads the carve-out for holders: the independent check comes after approval rather than before, and the absence of disclosable related-party transactions in fiscal 2025 limits the concern. Its view is qualified: 'conventional apart from the delegated approval'."
+    },
+    {
+      "id": "F-17",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[2].driver",
+      "quote": "we value those earnings at 35x, well below today's current-year multiple but still assuming the ramp resumes",
+      "issue": "The Bear multiple is as decisive for the label as the Base multiple, but its level is argued only relative to today's multiple. 'Well below 56.8x but not too low' fixes no level; nothing on the page sits near 35x. scenarioCommentary argues against a richer Bear (today's 42.2x FY27E multiple, which it shows derives BUY) but never argues for 35x itself. The report also describes the call as turning on a single judgment: analystCommentary says 'the valuation section shows which single judgment would turn it into a BUY', scenarioCommentary says 'the Base multiple decides it', and finalRecommendation.body[1] says 'it turns on one judgment'. Yet scenarioCommentary's own sensitivity shows the Bear multiple, the Bull anchor and a ten-point weight shift each derive BUY. Rubric 6: the prose does not match what the scenarios show.",
+      "fix": "Argue the Bear multiple's level on the Bear story itself, from both sides: why a market that sees a growth year pushed out and continuing cash use pays about this much for stalled earnings, and what would make it pay more or less. Alternatively, anchor it to a figure on the page and say the basis. Then describe the call accurately: it rests on the Base multiple and the depth of the Bear together, not one judgment. Make that change in analystCommentary, scenarioCommentary and finalRecommendation.body[1]. Whatever label the scenarios then derive is the call.",
+      "status": "addressed",
+      "note": "Round 2 re-check: addressed. The Bear driver now argues 35x on its own story from both sides (stalled year and negative FCF; funded backlog and net cash argue for more, lost programs or new capital for less), with the basis in the sentence. analystCommentary, scenarioCommentary and finalRecommendation.body[1] now say the label rests on the Base multiple and the depth of the Bear together. Recomputed: E +13.6%, D -38.3%, R 0.36x, HOLD."
+    },
+    {
+      "id": "F-18",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "The call is close, and the valuation section sets out what would tip it.",
+      "issue": "Two tics recur past the point of notice. 'The call is close' opens a sentence four times: analystCommentary, thesis.body, scenarioCommentary and finalRecommendation.body[1]. 'No source (in the pack) ...' and 'the pack does not ...' appear about 25 times in total ('no source in the pack explains the fall', 'which no source in the pack yet gives', 'no source in the pack says why', 'No source in the pack explains either move', 'no source in the pack gives a date', 'no source dates positive free cash flow' twice, 'the pack does not show', 'the pack does not say', 'the pack does not disclose', 'the pack does not label', 'the pack has no history', and others). The desk learnings name the repeated 'the sources do not ...' as a tic to avoid.",
+      "fix": "Say the call is close once, where it is argued (scenarioCommentary), and point to it in words elsewhere. Keep the 'no source' caveat where it carries the argument (the undated cash turn and the unexplained fall, each once). Elsewhere, state the claim without the caveat or vary the wording.",
+      "status": "addressed",
+      "note": "Round 2 re-check: addressed. 'call is close' now appears once (scenarioCommentary). 'no source' appears once (cashflowCommentary, the undated cash turn) and 'the pack' twice. The elsewhere-caveats are reworded or dropped."
+    },
+    {
+      "id": "F-19",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "2026 funding was held back by a shutdown and an extended continuing resolution",
+      "issue": "Here the source's hedge is dropped. The press release says only that customer contract funding 'is expected to increase coming off of' the shutdown and extended continuing resolution. risks.systemic correctly reads that as something it 'implies', but scenarioCommentary states it as fact. Similarly, growth.points[3] says 'management cited a report that the Air Force plans to buy over 11,000 JASSM and LRASM missiles'. The transcript says it 'was reported the Air Force is looking to acquire over 11,000 JASSM and LRASM missiles over the next six or seven years', so 'plans to buy' hardens 'is looking to acquire' and drops the period.",
+      "fix": "In scenarioCommentary, keep the hedge or point to the systemic section's reading (e.g. 'the company expects funding to pick up after the shutdown and continuing resolution'). In growth.points[3], use 'is looking to acquire' and keep the six-to-seven-year window.",
+      "status": "addressed",
+      "note": "Round 2 re-check: addressed. scenarioCommentary now reads 'the company itself expects contract funding to pick up after the late-2025 and early-2026 shutdown and continuing resolution'. growth.points[3] reads 'is looking to acquire over 11,000 JASSM and LRASM missiles over the next six or seven years', matching the transcript."
+    },
+    {
+      "id": "F-20",
+      "severity": "Minor",
+      "field": "sections.growth.points[5]",
+      "quote": "is expected to include significant funding for Golden Dome, space and satellite communications, unmanned systems, missiles and air defense, all areas Kratos serves",
+      "issue": "'all areas Kratos serves' puts Golden Dome among Kratos's businesses. The surface lists Kratos's missile-defense, space, unmanned, missile and air-defense work, but nothing on it links Kratos to Golden Dome. The MD&A says only that the business is 'well-positioned, including in areas' the administration names as priorities.",
+      "fix": "Limit the claim to what the surface supports, e.g. 'most of them areas Kratos serves', or name only the areas the MD&A ties to Kratos's businesses. Alternatively, use the MD&A's own 'well-positioned' framing.",
+      "status": "addressed",
+      "note": "Round 2 re-check: addressed. growth.points[5] drops 'all areas Kratos serves' and instead uses the MD&A's framing: 'the company believes it is well-positioned in areas the administration names as priorities'."
+    },
+    {
+      "id": "F-21",
+      "severity": "Minor",
+      "field": "sections.businessMoat.moatFactors[2].body",
+      "quote": "Classified program space, a hypersonic integration facility, engine plants and facility security clearances take years and capital to build",
+      "issue": "'take years' is not on the surface. The 10-K says the facility clearance is a prerequisite for classified work, and the transcript gives one build timeline: the Oklahoma BladeWorks facility, where Kratos 'recently broke ground', is 'expected to be operational next summer'. businessMoat.durability repeats the claim ('clearances and specialized plants that take years to build').",
+      "fix": "Drop 'years' or make the barrier claim from what the surface gives: the clearance as a prerequisite, and the capital the investment table shows. Say it once, in the moat factor, and have durability refer back in words.",
+      "status": "addressed",
+      "note": "Round 2 re-check: addressed. moatFactors[2] now says the assets 'require capital a new entrant would have to commit' and keeps the 10-K's clearance prerequisite; 'years' is gone. durability refers back in words ('the facilities and clearances the moat factors describe')."
+    },
+    {
+      "id": "F-22",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.catalysts[3]",
+      "quote": "Appropriations turning into orders: the FY2027 request and the FY2026 supplemental are still before Congress.",
+      "issue": "The status comes from the August 4, 2026 10-Q MD&A ('subject to Congressional approval'), six weeks before the September 15 report date, but 'still before Congress' presents it as current. Rubric 3: a sourced status carries its date.",
+      "fix": "Date it, e.g. 'were before Congress as of the August 10-Q', or drop 'still'.",
+      "status": "addressed",
+      "note": "Round 2 re-check: addressed. catalysts[3] now frames passage through Congress as the forward event and points to the growth section, where growth.points[5] dates the status ('As of the August 10-Q, ... were subject to Congressional approval')."
+    },
+    {
+      "id": "F-23",
+      "severity": "Minor",
+      "field": "sections.management.insiderOwnership",
+      "quote": "The table's 5% holder section lists BlackRock, Inc., with 21,491,945 shares, 11.5%.",
+      "issue": "The paragraph opens 'As of March 20, 2026', but the proxy table applies that date 'except to the extent indicated otherwise in the footnotes' and says it is based in part on Schedules 13D and 13G. BlackRock's footnote (14) is not in the excerpt, so the date of its holding is unknown and may predate March 20, 2026. The percentage is computed on the March 20 share count. The desk has hit stale-13G dating before.",
+      "fix": "Add that the BlackRock figure rests on the holder's own SEC filings, whose date the excerpt does not give, or attribute it as 'the April 2026 proxy lists ...' without applying the March 20 date to it.",
+      "status": "addressed",
+      "note": "Round 2 re-check: addressed. insiderOwnership now attributes the BlackRock line to the April 2026 proxy and adds that the table draws partly on Schedule 13D and 13G filings, so that holding may be dated earlier than March 20."
+    },
+    {
+      "id": "F-24",
+      "severity": "Minor",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "only the share price earlier in the year, which the risk section describes, has reflected anything like it",
+      "issue": "'earlier in the year' dates the 52-week high, but the surface does not. The Facts give only the 52-week range (3.09 – 34.00), and the 30-day price history on the page starts on August 4, 2026. The 34.00 high could fall anywhere in the trailing 52 weeks, including late 2025. The risk section it points to gives the high without a date. The rewrite introduced this phrase.",
+      "fix": "Drop the dating, e.g. 'only the 52-week high the risk section notes has reflected anything like it'.",
+      "status": "declined",
+      "note": "Deferred to the next synthesis; editing the judgment after the final re-check would leave it unreviewed. Reviewer accepts the decline."
     }
   ]
 }

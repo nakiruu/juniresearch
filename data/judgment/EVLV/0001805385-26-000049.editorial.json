@@ -1,8 +1,13 @@
 {
-  "judgmentSha256": "2368e74b5edc46a8afefdfae0e8b448625cecccd58a71b4ed4af5033eb242e84",
-  "inputs": {"scheme":1,"facts":"8558a0b49f015f0a0b072ca700befab9b6a86a01ef8644536e3287cd18e38921","calls":"652ab6e8d7a3925f2a5cd0ac2f1331a34831ddc06ba00db697e59a58e6cebb0c","context":"0e5c6db8c545f247aa05919090a03bed5021b463107e8b477ee499ea3ba37bac","source":"backfill:349af8c"},
-  "reviewedAt": "2026-09-23T13:22:00Z",
-  "reviewer": "Claude Opus 4.8",
+  "judgmentSha256": "f2d394a73011500efc7f6f23d341a7a66b6bc9934318f28595474beab9dfd7da",
+  "inputs": {
+    "scheme": 1,
+    "facts": "63a00e5fc5fd973d40d0c78c04eb9da7cd23cbeb11070759d49d84e307f0d9ea",
+    "calls": "652ab6e8d7a3925f2a5cd0ac2f1331a34831ddc06ba00db697e59a58e6cebb0c",
+    "context": "0e5c6db8c545f247aa05919090a03bed5021b463107e8b477ee499ea3ba37bac"
+  },
+  "reviewedAt": "2026-10-08T19:21:33Z",
+  "reviewer": "Claude Opus 5.5",
   "round": 2,
   "verdict": "approved",
   "findings": [
@@ -14,7 +19,7 @@
       "issue": "Overstates the restatement's 2024 scope. The 10-K risk-factor excerpt (grounding surface) says the material weaknesses contributed to the restatement of the annual periods ended December 31, 2022 and 2023 and \"the quarterly periods as of and for the periods ended March 31, 2024 and June 30, 2024\" — exactly two 2024 quarters, not \"several.\" \"Several\" conventionally means more than two, so this inflates a control/restatement disclosure the reader is asked to weigh. It appears twice: in analystCommentary and in sections.executiveSummary.risks[0]. The precise scope is stated correctly in sections.risks.idiosyncratic[0] (\"the March 31, 2024 and June 30, 2024 quarters\"), so the two summary spots are inconsistent with the report's own accurate version.",
       "fix": "In both places replace \"several 2024 quarters\" with the accurate count, e.g. \"two 2024 quarters\" or \"the first two quarters of 2024 (Q1 and Q2),\" matching the precise scope already stated in risks.idiosyncratic[0].",
       "status": "addressed",
-      "note": "Fixed. Both analystCommentary and executiveSummary.risks[0] now read \"the 2022 and 2023 annual periods and two 2024 quarters\"; the string \"several 2024 quarters\" is gone from the judgment and the built report (0 occurrences). risks.idiosyncratic[0] still names exactly \"the March 31, 2024 and June 30, 2024 quarters\" (with the grounded 2022/2023 quarterly detail beginning Q2 2022), so all three spots are now consistent on exactly two 2024 quarters."
+      "note": "Still addressed after the rewrite. analystCommentary and executiveSummary.risks[0] both read \"the 2022 and 2023 annual periods and two 2024 quarters\", and risks.idiosyncratic[0] names the March 31, 2024 and June 30, 2024 periods."
     },
     {
       "id": "F-2",
@@ -24,7 +29,7 @@
       "issue": "Cross-section repetition (rubric item 7: no sentence repeated across sections; introduce a figure once and refer back in words). (1) This Bear clause near-verbatim duplicates sections.valuation.scenarioCommentary (\"The Bear at $3.60 sits about a quarter below the current price and below the 52-week low of $4.79...\"). (2) The half-year loss figure pair is re-quoted in full in four sections rather than referred back in words: analystCommentary (\"shrank to $14.3M from $42.2M\"), sections.executiveSummary.thesis.body (\"fell to $14.3M from $42.2M\"), sections.financials.incomeCommentary (\"narrowed to $14.3M in 2026 from $42.2M in 2025\"), and sections.finalRecommendation.body[0] (\"falling to $14.3M from $42.2M\"). (3) The executive-summary catalysts largely restate the growth.points levers (Columbia Tech shift, Plexus, international) rather than pointing while the growth section argues.",
       "fix": "In finalRecommendation, refer back to the Bear scenario in words instead of re-quoting the $3.60 / quarter-below / $4.79 specifics already argued in scenarioCommentary. State the half-year loss figures once (in incomeCommentary or thesis) and refer to \"the half-year loss reduction noted above\" elsewhere. Trim the catalysts to true one-line pointers and let the growth section carry the mechanism.",
       "status": "addressed",
-      "note": "Fixed on all three counts. (1) finalRecommendation.body[1] refers to the Bear in words (‘a genuine downside, not a formality’); the $3.60 / quarter-below / $4.79 specifics live only in scenarioCommentary. (2) The $14.3M-from-$42.2M pair appears once (incomeCommentary); analystCommentary, thesis and finalRecommendation refer to it in words (‘narrowed sharply’) — one full quote in judgment and built report. (3) Catalysts are one-line pointers (Columbia Tech, Plexus, international) while growth.points carry the dates/mechanism. A mild echo remains but is within the refer-back allowance."
+      "note": "Still addressed after the rewrite. The $14.3 million / $42.2 million pair appears only in incomeCommentary, the $3.60 Bear is gone, finalRecommendation refers to the Bear in words, and the catalysts are one-line pointers."
     },
     {
       "id": "F-3",
@@ -34,7 +39,87 @@
       "issue": "Endpoint framing that obscures the most recent year. The report's own income table and incomeCommentary show FY24 gross margin at 57.2%, so FY25's 51.6% is a ~560bp decline from the FY24 peak, not a continued climb. Presenting margin as a clean two-point ascent in the bull thesis, while the latest annual print fell, slightly overstates the margin trajectory that supports the case. Both endpoints (40.1%, 51.6%) are correctly sourced, so this is a framing/selection issue rather than a wrong figure.",
       "fix": "Acknowledge the FY24 peak, e.g. \"gross margin recovered to 51.6% in FY25 from 40.1% in FY23, off a 57.2% peak in FY24,\" or soften \"climbed\" so the thesis does not imply an uninterrupted uptrend the series contradicts.",
       "status": "addressed",
-      "note": "Fixed. thesis.body now reads \"Gross margin recovered to 51.6% in FY25 from 40.1% in FY23, though it stepped down from a 57.2% peak in FY24,\" which acknowledges the FY24 peak and drops the \"climbed\" framing, matching the suggested fix."
+      "note": "Still addressed. The thesis reads \"gross margin was 51.6% in FY25 after a 57.2% peak in FY24\"."
+    },
+    {
+      "id": "F-4",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[1].driver",
+      "quote": "the shares hold a price-to-sales near 5.2x and earn a modest premium to the current price without the full re-rating the consensus target implies.",
+      "issue": "The Base price does not follow from its stated anchor (rubric 6). The Facts block gives P/S 5.2x against a ~$883.2M market cap and FY26E consensus revenue of $182.4M on ~179.87M shares. Holding 5.2x on the FY26E revenue gives a price in the low $5s, not the $5.75 Base; reaching $5.75 needs a higher sales multiple, i.e. a re-rating the driver says does not happen. A reader who checks the anchor cannot reproduce the Base, and the Base carries 45% of the weight, so it moves the weighted fair value and the expected upside the page renders. The prompt also never labels the P/S window, so \"hold\" a 5.2x on a one-year-forward revenue line is the today's-multiple-rolled-forward anchor the desk has flagged before: it needs an argument for why the multiple holds, not just an assertion.",
+      "fix": "Make the Base price follow from what the driver says. Either set the Base to the price that holding the stated multiple on the FY26E consensus revenue actually gives, or keep a higher price and argue the modest re-rating it requires from both sides, naming the multiple and its basis. Do not describe the P/S window as trailing-twelve-month; the surface does not label it. Re-check the scenarioCommentary and finalRecommendation wording on the Base after the change.",
+      "status": "addressed",
+      "note": "Addressed. The Base now holds 5.2x on $182.4M over 179.87M shares and lands at $5.27, which reproduces. The driver argues the multiple from both sides, scenarioCommentary tests a turn either way and says the anchor decides the call, and multiplesCommentary says the P/S window is unlabelled. One clause of the Base argument is now inconsistent with the income section; see F-10."
+    },
+    {
+      "id": "F-5",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary; analystCommentary",
+      "quote": "the wide gap between the Bull and Bear outcomes is why we hold a BUY rather than match the Strong Buy consensus.",
+      "issue": "The page's own scenarios derive STRONG BUY (the rendered conviction block shows expected upside and reward/risk above the STRONG BUY thresholds; derived label STRONG BUY), but the published label is BUY, and the prose never says the BUY is a one-notch-conservative call against the report's own math. Instead it justifies BUY against the Street's \"Strong Buy consensus\" (here and in analystCommentary: \"a call more conservative than the Street\"), conflating the analysts' consensus rating with the page's derived label. A reader sees a STRONG BUY derivation next to a BUY with no explanation of that gap. House rule: a one-notch-conservative call is allowed only if the report says so.",
+      "fix": "Resolve F-4 first, since the Base choice feeds the derivation. If the revised scenarios still derive STRONG BUY, say once (scenarioCommentary or finalRecommendation) that the scenarios derive STRONG BUY and that BUY is a deliberate one-notch-conservative call, and give the reason in the report's own terms; keep that distinct from the Street's Strong Buy consensus. If the revised scenarios derive BUY, drop wording that implies a conservative notch. Do not tune prices or weights to land on a label.",
+      "status": "addressed",
+      "note": "Addressed. The rendered conviction block now derives HOLD (E +9.9%, D -38.1%, R 0.26x), the published label is HOLD, and scenarioCommentary says \"The scenarios derive HOLD, and HOLD is our call.\" The conflation with the Street's Strong Buy is gone. I checked the stated sensitivities and the BUY and SELL price thresholds in finalRecommendation against the page math, and they hold."
+    },
+    {
+      "id": "F-6",
+      "severity": "Important",
+      "field": "sections.management.insiderOwnership",
+      "quote": "Among 5% holders, BlackRock reported 9,391,975 shares. The Vanguard Group had reported 11,981,998 shares (6.7%)",
+      "issue": "Stale 13G figures presented under a current date (rubric 3). The paragraph opens \"disclosed in the proxy as of March 20, 2026\", but the proxy footnotes say BlackRock's 9,391,975 shares are \"Based on Schedule 13G filed with the SEC on November 8, 2024\" (nearly two years before this 10-Q) and Vanguard's 11,981,998 on a \"Schedule 13G/A filed with the SEC on October 30, 2025\". Neither filing date is given, so a reader takes both stakes as March 2026 holdings. The BlackRock figure in particular is old enough that its age changes what it means.",
+      "fix": "Date each 5% holder figure by the filing the proxy footnote names: BlackRock's stake per its November 8, 2024 Schedule 13G, Vanguard's per its October 30, 2025 Schedule 13G/A, followed by the March 26, 2026 13G/A realignment the paragraph already describes. Keep the March 20, 2026 date for the director-and-officer rows, which the proxy reports as of that date.",
+      "status": "addressed",
+      "note": "Addressed. BlackRock's stake is dated to the November 8, 2024 Schedule 13G and flagged as saying little about today's holding. Vanguard's is dated to the October 30, 2025 13G/A, then the March 26, 2026 realignment. March 20, 2026 now applies only to the director and officer rows."
+    },
+    {
+      "id": "F-7",
+      "severity": "Important",
+      "field": "sections.management.insiderOwnership",
+      "quote": "Directors and executive officers as a group held 9,636,602 shares, 5.2% of the class. Among that group, Michael Ellenbogen held 4,557,005 shares (2.5%) and Anil Chitkara 3,188,455 shares (1.8%), with all other listed directors and officers below 1% each.",
+      "issue": "Restatement without a view (rubric 4). The paragraph lists the proxy's ownership rows and the share-count reconciliation but never says what the ownership means for an outside holder: whether 5.2% for the whole insider group gives management meaningful alignment or any control, and whether the two largest institutional stakes matter for the stock. Every sentence is a figure the Context already gives; the section reaches no judgment a reader can act on.",
+      "fix": "Add one or two sentences reading the figures for the holder: what a 5.2% group stake, with no individual above a few percent, means for alignment and for control (no holder or group can steer outcomes alone), and what the institutional base implies, without new numbers. Cut a restated row if room is needed.",
+      "status": "addressed",
+      "note": "Addressed. The paragraph now reads the register for an outside holder: it is widely held and no holder or group can steer a vote, so control is not a concern. Alignment is \"real but limited\", and outside holders should not count on a committed owner pressing on the control remediation."
+    },
+    {
+      "id": "F-8",
+      "severity": "Minor",
+      "field": "sections.financials.cashflowCommentary",
+      "quote": "Trailing-twelve-month net debt to EBITDA is 2.8x and interest coverage is -9.7x, the latter reflecting that EBITDA remains negative even as cash flow improves.",
+      "issue": "The 2.8x is quoted as if it were a leverage multiple, right after balanceCommentary calls Evolv lightly levered with net debt of -$20.6M. With net debt negative (net cash) and EBITDA negative, a positive ratio is the quotient of two negatives and does not measure leverage; a reader can take 2.8x as meaningful debt. The sentence explains the negative coverage but not the sign of the leverage ratio.",
+      "fix": "Say the net debt/EBITDA ratio is not meaningful while net debt is negative and EBITDA is negative, or drop it, rather than quoting 2.8x without that caveat.",
+      "status": "addressed",
+      "note": "Addressed. cashflowCommentary now says net debt/EBITDA \"prints as a positive multiple, but net debt and EBITDA are both negative, so the ratio does not measure leverage and we do not use it\", and it no longer quotes 2.8x."
+    },
+    {
+      "id": "F-9",
+      "severity": "Critical",
+      "field": "sections.executiveSummary.thesis.body; sections.financials.cashflowCommentary; sections.valuation.scenarioCommentary",
+      "quote": "operating cash flow was close to breakeven in FY25 on the vendor's rounding",
+      "issue": "Unsupported claim (rubric 2): an inference the source invites but does not make. The only FY25 operating cash flow on the surface is the cash-flow table's \"0.0\" in $B, shown without a minus sign. That rounding says only that the figure is non-negative and under about $0.05B, which is anything up to roughly a third of FY25 revenue of $145.9M; it cannot support \"close to breakeven\". The same reading recurs in three places: cashflowCommentary (\"so FY25 was near breakeven at the cash level\"), scenarioCommentary (\"operating cash flow near breakeven support the Bull\") and the thesis quoted here. Round 1 said \"turned non-negative in FY25 on the vendor's rounding\", which was accurate. The new wording may understate a material positive, and it feeds both the Bull argument and the funding risk the HOLD relies on.",
+      "fix": "Describe FY25 operating cash flow only as the table shows it: non-negative, with its size not visible at the table's $B rounding. Remove \"close to breakeven\" / \"near breakeven\" in all three places, and phrase the funding argument (capitalAllocation, cashflowCommentary's last sentence) as whether operating cash flow stays non-negative, not whether it holds at breakeven. Do not recall or derive a figure for it.",
+      "status": "addressed",
+      "note": "Addressed. No \"breakeven\" wording remains. The thesis says operating cash flow \"turned non-negative in FY25 on the vendor's rounding\". cashflowCommentary adds that \"the table's rounding hides its size\" and asks whether operating cash flow \"stays non-negative through 2026\". scenarioCommentary cites \"operating cash flow that turned non-negative in FY25\"."
+    },
+    {
+      "id": "F-10",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[1].driver",
+      "quote": "while a first half that already covers about half of FY26E and a net loss that keeps narrowing argue for a higher one, so we hold it.",
+      "issue": "Calls coherence (rubric 6). The Base holds today's multiple partly on \"a net loss that keeps narrowing\". But incomeCommentary says the net line is flattered by unitemized items below operating income and concludes \"we judge progress on the operating margin rather than the net loss\". On the operating line the report itself finds Q2'26 at -24.1%, weaker than the trailing figure. So the Base leans on the measure the report has just declined to rely on, and ignores the measure it chose. The multiple in this driver decides the call (scenarioCommentary says a turn higher would derive BUY), so its supporting argument needs to be consistent with the rest of the report.",
+      "fix": "Drop the narrowing net loss as an argument for a higher multiple, or replace it with operating-line evidence. If the operating-line evidence cuts the other way, say so in the both-sides sentence and keep the conclusion that follows from it. Do not change the multiple or the price only to keep the label.",
+      "status": "addressed",
+      "note": "Addressed. The Base no longer cites the net loss. Its both-sides sentence now uses the operating line only: a Q2'26 operating margin weaker than the trailing figure argues lower, and a trailing margin well ahead of FY25's argues higher (-20.8% vs -33.2%, both on the surface). This matches incomeCommentary's choice to judge progress on the operating margin. The multiple and the price are unchanged."
+    },
+    {
+      "id": "F-11",
+      "severity": "Important",
+      "field": "sections.management.capitalAllocation",
+      "quote": "That is a sensible trade for a recurring-revenue model, provided the balance sheet can carry the slower cash recovery.",
+      "issue": "Unsupported inference (rubric 2), presented as a given. The MD&A says license revenue \"is now replaced by increased product revenue, which provides an increase in gross profit over the term of the related subscription contract\". It says nothing about the timing of cash, and under the purchase subscription model the customer buys the hardware outright. \"The slower cash recovery\" therefore asserts a cash effect the source does not establish. In the same paragraph, \"an equity raise is the likeliest source\" goes beyond the 10-K, which says only that the company \"may require additional capital to support business growth, which might not be available\" and which also has a debt instrument. I rate this Important rather than Critical because both clauses sit inside an evaluative sentence, but each is stated as fact.",
+      "fix": "Remove \"the slower cash recovery\", or tie the caveat to what the MD&A says (gross profit recognized over the contract term). Present the funding source as open, or as the analyst's view with its reason, rather than naming equity as the likeliest source as though the pack said so.",
+      "status": "addressed",
+      "note": "Addressed. \"the slower cash recovery\" and \"likeliest source\" are gone. The paragraph says the pack does not say whether new capital would come from debt or equity. It ties the license-to-product trade to the MD&A phrase \"over the term of the related subscription contract\"."
     }
   ]
 }
