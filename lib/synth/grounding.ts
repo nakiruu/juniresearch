@@ -53,7 +53,8 @@ const YEAR = /^(199\d|20[0-3]\d|2040)$/;
 const MONTH = "(Jan(uary)?|Feb(ruary)?|Mar(ch)?|Apr(il)?|May|June?|July?|Aug(ust)?|Sept?(ember)?|Oct(ober)?|Nov(ember)?|Dec(ember)?)";
 const MONTH_BEFORE = new RegExp(`(^|[^A-Za-z])${MONTH}\\.? $`, "i");
 const MONTH_AFTER = new RegExp(`^ ${MONTH}\\b`);
-const DAY_RANGE_BEFORE = new RegExp(`(^|[^A-Za-z])${MONTH}\\.? \\d{1,2}(\\s?[-–—]\\s?| and | to )$`, "i");
+// a day range takes only a dash, after a capitalized month: "May 5–10" is a date; "May 5 to 20 analysts" and "it may 5 to 18" are not
+const DAY_RANGE_BEFORE = new RegExp(`(^|[^A-Za-z])${MONTH}\\.? \\d{1,2}\\s?[-–—]\\s?$`);
 const INDEX_BEFORE = /(^|[^A-Za-z])(S&P|Russell|Nasdaq|NASDAQ|Dow Jones|FTSE|STOXX|Stoxx|MSCI|Nikkei|Fortune|Global) ?$/;
 const LABEL_BEFORE = /(^|[^A-Za-z])(Note|Notes|Item|Items|Tier|Section|Rule|Phase|Schedule|Form|Class|Series|Level|Title|Chapter|Part|Article|ISO|Gen|Proposal|Exhibit|Regulation|Stage|Version|PDK|No\.|#)\s?$/;
 const PERIOD_BEFORE = /(^|[^A-Za-z])(past|last|trailing|prior|next|previous|over the) $/i;
@@ -85,7 +86,7 @@ function allowed(text: string, start: number, end: number, int: string): false |
   if (/^-(week|month|day|year|quarter)s?\b/i.test(after)) return "other";             // 52-week
   if (n >= 1 && n <= 31 && /(19|20)\d\d-(\d{1,2}-)?$/.test(text.slice(Math.max(0, start - 8), start))) return "other"; // 2026-08-30
   if (n >= 1 && n <= 31 && MONTH_BEFORE.test(before12)) return "other";               // December 31, August 30, 2026 ("450, 2026" is a figure)
-  if (n >= 1 && n <= 31 && DAY_RANGE_BEFORE.test(text.slice(Math.max(0, start - 20), start))) return "other"; // September 22–23, June 27 and 28
+  if (n >= 1 && n <= 31 && DAY_RANGE_BEFORE.test(text.slice(Math.max(0, start - 20), start))) return "other"; // September 22–23, May 5-10
   if (n >= 1 && n <= 31 && (/^\/\d{1,2}\/(19|20)\d\d(?!\d)/.test(after) || (/(^|[^\d/])\d{1,2}\/$/.test(text.slice(Math.max(0, start - 4), start)) && /^\/(19|20)\d\d(?!\d)/.test(after)))) return "other"; // 9/30/2026
   if (n >= 1 && n <= 31 && MONTH_AFTER.test(after)) return "other";                   // 30 September 2026
   if (LABEL_BEFORE.test(before12)) return "other";                                    // Note 14, Item 1A, Tier 1, Section 232, Phase 3

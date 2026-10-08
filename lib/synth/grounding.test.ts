@@ -212,8 +212,13 @@ describe("numericTokens v2", () => {
     raws("14 analysts", ["14"]);
     raws("PDK 0.9", ["0.9"]);                                                          // the label rule covers bare integers only
     // dates (review C-5): ", 2026" marks a date only after a month name; numeric dates are allow-listed whole
-    for (const text of ["over September 22–23, 2026", "June 27 and 28, 2026", "from July 1 to 3", "ended June 30, 2026", "on Aug 2, 2026", "Sept. 30, 2025", "as of 9/30/2026", "as of 30.09.2026", "on 12/31/2025"]) none(text);
+    for (const text of ["over September 22–23, 2026", "May 5–10", "Sept. 3-4", "ended June 30, 2026", "on Aug 2, 2026", "Sept. 30, 2025", "as of 9/30/2026", "as of 30.09.2026", "on 12/31/2025"]) none(text);
     raws("across 15 markets, 2026 guidance holds", ["15"]);
+    // a day range takes only a dash, after a capitalized month: "and"/"to" and the verb "may" leave the count a figure
+    raws("on May 5 to 20 analysts", ["20"]);
+    raws("since March 3 and 25 analysts", ["25"]);
+    raws("between March 1 and 30 stores", ["30"]);
+    raws("it may 5 to 18 units", ["18"]);
     raws("revenue of 450, 2026 being a transition year", ["450"]);
     raws("as of 9/30/2026 margin rose 14%", ["14%"]);
     raws("as of 30.09.2026 margin was 30.09%", ["30.09%"]);
