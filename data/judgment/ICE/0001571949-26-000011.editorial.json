@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "da412b5778f956eb40224c3e01eda49a45da3132c3f628b037c2bf3b55331b52",
-  "reviewedAt": "2026-09-21T20:00:00Z",
-  "reviewer": "Claude Opus 4.8",
+  "judgmentSha256": "133ea11f2ca5754a2ef15eceed2ec1d35791a7c681d9d45668e610232dd1f4d7",
+  "reviewedAt": "2026-10-08T14:30:27Z",
+  "reviewer": "Claude Opus 5.5",
   "round": 2,
-  "verdict": "approved-with-minors",
+  "verdict": "approved",
   "findings": [
     {
       "id": "F-1",
@@ -13,7 +13,7 @@
       "issue": "The filing's MD&A (Recent Developments) discloses a definitive agreement dated July 29, 2026 to acquire MarketAxess Holdings for approximately $6.0 billion ($167 per share) entirely in cash, backed by a 364-day bridge facility of up to $6.2 billion, expected to close in the first half of 2027. The report never mentions it. This is the most material recent development in the pack and it contradicts the report's central 'deleveraging' characterization: capital allocation is not a clean three-way split, and the Base case claim that 'buybacks and deleveraging both continue off strong free cash flow' and the subtitle's 'deleveraging' are unsupported once up to $6.2B of new bridge debt is in view. It also omits a material Fixed Income and Data Services growth driver and a financing/integration risk.",
       "fix": "Add the MarketAxess acquisition to capitalAllocation, balanceCommentary, the scenarios, growth and risks: state the ~$6.0B all-cash price ($167/share), the up-to-$6.2B bridge facility and the 1H2027 expected close, and reconcile it with the deleveraging/buyback thesis (the deal re-levers or defers deleveraging and competes with buybacks). Qualify the subtitle and Base case accordingly, and add the FI&DS strategic rationale plus financing/integration risk.",
       "status": "addressed",
-      "note": "The rewrite adds MarketAxess throughout: the subtitle, analystCommentary, companyOverview, thesis, balanceCommentary, capitalAllocation, all three scenarios, growth point 3 and risks now state the ~$6.0B all-cash price, the up-to-$6.2B bridge, the 1H2027 close, the FI&DS rationale and the financing/integration risk, and reconcile the deal with the deleveraging/buyback thesis. Still addressed after the round-2 bear-deepening rewrite. ($167/share was optional and its omission is not a defect.)"
+      "note": "Corrected-inputs edition: still addressed. The deal (about $6.0B cash, $167/share, up-to-$6.2B bridge as backup, 1H2027 close, approvals) runs through the subtitle, analystCommentary, companyOverview, balanceCommentary, capitalAllocation, all three scenarios, growth point 4 and risks, and is reconciled with the buyback and leverage thesis."
     },
     {
       "id": "F-2",
@@ -23,7 +23,7 @@
       "issue": "The captured DEF 14A excerpt (in Context and in the FactPack context.proxyStatement.text) contains only the security-ownership table and the related-party-transactions approval policy. It says nothing about director independence, board composition or committee membership. Asserting that 'the proxy shows an otherwise independent director slate' characterizes the document as disclosing something the captured excerpt does not carry — an unsupported governance claim, exactly the type the prompt warns against.",
       "fix": "Remove the independence assertion, or state that the captured proxy excerpt does not cover board independence so no view on director independence can be grounded. The founder chair-and-CEO concentration point can stand on the ownership table and the CEO title alone.",
       "status": "addressed",
-      "note": "The independence assertion is gone. Governance now states the excerpt 'is limited to ownership and the related-party framework rather than board composition' and 'does not include the board-independence detail that would round out the picture,' resting the concentration point on the ownership table and the combined chair-and-CEO title. Unchanged and still addressed in round 2."
+      "note": "Still addressed. Governance says the excerpt 'covers ownership and the related-party policy but not board composition or independence, so we cannot assess those,' and rests the combined-role point on the release's title for Jeff Sprecher."
     },
     {
       "id": "F-3",
@@ -33,7 +33,7 @@
       "issue": "The captured proxy excerpt does aggregate the group: 'All Directors, Nominees and Executive Officers as a Group (22 persons) 4,781,984 *', where * means less than 1% of the outstanding Common Stock; founder-CEO Jeffrey C. Sprecher individually holds 3,481,234 shares (also *, <1%). The claim that no combined figure is asserted is contradicted by the excerpt, and the section misses the available takeaway — insiders as a group own well under 1% of the ~566M shares.",
       "fix": "Cite the group total (4,781,984 shares, less than 1% of the class) and read it for the holder: insiders own a negligible share, so pay-alignment is limited and there is no insider control bloc. Optionally note Sprecher's ~3.48M shares (<1%).",
       "status": "addressed",
-      "note": "insiderOwnership now cites the group total (4,781,984 shares, 22 persons, <1%) and Sprecher's 3,481,234 shares, and reads them for the holder — 'alignment is through annual equity grants rather than a founder control block, and a minority holder is not voting underneath a dominant insider position.' Unchanged and still addressed in round 2."
+      "note": "Still addressed. insiderOwnership cites 566,430,761 shares outstanding at March 19, 2026, Sprecher's 3,481,234 and the group's 4,781,984 (22 persons), each under 1%, and reads them for the holder."
     },
     {
       "id": "F-4",
@@ -43,7 +43,7 @@
       "issue": "The 'buyback vs deleveraging compete for the same cash' argument is restated in roughly six places: cashflowCommentary ('every dollar to buybacks is a dollar not deleveraging'), executiveSummary.risks ('competes with buybacks for the free cash flow'), capitalAllocation (quoted), risks.idiosyncratic Leverage ('the buyback competes with deleveraging for the cash'), and finalRecommendation body twice ('draw on the same cash'; 'forces a choice between buybacks and deleveraging'). The figure '2.9x EBITDA' is also re-stated numerically in each place rather than referred back in words.",
       "fix": "Make the buyback-vs-deleveraging point once (capitalAllocation is the natural home) and refer back in words elsewhere. Introduce '2.9x EBITDA' once and call it 'the leverage noted above' thereafter.",
       "status": "addressed",
-      "note": "The six-fold repetition and the repeated numeric '2.9x EBITDA' are resolved. 2.9x now appears once per section (balanceCommentary and risks.idiosyncratic Leverage). The 'competes for the same free cash flow' point is made once (cashflowCommentary), while capitalAllocation frames the deal's re-ordering of priorities from a distinct angle — acceptable residual overlap. Unchanged in round 2."
+      "note": "The six-fold restatement and the repeated numeric 2.9x are gone (2.9x now sits only in the thesis and balanceCommentary). A narrower two-place overlap between cashflowCommentary and capitalAllocation came back in this rewrite; it is raised separately as F-19."
     },
     {
       "id": "F-5",
@@ -53,7 +53,7 @@
       "issue": "The 'rates cut twice / double exposure' argument (high rates hurt mortgage volumes and raise ICE's refinancing cost) appears in four sections: balanceCommentary ('the same rate environment that depresses the mortgage segment also lifts interest expense — a double exposure'), businessMoat.durability ('the interest-rate cycle, which cuts twice — depressing mortgage volumes and lifting the cost of the debt'), risks.idiosyncratic Leverage, and risks.systemic (quoted). Same claim, different words, four places.",
       "fix": "Argue the double-exposure once (systemic risks) and point to it in words from the balance-sheet, durability and idiosyncratic-risk passages.",
       "status": "addressed",
-      "note": "Resolved. The double exposure is now argued once, in risks.systemic ('Higher rates depress mortgage-origination volumes ... and simultaneously raise the cost of ICE's debt as it refinances'). businessMoat.durability points to it in words ('the interest-rate cycle it is doubly exposed to (the systemic-risk section sets out how)'), and risks.idiosyncratic Leverage keeps only the debt-refinancing half without restating the mortgage linkage. Unchanged in round 2."
+      "note": "Still addressed. risks.systemic argues the shared rate exposure once ('the same rise that would hold down mortgage demand would also raise refinancing costs'); balanceCommentary keeps only the MD&A's refinancing sentence, the executive-summary risk is a pointer, and durability no longer restates it."
     },
     {
       "id": "F-6",
@@ -63,7 +63,7 @@
       "issue": "This sentence is a near-verbatim duplicate of scenarioCommentary: 'we own the two working segments and the capital return at today's price, and treat the mortgage recovery as upside to be paid for as it arrives rather than in advance.' Both sections also close with a 'For a new buyer, ICE …' construction and repeat the 'quality compounder … with … optionality' framing. The house style forbids the same sentence appearing in two sections.",
       "fix": "Rewrite the finalRecommendation to synthesize the call without reusing the scenarioCommentary sentence or the 'For a new buyer' construction; let the two sections say different things.",
       "status": "addressed",
-      "note": "Addressed. scenarioCommentary and finalRecommendation no longer share a sentence: the verbatim 'own the two working segments ... paid for as it arrives' sentence is gone; 'own the compounding core at today's price' sits only in finalRecommendation body[2]; and after the round-2 rewrite scenarioCommentary states the conclusion as 'a fair value modestly above the price and below the consensus target' while the $173 / 11% / $187.29 figures appear only in finalRecommendation body[0]. Only residual is the shared noun phrase 'compounding core' — acceptable."
+      "note": "The original duplicated sentence and the 'For a new buyer' construction are gone. A different sentence is now shared by scenarioCommentary, finalRecommendation and analystCommentary (the E/D statement); that is raised as F-17."
     },
     {
       "id": "F-7",
@@ -73,7 +73,7 @@
       "issue": "The gross-vs-net revenue reconciliation (net = revenues less pass-through transaction-based expenses; the $12.6B table figure is gross; the FY26E ~$11B consensus is a net figure, not a decline) is argued in full in both analystCommentary and incomeCommentary, and touched again in growth point four. Under the house rule on source-basis differences, the point should be made once; stating the full three-part reconciliation twice is a repetition finding.",
       "fix": "State the net-vs-gross basis once. Let analystCommentary note the basis in a sentence and point forward, and let incomeCommentary carry the full reconciliation (or vice versa), without repeating the $12.6B-gross and 'FY26E is not a decline' explanation in both.",
       "status": "addressed",
-      "note": "The full three-part reconciliation — including the 'FY26E ~$11B is a net figure, not a forecast that revenue falls' part — lives only in incomeCommentary. analystCommentary states the net-vs-gross basis as framing and points forward with 'we work in net revenue throughout'; the residual definition overlap is acceptable for an abstract vs a body section. Unchanged in round 2."
+      "note": "Still addressed. The full reconciliation ($3,611 million to $2,666 million, FY26E as a basis difference, 38.5% vs 52% margin) lives only in incomeCommentary; analystCommentary gives the one-sentence definition and the growth point only names the consensus figures."
     },
     {
       "id": "F-8",
@@ -83,7 +83,7 @@
       "issue": "The only price-range fact on the grounding surface is the 52-week range $121.79–$176.05. Its high, $176.05, is above the $163 low target, so the stock has traded above $163 within the year on the page. The claim that $163 is 'still above where the stock has traded this year' is unsupported and is contradicted by the 52-week high.",
       "fix": "Drop or correct the clause — for example, note the $163 low target sits above the current $155.47 price and within the 52-week range, without asserting it exceeds the year's trading range.",
       "status": "addressed",
-      "note": "The offending clause is removed; multiplesCommentary now reads only 'inside a wide $163.00–$232.00 range,' with no claim about the year's trading range. Unchanged in round 2."
+      "note": "Still addressed. multiplesCommentary now says 'even the low end of the $163.00–$232.00 range sits above the price,' which is true against $155.47 and makes no claim about the year's trading range."
     },
     {
       "id": "F-9",
@@ -92,8 +92,8 @@
       "quote": "$373 million of FY25 capex against $4.66B of operating cash flow",
       "issue": "Two smaller cross-section repetitions. (1) The capital-light claim with the same figures — '$373 million of FY25 capex against $4.66B of operating cash flow' (moatFactors) duplicates cashflowCommentary's 'capital expenditure was just $373 million in FY25' and its '$3.1B ... to $4.66B' operating-cash-flow line. (2) 'peak open interest' is used as an analytical driver in about five places (thesis, executiveSummary.catalysts, moatFactors, growth, risks.idiosyncratic) and leaned on as 'the evidence that ICE's pools are deepening', when its only source is the CEO's promotional 'record open interest' line in the press release.",
       "fix": "State the capital-light figures once and refer back in words; use 'peak/record open interest' once, attribute it to the CEO/press release, and stop repeating it as a standalone analytical driver.",
-      "status": "open",
-      "note": "Round-2 re-check: part (1) stays addressed. Part (2) still open and unchanged from the prior re-check. 'Open interest' as a standalone driver remains in three sections — analystCommentary ('open interest across the exchange complex at a peak'), businessMoat.segments ('strong open interest drove the result') and moatFactors[0], which still calls 'this quarter's peak open interest ... the evidence that ICE's pools are deepening' — leaned on as evidence and still unattributed to its only source, the CEO's press-release 'record open interest' line. The bear-deepening rewrite did not touch this."
+      "status": "addressed",
+      "note": "Both parts now addressed. (1) The capex figures appear only in cashflowCommentary. (2) Open interest appears once, in moatFactors[0], as the CEO's quoted 'record open interest across our exchange complex'; scenarioCommentary points back to it in words ('the CEO's comments on open interest, set out in the moat section'), and analystCommentary and segments no longer use it."
     },
     {
       "id": "F-10",
@@ -103,7 +103,7 @@
       "issue": "These ownership stakes, and the 'roughly 566 million shares outstanding' cited in insiderOwnership, come from the DEF 14A as of March 19, 2026 (the underlying 13Gs are older still — BlackRock April 2025, Vanguard December 2025), about six months before this September 20, 2026 report; the report presents them undated. The 566M proxy share count also differs from the current ~561.39M in the snapshot without a note.",
       "fix": "Date the ownership figures to the March 2026 proxy (as of March 19, 2026), and note that the 566M share count is the proxy figure versus the current ~561M.",
       "status": "addressed",
-      "note": "insiderOwnership now dates the ownership table to March 19, 2026, computed on 'roughly 566 million shares outstanding,' and adds 'The figures are as of the March record date, so they slightly predate the current share count' (the snapshot renders the current ~561.39M alongside). The underlying 13G dates remain unmentioned but the core undated-figures defect is fixed. Unchanged in round 2."
+      "note": "Fully addressed. Governance dates the stakes to March 19, 2026 and names the 13G/A filings (December 3, 2025 and April 17, 2025). insiderOwnership dates the share count and notes the figures predate the second quarter and the deal."
     },
     {
       "id": "F-11",
@@ -113,7 +113,7 @@
       "issue": "The Gardiner quote in the press release pairs buybacks with 'disciplined investment in strategically important opportunities' only; it does not mention debt paydown. Attributing 'and debt paydown' to the CFO's framing over-states the quote (the deleveraging is visible in the balance sheet, but not in the CFO's words here).",
       "fix": "Drop 'and debt paydown' from the CFO attribution, or move it out of the quoted framing and cite the balance sheet for the deleveraging.",
       "status": "addressed",
-      "note": "leadership now reads 'the CFO tied continued buybacks to free-cash-flow strength and paired them with disciplined investment' — the 'and debt paydown' over-attribution is removed. Unchanged in round 2."
+      "note": "Still addressed. cashflowCommentary reads 'the CFO said share repurchases remain a priority alongside disciplined investment', and capitalAllocation quotes only 'capital discipline and financial rigor'. No debt paydown is attributed to the CFO."
     },
     {
       "id": "F-12",
@@ -123,7 +123,7 @@
       "issue": "The grounding surface establishes only that volatility was elevated during the first six months of 2026 and lifted trading (MD&A Global Market Conditions); nothing in the Facts or Context says the sector recently experienced a subsidence of volatility. The report asserts one as an established fact in two places: the Bear scenario driver ('market volatility subsides as it did across the sector recently') and risks.idiosyncratic Exchange cyclicality ('a subsidence of volatility, as the sector saw recently, would slow the top-margin segment'). This is an unsupported factual aside — the underlying cyclicality point (trading tracks volatility) is grounded, but the 'as the sector saw recently' precedent is not on the surface.",
       "fix": "Drop the 'as it did across the sector recently' / 'as the sector saw recently' clauses from both the Bear scenario and the Exchange-cyclicality risk. The cyclicality argument stands on the MD&A alone (trading rose with the volatility of the first six months of 2026, so a subsidence would slow the exchange segment) without inventing a recent sector-wide decline.",
       "status": "addressed",
-      "note": "Still addressed after the round-2 bear-deepening rewrite. The deepened Bear driver reads 'market volatility subsides' with no 'as it did across the sector recently,' and risks.idiosyncratic Exchange cyclicality reads 'a subsidence of volatility would slow the top-margin segment' with no 'as the sector saw recently.' The invented recent-precedent was not reintroduced when the bear was deepened from $135 to $128; the cyclicality argument rests on the MD&A alone."
+      "note": "Still addressed. The Bear driver reads 'Market activity calms and transaction revenue falls', and risks.idiosyncratic[1] ties the risk to 'the volatility the MD&A credits for higher trading in early 2026'. The invented sector precedent has not come back."
     },
     {
       "id": "F-13",
@@ -133,7 +133,7 @@
       "issue": "This exact eight-word span appears in two sections and both sentences make substantially the same claim (the deal re-levers a de-leveraging balance sheet and carries regulatory/integration risk). thesis: 'a roughly $6.0 billion all-cash deal funded with new debt that re-levers a balance sheet ICE had been deleveraging, and carries the integration and regulatory risk any deal of that size does.' risks.idiosyncratic[0]: 'It re-levers a balance sheet ICE had been deleveraging, and a regulatory delay, a financing at worse terms, or a difficult integration would each pressure the case.' The house style forbids the same claim appearing near-verbatim in two sections; the executive-summary thesis should point, the risk section should argue.",
       "fix": "Reword one of the two so the phrase 're-levers a balance sheet ICE had been deleveraging' and the paired regulatory/integration-risk claim are not repeated. Let the thesis state the re-levering in its own words and let risks.idiosyncratic carry the argument and the what-to-watch.",
       "status": "addressed",
-      "note": "Resolved. The eight-word span 're-levers a balance sheet ICE had been deleveraging' now appears only in the thesis; risks.idiosyncratic[0] reads 'It reverses the deleveraging of recent years, and a regulatory delay, a financing at worse terms, or a difficult integration would each pressure the case,' so the thesis points and the risk section argues with its own what-to-watch. Unchanged in round 2."
+      "note": "Still addressed. The span appears nowhere now. The thesis says the next year 'turns on a debt-funded acquisition', and risks.idiosyncratic[0] argues the approvals, the financing and the integration risk on its own."
     },
     {
       "id": "F-14",
@@ -142,8 +142,118 @@
       "quote": "energy, interest-rate and equity trading and strong open interest drove the result",
       "issue": "The Exchanges segment description names energy first among the activities that 'drove the result,' but the earnings press-release segment breakout shows energy net revenue fell 13% year over year (2Q26 $518M vs 2Q25 $595M) — a detractor from the segment's growth, not a driver. The Exchanges segment's +3% YoY increase ($1,464M vs $1,415M) came from Ags and Metals (+35%, $87M vs $65M), Financials (+21%, $192M vs $158M), Cash Equities and Equity Options (+15%), OTC and Other (+15%) and Data and Connectivity (+12%). On a level reading energy is defensibly the single largest line ($518M), but as written the clause reads as a growth-driver claim the grounding surface contradicts.",
       "fix": "Drop 'energy' from the list of what drove the result, or note that energy revenue declined 13% while the segment's growth came from ags and metals, financials, equities and data — so the driver list matches the segment breakout in the Context press release.",
-      "status": "open",
-      "note": "Round-2 re-check: unchanged and still open. businessMoat.segments still reads 'energy, interest-rate and equity trading and strong open interest drove the result,' but the press-release breakout shows energy net revenue fell 13% y/y (2Q26 $518M vs 2Q25 $595M); the segment's +3% growth came from Ags & Metals, Financials, equities and data — not energy. The bear-deepening rewrite did not touch this clause."
+      "status": "addressed",
+      "note": "Addressed. The segments body no longer names drivers. incomeCommentary now says Exchanges grew 3% 'as gains in financials, ags and metals, cash equities and data and connectivity outweighed a 13% fall in energy revenue, from $595 million to $518 million', which matches the release breakout."
+    },
+    {
+      "id": "F-15",
+      "severity": "Critical",
+      "field": "sections.financials.cashflowCommentary",
+      "quote": "Operating cash flow grew from $3.1B in FY21 to $4.7B in FY25, but capital expenditure rose from $0.5B a year in FY21 through FY23 to $0.8B in FY24 and FY25, so free cash flow was $3.9B in both FY24 and FY25.",
+      "issue": "The 'but … so' sentence says rising capex is why FY25 free cash flow equalled FY24's. The cash-flow table on the surface contradicts that. Capex was $0.8B in both FY24 and FY25, so it did not rise between the two years. It stepped up from FY23 to FY24, the year FCF rose from $3.1B to $3.9B. FY25 FCF was flat because operating cash flow barely grew ($4.6B in FY24, $4.7B in FY25) while capex held steady. The causal claim is on this edition's headline point ('cash is not growing'), and it misplaces the cause from slowing operating cash flow onto capex. Slowing operating cash flow is the reading that matters to the holder.",
+      "fix": "Restate the mechanism from the table. Capex stepped up to $0.8B in FY24 and held there in FY25. Operating cash flow went from $4.6B to $4.7B, so FY25 free cash flow stayed at $3.9B. The flat year comes from operating cash flow, not from a further capex rise. Keep the 2026 capex guide of about $850 million as the forward pressure. Check that the thesis's 'capital spending is rising' still reads correctly next to this.",
+      "status": "addressed",
+      "note": "Addressed. cashflowCommentary now says capex stepped up to $0.8B in FY24 and held there in FY25. FCF rose to $3.9B in FY24 on operating cash flow ($3.5B to $4.6B), then held in FY25 because operating cash flow barely grew, to $4.7B. It says the flat year comes from operating cash flow, not capex, and keeps the about-$850 million 2026 guide as the forward pressure. The thesis now says capital spending is 'guided higher for 2026', which is consistent."
+    },
+    {
+      "id": "F-16",
+      "severity": "Important",
+      "field": "sections.growth.points[0]",
+      "quote": "The company guides 2026 recurring revenue growth of high-single digits in Exchanges and 7% to 8% in Fixed Income and Data Services, in line with what the two segments delivered in the second quarter.",
+      "issue": "On the same quantity, the release shows second-quarter recurring revenue up 10% in Exchanges ($416 million vs $378 million) and 10% in Fixed Income and Data Services ($531 million vs $483 million). The Fixed Income and Data Services guide of 7% to 8% is below what the segment delivered, and 'high-single digits' is at or below Exchanges' 10%. The report's own segments body gives the 10% for both. 'In line' is therefore unsupported. It also hides the point a reader needs: the full-year guide implies recurring growth slows from the second quarter's pace. The 7–8% only matches the Fixed Income and Data Services total segment growth (8%), which is a different quantity.",
+      "fix": "Compare like with like. Both segments' recurring revenue grew 10% in the second quarter, and the 2026 guide (high-single digits; 7% to 8%) is at or below that pace. Say in words what that implies for the second half. If useful, use it as a counter to the Bull case's 'recurring revenue grows in line with 2026 guidance'.",
+      "status": "addressed",
+      "note": "Addressed. growth.points[0] now compares like with like: second-quarter recurring revenue grew 10% in both segments, and the 2026 guide (high-single digits; 7% to 8%) is at or below that pace, 'which implies slower recurring growth over the rest of the year'."
+    },
+    {
+      "id": "F-17",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary; also analystCommentary, sections.finalRecommendation.body[0]",
+      "quote": "an expected upside of +5.2% against a bear-case downside of 21.7%",
+      "issue": "This exact clause and its surrounding sentence appear in three sections. analystCommentary: 'the scenarios weight to $163.62, an expected upside of +5.2% against a bear-case downside of 21.7%.' scenarioCommentary: 'The weights produce a fair value of $163.62, an expected upside of +5.2% against a bear-case downside of 21.7%, and a reward/risk of 0.24x, which derives HOLD.' finalRecommendation.body[0]: 'The scenarios weight to a fair value of $163.62, an expected upside of +5.2% against a bear-case downside of 21.7%, for a reward/risk of 0.24x.' The house style forbids a sentence appearing in two sections, and the page already renders these calls in the rating box.",
+      "fix": "State the fair value, E, D and R once, in scenarioCommentary where the weights are argued. In analystCommentary and finalRecommendation, refer to the result in words (for example 'a fair value modestly above the price'), or give only the target range there. Do not repeat the E/D clause.",
+      "status": "addressed",
+      "note": "Addressed. Fair value, E, D and R now appear only in scenarioCommentary. analystCommentary ends on the anchor, and finalRecommendation.body[0] says 'around a fair value modestly above the price'."
+    },
+    {
+      "id": "F-18",
+      "severity": "Important",
+      "field": "sections.valuation.multiplesCommentary; also scenarioCommentary, finalRecommendation.body[0], executiveSummary.thesis.body, executiveSummary.risks[3]",
+      "quote": "We judge it against what the business is delivering: mid-single-digit net revenue growth, 5% adjusted EPS growth in the quarter, flat FY25 free cash flow and a balance sheet about to take on more debt. That supports today's multiple, but on the evidence in the pack it does not support a higher one.",
+      "issue": "The report's central conclusion (today's multiple, not a higher one) is argued twice in full on the same evidence. multiplesCommentary (quoted) and scenarioCommentary ('Against a higher multiple: transaction revenue barely grew, adjusted EPS only kept pace with net revenue, FY25 free cash flow was flat, and the acquisition adds debt before it adds earnings. We find the case for holding the multiple stronger…') are adjacent and say the same thing. finalRecommendation.body[0] lists the evidence a third time ('FY25 free cash flow was level with FY24, and the next year adds acquisition debt'). The thesis lists it a fourth. Flat FY25 FCF alone is stated in six fields: analystCommentary, risks[3], cashflowCommentary, multiplesCommentary, scenarioCommentary and finalRec[0]. 'adds debt before it adds earnings' appears verbatim in executiveSummary.risks[0] and scenarioCommentary.",
+      "fix": "Argue the multiple once, in scenarioCommentary, where the deciding assumption is weighed both ways. End multiplesCommentary at the basis, the Street gap and the missing peer and history anchors, and point forward in words. Let finalRecommendation synthesize the call without re-listing the evidence. Keep the flat-FCF figure in cashflowCommentary (plus one summary mention) and refer back to it in words elsewhere. Reword one of the two 'adds debt before it adds earnings'.",
+      "status": "addressed",
+      "note": "Addressed. multiplesCommentary ends at the basis, the Street gap and the missing anchors, and points to the scenario commentary. The multiple is argued once, in scenarioCommentary. finalRecommendation no longer re-lists the evidence. Flat FY25 FCF is down to cashflowCommentary plus the two summary fields and the scenario argument. 'adds debt before it adds earnings' now appears only in the executive-summary pointer."
+    },
+    {
+      "id": "F-19",
+      "severity": "Important",
+      "field": "sections.financials.cashflowCommentary; also sections.management.capitalAllocation",
+      "quote": "Once it closes, servicing and repaying the acquisition debt will compete with the buyback for the same cash. Management has not said how it will split the two, so our Base assumes repurchases slow while leverage comes down",
+      "issue": "capitalAllocation makes the same claim in different words: 'an all-cash purchase backed by a bridge commitment puts debt service and refinancing ahead of discretionary returns until leverage comes down.' Both sections say that deal debt service displaces buybacks until leverage falls, so the claim is argued twice. This is a paraphrase of the defect F-4 cleared, and it came back in the corrected-inputs rewrite.",
+      "fix": "Make the debt-service-versus-buyback point once. capitalAllocation is the natural home; it can also carry the Base assumption that repurchases slow. End cashflowCommentary at the existing claims on the cash (dividend, buyback, the $4.0 billion authorization) and point to the management section in words.",
+      "status": "addressed",
+      "note": "Addressed. cashflowCommentary ends at the existing claims on the cash and hands the acquisition-debt question to the management section. capitalAllocation alone argues that debt service competes with the buyback and carries the Base assumption that repurchases slow."
+    },
+    {
+      "id": "F-20",
+      "severity": "Minor",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "the step from FY25 GAAP diluted EPS of $5.77 to FY26E EPS of $8.13 suggests the estimates are not on the GAAP basis",
+      "issue": "The surface does not support this inference. Six-month 2026 GAAP diluted EPS was $4.18, against $2.86 a year earlier. The trailing 22.0x P/E on $155.47 also puts trailing GAAP earnings well above FY25's $5.77. A large step to $8.13 is therefore consistent with GAAP earnings too, and the step does not indicate the basis. The conclusion (compare forward multiples only with each other) is sound; the stated reason is not.",
+      "fix": "Drop the 'suggests' inference. Say the pack does not state the consensus basis, and that GAAP earnings this year include the unexplained other income, so the trailing and forward multiples are compared only within their own basis.",
+      "status": "addressed",
+      "note": "Addressed. The 'suggests' inference is gone. multiplesCommentary says the pack does not state whether consensus EPS is GAAP or adjusted, and compares trailing and forward multiples only within their own basis."
+    },
+    {
+      "id": "F-21",
+      "severity": "Minor",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "Below operating income, other income, net was $485 million in the six months against $24 million a year earlier",
+      "issue": "The paragraph explains the second quarter's GAAP-versus-adjusted EPS gap (diluted EPS of $1.69 up 14%) with a six-month figure. Most of the $485 million fell in the first quarter. For the second quarter itself, other income, net was $74 million against $5 million. The period is labelled correctly, but the figure does not match the quarter it is used to explain.",
+      "fix": "Use the quarter's figures ($74 million vs $5 million) next to the quarter's EPS. Alternatively, keep the six-month figures and pair them with six-month GAAP diluted EPS ($4.18 vs $2.86).",
+      "status": "addressed",
+      "note": "Addressed. incomeCommentary now gives the quarter's other income ($74 million, far above the year-earlier figure) next to the quarter's EPS, and labels the six-month $485 million vs $24 million separately."
+    },
+    {
+      "id": "F-22",
+      "severity": "Minor",
+      "field": "sections.businessMoat.segments[0].body",
+      "quote": "Exchanges produced net revenues of $1,464 million at a 74% operating margin (75% adjusted)",
+      "issue": "No figure in the segment body carries its period, so a reader can take $1,464 million, $645 million and $557 million as annual figures next to the FY25 $12.6B. All are second-quarter 2026. Separately, '$531 million was recurring revenue growing at the same rate' is ambiguous. It means the 10% of Exchanges recurring revenue in the previous clause, but it reads as the segment's own rate.",
+      "fix": "Open the body's figures with 'In the second quarter of 2026'. Replace 'growing at the same rate' with 'also up 10%'.",
+      "status": "addressed",
+      "note": "Addressed. The segment body opens with 'In the second quarter of 2026', and the Fixed Income and Data Services clause now reads 'matching Exchanges' recurring growth rate'."
+    },
+    {
+      "id": "F-23",
+      "severity": "Minor",
+      "field": "sections.businessMoat.durability",
+      "quote": "the MD&A lists both among its risk factors",
+      "issue": "The MD&A excerpt lists competition and the pace of technology among the factors in its forward-looking-statements caution. The Risk factors section of the pack is '(not captured)'. Calling the list the MD&A's 'risk factors' mildly over-attributes the source.",
+      "fix": "Write 'the MD&A lists both among the factors that may affect its performance', or similar wording that names the forward-looking-statements list.",
+      "status": "addressed",
+      "note": "Addressed. durability now says the MD&A lists both 'among the factors that may affect its performance'."
+    },
+    {
+      "id": "F-24",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "The Base takes 55% because its inputs are the ones the quarter delivered.",
+      "issue": "The Base's main input is consensus FY27E EPS of $8.80, about one year of consensus growth above FY26E's $8.13. The quarter delivered 5% adjusted EPS growth. The revenue-mix inputs (recurring revenue carries growth, transaction revenue roughly flat) match the quarter, but the EPS input is a forecast, not a delivered figure. As written, the reason for the 55% overstates how much the quarter confirms the Base.",
+      "fix": "Argue the 55% on what the Base actually assumes: the quarter's revenue mix supports it, and it still depends on consensus EPS growth running ahead of the quarter's 5%. Say in words why that is likelier than either tail.",
+      "status": "addressed",
+      "note": "Addressed. The 55% is argued on what the Base assumes. The quarter's revenue mix matches it, and it still needs consensus EPS to grow faster than the quarter's 5% adjusted growth. The falling share count and recurring growth are given as reasons that gap can partly close."
+    },
+    {
+      "id": "F-25",
+      "severity": "Minor",
+      "field": "sections.finalRecommendation.body[2]",
+      "quote": "we would raise the Base if the permanent deal financing leaves room for buybacks while transaction revenue grows again",
+      "issue": "'Grows again' implies transaction revenue is not growing. The report itself gives net transaction revenues of $1,313 million, up 2% in the quarter. Part of the trigger is therefore one the current data already meets.",
+      "fix": "Make the trigger something the data does not yet show, for example transaction revenue growth that keeps pace with recurring revenue, described in words.",
+      "status": "addressed",
+      "note": "Addressed. The trigger now reads 'transaction revenue grows as fast as recurring revenue', which the second quarter (2% vs 8%) does not yet meet."
     }
   ]
 }

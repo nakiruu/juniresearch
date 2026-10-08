@@ -4,7 +4,7 @@
     "company": "Intuit Inc.",
     "ticker": "INTU",
     "exchange": "NASDAQGS",
-    "subtitle": "Double-digit growth and an 11.8x NTM multiple, with the shares near their 52-week low",
+    "subtitle": "FY26 revenue, margins and cash flow all rose while the shares fell toward their 52-week low; HOLD on a close call",
     "reportDate": "October 1, 2026",
     "asOf": "Oct 1, 2026",
     "analyst": "Juniper Finance Research Desk",
@@ -149,20 +149,20 @@
     ]
   },
   "rating": {
-    "label": "BUY",
-    "tone": "bull",
+    "label": "HOLD",
+    "tone": "secondary",
     "targetLow": 290,
-    "targetHigh": 360,
+    "targetHigh": 350,
     "conviction": {
-      "expectedUpside": 0.13515807341396147,
-      "bearDownside": 0.23615531508593246,
-      "rewardRisk": 0.5723270440251578,
-      "derivedLabel": "BUY"
+      "expectedUpside": 0.11270245420468217,
+      "bearDownside": 0.243227951057359,
+      "rewardRisk": 0.46336144227973297,
+      "derivedLabel": "HOLD"
     },
     "gate": {
       "sector": "industrial",
       "ceiling": "STRONG BUY",
-      "gatedLabel": "BUY",
+      "gatedLabel": "HOLD",
       "distress": "SAFE",
       "piotroski": 7,
       "accruals": "LOW",
@@ -170,13 +170,15 @@
       "flags": []
     },
     "decision": {
-      "conviction": 75,
+      "conviction": 85,
       "tier": "high",
-      "proposed": "BUY",
+      "proposed": "HOLD",
       "reasons": [
-        "E/R proposed BUY"
+        "E/R proposed HOLD"
       ],
-      "advisories": [],
+      "advisories": [
+        "model vs Street expected return diverge by 221pp — informational, not scored"
+      ],
       "moat": {
         "width": "WIDE",
         "trend": "WIDENING",
@@ -184,9 +186,9 @@
         "bearFloor": 0.15
       },
       "intrinsic": {
-        "marginOfSafety": 3.4090447237383836,
-        "impliedGrowth": -0.0017621315030442175,
-        "achievableGrowth": 0.2
+        "marginOfSafety": 2.6123665364533144,
+        "impliedGrowth": -0.13924072635594026,
+        "achievableGrowth": 0.15
       },
       "composite": {
         "percentile": 68.55486793818432,
@@ -236,8 +238,8 @@
     },
     {
       "label": "EV/EBITDA (TTM)",
-      "unit": "mult",
-      "value": 11.212
+      "value": 11.212,
+      "unit": "mult"
     },
     {
       "label": "Analyst Consensus",
@@ -294,7 +296,7 @@
     },
     {
       "label": "FY26 Free Cash Flow",
-      "value": 8663000000,
+      "value": 8617000000,
       "unit": "usdLarge"
     },
     {
@@ -323,20 +325,19 @@
     "medianTarget": 400,
     "highTarget": 732,
     "lowTarget": 290,
-    "commentary": "Intuit's reported numbers and its share price tell opposite stories. FY26 delivered steady growth, a wider operating margin and a step-up in cash generation. Yet at $282.78 on October 1, 2026 the stock sits far below its 52-week high of $689.17 and close to the low of $252.84.\n\nThe filing does not explain the decline, and we have no news coverage in our data that does. That is the central uncertainty in this report: the market may be pricing a threat the reported numbers do not yet show. The 10-K's own risk factors describe the most likely candidates, which we weigh under Risks.\n\nOur view is that the current price already discounts a great deal of that threat, given the forward multiple and the cash the business returns (see Valuation and Management).\n\nWe rate INTU BUY with a $290–$360 target range."
+    "commentary": "Intuit's reported numbers and its share price tell opposite stories. FY26 brought double-digit revenue growth, a wider operating margin and a step-up in cash generation. Yet at $282.78 on October 1, 2026 the stock sat far below its 52-week high of $689.17 and close to the low of $252.84.\n\nThe filing does not explain the decline, and no news coverage in our data does. That is the central uncertainty in this report. The 10-K's risk factors describe candidates, which we weigh under Risks.\n\nWe rate INTU HOLD with a $290–$350 target range."
   },
   "sections": {
     "executiveSummary": {
-      "companyOverview": "Intuit Inc. provides financial management, tax, payments and capital, and marketing products and services, mainly in the United States. Its brands include QuickBooks and Mailchimp for small and mid-market businesses, and TurboTax, Credit Karma and its professional tax software for consumers and tax preparers.\n\nEffective August 1, 2025, the company combined its Consumer, Credit Karma and ProTax businesses into a single Consumer segment, alongside Global Business Solutions. Effective August 1, 2026 it began managing Mailchimp as a separate operating segment, and Mailchimp will be a separate reportable segment beginning in fiscal 2027. The company is headquartered in Mountain View, California.",
+      "companyOverview": "Intuit Inc. provides financial management, payments and capital, compliance, and marketing products and services in the United States. Its offerings include QuickBooks and Mailchimp for small and mid-market businesses, TurboTax and Credit Karma for consumers, and the Lacerte, ProSeries, ProFile and ProConnect Tax Online professional tax products.\n\nEffective August 1, 2025, the company combined its Consumer, Credit Karma and ProTax businesses into a single Consumer segment, which sits alongside Global Business Solutions. Mailchimp will be a separate reportable segment beginning in fiscal 2027. The company is headquartered in Mountain View, California.",
       "thesis": {
-        "label": "BUY",
-        "body": "We rate BUY on a simple path: the business keeps generating cash and delivering consensus earnings, and the market holds today's multiple, which carries the shares to our Base case. The scenario weighting and its asymmetry are set out in Valuation. If the feared erosion shows up in results or estimates, the bear case becomes the base case."
+        "label": "HOLD",
+        "body": "Our Base case needs only consensus earnings at today's forward multiple, and it points to a gain. We give a further fall the same weight as a recovery to the Street's targets, and with that split the reward/risk falls just short of our BUY bar, which makes this a close call."
       },
       "catalysts": [
-        "Delivery against consensus FY27 revenue and earnings.",
+        "Delivery against consensus FY27 revenue and earnings through the next tax season.",
         "Completion of the 2026 reorganization.",
-        "The first separate Mailchimp segment disclosure in fiscal 2027.",
-        "Any repurchases at the current share price."
+        "The first separate Mailchimp segment disclosure in fiscal 2027."
       ],
       "risks": [
         "Government-provided tax software competing with TurboTax.",
@@ -447,7 +448,7 @@
         ],
         "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended July 31 (FY26 ended July 31, 2026)."
       },
-      "incomeCommentary": "FY26 revenue was $21.4B, up {+13.9%+} from $18.8B in FY25, the fourth straight year of double-digit growth. Operating income rose to $5.9B and operating margin widened to 27.4% from 26.1%. Diluted EPS was $16.46, up from $13.67.\n\nThe counter-case is in the same series: growth slowed from 15.6% in FY25 to 13.9% in FY26, and Q4'26 revenue grew 12.1%, below the full-year rate. Consensus expects a further slowdown in FY27 (see Growth). Margins are doing more of the work as top-line growth eases.\n\nThe FY26 results absorb a $293 million restructuring charge under the 2026 Plan, which management estimates will total approximately $315 million.\n\nQuarterly results are highly seasonal because tax revenue concentrates from November through April. The Q4'26 operating margin of 10.9% therefore cannot be compared with the full-year margin.",
+      "incomeCommentary": "FY26 revenue was $21.4B, up {+13.9%+} from $18.8B in FY25, the fourth year of double-digit growth the table shows. Operating income rose to $5.9B, up 20% per the MD&A, and operating margin widened to 27.4% from 26.1%. Diluted EPS was $16.46, up from $13.67.\n\nGrowth slowed from 15.6% in FY25 to 13.9% in FY26, and Q4'26 revenue grew 12.1% year over year. Consensus expects a further slowdown in FY27 (see Growth). Operating income still grew faster than revenue in FY26, but the margin's FY26 gain was smaller than its FY25 rise from 22.3%.\n\nFY26 results absorb a $293 million restructuring charge under the 2026 Plan, primarily for severance and employee benefits, out of total costs the company estimates at approximately $315 million.\n\nSales of the tax products are typically concentrated from November through April, so the Q4'26 operating margin of 10.9% is not comparable with the full-year figure, and the pack carries no Q4'25 margin to set it against.",
       "balance": {
         "columns": [
           "Metric ($B)",
@@ -516,7 +517,7 @@
         ],
         "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended July 31 (FY26 ended July 31, 2026)."
       },
-      "balanceCommentary": "Cash and short-term investments rose to $4.7B at FY26 year-end from $2.9B. Total debt rose to $7.7B from $6.0B, leaving net debt roughly flat at $3.0B. The current ratio improved to 1.51 from 1.36.\n\nTotal equity fell to $19.0B from $19.7B in a year when buybacks and dividends together exceeded net income of $4.6B. Net debt is small relative to the year's cash generation, so the balance sheet does not constrain the company.",
+      "balanceCommentary": "Cash and short-term investments rose to $4.7B at FY26 year-end from $2.9B. Total debt rose to $7.7B from $6.0B, so net debt was roughly flat at $3.0B against $3.1B. The current ratio improved to 1.51 from 1.36.\n\nTotal equity fell to $19.0B from $19.7B in a year when buybacks and dividends together exceeded net income of $4.6B. Net debt is small against the year's free cash flow, so leverage leaves room for the capital-return policy.",
       "cashflow": {
         "columns": [
           "Metric ($B)",
@@ -541,11 +542,11 @@
           {
             "label": "Capital Expenditure",
             "values": [
-              -157000000,
-              -210000000,
-              -191000000,
-              -84000000,
-              -175000000
+              -229000000,
+              -260000000,
+              -250000000,
+              -124000000,
+              -221000000
             ],
             "format": "usdB"
           },
@@ -574,29 +575,29 @@
           {
             "label": "Free Cash Flow",
             "values": [
-              3732000000,
-              4836000000,
-              4693000000,
-              6123000000,
-              8663000000
+              3660000000,
+              4786000000,
+              4634000000,
+              6083000000,
+              8617000000
             ],
             "format": "usdB"
           },
           {
             "label": "FCF Margin",
             "values": [
-              0.29325789721829326,
-              0.3365812917594655,
-              0.2881793061099171,
-              0.32515532897881155,
-              0.4039071242073853
+              0.2876001885902876,
+              0.33310133630289535,
+              0.28455634019035925,
+              0.3230311720036111,
+              0.40176240208877284
             ],
             "format": "pct"
           }
         ],
         "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended July 31 (FY26 ended July 31, 2026)."
       },
-      "cashflowCommentary": "Operating cash flow rose to $8.8B from $6.2B, which management reports as up 42%. Capital expenditure was small at -$175M, so free cash flow reached $8.7B, a 40.4% FCF margin against 32.5% in FY25.\n\nThe jump in cash flow outpaced the rise in net income, so part of it may reflect working-capital timing; we would not extrapolate the full FY26 margin. Even at the FY25 margin, the business generates cash well beyond its dividend and capital spending."
+      "cashflowCommentary": "Operating cash flow rose to $8.8B from $6.2B, up 42% per the MD&A. Capital expenditure was small, so free cash flow reached $8.6B, a 40.2% FCF margin against 32.3% in FY25. On the October 1 price that is an 11.4% trailing FCF yield.\n\nWe would not extrapolate the FY26 margin. It sits well above the 28.5% to 33.3% range of FY22–FY25. Operating cash flow also grew far faster than net income, which the MD&A reports up 18%, and the MD&A excerpt does not explain the gap. Even within the earlier range, free cash flow in each of those years was well above dividends paid."
     },
     "valuation": {
       "multiples": {
@@ -636,28 +637,28 @@
         ],
         "note": "Peer multiples pending a peer data source."
       },
-      "multiplesCommentary": "At $282.78 INTU trades at 17.2x trailing earnings, 11.8x NTM earnings, 10.4x FY28E EPS and 3.5x trailing sales, with a 2.00% dividend yield.\n\nThe Street remains positive but split: 34 analysts, 20 Buy, 12 Hold and 2 Sell. The consensus target is $405.60, implying +43.4%, with a median of $400.00 inside a wide range of $290.00–$732.00. The width of that range shows how far apart views on the disruption risk are.\n\nWe have no peer multiples to benchmark against, so we judge the forward multiple against growth instead: it is low for a business with the growth record described in Financials.",
+      "multiplesCommentary": "At $282.78 INTU trades at 17.2x trailing earnings, 11.8x NTM earnings, 10.4x FY28E EPS and 3.5x sales, with a 2.00% dividend yield. The NTM multiple lines up with FY27E consensus EPS of $23.94, so we treat it as today's current-year multiple and the like-for-like reference for our scenarios.\n\nThe gap between the trailing and forward multiples needs care. Consensus FY27E EPS sits far above FY26 diluted EPS of $16.46, while consensus revenue growth is about 9%. The sources do not say whether consensus EPS is on the same basis as reported diluted EPS. If it is an adjusted figure, part of the step from the trailing to the forward multiple is a change of basis rather than growth, and the stock is less cheap than the forward multiple suggests.\n\nThe Street is positive but split: 34 analysts, 20 Buy, 12 Hold and 2 Sell. The consensus target is $405.60, implying +43.4%, with a median of $400.00 and a range of $290.00–$732.00, so every target sits above the October 1 price. We have no peer multiples and no history of the stock's own multiple to benchmark against.",
       "scenarios": [
         {
           "name": "Bull",
-          "driver": "Consensus EPS of $23.94 for FY27E is met, the fear behind the decline fades, and the shares recover to a little above the consensus target of $405.60.",
-          "impliedPrice": 410,
-          "probability": 0.3
+          "driver": "FY27 tracks consensus EPS of $23.94, the fear behind the decline fades, and the shares reach the Street's consensus target of $405.60.",
+          "impliedPrice": 405.6,
+          "probability": 0.25
         },
         {
           "name": "Base",
-          "driver": "The market keeps today's 11.8x NTM multiple and, a year from now, applies it to FY28E EPS of $27.08. The shares rise with earnings, with no re-rating.",
-          "impliedPrice": 320,
-          "probability": 0.45
+          "driver": "Consensus delivers and the market holds today's 11.8x current-year multiple: a year from now it applies 11.8x to FY28E consensus EPS of $27.08. The shares rise with one year of earnings growth, with no re-rating.",
+          "impliedPrice": 319.5,
+          "probability": 0.5
         },
         {
           "name": "Bear",
-          "driver": "The feared erosion shows up: government or AI-enabled tax offerings take customers or pricing, estimates fall, and the shares break below both the 52-week low of $252.84 and the bottom of the Street target range.",
-          "impliedPrice": 216,
+          "driver": "The feared erosion shows up: government or AI-enabled offerings take customers or pricing, FY27 earnings stall near FY26 diluted EPS of $16.46, and the shares fall to 13x that EPS, our assumed discount to today's 17.2x trailing multiple for a business whose growth has stopped. That is below the 52-week low of $252.84.",
+          "impliedPrice": 214,
           "probability": 0.25
         }
       ],
-      "scenarioCommentary": "Base carries the most weight because it needs only consensus delivery at an unchanged multiple. Bull gets more weight than Bear because the cash the business generates supports the shares even if sentiment stays poor. Bear still carries a quarter of the weight because the cause of the decline is unknown and the risk factors describe credible ways the earnings base could erode.\n\nThe result is a weighted fair value of $321, an expected upside of +13.5% and a bear-case downside of -23.6%. The downside exceeds the expected upside, but the reward/risk still clears our BUY threshold.\n\nOur $290–$360 target range brackets Base."
+      "scenarioCommentary": "Base carries half the weight because it needs only consensus delivery at an unchanged multiple. A Base that held only today's price would leave the call at HOLD with much less expected upside, and a higher Base multiple would push it toward BUY. Two things argue for a lower multiple: consensus revenue growth slows in FY27, and if consensus EPS is an adjusted figure, the forward multiple is less cheap than it looks (see above). Against that, the free cash flow and FY26 capital return described in Financials and Management give the shares support at today's FCF yield. We find these balanced and hold the multiple.\n\nBull and Bear carry 25% each, and that split is where the call is closest. For Bull: the Street's targets, set out above, all imply a recovery. For Bear: whatever drove the decline has not shown up in any reported figure, so it may still reach FY27 results, and the risk factors name credible candidates in government and AI-enabled tax offerings. We cannot tell which reading is right and judge the two of similar strength.\n\nThe result is a weighted fair value of $315, an expected upside of +11.3% and a bear-case downside of {-24.3%-}, a reward/risk of 0.46x. That clears the expected-upside bar for BUY but not the 0.50x reward/risk bar, so HOLD derives. A small shift of weight from Bear to Bull would derive BUY; we do not make it because nothing on the page makes the recovery more likely than the fall.\n\nOur $290–$350 target range brackets Base."
     },
     "businessMoat": {
       "segments": [
@@ -665,7 +666,7 @@
           "name": "Consolidated",
           "sharePct": 1,
           "revenue": 21448000000,
-          "body": "Our sources disagree on segments. The vendor data carries one consolidated segment, and the company tearsheet describes an older four-segment structure. We use the FY26 10-K MD&A, which reports two segments: Global Business Solutions revenue of $12.9B, up 16%, and Consumer revenue of $8.6B, up 11%. Service offerings were $18.9 billion, or 88% of total revenue, and management expects that share to grow over the long term."
+          "body": "Our sources disagree on segments. The vendor data carries one consolidated segment, and the company tearsheet describes an older four-segment structure. We use the FY26 10-K MD&A, which gives Global Business Solutions revenue of $12.9B, up 16%, and Consumer revenue of $8.6B, up 11%. Total service revenue was $18.9 billion, or 88% of total revenue, and management expects that share to grow over the long term."
         }
       ],
       "segmentsBasis": "FY26 (single reportable segment) mix",
@@ -676,46 +677,46 @@
         {
           "name": "Recurring customer relationships",
           "strength": "Moderate-strong",
-          "body": "The 10-K says the tax businesses depend significantly on customers who return each year, and QuickBooks sits inside small businesses' daily accounting, payroll and payments. That recurrence underpins steady revenue. The same risk factor warns that retaining customers gets harder if they do not see continuing value."
+          "body": "The 10-K says the consumer and professional tax businesses depend significantly on revenue from customers who return each year, including free users whose tax scenarios evolve to require paid services. QuickBooks covers small and mid-market businesses' accounting, payroll, payments and bill pay, which we expect makes it costly to replace. The same risk factor warns that continued use becomes harder if customers do not see continuing value."
         },
         {
           "name": "Platform breadth and data",
           "strength": "Moderate",
-          "body": "Intuit spans tax, accounting, payroll, payments, credit and marketing, and it uses consented customer data across the platform to build new offerings. Breadth raises switching costs. It also widens the surface for security, privacy and regulatory risk."
+          "body": "Intuit spans tax, accounting, payroll, payments, credit and marketing, and when customers consent it uses their data across the platform to build new offerings. Breadth raises switching costs. It also widens the surface for the security, privacy and regulatory risks the MD&A describes."
         },
         {
           "name": "Funding capacity",
           "strength": "Moderate",
-          "body": "The cash flow described in Financials lets Intuit fund AI development, product and marketing every year from operations. A startup competitor cannot match that budget. A large platform can, so this advantage protects against small entrants more than against large ones."
+          "body": "The cash flow described in Financials lets Intuit fund significant product development, marketing and AI investment from operations, a budget we think a startup would struggle to match. The risk factors note that some competitors may have greater technical, marketing and other resources, so this advantage protects more against small entrants than against large platforms."
         }
       ],
-      "durability": "We rate the moat NARROW. The page's quantitative screen reads it as wide, and today's margins and cash generation are consistent with that. We mark it narrower because the threats in Risks attack its two main supports: free and government tax offerings go at recurring tax customers, and AI-enabled rivals go at the value of platform breadth. The moat holds if Intuit's own AI investment keeps pace with new entrants."
+      "durability": "We rate the moat NARROW. The page's quantitative screen reads it as wide; we mark it narrower because the threats in Risks go at its two main supports. Free and government tax offerings go at recurring tax customers, and AI-enabled rivals go at the value of platform breadth. The moat holds as long as those threats stay in the risk factors rather than showing up in the results."
     },
     "growth": {
       "points": [
-        "Consensus expects FY27E revenue of $23.4B, up about 9%, and FY28E revenue of $25.6B. That is a slower path than FY26, so it leaves room for upside if growth holds near recent rates, and less room for error if it slows further.",
-        "The first separate Mailchimp disclosure, beginning in fiscal 2027, is worth watching: it will show whether that business is growing or diluting the rest of Global Business Solutions, which today we cannot see.",
-        "AI is the swing factor. The company is devoting significant resources to it but warns there is no assurance its AI innovations will be adopted or monetizable. In our view the test is simple: whether tax customers keep returning each season."
+        "Consensus expects FY27E revenue of $23.4B, up about 9%, and FY28E revenue of $25.6B. That path is slower than FY26, which leaves upside if growth holds nearer recent rates and less room for error if it slows further.",
+        "The first separate Mailchimp disclosure will show whether that business is growing or diluting the rest of Global Business Solutions, which today we cannot see.",
+        "AI is the swing factor. The company is devoting significant resources to AI but warns there is no assurance its AI innovations will be successful, adopted or monetizable. The evidence should show first in whether customers keep returning each tax season."
       ]
     },
     "management": {
-      "leadership": "The captured proxy excerpt covers board independence and related-person policy but does not name the executive officers, so we do not comment on individual executives. The main management decision visible in the filing is the 2026 Plan, approved in May 2026, which the MD&A describes as simplifying the organizational structure to become a faster, leaner, more focused company. We discuss its execution risk under Risks.",
-      "capitalAllocation": "Intuit returned heavily to shareholders in FY26: share repurchases of -$5.4B, up from -$2.8B, and dividends of -$1.3B. Together they stayed within free cash flow.\n\nThe price paid for the FY26 repurchases, and their timing relative to the share-price decline, are not in our data. Any buyback at today's price would retire more shares per dollar, which is a reason to prefer repurchases over acquisitions while the shares stay depressed. The rise in total debt is covered in Financials.",
-      "governance": "Per the proxy statement dated November 2025, the Board determined eleven directors and nominees independent under Nasdaq rules: Ms. Burton, Mr. Dalzell, Ms. Liu, Ms. Mawakana, Ms. Nora Johnson, Mr. Norrod, Mr. Prabhu, Mr. Roslansky, Mr. Szkutak, Mr. Vazquez and Mr. Yuan. Independent directors meet in closed session at each regularly scheduled meeting, and the Audit and Risk Committee pre-approves related-person transactions annually under a written policy. For a holder this means independent-majority oversight and a formal check on related-party dealings. The proxy also says the Board believes a balanced mix of board tenure is effective, which keeps long-serving directors whose independence from management needs watching. The excerpt carries no executive pay, insider ownership or related-person transaction amounts, so we cannot assess those. These facts predate the FY26 10-K and may have changed."
+      "leadership": "The captured proxy excerpt covers board independence and related-person policy but does not name the executive officers, so we do not comment on individual executives. The main management decision in the filing is the 2026 Plan, approved in May 2026, which the MD&A describes as simplifying the organizational structure to become a faster, leaner, more focused company. It reduces the full-time workforce and closes certain sites in service to growing technology teams and capabilities in strategic locations, and management expects it to be substantially complete by the first quarter of fiscal 2027. Its execution risk is under Risks.",
+      "capitalAllocation": "Intuit's FY26 capital return was large: share repurchases of -$5.4B, up from -$2.8B, and dividends of -$1.3B. Together they stayed within free cash flow.\n\nThe prices paid for the FY26 repurchases are not in our data, so we cannot judge their timing. Repurchases at today's price retire more shares per dollar than at prices nearer the 52-week high; whether they create value turns on the same close call set out in Valuation.",
+      "governance": "Per the proxy statement dated November 2025, which predates the FY26 10-K, the Board determined these directors and nominees independent under Nasdaq rules: Ms. Burton, Mr. Dalzell, Ms. Liu, Ms. Mawakana, Ms. Nora Johnson, Mr. Norrod, Mr. Prabhu, Mr. Roslansky, Mr. Szkutak, Mr. Vazquez and Mr. Yuan. Independent directors meet in closed session without management at each regularly scheduled meeting, and the Audit and Risk Committee reviews related-person transactions under a written policy, generally pre-approving annual spending or revenue levels. For a holder, that means a formal independence test and a standing check on related-party dealings. The Board also says longer-tenured directors bring a deeper understanding of the company; the excerpt gives no tenures, so we cannot judge how far long service weighs on independence. It carries no executive pay, insider ownership or related-person transaction amounts, so we cannot assess those, and these facts may have changed since."
     },
     "risks": {
       "idiosyncratic": [
-        "Government tax software: the 10-K warns that federal and state authorities could provide tax software at public expense. The IRS free direct filing system was suspended, but proponents continue to advocate for it, and the legacy IRS Free File Program could expand.",
-        "Free, low-cost and AI-enabled competition: the risk factors describe competitors ranging from startups to large platforms with established consumer user bases, and increasing free and low-cost competition in tax, accounting, payments and personal finance.",
-        "Fraud, security and privacy: Intuit holds customers' financial data in industries seeing increasingly sophisticated fraud, including AI-assisted fraud. A major incident would hit trust in the platform directly.",
-        "Reorganization execution: in our view, the workforce reductions and site closures under the 2026 Plan could disrupt product delivery or the retention of technical talent, which the MD&A says the growth strategy depends on."
+        "Government tax software: the 10-K warns that federal and state authorities could develop and provide tax software at public expense. The IRS free direct filing system was suspended, but proponents continue to advocate for such programs, and adoption of the legacy IRS Free File Program could expand. The company says government-funded services could potentially have material and adverse revenue implications.",
+        "Free, low-cost and AI-enabled competition: the risk factors describe competitors ranging from startups to large established entities, some with greater resources or large established consumer user bases, and increased competition from free and low-cost offerings in tax, accounting, payments and personal finance. The company warns these factors may diminish its revenue and profitability.",
+        "Fraud, security and privacy: Intuit hosts customers' personal and financial data in industries the MD&A says are seeing increasingly sophisticated fraud, including through AI. A major incident would damage trust in the platform directly.",
+        "Reorganization execution: in our view, the workforce reductions and site closures under the 2026 Plan could disrupt product delivery or the retention of skilled technical and leadership staff, whom the MD&A calls critical to executing the growth strategy."
       ],
-      "systemic": "Intuit operates in a rapidly evolving regulatory environment with heightened scrutiny across tax, financial services, privacy and AI. Its small and mid-market business customers are exposed to the economic cycle, which affects QuickBooks, payments and lending activity. Seasonality concentrates tax revenue in a few months each year, so a disrupted filing season would weigh heavily on a single year's results."
+      "systemic": "Intuit operates in a rapidly evolving regulatory environment and, per the MD&A, faces increasingly heightened scrutiny under a broad and expanding range of laws in the U.S. and abroad. The risk factors add that macroeconomic and geopolitical conditions may amplify its risks; we would expect its small and mid-market business customers to make QuickBooks, payments and financing activity sensitive to the economic cycle. Because the filing season carries the tax businesses' year, a disrupted season would weigh heavily on a single year's results."
     },
     "finalRecommendation": {
       "body": [
-        "BUY, target range $290–$360, on the case set out in the thesis and the scenario math in Valuation.",
-        "We would turn cautious if consensus estimates start to fall or if government or AI-enabled tax filing gains meaningful adoption. We would add conviction if FY27 results track the consensus path through the next tax season."
+        "HOLD, target range $290–$350, on the case set out in the thesis and the scenario math in Valuation.",
+        "We would move to BUY if FY27 results track consensus through the next tax season, which would justify more weight on Bull than on Bear; on the current scenarios, a price only slightly below the October 1 close would also derive BUY. We would lower the Base, moving the call toward SELL, if consensus estimates start to fall or government or AI-enabled tax filing gains meaningful adoption; on the current scenarios, SELL derives only if the shares rise into the upper part of our target range with no change in estimates."
       ]
     }
   },
