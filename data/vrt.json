@@ -4,7 +4,7 @@
     "company": "Vertiv Holdings Co",
     "ticker": "VRT",
     "exchange": "NYSE",
-    "subtitle": "Power and thermal infrastructure for the AI data-center build-out; a $15.0B backlog and net-cash balance sheet against a premium multiple.",
+    "subtitle": "Power and thermal infrastructure for AI data centers: a backlog that more than doubled and net cash, against a forward multiple that has to hold.",
     "reportDate": "September 22, 2026",
     "asOf": "Sep 22, 2026",
     "analyst": "Juniper Finance Research Desk",
@@ -149,20 +149,20 @@
     ]
   },
   "rating": {
-    "label": "BUY",
-    "tone": "bull",
-    "targetLow": 285,
-    "targetHigh": 360,
+    "label": "HOLD",
+    "tone": "secondary",
+    "targetLow": 275,
+    "targetHigh": 325,
     "conviction": {
-      "expectedUpside": 0.16524002997909348,
-      "bearDownside": 0.27024574967456905,
-      "rewardRisk": 0.6114435848781198,
-      "derivedLabel": "BUY"
+      "expectedUpside": 0.16030925801743545,
+      "bearDownside": 0.3373042483531221,
+      "rewardRisk": 0.4752660507542985,
+      "derivedLabel": "HOLD"
     },
     "gate": {
       "sector": "industrial",
       "ceiling": "STRONG BUY",
-      "gatedLabel": "BUY",
+      "gatedLabel": "HOLD",
       "distress": "SAFE",
       "piotroski": 5,
       "accruals": "LOW",
@@ -170,13 +170,15 @@
       "flags": []
     },
     "decision": {
-      "conviction": 82,
+      "conviction": 92,
       "tier": "high",
-      "proposed": "BUY",
+      "proposed": "HOLD",
       "reasons": [
-        "E/R proposed BUY"
+        "E/R proposed HOLD"
       ],
-      "advisories": [],
+      "advisories": [
+        "model vs Street expected return diverge by 76pp — informational, not scored"
+      ],
       "moat": {
         "width": "NARROW",
         "trend": "WIDENING",
@@ -184,9 +186,9 @@
         "bearFloor": 0.2
       },
       "intrinsic": {
-        "marginOfSafety": 0.7580926184512109,
-        "impliedGrowth": 0.12483454958412532,
-        "achievableGrowth": 0.2
+        "marginOfSafety": -0.48293073042069035,
+        "impliedGrowth": 0.32985159362261773,
+        "achievableGrowth": 0.15
       },
       "composite": {
         "percentile": 51.12406154931888,
@@ -293,25 +295,25 @@
       "dp": 2
     },
     {
-      "label": "Net Debt / EBITDA (TTM)",
-      "value": 0.05043328909360606,
-      "unit": "mult"
+      "label": "FY25 Free Cash Flow",
+      "value": 1887400000,
+      "unit": "usdLarge"
+    },
+    {
+      "label": "FY25 Capital Expenditure",
+      "value": -226400000,
+      "unit": "usdLarge"
+    },
+    {
+      "label": "FCF Yield (TTM)",
+      "value": 0.02995952309247187,
+      "unit": "pct",
+      "dp": 1
     },
     {
       "label": "Interest Coverage (TTM)",
       "value": 41.42095238095238,
       "unit": "mult"
-    },
-    {
-      "label": "FY25 Free Cash Flow",
-      "value": 1893800000,
-      "unit": "usdLarge"
-    },
-    {
-      "label": "FCF Yield (TTM)",
-      "value": 0.03001895032706022,
-      "unit": "pct",
-      "dp": 1
     }
   ],
   "analystSentiment": {
@@ -324,28 +326,27 @@
     "medianTarget": 345,
     "highTarget": 427,
     "lowTarget": 236,
-    "commentary": "The Street is uniformly positive. Across 28 analysts the split is 24 Buy, 4 Hold and 0 Sell, a consensus of Strong Buy. The consensus price target is $338.15, {+ +33.4% +} above the $253.51 quote, with a median of $345.00 and a range from $236.00 to $427.00. That range is wide for a single name, and the absence of any Sell rating leaves the tape positioned for continued execution. Where our own fair value lands relative to that consensus is set out in the valuation section."
+    "commentary": "The Street is positive but not unanimous. Of 28 analysts, 24 rate the shares Buy, 4 Hold and 0 Sell, a consensus of Strong Buy. The consensus price target is $338.15, {+ +33.4% +} above the $253.51 quote, with a median of $345.00 and a range of $236.00 to $427.00; every target except the lowest sits above the current price. The consensus target lands close to what today's forward multiple would give on the FY27E consensus EPS, so the Street is in effect assuming that the multiple holds for another year while earnings grow into it. That is the point where we differ. Our Base lets the multiple ease as growth slows, and our Bear prices a pause in data-center spending, so our fair value sits well below the consensus target (see valuation)."
   },
   "sections": {
     "executiveSummary": {
-      "companyOverview": "Vertiv Holdings Co designs, manufactures and services critical digital infrastructure — the power and thermal systems that keep data centers, communication networks and industrial facilities running. The portfolio spans AC and DC power management, switchgear and busbar, air- and liquid-cooled thermal management, integrated modular systems, racks and single-phase UPS, sold under the Vertiv, Liebert, NetSure, Geist and Avocent brands. The company is headquartered in Westerville, Ohio and does business in more than 130 countries, serving the Americas, Asia Pacific and Europe, the Middle East & Africa. FY25 revenue was $10.2B, {+ +27.7% +} year over year, with net income of $1.3B and diluted EPS of $3.41. The business has re-rated with the artificial-intelligence data-center build-out: management describes very robust demand for AI and high-performance compute, and is expanding global capacity to meet it.",
+      "companyOverview": "Vertiv Holdings Co designs, manufactures and services critical digital infrastructure: the power, thermal and rack systems that keep data centers, communication networks and commercial and industrial facilities running. The portfolio spans AC and DC power management, low/medium voltage switchgear and busbar, air cooled and liquid cooled thermal management, racks, single phase UPS, integrated modular solutions and energy storage, sold under brands including Vertiv, Liebert, NetSure, Geist and Avocent. Lifecycle services cover preventative maintenance, remote monitoring, fluid management and spare parts. The company is headquartered in Westerville, Ohio, does business in more than 130 countries and carries a market capitalization of about $97.6B. In its second-quarter 10-Q, management describes very robust growth in demand for data centers supporting artificial intelligence and high-performance compute, and says it is investing in global capacity to meet current and anticipated demand.",
       "thesis": {
-        "label": "BUY",
-        "body": "Vertiv sells the power and cooling that AI data centers cannot run without, and the demand is showing up in the order book: combined backlog reached approximately $15.0 billion at year-end 2025, up from approximately $7.2 billion a year earlier. Revenue is growing at a high-twenties rate, management has raised its 2026 guidance, and the balance sheet turned to a net-cash position in the second quarter. The counter-case is price: at 38.1x EV/EBITDA the shares already discount years of compounding, and a name valued this richly can de-rate quickly. We rate the shares BUY rather than STRONG BUY because the growth is real but the multiple leaves little room for a stumble."
+        "label": "HOLD",
+        "body": "Vertiv's order book and guidance point to another year of fast growth. Backlog more than doubled during 2025, management raised its 2026 guidance across all key metrics in July, margins are widening, and the company reached a net-cash position at the end of the second quarter. The question is price. The shares trade on a premium forward multiple, and the Street's targets need that multiple to hold a year out. Our Base lets it ease as growth slows, and our Bear prices a pause in data-center spending. On those scenarios the expected return is positive but small next to the Bear downside, so the derived label is HOLD. It is a close call, and the valuation section sets out what would tip it."
       },
       "catalysts": [
-        "Backlog conversion: a large order backlog entering 2026 gives near-term revenue firmer support than order flow alone.",
-        "Guidance raise: management lifted full-year 2026 guidance across metrics, to net sales of $13,800–$14,200 million and adjusted diluted EPS of $6.65–$6.75, {+ up 58–61% +} versus 2025.",
-        "Margin expansion: adjusted operating margin is still widening on productivity and favorable price-cost as the business scales.",
-        "Capacity and technology investment: Vertiv is expanding global manufacturing and its liquid-cooling and high-density portfolio to capture AI and high-performance-compute demand.",
-        "Bolt-on M&A: management is adding capability by acquisition — rack integration, fluid management and AI-software assets — rather than building all of it in-house."
+        "Third-quarter results: guidance calls for organic growth well above the second quarter's pace, and delivery would support the FY27E consensus (see growth).",
+        "Backlog conversion: most of the year-end 2025 backlog was expected to ship within about the next year and a half, which supports revenue into 2027.",
+        "Margin: third-quarter guidance implies a wider adjusted operating margin than the second quarter's.",
+        "Tariff refunds: Vertiv has begun filing IEEPA refund claims, though it says the amount, timing and likelihood of any recovery are uncertain."
       ],
       "risks": [
-        "AI-capex sensitivity: a substantial share of demand rests on customers' data-center and AI spending, and a shift in the level or focus of that spending could reduce orders.",
-        "Customer concentration: large cloud, hyperscale and colocation buyers hold purchasing leverage, can demand more favorable terms, and may impose penalties for missed deliveries.",
-        "Order lumpiness: long, unpredictable sales cycles and customers' right to defer or cancel firm backlog can make quarterly results vary.",
-        "Valuation: the premium multiple leaves little margin for error, and a growth scare could compress it sharply.",
-        "Trade and supply chain: tariffs, retaliatory measures and supply-chain congestion affect input costs and delivery timing."
+        "AI and data-center capex: demand rests on customers' spending, and a pause is our Bear case.",
+        "Large-customer terms: big cloud and colocation buyers can press on price, contract terms and delivery penalties.",
+        "Order timing: lumpy orders and deferrable backlog can move results from quarter to quarter.",
+        "Valuation: a premium multiple can compress well before estimates change.",
+        "Trade and geopolitics: tariffs, conflict and supply-chain congestion affect costs and delivery timing."
       ]
     },
     "financials": {
@@ -450,7 +451,7 @@
         ],
         "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
       },
-      "incomeCommentary": "Revenue has compounded from $5.0B in FY21 to $10.2B in FY25, with growth accelerating to {+ +27.7% +} in FY25. Profitability improved more sharply: gross margin widened from 30.5% in FY21 to 36.3% in FY25, and operating margin rose from 5.2% to 17.9% over the same span, lifting diluted EPS from $0.33 to $3.41 (FY22 was a $0.04 loss). The second quarter extended the trend — net sales of $3.3B grew {+ 24% +}, which management attributes to 18% organic growth, 5% from acquisitions and 1% from foreign currency. Gross profit was 37.7% of sales, up from 34.0% a year earlier, and GAAP operating profit of $638M rose {+ 44% +}. On an adjusted basis, operating margin reached 22.6% and adjusted diluted EPS grew {+ 60% +} to $1.52, against GAAP diluted EPS of $1.27, {+ up 53% +}. The gap between the two is worth watching, because both consensus and guidance are framed on the adjusted figures.",
+      "incomeCommentary": "Revenue grew from $5.0B in FY21 to $10.2B in FY25, and growth picked up to {+ +27.7% +} in FY25 from {+ +16.7% +} in FY24. Profitability rose faster: gross margin moved from 30.5% to 36.3% and operating margin from 5.2% to 17.9% over FY21–FY25, and diluted EPS went from $0.33 to $3.41, after a $0.04 loss per share in FY22. In the second quarter of 2026, net sales of $3,274.3 million rose {+ 24.1% +} year over year. The company splits that into 18% organic growth, 5% from acquisitions and 1% from currency, and says minor timing shifts from temporary supply chain congestion and multi-phased project execution held sales back. Gross margin was 37.7% against 34.0% a year earlier, which the MD&A attributes primarily to the mix of product and service sales, and GAAP operating margin was 19.5%. GAAP operating profit also absorbed higher amortization of intangibles, $73.7 million against $46.9 million a year earlier. Adjusted figures run higher. Adjusted operating margin was 22.6%, {+ up 410 basis points +}, which the company credits to operational execution, continued strong productivity and favorable price-cost, inclusive of tariff impacts and countermeasures. Adjusted diluted EPS was $1.52, {+ up 60% +}, against GAAP diluted EPS of $1.27, {+ up 53% +}. Trailing-twelve-month margins are 38.0% gross, 18.9% operating and 15.1% net.",
       "balance": {
         "columns": [
           "Metric ($B)",
@@ -519,7 +520,7 @@
         ],
         "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
       },
-      "balanceCommentary": "The balance sheet has strengthened as earnings scaled. Net debt fell from $2.5B in FY21 to $1.2B in FY25, and Vertiv reported a net-cash position at the end of the second quarter of 2026, with $5.6 billion of liquidity. Total equity rose from $1.4B to $3.9B across FY21–FY25. Trailing leverage is negligible at 0.1x net debt to EBITDA, interest coverage is 41.4x, and the current ratio is 1.38 — down modestly from 1.55 at year-end 2025 but comfortably above 1.0. The strong position gives management room to keep investing in capacity ahead of demand without straining the credit profile.",
+      "balanceCommentary": "Net debt fell from $2.5B in FY21 to $1.2B in FY25 while total debt held at $2.9B from FY23 onward, so the improvement came from cash and short-term investments, which reached $1.7B. Total equity rose from $1.4B to $3.9B over the same years. The company reported a net cash position at the end of the second quarter of 2026, with $5.6 billion of liquidity. The trailing-twelve-month row instead shows net debt at 0.1x EBITDA; the two may use different dates or definitions, and we take the company's quarter-end statement as the current position. Interest coverage is 41.4x. The current ratio is 1.38 on a trailing basis against 1.55 at the end of FY25, lower but backed by a net-cash position. Debt does not constrain the investment plan. The balance-sheet risk we see is the fixed cost of capacity built ahead of demand, which would weigh on margins if orders slowed.",
       "cashflow": {
         "columns": [
           "Metric ($B)",
@@ -544,11 +545,11 @@
           {
             "label": "Capital Expenditure",
             "values": [
-              -73400000,
-              -100000000,
-              -127900000,
-              -167000000,
-              -220000000
+              -84600000,
+              -111000000,
+              -134600000,
+              -184100000,
+              -226400000
             ],
             "format": "usdB"
           },
@@ -577,29 +578,29 @@
           {
             "label": "Free Cash Flow",
             "values": [
-              137500000,
-              -252800000,
-              772600000,
-              1152300000,
-              1893800000
+              126300000,
+              -263800000,
+              765900000,
+              1135200000,
+              1887400000
             ],
             "format": "usdB"
           },
           {
             "label": "FCF Margin",
             "values": [
-              0.027510453972509553,
-              -0.04441711323904068,
-              0.1125713952675137,
-              0.1438253575975436,
-              0.18512399925707973
+              0.025269602448930593,
+              -0.04634981990687868,
+              0.11159517426273459,
+              0.14169100576649443,
+              0.18449838219337433
             ],
             "format": "pct"
           }
         ],
         "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended December 31."
       },
-      "cashflowCommentary": "Cash generation has followed margins. Operating cash flow grew from $0.2B in FY21 to $2.1B in FY25, and free cash flow reached $1.9B in FY25, an 18.5% FCF margin, after a negative FY22. The second quarter was strong on this measure — operating cash flow of $1,100 million and adjusted free cash flow of $925 million — and management guides full-year 2026 adjusted free cash flow of $2,400–$2,600 million. Capital expenditure is rising, guided to about 4.0% of revenue, as Vertiv builds capacity for AI demand. Capital returns stay small: FY24 carried $0.6B of buybacks but FY25 had none, and the dividend yields 0.10%. The trailing FCF yield is 3.0%."
+      "cashflowCommentary": "Operating cash flow rose from $0.2B in FY21 to $2.1B in FY25, and free cash flow reached $1.9B in FY25, an 18.4% FCF margin, after a negative FY22. Capital spending is now stepping up: the MD&A says second-quarter capital investment was significantly higher than a year earlier, and the company expects full-year 2026 capital expenditure of approximately 4.0% of revenue, at the high end of its range. In the second quarter, operating cash flow was $1,100 million and adjusted free cash flow $925 million, {+ up 241% +} and {+ up 234% +} respectively. The company credits higher adjusted operating profit, working capital efficiency and lower cash interest, partially offset by higher cash taxes and capital expenditure; a quarter helped by working capital should not be annualized. Full-year 2026 adjusted free cash flow is guided at $2,400–$2,600 million. That is a non-GAAP measure, so it is not directly comparable with the FY25 free cash flow above. Shareholder returns are small: FY25 had no buybacks after $0.6B in FY24, and the dividend yields 0.10%. The trailing FCF yield of 3.0% shows how much of the share price rests on future growth rather than current cash."
     },
     "valuation": {
       "multiples": {
@@ -639,28 +640,28 @@
         ],
         "note": "Peer multiples pending a peer data source."
       },
-      "multiplesCommentary": "Vertiv trades at a premium to its own history: 57.4x trailing earnings, 8.5x sales and 38.1x EV/EBITDA. The forward multiple compresses as estimates rise — 37.6x on next-twelve-month earnings and about 27.8x on the FY27E consensus EPS of $9.12 — but only if the company delivers the growth embedded in those numbers. Peer multiples are pending a peer data source, so we anchor on the company's own series and on what the multiple implies: at that EV/EBITDA multiple the market is paying for sustained high-twenties revenue growth and continued margin expansion, which puts the burden of proof on execution rather than on a further re-rating.",
+      "multiplesCommentary": "On the vendor's figures, Vertiv trades at 57.4x trailing earnings, 8.5x sales and 38.1x trailing EV/EBITDA. The forward (NTM) P/E of 37.6x sits close to the price over the FY26E consensus EPS of $6.73, so we treat it as today's current-year multiple. The ~27.8x on FY27E consensus EPS of $9.12 is today's price over earnings two years out; it is not the comparison for a value set a year from now. Our scenarios value the shares a year out, so the like-for-like reference for their multiples is that current-year multiple. Consensus FY26E EPS sits inside the company's adjusted EPS guidance rather than its GAAP guidance (see growth), so the forward multiples are on an adjusted basis. Peer multiples are pending a peer data source, and the page carries no history of Vertiv's own multiple, so each scenario multiple is our assumption with its basis stated. The shares trade at $253.51, well below the 52-week high of $379.94 and above the low of $133.85, even though guidance was raised in July. No captured source explains the decline. It shows both that the market paid much more for this story within the past year and that it has been willing to pay much less.",
       "scenarios": [
         {
           "name": "Bull",
-          "driver": "AI and high-performance-compute demand stays robust, the roughly $15.0 billion backlog converts on schedule, FY27E EPS of $9.12 is met or exceeded, and a scarcity premium holds the multiple near today's level on a larger earnings base.",
-          "impliedPrice": 385,
-          "probability": 0.3
+          "driver": "Demand stays robust, the backlog converts on schedule, further guidance raises follow, and the FY27E consensus EPS is met or beaten. A year out the shares regain their 52-week high, a price the market paid within the past year; on FY27E consensus EPS that is a premium to today's current-year multiple, which a still-growing order book and a third-quarter acceleration could support.",
+          "impliedPrice": 380,
+          "probability": 0.25
         },
         {
           "name": "Base",
-          "driver": "Full-year 2026 organic growth lands in the guided 30–32% range with adjusted operating margin near 23–24%, the FY27E consensus is broadly achieved, and the forward multiple normalizes modestly as growth decelerates from its current pace.",
-          "impliedPrice": 305,
-          "probability": 0.42
+          "driver": "Vertiv lands its raised 2026 guidance and the FY27E consensus EPS is met, but a year out the shares trade at 33x those earnings, our assumption: a few turns below today's current-year multiple, because consensus EPS growth from FY26E to FY27E is slower than the 58–61% adjusted EPS growth guided for 2026. Holding today's multiple instead would put the Base close to the Street's consensus target.",
+          "impliedPrice": 301,
+          "probability": 0.55
         },
         {
           "name": "Bear",
-          "driver": "AI data-center capex digests or a large customer pauses orders; with the shares at 38.1x EV/EBITDA, even continued growth cannot prevent a sharp de-rating toward the lower end of the past year's range.",
-          "impliedPrice": 185,
-          "probability": 0.28
+          "driver": "AI data-center spending pauses or a large customer defers orders, so FY27 EPS stalls at the FY26E consensus instead of rising. The shares de-rate to 25x those earnings, our assumption for earnings that have paused rather than fallen, set well below today's current-year multiple. It is not a floor: the shares traded lower than this within the past year.",
+          "impliedPrice": 168,
+          "probability": 0.2
         }
       ],
-      "scenarioCommentary": "Weighting the three cases gives a fair value about {+ +16.5% +} above the current price, against a bear case {- -27.0% -} below it, for a reward/risk of 0.61x. That clears our bar for a BUY but not for a stronger call: the base case already assumes the company executes on a demanding plan, and the bear reflects how far a richly valued growth name can fall when sentiment turns — the shares ranged from $133.85 to $379.94 in the past year. Our weighted fair value sits below the Street's $338.15 consensus target; we agree on direction but pay less for the multiple. The target range of $285 to $360 brackets the base case."
+      "scenarioCommentary": "Weighting Bull, Base and Bear at 25%, 55% and 20% gives a fair value of $294.15, an expected upside of {+ +16.0% +} against a bear-case downside of {- -33.7% -}, a reward/risk of 0.48×. That clears the +10.0% bar for a BUY but not the 0.50× reward/risk bar, so the derived label is HOLD. The weights rest on the order book, not on the multiples. Base carries the most weight because the July guidance raise and a mostly firm backlog make delivery of the FY27E consensus the likeliest path. Bull's weight reflects a third-quarter guide that points to faster organic growth, held back because the case also needs the multiple to rise from today's level after a year in which it fell. Bear sits just below Bull. A full stall in FY27 earnings within a year would need customers to defer or cancel firm orders, which usually carries penalties; we do not weight it lower, because the risk factors name exactly that mechanism and the shares have already fallen well below their high without an explained cause. The call is close, and it is HOLD by a narrow margin. Moving five points of weight from Bear to Bull, a Bear multiple one turn higher, or a Base multiple one turn richer would each derive BUY. The deciding judgment is whether the multiple holds a year out. We think it eases as growth slows; a reader who expects it to hold would rate the shares BUY. The target range of $275 to $325 brackets the Base."
     },
     "businessMoat": {
       "segments": [
@@ -668,7 +669,7 @@
           "name": "Consolidated",
           "sharePct": 1,
           "revenue": 10229900000,
-          "body": "Vertiv reports as a single segment, so the figures elsewhere are consolidated. The business combines three linked offerings — power management (UPS, switchgear, busbar and DC systems), thermal management (air- and liquid-cooled) and integrated rack and modular solutions — wrapped in lifecycle services such as installation, maintenance, remote monitoring and spares. That systems-level breadth lets Vertiv sell power and cooling together as rack density rises, and the services layer builds a recurring relationship on an installed base that spans more than 130 countries. The recent margin gains came from the mix of product and service sales alongside price-cost discipline, rather than from any one product line."
+          "body": "Our data carries Vertiv as one consolidated line with no regional or product split. The 10-Q MD&A, however, refers to segment results by region (the Americas, Asia Pacific, and Europe, Middle East & Africa) and by offering; the captured excerpt ends before that section, so this report discusses the business on a consolidated basis. By offering, the portfolio combines power management, thermal management, racks and integrated modular systems with lifecycle services. In the second quarter, Product sales increased $487.5 million and Services & Spares sales increased $148.7 million year over year, so both grew and products drove most of the dollar gain. The value of the combination is that Vertiv can sell power and cooling together as rack density rises, and then service the installed equipment."
         }
       ],
       "segmentsBasis": "FY25 (single reportable segment) mix",
@@ -679,55 +680,53 @@
         {
           "name": "Installed base and services",
           "strength": "Moderate",
-          "body": "A large, global installed base of power and thermal equipment generates recurring maintenance, monitoring and spares revenue, and raises the cost of switching away from Vertiv for uptime-critical facilities."
+          "body": "Lifecycle services such as preventative maintenance, remote monitoring, fluid management and spare parts attach to equipment already in the field, and Services & Spares grew in the second quarter (see segments). Recurring service work on uptime-critical equipment likely raises the cost of switching suppliers, though the page shows neither services margins nor retention."
         },
         {
           "name": "Systems-level breadth",
           "strength": "Moderate",
-          "body": "Offering power, cooling and rack integration together lets Vertiv win larger, more complex deployments as AI raises rack density — a scope few single-product competitors can match."
+          "body": "The MD&A says customer requirements are moving toward higher-density environments, including hybrid air and liquid cooling and high voltage direct current power, and that customers increasingly prioritize speed of deployment and execution certainty. A supplier of power, thermal, racks and prefabricated modular systems fits that shift. The sources do not show how often customers buy the full system."
         },
         {
-          "name": "Mission-criticality and qualification",
+          "name": "Qualification cycles",
           "strength": "Moderate",
-          "body": "Data-center operators qualify infrastructure suppliers over long cycles and prize execution certainty, which favors incumbents with a track record and narrows the field of credible bidders."
+          "body": "The 10-K describes a lengthy contracting, design and qualification process for large deployments and new products. That favors suppliers that are already qualified, although the same risk factor says it makes orders less predictable."
         },
         {
-          "name": "Competitive pressure",
+          "name": "Customer power and competition",
           "strength": "Limiting",
-          "body": "Large, well-capitalized electrical and thermal specialists compete for the same demand, and major cloud and colocation buyers hold pricing leverage, which caps how wide the moat can be."
+          "body": "Large communication network, cloud/hyperscale, neocloud and colocation providers comprise a material portion of the customer base and often require more favorable terms. The company also lists competition in its industry among its risks. The page names no competitor and gives no market-share data, so we cannot measure Vertiv's position against rivals."
         }
       ],
-      "durability": "The moat is real but not wide. Its durability rests on the installed base and on being embedded in customers' deployment plans, reinforced by an order backlog that gives it more than a year of forward visibility. Working against it are two forces named in the company's own risk factors: large customers can demand more favorable terms and impose penalties, and demand itself depends on those customers continuing to spend on AI and data-center capacity. The AI build-out is a strong tailwind today, but it is a demand cycle Vertiv rides rather than controls, which is why we treat the moat as narrow rather than wide."
+      "durability": "We rate the moat narrow. Qualification cycles and an installed base that needs servicing give incumbents real protection, and the FY23–FY25 margin step-up (see financials) shows that Vertiv could price well in a tight market. Two forces cap it. Large customers hold bargaining power over terms and penalties, and demand rides a data-center spending cycle that Vertiv does not control. The data show no period of slower demand in which to test whether the margin gains hold, so we do not treat them as proof of a wide moat."
     },
     "growth": {
       "points": [
-        "Order backlog more than doubled year over year at the end of 2025, most of it expected to convert within 12 to 18 months, an unusual level of forward visibility for a hardware business.",
-        "Management guides full-year 2026 to net sales of about $14 billion, roughly {+ +37% +} over FY25, with organic growth of 30–32%, and third-quarter organic growth of 34–36%.",
-        "Adjusted operating margin is guided to 23.3–24.3% for 2026, a further step up on an adjusted basis after the second quarter's expansion.",
-        "Acquisitions — Great Lakes for rack enclosures, PurgeRite for fluid management and Waylay for AI software — deepen the liquid-cooling and high-density portfolio.",
-        "Adjusted operating profit is guided to $3,285–$3,365 million for full-year 2026, the dollar scale that the revenue growth and margin expansion combine to produce."
+        "Per the 2025 Form 10-K, Vertiv's estimated combined order backlog was approximately $15.0 billion at December 31, 2025, against approximately $7.2 billion a year earlier, and the majority was considered firm and expected to be delivered within 12 to 18 months. Acquisitions added to pipeline and backlog, and their contracts may let customers reduce firm orders or terminate. The figure dates from the end of 2025, and the captured 10-Q excerpt gives no update.",
+        "In July management raised full-year 2026 guidance to net sales of $13,800–$14,200 million, organic growth of 30–32% and adjusted diluted EPS of $6.65–$6.75, against GAAP diluted EPS guidance of $5.82–$5.92. Consensus for FY26E, ~$14B of revenue (+37%), sits at the midpoint of the sales range, and consensus EPS sits inside the adjusted range.",
+        "Third-quarter guidance calls for net sales of $3,650–$3,850 million and organic growth of 34–36%, well above the second quarter's organic pace. The company describes the second quarter's shortfall as minor timing shifts, so the third quarter will test that explanation.",
+        "Adjusted operating margin is guided at 23.3–24.3% for 2026 and 24.0–25.0% for the third quarter, with full-year adjusted operating profit of $3,285–$3,365 million. The company frames the gains as coming from execution, productivity and price-cost.",
+        "Consensus expects revenue to keep rising in FY27, to $18.2B, though at a slower rate than in FY26. The MD&A says Vertiv anticipates further investment in global capacity, and that it is investing in prefabricated, modular and factory-integrated solutions as customers prioritize speed of deployment."
       ]
     },
     "management": {
-      "leadership": "Giordano Albertazzi is Chief Executive Officer; Dave Cote serves as Executive Chairman, and the company separates the two roles. Craig Chamberlin became Chief Financial Officer on November 10, 2025, succeeding David Fallon, who remains a named executive officer for 2025. The named-executive group also includes the President of the Americas, the Chief Legal Officer and the Chief Product & Technology Officer. The proxy describes 2025 as a year of what it calls historic financial results and credits the leadership team with the operational execution behind the recent gains; the CFO transition is the main continuity item to watch.",
-      "capitalAllocation": "Capital allocation is reinvestment-first. Management's priority is funding organic capacity and bolt-on acquisitions that extend the liquid-cooling and software portfolio, ahead of returning cash to shareholders — buybacks have been sporadic and the dividend is token. Management frames the net-cash balance sheet as strategic optionality: dry powder to keep investing ahead of demand and to fund deals, rather than a signal of imminent large buybacks. The open question is whether that heavy reinvestment keeps earning the high incremental returns the recent margin trajectory implies.",
-      "governance": "Governance follows a fairly standard large-cap template. The proxy states that nine of its director nominees are each determined to be independent under SEC and NYSE rules, satisfying the NYSE majority-independence requirement, and the roles of Chairman and CEO are separated, with Mr. Cote as Executive Chairman acting as the liaison between management and the independent directors. Related-person transactions above a $120,000 threshold are reviewed by the disinterested members of the Audit Committee under a written policy, and the excerpt flags no unusual related-party dealings. One nuance is the Executive Chairman structure, which places an executive rather than an independent director at the head of the board alongside the CEO."
+      "leadership": "Per the proxy statement dated April 24, 2026, Giordano Albertazzi is Chief Executive Officer and Dave Cote serves as Executive Chairman; the company currently separates the two roles. Craig Chamberlin became Chief Financial Officer on November 10, 2025, and the proxy lists the former Chief Financial Officer, David Fallon, as a 2025 named executive officer as well. The other named executives are Anand Sanghi (President, Americas), Stephanie Gill (Chief Legal Officer) and Scott Armul (Chief Product & Technology Officer). The proxy credits Mr. Albertazzi's leadership with improvements in operational execution and with what it calls historic financial results in 2025, and the second-quarter results (see financials) are consistent with that record. The finance chief changed less than a year ago, which we treat as a modest continuity point rather than a concern.",
+      "capitalAllocation": "The record points to reinvestment first. FY25 had no buybacks (see cash flow) and the dividend is small, while capital spending is rising and the proxy names three 2025 acquisitions: Waylay (generative AI software for predictive analytics), Great Lakes (data rack enclosures and integrated infrastructure) and PurgeRite (fluid management services for liquid cooling). Acquisitions contributed to second-quarter sales growth (see financials). The company says its net-cash position provides significant strategic optionality, and the MD&A says it anticipates further investment in global capacity. That allocation suits a business with this order book. The cost is a larger fixed base, which would make a Bear-case slowdown more painful for margins.",
+      "governance": "Per the April 24, 2026 proxy, the Board has determined that nine director nominees are independent under SEC and NYSE rules; the excerpt does not give the total board size. The chairman and CEO roles are separate, but the chairman is an executive: Mr. Cote, as Executive Chairman, acts as the primary liaison between senior management and the independent directors, and the company has no policy on whether the roles should be separate or combined. Related-person transactions above $120,000 are reviewed by the Audit Committee members who are not interested in the transaction, under a written policy that also pre-approves certain transaction types; the excerpt describes no specific transactions. Pay leans on performance. The CEO's opportunity consists primarily of stock options and a performance bonus. The 2022 strategic performance awards cliff-vest in January 2027 after 220% of the final tranche was earned, and a similar EPS-based program starts in 2026. For outside holders, pay is tied to the share price and EPS, and the January 2027 cliff vest supports management retention until then. The main limit on the board's independent oversight is that an executive, not an independent director, chairs it."
     },
     "risks": {
       "idiosyncratic": [
-        "Demand concentration in AI and data centers: a substantial share of revenue depends on customers' data-center and AI capital spending, and a shift in the level or focus of that spending — or building capacity ahead of demand — could reduce orders.",
-        "Large-customer leverage: cloud, hyperscale and colocation buyers make up a material part of the base, can require terms favorable to them, and may impose penalties for late or failed deliveries.",
-        "Backlog realization and order timing: long, unpredictable sales cycles and customers' right to defer or cancel firm orders can make revenue and margins swing from quarter to quarter.",
-        "Valuation risk: the shares price in years of execution, so a disappointment could compress the multiple well before estimates change.",
-        "Trade and supply chain: tariffs and retaliatory measures, supply-chain congestion and foreign-currency swings affect input costs, delivery timing and reported growth."
+        "AI and data-center dependence: the 10-K says a substantial portion of the business depends on continued growth in customers' data-center and communication infrastructure, and names shifts in the level or focus of AI spending, capacity built in excess of demand and delays in permits as reasons demand could fall. This is the mechanism behind our Bear case (see valuation). Because backlog cancellations usually carry penalties, a slowdown would likely show first in new orders and in the multiple rather than in reported revenue.",
+        "Large-customer leverage: per the 10-K, large customers often require more favorable terms, including on large multi-year AI projects, and may impose substantial penalties for product or service failures or late delivery. As project scale and urgency rise, they may also seek more stringent delivery commitments, which raises the cost of any execution slip during the capacity build-out.",
+        "Order timing and backlog: long sales cycles and customers' right to reduce or defer firm orders, usually with penalties, can make revenue swing between quarters; the second quarter's timing shifts (see financials) are an example. Contracts from acquired businesses may have differing terms that let customers reduce firm orders or terminate.",
+        "Executing the capacity build: Vertiv is expanding capacity for current and anticipated demand, and the MD&A refers to inherent complexities and challenges associated with very robust market growth. The 10-Q's list of forward-looking risks also includes failure to remediate material weaknesses in internal control over financial reporting; the captured excerpt does not describe them, so we cannot judge their scope."
       ],
-      "systemic": "Vertiv is levered to a single macro driver more than most: the data-center capital-expenditure cycle. That cycle is strong today on AI adoption, but it is sensitive to interest rates, the cost and availability of power, and the willingness of a handful of large technology buyers to keep spending. A broad slowdown in technology capital spending, a tightening of financial conditions, or an escalation in global trade conflict would hit demand, pricing and supply chains at once. Because the shares carry a premium multiple, a systemic shock would likely show up first in the valuation and only later in the fundamentals."
+      "systemic": "Vertiv's demand rides one cycle: data-center capital spending. The 10-K names the ways that cycle could slow, among them changes in the economy, shifts in AI spending, capacity built in excess of demand, permit delays, and local zoning decisions, community opposition or moratoria that limit data-center construction. The 10-Q adds a trade and geopolitical layer. U.S. tariffs, foreign retaliatory measures, the US-Israel and Iran war and wider foreign-policy developments have affected, and are likely to continue to affect, supply chains, input, fuel and transportation costs, customer demand and exchange rates. The company manages these through supply chain diversification, regional sourcing, pricing actions and hedging. The February 2026 Supreme Court decision invalidating IEEPA tariffs could return some tariff costs, but Vertiv says the amount, timing and likelihood of any refund are uncertain. With net cash, higher interest rates would hurt Vertiv mainly through its customers' cost of building data centers rather than through its own debt. Because the shares carry a premium multiple, a broad shock would likely reach the valuation before the reported results."
     },
     "finalRecommendation": {
       "body": [
-        "We rate Vertiv BUY with a target range of $285 to $360. The company sits at the center of the AI data-center build-out, selling the power and thermal systems that demand cannot do without, and the order book has climbed sharply over the past year. Management has raised its full-year 2026 guidance, free cash flow has scaled, and margins are still climbing.",
-        "The reason we stop at BUY rather than STRONG BUY is price. The shares already pay a premium multiple for years of growth, which is what makes the downside in our valuation section a real scenario rather than a formality, and our probability-weighted fair value lands below the Street's bullish consensus. We are buyers of the business, but disciplined about the entry point.",
-        "We would move to a stronger stance if backlog kept building while the multiple came in, and to a more cautious one if order growth slowed or a large customer paused. For now the growth is real, the balance sheet is strong and the valuation is full — a BUY that respects both the opportunity and the price."
+        "We rate Vertiv HOLD with a target range of $275 to $325. The business case is strong: an order book that more than doubled in 2025, guidance raised in July, widening margins and a net-cash balance sheet. The issue is what the market will pay a year from now. Our expected upside of {+ +16.0% +} clears the BUY bar, but the reward/risk of 0.48× does not, because a pause in data-center spending at a lower multiple would take the shares well below today's price.",
+        "The label is close to BUY and rests on our judgment that the multiple eases as growth slows. On these scenarios, BUY would derive at a price just below $253.51, or if third-quarter results came in line with guidance and lifted the FY27E consensus enough to raise the Base. SELL would derive if the price rose a little above our Base value of $301 with the outlook unchanged, or if orders weakened enough to make the Bear the central case."
       ]
     }
   },
