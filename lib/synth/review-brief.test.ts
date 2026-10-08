@@ -2,7 +2,8 @@ import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { EditorialReview } from "@/lib/synth/editorial.schema";
 import { judgmentSha256 } from "@/lib/synth/editorial";
-import { renderReviewBrief } from "@/lib/synth/review-brief";
+import { renderReviewBrief, briefGroundingLists } from "@/lib/synth/review-brief";
+import { Desk } from "@/lib/synth/desk.schema";
 
 const ticker = "AVGO";
 const accession = "0001730168-26-000080";
@@ -110,6 +111,24 @@ describe("renderReviewBrief", () => {
   it("is deterministic", () => {
     expect(brief()).toBe(brief());
     expect(brief({ previousReview, round: 2 })).toBe(brief({ previousReview, round: 2 }));
+  });
+});
+
+describe("briefGroundingLists", () => {
+  const desk = Desk.parse(JSON.parse(readFileSync("data/desk/desk.json", "utf8")));
+  const packText = readFileSync(`data/facts/${ticker}/${accession}.json`, "utf8");
+  it("computes the weak and assumed lists from the judgment and the pack", () => {
+    const r = briefGroundingLists(judgmentText, packText, desk);
+    expect("weak" in r && Array.isArray(r.weak) && Array.isArray(r.assumed)).toBe(true);
+  });
+  it.each<[string, string, string | null, RegExp]>([
+    ["a judgment that is not JSON", "{ not json", packText, /judgment/],
+    ["a judgment that fails the schema", "{}", packText, /judgment/],
+    ["a missing pack", judgmentText, null, /pack/],
+    ["a pack that is not JSON", judgmentText, "{ nope", /pack/],
+  ])("returns a warning, not a throw, for %s", (_name, j, p, why) => {
+    const r = briefGroundingLists(j, p, desk);
+    expect("warning" in r && r.warning).toMatch(why);
   });
 });
 

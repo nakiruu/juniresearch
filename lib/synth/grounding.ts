@@ -262,7 +262,6 @@ export interface GroundingPolicy {
   multFromRatio: boolean;      // "17.26x current ratio" grounded by the Facts' "17.26"
   bands: boolean;              // "$190s"
   multWild: boolean;           // may a multiple ground against a bare context cell? (no: multiples are not table cells)
-  moneyCellMinSig: number;     // a scaled money figure grounds against an unscaled "$ 5" table cell only with ≥ this many significant digits
   secondReadingMinSig: number; // the trailing-zeros-insignificant reading only matches entries with ≥ this many significant digits
   bpFromPct: boolean;          // may basis points ground against a % level? (no: "540 bps" is a change, not a 5.4% level)
   perShareNoScaleUp: boolean;  // a 2-decimal context money cell ("$4.56", per-share-shaped) is never scaled up to millions or billions
@@ -271,7 +270,7 @@ export interface GroundingPolicy {
 /** The measured policy (plan 2026-10-07 §2–4). Not configurable: a looser policy is a reviewed code change. */
 export const POLICY: Readonly<GroundingPolicy> = Object.freeze({
   ctxCoarsenSig: 3, surfCoarsenSig: 2, wildMinSig: 2, wildMinSigPct: 1, checkSign: true, ppFromPct: true, multFromRatio: true, bands: true,
-  multWild: false, moneyCellMinSig: 1, secondReadingMinSig: 2, bpFromPct: false, perShareNoScaleUp: true,
+  multWild: false, secondReadingMinSig: 2, bpFromPct: false, perShareNoScaleUp: true,
 });
 
 export type MatchClass = "exact" | "lossless" | "coarse" | "band" | "none";
@@ -322,8 +321,7 @@ function matchOne(p: NumberToken, e: GroundingEntry, pol: GroundingPolicy): Matc
   // An unscaled money cell in context ("$\n15,955"): known kind, scale from a header.
   if (e.source === "context" && e.kind === "money" && e.scale === 1 && p.kind === "money" && e.currency === p.currency) {
     if (pol.perShareNoScaleUp && e.precision === 2 && p.scale !== 1) return compare(p, e.abs, e.resolution, e.sig, e.source, pol);
-    if (p.scale === 1 || p.sig >= pol.moneyCellMinSig) return best([1, 1e3, 1e6, 1e9].map((s) => compare(p, e.abs * s, e.resolution * s, e.sig, e.source, pol)));
-    return compare(p, e.abs, e.resolution, e.sig, e.source, pol);
+    return best([1, 1e3, 1e6, 1e9].map((s) => compare(p, e.abs * s, e.resolution * s, e.sig, e.source, pol)));
   }
   if (!kindOk(p, e, pol)) return "none";
   return compare(p, e.abs, e.resolution, e.sig, e.source, pol);

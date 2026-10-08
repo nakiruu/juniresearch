@@ -9,6 +9,28 @@
 import { z } from "zod";
 import { EditorialReviewShape, type EditorialReview } from "./editorial.schema";
 import { judgmentSha256 } from "./editorial";
+import { FactPack } from "../facts/schema";
+import { projectReportFacts } from "../facts/project";
+import { Judgment } from "./judgment.schema";
+import type { Desk } from "./desk.schema";
+import { groundingSurface, groundJudgment } from "./validate-judgment";
+import { weakLine } from "./grounding";
+
+/**
+ * The figures the build could check only by digits or without a sign, and the assumed whole-number multiples (D2): the
+ * reviewer checks these first. A judgment or pack that does not parse yields a warning instead; the brief is then
+ * rendered without the two lists (the build fails on such a judgment anyway).
+ */
+export function briefGroundingLists(judgmentText: string, packText: string | null, desk: Desk): { weak: string[]; assumed: string[] } | { warning: string } {
+  const firstLine = (e: unknown) => (e as Error).message.split("\n")[0];
+  let j: Judgment;
+  try { j = Judgment.parse(JSON.parse(judgmentText)); } catch (e) { return { warning: `the judgment does not parse (${firstLine(e)})` }; }
+  if (packText == null) return { warning: "the pack is missing" };
+  let pack: FactPack;
+  try { pack = FactPack.parse(JSON.parse(packText)); } catch (e) { return { warning: `the pack does not parse (${firstLine(e)})` }; }
+  const g = groundJudgment(j, groundingSurface(j, projectReportFacts(pack), pack, desk));
+  return { weak: g.weak.map(weakLine), assumed: g.assumed.map((w) => `${w.field}: "${String(w.value)}"`) };
+}
 
 export interface ReviewBriefPaths {
   report: string;
