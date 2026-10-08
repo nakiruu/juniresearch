@@ -18,6 +18,17 @@ describe("canon", () => {
   it("absorbs float noise below 12 significant digits", () => expect(canon(0.1 + 0.2)).toBe(canon(0.3)));
   it("keeps a difference at display precision", () => expect(canon(0.3001)).not.toBe(canon(0.3)));
   it("drops undefined keys", () => expect(canon({ a: 1, b: undefined })).toBe(canon({ a: 1 })));
+  it("throws on NaN and ±Infinity instead of hashing them as null", () => {
+    for (const x of [NaN, Infinity, -Infinity]) {
+      expect(() => canon(x)).toThrow(/non-finite/);
+      expect(() => canon({ a: [1, x] })).toThrow(/non-finite/);
+    }
+  });
+  it("hashes a sparse array's holes as null, as JSON does", () => {
+    // eslint-disable-next-line no-sparse-arrays
+    expect(canon([1, , 3])).toBe("[1,null,3]");
+    expect(canon([1, undefined, 3])).toBe("[1,null,3]");
+  });
 });
 
 describe("reviewInputs: one mutation moves only its component", () => {

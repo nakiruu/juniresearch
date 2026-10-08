@@ -22,11 +22,17 @@ import type { Desk } from "./desk.schema";
 
 export const sha256 = (s: string) => createHash("sha256").update(s, "utf8").digest("hex");
 
-/** Key-sorted JSON; undefined dropped; -0 → 0; finite numbers rounded to 12 significant digits (re-derivation noise). */
+/**
+ * Key-sorted JSON; undefined keys dropped; -0 → 0; numbers rounded to 12 significant digits (re-derivation noise).
+ * NaN and ±Infinity throw rather than hash as null (a parsed pack cannot hold them); array holes hash as null, as in JSON.
+ */
 export function canon(v: unknown): string {
-  if (typeof v === "number" && Number.isFinite(v)) v = Number(v.toPrecision(12));
+  if (typeof v === "number") {
+    if (!Number.isFinite(v)) throw new Error(`canon: non-finite number ${v}`);
+    v = Number(v.toPrecision(12));
+  }
   if (v === null || typeof v !== "object") return typeof v === "number" && Object.is(v, -0) ? "0" : JSON.stringify(v);
-  if (Array.isArray(v)) return `[${v.map((x) => (x === undefined ? "null" : canon(x))).join(",")}]`;
+  if (Array.isArray(v)) return `[${Array.from(v, (x) => (x === undefined ? "null" : canon(x))).join(",")}]`;
   const o = v as Record<string, unknown>;
   return `{${Object.keys(o).filter((k) => o[k] !== undefined).sort().map((k) => `${JSON.stringify(k)}:${canon(o[k])}`).join(",")}}`;
 }
