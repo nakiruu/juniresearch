@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "1b897e2c8645f82a496918ba8075b40a52496cd19735b6cf2e08ff501bc46fdd",
-  "reviewedAt": "2026-10-08T14:21:24Z",
+  "judgmentSha256": "ec11b0d6471d129f018a49edc682ba976842c495dd8baeec6c7294682bb50d1b",
+  "reviewedAt": "2026-10-08T14:24:51Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved",
   "findings": [
     {
       "id": "F-1",
@@ -255,7 +255,7 @@
       "quote": "FY26 growth, margins and cash flow all rose",
       "issue": "\"Growth ... rose\" reads as the growth rate rising, which the surface contradicts: revenue growth slowed from +15.6% in FY25 to +13.9% in FY26, and incomeCommentary itself says \"growth slowed\". The headline is the first thing a reader sees and it misstates the trend the report argues elsewhere.",
       "fix": "Name what rose, e.g. \"FY26 revenue, margins and cash flow all rose while the shares fell toward their 52-week low; HOLD on a close call\".",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-29",
@@ -264,7 +264,7 @@
       "quote": "Margin expansion is doing more of the work as top-line growth eases.",
       "issue": "The table does not support \"more of the work\" over time. Operating margin widened from 22.3% to 26.1% in FY25 but only from 26.1% to 27.4% in FY26, so margin expansion did less, not more, as growth eased from 15.6% to 13.9%. The sentence describes a trend the series contradicts.",
       "fix": "Drop the sentence, or say only what the FY26 figures show: operating income grew faster than revenue in FY26 (20% per the MD&A against 13.9%), while the margin widened less than in FY25. Do not compute a new figure.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-30",
@@ -273,7 +273,7 @@
       "quote": "That anchor decides the label: a Base that only held today's price would leave the expected upside below our BUY bar.",
       "issue": "Calls coherence. The label is HOLD, and a Base that only held today's price would also derive HOLD, so the anchor does not decide the label as written. It decides whether E clears the 10% bar, but R (0.46x) already fails the 0.50x bar on the chosen anchor. The sentence looks carried over from the earlier BUY draft and points the reader at the wrong sensitivity: what separates HOLD from BUY here is the Bull/Bear split (or a Base somewhat above the one chosen), as the next paragraph says.",
       "fix": "Restate in words what the anchor does to the call now: a price-held Base would leave the call HOLD with much less expected upside, and a higher Base multiple would push toward BUY. Then argue the multiple both ways as you do. Do not quote a flip-point figure.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-31",
@@ -282,7 +282,7 @@
       "quote": "For a higher one: the FCF yield, the cash returned in FY26 and Street targets that all sit above the price.",
       "issue": "Repetition within Valuation: the same evidence argues both the multiple and the weights. \"Street targets that all sit above the price\" (here) recurs as \"every Street target is above the price\" (paragraph 2), after multiplesCommentary already says \"every target sits above the October 1 price\". \"The shares de-rated over the past 52 weeks while reported results improved\" (paragraph 1) recurs as \"neither the results nor the cash returned has stopped the fall\" (paragraph 2), and FY26 growth and cash returned appear on both sides of both arguments. The two \"both ways\" arguments are one argument told twice, which weakens the claim that each decision was argued on its own evidence.",
       "fix": "Give each piece of evidence once. Use the Street targets and cash generation for one decision and point back in words in the other. Let each argument rest on what bears on it specifically: for the multiple, the consensus-basis question and the FY27 slowdown; for the weights, how likely the unseen cause of the decline is to show up in results.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-32",
@@ -291,7 +291,7 @@
       "quote": "Valuation argues the deciding assumptions from both sides.",
       "issue": "Cross-section paraphrase. analystCommentary closes with the same moves: \"We rate INTU HOLD with a $290–$350 target range. The call sits close to BUY, and Valuation shows what decides it.\" The thesis repeats \"We rate HOLD\", says the reward/risk \"falls just short of our BUY bar\", and points to Valuation for the deciding assumptions. The same close-to-BUY, see-Valuation claim is made twice at the top of the page.",
       "fix": "Keep it in one place. Either have analystCommentary state the rating and range only and leave the close-call point to the thesis, or cut the thesis's last sentence and its restatement of the rating.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-33",
@@ -300,7 +300,7 @@
       "quote": "The counter-case is in the same series:",
       "issue": "Tics the desk lists to avoid. The \"counter-case\" label opens this paragraph. \"In our view\" appears seven times (balanceCommentary, moatFactors[0], moatFactors[1], growth.points[2], risks.idiosyncratic[2], risks.idiosyncratic[3], risks.systemic). \"The sources do not ...\" appears three times (balanceCommentary, cashflowCommentary, multiplesCommentary).",
       "fix": "Drop the counter-case label and state the slowdown directly. Cut or vary most of the \"in our view\" and \"the sources do not\" phrasings, keeping them only where the attribution matters.",
-      "status": "open"
+      "status": "addressed"
     },
     {
       "id": "F-34",
@@ -309,7 +309,7 @@
       "quote": "and Q4'26 revenue grew 12.1%",
       "issue": "The comparison basis is not stated. The surface gives +12.1% as year over year; in a seasonal business where Q4 is the off-season quarter, an unlabelled quarterly growth rate can be misread as sequential.",
       "fix": "Write \"Q4'26 revenue grew 12.1% year over year\".",
-      "status": "open"
+      "status": "addressed"
     }
   ]
 }
