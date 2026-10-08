@@ -6,3 +6,6 @@ data/raw/** -text
 
 # Persisted SEC companyfacts responses (facts:free, D-9) are binary.
 *.json.gz binary
+
+# Grounding exceptions apply only when byte-equal to main's copy (git show emits LF), so never convert their line endings.
+lib/synth/grounding-exceptions.json text eol=lf
