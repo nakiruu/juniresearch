@@ -1,27 +1,189 @@
 {
-  "judgmentSha256": "8d62c5d09c0c8c5492b4b6fe8e66ff8e3cf001f7abf386146882cff07b2433d9",
-  "reviewedAt": "2026-09-23T18:20:00Z",
-  "reviewer": "Claude Opus 4.8 (inline self-review; subagent runner stalled; independence reduced)",
-  "round": 1,
-  "verdict": "approved-with-minors",
-  "findings": [
-    {
-      "id": "F-1",
-      "severity": "Minor",
-      "field": "sections.valuation.scenarioCommentary",
-      "quote": "about 2% below the current $261.28",
-      "issue": "A few figures restate across subsections of the same section, flagged by the figure-repeat-unit lint as non-blocking warnings: the current price $261.28 recurs in valuation and finalRecommendation; 49.6x and 9.8% recur in scenarioCommentary after multiplesCommentary; the Class A share count 254,580,533 recurs in governance and insiderOwnership; $5.84B ARR and 51% recur across the moat and growth sections. None is a wrong or ungrounded figure -- the build's grounding check passed with zero ungrounded figures -- and each is introduced correctly in its home; the repeats are stylistic.",
-      "fix": "In a future pass, refer back in words at the second mention (e.g., 'today's price', 'that multiple', 'the shares outstanding noted above') rather than restating the figure.",
-      "status": "open"
-    },
-    {
-      "id": "F-2",
-      "severity": "Minor",
-      "field": "sections.financials.incomeCommentary",
-      "quote": "The vendor's snapshot labels the July quarter as 'Q3 2026'; we use the company's own label, the second quarter of fiscal 2027, throughout.",
-      "issue": "Verification note, not a defect: the two known data traps are handled correctly. The vendor's non-Dec-FYE quarter mislabel ('Q3 2026') is flagged once and the company's Q2 FY2027 label is used throughout. The pack's share-count and market-cap figures are internally inconsistent (market cap implies ~1.02B shares while the proxy reports 254,580,533 Class A shares outstanding); the report does not state an absolute share count in the prose, grounds valuation in the given multiples and ownership in the proxy, so no contradiction reaches the reader. Calls math checks out: weighted FV ~$255, E -2.2%, D -29.2%, derived HOLD, band $220-$305 brackets Base $255, Bear $185 is 29% below price.",
-      "fix": "No change required. A fresh independent reviewer should re-verify when the subagent runner recovers, given this was an inline self-review.",
-      "status": "open"
-    }
-  ]
+    "judgmentSha256":  "714962e56af7f4ea7729fc9e3ce4680c6a76b7a546f506b560de985f7a2aff0a",
+    "reviewedAt":  "2026-10-08T14:07:48Z",
+    "reviewer":  "Claude Opus 5.5",
+    "round":  2,
+    "verdict":  "approved",
+    "findings":  [
+                     {
+                         "id":  "F-1",
+                         "severity":  "Minor",
+                         "field":  "sections.valuation.scenarioCommentary",
+                         "quote":  "about 2% below the current $261.28",
+                         "issue":  "A few figures restate across subsections of the same section, flagged by the figure-repeat-unit lint as non-blocking warnings: the current price $261.28 recurs in valuation and finalRecommendation; 49.6x and 9.8% recur in scenarioCommentary after multiplesCommentary; the Class A share count 254,580,533 recurs in governance and insiderOwnership; $5.84B ARR and 51% recur across the moat and growth sections. None is a wrong or ungrounded figure -- the build\u0027s grounding check passed with zero ungrounded figures -- and each is introduced correctly in its home; the repeats are stylistic.",
+                         "fix":  "In a future pass, refer back in words at the second mention (e.g., \u0027today\u0027s price\u0027, \u0027that multiple\u0027, \u0027the shares outstanding noted above\u0027) rather than restating the figure.",
+                         "status":  "addressed",
+                         "note":  "Still addressed after the rewrite: scenarioCommentary carries no $261.28, 49.6x or 9.8%; finalRecommendation states $261.28 once; insiderOwnership points to \u0027the Class A share count above\u0027; the module figures now sit only in moatFactors[0]."
+                     },
+                     {
+                         "id":  "F-2",
+                         "severity":  "Minor",
+                         "field":  "sections.financials.incomeCommentary",
+                         "quote":  "The vendor\u0027s snapshot labels the July quarter as \u0027Q3 2026\u0027; we use the company\u0027s own label, the second quarter of fiscal 2027, throughout.",
+                         "issue":  "Verification note, not a defect: the two known data traps are handled correctly. The vendor\u0027s non-Dec-FYE quarter mislabel (\u0027Q3 2026\u0027) is flagged once and the company\u0027s Q2 FY2027 label is used throughout. The pack\u0027s share-count and market-cap figures are internally inconsistent (market cap implies ~1.02B shares while the proxy reports 254,580,533 Class A shares outstanding); the report does not state an absolute share count in the prose, grounds valuation in the given multiples and ownership in the proxy, so no contradiction reaches the reader. Calls math checks out: weighted FV ~$255, E -2.2%, D -29.2%, derived HOLD, band $220-$305 brackets Base $255, Bear $185 is 29% below price.",
+                         "fix":  "No change required. A fresh independent reviewer should re-verify when the subagent runner recovers, given this was an inline self-review.",
+                         "status":  "addressed",
+                         "note":  "Re-verified on the rewrite. Quarter label handled once (now reworded). Share-basis gap disclosed and no longer crossed (F-7). Calls: weighted value about $255, E -2.3%, D -29.6%, derived HOLD; band $220-$305 brackets the $245 Base; the five-point Bull-to-Bear shift does derive SELL; the SELL and BUY flip directions in finalRecommendation match the page\u0027s math."
+                     },
+                     {
+                         "id":  "F-3",
+                         "severity":  "Critical",
+                         "field":  "sections.businessMoat.moatFactors[2].body",
+                         "quote":  "Falcon Flex ending ARR surpassed $2.29 billion, up 101% year-over-year, evidence that customers are consolidating security spend onto the platform",
+                         "issue":  "Wrong quantity. The press release says the company \u0027Exceeds $2.29 billion in ending ARR from accounts that have adopted Falcon Flex\u0027 -- the total ARR of Flex-adopting accounts, not ARR booked under Falcon Flex. The report relabels it as \u0027Falcon Flex ending ARR\u0027 / \u0027Falcon Flex ARR\u0027 in five places: analystCommentary (\u0027Falcon Flex ending ARR exceeded $2.29 billion, up 101%\u0027), executiveSummary.thesis.body (\u0027Falcon Flex ARR above $2.29 billion growing 101%\u0027), executiveSummary.catalysts[1] (\u0027ending Falcon Flex ARR extended its rapid year-over-year climb\u0027), businessMoat.moatFactors[2] and growth.points[1]. The relabel overstates how much spend runs through the Flex model, which is the evidence the moat factor and the catalyst rest on.",
+                         "fix":  "Everywhere the figure appears, attach it to its own subject: ending ARR from accounts that have adopted Falcon Flex exceeded $2.29 billion, up 101%. Draw only the conclusion that subject supports (accounts on Flex are growing their total ARR quickly), not that spend under Flex itself is that size.",
+                         "status":  "addressed",
+                         "note":  "analystCommentary, catalysts[1], moatFactors[2] and growth.points[1] now attach the figure to accounts that have adopted Falcon Flex; growth.points[1] states it is not spend under Flex itself; thesis no longer carries it. Conclusions are limited to those accounts expanding."
+                     },
+                     {
+                         "id":  "F-4",
+                         "severity":  "Critical",
+                         "field":  "sections.growth.points[4]",
+                         "quote":  "Consensus sees revenue reaching about $6 billion in fiscal 2027 and $7.4 billion in fiscal 2028, with EPS of $1.26 and $1.61, though annual growth continues to decelerate as the base scales.",
+                         "issue":  "The surface contradicts \u0027continues to decelerate\u0027. The Facts block gives FY26 revenue growth of +21.7% and FY27E revenue growth of +25%, so consensus has annual growth re-accelerating in fiscal 2027, not continuing to slow. The latest quarter points the same way: second-quarter revenue rose 26%, and ARR growth was 25% at July 31, 2026 against 20% a year earlier (MD\u0026A ARR table). A statement the page\u0027s own figures refute is an unsupported claim.",
+                         "fix":  "Say what the surface shows: consensus has fiscal 2027 growth above fiscal 2026\u0027s +21.7% (the Facts give +25%), and the fiscal 2028 revenue figure implies a further step; describe any later slowing in words without computing a new rate. Drop \u0027continues to decelerate\u0027.",
+                         "status":  "addressed",
+                         "note":  "Now growth.points[3]: fiscal 2027 consensus is \u0027a faster rise than fiscal 2026\u0027s\u0027 and fiscal 2028 \u0027implies growth a little below fiscal 2027\u0027s\u0027, in words and consistent with the Facts ($6B to $7.4B)."
+                     },
+                     {
+                         "id":  "F-5",
+                         "severity":  "Important",
+                         "field":  "sections.executiveSummary.risks[3]",
+                         "quote":  "Growth deceleration: annual revenue growth has slowed from 54.4% in fiscal 2023 to 21.7% in fiscal 2026",
+                         "issue":  "Two problems. (1) Repetition: the annual-deceleration claim is made in five places -- executiveSummary.risks[3], financials.incomeCommentary (\u0027the picture is growth decelerating as the base scales ... easing from 54.4% to 21.7%\u0027), risks.idiosyncratic[2] (\u0027annual revenue growth has decelerated each year as the base has scaled\u0027), businessMoat.durability (\u0027annual revenue growth has already slowed markedly since fiscal 2023\u0027) and finalRecommendation.body[1] (\u0027a deceleration in annual revenue growth since fiscal 2023\u0027). (2) Counter-case: none of them gives the reading that cuts the other way, though it is on the page -- second-quarter revenue +26% against FY26 +21.7%, ARR growth 25% against 20% a year earlier, net new ARR growth 51%, and FY27E revenue +25%. The report uses that re-acceleration only to argue the Bull weight, so the deceleration story reads as settled when the latest data run against it.",
+                         "fix":  "Argue growth once, in incomeCommentary: the fiscal-year series slowed through fiscal 2026, then the second quarter, ARR growth and the FY27 consensus turned up; say which the report weighs more and why. Elsewhere point back in words (e.g. \u0027the growth path discussed under financials\u0027), and keep the exec-summary risk a one-line pointer.",
+                         "status":  "addressed",
+                         "note":  "incomeCommentary now argues both sides once and reaches a view (\u0027real but early\u0027); risks[3], risks.idiosyncratic[2], durability and finalRecommendation point back in words without restating the series."
+                     },
+                     {
+                         "id":  "F-6",
+                         "severity":  "Critical",
+                         "field":  "sections.management.leadership",
+                         "quote":  "but the same team presided over the July 19, 2024 Incident and the customer-commitment discounting that followed",
+                         "issue":  "Recalled tenure. The surface names George Kurtz as Founder and Chief Executive Officer and Burt Podbere as Chief Financial Officer only as of the August 26, 2026 press release (and lists both in the April 3, 2026 proxy ownership table without titles or start dates). Nothing on the surface says either held his role in July 2024, so \u0027the same team presided over\u0027 the incident is a tenure claim from memory.",
+                         "fix":  "Remove the tenure claim. If the point is that execution risk is real, make it from the incident and the revision themselves without saying who was in office, e.g. \u0027the July 19, 2024 Incident and the revision of prior-year interim figures are reminders that execution risk is real\u0027.",
+                         "status":  "addressed",
+                         "note":  "The tenure claim is gone; titles are dated to the August 26, 2026 earnings release, and the incident is cited only as a reminder of execution risk."
+                     },
+                     {
+                         "id":  "F-7",
+                         "severity":  "Important",
+                         "field":  "sections.executiveSummary.risks[2]",
+                         "quote":  "GAAP profitability: GAAP results are near breakeven (second-quarter diluted EPS $0.01; fiscal 2026 diluted EPS -$0.65)",
+                         "issue":  "Cross-basis comparison the report itself rules out. incomeCommentary says the annual per-share series \u0027appears to sit on a much smaller share count than the quarterly, consensus and guidance figures ... so we do not compare the two series\u0027. Yet executiveSummary.risks[2] and risks.idiosyncratic[3] (\u0027fiscal 2026 diluted EPS -$0.65; second-quarter $0.01\u0027) set the annual EPS beside the quarterly EPS in one parenthesis as evidence of the same point. A reader takes -$0.65 and $0.01 as comparable per-share figures, which on the report\u0027s own reading they are not; the annual loss per share looks far larger next to the quarter than it would on one basis.",
+                         "fix":  "In both bullets, make the near-breakeven point on figures with no share-basis issue -- fiscal 2026 net income of -$162.5M or the FY26 operating margin of -6.1%, and the quarter\u0027s GAAP net income of $5.3 million -- or keep one EPS figure only. Do not place the annual and quarterly EPS side by side.",
+                         "status":  "addressed",
+                         "note":  "risks[2] is now a figure-free pointer; risks.idiosyncratic[3] uses fiscal 2026 net income, the -6.1% operating margin and the quarter\u0027s $5.3 million net income. No annual-vs-quarterly EPS pairing remains."
+                     },
+                     {
+                         "id":  "F-8",
+                         "severity":  "Important",
+                         "field":  "sections.executiveSummary.catalysts",
+                         "quote":  "AI-security demand: new offerings such as Continuous Identity for AI Agents and Falcon AIDR, plus alliances with AWS, Cerebras and Schwarz Digits, extend the platform into securing AI workloads.",
+                         "issue":  "Executive-summary pointers are near-verbatim copies of the section bullets behind them, so the section does not argue anything the summary did not already say: (a) catalysts[4] vs growth.points[5] (\u0027offerings such as Continuous Identity for AI Agents and Falcon AIDR, and alliances with AWS, Cerebras and Schwarz Digits, target securing enterprise AI workloads\u0027); (b) catalysts[0] vs growth.points[2] (both: raised FY27 net new ARR growth outlook by 630 basis points to 34% at the midpoint, plus the $5,991.1-$6,011.1 million revenue guide, which companyOverview also states); (c) catalysts[1] (\u0027pulling broader, larger platform commitments\u0027) vs growth.points[1] (\u0027pulls larger, broader platform commitments\u0027); (d) risks[2] vs risks.idiosyncratic[3] (both: GAAP near breakeven, the same two EPS figures, so the shareholder relies on ARR/free cash flow), with thesis.body making the same point a third time; (e) the consensus revenue path ($4.8B to about $6B to $7.4B) appears in both valuation.multiplesCommentary and growth.points[4].",
+                         "fix":  "Keep each catalyst and risk to a one-line pointer with no more than one figure; let the growth bullets and idiosyncratic risks carry the figures and the mechanism (what to watch, what would change the view). State the revenue guide once (growth or overview, not both plus a catalyst), and the consensus revenue path once (valuation or growth).",
+                         "status":  "addressed",
+                         "note":  "All five parts fixed. (c): catalysts[1] stays a bare pointer, and moatFactors[2] now points back in words (\u0027the Flex-account ARR figures under growth are the evidence that the model is working\u0027) instead of repeating the catalyst sentence. growth.points[1] carries the figure and its subject."
+                     },
+                     {
+                         "id":  "F-9",
+                         "severity":  "Important",
+                         "field":  "sections.businessMoat.durability",
+                         "quote":  "at 49.6x sales the equity is valued for years of ARR growth near today\u0027s pace and for margin expansion",
+                         "issue":  "Paraphrase repetition across sections. (a) The valuation argument -- 49.6x sales, priced for years of growth near today\u0027s pace plus margin expansion -- is made in thesis.body, valuation.multiplesCommentary, businessMoat.durability and risks.idiosyncratic[1] (which restates 49.6x, 208.0x, $235.67 and 162.7x). (b) The July 19 mechanism (elongated sales cycles, competitor approaches, commitment discounting raising contraction) is argued in both durability and risks.idiosyncratic[0]. (c) \u0027Net cash lets management invest, acquire and buy back\u0027 is made in balanceCommentary, management.capitalAllocation and catalysts[3] (\u0027future buyback capacity\u0027). (d) Stock-based-compensation dilution is argued in cashflowCommentary, capitalAllocation, risks.idiosyncratic[3] and finalRecommendation.body[2]. (e) The immaterial-error revision is told in incomeCommentary and leadership. (f) The 51%/35%/26% module-adoption figures appear in both companyOverview and moatFactors[0].",
+                         "fix":  "Give each claim one home and point back in words elsewhere: valuation in valuation (durability and risks.idiosyncratic[1] say \u0027the multiple discussed under valuation\u0027); the incident mechanism in risks.idiosyncratic[0]; capital capacity in capitalAllocation; SBC dilution in one place; the revision once; the module figures in the moat factor (overview can say \u0027a rising share of customers run six or more modules\u0027).",
+                         "status":  "addressed",
+                         "note":  "Each claim now has one home: valuation in multiplesCommentary (durability and risks.idiosyncratic[1] point back); the incident mechanism in risks.idiosyncratic[0]; capital capacity and SBC dilution in capitalAllocation (risks.idiosyncratic[3] points back); the revision only in incomeCommentary; module figures only in moatFactors[0]."
+                     },
+                     {
+                         "id":  "F-10",
+                         "severity":  "Important",
+                         "field":  "sections.valuation.scenarios[2].driver",
+                         "quote":  "an assumed 115x the same fiscal 2028 consensus EPS, a little over half today\u0027s current-year multiple, for a market that stops paying a growth premium, gives about $185",
+                         "issue":  "The stated basis does not describe the multiple. 115x a year-out consensus EPS is still a very large growth premium, so \u0027a market that stops paying a growth premium\u0027 misstates what the Bear assumes; a reader checking the basis finds the words and the number pointing in opposite directions. The only anchor is \u0027a little over half today\u0027s\u0027 multiple, a fraction of the price-dependent figure rather than anything independent on the surface (the Street\u0027s low target and consensus target are on the page). The Bear\u0027s 25% weight is argued in scenarioCommentary, but the price it weights is not.",
+                         "fix":  "Either re-describe the multiple honestly (a partial de-rating that still leaves a growth premium) and argue why that, rather than a deeper de-rating, is the downside case, or anchor the Bear to a checkable surface figure and say why it is the right one. Re-derive the label from whatever Bear you settle on and let the rule decide it.",
+                         "status":  "addressed",
+                         "note":  "The Bear now takes earnings stalled at FY27 consensus EPS ($1.26) at the multiple the $235.67 consensus target places on FY28 EPS. That is a checkable, price-independent anchor, says it still carries a growth premium, and gives about $184. scenarioCommentary flags that the analysts\u0027 basis is unknown and argues why there is no deeper de-rating, with the Street low as the tail. It still derives HOLD."
+                     },
+                     {
+                         "id":  "F-11",
+                         "severity":  "Important",
+                         "field":  "sections.businessMoat.moatFactors[2].body",
+                         "quote":  "The land-and-expand model and the Falcon Flex licensing framework let customers commit broadly upfront and draw down across products",
+                         "issue":  "No counter-case for Falcon Flex, though one is on the page. The MD\u0026A warns that \u0027if our customers are not able to fully utilize their product subscriptions (including in connection with our flexible subscription offering), we may experience increased contraction as such customers may elect to renew with shorter subscription periods, fewer cloud modules, fewer endpoints or smaller contract values\u0027. The report treats Flex as purely bullish in catalysts[1], moatFactors[2] and growth.points[1]. risks.idiosyncratic[2] paraphrases the same MD\u0026A sentence but drops its condition (customers not fully using what they bought, including under the flexible offering), so the link to Flex is lost.",
+                         "fix":  "In the moat factor, add the bear sentence in the company\u0027s words: commitments drawn down over time can turn into contraction at renewal if customers do not use them, and the company names its flexible subscription offering in that warning. In risks.idiosyncratic[2], keep the condition the MD\u0026A attaches. Do not equate the \u0027flexible subscription offering\u0027 with Falcon Flex beyond what the text says.",
+                         "status":  "addressed",
+                         "note":  "moatFactors[2] now carries the MD\u0026A warning in the company\u0027s words, including \u0027its flexible subscription offering\u0027, and reaches a view (\u0027prove their value at renewal\u0027). risks.idiosyncratic[2] keeps the condition and points to the moat."
+                     },
+                     {
+                         "id":  "F-12",
+                         "severity":  "Critical",
+                         "field":  "sections.businessMoat.durability",
+                         "quote":  "Competition is intense, and pricing is disciplined by rivals rather than by CrowdStrike alone.",
+                         "issue":  "Unsupported inference. The 10-K risk factors say the company faces intense competition and that certain competitors aggressively approached customers and partners after the July 19 Incident. No source says rivals discipline CrowdStrike\u0027s pricing; the only discounting on the surface is the company\u0027s own customer-commitment packages tied to the incident. The sentence states as fact an inference the source invites but does not make.",
+                         "fix":  "Keep what the source says (intense competition; competitors approached customers and partners after the incident) and drop the pricing claim, or frame it explicitly as the report\u0027s own judgment rather than a finding.",
+                         "status":  "addressed",
+                         "note":  "Now \u0027The 10-K also describes competition as intense.\u0027 The pricing claim is gone."
+                     },
+                     {
+                         "id":  "F-13",
+                         "severity":  "Important",
+                         "field":  "sections.growth.points[5]",
+                         "quote":  "AI security is an emerging vector: offerings such as Continuous Identity for AI Agents and Falcon AIDR, and alliances with AWS, Cerebras and Schwarz Digits, target securing enterprise AI workloads.",
+                         "issue":  "Over-attribution, here and in executiveSummary.catalysts[4]. The press release describes the Schwarz Digits partnership as \u0027a multi-year roadmap to bring the AI-native Falcon platform to European enterprises\u0027 plus the agreed XM Cyber asset purchase (attack path visualization and offensive simulation) -- not an alliance aimed at securing AI workloads. Falcon AIDR is also not a new offering on the surface: the release says the company \u0027Extended\u0027 it across AI gateway partners, while catalysts[4] calls it one of the \u0027new offerings\u0027.",
+                         "fix":  "Keep AWS (AI, cloud and Next-Gen SIEM innovations to help build and operate AI applications) and Cerebras (AI inference at scale) as the AI-security alliances; describe Schwarz Digits by what the release says it is (European distribution roadmap and the XM Cyber assets). Say Falcon AIDR was extended to more AI gateway partners rather than calling it new.",
+                         "status":  "addressed",
+                         "note":  "growth.points[4] now says AIDR was extended to more AI gateway partners, and describes Schwarz Digits as the European roadmap plus XM Cyber, separate from the AI work. catalysts[4] names only AWS and Cerebras Systems."
+                     },
+                     {
+                         "id":  "F-14",
+                         "severity":  "Minor",
+                         "field":  "sections.financials.balanceCommentary",
+                         "quote":  "and cash and cash equivalents grew to $5.01 billion by July 31, 2026",
+                         "issue":  "Two different measures side by side. The sentence first gives $5.2 billion of cash and short-term investments at fiscal 2026 year-end, then says cash and cash equivalents \u0027grew to\u0027 $5.01 billion by July 31, 2026. A reader sees a smaller figure introduced with \u0027grew\u0027 and reads a contradiction or a decline; the two lines are on different bases (one includes short-term investments).",
+                         "fix":  "Name the basis difference in the sentence (the July figure is cash and cash equivalents only, the year-end figure includes short-term investments) or keep only one of the two.",
+                         "status":  "addressed",
+                         "note":  "Now \u0027cash and cash equivalents alone, a narrower measure that excludes short-term investments, stood at $5.01 billion\u0027."
+                     },
+                     {
+                         "id":  "F-15",
+                         "severity":  "Minor",
+                         "field":  "sections.executiveSummary.companyOverview",
+                         "quote":  "Revenue is recognized ratably over one-to-three-year subscription terms",
+                         "issue":  "Dropped hedges. The MD\u0026A says the agreement term \u0027is generally one to three years\u0027; the overview drops \u0027generally\u0027. Likewise risks.idiosyncratic[0] says \u0027because contracts run over a year\u0027, where the MD\u0026A says customers \u0027typically sign contracts with terms over one year\u0027.",
+                         "fix":  "Restore the source\u0027s hedges: \u0027generally one to three years\u0027 and \u0027typically run longer than a year\u0027.",
+                         "status":  "addressed",
+                         "note":  "Both hedges restored (\u0027generally one to three years\u0027; \u0027customers typically sign contracts with terms over one year\u0027)."
+                     },
+                     {
+                         "id":  "F-16",
+                         "severity":  "Minor",
+                         "field":  "sections.financials.balanceCommentary",
+                         "quote":  "CrowdStrike\u0027s balance sheet is a fortress.",
+                         "issue":  "Unearned characterisation and hype. Also analystCommentary says the quarter \u0027was strong on every operating metric\u0027 while the same quarter carried a GAAP loss from operations of $33.2 million; \u0027every\u0027 is not earned.",
+                         "fix":  "Let the figures carry it (net cash of $4.5 billion against $0.7 billion of debt). In analystCommentary, say which metrics were strong (revenue, ARR, net new ARR, cash flow) instead of \u0027every operating metric\u0027.",
+                         "status":  "addressed",
+                         "note":  "\u0027Fortress\u0027 is removed. analystCommentary names the strong metrics and adds that GAAP results were thinner."
+                     },
+                     {
+                         "id":  "F-17",
+                         "severity":  "Minor",
+                         "field":  "sections.management.capitalAllocation",
+                         "quote":  "so fiscal 2026 free cash flow of $1.2 billion has accumulated as net cash, which reached $4.5 billion at year-end",
+                         "issue":  "Loose causal claim. It reads as though the year\u0027s free cash flow went entirely to net cash, but the Facts block shows net debt moving from -3.6 to -4.5 ($B) over fiscal 2026, a smaller change than the $1.2 billion of free cash flow, so not all of it accumulated. The $4.5 billion is the cumulative balance, not the year\u0027s accumulation.",
+                         "fix":  "Say that free cash flow, with no dividends or recorded buybacks, has built the net cash position over the five years, without tying the one-year figure to the year-end balance.",
+                         "status":  "addressed",
+                         "note":  "Now \u0027so free cash flow has built the net cash position over that period\u0027."
+                     },
+                     {
+                         "id":  "F-18",
+                         "severity":  "Minor",
+                         "field":  "sections.finalRecommendation.body[1]",
+                         "quote":  "The equity\u0027s risk lives in the multiple, not the business.",
+                         "issue":  "Tic repeated past the point of notice. The same price-not-business formula closes five places: analystCommentary (\u0027The problem is price, not the business.\u0027), thesis.body (\u0027so the multiple, not the business, carries the risk\u0027), businessMoat.durability (\u0027the equity\u0027s risk sits in the valuation rather than the franchise\u0027), risks.systemic (\u0027the multiple, which is where the equity\u0027s risk is concentrated\u0027) and finalRecommendation.body[1].",
+                         "fix":  "Keep the line in the thesis and once in the final recommendation; end durability and the systemic paragraph on their own points instead.",
+                         "status":  "addressed",
+                         "note":  "analystCommentary\u0027s \u0027The problem is price, not the business.\u0027 is gone, and durability now ends on its own point. The line remains in thesis.body and finalRecommendation.body[1] as the fix allowed. risks.systemic keeps its closing sentence, which makes its own point (systemic forces act through the multiple), so the tic no longer reads as a refrain."
+                     }
+                 ]
 }

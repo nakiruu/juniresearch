@@ -154,9 +154,9 @@
     "targetLow": 220,
     "targetHigh": 305,
     "conviction": {
-      "expectedUpside": -0.022103148024112396,
-      "bearDownside": 0.2919337862405511,
-      "rewardRisk": -0.0757128810226151,
+      "expectedUpside": -0.023059994258922467,
+      "bearDownside": 0.29576117117979134,
+      "rewardRisk": -0.07796829505014519,
       "derivedLabel": "HOLD"
     },
     "gate": {
@@ -183,20 +183,17 @@
         "contingent": false,
         "bearFloor": 0.15
       },
-      "intrinsic": {
-        "marginOfSafety": -0.7530182459500806,
-        "impliedGrowth": 0.39912565136764366,
-        "achievableGrowth": 0.2
-      },
+      "intrinsic": null,
       "composite": {
         "percentile": 79.92268640304592,
         "confidence": "low"
       },
       "uncertainty": {
-        "tier": "low",
-        "points": 2,
+        "tier": "medium",
+        "points": 3,
         "drivers": [
-          "wide analyst-target dispersion (+2)"
+          "wide analyst-target dispersion (+2)",
+          "layers abstained / thin data (+1)"
         ]
       }
     }
@@ -236,6 +233,7 @@
     },
     {
       "label": "EV/EBITDA (TTM)",
+      "value": 2510.766,
       "unit": "mult"
     },
     {
@@ -293,13 +291,13 @@
     },
     {
       "label": "FY26 Free Cash Flow",
-      "value": 1310241000,
+      "value": 1241490000,
       "unit": "usdLarge"
     },
     {
-      "label": "FY26 Gross Margin",
-      "value": 0.7466899972049074,
-      "unit": "pct"
+      "label": "FY26 Capital Expenditure",
+      "value": -370859000,
+      "unit": "usdLarge"
     },
     {
       "label": "FY26 Net Debt",
@@ -307,8 +305,10 @@
       "unit": "usdLarge"
     },
     {
-      "label": "Current Ratio (TTM)",
-      "raw": "1.57"
+      "label": "FCF Yield (TTM)",
+      "value": 0.00570257975311053,
+      "unit": "pct",
+      "dp": 1
     }
   ],
   "analystSentiment": {
@@ -321,28 +321,28 @@
     "medianTarget": 245,
     "highTarget": 300,
     "lowTarget": 132,
-    "commentary": "We rate CrowdStrike HOLD with a $220-$305 target range. The second quarter of fiscal 2027, ended July 31, 2026, was strong on every operating metric: total revenue rose 26% to $1.47 billion, subscription revenue rose 27% to $1.40 billion, annual recurring revenue grew 25% year-over-year to $5.84 billion, and the company added $333 million of net new ARR, up 51%. Falcon Flex ending ARR exceeded $2.29 billion, up 101%. Cash generation was strong, with operating cash flow of $530.3 million and free cash flow of $377.4 million, both quarterly highs the company flagged. The problem is price, not the business. At $261.28 the stock trades at 49.6x sales and about 208x next-twelve-month earnings, and it sits above the Street's consensus target of $235.67 (median $245.00, range $132.00-$300.00). GAAP earnings are near breakeven -- second-quarter GAAP diluted EPS was $0.01 and non-GAAP $0.31 -- so we anchor on ARR, net new ARR and free cash flow rather than a GAAP multiple. Our probability-weighted fair value is near $255, about 2% below the current price, against a bear-case downside near 29%; that risk/reward is unattractive even for a wide-moat franchise, which holds the rating at HOLD. The Street is more constructive, at 40 buy, 12 hold and 1 sell."
+    "commentary": "We rate CrowdStrike HOLD with a $220-$305 target range. In the second quarter of fiscal 2027, ended July 31, 2026, revenue, ARR, net new ARR and cash flow were all strong: total revenue rose 26% to $1.47 billion, annual recurring revenue grew 25% year-over-year to $5.84 billion, and the company added $333 million of net new ARR, up 51%. Ending ARR from accounts that have adopted Falcon Flex exceeded $2.29 billion, up 101%. Operating cash flow was $530.3 million and free cash flow $377.4 million, both well above the prior-year quarter. GAAP results were thinner: a $33.2 million loss from operations and diluted EPS of $0.01. At $261.28 the stock trades at 49.6x sales and 208.0x the vendor's forward earnings, above the Street's consensus target of $235.67 (median $245.00, range $132.00-$300.00). We value the shares on consensus EPS and the Street's targets rather than a GAAP multiple. Our probability-weighted fair value is about $255, 2.3% below the current price, against a bear-case downside of 29.6%. That derives HOLD, nearer the SELL line than the BUY line. The Street is more constructive, at 40 buy, 12 hold and 1 sell."
   },
   "sections": {
     "executiveSummary": {
-      "companyOverview": "CrowdStrike Holdings, Inc. (Nasdaq: CRWD), incorporated in 2011 and headquartered in Austin, Texas, provides cloud-delivered cybersecurity through its AI-native Falcon platform, sold on a SaaS subscription model with a single lightweight sensor. The platform protects endpoints, cloud workloads, identity and data, and spans managed security, threat intelligence, next-generation SIEM, identity protection and AI-workload security. The company sells through a partner-first, land-and-expand model: customers start with any number of cloud modules and add capabilities over time, and Falcon Flex, its enterprise licensing model, lets customers commit to a broad platform investment upfront and draw it down across products. Module adoption is deepening -- as of July 31, 2026, 51% of subscription customers had adopted six or more modules, 35% seven or more, and 26% eight or more. Revenue is recognized ratably over one-to-three-year subscription terms, so reported revenue lags bookings and the ARR base is the leading indicator. The company reports as a single reportable segment and breaks out no product or geographic revenue split. Strategic alliances span Cognizant, Snowflake, Fortanix, Cerebras Systems, Amazon Web Services and Schwarz Digits; the company agreed to acquire the technology assets of XM Cyber. Fiscal 2027 revenue is guided to $5,991.1-$6,011.1 million.",
+      "companyOverview": "CrowdStrike Holdings, Inc. (Nasdaq: CRWD), incorporated in 2011 and headquartered in Austin, Texas, provides cloud-delivered cybersecurity through its AI-native Falcon platform, sold on a SaaS subscription model with a single lightweight sensor. The platform protects endpoints, cloud workloads, identity and data, and spans managed security, threat intelligence, next-generation SIEM, identity protection and AI-workload security. The company sells through a partner-first, land-and-expand model: customers start with any number of cloud modules and add capabilities over time, and Falcon Flex, its enterprise licensing model, lets customers commit to a broader platform investment upfront and draw it down across products. Subscription revenue is recognized ratably over the term of the agreement, which is generally one to three years, so reported revenue lags bookings and the ARR base is the leading indicator. The company reports as a single reportable segment and breaks out no product or geographic revenue split. The company description lists alliances with Cognizant and Snowflake and a partnership with Fortanix around AI security.",
       "thesis": {
         "label": "HOLD",
-        "body": "CrowdStrike is a high-quality compounder whose price already discounts years of that compounding. The bull case is the operating record: ARR of $5.84 billion growing 25%, net new ARR of $333 million, Falcon Flex ARR above $2.29 billion growing 101%, a 74.7% gross margin, and fiscal 2026 free cash flow of $1.3 billion at a 27.2% margin -- a rare pairing of scale, growth and cash generation. The counter-case is valuation and the durability of the multiple. At 49.6x sales and about 208x forward earnings, with the shares above the consensus target of $235.67, the market already prices sustained high-20s ARR growth and margin expansion. A growth slowdown, a renewed drag from the July 19, 2024 Incident, or a broad de-rating of high-multiple software would each compress the multiple faster than fundamentals improve. GAAP profitability remains marginal, so the equity is valued on ARR and free cash flow, both of which must keep compounding to justify the price. We see a wide moat fully valued, not a bargain."
+        "body": "CrowdStrike is a high-quality compounder whose price already discounts years of that compounding. The bull case is the operating record: ARR of $5.84 billion growing 25%, faster than a year earlier, net new ARR of $333 million, a 74.7% gross margin in fiscal 2026, and fiscal 2026 free cash flow of $1.2 billion at a 25.8% margin, though that margin has slipped for two years. The counter-weight is price: the shares sit above the Street's consensus target, so the multiple, not the business, carries the risk. A relapse in growth, a renewed drag from the July 19, 2024 Incident, or a broad de-rating of high-multiple software would each compress the multiple faster than fundamentals improve. We see a wide moat fully valued, not a bargain."
       },
       "catalysts": [
-        "Raised outlook: management increased its fiscal 2027 net new ARR growth guidance by 630 basis points to 34% at the midpoint, and guides full-year revenue to $5,991.1-$6,011.1 million and non-GAAP EPS to $1.25-$1.26.",
-        "Falcon Flex adoption: ending Falcon Flex ARR extended its rapid year-over-year climb, evidence the enterprise licensing model is pulling broader, larger platform commitments.",
-        "Module expansion: a growing share of subscription customers run six or more modules, the mechanism behind expansion within the existing base.",
-        "Cash generation: second-quarter free cash flow reached $377.4 million, funding investment and future buyback capacity without external capital.",
-        "AI-security demand: new offerings such as Continuous Identity for AI Agents and Falcon AIDR, plus alliances with AWS, Cerebras and Schwarz Digits, extend the platform into securing AI workloads."
+        "Raised outlook: management raised its fiscal 2027 net new ARR growth outlook after the second quarter, and delivery against it is the next test.",
+        "Falcon Flex: ARR from accounts that have adopted Falcon Flex is growing quickly, a sign those accounts are expanding on the platform.",
+        "Module expansion: a growing share of subscription customers run six or more modules.",
+        "Cash generation: second-quarter free cash flow reached $377.4 million.",
+        "AI security: new AI-security work with AWS and Cerebras Systems extends the platform toward securing enterprise AI."
       ],
       "risks": [
-        "Valuation: the stock trades at a rich multiple of sales and of forward earnings and sits above the consensus target, so the price leaves little margin of safety if growth or the multiple slips.",
-        "July 19 Incident: the 2024 Falcon sensor outage has elongated sales cycles and raised contraction, and still carries lawsuits and customer-commitment discounting; management expects continued effects.",
-        "GAAP profitability: GAAP results are near breakeven (second-quarter diluted EPS $0.01; fiscal 2026 diluted EPS -$0.65), so the equity depends on ARR and free cash flow rather than reported earnings.",
-        "Growth deceleration: annual revenue growth has slowed from 54.4% in fiscal 2023 to 21.7% in fiscal 2026, and net retention can fall if customers renew with shorter terms or fewer modules.",
-        "Competition: the company faces intense competition, and certain rivals approached its customers and partners after the July 19 Incident."
+        "Valuation: the shares trade above the consensus target, leaving little margin of safety if growth or the multiple slips.",
+        "July 19 Incident: management expects factors relating to the 2024 sensor outage to keep weighing on key metrics and results.",
+        "GAAP profitability: GAAP results are near breakeven, so the equity rests on ARR and free cash flow.",
+        "Growth durability: annual growth slowed through fiscal 2026 before the latest quarter turned up; a relapse would hit the multiple.",
+        "Competition: the 10-K describes competition as intense, with a risk of losing market share."
       ]
     },
     "financials": {
@@ -447,7 +447,7 @@
         ],
         "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended January 31."
       },
-      "incomeCommentary": "In the second quarter of fiscal 2027 (ended July 31, 2026), total revenue rose 26% to $1.47 billion and subscription revenue rose 27% to $1.40 billion, from $1.17 billion a year earlier. GAAP subscription gross margin was 78%, up from 77%, and non-GAAP subscription gross margin was 81%. The GAAP loss from operations narrowed to $33.2 million from $105.5 million, while non-GAAP income from operations rose to $371.6 million from $255.0 million; the gap is largely stock-based compensation, acquisition and July 19 Incident costs. GAAP net income attributable to CrowdStrike was $5.3 million, or $0.01 per diluted share, against a $70.2 million loss a year earlier; non-GAAP net income was $322.9 million, or $0.31 per diluted share, up from $0.23. On a full-year basis the picture is growth decelerating as the base scales: revenue rose from $1.5 billion in fiscal 2022 to $4.8 billion in fiscal 2026, with year-over-year growth easing from 54.4% to 21.7%. Fiscal 2026 carried a 74.7% gross margin, a -6.1% GAAP operating margin and a diluted loss of $0.65 per share; fiscal 2024 was the one profitable year at $0.30. The vendor's snapshot labels the July quarter as 'Q3 2026'; we use the company's own label, the second quarter of fiscal 2027, throughout. Prior-year interim figures were revised for an immaterial error found in the fourth quarter of fiscal 2026.",
+      "incomeCommentary": "In the second quarter of fiscal 2027 (ended July 31, 2026), total revenue rose 26% to $1.47 billion from $1.17 billion a year earlier, and subscription revenue rose 27% to $1.40 billion from $1.10 billion. GAAP subscription gross margin was 78%, up from 77%, and non-GAAP subscription gross margin was 81%. The GAAP loss from operations narrowed to $33.2 million from $105.5 million, while non-GAAP income from operations rose to $371.6 million from $255.0 million; the non-GAAP measure excludes items including stock-based compensation, acquisition-related expenses and July 19 Incident costs. GAAP net income attributable to CrowdStrike was $5.3 million, or $0.01 per diluted share, against a $70.2 million loss a year earlier; non-GAAP EPS was $0.31, up from $0.23.\n\nGrowth is where the record turns. Annual revenue growth slowed every year through fiscal 2026, from 54.4% in fiscal 2023 to 21.7%, as revenue rose from $1.5 billion in fiscal 2022 to $4.8 billion. The latest data turned up: second-quarter revenue growth is above that fiscal 2026 rate, ARR growth was 25% at July 31, 2026 against 20% a year earlier, and consensus has fiscal 2027 revenue up 25%. We weigh the upturn as real but early. It rests on one quarter and the fiscal 2027 outlook, and part of it may reflect comparison with periods the company says the July 19 Incident affected through delayed sales and longer sales cycles.\n\nFiscal 2026 carried a 74.7% gross margin, a -6.1% GAAP operating margin and a diluted loss of $0.65 per share; fiscal 2024 was the one profitable year at $0.30. That annual per-share series appears to sit on a much smaller share count than the quarterly, consensus and guidance figures (guidance assumes 1,044 million diluted shares for fiscal 2027), and the pack does not explain the difference, so we do not compare the two. We use the company's label, the second quarter of fiscal 2027, for the quarter the vendor calls 'Q3 2026'. Prior-year interim figures were revised for an immaterial error found in the fourth quarter of fiscal 2026.",
       "balance": {
         "columns": [
           "Metric ($B)",
@@ -516,7 +516,7 @@
         ],
         "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended January 31."
       },
-      "balanceCommentary": "CrowdStrike's balance sheet is a fortress. At fiscal 2026 year-end it held $5.2 billion of cash and short-term investments against $0.7 billion of total debt, a net cash position of $4.5 billion, and cash and cash equivalents grew to $5.01 billion by July 31, 2026. Total equity was of similar size and the current ratio was 1.77 at year-end, 1.57 on a trailing-twelve-month basis. Total debt has held near that level across the five-year record while cash compounded from $2.0 billion in fiscal 2022, so leverage is not a concern; the -5.0x interest-coverage figure reflects the near-breakeven operating line, not a solvency issue, because the company carries far more cash than debt. The equity base has more than quadrupled from $1.0 billion in fiscal 2022, built from retained cash flow rather than issuance-heavy funding. The net-cash position gives management room to invest, to acquire -- as with the agreed purchase of XM Cyber's technology assets -- and to repurchase stock without external capital.",
+      "balanceCommentary": "At fiscal 2026 year-end CrowdStrike held $5.2 billion of cash and short-term investments against $0.7 billion of total debt, a net cash position of $4.5 billion. By July 31, 2026, cash and cash equivalents alone, a narrower measure that excludes short-term investments, stood at $5.01 billion. Total equity was of similar size to net cash at year-end, and the current ratio was 1.77, or 1.57 on a trailing-twelve-month basis. Total debt has held near that level across the five-year record while cash and short-term investments rose from $2.0 billion in fiscal 2022, so leverage is not a concern; the -5.0x interest-coverage figure reflects the loss-making operating line, not a solvency issue, because the company carries far more cash than debt. The equity base has more than quadrupled from $1.0 billion in fiscal 2022 even though GAAP net income was negative in four of the five years, so the increase did not come from retained earnings.",
       "cashflow": {
         "columns": [
           "Metric ($B)",
@@ -541,11 +541,11 @@
           {
             "label": "Capital Expenditure",
             "values": [
-              -112143000,
-              -235019000,
-              -176529000,
-              -254852000,
-              -302108000
+              -133009000,
+              -264114000,
+              -225986000,
+              -313821000,
+              -370859000
             ],
             "format": "usdB"
           },
@@ -574,29 +574,29 @@
           {
             "label": "Free Cash Flow",
             "values": [
-              462641000,
-              705988000,
-              989678000,
-              1126875000,
-              1310241000
+              441775000,
+              676893000,
+              940221000,
+              1067906000,
+              1241490000
             ],
             "format": "usdB"
           },
           {
             "label": "FCF Margin",
             "values": [
-              0.31871239478807434,
-              0.31499940211561833,
-              0.32389467707175945,
-              0.2850233102591445,
-              0.2722858766771855
+              0.30433785204402886,
+              0.3020177259333689,
+              0.3077087468561358,
+              0.27010813370214265,
+              0.25799848503898065
             ],
             "format": "pct"
           }
         ],
         "note": "Source: Bigdata.com company tearsheet (FMP); fiscal years ended January 31."
       },
-      "cashflowCommentary": "Cash generation is the cleanest measure of CrowdStrike's quality. In the second quarter of fiscal 2027 operating cash flow was $530.3 million, up from $332.8 million, and free cash flow was $377.4 million, up from $283.6 million. On a full-year basis fiscal 2026 operating cash flow was $1.6 billion and free cash flow $1.3 billion, a 27.2% free-cash-flow margin, on capital expenditure of about $302 million. Free cash flow has compounded every year, from $0.5 billion in fiscal 2022, even as GAAP earnings stayed near breakeven: the ratable subscription model collects cash upfront and recognizes revenue over the contract term, so operating cash flow runs well ahead of reported income. The company pays no dividend and reported no share repurchases across the five-year record, so free cash flow has accumulated on the balance sheet as net cash. The gap between strong free cash flow and marginal GAAP earnings is driven largely by stock-based compensation, which is the central tension for a shareholder: the cash is real, but so is the dilution that the non-GAAP add-backs set aside."
+      "cashflowCommentary": "Cash generation is the strongest part of CrowdStrike's financial history, but its margin is slipping. In the second quarter of fiscal 2027 operating cash flow was $530.3 million, up from $332.8 million, and free cash flow was $377.4 million, up from $283.6 million. In fiscal 2026 operating cash flow was $1.6 billion and free cash flow $1.2 billion, a 25.8% free-cash-flow margin, after capital expenditure of $0.4 billion. Free cash flow has risen every year since fiscal 2022, even as GAAP earnings stayed near breakeven: the company generally invoices subscription customers at the beginning of the term and recognizes the revenue ratably, so operating cash flow runs ahead of reported income. Conversion has weakened, though. The free-cash-flow margin held between 30.2% and 30.8% from fiscal 2022 to fiscal 2024, then fell to 27.0% in fiscal 2025 and further in fiscal 2026; over those two years operating cash flow grew more slowly than revenue and capital expenditure rose from $0.2 billion. No source in the pack explains the decline, so we treat it as a trend to watch rather than a settled change."
     },
     "valuation": {
       "multiples": {
@@ -622,7 +622,7 @@
           {
             "label": "EV/EBITDA",
             "values": [
-              null
+              2510.766
             ],
             "format": "mult"
           },
@@ -636,28 +636,28 @@
         ],
         "note": "Peer multiples pending a peer data source."
       },
-      "multiplesCommentary": "At $261.28 CrowdStrike trades at 49.6x trailing sales and about 208x next-twelve-month earnings; the trailing P/E of -6,531.9x is meaningless because GAAP earnings are near zero, and there is no EV/EBITDA line because EBITDA is not reported. For a subscription franchise the relevant anchors are ARR and free cash flow, and against sales that multiple is among the richest in software. Growth is strong -- consensus sees revenue rising from $4.8 billion in fiscal 2026 to about $6.0 billion in fiscal 2027 and $7.4 billion in fiscal 2028, with non-GAAP EPS of $1.26 and $1.61 -- but at about 162.7x estimated fiscal 2028 earnings the price already extrapolates that trajectory. Peer multiples are pending a peer data source, so we anchor to the company's own history and to the Street: the consensus target of $235.67 sits 9.8% below the current price, the median is $245.00, and the range runs $132.00-$300.00. That the average analyst target implies downside, even as most analysts rate the stock a buy, captures the tension -- a strong business at a price that already reflects it.",
+      "multiplesCommentary": "At $261.28 CrowdStrike trades at 49.6x sales and 208.0x the vendor's forward (NTM) earnings. That forward multiple sits close to the price over fiscal 2027 consensus EPS of $1.26, which is in line with the company's non-GAAP EPS guidance of $1.25-$1.26, so we read it as a current-year multiple. At 162.7x fiscal 2028 consensus EPS of $1.61, the price already extrapolates the consensus path set out under growth. The trailing P/E of -6,531.9x and EV/EBITDA of 2,510.8x carry no information because GAAP earnings are near zero, and the trailing free-cash-flow yield is 0.6%. At these multiples the market prices years of ARR growth near today's pace plus margin expansion, so even a healthy slowdown can compress the multiple faster than earnings grow. Peer multiples are pending a peer data source and the pack carries no history of the stock's own multiple, so we anchor the scenarios to consensus EPS and to the Street: the consensus target of $235.67 sits 9.8% below the current price, the median is $245.00, and the range runs $132.00-$300.00. That the average analyst target implies downside, even as most analysts rate the stock a buy, captures the tension -- a strong business at a price that already reflects it.",
       "scenarios": [
         {
           "name": "Bull",
-          "driver": "ARR growth holds in the mid-20s as Falcon Flex and module adoption compound, free cash flow keeps expanding, and the high-multiple software group holds its rating; the stock re-rates toward the top of the Street's $300.00 range and beyond as fiscal 2028 estimates rise.",
-          "impliedPrice": 315,
+          "driver": "ARR growth holds near today's pace as accounts on Falcon Flex and multi-module customers keep expanding, the raised fiscal 2027 net new ARR outlook is met, and the market keeps paying close to today's current-year multiple as it rolls onto fiscal 2028: an assumed 205x consensus fiscal 2028 EPS of $1.61, just below today's 208.0x, gives about $330, above the Street's $300.00 high.",
+          "impliedPrice": 330,
           "probability": 0.3
         },
         {
           "name": "Base",
-          "driver": "Revenue growth moderates toward the low-20s in line with guidance, the rich sales multiple compresses modestly, and free-cash-flow growth roughly offsets the de-rating; the stock hovers near the current level and the consensus median target of $245.00.",
-          "impliedPrice": 255,
+          "driver": "Revenue tracks consensus and ARR keeps compounding, but the multiple compresses as investors look past the fiscal 2027 upturn to slower growth later, and the shares settle at the Street's median target of $245.00, a checkable anchor that does not move with today's price. On fiscal 2028 consensus EPS that is a current-year multiple well below today's.",
+          "impliedPrice": 245,
           "probability": 0.45
         },
         {
           "name": "Bear",
-          "driver": "Net new ARR growth slows, the July 19 Incident's contraction effects linger, or high-multiple software de-rates broadly; the 49.6x sales multiple compresses sharply and the stock falls toward $185, still well above its 52-week low of $85.68.",
-          "impliedPrice": 185,
+          "driver": "Net new ARR growth slows and the July 19 Incident's contraction effects linger, so earnings stall near the fiscal 2027 consensus EPS of $1.26 instead of reaching fiscal 2028's. We value that stalled EPS at the multiple the Street's consensus target of $235.67 places on fiscal 2028 consensus EPS -- a Street multiple that does not move with today's price and still carries a growth premium -- which gives about $184.",
+          "impliedPrice": 184,
           "probability": 0.25
         }
       ],
-      "scenarioCommentary": "We weight the Base at 45%, the Bull at 30% and the Bear at 25%. That yields a probability-weighted fair value near $255, about 2% below the current $261.28, with a bear-case downside near 29% to a Bear price of $185. The reward/risk is unattractive: the expected value sits slightly below today's price while the bear case is a large drawdown, so on the derived rule the signal is HOLD, and we rate it HOLD. The asymmetry follows from valuation, not from the business -- at 49.6x sales the stock needs high-20s ARR growth and margin expansion to persist merely to hold its multiple, and the consensus target already implies 9.8% downside. That Bear outcome is a real scenario, a de-rating of high-multiple software rather than a fundamental collapse, and it still sits far above the 52-week low of $85.68. Our $220-$305 target range brackets the Base implied price and straddles the current price, reflecting a franchise we would own at a lower entry but not chase here."
+      "scenarioCommentary": "We weight the Base at 45%, the Bull at 30% and the Bear at 25%. That yields a probability-weighted fair value of about $255, 2.3% below the current price, with a bear-case downside of 29.6% to the Bear price of $184. On the derived rule the signal is HOLD, and we rate it HOLD. It sits nearer the SELL line of -5.0% than the BUY line of +10.0%: moving five points of weight from Bull to Bear would derive SELL, so the split is a judgment, not a finding. The Base anchor decides much of that. The case for the Street's median target is that even the consensus target sits below the price although 40 of 53 analysts rate the stock a buy. The case against it is that the shares trade near the top of a 52-week range of $85.68-$263.19, no source in the pack explains a move of that size, and targets may lag it. The Bear reads the consensus target as pricing fiscal 2028 consensus EPS; the pack does not say what basis analysts use. We take stalled earnings at the Street's multiple, rather than a deeper de-rating on top, as the downside case because ARR growth was accelerating at July 31, 2026 and management raised its outlook after the quarter; the Street's low target marks the deeper tail. We give the Bull its weight because net new ARR growth accelerated in the second quarter, and the Bear its weight because a stall needs no collapse in the business, only a slowdown in net new ARR. Our $220-$305 target range brackets the Base implied price and straddles the current price."
     },
     "businessMoat": {
       "segments": [
@@ -665,7 +665,7 @@
           "name": "Consolidated",
           "sharePct": 1,
           "revenue": 4812005000,
-          "body": "CrowdStrike reports as a single reportable segment and discloses no product or geographic revenue split, so the consolidated total is the reportable line: fiscal 2026 revenue of $4.8 billion, essentially all subscription. Within that total, annual recurring revenue reached $5.84 billion at July 31, 2026, up 25%, with net new ARR of $333 million in the quarter. Subscription gross margin runs high -- 78% GAAP and 81% non-GAAP in the second quarter -- reflecting the scale economics of a single cloud platform delivered through one lightweight sensor. Professional services are a small, deliberately loss-leading complement used to cross-sell Falcon subscriptions. Because the company sells one platform with many modules rather than distinct product lines, the moat is best read at the platform level: more modules per customer, more data, and a stronger network effect."
+          "body": "CrowdStrike reports as a single reportable segment and discloses no product or geographic revenue split, so the consolidated total is the reportable line: fiscal 2026 revenue of $4.8 billion, most of it subscription (in the second quarter of fiscal 2027, subscription revenue was $1.40 billion of $1.47 billion in total). Subscription gross margin runs high -- 78% GAAP and 81% non-GAAP in the second quarter -- reflecting the scale economics of a single cloud platform delivered through one lightweight sensor. Professional services are a small complement that the company views primarily as an opportunity to cross-sell Falcon subscriptions. Because the company sells one platform with many modules rather than distinct product lines, the moat is best read at the platform level: more modules per customer, more data, and a stronger network effect."
         }
       ],
       "segmentsBasis": "FY26 (single reportable segment) mix",
@@ -681,12 +681,12 @@
         {
           "name": "Network effect from data scale",
           "strength": "Strong",
-          "body": "The Security Cloud correlates trillions of security events each week; the company states that more data fed into Falcon makes its detection more effective, a self-reinforcing advantage that a subscale rival struggles to replicate. A $5.84 billion ARR base and continued net new ARR growth widen that data and installed-base lead."
+          "body": "The Security Cloud correlates trillions of cybersecurity events per week; the company says that the more data fed into Falcon, the more intelligent its Security Cloud becomes. In our view that is a self-reinforcing advantage a subscale rival would find hard to replicate, and the growing ARR base widens the data and installed-base lead."
         },
         {
           "name": "Land-and-expand and Falcon Flex",
           "strength": "Strong",
-          "body": "The land-and-expand model and the Falcon Flex licensing framework let customers commit broadly upfront and draw down across products; Falcon Flex ending ARR surpassed $2.29 billion, up 101% year-over-year, evidence that customers are consolidating security spend onto the platform."
+          "body": "The land-and-expand model and Falcon Flex let customers commit to a broader platform investment upfront and draw it down across products over time; the Flex-account ARR figures under growth are the evidence that the model is working. The same structure carries the counter-case. The company warns that if customers are not able to fully utilize their product subscriptions, including in connection with its flexible subscription offering, it may experience increased contraction as they renew with shorter subscription periods, fewer cloud modules, fewer endpoints or smaller contract values. Commitments drawn down over time prove their value at renewal, not at signing."
         },
         {
           "name": "Switching costs",
@@ -694,39 +694,38 @@
           "body": "Once a customer standardizes on Falcon across endpoints, cloud and identity, replacing it means re-instrumenting security operations. High dollar-based gross retention persisted even through the July 19 Incident, though the incident showed the retention is not unconditional."
         }
       ],
-      "durability": "The moat is wide but not unconditional. The platform, the data-scale network effect and multi-module adoption make CrowdStrike costly to displace, and ARR and free cash flow have compounded through a threat environment that keeps security demand growing. The clearest threat to durability is self-inflicted: the July 19, 2024 Incident showed that a single faulty update can elongate sales cycles, invite competitor poaching and force customer-commitment discounting that raises contraction, even when gross retention holds. Competition is intense, and pricing is disciplined by rivals rather than by CrowdStrike alone. The second threat is expectations, not economics: at 49.6x sales the equity is valued for sustained high-20s ARR growth and margin expansion, so even a healthy deceleration -- annual revenue growth has already slowed markedly since fiscal 2023 -- can compress the multiple. We rate the moat wide and the business durable, but the equity's risk sits in the valuation rather than the franchise."
+      "durability": "The moat is wide but not unconditional. The platform, the data-scale network effect and multi-module adoption make CrowdStrike costly to displace, and ARR and free cash flow have kept growing. The clearest threat is self-inflicted: the July 19, 2024 Incident, whose effects are set out under risks, showed that one faulty update can set back sales even while gross retention holds. The 10-K also describes competition as intense. The second threat is the multiple discussed under valuation, which leaves little room for a growth relapse. We rate the moat wide and the business durable."
     },
     "growth": {
       "points": [
         "Annual recurring revenue reached $5.84 billion at July 31, 2026, up 25%, with $333 million of net new ARR added in the quarter, up 51%, and $588.6 million over the six months.",
-        "Falcon Flex ending ARR surpassed $2.29 billion, up 101% year-over-year, as the enterprise licensing model pulls larger, broader platform commitments.",
+        "Ending ARR from accounts that have adopted Falcon Flex exceeded $2.29 billion, up 101% year-over-year; the figure is the total ARR of those accounts, not spend under Falcon Flex itself.",
         "Management raised the fiscal 2027 net new ARR growth outlook by 630 basis points to 34% at the midpoint and guides full-year revenue to $5,991.1-$6,011.1 million.",
-        "Module adoption deepened to 51% of subscription customers on six or more modules, the mechanism behind expansion within the existing base.",
-        "Consensus sees revenue reaching about $6.0 billion in fiscal 2027 and $7.4 billion in fiscal 2028, with non-GAAP EPS of $1.26 and $1.61, though annual growth continues to decelerate as the base scales.",
-        "AI security is an emerging vector: offerings such as Continuous Identity for AI Agents and Falcon AIDR, and alliances with AWS, Cerebras and Schwarz Digits, target securing enterprise AI workloads."
+        "Consensus sees revenue of about $6 billion in fiscal 2027, a faster rise than fiscal 2026's, and $7.4 billion in fiscal 2028, which implies growth a little below fiscal 2027's.",
+        "AI security is an emerging vector: the company unveiled Continuous Identity for AI Agents, extended Falcon AI Detection and Response (AIDR) to more AI gateway partners, introduced AI, cloud and Next-Gen SIEM innovations with Amazon Web Services, and announced a collaboration with Cerebras Systems on AI inference for enterprises. Separately, an expanded partnership with Schwarz Digits sets a multi-year roadmap to bring Falcon to European enterprises, alongside the agreed purchase of XM Cyber's technology assets."
       ]
     },
     "management": {
-      "leadership": "George Kurtz, the company's founder, is Chief Executive Officer, and Burt W. Podbere is Chief Financial Officer. On the second-quarter results Kurtz highlighted the Falcon Flex results and net new ARR, and Podbere pointed to strong quarterly cash flow from operations and free cash flow and to the raised full-year net new ARR outlook. The team's execution shows in the ARR, net new ARR and free-cash-flow figures set out above, but the same team presided over the July 19, 2024 Incident and the customer-commitment discounting that followed, and revised prior-year interim financials for an immaterial error found in the fourth quarter of fiscal 2026. Founder leadership aligns management with the long-term platform strategy; the incident and the revision are reminders that execution risk is real.",
-      "capitalAllocation": "Capital allocation is investment-led and internally funded. The company pays no dividend and reported no share repurchases across the five-year record, so the roughly $1.3 billion of fiscal 2026 free cash flow has accumulated as net cash, which reached $4.5 billion at year-end. Reinvestment runs through research and development and sales and marketing to sustain the land-and-expand model, and through acquisitions that extend the platform -- most recently the agreed purchase of XM Cyber's technology assets from Schwarz Digits. Capital expenditure is modest at about $302 million in fiscal 2026. The net-cash balance sheet and strong free cash flow give management ample capacity to keep investing, to acquire and eventually to return capital, though stock-based compensation -- the main reconciling item between GAAP and non-GAAP results -- is a form of dilution that free-cash-flow figures do not capture. We would want to see buybacks begin to offset that dilution as the company matures.",
-      "governance": "Governance rests on the 2026 proxy statement (DEF 14A, filed May 5, 2026). As of April 3, 2026, 254,580,533 shares of Class A common stock were outstanding and no Class B shares remained outstanding, so the historical dual-class structure no longer concentrates votes in a separate super-voting class. The founder, George Kurtz, serves as Chief Executive Officer and a director, aligning management with shareholders, and the proxy names independent directors and director nominees. The captured excerpt covers the beneficial-ownership table rather than the full board and compensation discussion, so we do not infer board-independence counts or committee structure beyond what it supports; related-party detail beyond ordinary beneficial ownership is not in the excerpt.",
-      "insiderOwnership": "Beneficial ownership is disclosed as of April 3, 2026, against 254,580,533 Class A shares outstanding. Founder and Chief Executive Officer George Kurtz beneficially owned 2,384,082 shares, less than 1%, including shares held through trusts and options exercisable within 60 days. All executive officers and directors as a group (11 persons) owned 4,262,065 shares, or 1.67%. Among outside holders, The Vanguard Group reported 18,449,066 shares, or 7.27%, and BlackRock, Inc. reported 16,954,069 shares, or 6.70%. Insider ownership is modest in percentage terms, so alignment rests on the founder's role and equity incentives rather than a controlling stake; the reported blocks above five percent sit with index managers, which typically support management. The low insider percentage also means stock-based compensation, not founder control, is the main channel through which the broad employee base participates in the equity."
+      "leadership": "George Kurtz, the company's founder, is Chief Executive Officer, and Burt Podbere is Chief Financial Officer, as the August 26, 2026 earnings release names them. On the second-quarter results Kurtz highlighted the Falcon Flex results and net new ARR, and Podbere pointed to second-quarter cash flow from operations and free cash flow and to the raised full-year net new ARR outlook. Execution shows in the ARR, net new ARR and free-cash-flow figures set out above. Founder leadership aligns management with the long-term platform strategy, and the July 19, 2024 Incident is a reminder that execution risk is real.",
+      "capitalAllocation": "Capital allocation is investment-led and internally funded. The company pays no dividend and the pack records no share repurchases across the five years, so free cash flow has built the net cash position over that period. Reinvestment runs through research and development and sales and marketing to sustain the land-and-expand model, and through acquisitions that extend the platform -- most recently the agreed purchase of XM Cyber's technology assets from Schwarz Digits. Capital expenditure has risen, as the cash-flow discussion sets out, but remains small beside operating cash flow. Net cash and free cash flow give management capacity to keep investing, to acquire and eventually to buy back stock without outside capital. The cost those figures do not show is stock-based compensation, which the non-GAAP results exclude and which dilutes holders; we would want buybacks to begin offsetting it as the company matures.",
+      "governance": "Governance rests on the 2026 proxy statement (DEF 14A, filed May 5, 2026). As of April 3, 2026, 254,580,533 shares of Class A common stock were outstanding and no shares of Class B common stock were outstanding, so no separate share class concentrates votes. The excerpt's ownership table lists George Kurtz with the other named executive officers, directors and director nominees. The captured excerpt covers the beneficial-ownership table rather than the board and compensation discussion, so we do not infer board independence, committee structure or pay; related-party detail beyond ordinary beneficial ownership is not in the excerpt.",
+      "insiderOwnership": "Beneficial ownership is disclosed as of April 3, 2026, against the Class A share count above. That count is on a different basis from the roughly 1.02 billion shares behind the current market value, and the pack does not explain the difference, so we read the proxy's percentages as of their date only. George Kurtz beneficially owned 2,384,082 shares, less than 1%, including shares held through trusts and options exercisable within 60 days. All executive officers and directors as a group (11 persons) owned 4,262,065 shares, or 1.67%. Among outside holders, Vanguard Capital Management was listed with 18,449,066 shares, or 7.27%, based on a Schedule 13G filed April 29, 2026, and BlackRock, Inc. with 16,954,069 shares, or 6.70%, based on a Schedule 13G that reports holdings as of December 31, 2023 and may be out of date. Insider ownership is modest in percentage terms, so alignment rests on the founder's role and equity incentives rather than a controlling stake; for outside holders, no insider block can carry or stop a vote."
     },
     "risks": {
       "idiosyncratic": [
-        "July 19, 2024 Incident: the faulty Falcon sensor update caused Windows system crashes and has led to lawsuits, elongated sales cycles, delayed purchasing decisions and customer-commitment packages featuring discounts, extra modules and extended terms. Management expects the incident to keep raising costs and to pressure key metrics in future periods, and because contracts run over a year, churn and contraction can surface with a lag.",
-        "Valuation and expectations: at 49.6x sales and about 208x forward earnings, with the shares above the $235.67 consensus target and about 162.7x fiscal 2028 estimated earnings, the price embeds sustained high-growth outcomes; a slowdown in net new ARR or in net retention would leave little valuation support.",
-        "Growth and retention: annual revenue growth has decelerated each year as the base has scaled, and the company notes that dollar-based net retention can fall when customers renew with shorter terms, fewer modules or smaller contract values -- a dynamic the incident's commitment packages can worsen.",
-        "GAAP profitability and stock-based compensation: GAAP results remain near breakeven (fiscal 2026 diluted EPS -$0.65; second-quarter $0.01), and the wide gap to non-GAAP income is driven largely by stock-based compensation, so a shareholder relies on free cash flow and must weigh ongoing dilution.",
+        "July 19, 2024 Incident: the faulty Falcon sensor update crashed certain Windows systems and has led to lawsuits, claims and inquiries, longer sales cycles, delayed purchasing decisions and customer-commitment packages that included discounting, additional modules, professional services, flexible payment terms or subscription period extensions. The company says those packages have resulted, and are expected to continue to result, in increased contraction, and that certain competitors aggressively approached its customers and partners after the incident. Because customers typically sign contracts with terms over one year, churn and contraction may surface in future periods.",
+        "Valuation and expectations: the multiple discussed under valuation embeds sustained high-growth outcomes, so a slowdown in net new ARR or in net retention would leave little valuation support.",
+        "Growth and retention: a relapse in the growth upturn discussed under financials would weigh on the multiple, and dollar-based net retention may fall if customers who cannot fully use their subscriptions, including under the flexible subscription offering, renew smaller, the mechanism set out under the moat.",
+        "GAAP profitability: fiscal 2026 net income was -$162.5 million and the GAAP operating margin -6.1%, and the second quarter's GAAP net income of $5.3 million was near breakeven. A shareholder therefore relies on free cash flow, and the dilution discussed under capital allocation is the cost of that reliance.",
         "Single-platform concentration: a defect, outage or security failure in the one Falcon platform -- as the July 19 Incident showed -- can affect the entire customer base at once and damage the brand on which new-customer acquisition depends."
       ],
       "systemic": "CrowdStrike's results move with the broader technology and macro cycle. Demand for security software is resilient but not immune to enterprise budget tightening in a downturn, which can lengthen sales cycles and slow net new ARR. The equity is a high-multiple, long-duration asset, so it is unusually sensitive to interest rates and to the market's appetite for growth software: a rise in rates or a rotation away from high-multiple names can compress the sales multiple independent of company performance. The company also flags general market, political, economic and business conditions -- including macroeconomic deterioration, inflation, geopolitical conflict and volatility in the financial sector -- as forces that could affect results. As a widely deployed security vendor, CrowdStrike is itself a standing target of cyberattacks, and a compromise of its own systems would harm the reputation on which its franchise depends. These systemic forces bear most on the multiple, which is where the equity's risk is concentrated."
     },
     "finalRecommendation": {
       "body": [
-        "We rate CrowdStrike HOLD with a $220-$305 target range that brackets a Base case near $255. The second-quarter fiscal 2027 results were excellent -- revenue up 26% to $1.47 billion, ARR up 25% to $5.84 billion, net new ARR of $333 million, and free cash flow of $377.4 million -- and the moat is wide. But at 49.6x sales and about 208x forward earnings, with the stock above the $235.67 consensus target, the price already reflects that quality, and our probability-weighted fair value sits about 2% below the current $261.28.",
-        "The risk/reward is unattractive rather than outright negative: a bear-case de-rating to $185 is a 29% drawdown, while the expected value is roughly flat with today's price. The equity's risk lives in the multiple, not the business -- the July 19, 2024 Incident and a deceleration in annual revenue growth since fiscal 2023 show how expectations can reset even as ARR and free cash flow compound.",
-        "We would own CrowdStrike at a lower entry, toward the low end of our range, where the free-cash-flow yield and ARR growth would better compensate for the execution and multiple risk. At $261.28 we wait. The metrics to watch are net new ARR and Falcon Flex momentum, dollar-based net retention, and whether the company converts its non-GAAP profitability into GAAP earnings while beginning to offset stock-based-compensation dilution."
+        "We rate CrowdStrike HOLD with a $220-$305 target range that brackets a Base case at the Street's median target. The second quarter was strong on revenue, ARR, net new ARR and cash flow, growth turned up, and the moat is wide. But with the stock above the $235.67 consensus target, the price already reflects that quality, and our probability-weighted fair value sits 2.3% below the current $261.28.",
+        "The risk/reward is unattractive rather than outright negative: the Bear, with earnings stalling at the fiscal 2027 level and valued at the Street's multiple, is a 29.6% drawdown, while the expected value sits a little below today's price. The equity's risk lives in the multiple, not the business.",
+        "On these scenarios, a rise of a few percent, past the 52-week high, would derive SELL, and a fall toward the low end of our range would derive BUY. Until then we wait. A quarter in which net new ARR growth slows would move weight toward the Bear; net new ARR running ahead of the raised outlook would move it toward the Bull. We also track dollar-based net retention, whether the free-cash-flow margin stops falling, and whether non-GAAP profitability converts into GAAP earnings."
       ]
     }
   },

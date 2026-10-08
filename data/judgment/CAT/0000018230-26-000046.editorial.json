@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "6eb3d9eca1477530af037fd98b36b02f558f93f885e7e679ffb82c3a204b578b",
-  "reviewedAt": "2026-09-24T04:00:00Z",
-  "reviewer": "claude-opus-4-8",
+  "judgmentSha256": "6493947ab2158f15d5abd2e5b2c2acc5a18195c14e63ee75095a2c23085e4ab6",
+  "reviewedAt": "2026-10-08T13:59:32Z",
+  "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "approved",
+  "verdict": "approved-with-minors",
   "findings": [
     {
       "id": "F-1",
@@ -13,7 +13,7 @@
       "issue": "This conflates the revenue bridge with the profit bridge. The MD&A gives $3.1 billion of higher sales volume and $595 million of favorable price realization as the drivers of the 24 percent, $3.974 billion increase in sales and revenues — not of profit. It then states the separate profit rise ('an increase of $1.414 billion, or 65 percent') 'was mainly due to the profit impact of higher sales volume,' and does not credit the $595 million price figure or the $3.1 billion figure to consolidated profit. Attaching two revenue-change magnitudes to the profit result, and naming price as a co-driver the pack does not credit at the consolidated level, is an unsupported causal/attribution claim.",
       "fix": "Separate the two bridges: state that sales rose 24 percent to $20.543 billion on $3.1 billion higher volume and $595 million favorable price, and, separately, that quarterly profit rose 65 percent to $3.593 billion, which the MD&A attributes mainly to the profit impact of higher sales volume. Do not present the $595 million/$3.1 billion revenue figures as the drivers of profit.",
       "status": "addressed",
-      "note": "Round 2: the thesis now separates the two bridges — sales +24% to $20.543B on $3.1B volume and $595M price, and, separately, profit +65% to $3.593B 'which the MD&A attributes mainly to the profit impact of higher sales volume', matching the MD&A (prompt lines 228-229). Resolved."
+      "note": "Re-checked on the corrected-inputs rewrite (October 8, 2026): the thesis still separates the sales bridge ($3.1B volume, $595M price) from the profit rise (+65% to $3.593B, 'mainly ... the profit impact of higher sales volume'), matching the MD&A. Resolved."
     },
     {
       "id": "F-2",
@@ -23,7 +23,7 @@
       "issue": "capitalAllocation is a near-verbatim restatement of cashflowCommentary rather than a distinct read. Both carry the same figures (FY25 buybacks $5.2B, dividends $2.7B; Q2'26 $2.2B combined = $1.5B/$0.7B; FCF $8.9B; capex $2.8B rising to $3.5B; 0.81% yield), and the clauses 'deployed $2.2 billion for the two combined, being $1.5 billion of repurchases and $0.7 billion of dividends' and 'the return of capital comes mostly through repurchases/buybacks' appear in both sections almost word-for-word. Rubric item 7: no sentence should appear in two sections; introduce a figure once and refer back in words.",
       "fix": "Establish the capital-return figures once (in cashflowCommentary), and in capitalAllocation reach a judgment instead of repeating them: e.g. how the rising $3.5B capex plan changes the buyback pace, whether the 0.81% yield/buyback mix is sustainable through a downturn, or what the FCF cover of returns implies. Refer back to the figures in words rather than restating the amounts.",
       "status": "addressed",
-      "note": "Round 2: capitalAllocation now reaches a distinct judgment — affordability (FCF covers returns), the capex step-up slowing the buyback pace, dividend-vs-buyback flexibility, and FCF tracking the cycle — and refers back to the figures 'detailed above' in words. The amounts now live once, in cashflowCommentary. Resolved."
+      "note": "Re-checked October 8, 2026: capitalAllocation carries no restated amounts and reaches its own view (payout ran ahead of FCF in FY24 and FY25; buybacks are the flex). Resolved. Two new wording points in this field are raised as F-19."
     },
     {
       "id": "F-3",
@@ -33,7 +33,7 @@
       "issue": "The Q2'26 segment-sales trio and the data-center/Power Generation point are stated in full in three places. Construction $8.346B/+35% and Power & Energy $8.238B/+17% appear in the executive-summary thesis and again here; Power Generation +29% appears in the thesis, in this segment body ('main driver on data-center demand') and in growth.points[1]. The 'first time in company history above $20 billion / over $20 billion in a single quarter' claim likewise recurs across the subtitle, growth.points[0] and management.leadership. Rubric item 7: figures introduced in the exec summary should be pointed to, not re-stated verbatim in the body sections.",
       "fix": "Introduce each segment figure once (the businessMoat/segments body is the natural home) and have the thesis and growth points refer back in words rather than repeat the same billions and percentages. Keep the '$20 billion first' claim in one place and reference it elsewhere in prose.",
       "status": "addressed",
-      "note": "Round 2: the Q2'26 segment trio now appears once, in segments[0].body (Power Generation +29% with it); the thesis refers to it in words ('sales higher across all three primary segments') and growth.points no longer restate the figures. The '$20 billion first' claim sits once in management.leadership, with the subtitle referencing 'a $20 billion quarter' only as framing. Resolved."
+      "note": "Re-checked October 8, 2026: the segment figures appear once, in segments[0].body, and the $20 billion milestone sits once in leadership. Resolved for figures. The same claims still recur in words across growth.points; that paraphrase repetition is raised separately as F-15."
     },
     {
       "id": "F-4",
@@ -43,7 +43,7 @@
       "issue": "The FY25 operating-margin decline (16.5 percent from 20.2 percent) is used as a stand-alone claim in three sections: financials.incomeCommentary ('operating margin narrowed to {- 16.5 percent -} from 20.2 percent in FY24'), this durability paragraph, and risks.idiosyncratic ('operating margin fell to 16.5 percent from 20.2 percent even as revenue grew 4.3 percent'). Same figure, same argument (margin fragility), made three times in different words. Rubric item 7 paraphrase repetition.",
       "fix": "State the FY25 margin compression once with its number (incomeCommentary), then in durability and the idiosyncratic risk refer to it in words ('the FY25 margin slip shown above') rather than re-quoting 16.5 percent from 20.2 percent.",
       "status": "addressed",
-      "note": "Round 2: the 16.5%-from-20.2% figure is stated once, in incomeCommentary. durability now says 'the FY25 margin slip shown in the income-statement discussion' and risks.idiosyncratic[3] says 'the FY25 operating-margin decline noted in the income-statement discussion' — both refer back in words with no restated figures. Resolved."
+      "note": "Re-checked October 8, 2026: the 16.5%-from-20.2% figure is stated once (incomeCommentary); durability and idiosyncratic[3] refer back in words. Resolved. The causal tail added to idiosyncratic[3] is raised as F-13."
     },
     {
       "id": "F-5",
@@ -53,7 +53,7 @@
       "issue": "The {- -} span wraps a bare level ('16.5 percent'), not a signed change. House style / rubric item 9 restricts spans to signed changes or explicit positives/negatives; 16.5 percent in isolation is a positive margin, and the fall is expressed by the surrounding words 'narrowed ... from 20.2 percent', which sit outside the span.",
       "fix": "Either drop the span, or move it onto the signed change itself (e.g. the decline in points), so the marker sits on an explicit negative rather than on a standalone level.",
       "status": "addressed",
-      "note": "Round 2: the span now reads '{- narrowed to 16.5 percent from 20.2 percent -}', wrapping the decline phrase — an explicit negative that includes the direction word and both endpoints — rather than the bare level '16.5 percent'. The marker sits on the negative change, satisfying the span rule, and it is a clause, not a whole sentence. Resolved."
+      "note": "Re-checked October 8, 2026: the span wraps 'narrowed to 16.5 percent from 20.2 percent', an explicit negative change. Resolved."
     },
     {
       "id": "F-6",
@@ -63,7 +63,7 @@
       "issue": "The 39 percent figure is grounded (the MD&A states 'North America sales increased 39 percent'), but it is the total Machinery, Energy & Transportation North America figure, not Construction Industries. Construction Industries' own North America sales rose 50 percent, and consolidated North America (including Financial Products) rose 37 percent. Labelling a total-region figure 'Construction momentum' and pairing it with IIJA construction spending implies it is a construction-segment number, which is imprecise.",
       "fix": "Either use the Construction Industries North America figure (+50 percent) under the 'Construction momentum' label, or relabel the bullet to make clear the 39 percent is total North America sales and keep the IIJA point as context.",
       "status": "addressed",
-      "note": "Round 2: the bullet now reads 'Construction Industries' North America sales rose 50 percent in the quarter', using the segment's own figure (grounded at Construction Industries NA $5,065M vs $3,369M, +50%) under the 'Construction momentum' label. Resolved."
+      "note": "Re-checked October 8, 2026: the bullet uses Construction Industries' own North America figure (+50%). Resolved for the figure. The driver attached to it is raised separately as F-11."
     },
     {
       "id": "F-7",
@@ -73,7 +73,197 @@
       "issue": "The pack does not split total debt ($36.2B) between the Financial Products lending book and industrial operations. Financial Products is disclosed as a captive lender (Q2'26 revenue $1.145B), which invites the inference, but the surface carries no debt breakdown, so 'much of it funds the Financial Products lending book' is an unsupported quantitative characterization (rubric item 2).",
       "fix": "Either hedge to what the pack supports (Caterpillar carries a captive-finance arm whose receivables are debt-funded) without asserting the share of total debt it represents, or ground the split from a source that quantifies Financial Products borrowings.",
       "status": "addressed",
-      "note": "Round 2: balanceCommentary now hedges to what the pack supports — 'Caterpillar runs a captive-finance arm, Financial Products, whose finance receivables are debt-funded' — and states explicitly that 'the pack does not split borrowings between that lending book and the industrial business ... without quantifying by how much'. The unsupported share-of-debt assertion is gone. Resolved."
+      "note": "Re-checked October 8, 2026: balanceCommentary still hedges to what the sources support and says the split is not quantified. Resolved."
+    },
+    {
+      "id": "F-8",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[2].driver",
+      "quote": "We value that at about 23x, below the 25.1x the market pays today on FY27E EPS, on the basis that a market that sees the cycle turning stops paying for growth.",
+      "issue": "The Bear's multiple is compared on the wrong basis. The Bear prices the shares a year out on that year's (current-year) EPS, and scenarioCommentary itself says 'All three cases value a year-out current-year EPS, so their multiples compare directly with today's current-year multiple', which multiplesCommentary sets at 29.9x. The Bear instead compares 23x with 25.1x, today's price over next year's EPS. Mixing the two bases makes the Bear's de-rating look about two turns deep when, on the report's own like-for-like basis, it is a much larger step down from 29.9x. The reader cannot judge whether 23x is reasonable when it is placed against the wrong reference (cf. USFD F-15).",
+      "fix": "Compare the Bear's 23x with today's 29.9x current-year multiple, the basis the scenario commentary names, and argue the size of that step down on the Bear's own story. If 23x no longer reads as a sensible downturn multiple on that comparison, re-anchor it to a figure on the page and say why. Keep the basis in the same sentence as the multiple.",
+      "status": "addressed",
+      "note": "Re-check: the Bear now compares 23x with today's 29.9x current-year multiple ('a sharp step down'), the basis the scenario commentary names, and argues the size of the cut on its own story (a stall removes the growth premium; earnings hold, so no deeper cut). Resolved."
+    },
+    {
+      "id": "F-9",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[2].driver",
+      "quote": "unfavorable manufacturing costs and roughly $2.2 billion of 2026 tariff costs weigh on margins, so FY27 earnings stall near the FY26E consensus of $27.19 instead of reaching the FY27E consensus",
+      "issue": "The Bear's mechanism does not follow its own numbers. (a) The $2.2 billion is the MD&A's 2026 tariff-cost expectation, so it already sits in the 2026 earnings base; it cannot explain why FY27 earnings fail to grow beyond FY26E, and the surface carries no 2027 tariff figure. (b) The story opens with capital spending that 'rolls over', but the number it prices is earnings holding flat at the FY26E level, which is a peak-and-stall, not a rollover. A Bear must price the case it describes (cf. V and CEG in the October 7 republish).",
+      "fix": "Make the Bear's mechanism and its EPS agree. Either describe a stall (demand peaks, volume growth stops, cost headwinds absorb price) and drop the 2026 tariff figure as an FY27 driver, or keep a rollover and price earnings below the FY26E level from a figure on the page. Use only mechanisms the surface supports for 2027, such as the MD&A's guided cost headwinds or the non-recurrence of the quarter's $392 million IEEPA recovery, described in words.",
+      "status": "addressed",
+      "note": "Re-check: the Bear now prices the case it describes, a peak and stall. Its drivers are on the surface: Construction Industries dealer inventory that management expects to be higher at year-end 2026, cost increases like those guided for 2026, and the non-recurring IEEPA recovery. The 2026 tariff figure is no longer used as an FY27 driver. Resolved."
+    },
+    {
+      "id": "F-10",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "We do not hold it: FY27E revenue growth is slower than the FY26E pace, the second half of 2026 brings cost and dealer-inventory headwinds, and FY25 free cash flow fell as capital spending rose.",
+      "issue": "The report says the label turns on the Base multiple, but argues that split from one side only. Of the three reasons, only the first bears on what the market pays a year out on FY27 earnings. The second-half 2026 cost and dealer-inventory headwinds are 2026 items that sit inside the FY26 guide and consensus. They say little about the multiple on FY27 EPS. The FY25 free-cash-flow decline looks backward, and cashflowCommentary itself declines to read the 2026 capex guide against it. The case for holding today's multiple gets no argument, only its consequence ('near the consensus target'). That case includes the Street's consensus and median targets, FY27E EPS still growing faster than revenue, and the strong orders and backlog the commentary uses to weight Bull over Bear. A close call needs both sides argued (AMSC F-24; batch-2 lesson that an unargued downgrade anchor is a finding, like an inflated BUY).",
+      "fix": "Argue the Base multiple from both sides using on-page evidence: what supports holding today's current-year multiple a year out, what supports a step down, and which side wins and why. Drop or reframe reasons that do not bear on a year-out multiple. Keep saying the call is close. Choose the multiple you believe and accept the label it derives. Do not tune it to either side of the line.",
+      "status": "addressed",
+      "note": "Re-check: the Base multiple is now argued from both sides. For holding: EPS growing faster than revenue, the Street targets, and the order and backlog claims. For a step down: slower FY27E growth, no peer or history anchor, and a thin FCF yield. The report says the call is close and that holding the multiple would derive BUY. Resolved; one inference in the new text is raised as F-25."
+    },
+    {
+      "id": "F-11",
+      "severity": "Important",
+      "field": "sections.executiveSummary.catalysts[4]",
+      "quote": "Construction momentum: Construction Industries' North America sales rose 50 percent in the quarter, supported by Infrastructure Investment and Jobs Act spending still to be deployed.",
+      "issue": "The press release gives the driver of this 50 percent: 'Higher sales volume was mainly driven by higher sales of equipment to end users and by the impact from changes in dealer inventories.' The catalyst drops the dealer-inventory part and ties the rise to IIJA spending, which the source does not credit for the quarter. The MD&A cites IIJA only for construction spending levels in the outlook. The omission matters because risks.idiosyncratic[1] warns that dealer-inventory changes will be an unfavorable volume factor in the second half. The catalyst therefore presents as end-demand momentum a figure that was partly a dealer build the report expects to reverse.",
+      "fix": "Attribute the 50 percent as the source does: higher end-user sales and changes in dealer inventories. Keep IIJA only as the MD&A's support for construction spending over the next few years, without crediting it with the quarter's rise.",
+      "status": "addressed",
+      "note": "Re-check: the 50 percent is now attributed as the source does (higher end-user sales and changes in dealer inventories), and IIJA is kept only as the MD&A's support for construction spending. Resolved."
+    },
+    {
+      "id": "F-12",
+      "severity": "Important",
+      "field": "sections.executiveSummary.catalysts[3]",
+      "quote": "Capital returns: the company continued to return cash through share repurchases and dividends in the second quarter of 2026.",
+      "issue": "The rewrite turned the report's cash view negative. risks[2] says 'shareholder returns ran ahead of' free cash flow, and capitalAllocation argues that the payout has not been covered by free cash flow alone. Yet the executive summary still lists capital returns as a catalyst. The bullet also names no event or change, only that returns continued, so it gives the reader nothing to act on (rubric 4) and contradicts the report's own risk list (rubric 6).",
+      "fix": "Drop the bullet, or replace it with a catalyst the surface supports, such as the additional IEEPA claims still under assessment or the Q3 2026 outlook. Alternatively, reframe capital returns consistently with capitalAllocation's view. Do not list the same item as both a catalyst and a risk.",
+      "status": "addressed",
+      "note": "Re-check: the capital-returns catalyst is replaced by the third-quarter 2026 outlook, which matches the MD&A. Resolved."
+    },
+    {
+      "id": "F-13",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[3]",
+      "quote": "Margin fragility is real: the FY25 operating-margin decline noted in the income-statement discussion came in a year of revenue growth, showing how quickly profitability can slip when mix and costs move against the company.",
+      "issue": "'When mix and costs move against the company' supplies a driver story for the FY25 margin decline that no source on the surface gives. Neither the Facts nor the Context explains why FY25 operating margin fell, and mix is never mentioned. This is the THG pattern: substituting the author's own explanation where the pack has none (rubric 2).",
+      "fix": "Drop the causal tail and make the point without a cause. For example: the FY25 decline came in a year of revenue growth, so revenue growth alone does not protect margins. If you want a cause, use one the surface states, and attribute it.",
+      "status": "addressed",
+      "note": "Re-check: the causal tail is gone ('so revenue growth alone does not protect margins'). Resolved."
+    },
+    {
+      "id": "F-14",
+      "severity": "Important",
+      "field": "sections.management.governance",
+      "quote": "Both are small relative to the company and were handled under the stated policy.",
+      "issue": "The proxy excerpt describes the related-party policy (NGC pre-approval of transactions expected to exceed $120,000) and then lists the two family-employment matters. It does not say the NGC reviewed or approved either one. 'Were handled under the stated policy' is an inference the source invites but does not make (rubric 2), and it is a governance assurance to the reader that rests on nothing in the excerpt.",
+      "fix": "Say only what the proxy says. Both matters are disclosed in the proxy's related-party section, and both amounts are small relative to the company. Do not claim they were approved or handled under the policy unless the excerpt states it.",
+      "status": "addressed",
+      "note": "Re-check: now reads 'Both are disclosed in the proxy's related-party section, and both amounts are small relative to the company.' Resolved."
+    },
+    {
+      "id": "F-15",
+      "severity": "Important",
+      "field": "sections.growth.points[0]",
+      "quote": "The upcycle is broad: sales rose across all three primary segments in the second quarter of 2026, not a single-market spike.",
+      "issue": "The growth points mostly restate claims made elsewhere rather than adding to them (rubric 7, paraphrase). (1) Sales rising across all three primary segments appears in the thesis ('sales higher across all three primary segments'), segments[0] ('all three grew in the second quarter of 2026'), this point, and finalRecommendation.body[0]. (2) Data-center demand for Power Generation appears in catalysts[0], the thesis, segments[0], growth.points[1] (again with 'cloud computing and generative AI', as catalysts[0] has it) and the Bull driver. (3) The mid-to-high-teens 2026 guide appears in the analystCommentary, catalysts[1], growth.points[2] and the Bull driver.",
+      "fix": "Let each growth point carry something not argued elsewhere and still on the surface. Candidates include the Q3 2026 outlook, Oil & Gas and Rail demand, rebuild and services growth, and the consensus path. Where a point needs the breadth, data-center or guidance claim, refer back in words instead of restating it.",
+      "status": "addressed",
+      "note": "Re-check: the growth points now carry new on-surface content (Oil and Gas +9 percent, Resource Industries copper and gold demand, Rail +15 percent, services and rebuild, the consensus path). The breadth, data-center and guidance claims are no longer restated. Resolved."
+    },
+    {
+      "id": "F-16",
+      "severity": "Important",
+      "field": "sections.executiveSummary.risks[3]",
+      "quote": "Tariffs: the company expects around $2.2 billion of 2026 tariff costs, including roughly $600 million in the third quarter of 2026.",
+      "issue": "This sentence reappears almost word for word in risks.idiosyncratic[0] ('The company expects around $2.2 billion of 2026 tariff costs and about $600 million in the third quarter of 2026.'). Likewise catalysts[2] ('recorded $392 million of expected IEEPA tariff recoveries ... after the U.S. Supreme Court ruled the tariffs unauthorized, with additional claims still under assessment') is retold in idiosyncratic[0] ('recorded $392 million of expected IEEPA tariff recoveries after the U.S. Supreme Court ruled those tariffs unauthorized ... additional recoveries are not assured'). Rubric 7: no sentence appears in two sections; executive-summary items point and the section argues.",
+      "fix": "Keep the figures and the ruling in risks.idiosyncratic[0], where the argument is. Make the executive-summary risk and catalyst one-line pointers in words, for example '2026 tariff costs remain large, detailed in the risks section' and 'further IEEPA refund claims could add to the recovery already booked'.",
+      "status": "addressed",
+      "note": "Re-check: executiveSummary.risks[3] and catalysts[2] are now pointers in words; the figures and the ruling sit once, in risks.idiosyncratic[0]. Resolved."
+    },
+    {
+      "id": "F-17",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.risks[2]",
+      "quote": "Cash conversion: FY25 free cash flow fell as capital expenditure rose, and shareholder returns ran ahead of it.",
+      "issue": "The same clause, 'free cash flow fell in FY25 as capital expenditure/spending rose', recurs almost verbatim in the analystCommentary, here, cashflowCommentary (its home, with figures), scenarioCommentary and finalRecommendation.body[1]. Each instance is in words, but five uses of one formula reads as a tic (rubric 9).",
+      "fix": "Keep the argued version in cashflowCommentary. Elsewhere, point to it briefly or in different terms (e.g. 'thinner cash conversion'). In scenarioCommentary, drop it as a multiple argument if F-10's rewrite does not need it.",
+      "status": "addressed",
+      "note": "Re-check: the formula is gone. The analystCommentary and finalRecommendation say 'cash conversion thinned' or 'thinner cash conversion', risks[2] points to capitalAllocation, and scenarioCommentary uses the FCF yield instead. Resolved."
+    },
+    {
+      "id": "F-18",
+      "severity": "Minor",
+      "field": "sections.risks.systemic",
+      "quote": "Caterpillar's 2025 Form 10-K states that demand for its products is cyclical and can be significantly reduced in periods of economic weakness",
+      "issue": "Several paraphrases drop the source's hedges or shift its subject. (1) The 10-K says demand 'tends to be cyclical'. The hedge is dropped here, in executiveSummary.risks[0] ('is cyclical') and in finalRecommendation.body[1] ('explicit that demand is cyclical'). (2) systemic: 'Mining and energy customers base purchases on expected commodity prices'. The 10-K says customers 'are likely to base their purchase decisions upon expected future commodity dynamics, including price'. (3) durability: 'demand is highly sensitive to ... commodity prices'. The 10-K's 'highly sensitive' sentence concerns economic conditions. (4) risks[4]: 'Resource Industries demand tracks copper, gold, and other commodity prices'. The MD&A cites 'rising demand for copper and gold', not prices. (5) idiosyncratic[1] drops the company's 'more typical' from the fourth-quarter dealer-inventory decrease.",
+      "fix": "Restore the hedges and subjects: 'tends to be cyclical'; customers 'are likely to' base decisions on expected commodity dynamics, including price; keep 'highly sensitive' attached to economic conditions; RI sales are driven by demand for copper and gold; 'a more typical decrease ... of over $1.0 billion'.",
+      "status": "addressed",
+      "note": "Re-check: all five are restored: 'tends to be cyclical' (systemic, risks[0], finalRecommendation), 'are likely to base ... expected future commodity dynamics, including price', 'highly sensitive' attached to economic conditions, Resource Industries 'rising demand for copper and gold', and 'a more typical decrease'. Resolved."
+    },
+    {
+      "id": "F-19",
+      "severity": "Minor",
+      "field": "sections.management.capitalAllocation",
+      "quote": "Capital allocation leans on buybacks over dividends, and on the corrected cash-flow figures the payout ran ahead of free cash flow: FY25 repurchases and dividends together exceeded the year's free cash flow, as they did in FY24, and net debt rose in FY25, as the balance-sheet discussion shows.",
+      "issue": "(1) 'On the corrected cash-flow figures' is pipeline language. Nothing on the page tells the reader that any figure was corrected, so the phrase raises a question the report never answers. (2) 'As the balance-sheet discussion shows' points to something that section does not show. balanceCommentary gives FY25 net debt and the rise in total debt, but not the FY24 net-debt comparison. Related wording: 'in the pack' (cashflowCommentary, balanceCommentary, multiplesCommentary) is also internal vocabulary.",
+      "fix": "Drop 'on the corrected cash-flow figures'. Either point to the balance-sheet table rather than the discussion, or have balanceCommentary state that net debt rose. Consider replacing 'the pack' with 'our sources' or 'the data shown'.",
+      "status": "addressed",
+      "note": "Re-check: 'on the corrected cash-flow figures' is dropped. balanceCommentary now states that net debt rose from $24.9 billion, so the pointer holds. 'The pack' is replaced by 'our sources' or 'the data shown'. Resolved."
+    },
+    {
+      "id": "F-20",
+      "severity": "Minor",
+      "field": "sections.finalRecommendation.body[1]",
+      "quote": "We would revisit the rating toward BUY if FY27 consensus EPS rises above $32.38 while order rates and the backlog hold, and toward SELL if the second-half headwinds turn into falling FY27 estimates.",
+      "issue": "Neither trigger sits where the page's own scenario math moves the label (ADI F-25). Any upward revision above $32.38, however small, meets the BUY trigger, and its second condition (order rates and backlog holding) is met today. A small rise would not by itself lift the scenarios to BUY. Likewise, a modest fall in FY27 estimates would not take expected upside to the SELL threshold.",
+      "fix": "Derive each trigger from your own scenarios, at the level of estimate (or price) at which the weighted value would cross the BUY or SELL rule. Alternatively, word them as reasons to re-run the analysis, not as rating triggers.",
+      "status": "addressed",
+      "note": "Re-check: the rating triggers are replaced. The report now says the label rests on the current close (a small price fall derives BUY; SELL derives below the $975.61 target), which matches the page's math, and it gives re-run conditions rather than rating triggers. Resolved."
+    },
+    {
+      "id": "F-21",
+      "severity": "Minor",
+      "field": "analystCommentary",
+      "quote": "That derives HOLD, just short of the BUY line; the call is close and turns on the multiple we assume for the Base case.",
+      "issue": "Next to 'expected upside of 9.0 percent', 'just short of the BUY line' suggests that about one point of upside separates HOLD from BUY. BUY needs both E of at least 10.0 percent and R of at least 0.50 times. At the stated 23.0 percent bear-case downside, the reward/risk test (0.39 times) is the binding one, not the upside test. finalRecommendation.body[1] repeats 'just below the BUY line'.",
+      "fix": "Say that the call is close and that both BUY tests fall short, with reward/risk the further of the two. Alternatively, drop 'just' and leave the closeness argument to the valuation section.",
+      "status": "addressed",
+      "note": "Re-check: now 'both BUY tests fall short, and reward/risk falls further short than expected upside'. Resolved."
+    },
+    {
+      "id": "F-22",
+      "severity": "Minor",
+      "field": "sections.management.leadership",
+      "quote": "In the August 4, 2026 earnings release he called the quarter's more than $20 billion in sales and revenues a milestone in company history, and pointed to strong order rates and a growing backlog across all three primary segments.",
+      "issue": "The paragraph only reports the CEO's statement and reaches no view (rubric 4). One view the surface supports is that the release asserts strong order rates and a growing backlog but quantifies neither. That matters because scenarioCommentary uses exactly that claim to weight the Bull above the Bear.",
+      "fix": "Add one sentence with a view on what the leadership statement is worth to the reader. For example, the backlog and order claims come from management and carry no figure on the page, so the Bull-over-Bear weighting rests on management's word.",
+      "status": "addressed",
+      "note": "Re-check: leadership adds the view that the order and backlog claims are unquantified, so the Bull-over-Bear weight rests partly on management's word. Resolved."
+    },
+    {
+      "id": "F-23",
+      "severity": "Minor",
+      "field": "sections.businessMoat.moatFactors[2].body",
+      "quote": "giving it manufacturing scale and a product breadth that smaller competitors struggle to match",
+      "issue": "No competitor, peer or competitive comparison is on the surface ('peers pending a peer data source'), so 'smaller competitors struggle to match' is an unsupported competitive claim.",
+      "fix": "Make the point from Caterpillar's own breadth: the segments and end markets on the page, and FY25 revenue. Do not characterize competitors.",
+      "status": "addressed",
+      "note": "Re-check: the competitor claim is gone ('a product range that reaches many end markets'). Resolved."
+    },
+    {
+      "id": "F-24",
+      "severity": "Minor",
+      "field": "sections.risks.idiosyncratic[2]",
+      "quote": "Management guides to unfavorable manufacturing costs and higher SG&A and R&D expenses in the second half of 2026, so revenue growth will convert to profit less efficiently than in the second quarter.",
+      "issue": "The MD&A gives these cost headwinds for the third quarter of 2026 and for full-year 2026 ('partially offset by unfavorable manufacturing costs and higher SG&A/R&D expenses'). It does not frame them as a second-half guide, and it makes no comparison with the second quarter. 'Will convert ... less efficiently than in the second quarter' is the author's forecast stated as fact.",
+      "fix": "Use the company's periods (third quarter and full-year 2026). Frame the conversion comparison as your expectation ('we expect'), resting it on on-page reasons such as the quarter's one-off $392 million IEEPA recovery, described in words.",
+      "status": "addressed",
+      "note": "Re-check: it now uses the company's periods (third quarter and full-year 2026), and the conversion comparison is framed as 'We expect', resting on the one-off IEEPA recovery. Resolved."
+    },
+    {
+      "id": "F-25",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "FY27E EPS grows faster than FY27E revenue, so consensus expects margins to keep widening",
+      "issue": "The surface carries no consensus margin. EPS growing faster than revenue can come from wider margins, a lower share count (the report itself stresses buybacks) or both. 'So consensus expects margins to keep widening' is an inference that the consensus figures invite but do not establish (rubric 2 shape, low materiality).",
+      "fix": "Hedge to what the figures show, e.g. 'FY27E EPS grows faster than FY27E revenue, which implies wider margins, fewer shares or both'. Alternatively, keep only the first clause.",
+      "status": "declined",
+      "note": "Deferred to the next synthesis; editing the judgment after the final re-check would leave it unreviewed. Reviewer accepts the decline."
+    },
+    {
+      "id": "F-26",
+      "severity": "Minor",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "the Bear keeps a quarter of the weight because the 2025 Form 10-K says demand tends to be cyclical",
+      "issue": "The rewrite moved two claims into new places, so each now recurs. (1) The 10-K's 'demand tends to be cyclical' appears in executiveSummary.risks[0], here, risks.systemic (its home) and finalRecommendation.body[1]. (2) The point that management's order and backlog claims carry no figures is made in both management.leadership ('Neither the order rates nor the backlog is quantified') and scenarioCommentary ('though without figures'), and the order and backlog claims are cited twice within scenarioCommentary. Each is in words, but the repetition reads as a tic (rubric 7/9).",
+      "fix": "Keep the 10-K citation in risks.systemic and point to it elsewhere ('the cyclical risk set out in the risks section'). Make the 'no figures' point once, in leadership or in scenarioCommentary, and refer back in words from the other.",
+      "status": "declined",
+      "note": "Deferred to the next synthesis; editing the judgment after the final re-check would leave it unreviewed. Reviewer accepts the decline."
     }
   ]
 }
