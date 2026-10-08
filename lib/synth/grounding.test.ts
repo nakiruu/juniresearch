@@ -172,6 +172,24 @@ describe("numericTokens v2", () => {
     expect(numericTokens(text).map((t) => text.slice(t.index, t.end))).toEqual(["8%", "$1.2B"]);
   });
 
+  describe("allow-list: labels, index names, day-first dates, period phrases", () => {
+    for (const text of ["Schedule 13G/A", "the 14A", "13G", "Item 1A", "Note 14", "Tier 1", "Section 232", "Phase 3", "ISO 9001", "FAST-41", "COVID-19",
+      "Intel 14A", "30 September 2026", "a 52/53-week year", "the past 52 weeks", "S&P 500", "Russell 1000", "Russell 2000", "Fortune 500", "401(k)", "24/7",
+      "a 1-for-10 split", "Level 3 inputs", "Gen 5", "Rule 10b5-1", "a member of the S&P 500 index", "joined the Russell 1000", "its 401(k) match", "24/7 monitoring"]) none(text);
+    raws("over 52 weeks", ["52"]);
+    raws("53rd percentile", ["53"]);
+    raws("over 25 years", ["25"]);
+    raws("in 15 countries", ["15"]);
+    raws("14 analysts", ["14"]);
+    raws("PDK 0.9", ["0.9"]);                                                          // the label rule covers bare integers only
+    it("$14A is money", () => expect(numericTokens("$14A").map((t) => [t.raw, t.kind])).toEqual([["$14", "money"]]));
+    it("index mode keeps small counts", () => {
+      expect(numericTokens("Acquisitions\n5\n%", "index").map((t) => [t.kind, t.abs])).toEqual([["pct", 5]]);
+      expect(numericTokens("growth of 5 stores", "index").map((t) => t.abs)).toEqual([5]);
+      expect(numericTokens("growth of 5 stores")).toEqual([]);
+    });
+  });
+
   // The reviewer's formats.ts cases (Appendix B): raw:kind, ×scale when not 1, and the sign when written.
   describe("formats.ts cases", () => {
     const show = (text: string) => numericTokens(text).map((t) => `${t.raw}:${t.kind}${t.scale !== 1 ? "×" + t.scale : ""}${t.sign ? (t.sign > 0 ? "+" : "-") : ""}`);

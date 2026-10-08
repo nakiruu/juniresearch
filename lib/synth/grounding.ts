@@ -46,6 +46,10 @@ const TOKEN = new RegExp(
 const YEAR = /^(199\d|20[0-3]\d|2040)$/;
 const MONTH = "(Jan(uary)?|Feb(ruary)?|Mar(ch)?|Apr(il)?|May|June?|July?|Aug(ust)?|Sept?(ember)?|Oct(ober)?|Nov(ember)?|Dec(ember)?)";
 const MONTH_BEFORE = new RegExp(`(^|[^A-Za-z])${MONTH}\\.? $`, "i");
+const MONTH_AFTER = new RegExp(`^ ${MONTH}\\b`);
+const INDEX_BEFORE = /(^|[^A-Za-z])(S&P|Russell|Nasdaq|NASDAQ|Dow Jones|FTSE|STOXX|Stoxx|MSCI|Nikkei|Fortune|Global) ?$/;
+const LABEL_BEFORE = /(^|[^A-Za-z])(Note|Notes|Item|Items|Tier|Section|Rule|Phase|Schedule|Form|Class|Series|Level|Title|Chapter|Part|Article|ISO|Gen|Proposal|Exhibit|Regulation|Stage|Version|PDK|No\.|#)\s?$/;
+const PERIOD_BEFORE = /(^|[^A-Za-z])(past|last|trailing|prior|next|previous|over the) $/i;
 
 function unitKind(u: string | undefined): NumberKind | null {
   if (!u) return null;
@@ -75,6 +79,15 @@ function allowed(text: string, start: number, end: number, int: string): false |
   if (/^,? ?(19|20)\d\d\b/.test(after)) return "other";                               // August 30, 2026
   if (n >= 1 && n <= 31 && /(19|20)\d\d-(\d{1,2}-)?$/.test(text.slice(Math.max(0, start - 8), start))) return "other"; // 2026-08-30
   if (n >= 1 && n <= 31 && MONTH_BEFORE.test(before12)) return "other";               // December 31
+  if (n >= 1 && n <= 31 && MONTH_AFTER.test(after)) return "other";                   // 30 September 2026
+  if (LABEL_BEFORE.test(before12)) return "other";                                    // Note 14, Item 1A, Tier 1, Section 232, Phase 3
+  if (/[A-Za-z]-$/.test(text.slice(Math.max(0, start - 2), start))) return "other";   // FAST-41, COVID-19
+  if (/^[A-Z](\/A)?(?![A-Za-z])/.test(after) && !/^[KMBT](?![A-Za-z])/.test(after)) return "other"; // 14A, 13G, 13G/A, 1A, 3D
+  if (/^\/\d+-(week|month|day|year)/.test(after)) return "other";                     // 52/53-week
+  if (INDEX_BEFORE.test(before12)) return "other";                                   // S&P 500, Russell 2000, Fortune 500
+  if (/^\(k\)/i.test(after)) return "other";                                         // 401(k)
+  if (n === 24 && /^\/7\b/.test(after)) return "other";                            // 24/7
+  if (PERIOD_BEFORE.test(before12) && /^ (weeks|months|days|quarters)\b/.test(after)) return "other"; // the past 52 weeks
   return n <= 12 ? "small" : false;
 }
 
