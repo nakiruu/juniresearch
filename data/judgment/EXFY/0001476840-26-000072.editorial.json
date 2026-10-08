@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "30121e2cfb0db20e654bc52d898409c2696f658f9f6de02c76654ce0e6138239",
-  "reviewedAt": "2026-10-08T13:53:24Z",
+  "judgmentSha256": "31158b9ff8ff267dec559521a608a771414c477f1c717a9e4f6e694b88149d8e",
+  "reviewedAt": "2026-10-08T13:59:59Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved-with-minors",
   "findings": [
     {
       "id": "F-1",
@@ -272,7 +272,8 @@
       "quote": "at 15x the midpoint of that guide, a multiple we assume for cash flow that consensus shows flat to lower, on ~91.19M shares, the stock is worth $2.14",
       "issue": "Source disagreement on the share count, chosen silently, and the label depends on it. Base and Bear divide a total-dollar FCF value by ~91.19M, which the Quote line says is derived from market cap. The filings on the page point higher. The proxy counts 88,637,254 Class A, 4,209,827 LT10 and 8,175,283 LT50 shares as of March 27, 2026, before the ~6.8 million Q2 repurchase. The 10-Q table gives a Q2'26 basic and diluted weighted average of 95,441,380. The prompt's input check also flags the vendor market cap 10% below the cross-check (205M vs 229M). A higher count lowers Base and Bear in proportion. On either filing-based figure, the weighted value moves well below the line the report says is close. scenarioCommentary already says one turn less on the multiple derives SELL, so a gap of this size changes the call.",
       "fix": "Say once that the vendor's derived share count and the filing figures disagree. State which count you use and why: for example, the 10-Q weighted average, or the proxy classes less the Q2 repurchase, described in words. Re-derive Base and Bear on that count and let the rule set the label. Do not re-tune the multiple or the weights to keep the current label; if the call changes, the prose changes with it.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. scenarioCommentary states the disagreement once: the vendor-derived ~91.19M against the proxy classes less the Q2 repurchase and the 10-Q weighted average. It uses 95,441,380 with a reason and names the bias both ways. Base $2.04 and Bear $1.51 re-derive correctly on that count; E is -7.9%, so SELL is the derived label and the prose follows it."
     },
     {
       "id": "F-28",
@@ -281,7 +282,8 @@
       "quote": "a multiple we assume for cash flow that consensus shows flat to lower",
       "issue": "Attributes a forecast to a source that does not carry it. The consensus on the surface gives revenue and EPS only (FY26E $135.9M / $0.12, FY27E $136.1M / $0.10). It has no cash flow estimate, so consensus cannot show cash flow as flat to lower. This sentence is the stated basis for the 15x multiple that the report says decides the call.",
       "fix": "Base the multiple on what consensus actually shows, for example 'for a business whose consensus revenue is lower in FY26E and flat in FY27E, with EPS lower in FY27E (see Growth)'. Or base it on the company's own guide. Do not attach a cash flow view to consensus.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. The 15x basis now cites consensus revenue lower in FY26E and flat in FY27E, with EPS lower in FY27E, all of which is on the surface."
     },
     {
       "id": "F-29",
@@ -290,7 +292,8 @@
       "quote": "free cash flow comes in no better than the low end of the guide; at 12x, a lower multiple we assume because a miss would show the decline outrunning New Expensify, the stock is worth $1.58",
       "issue": "The Bear does not follow its own story. It prices free cash flow at the low end of the guide, which meets the guide, yet it justifies the lower multiple by 'a miss'. Most of the Bear's fall from the Base therefore comes from a multiple cut that is argued on an outcome the scenario does not assume. finalRecommendation treats a miss against the guide as a SELL trigger, which suggests a miss lies outside the Bear as priced.",
       "fix": "Make the Bear consistent. Either price an outcome below the guide (a miss, argued on the Classic decline) and keep the miss rationale for the multiple. Or keep the low end of the guide and argue 12x on something that outcome actually shows, for example that a low-end result with revenue still falling (see Growth) gives no reason to pay the Base multiple. Re-check the SELL trigger in finalRecommendation against whichever Bear you choose.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. The Bear prices the low end of the guide and argues 12x on that outcome plus stock-based compensation; finalRecommendation now places a miss below the Bear."
     },
     {
       "id": "F-30",
@@ -299,7 +302,8 @@
       "quote": "Card economics: if cashback keeps growing faster than interchange, card adoption reduces net revenue rather than adding to it.",
       "issue": "The mechanism is wrong as stated. In Q2'26 cashback already grew faster than interchange in percentage terms ($3.0 million from $2.5 million against $5.9 million from $5.3 million). Even so, interchange rose by more dollars than cashback, so the card still added to net revenue. Faster percentage growth on a smaller base does not by itself turn the card's contribution negative. That needs cashback to rise by more dollars than interchange. As written, the risk describes today's condition and says it reduces net revenue, which the quarter's figures do not show.",
       "fix": "State the risk as cashback rising by more than interchange in dollars, which would narrow and eventually reverse the card's net contribution. Keep the watch item on the gap between the two lines.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. The risk now says interchange still rose by more dollars, and frames the risk as cashback rising by more dollars; the exec-summary risk matches."
     },
     {
       "id": "F-31",
@@ -308,7 +312,8 @@
       "quote": "The $1.90–$2.50 target range brackets the Base and stops at the low end of the Street's target range on the upside.",
       "issue": "Only the upper end of the band is explained. Nothing says how $1.90 was set relative to the Base ($2.14) or the Bear ($1.58).",
       "fix": "Add a clause giving the basis for the $1.90 low end, in words, relative to the scenarios.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. The $1.80 low end is explained relative to the Base and the Bear (it is about 45% of the way down), and the $2.20 high end relative to the price."
     },
     {
       "id": "F-32",
@@ -317,7 +322,8 @@
       "quote": "the earnings release reports non-GAAP net income of $3.4 million and Adjusted EBITDA of $6.6 million; the difference from GAAP is stock-based compensation, which non-GAAP net income excludes by definition",
       "issue": "Coming after both measures, 'the difference from GAAP is stock-based compensation' reads as covering Adjusted EBITDA too. The release defines Adjusted EBITDA as also excluding taxes, other income, net, and depreciation and amortization.",
       "fix": "Limit the sentence to non-GAAP net income, for example: 'non-GAAP net income differs from the GAAP net loss by stock-based compensation, which was 7,211 in the quarter'.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. Now limited to non-GAAP net income."
     },
     {
       "id": "F-33",
@@ -326,7 +332,8 @@
       "quote": "the MD&A cites higher amortization of capitalized software, partly offset by savings from using AI in place of human agents, and Visa volume incentives that reduce cost of revenue fell to $0.2 million from $0.8 million",
       "issue": "The Visa clause is part of the 'MD&A cites' sentence, so it reads as one of the reasons the MD&A gives for the margin decline. The MD&A reports the incentive amounts but does not cite them as a cause of higher cost of revenue.",
       "fix": "Move the Visa figures into their own sentence, stated as reported amounts: 'Separately, Visa volume incentives, which reduce cost of revenue, were $0.2 million against $0.8 million'.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. The MD&A's causes are stated as written; the Visa amounts are in their own sentence."
     },
     {
       "id": "F-34",
@@ -335,7 +342,8 @@
       "quote": "driven by pre-IPO RSUs with approximately three years of vesting remaining",
       "issue": "Drops the source's hedge. The release says the estimate is 'driven primarily by the pre-IPO grant of RSUs'.",
       "fix": "Write 'driven primarily by pre-IPO RSUs'.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. 'driven primarily' restored."
     },
     {
       "id": "F-35",
@@ -344,7 +352,8 @@
       "quote": "The counter-case is the Street",
       "issue": "Tic. 'The counter-case' opens or frames a sentence in multiplesCommentary, balanceCommentary ('The counter-case to a comfortable balance sheet'), moatFactors[1] ('The counter-case is economic') and growth.points[1] ('The counter-case is consensus'). capitalAllocation adds 'The counter-point is'. incomeCommentary uses 'Our view:', which the desk lists as a tic to avoid.",
       "fix": "Keep the counter-arguments but vary how they are introduced (for example 'Against that', or state the opposing figure directly). Replace 'Our view:' with a plain concluding sentence.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. 'The counter-case' and 'Our view:' are gone; the counter-arguments are introduced in varied ways."
     },
     {
       "id": "F-36",
@@ -353,7 +362,28 @@
       "quote": "the MD&A says month-to-month arrangements can be terminated by either party without penalty, so the base offers limited lock-in",
       "issue": "Half the source. The MD&A also describes annual arrangements based on a minimum number of monthly members, where early termination requires paying the remaining obligation plus fees. It does not give the mix. 'Limited lock-in' is drawn from the month-to-month half only.",
       "fix": "Note that annual arrangements carry termination payments and that the excerpt does not give the mix, then reach the lock-in view on that basis.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. Annual arrangements with early-termination payments are noted, and the undisclosed mix qualifies the lock-in view."
+    },
+    {
+      "id": "F-37",
+      "severity": "Minor",
+      "field": "sections.growth.points[1]",
+      "quote": "Consensus does not yet reflect it",
+      "issue": "Characterizes what analysts have modeled, which the surface does not show. Consensus gives only the revenue and EPS figures. It may already include New Expensify growth, netted against the Classic decline.",
+      "fix": "State what the figures show, for example: 'Consensus revenue does not show it yet:' followed by the FY26E and FY27E figures.",
+      "status": "declined",
+      "note": "Deferred to the next synthesis; editing the judgment after the final re-check would leave it unreviewed. Reviewer accepts the decline."
+    },
+    {
+      "id": "F-38",
+      "severity": "Minor",
+      "field": "analystCommentary; sections.finalRecommendation.body[0]",
+      "quote": "below the price by more than the SELL line allows",
+      "issue": "Repeated phrase. analystCommentary says the weighting 'lands below the current price by more than the SELL line allows', and finalRecommendation says the weighted value 'sits below the price by more than the SELL line allows'.",
+      "fix": "Keep the phrase in one place and word the other differently, or have analystCommentary point to the recommendation.",
+      "status": "declined",
+      "note": "Deferred to the next synthesis; editing the judgment after the final re-check would leave it unreviewed. Reviewer accepts the decline."
     }
   ]
 }
