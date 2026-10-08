@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "64f05f6a82051f0b3b5094b72b4b0e69663501c745042f5b51e2d198c82fda41",
-  "reviewedAt": "2026-10-08T14:30:00Z",
+  "judgmentSha256": "133ea11f2ca5754a2ef15eceed2ec1d35791a7c681d9d45668e610232dd1f4d7",
+  "reviewedAt": "2026-10-08T14:30:27Z",
   "reviewer": "Claude Opus 5.5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved",
   "findings": [
     {
       "id": "F-1",
@@ -152,7 +152,8 @@
       "quote": "Operating cash flow grew from $3.1B in FY21 to $4.7B in FY25, but capital expenditure rose from $0.5B a year in FY21 through FY23 to $0.8B in FY24 and FY25, so free cash flow was $3.9B in both FY24 and FY25.",
       "issue": "The 'but … so' sentence says rising capex is why FY25 free cash flow equalled FY24's. The cash-flow table on the surface contradicts that. Capex was $0.8B in both FY24 and FY25, so it did not rise between the two years. It stepped up from FY23 to FY24, the year FCF rose from $3.1B to $3.9B. FY25 FCF was flat because operating cash flow barely grew ($4.6B in FY24, $4.7B in FY25) while capex held steady. The causal claim is on this edition's headline point ('cash is not growing'), and it misplaces the cause from slowing operating cash flow onto capex. Slowing operating cash flow is the reading that matters to the holder.",
       "fix": "Restate the mechanism from the table. Capex stepped up to $0.8B in FY24 and held there in FY25. Operating cash flow went from $4.6B to $4.7B, so FY25 free cash flow stayed at $3.9B. The flat year comes from operating cash flow, not from a further capex rise. Keep the 2026 capex guide of about $850 million as the forward pressure. Check that the thesis's 'capital spending is rising' still reads correctly next to this.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. cashflowCommentary now says capex stepped up to $0.8B in FY24 and held there in FY25. FCF rose to $3.9B in FY24 on operating cash flow ($3.5B to $4.6B), then held in FY25 because operating cash flow barely grew, to $4.7B. It says the flat year comes from operating cash flow, not capex, and keeps the about-$850 million 2026 guide as the forward pressure. The thesis now says capital spending is 'guided higher for 2026', which is consistent."
     },
     {
       "id": "F-16",
@@ -161,7 +162,8 @@
       "quote": "The company guides 2026 recurring revenue growth of high-single digits in Exchanges and 7% to 8% in Fixed Income and Data Services, in line with what the two segments delivered in the second quarter.",
       "issue": "On the same quantity, the release shows second-quarter recurring revenue up 10% in Exchanges ($416 million vs $378 million) and 10% in Fixed Income and Data Services ($531 million vs $483 million). The Fixed Income and Data Services guide of 7% to 8% is below what the segment delivered, and 'high-single digits' is at or below Exchanges' 10%. The report's own segments body gives the 10% for both. 'In line' is therefore unsupported. It also hides the point a reader needs: the full-year guide implies recurring growth slows from the second quarter's pace. The 7–8% only matches the Fixed Income and Data Services total segment growth (8%), which is a different quantity.",
       "fix": "Compare like with like. Both segments' recurring revenue grew 10% in the second quarter, and the 2026 guide (high-single digits; 7% to 8%) is at or below that pace. Say in words what that implies for the second half. If useful, use it as a counter to the Bull case's 'recurring revenue grows in line with 2026 guidance'.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. growth.points[0] now compares like with like: second-quarter recurring revenue grew 10% in both segments, and the 2026 guide (high-single digits; 7% to 8%) is at or below that pace, 'which implies slower recurring growth over the rest of the year'."
     },
     {
       "id": "F-17",
@@ -170,7 +172,8 @@
       "quote": "an expected upside of +5.2% against a bear-case downside of 21.7%",
       "issue": "This exact clause and its surrounding sentence appear in three sections. analystCommentary: 'the scenarios weight to $163.62, an expected upside of +5.2% against a bear-case downside of 21.7%.' scenarioCommentary: 'The weights produce a fair value of $163.62, an expected upside of +5.2% against a bear-case downside of 21.7%, and a reward/risk of 0.24x, which derives HOLD.' finalRecommendation.body[0]: 'The scenarios weight to a fair value of $163.62, an expected upside of +5.2% against a bear-case downside of 21.7%, for a reward/risk of 0.24x.' The house style forbids a sentence appearing in two sections, and the page already renders these calls in the rating box.",
       "fix": "State the fair value, E, D and R once, in scenarioCommentary where the weights are argued. In analystCommentary and finalRecommendation, refer to the result in words (for example 'a fair value modestly above the price'), or give only the target range there. Do not repeat the E/D clause.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. Fair value, E, D and R now appear only in scenarioCommentary. analystCommentary ends on the anchor, and finalRecommendation.body[0] says 'around a fair value modestly above the price'."
     },
     {
       "id": "F-18",
@@ -179,7 +182,8 @@
       "quote": "We judge it against what the business is delivering: mid-single-digit net revenue growth, 5% adjusted EPS growth in the quarter, flat FY25 free cash flow and a balance sheet about to take on more debt. That supports today's multiple, but on the evidence in the pack it does not support a higher one.",
       "issue": "The report's central conclusion (today's multiple, not a higher one) is argued twice in full on the same evidence. multiplesCommentary (quoted) and scenarioCommentary ('Against a higher multiple: transaction revenue barely grew, adjusted EPS only kept pace with net revenue, FY25 free cash flow was flat, and the acquisition adds debt before it adds earnings. We find the case for holding the multiple stronger…') are adjacent and say the same thing. finalRecommendation.body[0] lists the evidence a third time ('FY25 free cash flow was level with FY24, and the next year adds acquisition debt'). The thesis lists it a fourth. Flat FY25 FCF alone is stated in six fields: analystCommentary, risks[3], cashflowCommentary, multiplesCommentary, scenarioCommentary and finalRec[0]. 'adds debt before it adds earnings' appears verbatim in executiveSummary.risks[0] and scenarioCommentary.",
       "fix": "Argue the multiple once, in scenarioCommentary, where the deciding assumption is weighed both ways. End multiplesCommentary at the basis, the Street gap and the missing peer and history anchors, and point forward in words. Let finalRecommendation synthesize the call without re-listing the evidence. Keep the flat-FCF figure in cashflowCommentary (plus one summary mention) and refer back to it in words elsewhere. Reword one of the two 'adds debt before it adds earnings'.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. multiplesCommentary ends at the basis, the Street gap and the missing anchors, and points to the scenario commentary. The multiple is argued once, in scenarioCommentary. finalRecommendation no longer re-lists the evidence. Flat FY25 FCF is down to cashflowCommentary plus the two summary fields and the scenario argument. 'adds debt before it adds earnings' now appears only in the executive-summary pointer."
     },
     {
       "id": "F-19",
@@ -188,7 +192,8 @@
       "quote": "Once it closes, servicing and repaying the acquisition debt will compete with the buyback for the same cash. Management has not said how it will split the two, so our Base assumes repurchases slow while leverage comes down",
       "issue": "capitalAllocation makes the same claim in different words: 'an all-cash purchase backed by a bridge commitment puts debt service and refinancing ahead of discretionary returns until leverage comes down.' Both sections say that deal debt service displaces buybacks until leverage falls, so the claim is argued twice. This is a paraphrase of the defect F-4 cleared, and it came back in the corrected-inputs rewrite.",
       "fix": "Make the debt-service-versus-buyback point once. capitalAllocation is the natural home; it can also carry the Base assumption that repurchases slow. End cashflowCommentary at the existing claims on the cash (dividend, buyback, the $4.0 billion authorization) and point to the management section in words.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. cashflowCommentary ends at the existing claims on the cash and hands the acquisition-debt question to the management section. capitalAllocation alone argues that debt service competes with the buyback and carries the Base assumption that repurchases slow."
     },
     {
       "id": "F-20",
@@ -197,7 +202,8 @@
       "quote": "the step from FY25 GAAP diluted EPS of $5.77 to FY26E EPS of $8.13 suggests the estimates are not on the GAAP basis",
       "issue": "The surface does not support this inference. Six-month 2026 GAAP diluted EPS was $4.18, against $2.86 a year earlier. The trailing 22.0x P/E on $155.47 also puts trailing GAAP earnings well above FY25's $5.77. A large step to $8.13 is therefore consistent with GAAP earnings too, and the step does not indicate the basis. The conclusion (compare forward multiples only with each other) is sound; the stated reason is not.",
       "fix": "Drop the 'suggests' inference. Say the pack does not state the consensus basis, and that GAAP earnings this year include the unexplained other income, so the trailing and forward multiples are compared only within their own basis.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. The 'suggests' inference is gone. multiplesCommentary says the pack does not state whether consensus EPS is GAAP or adjusted, and compares trailing and forward multiples only within their own basis."
     },
     {
       "id": "F-21",
@@ -206,7 +212,8 @@
       "quote": "Below operating income, other income, net was $485 million in the six months against $24 million a year earlier",
       "issue": "The paragraph explains the second quarter's GAAP-versus-adjusted EPS gap (diluted EPS of $1.69 up 14%) with a six-month figure. Most of the $485 million fell in the first quarter. For the second quarter itself, other income, net was $74 million against $5 million. The period is labelled correctly, but the figure does not match the quarter it is used to explain.",
       "fix": "Use the quarter's figures ($74 million vs $5 million) next to the quarter's EPS. Alternatively, keep the six-month figures and pair them with six-month GAAP diluted EPS ($4.18 vs $2.86).",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. incomeCommentary now gives the quarter's other income ($74 million, far above the year-earlier figure) next to the quarter's EPS, and labels the six-month $485 million vs $24 million separately."
     },
     {
       "id": "F-22",
@@ -215,7 +222,8 @@
       "quote": "Exchanges produced net revenues of $1,464 million at a 74% operating margin (75% adjusted)",
       "issue": "No figure in the segment body carries its period, so a reader can take $1,464 million, $645 million and $557 million as annual figures next to the FY25 $12.6B. All are second-quarter 2026. Separately, '$531 million was recurring revenue growing at the same rate' is ambiguous. It means the 10% of Exchanges recurring revenue in the previous clause, but it reads as the segment's own rate.",
       "fix": "Open the body's figures with 'In the second quarter of 2026'. Replace 'growing at the same rate' with 'also up 10%'.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. The segment body opens with 'In the second quarter of 2026', and the Fixed Income and Data Services clause now reads 'matching Exchanges' recurring growth rate'."
     },
     {
       "id": "F-23",
@@ -224,7 +232,8 @@
       "quote": "the MD&A lists both among its risk factors",
       "issue": "The MD&A excerpt lists competition and the pace of technology among the factors in its forward-looking-statements caution. The Risk factors section of the pack is '(not captured)'. Calling the list the MD&A's 'risk factors' mildly over-attributes the source.",
       "fix": "Write 'the MD&A lists both among the factors that may affect its performance', or similar wording that names the forward-looking-statements list.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. durability now says the MD&A lists both 'among the factors that may affect its performance'."
     },
     {
       "id": "F-24",
@@ -233,7 +242,8 @@
       "quote": "The Base takes 55% because its inputs are the ones the quarter delivered.",
       "issue": "The Base's main input is consensus FY27E EPS of $8.80, about one year of consensus growth above FY26E's $8.13. The quarter delivered 5% adjusted EPS growth. The revenue-mix inputs (recurring revenue carries growth, transaction revenue roughly flat) match the quarter, but the EPS input is a forecast, not a delivered figure. As written, the reason for the 55% overstates how much the quarter confirms the Base.",
       "fix": "Argue the 55% on what the Base actually assumes: the quarter's revenue mix supports it, and it still depends on consensus EPS growth running ahead of the quarter's 5%. Say in words why that is likelier than either tail.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. The 55% is argued on what the Base assumes. The quarter's revenue mix matches it, and it still needs consensus EPS to grow faster than the quarter's 5% adjusted growth. The falling share count and recurring growth are given as reasons that gap can partly close."
     },
     {
       "id": "F-25",
@@ -242,7 +252,8 @@
       "quote": "we would raise the Base if the permanent deal financing leaves room for buybacks while transaction revenue grows again",
       "issue": "'Grows again' implies transaction revenue is not growing. The report itself gives net transaction revenues of $1,313 million, up 2% in the quarter. Part of the trigger is therefore one the current data already meets.",
       "fix": "Make the trigger something the data does not yet show, for example transaction revenue growth that keeps pace with recurring revenue, described in words.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. The trigger now reads 'transaction revenue grows as fast as recurring revenue', which the second quarter (2% vs 8%) does not yet meet."
     }
   ]
 }
