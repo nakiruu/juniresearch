@@ -193,6 +193,9 @@ describe("the surface hash", () => {
 });
 
 describe("synth:build stage order", () => {
+  // A source-order assertion, not a behavioural one: scripts/synth-build.ts is a top-level script that reads the pack,
+  // judgment and desk and calls process.exit as it runs, so it cannot be imported into a test without first being split
+  // into a function (a larger change than this guard warrants). The fail(…, "<stage>") call sites are what this pins.
   it("runs the exceptions stage after the input check and before validate", () => {
     const src = readFileSync("scripts/synth-build.ts", "utf8");
     const at = (stage: string) => src.indexOf(`"${stage}")`);
