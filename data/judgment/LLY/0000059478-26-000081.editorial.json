@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "2e5d50d6c2f6319d0e78bcb4a69a72026af5474ab427ceaa6fb22798b0a89d56",
-  "reviewedAt": "2026-10-08T16:29:26Z",
+  "judgmentSha256": "daffdcf29aa171c931aab39ff150181c7f10323d5bada09c862792675a006cb8",
+  "reviewedAt": "2026-10-08T16:30:39Z",
   "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "needs-fix-round",
+  "verdict": "approved",
   "findings": [
     {
       "id": "F-1",
@@ -42,7 +42,8 @@
       "quote": "left free cash flow of $9.0B, a 13.8% margin and a trailing free-cash-flow yield of only 1.8% against the $1.02T market capitalization",
       "issue": "Rubric item 1, period attachment. The sentence presents the 1.8% yield as a property of the FY25 free cash flow of $9.0B, but the 1.8% on the surface is the trailing-twelve-month FCF yield (Facts 'Trailing twelve months ... FCF yield 1.8%'; highlight 'FCF Yield (TTM) = 1.8%'), a different period from FY25. Now that the sentence names the market cap precisely, a reader can check it: $9.0B against $1.02T is about half of 1.8%, so the sentence does not reconcile. The mismatch also hides a point that bears on the paragraph's argument: a trailing yield twice the FY25 level means trailing free cash flow has already risen well above FY25, while the paragraph says the yield 'should improve as the plants ramp' as if it has not yet. This sentence was approved before with '$1T' and carried the same mismatch; the edit made it checkable.",
       "fix": "Separate the two periods. Keep FY25 free cash flow of $9.0B and the 13.8% margin as the FY25 facts, then give the 1.8% as the trailing-twelve-month yield in its own clause, saying it is on trailing free cash flow rather than the FY25 figure (do not compute a TTM FCF dollar figure; describe it in words). Then make the closing claim about future improvement consistent with a trailing yield that already sits above the FY25 level, or drop the yield.",
-      "status": "open"
+      "status": "addressed",
+      "note": "Addressed. cashflowCommentary now gives FY25 free cash flow of $9.0B and the 13.8% margin as FY25 facts, and states the 1.8% yield separately as \"measured on trailing-twelve-month free cash flow rather than the FY25 figure\", which matches the surface (TTM FCF yield 1.8%). No new dollar figure was computed. The closing now says in words that trailing free cash flow already runs above the FY25 level, consistent with the yield. No other field changed (commit d385e74)."
     }
   ]
 }
