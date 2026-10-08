@@ -7,8 +7,9 @@
  * (surfaceSha256). Any edit to either lapses the entry and the figure must pass on its own.
  *
  * Two guards keep the list from growing quietly:
- *   - synth:build applies the file only when the working copy is byte-equal to `git show main:<file>`; otherwise it
- *     applies none (fail closed), so a branch cannot except its own figures before a reviewed merge;
+ *   - synth:build applies the file only when the working copy is byte-equal to both refs/heads/main's and
+ *     refs/remotes/origin/main's copies; otherwise it applies none (fail closed), so a branch cannot except its own
+ *     figures before a reviewed merge and push;
  *   - grounding-exceptions.test.ts pins every entry's key to a literal list, so adding one is a reviewed code change.
  * The fix queue removes entries as reports are re-synthesized; the file is deleted when it is empty.
  */
@@ -21,8 +22,9 @@ import type { LintIssue } from "./lint";
 import type { GroundingSurface } from "./grounding";
 
 export const EXCEPTIONS_PATH = "lib/synth/grounding-exceptions.json";
-export const EXCEPTIONS_IGNORED_DIFFERS = "grounding exceptions ignored: file differs from main";
-export const EXCEPTIONS_IGNORED_NOT_ON_MAIN = "grounding exceptions ignored: main's copy is unreadable (not merged yet, or no git)";
+export const EXCEPTIONS_IGNORED_DIFFERS = "grounding exceptions ignored: file differs from main or origin/main";
+export const EXCEPTIONS_IGNORED_UNREADABLE = "grounding exceptions ignored: refs/heads/main or refs/remotes/origin/main has no readable copy (not merged and pushed yet, or no git)";
+export const EXCEPTIONS_IGNORED_WORKING = "grounding exceptions ignored: the working copy is unreadable";
 
 const SHA256 = z.string().regex(/^[0-9a-f]{64}$/);
 export const GroundingException = z.strictObject({
@@ -50,23 +52,38 @@ export function surfaceSha256(s: GroundingSurface): string {
 
 export interface ExceptionReaders {
   readWorking: () => Buffer | string | null;   // null when the file is absent
-  readMain: () => Buffer | string;             // throws when main has no copy, or git is unavailable
+  readMain: () => Buffer | string;             // refs/heads/main's copy; throws when it has none, or git is unavailable
+  readOriginMain: () => Buffer | string;       // refs/remotes/origin/main's copy; likewise
 }
 
-/** The production readers: the working copy, and main's copy through git. */
-export const gitReaders = (path = EXCEPTIONS_PATH): ExceptionReaders => ({
+/** Fully qualified, so a tag or branch named "main" cannot shadow them. */
+export const MAIN_REFS = ["refs/heads/main", "refs/remotes/origin/main"] as const;
+
+/** The production readers: the working copy, and the two refs' copies through git. */
+export const gitReaders = (
+  path = EXCEPTIONS_PATH,
+  run: (args: string[]) => Buffer = (args) => execFileSync("git", args, { stdio: ["ignore", "pipe", "ignore"] }),
+): ExceptionReaders => ({
   readWorking: () => (existsSync(path) ? readFileSync(path) : null),
-  readMain: () => execFileSync("git", ["show", `main:${path}`], { stdio: ["ignore", "pipe", "ignore"] }),
+  readMain: () => run(["show", `${MAIN_REFS[0]}:${path}`]),
+  readOriginMain: () => run(["show", `${MAIN_REFS[1]}:${path}`]),
 });
 
-/** The entries to apply: only those of a working file byte-equal to main's copy. Malformed → throw. */
+/**
+ * The entries to apply: only those of a working file byte-equal to both main's and origin/main's copies, so a moved
+ * local main or a wip branch excepts nothing. This guards against accidents and wip branches, not a hostile shell: the
+ * real control is the reviewed merge plus push. Anything unreadable fails closed with a warning; a malformed file that
+ * both refs hold throws (the build stops at the exceptions stage).
+ */
 export function loadExceptions(r: ExceptionReaders): { entries: GroundingException[]; warning?: string } {
-  const working = r.readWorking();
+  let working: Buffer | string | null;
+  try { working = r.readWorking(); } catch (e) { return { entries: [], warning: `${EXCEPTIONS_IGNORED_WORKING}: ${(e as Error).message}` }; }
   if (working == null) return { entries: [] };
-  let main: Buffer;
-  try { main = Buffer.from(r.readMain()); } catch { return { entries: [], warning: EXCEPTIONS_IGNORED_NOT_ON_MAIN }; }
+  let main: Buffer, originMain: Buffer;
+  try { main = Buffer.from(r.readMain()); originMain = Buffer.from(r.readOriginMain()); }
+  catch { return { entries: [], warning: EXCEPTIONS_IGNORED_UNREADABLE }; }
   const bytes = Buffer.from(working);
-  if (!bytes.equals(main)) return { entries: [], warning: EXCEPTIONS_IGNORED_DIFFERS };
+  if (!bytes.equals(main) || !bytes.equals(originMain)) return { entries: [], warning: EXCEPTIONS_IGNORED_DIFFERS };
   return { entries: GroundingExceptionsFile.parse(JSON.parse(bytes.toString("utf8"))).entries };
 }
 

@@ -1,7 +1,8 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import {
-  GroundingExceptionsFile, loadExceptions, applyExceptions, exceptionKey, surfaceSha256, EXCEPTIONS_IGNORED_DIFFERS, type GroundingException,
+  GroundingExceptionsFile, loadExceptions, applyExceptions, exceptionKey, surfaceSha256, gitReaders, EXCEPTIONS_IGNORED_DIFFERS, EXCEPTIONS_IGNORED_UNREADABLE,
+  type GroundingException,
 } from "@/lib/synth/grounding-exceptions";
 import type { GroundingSurface } from "@/lib/synth/grounding";
 
@@ -68,37 +69,62 @@ describe("applying exceptions", () => {
   });
 });
 
-describe("only the copy merged to main applies", () => {
+describe("only the copy merged to main and pushed to origin/main applies", () => {
   const bytes = fileOf([entry]);
-  it("applies the entries when the working file is byte-equal to main's", () => {
-    expect(loadExceptions({ readWorking: () => bytes, readMain: () => Buffer.from(bytes) })).toEqual({ entries: [entry] });
+  const both = (main: () => Buffer | string, originMain: () => Buffer | string = main) => ({ readMain: main, readOriginMain: originMain });
+  it("applies the entries when the working file is byte-equal to both refs' copies", () => {
+    expect(loadExceptions({ readWorking: () => bytes, ...both(() => Buffer.from(bytes)) })).toEqual({ entries: [entry] });
   });
-  it("applies none, with a warning, when one byte differs", () => {
-    const r = loadExceptions({ readWorking: () => bytes, readMain: () => bytes.replace("test", "tesT") });
+  it("applies none, with a warning, when one byte differs from main's copy", () => {
+    const r = loadExceptions({ readWorking: () => bytes, ...both(() => bytes.replace("test", "tesT"), () => bytes) });
     expect(r.entries).toEqual([]);
     expect(r.warning).toBe(EXCEPTIONS_IGNORED_DIFFERS);
-    expect(EXCEPTIONS_IGNORED_DIFFERS).toBe("grounding exceptions ignored: file differs from main");
+    expect(EXCEPTIONS_IGNORED_DIFFERS).toBe("grounding exceptions ignored: file differs from main or origin/main");
+  });
+  it("applies none when main agrees but origin/main does not (a moved local main, a wip branch)", () => {
+    const r = loadExceptions({ readWorking: () => bytes, ...both(() => bytes, () => fileOf([])) });
+    expect(r.entries).toEqual([]);
+    expect(r.warning).toBe(EXCEPTIONS_IGNORED_DIFFERS);
   });
   it("applies none when a line ending differs", () => {
-    expect(loadExceptions({ readWorking: () => bytes.replace(/\n/g, "\r\n"), readMain: () => bytes }).entries).toEqual([]);
+    expect(loadExceptions({ readWorking: () => bytes.replace(/\n/g, "\r\n"), ...both(() => bytes) }).entries).toEqual([]);
   });
-  it("fails closed when main's copy cannot be read (git missing, or the file not on main yet)", () => {
-    const r = loadExceptions({ readWorking: () => bytes, readMain: () => { throw new Error("fatal: path not in main"); } });
-    expect(r.entries).toEqual([]);
+  it("fails closed, with a warning, when either ref's copy cannot be read", () => {
+    const boom = () => { throw new Error("fatal: path not in refs/remotes/origin/main"); };
+    for (const r of [loadExceptions({ readWorking: () => bytes, ...both(boom, () => bytes) }), loadExceptions({ readWorking: () => bytes, ...both(() => bytes, boom) })]) {
+      expect(r.entries).toEqual([]);
+      expect(r.warning).toBe(EXCEPTIONS_IGNORED_UNREADABLE);
+    }
   });
   it("applies none when the working file is absent", () => {
-    expect(loadExceptions({ readWorking: () => null, readMain: () => bytes }).entries).toEqual([]);
+    expect(loadExceptions({ readWorking: () => null, ...both(() => bytes) })).toEqual({ entries: [] });
+  });
+  it("fails closed, with a warning, when the working file cannot be read (EACCES, EISDIR), rather than stopping the build", () => {
+    const r = loadExceptions({ readWorking: () => { throw Object.assign(new Error("EISDIR: illegal operation on a directory"), { code: "EISDIR" }); }, ...both(() => bytes) });
+    expect(r.entries).toEqual([]);
+    expect(r.warning).toMatch(/^grounding exceptions ignored: the working copy is unreadable: EISDIR/);
   });
   it("excepts nothing from a wip commit that adds an entry and pins it, while main holds the old file", () => {
     const added = { ...entry, field: "sections.growth.points[0]", raw: "$2T" };
     const frozen = new Set([exceptionKey(entry), exceptionKey(added)]);
     const working = fileOf([entry, added]);
     expect(GroundingExceptionsFile.parse(JSON.parse(working)).entries.every((e) => frozen.has(exceptionKey(e)))).toBe(true);
-    expect(loadExceptions({ readWorking: () => working, readMain: () => bytes }).entries).toEqual([]);
+    expect(loadExceptions({ readWorking: () => working, ...both(() => bytes) }).entries).toEqual([]);
+    // a local `git branch -f main wip` moves refs/heads/main but not refs/remotes/origin/main
+    expect(loadExceptions({ readWorking: () => working, ...both(() => working, () => bytes) }).entries).toEqual([]);
   });
-  it("throws on a malformed file that main also holds, so synth:build fails at the exceptions stage", () => {
+  it("throws on a malformed file that both refs also hold, so synth:build fails at the exceptions stage", () => {
     const bad = JSON.stringify({ entries: [{ ...entry, class: "maybe" }] });
-    expect(() => loadExceptions({ readWorking: () => bad, readMain: () => bad })).toThrow();
+    expect(() => loadExceptions({ readWorking: () => bad, ...both(() => bad) })).toThrow();
+  });
+  it("reads main's and origin/main's copies by fully qualified ref, never a bare name a tag could shadow", () => {
+    const calls: string[][] = [];
+    const r = gitReaders("lib/synth/grounding-exceptions.json", (args) => { calls.push(args); return Buffer.from("x"); });
+    r.readMain(); r.readOriginMain();
+    expect(calls).toEqual([
+      ["show", "refs/heads/main:lib/synth/grounding-exceptions.json"],
+      ["show", "refs/remotes/origin/main:lib/synth/grounding-exceptions.json"],
+    ]);
   });
 });
 

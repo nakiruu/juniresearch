@@ -120,7 +120,7 @@ const unwaived = [...issues, ...lint.filter((i) => i.severity === "error")];
 const lintWarnings = [...vj.warnings, ...lint.filter((i) => i.severity === "warning")];
 // A data verdict, not an authoring error: no flag skips it (--skip-review only covers the editorial gate).
 if (cg.blocked) fail(cg.errors.map((m) => ({ field: "shibuiCheck", message: m, value: null })), lintWarnings, "input check");
-// Owner-approved grounding exceptions for published reports: applied only when the file is byte-equal to main's copy,
+// Owner-approved grounding exceptions for published reports: applied only when the file is byte-equal to main's and origin/main's copies,
 // and only while the judgment and the rendered surface are exactly the ones the entry names.
 const exceptions = (() => {
   try { return loadExceptions(gitReaders()); }

@@ -19,7 +19,7 @@
  * exception entries, and the weak count. Exits 1 when any error-class miss remains that no exception covers.
  *
  * Exceptions (lib/synth/grounding-exceptions.json) apply here exactly as in synth:build: only when the file is byte-equal
- * to main's copy. --preview-exceptions evaluates the working copy instead (a branch's view, which synth:build ignores).
+ * to both refs/heads/main's and refs/remotes/origin/main's copies. --preview-exceptions evaluates the working copy instead (a branch's view, which synth:build ignores).
  * --propose-exceptions prints candidate entries for the remaining misses of reports whose surface and judgment are
  * unchanged since build time; a report that drifted is never proposed, and any entry matching one aborts the sweep.
  */
@@ -105,18 +105,20 @@ function driftCount(head: { field: string; value: unknown }[], built: { field: s
   return n;
 }
 
-// Exceptions: synth:build applies the file only when byte-equal to main's copy; --preview-exceptions evaluates the working copy.
+// Exceptions: synth:build applies the file only when byte-equal to main's and origin/main's copies; --preview-exceptions
+// evaluates the working copy. An unreadable working copy is treated as absent, as synth:build treats it.
 const workingEntries = (() => {
-  const w = gitReaders().readWorking();
+  let w: Buffer | string | null;
+  try { w = gitReaders().readWorking(); } catch { w = null; }
   if (w == null) return [];
   try { return GroundingExceptionsFile.parse(JSON.parse(w.toString())).entries; }
   catch (e) { console.error(`malformed ${EXCEPTIONS_PATH}: ${(e as Error).message}`); process.exit(2); }
 })();
 const ex = preview
-  ? { entries: workingEntries, note: `${workingEntries.length} entries, preview — synth:build ignores this file until it is on main` }
+  ? { entries: workingEntries, note: `${workingEntries.length} entries, preview — synth:build ignores this file until it is on main and origin/main` }
   : (() => {
       const l = loadExceptions(gitReaders());
-      return { entries: l.entries, note: l.warning ? `${workingEntries.length} entries ignored (not on main): ${l.warning}` : `${l.entries.length} entries applied (byte-equal to main)` };
+      return { entries: l.entries, note: l.warning ? `${workingEntries.length} entries ignored: ${l.warning}` : `${l.entries.length} entries applied (byte-equal to main and origin/main)` };
     })();
 
 type Row = {

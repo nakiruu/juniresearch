@@ -213,7 +213,7 @@ must match a figure in the rendered Facts block, the Calls thresholds, the repor
 excerpts, with a compatible unit and no finer precision; Context table cells match by digits, and figures
 grounded only that way are listed for the reviewer; a multiple or margin found nowhere on the surface is an
 assumed-figure warning, not an error), the owner-approved **grounding exceptions** for published reports
-(`lib/synth/grounding-exceptions.json`, applied only as merged to `main`), **desk lint**
+(`lib/synth/grounding-exceptions.json`, applied only as merged to `main` and pushed), **desk lint**
 (`lib/synth/lint/` — figure/sentence repeats, span scope, hype, unattributed superlatives; errors fail the
 build, warnings print), and the **editorial gate** — a fresh reviewer writes `…editorial.json` and the
 build refuses to write the report until that file matches the judgment's SHA-256 with no Critical or
