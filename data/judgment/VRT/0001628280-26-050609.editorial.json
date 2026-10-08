@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "120e3902f346f3bcc6bfe23d56f3340a52d346696619072bb64b0c5be159de69",
-  "reviewedAt": "2026-09-22T22:30:00Z",
-  "reviewer": "claude-opus-4-8",
+  "judgmentSha256": "476c054f0fefc59a2e92657384f4c8262389b9016d9597ccd08073504ac3cd0f",
+  "reviewedAt": "2026-10-08T14:51:09Z",
+  "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "approved-with-minors",
+  "verdict": "needs-fix-round",
   "findings": [
     {
       "id": "F-1",
@@ -13,7 +13,7 @@
       "issue": "\"long-tenured\" is an unsupported factual claim about Mr. Cote's tenure. The proxy excerpt is the authoritative governance source, and it discloses nothing about how long Mr. Cote has served on the board or as Executive Chairman — it says only that he is Executive Chairman and primary liaison to the independent directors. His tenure is not in the Facts or Context blocks either. The descriptor is recalled from outside the pack (the same recalled-tenure trap flagged Critical on prior runs).",
       "fix": "Drop \"long-tenured\" and rest the point on what the pack supports — e.g. \"which concentrates influence in the Executive Chairman alongside the CEO.\" Restore a tenure characterization only if a tenure fact is added to the grounding surface.",
       "status": "addressed",
-      "note": "Confirmed fixed in the current judgment. The sentence now reads \"One nuance is the Executive Chairman structure, which places an executive rather than an independent director at the head of the board alongside the CEO.\" — supported: the proxy names Cote as Executive Chairman and lists him outside the nine independent nominees. No tenure claim remains."
+      "note": "Still fixed in the rewrite. Governance now ends \"The main limit on the board's independent oversight is that an executive, not an independent director, chairs it.\" No tenure claim appears anywhere in the judgment."
     },
     {
       "id": "F-2",
@@ -23,7 +23,7 @@
       "issue": "This restates, in different words, the whole valuation conclusion already argued in valuation.scenarioCommentary (\"a fair value about +16.5% above the current price, against a bear case -27.0% below it, for a reward/risk of 0.61x ... below the Street's $338.15 consensus target\"). The same claim appears twice across sections — the paraphrase repetition item 7 targets and the lint does not catch. The 52-week range $133.85–$379.94 in this same paragraph is likewise a third printing of a figure already given verbatim in the thesis and in scenarioCommentary.",
       "fix": "Keep the numeric valuation statement in one home (scenarioCommentary) and refer back in words in the final recommendation — e.g. \"our weighted fair value stays a mid-teens premium to the quote, below the Street, with a wider bear downside.\" Point to the range rather than reprinting $133.85–$379.94.",
       "status": "addressed",
-      "note": "Confirmed fixed. body[1] now points in words only: \"our probability-weighted fair value lands below the Street's bullish consensus.\" No +16.5%/-27.0%/0.61x restatement and no reprint of the 52-week range remain in the final recommendation."
+      "note": "The quoted text is gone (the report was re-authored on corrected inputs). The same pattern has come back in new text: finalRecommendation.body[0] reprints the +16.0% expected upside and 0.48× reward/risk with the same BUY-bar logic as scenarioCommentary. That is filed as F-11 so the author can find the current wording."
     },
     {
       "id": "F-3",
@@ -33,7 +33,7 @@
       "issue": "\"nearly doubled\" mischaracterizes the series stated in the same sentence: $7.2B to $15.0B is a ~108% increase, so backlog more than doubled. The qualifier understates the move (the thesis correctly states the same two figures without it).",
       "fix": "Use \"more than doubled\" or \"roughly doubled,\" or state the two figures without the qualifier.",
       "status": "addressed",
-      "note": "Confirmed fixed. Now reads \"Order backlog more than doubled year over year at the end of 2025\" — consistent with the ~108% increase."
+      "note": "Still fixed. growth.points[0] gives the two 10-K figures without a qualifier, and the thesis and final recommendation say \"more than doubled\", which matches $7.2 billion to $15.0 billion."
     },
     {
       "id": "F-4",
@@ -43,7 +43,7 @@
       "issue": "Basis mismatch presented as one series: the 23.3–24.3% is adjusted operating margin (guidance), while the \"single digits in FY21\" is the GAAP operating margin (5.2%) shown in the income table and incomeCommentary. No adjusted FY21 margin is on the surface, so the implied continuous climb mixes adjusted and GAAP bases — the same GAAP-vs-adjusted care the incomeCommentary otherwise keeps.",
       "fix": "Either compare like-for-like (GAAP operating margin 5.2% in FY21 to 17.9% in FY25) or make explicit that 2026 is an adjusted figure and drop the implication that it continues the GAAP FY21 line.",
       "status": "addressed",
-      "note": "Confirmed fixed. Current text is adjusted-to-adjusted: \"Adjusted operating margin is guided to 23.3–24.3% for 2026, a further step up on an adjusted basis after the second quarter's expansion\" (the second quarter's adjusted margin, 22.6%, is stated in incomeCommentary). The GAAP FY21 anchor and the mixed-basis implication are gone."
+      "note": "Still fixed. growth.points[3] states only adjusted guidance (23.3–24.3% for 2026, 24.0–25.0% for the third quarter). The GAAP FY21 comparison is gone. A separate attribution problem in that bullet is filed as F-14."
     },
     {
       "id": "F-5",
@@ -53,7 +53,7 @@
       "issue": "This restates, in different words, the capital-returns claim already argued in financials.cashflowCommentary (\"Capital returns stay small: FY24 carried $0.6B of buybacks but FY25 had none, and the dividend yields 0.10%\") — the same three figures (FY24 $0.6B buybacks, FY25 zero, dividend 0.10%) in two sections, the near-verbatim paraphrase repetition item 7 targets and the lint does not catch. The same section repeats two further clusters already argued elsewhere: the net-cash position and \"$5.6 billion of liquidity\" (given in balanceCommentary, \"a net-cash position at the end of the second quarter of 2026, with $5.6 billion of liquidity\"), and the Waylay/Great Lakes/PurgeRite acquisition trio with descriptions (given in growth.points[3] and already pointed to in catalysts[4]).",
       "fix": "Keep the capital-returns figures in one home (cashflowCommentary) and refer back in words in capitalAllocation — e.g. \"buybacks paused in FY25 and the dividend is nominal.\" Point to the net-cash/liquidity rather than reprinting \"$5.6 billion,\" and name the acquisitions once (in growth) rather than re-listing them here, so the section carries only its capital-allocation judgment (reinvestment over returns, optionality not buybacks).",
       "status": "addressed",
-      "note": "Confirmed fixed. capitalAllocation now points in words — \"buybacks have been sporadic and the dividend is token\" — with no reprint of the FY24 $0.6B / FY25 zero / 0.10% cluster, no \"$5.6 billion\" figure (only \"the net-cash balance sheet as strategic optionality\"), and no re-listing of the acquisition names. The section now carries only its capital-allocation judgment: reinvestment over returns, optionality not buybacks."
+      "note": "Still fixed. capitalAllocation points back with \"FY25 had no buybacks (see cash flow) and the dividend is small\" and does not reprint $5.6 billion. The acquisitions are now named only here and appear nowhere else. A different repetition in this field (capacity investment and the fixed-cost point) is filed as F-17."
     },
     {
       "id": "F-6",
@@ -63,7 +63,7 @@
       "issue": "Paraphrase repetition across sections (item 7): the same capex figure and rationale are already given in financials.cashflowCommentary — \"Capital expenditure is rising, guided to about 4.0% of revenue, as Vertiv builds capacity for AI demand.\" Both sentences carry the same figure (capex ~4.0% of revenue) and the same AI-capacity purpose, in two body sections, in different words. The lint may catch the shared \"4.0%\" token but not the paraphrased framing. The growth bullet adds little beyond the figure over what cashflow already states (and the capacity-investment theme is itself the argue-behind for executive-summary catalysts[3]).",
       "fix": "Keep the 4.0%-of-revenue capex figure in one home — cashflowCommentary is its natural home as a use of cash — and in growth.points[4] make the capacity-expansion point in words without reprinting the figure (e.g. \"Capacity expansion is accelerating to serve AI and high-performance-compute demand, with rising capex behind it\"), or lead the growth bullet with a distinct capacity metric.",
       "status": "addressed",
-      "note": "Addressed. The capex ~4.0%-of-revenue bullet was removed from growth; growth.points[4] now reads \"Adjusted operating profit is guided to $3,285–$3,365 million for full-year 2026, the dollar scale that the revenue growth and margin expansion combine to produce\" — a distinct figure (press-release FY26 guidance) that appears nowhere else in the judgment. The 4.0% capex figure now lives only in cashflowCommentary, so the paraphrase repetition is resolved and no new cross-section repeat was introduced."
+      "note": "The 4.0%-of-revenue capex figure now appears only in cashflowCommentary. The capacity-investment theme itself is still told in several places, including two \"the MD&A says ... anticipates further investment in global capacity\" sentences. That is filed as F-17."
     },
     {
       "id": "F-7",
@@ -73,7 +73,7 @@
       "issue": "This restates, in different words, the closing claim already made in the top-level analystCommentary — \"Our probability-weighted fair value sits below the consensus target: we share the direction but pay less for the premium multiple and the demonstrated swing in the shares over the past year.\" The same editorial stance (weighted fair value below the Street consensus; agree on/share direction; pay less for the multiple) appears in two sections. This is the paraphrase repetition item 7 targets and the lint does not catch — the shared token is only \"$338.15\" (analystCommentary states it earlier in the paragraph), while the duplicated framing carries across.",
       "fix": "Keep the below-the-Street stance in one home. analystCommentary is the Street section and its natural home; retain there \"we share the direction but pay less for the premium multiple.\" In scenarioCommentary, drop the \"we agree on direction but pay less for the multiple\" clause and keep only the numeric comparison the valuation section needs — that the computed weighted fair value sits below the $338.15 consensus target.",
       "status": "addressed",
-      "note": "Addressed. The stance now lives in one home. analystCommentary was rewritten to point only — it ends \"Where our own fair value lands relative to that consensus is set out in the valuation section.\" and no longer carries the \"we share the direction but pay less for the premium multiple\" clause. scenarioCommentary retains the numeric comparison plus the \"pay less for the multiple\" reasoning as its home; finalRecommendation points in words (\"lands below the Street's bullish consensus\"). No cross-section restatement of the stance remains."
+      "note": "The quoted sentence is gone. scenarioCommentary no longer compares itself with the Street target. A different repetition has replaced it: the Street-needs-the-multiple-to-hold claim and the \"Base lets the multiple ease ... Bear prices a pause\" sentence now appear in analystCommentary, the thesis and the Base driver. That is filed as F-12."
     },
     {
       "id": "F-8",
@@ -83,7 +83,7 @@
       "issue": "The tail clause \"deepen the liquid-cooling and high-density portfolio\" is repeated verbatim from executive-summary catalysts[4] (\"recent acquisitions in rack integration, fluid management and AI software deepen the liquid-cooling and high-density portfolio\"), and the three-acquisition structure (rack, fluid management, AI software) is duplicated across the two sections rather than the catalyst pointing and the growth bullet arguing. A milder instance of the same catalyst-restated-in-growth pattern is backlog: catalysts[0] and growth.points[0] both carry \"most of it expected to [ship/convert] within 12 to 18 months\" plus a \"visibility\" conclusion.",
       "fix": "Let the exec-summary catalyst point and the growth bullet argue in its own words. In growth.points[3], name the acquisitions and what each adds without reprinting the catalyst's \"deepen the liquid-cooling and high-density portfolio\" tail. Similarly vary the growth.points[0] conclusion so the \"12 to 18 months / visibility\" detail is not echoed from catalysts[0].",
       "status": "addressed",
-      "note": "Addressed. catalysts[4] rewritten to point ('management is adding capability by acquisition — rack integration, fluid management and AI-software assets — rather than building all of it in-house'), dropping the verbatim 'deepen the liquid-cooling and high-density portfolio' tail; growth.points[3] now solely names Great Lakes/PurgeRite/Waylay. catalysts[0] likewise rewritten ('gives near-term revenue firmer support than order flow alone'), removing the '12 to 18 months / visibility' echo of growth.points[0]."
+      "note": "Still fixed. No acquisition catalyst remains, and the acquisitions are named once, in capitalAllocation. catalysts[1] now paraphrases the backlog timing (\"within about the next year and a half, which supports revenue into 2027\") rather than reprinting \"12 to 18 months\", and it adds the 2027 revenue implication."
     },
     {
       "id": "F-9",
@@ -92,6 +92,133 @@
       "quote": "Order backlog more than doubled year over year at the end of 2025, most of it expected to convert within 12 to 18 months, an unusual level of forward visibility for a hardware business.",
       "issue": "Paraphrase repetition across two body sections (item 7). The tail \"an unusual level of forward visibility for a hardware business\" restates the backlog-visibility claim businessMoat.durability already makes: \"reinforced by an order backlog that gives it more than a year of forward visibility.\" The same claim — the backlog provides forward visibility — appears in growth and in durability, using the same phrase \"forward visibility.\" This tail was newly added to growth.points[0] in the round-2 rewrite (the prior version ended at \"12 to 18 months\"), so the rewrite introduced the cross-section echo, which the lint will not catch because the wording differs.",
       "fix": "Keep the \"forward visibility\" characterization in one home. Since durability already frames the backlog as forward visibility for the moat, drop or vary the growth.points[0] tail — e.g. end the bullet at \"within 12 to 18 months,\" or make the growth point distinct (the firm share of backlog, or the conversion cadence) rather than repeating the visibility framing.",
+      "status": "addressed",
+      "note": "Fixed. growth.points[0] no longer has the \"forward visibility\" tail; it ends by dating the figure (\"The figure dates from the end of 2025, and the captured 10-Q excerpt gives no update.\"). Durability no longer uses the backlog-visibility framing either."
+    },
+    {
+      "id": "F-10",
+      "severity": "Critical",
+      "field": "analystCommentary",
+      "quote": "with a median of $345.00 and a range of $236.00 to $427.00; every target except the lowest sits above the current price.",
+      "issue": "Unsupported claim (rubric 2). The surface gives only the consensus ($338.15), the median ($345.00) and the range ($236.00–$427.00) of the 28 analysts' targets. Those show that the lowest target is below $253.51 and that at least half are above it. They say nothing about the second-lowest or any other individual target, so \"every target except the lowest sits above the current price\" is an inference the pack does not support. Several targets could sit between $236.00 and $253.51.",
+      "fix": "Say only what the three statistics show, e.g. \"the lowest target sits below the current price, while the median is well above it.\" Or drop the clause.",
+      "status": "open"
+    },
+    {
+      "id": "F-11",
+      "severity": "Important",
+      "field": "sections.finalRecommendation.body[0]",
+      "quote": "Our expected upside of {+ +16.0% +} clears the BUY bar, but the reward/risk of 0.48× does not, because a pause in data-center spending at a lower multiple would take the shares well below today's price.",
+      "issue": "Repetition across sections (item 7), which round 1 fixed as F-2 and the rewrite brought back. scenarioCommentary already gives E +16.0%, R 0.48× and the same logic (\"That clears the +10.0% bar for a BUY but not the 0.50× reward/risk bar, so the derived label is HOLD\"). body[0] also re-lists the thesis's four-part business case (\"an order book that more than doubled in 2025, guidance raised in July, widening margins and a net-cash balance sheet\" vs the thesis's backlog / July raise / margins widening / net cash). body[1] repeats scenarioCommentary's deciding judgment: \"The label is close to BUY and rests on our judgment that the multiple eases as growth slows\" vs \"The call is close ... The deciding judgment is whether the multiple holds a year out. We think it eases as growth slows\". The thesis says \"It is a close call\" as well, so closeness is stated three times.",
+      "fix": "Keep the E/R numbers, the BUY-bar logic and the closeness statement in scenarioCommentary. In the final recommendation, give the label and target, point back in words (e.g. \"the upside is real but small against the Bear's downside; see valuation\") and keep body[1]'s price and event triggers, which are new. Shorten the business-case recap so it does not re-list the thesis's four items.",
+      "status": "open"
+    },
+    {
+      "id": "F-12",
+      "severity": "Important",
+      "field": "analystCommentary",
+      "quote": "Our Base lets the multiple ease as growth slows, and our Bear prices a pause in data-center spending, so our fair value sits well below the consensus target (see valuation).",
+      "issue": "Near-verbatim sentence in two sections (item 7). The thesis says \"Our Base lets it ease as growth slows, and our Bear prices a pause in data-center spending.\" The claim that the Street needs the multiple to hold is also made three times: analystCommentary (\"The consensus target lands close to what today's forward multiple would give on the FY27E consensus EPS, so the Street is in effect assuming that the multiple holds for another year\"), the thesis (\"the Street's targets need that multiple to hold a year out\") and scenarios[1].driver (\"Holding today's multiple instead would put the Base close to the Street's consensus target\").",
+      "fix": "Make the Street-implied-multiple point once, in analystCommentary (the Street section), and end that paragraph with a pointer (\"our fair value sits well below it; see valuation\") instead of re-describing the Base and Bear. Keep the thesis's one-line summary of the scenarios. In the Base driver, drop the Street comparison or reduce it to a pointer.",
+      "status": "open"
+    },
+    {
+      "id": "F-13",
+      "severity": "Important",
+      "field": "sections.businessMoat.durability",
+      "quote": "Qualification cycles and an installed base that needs servicing give incumbents real protection, and the FY23–FY25 margin step-up (see financials) shows that Vertiv could price well in a tight market.",
+      "issue": "The cited series does not show the claim (rubric 2, causal reading). Over FY23–FY25 gross margin was essentially flat (35.0%, 36.6%, 36.3%; FY25 was lower than FY24). Operating margin rose (12.7% to 17.9%) on flat gross margin, which reads as operating leverage, not pricing. The large gross-margin step was FY22 to FY23 (28.4% to 35.0%), and the pack gives no reason for it. The only company explanations on the surface are for the second quarter of 2026: mix for gross margin, and execution, productivity and price-cost for adjusted operating margin. \"In a tight market\" is also not on the surface. The moat rating rests on this sentence.",
+      "fix": "Rest the point on what the series shows and the company says. For example: operating margin widened over FY23–FY25 while gross margin held around 35–36%, so the gain came mostly from scale; the company credits part of the second-quarter 2026 adjusted margin gain to favorable price-cost. Drop \"in a tight market\" unless a source supports it. Then re-check that the NARROW rating still follows.",
+      "status": "open"
+    },
+    {
+      "id": "F-14",
+      "severity": "Important",
+      "field": "sections.growth.points[3]",
+      "quote": "The company frames the gains as coming from execution, productivity and price-cost.",
+      "issue": "Attribution attached to the wrong period. In the press release, \"operational execution, continued strong productivity, and favorable price-cost\" explains the second-quarter 2026 adjusted operating margin (22.6%, up 410 basis points). The guidance table for the third quarter and full year gives no drivers. Coming straight after the guided ranges, the sentence attaches the Q2 explanation to the 2026 and Q3 guidance. It also repeats incomeCommentary, which already gives this explanation for Q2 (\"which the company credits to operational execution, continued strong productivity and favorable price-cost\").",
+      "fix": "Delete the sentence, since incomeCommentary already gives the Q2 explanation. If a bridge is wanted, point back without restating it: \"the guide extends the second-quarter expansion (see financials)\".",
+      "status": "open"
+    },
+    {
+      "id": "F-15",
+      "severity": "Important",
+      "field": "sections.risks.systemic",
+      "quote": "The 10-K names the ways that cycle could slow, among them changes in the economy, shifts in AI spending, capacity built in excess of demand, permit delays, and local zoning decisions, community opposition or moratoria that limit data-center construction.",
+      "issue": "Repetition within the risks section and beyond (item 7). risks.idiosyncratic[0] already gives the same 10-K list (\"names shifts in the level or focus of AI spending, capacity built in excess of demand and delays in permits as reasons demand could fall\"). The point that the multiple moves before reported results is made three times: executiveSummary.risks[3] (\"a premium multiple can compress well before estimates change\"), idiosyncratic[0] (\"a slowdown would likely show first in new orders and in the multiple rather than in reported revenue\") and systemic (\"a broad shock would likely reach the valuation before the reported results\"). The systemic opener (\"Vertiv's demand rides one cycle: data-center capital spending\") also restates durability (\"demand rides a data-center spending cycle that Vertiv does not control\").",
+      "fix": "Keep the data-center demand drivers in one bullet. Either idiosyncratic[0] keeps the AI, overbuild and permit list and systemic adds only the zoning, community-opposition and moratoria layer plus trade and geopolitics, or the reverse. Make the multiple-moves-first point once, in the body (idiosyncratic[0] or systemic), and let the executive-summary risk point to it.",
+      "status": "open"
+    },
+    {
+      "id": "F-16",
+      "severity": "Important",
+      "field": "sections.risks.idiosyncratic[2]",
+      "quote": "Contracts from acquired businesses may have differing terms that let customers reduce firm orders or terminate.",
+      "issue": "Cross-section paraphrase repetition (item 7), three clusters. (1) growth.points[0] already says \"Acquisitions added to pipeline and backlog, and their contracts may let customers reduce firm orders or terminate.\" (2) moatFactors[3] says large customers \"comprise a material portion of the customer base and often require more favorable terms\", idiosyncratic[1] repeats \"large customers often require more favorable terms\", and durability says it a third time (\"Large customers hold bargaining power over terms and penalties\"). (3) The deferral-with-penalties point is in scenarioCommentary (\"which usually carries penalties\"), idiosyncratic[0] (\"Because backlog cancellations usually carry penalties\") and idiosyncratic[2] (\"usually with penalties\"). Also, catalysts[3] and systemic both carry the IEEPA refund caveat (\"the amount, timing and likelihood of any recovery/refund are uncertain\").",
+      "fix": "Give each claim one home and point elsewhere. The acquired-contract terms go in risks (idiosyncratic[2]); drop them from growth.points[0]. Large-customer terms go in idiosyncratic[1]; moatFactors[3] says only what this means for the moat, with \"(see risks)\". State the penalty mechanism once, in idiosyncratic[2], and refer to it in words elsewhere. Keep the refund caveat in systemic and shorten the catalyst to a pointer.",
+      "status": "open"
+    },
+    {
+      "id": "F-17",
+      "severity": "Important",
+      "field": "sections.management.capitalAllocation",
+      "quote": "The company says its net-cash position provides significant strategic optionality, and the MD&A says it anticipates further investment in global capacity.",
+      "issue": "Cross-section repetition of the capacity-investment theme (item 7). growth.points[4] has nearly the same sentence (\"The MD&A says Vertiv anticipates further investment in global capacity\"). The fixed-cost consequence is argued twice: balanceCommentary (\"the fixed cost of capacity built ahead of demand, which would weigh on margins if orders slowed\") and capitalAllocation (\"The cost is a larger fixed base, which would make a Bear-case slowdown more painful for margins\"). \"customers prioritize speed of deployment\" appears in both growth.points[4] and moatFactors[1]. The capacity build is told again in companyOverview, cashflowCommentary and idiosyncratic[3].",
+      "fix": "Give the capacity build one home. capitalAllocation is the natural home for the further-investment plan and its fixed-cost cost. Remove the MD&A capacity sentence from growth.points[4], and replace balanceCommentary's fixed-cost sentence with a pointer or a balance-sheet-specific view. Keep the speed-of-deployment point in moatFactors[1] and drop it from growth.points[4].",
+      "status": "open"
+    },
+    {
+      "id": "F-18",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "The shares trade on a premium forward multiple, and the Street's targets need that multiple to hold a year out.",
+      "issue": "\"Premium\" implies a comparison, but the page has none: multiplesCommentary itself says peer multiples are pending and the page carries no history of Vertiv's own multiple. The word recurs in executiveSummary.risks[3] (\"a premium multiple can compress\") and in systemic (\"Because the shares carry a premium multiple\").",
+      "fix": "Say \"high\" or give the figure once (a forward P/E of 37.6x). Or name the benchmark the premium is measured against, if one is on the page.",
+      "status": "open"
+    },
+    {
+      "id": "F-19",
+      "severity": "Minor",
+      "field": "meta.subtitle",
+      "quote": "Power and thermal infrastructure for AI data centers: a backlog that more than doubled and net cash, against a forward multiple that has to hold.",
+      "issue": "The subtitle conflicts with the report's own Base case. The Base lets the multiple ease to 33x and still yields $301, above the quote, so the report's view does not require the multiple to hold. Only the Street's consensus target does.",
+      "fix": "Reword to match the thesis, e.g. \"... against a forward multiple the Street needs to hold\", or \"... against a high forward multiple\".",
+      "status": "open"
+    },
+    {
+      "id": "F-20",
+      "severity": "Minor",
+      "field": "sections.businessMoat.moatFactors[1].body",
+      "quote": "The sources do not show how often customers buy the full system.",
+      "issue": "Tic repeated past the point of notice (rubric 9; the learnings list repeated \"the sources do not…\" as a tic). Similar disclaimers appear in moatFactors[0] (\"the page shows neither services margins nor retention\"), moatFactors[3] (\"The page names no competitor and gives no market-share data\"), multiplesCommentary (\"the page carries no history of Vertiv's own multiple\", \"No captured source explains the decline\"), segments[0] (\"the captured excerpt ends before that section\"), idiosyncratic[3] (\"the captured excerpt does not describe them\") and growth.points[0] (\"the captured 10-Q excerpt gives no update\").",
+      "fix": "Keep the disclaimers that change a judgment (the multiple history, the unexplained price decline, the material weaknesses). Fold or drop the rest, e.g. in moatFactors[1] state the view (\"the shift favors a full-system supplier\") without the closing caveat.",
+      "status": "open"
+    },
+    {
+      "id": "F-21",
+      "severity": "Minor",
+      "field": "sections.growth.points[2]",
+      "quote": "The company describes the second quarter's shortfall as minor timing shifts, so the third quarter will test that explanation.",
+      "issue": "\"Shortfall\" is not the company's word and implies a miss against something the page does not show (the press release says second-quarter revenue \"reflected minor timing shifts\"). The Q2 timing story is also told in incomeCommentary (\"says minor timing shifts ... held sales back\") and pointed to again in idiosyncratic[2], so this is its second full telling.",
+      "fix": "Point back and keep only the new judgment, e.g. \"After the timing shifts that held back second-quarter sales (see financials), the third quarter will test that explanation.\"",
+      "status": "open"
+    },
+    {
+      "id": "F-22",
+      "severity": "Minor",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "The ~27.8x on FY27E consensus EPS of $9.12 is today's price over earnings two years out; it is not the comparison for a value set a year from now.",
+      "issue": "FY27 is the next fiscal year: it ends about fifteen months after the September 22, 2026 quote. \"Two years out\" overstates the gap and blurs the like-for-like argument that follows.",
+      "fix": "Say \"next fiscal year's earnings\" or \"FY27 earnings\" instead of \"earnings two years out\".",
+      "status": "open"
+    },
+    {
+      "id": "F-23",
+      "severity": "Minor",
+      "field": "sections.management.governance",
+      "quote": "The CEO's opportunity consists primarily of stock options and a performance bonus. The 2022 strategic performance awards cliff-vest in January 2027 after 220% of the final tranche was earned",
+      "issue": "Dating and hedge (rubrics 3 and 9). The proxy describes the CEO's 2025 pay (\"pay opportunities primarily consisted of\"), but the sentence uses the present tense. The awards \"will be eligible for cliff vesting\" in January 2027 \"subject to continued employment\", and that condition is dropped. Also, governance's \"The chairman and CEO roles are separate\" repeats leadership's \"the company currently separates the two roles\".",
+      "fix": "Write \"In 2025, the CEO's pay opportunity consisted primarily of ...\" and \"are eligible to cliff-vest in January 2027, subject to continued employment\". Drop the role-separation clause from one of the two fields.",
       "status": "open"
     }
   ]
