@@ -120,7 +120,8 @@ describe("what the brief says the grounding check enforces", () => {
   it("names Facts, Calls and Context as the surface and does not overclaim the check", () => {
     expect(text).toContain("Its **Facts**, **Calls** and **Context** blocks, with the report's own calls, are the grounding surface.");
     expect(text).toContain("checked by digits only");
-    expect(text).toContain("Context signs are not checked");
+    expect(text).toContain("an unsigned Context figure cannot check a sign");
+    expect(text).not.toContain("Context signs are not checked");   // a sign written in Context is checked (review C-7)
     expect(text).toContain("(rubric item 1) is always yours");
     expect(text).not.toContain("checks each figure's unit, scale, sign and precision");
   });
