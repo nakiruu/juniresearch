@@ -1,9 +1,9 @@
 {
-  "judgmentSha256": "9f262de96beee34bd73e30500e22606e7435611b3b72f4a020599812e9d8163f",
-  "reviewedAt": "2026-09-16T13:30:00Z",
-  "reviewer": "claude-opus-4-8",
+  "judgmentSha256": "2e5d50d6c2f6319d0e78bcb4a69a72026af5474ab427ceaa6fb22798b0a89d56",
+  "reviewedAt": "2026-10-08T16:29:26Z",
+  "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "approved",
+  "verdict": "needs-fix-round",
   "findings": [
     {
       "id": "F-1",
@@ -13,7 +13,7 @@
       "issue": "Novo Nordisk appears nowhere on the grounding surface — not in the Facts block, the Context excerpts, or the FactPack. Only its product Wegovy is on the surface (proxy SURMOUNT-5: 'Zepbound: 20.2% weight loss vs. Wegovy's 13.7%'). Naming Novo Nordisk as the competitor is a recalled proper noun the house rule forbids ('never recall one from memory') and is exactly the shape item 2 flags — an inference the source invites but does not make. No later section argues a Novo/Lilly competitive dynamic, so this exec-summary pointer is unsupported.",
       "fix": "Ground the claim in what the surface carries: refer to Wegovy (the competing obesity medicine named in the proxy SURMOUNT-5 head-to-head) instead of naming Novo Nordisk, or drop the competitor clause and keep only the tirzepatide-generic point, which the headline supports. If Novo is to be named, it must first appear on the grounding surface.",
       "status": "addressed",
-      "note": "Addressed. risks[3] no longer names Novo Nordisk; it now reads 'the competing Wegovy franchise remains a direct rival in obesity.' Wegovy is on the grounding surface via the proxy SURMOUNT-5 head-to-head (Zepbound 20.2% vs Wegovy's 13.7%), so the competitor reference is now grounded, exactly as the fix directed."
+      "note": "Still addressed on this re-check. risks[3] is unchanged since the last approval and names Wegovy, which the proxy SURMOUNT-5 head-to-head puts on the surface."
     },
     {
       "id": "F-2",
@@ -23,7 +23,7 @@
       "issue": "The same claims recur across sections instead of being introduced once and referred back in words. (1) The clause 'the shares price sustained hypergrowth' appears verbatim in thesis.body and in this risks.idiosyncratic[0] bullet. (2) 'oncology, immunology, and neuroscience medicines ... grew 121% year over year in the quarter' appears near-verbatim in businessMoat.segments[0] and growth.points[3]. (3) The consensus revenue path '$88.2B ... $101.8B' is stated with figures in incomeCommentary and again in valuation.scenarios[1] (Base) driver. (4) The '~55%' international share and '136%' rest-of-world figures are carried in catalysts[2] and repeated in moatFactors[0] and growth.points[4], where an exec-summary pointer should point rather than carry the figure.",
       "fix": "Introduce each figure once, in the section that argues it, and refer back in words elsewhere. Reword risks.idiosyncratic[0] so it does not reuse the thesis's 'shares price sustained hypergrowth' clause. State the 121% figure once (moat or growth) and refer to it in words in the other. Let incomeCommentary own the $88.2B/$101.8B path and have the Base scenario say 'the consensus path' in words. Turn catalysts[2] into a pointer without the 55%/136% figures the sections carry.",
       "status": "addressed",
-      "note": "Addressed on all four counts. (1) idiosyncratic[0] now reads 'the price leaves little room for error' and no longer reuses the thesis clause. (2) The 121% figure sits once in growth.points[3]; the moat refers to it in words. (3) incomeCommentary owns the $88.2B/$101.8B path; the Base scenario now says 'along the consensus path.' (4) catalysts[2] is a figureless pointer; 55% appears once in moatFactors[0] and 136% once in growth.points[4]."
+      "note": "Still addressed on this re-check. None of the four fields changed since the last approval. The $1.02T market cap now appears in companyOverview and cashflowCommentary, as $1T did before; an executive-summary overview plus one section is within the rule."
     },
     {
       "id": "F-3",
@@ -33,7 +33,16 @@
       "issue": "The sentence links two unrelated quantities. The current ratio (1.58 = current assets / current liabilities) is not a function of total equity ($26.5B). Both figures are individually grounded (FY25 equity $26.5B; current ratio 1.58), but 'equity ... supports a current ratio' misstates what drives the ratio and reads as a non-sequitur.",
       "fix": "Separate the two facts: present FY25 equity ($26.5B) and the current ratio (1.58) as distinct balance-sheet points, or attribute the current ratio to liquidity (current assets versus current liabilities) rather than to equity.",
       "status": "addressed",
-      "note": "Addressed. balanceCommentary now presents equity in the net-debt context ('net debt of $35.2B against equity of $26.5B') and attributes the 1.58 current ratio to liquidity in a separate sentence ('Short-term liquidity is comfortable, with a current ratio of 1.58'). The equity-drives-the-ratio non-sequitur is gone."
+      "note": "Still addressed on this re-check. balanceCommentary is unchanged; 1.58 is the FY25 current ratio in the Facts balance-sheet table and the sentence is dated to FY25."
+    },
+    {
+      "id": "F-4",
+      "severity": "Important",
+      "field": "sections.financials.cashflowCommentary",
+      "quote": "left free cash flow of $9.0B, a 13.8% margin and a trailing free-cash-flow yield of only 1.8% against the $1.02T market capitalization",
+      "issue": "Rubric item 1, period attachment. The sentence presents the 1.8% yield as a property of the FY25 free cash flow of $9.0B, but the 1.8% on the surface is the trailing-twelve-month FCF yield (Facts 'Trailing twelve months ... FCF yield 1.8%'; highlight 'FCF Yield (TTM) = 1.8%'), a different period from FY25. Now that the sentence names the market cap precisely, a reader can check it: $9.0B against $1.02T is about half of 1.8%, so the sentence does not reconcile. The mismatch also hides a point that bears on the paragraph's argument: a trailing yield twice the FY25 level means trailing free cash flow has already risen well above FY25, while the paragraph says the yield 'should improve as the plants ramp' as if it has not yet. This sentence was approved before with '$1T' and carried the same mismatch; the edit made it checkable.",
+      "fix": "Separate the two periods. Keep FY25 free cash flow of $9.0B and the 13.8% margin as the FY25 facts, then give the 1.8% as the trailing-twelve-month yield in its own clause, saying it is on trailing free cash flow rather than the FY25 figure (do not compute a TTM FCF dollar figure; describe it in words). Then make the closing claim about future improvement consistent with a trailing yield that already sits above the FY25 level, or drop the yield.",
+      "status": "open"
     }
   ]
 }
