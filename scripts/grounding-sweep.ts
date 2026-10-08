@@ -20,7 +20,8 @@
  *
  * Each report also carries its editorial review as synth:build's gate reads it today (the working judgment, findings
  * file, pack and desk): clean | open | stale (judgment | facts, calls, context) | unstamped | missing. The summary's
- * staleReviews lists every one the gate would refuse.
+ * staleReviews lists every one the gate would refuse. suspiciousStamps lists any `backfill:` or `owner-accept:` stamp
+ * that the backfill commit did not write as it stands (an audit flag: `source` never decides a status).
  *
  * Exceptions (lib/synth/grounding-exceptions.json) apply here exactly as in synth:build: only when the file is byte-equal
  * to both refs/heads/main's and refs/remotes/origin/main's copies. --preview-exceptions evaluates the working copy instead (a branch's view, which synth:build ignores).
@@ -38,6 +39,8 @@ import { renderFactsBlock } from "../lib/synth/prompt";
 import { groundingSurface, groundJudgment, renderJudgmentBlock } from "../lib/synth/validate-judgment";
 import { numericTokens, type GroundingMiss } from "../lib/synth/grounding";
 import { judgmentSha256, loadEditorialReview, reviewVerdict, verdictLabel } from "../lib/synth/editorial";
+import { EditorialReview, readInputsStamp } from "../lib/synth/editorial.schema";
+import { BACKFILL_DATA_COMMIT, suspiciousStamp } from "../lib/synth/review-backfill";
 import { inputsUnder } from "../lib/synth/review-inputs";
 import { GroundingExceptionsFile, loadExceptions, gitReaders, applyExceptions, surfaceSha256, EXCEPTIONS_PATH } from "../lib/synth/grounding-exceptions";
 import { stringLeaves } from "../lib/synth/walk";
@@ -129,7 +132,7 @@ const ex = preview
 type Row = {
   ticker: string; accession: string; figures: number; legacy: string[]; errors: { field: string; raw: string; reason: string; message: string }[];
   excepted: { field: string; raw: string; why: string }[]; stale: { field: string; raw: string }[];
-  assumed: { field: string; raw: string }[]; weak: number; drift: number; silentDrift: boolean; review: string;
+  assumed: { field: string; raw: string }[]; weak: number; drift: number; silentDrift: boolean; review: string; stampFlag: string | null;
 };
 /** The editorial gate's verdict today (synth:build's rule): the working judgment, findings file, pack and desk. */
 function reviewOf(p: Pair): string {
@@ -140,6 +143,21 @@ function reviewOf(p: Pair): string {
     const facts = projectReportFacts(pack);
     return verdictLabel(reviewVerdict(text, review, (s) => inputsUnder(s, pack, desk, facts), { requireInputs: true }));
   } catch (e) { return `malformed (${(e as Error).message.split("\n")[0]})`; }
+}
+/** A backfill or owner-accept stamp that the backfill commit did not write as it stands (suspiciousStamp); null when fine. */
+function stampFlagOf(p: Pair): string | null {
+  const path = `data/judgment/${p.ticker}/${p.accession}.editorial.json`;
+  try {
+    if (!existsSync(path)) return null;
+    const read = readInputsStamp(EditorialReview.parse(JSON.parse(readFileSync(path, "utf8"))));
+    if (!("stamp" in read) || !read.stamp.source || !/^(backfill:|owner-accept:)/.test(read.stamp.source)) return null;
+    let atBackfill = null;
+    try {
+      const then = readInputsStamp(EditorialReview.parse(JSON.parse(git("show", `${BACKFILL_DATA_COMMIT}:${path}`))));
+      atBackfill = "stamp" in then ? then.stamp : null;
+    } catch { atBackfill = null; }
+    return suspiciousStamp({ stamp: read.stamp, atBackfill, lastCommit: git("log", "-1", "--format=%H", "--", path).trim(), modified: git("status", "--porcelain", "--", path).trim() !== "" });
+  } catch (e) { return `unreadable stamp (${(e as Error).message.split("\n")[0]})`; }
 }
 const rows: Row[] = [];
 const proposals: Record<string, unknown>[] = [];
@@ -172,7 +190,7 @@ for (const p of pairs()) {
     excepted: waived.warnings.map((w) => ({ field: w.field, raw: String(w.value), why: w.message })),
     stale: waived.stale.map((e) => ({ field: e.field, raw: e.raw })),
     assumed: r.assumed.map((w) => ({ field: w.field, raw: String(w.value) })), weak: r.weak.length, drift, silentDrift,
-    review: reviewOf(p),
+    review: reviewOf(p), stampFlag: stampFlagOf(p),
   });
 }
 
@@ -189,6 +207,8 @@ const summary = {
   silentDrift: rows.filter((x) => x.silentDrift).map((x) => x.ticker),
   // Reviews synth:build would refuse on today's inputs: stale (judgment or components), unstamped or missing.
   staleReviews: rows.filter((x) => !/^(clean|open)$/.test(x.review)).map((x) => `${x.ticker} ${x.review}`),
+  // backfill/owner-accept stamps the backfill commit did not write as they stand (audit only; never a status)
+  suspiciousStamps: rows.filter((x) => x.stampFlag).map((x) => `${x.ticker}: ${x.stampFlag}`),
   skipped,
 };
 
@@ -209,6 +229,7 @@ else {
   console.log(`\nexceptions: ${s.exceptions}`);
   console.log(`failing (error-class misses not excepted): ${s.errors.failing.join(" ") || "none"}`);
   console.log(`stale reviews (${s.staleReviews.length}): ${s.staleReviews.join("; ") || "none"}`);
+  console.log(`suspicious stamp sources (${s.suspiciousStamps.length}): ${s.suspiciousStamps.join("; ") || "none"}`);
   console.log(`${s.figures} figures; legacy ${s.legacy.figures} in ${s.legacy.reports}; new ${s.new.figures} in ${s.new.reports} (errors ${s.errors.figures} in ${s.errors.reports}, assumed ${s.assumed.figures} in ${s.assumed.reports}); excepted ${s.excepted}; stale ${s.stale}; drift ${s.drift}; silent surface drift: ${s.silentDrift.join(" ") || "none"}`);
 }
 process.exitCode = summary.errors.figures > 0 ? 1 : 0;

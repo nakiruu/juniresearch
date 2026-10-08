@@ -29,6 +29,35 @@ export const PRE_RATING_ACCEPT = [
 ];
 export const OWNER_ACCEPT_SOURCE = "owner-accept:pre-rating";
 
+/**
+ * The data commit that wrote every backfill and owner-accept stamp. If the branch is ever rebased before the merge, this
+ * and BACKFILL_CUTOFF move together (plan Task 9's pre-merge note).
+ */
+export const BACKFILL_DATA_COMMIT = "feab33de006b143ae849a5ce1128aeb3ffa10792";
+
+/**
+ * A `backfill:` or `owner-accept:` source is an audit trail, never authority: nothing but the backfill commit writes one.
+ * Flag such a stamp when it differs from what that commit wrote, or sits in a findings file changed since (committed or
+ * not). Every other stamp (a reviewer's copy, a re-key) passes. Diagnostic only: the gate never reads `source`.
+ */
+export function suspiciousStamp(input: {
+  stamp: ReviewInputsStamp;
+  /** The same file's stamp at BACKFILL_DATA_COMMIT; null when that commit has no stamped copy of it. */
+  atBackfill: ReviewInputsStamp | null;
+  /** The last commit touching the file (full SHA). */
+  lastCommit: string;
+  /** Uncommitted changes to the file. */
+  modified: boolean;
+}): string | null {
+  const { stamp, atBackfill, lastCommit, modified } = input;
+  if (!stamp.source || !/^(backfill:|owner-accept:)/.test(stamp.source)) return null;
+  if (!atBackfill) return `${stamp.source} stamp not written by the backfill commit`;
+  if (canon(stamp) !== canon(atBackfill)) return `${stamp.source} stamp differs from the backfill commit's`;
+  if (lastCommit !== BACKFILL_DATA_COMMIT) return `${stamp.source} stamp in a file changed after the backfill (last commit ${lastCommit.slice(0, 7)})`;
+  if (modified) return `${stamp.source} stamp in a file with an uncommitted change`;
+  return null;
+}
+
 export interface BackfillGit {
   /** The last commit touching the path (`git log -1 --format=%h`); "" when none. */
   lastCommit(path: string): string;

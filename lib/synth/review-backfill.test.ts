@@ -5,7 +5,7 @@ import { FactPack } from "@/lib/facts/schema";
 import { Desk } from "@/lib/synth/desk.schema";
 import { judgmentSha256 } from "@/lib/synth/editorial";
 import { reviewInputs, LEGACY_ENVELOPE_CALLS } from "@/lib/synth/review-inputs";
-import { planBackfill, insertInputsLine, parseBackfillArgs, type BackfillGit, type FindingsFile } from "@/lib/synth/review-backfill";
+import { planBackfill, insertInputsLine, parseBackfillArgs, suspiciousStamp, BACKFILL_DATA_COMMIT, type BackfillGit, type FindingsFile } from "@/lib/synth/review-backfill";
 
 const FIX = "lib/__fixtures__/review-inputs";
 const packText = readFileSync(`${FIX}/AVGO.pack.json`, "utf8");
@@ -141,6 +141,30 @@ describe("BACKFILL_CUTOFF in scripts/backfill-review-inputs.ts", () => {
     const sha = JSON.parse(m![1]) as string;
     expect(() => execFileSync("git", ["merge-base", "--is-ancestor", sha, "HEAD"], { stdio: "ignore" })).not.toThrow();
   });
+});
+
+describe("suspiciousStamp (grounding:sweep)", () => {
+  const stamp = { ...inputsNow, source: "backfill:c0ffee1" };
+  const ok = { stamp, atBackfill: stamp, lastCommit: BACKFILL_DATA_COMMIT, modified: false };
+  it("passes a backfill or owner-accept stamp exactly as the backfill commit wrote it", () => {
+    expect(suspiciousStamp(ok)).toBeNull();
+    const accepted = { ...inputsNow, source: "owner-accept:pre-rating" };
+    expect(suspiciousStamp({ ...ok, stamp: accepted, atBackfill: accepted })).toBeNull();
+  });
+  it("ignores stamps the backfill did not write: reviewer copies and re-keys", () => {
+    for (const s of [{ ...inputsNow }, { ...inputsNow, source: "rekey:abc1234" }, { ...inputsNow, source: "rekey:abc1234+owner-accept" }])
+      expect(suspiciousStamp({ ...ok, stamp: s, atBackfill: null, lastCommit: "f".repeat(40), modified: true })).toBeNull();
+  });
+  it("flags a stamp that differs from the backfill commit's, or that it never wrote", () => {
+    expect(suspiciousStamp({ ...ok, atBackfill: { ...stamp, facts: "a".repeat(64) } })).toMatch(/differs from the backfill commit/);
+    expect(suspiciousStamp({ ...ok, stamp: { ...stamp, source: "owner-accept:pre-rating" } })).toMatch(/differs from the backfill commit/);
+    expect(suspiciousStamp({ ...ok, atBackfill: null })).toMatch(/not written by the backfill commit/);
+  });
+  it("flags a file changed after the backfill, committed or not", () => {
+    expect(suspiciousStamp({ ...ok, lastCommit: "f".repeat(40) })).toMatch(/changed after the backfill/);
+    expect(suspiciousStamp({ ...ok, modified: true })).toMatch(/uncommitted change/);
+  });
+  it("names the backfill data commit in full", () => expect(BACKFILL_DATA_COMMIT).toBe("feab33de006b143ae849a5ce1128aeb3ffa10792"));
 });
 
 describe("insertInputsLine", () => {
