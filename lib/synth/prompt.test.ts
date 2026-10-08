@@ -5,6 +5,7 @@ import { projectReportFacts } from "@/lib/facts/project";
 import { Desk } from "@/lib/synth/desk.schema";
 import { renderFactsBlock, renderContextBlock, renderPrompt, renderCalls, renderTraps, promptTail } from "@/lib/synth/prompt";
 import { EditorialReview } from "@/lib/synth/editorial.schema";
+import { buildGroundingIndex, checkGrounding } from "@/lib/synth/grounding";
 
 const pack = FactPack.parse(JSON.parse(readFileSync("data/facts/AVGO/0001730168-26-000080.json", "utf8")));
 const facts = projectReportFacts(pack);
@@ -132,6 +133,19 @@ describe("the authoring contract on figures", () => {
   it("lets only an assumed whole-number multiple stand on its stated basis (D2, revised after review C-1)", () => {
     expect(contract).toContain("A whole-number valuation multiple you assume (Nx) that is not on the surface is your judgment: state its basis in the same sentence");
     expect(contract).toContain("Every other figure (a margin, a growth rate, a multiple with a decimal, an amount) must come from the surface.");
+  });
+  it("gives a rounding example that the grounding check accepts as written (review C-3)", () => {
+    const m = contract.match(/(\$N+\.NB) may become (\$N+B)/);
+    expect(m).not.toBeNull();
+    // fill the placeholders with real digits: the written figure keeps its shape, the rounded one is its own rounding
+    const from = m![1].replace("NN.N", "63.9"), to = m![2].replace("NN", "64");
+    expect([from, to]).toEqual(["$63.9B", "$64B"]);
+    const idx = buildGroundingIndex({ tables: [], factsBlock: `- FY25 Revenue: ${from}`, callsBlock: "", judgmentBlock: "", contextBlock: "" });
+    expect(checkGrounding({ p: `revenue of about ${to}` }, idx)).toEqual([]);
+    // "$N.NB stays $N.NB": a single-digit figure rounded to one digit fails, as the contract says
+    expect(contract).toContain("but $N.NB stays $N.NB");
+    const small = buildGroundingIndex({ tables: [], factsBlock: "- Capex: $4.7B", callsBlock: "", judgmentBlock: "", contextBlock: "" });
+    expect(checkGrounding({ p: "capex of about $5B" }, small)).toHaveLength(1);
   });
   it("uses placeholders only — no real figure an author could copy (R-9)", () => {
     expect(quoting.length).toBeGreaterThanOrEqual(2);
