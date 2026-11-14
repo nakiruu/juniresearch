@@ -273,11 +273,28 @@ describe("missing inputs are gaps, not zeros", () => {
     expect(usableYears(withRow("balance", "totalDebt", null)).dropped).toEqual([]);
     expect(usableYears(withRow("balance", "totalDebt", [null, null, null, 100, null])).dropped).toEqual([]);
   });
-  it("drops a hole in a cash series, and keeps a filer whose cash is never read with a flag", () => {
-    expect(usableYears(withRow("balance", "cashAndInvestments", [50, 50, 50, null, null])).dropped.map((d) => d.fiscalYear)).toEqual(["FY24", "FY25"]);
-    const never = withRow("balance", "cashAndInvestments", null);
-    expect(usableYears(never).dropped).toEqual([]);
-    expect(moatRead(never, { wacc: 0.08 }).flags.some((x) => /cash not reported/.test(x))).toBe(true);
+  it("keeps a year without cash and says so: zero cash understates ROIC, dropping the latest years hides them (NVT)", () => {
+    const holes = withRow("balance", "cashAndInvestments", [50, 50, 50, null, null]);
+    expect(usableYears(holes).dropped).toEqual([]);
+    const m = moatRead(holes, { wacc: 0.08 });
+    expect(m.roic).toHaveLength(5);
+    expect(m.flags).toContain("cash not reported for FY24, FY25 — invested capital overstated, ROIC understated");
+    expect(m.roic[4]).toBeLessThan(moatRead(steady([450, 473, 495, 518, 540]), { wacc: 0.08 }).roic[4]);
+  });
+  it("a cash gap in a cash-rich filer is not read as an invested-capital jump", () => {
+    const rich = (cash: (number | null)[]): MoatFacts => {
+      const f = withRow("balance", "cashAndInvestments", cash);
+      return { ...f, statements: { ...f.statements, balance: f.statements.balance.map((r) => (r.key === "totalDebt" ? rows("totalDebt", [0, 0, 0, 0, 0]) : r)) } };
+    };
+    for (const gap of [[600, 610, 620, 630, null], [600, 610, null, 630, 640]]) {
+      const m = moatRead(rich(gap), { wacc: 0.08 });
+      expect(m.comparableFrom).toBe(0);
+      expect(m.flags.some((x) => x.startsWith("structural break"))).toBe(false);
+    }
+  });
+  it("abstains when the latest fiscal year is the one that cannot be read", () => {
+    const a = moatApplicable(withRow("income", "operatingIncome", [200, 210, 220, 230, null]));
+    expect(a.ok).toBe(false);
   });
   it("keeps the goodwill series aligned to the years that survive", () => {
     const f = { ...withRow("income", "operatingIncome", [null, 210, 220, 230, 240]), goodwill: [1, 2, 3, 4, 5] };

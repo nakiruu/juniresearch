@@ -80,18 +80,16 @@ const ROIC_INPUTS: { key: RoicInput; section: "income" | "balance" }[] = [
 
 /**
  * What a missing ROIC input does to its fiscal year: "zero" reads the gap as a true zero and keeps
- * the year, "drop" removes the year from every moat test. `reportedInAnotherYear` is true when the
- * filer carries the row in some other fiscal year (a gap in a series), false when it never does.
+ * the year, "drop" removes the year from every moat test.
  */
-export function gapAction(key: RoicInput, reportedInAnotherYear: boolean): "zero" | "drop" {
+export function gapAction(key: RoicInput): "zero" | "drop" {
   // No honest zero exists for the numerator or for equity.
   if (key === "operatingIncome" || key === "totalEquity") return "drop";
   // An untagged debt year is almost always a year without debt (MNST, PLTR, TER tag debt in one year of
   // five), and dropping those years left one or two and a made-up NONE. Zero can only overstate ROIC.
-  if (key === "totalDebt") return "zero";
-  // No company has zero cash. With other years to lean on, drop the hole (NVT, ICE). A filer whose cash
-  // is never read (PLOW, DSP, MMM, LQDT) keeps a zero: ROIC is understated, which moatRead flags.
-  return reportedInAnotherYear ? "drop" : "zero";
+  // No company has zero cash, but cash is a small part of invested capital and zero can only understate
+  // ROIC, while dropping NVT's two cash-less years threw away its latest margins. moatRead flags it.
+  return "zero";
 }
 
 /**
@@ -105,8 +103,7 @@ export function usableYears(f: MoatFacts): { facts: MoatFacts; dropped: { fiscal
   f.statements.fiscalYears.forEach((fiscalYear, i) => {
     const missing = ROIC_INPUTS.filter(({ key, section }) => {
       if (raw(f.statements[section], key, i) != null) return false;
-      const elsewhere = f.statements.fiscalYears.some((_, j) => j !== i && raw(f.statements[section], key, j) != null);
-      return gapAction(key, elsewhere) === "drop";
+      return gapAction(key) === "drop";
     }).map((r) => r.key);
     if (missing.length) dropped.push({ fiscalYear, missing });
     else keep.push(i);
@@ -227,10 +224,11 @@ export function moatApplicable(f: MoatFacts): { ok: boolean; reason: string | nu
   // ROIC−WACC spread reads NONE/eroding when the reality is a stable regulatory monopoly. The
   // ROIC−WACC method measures COMPETITIVE excess returns, which a regulated utility does not have.
   if (sector === "utility") return { ok: false, reason: "utility: regulated returns are not competitive excess returns (ROIC ≈ allowed return)" };
-  // No fiscal year carries every ROIC input: there is nothing to measure, and a zero ROIC would read as NONE.
-  // Too few fiscal years carry every ROIC input: a zero ROIC, or one or two surviving years, would read as NONE.
+  // Too few fiscal years carry every ROIC input, or the latest one does not: a zero ROIC, one or two surviving
+  // years, or a read that stops before the latest year would pass for a verdict.
   const { facts, dropped } = usableYears(f);
-  if (dropped.length && facts.statements.fiscalYears.length < 3) {
+  const latest = f.statements.fiscalYears[f.statements.fiscalYears.length - 1];
+  if (dropped.length && (facts.statements.fiscalYears.length < 3 || dropped.some((d) => d.fiscalYear === latest))) {
     const missing = [...new Set(dropped.flatMap((d) => d.missing))].join(", ");
     return { ok: false, reason: `insufficient data: ${facts.statements.fiscalYears.length} of ${f.statements.fiscalYears.length} fiscal years report ${missing}` };
   }
@@ -262,8 +260,8 @@ export function moatRead(pack: MoatFacts, cfg: MoatConfig = {}): MoatResult {
   // Every test below runs on the usable years only, so `roic` and `spread` align to those years.
   const { facts: f, dropped } = usableYears(pack);
   if (dropped.length) flags.push(`dropped ${dropped.map((d) => `${d.fiscalYear} (no ${d.missing.join(", ")})`).join("; ")}`);
-  if (f.statements.fiscalYears.some((_, i) => raw(f.statements.balance, "cashAndInvestments", i) == null))
-    flags.push("cash not reported — invested capital overstated, ROIC understated");
+  const noCash = f.statements.fiscalYears.filter((_, i) => raw(f.statements.balance, "cashAndInvestments", i) == null);
+  if (noCash.length) flags.push(`cash not reported for ${noCash.join(", ")} — invested capital overstated, ROIC understated`);
 
   const roic = roicSeries(f, taxRate);
   const spread = roic.map((r) => r - wacc);
@@ -272,7 +270,11 @@ export function moatRead(pack: MoatFacts, cfg: MoatConfig = {}): MoatResult {
   // (a > 20% revenue drop in a pack whose history a later 10-K restated — portfolioBreakIndex, the reverse
   // DCF's own test, so both engines drop the same pre-spin years; DD's Qnity spin halved revenue but moved
   // invested capital < 50%). A cyclical revenue collapse with no restatement is evidence, not a break.
-  const icBreak = comparableWindow(ic);
+  // A cash year read as zero looks like an invested-capital jump for a cash-rich filer; with any cash gap the
+  // break test runs on debt + equity, the same basis in every year.
+  const icBreak = comparableWindow(
+    noCash.length ? f.statements.fiscalYears.map((_, i) => val(f.statements.balance, "totalDebt", i) + val(f.statements.balance, "totalEquity", i)) : ic,
+  );
   const revBreak = Math.max(0, portfolioBreakIndex(f));
   const from = Math.max(icBreak, revBreak);
   if (from > 0)
