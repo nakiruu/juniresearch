@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
-import { parseCompanyFacts, combineCapex, deriveTotalDebt, fiscalPeriodOf, fiscalYearKey, fiscalYearSpans, CAPEX_RAW, type FiscalYearSpan, type SecPeriod } from "./sec";
+import { parseCompanyFacts, combineCapex, deriveTotalDebt, fiscalPeriodOf, fiscalYearKey, fiscalYearLabel, fiscalYearSpans, CAPEX_RAW, type FiscalYearSpan, type SecPeriod } from "./sec";
 import { computeTtm } from "./ttm";
 
 const facts = JSON.parse(readFileSync("lib/facts/free/__fixtures__/lly-companyfacts.json", "utf8"));
@@ -1152,10 +1152,18 @@ describe("YTD cash flow for a September fiscal year", () => {
     expect(rowAt(quarter, "2025-09-30")[0].operating_cash_flow).toBe(2_000 - 1_500);
     expect(rowAt(quarter, "2025-09-30")[0].revenue).toBe(4_000 - 900 - 1_000 - 1_050);
   });
-  it("keeps today's calendar labels on every row", () => {
+  it("labels each quarter by its place in the fiscal year: the June quarter is Q3 of fiscal 2025", () => {
     expect(quarter.map((q) => `${q.fiscal_period}/${q.fiscal_year}@${q.report_date}`)).toEqual([
+      "Q1/2025@2024-12-31", "Q2/2025@2025-03-31", "Q3/2025@2025-06-30", "Q4/2025@2025-09-30",
+    ]);
+  });
+  it("keeps the calendar labels under the calendar override (LQDT), every value unchanged", () => {
+    const cal = parseCompanyFacts(f, { labels: { labels: "calendar" } });
+    expect(cal.quarter.map((q) => `${q.fiscal_period}/${q.fiscal_year}@${q.report_date}`)).toEqual([
       "Q4/2024@2024-12-31", "Q1/2025@2025-03-31", "Q2/2025@2025-06-30", "Q4/2025@2025-09-30",
     ]);
+    const unlabelled = (rows: SecPeriod[]) => rows.map(({ fiscal_period: _p, fiscal_year: _y, ...rest }) => rest);
+    expect(unlabelled(cal.quarter)).toEqual(unlabelled(quarter));
   });
 });
 
@@ -1206,9 +1214,12 @@ describe("two quarter ends in one calendar quarter (52/53-week year)", () => {
     CashAndCashEquivalentsAtCarryingValue: [i("2023-07-01", 70, "10-Q", "2023-08-04"), i("2023-09-30", 80, "10-Q", "2023-11-03")],
   });
   const { quarter } = parseCompanyFacts(f);
-  it("keeps both quarters, each with its own figures, under today's calendar labels", () => {
-    expect(rowAt(quarter, "2023-07-01").map((q) => [q.fiscal_period, q.fiscal_year, q.revenue, q.net_income, q.cash])).toEqual([["Q3", 2023, 1_000, 100, 70]]);
+  it("keeps both quarters, each with its own figures, labelled Q2 and Q3", () => {
+    expect(rowAt(quarter, "2023-07-01").map((q) => [q.fiscal_period, q.fiscal_year, q.revenue, q.net_income, q.cash])).toEqual([["Q2", 2023, 1_000, 100, 70]]);
     expect(rowAt(quarter, "2023-09-30").map((q) => [q.fiscal_period, q.fiscal_year, q.revenue, q.net_income, q.cash])).toEqual([["Q3", 2023, 1_050, 105, 80]]);
+  });
+  it("labels the April 1 quarter Q1, not the calendar Q2 its end falls in", () => {
+    expect(rowAt(quarter, "2023-04-01").map((q) => `${q.fiscal_period}/${q.fiscal_year}`)).toEqual(["Q1/2023"]);
   });
   it("derives the year's Q4 from its three quarters", () => {
     expect(rowAt(quarter, "2023-12-30").map((q) => [q.fiscal_period, q.revenue, q.net_income])).toEqual([["Q4", 4_000 - 900 - 1_000 - 1_050, 400 - 90 - 100 - 105]]);
@@ -1226,11 +1237,11 @@ describe("two fiscal years ending in one calendar year", () => {
     NetIncomeLoss: [d("2019-12-29", "2021-01-02", -226, "10-K", "2021-02-17"), d("2021-01-03", "2022-01-01", 164, "10-K", "2022-02-16"), d("2022-01-02", "2022-12-31", 265, "10-K", "2023-02-16")],
     CashAndCashEquivalentsAtCarryingValue: [i("2022-01-01", 148, "10-K", "2022-02-16"), i("2022-12-31", 211, "10-K", "2023-02-16")],
   });
-  it("keeps every year, each with its own balance sheet, labelled by the calendar year of its end as today", () => {
+  it("keeps every year, each with its own balance sheet, labelled 2020, 2021 and 2022", () => {
     const { annual } = parseCompanyFacts(f);
     expect(annual.map((a) => [a.fiscal_year, a.report_date, a.revenue, a.cash])).toEqual([
-      [2021, "2021-01-02", 22_885, null],
-      [2022, "2022-01-01", 29_487, 148],
+      [2020, "2021-01-02", 22_885, null],
+      [2021, "2022-01-01", 29_487, 148],
       [2022, "2022-12-31", 34_057, 211],
     ]);
   });
@@ -1346,5 +1357,82 @@ describe("no two emitted rows share a report_date", () => {
   it("holds for the LLY fixture", () => {
     const { annual, quarter } = parseCompanyFacts(facts);
     for (const rows of [annual, quarter]) expect(new Set(rows.map((r) => r.report_date)).size).toBe(rows.length);
+  });
+});
+
+// --- fiscal labels (step 5) ----------------------------------------------------------------------------
+describe("fiscal labels on emitted rows", () => {
+  it("a January-year filer (TJX shape): the quarter ended 2026-08-01 is Q2 of fiscal 2027, the year ending January 2027", () => {
+    const f = gaap({
+      Revenues: [
+        d("2025-02-02", "2026-01-31", 56_000, "10-K", "2026-04-01"),
+        d("2026-02-01", "2026-05-02", 13_000, "10-Q", "2026-05-29"),
+        d("2026-05-03", "2026-08-01", 15_180, "10-Q", "2026-08-28"),
+      ],
+      NetIncomeLoss: [d("2025-02-02", "2026-01-31", 5_000, "10-K", "2026-04-01")],
+    });
+    const { annual, quarter } = parseCompanyFacts(f);
+    expect(annual.map((a) => [a.fiscal_period, a.fiscal_year])).toEqual([["FY", 2026]]);
+    expect(quarter.map((q) => [q.fiscal_period, q.fiscal_year, q.report_date])).toEqual([["Q1", 2027, "2026-05-02"], ["Q2", 2027, "2026-08-01"]]);
+  });
+
+  it("a 52/53-week December filer (VSH/ZBRA shape): the quarter ended July 4 is Q2", () => {
+    const f = gaap({
+      Revenues: [
+        d("2025-01-01", "2025-12-31", 3_000, "10-K", "2026-02-20"),
+        d("2026-01-01", "2026-04-04", 800, "10-Q", "2026-05-05"),
+        d("2026-04-05", "2026-07-04", 889, "10-Q", "2026-08-05"),
+      ],
+      NetIncomeLoss: [d("2025-01-01", "2025-12-31", 100, "10-K", "2026-02-20")],
+    });
+    expect(parseCompanyFacts(f).quarter.map((q) => [q.fiscal_period, q.fiscal_year, q.report_date])).toEqual([["Q1", 2026, "2026-04-04"], ["Q2", 2026, "2026-07-04"]]);
+  });
+
+  it("a year offset (CHWY shape) names the year by its start on annual, real and derived quarter rows alike", () => {
+    const f = gaap({
+      Revenues: [
+        d("2025-02-03", "2026-02-01", 12_000, "10-K", "2026-03-20"),
+        d("2025-02-03", "2025-05-04", 3_100, "10-Q", "2025-06-10"),
+        d("2025-05-05", "2025-08-03", 3_100, "10-Q", "2025-09-10"),
+        d("2025-08-04", "2025-11-02", 3_100, "10-Q", "2025-12-10"),
+        d("2026-02-02", "2026-05-03", 3_350, "10-Q", "2026-06-10"),
+        d("2026-05-04", "2026-08-02", 3_330, "10-Q", "2026-09-10"),
+      ],
+      NetIncomeLoss: [d("2025-02-03", "2026-02-01", 100, "10-K", "2026-03-20")],
+    });
+    const { annual, quarter } = parseCompanyFacts(f, { labels: { yearOffset: -1 } });
+    expect(annual.map((a) => [a.fiscal_year, a.report_date])).toEqual([[2025, "2026-02-01"]]);
+    expect(quarter.map((q) => `${q.fiscal_period}/${q.fiscal_year}@${q.report_date}`)).toEqual([
+      "Q1/2025@2025-05-04", "Q2/2025@2025-08-03", "Q3/2025@2025-11-02", "Q4/2025@2026-02-01", "Q1/2026@2026-05-03", "Q2/2026@2026-08-02",
+    ]);
+    expect(rowAt(quarter, "2026-02-01")[0].revenue).toBe(12_000 - 3 * 3_100);
+  });
+
+  it("a calendar-December filer keeps the labels it always had", () => {
+    const f = gaap({
+      Revenues: [
+        d("2025-01-01", "2025-12-31", 400, "10-K", "2026-02-10"),
+        d("2025-01-01", "2025-03-31", 90, "10-Q", "2025-04-30"),
+        d("2025-04-01", "2025-06-30", 100, "10-Q", "2025-07-30"),
+        d("2025-07-01", "2025-09-30", 105, "10-Q", "2025-10-30"),
+        d("2026-01-01", "2026-03-31", 110, "10-Q", "2026-04-30"),
+      ],
+      NetIncomeLoss: [d("2025-01-01", "2025-12-31", 40, "10-K", "2026-02-10")],
+    });
+    for (const labels of [undefined, { labels: "calendar" as const }]) {
+      const { annual, quarter } = parseCompanyFacts(f, { labels });
+      expect(annual.map((a) => `${a.fiscal_period}/${a.fiscal_year}`)).toEqual(["FY/2025"]);
+      expect(quarter.map((q) => `${q.fiscal_period}/${q.fiscal_year}`)).toEqual(["Q1/2025", "Q2/2025", "Q3/2025", "Q4/2025", "Q1/2026"]);
+    }
+  });
+});
+
+describe("fiscalYearLabel", () => {
+  it("is the fiscal-year key plus the offset, or the calendar year of the end under the calendar override", () => {
+    expect(fiscalYearLabel("2026-02-01")).toBe(2026);
+    expect(fiscalYearLabel("2026-02-01", { yearOffset: -1 })).toBe(2025);
+    expect(fiscalYearLabel("2021-01-02")).toBe(2020);
+    expect(fiscalYearLabel("2021-01-02", { labels: "calendar" })).toBe(2021);
+    expect(fiscalYearLabel("2025-09-30", { labels: "calendar" })).toBe(2025);
   });
 });

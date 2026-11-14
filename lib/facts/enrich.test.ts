@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { alignAnnualSeries, restatedYears, mergeConceptSeries, fetchSbcSeries, stampSbcProvenance, parsePeerMultiples, enrichPack, secEvToEbitda, evToEbitdaNotMeaningful, ttmFromYtd, secTtmFcf, ttmCapex } from "./enrich";
+import { alignAnnualSeries, labelRuleAmbiguous, restatedYears, mergeConceptSeries, fetchSbcSeries, stampSbcProvenance, parsePeerMultiples, enrichPack, secEvToEbitda, evToEbitdaNotMeaningful, ttmFromYtd, secTtmFcf, ttmCapex } from "./enrich";
 
 // Hand-built companyconcept facts. A 10-K reports the current year plus comparatives, all under the
 // filing's own `fy` — which is why alignment must key on the period end, not `fy`.
@@ -93,16 +93,16 @@ describe("alignAnnualSeries", () => {
     expect(alignAnnualSeries([], ["FY24", "FY25"], "2026-06-30")).toEqual([null, null]);
   });
 
-  it("puts each year in the column the statements give it when the labels skip a fiscal year (USFD)", () => {
-    // 52/53-week years ending 2021-01-02, 2022-01-01 and 2022-12-31. The statement columns are labelled by the
-    // calendar year of each end, so "FY21" holds the year ended 2021-01-02 and "FY22" the year ended 2022-12-31.
+  it("puts each year in the column the statements give it, two year ends in one calendar year included (USFD)", () => {
+    // 52/53-week years ending 2021-01-02, 2022-01-01 and 2022-12-31 are labelled fiscal 2020, 2021 and 2022 (a year
+    // ending in early January belongs to the year before), so each has a column of its own.
     const e = [
       dur("2019-12-29", "2021-01-02", 40, "k20", 2020, "2021-02-17"),
       dur("2021-01-03", "2022-01-01", 48, "k21", 2021, "2022-02-16"),
       dur("2022-01-02", "2022-12-31", 45, "k22", 2022, "2023-02-16"),
       dur("2022-12-31", "2023-12-30", 56, "k23", 2023, "2024-02-15"),
     ];
-    expect(alignAnnualSeries(e, ["FY21", "FY22", "FY23"], "2024-06-29")).toEqual([40, 45, 56]);
+    expect(alignAnnualSeries(e, ["FY20", "FY21", "FY22", "FY23"], "2024-06-29")).toEqual([40, 48, 45, 56]);
   });
 
   it("leaves a label null when no fiscal year ends in its year, without shifting the others", () => {
@@ -310,5 +310,36 @@ describe("ttmCapex — tagged software / lease equipment join the PP&E capex", (
   it("reads machinery-and-equipment capex only when no higher-priority capex concept has the TTM (DOW, 2026-10-07)", () => {
     expect(ttmCapex(body({ PaymentsToAcquireMachineryAndEquipment: leg(20, 12, 10) }), "2025-12-31")).toBe(22);
     expect(ttmCapex(body({ PaymentsToAcquirePropertyPlantAndEquipment: leg(30, 15, 12), PaymentsToAcquireMachineryAndEquipment: leg(20, 12, 10) }), "2025-12-31")).toBe(33);
+  });
+});
+
+describe("alignAnnualSeries follows the filer's label override", () => {
+  const e = [
+    dur("2024-02-05", "2025-02-02", 24, "k24", 2024, "2025-03-20"),
+    dur("2025-02-03", "2026-02-01", 25, "k25", 2025, "2026-03-20"),
+  ];
+  it("a −1 offset (CHWY) puts the year ended 2026-02-01 in the FY25 column", () => {
+    expect(alignAnnualSeries(e, ["FY24", "FY25"], "2026-08-02", { yearOffset: -1 })).toEqual([24, 25]);
+    expect(alignAnnualSeries(e, ["FY25", "FY26"], "2026-08-02")).toEqual([24, 25]);
+  });
+  it("the calendar override names a year by the calendar year of its end", () => {
+    const usfd = [dur("2019-12-29", "2021-01-02", 40, "k20", 2020, "2021-02-17"), dur("2021-01-03", "2022-01-01", 48, "k21", 2021, "2022-02-16")];
+    expect(alignAnnualSeries(usfd, ["FY20", "FY21"], "2022-06-30")).toEqual([40, 48]);
+    expect(alignAnnualSeries(usfd, ["FY21", "FY22"], "2022-06-30", { labels: "calendar" })).toEqual([40, 48]);
+  });
+});
+
+describe("labelRuleAmbiguous: a stored pack does not say which rule named its columns", () => {
+  const usfd = [dur("2019-12-29", "2021-01-02", 40, "k20", 2020, "2021-02-17"), dur("2021-01-03", "2022-01-01", 48, "k21", 2021, "2022-02-16")];
+  const chwy = [dur("2024-02-05", "2025-02-02", 24, "k24", 2024, "2025-03-20"), dur("2025-02-03", "2026-02-01", 25, "k25", 2025, "2026-03-20")];
+  const dec = [dur("2024-01-01", "2024-12-31", 7, "k24", 2024, "2025-02-20"), dur("2025-01-01", "2025-12-31", 8, "k25", 2025, "2026-02-20")];
+  it("is true where the calendar and fiscal rules place a year in different columns", () => {
+    expect(labelRuleAmbiguous(usfd, ["FY20", "FY21", "FY22"], "2022-06-30")).toBe(true);
+    expect(labelRuleAmbiguous(chwy, ["FY25", "FY26"], "2026-08-02", { yearOffset: -1 })).toBe(true);
+  });
+  it("is false for a filer both rules label alike, and under the calendar override", () => {
+    expect(labelRuleAmbiguous(dec, ["FY24", "FY25"], "2026-06-30")).toBe(false);
+    expect(labelRuleAmbiguous(usfd, ["FY21", "FY22"], "2022-06-30", { labels: "calendar" })).toBe(false);
+    expect(labelRuleAmbiguous([], ["FY24", "FY25"], "2026-06-30")).toBe(false);
   });
 });

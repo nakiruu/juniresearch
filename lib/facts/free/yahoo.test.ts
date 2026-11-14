@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { parseQuoteSummary } from "./yahoo";
+import { fiscalYearLabel } from "./sec";
 
 const raw = JSON.parse(readFileSync("lib/facts/free/__fixtures__/lly-quotesummary.json", "utf8"));
 
@@ -42,5 +43,34 @@ describe("parseQuoteSummary required fields", () => {
     const clone = JSON.parse(JSON.stringify(raw));
     delete clone.quoteSummary.result[0].assetProfile.longBusinessSummary;
     expect(() => parseQuoteSummary(clone, { latestFY: 2025 })).toThrow();
+  });
+});
+
+// A January year (CHWY shape): Yahoo dates each annual estimate by the year's end. The estimate must attach to the
+// year the statements call latestFY + 1, on the same label rule, whatever the year offset.
+describe("parseQuoteSummary estimate years follow the statement label rule", () => {
+  const chwy = (() => {
+    const clone = JSON.parse(JSON.stringify(raw));
+    clone.quoteSummary.result[0].earningsTrend.trend = [
+      { period: "0q", endDate: "2026-11-01", revenueEstimate: { avg: { raw: 3_000 } }, earningsEstimate: { avg: { raw: 0.1 } } },
+      { period: "0y", endDate: "2027-01-31", revenueEstimate: { avg: { raw: 13_500 } }, earningsEstimate: { avg: { raw: 1.1 } } },
+      { period: "+1y", endDate: "2028-01-30", revenueEstimate: { avg: { raw: 14_300 } }, earningsEstimate: { avg: { raw: 1.4 } } },
+    ];
+    return clone;
+  })();
+  it("with no offset, the year ending January 2027 is fiscal 2027", () => {
+    const d = parseQuoteSummary(chwy, { latestFY: 2026 });
+    expect(d.estimates.map((e) => [e.fiscal_year, e.sales, e.endDate])).toEqual([[2027, 13_500, "2027-01-31"], [2028, 14_300, "2028-01-30"]]);
+  });
+  it("with a −1 offset, the same year is fiscal 2026 and still the year after the latest fiscal 2025", () => {
+    const d = parseQuoteSummary(chwy, { latestFY: 2025, yearLabelOf: (end) => fiscalYearLabel(end, { yearOffset: -1 }) });
+    expect(d.estimates.map((e) => [e.fiscal_year, e.sales])).toEqual([[2026, 13_500], [2027, 14_300]]);
+  });
+  it("a 52/53-week year ending in early January belongs to the year before (USFD)", () => {
+    const clone = JSON.parse(JSON.stringify(chwy));
+    clone.quoteSummary.result[0].earningsTrend.trend[1].endDate = "2027-01-02";
+    clone.quoteSummary.result[0].earningsTrend.trend[2].endDate = "2027-12-31";
+    const d = parseQuoteSummary(clone, { latestFY: 2025 });
+    expect(d.estimates.map((e) => [e.fiscal_year, e.sales])).toEqual([[2026, 13_500], [2027, 14_300]]);
   });
 });

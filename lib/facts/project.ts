@@ -96,9 +96,13 @@ export function projectReportFacts(p: FactPack): ReportFacts {
   const shortDate = (iso: string) =>
     new Date(iso + "T00:00:00Z").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
   // fiscalPeriod describes the filing, not the latest quarter: a 10-K is always its fiscal year; a 10-Q
-  // keeps the "fiscal Qn YYYY" label only when the latest quarter is the one the filing itself reports.
+  // keeps the "fiscal Qn YYYY" label only when the latest quarter is the one the filing itself reports. A 10-K
+  // whose latest quarter is its own fourth quarter takes that quarter's fiscal-year label (CHWY's year ended
+  // 2026-02-01 is its fiscal 2025; USFD's ending 2027-01-02 its fiscal 2026); otherwise its latest fiscal-year label.
   const fiscalPeriod = p.filing.form === "10-K"
-    ? `fiscal ${new Date(p.filing.periodEnd + "T00:00:00Z").getUTCFullYear()}`
+    ? lq.periodEnd === p.filing.periodEnd
+      ? `fiscal 20${lq.label.slice(3)}`
+      : `fiscal 20${fy[fy.length - 1].slice(2)}`
     : lq.periodEnd === p.filing.periodEnd
       ? `fiscal ${lq.label.slice(0, 2)} 20${lq.label.slice(3)}`
       : `quarter ended ${shortDate(p.filing.periodEnd)}`;

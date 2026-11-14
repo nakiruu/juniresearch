@@ -11,10 +11,11 @@
  */
 import { edgarJson, type FetchLike } from "../../edgar/client";
 import { padCik } from "../../edgar/submissions";
+import type { FiscalLabelOverride } from "./fiscal-labels";
 
 export interface SecPeriod {
-  fiscal_period: string; // "FY" | "Q1" | "Q2" | "Q3" | "Q4"
-  fiscal_year: number; // calendar year of period end
+  fiscal_period: string; // "FY" | "Q1" | "Q2" | "Q3" | "Q4": the quarter's position in the filer's fiscal year
+  fiscal_year: number; // the fiscal year's label (fiscalYearLabel), not the calendar year of the period end
   report_date: string; // YYYY-MM-DD (period end)
   revenue: number | null;
   gross_profit: number | null;
@@ -234,9 +235,6 @@ function entriesFor(facts: unknown, concept: string, unit: Unit = "USD"): UnitEn
 
 // --- period selection (the XBRL "fy-means-filing-year" trap) -----------
 
-// The emitted LABELS (fiscal_period, fiscal_year on each row) are still calendar-based: the quarter and
-// year of the period end. Relabelling to the filer's own fiscal quarters is a separate, owner-gated change
-// (learnings §3: LQDT's label stays). Only the map KEYS below are fiscal.
 const yearOf = (date: string) => Number(date.slice(0, 4));
 const daysBetween = (start: string, end: string) => (Date.parse(end) - Date.parse(start)) / 86_400_000;
 const quarterOf = (end: string) => Math.floor((Number(end.slice(5, 7)) - 1) / 3) + 1;
@@ -268,6 +266,14 @@ export interface FiscalPeriod {
  * fiscal 2020); every other year end keeps its calendar year (Dec 31, TJX's late January, V's September).
  */
 export const fiscalYearKey = (end: string): number => yearOf(addDays(end, -14));
+
+/**
+ * The label a row carries for the fiscal year ending on `fiscalYearEnd`: its fiscalYearKey plus the filer's year
+ * offset (CHWY names a year by its start: −1). Under the "calendar" override (LQDT, by owner decision) the label
+ * is the calendar year of the period end, as before 2026-11. See fiscal-labels.ts.
+ */
+export const fiscalYearLabel = (fiscalYearEnd: string, labels: FiscalLabelOverride = {}): number =>
+  labels.labels === "calendar" ? yearOf(fiscalYearEnd) : fiscalYearKey(fiscalYearEnd) + (labels.yearOffset ?? 0);
 
 /** A fiscal quarter is 13 weeks, 14 in some 53-week years; a period end further than this from a quarter boundary is not a quarter end. */
 const QUARTER_DAYS = 365.25 / 4;
@@ -360,6 +366,7 @@ export function fiscalPeriodOf(end: string, spans: FiscalYearSpan[]): FiscalPeri
  * after its quarter end; CEG's tags spin-off-date balances at 2022-01-31, which beat its March 31 ones).
  */
 interface FiscalCalendar {
+  period: (end: string) => FiscalPeriod | null;
   annualInstantKey: (end: string) => number | null;
   quarterKey: (end: string) => string | null;
   instantKey: (end: string) => string | null;
@@ -383,6 +390,7 @@ function fiscalCalendar(facts: unknown): FiscalCalendar {
     return cache.get(end)!;
   };
   return {
+    period: placed,
     annualInstantKey: (end) => (durationEnds.has(end) ? fiscalYearKey(end) : null),
     quarterKey: (end) => {
       const p = placed(end);
@@ -856,7 +864,11 @@ function bestCoveredSeries(src: FactsSource, concepts: string[]) {
 /** SIC division H (finance, insurance, real estate): interest expense is a funding cost, not a financing line below operating income. */
 const sicIsFinancial = (sic: number) => sic >= 6000 && sic <= 6799;
 
-export function parseCompanyFacts(facts: unknown, opts: { sic?: number | null } = {}): { annual: SecPeriod[]; quarter: SecPeriod[] } {
+/**
+ * `opts.labels` is the filer's label override (fiscal-labels.ts, looked up by ticker by the caller): it changes the
+ * fiscal_period / fiscal_year labels on the rows and nothing else.
+ */
+export function parseCompanyFacts(facts: unknown, opts: { sic?: number | null; labels?: FiscalLabelOverride } = {}): { annual: SecPeriod[]; quarter: SecPeriod[] } {
   const src: FactsSource = { facts, cal: fiscalCalendar(facts) };
   const revenuePrimary = flowSeries(src, REVENUE);
   const netInterestIncome = flowSeries(src, NET_INTEREST_INCOME);
@@ -1001,29 +1013,36 @@ export function parseCompanyFacts(facts: unknown, opts: { sic?: number | null } 
     dividendsRaw: at(dividendsRaw[side] as Map<K, UnitEntry>, key),
   });
 
-  // Annual (FY) rows, anchored on the fiscal years the revenue concept reports. The row's label stays the
-  // calendar year of its end (see yearOf above), so USFD's fiscal 2020 (ended 2021-01-02) is still "2021" and
-  // its fiscal 2021 (ended 2022-01-01), no longer dropped, is labelled "2022" beside fiscal 2022.
+  // Annual (FY) rows, anchored on the fiscal years the revenue concept reports, each labelled by its fiscal
+  // year (fiscalYearLabel): USFD's years ended 2021-01-02, 2022-01-01 and 2022-12-31 are 2020, 2021 and 2022.
+  const labels = opts.labels ?? {};
+  const calendarLabels = labels.labels === "calendar";
   const annualYears = [...revenue.annual.keys()].sort((a, b) => a - b);
   const annual: SecPeriod[] = annualYears.map((year) => {
     const end = revenue.annual.get(year)!.end;
     return {
       fiscal_period: "FY",
-      fiscal_year: yearOf(end),
+      fiscal_year: fiscalYearLabel(end, labels),
       report_date: end,
       ...deriveFields(rawAt(year, "annual"), { filerTagsLongTerm, pretaxTier }),
     };
   });
   // Real quarterly rows, anchored on the quarters the revenue concept reports: Q1-Q3, and the rare Q4 a
-  // 10-Q re-reports (RTX's 2020 10-Qs recast Q4 2019). Labelled by the calendar quarter of the end.
+  // 10-Q re-reports (RTX's 2020 10-Qs recast Q4 2019). Labelled by their place in the fiscal year: V's quarter
+  // ended 2026-06-30 is Q3 of fiscal 2026, TJX's ended 2026-08-01 Q2 of fiscal 2027 (the year ending January
+  // 2027). Every keyed quarter has a fiscal period, so the lookup below never misses.
+  const quarterLabel = (end: string): Pick<SecPeriod, "fiscal_period" | "fiscal_year"> => {
+    if (calendarLabels) return { fiscal_period: `Q${quarterOf(end)}`, fiscal_year: yearOf(end) };
+    const p = src.cal.period(end)!;
+    return { fiscal_period: `Q${p.quarter}`, fiscal_year: p.fiscalYear + (labels.yearOffset ?? 0) };
+  };
   const quarterKeys = [...revenue.quarter.keys()].sort();
   const realQuarters: { key: string; row: SecPeriod }[] = quarterKeys.map((key) => {
     const end = revenue.quarter.get(key)!.end;
     return {
       key,
       row: {
-        fiscal_period: `Q${quarterOf(end)}`,
-        fiscal_year: yearOf(end),
+        ...quarterLabel(end),
         report_date: end,
         ...deriveFields(rawAt(key, "quarter"), { filerTagsLongTerm, pretaxTier }),
       },

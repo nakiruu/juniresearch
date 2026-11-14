@@ -10,11 +10,13 @@
  * ("Yahoo quoteSummary map") for the field map this file implements.
  */
 import type { FetchLike } from "../../edgar/client";
+import { fiscalYearKey } from "./sec";
 
 export interface YahooEstimate {
-  fiscal_year: number;
+  fiscal_year: number; // the fiscal-year label, on the same rule as the statement rows (see parseQuoteSummary)
   sales: number | null;
   eps: number | null;
+  endDate?: string; // Yahoo's end date for the estimated fiscal year (YYYY-MM-DD); absent in captures before 2026-11
 }
 
 export interface YahooData {
@@ -151,10 +153,11 @@ function titleCase(recommendationKey: string | undefined): string {
     .join(" ");
 }
 
-function endDateYear(endDate: string | undefined): number | null {
+/** Yahoo's endDate as YYYY-MM-DD, or null when it is missing or unparseable. */
+function isoDate(endDate: string | undefined): string | null {
   if (!endDate) return null;
-  const year = new Date(endDate).getUTCFullYear();
-  return Number.isFinite(year) ? year : null;
+  const t = new Date(endDate).getTime();
+  return Number.isFinite(t) ? new Date(t).toISOString().slice(0, 10) : null;
 }
 
 // earningsTrend.trend[] mixes quarterly entries (period "0q", "+1q", ...) and annual
@@ -166,7 +169,13 @@ const ANNUAL_PERIOD = /^[-+]?\d+y$/;
 
 // --- parser ---------------------------------------------------------------
 
-export function parseQuoteSummary(raw: unknown, opts: { latestFY: number }): YahooData {
+/**
+ * `opts.latestFY` is the label of the filer's latest reported fiscal year; `opts.yearLabelOf` names a fiscal year
+ * by its end date on the same rule the statement rows use (sec.ts fiscalYearLabel with the filer's override), so
+ * an estimate attaches to the year the statements call latestFY + 1 whatever the year offset or year-end month.
+ * The default is the un-overridden rule, fiscalYearKey.
+ */
+export function parseQuoteSummary(raw: unknown, opts: { latestFY: number; yearLabelOf?: (fiscalYearEnd: string) => number }): YahooData {
   const result = (raw as QuoteSummaryShape)?.quoteSummary?.result?.[0] ?? {};
   const price = result.price ?? {};
   const summaryDetail = result.summaryDetail ?? {};
@@ -219,18 +228,22 @@ export function parseQuoteSummary(raw: unknown, opts: { latestFY: number }): Yah
     consensus: titleCase(financialData.recommendationKey),
   };
 
+  const yearLabelOf = opts.yearLabelOf ?? fiscalYearKey;
   const wantedYears = new Set([opts.latestFY + 1, opts.latestFY + 2]);
   const estimates: YahooEstimate[] = [];
   const seenYears = new Set<number>();
   for (const entry of result.earningsTrend?.trend ?? []) {
     if (!entry.period || !ANNUAL_PERIOD.test(entry.period)) continue;
-    const year = endDateYear(entry.endDate);
-    if (year === null || !wantedYears.has(year) || seenYears.has(year)) continue;
+    const endDate = isoDate(entry.endDate);
+    if (endDate == null) continue;
+    const year = yearLabelOf(endDate);
+    if (!wantedYears.has(year) || seenYears.has(year)) continue;
     seenYears.add(year);
     estimates.push({
       fiscal_year: year,
       sales: rawVal(entry.revenueEstimate?.avg),
       eps: rawVal(entry.earningsEstimate?.avg),
+      endDate,
     });
   }
 

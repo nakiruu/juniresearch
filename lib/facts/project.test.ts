@@ -120,3 +120,19 @@ describe("fiscalPeriod follows the filing, not the latest quarter", () => {
     expect(projectReportFacts(p).meta.filing.fiscalPeriod).toBe("quarter ended Aug 2, 2026");
   });
 });
+
+describe("fiscalPeriod on fiscal labels", () => {
+  it("a 10-K whose latest quarter is its own Q4 takes that quarter's fiscal-year label (CHWY: year ended 2026-02-01 is fiscal 2025)", () => {
+    const p = JSON.parse(JSON.stringify(pack));
+    p.filing.form = "10-K";
+    p.filing.periodEnd = "2026-02-01";
+    p.latestQuarter = { ...p.latestQuarter, label: "Q4'25", periodEnd: "2026-02-01" };
+    expect(projectReportFacts(p).meta.filing.fiscalPeriod).toBe("fiscal 2025");
+  });
+  it("a 10-Q reads the fiscal quarter from the latest quarter's label (V: June 2026 is fiscal Q3 2026)", () => {
+    const p = JSON.parse(JSON.stringify(pack));
+    p.filing.periodEnd = "2026-06-30";
+    p.latestQuarter = { ...p.latestQuarter, label: "Q3'26", periodEnd: "2026-06-30" };
+    expect(projectReportFacts(p).meta.filing.fiscalPeriod).toBe("fiscal Q3 2026");
+  });
+});

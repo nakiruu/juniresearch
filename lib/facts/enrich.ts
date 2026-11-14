@@ -10,7 +10,8 @@
  */
 import { sleep, type FetchLike } from "../edgar/client";
 import { padCik } from "../edgar/submissions";
-import { CAPEX_ALL_IN, CAPEX_EXTRA, CAPEX_RAW, OCF, fetchCompanyFacts, parseCompanyFacts, type SecPeriod } from "./free/sec";
+import { CAPEX_ALL_IN, CAPEX_EXTRA, CAPEX_RAW, OCF, fetchCompanyFacts, fiscalYearLabel, parseCompanyFacts, type SecPeriod } from "./free/sec";
+import { fiscalLabelOverride, type FiscalLabelOverride } from "./free/fiscal-labels";
 import { TTM_SPAN_DAYS } from "./free/ttm";
 
 const YAHOO_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) juniper-research";
@@ -59,14 +60,13 @@ const FYE_TOLERANCE_DAYS = 20;
  * - `anchor` is the pack's filing period end (`filing.periodEnd`); facts ending after it are ignored.
  * - A fact counts as a fiscal-year figure when its `end` is within 20 days (52/53-week drift) of a whole
  *   number of years from some 10-K's own year end, which excludes mid-year instants (an acquisition date).
- * - Each label takes the fiscal-year fact whose end falls in the label's calendar year, the latest such end
- *   when two do. That is the rule the statement columns follow (lib/facts/free/sec.ts labels each FY row with
- *   the calendar year of its end, and mapStatements keeps the later row of a label), so the series lands in
- *   the column it belongs to even when the labels skip a fiscal year: USFD's "FY21" column is the year ended
- *   2021-01-02, and its goodwill and SBC must be that year's, not those of the year ended 2022-01-01. A label
- *   with no fact in its year is null rather than shifting the series. Change this with the sec.ts labels.
+ * - Each label takes the fiscal-year fact whose end the statement rows give that label: sec.ts fiscalYearLabel
+ *   with the filer's override `labels` (fiscal-labels.ts; default none), the latest such end if two share it.
+ *   So the series lands in the column it belongs to: USFD's years ended 2021-01-02 and 2022-01-01 are its
+ *   "FY20" and "FY21", CHWY's year ended 2026-02-01 (offset −1) its "FY25". A label no fact carries is null
+ *   rather than shifting the series.
  */
-export function alignAnnualSeries(entries: ConceptEntry[], fiscalYears: string[], anchor: string): (number | null)[] {
+export function alignAnnualSeries(entries: ConceptEntry[], fiscalYears: string[], anchor: string, labels: FiscalLabelOverride = {}): (number | null)[] {
   const annual = entries.filter((e) =>
     (e.form === "10-K" || e.form === "10-K/A") && e.fp === "FY" && typeof e.end === "string" && num(e.val) &&
     (e.start == null || (days(e.start, e.end) >= ANNUAL_MIN_DAYS && days(e.start, e.end) <= ANNUAL_MAX_DAYS)));
@@ -95,7 +95,7 @@ export function alignAnnualSeries(entries: ConceptEntry[], fiscalYears: string[]
   const ends = [...byEnd.keys()].filter((end) => end <= anchor && onFiscalYearEnd(end)).sort();
   return fiscalYears.map((label) => {
     const year = 2000 + Number(label.slice(2));
-    const end = ends.filter((d) => Number(d.slice(0, 4)) === year).at(-1);
+    const end = ends.filter((d) => fiscalYearLabel(d, labels) === year).at(-1);
     return end == null ? null : byEnd.get(end)!.val;
   });
 }
@@ -127,6 +127,17 @@ export function parsePeerMultiples(result: QuoteSummaryResult | undefined): Peer
 // --- network fetchers (fetch injectable for tests) --------------------------
 
 /**
+ * True when the labels cannot say which fiscal year a column holds: the calendar rule (every pack captured before
+ * 2026-11) and the filer's current rule put `entries` in different columns. A stored pack does not record which
+ * rule named its columns, so a script that re-aligns a series on a stored pack must leave such a pack alone
+ * (USFD's "FY21" was the year ended 2021-01-02 and is now the one ended 2022-01-01; CHWY's "FY25" likewise moved).
+ * Re-capturing the pack is the fix. Pure.
+ */
+export function labelRuleAmbiguous(entries: ConceptEntry[], fiscalYears: string[], anchor: string, labels: FiscalLabelOverride = {}): boolean {
+  return JSON.stringify(alignAnnualSeries(entries, fiscalYears, anchor, labels)) !== JSON.stringify(alignAnnualSeries(entries, fiscalYears, anchor, { labels: "calendar" }));
+}
+
+/**
  * SEC companyconcept us-gaap/<concept> → its USD facts. [] when the filer never tagged the concept
  * (404); throws on any other failure so a caller can tell "not tagged" from "request failed".
  *
@@ -148,14 +159,14 @@ export async function fetchConceptEntries(cik: number, concept: string, contact:
 }
 
 /** SEC companyconcept us-gaap/Goodwill → a per-fiscal-year series aligned to `fiscalYears` (see alignAnnualSeries). */
-export async function fetchGoodwillSeries(cik: number, fiscalYears: string[], anchor: string, contact: string, fetchImpl: FetchLike = fetch) {
-  return (await fetchGoodwill(cik, fiscalYears, anchor, contact, fetchImpl)).values;
+export async function fetchGoodwillSeries(cik: number, fiscalYears: string[], anchor: string, contact: string, fetchImpl: FetchLike = fetch, labels: FiscalLabelOverride = {}) {
+  return (await fetchGoodwill(cik, fiscalYears, anchor, contact, fetchImpl, labels)).values;
 }
 
 /** Goodwill aligned to `fiscalYears` (latest-filed basis) plus the labels a later filing restated (restatedYears). */
-export async function fetchGoodwill(cik: number, fiscalYears: string[], anchor: string, contact: string, fetchImpl: FetchLike = fetch) {
+export async function fetchGoodwill(cik: number, fiscalYears: string[], anchor: string, contact: string, fetchImpl: FetchLike = fetch, labels: FiscalLabelOverride = {}) {
   const entries = await fetchConceptEntries(cik, "Goodwill", contact, fetchImpl);
-  return { values: alignAnnualSeries(entries, fiscalYears, anchor), restated: restatedYears(entries, fiscalYears, anchor) };
+  return { values: alignAnnualSeries(entries, fiscalYears, anchor, labels), restated: restatedYears(entries, fiscalYears, anchor, 0.01, labels) };
 }
 
 /**
@@ -165,8 +176,8 @@ export async function fetchGoodwill(cik: number, fiscalYears: string[], anchor: 
  * be on the original basis — so these years' ex-goodwill ROIC mixes bases (docs/engine.md, deferred
  * point-in-time follow-up). Pure.
  */
-export function restatedYears(entries: ConceptEntry[], fiscalYears: string[], anchor: string, tol = 0.01): string[] {
-  const latest = alignAnnualSeries(entries, fiscalYears, anchor);
+export function restatedYears(entries: ConceptEntry[], fiscalYears: string[], anchor: string, tol = 0.01, labels: FiscalLabelOverride = {}): string[] {
+  const latest = alignAnnualSeries(entries, fiscalYears, anchor, labels);
   const earliestByEnd = new Map<string, ConceptEntry>();
   for (const e of entries) {
     if (typeof e.end !== "string" || !(e.form === "10-K" || e.form === "10-K/A") || e.fp !== "FY") continue;
@@ -174,7 +185,7 @@ export function restatedYears(entries: ConceptEntry[], fiscalYears: string[], an
     if (!prev || (e.filed ?? "") < (prev.filed ?? "")) earliestByEnd.set(e.end, e);
   }
   // Keep only each end's earliest 10-K filing; alignAnnualSeries then dedupes nothing.
-  const original = alignAnnualSeries(entries.filter((e) => typeof e.end === "string" && earliestByEnd.get(e.end) === e), fiscalYears, anchor);
+  const original = alignAnnualSeries(entries.filter((e) => typeof e.end === "string" && earliestByEnd.get(e.end) === e), fiscalYears, anchor, labels);
   return fiscalYears.filter((_, i) => {
     const a = latest[i], b = original[i];
     return a != null && b != null && Math.abs(a - b) > tol * Math.max(Math.abs(b), 1);
@@ -189,11 +200,11 @@ export const SBC_FALLBACK_CONCEPT = "AllocatedShareBasedCompensationExpense";
  * with any year it leaves null filled from AllocatedShareBasedCompensationExpense (the expense note) —
  * fetched only when needed. `concepts[i]` names the concept that supplied year i.
  */
-export async function fetchSbcSeries(cik: number, fiscalYears: string[], anchor: string, contact: string, fetchImpl: FetchLike = fetch, pause: () => Promise<unknown> = async () => {}) {
-  const primary = { concept: SBC_CONCEPT, values: alignAnnualSeries(await fetchConceptEntries(cik, SBC_CONCEPT, contact, fetchImpl), fiscalYears, anchor) };
+export async function fetchSbcSeries(cik: number, fiscalYears: string[], anchor: string, contact: string, fetchImpl: FetchLike = fetch, pause: () => Promise<unknown> = async () => {}, labels: FiscalLabelOverride = {}) {
+  const primary = { concept: SBC_CONCEPT, values: alignAnnualSeries(await fetchConceptEntries(cik, SBC_CONCEPT, contact, fetchImpl), fiscalYears, anchor, labels) };
   if (primary.values.every((v) => v != null)) return { values: primary.values, concepts: primary.values.map(() => SBC_CONCEPT) as (string | null)[] };
   await pause();
-  const fallback = { concept: SBC_FALLBACK_CONCEPT, values: alignAnnualSeries(await fetchConceptEntries(cik, SBC_FALLBACK_CONCEPT, contact, fetchImpl), fiscalYears, anchor) };
+  const fallback = { concept: SBC_FALLBACK_CONCEPT, values: alignAnnualSeries(await fetchConceptEntries(cik, SBC_FALLBACK_CONCEPT, contact, fetchImpl), fiscalYears, anchor, labels) };
   return mergeConceptSeries(primary, fallback);
 }
 
@@ -367,7 +378,7 @@ export async function fillEvToEbitda(
   try {
     const periodEnd = pack.latestQuarter?.periodEnd;
     if (periodEnd) {
-      const { quarter } = parseCompanyFacts(await fetchCompanyFacts(pack.cik, contact, fetchImpl), { sic: pack.sic });
+      const { quarter } = parseCompanyFacts(await fetchCompanyFacts(pack.cik, contact, fetchImpl), { sic: pack.sic, labels: fiscalLabelOverride(pack.ticker) });
       const v = secEvToEbitda(quarter, periodEnd, pack.quote?.marketCap ?? null);
       if (v != null) {
         pack.ttm.evToEbitda = v;
@@ -407,6 +418,7 @@ export async function fillFcfYield(
 }
 
 interface EnrichablePack {
+  ticker?: string; // selects the filer's label override (fiscal-labels.ts) the goodwill and SBC columns follow
   cik: number;
   filing: { periodEnd: string };
   statements: { fiscalYears: string[] };
@@ -425,10 +437,11 @@ export async function enrichPack<T extends EnrichablePack>(pack: T, contact: str
   // request leaves that series unstamped rather than failing the enrichment.
   const { fiscalYears } = pack.statements;
   const anchor = pack.filing.periodEnd;
+  const labels = fiscalLabelOverride(pack.ticker ?? "");
   const none = () => fiscalYears.map(() => null);
   const [goodwill, sbc, multiples] = await Promise.all([
-    fetchGoodwill(pack.cik, fiscalYears, anchor, contact, fetchImpl).catch(() => ({ values: none(), restated: [] as string[] })),
-    fetchSbcSeries(pack.cik, fiscalYears, anchor, contact, fetchImpl).catch(() => ({ values: none(), concepts: none() })),
+    fetchGoodwill(pack.cik, fiscalYears, anchor, contact, fetchImpl, labels).catch(() => ({ values: none(), restated: [] as string[] })),
+    fetchSbcSeries(pack.cik, fiscalYears, anchor, contact, fetchImpl, undefined, labels).catch(() => ({ values: none(), concepts: none() })),
     pack.peers?.length ? fetchPeerMultiples(pack.peers.map((p) => p.ticker), fetchImpl) : null,
   ]);
   if (goodwill.values.some((g) => g != null)) pack.goodwill = goodwill.values;

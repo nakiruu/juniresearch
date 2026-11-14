@@ -13,10 +13,13 @@
  * Caveat: the published packs were built from companyfacts + iXBRL, while this sweep uses iXBRL alone. A 10-K's
  * iXBRL carries two balance-sheet years and the 10-Q's one, so three columns are compared at most; older columns
  * print "n/a" and are not counted. A filer whose 10-K iXBRL lacks a revenue concept prints "cannot parse".
+ * Columns are matched by fiscal-year label, so a pack captured before the 2026-11 fiscal labels compares the wrong
+ * year where the label moved (a 52/53-week year ending in early January, or CHWY); re-capture it first.
  */
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { parseCompanyFacts } from "../lib/facts/free/sec";
+import { fiscalLabelOverride } from "../lib/facts/free/fiscal-labels";
 import { parseFilingXbrl, mergeFilingFacts, type CompanyFactsLike } from "../lib/facts/free/filing-xbrl";
 
 const tickers = process.argv.slice(2).filter((a) => !a.startsWith("--")).map((t) => t.toUpperCase());
@@ -39,7 +42,7 @@ for (const t of tickers) {
       facts = mergeFilingFacts(facts, parseFilingXbrl(html, { form: "10-K", filed: periodEnd }));
     }
     let sec: ReturnType<typeof parseCompanyFacts>;
-    try { sec = parseCompanyFacts(facts); } catch (e) { console.log(`${t} ${acc}: cannot parse (${(e as Error).message})`); continue; }
+    try { sec = parseCompanyFacts(facts, { labels: fiscalLabelOverride(t) }); } catch (e) { console.log(`${t} ${acc}: cannot parse (${(e as Error).message})`); continue; }
     const packPath = join("data", "facts", t, `${acc}.json`);
     const pack = existsSync(packPath) ? JSON.parse(readFileSync(packPath, "utf8")) : null;
     const row = (key: string): (number | null)[] => pack?.statements.balance.find((r: { key: string }) => r.key === key)?.values ?? [];

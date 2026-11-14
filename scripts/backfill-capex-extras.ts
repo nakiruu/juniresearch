@@ -13,7 +13,8 @@
 import { readFileSync, readdirSync, statSync, utimesSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { requireContact } from "./_env";
-import { alignAnnualSeries, secTtmFcf, type ConceptEntry } from "../lib/facts/enrich";
+import { fiscalLabelOverride } from "../lib/facts/free/fiscal-labels";
+import { alignAnnualSeries, labelRuleAmbiguous, secTtmFcf, type ConceptEntry } from "../lib/facts/enrich";
 import { CAPEX_ALL_IN, CAPEX_EXTRA, CAPEX_RAW, fetchCompanyFacts } from "../lib/facts/free/sec";
 
 const FACTS = "data/facts";
@@ -36,7 +37,13 @@ for (const path of packs) {
   await new Promise((r) => setTimeout(r, 130));
   const g = facts.facts?.["us-gaap"] ?? {};
   const fy: string[] = pack.statements.fiscalYears;
-  const align = (c: string) => alignAnnualSeries(g[c]?.units?.USD ?? [], fy, pack.filing.periodEnd);
+  const labels = fiscalLabelOverride(pack.ticker);
+  // A pack does not record which label rule named its columns; where the two rules disagree, leave it alone.
+  if ([...CAPEX_RAW, ...CAPEX_EXTRA].some((c) => labelRuleAmbiguous(g[c]?.units?.USD ?? [], fy, pack.filing.periodEnd, labels))) {
+    console.log(`  ${path}: the calendar and fiscal label rules place these years in different columns; left as is (re-capture the pack)`);
+    continue;
+  }
+  const align = (c: string) => alignAnnualSeries(g[c]?.units?.USD ?? [], fy, pack.filing.periodEnd, labels);
   const base = CAPEX_RAW.map(align);
   const allInIdx = CAPEX_RAW.indexOf(CAPEX_ALL_IN);
   const extras = fy.map(() => 0);
