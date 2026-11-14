@@ -11,6 +11,7 @@
 import { sleep, type FetchLike } from "../edgar/client";
 import { padCik } from "../edgar/submissions";
 import { CAPEX_ALL_IN, CAPEX_EXTRA, CAPEX_RAW, OCF, fetchCompanyFacts, parseCompanyFacts, type SecPeriod } from "./free/sec";
+import { TTM_SPAN_DAYS } from "./free/ttm";
 
 const YAHOO_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) juniper-research";
 const num = (x: unknown): x is number => typeof x === "number" && Number.isFinite(x);
@@ -55,11 +56,15 @@ const FYE_TOLERANCE_DAYS = 20;
  *
  * - Only annual facts: form 10-K / 10-K/A, fp "FY"; duration facts must span 330–380 days.
  * - Deduped by `end`: the latest `filed` wins (amendments and restatements).
- * - `anchor` is the pack's filing period end (`filing.periodEnd`). The last label is the most recent
- *   fiscal year ending at or before it; each earlier label is one year earlier. A label takes the fact
- *   whose `end` falls within 20 days of that year's expected end (52/53-week drift), so a missing year
- *   leaves a null rather than shifting the series. If the latest fiscal year's 10-K is absent from the
- *   feed, the expected ends are rolled forward so the newest label stays null instead of taking last year's value.
+ * - `anchor` is the pack's filing period end (`filing.periodEnd`); facts ending after it are ignored.
+ * - A fact counts as a fiscal-year figure when its `end` is within 20 days (52/53-week drift) of a whole
+ *   number of years from some 10-K's own year end, which excludes mid-year instants (an acquisition date).
+ * - Each label takes the fiscal-year fact whose end falls in the label's calendar year, the latest such end
+ *   when two do. That is the rule the statement columns follow (lib/facts/free/sec.ts labels each FY row with
+ *   the calendar year of its end, and mapStatements keeps the later row of a label), so the series lands in
+ *   the column it belongs to even when the labels skip a fiscal year: USFD's "FY21" column is the year ended
+ *   2021-01-02, and its goodwill and SBC must be that year's, not those of the year ended 2022-01-01. A label
+ *   with no fact in its year is null rather than shifting the series. Change this with the sec.ts labels.
  */
 export function alignAnnualSeries(entries: ConceptEntry[], fiscalYears: string[], anchor: string): (number | null)[] {
   const annual = entries.filter((e) =>
@@ -85,22 +90,13 @@ export function alignAnnualSeries(entries: ConceptEntry[], fiscalYears: string[]
   const fyes = [...new Set(fyeByFiling.values())].filter((d) => d <= anchor).sort();
   if (!fyes.length) return fiscalYears.map(() => null);
 
-  // The latest fiscal year ending at/before the anchor. A 10-K anchor IS a fiscal-year end and a 10-Q
-  // anchor is a quarter end ~3–9 months after one, so a gap of 350+ days means a later year has closed
-  // whose 10-K the feed lacks: roll the expected end forward so that label stays null.
-  let lastEnd = fyes[fyes.length - 1];
-  while (days(lastEnd, anchor) >= 350) lastEnd = shiftYears(lastEnd, 1);
-
-  const ends = [...byEnd.keys()];
-  const n = fiscalYears.length;
-  return fiscalYears.map((_, i) => {
-    const expected = shiftYears(lastEnd, i - (n - 1));
-    let best: string | null = null;
-    for (const end of ends) {
-      const gap = Math.abs(days(expected, end));
-      if (gap <= FYE_TOLERANCE_DAYS && (best == null || gap < Math.abs(days(expected, best)))) best = end;
-    }
-    return best == null ? null : byEnd.get(best)!.val;
+  const onFiscalYearEnd = (end: string) =>
+    fyes.some((fye) => Math.abs(days(shiftYears(fye, Math.round(days(fye, end) / 365.25)), end)) <= FYE_TOLERANCE_DAYS);
+  const ends = [...byEnd.keys()].filter((end) => end <= anchor && onFiscalYearEnd(end)).sort();
+  return fiscalYears.map((label) => {
+    const year = 2000 + Number(label.slice(2));
+    const end = ends.filter((d) => Number(d.slice(0, 4)) === year).at(-1);
+    return end == null ? null : byEnd.get(end)!.val;
   });
 }
 
@@ -253,12 +249,16 @@ export async function fetchPeerMultiples(tickers: string[], fetchImpl: FetchLike
  * TTM EV/EBITDA from SEC companyfacts, as of a pack's latest quarter: (the pack's capture-time market cap +
  * that quarter's net debt) ÷ the sum of the four discrete quarters' EBITDA ending at it. null when the latest
  * quarter isn't in the SEC series, any of the four EBITDA values or the net debt is missing, or TTM EBITDA is
- * not positive (a multiple on negative EBITDA means nothing). Pure.
+ * not positive (a multiple on negative EBITDA means nothing). Also null when the four quarter ends span outside
+ * TTM_SPAN_DAYS, the window computeTtm accepts: this is the fallback that runs when computeTtm has nulled a gapped
+ * window (V's 2026-09-21 capture lacked its September quarter), so it must not sum that same window. Pure.
  */
 export function secEvToEbitda(quarters: Pick<SecPeriod, "report_date" | "ebitda" | "net_debt">[], periodEnd: string, marketCap: number | null): number | null {
   if (!(marketCap != null && marketCap > 0)) return null;
   const last4 = quarters.filter((q) => q.report_date <= periodEnd).sort((a, b) => (a.report_date < b.report_date ? -1 : 1)).slice(-4);
   if (last4.length < 4 || last4[3].report_date !== periodEnd) return null;
+  const span = Math.round(days(last4[0].report_date, last4[3].report_date));
+  if (span < TTM_SPAN_DAYS.lo || span > TTM_SPAN_DAYS.hi) return null;
   if (last4.some((q) => q.ebitda == null) || last4[3].net_debt == null) return null;
   const ebitda = last4.reduce((a, q) => a + (q.ebitda as number), 0);
   if (!(ebitda > 0)) return null;

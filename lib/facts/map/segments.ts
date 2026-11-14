@@ -35,7 +35,10 @@ function latestFyIncome(dir: string): { fy: number; revenue: number } | null {
   }
   const fyRows = rows.filter((r) => r.fiscal_period === "FY" && typeof r.fiscal_year === "number");
   if (!fyRows.length) return null;
-  const top = fyRows.sort((a, b) => (b.fiscal_year as number) - (a.fiscal_year as number))[0];
+  // The latest year by its end date: two 52/53-week years can carry one fiscal_year label (USFD's years
+  // ending 2022-01-01 and 2022-12-31), and the label alone picked the earlier one.
+  const end = (r: Rec) => (typeof r.report_date === "string" ? r.report_date : "");
+  const top = fyRows.sort((a, b) => (b.fiscal_year as number) - (a.fiscal_year as number) || (end(a) < end(b) ? 1 : end(a) > end(b) ? -1 : 0))[0];
   const fy = num(top, "fiscal_year", STATEMENTS), revenue = num(top, "revenue", STATEMENTS);
   return fy != null && revenue != null ? { fy, revenue } : null;
 }

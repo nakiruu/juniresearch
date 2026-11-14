@@ -92,6 +92,26 @@ describe("alignAnnualSeries", () => {
   it("is all null for an empty feed", () => {
     expect(alignAnnualSeries([], ["FY24", "FY25"], "2026-06-30")).toEqual([null, null]);
   });
+
+  it("puts each year in the column the statements give it when the labels skip a fiscal year (USFD)", () => {
+    // 52/53-week years ending 2021-01-02, 2022-01-01 and 2022-12-31. The statement columns are labelled by the
+    // calendar year of each end, so "FY21" holds the year ended 2021-01-02 and "FY22" the year ended 2022-12-31.
+    const e = [
+      dur("2019-12-29", "2021-01-02", 40, "k20", 2020, "2021-02-17"),
+      dur("2021-01-03", "2022-01-01", 48, "k21", 2021, "2022-02-16"),
+      dur("2022-01-02", "2022-12-31", 45, "k22", 2022, "2023-02-16"),
+      dur("2022-12-31", "2023-12-30", 56, "k23", 2023, "2024-02-15"),
+    ];
+    expect(alignAnnualSeries(e, ["FY21", "FY22", "FY23"], "2024-06-29")).toEqual([40, 45, 56]);
+  });
+
+  it("leaves a label null when no fiscal year ends in its year, without shifting the others", () => {
+    const e = [
+      dur("2021-01-01", "2021-12-31", 21, "k21", 2021, "2022-02-10"),
+      dur("2023-01-01", "2023-12-31", 23, "k23", 2023, "2024-02-10"),
+    ];
+    expect(alignAnnualSeries(e, ["FY21", "FY22", "FY23"], "2024-06-30")).toEqual([21, null, 23]);
+  });
 });
 
 describe("mergeConceptSeries / fetchSbcSeries", () => {
@@ -190,6 +210,12 @@ describe("secEvToEbitda", () => {
     expect(secEvToEbitda([q("2025-09-30", 50), q("2025-12-31", 60), q("2026-03-31", 70), q("2026-06-30", 80)], "2026-06-30", 2_300)).toBeNull();
     expect(secEvToEbitda([q("2025-09-30", -50), q("2025-12-31", -60), q("2026-03-31", 70), q("2026-06-30", 10, 0)], "2026-06-30", 2_300)).toBeNull();
     expect(secEvToEbitda(quarters, "2026-06-30", null)).toBeNull();
+  });
+  it("is null when the four quarters do not span a year (a quarter is missing from the series)", () => {
+    // V's 2026-09-21 capture: no September quarter, so Jun-25 + Dec-25 + Mar-26 + Jun-26 are not a trailing year.
+    expect(secEvToEbitda([q("2025-06-30", 50), q("2025-12-31", 60), q("2026-03-31", 70), q("2026-06-30", 80, 300)], "2026-06-30", 2_300)).toBeNull();
+    // A 52/53-week year's four quarter ends (Sep 27 → Jun 27, 273 days) are a trailing year.
+    expect(secEvToEbitda([q("2025-09-27", 50), q("2025-12-27", 60), q("2026-03-28", 70), q("2026-06-27", 80, 300)], "2026-06-27", 2_300)).toBeCloseTo(2_600 / 260);
   });
 });
 

@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
-import { parseCompanyFacts, combineCapex, deriveTotalDebt, CAPEX_RAW, type SecPeriod } from "./sec";
+import { parseCompanyFacts, combineCapex, deriveTotalDebt, fiscalPeriodOf, fiscalYearKey, fiscalYearSpans, CAPEX_RAW, type FiscalYearSpan, type SecPeriod } from "./sec";
 import { computeTtm } from "./ttm";
 
 const facts = JSON.parse(readFileSync("lib/facts/free/__fixtures__/lly-companyfacts.json", "utf8"));
@@ -1057,5 +1057,294 @@ describe("operating income — third tier from pretax income (2026-11-13)", () =
     });
     expect(oi(r).fy).toBeNull();
     expect(oi(r).q.every((x) => x == null)).toBe(true);
+  });
+});
+
+// --- fiscal period keys (2026-10 period-keying audit, steps 2–4) ------------------------------------
+//
+// Fixture shorthands: a duration entry and a balance-sheet instant, in companyfacts shape.
+const d = (start: string, end: string, val: number, form: string, filed: string) => ({ start, end, val, form, filed });
+const i = (end: string, val: number, form: string, filed: string) => ({ end, val, form, filed });
+const gaap = (concepts: Record<string, ReturnType<typeof d | typeof i>[]>) => ({
+  facts: { "us-gaap": Object.fromEntries(Object.entries(concepts).map(([c, USD]) => [c, { units: { USD } }])) },
+});
+const rowAt = (rows: SecPeriod[], date: string) => rows.filter((r) => r.report_date === date);
+
+describe("fiscalYearKey", () => {
+  it("keeps the calendar year of a year end, except one in the first two weeks of January", () => {
+    expect(fiscalYearKey("2025-12-31")).toBe(2025);
+    expect(fiscalYearKey("2025-12-27")).toBe(2025);
+    expect(fiscalYearKey("2025-09-30")).toBe(2025);
+    expect(fiscalYearKey("2026-01-31")).toBe(2026); // TJX's late-January year keeps its year
+    expect(fiscalYearKey("2026-02-01")).toBe(2026);
+    expect(fiscalYearKey("2021-01-02")).toBe(2020); // USFD's 53-week fiscal 2020
+    expect(fiscalYearKey("2022-01-01")).toBe(2021);
+  });
+});
+
+describe("fiscalPeriodOf", () => {
+  const sept: FiscalYearSpan[] = [
+    { start: "2023-10-01", end: "2024-09-30" },
+    { start: "2024-10-01", end: "2025-09-30" },
+  ];
+  it("numbers a September filer's quarters from its October start", () => {
+    expect(fiscalPeriodOf("2024-12-31", sept)).toEqual({ fiscalYear: 2025, quarter: 1 });
+    expect(fiscalPeriodOf("2025-03-31", sept)).toEqual({ fiscalYear: 2025, quarter: 2 });
+    expect(fiscalPeriodOf("2025-06-30", sept)).toEqual({ fiscalYear: 2025, quarter: 3 });
+    expect(fiscalPeriodOf("2025-09-30", sept)).toEqual({ fiscalYear: 2025, quarter: 4 });
+  });
+  it("places the year in progress from the last year end, and the year before the first from its start", () => {
+    expect(fiscalPeriodOf("2026-03-31", sept)).toEqual({ fiscalYear: 2026, quarter: 2 });
+    expect(fiscalPeriodOf("2023-06-30", sept)).toEqual({ fiscalYear: 2023, quarter: 3 });
+    expect(fiscalPeriodOf("2023-09-30", sept)).toEqual({ fiscalYear: 2023, quarter: 4 });
+  });
+  it("tells two 52/53-week quarter ends in one calendar quarter apart", () => {
+    const wk = [{ start: "2023-01-01", end: "2023-12-30" }];
+    expect(fiscalPeriodOf("2023-07-01", wk)).toEqual({ fiscalYear: 2023, quarter: 2 });
+    expect(fiscalPeriodOf("2023-09-30", wk)).toEqual({ fiscalYear: 2023, quarter: 3 });
+  });
+  it("is null for a date that is not near a quarter boundary, or beyond a year from the known years", () => {
+    expect(fiscalPeriodOf("2025-02-14", sept)).toBeNull();
+    expect(fiscalPeriodOf("2027-03-31", sept)).toBeNull();
+    expect(fiscalPeriodOf("2022-03-31", sept)).toBeNull();
+  });
+});
+
+describe("fiscalYearSpans", () => {
+  it("reads each fiscal year's first and last day from 10-K ~1-year durations, ignoring 10-Q and quarterly entries", () => {
+    const f = gaap({
+      Revenues: [d("2023-10-01", "2024-09-30", 10, "10-K", "2024-11-10"), d("2024-10-01", "2025-09-30", 11, "10-K", "2025-11-10"), d("2024-10-01", "2024-12-31", 3, "10-Q", "2025-01-30")],
+      NetIncomeLoss: [d("2024-07-01", "2025-09-30", 9, "10-K", "2025-11-10")], // 15 months: not a fiscal year
+    });
+    expect(fiscalYearSpans(f)).toEqual([{ start: "2023-10-01", end: "2024-09-30" }, { start: "2024-10-01", end: "2025-09-30" }]);
+  });
+  it("leaves a fiscal-year-end change open instead of inventing a year across it", () => {
+    const f = gaap({ Revenues: [d("2022-05-01", "2023-04-30", 10, "10-K", "2023-06-20"), d("2024-01-01", "2024-12-31", 12, "10-K", "2025-02-20")] });
+    expect(fiscalYearSpans(f)).toEqual([{ start: "2022-05-01", end: "2023-04-30" }, { start: "2024-01-01", end: "2024-12-31" }]);
+  });
+});
+
+// V/ATO shape: a September year. The December quarter is tagged discretely; the March and June cash flows
+// only as six- and nine-month year-to-date figures, which end in calendar Q1 and Q2.
+describe("YTD cash flow for a September fiscal year", () => {
+  const f = gaap({
+    Revenues: [
+      d("2024-10-01", "2025-09-30", 4_000, "10-K", "2025-11-06"),
+      d("2024-10-01", "2024-12-31", 900, "10-Q", "2025-01-30"),
+      d("2025-01-01", "2025-03-31", 1_000, "10-Q", "2025-04-29"),
+      d("2025-04-01", "2025-06-30", 1_050, "10-Q", "2025-07-29"),
+    ],
+    NetIncomeLoss: [d("2024-10-01", "2025-09-30", 400, "10-K", "2025-11-06")],
+    NetCashProvidedByUsedInOperatingActivities: [
+      d("2024-10-01", "2025-09-30", 2_000, "10-K", "2025-11-06"),
+      d("2024-10-01", "2024-12-31", 500, "10-Q", "2025-01-30"),
+      d("2024-10-01", "2025-03-31", 950, "10-Q", "2025-04-29"), // six months
+      d("2024-10-01", "2025-06-30", 1_500, "10-Q", "2025-07-29"), // nine months
+    ],
+  });
+  const { quarter } = parseCompanyFacts(f);
+  it("reconstructs the March quarter as six months − December and the June quarter as nine − six months", () => {
+    expect(rowAt(quarter, "2024-12-31")[0].operating_cash_flow).toBe(500);
+    expect(rowAt(quarter, "2025-03-31")[0].operating_cash_flow).toBe(950 - 500);
+    expect(rowAt(quarter, "2025-06-30")[0].operating_cash_flow).toBe(1_500 - 950);
+  });
+  it("derives the September quarter as the year less those three", () => {
+    expect(rowAt(quarter, "2025-09-30")[0].operating_cash_flow).toBe(2_000 - 1_500);
+    expect(rowAt(quarter, "2025-09-30")[0].revenue).toBe(4_000 - 900 - 1_000 - 1_050);
+  });
+  it("keeps today's calendar labels on every row", () => {
+    expect(quarter.map((q) => `${q.fiscal_period}/${q.fiscal_year}@${q.report_date}`)).toEqual([
+      "Q4/2024@2024-12-31", "Q1/2025@2025-03-31", "Q2/2025@2025-06-30", "Q4/2025@2025-09-30",
+    ]);
+  });
+});
+
+// ADI shape: an October/November year whose quarters still end in calendar Q1–Q3. The fiscal calendar must give
+// the same answer the 2026-10-06 start-date grouping already did.
+describe("YTD cash flow for an ADI-shape fiscal year (quarters end in calendar Q1–Q3)", () => {
+  const f = gaap({
+    Revenues: [
+      d("2024-11-03", "2025-11-01", 10_000, "10-K", "2025-11-25"),
+      d("2025-11-02", "2026-01-31", 3_000, "10-Q", "2026-02-20"),
+      d("2026-02-01", "2026-05-02", 3_100, "10-Q", "2026-05-22"),
+      d("2026-05-03", "2026-08-01", 3_200, "10-Q", "2026-08-21"),
+    ],
+    NetIncomeLoss: [d("2024-11-03", "2025-11-01", 2_000, "10-K", "2025-11-25")],
+    NetCashProvidedByUsedInOperatingActivities: [
+      d("2025-11-02", "2026-01-31", 1_000, "10-Q", "2026-02-20"),
+      d("2025-11-02", "2026-05-02", 2_300, "10-Q", "2026-05-22"),
+      d("2025-11-02", "2026-08-01", 3_900, "10-Q", "2026-08-21"),
+    ],
+  });
+  it("reconstructs Q2 and Q3 and labels them as before", () => {
+    const { quarter } = parseCompanyFacts(f);
+    expect(quarter.map((q) => [q.fiscal_period, q.fiscal_year, q.report_date, q.operating_cash_flow])).toEqual([
+      ["Q1", 2026, "2026-01-31", 1_000],
+      ["Q2", 2026, "2026-05-02", 1_300],
+      ["Q3", 2026, "2026-08-01", 1_600],
+    ]);
+  });
+});
+
+// TMO/USFD shape: a 52/53-week year ending the Saturday nearest December 31. In 2023 the second quarter ended
+// on July 1 and the third on September 30, both in calendar Q3.
+describe("two quarter ends in one calendar quarter (52/53-week year)", () => {
+  const f = gaap({
+    Revenues: [
+      d("2023-01-01", "2023-12-30", 4_000, "10-K", "2024-02-20"),
+      d("2023-01-01", "2023-04-01", 900, "10-Q", "2023-05-05"),
+      d("2023-04-02", "2023-07-01", 1_000, "10-Q", "2023-08-04"),
+      d("2023-07-02", "2023-09-30", 1_050, "10-Q", "2023-11-03"),
+    ],
+    NetIncomeLoss: [
+      d("2023-01-01", "2023-12-30", 400, "10-K", "2024-02-20"),
+      d("2023-01-01", "2023-04-01", 90, "10-Q", "2023-05-05"),
+      d("2023-04-02", "2023-07-01", 100, "10-Q", "2023-08-04"),
+      d("2023-07-02", "2023-09-30", 105, "10-Q", "2023-11-03"),
+      d("2023-04-02", "2023-07-01", 100, "10-Q", "2024-08-02"), // re-reported a year later, filed last
+    ],
+    CashAndCashEquivalentsAtCarryingValue: [i("2023-07-01", 70, "10-Q", "2023-08-04"), i("2023-09-30", 80, "10-Q", "2023-11-03")],
+  });
+  const { quarter } = parseCompanyFacts(f);
+  it("keeps both quarters, each with its own figures, under today's calendar labels", () => {
+    expect(rowAt(quarter, "2023-07-01").map((q) => [q.fiscal_period, q.fiscal_year, q.revenue, q.net_income, q.cash])).toEqual([["Q3", 2023, 1_000, 100, 70]]);
+    expect(rowAt(quarter, "2023-09-30").map((q) => [q.fiscal_period, q.fiscal_year, q.revenue, q.net_income, q.cash])).toEqual([["Q3", 2023, 1_050, 105, 80]]);
+  });
+  it("derives the year's Q4 from its three quarters", () => {
+    expect(rowAt(quarter, "2023-12-30").map((q) => [q.fiscal_period, q.revenue, q.net_income])).toEqual([["Q4", 4_000 - 900 - 1_000 - 1_050, 400 - 90 - 100 - 105]]);
+  });
+});
+
+// USFD shape: 52/53-week years ending 2021-01-02 (fiscal 2020), 2022-01-01 (fiscal 2021) and 2022-12-31 (fiscal 2022).
+describe("two fiscal years ending in one calendar year", () => {
+  const f = gaap({
+    Revenues: [
+      d("2019-12-29", "2021-01-02", 22_885, "10-K", "2021-02-17"),
+      d("2021-01-03", "2022-01-01", 29_487, "10-K", "2022-02-16"),
+      d("2022-01-02", "2022-12-31", 34_057, "10-K", "2023-02-16"),
+    ],
+    NetIncomeLoss: [d("2019-12-29", "2021-01-02", -226, "10-K", "2021-02-17"), d("2021-01-03", "2022-01-01", 164, "10-K", "2022-02-16"), d("2022-01-02", "2022-12-31", 265, "10-K", "2023-02-16")],
+    CashAndCashEquivalentsAtCarryingValue: [i("2022-01-01", 148, "10-K", "2022-02-16"), i("2022-12-31", 211, "10-K", "2023-02-16")],
+  });
+  it("keeps every year, each with its own balance sheet, labelled by the calendar year of its end as today", () => {
+    const { annual } = parseCompanyFacts(f);
+    expect(annual.map((a) => [a.fiscal_year, a.report_date, a.revenue, a.cash])).toEqual([
+      [2021, "2021-01-02", 22_885, null],
+      [2022, "2022-01-01", 29_487, 148],
+      [2022, "2022-12-31", 34_057, 211],
+    ]);
+  });
+});
+
+// RTX shape: a 10-Q filed after a merger re-reports the prior December quarter discretely.
+describe("a 10-Q that re-reports a fiscal Q4", () => {
+  const f = gaap({
+    Revenues: [
+      d("2019-01-01", "2019-12-31", 45_349, "10-K", "2020-02-10"),
+      d("2019-01-01", "2019-03-31", 11_000, "10-Q", "2019-04-25"),
+      d("2019-04-01", "2019-06-30", 11_300, "10-Q", "2019-07-25"),
+      d("2019-07-01", "2019-09-30", 11_355, "10-Q", "2019-10-25"),
+      d("2019-10-01", "2019-12-31", 11_694, "10-Q", "2020-07-29"),
+    ],
+    NetIncomeLoss: [
+      d("2019-01-01", "2019-12-31", 5_000, "10-K", "2020-02-10"),
+      d("2019-01-01", "2019-03-31", 1_200, "10-Q", "2019-04-25"),
+      d("2019-04-01", "2019-06-30", 1_300, "10-Q", "2019-07-25"),
+      d("2019-07-01", "2019-09-30", 1_357, "10-Q", "2019-10-25"),
+    ],
+  });
+  it("emits one row per date: the reported quarter, not a derived duplicate", () => {
+    const { quarter } = parseCompanyFacts(f);
+    const dates = quarter.map((q) => q.report_date);
+    expect(new Set(dates).size).toBe(dates.length);
+    expect(rowAt(quarter, "2019-12-31").map((q) => [q.fiscal_period, q.revenue])).toEqual([["Q4", 11_694]]);
+  });
+  it("fills what the recast left untagged from FY − Q1..Q3 when the two agree on revenue", () => {
+    // the recast 10-Q tags Q4 revenue but not net income; 5,000 − (1,200 + 1,300 + 1,357) = 1,143
+    expect(rowAt(parseCompanyFacts(f).quarter, "2019-12-31")[0].net_income).toBe(1_143);
+  });
+  it("leaves the gaps null when the recast revenue is on a different basis from the full year", () => {
+    const recast = gaap({
+      ...Object.fromEntries(Object.entries(f.facts["us-gaap"]).map(([c, v]) => [c, v.units.USD])),
+      Revenues: f.facts["us-gaap"].Revenues.units.USD.map((e) => (e.end === "2019-12-31" && e.form === "10-Q" ? { ...e, val: 12_500 } : e)),
+    });
+    const [row] = rowAt(parseCompanyFacts(recast).quarter, "2019-12-31");
+    expect(row.revenue).toBe(12_500);
+    expect(row.net_income).toBeNull();
+  });
+});
+
+// CEG shape: a later 10-Q tags balances at the spin-off date, inside the March quarter. USFD shape: a note tags a
+// mis-scaled debt figure at a date that is no period end. Neither may replace the quarter-end balance.
+describe("a balance tagged at a date that is no period end", () => {
+  const f = gaap({
+    Revenues: [
+      d("2021-01-01", "2021-12-31", 19_000, "10-K", "2022-02-25"),
+      d("2022-01-01", "2022-03-31", 5_591, "10-Q", "2022-05-12"),
+    ],
+    NetIncomeLoss: [d("2021-01-01", "2021-12-31", -200, "10-K", "2022-02-25"), d("2022-01-01", "2022-03-31", 106, "10-Q", "2022-05-12")],
+    StockholdersEquity: [i("2022-03-31", 11_505, "10-Q", "2022-05-12"), i("2022-01-31", 0, "10-Q", "2022-08-04")],
+    LongTermDebt: [i("2022-03-31", 4_548, "10-Q", "2022-05-12"), i("2022-02-15", 1.334, "10-Q", "2022-08-04")],
+  });
+  it("keeps the quarter-end balance, however late the off-date figure was filed", () => {
+    const [row] = rowAt(parseCompanyFacts(f).quarter, "2022-03-31");
+    expect(row.total_equity).toBe(11_505);
+    expect(row.total_debt).toBe(4_548);
+  });
+});
+
+// RCAT shape: an April year, an eight-month transition to December, then a calendar year.
+describe("a fiscal-year-end change", () => {
+  const f = gaap({
+    Revenues: [
+      d("2022-05-01", "2023-04-30", 1_200, "10-K", "2023-07-14"),
+      d("2023-05-01", "2023-07-31", 300, "10-Q", "2023-09-14"),
+      d("2023-08-01", "2023-10-31", 310, "10-Q", "2023-12-14"),
+      d("2024-01-01", "2024-12-31", 1_600, "10-K", "2025-03-20"),
+      d("2024-01-01", "2024-03-31", 380, "10-Q", "2024-05-14"),
+      d("2024-04-01", "2024-06-30", 390, "10-Q", "2024-08-14"),
+      d("2024-07-01", "2024-09-30", 400, "10-Q", "2024-11-14"),
+    ],
+    NetIncomeLoss: [d("2022-05-01", "2023-04-30", 10, "10-K", "2023-07-14"), d("2024-01-01", "2024-12-31", 20, "10-K", "2025-03-20")],
+    NetCashProvidedByUsedInOperatingActivities: [
+      d("2023-05-01", "2023-07-31", 30, "10-Q", "2023-09-14"),
+      d("2023-05-01", "2023-10-31", 70, "10-Q", "2023-12-14"), // six months of the transition period
+    ],
+  });
+  const { quarter } = parseCompanyFacts(f);
+  it("emits no row for a quarter inside the transition, rather than placing it in a guessed fiscal year", () => {
+    expect(rowAt(quarter, "2023-07-31")).toEqual([]);
+    expect(rowAt(quarter, "2023-10-31")).toEqual([]);
+  });
+  it("still keys the calendar year that follows, and derives its Q4 from its own three quarters", () => {
+    expect(rowAt(quarter, "2024-12-31").map((q) => q.revenue)).toEqual([1_600 - 380 - 390 - 400]);
+  });
+});
+
+describe("Q4 derivation stays inside one fiscal year", () => {
+  // June year; FY2026 lacks its first quarter. FY2025's quarters and Q4 are complete.
+  const f = gaap({
+    Revenues: [
+      d("2024-06-30", "2025-06-29", 1_800, "10-K", "2025-08-08"),
+      d("2024-06-30", "2024-09-29", 400, "10-Q", "2024-10-25"),
+      d("2024-09-30", "2024-12-29", 450, "10-Q", "2025-01-30"),
+      d("2024-12-30", "2025-03-30", 470, "10-Q", "2025-04-24"),
+      d("2025-06-30", "2026-06-28", 2_000, "10-K", "2026-08-07"),
+      d("2025-09-29", "2025-12-28", 500, "10-Q", "2026-01-29"),
+      d("2025-12-29", "2026-03-29", 600, "10-Q", "2026-04-23"),
+    ],
+    NetIncomeLoss: [d("2024-06-30", "2025-06-29", 1, "10-K", "2025-08-08"), d("2025-06-30", "2026-06-28", 1, "10-K", "2026-08-07")],
+  });
+  it("derives a year's Q4 from that year's quarters, and none when one of them is missing", () => {
+    const { quarter } = parseCompanyFacts(f);
+    expect(rowAt(quarter, "2025-06-29").map((q) => q.revenue)).toEqual([1_800 - 400 - 450 - 470]);
+    expect(rowAt(quarter, "2026-06-28")).toEqual([]);
+  });
+});
+
+describe("no two emitted rows share a report_date", () => {
+  it("holds for the LLY fixture", () => {
+    const { annual, quarter } = parseCompanyFacts(facts);
+    for (const rows of [annual, quarter]) expect(new Set(rows.map((r) => r.report_date)).size).toBe(rows.length);
   });
 });
