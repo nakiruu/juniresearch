@@ -157,3 +157,13 @@ describe("mapStatements without a prior-year quarter", () => {
     expect(s.latestQuarter.operatingMargin).toBeCloseTo(0.25, 6);
   });
 });
+
+// A June fiscal year on the free path: the derived fiscal Q4 (June) and the real December quarter both carry
+// the calendar label "Q4", so the label cannot find the year-ago quarter. LITE-shape values.
+describe("mapStatements pairs the year-ago quarter by date, not by label", () => {
+  it("compares the June quarter with the previous June quarter, not with December", () => {
+    const s = mapStatements("lib/facts/map/__fixtures__/june-fye-derived-q4");
+    expect(s.latestQuarter.periodEnd).toBe("2026-06-27");
+    expect(s.latestQuarter.revenueYoY).toBeCloseTo(209 / 100 - 1, 6); // +109%, not 209 / 138 − 1 = +51%
+  });
+});

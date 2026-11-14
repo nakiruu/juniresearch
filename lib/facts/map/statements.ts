@@ -88,7 +88,14 @@ export function mapStatements(dir: string): { statements: FactPack["statements"]
   const latest = quarters[0];
   if (!latest) throw new Error(`No quarterly income rows in ${QUARTER}`);
   const fy = num(latest, "fiscal_year", QUARTER)!, period = str(latest, "fiscal_period", QUARTER);
-  const prior = quarters.find((r) => r.fiscal_period === period && num(r, "fiscal_year", QUARTER) === fy - 1);
+  // The year-ago quarter is the one that ended a year earlier, found by date. Matching the label instead paired
+  // a derived June Q4 with the December "Q4" and a 52/53-week filer's July quarter with its September one
+  // (LITE read +51% for +109%), because free-path labels follow the calendar, not the fiscal year.
+  const latestEnd = Date.parse(str(latest, "report_date", QUARTER));
+  const prior = quarters.find((r) => {
+    const days = (latestEnd - Date.parse(str(r, "report_date", QUARTER))) / 86_400_000;
+    return days >= 350 && days <= 380;
+  });
   const rev = num(latest, "revenue", QUARTER)!;
   const priorRev = prior ? num(prior, "revenue", QUARTER)! : null;
   // A quarter with no revenue (a miner that sold nothing that quarter) has no margin and no growth rate;
