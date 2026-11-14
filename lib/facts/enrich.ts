@@ -367,7 +367,7 @@ export async function fillEvToEbitda(
   try {
     const periodEnd = pack.latestQuarter?.periodEnd;
     if (periodEnd) {
-      const { quarter } = parseCompanyFacts(await fetchCompanyFacts(pack.cik, contact, fetchImpl));
+      const { quarter } = parseCompanyFacts(await fetchCompanyFacts(pack.cik, contact, fetchImpl), { sic: pack.sic });
       const v = secEvToEbitda(quarter, periodEnd, pack.quote?.marketCap ?? null);
       if (v != null) {
         pack.ttm.evToEbitda = v;
