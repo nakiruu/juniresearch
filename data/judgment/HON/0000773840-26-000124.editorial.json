@@ -1,10 +1,15 @@
 {
-  "judgmentSha256": "6cb0322653252e83b06c65362eb7c03ea8c0027c8843e6ecc20b8daed03e83c2",
-  "inputs": {"scheme":1,"facts":"6ef8f894113bdb3e39c250c33d9b9a467bc2dfcc2105e071c5bfa93acd5ecc0a","calls":"836eba1c36e68c57170dfac2caad63417b23494c3df2bf589594329a4dcc15df","context":"c9b3ba862aca84e7cb0e4f836f628ef2e578b79f7fad11c31f0ba1191c0fc001","source":"backfill:9dd7054"},
-  "reviewedAt": "2026-09-15T15:52:00Z",
-  "reviewer": "claude-opus-5",
+  "judgmentSha256": "4c3f03bfa90b1b14263e32d2e0cca40c3575fafa123f1201d77970b05872b56b",
+  "inputs": {
+    "scheme": 1,
+    "facts": "6ef8f894113bdb3e39c250c33d9b9a467bc2dfcc2105e071c5bfa93acd5ecc0a",
+    "calls": "652ab6e8d7a3925f2a5cd0ac2f1331a34831ddc06ba00db697e59a58e6cebb0c",
+    "context": "c9b3ba862aca84e7cb0e4f836f628ef2e578b79f7fad11c31f0ba1191c0fc001"
+  },
+  "reviewedAt": "2026-10-08T20:39:32Z",
+  "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "approved-with-minors",
+  "verdict": "needs-fix-round",
   "findings": [
     {
       "id": "F-1",
@@ -14,7 +19,7 @@
       "issue": "The release's Table 2 gives Honeywell Technologies sales of $5,187 million, up 3% reported and organic growth of 4% — not 'in line with' the 3% reported. The report's own analystCommentary, thesis and finalRecommendation all say 4% organic, so the financials section contradicts both the release and the rest of the report at the one number the growth argument rests on.",
       "fix": "Write 'up 3% reported and 4% organically', and keep the reported/organic wedge (currency, acquisitions, the PPE divestiture) as the explanation rather than collapsing the two figures.",
       "status": "addressed",
-      "note": "Fixed. incomeCommentary now reads 'up 3% reported and 4% organically', matching Table 2 of the release and the four other fields that say 4%."
+      "note": "Still holds on the rewrite: incomeCommentary reads 'second-quarter sales were $5,187 million, up 3% reported and 4% organically', matching Table 2."
     },
     {
       "id": "F-2",
@@ -24,7 +29,7 @@
       "issue": "The pack does not support 'sales outside the U.S.' above half. The FY25 geography split in the Facts block is United States 58.2%, Europe 21.7%, Other International 20.2% — non-U.S. is 41.8%. The 10-Q risk factor says something different: 'Our international operations, including U.S. exports, represent more than half of the Company's sales.' That is a different quantity, and the report quotes it correctly twice elsewhere (companyOverview: 'international operations remain more than half of sales'; risks[3]: 'international operations exceed half of sales') before restating it wrongly here.",
       "fix": "Use the risk factor's own quantity — international operations including U.S. exports — rather than 'sales outside the U.S.', and note that the 58.2% U.S. geography split in the Facts block is a pre-spin FY25 figure measured on a different basis.",
       "status": "addressed",
-      "note": "Fixed. risks.systemic now reads 'with international operations, including U.S. exports, representing more than half of sales'. companyOverview goes further and flags that the 58.2% U.S. geography split measures a different quantity."
+      "note": "Still holds: systemic reads 'International operations, including U.S. exports, represent more than half of sales'. A separate attribution problem in the same sentence is F-28."
     },
     {
       "id": "F-3",
@@ -34,7 +39,7 @@
       "issue": "FY26E consensus revenue of $20.1B does not sit inside guidance. Table 4 of the release puts current full-year sales guidance at $19.8B – $20.0B, so consensus sits above the top of the range. Only the EPS half of the sentence is true ($8.32 inside $8.05–$8.35), and the report states that correctly in multiplesCommentary.",
       "fix": "Split the claim: consensus FY26E EPS of $8.32 sits inside the guided $8.05 to $8.35, while consensus FY26E revenue of $20.1B sits above the guided $19.8 billion to $20.0 billion — a gap worth a sentence, since the guidance was cut for divestiture timing the consensus mean may not yet carry.",
       "status": "addressed",
-      "note": "Fixed and split as suggested: EPS of $8.32 'sits inside the guided range' while revenue of $20.1B 'sits just above the sales guidance, which was trimmed for divestiture timing the consensus mean may not yet carry'."
+      "note": "Still holds: growth.points[5] says EPS of $8.32 'sits inside the guided range' and revenue of $20.1B 'sits above the guided sales range'."
     },
     {
       "id": "F-4",
@@ -44,7 +49,7 @@
       "issue": "Guidance did not go up on every line. Table 4 shows sales guidance cut from $19.9B–$20.2B to $19.8B–$20.0B and both operating cash flow ($2.1B) and free cash flow ($2.0B) unchanged. The same overstatement appears in two more places: growth.points[0] ('Guidance moved up on every line on July 23, 2026', which then concedes in its own final clause that sales guidance is lower) and finalRecommendation.body[0] ('guidance raised on every line'). meta.subtitle's 'guidance raised' rests on the same claim.",
       "fix": "Say guidance was raised on organic growth, segment margin and adjusted EPS, with sales guidance cut on divestiture timing and cash-flow guidance unchanged — which is also what the transcript claims ('raising our full-year outlook for organic growth, segment margin, and adjusted earnings per share'). Fix all three fields.",
       "status": "addressed",
-      "note": "Fixed in all three fields. analystCommentary and growth.points[0] now name the three lines raised and say the sales range was trimmed and cash-flow guidance unchanged; finalRecommendation reads 'its growth, margin and earnings guidance raised'. 'every line' appears nowhere."
+      "note": "Still holds: analystCommentary names the three lines raised and the trimmed sales range; growth.points[0] adds that free cash flow guidance was unchanged. 'every line' appears nowhere."
     },
     {
       "id": "F-5",
@@ -54,7 +59,7 @@
       "issue": "Wrong date and wrong characterisation. The Daiwa and Deutsche Bank items are dated 2026-06-30, not July 2, and the report dates them correctly in multiplesCommentary ('were written on June 30, 2026'). There is one upgrade, not two — Daiwa upgraded to Outperform (the headline appears three times across PubT/Benzinga/The Fly), while Deutsche Bank 'Maintains Buy' and raised its target to $263. The July 2 headlines are a community-solar commercial-operation item and BMO initiating coverage on Honeywell Aerospace at $276, which is a different issuer.",
       "fix": "State that the headline window ends 2026-07-02, that the last HON-specific broker actions are dated June 30 — one upgrade (Daiwa, target $255) and one maintained Buy with a raised target (Deutsche Bank, $263) — and that the July 2 items concern a solar project and a Honeywell Aerospace initiation.",
       "status": "addressed",
-      "note": "Fixed. risks.idiosyncratic[0] now dates the window to July 2, the broker actions to June 30, names one upgrade (Daiwa, $255) and Deutsche Bank maintaining Buy at $263, and says the July 2 items are a solar project and BMO's initiation on Honeywell Aerospace, 'a different issuer'."
+      "note": "Still holds: multiplesCommentary dates both actions to June 30, 2026 and calls Daiwa's an upgrade and Deutsche Bank's a raised $263 target."
     },
     {
       "id": "F-6",
@@ -64,7 +69,7 @@
       "issue": "'A premium multiple for an industrial' is a relative-valuation claim with nothing on the grounding surface to measure it against. The Facts block's multiples section is explicitly labelled 'company column; peers pending a peer data source' and the rendered table carries the note 'Peer multiples pending a peer data source.' The report's own thesis concedes the point in the opposite direction: the company is 'priced at a forward multiple the pack cannot benchmark against peers.'",
       "fix": "Drop 'premium' or attach it to something on the page — for example, that 20.2x on FY27E is above the 7.8x trailing P/E the pack prints for the pre-spin conglomerate, or simply argue the multiple against management's own approximately $12 three-year adjusted EPS bridge without a peer comparison the pack cannot support.",
       "status": "addressed",
-      "note": "Fixed. multiplesCommentary now says peer multiples are pending 'so the forward multiple cannot be called rich or cheap against the group' and argues it against management's own approximately $12 bridge instead."
+      "note": "Still holds: multiplesCommentary says 'nothing on the page shows whether that multiple is a premium or a discount'."
     },
     {
       "id": "F-7",
@@ -74,7 +79,7 @@
       "issue": "An inference the proxy invites but does not make. The April 10, 2026 DEF 14A excerpt describes equitable conversion-ratio adjustments for the Solstice distribution only; it predates the June 29, 2026 Aerospace Spin-Off and says nothing about how unvested awards were treated in it, and no other source in the pack does either. The authoring contract is explicit that governance claims rest on the proxy excerpt and that the report should say what the pack does not carry rather than infer. The paragraph otherwise does this well, listing four things it makes no claim on.",
       "fix": "Add the Aerospace equity treatment to the list of things the proxy does not show — the excerpt covers Solstice only and predates the Aerospace distribution — instead of projecting the Solstice mechanic forward.",
       "status": "addressed",
-      "note": "Fixed. The forward projection is gone; governance now lists 'nothing on how unvested awards were treated in the Aerospace distribution, which came after the proxy's date' among the things it makes no claim on."
+      "note": "Still holds: governance lists 'nothing on unvested awards in the Aerospace distribution' among the things it makes no claim on."
     },
     {
       "id": "F-8",
@@ -84,7 +89,7 @@
       "issue": "'Most of' is a quantified claim the pack cannot support. Nothing on the grounding surface sizes UOP against Advanced Materials inside the FY25 Energy and Sustainability Solutions label ($3.1B, 8.4%). The report's own moat section states the relationship without the quantifier — 'The vendor's Energy and Sustainability Solutions label covered UOP and Advanced Materials; Advanced Materials left as Solstice Advanced Materials on October 30, 2025' — and that is as far as the sources go. The quarter's Process Automation and Technology sales of $1,679 million, which include UOP, cut against the implication that little of the label remains.",
       "fix": "Say that Advanced Materials left as Solstice Advanced Materials on October 30, 2025 and that UOP moved into Process Automation and Technology, without asserting which was the larger part.",
       "status": "addressed",
-      "note": "Fixed. companyOverview now says Advanced Materials left as Solstice and UOP moved into Process Automation and Technology, with no claim about which was the larger part."
+      "note": "Still holds: companyOverview no longer mentions Solstice's share of the label, and segments[3] says 'the page does not say what else the label held'."
     },
     {
       "id": "F-9",
@@ -94,7 +99,7 @@
       "issue": "The Base case is not anchored to anything the reader can reproduce from the page. Today's forward multiple on FY27E earnings is the ~20.2x on $9.99 the report quotes five times — which is the current price of $201.38, not $235. 'Plus a year of growth' is doing all the work and names no figure: there is no FY28E EPS on the grounding surface, and no multiple is given for the re-rating. Since Base carries 50% of the weight and the $215–$255 target range is built to bracket it, the whole calls structure rests on this one unstated step.",
       "fix": "Anchor the Base case to a figure that is on the page: either a stated multiple applied to FY27E EPS of $9.99 (roughly 23.5x gets to $235), or management's approximately $12 three-year adjusted EPS bridge discounted back. State the multiple once, in this driver, and let scenarioCommentary refer back to it in words.",
       "status": "addressed",
-      "note": "Fixed and reproducible: the Base driver now states '24.2x NTM multiple they carry today as the market rolls forward to FY27E earnings, which is approximately $242', and impliedPrice moved 235 to 242. 24.2 x $9.99 = $241.76, both figures on the page. Recomputed calls remain coherent: weighted fair value $229.0, +13.7% vs $201.38 (BUY envelope), band $215-$255 brackets Base $242, probabilities sum to 1."
+      "note": "Still holds: 24.2x on $9.99 is approximately $242, both figures on the page. Recomputed calls: weighted value $228.50, E +13.5%, D -16.6%, R 0.81x, BUY derived; the $220-$255 band brackets $242. The Bull's overlap with the Base is a new problem, F-30."
     },
     {
       "id": "F-10",
@@ -104,7 +109,7 @@
       "issue": "The same margin-path claim is made in five places, each time with the same two figures and the same three drivers: catalysts[3]; businessMoat.moatFactors[2] ('management expects over 200 basis points of margin expansion quickly from stranded-cost removal, portfolio actions in Industrial Automation and the aerospace trademark agreement, then 60 basis points a year'); growth.points[4] ('over 200 basis points of quick margin expansion and 60 basis points a year after that'); risks.idiosyncratic[2] ('the over 200 basis points of quick margin expansion'); finalRecommendation.body[0] ('over 200 basis points of expansion from stranded-cost removal and portfolio actions, then 60 basis points a year').",
       "fix": "Argue the bridge once — moatFactors[2] is the right home, since that is where the counter about corporate costs on a smaller base sits. Keep catalysts[3] as a pointer without the figures, and have growth.points[4], risks.idiosyncratic[2] and the final recommendation refer back in words ('the quick margin bridge', 'the stranded-cost step').",
       "status": "addressed",
-      "note": "Fixed. '200 basis points' and '60 basis points' now appear once each, in moatFactors[2]. catalysts[3], growth.points[4], risks.idiosyncratic[2] and finalRecommendation.body[1] all refer back in words ('the margin bridge', 'the quick margin bridge', 'the quick step in the margin bridge')."
+      "note": "Still holds: '200 basis points' and '60 basis points' appear once each, in growth.points[4]; risks.idiosyncratic[1] and the executive-summary risk refer to 'the bridge' in words."
     },
     {
       "id": "F-11",
@@ -113,8 +118,8 @@
       "quote": "The Bear case carries the same weight because the shares have already fallen to the bottom of their range on information the pack does not contain, and a report that cannot see the reason should not assume it is benign.",
       "issue": "The reason the target sits below consensus, and the reason the Bear case carries a quarter of the weight, is argued three times in different words: analystCommentary ('That silence leads the risk section, and it is why the target range sits below consensus rather than on it'), this sentence, and risks.idiosyncratic[0] ('We treat the decline as unexplained rather than benign, which is why the Bear case carries a full quarter of the weight and the target range sits below consensus'). finalRecommendation.body[1] makes it a fourth time ('those three gaps are why the target range sits below the Street's $261.82 consensus'). The Bear probability is also stated twice inside scenarioCommentary alone — 'split the remainder evenly' and 'carries the same weight'.",
       "fix": "Argue it once, in scenarioCommentary, where the weights are set. Let analystCommentary and the final recommendation point at it, and cut the causal clause from risks.idiosyncratic[0] so the risk bullet describes the gap rather than re-deriving the weighting.",
-      "status": "addressed",
-      "note": "Fixed. The three reasons are argued once in thesis.body; analystCommentary ('for the three reasons the thesis sets out') and finalRecommendation ('those are the three gaps the thesis names') point at it, and the causal clause was cut from risks.idiosyncratic[0], which now ends 'We treat the decline as unexplained rather than benign.' The Bear weight is stated once, in scenarioCommentary."
+      "status": "open",
+      "note": "Regressed in the rewrite. The evidence-gap list, and the claim that it holds the range below consensus, is rebuilt in three places. analystCommentary: 'one quarter of standalone-style disclosure, no post-spin balance sheet or dividend'. thesis.body: 'These keep the call narrow and the target range below the Street's consensus'. finalRecommendation.body[1]: 'What we cannot yet see holds the range below the Street's consensus'. 'One quarter' is in seven fields. Argue it in thesis.body and have the other two point back in words."
     },
     {
       "id": "F-12",
@@ -124,7 +129,7 @@
       "issue": "risks.idiosyncratic[1] makes the same claim in nearly the same words: 'guidance now rests on a second-half inflection to high-single-digit growth as energy projects resume and catalyst volumes rise ... the collection headwinds in the Middle East the CFO cited are the evidence against.' Both name the same mechanism, the same guided growth rate and the same counter-evidence, and both attribute it to the CFO. This is the paraphrase case the lint cannot catch.",
       "fix": "Keep the mechanism and the Middle East collections counter in the risk bullet, where the segment's risk factor and the order/book-to-bill evidence already sit, and cut growth.points[2] back to the growth claim itself — the organic decline of 1% in the quarter against a guided second-half acceleration — pointing at the risk section for the counter.",
       "status": "addressed",
-      "note": "Fixed. growth.points[2] is cut back to the organic decline against the guided acceleration and points on ('the risk section carries the mechanism and the case against'); the mechanism and the Middle East collections counter now sit only in risks.idiosyncratic[1]."
+      "note": "Still holds: growth.points[2] states the CFO's expectation and points to the risk section; risks.idiosyncratic[0] carries the case for and against without retelling the mechanism."
     },
     {
       "id": "F-13",
@@ -134,7 +139,7 @@
       "issue": "risks.idiosyncratic[2] argues the identical point: 'operating margin of 12.8% sat well below segment margin of 19.0% because separation costs and corporate expense sit between them.' financials.incomeCommentary introduces the same pair a third time ('operating margin slipped 50 basis points to 12.8% on separation costs below the segment line' alongside segment margin of 19.0%). Three fields carry the same two figures making the same argument about the gap between them.",
       "fix": "Introduce the 12.8% / 19.0% gap once, in incomeCommentary, where the separation costs are quantified. Have the moat factor refer back in words ('the gap between segment and operating margin') and let risks.idiosyncratic[2] keep it, since the stranded-cost risk is its subject — but not both.",
       "status": "addressed",
-      "note": "Fixed. '12.8%' now appears once, in incomeCommentary. moatFactors[2] refers back ('the gap between segment and operating margin the financials section quantifies') and risks.idiosyncratic[2] keeps the argument without the figures."
+      "note": "Still holds: 12.8% and 19.0% appear once each, in incomeCommentary. The mechanism the risk section now attaches to the gap is a separate problem, F-25."
     },
     {
       "id": "F-14",
@@ -144,7 +149,7 @@
       "issue": "The 50%/30% figures are attached to the wrong quantity. The transcript says 'we drove over 50% orders growth and 30% organic sales growth in high-growth verticals', and names the focus verticals elsewhere as 'healthcare, hospitality, and data centers'. The release attributes only the 13% orders growth to data center and hospitality. Narrowing management's 'high-growth verticals' to the two the release names makes the report claim a growth rate for two verticals that the sources give for a wider group.",
       "fix": "Write it as management does: orders rose 13%, led by data center and hospitality per the release, and management put orders growth above 50% and organic sales growth at 30% in its high-growth verticals, which it lists as healthcare, hospitality and data centers.",
       "status": "addressed",
-      "note": "Fixed as suggested: 'Orders rose 13%, led by data center and hospitality per the release; across what management calls its high-growth verticals, which it lists as healthcare, hospitality and data centers, it put orders growth above 50% and organic sales growth at 30%.'"
+      "note": "Still holds: segments[1] reads 'the CEO put orders growth in the segment's high-growth verticals above 50%', which matches the transcript."
     },
     {
       "id": "F-15",
@@ -154,7 +159,7 @@
       "issue": "39.3% is the consolidated Q2 2025 gross margin — the old company, Aerospace included — as the MD&A gives it ('gross margin percentage decreased 170 basis points to 37.6% compared to 39.3% for the same period of 2025'), and incomeCommentary correctly labels it 'At the consolidated level'. The Bear case is a scenario for Honeywell Technologies, so the benchmark is the pre-spin conglomerate's. This is exactly the mixing the report's own thesis and financials section are built to prevent.",
       "fix": "Anchor the Bear case to a Honeywell Technologies figure the pack carries — segment margin of 19.0% in the quarter, or the guided 20.1% to 20.5% for the year — rather than the consolidated gross margin; or keep 39.3% and say plainly that it is the consolidated figure and why it is still the relevant cost signal.",
       "status": "addressed",
-      "note": "Fixed. The Bear driver now reads 'push segment margin back below the quarter's 19.0% rather than toward the guided 20.1% to 20.5%'. The consolidated 39.3% no longer appears in the scenario."
+      "note": "Still holds: the Bear driver is now anchored to FY26E consensus EPS of $8.32 and the ~20.2x FY27E multiple, and 39.3% appears only in incomeCommentary, labelled as consolidated."
     },
     {
       "id": "F-16",
@@ -164,7 +169,7 @@
       "issue": "How the vendor computed the 2.21% is not on the grounding surface. The Facts block gives only 'Dividend Yield: 2.21%' and, in the Quote line, 'dividend yield 2.21%' as of 2026-09-14; nothing states the dividend rate behind it or the period it covers. The report's own capitalAllocation paragraph says 'the pack does not carry the standalone dividend policy', which is the honest version of the same observation.",
       "fix": "Say what the pack shows: a 2.21% yield as of September 14, 2026 whose underlying dividend rate is not disclosed in the pack, and that the standalone post-spin dividend has not been set out — rather than asserting the basis of the vendor's calculation.",
       "status": "addressed",
-      "note": "Fixed. multiplesCommentary now reads 'a 2.21% dividend yield behind which no dividend rate is disclosed on this page', which is what the sources support."
+      "note": "Still holds: 'The 2.21% dividend yield has no post-spin dividend rate behind it on this page.'"
     },
     {
       "id": "F-17",
@@ -174,7 +179,7 @@
       "issue": "'Near the bottom of the 52-week range' is asserted in eight fields: this bullet, analystCommentary, thesis.body, multiplesCommentary, scenarioCommentary, capitalAllocation, risks.idiosyncratic[0] and finalRecommendation.body[1]. The executive-summary pointer and the risk section that argues it are both appropriate; the other six are restatement, and they crowd out the one thing a reader can check — the report's own price history, which shows the fall running from about $246 in early August to $201.38 on September 14.",
       "fix": "Keep the claim in this pointer and in risks.idiosyncratic[0], where it is argued against the headline window. Elsewhere refer back in words ('the decline described in the risk section'). Consider using the rendered price history to date the fall, which would sharpen the point that it began after the pack's headline window closed.",
       "status": "addressed",
-      "note": "Fixed. '52-week' is down from eight fields to four: meta.subtitle, analystCommentary, the executive-summary pointer and risks.idiosyncratic[0] where it is argued, plus multiplesCommentary which now only states the range rather than the position in it. thesis.body, scenarioCommentary and finalRecommendation.body[1] no longer assert it."
+      "note": "The repetition is gone: '52-week' now appears once, in multiplesCommentary. The rewrite overcorrected, though, and no longer engages the post-spin decline the rendered price history shows. That is F-29."
     },
     {
       "id": "F-18",
@@ -184,7 +189,7 @@
       "issue": "'The pack' is a tic: it appears 25 times across 16 fields — analystCommentary (2), thesis.body (4), risks[0], balanceCommentary (2), cashflowCommentary, multiplesCommentary, scenarioCommentary, moatFactors[3], durability, leadership (2), capitalAllocation (2), governance, insiderOwnership, risks.idiosyncratic[0] (3), risks.idiosyncratic[4] and finalRecommendation.body[0]. The honesty about what is not disclosed is the right instinct and the reason the report works; the single phrase carrying it every time is past the point of notice, and it also puts the desk's internal vocabulary in front of the reader.",
       "fix": "Vary it and name the source when there is one — 'the 10-Q does not show', 'the proxy predates it', 'no post-spin balance sheet has been filed', 'nothing captured since July 2'. Keep 'the pack' for the two or three places where the absence of a source is itself the point.",
       "status": "addressed",
-      "note": "Fixed as asked: 'the pack' appears zero times, replaced by varied and source-named phrasing ('nothing captured after July 2', 'the second-quarter balance sheet is not among the captured excerpts', 'no post-spin balance sheet has been filed', 'in anything filed so far'). See F-20 for the residual pattern in the replacements."
+      "note": "Still holds: 'the pack' appears zero times. The replacement vocabulary is tracked in F-20."
     },
     {
       "id": "F-19",
@@ -194,7 +199,7 @@
       "issue": "Four fields sit close enough to their caps that the fixes above have little room: thesis.body 1320/1500 (88%), incomeCommentary 2163/2500 (87%), companyOverview 2142/2500 (86%) and capitalAllocation 1267/1500 (84%). Several Critical fixes — the organic growth correction in incomeCommentary, dropping 'most of' in companyOverview — add words rather than remove them.",
       "fix": "Recover space by cutting the repeated material named in F-10 through F-13 and F-17 before the fix round adds the corrections; the duplicated margin-path, 12.8%/19.0% and 52-week-range sentences are the cheapest to give back.",
       "status": "addressed",
-      "note": "The condition is cleared: every Critical and Important fix landed and every field is inside its cap. Three of the four named fields got shorter (thesis.body 88% to 85%, incomeCommentary 87% to 82%, capitalAllocation 84% to 83%). companyOverview went the other way, 86% to 91%, because it absorbed two Critical fixes. See F-21."
+      "note": "Still holds: thesis.body is at 55% of its cap, incomeCommentary 76%, companyOverview 59%, capitalAllocation 67%."
     },
     {
       "id": "F-20",
@@ -203,7 +208,8 @@
       "quote": "almost every trailing figure on this page describes the old company",
       "issue": "The replacement for 'the pack' has settled into two stock phrases doing the same job. 'On this page' appears seven times across six fields — analystCommentary, thesis.body (twice), multiplesCommentary, moatFactors[3], risks.idiosyncratic[3] and finalRecommendation.body[0] — and 'captured' ten times across ten fields. Three of the seven are the same sentence rebuilt: this one, thesis.body's 'Every trailing multiple on this page, the 7.8x P/E', and finalRecommendation.body[0]'s 'The trailing figures on this page describe a company that no longer exists.' The volume of not-disclosed-here locutions is unchanged from round 1; only the vocabulary moved, and it has already begun to repeat.",
       "fix": "Name the source or the absence directly where one exists — 'the vendor's snapshot', 'the FY25 tables', 'the 10-Q does not show', 'no post-spin balance sheet has been filed' — and reserve 'on this page' for the two or three places where what the reader can see rendered is itself the point. The trailing-figures claim is the report's thesis, so it can be stated once in analystCommentary and referred back to in the final recommendation rather than rebuilt a third time in thesis.body.",
-      "status": "open"
+      "status": "open",
+      "note": "Still open and worse on one count. 'On this page'/'on the page' is down to six uses in five fields, but 'captured' is up to 13 in 12 fields (e.g. 'in anything captured', 'among the captured excerpts', 'the captured sources'). Desk vocabulary has also reached the reader: companyOverview 'The Facts block's FY25 segment and geography splits' and incomeCommentary 'The Facts tables describe the pre-spin company'. Say 'the vendor's FY25 tables' or 'the five-year tables'."
     },
     {
       "id": "F-21",
@@ -212,6 +218,133 @@
       "quote": "and it measures a different quantity from the 10-Q's statement that international operations, including U.S. exports, represent more than half of sales",
       "issue": "companyOverview is now the tightest field on the page at 2277/2500 characters (91%), up from 86% in round 1, because it absorbed the F-2 and F-8 corrections. businessMoat.moatFactors[3] sits at 724/800 (90%), which is 76 characters of headroom, and moatFactors[2] at 690/800 (86%). Nothing material has been cut for space and every field is inside its cap, so this is a headroom observation rather than a breach — but these three fields have the least room left of anything on the page.",
       "fix": "Recover headroom in companyOverview by moving the second paragraph's vendor-chart translation toward the moat section, which already maps each legacy label to what remains; the first and third paragraphs carry the company description and the current segment shape and are the parts the executive summary needs. In moatFactors[3], 'that no five-year series on this page describes the company that exists' restates what the thesis and the financials section already establish and can be cut to a clause.",
+      "status": "addressed",
+      "note": "Fixed: companyOverview is at 1487/2500 (59%) and the old moatFactors[3] is gone. New headroom pressure in the segment bodies is F-35."
+    },
+    {
+      "id": "F-22",
+      "severity": "Critical",
+      "field": "sections.risks.idiosyncratic[3]",
+      "quote": "Apart from the September 14, 2026 quote, nothing captured is dated after July 2, 2026",
+      "issue": "False. July 2 is where the headline list ends, not the sources. The 10-Q MD&A, the risk factors, the earnings release and the call transcript are all dated July 23, 2026, the company description is dated September 14, 2026, and the report itself cites the July 17 Catalyst Technologies close and the July 23 guidance raise. The same claim appears in two more places. sections.executiveSummary.risks[4]: 'nothing captured after July 2, 2026 except the quote'. finalRecommendation.body[1]: 'anything that has happened since early July, which the captured sources do not cover'. The evidence-window argument, which is one of the report's main reasons for caution, therefore rests on a misdescription of what was read.",
+      "fix": "Say what is true: the headline list ends July 2, 2026, the latest company documents are the July 23 release, 10-Q and call, and apart from the September 14 quote nothing after July 23 was captured. Correct all three fields. In finalRecommendation.body[1], say 'since late July'.",
+      "status": "open"
+    },
+    {
+      "id": "F-23",
+      "severity": "Critical",
+      "field": "sections.risks.idiosyncratic[1]",
+      "quote": "Other expense carried approximately $0.7 billion of Aerospace Spin-Off costs in the quarter and approximately $0.9 billion year to date",
+      "issue": "Wrong quantity. The MD&A says 'Other income decreased due to... Higher divestiture-related costs related to the Aerospace Spin-Off of approximately $0.7 billion' ($0.9 billion year to date). That is the year-over-year increase in those costs, not the amount other expense carried. The same change-for-level swap appears in incomeCommentary: 'partly offset by $1.54 of divestiture-related costs'. The MD&A lists 'higher divestiture-related costs ($1.54 after tax)' as a driver of the change in EPS, not as the cost included in it.",
+      "fix": "Write it as the source does: Aerospace Spin-Off costs in other expense were approximately $0.7 billion higher than a year earlier ($0.9 billion higher year to date). Likewise, EPS rose on the $15.78 gain, partly offset by $1.54 of higher divestiture-related costs.",
+      "status": "open"
+    },
+    {
+      "id": "F-24",
+      "severity": "Critical",
+      "field": "sections.financials.cashflowCommentary",
+      "quote": "FY25 operating cash flow of $6.4B and free cash flow of $5.4B, a 14.4% margin, funded $3.8B of repurchases and $3.0B of dividends for a company that included Aerospace",
+      "issue": "The facts on the page do not support this causal claim. FY25 repurchases of $3.8B and dividends of $3.0B together exceed both operating cash flow of $6.4B and free cash flow of $5.4B, and total debt rose from $32.2B to $34.6B over FY25. The cash flow did not fund the payout on its own. This matters for the paragraph's point: the old company was already returning more than it generated, which makes the open payout question for the smaller company sharper, not merely a matter of scale.",
+      "fix": "Say the FY25 repurchases and dividends together exceeded free cash flow, in words and without computing a gap, and let that sharpen the payout question the capital-allocation section takes up.",
+      "status": "open"
+    },
+    {
+      "id": "F-25",
+      "severity": "Critical",
+      "field": "sections.risks.idiosyncratic[1]",
+      "quote": "Management's bridge assumes stranded costs go quickly; if they linger, the gap between operating and segment margin that the financials section shows stays open, and the guided margin expansion is the casualty.",
+      "issue": "This is a mechanism no source states, and it contradicts itself. incomeCommentary concedes that 'the captured release excerpt does not reconcile the two measures', so nothing says stranded costs sit in the gap between operating and segment margin. Management puts stranded-cost removal inside its segment-margin bridge. If those costs sit inside segment profit they cannot be what keeps the operating-to-segment gap open. If they sit in the gap, lingering costs would not hurt the guided segment margin. The paragraph also leads with spin-off costs in other expense, which the MD&A reports as a separate line. Consolidated segment profit ($2,240 million) exceeds operating income ($1,737 million) by less than those higher spin-off costs, so they are not inside the operating margin either. sections.executiveSummary.risks[2] carries the same link.",
+      "fix": "Keep the risk as management frames it: the segment-margin bridge assumes stranded costs go quickly, and if they linger the guided segment-margin expansion is exposed. Say separately that the sources do not show what sits between operating and segment margin. Drop the implied link from the executive-summary risk.",
+      "status": "open"
+    },
+    {
+      "id": "F-26",
+      "severity": "Important",
+      "field": "analystCommentary",
+      "quote": "Honeywell became a different company one day before the quarter closed.",
+      "issue": "The company places the spin-off after its second quarter. The release says Honeywell Aerospace 'successfully separated in a spin-off from Honeywell Technologies on June 29, 2026 (third quarter 2026)'. The MD&A says 'In the third quarter on June 29, 2026, the Company completed the Aerospace Spin-Off'. The 10-Q's tables are headed 'three months ended June 30', so the sources disagree on the calendar. The report silently picks the reading the company contradicts, and that obscures why the second quarter consolidates Aerospace in full. capitalAllocation's 'the quarter's dividends were paid before the spin-off' already relies on the company's reading.",
+      "fix": "Follow the company: the spin-off was completed on June 29, 2026, which the company counts as its third quarter, so the second-quarter results still consolidate Aerospace. If the June 30 heading is worth mentioning, say once that the company dates the spin-off to the third quarter.",
+      "status": "open"
+    },
+    {
+      "id": "F-27",
+      "severity": "Important",
+      "field": "sections.executiveSummary.catalysts[2]",
+      "quote": "The sale of Productivity Solutions and Services and Warehouse and Workflow Solutions, expected by early August per the release and already in guidance.",
+      "issue": "Stale fact presented as a forward catalyst. The report is dated September 15, 2026, six weeks after the expected close, and nothing in the sources confirms or denies that the sales closed. Three other fields present the July 23 expectation as current. companyOverview: 'businesses it agreed in April 2026 to sell'. segments[2]: 'held for sale'. leadership: 'two divestitures now expected about two months ahead of the initial planning assumption'.",
+      "fix": "Date it: as of July 23, 2026, management expected both sales to close by early August, and no later source confirms it. Replace the catalyst with the third-quarter filing confirming the close, or fold it into catalysts[1]. Change 'now expected' in leadership to the July 23 expectation.",
+      "status": "open"
+    },
+    {
+      "id": "F-28",
+      "severity": "Important",
+      "field": "sections.risks.systemic",
+      "quote": "currency swings and the ongoing conflict in the Middle East, with its effect on energy markets, trade flows and shipping",
+      "issue": "Wrong source. The paragraph opens 'The 10-Q's updated risk factors put macro and trade risk first' and then lists the Middle East conflict 'with its effect on energy markets, trade flows and shipping' among them. The risk-factor excerpt names regional conflicts and Russia and Ukraine, but not the Middle East. That phrasing comes from the MD&A's Macroeconomic Conditions section: 'ongoing conflict in the Middle East and its impact on energy markets, trade flows, and shipping'. The paragraph then credits the MD&A only with 'moderating global growth, elevated inflation and market volatility'. sections.executiveSummary.risks[3] repeats the attribution: 'Tariffs, the Middle East conflict and Russian obligations, all in the 10-Q's updated risk factors'.",
+      "fix": "Attribute the Middle East conflict and its effect on energy markets, trade flows and shipping to the MD&A, alongside the other macro items. In the executive-summary risk, say 'in the 10-Q' rather than 'all in the 10-Q's updated risk factors'.",
+      "status": "open"
+    },
+    {
+      "id": "F-29",
+      "severity": "Important",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "The price sits near the bottom of a 52-week range of $195.87 – $260.28, but that range spans the spin-off and the reverse split, so we do not read a trend from it.",
+      "issue": "The report no longer mentions the decline the page shows. The rendered price history runs from August 3 to September 14, 2026, entirely after the spin-off, the split and the July 23 results. It shows the shares falling steadily from the high $240s to $201.38, with no source explaining it. 'We do not read a trend' is true of the 52-week range but not of the post-spin series beside it. The fall also bears on the calls. The Base takes 'today's' 24.2x after that fall. Its 'independent check', the lowest Street target of $239.00, is close to where the shares traded in mid-August, and risks.idiosyncratic[3] concedes the targets 'may predate whatever has happened since'. The valuation section treats the check as clean.",
+      "fix": "Describe in words, without quoting closes that are not on the grounding surface, that the post-spin price history shows a steady fall through August into September that no source explains. In multiplesCommentary, say the Street targets used as the Base check may predate that fall. In scenarioCommentary, say whether the Bear's 25% already allows for it.",
+      "status": "open"
+    },
+    {
+      "id": "F-30",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[0].driver",
+      "quote": "The second-half inflection shows in shipments: Process Automation and Technology grows high single digits, segment margin exits 2026 above 22%",
+      "issue": "The Bull's operating path is management's guidance, which the Base already assumes. The CFO expects Process Automation and Technology 'to accelerate to high single digits in the second half'. Management expects to 'exit the year above 22% segment margin', and growth.points[4] reports that as management's expectation. The Base is 'Guidance is met'. So Bull and Base share an operating path and differ only in the multiple. Yet scenarioCommentary caps the Bull at 25% because 'it needs the inflection in shipments and a re-rating on top', a reason that applies just as much to the Base's guidance, which leans on the same inflection. The weights therefore do not follow from the scenarios as written.",
+      "fix": "Either give the Bull an operating path beyond guidance (e.g. guidance beaten, or FY27 EPS ahead of consensus) and argue its weight on that, or say plainly that Bull and Base share the guided path and differ only in the multiple, and argue the 25%/50% split on the re-rating alone. Make sure the Base's own driver says it needs the inflection.",
+      "status": "open"
+    },
+    {
+      "id": "F-31",
+      "severity": "Important",
+      "field": "sections.finalRecommendation.body[0]",
+      "quote": "The BUY rests on the market keeping today's current-year multiple as consensus earnings arrive; it is narrow, and the valuation section shows the judgments that move it.",
+      "issue": "This paraphrases analystCommentary almost line for line: 'It rests on the Base case, in which the market keeps paying today's current-year multiple a year from now as consensus FY27E earnings arrive, and the valuation section shows how little it takes to move the label.' thesis.body makes the same claim a third time ('If the market keeps paying the 24.2x current-year multiple it pays today as those earnings arrive... That is the Base case and the reason for the BUY'), and scenarioCommentary a fourth ('The Base anchor decides the label'; 'a judgment on the weights and the Base multiple'). 'Current-year multiple' appears eight times across seven fields.",
+      "fix": "Argue the anchor in the valuation section, where it already sits from both sides. State it once in the thesis. Have analystCommentary and the final recommendation point back in words (e.g. 'the Base multiple the valuation section argues') without restating the mechanism.",
+      "status": "open"
+    },
+    {
+      "id": "F-32",
+      "severity": "Important",
+      "field": "sections.businessMoat.segments[2].body",
+      "quote": "Industrial Automation now holds smart energy, thermal solutions, process measurement and control, and Sensing and Safety Technologies, plus the Productivity Solutions and Services and Warehouse and Workflow Solutions businesses held for sale",
+      "issue": "Cross-section paraphrase. companyOverview gives the same list: 'Industrial Automation holds the smart energy, thermal solutions and process measurement and control businesses and Sensing and Safety Technologies, plus the Productivity Solutions and Services and Warehouse and Workflow Solutions businesses'. The Process Automation and Technology composition (UOP plus the core of Process Solutions) is likewise told in both companyOverview and segments[3]. Building Automation's lead over the other two segments is stated four times: companyOverview ('more second-quarter sales and a higher segment margin than either of the other two'), segments[1] ('above both other segments''), moatFactors[1] ('above the other two segments'') and durability ('a margin and organic growth above the other two segments''). The leverage point is made twice: balanceCommentary ('It does not deepen the Bear multiple, because a P/E-based price already sits after interest costs') and scenarios[2].driver ('Leverage is not deducted again, because a P/E-based price already sits after interest').",
+      "fix": "Give segment composition once, in companyOverview, and have the segment bodies start from the quarter's figures. Rank Building Automation once (segments[1]) and let the moat factor and durability refer back. Keep the leverage sentence in the Bear driver only.",
+      "status": "open"
+    },
+    {
+      "id": "F-33",
+      "severity": "Minor",
+      "field": "sections.risks.idiosyncratic[0]",
+      "quote": "a full half of Catalyst Technologies",
+      "issue": "The acquisition closed on July 17, 2026, after the second half began, so the second half does not hold a full half of Catalyst Technologies. The release says guidance 'incorporates expected results for the acquisition... which closed on July 17, 2026'.",
+      "fix": "Say 'Catalyst Technologies from its July 17 close' or 'Catalyst Technologies' results, which guidance already includes'.",
+      "status": "open"
+    },
+    {
+      "id": "F-34",
+      "severity": "Minor",
+      "field": "sections.businessMoat.durability",
+      "quote": "Process Automation and Technology is cyclical by the 10-Q's own description",
+      "issue": "The 10-Q does not use the word. Its risk factor lists the exposures, customers' capital for refinery construction and oil and gas price volatility, and 'cyclical' is our reading of them. Attributing the label to the filing is mild over-attribution.",
+      "fix": "Say the segment is cyclical given the exposures the 10-Q's risk factor names.",
+      "status": "open"
+    },
+    {
+      "id": "F-35",
+      "severity": "Minor",
+      "field": "sections.businessMoat.segments[2].body",
+      "quote": "Management calls the program a turnaround; this segment is being fixed rather than carrying the franchise.",
+      "issue": "Headroom. segments[2].body is at 1146/1200 characters (96%), the tightest field on the page. segments[3].body is at 1062/1200 (89%) and segments[1].body at 1037/1200 (86%). F-27 needs to add dating to segments[2], so it has almost no room for the fix.",
+      "fix": "Cutting the composition list as F-32 asks recovers roughly 250 characters in segments[2] and a similar amount in segments[3]. Do that before adding the F-27 dating.",
       "status": "open"
     }
   ]

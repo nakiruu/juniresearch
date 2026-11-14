@@ -1,10 +1,15 @@
 {
-  "judgmentSha256": "fffe01a329bcec3344eb7f25fbbe560746bb9cb60762ff882e3f686eab100f35",
-  "inputs": {"scheme":1,"facts":"6fb333e11f88df27eaf53946bfd197ff0652a52d68dd5c64be3b7ffc06b7830d","calls":"836eba1c36e68c57170dfac2caad63417b23494c3df2bf589594329a4dcc15df","context":"508e2bdf130d879e5c9f459bc695005b20fd847faea8a12170f67e439dfc1446","source":"backfill:5d9f1e3"},
-  "reviewedAt": "2026-09-15T10:02:52Z",
-  "reviewer": "claude-opus-5",
+  "judgmentSha256": "2ae747a4bf4cb377f80ca788a3947968090d4b66e79c8c33bfcaed72a7d1726c",
+  "inputs": {
+    "scheme": 1,
+    "facts": "6fb333e11f88df27eaf53946bfd197ff0652a52d68dd5c64be3b7ffc06b7830d",
+    "calls": "652ab6e8d7a3925f2a5cd0ac2f1331a34831ddc06ba00db697e59a58e6cebb0c",
+    "context": "508e2bdf130d879e5c9f459bc695005b20fd847faea8a12170f67e439dfc1446"
+  },
+  "reviewedAt": "2026-10-08T20:34:11Z",
+  "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "approved",
+  "verdict": "needs-fix-round",
   "findings": [
     {
       "id": "F-1",
@@ -76,7 +81,8 @@
       "quote": "the early-July sell-off showed the multiple reacts to satellite headlines before any churn appears",
       "issue": "The same sentence is made three times in different words - 'shows the multiple responds to satellite headlines before any subscriber impact is visible' (executiveSummary.risks[0]), 'showed that the multiple can move on satellite headlines before any operating data confirms them' (valuation.scenarioCommentary), and this one. The early-July sell-off is invoked in five fields and 'satellite' appears in thirteen, including the subtitle. This is the paraphrase case the rubric asks the reviewer to catch, not a mechanical duplicate the lint would flag.",
       "fix": "Make the claim once, in sections.risks.idiosyncratic[0], where the mechanism and the metric to watch belong. Cut the restatement from scenarioCommentary and finalRecommendation.body[1] - the Bear scenario and the HOLD both already rest on it - and reduce executiveSummary.risks[0] to a pointer at the risk section.",
-      "status": "addressed"
+      "status": "open",
+      "note": "Reopened on the rewrite. The quoted sentence is gone but the same claim is now made in six fields: risks.idiosyncratic[0] ('before any churn appears'), scenarioCommentary (same phrase, verbatim), businessMoat.durability, multiplesCommentary, analystCommentary and finalRecommendation.body[1]. The last two also state as fact that satellite 'moved the shares'; that causal link is Morningstar's headline. Argue it once in risks.idiosyncratic[0]; elsewhere point back in words."
     },
     {
       "id": "F-9",
@@ -238,8 +244,8 @@
       "quote": "Related-person transactions require Governance and Policy Committee approval under a written policy",
       "issue": "The field runs 1,401 characters against a 1,500 cap - 93% full, leaving 99 characters of room. Three findings above ask for changes inside this field (the related-party relationship re-described, the strategic component's N/A attainment separated, the proxy dated), and none of them fit in what is left. Every other long field in the report sits at 76% of cap or below.",
       "fix": "Make room before the fix round: the say-on-pay sentence and the short-term plan breakdown can shed the payout percentages that carry no argument, and the three-metric long-term table can be cut to the two findings the section actually reasons from - the 0.6% EPS CAGR paying 128%, and the third-quartile TSR paying nothing.",
-      "status": "addressed",
-      "note": "Addressed. management.governance came down from 1,484/1,500 (98.9%) to 1,381/1,500 (92.1%), and businessMoat.moatFactors[0].body from 799/800 (99.9%) to 701/800 (87.6%). No field now sits above 92.1% of its cap, and the three governance edits this finding was blocking (F-16, F-17, F-19) all landed. Noting for the record that governance is still the tightest field at 119 characters of headroom."
+      "status": "open",
+      "note": "Reopened. management.governance is back up to 1,436/1,500 characters (95.7%), tighter than when this was addressed (1,381). It is the only field above 90% of its cap. No current finding needs room there, but trim before the next round, e.g. the short-term plan's per-metric payout percentages that carry no argument."
     },
     {
       "id": "F-27",
@@ -257,7 +263,8 @@
       "quote": "The EchoStar spectrum purchase lifts net leverage to a post-close peak",
       "issue": "The fix for F-6 traded a repeated figure for a repeated phrase. Seven verbatim cross-section duplicates now sit in the draft, four of them created by this rewrite: this string is identical in analystCommentary and executiveSummary.thesis.body; 'the post-close leverage peak and the multi-year... set out in the balance-sheet section' is near-identical in management.capitalAllocation and risks.idiosyncratic[1]; 'partially offset by promotional discounts on new subscribers' is identical in businessMoat.durability and businessMoat.segments[0].body; and 'including over 4 million acquired from Lumen' is identical in executiveSummary.catalysts[2] and businessMoat.durability. Three more survive from round 1: 'our probability-weighted value sits modestly above' (analystCommentary, finalRecommendation.body[1]), 'absorb essentially 100% of the free cash flow' (thesis.body, cashflowCommentary) and 'up from $0.2B in FY24 per the vendor table' (cashflowCommentary, management.capitalAllocation).",
       "fix": "Vary the back-reference instead of standardising it. balanceCommentary already declares that every later mention of the leverage peak means its sequence, so the later fields need only a short nod - 'the leverage peak', 'the deleveraging window' - and not the same eight-word clause twice. For the promotional-discount language, let segments[0] quote the 10-Q and have durability refer to it. For the three round-1 survivors, keep each phrase in the section that argues it and refer back in words elsewhere.",
-      "status": "addressed"
+      "status": "open",
+      "note": "Reopened on the rewrite. The figures now sit only in balanceCommentary, but the paired claim (net leverage rises after EchoStar while dividends and buybacks absorb the guided FCF) is restated in analystCommentary, thesis.body, executiveSummary.risks[2], balanceCommentary, multiplesCommentary and finalRecommendation.body[1]. 'while net leverage rises after the EchoStar purchase' is verbatim in thesis.body and finalRecommendation.body[1]. Keep it in balanceCommentary and capitalAllocation; elsewhere point back in words."
     },
     {
       "id": "F-29",
@@ -276,6 +283,69 @@
       "issue": "The pack evidences an AT&T move, not a sector one. Both Morningstar headlines are AT&T-specific - 'SpaceX panic sends AT&T stock to its worst week in years' and 'AT&T on Pace for Worst Week Since March 2020' - and no other telecom issuer appears anywhere in the Facts or Context blocks. 'Telecom shares' asserts a sector re-pricing the sources do not show. The section behind this bullet gets it right, saying 'AT&T's shares were on pace for their worst week since March 2020', so the generalisation is introduced only in the pointer. valuation.multiplesCommentary carries the same scope in forward-looking form ('satellite competition can compress telecom multiples on headlines alone'). Raised at this round rather than earlier - the wording has been present since round 1 and I did not catch it.",
       "fix": "Narrow the pointer to what the headlines support: SpaceX headlines hit AT&T's shares in early July 2026. The multiplesCommentary line can stay as written, since it is an explicit forward-looking claim about what satellite competition can do to the group's multiples rather than a report of what happened, but if the desk wants the sector framing in the executive summary it needs a source covering more than one issuer.",
       "status": "addressed"
+    },
+    {
+      "id": "F-31",
+      "severity": "Critical",
+      "field": "sections.financials.cashflowCommentary",
+      "quote": "That is below the FY21 level of $25.4B but above FY23's $20.5B and FY24's $18.5B",
+      "issue": "Misreads the series. The cash flow table gives FY25 free cash flow of $19.4B and FY23 of $20.5B, so FY25 is below FY23, not above it. Only FY24 ($18.5B) and FY22 ($12.4B) sit below FY25. This is a statement of fact the surface contradicts, in the paragraph a reader uses to judge whether the FY25 cash flow that funds the dividend and buyback is high or low for this company.",
+      "fix": "Restate the comparison so it matches the table: FY25 free cash flow of $19.4B sits below FY21's $25.4B and FY23's $20.5B and above FY24's $18.5B, with the FY22 trough at $12.4B. Then say what that means: FY25 free cash flow is in the middle of the five-year range, not at a high.",
+      "status": "open"
+    },
+    {
+      "id": "F-32",
+      "severity": "Important",
+      "field": "sections.executiveSummary.thesis.body",
+      "quote": "a re-rating needs earnings ahead of consensus or evidence that satellite entrants are not raising churn",
+      "issue": "Two problems. (1) The second trigger contradicts the page's own math and is already met. scenarioCommentary says BUY 'means earnings ahead of consensus' and that swapping the Bull and Bear weights still leaves E far short of BUY. Removing the satellite risk only takes weight out of the Bear, and on these scenarios that does not reach the BUY line. The report also says postpaid phone churn was lower in the quarter and no operating figure shows satellite taking share, so the evidence asked for is already on the page. (2) Triggers belong once, in the final recommendation. This one is stated here, again in scenarioCommentary ('which means earnings ahead of consensus') and again in finalRecommendation.body[2].",
+      "fix": "Delete the trigger from thesis.body and end the paragraph on the HOLD and its reason. Keep the upgrade and downgrade triggers only in finalRecommendation.body[2], which already ties BUY to earnings ahead of the FY27E consensus. Do not name a churn-based upgrade trigger unless the scenarios show that it moves the label.",
+      "status": "open"
+    },
+    {
+      "id": "F-33",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary",
+      "quote": "The Bull carries 20%, less than the Bear, because management's own timetable returns leverage to its target range only within approximately three years of the EchoStar closing, so a year out the ratio will still sit near its step-up.",
+      "issue": "The Bull weight is argued on something outside the Bull case. The Bull driver is AC growth at guidance, FY27E consensus holding and the 2028 path looking on track, rerated to 12x. Nothing in it depends on leverage. The same paragraph says the Bear is not deepened for debt because 'a price set on earnings is already after interest', and the leverage argument here contradicts that. 'A year out the ratio will still sit near its step-up' is also the desk's inference stated as fact. Management gives only the 3.2 times range after closing and a return to about 2.5x within approximately three years, not the path in between. The Bear's 25% has a similar gap: it rests on a one-week price reaction rather than on how likely adjusted EPS is to stall at the bottom of 2026 guidance.",
+      "fix": "Argue each weight on its own scenario. For the Bull, say how likely the market is to pay above today's current-year multiple on the FY27E consensus, using evidence on the page: the Street's Hold consensus, the median target and the double-digit adjusted-EPS CAGR guide. For the Bear, argue how likely it is that adjusted EPS stalls at $2.25, against Q2 adjusted EPS of $0.65 versus $0.54 and the reiterated range. If leverage stays as a reason, hedge it as the desk's reading and say why the market would cap the multiple on it. Pick the weights the argument supports; do not aim at a label.",
+      "status": "open"
+    },
+    {
+      "id": "F-34",
+      "severity": "Important",
+      "field": "sections.financials.cashflowCommentary",
+      "quote": "notes that the quarter benefited from $0.3 billion of cash received from DIRECTV, net of related tax payments",
+      "issue": "The cash-flow section lists figures but never reaches a view. Paragraph 1 recites the five-year table, paragraph 2 recites the release's quarter, and paragraph 3 recites the guidance. The reader is told FCF rose to $4.7 billion from $4.4 billion and beat the range, and separately that the quarter benefited from $0.3 billion of DIRECTV cash, lower cash taxes and working-capital timing. The report never says what those items mean for the quality of the beat or for the $18 billion+ full-year guide. The third paragraph of balanceCommentary has the same problem: cash of $18.2B against $3.3B, the current ratios and the equity path, with no reading.",
+      "fix": "Close each paragraph on a view. For cash flow, say whether the beat rests on recurring operations or on items the release names as one-off or timing (the DIRECTV receipt, working-capital timing). Note that the pack gives no prior-year DIRECTV figure, so do not compute the underlying change. For the balance-sheet paragraph, say what the FY25 cash build and the sub-1 current ratio mean for liquidity through the EchoStar payment, without attaching a motive the pack does not state (see F-5).",
+      "status": "open"
+    },
+    {
+      "id": "F-35",
+      "severity": "Important",
+      "field": "sections.finalRecommendation.body[1]",
+      "quote": "The 2026 free cash flow guidance is committed to dividends and buybacks while net leverage rises after the EchoStar purchase, convergence is diluting fiber ARPU, and the satellite question has moved the shares without yet showing up in churn. The dividend pays investors to wait.",
+      "issue": "This paragraph re-runs analystCommentary's closing paragraph item by item: leverage and payout ('while dividends and buybacks are planned to absorb the guided free cash flow'), 'convergence is diluting fiber ARPU' (verbatim in both), and the satellite question that 'moved the shares'. The closing line repeats thesis.body's 'the income pays investors to wait', and analystCommentary already says 'The return case rests on income more than on price.' The same three-reason case is made in three fields, and the dividend line in three.",
+      "fix": "Let analystCommentary state the three reasons once. Rewrite finalRecommendation.body[1] to argue the label from the calls (what the weighted value and Bear downside mean for a holder) and refer to the reasons in a few words ('the three constraints set out above'). Keep the dividend point in one place only.",
+      "status": "open"
+    },
+    {
+      "id": "F-36",
+      "severity": "Important",
+      "field": "sections.executiveSummary.catalysts[4]",
+      "quote": "Sale of a controlling interest in Forged Fiber to an equity partner that would co-invest in the acquired Lumen network.",
+      "issue": "The Forged Fiber sale is stated three times: companyOverview ('plans to sell a controlling interest to an equity partner'), this catalyst, and management.capitalAllocation ('a controlling interest in the acquired network is to be sold to an equity partner'). This catalyst restates the overview inside the same executive summary and points nowhere. There are two smaller paraphrase repeats. The interest-expense driver ('on higher debt balances and interest rates') appears in both financials.incomeCommentary and risks.idiosyncratic[1]. scenarioCommentary paragraph 1 restates each scenario driver's stated basis for its multiple (Bull: 'what the guided path to 2028 earns'; Base: the median-target reasoning; Bear: the stall).",
+      "fix": "Cut the catalyst to a pointer ('the planned Forged Fiber sale; the capital-allocation section sets out what it would bring') and drop the sale clause from companyOverview, keeping only that the assets are reported as discontinued operations. In risks.idiosyncratic[1], refer to the interest-expense rise without restating its cause. In scenarioCommentary, say once that each driver states its basis, and do not re-describe them.",
+      "status": "open"
+    },
+    {
+      "id": "F-37",
+      "severity": "Minor",
+      "field": "sections.businessMoat.segments[5].body",
+      "quote": "The 10-Q reports equipment revenue separately, at $5,581 million for the second quarter; it fell in Advanced Connectivity on lower hardware sales to business customers, offset by higher wireless device sales volumes.",
+      "issue": "$5,581 million is consolidated equipment revenue, which rose 0.5% in the quarter. The decline was in Advanced Connectivity's equipment line ($5,137 million, down 0.5%). Read quickly, the sentence attaches the fall to the $5,581 million figure.",
+      "fix": "Name the consolidated figure as consolidated and keep the decline with its segment: consolidated equipment revenue was $5,581 million, while Advanced Connectivity equipment revenue fell on lower hardware sales to business customers, offset by higher wireless device sales volumes.",
+      "status": "open"
     }
   ]
 }

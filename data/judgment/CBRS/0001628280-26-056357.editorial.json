@@ -1,10 +1,10 @@
 {
-  "judgmentSha256": "4e0d64f38af27118fa9ec997d4bdda34e1fe551b63e572cf8c7de298517c873d",
-  "inputs": {"scheme":1,"facts":"2bdacfcf966a7b0ab8668f8c53829192608a210089b900dda228550e7304b49b","calls":"836eba1c36e68c57170dfac2caad63417b23494c3df2bf589594329a4dcc15df","context":"7c8659a57ca226210ca2cba7bf3f87e52b3f474c97b8e110ce4971b558b63d82","source":"backfill:38a8eb4"},
-  "reviewedAt": "2026-09-15T18:45:00Z",
-  "reviewer": "claude-opus-4-8",
+  "judgmentSha256": "c0202bfe3f25e15818a84af6a020a2b08282dcc50443578a6bb21d131e6156d3",
+  "inputs": {"scheme":1,"facts":"2bdacfcf966a7b0ab8668f8c53829192608a210089b900dda228550e7304b49b","calls":"652ab6e8d7a3925f2a5cd0ac2f1331a34831ddc06ba00db697e59a58e6cebb0c","context":"7c8659a57ca226210ca2cba7bf3f87e52b3f474c97b8e110ce4971b558b63d82"},
+  "reviewedAt": "2026-10-08T20:35:00Z",
+  "reviewer": "claude-opus-5-5",
   "round": 2,
-  "verdict": "approved-with-minors",
+  "verdict": "needs-fix-round",
   "findings": [
     {
       "id": "F-1",
@@ -14,7 +14,7 @@
       "issue": "The negative total equity (-$0.6B at FY25) is on the grounding surface, but the explanation for it is not. Nothing in the Facts block, the MD&A, the risk factors or the transcript mentions convertible preferred stock, let alone that it is 'carried as a liability.' The FactPack balance sheet exposes only cash, total debt, net debt, total equity and current ratio. This is an invented accounting characterisation of a document the pack does not carry (rubric 2).",
       "fix": "Drop the convertible-preferred-as-liability explanation. State the negative equity as observed (-$0.6B at FY25) and, if a cause is offered, limit it to what the surface supports (accumulated losses / a pre-IPO capital structure the post-IPO balance sheet will reshape), without asserting a specific classification the pack does not disclose.",
       "status": "addressed",
-      "note": "Fixed. The clause now reads 'a feature of the pre-IPO capital structure rather than a sign of insolvency given the net cash position; after the May 2026 IPO that structure looks different.' The invented convertible-preferred-as-liability characterisation is gone; what remains is a defensible, surface-consistent framing (all years shown are pre-IPO)."
+      "note": "Still fixed in the rewrite. balanceCommentary now reads 'Total equity was negative in every year shown, -$0.6B at FY25. The page does not explain it, and the figure predates the IPO, so we give it little weight.' No invented cause."
     },
     {
       "id": "F-2",
@@ -24,7 +24,7 @@
       "issue": "The figures ($209.9M, up 103%) are sourced, but attributing the entire $29.8M core-vs-GAAP gap solely to warrant amortization is unsupported. The transcript states the core-to-GAAP reconciliation is in the earnings release / website, which the pack did not capture. The author's own thesis says core figures 'strip out non-cash warrant and pass-through effects' (two effects); the MD&A says pass-through revenue 'is not part of our core' - so the gap cannot be only warrant amortization. This is an inference the source does not make (rubric 2) and it contradicts the thesis.",
       "fix": "Say the gap reflects the company's core adjustments (warrant-amortization add-back and pass-through treatment) rather than claiming it is entirely warrant amortization, and note the full reconciliation is not in the pack.",
       "status": "addressed",
-      "note": "Fixed. Now reads 'the gap reflects the adjustments management makes to reach its core figures, chiefly the non-cash amortization of customer warrants and the pass-through data-center amounts it removes from reported revenue.' Both MD&A-named effects are cited and the wording is appropriately hedged; consistent with the thesis."
+      "note": "Still fixed. The rewrite no longer explains the core-to-GAAP gap at all; it quotes the core figures and says 'The earnings release that reconciles them to GAAP was not captured.'"
     },
     {
       "id": "F-3",
@@ -34,7 +34,7 @@
       "issue": "The series on the surface does not support 'hovered around zero.' The Facts cash-flow table shows operating cash flow of 0.5 ($B) in FY24 (FactPack: $451.98M), alongside -0.2, -0.1 and -0.0 in the other years. FY24 at roughly +$452M is nowhere near zero, so the characterisation misstates the series the reader can see (rubric 2 / rubric 1).",
       "fix": "Reword to reflect the actual range, acknowledging FY24's materially positive operating cash flow (~$452M / 0.5 $B) and the near-zero FY25 figure, before drawing the 'burn is investment, not operating collapse' conclusion.",
       "status": "addressed",
-      "note": "Fixed. Now reads 'Operating cash flow has been erratic, a $0.5B inflow in FY24 against outflows in the other years shown,' which matches the Facts cash-flow table."
+      "note": "Still fixed. Now reads 'Operating cash flow was a small outflow in FY25. FY24 was the exception, with a $0.5B operating inflow and an FCF margin of 147.6%. The page does not explain that inflow, and we do not treat it as a run rate.' Matches the table."
     },
     {
       "id": "F-4",
@@ -43,8 +43,8 @@
       "quote": "FY25 capital expenditure was $382.7 million and free cash flow was -$392.8 million, and the company raised fresh equity in its May 2026 IPO to fund the build-out",
       "issue": "Both figures were already introduced and sized one section earlier in financials.cashflowCommentary ('Free cash flow was negative $392.8 million in FY25 ... and capital expenditure was $382.7 million'). House style is to introduce each figure once and refer back in words; re-citing the identical capex and FCF numbers here is a repetition/pointer defect (rubric 7). The risks section handles the same figures correctly ('negative free cash flow, which the cash-flow section sizes').",
       "fix": "Refer back in words rather than re-quoting the numbers, e.g. 'the capital expenditure and free-cash-flow outflow the cash-flow section sizes,' keeping the capital-allocation point (equity-funded build-out) intact.",
-      "status": "addressed",
-      "note": "Fixed. capitalAllocation now refers back in words ('at the capital-expenditure and free-cash-flow levels the cash-flow section sizes') and no longer re-quotes the $382.7M / -$392.8M figures."
+      "status": "open",
+      "note": "Regressed in the rewrite. The original sentence is gone, but capitalAllocation again re-quotes the capex figure and retells cashflowCommentary's claim ('The pattern is spending ahead of contracted revenue'): 'Capital goes into capacity ahead of revenue: capex of $382.7M in FY25, a manufacturing ramp and data-center contracts.' Point back to the cash-flow section in words and keep only the funding and dilution argument here."
     },
     {
       "id": "F-5",
@@ -54,7 +54,7 @@
       "issue": "Two problems. (1) The temporal anchor is unsupported: the pack carries no 'initial post-IPO results' event, and the only post-IPO results captured are the Q2 10-Q filed 2026-08-12 - after the investigation headlines, which are dated 2026-06-30 to 2026-07-02. So the investigations did not follow reported results (rubric 2). (2) The sourced fact carries no date, only a vague 'in the weeks after' (rubric 3, honest dating).",
       "fix": "Date the investigations (late June to early July 2026, per the headlines) and anchor them to the post-IPO share-price decline, which is on the surface (52-week high $386.34 down to $184.03), rather than to earnings 'results' the pack does not show preceding them.",
       "status": "addressed",
-      "note": "Fixed. Now reads 'In late June and early July 2026, multiple law firms announced securities-fraud investigations into the company ... such investigations often follow a volatile new listing.' The investigations are dated per the headlines and the false earnings-results anchor is removed."
+      "note": "Still fixed. risks.idiosyncratic[2] now reads 'Between June 30 and July 2, 2026, several law firms announced investigations of possible securities-law violations on behalf of shareholders. None of the headlines reports a filed claim or an amount.' Dated per the headlines; no results anchor."
     },
     {
       "id": "F-6",
@@ -64,7 +64,7 @@
       "issue": "The transcript supplies the first names Andrew and Bob (Andrew opens; 'I'll turn things over to Bob,' who presents the financials) but never states their titles. Assigning the CEO and CFO labels is an inference the pack does not establish (rubric 2 / house rule that every claim rests on a quoted fact).",
       "fix": "Refer to them as the earnings-call speakers by the names the transcript uses, without asserting the specific CEO/CFO titles, or omit the titles.",
       "status": "addressed",
-      "note": "Fixed. The names and the CEO/CFO titles are removed; the sentence now reads 'On the earnings call, management frames 2026 as a foundation-building year.' (But see F-9: a different unsupported leadership characterisation was introduced in the same field.)"
+      "note": "Still fixed. leadership names no one: 'The pack carries no proxy statement, so this report names no executives and makes no claim on their tenure, pay or ownership.'"
     },
     {
       "id": "F-7",
@@ -74,17 +74,17 @@
       "issue": "This self-referential sentence restates meta the report header already renders (fiscalYearEnd) and, on the built report, contradicts it: cbrs.json meta.reportDate renders as 'September 16, 2026' while the prose asserts September 15, 2026, so the reader sees a mismatched date (rubric 9/10, plus a visible inconsistency).",
       "fix": "Remove the report-date/fiscal-year sentence from the overview prose; the header carries both. If a date is kept, align it with the rendered report date.",
       "status": "addressed",
-      "note": "Now fully addressed. The trailing 'The fiscal year ends in late December.' sentence flagged in round 1 has been removed from companyOverview; the section no longer restates the report date or the fiscal-year-end (both now live only in the header/meta). No 'September 15' remains in the prose."
+      "note": "Still fixed. companyOverview carries no report date or fiscal-year-end sentence."
     },
     {
       "id": "F-8",
       "severity": "Important",
       "field": "sections.financials.balanceCommentary (also sections.management.capitalAllocation)",
       "quote": "The IPO in May 2026 added materially to that cash, and the company funds its build-out with equity rather than borrowing.",
-      "issue": "The 'rather than borrowing' characterisation is contradicted by the grounding surface, and it recurs in capitalAllocation ('raised fresh equity in its May 2026 IPO to fund the build-out rather than taking on meaningful debt'). The FY25 balance sheet shows total debt of $261.8M (up from zero in FY22-FY24) - which the author quotes one sentence earlier in the same paragraph - and the MD&A discloses 'a working capital loan of approximately $1.0 billion (the Working Capital Loan) in January 2026,' referenced to 'Note 10 - Debt' and repaid via non-cash service credits. A ~$1.0B loan is meaningful debt, so the claim that the company funds itself without borrowing / without meaningful debt is unsupported and self-contradicting (rubric 2). The net-cash position itself (net debt -$439.9M) is correct and supported.",
+      "issue": "The 'rather than borrowing' characterisation is contradicted by the grounding surface, and it recurs in capitalAllocation ('raised fresh equity in its May 2026 IPO to fund the build-out rather than taking on meaningful debt'). The FY25 balance sheet shows total debt of $261.8M (up from zero in FY22-FY24) - which the author quotes one sentence earlier in the same paragraph - and the MD&A discloses 'a working capital loan of approximately $1.0 billion (the Working Capital Loan) in January 2026,' referenced to 'Note 10 - Debt' and repaid via non-cash service credits. A ~$1.0B loan is meaningful debt, so the claim that the company funds itself without borrowing / without meaningful debt is unsupported and self-contradicting (rubric 2).",
       "fix": "Drop or qualify the 'rather than borrowing' / 'rather than taking on meaningful debt' phrasing in both fields. Keep the supported point that the balance sheet is net cash and equity (the IPO) is the primary funding source, while acknowledging the disclosed borrowing - $261.8M of FY25 total debt and the ~$1.0 billion OpenAI-linked Working Capital Loan (Note 10 - Debt) repaid via non-cash service credits.",
       "status": "addressed",
-      "note": "Fixed in both fields. balanceCommentary now reads 'funds its build-out mainly with equity, alongside a roughly $1.0 billion working capital loan drawn in January 2026 that it repays with non-cash service credits'; capitalAllocation now reads 'the borrowing it does carry, including the working capital loan tied to the OpenAI arrangement, is repaid largely in service credits.' The 'rather than borrowing' / 'rather than taking on meaningful debt' phrasing is gone and the disclosed loan is acknowledged."
+      "note": "Still fixed. balanceCommentary describes the January 2026 working capital loan and its repayment in service credits; capitalAllocation says the build-out 'is funded by IPO equity, the OpenAI working capital loan and customer commitments.' No 'rather than borrowing' claim remains."
     },
     {
       "id": "F-9",
@@ -93,6 +93,106 @@
       "quote": "Cerebras is led by the founding management team that built it from 2015 and took it public in May 2026.",
       "issue": "The grounding surface establishes only that the company 'was established in 2015' (Context company description). Nothing in the Facts or Context blocks names a founder, a 'founding management team,' any CEO/CFO, or management tenure - the transcript speakers 'Andrew' and 'Bob' appear with no role and no founder status (a scan of the description, MD&A, risk factors and transcript returns zero hits for founder/founding/CEO/led-by/management team). Asserting the current leadership is the 'founding management team' that 'built it from 2015' is an inference the source invites but does not make (rubric 2). It is the same class of unsupported leadership characterisation that F-6 removed, reintroduced in the same field.",
       "fix": "Drop 'founding' and 'that built it from 2015.' State only what the surface supports, e.g. 'Cerebras, established in 2015, went public in May 2026, and on the earnings call management frames 2026 as a foundation-building year,' without asserting that the leadership founded the company or has led it since 2015.",
+      "status": "addressed",
+      "note": "Fixed. The 'founding management team that built it from 2015' sentence is gone; leadership now opens 'The pack carries no proxy statement, so this report names no executives and makes no claim on their tenure, pay or ownership.' No founder or tenure claim remains anywhere in the judgment."
+    },
+    {
+      "id": "F-10",
+      "severity": "Critical",
+      "field": "sections.growth.points[3]",
+      "quote": "Outside OpenAI and the hyperscalers, it signed six deals north of $30 million in Q2 and named new customers including Figma, Cognition, Lovable, Block, AlphaSense, GSK and CrowdStrike. None of this is in the RPO yet, so it adds to growth but not to visibility.",
+      "issue": "Two unsupported claims (rubric 2). (1) 'None of this is in the RPO yet': the transcript says only that the $25 billion RPO 'does not reflect any backlog of business from AWS or any other hyperscaler.' It says nothing about whether the six deals signed in Q2, or the Figma, Cognition, Lovable, Block, AlphaSense, GSK and CrowdStrike agreements, sit in the June 30, 2026 RPO; deals signed in the quarter could well be in it. The conclusion 'adds to growth but not to visibility' rests on that unsupported premise. (2) 'new customers': the transcript says the company 'signed new agreements' with Figma and Cognition, 'extended our presence in Europe with a major win at Lovable', that Block, AlphaSense and GSK 'signed new agreements', and calls CrowdStrike a 'recent win'. A new agreement is not the same as a new customer, and the source does not say these are first-time customers.",
+      "fix": "Limit the RPO statement to what the transcript says: AWS and the other hyperscalers are not in the RPO, so the Bedrock launch and mid-2027 hyperscaler revenue would add to growth but not to today's visibility. Do not say whether the Q2 deals are in the RPO. Describe the named companies as companies that signed new agreements or wins in Q2, not as new customers.",
+      "status": "open"
+    },
+    {
+      "id": "F-11",
+      "severity": "Important",
+      "field": "sections.valuation.scenarios[1].driver (also scenarios[2].driver)",
+      "quote": "a year from now the shares trade at 140x the consensus FY27E EPS, a multiple we set a little below today's forward multiple on the same EPS",
+      "issue": "The Base and Bear multiples are not on one basis (rubric 6; desk lesson 'compare multiples on one basis'). Today's 148.4x prices FY27E EPS that is more than a year ahead. In the Base, 'a year from now' FY27 is the current year, so 140x is a current-year multiple, not a forward one. The Bear ('the FY27E EPS arrives in 2028 instead of 2027. The market pays 90x for it, well below today's forward multiple') prices the same $1.24 a year out while it is still more than a year ahead, which is a forward multiple. Measured on the same horizon, and given management's claim that growth 'continue[s] at multiples' after 2027, the Base's implied forward multiple a year out could sit below the Bear's 90x. That contradicts the Bear's own reasoning that a slip lowers the forward multiple. The 90x also has nothing a reader can check behind its size; only its direction is argued. The label does not move on reasonable changes (it stays HOLD across the ranges the scenario commentary tests), but the scenario story is internally inconsistent.",
+      "fix": "Put both scenarios on one horizon and say which. For example, price both today on the $1.24 as the first full profit year: the Base at a forward multiple a little below 148.4x, and the Bear at a lower multiple because the same EPS now sits a year further out and the growth claim is weaker. Or keep 'a year from now' and say plainly that the Base's 140x is then a current-year multiple, and argue why it still exceeds the Bear's. Either way, tie the size of the 90x to something on the page in words, such as its relation to today's 148.4x, not only its direction. Do not tune either multiple to the SELL line.",
+      "status": "open"
+    },
+    {
+      "id": "F-12",
+      "severity": "Important",
+      "field": "meta.subtitle",
+      "quote": "fairly priced, with more room to fall than to rise",
+      "issue": "The subtitle contradicts the report's own calls (rubric 6). The Bull case ($300.50, the consensus target, +63.3%) sits further above the price than the Bear ($111.6, -39.4%) sits below it, the two are weighted equally at 25%, and expected upside E is +3.1%. On the page's numbers there is more room to rise than to fall. The thesis's real point is different: 'the upside needs two things to go right and the downside needs only one to go wrong', which is about likelihood, not room.",
+      "fix": "Restate the subtitle in line with the thesis. For example: fairly priced, with an upside that needs a re-rating on top of delivery and a downside that needs only a slip. Keep it within the cap.",
+      "status": "open"
+    },
+    {
+      "id": "F-13",
+      "severity": "Important",
+      "field": "sections.financials.balanceCommentary",
+      "quote": "At the end of FY25 Cerebras held $1.1B of cash and short-term investments against total debt of $261.8M, for net debt of -$439.9M, a net cash position.",
+      "issue": "Two figures on the page disagree and the report silently joins them (rubric 8, with rubric 1 on the implied derivation). 'For net debt of' tells the reader that -$439.9M is cash and short-term investments less total debt, but $1.1B less $261.8M gives a far larger net cash figure than $439.9M. The page's net-debt row evidently nets debt against a narrower cash measure than the 'Cash & ST Investments' row. A reader checking the arithmetic finds it does not add up, and the report does not say which measure it relies on.",
+      "fix": "Say once that the page's net-debt row (-$439.9M) is smaller than cash and short-term investments less total debt would give, so it appears to count cash alone. State which figure the report relies on, and note that the company is net cash on either measure. Do not compute a new net-cash figure.",
+      "status": "open"
+    },
+    {
+      "id": "F-14",
+      "severity": "Important",
+      "field": "sections.valuation.scenarioCommentary (also analystCommentary)",
+      "quote": "For delivery: the capacity, wafer and manufacturing commitments the growth and moat sections describe are already in place",
+      "issue": "The surface does not support 'wafer and manufacturing commitments' (rubric 2). Data-center capacity is under contract (more than 600 megawatts 'either live now or will be delivered by the end of 2027'). For wafers, management says only that 'we have the wafers needed'. For manufacturing, it says capacity is 4 times its first-half-2025 level and expected to grow more than 10x in 2026. The risk factors say 'substantially all of our manufacturing services and components are procured on a purchase order basis without capacity or volume commitments', and the moat section says so too. The same paragraph then says 'the supply terms the moat section describes carry no capacity guarantees', so it contradicts itself. This sentence is the main evidence for the delivery weight. Related: analystCommentary says 'management says it has secured the wafers, the manufacturing and part of the data-center capacity'. Management describes manufacturing as being scaled up, not secured.",
+      "fix": "Call only the data-center capacity contracted. Describe wafer supply as management's statement that it has the wafers it needs, and manufacturing as a ramp in progress (on purchase orders, without volume commitments). In analystCommentary, replace 'secured ... the manufacturing' with the ramp management describes.",
+      "status": "open"
+    },
+    {
+      "id": "F-15",
+      "severity": "Important",
+      "field": "financials.incomeCommentary, cashflowCommentary; valuation.multiplesCommentary, scenarioCommentary; management.leadership; analystCommentary; finalRecommendation.body[0]; growth.points",
+      "quote": "Management expects lower-cost Cerebras-owned systems in new data centers to lift margins from Q4 2026.",
+      "issue": "The same claim is made in several places (rubric 7):\n(1) The Q4 2026 owned-capacity margin step-up is argued in incomeCommentary ('A Q4 step-up as owned data centers come online is the test of that claim'), retold in cashflowCommentary (quoted above) and retold again in management.leadership ('which makes Q4 2026 a fair test of its forecasting').\n(2) The call's closeness to SELL is stated three times: analystCommentary 'The call is closer to SELL than to BUY.', scenarioCommentary 'The call is close to SELL and far from BUY.' and finalRecommendation.body[0] 'the call sits nearer SELL than BUY.'\n(3) The uncaptured reconciliation appears in incomeCommentary ('The earnings release that reconciles them to GAAP was not captured.') and again in multiplesCommentary ('the core-to-GAAP reconciliation sits in a release the pack did not capture').\n(4) The RPO's lack of hyperscaler business appears in growth.points[0] and again in growth.points[3].",
+      "fix": "Argue each claim once and point back in words elsewhere:\n- The Q4 test belongs in incomeCommentary. Cut the restatement from cashflowCommentary and leadership.\n- The closeness to SELL is sized in scenarioCommentary. The other two fields should state the label without re-arguing the margin.\n- The reconciliation gap belongs in incomeCommentary, with multiplesCommentary pointing back.\n- Keep the hyperscaler-RPO point in growth.points[0] only.",
+      "status": "open"
+    },
+    {
+      "id": "F-16",
+      "severity": "Minor",
+      "field": "sections.finalRecommendation.body[1]",
+      "quote": "We would move to SELL if the price rose by less than a tenth from here on unchanged scenarios",
+      "issue": "Ambiguous trigger. Read literally, it says any rise under 10% triggers SELL, which is wrong: a small rise still derives HOLD. On unchanged scenarios the page's math reaches the -5.0% SELL line only after a rise of a little under a tenth from $184.03. The intended meaning is right, but the wording points the reader to the wrong flip point.",
+      "fix": "Reword so the trigger is the flip point, for example 'if the price rose by a little under a tenth from here on unchanged scenarios'. Do not introduce a computed price.",
+      "status": "open"
+    },
+    {
+      "id": "F-17",
+      "severity": "Minor",
+      "field": "sections.valuation.multiplesCommentary",
+      "quote": "a vendor NTM P/E of -353.9x all reflect negative earnings. The vendor's P/S is 61.2x. FY26E is a consensus loss of $0.52 per share, so there is no current-year P/E.",
+      "issue": "The vendor's 'NTM' P/E of -353.9x matches $184.03 over the FY26E consensus loss of $0.52. In effect it is the current-year multiple, not a separate next-twelve-month one. Quoting it as NTM and then saying 'there is no current-year P/E' misdescribes it (rubric 8; desk lesson that a vendor NTM multiple is often a current-year multiple).",
+      "fix": "Say once that the vendor's NTM P/E matches the price over the FY26E loss, so it is the current-year figure, and that it is not meaningful because it is negative. Then move to FY27E as the first profit year.",
+      "status": "open"
+    },
+    {
+      "id": "F-18",
+      "severity": "Minor",
+      "field": "sections.businessMoat.segments[0].body",
+      "quote": "Management describes two revenue streams the page does not split",
+      "issue": "The page does split the two streams on management's core basis for Q2: core cloud and other services revenue of $127.7 million and core hardware revenue of $82.1 million. growth.points[1] quotes both. What the page lacks is a GAAP or full-year split. As written, the sentence contradicts the growth section.",
+      "fix": "Say the page carries no GAAP split of the two streams, only management's Q2 core split, which the growth section gives.",
+      "status": "open"
+    },
+    {
+      "id": "F-19",
+      "severity": "Minor",
+      "field": "sections.executiveSummary.thesis.body (also finalRecommendation.body[0])",
+      "quote": "We rate the shares HOLD because the backlog and the net cash make a collapse unlikely.",
+      "issue": "Honest dating (rubric 3). The net cash position is the FY25 year-end figure (net debt -$439.9M). It predates the January 2026 working capital loan of about $1.0 billion and the May 2026 IPO, and the page carries no June 30, 2026 debt figure. The thesis and finalRecommendation.body[0] ('Cerebras has the contracted backlog, the net cash') present it as current and undated, although balanceCommentary dates it correctly.",
+      "fix": "Date it where it carries the argument, e.g. 'the net cash at the FY25 year end', or point to the balance-sheet section's reading of post-IPO liquidity.",
+      "status": "open"
+    },
+    {
+      "id": "F-20",
+      "severity": "Minor",
+      "field": "sections.financials.incomeCommentary",
+      "quote": "The MD&A says stock compensation for awards that vested with the IPO, including the Executive Grants for the CTO, began to be recognized in Q2 2026.",
+      "issue": "The MD&A does not say the awards vested with the IPO. It says the 'liquidity-based vesting condition was satisfied in connection with the IPO on May 13, 2026' and that expense recognition began in Q2 2026. Satisfying one vesting condition is not the same as vesting. The sentence attributes to the MD&A a fact it does not state.",
+      "fix": "Use the MD&A's wording: awards whose liquidity-based vesting condition was satisfied in connection with the IPO.",
       "status": "open"
     }
   ]
