@@ -82,7 +82,17 @@ try {
     if ((err as NodeJS.ErrnoException)?.code !== "ENOENT") throw err;
   }
 
-  sec = parseCompanyFacts(merged);
+  // The SIC decides whether operating income may be derived from pretax income (never for a financial filer).
+  // Older captures carry none in edgar-filing.json (it was stamped on the pack later), so the pack is the fallback.
+  let sic: number | null = null;
+  for (const file of [join(captureDir, "edgar-filing.json"), join("data", "facts", ticker, `${accession}.json`)]) {
+    try {
+      sic ??= (JSON.parse(readFileSync(file, "utf8")) as { sic?: number | null }).sic ?? null;
+    } catch (err) {
+      if ((err as NodeJS.ErrnoException)?.code !== "ENOENT") throw err;
+    }
+  }
+  sec = parseCompanyFacts(merged, { sic });
 } catch (err) {
   const message = err instanceof Error ? err.message : String(err);
   throw new Error(`SEC data for ${ticker}: ${message}`);

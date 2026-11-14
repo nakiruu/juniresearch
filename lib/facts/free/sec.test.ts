@@ -921,3 +921,141 @@ describe("capex — PaymentsToAcquireMachineryAndEquipment is the lowest-priorit
     expect(CAPEX_RAW.at(-1)).toBe("PaymentsToAcquireMachineryAndEquipment");
   });
 });
+
+// TJX, SOLS and CSTM show no operating subtotal on the income statement and tag no NonoperatingIncomeExpense
+// total, so tiers one and two read null. Values are the FY2025 (TJX: FY2026) face lines, in $M.
+describe("operating income — third tier from pretax income (2026-11-13)", () => {
+  const y = (val: number) => ({ start: "2025-01-01", end: "2025-12-31", val, form: "10-K", fp: "FY", filed: "2026-02-20" });
+  const parse = (concepts: Record<string, number>, sic: number | null = 5651) =>
+    parseCompanyFacts(
+      { facts: { "us-gaap": Object.fromEntries(Object.entries({ NetIncomeLoss: 100, ...concepts }).map(([c, v]) => [c, { units: { USD: [y(v)] } }])) } },
+      { sic },
+    ).annual[0];
+  const PRETAX = "IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest";
+
+  it("subtracts net interest income (TJX: 7,299 − 121 = revenue − cost of sales − SG&A)", () => {
+    const p = parse({ RevenueFromContractWithCustomerIncludingAssessedTax: 60_372, CostOfGoodsAndServicesSold: 41_679, [PRETAX]: 7_299, InterestRevenueExpenseNet: 121, InterestExpense: 79 });
+    expect(p.operating_income).toBe(7_178);
+    expect(p.operating_income).toBe(60_372 - 41_679 - 11_515);
+  });
+  it("adds back interest expense and takes out other nonoperating income (SOLS: 647 + 28 − 60)", () => {
+    const p = parse({ RevenueFromContractWithCustomerExcludingAssessedTax: 3_886, [PRETAX]: 647, InterestExpenseNonoperating: 28, OtherNonoperatingIncomeExpense: 60 });
+    expect(p.operating_income).toBe(615);
+  });
+  it("prefers the face interest line over the debt-note line (CSTM: 408 + 109, not + 102)", () => {
+    const p = parse({ RevenueFromContractWithCustomerExcludingAssessedTax: 8_449, [PRETAX]: 408, InterestAndDebtExpense: 109, InterestExpenseDebt: 102 });
+    expect(p.operating_income).toBe(517);
+    expect(p.interest_expense).toBe(102); // the interest-coverage denominator keeps its own order
+  });
+  it("stays null on a single-step statement, where other income sits inside revenue (XOM, CVX)", () => {
+    const p = parse({ Revenues: 332_238, CostsAndExpenses: 290_970, [PRETAX]: 41_268, InterestExpense: 603 });
+    expect(p.operating_income).toBeNull();
+  });
+  it("stays null for a bank-like filer, whose interest expense is a funding cost (CFG, SCHW)", () => {
+    const p = parse({ Revenues: 8_000, [PRETAX]: 2_000, InterestExpense: 1_300, InterestIncomeExpenseNet: 6_000 });
+    expect(p.operating_income).toBeNull();
+  });
+  it("stays null when no interest line is tagged: pretax income alone is not operating income", () => {
+    expect(parse({ Revenues: 1_000, [PRETAX]: 100 }).operating_income).toBeNull();
+  });
+  it("stays null when equity-method income is tagged: XBRL cannot place it above or below the operating line (HASI)", () => {
+    // pretax 273.5 + funding-cost interest 292.4 would read 565.9 on revenue of 400.5
+    const p = parse({ Revenues: 400.5, [PRETAX]: 273.5, InterestExpense: 292.4, IncomeLossFromEquityMethodInvestments: 300.7 });
+    expect(p.operating_income).toBeNull();
+    expect(p.ebitda).toBeNull();
+  });
+  it("stays null when the result is larger than revenue or gross profit", () => {
+    expect(parse({ Revenues: 400.5, [PRETAX]: 273.5, InterestExpense: 292.4 }).operating_income).toBeNull();
+    expect(parse({ Revenues: 1_000, CostOfRevenue: 900, [PRETAX]: 90, InterestExpense: 20 }).operating_income).toBeNull(); // 110 > gross profit 100
+  });
+  it("stays null for a lender with no bank tags, and when the SIC is unknown: interest may be a funding cost", () => {
+    const lender = { Revenues: 1_000, [PRETAX]: 200, InterestExpense: 300 };
+    expect(parse(lender).operating_income).toBe(500); // what an industrial SIC would read
+    expect(parse(lender, 6159).operating_income).toBeNull();
+    expect(parse(lender, 6799).operating_income).toBeNull();
+    expect(parse(lender, null).operating_income).toBeNull();
+  });
+  it("never overrides the first two tiers", () => {
+    expect(parse({ Revenues: 1_000, [PRETAX]: 100, InterestExpense: 10, OperatingIncomeLoss: 150 }).operating_income).toBe(150);
+    expect(parse({ Revenues: 1_000, [PRETAX]: 100, InterestExpense: 10, NonoperatingIncomeExpense: -30 }).operating_income).toBe(130);
+  });
+
+  // The method is the filer's, not the period's: a fiscal year and its quarters must not mix methods, because
+  // Q4 is derived as FY − (Q1 + Q2 + Q3).
+  const period = (start: string, end: string, form: string, filed: string) => (val: number) => ({ start, end, val, form, fp: form === "10-K" ? "FY" : "Q", filed });
+  const FY = period("2025-01-01", "2025-12-31", "10-K", "2026-02-20");
+  const QS = [period("2025-01-01", "2025-03-31", "10-Q", "2025-05-01"), period("2025-04-01", "2025-06-30", "10-Q", "2025-08-01"), period("2025-07-01", "2025-09-30", "10-Q", "2025-11-01")];
+  const filer = (concepts: Record<string, { fy?: number; q?: (number | null)[] }>) =>
+    parseCompanyFacts(
+      {
+        facts: {
+          "us-gaap": Object.fromEntries(
+            Object.entries(concepts).map(([c, v]) => [
+              c,
+              { units: { USD: [...(v.fy != null ? [FY(v.fy)] : []), ...(v.q ?? []).flatMap((x, k) => (x == null ? [] : [QS[k](x)]))] } },
+            ]),
+          ),
+        },
+      },
+      { sic: 3350 },
+    );
+  const base = { Revenues: { fy: 4_000, q: [1_000, 1_000, 1_000] }, NetIncomeLoss: { fy: 400, q: [100, 100, 100] }, [PRETAX]: { fy: 500, q: [120, 130, 125] } };
+  const oi = (r: ReturnType<typeof filer>) => ({ fy: r.annual[0].operating_income, q: r.quarter.filter((x) => x.fiscal_year === 2025).map((x) => x.operating_income) });
+
+  it("derives every quarter and Q4 on one method when the filer tags the same lines throughout", () => {
+    const r = oi(filer({ ...base, InterestExpense: { fy: 40, q: [10, 10, 10] } }));
+    expect(r.fy).toBe(540);
+    expect(r.q).toEqual([130, 140, 135, 135]);
+  });
+  it("uses one interest concept for the filer: the face line the 10-Qs carry, not a 10-K-only note line", () => {
+    const r = oi(filer({ ...base, [PRETAX]: { fy: 400, q: [100, 100, 100] }, InterestExpense: { fy: 120 }, InterestExpenseNonoperating: { fy: 100, q: [25, 25, 25] } }));
+    expect(r.fy).toBe(500);
+    expect(r.q).toEqual([125, 125, 125, 125]);
+  });
+  it("follows a renamed interest tag: the old concept's longer history does not blank or overwrite the latest years", () => {
+    const yr = (year: number, val: number) => ({ start: `${year}-01-01`, end: `${year}-12-31`, val, form: "10-K", fp: "FY", filed: `${year + 1}-02-20` });
+    const years = [2019, 2020, 2021, 2022, 2023, 2024, 2025];
+    const series = (ys: number[], val: number) => ({ units: { USD: ys.map((year) => yr(year, val)) } });
+    const renamed = (oldYears: number[]) =>
+      parseCompanyFacts(
+        {
+          facts: {
+            "us-gaap": {
+              Revenues: series(years, 4_000), NetIncomeLoss: series(years, 400), [PRETAX]: series(years, 400),
+              InterestExpense: series(oldYears, 140), // the old face tag, later only a note line
+              InterestExpenseNonoperating: { units: { USD: [yr(2024, 100), yr(2025, 100), ...QS.map((q) => q(25))] } },
+            },
+          },
+        },
+        { sic: 3350 },
+      ).annual;
+    const at = (rows: ReturnType<typeof renamed>, year: number) => rows.find((p) => p.fiscal_year === year)!.operating_income;
+    const dropped = renamed([2019, 2020, 2021, 2022, 2023]); // old tag stops at the rename
+    expect(at(dropped, 2025)).toBe(500);
+    expect(at(dropped, 2024)).toBe(500);
+    expect(at(dropped, 2023)).toBeNull(); // the current line is not tagged that far back
+    const kept = renamed(years); // old tag carries on in the 10-K note at 140
+    expect(at(kept, 2025)).toBe(500);
+  });
+  it("leaves a quarter null, and so Q4, when it lacks the line the filer's method needs", () => {
+    // the 10-K tags the net interest line, the 10-Qs only gross interest expense: net in FY, nothing comparable in the quarters
+    const r = oi(filer({ ...base, InterestRevenueExpenseNet: { fy: 20 }, InterestExpense: { fy: 40, q: [10, 10, 10] } }));
+    expect(r.fy).toBe(480);
+    expect(r.q.every((x) => x == null)).toBe(true);
+  });
+  it("does not fill a period the first two tiers leave null for a filer that tags them elsewhere (DOW)", () => {
+    const r = oi(filer({ ...base, InterestExpense: { fy: 40, q: [10, 10, 10] }, NonoperatingIncomeExpense: { fy: -40, q: [-10, null, -10] } }));
+    expect(r.fy).toBe(540);
+    expect(r.q[0]).toBe(130);
+    expect(r.q[1]).toBeNull();
+    expect(r.q[3]).toBeNull();
+  });
+  it("blocks the whole filer when any period is single-step, even one outside the latest years (XOM)", () => {
+    const r = filer({
+      Revenues: { fy: 4_000, q: [1_000, 1_000, 1_000] }, NetIncomeLoss: { fy: 400, q: [100, 100, 100] }, [PRETAX]: { fy: 500, q: [120, 130, 125] },
+      InterestExpense: { fy: 40, q: [10, 10, 10] }, CostsAndExpenses: { q: [880] }, // only Q1 reconciles: 1,000 − 880 = 120
+    });
+    expect(oi(r).fy).toBeNull();
+    expect(oi(r).q.every((x) => x == null)).toBe(true);
+  });
+});

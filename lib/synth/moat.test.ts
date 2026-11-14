@@ -12,6 +12,7 @@ import {
   moatApplicable,
   moatBearFloor,
   moatRead,
+  usableYears,
   type MoatFacts,
 } from "./moat";
 
@@ -216,5 +217,102 @@ describe("structural break — spin-off (revenue drop + restated history) vs cyc
     const m = moatRead(shape(undefined), { wacc: 0.08 });
     expect(m.comparableFrom).toBe(0);
     expect(m.flags.some((f) => f.startsWith("structural break"))).toBe(false);
+  });
+});
+
+describe("missing inputs are gaps, not zeros", () => {
+  const rows = (key: string, values: (number | null)[]) => ({ key, label: key, values });
+  const steady = (grossProfit: (number | null)[] | null): MoatFacts => ({
+    ticker: "GAP", sic: 3559,
+    quote: { marketCap: 20000 }, ttm: { interestCoverage: 20 },
+    statements: {
+      fiscalYears: ["FY21", "FY22", "FY23", "FY24", "FY25"],
+      income: [
+        rows("operatingIncome", [200, 210, 220, 230, 240]),
+        rows("revenue", [1000, 1050, 1100, 1150, 1200]),
+        ...(grossProfit ? [rows("grossProfit", grossProfit)] : []),
+      ],
+      balance: [rows("totalEquity", [900, 910, 920, 930, 940]), rows("totalDebt", [100, 100, 100, 100, 100]), rows("cashAndInvestments", [50, 50, 50, 50, 50])],
+      cashflow: [rows("freeCashFlow", [150, 155, 160, 165, 170])],
+    },
+  });
+  it("a missing latest-year gross profit is not read as a margin collapse", () => {
+    const full = moatRead(steady([450, 473, 495, 518, 540]), { wacc: 0.08 });
+    const gap = moatRead(steady([450, 473, 495, 518, null]), { wacc: 0.08 });
+    expect(gap.width).toBe(full.width);
+    expect(gap.trend).toBe(full.trend);
+  });
+  it("a filer with no gross profit row keeps a WIDE read from its returns and says the margin test was neutral", () => {
+    const m = moatRead(steady(null), { wacc: 0.08 });
+    expect(m.width).toBe("WIDE");
+    expect(m.flags.some((f) => /gross margin not reported/.test(f))).toBe(true);
+  });
+
+  const withRow = (section: "income" | "balance", key: string, values: (number | null)[] | null): MoatFacts => {
+    const f = steady([450, 473, 495, 518, 540]);
+    const others = f.statements[section].filter((r) => r.key !== key);
+    return { ...f, statements: { ...f.statements, [section]: values ? [...others, rows(key, values)] : others } };
+  };
+  it("abstains when no fiscal year reports operating income, instead of reading a 0% ROIC as NONE", () => {
+    const a = moatApplicable(withRow("income", "operatingIncome", null));
+    expect(a.ok).toBe(false);
+    expect(a.reason).toMatch(/insufficient data: 0 of 5 fiscal years report operatingIncome/);
+  });
+  it("drops the years without operating income and reads the rest", () => {
+    const f = withRow("income", "operatingIncome", [null, 210, 220, 230, 240]);
+    expect(moatApplicable(f).ok).toBe(true);
+    const m = moatRead(f, { wacc: 0.08 });
+    expect(m.roic).toHaveLength(4);
+    expect(m.flags).toContain("dropped FY21 (no operatingIncome)");
+    expect(m.width).toBe("WIDE");
+  });
+  it("abstains when the drops leave fewer than three years", () => {
+    expect(moatApplicable(withRow("income", "operatingIncome", [null, null, null, 230, 240])).ok).toBe(false);
+  });
+  it("reads an untagged debt year as a year without debt, whether or not other years carry debt", () => {
+    expect(usableYears(withRow("balance", "totalDebt", null)).dropped).toEqual([]);
+    expect(usableYears(withRow("balance", "totalDebt", [null, null, null, 100, null])).dropped).toEqual([]);
+  });
+  it("keeps a year without cash and says so: zero cash understates ROIC, dropping the latest years hides them (NVT)", () => {
+    const holes = withRow("balance", "cashAndInvestments", [50, 50, 50, null, null]);
+    expect(usableYears(holes).dropped).toEqual([]);
+    const m = moatRead(holes, { wacc: 0.08 });
+    expect(m.roic).toHaveLength(5);
+    expect(m.flags).toContain("cash not reported for FY24, FY25 — invested capital overstated, ROIC understated");
+    expect(m.roic[4]).toBeLessThan(moatRead(steady([450, 473, 495, 518, 540]), { wacc: 0.08 }).roic[4]);
+  });
+  it("a cash gap in a cash-rich filer is not read as an invested-capital jump", () => {
+    const rich = (cash: (number | null)[]): MoatFacts => {
+      const f = withRow("balance", "cashAndInvestments", cash);
+      return { ...f, statements: { ...f.statements, balance: f.statements.balance.map((r) => (r.key === "totalDebt" ? rows("totalDebt", [0, 0, 0, 0, 0]) : r)) } };
+    };
+    for (const gap of [[600, 610, 620, 630, null], [600, 610, null, 630, 640]]) {
+      const m = moatRead(rich(gap), { wacc: 0.08 });
+      expect(m.comparableFrom).toBe(0);
+      expect(m.flags.some((x) => x.startsWith("structural break"))).toBe(false);
+    }
+    // the middle gap reads like the full series; the latest-year gap would cut the latest ROIC, so it abstains
+    expect(moatApplicable(rich([600, 610, null, 630, 640])).ok).toBe(true);
+    expect(moatRead(rich([600, 610, null, 630, 640]), { wacc: 0.08 }).trend).toBe(moatRead(rich([600, 610, 620, 630, 640]), { wacc: 0.08 }).trend);
+    const latest = moatApplicable(rich([600, 610, 620, 630, null]));
+    expect(latest.ok).toBe(false);
+    expect(latest.reason).toBe("insufficient data: latest fiscal year reports no cash, which was 68% of debt + equity in FY24");
+  });
+  it("still reads a filer whose missing latest-year cash is a small share of capital (NVT)", () => {
+    expect(moatApplicable(withRow("balance", "cashAndInvestments", [50, 50, 50, null, null])).ok).toBe(true); // 50 of 1,020
+    expect(moatApplicable(withRow("balance", "cashAndInvestments", null)).ok).toBe(true); // never reported: nothing to compare
+  });
+  it("an unrelated cash gap does not hide a real invested-capital break", () => {
+    // cash funds an acquisition in FY24: invested capital more than doubles between two years that both report cash
+    const f = withRow("balance", "cashAndInvestments", [null, 700, 700, 100, 100]);
+    expect(moatRead(f, { wacc: 0.08 }).comparableFrom).toBe(3);
+  });
+  it("abstains when the latest fiscal year is the one that cannot be read", () => {
+    const a = moatApplicable(withRow("income", "operatingIncome", [200, 210, 220, 230, null]));
+    expect(a.ok).toBe(false);
+  });
+  it("keeps the goodwill series aligned to the years that survive", () => {
+    const f = { ...withRow("income", "operatingIncome", [null, 210, 220, 230, 240]), goodwill: [1, 2, 3, 4, 5] };
+    expect(usableYears(f).facts.goodwill).toEqual([2, 3, 4, 5]);
   });
 });

@@ -63,10 +63,63 @@ export interface MoatResult {
 }
 
 const num = (x: number | null | undefined): x is number => x != null && Number.isFinite(x);
-const val = (section: Row[], key: string, i: number): number => {
+const raw = (section: Row[], key: string, i: number): number | null => {
   const v = section.find((r) => r.key === key)?.values[i];
-  return num(v) ? v : 0;
+  return num(v) ? v : null;
 };
+const val = (section: Row[], key: string, i: number): number => raw(section, key, i) ?? 0;
+
+/** The four statement rows ROIC is built from. */
+export type RoicInput = "operatingIncome" | "totalEquity" | "totalDebt" | "cashAndInvestments";
+const ROIC_INPUTS: { key: RoicInput; section: "income" | "balance" }[] = [
+  { key: "operatingIncome", section: "income" },
+  { key: "totalEquity", section: "balance" },
+  { key: "totalDebt", section: "balance" },
+  { key: "cashAndInvestments", section: "balance" },
+];
+
+/**
+ * What a missing ROIC input does to its fiscal year: "zero" reads the gap as a true zero and keeps
+ * the year, "drop" removes the year from every moat test.
+ */
+export function gapAction(key: RoicInput): "zero" | "drop" {
+  // No honest zero exists for the numerator or for equity.
+  if (key === "operatingIncome" || key === "totalEquity") return "drop";
+  // An untagged debt year is almost always a year without debt (MNST, PLTR, TER tag debt in one year of
+  // five), and dropping those years left one or two and a made-up NONE. Zero can only overstate ROIC.
+  // No company has zero cash, but cash is a small part of invested capital and zero can only understate
+  // ROIC, while dropping NVT's two cash-less years threw away its latest margins. moatRead flags it.
+  return "zero";
+}
+
+/**
+ * The fiscal years the moat tests may use: a year is dropped when gapAction drops any of its missing
+ * ROIC inputs, and the remaining gaps are left for val() to read as zero. Returns the pack narrowed
+ * to those years (rows and goodwill stay aligned) and the years that were dropped, with the reason.
+ */
+export function usableYears(f: MoatFacts): { facts: MoatFacts; dropped: { fiscalYear: string; missing: RoicInput[] }[] } {
+  const dropped: { fiscalYear: string; missing: RoicInput[] }[] = [];
+  const keep: number[] = [];
+  f.statements.fiscalYears.forEach((fiscalYear, i) => {
+    const missing = ROIC_INPUTS.filter(({ key, section }) => {
+      if (raw(f.statements[section], key, i) != null) return false;
+      return gapAction(key) === "drop";
+    }).map((r) => r.key);
+    if (missing.length) dropped.push({ fiscalYear, missing });
+    else keep.push(i);
+  });
+  if (!dropped.length) return { facts: f, dropped };
+  const pick = <T,>(xs: T[]): T[] => keep.map((i) => xs[i]);
+  const rows = (section: Row[]): Row[] => section.map((r) => ({ ...r, values: pick(r.values) }));
+  return {
+    facts: {
+      ...f,
+      goodwill: f.goodwill ? pick(f.goodwill) : f.goodwill,
+      statements: { fiscalYears: pick(f.statements.fiscalYears), income: rows(f.statements.income), balance: rows(f.statements.balance), cashflow: rows(f.statements.cashflow) },
+    },
+    dropped,
+  };
+}
 
 /** NOPAT / invested capital per fiscal year; invested capital = debt + equity − cash. */
 export function roicSeries(f: MoatFacts, taxRate: number): number[] {
@@ -144,10 +197,14 @@ export function sectorHurdle(sic: number | null | undefined): number {
   return 0.1; // industrial default
 }
 
-/** First comparable index: a year whose invested capital jumped > 50% marks a break; drop what precedes it. */
-export function comparableWindow(ic: number[]): number {
+/**
+ * First comparable index: a year whose invested capital jumped > 50% marks a break; drop what precedes it.
+ * A pair with a year in `unreliable` is not tested: a cash value read as zero moves invested capital by itself.
+ */
+export function comparableWindow(ic: number[], unreliable: boolean[] = []): number {
   let start = 0;
   for (let i = 1; i < ic.length; i++) {
+    if (unreliable[i] || unreliable[i - 1]) continue;
     if (ic[i - 1] !== 0 && Math.abs(ic[i] - ic[i - 1]) / Math.abs(ic[i - 1]) > 0.5) start = i;
   }
   return start;
@@ -163,6 +220,9 @@ export function incrementalRoic(f: MoatFacts, taxRate: number, from: number): nu
   return dIc !== 0 ? (nopat(n) - nopat(from)) / dIc : null;
 }
 
+/** Above this share of debt + equity, a missing latest-year cash value moves ROIC too far to read as zero (NVT's is about 4%). */
+const LATEST_CASH_MATERIAL = 0.1;
+
 /** A reverse ROIC-based moat read only fits operating companies; banks need ROTCE vs cost of equity. */
 export function moatApplicable(f: MoatFacts): { ok: boolean; reason: string | null } {
   const sector = classifySector(f);
@@ -171,6 +231,28 @@ export function moatApplicable(f: MoatFacts): { ok: boolean; reason: string | nu
   // ROIC−WACC spread reads NONE/eroding when the reality is a stable regulatory monopoly. The
   // ROIC−WACC method measures COMPETITIVE excess returns, which a regulated utility does not have.
   if (sector === "utility") return { ok: false, reason: "utility: regulated returns are not competitive excess returns (ROIC ≈ allowed return)" };
+  // Too few fiscal years carry every ROIC input, or the latest one does not: a zero ROIC, one or two surviving
+  // years, or a read that stops before the latest year would pass for a verdict.
+  const { facts, dropped } = usableYears(f);
+  const latest = f.statements.fiscalYears[f.statements.fiscalYears.length - 1];
+  if (dropped.length && (facts.statements.fiscalYears.length < 3 || dropped.some((d) => d.fiscalYear === latest))) {
+    const missing = [...new Set(dropped.flatMap((d) => d.missing))].join(", ");
+    return { ok: false, reason: `insufficient data: ${facts.statements.fiscalYears.length} of ${f.statements.fiscalYears.length} fiscal years report ${missing}` };
+  }
+  // The latest year's cash is missing and the last reported cash was a material share of capital: reading it
+  // as zero would cut the latest ROIC and set the trend (a net-cash filer read 9% against 21%, and ERODING).
+  const bal = facts.statements.balance;
+  const n = facts.statements.fiscalYears.length - 1;
+  if (raw(bal, "cashAndInvestments", n) == null) {
+    for (let j = n - 1; j >= 0; j--) {
+      const cash = raw(bal, "cashAndInvestments", j);
+      if (cash == null) continue;
+      const capital = val(bal, "totalDebt", j) + val(bal, "totalEquity", j);
+      if (capital > 0 && cash / capital > LATEST_CASH_MATERIAL)
+        return { ok: false, reason: `insufficient data: latest fiscal year reports no cash, which was ${Math.round((cash / capital) * 100)}% of debt + equity in ${facts.statements.fiscalYears[j]}` };
+      break;
+    }
+  }
   return { ok: true, reason: null };
 }
 
@@ -190,12 +272,17 @@ const median = (xs: number[]): number => {
   return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
 };
 
-export function moatRead(f: MoatFacts, cfg: MoatConfig = {}): MoatResult {
+export function moatRead(pack: MoatFacts, cfg: MoatConfig = {}): MoatResult {
   const taxRate = cfg.taxRate ?? 0.21;
   const macro = { riskFree: cfg.riskFree ?? MACRO.riskFree, erp: cfg.erp ?? MACRO.erp, taxRate };
-  const wacc = cfg.wacc ?? buildWacc(f, macro);
-  const b = betaFor(f);
+  const wacc = cfg.wacc ?? buildWacc(pack, macro); // the latest year's debt, whether or not that year is usable below
+  const b = betaFor(pack);
   const flags: string[] = [`WACC ${(wacc * 100).toFixed(1)}% (build-up, β≈${b.beta}${b.source === "sic" ? " sector proxy" : " measured"})`, `tax rate assumed ${(taxRate * 100).toFixed(0)}%`];
+  // Every test below runs on the usable years only, so `roic` and `spread` align to those years.
+  const { facts: f, dropped } = usableYears(pack);
+  if (dropped.length) flags.push(`dropped ${dropped.map((d) => `${d.fiscalYear} (no ${d.missing.join(", ")})`).join("; ")}`);
+  const noCash = f.statements.fiscalYears.filter((_, i) => raw(f.statements.balance, "cashAndInvestments", i) == null);
+  if (noCash.length) flags.push(`cash not reported for ${noCash.join(", ")} — invested capital overstated, ROIC understated`);
 
   const roic = roicSeries(f, taxRate);
   const spread = roic.map((r) => r - wacc);
@@ -204,7 +291,10 @@ export function moatRead(f: MoatFacts, cfg: MoatConfig = {}): MoatResult {
   // (a > 20% revenue drop in a pack whose history a later 10-K restated — portfolioBreakIndex, the reverse
   // DCF's own test, so both engines drop the same pre-spin years; DD's Qnity spin halved revenue but moved
   // invested capital < 50%). A cyclical revenue collapse with no restatement is evidence, not a break.
-  const icBreak = comparableWindow(ic);
+  // A cash year read as zero looks like an invested-capital jump for a cash-rich filer, so the break test skips
+  // the pairs that touch one. A filer that never reports cash is on one basis throughout and is tested in full.
+  const everCash = noCash.length < f.statements.fiscalYears.length;
+  const icBreak = comparableWindow(ic, f.statements.fiscalYears.map((fy) => everCash && noCash.includes(fy)));
   const revBreak = Math.max(0, portfolioBreakIndex(f));
   const from = Math.max(icBreak, revBreak);
   if (from > 0)
@@ -238,15 +328,18 @@ export function moatRead(f: MoatFacts, cfg: MoatConfig = {}): MoatResult {
     flags.push(`goodwill restated by a later filing for ${restatedCmp.join(", ")} — ex-goodwill ROIC for those years may mix restated goodwill with as-reported statements`);
 
   // Gross-margin level and slope (pricing power).
+  // A year with no gross profit has no margin; it is left out of the series, not read as a 0% margin.
   const gm = f.statements.fiscalYears.map((_, i) => {
-    const rev = val(f.statements.income, "revenue", i);
-    return rev ? val(f.statements.income, "grossProfit", i) / rev : 0;
+    const rev = raw(f.statements.income, "revenue", i);
+    const gp = raw(f.statements.income, "grossProfit", i);
+    return rev && gp != null ? gp / rev : null;
   });
   const om = f.statements.fiscalYears.map((_, i) => {
     const rev = val(f.statements.income, "revenue", i);
     return rev ? val(f.statements.income, "operatingIncome", i) / rev : 0;
   });
-  const gmCmp = gm.slice(from);
+  const gmCmp = gm.slice(from).filter(num);
+  if (!gmCmp.length) flags.push("gross margin not reported — pricing-power test neutral");
 
   // --- Width: five evidence tests, resolved by rule (3.md §3) ---
   const A: MoatWidth = median(cmpSpreadLevel) >= 0.08 ? "WIDE" : median(cmpSpreadLevel) >= 0 ? "NARROW" : "NONE";
@@ -258,7 +351,8 @@ export function moatRead(f: MoatFacts, cfg: MoatConfig = {}): MoatResult {
   const C: MoatWidth = inc == null ? "NONE" : inc >= wacc + 0.1 ? "WIDE" : inc >= wacc ? "NARROW" : "NONE";
   const gmSlope = slopePerYear(gmCmp);
   const gmLevel = gmCmp[gmCmp.length - 1] ?? 0;
-  const D: MoatWidth = gmLevel >= 0.4 && gmSlope >= 0 ? "WIDE" : gmLevel >= 0.25 || gmSlope >= 0 ? "NARROW" : "NONE";
+  // No margin series: NARROW neither blocks a WIDE read from A and B nor supplies one on its own.
+  const D: MoatWidth = !gmCmp.length ? "NARROW" : gmLevel >= 0.4 && gmSlope >= 0 ? "WIDE" : gmLevel >= 0.25 || gmSlope >= 0 ? "NARROW" : "NONE";
 
   let width: MoatWidth;
   if (RANK[A] === 2 && RANK[B] === 2 && RANK[D] >= 1) width = "WIDE";
@@ -298,7 +392,7 @@ export function moatRead(f: MoatFacts, cfg: MoatConfig = {}): MoatResult {
   if (nComparable < 3) {
     trend = "STABLE";
     flags.push(`trend withheld (${nComparable} comparable yr < 3)`);
-    if (f.statements.fiscalYears.length < 4) {
+    if (pack.statements.fiscalYears.length < 4) {
       width = "NONE";
       contingent = false;
       flags.push("width withheld (young issuer, < 4 fiscal years)");

@@ -97,7 +97,7 @@ const NET_INTEREST_INCOME = ["InterestIncomeExpenseNet"];
 const NONINTEREST_INCOME = ["NoninterestIncome"];
 const COGS = ["CostOfGoodsAndServicesSold", "CostOfRevenue", "CostOfGoodsSold"];
 const GROSS_PROFIT = ["GrossProfit"]; // else derived: revenue − COGS
-const OPERATING_INCOME = ["OperatingIncomeLoss"]; // else derived: pretax income − nonoperating income/expense
+const OPERATING_INCOME = ["OperatingIncomeLoss"]; // else derived: pretax income − nonoperating income/expense, else the third tier below
 // Helper concepts for the operating_income fallback (LLY tags neither OperatingIncomeLoss
 // nor GrossProfit — its income statement has no such subtotal lines in XBRL).
 const PRETAX_INCOME = [
@@ -106,6 +106,16 @@ const PRETAX_INCOME = [
   "IncomeBeforeIncomeTaxesMinorityInterestAndCumulativeEffectOfChangeInAccountingPrinciple",
 ];
 const NONOPERATING_INCOME_EXPENSE = ["NonoperatingIncomeExpense"];
+// Third tier for operating_income, for filers whose face statement has no operating subtotal and no
+// NonoperatingIncomeExpense total (TJX, SOLS, CSTM): pretax income with the interest line and the
+// other-nonoperating line taken back out. parseCompanyFacts decides per filer whether it applies (pretaxTier).
+const NET_INTEREST_NONOPERATING = ["InterestRevenueExpenseNet", "InterestIncomeExpenseNonoperatingNet"]; // income-positive
+// Kept apart from INTEREST_EXPENSE, whose order sets interest coverage. The filer's line is the one tagged in
+// the most periods; this order only breaks ties (CSTM's InterestAndDebtExpense 109 vs the note's InterestExpenseDebt 102).
+const FACE_INTEREST_EXPENSE = ["InterestExpense", "InterestExpenseNonoperating", "InterestAndDebtExpense", "InterestExpenseDebt"];
+const OTHER_NONOPERATING = ["OtherNonoperatingIncomeExpense"]; // income-positive
+const COSTS_AND_EXPENSES = ["CostsAndExpenses"];
+const EQUITY_METHOD_INCOME = ["IncomeLossFromEquityMethodInvestments"];
 const NET_INCOME = ["NetIncomeLoss"]; // parent-attributable; ProfitLoss − NCI fills gaps (see fillNetIncomeFromProfitLoss)
 const PROFIT_LOSS = ["ProfitLoss"]; // net income INCLUDING noncontrolling interests
 const NCI = ["NetIncomeLossAttributableToNoncontrollingInterest"];
@@ -476,6 +486,9 @@ interface RawValues {
   operatingIncomeDirect: number | null;
   pretax: number | null;
   nonoperating: number | null;
+  netInterestNonoperating: number | null;
+  faceInterestExpense: number | null;
+  otherNonoperating: number | null;
   netIncome: number | null;
   epsDiluted: number | null;
   da: number | null;
@@ -558,9 +571,40 @@ export function deriveTotalDebt(
   return current === 0 && opts.filerTagsLongTerm ? null : current;
 }
 
-function deriveFields(r: RawValues, opts: { filerTagsLongTerm: boolean }): DerivedFields {
+/**
+ * How the third operating-income tier reads a filer, decided once for the whole filer so a fiscal year
+ * and its quarters never mix methods (Q4 is FY − Q1..Q3): "net" subtracts the net interest line, "gross"
+ * adds back the face interest expense, null means the tier does not apply.
+ */
+export interface PretaxTier {
+  interest: "net" | "gross";
+  subtractsOther: boolean; // the filer tags OtherNonoperatingIncomeExpense, so every period must carry it
+}
+
+/**
+ * Operating income for a filer that tags neither OperatingIncomeLoss nor NonoperatingIncomeExpense:
+ * pretax income, less net interest income (or plus the face interest expense), less other nonoperating
+ * income. Null when a line the filer's method needs is missing for the period, and when the result is
+ * larger than revenue or gross profit, which no operating income can be.
+ */
+export function deriveOperatingIncomeFromPretax(
+  r: Pick<RawValues, "revenue" | "cogs" | "grossProfitDirect" | "pretax" | "netInterestNonoperating" | "faceInterestExpense" | "otherNonoperating">,
+  tier: PretaxTier | null,
+): number | null {
+  if (!tier || r.pretax == null) return null;
+  const interest = tier.interest === "net" ? (r.netInterestNonoperating == null ? null : -r.netInterestNonoperating) : r.faceInterestExpense;
+  if (interest == null || (tier.subtractsOther && r.otherNonoperating == null)) return null;
+  const operatingIncome = r.pretax + interest - (tier.subtractsOther ? r.otherNonoperating! : 0);
   const grossProfit = r.grossProfitDirect ?? (r.revenue != null && r.cogs != null ? r.revenue - r.cogs : null);
-  const operatingIncome = r.operatingIncomeDirect ?? (r.pretax != null && r.nonoperating != null ? r.pretax - r.nonoperating : null);
+  if (r.revenue != null && Math.abs(operatingIncome) > Math.abs(r.revenue)) return null;
+  if (grossProfit != null && operatingIncome > grossProfit) return null;
+  return operatingIncome;
+}
+
+function deriveFields(r: RawValues, opts: { filerTagsLongTerm: boolean; pretaxTier: PretaxTier | null }): DerivedFields {
+  const grossProfit = r.grossProfitDirect ?? (r.revenue != null && r.cogs != null ? r.revenue - r.cogs : null);
+  const operatingIncome =
+    r.operatingIncomeDirect ?? (r.pretax != null && r.nonoperating != null ? r.pretax - r.nonoperating : deriveOperatingIncomeFromPretax(r, opts.pretaxTier));
   const ebitda = operatingIncome != null && r.da != null ? operatingIncome + r.da : null;
   // Some filers stop separately tagging short-term investments once the balance is immaterial (LLY: no
   // ShortTermInvestments entry for FY2025, though every prior year back to 2008 has one). Falling back to
@@ -624,7 +668,25 @@ const INSTANT_FIELDS: (keyof DerivedFields)[] = [
   "total_current_liabilities",
 ];
 
-export function parseCompanyFacts(facts: unknown): { annual: SecPeriod[]; quarter: SecPeriod[] } {
+/**
+ * One series for the whole filer. Only a concept that reports the filer's latest fiscal year qualifies, so a tag
+ * the filer has since renamed cannot supply or blank the recent years. Among those, the one tagged in the most
+ * periods of the last two years wins (the face line is in every 10-Q, a note line often only in the 10-K), list
+ * order breaking ties. A note line tagged as often as the face line is indistinguishable here and can still win.
+ */
+function bestCoveredSeries(facts: unknown, concepts: string[]) {
+  const all = concepts.map((c) => flowSeriesYtd(facts, [c]));
+  const latest = Math.max(...all.flatMap((x) => [...x.annual.keys()]));
+  const recent = (x: (typeof all)[number]) =>
+    [...x.annual.keys()].filter((y) => y >= latest - 1).length + [...x.quarter.keys()].filter((k) => Number.parseInt(String(k), 10) >= latest - 1).length;
+  const current = all.filter((x) => x.annual.has(latest));
+  return current.length ? current.reduce((best, x) => (recent(x) > recent(best) ? x : best)) : all[0];
+}
+
+/** SIC division H (finance, insurance, real estate): interest expense is a funding cost, not a financing line below operating income. */
+const sicIsFinancial = (sic: number) => sic >= 6000 && sic <= 6799;
+
+export function parseCompanyFacts(facts: unknown, opts: { sic?: number | null } = {}): { annual: SecPeriod[]; quarter: SecPeriod[] } {
   const revenuePrimary = flowSeries(facts, REVENUE);
   const netInterestIncome = flowSeries(facts, NET_INTEREST_INCOME);
   const noninterestIncome = flowSeries(facts, NONINTEREST_INCOME);
@@ -639,6 +701,32 @@ export function parseCompanyFacts(facts: unknown): { annual: SecPeriod[]; quarte
   const operatingIncomeDirect = flowSeries(facts, OPERATING_INCOME);
   const pretax = flowSeries(facts, PRETAX_INCOME);
   const nonoperating = flowSeries(facts, NONOPERATING_INCOME_EXPENSE);
+  // Interest lines are often tagged year-to-date in 10-Qs, like INTEREST_EXPENSE below. Each is ONE concept for
+  // the filer: a 10-K note line of 120 beside a face line of 100 that the 10-Qs also carry must not give the
+  // fiscal year one basis and its quarters another.
+  const netInterestNonoperating = bestCoveredSeries(facts, NET_INTEREST_NONOPERATING);
+  const faceInterestExpense = bestCoveredSeries(facts, FACE_INTEREST_EXPENSE);
+  const otherNonoperating = flowSeriesYtd(facts, OTHER_NONOPERATING);
+  const costsAndExpenses = flowSeries(facts, COSTS_AND_EXPENSES);
+  // The third tier applies to a filer only when nothing in its history rules it out:
+  //  - it tags tier one or two anywhere (DOW's one quarter without NonoperatingIncomeExpense must stay null);
+  //  - it is bank-like, or its SIC is financial or unknown, so its interest expense may be a funding cost (CFG,
+  //    SCHW; a lender with no bank tags read pretax 200 + interest 300 = 500 on revenue of 1,000);
+  //  - it tags equity-method income, which XBRL cannot place above or below the operating line (HASI read
+  //    an operating income of 141% of revenue; XOM, CVX about a quarter too high);
+  //  - any period is single-step, revenue − CostsAndExpenses = pretax income, so other income sits in revenue.
+  const tagged = (x: { annual: Map<unknown, unknown>; quarter: Map<unknown, unknown> }) => x.annual.size > 0 || x.quarter.size > 0;
+  const singleStep = (["annual", "quarter"] as const).some((side) =>
+    [...(pretax[side] as Map<unknown, UnitEntry>).entries()].some(([key, p]) => {
+      const rev = (revenue[side] as Map<unknown, UnitEntry>).get(key)?.val;
+      const costs = (costsAndExpenses[side] as Map<unknown, UnitEntry>).get(key)?.val;
+      return rev != null && costs != null && Math.abs(rev - costs - p.val) <= Math.abs(p.val) * 0.001;
+    }),
+  );
+  const pretaxTier: PretaxTier | null =
+    opts.sic == null || sicIsFinancial(opts.sic) || [operatingIncomeDirect, nonoperating, netInterestIncome, noninterestIncome, flowSeries(facts, EQUITY_METHOD_INCOME)].some(tagged) || singleStep
+      ? null
+      : { interest: tagged(netInterestNonoperating) ? "net" : "gross", subtractsOther: tagged(otherNonoperating) };
   // Parent-attributable net income. Prefer NetIncomeLoss; for filers that tag only ProfitLoss
   // (incl. noncontrolling interests), fill the gaps with ProfitLoss − NCI (see helper).
   const netIncomeDirect = flowSeries(facts, NET_INCOME);
@@ -710,6 +798,9 @@ export function parseCompanyFacts(facts: unknown): { annual: SecPeriod[]; quarte
     operatingIncomeDirect: at(operatingIncomeDirect[side] as Map<K, UnitEntry>, key),
     pretax: at(pretax[side] as Map<K, UnitEntry>, key),
     nonoperating: at(nonoperating[side] as Map<K, UnitEntry>, key),
+    netInterestNonoperating: at(netInterestNonoperating[side] as Map<K, UnitEntry>, key),
+    faceInterestExpense: at(faceInterestExpense[side] as Map<K, UnitEntry>, key),
+    otherNonoperating: at(otherNonoperating[side] as Map<K, UnitEntry>, key),
     netIncome: at(netIncome[side] as Map<K, UnitEntry>, key),
     epsDiluted: at(epsDiluted[side] as Map<K, UnitEntry>, key),
     da: at(da[side] as Map<K, UnitEntry>, key),
@@ -745,7 +836,7 @@ export function parseCompanyFacts(facts: unknown): { annual: SecPeriod[]; quarte
     fiscal_period: "FY",
     fiscal_year: year,
     report_date: revenue.annual.get(year)!.end,
-    ...deriveFields(rawAt(year, "annual"), { filerTagsLongTerm }),
+    ...deriveFields(rawAt(year, "annual"), { filerTagsLongTerm, pretaxTier }),
   }));
   // Real quarterly rows (Q1-Q3 only — Q4 is never separately filed), anchored
   // on the quarters the revenue concept reports.
@@ -756,7 +847,7 @@ export function parseCompanyFacts(facts: unknown): { annual: SecPeriod[]; quarte
       fiscal_period: `Q${quarterOf(end)}`,
       fiscal_year: yearOf(end),
       report_date: end,
-      ...deriveFields(rawAt(key, "quarter"), { filerTagsLongTerm }),
+      ...deriveFields(rawAt(key, "quarter"), { filerTagsLongTerm, pretaxTier }),
     };
   });
 
