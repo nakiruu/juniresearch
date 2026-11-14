@@ -291,6 +291,21 @@ describe("missing inputs are gaps, not zeros", () => {
       expect(m.comparableFrom).toBe(0);
       expect(m.flags.some((x) => x.startsWith("structural break"))).toBe(false);
     }
+    // the middle gap reads like the full series; the latest-year gap would cut the latest ROIC, so it abstains
+    expect(moatApplicable(rich([600, 610, null, 630, 640])).ok).toBe(true);
+    expect(moatRead(rich([600, 610, null, 630, 640]), { wacc: 0.08 }).trend).toBe(moatRead(rich([600, 610, 620, 630, 640]), { wacc: 0.08 }).trend);
+    const latest = moatApplicable(rich([600, 610, 620, 630, null]));
+    expect(latest.ok).toBe(false);
+    expect(latest.reason).toBe("insufficient data: latest fiscal year reports no cash, which was 68% of debt + equity in FY24");
+  });
+  it("still reads a filer whose missing latest-year cash is a small share of capital (NVT)", () => {
+    expect(moatApplicable(withRow("balance", "cashAndInvestments", [50, 50, 50, null, null])).ok).toBe(true); // 50 of 1,020
+    expect(moatApplicable(withRow("balance", "cashAndInvestments", null)).ok).toBe(true); // never reported: nothing to compare
+  });
+  it("an unrelated cash gap does not hide a real invested-capital break", () => {
+    // cash funds an acquisition in FY24: invested capital more than doubles between two years that both report cash
+    const f = withRow("balance", "cashAndInvestments", [null, 700, 700, 100, 100]);
+    expect(moatRead(f, { wacc: 0.08 }).comparableFrom).toBe(3);
   });
   it("abstains when the latest fiscal year is the one that cannot be read", () => {
     const a = moatApplicable(withRow("income", "operatingIncome", [200, 210, 220, 230, null]));

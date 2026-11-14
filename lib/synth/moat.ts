@@ -197,10 +197,14 @@ export function sectorHurdle(sic: number | null | undefined): number {
   return 0.1; // industrial default
 }
 
-/** First comparable index: a year whose invested capital jumped > 50% marks a break; drop what precedes it. */
-export function comparableWindow(ic: number[]): number {
+/**
+ * First comparable index: a year whose invested capital jumped > 50% marks a break; drop what precedes it.
+ * A pair with a year in `unreliable` is not tested: a cash value read as zero moves invested capital by itself.
+ */
+export function comparableWindow(ic: number[], unreliable: boolean[] = []): number {
   let start = 0;
   for (let i = 1; i < ic.length; i++) {
+    if (unreliable[i] || unreliable[i - 1]) continue;
     if (ic[i - 1] !== 0 && Math.abs(ic[i] - ic[i - 1]) / Math.abs(ic[i - 1]) > 0.5) start = i;
   }
   return start;
@@ -215,6 +219,9 @@ export function incrementalRoic(f: MoatFacts, taxRate: number, from: number): nu
   const dIc = ic[n] - ic[from];
   return dIc !== 0 ? (nopat(n) - nopat(from)) / dIc : null;
 }
+
+/** Above this share of debt + equity, a missing latest-year cash value moves ROIC too far to read as zero (NVT's is about 4%). */
+const LATEST_CASH_MATERIAL = 0.1;
 
 /** A reverse ROIC-based moat read only fits operating companies; banks need ROTCE vs cost of equity. */
 export function moatApplicable(f: MoatFacts): { ok: boolean; reason: string | null } {
@@ -231,6 +238,20 @@ export function moatApplicable(f: MoatFacts): { ok: boolean; reason: string | nu
   if (dropped.length && (facts.statements.fiscalYears.length < 3 || dropped.some((d) => d.fiscalYear === latest))) {
     const missing = [...new Set(dropped.flatMap((d) => d.missing))].join(", ");
     return { ok: false, reason: `insufficient data: ${facts.statements.fiscalYears.length} of ${f.statements.fiscalYears.length} fiscal years report ${missing}` };
+  }
+  // The latest year's cash is missing and the last reported cash was a material share of capital: reading it
+  // as zero would cut the latest ROIC and set the trend (a net-cash filer read 9% against 21%, and ERODING).
+  const bal = facts.statements.balance;
+  const n = facts.statements.fiscalYears.length - 1;
+  if (raw(bal, "cashAndInvestments", n) == null) {
+    for (let j = n - 1; j >= 0; j--) {
+      const cash = raw(bal, "cashAndInvestments", j);
+      if (cash == null) continue;
+      const capital = val(bal, "totalDebt", j) + val(bal, "totalEquity", j);
+      if (capital > 0 && cash / capital > LATEST_CASH_MATERIAL)
+        return { ok: false, reason: `insufficient data: latest fiscal year reports no cash, which was ${Math.round((cash / capital) * 100)}% of debt + equity in ${facts.statements.fiscalYears[j]}` };
+      break;
+    }
   }
   return { ok: true, reason: null };
 }
@@ -270,11 +291,10 @@ export function moatRead(pack: MoatFacts, cfg: MoatConfig = {}): MoatResult {
   // (a > 20% revenue drop in a pack whose history a later 10-K restated — portfolioBreakIndex, the reverse
   // DCF's own test, so both engines drop the same pre-spin years; DD's Qnity spin halved revenue but moved
   // invested capital < 50%). A cyclical revenue collapse with no restatement is evidence, not a break.
-  // A cash year read as zero looks like an invested-capital jump for a cash-rich filer; with any cash gap the
-  // break test runs on debt + equity, the same basis in every year.
-  const icBreak = comparableWindow(
-    noCash.length ? f.statements.fiscalYears.map((_, i) => val(f.statements.balance, "totalDebt", i) + val(f.statements.balance, "totalEquity", i)) : ic,
-  );
+  // A cash year read as zero looks like an invested-capital jump for a cash-rich filer, so the break test skips
+  // the pairs that touch one. A filer that never reports cash is on one basis throughout and is tested in full.
+  const everCash = noCash.length < f.statements.fiscalYears.length;
+  const icBreak = comparableWindow(ic, f.statements.fiscalYears.map((fy) => everCash && noCash.includes(fy)));
   const revBreak = Math.max(0, portfolioBreakIndex(f));
   const from = Math.max(icBreak, revBreak);
   if (from > 0)
