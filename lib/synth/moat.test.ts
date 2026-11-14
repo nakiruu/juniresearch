@@ -12,6 +12,7 @@ import {
   moatApplicable,
   moatBearFloor,
   moatRead,
+  usableYears,
   type MoatFacts,
 } from "./moat";
 
@@ -216,5 +217,70 @@ describe("structural break — spin-off (revenue drop + restated history) vs cyc
     const m = moatRead(shape(undefined), { wacc: 0.08 });
     expect(m.comparableFrom).toBe(0);
     expect(m.flags.some((f) => f.startsWith("structural break"))).toBe(false);
+  });
+});
+
+describe("missing inputs are gaps, not zeros", () => {
+  const rows = (key: string, values: (number | null)[]) => ({ key, label: key, values });
+  const steady = (grossProfit: (number | null)[] | null): MoatFacts => ({
+    ticker: "GAP", sic: 3559,
+    quote: { marketCap: 20000 }, ttm: { interestCoverage: 20 },
+    statements: {
+      fiscalYears: ["FY21", "FY22", "FY23", "FY24", "FY25"],
+      income: [
+        rows("operatingIncome", [200, 210, 220, 230, 240]),
+        rows("revenue", [1000, 1050, 1100, 1150, 1200]),
+        ...(grossProfit ? [rows("grossProfit", grossProfit)] : []),
+      ],
+      balance: [rows("totalEquity", [900, 910, 920, 930, 940]), rows("totalDebt", [100, 100, 100, 100, 100]), rows("cashAndInvestments", [50, 50, 50, 50, 50])],
+      cashflow: [rows("freeCashFlow", [150, 155, 160, 165, 170])],
+    },
+  });
+  it("a missing latest-year gross profit is not read as a margin collapse", () => {
+    const full = moatRead(steady([450, 473, 495, 518, 540]), { wacc: 0.08 });
+    const gap = moatRead(steady([450, 473, 495, 518, null]), { wacc: 0.08 });
+    expect(gap.width).toBe(full.width);
+    expect(gap.trend).toBe(full.trend);
+  });
+  it("a filer with no gross profit row keeps a WIDE read from its returns and says the margin test was neutral", () => {
+    const m = moatRead(steady(null), { wacc: 0.08 });
+    expect(m.width).toBe("WIDE");
+    expect(m.flags.some((f) => /gross margin not reported/.test(f))).toBe(true);
+  });
+
+  const withRow = (section: "income" | "balance", key: string, values: (number | null)[] | null): MoatFacts => {
+    const f = steady([450, 473, 495, 518, 540]);
+    const others = f.statements[section].filter((r) => r.key !== key);
+    return { ...f, statements: { ...f.statements, [section]: values ? [...others, rows(key, values)] : others } };
+  };
+  it("abstains when no fiscal year reports operating income, instead of reading a 0% ROIC as NONE", () => {
+    const a = moatApplicable(withRow("income", "operatingIncome", null));
+    expect(a.ok).toBe(false);
+    expect(a.reason).toMatch(/insufficient data: 0 of 5 fiscal years report operatingIncome/);
+  });
+  it("drops the years without operating income and reads the rest", () => {
+    const f = withRow("income", "operatingIncome", [null, 210, 220, 230, 240]);
+    expect(moatApplicable(f).ok).toBe(true);
+    const m = moatRead(f, { wacc: 0.08 });
+    expect(m.roic).toHaveLength(4);
+    expect(m.flags).toContain("dropped FY21 (no operatingIncome)");
+    expect(m.width).toBe("WIDE");
+  });
+  it("abstains when the drops leave fewer than three years", () => {
+    expect(moatApplicable(withRow("income", "operatingIncome", [null, null, null, 230, 240])).ok).toBe(false);
+  });
+  it("reads an untagged debt year as a year without debt, whether or not other years carry debt", () => {
+    expect(usableYears(withRow("balance", "totalDebt", null)).dropped).toEqual([]);
+    expect(usableYears(withRow("balance", "totalDebt", [null, null, null, 100, null])).dropped).toEqual([]);
+  });
+  it("drops a hole in a cash series, and keeps a filer whose cash is never read with a flag", () => {
+    expect(usableYears(withRow("balance", "cashAndInvestments", [50, 50, 50, null, null])).dropped.map((d) => d.fiscalYear)).toEqual(["FY24", "FY25"]);
+    const never = withRow("balance", "cashAndInvestments", null);
+    expect(usableYears(never).dropped).toEqual([]);
+    expect(moatRead(never, { wacc: 0.08 }).flags.some((x) => /cash not reported/.test(x))).toBe(true);
+  });
+  it("keeps the goodwill series aligned to the years that survive", () => {
+    const f = { ...withRow("income", "operatingIncome", [null, 210, 220, 230, 240]), goodwill: [1, 2, 3, 4, 5] };
+    expect(usableYears(f).facts.goodwill).toEqual([2, 3, 4, 5]);
   });
 });
