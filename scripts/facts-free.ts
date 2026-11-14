@@ -2,7 +2,8 @@ import { mkdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { requireContact } from "./_env";
 import { resolveCik } from "../lib/edgar/tickers";
-import { parseCompanyFacts } from "../lib/facts/free/sec";
+import { fiscalYearLabel, parseCompanyFacts } from "../lib/facts/free/sec";
+import { fiscalLabelOverride } from "../lib/facts/free/fiscal-labels";
 import { loadOrFetchCompanyFacts } from "../lib/facts/free/companyfacts-cache";
 import { parseFilingXbrl, mergeFilingFacts, type CompanyFactsLike } from "../lib/facts/free/filing-xbrl";
 import { ANNUAL_PRIMARY_FILE } from "../lib/facts/manifest";
@@ -22,6 +23,9 @@ if (!tickerArg || !accession) { console.error("usage: npm run facts:free -- <TIC
 const ticker = tickerArg.toUpperCase();
 const contact = requireContact();
 const dir = join("data", "raw", ticker, accession);
+// The filer's label override (fiscal-labels.ts): the statement rows and the Yahoo estimate years share it.
+const labels = fiscalLabelOverride(ticker);
+const yearLabelOf = (fiscalYearEnd: string) => fiscalYearLabel(fiscalYearEnd, labels);
 mkdirSync(dir, { recursive: true });
 
 // Prefer the curated watchlist CIK over SEC's ticker map. After a corporate
@@ -92,7 +96,7 @@ try {
       if ((err as NodeJS.ErrnoException)?.code !== "ENOENT") throw err;
     }
   }
-  sec = parseCompanyFacts(merged, { sic });
+  sec = parseCompanyFacts(merged, { sic, labels });
 } catch (err) {
   const message = err instanceof Error ? err.message : String(err);
   throw new Error(`SEC data for ${ticker}: ${message}`);
@@ -102,7 +106,16 @@ if (sec.annual.length < 3) { console.error(`Only ${sec.annual.length} annual per
 const latestFY = sec.annual.at(-1)!.fiscal_year;
 
 const kept = keepQuote ? yahooFromTearsheet(keptTearsheet) : null;
-const yahoo = kept ? kept.yahoo : parseQuoteSummary(await yrawPending!, { latestFY }); // throws loudly on crumb/HTTP failure
+// A kept estimate is named again on the current label rule: from its end date when the capture recorded one;
+// otherwise the capture predates fiscal labels (2026-11) and stored the calendar year of Yahoo's end date, which
+// is the fiscal-year key unless that date fell in the first two weeks of January, so only the offset is applied.
+if (kept) {
+  kept.yahoo.estimates = kept.yahoo.estimates.map((e) => ({
+    ...e,
+    fiscal_year: e.endDate ? yearLabelOf(e.endDate) : labels.labels === "calendar" ? e.fiscal_year : e.fiscal_year + (labels.yearOffset ?? 0),
+  }));
+}
+const yahoo = kept ? kept.yahoo : parseQuoteSummary(await yrawPending!, { latestFY, yearLabelOf }); // throws loudly on crumb/HTTP failure
 const capturedAt = kept ? kept.capturedAt : new Date().toISOString();
 const ttm = computeTtm(sec.quarter, { price: yahoo.price, marketCap: yahoo.marketCap, dividendYield: yahoo.dividendYield, trailingPe: yahoo.trailingPe });
 

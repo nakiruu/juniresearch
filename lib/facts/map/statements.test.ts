@@ -157,3 +157,27 @@ describe("mapStatements without a prior-year quarter", () => {
     expect(s.latestQuarter.operatingMargin).toBeCloseTo(0.25, 6);
   });
 });
+
+// A June fiscal year on the free path: the derived fiscal Q4 (June) and the real December quarter both carry
+// the calendar label "Q4", so the label cannot find the year-ago quarter. LITE-shape values.
+describe("mapStatements pairs the year-ago quarter by date, not by label", () => {
+  it("compares the June quarter with the previous June quarter, not with December", () => {
+    const s = mapStatements("lib/facts/map/__fixtures__/june-fye-derived-q4");
+    expect(s.latestQuarter.periodEnd).toBe("2026-06-27");
+    expect(s.latestQuarter.revenueYoY).toBeCloseTo(209 / 100 - 1, 6); // +109%, not 209 / 138 − 1 = +51%
+  });
+});
+
+// Free-path rows carry fiscal labels (2026-11). A September year: the June quarter is fiscal Q3.
+describe("mapStatements on fiscal-labelled rows", () => {
+  it("labels the latest quarter by its fiscal period and year (V shape: June 2026 is Q3'26)", () => {
+    const s = mapStatements("lib/facts/map/__fixtures__/fiscal-labels-sept");
+    expect(s.latestQuarter.label).toBe("Q3'26");
+    expect(s.latestQuarter.revenueYoY).toBeCloseTo(11_633 / 10_172 - 1, 6);
+  });
+  it("keeps one column per fiscal year when two year ends fall in one calendar year (USFD shape)", () => {
+    const s = mapStatements("lib/facts/map/__fixtures__/fiscal-labels");
+    expect(s.statements.fiscalYears).toEqual(["FY21", "FY22", "FY23", "FY24", "FY25"]);
+    expect(s.statements.income.find((r) => r.key === "revenue")!.values).toEqual([29_487, 34_057, 35_597, 37_877, 39_424]);
+  });
+});

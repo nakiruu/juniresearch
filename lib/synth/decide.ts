@@ -80,7 +80,7 @@ const isBullish = (l: RatingLabel) => l === "BUY" || l === "STRONG BUY";
 const sign = (x: number) => (x > 0 ? 1 : x < 0 ? -1 : 0);
 
 /**
- * Does the DCF disagree with the sign of expected upside E?
+ * Does the DCF disagree with a direction `e` (the sign of expected upside E, or of the label)?
  *   "point"  — the point-estimate margin of safety has the opposite (non-zero) sign to E;
  *   "robust" — additionally every point of `mosRange` has that opposite sign (E > 0 needs max < 0;
  *              E < 0 needs min > 0), so the disagreement survives ±1pp on r and ±2pp on growth.
@@ -174,15 +174,17 @@ export function decide(inputs: DecisionInputs, cfg: DeskRating, policy: Decision
   let score = 100;
   if (gateBinds) score -= 25; // the fundamentals disagree with the rating
   if (moat && moat.trend === "ERODING" && isBullish(label)) score -= 15;
-  // A value/expected-return disagreement only counts against a bullish call — a HOLD is often the
-  // correct synthesis of exactly that disagreement, so it is not penalised for it (7.md I4).
+  // A value/expected-return disagreement counts against a directional call, bullish or bearish (a SELL
+  // against a robustly positive margin of safety showed conviction 95). A HOLD is often the correct
+  // synthesis of exactly that disagreement, so it is not penalised for it (7.md I4).
   // Only a ROBUST disagreement costs conviction (see dcfDisagreement): a sign that flips within the
   // DCF's ±1pp r / ±2pp growth range is a coin flip, so it is noted but not penalised.
-  if (isBullish(label)) {
-    const dis = dcfDisagreement(intrinsic, c.expectedUpside);
+  if (label !== "HOLD") {
+    // Tested against the direction of the label, not the sign of E: a SELL can carry a small positive E.
+    const dis = dcfDisagreement(intrinsic, isBullish(label) ? 1 : -1);
     if (dis === "robust") score -= 20;
     else if (dis === "point")
-      advisories.push("DCF margin of safety disagrees with expected upside, but within model error (range straddles 0) — not penalised");
+      advisories.push(`DCF margin of safety disagrees with the ${isBullish(label) ? "bullish" : "bearish"} call, but within model error (range straddles 0) — not penalised`);
   }
   // Contested name: a wide analyst-target spread is a market proxy for uncertainty (6.md 4.1).
   const disp = inputs.market?.targetDispersion;

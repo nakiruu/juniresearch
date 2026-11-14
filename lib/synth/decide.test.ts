@@ -194,6 +194,16 @@ describe("conviction: DCF margin-of-safety disagreement must be robust", () => {
     expect(run({ marginOfSafety: -0.05 }).conviction).toBe(agree.conviction - 20);
     expect(run({ marginOfSafety: 0.05 }).conviction).toBe(agree.conviction);
   });
+  it("a SELL against a robustly positive margin of safety costs 20 too; a DCF that agrees with the SELL does not", () => {
+    const SELLISH: Conviction = { expectedUpside: -0.2, bearDownside: 0.45, rewardRisk: null };
+    const sell = (intrinsic: { marginOfSafety: number; mosRange?: { min: number; max: number } }) => decide({ conviction: SELLISH, gate: cleanGate, moat, intrinsic }, cfg);
+    const agrees = sell({ marginOfSafety: -0.3, mosRange: { min: -0.45, max: -0.1 } });
+    expect(["SELL", "STRONG SELL"]).toContain(agrees.label);
+    expect(sell({ marginOfSafety: 0.23, mosRange: { min: 0.05, max: 0.4 } }).conviction).toBe(agrees.conviction - 20);
+    const straddle = sell({ marginOfSafety: 0.05, mosRange: { min: -0.1, max: 0.2 } });
+    expect(straddle.conviction).toBe(agrees.conviction);
+    expect(straddle.advisories.some((x) => /bearish call.*model error/.test(x))).toBe(true);
+  });
   it("corroboration of a STRONG BUY is blocked only by a robustly negative DCF", () => {
     const strong = { conviction: STRONGBUYISH, gate: cleanGate, moat: { width: "WIDE" as const, trend: "WIDENING" as const, contingent: false } };
     const pol = { ...SAFE_DEFAULTS, requireCorroboration: true };

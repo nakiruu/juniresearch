@@ -11,10 +11,11 @@
  */
 import { edgarJson, type FetchLike } from "../../edgar/client";
 import { padCik } from "../../edgar/submissions";
+import type { FiscalLabelOverride } from "./fiscal-labels";
 
 export interface SecPeriod {
-  fiscal_period: string; // "FY" | "Q1" | "Q2" | "Q3" | "Q4"
-  fiscal_year: number; // calendar year of period end
+  fiscal_period: string; // "FY" | "Q1" | "Q2" | "Q3" | "Q4": the quarter's position in the filer's fiscal year
+  fiscal_year: number; // the fiscal year's label (fiscalYearLabel), not the calendar year of the period end
   report_date: string; // YYYY-MM-DD (period end)
   revenue: number | null;
   gross_profit: number | null;
@@ -237,12 +238,178 @@ function entriesFor(facts: unknown, concept: string, unit: Unit = "USD"): UnitEn
 const yearOf = (date: string) => Number(date.slice(0, 4));
 const daysBetween = (start: string, end: string) => (Date.parse(end) - Date.parse(start)) / 86_400_000;
 const quarterOf = (end: string) => Math.floor((Number(end.slice(5, 7)) - 1) / 3) + 1;
-const quarterKey = (end: string) => `${yearOf(end)}Q${quarterOf(end)}`;
+const addDays = (date: string, n: number) => new Date(Date.parse(`${date}T00:00:00Z`) + n * 86_400_000).toISOString().slice(0, 10);
 
-function keepLatestFiled<K>(entries: UnitEntry[], keyOf: (e: UnitEntry) => K): Map<K, UnitEntry> {
+// --- fiscal calendar (period keys) ----------------------------------------
+//
+// Periods are keyed by the filer's fiscal year and quarter, not by the calendar. A calendar key collides
+// whenever two quarter ends fall in one calendar quarter: TMO, USFD, CALX, VSH and ZBRA ended quarters on
+// 2023-07-01 and 2023-09-30, both "2023Q3", so the July quarter was dropped and FY2023 had no Q4. And a
+// calendar year key drops one of two 52/53-week years ending in the same calendar year (USFD: 2022-01-01 and
+// 2022-12-31). For a calendar-December filer every fiscal key equals the calendar key it replaces.
+
+/** One fiscal year, first and last day, from a 10-K's ~1-year duration entries. */
+export interface FiscalYearSpan {
+  start: string;
+  end: string;
+}
+
+/** A period end placed in its fiscal year (fiscalYearKey of that year's end) and fiscal quarter. */
+export interface FiscalPeriod {
+  fiscalYear: number;
+  quarter: 1 | 2 | 3 | 4;
+}
+
+/**
+ * The key of the fiscal year ending on `end`: the calendar year of the date two weeks earlier. A 52/53-week
+ * year that ends in the first days of January belongs to the year before (USFD's 2021-01-02 year is its
+ * fiscal 2020); every other year end keeps its calendar year (Dec 31, TJX's late January, V's September).
+ */
+export const fiscalYearKey = (end: string): number => yearOf(addDays(end, -14));
+
+/**
+ * The label a row carries for the fiscal year ending on `fiscalYearEnd`: its fiscalYearKey plus the filer's year
+ * offset (CHWY names a year by its start: −1). Under the "calendar" override (LQDT, by owner decision) the label
+ * is the calendar year of the period end, as before 2026-11. See fiscal-labels.ts.
+ */
+export const fiscalYearLabel = (fiscalYearEnd: string, labels: FiscalLabelOverride = {}): number =>
+  labels.labels === "calendar" ? yearOf(fiscalYearEnd) : fiscalYearKey(fiscalYearEnd) + (labels.yearOffset ?? 0);
+
+/** A fiscal quarter is 13 weeks, 14 in some 53-week years; a period end further than this from a quarter boundary is not a quarter end. */
+const QUARTER_DAYS = 365.25 / 4;
+const QUARTER_TOLERANCE_DAYS = 15;
+
+/**
+ * The filer's fiscal years, from the start and end of every 10-K duration entry spanning 350–380 days (a
+ * 52/53-week year runs 364 or 371). Each end takes the start most entries give it. Where two candidate years
+ * overlap (a stray twelve-month disclosure), the one more entries report wins. One wholly missing year between
+ * two known ones (a gap of 350–380 days) is filled; any other gap is a fiscal-year-end change and stays open,
+ * so the periods inside it are not placed. Pure.
+ */
+export function fiscalYearSpans(facts: unknown): FiscalYearSpan[] {
+  const gaap = (facts as CompanyFactsShape)?.facts?.["us-gaap"] ?? {};
+  const starts = new Map<string, Map<string, number>>(); // end → start → count
+  for (const node of Object.values(gaap)) {
+    for (const e of node.units?.USD ?? []) {
+      if (e.form !== "10-K" || !e.start) continue;
+      const d = daysBetween(e.start, e.end);
+      if (d < 350 || d > 380) continue;
+      const byStart = starts.get(e.end) ?? new Map<string, number>();
+      byStart.set(e.start, (byStart.get(e.start) ?? 0) + 1);
+      starts.set(e.end, byStart);
+    }
+  }
+  const candidates = [...starts].map(([end, byStart]) => {
+    const [start] = [...byStart].reduce((best, x) => (x[1] > best[1] ? x : best));
+    return { start, end, support: [...byStart.values()].reduce((a, b) => a + b, 0) };
+  });
+  const kept: FiscalYearSpan[] = [];
+  for (const c of [...candidates].sort((a, b) => b.support - a.support || (a.end < b.end ? -1 : 1))) {
+    if (!kept.some((k) => c.start <= k.end && k.start <= c.end)) kept.push({ start: c.start, end: c.end });
+  }
+  kept.sort((a, b) => (a.end < b.end ? -1 : 1));
+  const spans: FiscalYearSpan[] = [];
+  for (const s of kept) {
+    const prev = spans.at(-1);
+    if (prev) {
+      const gap = daysBetween(prev.end, s.start) - 1; // days strictly between the two years
+      if (gap >= 350 && gap <= 380) spans.push({ start: addDays(prev.end, 1), end: addDays(s.start, -1) });
+    }
+    spans.push(s);
+  }
+  return spans;
+}
+
+/** The quarter (1–3) a period `days` after the previous fiscal-year end closes, or null when it is not near a quarter boundary. */
+function quarterAfter(days: number): 1 | 2 | 3 | null {
+  const q = Math.round(days / QUARTER_DAYS);
+  return q >= 1 && q <= 3 && Math.abs(days - q * QUARTER_DAYS) <= QUARTER_TOLERANCE_DAYS ? (q as 1 | 2 | 3) : null;
+}
+
+/**
+ * Places a period end in the filer's fiscal calendar (`spans`, oldest first, from fiscalYearSpans):
+ *   - inside a known fiscal year: a period ending on its last day is Q4, else Q1–Q3 by the days since the
+ *     previous year end;
+ *   - after the last known year (the year in progress): counted from that year's end, within one year;
+ *   - before the first known year: counted back from its start, within one year.
+ * Null when the end is in a gap between known years (a fiscal-year-end change) or not near a quarter
+ * boundary — never a guess. Pure.
+ */
+export function fiscalPeriodOf(end: string, spans: FiscalYearSpan[]): FiscalPeriod | null {
+  if (!spans.length) return null;
+  const inside = spans.find((s) => s.start <= end && end <= s.end);
+  if (inside) {
+    if (end === inside.end) return { fiscalYear: fiscalYearKey(inside.end), quarter: 4 };
+    const q = quarterAfter(daysBetween(addDays(inside.start, -1), end));
+    return q ? { fiscalYear: fiscalYearKey(inside.end), quarter: q } : null;
+  }
+  const last = spans[spans.length - 1], first = spans[0];
+  if (end > last.end) {
+    const days = daysBetween(last.end, end);
+    const q = days <= 380 ? quarterAfter(days) : null;
+    return q ? { fiscalYear: fiscalYearKey(last.end) + 1, quarter: q } : null;
+  }
+  if (end < first.start) {
+    const priorEnd = addDays(first.start, -1);
+    if (end === priorEnd) return { fiscalYear: fiscalYearKey(priorEnd), quarter: 4 };
+    const back = daysBetween(end, priorEnd);
+    const q = back < 365 ? quarterAfter(365.25 - back) : null;
+    return q ? { fiscalYear: fiscalYearKey(priorEnd), quarter: q } : null;
+  }
+  return null;
+}
+
+/**
+ * The filer's quarterly period keys, "<fiscal year>Q<n>", null when the end cannot be placed. A balance-sheet
+ * instant is keyed only when some 10-Q or 10-K duration ends on the same day: a note's off-date instant would
+ * otherwise join the quarter it falls near (GE's 10-Q tags a $2.0B current-debt line at 2015-10-09, nine days
+ * after its quarter end; CEG's tags spin-off-date balances at 2022-01-31, which beat its March 31 ones).
+ */
+interface FiscalCalendar {
+  period: (end: string) => FiscalPeriod | null;
+  annualInstantKey: (end: string) => number | null;
+  quarterKey: (end: string) => string | null;
+  instantKey: (end: string) => string | null;
+  quarterNumber: (end: string) => number | null;
+}
+
+function fiscalCalendar(facts: unknown): FiscalCalendar {
+  const spans = fiscalYearSpans(facts);
+  const durationEnds = new Set<string>();
+  for (const node of Object.values((facts as CompanyFactsShape)?.facts?.["us-gaap"] ?? {})) {
+    for (const e of node.units?.USD ?? []) if (e.start && (e.form === "10-Q" || e.form === "10-K")) durationEnds.add(e.end);
+  }
+  // A filer with no 10-K year at all (only 10-Qs captured) has no fiscal calendar to place against; its periods
+  // keep the calendar key they always had. facts:free refuses such a filer anyway (it needs three fiscal years).
+  const locate = spans.length
+    ? (end: string) => fiscalPeriodOf(end, spans)
+    : (end: string): FiscalPeriod => ({ fiscalYear: yearOf(end), quarter: quarterOf(end) as FiscalPeriod["quarter"] });
+  const cache = new Map<string, FiscalPeriod | null>();
+  const placed = (end: string) => {
+    if (!cache.has(end)) cache.set(end, locate(end));
+    return cache.get(end)!;
+  };
+  return {
+    period: placed,
+    annualInstantKey: (end) => (durationEnds.has(end) ? fiscalYearKey(end) : null),
+    quarterKey: (end) => {
+      const p = placed(end);
+      return p ? `${p.fiscalYear}Q${p.quarter}` : null;
+    },
+    instantKey: (end) => {
+      const p = durationEnds.has(end) ? placed(end) : null;
+      return p ? `${p.fiscalYear}Q${p.quarter}` : null;
+    },
+    quarterNumber: (end) => placed(end)?.quarter ?? null,
+  };
+}
+
+/** Latest-filed entry per key; an entry whose key is null (a period the fiscal calendar cannot place) is left out. */
+function keepLatestFiled<K>(entries: UnitEntry[], keyOf: (e: UnitEntry) => K | null): Map<K, UnitEntry> {
   const m = new Map<K, UnitEntry>();
   for (const e of entries) {
     const k = keyOf(e);
+    if (k == null) continue;
     const prev = m.get(k);
     if (!prev || e.filed > prev.filed) m.set(k, e);
   }
@@ -252,25 +419,25 @@ function keepLatestFiled<K>(entries: UnitEntry[], keyOf: (e: UnitEntry) => K): M
 const annualFlow = (entries: UnitEntry[]): Map<number, UnitEntry> =>
   keepLatestFiled(
     entries.filter((e) => e.form === "10-K" && e.start && daysBetween(e.start, e.end) >= 350 && daysBetween(e.start, e.end) <= 380),
-    (e) => yearOf(e.end),
+    (e) => fiscalYearKey(e.end),
   );
 
-const annualInstant = (entries: UnitEntry[]): Map<number, UnitEntry> =>
+const annualInstant = (entries: UnitEntry[], cal: FiscalCalendar): Map<number, UnitEntry> =>
   keepLatestFiled(
     entries.filter((e) => e.form === "10-K" && !e.start),
-    (e) => yearOf(e.end),
+    (e) => cal.annualInstantKey(e.end),
   );
 
-const quarterFlow = (entries: UnitEntry[]): Map<string, UnitEntry> =>
+const quarterFlow = (entries: UnitEntry[], cal: FiscalCalendar): Map<string, UnitEntry> =>
   keepLatestFiled(
     entries.filter((e) => e.form === "10-Q" && e.start && daysBetween(e.start, e.end) >= 80 && daysBetween(e.start, e.end) <= 100),
-    (e) => quarterKey(e.end),
+    (e) => cal.quarterKey(e.end),
   );
 
-const quarterInstant = (entries: UnitEntry[]): Map<string, UnitEntry> =>
+const quarterInstant = (entries: UnitEntry[], cal: FiscalCalendar): Map<string, UnitEntry> =>
   keepLatestFiled(
     entries.filter((e) => e.form === "10-Q" && !e.start),
-    (e) => quarterKey(e.end),
+    (e) => cal.instantKey(e.end),
   );
 
 // --- YTD reconstruction (the "10-Q cash-flow items are cumulative" trap) -----------------
@@ -287,8 +454,8 @@ const quarterInstant = (entries: UnitEntry[]): Map<string, UnitEntry> =>
 //   Q1 = YTD ending Q1 (already discrete, no differencing needed)
 //   Q2 = YTD ending Q2 (~180d) − YTD ending Q1 (~90d)
 //   Q3 = YTD ending Q3 (~270d) − YTD ending Q2 (~180d)
-// keyed by the calendar quarter of the YTD entry's own period-end date (quarterKey), same as
-// quarterFlow. Q4 is left to the existing FY − (Q1+Q2+Q3) derivation below, which already
+// keyed by the fiscal quarter of the YTD entry's own period-end date (FiscalCalendar.quarterKey),
+// same as quarterFlow. Q4 is left to the existing FY − (Q1+Q2+Q3) derivation below, which already
 // works once Q1–Q3 are non-null here. A discrete tag, when one exists, always wins over a
 // reconstructed value (some filers — and some concepts, e.g. LLY's interest expense — tag
 // both; the true discrete figure is preferred to an equivalent-but-derived one).
@@ -303,11 +470,14 @@ type YtdBucket = "Q1" | "H1" | "9M";
  * whichever is filed later would otherwise win the "Q1" anchor slot in ytdByYear below, and
  * reconstructedQuarterFlow would silently compute Q2 = H1 − Q3 instead of H1 − Q1 (a wrong,
  * non-null number, not a null one — nothing downstream would flag it). So bucket
- * classification also requires the entry's period-end to actually fall in the calendar quarter
- * the bucket represents: an off-quarter ~90-day entry can never occupy the Q1 slot.
+ * classification also requires the entry's period-end to actually fall in the FISCAL quarter the
+ * bucket represents: an off-quarter ~90-day entry can never occupy the Q1 slot. Fiscal, not
+ * calendar: V's and ATO's six-month YTD ends in March and the nine-month YTD in June (September
+ * years), and ESAB's and ZBRA's first quarter ends in early April, so a calendar test dropped every
+ * one of them and their fiscal Q2/Q3 cash flow, D&A and interest read null.
  */
-function ytdBucketOf(days: number, end: string): YtdBucket | null {
-  const q = quarterOf(end);
+function ytdBucketOf(days: number, end: string, cal: FiscalCalendar): YtdBucket | null {
+  const q = cal.quarterNumber(end);
   if (days >= 80 && days <= 100 && q === 1) return "Q1";
   if (days >= 170 && days <= 190 && q === 2) return "H1";
   if (days >= 260 && days <= 280 && q === 3) return "9M";
@@ -323,11 +493,11 @@ function ytdBucketOf(days: number, end: string): YtdBucket | null {
  * prior calendar year: ADI's FY2026 YTD entries all start 2025-11-02, and a same-calendar-year
  * guard dropped every one of them, leaving its Q2/Q3 D&A, cash flow and EBITDA null.
  */
-function ytdByYear(entries: UnitEntry[]): Map<string, Partial<Record<YtdBucket, UnitEntry>>> {
+function ytdByYear(entries: UnitEntry[], cal: FiscalCalendar): Map<string, Partial<Record<YtdBucket, UnitEntry>>> {
   const byStart = new Map<string, Partial<Record<YtdBucket, UnitEntry>>>();
   for (const e of entries) {
     if (e.form !== "10-Q" || !e.start) continue;
-    const bucket = ytdBucketOf(daysBetween(e.start, e.end), e.end);
+    const bucket = ytdBucketOf(daysBetween(e.start, e.end), e.end, cal);
     if (!bucket) continue;
     if (!byStart.has(e.start)) byStart.set(e.start, {});
     const group = byStart.get(e.start)!;
@@ -338,22 +508,24 @@ function ytdByYear(entries: UnitEntry[]): Map<string, Partial<Record<YtdBucket, 
 }
 
 /** Reconstructs discrete Q1/Q2/Q3 entries by differencing consecutive YTD entries, per fiscal year. */
-function reconstructedQuarterFlow(entries: UnitEntry[]): Map<string, UnitEntry> {
+function reconstructedQuarterFlow(entries: UnitEntry[], cal: FiscalCalendar): Map<string, UnitEntry> {
   const out = new Map<string, UnitEntry>();
-  for (const { Q1, H1, "9M": nineMonth } of ytdByYear(entries).values()) {
-    if (Q1) out.set(quarterKey(Q1.end), Q1); // YTD-ending-Q1 IS the discrete Q1 figure
+  // Every bucketed entry has a placeable end (ytdBucketOf needs its fiscal quarter), so its key is never null.
+  const keyOf = (e: UnitEntry) => cal.quarterKey(e.end)!;
+  for (const { Q1, H1, "9M": nineMonth } of ytdByYear(entries, cal).values()) {
+    if (Q1) out.set(keyOf(Q1), Q1); // YTD-ending-Q1 IS the discrete Q1 figure
     // `start` below is approximate (the prior quarter's end date, not its own start-of-quarter
     // day) — nothing downstream reads a reconstructed entry's `start`, so this is cosmetic.
-    if (H1 && Q1) out.set(quarterKey(H1.end), { ...H1, start: Q1.end, val: H1.val - Q1.val });
-    if (nineMonth && H1) out.set(quarterKey(nineMonth.end), { ...nineMonth, start: H1.end, val: nineMonth.val - H1.val });
+    if (H1 && Q1) out.set(keyOf(H1), { ...H1, start: Q1.end, val: H1.val - Q1.val });
+    if (nineMonth && H1) out.set(keyOf(nineMonth), { ...nineMonth, start: H1.end, val: nineMonth.val - H1.val });
   }
   return out;
 }
 
 /** quarterFlow, falling back to a YTD-differenced value when no discrete tag exists for that quarter. */
-const quarterFlowWithYtdFallback = (entries: UnitEntry[]): Map<string, UnitEntry> => {
-  const merged = new Map(reconstructedQuarterFlow(entries));
-  for (const [key, entry] of quarterFlow(entries)) merged.set(key, entry); // discrete tag wins when present
+const quarterFlowWithYtdFallback = (entries: UnitEntry[], cal: FiscalCalendar): Map<string, UnitEntry> => {
+  const merged = new Map(reconstructedQuarterFlow(entries, cal));
+  for (const [key, entry] of quarterFlow(entries, cal)) merged.set(key, entry); // discrete tag wins when present
   return merged;
 };
 
@@ -389,11 +561,17 @@ export function combineCapex<K>(base: Map<K, UnitEntry>[], extras: Map<K, UnitEn
   return out;
 }
 
-function flowSeries(facts: unknown, concepts: string[], unit: Unit = "USD") {
+/** A filer's companyfacts with the fiscal calendar its period keys are drawn from. */
+interface FactsSource {
+  facts: unknown;
+  cal: FiscalCalendar;
+}
+
+function flowSeries({ facts, cal }: FactsSource, concepts: string[], unit: Unit = "USD") {
   const perConcept = concepts.map((c) => entriesFor(facts, c, unit));
   return {
     annual: mergeByPriority(perConcept.map(annualFlow)),
-    quarter: mergeByPriority(perConcept.map(quarterFlow)),
+    quarter: mergeByPriority(perConcept.map((e) => quarterFlow(e, cal))),
   };
 }
 /**
@@ -403,18 +581,18 @@ function flowSeries(facts: unknown, concepts: string[], unit: Unit = "USD") {
  * they're already discretely tagged, and running them through YTD differencing would be a
  * silent no-op at best and a double-difference bug at worst if a filer ever tags both.
  */
-function flowSeriesYtd(facts: unknown, concepts: string[], unit: Unit = "USD") {
+function flowSeriesYtd({ facts, cal }: FactsSource, concepts: string[], unit: Unit = "USD") {
   const perConcept = concepts.map((c) => entriesFor(facts, c, unit));
   return {
     annual: mergeByPriority(perConcept.map(annualFlow)),
-    quarter: mergeByPriority(perConcept.map(quarterFlowWithYtdFallback)),
+    quarter: mergeByPriority(perConcept.map((e) => quarterFlowWithYtdFallback(e, cal))),
   };
 }
-function instantSeries(facts: unknown, concepts: string[], unit: Unit = "USD") {
+function instantSeries({ facts, cal }: FactsSource, concepts: string[], unit: Unit = "USD") {
   const perConcept = concepts.map((c) => entriesFor(facts, c, unit));
   return {
-    annual: mergeByPriority(perConcept.map(annualInstant)),
-    quarter: mergeByPriority(perConcept.map(quarterInstant)),
+    annual: mergeByPriority(perConcept.map((e) => annualInstant(e, cal))),
+    quarter: mergeByPriority(perConcept.map((e) => quarterInstant(e, cal))),
   };
 }
 
@@ -674,8 +852,8 @@ const INSTANT_FIELDS: (keyof DerivedFields)[] = [
  * periods of the last two years wins (the face line is in every 10-Q, a note line often only in the 10-K), list
  * order breaking ties. A note line tagged as often as the face line is indistinguishable here and can still win.
  */
-function bestCoveredSeries(facts: unknown, concepts: string[]) {
-  const all = concepts.map((c) => flowSeriesYtd(facts, [c]));
+function bestCoveredSeries(src: FactsSource, concepts: string[]) {
+  const all = concepts.map((c) => flowSeriesYtd(src, [c]));
   const latest = Math.max(...all.flatMap((x) => [...x.annual.keys()]));
   const recent = (x: (typeof all)[number]) =>
     [...x.annual.keys()].filter((y) => y >= latest - 1).length + [...x.quarter.keys()].filter((k) => Number.parseInt(String(k), 10) >= latest - 1).length;
@@ -686,28 +864,33 @@ function bestCoveredSeries(facts: unknown, concepts: string[]) {
 /** SIC division H (finance, insurance, real estate): interest expense is a funding cost, not a financing line below operating income. */
 const sicIsFinancial = (sic: number) => sic >= 6000 && sic <= 6799;
 
-export function parseCompanyFacts(facts: unknown, opts: { sic?: number | null } = {}): { annual: SecPeriod[]; quarter: SecPeriod[] } {
-  const revenuePrimary = flowSeries(facts, REVENUE);
-  const netInterestIncome = flowSeries(facts, NET_INTEREST_INCOME);
-  const noninterestIncome = flowSeries(facts, NONINTEREST_INCOME);
+/**
+ * `opts.labels` is the filer's label override (fiscal-labels.ts, looked up by ticker by the caller): it changes the
+ * fiscal_period / fiscal_year labels on the rows and nothing else.
+ */
+export function parseCompanyFacts(facts: unknown, opts: { sic?: number | null; labels?: FiscalLabelOverride } = {}): { annual: SecPeriod[]; quarter: SecPeriod[] } {
+  const src: FactsSource = { facts, cal: fiscalCalendar(facts) };
+  const revenuePrimary = flowSeries(src, REVENUE);
+  const netInterestIncome = flowSeries(src, NET_INTEREST_INCOME);
+  const noninterestIncome = flowSeries(src, NONINTEREST_INCOME);
   // For a bank that tags no combined revenue concept, fill the gaps with net interest income +
   // noninterest income so the FY/quarter rows anchor on live periods, not a stale fee-only line.
   const revenue = {
     annual: combineRevenue(revenuePrimary.annual, netInterestIncome.annual, noninterestIncome.annual),
     quarter: combineRevenue(revenuePrimary.quarter, netInterestIncome.quarter, noninterestIncome.quarter),
   };
-  const cogs = flowSeries(facts, COGS);
-  const grossProfitDirect = flowSeries(facts, GROSS_PROFIT);
-  const operatingIncomeDirect = flowSeries(facts, OPERATING_INCOME);
-  const pretax = flowSeries(facts, PRETAX_INCOME);
-  const nonoperating = flowSeries(facts, NONOPERATING_INCOME_EXPENSE);
+  const cogs = flowSeries(src, COGS);
+  const grossProfitDirect = flowSeries(src, GROSS_PROFIT);
+  const operatingIncomeDirect = flowSeries(src, OPERATING_INCOME);
+  const pretax = flowSeries(src, PRETAX_INCOME);
+  const nonoperating = flowSeries(src, NONOPERATING_INCOME_EXPENSE);
   // Interest lines are often tagged year-to-date in 10-Qs, like INTEREST_EXPENSE below. Each is ONE concept for
   // the filer: a 10-K note line of 120 beside a face line of 100 that the 10-Qs also carry must not give the
   // fiscal year one basis and its quarters another.
-  const netInterestNonoperating = bestCoveredSeries(facts, NET_INTEREST_NONOPERATING);
-  const faceInterestExpense = bestCoveredSeries(facts, FACE_INTEREST_EXPENSE);
-  const otherNonoperating = flowSeriesYtd(facts, OTHER_NONOPERATING);
-  const costsAndExpenses = flowSeries(facts, COSTS_AND_EXPENSES);
+  const netInterestNonoperating = bestCoveredSeries(src, NET_INTEREST_NONOPERATING);
+  const faceInterestExpense = bestCoveredSeries(src, FACE_INTEREST_EXPENSE);
+  const otherNonoperating = flowSeriesYtd(src, OTHER_NONOPERATING);
+  const costsAndExpenses = flowSeries(src, COSTS_AND_EXPENSES);
   // The third tier applies to a filer only when nothing in its history rules it out:
   //  - it tags tier one or two anywhere (DOW's one quarter without NonoperatingIncomeExpense must stay null);
   //  - it is bank-like, or its SIC is financial or unknown, so its interest expense may be a funding cost (CFG,
@@ -724,65 +907,65 @@ export function parseCompanyFacts(facts: unknown, opts: { sic?: number | null } 
     }),
   );
   const pretaxTier: PretaxTier | null =
-    opts.sic == null || sicIsFinancial(opts.sic) || [operatingIncomeDirect, nonoperating, netInterestIncome, noninterestIncome, flowSeries(facts, EQUITY_METHOD_INCOME)].some(tagged) || singleStep
+    opts.sic == null || sicIsFinancial(opts.sic) || [operatingIncomeDirect, nonoperating, netInterestIncome, noninterestIncome, flowSeries(src, EQUITY_METHOD_INCOME)].some(tagged) || singleStep
       ? null
       : { interest: tagged(netInterestNonoperating) ? "net" : "gross", subtractsOther: tagged(otherNonoperating) };
   // Parent-attributable net income. Prefer NetIncomeLoss; for filers that tag only ProfitLoss
   // (incl. noncontrolling interests), fill the gaps with ProfitLoss − NCI (see helper).
-  const netIncomeDirect = flowSeries(facts, NET_INCOME);
-  const profitLoss = flowSeries(facts, PROFIT_LOSS);
-  const nci = flowSeries(facts, NCI);
+  const netIncomeDirect = flowSeries(src, NET_INCOME);
+  const profitLoss = flowSeries(src, PROFIT_LOSS);
+  const nci = flowSeries(src, NCI);
   const netIncome = {
     annual: fillNetIncomeFromProfitLoss(netIncomeDirect.annual, profitLoss.annual, nci.annual),
     quarter: fillNetIncomeFromProfitLoss(netIncomeDirect.quarter, profitLoss.quarter, nci.quarter),
   };
-  const epsDiluted = flowSeries(facts, EPS_DILUTED, "USD/shares");
+  const epsDiluted = flowSeries(src, EPS_DILUTED, "USD/shares");
   // These six are commonly tagged year-to-date rather than per discrete quarter in 10-Qs (see
   // flowSeriesYtd / quarterFlowWithYtdFallback above); the rest of the flow concepts above are
   // income-statement items filers already tag discretely and must NOT go through YTD
   // differencing.
-  const daPrimary = flowSeriesYtd(facts, DA);
-  const depreciation = flowSeriesYtd(facts, DEPRECIATION);
-  const amortization = flowSeriesYtd(facts, AMORTIZATION_INTANGIBLES);
+  const daPrimary = flowSeriesYtd(src, DA);
+  const depreciation = flowSeriesYtd(src, DEPRECIATION);
+  const amortization = flowSeriesYtd(src, AMORTIZATION_INTANGIBLES);
   const tagsAmortization = amortization.annual.size > 0 || amortization.quarter.size > 0;
   const da = {
     annual: combineDa(daPrimary.annual, depreciation.annual, amortization.annual, tagsAmortization),
     quarter: combineDa(daPrimary.quarter, depreciation.quarter, amortization.quarter, tagsAmortization),
   };
-  const interestExpense = flowSeriesYtd(facts, INTEREST_EXPENSE);
-  const ocf = flowSeriesYtd(facts, OCF);
-  const capexBase = CAPEX_RAW.map((c) => flowSeriesYtd(facts, [c]));
-  const capexExtra = CAPEX_EXTRA.map((c) => flowSeriesYtd(facts, [c]));
+  const interestExpense = flowSeriesYtd(src, INTEREST_EXPENSE);
+  const ocf = flowSeriesYtd(src, OCF);
+  const capexBase = CAPEX_RAW.map((c) => flowSeriesYtd(src, [c]));
+  const capexExtra = CAPEX_EXTRA.map((c) => flowSeriesYtd(src, [c]));
   const capexRaw = {
     annual: combineCapex(capexBase.map((x) => x.annual), capexExtra.map((x) => x.annual)),
     quarter: combineCapex(capexBase.map((x) => x.quarter), capexExtra.map((x) => x.quarter)),
   };
-  const buybacksRaw = flowSeriesYtd(facts, BUYBACKS_RAW);
-  const dividendsRaw = flowSeriesYtd(facts, DIVIDENDS_RAW);
+  const buybacksRaw = flowSeriesYtd(src, BUYBACKS_RAW);
+  const dividendsRaw = flowSeriesYtd(src, DIVIDENDS_RAW);
 
-  const cashAndStDirect = instantSeries(facts, CASH_AND_ST_INVESTMENTS);
-  const cash = instantSeries(facts, CASH);
-  const shortTermInvestments = instantSeries(facts, SHORT_TERM_INVESTMENTS);
-  const ltdNoncurrent = instantSeries(facts, LTD_NONCURRENT);
-  const ltdTotal = instantSeries(facts, LTD_TOTAL);
-  const ltdLeaseNoncurrent = instantSeries(facts, LTD_LEASE_NONCURRENT);
-  const ltdCurrent = instantSeries(facts, LTD_CURRENT);
-  const debtCurrent = instantSeries(facts, DEBT_CURRENT);
-  const shortTermBorrowings = instantSeries(facts, SHORT_TERM_BORROWINGS);
-  const convertibleNoncurrent = instantSeries(facts, CONVERTIBLE_NONCURRENT);
-  const convertibleCurrent = instantSeries(facts, CONVERTIBLE_CURRENT);
-  const ltdLeaseTotal = instantSeries(facts, LTD_LEASE_TOTAL);
-  const combinedTotal = instantSeries(facts, DEBT_COMBINED_TOTAL);
-  const unsecuredLtd = instantSeries(facts, UNSECURED_LTD);
-  const fhlbAdvances = instantSeries(facts, FHLB_ADVANCES);
-  const shortTermBorrowingsTotal = instantSeries(facts, SHORT_TERM_BORROWINGS_TOTAL);
+  const cashAndStDirect = instantSeries(src, CASH_AND_ST_INVESTMENTS);
+  const cash = instantSeries(src, CASH);
+  const shortTermInvestments = instantSeries(src, SHORT_TERM_INVESTMENTS);
+  const ltdNoncurrent = instantSeries(src, LTD_NONCURRENT);
+  const ltdTotal = instantSeries(src, LTD_TOTAL);
+  const ltdLeaseNoncurrent = instantSeries(src, LTD_LEASE_NONCURRENT);
+  const ltdCurrent = instantSeries(src, LTD_CURRENT);
+  const debtCurrent = instantSeries(src, DEBT_CURRENT);
+  const shortTermBorrowings = instantSeries(src, SHORT_TERM_BORROWINGS);
+  const convertibleNoncurrent = instantSeries(src, CONVERTIBLE_NONCURRENT);
+  const convertibleCurrent = instantSeries(src, CONVERTIBLE_CURRENT);
+  const ltdLeaseTotal = instantSeries(src, LTD_LEASE_TOTAL);
+  const combinedTotal = instantSeries(src, DEBT_COMBINED_TOTAL);
+  const unsecuredLtd = instantSeries(src, UNSECURED_LTD);
+  const fhlbAdvances = instantSeries(src, FHLB_ADVANCES);
+  const shortTermBorrowingsTotal = instantSeries(src, SHORT_TERM_BORROWINGS_TOTAL);
   // Does the filer tag ANY long-term debt concept anywhere in its history? Decides whether a zero current-only
   // period is a gap (null) or an honest zero (see deriveTotalDebt rule 8). Modelled on combineDa's tagsAmortization.
   const filerTagsLongTerm = [ltdNoncurrent, ltdTotal, ltdLeaseNoncurrent, ltdLeaseTotal, combinedTotal, unsecuredLtd, convertibleNoncurrent]
     .some((s) => s.annual.size > 0 || s.quarter.size > 0);
-  const totalEquity = instantSeries(facts, TOTAL_EQUITY);
-  const currentAssets = instantSeries(facts, CURRENT_ASSETS);
-  const currentLiabilities = instantSeries(facts, CURRENT_LIABILITIES);
+  const totalEquity = instantSeries(src, TOTAL_EQUITY);
+  const currentAssets = instantSeries(src, CURRENT_ASSETS);
+  const currentLiabilities = instantSeries(src, CURRENT_LIABILITIES);
 
   if (revenue.annual.size === 0 && revenue.quarter.size === 0) {
     throw new Error(`No revenue concept found among: ${REVENUE.join(", ")} (nor derivable from ${NET_INTEREST_INCOME[0]} + ${NONINTEREST_INCOME[0]})`);
@@ -830,45 +1013,62 @@ export function parseCompanyFacts(facts: unknown, opts: { sic?: number | null } 
     dividendsRaw: at(dividendsRaw[side] as Map<K, UnitEntry>, key),
   });
 
-  // Annual (FY) rows, anchored on the years the revenue concept reports.
+  // Annual (FY) rows, anchored on the fiscal years the revenue concept reports, each labelled by its fiscal
+  // year (fiscalYearLabel): USFD's years ended 2021-01-02, 2022-01-01 and 2022-12-31 are 2020, 2021 and 2022.
+  const labels = opts.labels ?? {};
+  const calendarLabels = labels.labels === "calendar";
   const annualYears = [...revenue.annual.keys()].sort((a, b) => a - b);
-  const annual: SecPeriod[] = annualYears.map((year) => ({
-    fiscal_period: "FY",
-    fiscal_year: year,
-    report_date: revenue.annual.get(year)!.end,
-    ...deriveFields(rawAt(year, "annual"), { filerTagsLongTerm, pretaxTier }),
-  }));
-  // Real quarterly rows (Q1-Q3 only — Q4 is never separately filed), anchored
-  // on the quarters the revenue concept reports.
+  const annual: SecPeriod[] = annualYears.map((year) => {
+    const end = revenue.annual.get(year)!.end;
+    return {
+      fiscal_period: "FY",
+      fiscal_year: fiscalYearLabel(end, labels),
+      report_date: end,
+      ...deriveFields(rawAt(year, "annual"), { filerTagsLongTerm, pretaxTier }),
+    };
+  });
+  // Real quarterly rows, anchored on the quarters the revenue concept reports: Q1-Q3, and the rare Q4 a
+  // 10-Q re-reports (RTX's 2020 10-Qs recast Q4 2019). Labelled by their place in the fiscal year: V's quarter
+  // ended 2026-06-30 is Q3 of fiscal 2026, TJX's ended 2026-08-01 Q2 of fiscal 2027 (the year ending January
+  // 2027). Every keyed quarter has a fiscal period, so the lookup below never misses.
+  const quarterLabel = (end: string): Pick<SecPeriod, "fiscal_period" | "fiscal_year"> => {
+    if (calendarLabels) return { fiscal_period: `Q${quarterOf(end)}`, fiscal_year: yearOf(end) };
+    const p = src.cal.period(end)!;
+    return { fiscal_period: `Q${p.quarter}`, fiscal_year: p.fiscalYear + (labels.yearOffset ?? 0) };
+  };
   const quarterKeys = [...revenue.quarter.keys()].sort();
-  const realQuarters: SecPeriod[] = quarterKeys.map((key) => {
+  const realQuarters: { key: string; row: SecPeriod }[] = quarterKeys.map((key) => {
     const end = revenue.quarter.get(key)!.end;
     return {
-      fiscal_period: `Q${quarterOf(end)}`,
-      fiscal_year: yearOf(end),
-      report_date: end,
-      ...deriveFields(rawAt(key, "quarter"), { filerTagsLongTerm, pretaxTier }),
+      key,
+      row: {
+        ...quarterLabel(end),
+        report_date: end,
+        ...deriveFields(rawAt(key, "quarter"), { filerTagsLongTerm, pretaxTier }),
+      },
     };
   });
 
   const byReportDate = (a: SecPeriod, b: SecPeriod) => (a.report_date < b.report_date ? -1 : a.report_date > b.report_date ? 1 : 0);
 
   // Derive Q4 = FY − (Q1 + Q2 + Q3), one per fiscal year whose three earlier quarters are present.
-  // The composing quarters are grouped by the FISCAL year they belong to — the three whose
-  // period-ends fall within the ~12 months before the annual period-end — not by calendar year: a
-  // non-December fiscal year-end (e.g. Lam Research's late-June year) spreads those three quarters
-  // across two calendar years, so a calendar-year grouping would never assemble all three and the
-  // final quarter (which is the latest quarter when the primary filing is a 10-K) would never be
-  // derived. The prior fiscal year's own Q4 sits ~365+ days back, outside the window, so it is never
-  // miscounted; a realQuarters entry is always a discretely filed Q1-Q3, never a would-be Q4.
+  // The composing quarters are the ones keyed to that FISCAL year (`<year>Q1`..`<year>Q3`), not to a
+  // calendar year: a non-December fiscal year-end (e.g. Lam Research's late-June year) spreads them
+  // across two calendar years, and the final quarter (the latest quarter when the primary filing is
+  // a 10-K) would otherwise never be derived. A quarter in a fiscal-year-end change has no key, so a
+  // year it would belong to gets no Q4 rather than one composed across two fiscal calendars. A year
+  // whose Q4 a 10-Q already reports keeps that real row, so no two rows share a date; the derived values
+  // only fill what the recast left untagged (RTX's 2020 10-Qs re-report Q4 2019 revenue and operating
+  // income but not net income or cash flow), and only when the two agree on revenue, so one row never
+  // mixes a recast basis with the 10-K's.
   const derivedQ4: SecPeriod[] = [];
-  for (const fyRow of annual) {
+  const realByKey = new Map(realQuarters.map((q) => [q.key, q.row]));
+  const realByDate = new Map(realQuarters.map((q) => [q.row.report_date, q.row]));
+  annualYears.forEach((year, i) => {
+    const fyRow = annual[i];
     const fyEnd = fyRow.report_date;
-    const composing = realQuarters
-      .filter((q) => q.report_date < fyEnd && daysBetween(q.report_date, fyEnd) <= 360)
-      .sort(byReportDate);
-    if (composing.length !== 3) continue;
-    const [q1, q2, q3] = composing;
+    const [q1, q2, q3] = [1, 2, 3].map((n) => realByKey.get(`${year}Q${n}`));
+    if (!q1 || !q2 || !q3) return;
 
     // NOTE: for eps_diluted specifically, FY − (Q1+Q2+Q3) is an approximation, not an exact
     // Q4 figure — diluted share counts (the EPS denominator) differ quarter to quarter, so this
@@ -881,6 +1081,15 @@ export function parseCompanyFacts(facts: unknown, opts: { sic?: number | null } 
     };
     const q4Partial = Object.fromEntries(FLOW_FIELDS.map((f) => [f, sub(f)])) as Pick<DerivedFields, (typeof FLOW_FIELDS)[number]>;
     const instantPartial = Object.fromEntries(INSTANT_FIELDS.map((f) => [f, fyRow[f]])) as Pick<DerivedFields, (typeof INSTANT_FIELDS)[number]>;
+    const real = realByDate.get(fyEnd);
+    if (real) {
+      const derivedRevenue = q4Partial.revenue;
+      if (derivedRevenue == null || real.revenue == null || Math.abs(derivedRevenue - real.revenue) > Math.abs(real.revenue) * 0.005) return;
+      for (const [field, value] of Object.entries({ ...q4Partial, ...instantPartial }) as [keyof DerivedFields, number | null][]) {
+        if (real[field] == null && value != null) (real as Record<keyof DerivedFields, number | null>)[field] = value;
+      }
+      return;
+    }
     derivedQ4.push({
       fiscal_period: "Q4",
       fiscal_year: fyRow.fiscal_year,
@@ -888,9 +1097,9 @@ export function parseCompanyFacts(facts: unknown, opts: { sic?: number | null } 
       ...q4Partial,
       ...instantPartial,
     });
-  }
+  });
 
-  const quarter = [...realQuarters, ...derivedQ4].sort(byReportDate);
+  const quarter = [...realQuarters.map((q) => q.row), ...derivedQ4].sort(byReportDate);
   annual.sort(byReportDate);
 
   return { annual, quarter };

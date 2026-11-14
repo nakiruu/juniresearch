@@ -13,7 +13,8 @@
 import { readFileSync, readdirSync, statSync, utimesSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { requireContact } from "./_env";
-import { alignAnnualSeries, restatedYears, fetchConceptEntries, mergeConceptSeries, stampSbcProvenance, SBC_CONCEPT, SBC_FALLBACK_CONCEPT, type ConceptEntry } from "../lib/facts/enrich";
+import { fiscalLabelOverride } from "../lib/facts/free/fiscal-labels";
+import { alignAnnualSeries, labelRuleAmbiguous, restatedYears, fetchConceptEntries, mergeConceptSeries, stampSbcProvenance, SBC_CONCEPT, SBC_FALLBACK_CONCEPT, type ConceptEntry } from "../lib/facts/enrich";
 
 const FACTS = "data/facts";
 const dry = process.argv.includes("--dry");
@@ -68,10 +69,17 @@ for (const path of packs) {
   const anchor = pack.filing.periodEnd;
   let goodwill: Series, restated: string[], sbc: Series, concepts: (string | null)[];
   try {
-    goodwill = alignAnnualSeries(await entries(pack.cik, "Goodwill"), fiscalYears, anchor);
-    restated = restatedYears(await entries(pack.cik, "Goodwill"), fiscalYears, anchor);
-    const primary = alignAnnualSeries(await entries(pack.cik, SBC_CONCEPT), fiscalYears, anchor);
-    const fallback = primary.some((v) => v == null) ? alignAnnualSeries(await entries(pack.cik, SBC_FALLBACK_CONCEPT), fiscalYears, anchor) : primary.map(() => null);
+    const labels = fiscalLabelOverride(pack.ticker);
+    const gwEntries = await entries(pack.cik, "Goodwill"), sbcEntries = await entries(pack.cik, SBC_CONCEPT);
+    // A pack does not record which label rule named its columns; where the two rules disagree, leave it alone.
+    if ([gwEntries, sbcEntries].some((e) => labelRuleAmbiguous(e, fiscalYears, anchor, labels))) {
+      console.log(`  ${path}: the calendar and fiscal label rules place these years in different columns; left as is (re-capture the pack)`);
+      continue;
+    }
+    goodwill = alignAnnualSeries(gwEntries, fiscalYears, anchor, labels);
+    restated = restatedYears(gwEntries, fiscalYears, anchor, 0.01, labels);
+    const primary = alignAnnualSeries(sbcEntries, fiscalYears, anchor, labels);
+    const fallback = primary.some((v) => v == null) ? alignAnnualSeries(await entries(pack.cik, SBC_FALLBACK_CONCEPT), fiscalYears, anchor, labels) : primary.map(() => null);
     ({ values: sbc, concepts } = mergeConceptSeries({ concept: SBC_CONCEPT, values: primary }, { concept: SBC_FALLBACK_CONCEPT, values: fallback }));
   } catch (e) {
     failed++;

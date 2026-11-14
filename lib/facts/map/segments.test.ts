@@ -102,3 +102,12 @@ describe("mapSegments with an all-zero segment total", () => {
     expect(() => mapSegments("lib/facts/map/__fixtures__/zero-segments")).toThrow(/bigdata-tearsheet-annual\.json/);
   });
 });
+
+// Two 52/53-week fiscal years can carry one fiscal_year label on the free path (USFD's years ending 2022-01-01
+// and 2022-12-31). The consolidated segment must be sized from the later one, the year the statements show.
+describe("mapSegments when two FY rows share a fiscal_year label", () => {
+  it("sizes the consolidated segment from the year that ended last", () => {
+    const s = mapSegments("lib/facts/map/__fixtures__/single-segment-shared-label");
+    expect(s.segments.items).toEqual([{ name: "Consolidated", revenue: 34057, share: 1 }]);
+  });
+});

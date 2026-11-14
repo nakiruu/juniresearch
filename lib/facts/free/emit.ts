@@ -92,13 +92,17 @@ interface EstimateRecord {
   fiscal_year: number;
   fiscal_period: "FY";
   estimate_mean: number;
+  // The estimated year's end date, so a --keep-quote re-run can name the year again on the current label rule
+  // (yahooFromTearsheet). The mappers read only the four fields above.
+  end_date?: string;
 }
 
 function estimateRecords(estimates: YahooEstimate[]): EstimateRecord[] {
   const records: EstimateRecord[] = [];
+  const endDate = (e: YahooEstimate) => (e.endDate ? { end_date: e.endDate } : {});
   for (const e of estimates) {
-    if (e.sales != null) records.push({ metric: "SALES", fiscal_year: e.fiscal_year, fiscal_period: "FY", estimate_mean: e.sales });
-    if (e.eps != null) records.push({ metric: "EPS", fiscal_year: e.fiscal_year, fiscal_period: "FY", estimate_mean: e.eps });
+    if (e.sales != null) records.push({ metric: "SALES", fiscal_year: e.fiscal_year, fiscal_period: "FY", estimate_mean: e.sales, ...endDate(e) });
+    if (e.eps != null) records.push({ metric: "EPS", fiscal_year: e.fiscal_year, fiscal_period: "FY", estimate_mean: e.eps, ...endDate(e) });
   }
   return records;
 }
@@ -186,21 +190,23 @@ export function buildTearsheetFiles(input: EmitInput): TearsheetFiles {
  * when the old run could not sum the quarterly EPS (V) and the old SEC-derived P/E otherwise — the Phase 2
  * pack diff prints ttm.pe before and after so a carried figure is visible. `dividendYield` comes from
  * ratios[0].dividend_yield; estimate years whose sales and eps were both null were dropped on the way out and
- * stay dropped.
+ * stay dropped. Each estimate carries the year's `endDate` when the capture recorded one (end_date, from 2026-11);
+ * the caller re-labels the years from it (scripts/facts-free.ts).
  */
 export function yahooFromTearsheet(t: unknown): { yahoo: YahooData; capturedAt: string } {
   const ts = t as {
     company_overview: Record<string, unknown>;
     price_performance: { current_market: Record<string, number | null | undefined> };
     analyst_data: { price_targets: Record<string, number>; ratings: Record<string, unknown> };
-    estimates: { records: { metric: "SALES" | "EPS"; fiscal_year: number; estimate_mean: number }[] };
+    estimates: { records: { metric: "SALES" | "EPS"; fiscal_year: number; estimate_mean: number; end_date?: string }[] };
     fundamentals: { key_metrics: Record<string, unknown>[]; ratios: Record<string, unknown>[] };
   };
   const ov = ts.company_overview, cm = ts.price_performance.current_market, pt = ts.analyst_data.price_targets, r = ts.analyst_data.ratings;
   const byYear = new Map<number, YahooEstimate>();
   for (const e of ts.estimates.records) {
-    const row = byYear.get(e.fiscal_year) ?? { fiscal_year: e.fiscal_year, sales: null, eps: null };
+    const row: YahooEstimate = byYear.get(e.fiscal_year) ?? { fiscal_year: e.fiscal_year, sales: null, eps: null };
     if (e.metric === "SALES") row.sales = e.estimate_mean; else row.eps = e.estimate_mean;
+    if (e.end_date) row.endDate = e.end_date;
     byYear.set(e.fiscal_year, row);
   }
   const num = (x: unknown) => (typeof x === "number" ? x : null);
